@@ -8,6 +8,7 @@ import Results from './pages/Results';
 import TipsPage from './pages/TipsPage';
 import CoursesPage from './pages/CoursesPage';
 import Profile from './pages/Profile';
+import ContentAdmin from './pages/ContentAdmin';
 import { Toaster } from './components/ui/sonner';
 
 function App() {
