@@ -265,13 +265,9 @@ Write at least 250 words.""",
                 "title": "Individual long turn",
                 "duration": "3-4 minutes",
                 "preparation_time": "1 minute",
-                "topic_card": """Describe a person who has influenced you.
-
-You should say:
-• who this person is
-• how you know this person
-• what they have done
-• and explain why this person has influenced you."""
+                "questions": [
+                    """Describe a person who has influenced you. You should say: who this person is, how you know this person, what they have done, and explain why this person has influenced you. [You have 1 minute to prepare and should speak for 2 minutes]"""
+                ]
             },
             {
                 "part": 3,
@@ -284,6 +280,19 @@ You should say:
                     "How important is it for children to have good role models?"
                 ]
             }
+        ],
+        "questions": [
+            {"id": 1, "part": 1, "question": "Let's talk about where you live. Do you live in a house or an apartment?"},
+            {"id": 2, "part": 1, "question": "What do you like most about your home?"},
+            {"id": 3, "part": 1, "question": "What kind of home would you like to live in the future?"},
+            {"id": 4, "part": 1, "question": "Let's move on to talk about your work/studies. What subject are you studying?"},
+            {"id": 5, "part": 1, "question": "Why did you choose this subject?"},
+            {"id": 6, "part": 1, "question": "What do you find most interesting about your studies?"},
+            {"id": 7, "part": 2, "question": "Describe a person who has influenced you. You should say: who this person is, how you know this person, what they have done, and explain why this person has influenced you. [Preparation: 1 minute. Speaking: 2 minutes]"},
+            {"id": 8, "part": 3, "question": "How do you think people's relationships with their families have changed in recent years?"},
+            {"id": 9, "part": 3, "question": "What role do you think technology plays in modern relationships?"},
+            {"id": 10, "part": 3, "question": "Do you think young people today have different role models compared to previous generations?"},
+            {"id": 11, "part": 3, "question": "How important is it for children to have good role models?"}
         ],
         "answer_key": []
     }
