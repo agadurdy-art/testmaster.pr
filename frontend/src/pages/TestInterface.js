@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { Clock, ChevronLeft, ChevronRight, Send, Mic, Square } from 'lucide-react';
-import { getTests, submitTest, transcribeAudio, getSpeakingQuestions } from '../lib/api';
+import { Clock, ChevronLeft, ChevronRight, Send, Mic, Square, Play, Pause } from 'lucide-react';
+import { getTests, submitTest, transcribeAudio, evaluateWriting, evaluateSpeaking } from '../lib/api';
 import { formatTime } from '../lib/utils';
 import { toast } from 'sonner';
 
@@ -19,8 +19,11 @@ export default function TestInterface({ user }) {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [recording, setRecording] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [audioChunks, setAudioChunks] = useState([]);
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     loadTest();
@@ -30,7 +33,7 @@ export default function TestInterface({ user }) {
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && test) {
+    } else if (timeLeft === 0 && test && answers && Object.keys(answers).length > 0) {
       handleSubmit();
     }
   }, [timeLeft]);
@@ -43,11 +46,12 @@ export default function TestInterface({ user }) {
         setTest(selectedTest);
         setTimeLeft(selectedTest.duration * 60);
         
-        // Initialize answers
         const initialAnswers = {};
-        selectedTest.questions?.forEach(q => {
-          initialAnswers[q.id] = '';
-        });
+        if (selectedTest.questions) {
+          selectedTest.questions.forEach(q => {
+            initialAnswers[q.id] = '';
+          });
+        }
         setAnswers(initialAnswers);
       }
     } catch (error) {
@@ -64,43 +68,108 @@ export default function TestInterface({ user }) {
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-      const chunks = [];
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
 
-      recorder.ondataavailable = (e) => chunks.push(e.data);
-      recorder.onstop = async () => {
-        const blob = new Blob(chunks, { type: 'audio/webm' });
-        const file = new File([blob], 'recording.webm', { type: 'audio/webm' });
-        
-        try {
-          const result = await transcribeAudio(file);
-          const question = test.questions[currentQuestion];
-          handleAnswerChange(question.id, result.text);
-          toast.success('Audio transcribed successfully!');
-        } catch (error) {
-          toast.error('Failed to transcribe audio');
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
         }
       };
 
-      recorder.start();
-      setMediaRecorder(recorder);
+      mediaRecorder.onstop = async () => {
+        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        setAudioBlob(blob);
+        
+        // Transcribe audio
+        try {
+          const file = new File([blob], 'recording.webm', { type: 'audio/webm' });
+          const result = await transcribeAudio(file);
+          const question = test.questions?.[currentQuestion] || test.parts?.[currentQuestion]?.questions?.[0];
+          if (question) {
+            handleAnswerChange(question.id || currentQuestion, result.text);
+          }
+          toast.success('Audio transcribed successfully!');
+        } catch (error) {
+          console.error('Transcription error:', error);
+          toast.error('Failed to transcribe audio');
+        }
+        
+        stream.getTracks().forEach(track => track.stop());
+      };
+
+      mediaRecorder.start();
       setRecording(true);
+      toast.info('Recording started...');
     } catch (error) {
-      toast.error('Failed to access microphone');
+      console.error('Microphone error:', error);
+      toast.error('Failed to access microphone. Please check permissions.');
     }
   };
 
   const stopRecording = () => {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-      mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    if (mediaRecorderRef.current && recording) {
+      mediaRecorderRef.current.stop();
       setRecording(false);
+      toast.success('Recording stopped');
+    }
+  };
+
+  const playAudio = () => {
+    if (audioBlob && audioRef.current) {
+      audioRef.current.src = URL.createObjectURL(audioBlob);
+      audioRef.current.play();
+      setIsPlaying(true);
     }
   };
 
   const handleSubmit = async () => {
+    if (submitting) return;
     setSubmitting(true);
+    
     try {
+      // For Writing and Speaking, get AI evaluation first
+      if (testType === 'writing') {
+        toast.info('Evaluating your writing with AI...');
+        for (const question of test.questions) {
+          if (answers[question.id]) {
+            try {
+              const evaluation = await evaluateWriting({
+                user_id: user.id,
+                task_type: question.task,
+                question: question.question,
+                answer: answers[question.id]
+              });
+              toast.success(`${question.task.toUpperCase()} evaluated: Band ${evaluation.band_score}`);
+            } catch (error) {
+              console.error('Evaluation error:', error);
+              toast.error('AI evaluation failed, but test submitted');
+            }
+          }
+        }
+      }
+      
+      if (testType === 'speaking') {
+        toast.info('Evaluating your speaking with AI...');
+        const allQuestions = test.parts?.flatMap(part => part.questions || []) || [];
+        for (let i = 0; i < allQuestions.length; i++) {
+          if (answers[i]) {
+            try {
+              const evaluation = await evaluateSpeaking({
+                user_id: user.id,
+                part: Math.floor(i / 3) + 1,
+                question: allQuestions[i],
+                user_response: answers[i]
+              });
+              toast.success(`Response ${i+1} evaluated: Band ${evaluation.band_score}`);
+            } catch (error) {
+              console.error('Evaluation error:', error);
+            }
+          }
+        }
+      }
+      
       const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => ({
         question_id: parseInt(questionId),
         answer: answer
@@ -117,6 +186,7 @@ export default function TestInterface({ user }) {
       toast.success('Test submitted successfully!');
       navigate(`/results/${result.id}`);
     } catch (error) {
+      console.error('Submit error:', error);
       toast.error('Failed to submit test');
     } finally {
       setSubmitting(false);
@@ -145,7 +215,18 @@ export default function TestInterface({ user }) {
     );
   }
 
-  const question = test.questions?.[currentQuestion];
+  // Handle different test structures
+  let question = null;
+  let totalQuestions = 0;
+  
+  if (testType === 'speaking' && test.parts) {
+    const allQuestions = test.parts.flatMap(part => part.questions || []);
+    question = { question: allQuestions[currentQuestion] || 'Speak about the topic', id: currentQuestion };
+    totalQuestions = allQuestions.length;
+  } else if (test.questions) {
+    question = test.questions[currentQuestion];
+    totalQuestions = test.questions.length;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
@@ -180,15 +261,15 @@ export default function TestInterface({ user }) {
           <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
             <h3 className="font-semibold text-gray-900 mb-4">Questions</h3>
             <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
-              {test.questions?.map((q, idx) => (
+              {Array.from({ length: totalQuestions }, (_, idx) => (
                 <button
-                  key={q.id}
+                  key={idx}
                   data-testid={`question-nav-${idx}`}
                   onClick={() => setCurrentQuestion(idx)}
                   className={`w-10 h-10 rounded-lg font-semibold transition-colors ${
                     idx === currentQuestion
                       ? 'bg-sky-500 text-white'
-                      : answers[q.id]
+                      : answers[question?.id || idx] || answers[idx]
                       ? 'bg-green-100 text-green-700'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
@@ -205,14 +286,29 @@ export default function TestInterface({ user }) {
               <div className="space-y-6">
                 <div>
                   <p className="text-sm text-gray-600 mb-2">
-                    Question {currentQuestion + 1} of {test.questions.length}
+                    Question {currentQuestion + 1} of {totalQuestions}
                   </p>
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">
                     {question.question}
                   </h2>
 
+                  {/* Listening Test - Audio Info */}
+                  {testType === 'listening' && (
+                    <div className="bg-blue-50 p-6 rounded-lg mb-6">
+                      <p className="text-blue-900 mb-4">
+                        <strong>Note:</strong> In the actual test, you would listen to audio recording. 
+                        For this demo, read the transcript below and answer the questions.
+                      </p>
+                      <div className="bg-white p-4 rounded">
+                        <p className="text-gray-700">
+                          <em>[Audio transcript would appear here in the actual implementation]</em>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Reading passage */}
-                  {testType === 'reading' && test.passages && (
+                  {testType === 'reading' && test.passages && question.passage && (
                     <div className="bg-gray-50 p-6 rounded-lg mb-6 max-h-96 overflow-y-auto">
                       <h3 className="font-semibold text-lg mb-3">
                         {test.passages[question.passage - 1]?.title}
@@ -223,10 +319,18 @@ export default function TestInterface({ user }) {
                     </div>
                   )}
 
+                  {/* Writing Task Image */}
+                  {testType === 'writing' && question.task === 'task1' && (
+                    <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-12 mb-6 text-center">
+                      <p className="text-gray-500 mb-2">[Chart/Graph/Diagram would be displayed here]</p>
+                      <p className="text-sm text-gray-600">In the actual test, you would see the visual data here</p>
+                    </div>
+                  )}
+
                   {/* Multiple Choice */}
-                  {question.type === 'multiple_choice' && (
+                  {question.type === 'multiple_choice' && question.options && (
                     <div className="space-y-3">
-                      {question.options?.map((option, idx) => (
+                      {question.options.map((option, idx) => (
                         <button
                           key={idx}
                           data-testid={`option-${idx}`}
@@ -243,10 +347,10 @@ export default function TestInterface({ user }) {
                     </div>
                   )}
 
-                  {/* True/False */}
-                  {question.type === 'true_false' && (
+                  {/* True/False/Not Given */}
+                  {(question.type === 'true_false_notgiven' || question.type === 'yes_no_notgiven') && (
                     <div className="space-y-3">
-                      {['True', 'False', 'Not Given'].map((option) => (
+                      {(question.type === 'true_false_notgiven' ? ['True', 'False', 'Not Given'] : ['Yes', 'No', 'Not Given']).map((option) => (
                         <button
                           key={option}
                           data-testid={`tf-option-${option}`}
@@ -263,8 +367,10 @@ export default function TestInterface({ user }) {
                     </div>
                   )}
 
-                  {/* Fill in Blank / Short Answer */}
-                  {(question.type === 'fill_blank' || question.type === 'matching') && (
+                  {/* Short Answer / Sentence Completion */}
+                  {(question.type === 'sentence_completion' || question.type === 'form_completion' || 
+                    question.type === 'note_completion' || question.type === 'matching_information' || 
+                    question.type === 'matching_headings') && (
                     <Input
                       data-testid="text-answer-input"
                       value={answers[question.id] || ''}
@@ -284,9 +390,14 @@ export default function TestInterface({ user }) {
                         placeholder="Write your response here..."
                         className="min-h-[400px] text-lg p-4"
                       />
-                      <p className="text-sm text-gray-600 mt-2">
-                        Words: {(answers[question.id] || '').split(/\s+/).filter(Boolean).length} / {question.word_limit}
-                      </p>
+                      <div className="flex justify-between mt-2">
+                        <p className="text-sm text-gray-600">
+                          Words: {(answers[question.id] || '').split(/\s+/).filter(Boolean).length} / {question.word_limit}
+                        </p>
+                        <p className="text-sm text-gray-600">
+                          Suggested time: {question.time_suggestion} minutes
+                        </p>
+                      </div>
                     </div>
                   )}
 
@@ -295,12 +406,13 @@ export default function TestInterface({ user }) {
                     <div className="space-y-4">
                       <Textarea
                         data-testid="speaking-textarea"
-                        value={answers[question.id] || ''}
-                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                        placeholder="Your response will appear here after recording..."
+                        value={answers[question.id] || answers[currentQuestion] || ''}
+                        onChange={(e) => handleAnswerChange(question.id || currentQuestion, e.target.value)}
+                        placeholder="Your transcribed response will appear here..."
                         className="min-h-[200px] text-lg p-4"
+                        readOnly={recording}
                       />
-                      <div className="flex gap-3">
+                      <div className="flex gap-3 items-center">
                         {!recording ? (
                           <Button
                             data-testid="start-recording-btn"
@@ -314,13 +426,28 @@ export default function TestInterface({ user }) {
                           <Button
                             data-testid="stop-recording-btn"
                             onClick={stopRecording}
-                            className="bg-red-500 text-white"
+                            className="bg-red-500 text-white hover:bg-red-600"
                           >
                             <Square className="w-4 h-4 mr-2" />
-                            Stop Recording
+                            Stop Recording (Recording...)
+                          </Button>
+                        )}
+                        {audioBlob && (
+                          <Button
+                            variant="outline"
+                            onClick={playAudio}
+                            disabled={isPlaying}
+                          >
+                            <Play className="w-4 h-4 mr-2" />
+                            Play Recording
                           </Button>
                         )}
                       </div>
+                      <audio 
+                        ref={audioRef} 
+                        onEnded={() => setIsPlaying(false)}
+                        className="hidden"
+                      />
                     </div>
                   )}
                 </div>
@@ -337,7 +464,7 @@ export default function TestInterface({ user }) {
                     Previous
                   </Button>
                   
-                  {currentQuestion < test.questions.length - 1 ? (
+                  {currentQuestion < totalQuestions - 1 ? (
                     <Button
                       data-testid="next-question-btn"
                       onClick={() => setCurrentQuestion(currentQuestion + 1)}
@@ -353,7 +480,7 @@ export default function TestInterface({ user }) {
                       disabled={submitting}
                       className="bg-green-600 text-white hover:bg-green-700"
                     >
-                      {submitting ? 'Submitting...' : 'Submit Test'}
+                      {submitting ? 'Submitting & Evaluating...' : 'Submit Test'}
                       <Send className="w-4 h-4 ml-2" />
                     </Button>
                   )}
