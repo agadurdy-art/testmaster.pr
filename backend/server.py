@@ -409,6 +409,26 @@ async def get_course(course_id: str):
         raise HTTPException(status_code=404, detail="Course not found")
     return course
 
+# Admin endpoint to add new tests
+class CreateTestRequest(BaseModel):
+    title: str
+    test_type: str
+    duration: int
+    passages: Optional[List[Dict[str, Any]]] = None
+    questions: List[Dict[str, Any]]
+    answer_key: List[Dict[str, Any]]
+
+@api_router.post("/tests")
+async def create_test(test_data: CreateTestRequest):
+    """Admin endpoint to create new test content"""
+    test = {
+        "id": str(uuid.uuid4()),
+        **test_data.model_dump(),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.tests.insert_one(test)
+    return {"message": "Test created successfully", "test_id": test["id"]}
+
 # Include router
 app.include_router(api_router)
 
