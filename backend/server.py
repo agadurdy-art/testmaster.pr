@@ -412,19 +412,6 @@ async def get_course(course_id: str):
 # Include router
 app.include_router(api_router)
 
-# Admin routes
-from admin_routes import admin_router
-admin_api = APIRouter(prefix="/api")
-admin_api.include_router(admin_router)
-
-@admin_api.middleware("http")
-async def add_db_to_admin(request, call_next):
-    request.state.db = db
-    response = await call_next(request)
-    return response
-
-app.include_router(admin_api)
-
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
