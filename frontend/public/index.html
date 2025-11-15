@@ -18,8 +18,22 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-        <title>Emergent | Fullstack App</title>
+        <title>IELTS Ace - AI-Powered Practice</title>
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
+        <script>
+            // Request microphone permissions early
+            window.addEventListener('DOMContentLoaded', () => {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    // Don't actually request yet, just check availability
+                    navigator.mediaDevices.enumerateDevices()
+                        .then(devices => {
+                            const audioInputs = devices.filter(d => d.kind === 'audioinput');
+                            console.log('Audio devices available:', audioInputs.length);
+                        })
+                        .catch(err => console.log('Audio check:', err));
+                }
+            });
+        </script>
         <!--
         These two scripts have been added for the testing, please do not edit or remove them
         -->
