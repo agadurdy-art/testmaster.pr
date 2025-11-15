@@ -60,6 +60,10 @@ function App() {
             path="/profile" 
             element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
           />
+          <Route 
+            path="/admin/content" 
+            element={<ContentAdmin />} 
+          />
         </Routes>
         <Toaster position="top-right" />
       </div>
