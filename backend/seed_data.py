@@ -82,20 +82,22 @@ Recognizing these biases doesn't eliminate them, but awareness can help individu
             }
         ],
         "questions": [
-            # Passage 1 Questions (1-13)
-            {"id": 1, "passage": 1, "type": "true_false_notgiven", "question": "Baron Karl von Drais invented the first bicycle with pedals."},
-            {"id": 2, "passage": 1, "type": "true_false_notgiven", "question": "The velocipede was nicknamed 'boneshaker' because of its uncomfortable design."},
-            {"id": 3, "passage": 1, "type": "true_false_notgiven", "question": "The penny-farthing was safer than modern bicycles."},
-            {"id": 4, "passage": 1, "type": "multiple_choice", "question": "When was the modern safety bicycle invented?", "options": ["A) 1817", "B) 1860s", "C) 1885", "D) 1888"]},
-            {"id": 5, "passage": 1, "type": "sentence_completion", "question": "John Boyd Dunlop invented _______ tires in 1888."},
-            {"id": 6, "passage": 1, "type": "sentence_completion", "question": "The Laufmaschine was propelled by riders pushing their _______ against the ground."},
-            {"id": 7, "passage": 1, "type": "multiple_choice", "question": "What is the estimated number of bicycles worldwide?", "options": ["A) Over 500 million", "B) Over a billion", "C) Over 2 billion", "D) Over 5 billion"]},
-            {"id": 8, "passage": 1, "type": "sentence_completion", "question": "Modern bicycle frames are sometimes made from lightweight _______."},
-            {"id": 9, "passage": 1, "type": "true_false_notgiven", "question": "Kirkpatrick Macmillan's claim to adding pedals is universally accepted."},
-            {"id": 10, "passage": 1, "type": "sentence_completion", "question": "The Rover Safety Bicycle was invented by John Kemp _______."},
-            {"id": 11, "passage": 1, "type": "true_false_notgiven", "question": "Electric bicycles are mentioned as a modern innovation."},
-            {"id": 12, "passage": 1, "type": "multiple_choice", "question": "The penny-farthing was particularly dangerous when:", "options": ["A) Riding uphill", "B) Dismounting", "C) Turning corners", "D) Riding in rain"]},
-            {"id": 13, "passage": 1, "type": "sentence_completion", "question": "The development of the bicycle began in the late _______ century."},
+            # Passage 1 Questions (1-7) - Cambridge IELTS 19
+            {"id": 1, "passage": 1, "type": "true_false_notgiven", "question": "People had expected Andy Murray to become the world's top tennis player for at least five years before 2016."},
+            {"id": 2, "passage": 1, "type": "true_false_notgiven", "question": "The change that Andy Murray made to his rackets attracted a lot of attention."},
+            {"id": 3, "passage": 1, "type": "true_false_notgiven", "question": "Most of the world's top players take a professional racket stringer on tour with them."},
+            {"id": 4, "passage": 1, "type": "true_false_notgiven", "question": "Mike and Bob Bryan use rackets that are light in comparison to the majority of rackets."},
+            {"id": 5, "passage": 1, "type": "true_false_notgiven", "question": "Werner Fischer played with a spaghetti-strung racket that he designed himself."},
+            {"id": 6, "passage": 1, "type": "true_false_notgiven", "question": "The weather can affect how professional players adjust the strings on their rackets."},
+            {"id": 7, "passage": 1, "type": "true_false_notgiven", "question": "It was believed that the change Pete Sampras made to his rackets contributed to his strong serve."},
+            
+            # Questions 8-13 - Placeholder for remaining Passage 1 questions (you can add these)
+            {"id": 8, "passage": 1, "type": "sentence_completion", "question": "Please add remaining questions 8-13 from your Cambridge IELTS 19 book"},
+            {"id": 9, "passage": 1, "type": "sentence_completion", "question": "Question 9 - to be added"},
+            {"id": 10, "passage": 1, "type": "sentence_completion", "question": "Question 10 - to be added"},
+            {"id": 11, "passage": 1, "type": "sentence_completion", "question": "Question 11 - to be added"},
+            {"id": 12, "passage": 1, "type": "sentence_completion", "question": "Question 12 - to be added"},
+            {"id": 13, "passage": 1, "type": "sentence_completion", "question": "Question 13 - to be added"},
             
             # Passage 2 Questions (14-26)
             {"id": 14, "passage": 2, "type": "true_false_notgiven", "question": "Coral reefs cover more than 1% of the ocean floor."},
