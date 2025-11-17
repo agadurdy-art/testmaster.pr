@@ -91,13 +91,13 @@ Recognizing these biases doesn't eliminate them, but awareness can help individu
             {"id": 6, "passage": 1, "type": "true_false_notgiven", "question": "The weather can affect how professional players adjust the strings on their rackets."},
             {"id": 7, "passage": 1, "type": "true_false_notgiven", "question": "It was believed that the change Pete Sampras made to his rackets contributed to his strong serve."},
             
-            # Questions 8-13 - Placeholder for remaining Passage 1 questions (you can add these)
-            {"id": 8, "passage": 1, "type": "sentence_completion", "question": "Please add remaining questions 8-13 from your Cambridge IELTS 19 book"},
-            {"id": 9, "passage": 1, "type": "sentence_completion", "question": "Question 9 - to be added"},
-            {"id": 10, "passage": 1, "type": "sentence_completion", "question": "Question 10 - to be added"},
-            {"id": 11, "passage": 1, "type": "sentence_completion", "question": "Question 11 - to be added"},
-            {"id": 12, "passage": 1, "type": "sentence_completion", "question": "Question 12 - to be added"},
-            {"id": 13, "passage": 1, "type": "sentence_completion", "question": "Question 13 - to be added"},
+            # Questions 8-13 - Note completion (ONE WORD ONLY)
+            {"id": 8, "passage": 1, "type": "sentence_completion", "question": "Mike and Bob Bryan made changes to the types of _______ used on their rackets."},
+            {"id": 9, "passage": 1, "type": "sentence_completion", "question": "Players were not allowed to use the spaghetti-strung racket because of the amount of _______ it created."},
+            {"id": 10, "passage": 1, "type": "sentence_completion", "question": "Changes to rackets can be regarded as being as important as players' diets or the _______ they do."},
+            {"id": 11, "passage": 1, "type": "sentence_completion", "question": "All rackets used to have natural strings made from the _______ of animals."},
+            {"id": 12, "passage": 1, "type": "sentence_completion", "question": "Pete Sampras had metal _______ put into the frames of his rackets."},
+            {"id": 13, "passage": 1, "type": "sentence_completion", "question": "Gonçalo Oliveira changed the _______ on his racket handles."},
             
             # Passage 2 Questions (14-26)
             {"id": 14, "passage": 2, "type": "true_false_notgiven", "question": "Coral reefs cover more than 1% of the ocean floor."},
