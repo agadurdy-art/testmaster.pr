@@ -293,6 +293,19 @@ async def submit_test(submission: SubmitAnswers):
             feedback={"message": "Awaiting AI evaluation"},
             time_taken=submission.time_taken
         )
+    
+    # Save attempt
+    doc = attempt.model_dump()
+    doc['completed_at'] = doc['completed_at'].isoformat()
+    await db.test_attempts.insert_one(doc)
+    
+    # Update user history
+    await db.users.update_one(
+        {"id": submission.user_id},
+        {"$push": {"test_history": attempt.id}}
+    )
+    
+    return attempt
 
 # Get a specific test attempt
 @api_router.get("/test_attempts/{attempt_id}")
@@ -306,20 +319,6 @@ async def get_test_attempt(attempt_id: str):
             attempt["completed_at"] = datetime.fromisoformat(attempt["completed_at"])
         except Exception:
             pass
-    return attempt
-
-    
-    # Save attempt
-    doc = attempt.model_dump()
-    doc['completed_at'] = doc['completed_at'].isoformat()
-    await db.test_attempts.insert_one(doc)
-    
-    # Update user history
-    await db.users.update_one(
-        {"id": submission.user_id},
-        {"$push": {"test_history": attempt.id}}
-    )
-    
     return attempt
 
 # AI Evaluation routes
