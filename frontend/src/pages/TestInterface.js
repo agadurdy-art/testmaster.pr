@@ -725,17 +725,34 @@ export default function TestInterface({ user }) {
 
                 {/* Writing feedback summary (shown below tasks) */}
                 {testType === 'writing' && Object.keys(writingFeedback).length > 0 && (
-                  <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <h3 className="text-lg font-semibold text-green-900 mb-2">AI Feedback Summary</h3>
-                    <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-800">
-                      {['task1', 'task2'].map((taskKey) => {
+                  <div className="mt-6 p-6 bg-green-50 border border-green-200 rounded-lg">
+                    <h3 className="text-xl font-semibold text-green-900 mb-3">Your Writing Feedback (Like a Teacher's Report)</h3>
+                    <p className="text-sm text-green-900 mb-4">
+                      Below is friendly feedback on each task, similar to what an IELTS teacher might tell you after reading your writing.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-6 text-sm text-gray-900">
+                      {['task1', 'task2'].map((taskKey, idx) => {
                         const fb = writingFeedback[taskKey];
                         if (!fb) return null;
+
+                        // If API returned raw JSON as text in overall_feedback, just show it as normal text
+                        const overallText =
+                          typeof fb.overall_feedback === 'string'
+                            ? fb.overall_feedback.replace(/```json|```/g, '').trim()
+                            : '';
+
                         return (
-                          <div key={taskKey} className="space-y-1">
-                            <p className="font-semibold capitalize">{taskKey} – Band {fb.band_score}</p>
-                            {fb.overall_feedback && (
-                              <p className="text-gray-700 whitespace-pre-line">{fb.overall_feedback}</p>
+                          <div key={taskKey} className="space-y-2">
+                            <p className="font-semibold text-base">
+                              {idx === 0 ? 'Task 1 – Graph/Chart' : 'Task 2 – Essay'}
+                              {fb.band_score && (
+                                <span className="ml-2 text-green-800">(Estimated band: {fb.band_score})</span>
+                              )}
+                            </p>
+                            {overallText && (
+                              <p className="text-gray-800 leading-relaxed whitespace-pre-line">
+                                {overallText}
+                              </p>
                             )}
                           </div>
                         );
