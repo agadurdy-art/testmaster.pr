@@ -21,9 +21,11 @@ export default function TestInterface({ user }) {
   const [recording, setRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [listeningAudioPlaying, setListeningAudioPlaying] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
+  const listeningAudioRef = useRef(null);
 
   useEffect(() => {
     loadTest();
