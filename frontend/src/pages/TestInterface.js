@@ -23,6 +23,7 @@ export default function TestInterface({ user }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [listeningAudioPlaying, setListeningAudioPlaying] = useState(false);
   const [writingFeedback, setWritingFeedback] = useState({});
+  const [speakingFeedback, setSpeakingFeedback] = useState({});
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
