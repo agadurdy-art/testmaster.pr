@@ -246,12 +246,12 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"id": 22, "section": 3, "type": "multiple_choice_two", "question": "Which TWO things did Colin find most satisfying about his bread reuse project? (Select TWO)", "options": ["A) receiving support from local restaurants", "B) finding a good way to prevent waste", "C) overcoming problems in a basic process", "D) experimenting with designs and colours", "E) learning how to apply 3-D printing"]},
             {"id": 23, "section": 3, "type": "multiple_choice_two", "question": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future?", "options": ["A) for use on medical products", "B) to show that food is no longer fit to eat", "C) for use with drinks as well as foods", "D) to provide applications for blind people", "E) to indicate the weight of certain foods"]},
             {"id": 24, "section": 3, "type": "multiple_choice_two", "question": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future? (Select TWO)", "options": ["A) for use on medical products", "B) to show that food is no longer fit to eat", "C) for use with drinks as well as foods", "D) to provide applications for blind people", "E) to indicate the weight of certain foods"]},
-            {"id": 25, "section": 3, "type": "matching", "question": "Bread reuse project"},
-            {"id": 26, "section": 3, "type": "matching", "question": "Touch-sensitive sensors"},
-            {"id": 27, "section": 3, "type": "matching", "question": "Insect farming"},
-            {"id": 28, "section": 3, "type": "matching", "question": "Acoustic early warning"},
-            {"id": 29, "section": 3, "type": "matching", "question": "Road material"},
-            {"id": 30, "section": 3, "type": "matching", "question": "Window shading"},
+            {"id": 25, "section": 3, "type": "matching", "question": "Use of local products"},
+            {"id": 26, "section": 3, "type": "matching", "question": "Reduction in unnecessary packaging"},
+            {"id": 27, "section": 3, "type": "matching", "question": "Gluten-free and lactose-free food"},
+            {"id": 28, "section": 3, "type": "matching", "question": "Use of branded products related to celebrity chefs"},
+            {"id": 29, "section": 3, "type": "matching", "question": "Development of 'ghost kitchens' for takeaway food"},
+            {"id": 30, "section": 3, "type": "matching", "question": "Use of mushrooms for common health concerns"},
             
             # Part 4 - Questions 31-40 (Céide Fields lecture)
             {"id": 31, "section": 4, "type": "sentence_completion", "question": "In the 1930s, a local teacher realised that stones beneath the bog surface were once _______"},
