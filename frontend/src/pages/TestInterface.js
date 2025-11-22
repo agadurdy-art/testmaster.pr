@@ -251,7 +251,8 @@ export default function TestInterface({ user }) {
   
   if (testType === 'speaking' && test.parts) {
     const allQuestions = test.parts.flatMap(part => part.questions || []);
-    question = { question: allQuestions[currentQuestion] || 'Speak about the topic', id: currentQuestion };
+    const questionId = test.questions?.[currentQuestion]?.id ?? currentQuestion + 1;
+    question = { question: allQuestions[currentQuestion] || 'Speak about the topic', id: questionId };
     totalQuestions = allQuestions.length;
   } else if (test.questions) {
     question = test.questions[currentQuestion];
