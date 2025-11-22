@@ -135,40 +135,76 @@ async def evaluate_with_ai(test_type: str, question: str, user_answer: str, mode
     chat = LlmChat(
         api_key=os.getenv("EMERGENT_LLM_KEY"),
         session_id=str(uuid.uuid4()),
-        system_message="You are an IELTS examiner expert. Provide detailed, constructive feedback."
+        system_message=(
+            "You are an experienced IELTS examiner and friendly writing teacher. "
+            "Use official IELTS band descriptors but explain them in simple language. "
+            "Always give very specific, practical advice and short example sentences the student could use to improve."
+        ),
     ).with_model("openai", "gpt-4o")
     
     if test_type == "writing":
-        prompt = f"""Evaluate this IELTS writing task:
+        prompt = f"""Evaluate this IELTS writing task.
+Speak directly to the student in a friendly teacher tone.
 
-Question: {question}
+Question:
+{question}
 
 Student's Answer:
 {user_answer}
 
-Provide evaluation in JSON format with:
-- band_score (1-9)
-- task_achievement (score and feedback)
-- coherence_cohesion (score and feedback)
-- lexical_resource (score and feedback)
-- grammatical_accuracy (score and feedback)
-- overall_feedback (detailed)
+Return ONLY a JSON object with this structure (no extra text, no markdown, no ``` fences):
+{{
+  "band_score": <overall band from 1 to 9>,
+  "task_achievement": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 friendly sentences explaining strengths and problems, plus at least one clear suggestion."
+  }},
+  "coherence_cohesion": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 sentences commenting on organisation, paragraphing, linking, with 1–2 example linking phrases."
+  }},
+  "lexical_resource": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 sentences about vocabulary range and accuracy, including 2–3 example phrases the student could use."
+  }},
+  "grammatical_accuracy": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 sentences about grammar and sentence structure, with 1–2 corrected example sentences."
+  }},
+  "overall_feedback": "A short teacher-style summary (4–5 sentences) combining all criteria and giving clear next steps."
+}}
 """
     else:  # speaking
-        prompt = f"""Evaluate this IELTS speaking response:
+        prompt = f"""Evaluate this IELTS speaking response.
+Speak directly to the student in a friendly teacher tone.
 
-Question: {question}
+Question:
+{question}
 
 Student's Response:
 {user_answer}
 
-Provide evaluation in JSON format with:
-- band_score (1-9)
-- fluency_coherence (score and feedback)
-- lexical_resource (score and feedback)
-- grammatical_accuracy (score and feedback)
-- pronunciation (score and feedback)
-- overall_feedback (detailed)
+Return ONLY a JSON object with this structure (no extra text, no markdown, no ``` fences):
+{{
+  "band_score": <overall band from 1 to 9>,
+  "fluency_coherence": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 friendly sentences about fluency and organisation, with at least one practical tip."
+  }},
+  "lexical_resource": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 sentences about vocabulary, including 2–3 example phrases."
+  }},
+  "grammatical_accuracy": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 sentences about grammar with 1–2 corrected examples."
+  }},
+  "pronunciation": {{
+    "score": <band 1-9>,
+    "feedback": "2–3 sentences about pronunciation with simple practice ideas."
+  }},
+  "overall_feedback": "A short teacher-style summary (4–5 sentences) combining all criteria and giving clear next steps."
+}}
 """
     
     message = UserMessage(text=prompt)
