@@ -132,9 +132,10 @@ export default function TestInterface({ user }) {
     setSubmitting(true);
     
     try {
-      // For Writing and Speaking, get AI evaluation first
+      // For Writing, get AI evaluation first (per task) and store latest feedback
       if (testType === 'writing') {
         toast.info('Evaluating your writing with AI...');
+        const feedbackSummary = {};
         for (const question of test.questions) {
           if (answers[question.id]) {
             try {
@@ -144,6 +145,7 @@ export default function TestInterface({ user }) {
                 question: question.question,
                 answer: answers[question.id]
               });
+              feedbackSummary[question.task] = evaluation;
               toast.success(`${question.task.toUpperCase()} evaluated: Band ${evaluation.band_score}`);
             } catch (error) {
               console.error('Evaluation error:', error);
@@ -151,6 +153,7 @@ export default function TestInterface({ user }) {
             }
           }
         }
+        setWritingFeedback(feedbackSummary);
       }
       
       if (testType === 'speaking') {
