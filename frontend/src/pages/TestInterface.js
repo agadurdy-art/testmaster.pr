@@ -309,6 +309,28 @@ export default function TestInterface({ user }) {
             {testType === 'listening' ? (
               /* Show all questions in the current section for Listening */
               <div className="space-y-6">
+                {/* Audio Player at Top */}
+                <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-6 rounded-lg shadow-lg mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-white">
+                      🎧 {test.sections?.[Math.floor(currentQuestion / 10)]?.title || 'Audio Section'}
+                    </h3>
+                  </div>
+                  <audio
+                    ref={listeningAudioRef}
+                    src={test.sections?.[Math.floor(currentQuestion / 10)]?.audio_url}
+                    onEnded={() => setListeningAudioPlaying(false)}
+                    onPlay={() => setListeningAudioPlaying(true)}
+                    onPause={() => setListeningAudioPlaying(false)}
+                    controls
+                    className="w-full rounded"
+                    style={{height: '40px'}}
+                  />
+                  <p className="text-sm text-white mt-3">
+                    📍 <strong>Context:</strong> {test.sections?.[Math.floor(currentQuestion / 10)]?.context}
+                  </p>
+                </div>
+                
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     Part {Math.floor(currentQuestion / 10) + 1}
