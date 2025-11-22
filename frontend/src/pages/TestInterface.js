@@ -395,29 +395,26 @@ export default function TestInterface({ user }) {
                             <div className="mt-2">
                               {questionNumber === 24 && (
                                 <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                                  <p className="font-semibold text-gray-900 mb-3">Questions 25-30: Match each innovation project with the correct topic A-H</p>
-                                  <div className="grid grid-cols-2 gap-2 text-sm">
-                                    <div><strong>A</strong> making roads safer</div>
-                                    <div><strong>B</strong> home insulation</div>
-                                    <div><strong>C</strong> reducing noise</div>
-                                    <div><strong>D</strong> producing electricity</div>
-                                    <div><strong>E</strong> saving water</div>
-                                    <div><strong>F</strong> preventing damage to buildings</div>
-                                    <div><strong>G</strong> dealing with waste</div>
-                                    <div><strong>H</strong> street lighting</div>
+                                  <p className="font-semibold text-gray-900 mb-3">Questions 25-30: What is the students' opinion about each of the following food trends?</p>
+                                  <p className="text-sm text-gray-700 mb-3">Choose SIX answers from the box and write the correct letter, A-H, next to Questions 25-30.</p>
+                                  <div className="bg-white p-4 rounded border-2 border-gray-300">
+                                    <p className="font-bold text-center mb-2">Opinions</p>
+                                    <div className="space-y-1 text-sm">
+                                      <div><strong>A</strong> This is only relevant to young people.</div>
+                                      <div><strong>B</strong> This may have disappointing results.</div>
+                                      <div><strong>C</strong> This already seems to be widespread.</div>
+                                      <div><strong>D</strong> Retailers should do more to encourage this.</div>
+                                      <div><strong>E</strong> More financial support is needed for this.</div>
+                                      <div><strong>F</strong> Most people know little about this.</div>
+                                      <div><strong>G</strong> There should be stricter regulations about this.</div>
+                                      <div><strong>H</strong> This could be dangerous.</div>
+                                    </div>
                                   </div>
                                 </div>
                               )}
                               <div className="flex items-center gap-4">
                                 <div className="flex-1">
-                                  <p className="font-medium">{questionNumber + 1}. {
-                                    questionNumber === 24 ? 'Bread reuse project' :
-                                    questionNumber === 25 ? 'Touch-sensitive sensors' :
-                                    questionNumber === 26 ? 'Insect farming' :
-                                    questionNumber === 27 ? 'Acoustic early warning' :
-                                    questionNumber === 28 ? 'Road material' :
-                                    questionNumber === 29 ? 'Window shading' : ''
-                                  }</p>
+                                  <p className="font-medium">{questionNumber + 1}. {q.question}</p>
                                 </div>
                                 <Input
                                   value={answers[q.id] || ''}
