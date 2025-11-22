@@ -175,21 +175,26 @@ export default function TestInterface({ user }) {
       if (testType === 'speaking') {
         toast.info('Evaluating your speaking with AI...');
         const allQuestions = test.parts?.flatMap(part => part.questions || []) || [];
+        const feedbackSummary = {};
         for (let i = 0; i < allQuestions.length; i++) {
-          if (answers[i]) {
+          const answerKey = test.questions?.[i]?.id ?? i;
+          if (answers[answerKey]) {
             try {
               const evaluation = await evaluateSpeaking({
                 user_id: user.id,
                 part: Math.floor(i / 3) + 1,
                 question: allQuestions[i],
-                user_response: answers[i]
+                user_response: answers[answerKey]
               });
-              toast.success(`Response ${i+1} evaluated: Band ${evaluation.band_score}`);
+              feedbackSummary[i + 1] = evaluation;
+              toast.success(`Response ${i + 1} evaluated: Band ${evaluation.band_score}`);
             } catch (error) {
               console.error('Evaluation error:', error);
+              toast.error('AI speaking evaluation failed for one of your answers.');
             }
           }
         }
+        setSpeakingFeedback(feedbackSummary);
       }
       
       const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => ({
