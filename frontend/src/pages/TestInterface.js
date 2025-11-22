@@ -728,32 +728,68 @@ export default function TestInterface({ user }) {
                   <div className="mt-6 p-6 bg-green-50 border border-green-200 rounded-lg">
                     <h3 className="text-xl font-semibold text-green-900 mb-3">Your Writing Feedback (Like a Teacher's Report)</h3>
                     <p className="text-sm text-green-900 mb-4">
-                      Below is friendly feedback on each task, similar to what an IELTS teacher might tell you after reading your writing.
+                      Below is friendly feedback on each task, with clear comments for each IELTS criterion and ideas to improve your skills.
                     </p>
                     <div className="grid md:grid-cols-2 gap-6 text-sm text-gray-900">
                       {['task1', 'task2'].map((taskKey, idx) => {
                         const fb = writingFeedback[taskKey];
                         if (!fb) return null;
 
-                        // If API returned raw JSON as text in overall_feedback, just show it as normal text
+                        // Overall teacher-style summary
                         const overallText =
                           typeof fb.overall_feedback === 'string'
                             ? fb.overall_feedback.replace(/```json|```/g, '').trim()
                             : '';
 
+                        const criteria = [
+                          { key: 'task_achievement', label: 'Task Response' },
+                          { key: 'coherence_cohesion', label: 'Coherence & Cohesion' },
+                          { key: 'lexical_resource', label: 'Lexical Resource' },
+                          { key: 'grammatical_accuracy', label: 'Grammatical Range & Accuracy' }
+                        ];
+
                         return (
-                          <div key={taskKey} className="space-y-2">
+                          <div key={taskKey} className="space-y-3">
                             <p className="font-semibold text-base">
                               {idx === 0 ? 'Task 1 – Graph/Chart' : 'Task 2 – Essay'}
                               {fb.band_score && (
-                                <span className="ml-2 text-green-800">(Estimated band: {fb.band_score})</span>
+                                <span className="ml-2 text-green-800">(Estimated overall band: {fb.band_score})</span>
                               )}
                             </p>
+
                             {overallText && (
                               <p className="text-gray-800 leading-relaxed whitespace-pre-line">
                                 {overallText}
                               </p>
                             )}
+
+                            <div className="space-y-3 border-t border-green-200 pt-3">
+                              {criteria.map((crit) => {
+                                const critData = fb[crit.key];
+                                if (!critData) return null;
+
+                                const critText =
+                                  typeof critData.feedback === 'string'
+                                    ? critData.feedback.replace(/```json|```/g, '').trim()
+                                    : '';
+
+                                return (
+                                  <div key={crit.key} className="space-y-1">
+                                    <p className="font-semibold text-green-900">
+                                      {crit.label}
+                                      {critData.score && (
+                                        <span className="ml-1 text-green-800">(Band {critData.score})</span>
+                                      )}
+                                    </p>
+                                    {critText && (
+                                      <p className="text-gray-800 leading-relaxed whitespace-pre-line">
+                                        {critText}
+                                      </p>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
                         );
                       })}
