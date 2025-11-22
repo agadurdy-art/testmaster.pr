@@ -70,8 +70,18 @@ export default function TestInterface({ user }) {
 
   const startRecording = async () => {
     try {
+      if (typeof window === 'undefined' || !navigator) {
+        toast.error('Recording is not available in this environment.');
+        return;
+      }
+
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         toast.error('Your browser does not support microphone recording. Please use the latest Chrome, Edge, or Firefox.');
+        return;
+      }
+
+      if (typeof window.MediaRecorder === 'undefined') {
+        toast.error('Audio recording is not supported in this browser. Please use the latest Chrome, Edge, or Firefox for the Speaking test.');
         return;
       }
 
