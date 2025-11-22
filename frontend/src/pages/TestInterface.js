@@ -335,74 +335,30 @@ export default function TestInterface({ user }) {
                             <div className="mt-4">
                               {questionNumber === 15 && (
                                 <div className="bg-gray-50 p-6 rounded-lg mb-6 border-2 border-gray-300">
-                                  <p className="text-center text-gray-900 text-xl font-bold mb-2">
+                                  <p className="text-center text-gray-900 text-xl font-bold mb-4">
                                     Farley House Map
                                   </p>
                                   <p className="text-sm text-gray-600 text-center mb-4">
-                                    Questions 16-20: Label the map below. Write the correct letter A-H.
+                                    Questions 16-20: Label the map below. Write the correct letter A-H next to Questions 16-20.
                                   </p>
-                                  <div className="bg-white p-8 rounded-lg border-2 border-gray-400 relative" style={{minHeight: '500px'}}>
-                                    {/* Compass */}
-                                    <div className="absolute top-4 right-4 bg-white border-2 border-gray-600 rounded-full w-16 h-16 flex items-center justify-center">
-                                      <div className="text-xs font-bold">
-                                        <div className="text-center">N</div>
-                                        <div className="flex justify-between">
-                                          <span>W</span>
-                                          <span className="mx-2">•</span>
-                                          <span>E</span>
-                                        </div>
-                                        <div className="text-center">S</div>
-                                      </div>
-                                    </div>
-                                    
-                                    {/* Main House - Center */}
-                                    <div className="absolute top-48 left-1/2 transform -translate-x-1/2 bg-amber-200 border-2 border-gray-700 rounded p-4 text-center w-32">
-                                      <strong>HOUSE</strong>
-                                    </div>
-                                    
-                                    {/* Lake - Upper Left */}
-                                    <div className="absolute top-20 left-16 bg-blue-200 border-2 border-blue-500 rounded-full w-24 h-24 flex items-center justify-center">
-                                      <span className="text-xs">Lake</span>
-                                    </div>
-                                    
-                                    {/* Car Park - Bottom Left */}
-                                    <div className="absolute bottom-16 left-16 bg-gray-300 border-2 border-gray-600 rounded p-2 text-xs">
-                                      <strong>Car Park</strong>
-                                    </div>
-                                    
-                                    {/* Old Stables - Bottom Center */}
-                                    <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 bg-red-200 border-2 border-gray-700 rounded p-3 text-center">
-                                      <strong className="text-sm">Old Stables</strong>
-                                    </div>
-                                    
-                                    {/* Labels A-H */}
-                                    <div className="absolute top-16 right-32 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">A</div>
-                                    <div className="absolute top-32 left-32 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">B</div>
-                                    <div className="absolute top-52 right-16 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">C</div>
-                                    <div className="absolute top-32 right-20 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">D</div>
-                                    <div className="absolute top-52 left-24 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">E</div>
-                                    <div className="absolute bottom-32 right-20 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">F</div>
-                                    <div className="absolute bottom-20 left-44 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">G</div>
-                                    <div className="absolute bottom-8 left-56 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">H</div>
-                                    
-                                    {/* Paths */}
-                                    <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{zIndex: 0}}>
-                                      <path d="M 150 100 Q 250 120, 300 180" stroke="#666" strokeWidth="2" strokeDasharray="5,5" fill="none"/>
-                                      <path d="M 300 240 L 300 360" stroke="#666" strokeWidth="2" strokeDasharray="5,5" fill="none"/>
-                                    </svg>
-                                    
-                                    {/* Legend */}
-                                    <div className="absolute bottom-2 right-2 bg-white border border-gray-400 p-2 text-xs">
-                                      <div><strong>16:</strong> Farm shop</div>
-                                      <div><strong>17:</strong> Disabled entry</div>
-                                      <div><strong>18:</strong> Adventure playground</div>
-                                      <div><strong>19:</strong> Kitchen gardens</div>
-                                      <div><strong>20:</strong> Temple of the Four Winds</div>
+                                  <div className="bg-white p-4 rounded-lg border-2 border-gray-400">
+                                    <img 
+                                      src="https://customer-assets.emergentagent.com/job_ieltsace/artifacts/nh3dkxxe_Screenshot%202025-11-22%20at%2015.34.39.png" 
+                                      alt="Farley House Map with labeled locations A-H"
+                                      className="w-full h-auto"
+                                      style={{maxWidth: '800px', margin: '0 auto', display: 'block'}}
+                                    />
+                                  </div>
+                                  <div className="mt-4 p-4 bg-blue-50 rounded">
+                                    <p className="text-sm text-gray-700 font-semibold mb-2">Answer the questions below:</p>
+                                    <div className="text-sm text-gray-700">
+                                      <p><strong>16</strong> Farm shop .........................</p>
+                                      <p><strong>17</strong> Disabled entry .........................</p>
+                                      <p><strong>18</strong> Adventure playground .........................</p>
+                                      <p><strong>19</strong> Kitchen gardens .........................</p>
+                                      <p><strong>20</strong> The Temple of the Four Winds .........................</p>
                                     </div>
                                   </div>
-                                  <p className="text-xs text-gray-500 mt-2 text-center">
-                                    Note: This is a simplified representation. In the actual test, you would see a detailed map.
-                                  </p>
                                 </div>
                               )}
                               <Input
