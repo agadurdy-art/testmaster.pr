@@ -137,7 +137,7 @@
 ##   run_ui: true
 ## test_plan:
 ##   current_focus:
-##     - "Submit and evaluate tests (reading/listening)"
+##     - "Test submission UI and navigation"
 ##   stuck_tasks:
 ##     - "Test submission UI and navigation"
 ##   test_all: false
