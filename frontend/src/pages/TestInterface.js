@@ -572,11 +572,22 @@ export default function TestInterface({ user }) {
                     </div>
                   )}
 
-                  {/* Writing Task Image */}
+                  {/* Writing Task 1 Graph/Image */}
                   {testType === 'writing' && question.task === 'task1' && (
-                    <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-12 mb-6 text-center">
-                      <p className="text-gray-500 mb-2">[Chart/Graph/Diagram would be displayed here]</p>
-                      <p className="text-sm text-gray-600">In the actual test, you would see the visual data here</p>
+                    <div className="bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm">
+                      <p className="text-sm text-gray-700 mb-3 font-medium">Writing Task 1 Visual</p>
+                      {question.image_url ? (
+                        <img
+                          src={question.image_url}
+                          alt="Writing Task 1 graph or chart"
+                          className="w-full h-auto max-h-[400px] object-contain mx-auto border border-gray-200 rounded"
+                        />
+                      ) : (
+                        <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
+                          <p className="text-gray-500 mb-2">[Chart/Graph/Diagram would be displayed here]</p>
+                          <p className="text-sm text-gray-600">In the actual test, you would see the visual data here</p>
+                        </div>
+                      )}
                     </div>
                   )}
 
