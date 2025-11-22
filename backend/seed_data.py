@@ -313,10 +313,10 @@ We live at a time when widespread misinformation is common. Yet at this time man
         ]
     }
     
-    # WRITING TEST
+    # WRITING TEST - Cambridge IELTS 19 Test 1
     writing_test = {
         "id": str(uuid.uuid4()),
-        "title": "Academic Writing Practice Test",
+        "title": "Academic Writing Test 1",
         "test_type": "writing",
         "duration": 60,
         "questions": [
@@ -324,11 +324,12 @@ We live at a time when widespread misinformation is common. Yet at this time man
                 "id": 1,
                 "task": "task1",
                 "type": "graph_description",
-                "question": """The chart below shows the percentage of households in different age groups using the internet in Country X from 2000 to 2020.
+                "question": """The graph below gives information on the numbers of participants for different activities at one social centre in Melbourne, Australia for the period 2000 to 2020.
 
-Summarize the information by selecting and reporting the main features, and make comparisons where relevant.
+Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
 
 Write at least 150 words.""",
+                "image_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/ws4df3j7_Screenshot%202025-11-22%20at%2021.50.56.png",
                 "word_limit": 150,
                 "time_suggestion": 20
             },
@@ -336,9 +337,9 @@ Write at least 150 words.""",
                 "id": 2,
                 "task": "task2",
                 "type": "essay",
-                "question": """Some people think that universities should provide graduates with the knowledge and skills needed in the workplace. Others think that the true function of a university should be to give access to knowledge for its own sake, regardless of whether the course is useful to an employer.
+                "question": """Some people think that competition at work, at school and in daily life is a good thing. Others believe that we should try to cooperate more, rather than competing against each other.
 
-What, in your opinion, should be the main function of a university?
+Discuss both these views and give your own opinion.
 
 Give reasons for your answer and include any relevant examples from your own knowledge or experience.
 
