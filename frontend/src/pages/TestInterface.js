@@ -390,6 +390,46 @@ export default function TestInterface({ user }) {
                             </div>
                           )}
                           
+                          {/* Matching questions 25-30 */}
+                          {q.type === 'matching' && questionNumber >= 24 && questionNumber <= 29 && (
+                            <div className="mt-2">
+                              {questionNumber === 24 && (
+                                <div className="bg-blue-50 p-4 rounded-lg mb-4">
+                                  <p className="font-semibold text-gray-900 mb-3">Questions 25-30: Match each innovation project with the correct topic A-H</p>
+                                  <div className="grid grid-cols-2 gap-2 text-sm">
+                                    <div><strong>A</strong> making roads safer</div>
+                                    <div><strong>B</strong> home insulation</div>
+                                    <div><strong>C</strong> reducing noise</div>
+                                    <div><strong>D</strong> producing electricity</div>
+                                    <div><strong>E</strong> saving water</div>
+                                    <div><strong>F</strong> preventing damage to buildings</div>
+                                    <div><strong>G</strong> dealing with waste</div>
+                                    <div><strong>H</strong> street lighting</div>
+                                  </div>
+                                </div>
+                              )}
+                              <div className="flex items-center gap-4">
+                                <div className="flex-1">
+                                  <p className="font-medium">{questionNumber + 1}. {
+                                    questionNumber === 24 ? 'Bread reuse project' :
+                                    questionNumber === 25 ? 'Touch-sensitive sensors' :
+                                    questionNumber === 26 ? 'Insect farming' :
+                                    questionNumber === 27 ? 'Acoustic early warning' :
+                                    questionNumber === 28 ? 'Road material' :
+                                    questionNumber === 29 ? 'Window shading' : ''
+                                  }</p>
+                                </div>
+                                <Input
+                                  value={answers[q.id] || ''}
+                                  onChange={(e) => handleAnswerChange(q.id, e.target.value.toUpperCase())}
+                                  placeholder="Letter (A-H)"
+                                  className="w-24 text-center text-lg font-semibold"
+                                  maxLength={1}
+                                />
+                              </div>
+                            </div>
+                          )}
+                          
                           {/* Text input for other types */}
                           {(q.type === 'note_completion' || q.type === 'sentence_completion' || q.type === 'form_completion') && (
                             <Input
