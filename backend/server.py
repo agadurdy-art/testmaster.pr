@@ -173,11 +173,32 @@ Provide evaluation in JSON format with:
     
     message = UserMessage(text=prompt)
     response = await chat.send_message(message)
-    
-    try:
-        return json.loads(response)
-    except:
-        return {"band_score": 5.0, "overall_feedback": response}
+
+    # Normalise response to a Python dict
+    # emergentintegrations may already return a dict; otherwise we try to parse JSON text.
+    if isinstance(response, dict):
+        return response
+
+    if isinstance(response, str):
+        # Try to strip Markdown code fences if present
+        cleaned = response.strip()
+        if cleaned.startswith("```"):
+            # Remove first line with ``` or ```json and trailing ```
+            cleaned_lines = cleaned.splitlines()
+            # Drop first line
+            cleaned_lines = cleaned_lines[1:]
+            # Drop last line if it's only ```
+            if cleaned_lines and cleaned_lines[-1].strip().startswith("```"):
+                cleaned_lines = cleaned_lines[:-1]
+            cleaned = "\n".join(cleaned_lines).strip()
+        try:
+            return json.loads(cleaned)
+        except Exception:
+            # Fall back to wrapping raw text
+            return {"band_score": 5.0, "overall_feedback": response}
+
+    # Unknown format - safe fallback
+    return {"band_score": 5.0, "overall_feedback": str(response)}
 
 # ============ Routes ============
 
