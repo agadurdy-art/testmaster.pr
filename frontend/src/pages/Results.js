@@ -4,9 +4,7 @@ import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Trophy, TrendingUp, CheckCircle, XCircle, Home } from 'lucide-react';
 import { getBandScoreColor, getBandScoreBg } from '../lib/utils';
-import axios from 'axios';
-
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+import api from '../lib/api';
 
 export default function Results({ user }) {
   const { attemptId } = useParams();
