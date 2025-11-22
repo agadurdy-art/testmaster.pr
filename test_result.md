@@ -106,15 +106,18 @@
 ## backend:
 ##   - task: "Submit and evaluate tests (reading/listening)"
 ##     implemented: true
-##     working: false
+##     working: true
 ##     file: "backend/server.py"
 ##     stuck_count: 1
 ##     priority: "high"
-##     needs_retesting: true
+##     needs_retesting: false
 ##     status_history:
 ##       - working: false
 ##         agent: "user"
 ##         comment: "User sees 'Failed to submit test' toast when submitting Reading/Listening; evaluation not reachable."
+##       - working: true
+##         agent: "testing"
+##         comment: "CRITICAL ISSUE FIXED: The /api/tests/submit endpoint had unreachable code - the function was missing return statement and database save logic. Fixed syntax error and moved save logic to correct position. Tested complete flow: (1) User creation ✅ (2) Reading test fetch ✅ (3) Reading test submission with 3 answers (2 correct, 1 wrong) ✅ - returned score 5% (2/40), band_score 1.0, proper feedback (4) Test attempt retrieval ✅ (5) Listening test fetch ✅ (6) Listening test submission ✅ - same scoring logic working (7) Listening attempt retrieval ✅. All endpoints return 200 status codes with proper TestAttempt objects including id, score, band_score, and feedback.correct/total as requested. Data consistency verified between submit and retrieve endpoints."
 ## frontend:
 ##   - task: "Test submission UI and navigation"
 ##     implemented: true
