@@ -668,6 +668,7 @@ export default function TestInterface({ user }) {
                   )}
                 </div>
               </div>
+            )
             )}
           </Card>
         </div>
