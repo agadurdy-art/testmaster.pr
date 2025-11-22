@@ -294,18 +294,55 @@ export default function TestInterface({ user }) {
                     {question.question}
                   </h2>
 
-                  {/* Listening Test - Audio Info */}
-                  {testType === 'listening' && (
+                  {/* Listening Test - Audio Player */}
+                  {testType === 'listening' && test.sections && (
                     <div className="bg-blue-50 p-6 rounded-lg mb-6">
-                      <p className="text-blue-900 mb-4">
-                        <strong>Note:</strong> In the actual test, you would listen to audio recording. 
-                        For this demo, read the transcript below and answer the questions.
-                      </p>
-                      <div className="bg-white p-4 rounded">
-                        <p className="text-gray-700">
-                          <em>[Audio transcript would appear here in the actual implementation]</em>
-                        </p>
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold text-blue-900">
+                          {test.sections[Math.floor(currentQuestion / 10)]?.title || 'Audio Section'}
+                        </h3>
+                        <div className="flex gap-2">
+                          {!listeningAudioPlaying ? (
+                            <Button
+                              onClick={() => {
+                                if (listeningAudioRef.current) {
+                                  listeningAudioRef.current.play();
+                                  setListeningAudioPlaying(true);
+                                }
+                              }}
+                              className="bg-blue-600 text-white"
+                            >
+                              <Play className="w-4 h-4 mr-2" />
+                              Play Audio
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() => {
+                                if (listeningAudioRef.current) {
+                                  listeningAudioRef.current.pause();
+                                  setListeningAudioPlaying(false);
+                                }
+                              }}
+                              className="bg-red-600 text-white"
+                            >
+                              <Pause className="w-4 h-4 mr-2" />
+                              Pause Audio
+                            </Button>
+                          )}
+                        </div>
                       </div>
+                      <audio
+                        ref={listeningAudioRef}
+                        src={test.sections[Math.floor(currentQuestion / 10)]?.audio_url}
+                        onEnded={() => setListeningAudioPlaying(false)}
+                        onPlay={() => setListeningAudioPlaying(true)}
+                        onPause={() => setListeningAudioPlaying(false)}
+                        controls
+                        className="w-full"
+                      />
+                      <p className="text-sm text-blue-700 mt-3">
+                        <strong>Context:</strong> {test.sections[Math.floor(currentQuestion / 10)]?.context}
+                      </p>
                     </div>
                   )}
 
