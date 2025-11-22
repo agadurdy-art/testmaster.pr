@@ -284,6 +284,15 @@ async def submit_test(submission: SubmitAnswers):
     else:
         # For writing/speaking, return without score (needs AI evaluation)
         attempt = TestAttempt(
+            user_id=submission.user_id,
+            test_id=submission.test_id,
+            test_type=submission.test_type,
+            answers=submission.answers,
+            score=0.0,
+            band_score=0.0,
+            feedback={"message": "Awaiting AI evaluation"},
+            time_taken=submission.time_taken
+        )
 
 # Get a specific test attempt
 @api_router.get("/test_attempts/{attempt_id}")
@@ -299,15 +308,6 @@ async def get_test_attempt(attempt_id: str):
             pass
     return attempt
 
-            user_id=submission.user_id,
-            test_id=submission.test_id,
-            test_type=submission.test_type,
-            answers=submission.answers,
-            score=0.0,
-            band_score=0.0,
-            feedback={"message": "Awaiting AI evaluation"},
-            time_taken=submission.time_taken
-        )
     
     # Save attempt
     doc = attempt.model_dump()
