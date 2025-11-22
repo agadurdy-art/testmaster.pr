@@ -101,3 +101,44 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+## user_problem_statement: "Reading and listening tests: submissions and evaluation must work correctly (exact answer checking)."
+## backend:
+##   - task: "Submit and evaluate tests (reading/listening)"
+##     implemented: true
+##     working: false
+##     file: "backend/server.py"
+##     stuck_count: 1
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: false
+##         agent: "user"
+##         comment: "User sees 'Failed to submit test' toast when submitting Reading/Listening; evaluation not reachable."
+## frontend:
+##   - task: "Test submission UI and navigation"
+##     implemented: true
+##     working: false
+##     file: "frontend/src/pages/TestInterface.js"
+##     stuck_count: 1
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: false
+##         agent: "user"
+##         comment: "User cannot successfully submit tests; toast shows 'Failed to submit test'."
+## metadata:
+##   created_by: "main_agent"
+##   version: "1.0"
+##   test_sequence: 0
+##   run_ui: true
+## test_plan:
+##   current_focus:
+##     - "Submit and evaluate tests (reading/listening)"
+##   stuck_tasks:
+##     - "Test submission UI and navigation"
+##   test_all: false
+##   test_priority: "high_first"
+## agent_communication:
+##   - agent: "main"
+##     message: "Need to verify /api/tests/submit backend behaviour and frontend submit flow for reading/listening modules."
