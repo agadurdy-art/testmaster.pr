@@ -259,28 +259,50 @@ export default function TestInterface({ user }) {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid lg:grid-cols-4 gap-6">
-          {/* Question Navigator */}
-          <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
-            <h3 className="font-semibold text-gray-900 mb-4">Questions</h3>
-            <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
-              {Array.from({ length: totalQuestions }, (_, idx) => (
-                <button
-                  key={idx}
-                  data-testid={`question-nav-${idx}`}
-                  onClick={() => setCurrentQuestion(idx)}
-                  className={`w-10 h-10 rounded-lg font-semibold transition-colors ${
-                    idx === currentQuestion
-                      ? 'bg-sky-500 text-white'
-                      : answers[question?.id || idx] || answers[idx]
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  {idx + 1}
-                </button>
-              ))}
-            </div>
-          </Card>
+          {/* Section Navigator for Listening */}
+          {testType === 'listening' ? (
+            <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
+              <h3 className="font-semibold text-gray-900 mb-4">Parts</h3>
+              <div className="space-y-2">
+                {[1, 2, 3, 4].map((part) => (
+                  <button
+                    key={part}
+                    onClick={() => setCurrentQuestion((part - 1) * 10)}
+                    className={`w-full p-3 rounded-lg font-semibold transition-colors text-left ${
+                      Math.floor(currentQuestion / 10) + 1 === part
+                        ? 'bg-sky-500 text-white'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    Part {part} (Q {(part - 1) * 10 + 1}-{part * 10})
+                  </button>
+                ))}
+              </div>
+            </Card>
+          ) : (
+            /* Question Navigator for other tests */
+            <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
+              <h3 className="font-semibold text-gray-900 mb-4">Questions</h3>
+              <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
+                {Array.from({ length: totalQuestions }, (_, idx) => (
+                  <button
+                    key={idx}
+                    data-testid={`question-nav-${idx}`}
+                    onClick={() => setCurrentQuestion(idx)}
+                    className={`w-10 h-10 rounded-lg font-semibold transition-colors ${
+                      idx === currentQuestion
+                        ? 'bg-sky-500 text-white'
+                        : answers[question?.id || idx] || answers[idx]
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {idx + 1}
+                  </button>
+                ))}
+              </div>
+            </Card>
+          )}
 
           {/* Question Content */}
           <Card className="lg:col-span-3 p-8">
