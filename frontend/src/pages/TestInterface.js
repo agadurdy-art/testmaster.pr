@@ -334,19 +334,75 @@ export default function TestInterface({ user }) {
                           {q.type === 'map_labeling' && questionNumber >= 15 && questionNumber <= 19 && (
                             <div className="mt-4">
                               {questionNumber === 15 && (
-                                <div className="bg-gray-100 p-6 rounded-lg mb-4">
-                                  <p className="text-center text-gray-700 mb-2">
-                                    <strong>Farley House Map</strong>
+                                <div className="bg-gray-50 p-6 rounded-lg mb-6 border-2 border-gray-300">
+                                  <p className="text-center text-gray-900 text-xl font-bold mb-2">
+                                    Farley House Map
                                   </p>
                                   <p className="text-sm text-gray-600 text-center mb-4">
-                                    Label the map below. Choose letters A-H for questions 16-20.
+                                    Questions 16-20: Label the map below. Write the correct letter A-H.
                                   </p>
-                                  <div className="bg-white p-4 rounded border-2 border-gray-300">
-                                    <p className="text-gray-500 text-center py-12">
-                                      [Map of Farley House would be displayed here]<br/>
-                                      Locations marked A through H on the map
-                                    </p>
+                                  <div className="bg-white p-8 rounded-lg border-2 border-gray-400 relative" style={{minHeight: '500px'}}>
+                                    {/* Compass */}
+                                    <div className="absolute top-4 right-4 bg-white border-2 border-gray-600 rounded-full w-16 h-16 flex items-center justify-center">
+                                      <div className="text-xs font-bold">
+                                        <div className="text-center">N</div>
+                                        <div className="flex justify-between">
+                                          <span>W</span>
+                                          <span className="mx-2">•</span>
+                                          <span>E</span>
+                                        </div>
+                                        <div className="text-center">S</div>
+                                      </div>
+                                    </div>
+                                    
+                                    {/* Main House - Center */}
+                                    <div className="absolute top-48 left-1/2 transform -translate-x-1/2 bg-amber-200 border-2 border-gray-700 rounded p-4 text-center w-32">
+                                      <strong>HOUSE</strong>
+                                    </div>
+                                    
+                                    {/* Lake - Upper Left */}
+                                    <div className="absolute top-20 left-16 bg-blue-200 border-2 border-blue-500 rounded-full w-24 h-24 flex items-center justify-center">
+                                      <span className="text-xs">Lake</span>
+                                    </div>
+                                    
+                                    {/* Car Park - Bottom Left */}
+                                    <div className="absolute bottom-16 left-16 bg-gray-300 border-2 border-gray-600 rounded p-2 text-xs">
+                                      <strong>Car Park</strong>
+                                    </div>
+                                    
+                                    {/* Old Stables - Bottom Center */}
+                                    <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 bg-red-200 border-2 border-gray-700 rounded p-3 text-center">
+                                      <strong className="text-sm">Old Stables</strong>
+                                    </div>
+                                    
+                                    {/* Labels A-H */}
+                                    <div className="absolute top-16 right-32 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">A</div>
+                                    <div className="absolute top-32 left-32 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">B</div>
+                                    <div className="absolute top-52 right-16 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">C</div>
+                                    <div className="absolute top-32 right-20 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">D</div>
+                                    <div className="absolute top-52 left-24 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">E</div>
+                                    <div className="absolute bottom-32 right-20 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">F</div>
+                                    <div className="absolute bottom-20 left-44 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">G</div>
+                                    <div className="absolute bottom-8 left-56 bg-green-500 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm">H</div>
+                                    
+                                    {/* Paths */}
+                                    <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{zIndex: 0}}>
+                                      <path d="M 150 100 Q 250 120, 300 180" stroke="#666" strokeWidth="2" strokeDasharray="5,5" fill="none"/>
+                                      <path d="M 300 240 L 300 360" stroke="#666" strokeWidth="2" strokeDasharray="5,5" fill="none"/>
+                                    </svg>
+                                    
+                                    {/* Legend */}
+                                    <div className="absolute bottom-2 right-2 bg-white border border-gray-400 p-2 text-xs">
+                                      <div><strong>16:</strong> Farm shop</div>
+                                      <div><strong>17:</strong> Disabled entry</div>
+                                      <div><strong>18:</strong> Adventure playground</div>
+                                      <div><strong>19:</strong> Kitchen gardens</div>
+                                      <div><strong>20:</strong> Temple of the Four Winds</div>
+                                    </div>
                                   </div>
+                                  <p className="text-xs text-gray-500 mt-2 text-center">
+                                    Note: This is a simplified representation. In the actual test, you would see a detailed map.
+                                  </p>
                                 </div>
                               )}
                               <Input
