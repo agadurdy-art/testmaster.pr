@@ -306,7 +306,128 @@ export default function TestInterface({ user }) {
 
           {/* Question Content */}
           <Card className="lg:col-span-3 p-8">
-            {question && (
+            {testType === 'listening' ? (
+              /* Show all questions in the current section for Listening */
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                    Part {Math.floor(currentQuestion / 10) + 1}
+                  </h2>
+                  <p className="text-gray-600 mb-6">
+                    Questions {Math.floor(currentQuestion / 10) * 10 + 1} - {(Math.floor(currentQuestion / 10) + 1) * 10}
+                  </p>
+                  
+                  {/* Show all 10 questions in this part */}
+                  <div className="space-y-6">
+                    {test.questions?.slice(
+                      Math.floor(currentQuestion / 10) * 10,
+                      (Math.floor(currentQuestion / 10) + 1) * 10
+                    ).map((q, idx) => {
+                      const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
+                      return (
+                        <div key={q.id} className="border-l-4 border-sky-500 pl-4 py-2">
+                          <p className="font-semibold text-gray-900 mb-2">
+                            {questionNumber + 1}. {q.question}
+                          </p>
+                          
+                          {/* Map labeling special display */}
+                          {q.type === 'map_labeling' && questionNumber >= 15 && questionNumber <= 19 && (
+                            <div className="mt-4">
+                              {questionNumber === 15 && (
+                                <div className="bg-gray-100 p-6 rounded-lg mb-4">
+                                  <p className="text-center text-gray-700 mb-2">
+                                    <strong>Farley House Map</strong>
+                                  </p>
+                                  <p className="text-sm text-gray-600 text-center mb-4">
+                                    Label the map below. Choose letters A-H for questions 16-20.
+                                  </p>
+                                  <div className="bg-white p-4 rounded border-2 border-gray-300">
+                                    <p className="text-gray-500 text-center py-12">
+                                      [Map of Farley House would be displayed here]<br/>
+                                      Locations marked A through H on the map
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                              <Input
+                                value={answers[q.id] || ''}
+                                onChange={(e) => handleAnswerChange(q.id, e.target.value.toUpperCase())}
+                                placeholder="Enter letter (A-H)"
+                                className="w-24 text-center text-lg font-semibold"
+                                maxLength={1}
+                              />
+                            </div>
+                          )}
+                          
+                          {/* Multiple choice */}
+                          {(q.type === 'multiple_choice' || q.type === 'multiple_choice_two') && q.options && (
+                            <div className="space-y-2 mt-2">
+                              {q.options.map((option, optIdx) => (
+                                <button
+                                  key={optIdx}
+                                  onClick={() => handleAnswerChange(q.id, option.split(')')[0])}
+                                  className={`w-full text-left p-3 rounded-lg border-2 transition-colors text-sm ${
+                                    answers[q.id] === option.split(')')[0]
+                                      ? 'border-sky-500 bg-sky-50'
+                                      : 'border-gray-200 hover:border-gray-300'
+                                  }`}
+                                >
+                                  {option}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                          
+                          {/* Text input for other types */}
+                          {(q.type === 'note_completion' || q.type === 'sentence_completion' || q.type === 'form_completion') && (
+                            <Input
+                              value={answers[q.id] || ''}
+                              onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                              placeholder="Type your answer..."
+                              className="mt-2"
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Navigation for Listening sections */}
+                  <div className="flex justify-between pt-6 border-t mt-8">
+                    <Button
+                      variant="outline"
+                      onClick={() => setCurrentQuestion(Math.max(0, Math.floor(currentQuestion / 10) * 10 - 10))}
+                      disabled={currentQuestion < 10}
+                    >
+                      <ChevronLeft className="w-4 h-4 mr-2" />
+                      Previous Part
+                    </Button>
+                    
+                    {currentQuestion < 30 ? (
+                      <Button
+                        onClick={() => setCurrentQuestion((Math.floor(currentQuestion / 10) + 1) * 10)}
+                        className="primary-gradient text-white"
+                      >
+                        Next Part
+                        <ChevronRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    ) : (
+                      <Button
+                        data-testid="submit-test-btn"
+                        onClick={handleSubmit}
+                        disabled={submitting}
+                        className="bg-green-600 text-white hover:bg-green-700"
+                      >
+                        {submitting ? 'Submitting...' : 'Submit Test'}
+                        <Send className="w-4 h-4 ml-2" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* Original single question view for other test types */
+              question && (
               <div className="space-y-6">
                 <div>
                   <p className="text-sm text-gray-600 mb-2">
