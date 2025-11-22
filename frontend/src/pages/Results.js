@@ -18,21 +18,8 @@ export default function Results({ user }) {
 
   const loadResults = async () => {
     try {
-      // For demo purposes, creating mock result
-      setResult({
-        id: attemptId,
-        test_type: 'reading',
-        score: 75,
-        band_score: 7.0,
-        feedback: {
-          correct: 30,
-          total: 40,
-          percentage: 75,
-          message: 'Great job! You got 30 out of 40 correct.'
-        },
-        time_taken: 3400,
-        completed_at: new Date()
-      });
+      const response = await api.get(`/test_attempts/${attemptId}`);
+      setResult(response.data || response);
     } catch (error) {
       console.error('Failed to load results', error);
     } finally {
