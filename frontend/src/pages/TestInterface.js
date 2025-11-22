@@ -720,6 +720,27 @@ export default function TestInterface({ user }) {
                   )}
                 </div>
 
+                {/* Writing feedback summary (shown below tasks) */}
+                {testType === 'writing' && Object.keys(writingFeedback).length > 0 && (
+                  <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <h3 className="text-lg font-semibold text-green-900 mb-2">AI Feedback Summary</h3>
+                    <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-800">
+                      {['task1', 'task2'].map((taskKey) => {
+                        const fb = writingFeedback[taskKey];
+                        if (!fb) return null;
+                        return (
+                          <div key={taskKey} className="space-y-1">
+                            <p className="font-semibold capitalize">{taskKey} – Band {fb.band_score}</p>
+                            {fb.overall_feedback && (
+                              <p className="text-gray-700 whitespace-pre-line">{fb.overall_feedback}</p>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 {/* Navigation */}
                 <div className="flex justify-between pt-6 border-t">
                   <Button
