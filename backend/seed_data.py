@@ -265,7 +265,52 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"id": 39, "section": 4, "type": "sentence_completion", "question": "Reasons for the decline in farming: a decline in _______ quality"},
             {"id": 40, "section": 4, "type": "sentence_completion", "question": "Reasons for the decline in farming: an increase in _______"},
         ],
-        "answer_key": []
+        "answer_key": [
+            # Part 1
+            {"question_id": 1, "answer": "69"},
+            {"question_id": 2, "answer": "stream"},
+            {"question_id": 3, "answer": "data"},
+            {"question_id": 4, "answer": "map"},
+            {"question_id": 5, "answer": "visitors"},
+            {"question_id": 6, "answer": "sounds"},
+            {"question_id": 7, "answer": "freedom"},
+            {"question_id": 8, "answer": "skills"},
+            {"question_id": 9, "answer": "4.95"},
+            {"question_id": 10, "answer": "leaders"},
+            # Part 2
+            {"question_id": 11, "answer": "B"},
+            {"question_id": 12, "answer": "A"},
+            {"question_id": 13, "answer": "B"},
+            {"question_id": 14, "answer": "C"},
+            {"question_id": 15, "answer": "A"},
+            {"question_id": 16, "answer": "G"},
+            {"question_id": 17, "answer": "C"},
+            {"question_id": 18, "answer": "B"},
+            {"question_id": 19, "answer": "D"},
+            {"question_id": 20, "answer": "A"},
+            # Part 3 (21&22 and 23&24 in either order)
+            {"question_id": 21, "answer": "B"},
+            {"question_id": 22, "answer": "D"},
+            {"question_id": 23, "answer": "A"},
+            {"question_id": 24, "answer": "E"},
+            {"question_id": 25, "answer": "D"},
+            {"question_id": 26, "answer": "G"},
+            {"question_id": 27, "answer": "C"},
+            {"question_id": 28, "answer": "B"},
+            {"question_id": 29, "answer": "F"},
+            {"question_id": 30, "answer": "H"},
+            # Part 4
+            {"question_id": 31, "answer": "walls"},
+            {"question_id": 32, "answer": "son"},
+            {"question_id": 33, "answer": "fuel"},
+            {"question_id": 34, "answer": "oxygen"},
+            {"question_id": 35, "answer": "rectangular"},
+            {"question_id": 36, "answer": "lamps"},
+            {"question_id": 37, "answer": "family"},
+            {"question_id": 38, "answer": "winter"},
+            {"question_id": 39, "answer": "soil"},
+            {"question_id": 40, "answer": "rain"},
+        ]
     }
     
     # WRITING TEST
