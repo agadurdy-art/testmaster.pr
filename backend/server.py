@@ -284,6 +284,21 @@ async def submit_test(submission: SubmitAnswers):
     else:
         # For writing/speaking, return without score (needs AI evaluation)
         attempt = TestAttempt(
+
+# Get a specific test attempt
+@api_router.get("/test_attempts/{attempt_id}")
+async def get_test_attempt(attempt_id: str):
+    attempt = await db.test_attempts.find_one({"id": attempt_id}, {"_id": 0})
+    if not attempt:
+        raise HTTPException(status_code=404, detail="Test attempt not found")
+    # Convert completed_at back to datetime for Pydantic model compatibility if needed
+    if isinstance(attempt.get("completed_at"), str):
+        try:
+            attempt["completed_at"] = datetime.fromisoformat(attempt["completed_at"])
+        except Exception:
+            pass
+    return attempt
+
             user_id=submission.user_id,
             test_id=submission.test_id,
             test_type=submission.test_type,
