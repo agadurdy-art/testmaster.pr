@@ -184,50 +184,88 @@ We live at a time when widespread misinformation is common. Yet at this time man
         ]
     }
     
-    # LISTENING TEST Structure
+    # LISTENING TEST - Cambridge IELTS 19 Test 1
     listening_test = {
         "id": str(uuid.uuid4()),
-        "title": "Academic Listening Practice Test",
+        "title": "Cambridge IELTS 19 - Test 1 - Listening",
         "test_type": "listening",
         "duration": 40,
         "sections": [
             {
                 "id": 1,
-                "title": "Section 1: Conversation between two people in an everyday social context",
-                "context": "A student calling about accommodation",
-                "audio_url": "/audio/listening-section-1.mp3"
+                "title": "Part 1: Conversation about Hinchingbrooke Country Park",
+                "context": "A conversation about educational visits to a country park",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/i09fo3b5_IELTS%2019%20Track%2001.mp3"
             },
             {
                 "id": 2,
-                "title": "Section 2: Monologue in an everyday social context",
-                "context": "Information about a local library",
-                "audio_url": "/audio/listening-section-2.mp3"
+                "title": "Part 2: Information about a twinning association and Farley House",
+                "context": "A talk about a twinning association and directions around Farley House",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/doe7u73v_IELTS%2019%20Track%2002.mp3"
             },
             {
                 "id": 3,
-                "title": "Section 3: Conversation between up to four people in educational context",
-                "context": "Students discussing a group project",
-                "audio_url": "/audio/listening-section-3.mp3"
+                "title": "Part 3: Discussion about innovation projects",
+                "context": "Two students discussing their innovation projects",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/105tkh6h_IELTS%2019%20Track%2003.mp3"
             },
             {
                 "id": 4,
-                "title": "Section 4: Monologue on an academic subject",
-                "context": "Lecture on renewable energy",
-                "audio_url": "/audio/listening-section-4.mp3"
+                "title": "Part 4: Lecture on an academic subject",
+                "context": "A lecture on an academic topic",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ieltsace/artifacts/i6iw429j_IELTS%2019%20Track%2004.mp3"
             }
         ],
         "questions": [
-            {"id": 1, "section": 1, "type": "form_completion", "question": "Name: Sarah _______"},
-            {"id": 2, "section": 1, "type": "form_completion", "question": "Phone number: _______"},
-            {"id": 3, "section": 1, "type": "multiple_choice", "question": "Type of accommodation required:", "options": ["A) Single room", "B) Shared flat", "C) Studio apartment", "D) Family house"]},
-            {"id": 4, "section": 2, "type": "map_labeling", "question": "Label the children's section on the library map"},
-            {"id": 5, "section": 3, "type": "matching", "question": "Match each person with their project role"},
-            {"id": 6, "section": 4, "type": "note_completion", "question": "Solar panels convert _______ into electricity"},
+            # Part 1 - Questions 1-10 (Note completion)
+            {"id": 1, "section": 1, "type": "note_completion", "question": "Area: _______ hectares"},
+            {"id": 2, "section": 1, "type": "note_completion", "question": "Wetland: lakes, ponds and a _______"},
+            {"id": 3, "section": 1, "type": "note_completion", "question": "Science: Children look at _______ about plants, etc."},
+            {"id": 4, "section": 1, "type": "note_completion", "question": "Geography: includes learning to use a _______ and compass"},
+            {"id": 5, "section": 1, "type": "note_completion", "question": "Leisure and tourism: mostly concentrates on the park's _______"},
+            {"id": 6, "section": 1, "type": "note_completion", "question": "Music: Children make _______ with natural materials"},
+            {"id": 7, "section": 1, "type": "note_completion", "question": "They give children a feeling of _______ that they may not have elsewhere"},
+            {"id": 8, "section": 1, "type": "note_completion", "question": "Children learn new _______ and gain self-confidence"},
+            {"id": 9, "section": 1, "type": "note_completion", "question": "Cost per child: £_______"},
+            {"id": 10, "section": 1, "type": "note_completion", "question": "Adults, such as _______, free"},
+            
+            # Part 2 - Questions 11-20
+            {"id": 11, "section": 2, "type": "multiple_choice", "question": "During the visit to Malatte, in France, members especially enjoyed", "options": ["A) going to a theme park", "B) experiencing a river trip", "C) visiting a cheese factory"]},
+            {"id": 12, "section": 2, "type": "multiple_choice", "question": "What will happen in Stanthorpe to mark the 25th anniversary of the Twinning Association?", "options": ["A) A tree will be planted", "B) A garden seat will be bought", "C) A footbridge will be built"]},
+            {"id": 13, "section": 2, "type": "multiple_choice", "question": "Which event raised most funds this year?", "options": ["A) the film show", "B) the pancake evening", "C) the cookery demonstration"]},
+            {"id": 14, "section": 2, "type": "multiple_choice", "question": "For the first evening with the French visitors host families are advised to", "options": ["A) take them for a walk round the town", "B) go to a local restaurant", "C) have a meal at home"]},
+            {"id": 15, "section": 2, "type": "multiple_choice", "question": "On Saturday evening there will be the chance to", "options": ["A) listen to a concert", "B) watch a match", "C) take part in a competition"]},
+            {"id": 16, "section": 2, "type": "map_labeling", "question": "Farm shop (Label the map - write the correct letter A-H)"},
+            {"id": 17, "section": 2, "type": "map_labeling", "question": "Disabled entry (Label the map - write the correct letter A-H)"},
+            {"id": 18, "section": 2, "type": "map_labeling", "question": "Adventure playground (Label the map - write the correct letter A-H)"},
+            {"id": 19, "section": 2, "type": "map_labeling", "question": "Kitchen gardens (Label the map - write the correct letter A-H)"},
+            {"id": 20, "section": 2, "type": "map_labeling", "question": "The Temple of the Four Winds (Label the map - write the correct letter A-H)"},
+            
+            # Part 3 - Questions 21-30
+            {"id": 21, "section": 3, "type": "multiple_choice_two", "question": "Which TWO things did Colin find most satisfying about his bread reuse project?", "options": ["A) receiving support from local restaurants", "B) finding a good way to prevent waste", "C) overcoming problems in a basic process", "D) experimenting with designs and colours", "E) learning how to apply 3-D printing"]},
+            {"id": 22, "section": 3, "type": "multiple_choice_two", "question": "Which TWO things did Colin find most satisfying about his bread reuse project? (Select TWO)", "options": ["A) receiving support from local restaurants", "B) finding a good way to prevent waste", "C) overcoming problems in a basic process", "D) experimenting with designs and colours", "E) learning how to apply 3-D printing"]},
+            {"id": 23, "section": 3, "type": "multiple_choice_two", "question": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future?", "options": ["A) for use on medical products", "B) to show that food is no longer fit to eat", "C) for use with drinks as well as foods", "D) to provide applications for blind people", "E) to indicate the weight of certain foods"]},
+            {"id": 24, "section": 3, "type": "multiple_choice_two", "question": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future? (Select TWO)", "options": ["A) for use on medical products", "B) to show that food is no longer fit to eat", "C) for use with drinks as well as foods", "D) to provide applications for blind people", "E) to indicate the weight of certain foods"]},
+            {"id": 25, "section": 3, "type": "matching", "question": "25-30: Match each innovation project with correct topic A-H"},
+            {"id": 26, "section": 3, "type": "matching", "question": "26: Matching question"},
+            {"id": 27, "section": 3, "type": "matching", "question": "27: Matching question"},
+            {"id": 28, "section": 3, "type": "matching", "question": "28: Matching question"},
+            {"id": 29, "section": 3, "type": "matching", "question": "29: Matching question"},
+            {"id": 30, "section": 3, "type": "matching", "question": "30: Matching question"},
+            
+            # Part 4 - Questions 31-40 (To be added from screenshot)
+            {"id": 31, "section": 4, "type": "sentence_completion", "question": "Question 31 - to be added from Part 4"},
+            {"id": 32, "section": 4, "type": "sentence_completion", "question": "Question 32 - to be added from Part 4"},
+            {"id": 33, "section": 4, "type": "sentence_completion", "question": "Question 33 - to be added from Part 4"},
+            {"id": 34, "section": 4, "type": "sentence_completion", "question": "Question 34 - to be added from Part 4"},
+            {"id": 35, "section": 4, "type": "sentence_completion", "question": "Question 35 - to be added from Part 4"},
+            {"id": 36, "section": 4, "type": "sentence_completion", "question": "Question 36 - to be added from Part 4"},
+            {"id": 37, "section": 4, "type": "sentence_completion", "question": "Question 37 - to be added from Part 4"},
+            {"id": 38, "section": 4, "type": "sentence_completion", "question": "Question 38 - to be added from Part 4"},
+            {"id": 39, "section": 4, "type": "sentence_completion", "question": "Question 39 - to be added from Part 4"},
+            {"id": 40, "section": 4, "type": "sentence_completion", "question": "Question 40 - to be added from Part 4"},
         ],
-        "answer_key": [
-            {"question_id": 1, "answer": "[Your Content]"},
-            {"question_id": 2, "answer": "[Your Content]"},
-        ]
+        "answer_key": []
     }
     
     # WRITING TEST
