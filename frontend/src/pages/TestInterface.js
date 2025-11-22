@@ -743,21 +743,63 @@ export default function TestInterface({ user }) {
                       />
 
                       {/* Speaking feedback summary for this question if available */}
-                      {Object.keys(speakingFeedback).length > 0 && (
+                      {Object.keys(speakingFeedback).length > 0 && speakingFeedback[currentQuestion + 1] && (
                         <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                          <h3 className="text-sm font-semibold text-blue-900 mb-2">Speaking Feedback</h3>
-                          {speakingFeedback[currentQuestion + 1] && (
-                            <div className="space-y-1 text-sm text-gray-800">
-                              <p className="font-semibold">
-                                Estimated band: {speakingFeedback[currentQuestion + 1].band_score}
-                              </p>
-                              {speakingFeedback[currentQuestion + 1].overall_feedback && (
-                                <p className="whitespace-pre-line">
-                                  {speakingFeedback[currentQuestion + 1].overall_feedback.replace(/```json|```/g, '').trim()}
+                          <h3 className="text-sm font-semibold text-blue-900 mb-2">Speaking Feedback (Like an Examiner's Notes)</h3>
+                          {(() => {
+                            const fb = speakingFeedback[currentQuestion + 1];
+                            const overallText =
+                              typeof fb.overall_feedback === 'string'
+                                ? fb.overall_feedback.replace(/```json|```/g, '').trim()
+                                : '';
+
+                            const criteria = [
+                              { key: 'fluency_coherence', label: 'Fluency & Coherence' },
+                              { key: 'lexical_resource', label: 'Lexical Resource' },
+                              { key: 'grammatical_accuracy', label: 'Grammatical Range & Accuracy' },
+                              { key: 'pronunciation', label: 'Pronunciation' }
+                            ];
+
+                            return (
+                              <div className="space-y-2 text-sm text-gray-800">
+                                <p className="font-semibold">
+                                  Estimated band: {fb.band_score}
                                 </p>
-                              )}
-                            </div>
-                          )}
+                                {overallText && (
+                                  <p className="whitespace-pre-line text-gray-800">
+                                    {overallText}
+                                  </p>
+                                )}
+
+                                <div className="mt-2 space-y-2 border-t border-blue-200 pt-2">
+                                  {criteria.map((crit) => {
+                                    const critData = fb[crit.key];
+                                    if (!critData) return null;
+                                    const critText =
+                                      typeof critData.feedback === 'string'
+                                        ? critData.feedback.replace(/```json|```/g, '').trim()
+                                        : '';
+
+                                    return (
+                                      <div key={crit.key} className="space-y-1">
+                                        <p className="font-semibold text-blue-900">
+                                          {crit.label}
+                                          {critData.score && (
+                                            <span className="ml-1 text-blue-800">(Band {critData.score})</span>
+                                          )}
+                                        </p>
+                                        {critText && (
+                                          <p className="text-gray-800 whitespace-pre-line">
+                                            {critText}
+                                          </p>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            );
+                          })()}
                         </div>
                       )}
                     </div>
