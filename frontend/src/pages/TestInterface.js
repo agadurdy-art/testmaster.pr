@@ -190,7 +190,10 @@ export default function TestInterface({ user }) {
       });
 
       toast.success('Test submitted successfully!');
-      navigate(`/results/${result.id}`);
+      // For objective tests, go to results page; for writing/speaking, stay and show AI feedback
+      if (testType !== 'writing' && testType !== 'speaking') {
+        navigate(`/results/${result.id}`);
+      }
     } catch (error) {
       console.error('Submit error:', error);
       toast.error('Failed to submit test');
