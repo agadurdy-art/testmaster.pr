@@ -253,17 +253,17 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"id": 29, "section": 3, "type": "matching", "question": "29: Matching question"},
             {"id": 30, "section": 3, "type": "matching", "question": "30: Matching question"},
             
-            # Part 4 - Questions 31-40 (To be added from screenshot)
-            {"id": 31, "section": 4, "type": "sentence_completion", "question": "Question 31 - to be added from Part 4"},
-            {"id": 32, "section": 4, "type": "sentence_completion", "question": "Question 32 - to be added from Part 4"},
-            {"id": 33, "section": 4, "type": "sentence_completion", "question": "Question 33 - to be added from Part 4"},
-            {"id": 34, "section": 4, "type": "sentence_completion", "question": "Question 34 - to be added from Part 4"},
-            {"id": 35, "section": 4, "type": "sentence_completion", "question": "Question 35 - to be added from Part 4"},
-            {"id": 36, "section": 4, "type": "sentence_completion", "question": "Question 36 - to be added from Part 4"},
-            {"id": 37, "section": 4, "type": "sentence_completion", "question": "Question 37 - to be added from Part 4"},
-            {"id": 38, "section": 4, "type": "sentence_completion", "question": "Question 38 - to be added from Part 4"},
-            {"id": 39, "section": 4, "type": "sentence_completion", "question": "Question 39 - to be added from Part 4"},
-            {"id": 40, "section": 4, "type": "sentence_completion", "question": "Question 40 - to be added from Part 4"},
+            # Part 4 - Questions 31-40 (Céide Fields lecture)
+            {"id": 31, "section": 4, "type": "sentence_completion", "question": "In the 1930s, a local teacher realised that stones beneath the bog surface were once _______"},
+            {"id": 32, "section": 4, "type": "sentence_completion", "question": "His _______ became an archaeologist and undertook an investigation of the site"},
+            {"id": 33, "section": 4, "type": "sentence_completion", "question": "A traditional method used by local people to dig for _______ was used to identify where stones were located"},
+            {"id": 34, "section": 4, "type": "sentence_completion", "question": "Items are well preserved in the bog because of a lack of _______"},
+            {"id": 35, "section": 4, "type": "sentence_completion", "question": "Houses were _______ in shape and had a hole in the roof"},
+            {"id": 36, "section": 4, "type": "sentence_completion", "question": "Pots used for storage and to make _______"},
+            {"id": 37, "section": 4, "type": "sentence_completion", "question": "Each field at Céide was large enough to support a big _______"},
+            {"id": 38, "section": 4, "type": "sentence_completion", "question": "The fields were probably used to restrict the grazing of animals – no evidence of structures to house them during _______"},
+            {"id": 39, "section": 4, "type": "sentence_completion", "question": "Reasons for the decline in farming: a decline in _______ quality"},
+            {"id": 40, "section": 4, "type": "sentence_completion", "question": "Reasons for the decline in farming: an increase in _______"},
         ],
         "answer_key": []
     }
