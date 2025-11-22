@@ -740,6 +740,25 @@ export default function TestInterface({ user }) {
                         onEnded={() => setIsPlaying(false)}
                         className="hidden"
                       />
+
+                      {/* Speaking feedback summary for this question if available */}
+                      {Object.keys(speakingFeedback).length > 0 && (
+                        <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                          <h3 className="text-sm font-semibold text-blue-900 mb-2">Speaking Feedback</h3>
+                          {speakingFeedback[currentQuestion + 1] && (
+                            <div className="space-y-1 text-sm text-gray-800">
+                              <p className="font-semibold">
+                                Estimated band: {speakingFeedback[currentQuestion + 1].band_score}
+                              </p>
+                              {speakingFeedback[currentQuestion + 1].overall_feedback && (
+                                <p className="whitespace-pre-line">
+                                  {speakingFeedback[currentQuestion + 1].overall_feedback.replace(/```json|```/g, '').trim()}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
