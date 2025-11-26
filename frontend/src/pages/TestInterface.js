@@ -682,6 +682,9 @@ export default function TestInterface({ user }) {
                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                         placeholder="Write your response here..."
                         className="min-h-[400px] text-lg p-4"
+                        spellCheck={false}
+                        autoCorrect="off"
+                        autoCapitalize="off"
                       />
                       <div className="flex justify-between mt-2">
                         <p className="text-sm text-gray-600">
