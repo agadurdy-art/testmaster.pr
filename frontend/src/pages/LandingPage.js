@@ -19,12 +19,22 @@ export default function LandingPage({ onLogin, user }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const userData = await createUser(formData);
-      onLogin(userData);
-      toast.success('Welcome to IELTS Ace!');
-      navigate('/dashboard');
+      if (authMode === 'signup') {
+        const { name, email, password } = formData;
+        const userData = await registerUser({ name, email, password });
+        onLogin(userData);
+        toast.success('Account created! Welcome to IELTS Ace!');
+        navigate('/dashboard');
+      } else {
+        const { email, password } = formData;
+        const userData = await loginUser({ email, password });
+        onLogin(userData);
+        toast.success('Logged in successfully!');
+        navigate('/dashboard');
+      }
     } catch (error) {
-      toast.error('Authentication failed. Please try again.');
+      const message = error?.response?.data?.detail || 'Authentication failed. Please try again.';
+      toast.error(message);
     } finally {
       setLoading(false);
     }
