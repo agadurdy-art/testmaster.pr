@@ -806,14 +806,14 @@ export default function TestInterface({ user }) {
                             <Play className="w-4 h-4 mr-2" />
                             Play Recording
                           </Button>
-                      {/* Hidden audio element for pre-recorded speaking questions */}
-                      <audio
-                        ref={speakingQuestionAudioRef}
-                        src={speakingAudioUrl}
-                        className="hidden"
-                      />
-
                         )}
+
+                        {/* Hidden audio element for pre-recorded speaking questions */}
+                        <audio
+                          ref={speakingQuestionAudioRef}
+                          src={speakingAudioUrl}
+                          className="hidden"
+                        />
                       </div>
                       <audio 
                         ref={audioRef} 
