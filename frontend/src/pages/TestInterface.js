@@ -183,8 +183,6 @@ export default function TestInterface({ user }) {
     }
   };
 
-  };
-
   const handleSubmit = async () => {
     if (submitting) return;
     setSubmitting(true);
