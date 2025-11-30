@@ -39,6 +39,8 @@ class User(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     email: str
     name: str
+    password_hash: Optional[str] = None
+    verified: bool = True
     google_id: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     test_history: List[str] = Field(default_factory=list)
@@ -46,7 +48,11 @@ class User(BaseModel):
 class UserCreate(BaseModel):
     email: str
     name: str
-    google_id: Optional[str] = None
+    password: str
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
 
 class Test(BaseModel):
     model_config = ConfigDict(extra="ignore")
