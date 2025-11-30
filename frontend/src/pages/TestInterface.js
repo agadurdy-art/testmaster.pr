@@ -729,14 +729,7 @@ export default function TestInterface({ user }) {
                         readOnly={recording}
                       />
                       <div className="flex gap-3 items-center flex-wrap">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => playQuestionVoice(question.question)}
-                        >
-                          <Play className="w-4 h-4 mr-2" />
-                          Play Question
-                        </Button>
+                        {/* Removed robotic TTS; will use pre-recorded audio when available */}
 
                         {!recording ? (
                           <Button
