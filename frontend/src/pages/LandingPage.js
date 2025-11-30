@@ -224,6 +224,22 @@ export default function LandingPage({ onLogin, user }) {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required={authMode === 'signup'}
                 />
+            <div>
+              <label className="block text-sm font-medium mb-2">Password</label>
+              <Input
+                data-testid="password-input"
+                type="password"
+                placeholder={authMode === 'signup' ? 'Create a password (min 8 characters)' : 'Enter your password'}
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                required
+                minLength={8}
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Use at least 8 characters. Letters and numbers recommended.
+              </p>
+            </div>
+
               </div>
             )}
             <div>
