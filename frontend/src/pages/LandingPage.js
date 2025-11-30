@@ -5,7 +5,7 @@ import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { BookOpen, Headphones, Mic, PenTool, CheckCircle, Clock, Target, Trophy } from 'lucide-react';
-import { createUser } from '../lib/api';
+import { registerUser, loginUser } from '../lib/api';
 import { toast } from 'sonner';
 
 export default function LandingPage({ onLogin, user }) {
