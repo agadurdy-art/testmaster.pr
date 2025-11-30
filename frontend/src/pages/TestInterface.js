@@ -720,8 +720,8 @@ export default function TestInterface({ user }) {
                   {/* Speaking Question */}
                   {testType === 'speaking' && (
                     <div className="space-y-4">
-                      {/* For Part 2, show cue card style bullet list */}
-                      {test.parts && test.parts[Math.floor(currentQuestion / 4)]?.part === 2 && (
+                      {/* For Part 2 cue card: show only for the long-turn question (Q5) */}
+                      {question.part === 2 && question.id === 5 && (
                         <div className="mb-4 p-4 border border-dashed border-gray-300 rounded-lg bg-yellow-50">
                           <p className="font-semibold mb-2">Cue Card</p>
                           <p className="mb-2">Describe a law that was introduced in your country and that you thought was a very good idea.</p>
