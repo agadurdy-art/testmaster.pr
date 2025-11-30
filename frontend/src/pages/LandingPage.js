@@ -213,17 +213,19 @@ export default function LandingPage({ onLogin, user }) {
             </DialogTitle>
           </DialogHeader>
           <form onSubmit={handleAuth} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Name</label>
-              <Input
-                data-testid="name-input"
-                type="text"
-                placeholder="Enter your name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
-              />
-            </div>
+            {authMode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium mb-2">Name</label>
+                <Input
+                  data-testid="name-input"
+                  type="text"
+                  placeholder="Enter your name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required={authMode === 'signup'}
+                />
+              </div>
+            )}
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
               <Input
