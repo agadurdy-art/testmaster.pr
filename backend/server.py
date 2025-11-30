@@ -109,6 +109,23 @@ class TipArticle(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class Course(BaseModel):
+# Password hashing helpers
+
+def hash_password(password: str) -> str:
+    """Hash password using SHA256 (for demo; use stronger algorithms in production)."""
+    if not isinstance(password, str):
+        password = str(password)
+    return hashlib.sha256(password.encode("utf-8")).hexdigest()
+
+
+def verify_password(password: str, password_hash: str) -> bool:
+    """Verify password against stored hash using constant-time comparison."""
+    if not password_hash:
+        return False
+    computed = hash_password(password)
+    return hmac.compare_digest(computed, password_hash)
+
+
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
