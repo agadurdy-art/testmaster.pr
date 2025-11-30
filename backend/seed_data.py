@@ -351,10 +351,10 @@ Write at least 250 words.""",
         "answer_key": []
     }
     
-    # SPEAKING TEST
+    # SPEAKING TEST - Cambridge-style prompts (International food & law)
     speaking_test = {
         "id": str(uuid.uuid4()),
-        "title": "Speaking Practice Test",
+        "title": "Speaking Practice Test 1",
         "test_type": "speaking",
         "duration": 15,
         "parts": [
@@ -362,14 +362,12 @@ Write at least 250 words.""",
                 "part": 1,
                 "title": "Introduction and interview",
                 "duration": "4-5 minutes",
-                "topics": ["Home/Accommodation", "Work/Studies", "Hobbies"],
+                "topics": ["International food"],
                 "questions": [
-                    "Let's talk about where you live. Do you live in a house or an apartment?",
-                    "What do you like most about your home?",
-                    "What kind of home would you like to live in the future?",
-                    "Let's move on to talk about your work/studies. What subject are you studying?",
-                    "Why did you choose this subject?",
-                    "What do you find most interesting about your studies?"
+                    "Can you find food from many different countries where you live? [Why/Why not?]",
+                    "How often do you eat typical food from other countries? [Why/Why not?]",
+                    "Have you ever tried making food from another country? [Why/Why not?]",
+                    "What food from your country would you recommend to people from other countries? [Why?]"
                 ]
             },
             {
@@ -378,7 +376,15 @@ Write at least 250 words.""",
                 "duration": "3-4 minutes",
                 "preparation_time": "1 minute",
                 "questions": [
-                    """Describe a person who has influenced you. You should say: who this person is, how you know this person, what they have done, and explain why this person has influenced you. [You have 1 minute to prepare and should speak for 2 minutes]"""
+                    """Describe a law that was introduced in your country and that you thought was a very good idea.
+
+You should say:
+what the law was
+who introduced it
+when and why it was introduced
+and explain why you thought this law was such a good idea.
+
+You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish."""
                 ]
             },
             {
@@ -386,25 +392,29 @@ Write at least 250 words.""",
                 "title": "Two-way discussion",
                 "duration": "4-5 minutes",
                 "questions": [
-                    "How do you think people's relationships with their families have changed in recent years?",
-                    "What role do you think technology plays in modern relationships?",
-                    "Do you think young people today have different role models compared to previous generations?",
-                    "How important is it for children to have good role models?"
+                    # School rules
+                    "What kinds of rules are common in a school?",
+                    "How important is it to have rules in a school?",
+                    "What do you recommend should happen if children break school rules?",
+                    # Working in the legal profession
+                    "Can you suggest why many students decide to study law at university?",
+                    "What are the key personal qualities needed to be a successful lawyer?",
+                    "Do you agree that working in the legal profession is very stressful?"
                 ]
             }
         ],
         "questions": [
-            {"id": 1, "part": 1, "question": "Let's talk about where you live. Do you live in a house or an apartment?"},
-            {"id": 2, "part": 1, "question": "What do you like most about your home?"},
-            {"id": 3, "part": 1, "question": "What kind of home would you like to live in the future?"},
-            {"id": 4, "part": 1, "question": "Let's move on to talk about your work/studies. What subject are you studying?"},
-            {"id": 5, "part": 1, "question": "Why did you choose this subject?"},
-            {"id": 6, "part": 1, "question": "What do you find most interesting about your studies?"},
-            {"id": 7, "part": 2, "question": "Describe a person who has influenced you. You should say: who this person is, how you know this person, what they have done, and explain why this person has influenced you. [Preparation: 1 minute. Speaking: 2 minutes]"},
-            {"id": 8, "part": 3, "question": "How do you think people's relationships with their families have changed in recent years?"},
-            {"id": 9, "part": 3, "question": "What role do you think technology plays in modern relationships?"},
-            {"id": 10, "part": 3, "question": "Do you think young people today have different role models compared to previous generations?"},
-            {"id": 11, "part": 3, "question": "How important is it for children to have good role models?"}
+            {"id": 1, "part": 1, "question": "Can you find food from many different countries where you live? [Why/Why not?]"},
+            {"id": 2, "part": 1, "question": "How often do you eat typical food from other countries? [Why/Why not?]"},
+            {"id": 3, "part": 1, "question": "Have you ever tried making food from another country? [Why/Why not?]"},
+            {"id": 4, "part": 1, "question": "What food from your country would you recommend to people from other countries? [Why?]"},
+            {"id": 5, "part": 2, "question": "Describe a law that was introduced in your country and that you thought was a very good idea. You should say what the law was, who introduced it, when and why it was introduced, and explain why you thought this law was such a good idea."},
+            {"id": 6, "part": 3, "question": "What kinds of rules are common in a school?"},
+            {"id": 7, "part": 3, "question": "How important is it to have rules in a school?"},
+            {"id": 8, "part": 3, "question": "What do you recommend should happen if children break school rules?"},
+            {"id": 9, "part": 3, "question": "Can you suggest why many students decide to study law at university?"},
+            {"id": 10, "part": 3, "question": "What are the key personal qualities needed to be a successful lawyer?"},
+            {"id": 11, "part": 3, "question": "Do you agree that working in the legal profession is very stressful?"}
         ],
         "answer_key": []
     }
