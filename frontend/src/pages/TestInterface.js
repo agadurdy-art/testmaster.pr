@@ -143,6 +143,8 @@ export default function TestInterface({ user }) {
       audioRef.current.play();
       setIsPlaying(true);
     }
+  };
+
   // Pre-recorded British audio for speaking questions (single combined file with timestamps)
   const speakingAudioUrl = 'https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/madyib68_ElevenLabs_2025-11-30T13_18_42_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
   const speakingQuestionTimings = {
