@@ -12,7 +12,7 @@ export default function LandingPage({ onLogin, user }) {
   const navigate = useNavigate();
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState('signup');
-  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
 
   const handleAuth = async (e) => {
