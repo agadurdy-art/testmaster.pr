@@ -718,6 +718,24 @@ export default function TestInterface({ user }) {
                   {/* Speaking Question */}
                   {testType === 'speaking' && (
                     <div className="space-y-4">
+                      {/* For Part 2, show cue card style bullet list */}
+                      {test.parts && test.parts[Math.floor(currentQuestion / 4)]?.part === 2 && (
+                        <div className="mb-4 p-4 border border-dashed border-gray-300 rounded-lg bg-yellow-50">
+                          <p className="font-semibold mb-2">Cue Card</p>
+                          <p className="mb-2">Describe a law that was introduced in your country and that you thought was a very good idea.</p>
+                          <p className="text-sm mb-1">You should say:</p>
+                          <ul className="list-disc list-inside text-sm space-y-1">
+                            <li>what the law was</li>
+                            <li>who introduced it</li>
+                            <li>when and why it was introduced</li>
+                            <li>and explain why you thought this law was such a good idea.</li>
+                          </ul>
+                          <p className="text-xs text-gray-600 mt-2">
+                            You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.
+                          </p>
+                        </div>
+                      )}
+
                       <Textarea
                         data-testid="speaking-textarea"
                         value={answers[question.id] || answers[currentQuestion] || ''}
@@ -726,7 +744,16 @@ export default function TestInterface({ user }) {
                         className="min-h-[200px] text-lg p-4"
                         readOnly={recording}
                       />
-                      <div className="flex gap-3 items-center">
+                      <div className="flex gap-3 items-center flex-wrap">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => playQuestionVoice(question.question)}
+                        >
+                          <Play className="w-4 h-4 mr-2" />
+                          Play Question
+                        </Button>
+
                         {!recording ? (
                           <Button
                             data-testid="start-recording-btn"
