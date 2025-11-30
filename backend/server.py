@@ -267,19 +267,44 @@ Return ONLY a JSON object with this structure (no extra text, no markdown, no ``
 async def root():
     return {"message": "IELTS Ace API"}
 
-# User routes
-@api_router.post("/users", response_model=User)
-async def create_user(input: UserCreate):
+# User & Auth routes
+@api_router.post("/auth/register", response_model=User)
+async def register_user(input: UserCreate):
     # Check if user exists
     existing = await db.users.find_one({"email": input.email}, {"_id": 0})
     if existing:
-        return User(**existing)
-    
-    user = User(**input.model_dump())
+        raise HTTPException(status_code=400, detail="Email is already registered")
+
+    if len(input.password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
+
+    user = User(
+        email=input.email,
+        name=input.name,
+        password_hash=hash_password(input.password),
+        verified=True,
+    )
     doc = user.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.users.insert_one(doc)
+    # Do not expose password_hash in response
+    user.password_hash = None
     return user
+
+@api_router.post("/auth/login", response_model=User)
+async def login_user(input: UserLogin):
+    user = await db.users.find_one({"email": input.email}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if not verify_password(input.password, user.get("password_hash") or ""):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    # Remove password_hash before returning
+    user.pop("password_hash", None)
+    if isinstance(user.get('created_at'), str):
+        user['created_at'] = datetime.fromisoformat(user['created_at'])
+    return User(**user)
 
 @api_router.get("/users/{user_id}", response_model=User)
 async def get_user(user_id: str):
@@ -288,6 +313,7 @@ async def get_user(user_id: str):
         raise HTTPException(status_code=404, detail="User not found")
     if isinstance(user.get('created_at'), str):
         user['created_at'] = datetime.fromisoformat(user['created_at'])
+    user.pop("password_hash", None)
     return User(**user)
 
 # Test routes
