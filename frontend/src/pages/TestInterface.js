@@ -69,6 +69,24 @@ export default function TestInterface({ user }) {
     setAnswers({ ...answers, [questionId]: value });
   };
 
+  // Play question text as audio using browser's SpeechSynthesis API
+  const playQuestionVoice = (text) => {
+    try {
+      if (typeof window === 'undefined' || !window.speechSynthesis) {
+        toast.error('Question audio is not supported in this browser.');
+        return;
+      }
+      if (!text) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-GB';
+      window.speechSynthesis.speak(utterance);
+    } catch (err) {
+      console.error('Question TTS error:', err);
+      toast.error('Failed to play question audio');
+    }
+  };
+
   const startRecording = async () => {
     try {
       if (typeof window === 'undefined' || !navigator) {
