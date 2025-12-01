@@ -808,7 +808,7 @@ export default function TestInterface({ user }) {
                         <Button
                           type="button"
                           variant="outline"
-                          onClick={() => playSpeakingQuestionAudio(currentQuestion)}
+                          onClick={() => playSpeakingQuestionAudio(currentQuestion, question.question)}
                         >
                           <Play className="w-4 h-4 mr-2" />
                           Play Question
