@@ -236,7 +236,12 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"id": 13, "section": 2, "type": "multiple_choice", "question": "Q13", "options": ["A)", "B)", "C)"]},
             {"id": 14, "section": 2, "type": "multiple_choice", "question": "Q14", "options": ["A)", "B)", "C)"]},
             {"id": 15, "section": 2, "type": "multiple_choice", "question": "Q15", "options": ["A)", "B)", "C)"]},
-            # 16-20 will be word-box/map style later
+            # 16-20: placeholder completion questions for Test 2 (type letter A-H as answer)
+            {"id": 16, "section": 2, "type": "note_completion", "question": "Question 16 (type correct letter)"},
+            {"id": 17, "section": 2, "type": "note_completion", "question": "Question 17 (type correct letter)"},
+            {"id": 18, "section": 2, "type": "note_completion", "question": "Question 18 (type correct letter)"},
+            {"id": 19, "section": 2, "type": "note_completion", "question": "Question 19 (type correct letter)"},
+            {"id": 20, "section": 2, "type": "note_completion", "question": "Question 20 (type correct letter)"},
 
             # Part 3 - Questions 21-30 (placeholder text, answers wired)
             {"id": 21, "section": 3, "type": "multiple_choice", "question": "Q21", "options": ["A)", "B)", "C)"]},
