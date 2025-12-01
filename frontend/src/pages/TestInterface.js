@@ -48,7 +48,12 @@ export default function TestInterface({ user }) {
     try {
       const tests = await getTests(testType);
       if (tests.length > 0) {
-        const selectedTest = tests[0];
+        // For now, pick Test 2 when available for listening so you can see it part by part
+        let selectedTest = tests[0];
+        if (testType === 'listening' && tests.length > 1) {
+          selectedTest = tests[1];
+        }
+
         setTest(selectedTest);
         setTimeLeft(selectedTest.duration * 60);
         
