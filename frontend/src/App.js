@@ -31,8 +31,8 @@ function App() {
     localStorage.removeItem('user');
   };
 
-  return (
-  React.useEffect(() => {
+  // Toggle body class for speaking page (controls where ElevenLabs widget is visible)
+  useEffect(() => {
     if (window.location.pathname.startsWith('/test/speaking')) {
       document.body.classList.add('speaking-page');
     } else {
@@ -40,6 +40,7 @@ function App() {
     }
   }, []);
 
+  return (
     <Router>
       <div className="App">
         <Routes>
