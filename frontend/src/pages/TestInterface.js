@@ -28,8 +28,6 @@ export default function TestInterface({ user }) {
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
   const listeningAudioRef = useRef(null);
-  const speakingQuestionAudioRef = useRef(null);
-  const speakingQuestionTimeoutRef = useRef(null);
 
   useEffect(() => {
     loadTest();
