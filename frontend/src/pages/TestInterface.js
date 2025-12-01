@@ -819,13 +819,6 @@ export default function TestInterface({ user }) {
                             Play Recording
                           </Button>
                         )}
-
-                        {/* Hidden audio element for pre-recorded speaking questions */}
-                        <audio
-                          ref={speakingQuestionAudioRef}
-                          src={speakingAudioUrl}
-                          className="hidden"
-                        />
                       </div>
                       <audio 
                         ref={audioRef} 
