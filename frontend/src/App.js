@@ -13,7 +13,6 @@ import { Toaster } from './components/ui/sonner';
 
 function App() {
   const [user, setUser] = useState(null);
-  const location = useLocation();
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -21,15 +20,6 @@ function App() {
       setUser(JSON.parse(savedUser));
     }
   }, []);
-
-  // Toggle body class for speaking page (controls where ElevenLabs widget is visible)
-  useEffect(() => {
-    if (location.pathname.startsWith('/test/speaking')) {
-      document.body.classList.add('speaking-page');
-    } else {
-      document.body.classList.remove('speaking-page');
-    }
-  }, [location.pathname]);
 
   const handleLogin = (userData) => {
     setUser(userData);
