@@ -146,38 +146,51 @@ export default function TestInterface({ user }) {
   };
   // Pre-recorded British audio for speaking questions (single combined file with timestamps)
   const speakingAudioUrl = 'https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/madyib68_ElevenLabs_2025-11-30T13_18_42_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
+  // Timings for pre-recorded British audio (only for Q1–Q5, approximate, non-overlapping)
   const speakingQuestionTimings = {
-    1: { start: 12, end: 22 },
-    2: { start: 17, end: 22 },
+    1: { start: 12, end: 17 },  // Q1 only
+    2: { start: 17, end: 22 },  // Q2 only
     3: { start: 23, end: 28 },
     4: { start: 29, end: 35 },
-    5: { start: 37, end: 54 },
-    6: { start: 113, end: 116 },
-    7: { start: 116, end: 119 },
-    8: { start: 119, end: 124 },
-    9: { start: 130, end: 134 },
-    10: { start: 135, end: 138 },
-    11: { start: 139, end: 143 }
+    5: { start: 37, end: 54 }   // Long cue card
   };
 
-  const playSpeakingQuestionAudio = (questionIndex) => {
-    if (!speakingQuestionAudioRef.current) return;
+  const playSpeakingQuestionAudio = (questionIndex, questionText) => {
     const timing = speakingQuestionTimings[questionIndex + 1];
-    if (!timing) return;
 
-    try {
-      const audio = speakingQuestionAudioRef.current;
-      if (speakingQuestionTimeoutRef.current) {
-        clearTimeout(speakingQuestionTimeoutRef.current);
+    // If we have a timing, use pre-recorded audio for a natural British voice
+    if (timing && speakingQuestionAudioRef.current) {
+      try {
+        const audio = speakingQuestionAudioRef.current;
+        if (speakingQuestionTimeoutRef.current) {
+          clearTimeout(speakingQuestionTimeoutRef.current);
+        }
+        audio.currentTime = timing.start;
+        audio.play();
+        const duration = (timing.end - timing.start) * 1000;
+        speakingQuestionTimeoutRef.current = setTimeout(() => {
+          audio.pause();
+        }, duration);
+        return;
+      } catch (err) {
+        console.error('Speaking question audio error:', err);
+        toast.error('Could not play question audio');
       }
-      audio.currentTime = timing.start;
-      audio.play();
-      const duration = (timing.end - timing.start) * 1000;
-      speakingQuestionTimeoutRef.current = setTimeout(() => {
-        audio.pause();
-      }, duration);
+    }
+
+    // Fallback: use browser text-to-speech for questions without pre-recorded audio (e.g. Q6+)
+    try {
+      if (typeof window === 'undefined' || !window.speechSynthesis) {
+        toast.error('Question audio is not supported in this browser.');
+        return;
+      }
+      if (!questionText) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(questionText);
+      utterance.lang = 'en-GB';
+      window.speechSynthesis.speak(utterance);
     } catch (err) {
-      console.error('Speaking question audio error:', err);
+      console.error('Speaking question TTS error:', err);
       toast.error('Could not play question audio');
     }
   };
