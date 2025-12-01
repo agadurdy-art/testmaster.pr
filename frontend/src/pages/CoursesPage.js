@@ -105,7 +105,10 @@ export default function CoursesPage({ user, onLogout }) {
                   ))}
                 </Accordion>
 
-                <Button className="w-full mt-6 primary-gradient text-white">
+                <Button
+                  className="w-full mt-6 primary-gradient text-white"
+                  onClick={() => navigate(`/courses/${course.id}`)}
+                >
                   Start Course
                 </Button>
               </Card>
