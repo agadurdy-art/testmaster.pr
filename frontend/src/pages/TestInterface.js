@@ -338,14 +338,14 @@ export default function TestInterface({ user }) {
             </p>
             <ul className="list-disc list-inside text-sm text-blue-900 space-y-1">
               <li>
-                <span className="font-semibold">Mode 1 – Built-in Speaking Test:</span> Use the questions below, record your answers, and get detailed examiner-style feedback on each response.
+                <span className="font-semibold">Mode 1 – Built-in Speaking Test:</span> Use the questions below, record your answers, and get detailed examiner-style feedback on each response directly in IELTS Ace.
               </li>
               <li>
-                <span className="font-semibold">Mode 2 – Live AI Examiner:</span> Click the ElevenLabs speaking agent widget (floating button) to have a full IELTS-style interview using the same topics.
+                <span className="font-semibold">Mode 2 – Live IELTS Examiner (ElevenLabs):</span> Use the round button in the bottom-right corner of the screen (the ElevenLabs widget) to start a live IELTS-style interview using the same topics.
               </li>
             </ul>
             <p className="text-xs text-blue-800 mt-2">
-              Tip: Start with Mode 1 to write or record sample answers, then use Mode 2 to simulate the real interview timing and interaction.
+              Tip: You can first practise here in Mode 1, then click the bottom-right ElevenLabs examiner button for a realistic interview in Mode 2.
             </p>
           </Card>
         )}
