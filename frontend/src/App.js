@@ -58,6 +58,10 @@ function App() {
             element={user ? <CoursesPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
           />
           <Route 
+            path="/courses/:courseId" 
+            element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+          />
+          <Route 
             path="/profile" 
             element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
           />
