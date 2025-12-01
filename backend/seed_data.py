@@ -588,6 +588,11 @@ You will have to talk about the topic for one to two minutes. You have one minut
 • Linking sentence to next paragraph
 
 **Body Paragraph 2 (100 words)**
+    # Insert listening tests
+    await db.tests.insert_one(listening_test)
+    await db.tests.insert_one(listening_test_2)
+    print("✅ Listening tests seeded")
+
 • Second main point
 • Full development with examples
 • Counter-argument if relevant
