@@ -48,6 +48,7 @@ export default function TestInterface({ user }) {
   const loadTest = async () => {
     try {
       const tests = await getTests(testType);
+      setAvailableTests(tests);
       if (tests.length > 0) {
         let selectedTest = tests[0];
 
