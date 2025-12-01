@@ -801,14 +801,14 @@ export default function TestInterface({ user }) {
                           Play Question
                         </Button>
 
-                        {!recording ? (
-                      {/* Hidden audio element for pre-recorded speaking questions */}
-                      <audio
-                        ref={speakingQuestionAudioRef}
-                        src={speakingAudioUrl}
-                        className="hidden"
-                      />
+                        {/* Hidden audio element for pre-recorded speaking questions */}
+                        <audio
+                          ref={speakingQuestionAudioRef}
+                          src={speakingAudioUrl}
+                          className="hidden"
+                        />
 
+                        {!recording ? (
                           <Button
                             data-testid="start-recording-btn"
                             onClick={startRecording}
