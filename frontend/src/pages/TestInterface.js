@@ -792,6 +792,15 @@ export default function TestInterface({ user }) {
                         readOnly={recording}
                       />
                       <div className="flex gap-3 items-center flex-wrap">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => playSpeakingQuestionAudio(currentQuestion)}
+                        >
+                          <Play className="w-4 h-4 mr-2" />
+                          Play Question
+                        </Button>
+
                         {!recording ? (
                           <Button
                             data-testid="start-recording-btn"
