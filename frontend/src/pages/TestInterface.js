@@ -314,6 +314,33 @@ export default function TestInterface({ user }) {
   // Handle different test structures
   let question = null;
   let totalQuestions = 0;
+        {/* Test selector for Listening when multiple tests are available */}
+        {testType === 'listening' && availableTests && availableTests.length > 1 && (
+          <div className="max-w-7xl mx-auto px-6 pt-4">
+            <div className="mb-4 flex items-center space-x-3 text-sm">
+              <span className="text-gray-700 font-medium">Select Listening Test:</span>
+              {availableTests.map((t) => (
+                <Button
+                  key={t.id}
+                  variant={t.id === test?.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => {
+                    setTest(t);
+                    setTimeLeft(t.duration * 60);
+                    const initial = {};
+                    (t.questions || []).forEach((q) => {
+                      initial[q.id] = '';
+                    });
+                    setAnswers(initial);
+                  }}
+                >
+                  {t.title || 'Listening Test'}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
   
   if (testType === 'speaking' && test.parts) {
     const allQuestions = test.parts.flatMap(part => part.questions || []);
