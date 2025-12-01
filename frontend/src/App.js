@@ -7,6 +7,7 @@ import TestInterface from './pages/TestInterface';
 import Results from './pages/Results';
 import TipsPage from './pages/TipsPage';
 import CoursesPage from './pages/CoursesPage';
+import CourseDetail from './pages/CourseDetail';
 import Profile from './pages/Profile';
 import ContentAdmin from './pages/ContentAdmin';
 import { Toaster } from './components/ui/sonner';
