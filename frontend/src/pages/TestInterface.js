@@ -329,6 +329,27 @@ export default function TestInterface({ user }) {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Speaking mode selector */}
+        {testType === 'speaking' && (
+          <Card className="mb-6 p-4 bg-blue-50 border border-blue-200">
+            <h2 className="text-lg font-semibold text-blue-900 mb-1">Choose your speaking mode</h2>
+            <p className="text-sm text-blue-900 mb-2">
+              You can practise in two ways:
+            </p>
+            <ul className="list-disc list-inside text-sm text-blue-900 space-y-1">
+              <li>
+                <span className="font-semibold">Mode 1 – Built-in Speaking Test:</span> Use the questions below, record your answers, and get detailed examiner-style feedback on each response.
+              </li>
+              <li>
+                <span className="font-semibold">Mode 2 – Live AI Examiner:</span> Click the ElevenLabs speaking agent widget (floating button) to have a full IELTS-style interview using the same topics.
+              </li>
+            </ul>
+            <p className="text-xs text-blue-800 mt-2">
+              Tip: Start with Mode 1 to write or record sample answers, then use Mode 2 to simulate the real interview timing and interaction.
+            </p>
+          </Card>
+        )}
+
         <div className="grid lg:grid-cols-4 gap-6">
           {/* Section Navigator for Listening */}
           {testType === 'listening' ? (
