@@ -17,6 +17,7 @@ export default function TestInterface({ user }) {
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [availableTests, setAvailableTests] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [recording, setRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
