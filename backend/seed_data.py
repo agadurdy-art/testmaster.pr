@@ -185,6 +185,132 @@ We live at a time when widespread misinformation is common. Yet at this time man
     }
     
     # LISTENING TEST - Cambridge IELTS 19 Test 1
+    # LISTENING TEST - Cambridge IELTS 19 Test 2
+    listening_test_2 = {
+        "id": str(uuid.uuid4()),
+        "title": "Cambridge IELTS 19 - Test 2 - Listening",
+        "test_type": "listening",
+        "duration": 40,
+        "sections": [
+            {
+                "id": 1,
+                "title": "Part 1: Guitar Group enquiry",
+                "context": "A telephone conversation about joining a guitar group",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/dn1r0fnc_IELTS%2019%20Track%2005.mp3"
+            },
+            {
+                "id": 2,
+                "title": "Part 2: Talk about a school sports club",
+                "context": "A talk about a sports club and its activities",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/rvxwt4ru_IELTS%2019%20Track%2006.mp3"
+            },
+            {
+                "id": 3,
+                "title": "Part 3: Discussion about food trends",
+                "context": "Two students discussing food trends and innovation",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/2zd9b819_IELTS%2019%20Track%2007.mp3"
+            },
+            {
+                "id": 4,
+                "title": "Part 4: Lecture on marine life and food security",
+                "context": "A lecture about marine ecosystems and food security",
+                "audio_url": "https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/y0zzip05_IELTS%2019%20Track%2008.mp3"
+            }
+        ],
+        "questions": [
+            # Part 1 - Questions 1-10 (Form completion: Guitar Group)
+            {"id": 1, "section": 1, "type": "note_completion", "question": "Coordinator: Gary _______"},
+            {"id": 2, "section": 1, "type": "note_completion", "question": "Level: _______"},
+            {"id": 3, "section": 1, "type": "note_completion", "question": "Place: the _______"},
+            {"id": 4, "section": 1, "type": "note_completion", "question": "_______ Street"},
+            {"id": 5, "section": 1, "type": "note_completion", "question": "Time: Thursday morning at _______"},
+            {"id": 6, "section": 1, "type": "note_completion", "question": "Recommended website: 'The perfect _______'"},
+            {"id": 7, "section": 1, "type": "note_completion", "question": "First exercise: training the _______"},
+            {"id": 8, "section": 1, "type": "note_completion", "question": "Second exercise: _______ along to the music"},
+            {"id": 9, "section": 1, "type": "note_completion", "question": "Third exercise: playing simple _______"},
+            {"id": 10, "section": 1, "type": "note_completion", "question": "Final advice: be patient and enjoy the _______"},
+
+            # Part 2 - Questions 11-20 (to be refined later with real wording and box)
+            {"id": 11, "section": 2, "type": "multiple_choice", "question": "Q11", "options": ["A)", "B)", "C)"]},
+            {"id": 12, "section": 2, "type": "multiple_choice", "question": "Q12", "options": ["A)", "B)", "C)"]},
+            {"id": 13, "section": 2, "type": "multiple_choice", "question": "Q13", "options": ["A)", "B)", "C)"]},
+            {"id": 14, "section": 2, "type": "multiple_choice", "question": "Q14", "options": ["A)", "B)", "C)"]},
+            {"id": 15, "section": 2, "type": "multiple_choice", "question": "Q15", "options": ["A)", "B)", "C)"]},
+            # 16-20 will be word-box/map style later
+
+            # Part 3 - Questions 21-30 (placeholder text, answers wired)
+            {"id": 21, "section": 3, "type": "multiple_choice", "question": "Q21", "options": ["A)", "B)", "C)"]},
+            {"id": 22, "section": 3, "type": "multiple_choice", "question": "Q22", "options": ["A)", "B)", "C)"]},
+            {"id": 23, "section": 3, "type": "multiple_choice", "question": "Q23", "options": ["A)", "B)", "C)"]},
+            {"id": 24, "section": 3, "type": "multiple_choice", "question": "Q24", "options": ["A)", "B)", "C)"]},
+            {"id": 25, "section": 3, "type": "multiple_choice", "question": "Q25", "options": ["A)", "B)", "C)"]},
+            {"id": 26, "section": 3, "type": "multiple_choice", "question": "Q26", "options": ["A)", "B)", "C)"]},
+            {"id": 27, "section": 3, "type": "multiple_choice", "question": "Q27", "options": ["A)", "B)", "C)"]},
+            {"id": 28, "section": 3, "type": "multiple_choice", "question": "Q28", "options": ["A)", "B)", "C)"]},
+            {"id": 29, "section": 3, "type": "multiple_choice", "question": "Q29", "options": ["A)", "B)", "C)"]},
+            {"id": 30, "section": 3, "type": "multiple_choice", "question": "Q30", "options": ["A)", "B)", "C)"]},
+
+            # Part 4 - Questions 31-40 (sentence completion – marine lecture)
+            {"id": 31, "section": 4, "type": "sentence_completion", "question": "Sea creatures need to be able to _______ in order to survive."},
+            {"id": 32, "section": 4, "type": "sentence_completion", "question": "Smaller fish can make themselves less visible by staying in a _______ area."},
+            {"id": 33, "section": 4, "type": "sentence_completion", "question": "Certain types of plankton contain _______ that store energy."},
+            {"id": 34, "section": 4, "type": "sentence_completion", "question": "Lack of _______ in deep water slows down decomposition."},
+            {"id": 35, "section": 4, "type": "sentence_completion", "question": "A long narrow _______ helps some fish to breathe in deep water."},
+            {"id": 36, "section": 4, "type": "sentence_completion", "question": "Changes in _______ can be fatal to marine life."},
+            {"id": 37, "section": 4, "type": "sentence_completion", "question": "Vitamin D is important because it helps the body absorb _______."},
+            {"id": 38, "section": 4, "type": "sentence_completion", "question": "Kelp forests provide shelter and _______ for many species."},
+            {"id": 39, "section": 4, "type": "sentence_completion", "question": "Brown _______ can be a valuable food source."},
+            {"id": 40, "section": 4, "type": "sentence_completion", "question": "Some fish species are now _______ because of overfishing."},
+        ],
+        "answer_key": [
+            # Part 1
+            {"question_id": 1, "answer": "Mathieson"},
+            {"question_id": 2, "answer": "beginners"},
+            {"question_id": 3, "answer": "college"},
+            {"question_id": 4, "answer": "New"},
+            {"question_id": 5, "answer": "11"},
+            {"question_id": 6, "answer": "instrument"},
+            {"question_id": 7, "answer": "ear"},
+            {"question_id": 8, "answer": "clapping"},
+
+            # Part 2
+            {"question_id": 11, "answer": "A"},
+            {"question_id": 12, "answer": "B"},
+            {"question_id": 13, "answer": "A"},
+            {"question_id": 14, "answer": "B"},
+            {"question_id": 15, "answer": "C"},
+            {"question_id": 16, "answer": "A"},
+            {"question_id": 17, "answer": "C"},
+            {"question_id": 18, "answer": "E"},
+            {"question_id": 19, "answer": "A"},
+            {"question_id": 20, "answer": "B"},
+
+            # Part 3
+            {"question_id": 21, "answer": "A"},
+            {"question_id": 22, "answer": "B"},
+            {"question_id": 23, "answer": "B"},
+            {"question_id": 24, "answer": "B"},
+            {"question_id": 25, "answer": "E"},
+            {"question_id": 26, "answer": "B"},
+            {"question_id": 27, "answer": "A"},
+            {"question_id": 28, "answer": "C"},
+            {"question_id": 29, "answer": "B"},
+            {"question_id": 30, "answer": "A"},
+
+            # Part 4
+            {"question_id": 31, "answer": "move"},
+            {"question_id": 32, "answer": "short"},
+            {"question_id": 33, "answer": "discs"},
+            {"question_id": 34, "answer": "oxygen"},
+            {"question_id": 35, "answer": "tube"},
+            {"question_id": 36, "answer": "temperatures"},
+            {"question_id": 37, "answer": "protein"},
+            {"question_id": 38, "answer": "space"},
+            {"question_id": 39, "answer": "seaweed"},
+            {"question_id": 40, "answer": "endangered"},
+        ]
+    }
+
     listening_test = {
         "id": str(uuid.uuid4()),
         "title": "Cambridge IELTS 19 - Test 1 - Listening",
