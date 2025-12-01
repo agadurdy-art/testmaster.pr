@@ -32,6 +32,14 @@ function App() {
   };
 
   return (
+  React.useEffect(() => {
+    if (window.location.pathname.startsWith('/test/speaking')) {
+      document.body.classList.add('speaking-page');
+    } else {
+      document.body.classList.remove('speaking-page');
+    }
+  }, []);
+
     <Router>
       <div className="App">
         <Routes>
