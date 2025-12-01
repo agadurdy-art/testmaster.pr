@@ -531,51 +531,77 @@ You will have to talk about the topic for one to two minutes. You have one minut
     await db.tips.insert_many(tips)
     print("✅ Tips seeded")
     
-    # Courses remain the same
+    # IELTS Masterclass video-based course (built from a single YouTube video)
     courses = [
         {
             "id": str(uuid.uuid4()),
-            "title": "IELTS Band 7+ Complete Course",
-            "description": "Comprehensive preparation for all four IELTS modules with proven strategies to achieve Band 7 or higher.",
+            "title": "IELTS Masterclass",
+            "description": "Video-based masterclass covering all IELTS skills (Listening, Reading, Writing, Speaking) with practical strategies for a higher band score.",
+            "video_url": "https://www.youtube.com/watch?v=xGtKdsVxV8A",
             "modules": [
                 {
                     "id": 1,
-                    "title": "Reading Mastery",
+                    "title": "Exam Overview & Strategy",
                     "lessons": [
-                        {"id": 1, "title": "Question Types Overview", "duration": "30 min"},
-                        {"id": 2, "title": "Skimming & Scanning Techniques", "duration": "45 min"},
-                        {"id": 3, "title": "True/False/Not Given Questions", "duration": "40 min"},
-                        {"id": 4, "title": "Matching Headings Strategy", "duration": "35 min"},
-                        {"id": 5, "title": "Time Management", "duration": "25 min"}
+                        {"id": 1, "title": "IELTS Format and Band Descriptors", "duration": "20 min"},
+                        {"id": 2, "title": "Common Mistakes and How to Avoid Them", "duration": "20 min"},
+                        {"id": 3, "title": "Overall Strategy for Band 7+", "duration": "20 min"}
                     ]
                 },
                 {
                     "id": 2,
-                    "title": "Writing Excellence",
+                    "title": "Reading Skills",
                     "lessons": [
-                        {"id": 1, "title": "Task 1: Graph Description", "duration": "50 min"},
-                        {"id": 2, "title": "Task 2: Essay Planning", "duration": "40 min"},
-                        {"id": 3, "title": "Advanced Vocabulary", "duration": "45 min"},
-                        {"id": 4, "title": "Grammar for Writing", "duration": "50 min"}
+                        {"id": 1, "title": "Question Types Overview", "duration": "25 min"},
+                        {"id": 2, "title": "Skimming & Scanning Techniques", "duration": "30 min"},
+                        {"id": 3, "title": "True/False/Not Given & Yes/No/Not Given", "duration": "25 min"},
+                        {"id": 4, "title": "Matching Headings & Paragraph Information", "duration": "25 min"}
                     ]
                 },
                 {
                     "id": 3,
-                    "title": "Listening Skills",
+                    "title": "Writing Task 1",
                     "lessons": [
-                        {"id": 1, "title": "Understanding Different Accents", "duration": "35 min"},
-                        {"id": 2, "title": "Note-Taking Techniques", "duration": "30 min"},
-                        {"id": 3, "title": "Common Traps and Distractors", "duration": "40 min"}
+                        {"id": 1, "title": "Understanding Graphs and Charts", "duration": "25 min"},
+                        {"id": 2, "title": "Task 1 Structure and Key Language", "duration": "30 min"},
+                        {"id": 3, "title": "Describing Trends and Comparisons", "duration": "25 min"}
                     ]
                 },
                 {
                     "id": 4,
-                    "title": "Speaking Confidence",
+                    "title": "Writing Task 2",
                     "lessons": [
-                        {"id": 1, "title": "Part 1: First Impressions", "duration": "30 min"},
-                        {"id": 2, "title": "Part 2: The Long Turn", "duration": "40 min"},
-                        {"id": 3, "title": "Part 3: Complex Discussion", "duration": "35 min"},
-                        {"id": 4, "title": "Fluency and Coherence", "duration": "30 min"}
+                        {"id": 1, "title": "Essay Question Types & Planning", "duration": "30 min"},
+                        {"id": 2, "title": "High-band Introductions and Conclusions", "duration": "25 min"},
+                        {"id": 3, "title": "Developing Ideas and Examples", "duration": "25 min"},
+                        {"id": 4, "title": "Advanced Vocabulary & Grammar for Writing", "duration": "30 min"}
+                    ]
+                },
+                {
+                    "id": 5,
+                    "title": "Listening Skills",
+                    "lessons": [
+                        {"id": 1, "title": "Understanding Different Accents", "duration": "20 min"},
+                        {"id": 2, "title": "Note-taking & Predicting Answers", "duration": "25 min"},
+                        {"id": 3, "title": "Traps, Distractors and Spelling", "duration": "25 min"}
+                    ]
+                },
+                {
+                    "id": 6,
+                    "title": "Speaking Skills",
+                    "lessons": [
+                        {"id": 1, "title": "Part 1: First Impressions & Simple Answers", "duration": "20 min"},
+                        {"id": 2, "title": "Part 2: Cue Card Structure and PREP Method", "duration": "25 min"},
+                        {"id": 3, "title": "Part 3: Extending Answers & Complex Discussion", "duration": "25 min"},
+                        {"id": 4, "title": "Pronunciation, Fluency & Coherence", "duration": "25 min"}
+                    ]
+                },
+                {
+                    "id": 7,
+                    "title": "Exam Day & Practice Plan",
+                    "lessons": [
+                        {"id": 1, "title": "Creating a 4-week Study Plan", "duration": "20 min"},
+                        {"id": 2, "title": "Test-day Strategy and Mindset", "duration": "20 min"}
                     ]
                 }
             ]
