@@ -110,10 +110,7 @@ function App() {
             </div>
           </a>
         )}
-        {/* ElevenLabs Convai Speaking Agent – only on speaking test page */}
-        {window.location.pathname.startsWith('/test/speaking') && (
-          <elevenlabs-convai agent-id="agent_2701kbcd1n1xepyt59ckv9sdzrjf"></elevenlabs-convai>
-        )}
+        {/* ElevenLabs Convai Speaking Agent – only on speaking test page (rendered via script in index.html) */}
 
 
         </Routes>
