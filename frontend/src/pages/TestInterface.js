@@ -209,6 +209,23 @@ export default function TestInterface({ user }) {
   const playSpeakingQuestionAudio = (questionIndex, questionText) => {
     const qNumber = questionIndex + 1;
     const isTest2 = test?.title && test.title.includes('Test 2');
+
+    // Prefer dedicated per-question audio for Speaking Test 2 (Q6–10)
+    if (isTest2 && speakingQuestionAudioRef.current && speakingAudioTest2PerQuestion[qNumber]) {
+      try {
+        const audio = speakingQuestionAudioRef.current;
+        audio.src = speakingAudioTest2PerQuestion[qNumber];
+        if (speakingQuestionTimeoutRef.current) {
+          clearTimeout(speakingQuestionTimeoutRef.current);
+        }
+        audio.currentTime = 0;
+        audio.play();
+        return;
+      } catch (err) {
+        console.error('Speaking question audio error (per-question Test 2):', err);
+      }
+    }
+
     const timing = isTest2 ? speakingQuestionTimingsTest2[qNumber] : speakingQuestionTimingsTest1[qNumber];
 
     // If we have a timing, use pre-recorded audio for a natural British voice
@@ -233,7 +250,7 @@ export default function TestInterface({ user }) {
       }
     }
 
-    // Fallback: use browser text-to-speech for questions without pre-recorded audio or for Speaking Test 2
+    // Fallback: use browser text-to-speech for questions without pre-recorded audio
     try {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
         toast.error('Question audio is not supported in this browser.');
