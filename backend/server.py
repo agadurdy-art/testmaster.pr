@@ -375,6 +375,87 @@ async def get_test(test_id: str):
 async def submit_test(submission: SubmitAnswers):
     # Get test
     test = await db.tests.find_one({"id": submission.test_id}, {"_id": 0})
+    if not test:
+        raise HTTPException(status_code=404, detail="Test not found")
+    
+    # Calculate score for objective tests (listening/reading)
+    if submission.test_type in ["listening", "reading"]:
+        # Build a lookup from question_id -> correct answer for robust matching
+        answer_key_map = {}
+        for item in test.get('answer_key', []):
+            qid = item.get('question_id')
+            if qid is not None:
+                try:
+                    qid_int = int(qid)
+                except (TypeError, ValueError):
+                    continue
+                answer_key_map[qid_int] = str(item.get('answer', ''))
+
+        correct = 0
+        total = len(answer_key_map) if answer_key_map else len(test.get('answer_key', []))
+
+        # Strict comparison: answers must match exactly (case-insensitive, trimmed)
+        for ans in submission.answers:
+            qid = ans.get('question_id') or ans.get('id')
+            if qid is None:
+                continue
+            try:
+                qid_int = int(qid)
+            except (TypeError, ValueError):
+                continue
+
+            correct_answer = answer_key_map.get(qid_int)
+            if correct_answer is None:
+                continue
+
+            user_answer = ans.get('answer', '')
+            if str(user_answer).strip().lower() == str(correct_answer).strip().lower():
+                correct += 1
+
+        score_percentage = (correct / total * 100) if total > 0 else 0
+        band_score = calculate_band_score(score_percentage)
+
+        attempt = TestAttempt(
+            user_id=submission.user_id,
+            test_id=submission.test_id,
+            test_type=submission.test_type,
+            answers=submission.answers,
+            score=score_percentage,
+            band_score=band_score,
+            feedback={
+                "correct": correct,
+                "total": total,
+                "percentage": score_percentage,
+                "message": f"You got {correct} out of {total} correct."
+            },
+            time_taken=submission.time_taken
+        )
+    else:
+        # For writing/speaking, return without score (needs AI evaluation)
+        attempt = TestAttempt(
+            user_id=submission.user_id,
+            test_id=submission.test_id,
+            test_type=submission.test_type,
+            answers=submission.answers,
+            score=0.0,
+            band_score=0.0,
+            feedback={"message": "Awaiting AI evaluation"},
+            time_taken=submission.time_taken
+        )
+    
+    # Save attempt
+    doc = attempt.model_dump()
+    doc['completed_at'] = doc['completed_at'].isoformat()
+    await db.test_attempts.insert_one(doc)
+    
+    # Update user history
+    await db.users.update_one(
+        {"id": submission.user_id},
+        {"$push": {"test_history": attempt.id}}
+    )
+    
+    return attempt
+
 @api_router.post("/auth/forgot-password")
 async def forgot_password(payload: ForgotPasswordRequest):
     """Generate a reset token and (in real setup) send email.
