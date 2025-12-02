@@ -358,6 +358,59 @@ async def get_test(test_id: str):
 async def submit_test(submission: SubmitAnswers):
     # Get test
     test = await db.tests.find_one({"id": submission.test_id}, {"_id": 0})
+@api_router.post("/auth/forgot-password")
+async def forgot_password(payload: ForgotPasswordRequest):
+    """Generate a reset token and (in real setup) send email.
+
+    For now we just create a token and log it. Frontend can display
+    a generic success message.
+    """
+    # Always respond success to avoid email enumeration
+    email = payload.email.strip().lower()
+
+    # Check if user exists
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user:
+        # Still pretend success
+        return {"detail": "If this email exists, a reset link has been sent."}
+
+    token = generate_reset_token()
+    expires_at = datetime.now(timezone.utc) + timedelta(minutes=RESET_TOKEN_EXPIRY_MINUTES)
+    password_reset_tokens[token] = {"email": email, "expires_at": expires_at}
+
+    # In a real integration, send an email here using SendGrid or similar.
+    # For now, we log the token so you can see it in backend logs.
+    logging.getLogger(__name__).info(f"Password reset token for {email}: {token}")
+
+    return {"detail": "If this email exists, a reset link has been sent."}
+
+
+@api_router.post("/auth/reset-password")
+async def reset_password(payload: ResetPasswordRequest):
+    token_data = password_reset_tokens.get(payload.token)
+    if not token_data:
+        raise HTTPException(status_code=400, detail="Invalid or expired reset token")
+
+    if datetime.now(timezone.utc) > token_data["expires_at"]:
+        password_reset_tokens.pop(payload.token, None)
+        raise HTTPException(status_code=400, detail="Invalid or expired reset token")
+
+    # Basic password strength check
+    if len(payload.new_password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
+
+    email = token_data["email"]
+    password_hash = hash_password(payload.new_password)
+
+    await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
+
+    # Invalidate token after use
+    password_reset_tokens.pop(payload.token, None)
+
+    return {"detail": "Password has been reset. You can now log in with your new password."}
+
+
+
     if not test:
         raise HTTPException(status_code=404, detail="Test not found")
     
