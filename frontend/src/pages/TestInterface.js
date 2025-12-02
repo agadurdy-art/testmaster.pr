@@ -221,19 +221,24 @@ export default function TestInterface({ user }) {
     const qNumber = questionIndex + 1;
     const isTest2 = test?.title && test.title.includes('Test 2');
 
-    // Prefer dedicated per-question audio for Speaking Test 2 (Q6–10)
-    if (isTest2 && speakingQuestionAudioRef.current && speakingAudioTest2PerQuestion[qNumber]) {
-      try {
-        const audio = speakingQuestionAudioRef.current;
-        audio.src = speakingAudioTest2PerQuestion[qNumber];
-        if (speakingQuestionTimeoutRef.current) {
-          clearTimeout(speakingQuestionTimeoutRef.current);
+    // Prefer dedicated per-question audio when available
+    if (speakingQuestionAudioRef.current) {
+      const directSrc = isTest2
+        ? speakingAudioTest2PerQuestion[qNumber]
+        : speakingAudioTest1PerQuestion[qNumber];
+      if (directSrc) {
+        try {
+          const audio = speakingQuestionAudioRef.current;
+          audio.src = directSrc;
+          if (speakingQuestionTimeoutRef.current) {
+            clearTimeout(speakingQuestionTimeoutRef.current);
+          }
+          audio.currentTime = 0;
+          audio.play();
+          return;
+        } catch (err) {
+          console.error('Speaking question audio error (per-question):', err);
         }
-        audio.currentTime = 0;
-        audio.play();
-        return;
-      } catch (err) {
-        console.error('Speaking question audio error (per-question Test 2):', err);
       }
     }
 
