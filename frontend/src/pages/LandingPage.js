@@ -278,7 +278,6 @@ export default function LandingPage({ onLogin, user }) {
                 </button>
               </div>
             )}
-            )}
             <Button 
 
 
