@@ -849,7 +849,8 @@ You will have to talk about the topic for one to two minutes. You have one minut
             {"id": 11, "part": 3, "question": "Do you agree that working in the legal profession is very stressful?"}
         ],
         "answer_key": []
-    
+    }
+
     speaking_test_2 = {
         "id": str(uuid.uuid4()),
         "title": "Speaking Practice Test 2",
