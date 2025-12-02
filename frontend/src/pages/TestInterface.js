@@ -416,6 +416,14 @@ export default function TestInterface({ user }) {
                   setAnswers(initial);
                   setCurrentQuestion(0);
                 }}
+              >
+                {t.title || 'Reading Test'}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Speaking test selector when multiple tests are available */}
       {testType === 'speaking' && availableTests && availableTests.length > 1 && (
         <div className="max-w-7xl mx-auto px-6 pt-4">
@@ -441,14 +449,6 @@ export default function TestInterface({ user }) {
                 }}
               >
                 {t.title || 'Speaking Test'}
-              </Button>
-            ))}
-          </div>
-        </div>
-      )}
-
-              >
-                {t.title || 'Reading Test'}
               </Button>
             ))}
           </div>
