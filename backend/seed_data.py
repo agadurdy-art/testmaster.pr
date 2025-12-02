@@ -20,7 +20,7 @@ async def seed_database():
     await db.tips.delete_many({})
     await db.courses.delete_many({})
     
-    # READING TEST - Proper IELTS Academic Structure
+    # READING TEST 1 - Proper IELTS Academic Structure (Cambridge 19 Reading Test 2 content currently)
     reading_test = {
         "id": str(uuid.uuid4()),
         "title": "Academic Reading Practice Test",
