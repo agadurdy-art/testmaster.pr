@@ -182,6 +182,15 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"question_id": 39, "answer": "No", "explanation": "In the final paragraph, the writer says, 'The journey forward (to develop solutions and remedies) undoubtedly will be a long and arduous (difficult) one.' This contradicts the idea that the problem could be overcome in a relatively short period."},
             {"question_id": 40, "answer": "Not Given", "explanation": "The writer describes what will be needed in future to address the problem of misinformation but does not refer to the need to keep up with new information or say that this is exaggerated."},
         ]
+    
+    # Create a second Reading test entry so we can show a selector in the UI
+    # For now it reuses the same Cambridge 19 Reading Test 2 content but with a different title.
+    reading_test_2 = {
+        **reading_test,
+        "id": str(uuid.uuid4()),
+        "title": "Academic Reading Practice Test 2",
+    }
+
     }
     
     # LISTENING TEST - Cambridge IELTS 19 Test 1
