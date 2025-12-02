@@ -180,15 +180,12 @@ export default function TestInterface({ user }) {
     const timing = speakingQuestionTimings[questionIndex + 1];
 
     // If we have a timing, use pre-recorded audio for a natural British voice
-    if (timing && speakingQuestionAudioRef.current) {
+    // NOTE: Current pre-recorded timings are only calibrated for Speaking Practice Test 1.
+    if (timing && speakingQuestionAudioRef.current && test?.title && test.title.includes('Test 1')) {
       try {
         const audio = speakingQuestionAudioRef.current;
-        // Switch audio file based on which speaking test is loaded
-        if (test?.title && test.title.includes('Test 2')) {
-          audio.src = speakingAudioUrlTest2;
-        } else {
-          audio.src = speakingAudioUrlTest1;
-        }
+        // Always use Test 1 audio for pre-recorded segments
+        audio.src = speakingAudioUrlTest1;
         if (speakingQuestionTimeoutRef.current) {
           clearTimeout(speakingQuestionTimeoutRef.current);
         }
@@ -205,7 +202,7 @@ export default function TestInterface({ user }) {
       }
     }
 
-    // Fallback: use browser text-to-speech for questions without pre-recorded audio (e.g. Q6+)
+    // Fallback: use browser text-to-speech for questions without pre-recorded audio or for Speaking Test 2
     try {
       if (typeof window === 'undefined' || !window.speechSynthesis) {
         toast.error('Question audio is not supported in this browser.');
