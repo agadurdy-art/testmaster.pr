@@ -356,17 +356,17 @@ We live at a time when widespread misinformation is common. Yet at this time man
                 "C) in a straightforward way."
             ]},
 
-            # Part 4 - Questions 31-40 (sentence completion – marine lecture)
-            {"id": 31, "section": 4, "type": "sentence_completion", "question": "Sea creatures need to be able to _______ in order to survive."},
-            {"id": 32, "section": 4, "type": "sentence_completion", "question": "Smaller fish can make themselves less visible by staying in a _______ area."},
-            {"id": 33, "section": 4, "type": "sentence_completion", "question": "Certain types of plankton contain _______ that store energy."},
-            {"id": 34, "section": 4, "type": "sentence_completion", "question": "Lack of _______ in deep water slows down decomposition."},
-            {"id": 35, "section": 4, "type": "sentence_completion", "question": "A long narrow _______ helps some fish to breathe in deep water."},
-            {"id": 36, "section": 4, "type": "sentence_completion", "question": "Changes in _______ can be fatal to marine life."},
-            {"id": 37, "section": 4, "type": "sentence_completion", "question": "Vitamin D is important because it helps the body absorb _______."},
-            {"id": 38, "section": 4, "type": "sentence_completion", "question": "Kelp forests provide shelter and _______ for many species."},
-            {"id": 39, "section": 4, "type": "sentence_completion", "question": "Brown _______ can be a valuable food source."},
-            {"id": 40, "section": 4, "type": "sentence_completion", "question": "Some fish species are now _______ because of overfishing."},
+            # Part 4 - Questions 31-40 (Tardigrades – note completion)
+            {"id": 31, "section": 4, "type": "sentence_completion", "question": "Tardigrades are also known as water 'bears' due to how they _______ and 'moss piglets'."},
+            {"id": 32, "section": 4, "type": "note_completion", "question": "They have a _______ round body and four pairs of legs."},
+            {"id": 33, "section": 4, "type": "note_completion", "question": "They have claws or _______ for gripping."},
+            {"id": 34, "section": 4, "type": "note_completion", "question": "Their body is filled with a liquid that carries both _______ and blood."},
+            {"id": 35, "section": 4, "type": "note_completion", "question": "Their mouth is shaped like a _______ with teeth called stylets."},
+            {"id": 36, "section": 4, "type": "note_completion", "question": "They are very resilient and can exist in very low or high _______."},
+            {"id": 37, "section": 4, "type": "note_completion", "question": "A type of _______ ensures their DNA is not damaged."},
+            {"id": 38, "section": 4, "type": "note_completion", "question": "Research is underway to find out how many days they can stay alive in _______."},
+            {"id": 39, "section": 4, "type": "note_completion", "question": "They consume liquids found in moss or _______."},
+            {"id": 40, "section": 4, "type": "note_completion", "question": "They are not considered to be _______."},
         ],
         "answer_key": [
             # Part 1
