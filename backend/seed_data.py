@@ -277,6 +277,8 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"question_id": 6, "answer": "instrument"},
             {"question_id": 7, "answer": "ear"},
             {"question_id": 8, "answer": "clapping"},
+            {"question_id": 9, "answer": ""},
+            {"question_id": 10, "answer": ""},
 
             # Part 2
             {"question_id": 11, "answer": "A"},
