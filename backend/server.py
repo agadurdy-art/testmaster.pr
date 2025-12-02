@@ -14,6 +14,9 @@ import hashlib
 import hmac
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from emergentintegrations.llm.openai import OpenAISpeechToText
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 import json
 import io
 
