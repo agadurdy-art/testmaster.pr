@@ -416,6 +416,37 @@ export default function TestInterface({ user }) {
                   setAnswers(initial);
                   setCurrentQuestion(0);
                 }}
+      {/* Speaking test selector when multiple tests are available */}
+      {testType === 'speaking' && availableTests && availableTests.length > 1 && (
+        <div className="max-w-7xl mx-auto px-6 pt-4">
+          <div className="mb-4 flex items-center space-x-3 text-sm">
+            <span className="text-gray-700 font-medium">Select Speaking Test:</span>
+            {availableTests.map((t) => (
+              <Button
+                key={t.id}
+                variant={t.id === test?.id ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => {
+                  setTest(t);
+                  setTimeLeft(t.duration * 60);
+                  const initial = {};
+                  const allQuestions = t.parts?.flatMap(part => part.questions || []) || [];
+                  const meta = t.questions || [];
+                  allQuestions.forEach((_, idx) => {
+                    const metaId = meta[idx]?.id ?? idx + 1;
+                    initial[metaId] = '';
+                  });
+                  setAnswers(initial);
+                  setCurrentQuestion(0);
+                }}
+              >
+                {t.title || 'Speaking Test'}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
+
               >
                 {t.title || 'Reading Test'}
               </Button>
