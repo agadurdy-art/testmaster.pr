@@ -849,6 +849,75 @@ You will have to talk about the topic for one to two minutes. You have one minut
             {"id": 11, "part": 3, "question": "Do you agree that working in the legal profession is very stressful?"}
         ],
         "answer_key": []
+    
+    speaking_test_2 = {
+        "id": str(uuid.uuid4()),
+        "title": "Speaking Practice Test 2",
+        "test_type": "speaking",
+        "duration": 15,
+        "parts": [
+            {
+                "part": 1,
+                "title": "Introduction and interview",
+                "duration": "4-5 minutes",
+                "topics": ["Travelling by plane"],
+                "questions": [
+                    "Have you travelled a lot by plane? [To where?/Why not?]",
+                    "Why do you think some people enjoy travelling by plane?",
+                    "Would you like to live near an airport? [Why/Why not?]",
+                    "In the future, do you think that you will travel by plane more often? [Why/Why not?]"
+                ]
+            },
+            {
+                "part": 2,
+                "title": "Individual long turn",
+                "duration": "3-4 minutes",
+                "preparation_time": "1 minute",
+                "questions": [
+                    """Describe a person from your country who has won a prize, award or medal.
+
+You should say:
+who this person is
+which prize, award or medal they received
+what they did to win this
+
+and explain whether you think it was right that this person received this prize, award or medal.
+
+You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish."""
+                ]
+            },
+            {
+                "part": 3,
+                "title": "Two-way discussion",
+                "duration": "4-5 minutes",
+                "questions": [
+                    # Rewards for children at school
+                    "What types of school prizes do children in your country receive?",
+                    "What do you think are the advantages of rewarding schoolchildren for good work?",
+                    "Do you agree that it's more important for children to receive rewards from their parents than from teachers?",
+                    # Rewards for sportspeople
+                    "Do you think that some sportspeople (e.g., top footballers) are paid too much money?",
+                    "Should everyone on a team get the same prize money when they win?",
+                    "Do you agree with the view that, in sport, taking part is more important than winning?"
+                ]
+            }
+        ],
+        "questions": [
+            {"id": 1, "part": 1, "question": "Have you travelled a lot by plane? [To where?/Why not?]"},
+            {"id": 2, "part": 1, "question": "Why do you think some people enjoy travelling by plane?"},
+            {"id": 3, "part": 1, "question": "Would you like to live near an airport? [Why/Why not?]"},
+            {"id": 4, "part": 1, "question": "In the future, do you think that you will travel by plane more often? [Why/Why not?]"},
+            {"id": 5, "part": 2, "question": "Describe a person from your country who has won a prize, award or medal. You should say who this person is, which prize, award or medal they received, what they did to win this, and explain whether you think it was right that this person received this prize, award or medal."},
+            {"id": 6, "part": 3, "question": "What types of school prizes do children in your country receive?"},
+            {"id": 7, "part": 3, "question": "What do you think are the advantages of rewarding schoolchildren for good work?"},
+            {"id": 8, "part": 3, "question": "Do you agree that it's more important for children to receive rewards from their parents than from teachers?"},
+            {"id": 9, "part": 3, "question": "Do you think that some sportspeople (e.g., top footballers) are paid too much money?"},
+            {"id": 10, "part": 3, "question": "Should everyone on a team get the same prize money when they win?"},
+            {"id": 11, "part": 3, "question": "Do you agree with the view that, in sport, taking part is more important than winning?"}
+        ],
+        "answer_key": []
+    }
+
     }
     
     await db.tests.insert_many([reading_test, reading_test_2, listening_test, listening_test_2, writing_test, writing_test_2, speaking_test])
