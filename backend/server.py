@@ -549,6 +549,7 @@ async def reset_password(payload: ResetPasswordRequest):
 
     email = token_data["email"]
     password_hash = hash_password(payload.new_password)
+    await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
 
 
 @api_router.post("/auth/direct-reset")
