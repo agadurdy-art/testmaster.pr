@@ -53,6 +53,14 @@ export default function TestInterface({ user }) {
         let selectedTest = tests[0];
 
         if (testType === 'listening') {
+        if (testType === 'reading') {
+          // Prefer a test titled with 'Test 1' if available; otherwise use first
+          const test1 = tests.find(t => t.title && t.title.toLowerCase().includes('test 1'));
+          if (test1) {
+            selectedTest = test1;
+          }
+        }
+
           // Prefer Test 2 if available (by title), otherwise fall back to first
           const test2 = tests.find(t => t.title && t.title.includes('Test 2'));
           if (test2) {
