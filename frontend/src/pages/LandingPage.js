@@ -224,6 +224,19 @@ export default function LandingPage({ onLogin, user }) {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required={authMode === 'signup'}
                 />
+              </div>
+            )}
+            <div>
+              <label className="block text-sm font-medium mb-2">Email</label>
+              <Input
+                data-testid="email-input"
+                type="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+              />
+            </div>
             <div>
               <label className="block text-sm font-medium mb-2">Password</label>
               <Input
@@ -238,20 +251,6 @@ export default function LandingPage({ onLogin, user }) {
               <p className="text-xs text-gray-500 mt-1">
                 Use at least 8 characters. Letters and numbers recommended.
               </p>
-            </div>
-
-              </div>
-            )}
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <Input
-                data-testid="email-input"
-                type="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
             </div>
             <Button 
               data-testid="submit-auth-btn"
