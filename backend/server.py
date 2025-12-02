@@ -116,6 +116,15 @@ class Course(BaseModel):
     modules: List[Dict[str, Any]]
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class ForgotPasswordRequest(BaseModel):
+    email: str
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
+
+
+
 # Password hashing helpers
 
 def hash_password(password: str) -> str:
