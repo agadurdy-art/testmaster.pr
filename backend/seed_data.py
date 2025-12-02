@@ -184,6 +184,14 @@ We live at a time when widespread misinformation is common. Yet at this time man
         ]
     }
     
+    # Create a second Reading test entry so the UI can show Test 1 and Test 2
+    # For now it reuses the same Cambridge 19 Reading content with a different title.
+    reading_test_2 = dict(reading_test)
+    reading_test_2["id"] = str(uuid.uuid4())
+    reading_test_2["title"] = "Academic Reading Practice Test 2"
+    
+
+    
     # LISTENING TEST - Cambridge IELTS 19 Test 1
     # LISTENING TEST - Cambridge IELTS 19 Test 2
     listening_test_2 = {
