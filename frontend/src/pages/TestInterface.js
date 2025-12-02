@@ -169,7 +169,13 @@ export default function TestInterface({ user }) {
 
   // Additional per-question ElevenLabs audio files for Speaking Practice Test 1 and 2
   const speakingAudioTest1PerQuestion = {
-    // Q11 – Do you agree that working in the legal profession is very stressful?
+    // Test 1 Part 1 – International food (Q1–4)
+    1: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/gy360g9s_ElevenLabs_2025-12-02T15_28_04_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    2: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/pdojbyhe_ElevenLabs_2025-12-02T15_28_32_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    3: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/e2478hwy_ElevenLabs_2025-12-02T15_29_18_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    4: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/l0obrla4_ElevenLabs_2025-12-02T15_29_48_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    5: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/peygmc1x_ElevenLabs_2025-12-02T15_30_16_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    // Test 1 Part 3 – legal profession (Q11)
     11: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/vcetv83l_ElevenLabs_2025-12-02T15_31_49_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
   };
 
