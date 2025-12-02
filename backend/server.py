@@ -145,17 +145,42 @@ def verify_password(password: str, password_hash: str) -> bool:
 
 def calculate_band_score(percentage: float) -> float:
     """Convert percentage to IELTS band score (1-9)"""
-    if percentage >= 95: return 9.0
-    elif percentage >= 90: return 8.5
-    elif percentage >= 85: return 8.0
-    elif percentage >= 80: return 7.5
-    elif percentage >= 75: return 7.0
-    elif percentage >= 70: return 6.5
-    elif percentage >= 65: return 6.0
-    elif percentage >= 60: return 5.5
-    elif percentage >= 55: return 5.0
-    elif percentage >= 50: return 4.5
-    elif percentage >= 45: return 4.0
+    if percentage >= 95:
+        return 9.0
+    elif percentage >= 90:
+        return 8.5
+    elif percentage >= 85:
+        return 8.0
+    elif percentage >= 80:
+        return 7.5
+    elif percentage >= 75:
+        return 7.0
+    elif percentage >= 70:
+        return 6.5
+    elif percentage >= 65:
+        return 6.0
+    elif percentage >= 60:
+        return 5.5
+    elif percentage >= 55:
+        return 5.0
+    elif percentage >= 50:
+        return 4.5
+    elif percentage >= 45:
+        return 4.0
+    elif percentage >= 40:
+        return 3.5
+    elif percentage >= 35:
+        return 3.0
+    elif percentage >= 30:
+        return 2.5
+    elif percentage >= 25:
+        return 2.0
+    elif percentage >= 20:
+        return 1.5
+    else:
+        return 1.0
+
+
 # ============ Email (stub) =========
 
 RESET_TOKEN_EXPIRY_MINUTES = 60
@@ -166,14 +191,6 @@ def generate_reset_token() -> str:
     # For simplicity use uuid4; safer crypto token could be used in production
     return str(uuid.uuid4())
 
-
-
-    elif percentage >= 40: return 3.5
-    elif percentage >= 35: return 3.0
-    elif percentage >= 30: return 2.5
-    elif percentage >= 25: return 2.0
-    elif percentage >= 20: return 1.5
-    else: return 1.0
 
 async def evaluate_with_ai(test_type: str, question: str, user_answer: str, model_answer: Optional[str] = None) -> Dict[str, Any]:
     """Evaluate answer using AI"""
