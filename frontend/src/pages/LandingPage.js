@@ -252,7 +252,6 @@ export default function LandingPage({ onLogin, user }) {
                 Use at least 8 characters. Letters and numbers recommended.
               </p>
             </div>
-            <Button 
             {authMode === 'signin' && (
               <div className="text-right text-xs text-gray-500">
                 <button
