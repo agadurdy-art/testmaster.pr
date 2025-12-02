@@ -182,6 +182,12 @@ export default function TestInterface({ user }) {
     if (timing && speakingQuestionAudioRef.current) {
       try {
         const audio = speakingQuestionAudioRef.current;
+        // Switch audio file based on which speaking test is loaded
+        if (test?.title && test.title.includes('Test 2')) {
+          audio.src = speakingAudioUrlTest2;
+        } else {
+          audio.src = speakingAudioUrlTest1;
+        }
         if (speakingQuestionTimeoutRef.current) {
           clearTimeout(speakingQuestionTimeoutRef.current);
         }
