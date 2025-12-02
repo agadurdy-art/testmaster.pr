@@ -975,17 +975,35 @@ export default function TestInterface({ user }) {
                       {question.part === 2 && question.id === 5 && (
                         <div className="mb-4 p-4 border border-dashed border-gray-300 rounded-lg bg-yellow-50">
                           <p className="font-semibold mb-2">Cue Card</p>
-                          <p className="mb-2">Describe a law that was introduced in your country and that you thought was a very good idea.</p>
-                          <p className="text-sm mb-1">You should say:</p>
-                          <ul className="list-disc list-inside text-sm space-y-1">
-                            <li>what the law was</li>
-                            <li>who introduced it</li>
-                            <li>when and why it was introduced</li>
-                            <li>and explain why you thought this law was such a good idea.</li>
-                          </ul>
-                          <p className="text-xs text-gray-600 mt-2">
-                            You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.
-                          </p>
+                          {test?.title && test.title.includes('Test 2') ? (
+                            <>
+                              <p className="mb-2">Describe a person from your country who has won a prize, award or medal.</p>
+                              <p className="text-sm mb-1">You should say:</p>
+                              <ul className="list-disc list-inside text-sm space-y-1">
+                                <li>who this person is</li>
+                                <li>which prize, award or medal they received</li>
+                                <li>what they did to win this</li>
+                                <li>and explain whether you think it was right that this person received this prize, award or medal.</li>
+                              </ul>
+                              <p className="text-xs text-gray-600 mt-2">
+                                You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.
+                              </p>
+                            </>
+                          ) : (
+                            <>
+                              <p className="mb-2">Describe a law that was introduced in your country and that you thought was a very good idea.</p>
+                              <p className="text-sm mb-1">You should say:</p>
+                              <ul className="list-disc list-inside text-sm space-y-1">
+                                <li>what the law was</li>
+                                <li>who introduced it</li>
+                                <li>when and why it was introduced</li>
+                                <li>and explain why you thought this law was such a good idea.</li>
+                              </ul>
+                              <p className="text-xs text-gray-600 mt-2">
+                                You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.
+                              </p>
+                            </>
+                          )}
                         </div>
                       )}
 
