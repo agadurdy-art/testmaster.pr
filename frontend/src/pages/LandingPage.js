@@ -278,6 +278,9 @@ export default function LandingPage({ onLogin, user }) {
                 </button>
               </div>
             )}
+            )}
+            <Button 
+
 
               data-testid="submit-auth-btn"
               type="submit" 
