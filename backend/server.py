@@ -156,6 +156,18 @@ def calculate_band_score(percentage: float) -> float:
     elif percentage >= 55: return 5.0
     elif percentage >= 50: return 4.5
     elif percentage >= 45: return 4.0
+# ============ Email (stub) =========
+
+RESET_TOKEN_EXPIRY_MINUTES = 60
+
+
+def generate_reset_token() -> str:
+    """Generate a pseudo-random token string."""
+    # For simplicity use uuid4; safer crypto token could be used in production
+    return str(uuid.uuid4())
+
+
+
     elif percentage >= 40: return 3.5
     elif percentage >= 35: return 3.0
     elif percentage >= 30: return 2.5
