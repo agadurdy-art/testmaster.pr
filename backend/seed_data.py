@@ -814,7 +814,7 @@ You will have to talk about the topic for one to two minutes. You have one minut
         "answer_key": []
     }
     
-    await db.tests.insert_many([reading_test, reading_test_2, listening_test, listening_test_2, writing_test, speaking_test])
+    await db.tests.insert_many([reading_test, reading_test_2, listening_test, listening_test_2, writing_test, writing_test_2, speaking_test])
     print("✅ Tests seeded with proper IELTS structure")
     
     # Tips remain the same
