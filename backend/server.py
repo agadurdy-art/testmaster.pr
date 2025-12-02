@@ -192,6 +192,10 @@ def generate_reset_token() -> str:
     return str(uuid.uuid4())
 
 
+# Simple in-memory reset token store (for demo). In production use DB/Redis.
+password_reset_tokens: Dict[str, Dict[str, Any]] = {}
+
+
 async def evaluate_with_ai(test_type: str, question: str, user_answer: str, model_answer: Optional[str] = None) -> Dict[str, Any]:
     """Evaluate answer using AI"""
     chat = LlmChat(
