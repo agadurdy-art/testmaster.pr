@@ -378,6 +378,16 @@ export default function TestInterface({ user }) {
                   const initial = {};
                   (t.questions || []).forEach((q) => {
                     initial[q.id] = '';
+                  });
+                  setAnswers(initial);
+                }}
+              >
+                {t.title || 'Listening Test'}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Reading test selector when multiple tests are available */}
       {testType === 'reading' && availableTests && availableTests.length > 1 && (
@@ -401,17 +411,6 @@ export default function TestInterface({ user }) {
                 }}
               >
                 {t.title || 'Reading Test'}
-              </Button>
-            ))}
-          </div>
-        </div>
-      )}
-
-                  });
-                  setAnswers(initial);
-                }}
-              >
-                {t.title || 'Listening Test'}
               </Button>
             ))}
           </div>
