@@ -166,6 +166,16 @@ export default function TestInterface({ user }) {
   // Pre-recorded British audio for speaking questions (single combined file with timestamps)
   const speakingAudioUrlTest1 = 'https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/madyib68_ElevenLabs_2025-11-30T13_18_42_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
   const speakingAudioUrlTest2 = 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/psaeevf4_ElevenLabs_2025-12-02T14_47_58_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
+
+  // Additional per-question ElevenLabs audio files for Speaking Practice Test 2 (Part 3)
+  const speakingAudioTest2PerQuestion = {
+    6: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/ahzvigmt_ElevenLabs_2025-12-02T15_07_35_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    7: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/l0bu9hot_ElevenLabs_2025-12-02T15_08_00_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    8: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/w6rxtg7d_ElevenLabs_2025-12-02T15_08_18_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    9: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/3l2c03zk_ElevenLabs_2025-12-02T15_08_35_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+    10: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/do18iez3_ElevenLabs_2025-12-02T15_09_12_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
+  };
+
   // Timings for pre-recorded British audio for Speaking Practice Test 1 (Q1–Q11)
   const speakingQuestionTimingsTest1 = {
     1: { start: 11, end: 16 },  // Q1: Can you find food from many different countries... (+ Why/Why not?)
