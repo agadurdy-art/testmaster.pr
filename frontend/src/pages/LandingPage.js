@@ -253,6 +253,33 @@ export default function LandingPage({ onLogin, user }) {
               </p>
             </div>
             <Button 
+            {authMode === 'signin' && (
+              <div className="text-right text-xs text-gray-500">
+                <button
+                  type="button"
+                  className="text-sky-600 hover:underline"
+                  onClick={async () => {
+                    if (!formData.email) {
+                      toast.error('Please enter your email first');
+                      return;
+                    }
+                    try {
+                      await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: formData.email }),
+                      });
+                      toast.success('If this email exists, a reset link has been sent.');
+                    } catch (err) {
+                      toast.error('Failed to request password reset. Please try again.');
+                    }
+                  }}
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
+
               data-testid="submit-auth-btn"
               type="submit" 
               className="w-full primary-gradient text-white"
