@@ -198,6 +198,10 @@ Return ONLY a JSON object with this structure (no extra text, no markdown, no ``
   }},
   "lexical_resource": {{
     "score": <band 1-9>,
+# Simple in-memory reset token store (for demo). In production use DB/Redis.
+password_reset_tokens: Dict[str, Dict[str, Any]] = {}
+
+
     "feedback": "2–3 sentences about vocabulary range and accuracy, including 2–3 example phrases the student could use."
   }},
   "grammatical_accuracy": {{
