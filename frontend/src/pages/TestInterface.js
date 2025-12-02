@@ -416,6 +416,34 @@ export default function TestInterface({ user }) {
           </div>
         </div>
       )}
+      {/* Writing test selector when multiple tests are available */}
+      {testType === 'writing' && availableTests && availableTests.length > 1 && (
+        <div className="max-w-7xl mx-auto px-6 pt-4">
+          <div className="mb-4 flex items-center space-x-3 text-sm">
+            <span className="text-gray-700 font-medium">Select Writing Test:</span>
+            {availableTests.map((t) => (
+              <Button
+                key={t.id}
+                variant={t.id === test?.id ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => {
+                  setTest(t);
+                  setTimeLeft(t.duration * 60);
+                  const initial = {};
+                  (t.questions || []).forEach((q) => {
+                    initial[q.id] = '';
+                  });
+                  setAnswers(initial);
+                  setCurrentQuestion(0);
+                }}
+              >
+                {t.title || 'Writing Test'}
+              </Button>
+            ))}
+          </div>
+        </div>
+      )}
+
 
 
       <div className="max-w-7xl mx-auto px-6 py-8">
