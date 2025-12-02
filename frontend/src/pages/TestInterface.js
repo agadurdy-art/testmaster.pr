@@ -175,9 +175,12 @@ export default function TestInterface({ user }) {
     3: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/3cg9faj4_test%201%20Q3.mp3',
     4: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/idnsfuch_test%201%20Q4.mp3',
     5: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/e5tz00s4_Test%201%20Q5.mp3',
-    // Test 1 Part 3 – school rules / law discussion (Q6–7)
+    // Test 1 Part 3 – school rules / law discussion (Q6–10)
     6: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/kv15nw42_Test%201%20Q6.mp3',
     7: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/g22m93zq_Test%201%20Q7.mp3',
+    8: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/jx5j5icm_test%201%20q8.mp3',
+    9: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/zzmd5x0b_test%201%20Q9.mp3',
+    10: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/4n4t1ua0_test%201%20Q10.mp3',
     // Test 1 Part 3 – legal profession (Q11)
     11: 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/vcetv83l_ElevenLabs_2025-12-02T15_31_49_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3',
   };
