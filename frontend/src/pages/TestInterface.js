@@ -189,15 +189,16 @@ export default function TestInterface({ user }) {
   };
 
   const playSpeakingQuestionAudio = (questionIndex, questionText) => {
-    const timing = speakingQuestionTimings[questionIndex + 1];
+    const qNumber = questionIndex + 1;
+    const isTest2 = test?.title && test.title.includes('Test 2');
+    const timing = isTest2 ? speakingQuestionTimingsTest2[qNumber] : speakingQuestionTimingsTest1[qNumber];
 
     // If we have a timing, use pre-recorded audio for a natural British voice
-    // NOTE: Current pre-recorded timings are only calibrated for Speaking Practice Test 1.
-    if (timing && speakingQuestionAudioRef.current && test?.title && test.title.includes('Test 1')) {
+    if (timing && speakingQuestionAudioRef.current) {
       try {
         const audio = speakingQuestionAudioRef.current;
-        // Always use Test 1 audio for pre-recorded segments
-        audio.src = speakingAudioUrlTest1;
+        // Use the appropriate audio file based on selected speaking test
+        audio.src = isTest2 ? speakingAudioUrlTest2 : speakingAudioUrlTest1;
         if (speakingQuestionTimeoutRef.current) {
           clearTimeout(speakingQuestionTimeoutRef.current);
         }
