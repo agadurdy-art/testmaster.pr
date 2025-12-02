@@ -23,7 +23,7 @@ async def seed_database():
     # READING TEST 1 - Proper IELTS Academic Structure (Cambridge 19 Reading Test 2 content currently)
     reading_test = {
         "id": str(uuid.uuid4()),
-        "title": "Academic Reading Practice Test",
+        "title": "Academic Reading Practice Test 1",
         "test_type": "reading",
         "duration": 60,
         "passages": [
