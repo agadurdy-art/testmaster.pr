@@ -230,30 +230,131 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"id": 9, "section": 1, "type": "note_completion", "question": "Third exercise: playing simple _______"},
             {"id": 10, "section": 1, "type": "note_completion", "question": "Final advice: be patient and enjoy the _______"},
 
-            # Part 2 - Questions 11-20 (to be refined later with real wording and box)
-            {"id": 11, "section": 2, "type": "multiple_choice", "question": "Q11", "options": ["A)", "B)", "C)"]},
-            {"id": 12, "section": 2, "type": "multiple_choice", "question": "Q12", "options": ["A)", "B)", "C)"]},
-            {"id": 13, "section": 2, "type": "multiple_choice", "question": "Q13", "options": ["A)", "B)", "C)"]},
-            {"id": 14, "section": 2, "type": "multiple_choice", "question": "Q14", "options": ["A)", "B)", "C)"]},
-            {"id": 15, "section": 2, "type": "multiple_choice", "question": "Q15", "options": ["A)", "B)", "C)"]},
-            # 16-20: placeholder completion questions for Test 2 (type letter A-H as answer)
-            {"id": 16, "section": 2, "type": "note_completion", "question": "Question 16 (type correct letter)"},
-            {"id": 17, "section": 2, "type": "note_completion", "question": "Question 17 (type correct letter)"},
-            {"id": 18, "section": 2, "type": "note_completion", "question": "Question 18 (type correct letter)"},
-            {"id": 19, "section": 2, "type": "note_completion", "question": "Question 19 (type correct letter)"},
-            {"id": 20, "section": 2, "type": "note_completion", "question": "Question 20 (type correct letter)"},
+            # Part 2 - Questions 11-20 (Working as a lifeboat volunteer)
+            {"id": 11, "section": 2, "type": "multiple_choice", "question": "What made David leave London and move to Northsea?", "options": [
+                "A) He was eager to develop a hobby.",
+                "B) He wanted to work shorter hours.",
+                "C) He found his job in website design unsatisfying."
+            ]},
+            {"id": 12, "section": 2, "type": "multiple_choice", "question": "The Lifeboat Institution in Northsea was built with money provided by", "options": [
+                "A) a local organisation.",
+                "B) a local resident.",
+                "C) the local council."
+            ]},
+            {"id": 13, "section": 2, "type": "multiple_choice", "question": "In his health assessment, the doctor was concerned about the fact that David", "options": [
+                "A) might be colour blind.",
+                "B) was rather short-sighted.",
+                "C) had undergone eye surgery."
+            ]},
+            {"id": 14, "section": 2, "type": "multiple_choice", "question": "After arriving at the lifeboat station, they aim to launch the boat within", "options": [
+                "A) five minutes.",
+                "B) six to eight minutes.",
+                "C) eight and a half minutes."
+            ]},
+            {"id": 15, "section": 2, "type": "multiple_choice", "question": "As a 'helmsman', David has the responsibility of deciding", "options": [
+                "A) who will be the members of his crew.",
+                "B) what equipment it will be necessary to take.",
+                "C) if the lifeboat should be launched."
+            ]},
+            {"id": 16, "section": 2, "type": "multiple_choice", "question": "As well as going out on the lifeboat, David", "options": [
+                "A) gives talks on safety at sea.",
+                "B) helps with fundraising.",
+                "C) recruits new volunteers."
+            ]},
 
-            # Part 3 - Questions 21-30 (placeholder text, answers wired)
-            {"id": 21, "section": 3, "type": "multiple_choice", "question": "Q21", "options": ["A)", "B)", "C)"]},
-            {"id": 22, "section": 3, "type": "multiple_choice", "question": "Q22", "options": ["A)", "B)", "C)"]},
-            {"id": 23, "section": 3, "type": "multiple_choice", "question": "Q23", "options": ["A)", "B)", "C)"]},
-            {"id": 24, "section": 3, "type": "multiple_choice", "question": "Q24", "options": ["A)", "B)", "C)"]},
-            {"id": 25, "section": 3, "type": "multiple_choice", "question": "Q25", "options": ["A)", "B)", "C)"]},
-            {"id": 26, "section": 3, "type": "multiple_choice", "question": "Q26", "options": ["A)", "B)", "C)"]},
-            {"id": 27, "section": 3, "type": "multiple_choice", "question": "Q27", "options": ["A)", "B)", "C)"]},
-            {"id": 28, "section": 3, "type": "multiple_choice", "question": "Q28", "options": ["A)", "B)", "C)"]},
-            {"id": 29, "section": 3, "type": "multiple_choice", "question": "Q29", "options": ["A)", "B)", "C)"]},
-            {"id": 30, "section": 3, "type": "multiple_choice", "question": "Q30", "options": ["A)", "B)", "C)"]},
+            # Questions 17-20: choose TWO letters A–E (modeled as single-letter answers per question)
+            {"id": 17, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David say about the lifeboat volunteer training? (Q17)", "options": [
+                "A) The residential course developed his leadership skills.",
+                "B) The training in use of ropes and knots was quite brief.",
+                "C) The training exercises have built up his mental strength.",
+                "D) The casualty care activities were particularly challenging for him.",
+                "E) The wave tank activities provided practice in survival techniques."
+            ]},
+            {"id": 18, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David say about the lifeboat volunteer training? (Q18)", "options": [
+                "A) The residential course developed his leadership skills.",
+                "B) The training in use of ropes and knots was quite brief.",
+                "C) The training exercises have built up his mental strength.",
+                "D) The casualty care activities were particularly challenging for him.",
+                "E) The wave tank activities provided practice in survival techniques."
+            ]},
+            {"id": 19, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David find most motivating about the work he does? (Q19)", "options": [
+                "A) working as part of a team",
+                "B) experiences when working in winter",
+                "C) being thanked by those he has helped",
+                "D) the fact that it keeps him fit",
+                "E) the chance to develop new equipment"
+            ]},
+            {"id": 20, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David find most motivating about the work he does? (Q20)", "options": [
+                "A) working as part of a team",
+                "B) experiences when working in winter",
+                "C) being thanked by those he has helped",
+                "D) the fact that it keeps him fit",
+                "E) the chance to develop new equipment"
+            ]},
+
+            # Part 3 - Questions 21-30 (recycling footwear)
+            {"id": 21, "section": 3, "type": "multiple_choice", "question": "At first, Don thought the topic of recycling footwear might be too", "options": [
+                "A) limited in scope.",
+                "B) hard to research.",
+                "C) boring for listeners."
+            ]},
+            {"id": 22, "section": 3, "type": "multiple_choice", "question": "When discussing trainers, Bella and Don disagree about", "options": [
+                "A) how popular they are among young people.",
+                "B) how suitable they are for school.",
+                "C) how quickly they wear out."
+            ]},
+            {"id": 23, "section": 3, "type": "multiple_choice", "question": "Bella says that she sometimes recycles shoes because", "options": [
+                "A) they no longer fit.",
+                "B) she no longer likes them.",
+                "C) they are no longer in fashion."
+            ]},
+            {"id": 24, "section": 3, "type": "multiple_choice", "question": "What did the article say that confused Don?", "options": [
+                "A) Public consumption of footwear has risen.",
+                "B) Less footwear is recycled now than in the past.",
+                "C) People dispose of more footwear than they used to."
+            ]},
+            {"id": 25, "section": 3, "type": "multiple_choice", "question": "The high-heeled shoes were rejected because", "options": [
+                "A) one shoe was missing",
+                "B) the colour of one shoe had faded",
+                "C) one shoe had a hole in it",
+                "D) the shoes were brand new",
+                "E) the shoes were too dirty",
+                "F) the stitching on the shoes was broken"
+            ]},
+            {"id": 26, "section": 3, "type": "multiple_choice", "question": "The ankle boots were rejected because", "options": [
+                "A) one shoe was missing",
+                "B) the colour of one shoe had faded",
+                "C) one shoe had a hole in it",
+                "D) the shoes were brand new",
+                "E) the shoes were too dirty",
+                "F) the stitching on the shoes was broken"
+            ]},
+            {"id": 27, "section": 3, "type": "multiple_choice", "question": "The baby shoes were rejected because", "options": [
+                "A) one shoe was missing",
+                "B) the colour of one shoe had faded",
+                "C) one shoe had a hole in it",
+                "D) the shoes were brand new",
+                "E) the shoes were too dirty",
+                "F) the stitching on the shoes was broken"
+            ]},
+            {"id": 28, "section": 3, "type": "multiple_choice", "question": "The trainers were rejected because", "options": [
+                "A) one shoe was missing",
+                "B) the colour of one shoe had faded",
+                "C) one shoe had a hole in it",
+                "D) the shoes were brand new",
+                "E) the shoes were too dirty",
+                "F) the stitching on the shoes was broken"
+            ]},
+            {"id": 29, "section": 3, "type": "multiple_choice", "question": "Why did the project to make 'new' shoes out of old shoes fail?", "options": [
+                "A) People believed the 'new' pairs of shoes were unhygienic.",
+                "B) There were not enough good parts to use in the old shoes.",
+                "C) The shoes in the 'new' pairs were not completely alike."
+            ]},
+            {"id": 30, "section": 3, "type": "multiple_choice", "question": "Bella and Don agree that they can present their topic", "options": [
+                "A) from a new angle.",
+                "B) with relevant images.",
+                "C) in a straightforward way."
+            ]},
 
             # Part 4 - Questions 31-40 (sentence completion – marine lecture)
             {"id": 31, "section": 4, "type": "sentence_completion", "question": "Sea creatures need to be able to _______ in order to survive."},
