@@ -120,6 +120,12 @@ class Course(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class ForgotPasswordRequest(BaseModel):
+class DirectResetRequest(BaseModel):
+    email: str
+    new_password: str
+
+
+
     email: str
 
 class ResetPasswordRequest(BaseModel):
