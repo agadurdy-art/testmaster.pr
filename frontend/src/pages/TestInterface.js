@@ -52,7 +52,6 @@ export default function TestInterface({ user }) {
       if (tests.length > 0) {
         let selectedTest = tests[0];
 
-        if (testType === 'listening') {
         if (testType === 'reading') {
           // Prefer a test titled with 'Test 1' if available; otherwise use first
           const test1 = tests.find(t => t.title && t.title.toLowerCase().includes('test 1'));
@@ -61,6 +60,7 @@ export default function TestInterface({ user }) {
           }
         }
 
+        if (testType === 'listening') {
           // Prefer Test 2 if available (by title), otherwise fall back to first
           const test2 = tests.find(t => t.title && t.title.includes('Test 2'));
           if (test2) {
