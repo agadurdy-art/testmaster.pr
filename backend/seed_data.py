@@ -782,8 +782,6 @@ Write at least 250 words.""",
         ],
         "answer_key": []
     }
-
-    }
     
     # SPEAKING TEST - Cambridge-style prompts (International food & law)
     speaking_test = {
