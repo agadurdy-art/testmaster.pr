@@ -744,7 +744,8 @@ Write at least 250 words.""",
             }
         ],
         "answer_key": []
-    
+    }
+
     writing_test_2 = {
         "id": str(uuid.uuid4()),
         "title": "Academic Writing Test 2",
