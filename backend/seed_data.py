@@ -761,7 +761,7 @@ Write at least 250 words.""",
 Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
 
 Write at least 150 words.""",
-                "image_url": "https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/yoma6ljv_Screenshot%202025-12-02%20at%2020.04.25.png",
+                "image_url": "https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/otft83z3_Screenshot%202025-12-02%20at%2008.04.35.png",
                 "word_limit": 150,
                 "time_suggestion": 20
             },
