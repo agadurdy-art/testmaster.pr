@@ -551,6 +551,28 @@ async def reset_password(payload: ResetPasswordRequest):
     email = token_data["email"]
     password_hash = hash_password(payload.new_password)
 
+
+@api_router.post("/auth/direct-reset")
+async def direct_reset(payload: DirectResetRequest):
+    """Directly reset password using email + new password (no email provider).
+
+    This is a fallback flow for when SendGrid is not available.
+    """
+    email = payload.email.strip().lower()
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user:
+        # For security, don't reveal if email exists
+        return {"detail": "If this email exists, the password has been updated."}
+
+    if len(payload.new_password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
+
+    password_hash = hash_password(payload.new_password)
+    await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
+
+    return {"detail": "If this email exists, the password has been updated."}
+
+
     await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
 
     # Invalidate token after use
