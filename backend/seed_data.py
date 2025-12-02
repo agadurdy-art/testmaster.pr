@@ -744,6 +744,44 @@ Write at least 250 words.""",
             }
         ],
         "answer_key": []
+    
+    writing_test_2 = {
+        "id": str(uuid.uuid4()),
+        "title": "Academic Writing Test 2",
+        "test_type": "writing",
+        "duration": 60,
+        "questions": [
+            {
+                "id": 1,
+                "task": "task1",
+                "type": "graph_description",
+                "question": """The plans below show a harbour in 2000 and how it looks today.
+
+Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
+
+Write at least 150 words.""",
+                "image_url": "https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/yoma6ljv_Screenshot%202025-12-02%20at%2020.04.25.png",
+                "word_limit": 150,
+                "time_suggestion": 20
+            },
+            {
+                "id": 2,
+                "task": "task2",
+                "type": "essay",
+                "question": """The working week should be shorter and workers should have a longer weekend.
+
+Do you agree or disagree?
+
+Give reasons for your answer and include any relevant examples from your own knowledge or experience.
+
+Write at least 250 words.""",
+                "word_limit": 250,
+                "time_suggestion": 40
+            }
+        ],
+        "answer_key": []
+    }
+
     }
     
     # SPEAKING TEST - Cambridge-style prompts (International food & law)
