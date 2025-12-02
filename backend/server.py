@@ -559,10 +559,6 @@ async def direct_reset(payload: DirectResetRequest):
     This is a fallback flow for when SendGrid is not available.
     """
     email = payload.email.strip().lower()
-    user = await db.users.find_one({"email": email}, {"_id": 0})
-    if not user:
-        # For security, don't reveal if email exists
-        return {"detail": "If this email exists, the password has been updated."}
 
     if len(payload.new_password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
