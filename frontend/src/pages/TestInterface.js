@@ -166,14 +166,26 @@ export default function TestInterface({ user }) {
   // Pre-recorded British audio for speaking questions (single combined file with timestamps)
   const speakingAudioUrlTest1 = 'https://customer-assets.emergentagent.com/job_ielts-buddy-11/artifacts/madyib68_ElevenLabs_2025-11-30T13_18_42_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
   const speakingAudioUrlTest2 = 'https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/psaeevf4_ElevenLabs_2025-12-02T14_47_58_Daniel_pre_sp100_s50_sb75_se0_b_m2.mp3';
-  // Timings for pre-recorded British audio (only for Q1–Q5, approximate, non-overlapping)
-  // Pre-recorded timings are currently only accurate for Speaking Practice Test 1
-  const speakingQuestionTimings = {
+  // Timings for pre-recorded British audio for Speaking Practice Test 1 (Q1–Q5)
+  const speakingQuestionTimingsTest1 = {
     1: { start: 12, end: 17 },  // Q1 only
     2: { start: 17, end: 22 },  // Q2 only
     3: { start: 23, end: 28 },
     4: { start: 29, end: 35 },
     5: { start: 37, end: 54 }   // Long cue card
+  };
+
+  // Timings for pre-recorded British audio for Speaking Practice Test 2 (approximate per ElevenLabs file)
+  const speakingQuestionTimingsTest2 = {
+    1: { start: 14, end: 17 },  // Q1: Have you travelled a lot by plane? To where? Why not?
+    2: { start: 18, end: 21 },  // Q2: Why do you think some people enjoy travelling by plane?
+    3: { start: 22, end: 25 },  // Q3: Would you like to live near an airport? Why? Why not?
+    4: { start: 26, end: 32 },  // Q4: In the future, do you think that you will travel by plane more often? Why/Why not?
+    5: { start: 33, end: 54 },  // Q5: Full Part 2 cue card (describe a person...)
+    6: { start: 113, end: 119 }, // Q6: What types of school prizes do children in your country receive? + advantages question
+    7: { start: 125, end: 131 }, // Q7: Do you agree that it's more important for children to receive rewards from their parents than from teachers?
+    8: { start: 134, end: 146 }, // Q8: Do you think that some sportspeople (e.g., top footballers) are paid too much money? + same prize money
+    9: { start: 147, end: 152 }  // Q9: Do you agree with the view that, in sport, taking part is more important than winning?
   };
 
   const playSpeakingQuestionAudio = (questionIndex, questionText) => {
