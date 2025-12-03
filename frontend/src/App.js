@@ -67,6 +67,10 @@ function App() {
             element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
           />
           <Route 
+            path="/pricing" 
+            element={user ? <PricingPage user={user} /> : <Navigate to="/" />} 
+          />
+          <Route 
             path="/admin/content" 
             element={<ContentAdmin />} 
           />
