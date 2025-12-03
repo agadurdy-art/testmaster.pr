@@ -10,6 +10,7 @@ import CoursesPage from './pages/CoursesPage';
 import CourseDetail from './pages/CourseDetail';
 import Profile from './pages/Profile';
 import ContentAdmin from './pages/ContentAdmin';
+import PricingPage from './pages/PricingPage';
 import { Toaster } from './components/ui/sonner';
 
 function App() {
