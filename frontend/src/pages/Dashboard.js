@@ -117,6 +117,13 @@ export default function Dashboard({ user, onLogout }) {
               Courses
             </Button>
             <Button
+              variant="ghost"
+              onClick={() => navigate('/pricing')}
+              className="text-gray-600"
+            >
+              Pricing
+            </Button>
+            <Button
               data-testid="profile-nav-btn"
               variant="ghost"
               onClick={() => navigate('/profile')}
