@@ -59,6 +59,12 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
+
+class UpgradeUserPlanRequest(BaseModel):
+    email: str
+    plan: str
+    admin_token: str
+
 class Test(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
