@@ -69,9 +69,11 @@ export default function PricingPage({ user }) {
       navigate('/');
       return;
     }
-    // For now, just show a placeholder; integration with Stripe/PayPal will be added next.
-    // This keeps the UI ready so you can review it visually.
-    alert(`Checkout for plan: ${planId} will go here.`);
+    // Payments are not live yet – SePay/MoMo integration coming soon.
+    // Keep all features effectively free for now.
+    alert(
+      `Payments are coming soon via SePay/MoMo. The "${planId}" plan is not purchasable yet, and all exams remain accessible while we finish integration.`,
+    );
   };
 
   return (
