@@ -13,6 +13,62 @@ import ContentAdmin from './pages/ContentAdmin';
 import PricingPage from './pages/PricingPage';
 import { Toaster } from './components/ui/sonner';
 
+
+function EmergentBadgeWrapper() {
+  const location = useLocation();
+
+  // Only show badge (and allow ElevenLabs widget) when user is on speaking test AND logged in
+  const isSpeakingTest = location.pathname.startsWith('/test/speaking');
+
+  if (!isSpeakingTest) return null;
+
+  return (
+    <a
+      id="emergent-badge"
+      target="_blank"
+      rel="noreferrer"
+      href="https://app.emergent.sh/?utm_source=emergent-badge"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        position: 'fixed',
+        bottom: 20,
+        left: 20,
+        textDecoration: 'none',
+        padding: '6px 10px',
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+        fontSize: 12,
+        zIndex: 9999,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+        borderRadius: 8,
+        backgroundColor: '#ffffff',
+        border: '1px solid rgba(255, 255, 255, 0.25)'
+      }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        <img
+          style={{ width: 20, height: 20, marginRight: 8 }}
+          src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4"
+          alt="Emergent avatar"
+        />
+        <p
+          style={{
+            color: '#000000',
+            fontFamily:
+              '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+            fontSize: 12,
+            alignItems: 'center',
+            marginBottom: 0
+          }}
+        >
+          Made with Emergent
+        </p>
+      </div>
+    </a>
+  );
+}
+
 function App() {
   const [user, setUser] = useState(null);
 
