@@ -459,6 +459,9 @@ function ElevenLabsExaminer() {
         </div>
       </header>
 
+      {/* NOTE: Payments not live yet – mark extra tests as coming soon but do not block.
+          Once SePay/MoMo is integrated, Test 2+ can be hard-gated based on user subscription/credits.
+       */}
       {/* Listening test selector when multiple tests are available */}
       {testType === 'listening' && availableTests && availableTests.length > 1 && (
         <div className="max-w-7xl mx-auto px-6 pt-4">
