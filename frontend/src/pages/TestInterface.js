@@ -17,21 +17,19 @@ export default function TestInterface({ user }) {
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
 
-// ElevenLabs examiner widget (only for logged-in users on speaking test page)
+// ElevenLabs examiner widget controller (only for logged-in users on speaking test page)
 function ElevenLabsExaminer() {
   React.useEffect(() => {
-    // Load ElevenLabs Convai script once
-    if (!document.querySelector('script[data-elevenlabs-convai="1"]')) {
-      const script = document.createElement('script');
-      script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-      script.async = true;
-      script.type = 'text/javascript';
-      script.setAttribute('data-elevenlabs-convai', '1');
-      document.body.appendChild(script);
-    }
+    const widget = document.getElementById('ielts-ace-examiner');
+    if (!widget) return;
+    widget.style.display = 'block';
+
+    return () => {
+      widget.style.display = 'none';
+    };
   }, []);
 
-  return <elevenlabs-convai agent-id="agent_2701kbcd1n1xepyt59ckv9sdzrjf"></elevenlabs-convai>;
+  return null;
 }
 
   const [loading, setLoading] = useState(true);
