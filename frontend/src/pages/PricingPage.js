@@ -93,8 +93,11 @@ export default function PricingPage({ user }) {
       <main className="max-w-6xl mx-auto px-6 py-10">
         <div className="text-center mb-10">
           <h2 className="text-3xl font-bold text-[#05203C] mb-3">AI Speaking Exam Plans</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 max-w-2xl mx-auto mb-2">
             Practice real IELTS-style speaking exams with AI examiner feedback. Prices shown in both USD and VND.
+          </p>
+          <p className="text-xs text-[#D90732] font-semibold uppercase tracking-wide">
+            Payments coming soon via SePay / MoMo – all plans are preview only, exams remain free for now.
           </p>
         </div>
 
