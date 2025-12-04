@@ -579,23 +579,29 @@ function ElevenLabsExaminer() {
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Speaking mode selector */}
         {testType === 'speaking' && (
-          <Card className="mb-6 p-4 bg-blue-50 border border-blue-200">
-            <h2 className="text-lg font-semibold text-blue-900 mb-1">Choose your speaking mode</h2>
-            <p className="text-sm text-blue-900 mb-2">
-              You can practise in two ways:
-            </p>
-            <ul className="list-disc list-inside text-sm text-blue-900 space-y-1">
-              <li>
-                <span className="font-semibold">Mode 1 – Built-in Speaking Test:</span> Use the questions below, record your answers, and get detailed examiner-style feedback on each response directly in IELTS Ace.
-              </li>
-              <li>
-                <span className="font-semibold">Mode 2 – Live IELTS Examiner (ElevenLabs):</span> Use the round button in the bottom-right corner of the screen (the ElevenLabs widget) to start a live IELTS-style interview using the same topics.
-              </li>
-            </ul>
-            <p className="text-xs text-blue-800 mt-2">
-              Tip: You can first practise here in Mode 1, then click the bottom-right ElevenLabs examiner button for a realistic interview in Mode 2.
-            </p>
-          </Card>
+          <>
+            <Card className="mb-6 p-4 bg-blue-50 border border-blue-200">
+              <h2 className="text-lg font-semibold text-blue-900 mb-1">Choose your speaking mode</h2>
+              <p className="text-sm text-blue-900 mb-2">
+                You can practise in two ways:
+              </p>
+              <ul className="list-disc list-inside text-sm text-blue-900 space-y-1">
+                <li>
+                  <span className="font-semibold">Mode 1 – Built-in Speaking Test:</span> Use the questions below, record your answers, and get detailed examiner-style feedback on each response directly in IELTS Ace.
+                </li>
+                <li>
+                  <span className="font-semibold">Mode 2 – Live IELTS Examiner (ElevenLabs):</span> Use the examiner button in the bottom-right corner of the speaking test screen to start a live IELTS-style interview using the same topics.
+                </li>
+              </ul>
+              <p className="text-xs text-blue-800 mt-2">
+                Tip: You can first practise here in Mode 1, then click the examiner button for a realistic interview in Mode 2.
+              </p>
+            </Card>
+            {/* ElevenLabs examiner widget - only rendered for logged-in users on speaking page */}
+            <div className="fixed bottom-6 right-6 z-40">
+              <ElevenLabsExaminer />
+            </div>
+          </>
         )}
 
         <div className="grid lg:grid-cols-4 gap-6">
