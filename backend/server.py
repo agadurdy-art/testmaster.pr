@@ -12,6 +12,7 @@ import uuid
 from datetime import datetime, timezone, timedelta
 import hashlib
 import hmac
+import urllib.parse
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 from emergentintegrations.llm.openai import OpenAISpeechToText
 from sendgrid import SendGridAPIClient
