@@ -5,7 +5,7 @@ import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Clock, ChevronLeft, ChevronRight, Send, Mic, Square, Play, Pause } from 'lucide-react';
-import { getTests, submitTest, transcribeAudio, evaluateWriting, evaluateSpeaking } from '../lib/api';
+import { getTests, submitTest, transcribeAudio, evaluateWriting, evaluateSpeaking, startSpeakingSession } from '../lib/api';
 import { formatTime } from '../lib/utils';
 import { toast } from 'sonner';
 
