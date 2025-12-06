@@ -599,27 +599,37 @@ function ElevenLabsExaminer() {
         {/* Speaking mode selector */}
         {testType === 'speaking' && (
           <>
-            <Card className="mb-6 p-4 bg-blue-50 border border-blue-200">
-              <h2 className="text-lg font-semibold text-blue-900 mb-1">Choose your speaking mode</h2>
-              <p className="text-sm text-blue-900 mb-2">
-                You can practise in two ways:
-              </p>
-              <ul className="list-disc list-inside text-sm text-blue-900 space-y-1">
-                <li>
-                  <span className="font-semibold">Mode 1 – Built-in Speaking Test:</span> Use the questions below, record your answers, and get detailed examiner-style feedback on each response directly in IELTS Ace.
-                </li>
-                <li>
-                  <span className="font-semibold">Mode 2 – Live IELTS Examiner (ElevenLabs):</span> Use the examiner button in the bottom-right corner of the speaking test screen to start a live IELTS-style interview using the same topics.
-                </li>
-              </ul>
-              <p className="text-xs text-blue-800 mt-2">
-                Tip: You can first practise here in Mode 1, then click the examiner button for a realistic interview in Mode 2.
-              </p>
+            <Card className="mb-6 p-4 bg-blue-50 border border-blue-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-semibold text-blue-900 mb-1">AI Speaking Credits</h2>
+                <p className="text-sm text-blue-900 mb-1">
+                  Remaining credits: <span className="font-bold">{speakingCredits}</span>
+                </p>
+                <p className="text-xs text-blue-800">
+                  Each live AI speaking interview uses <span className="font-semibold">1 credit</span> when you start the session.
+                </p>
+              </div>
+              <div className="flex flex-col items-start md:items-end gap-2">
+                <Button
+                  variant="default"
+                  disabled={speakingCredits <= 0}
+                  onClick={handleStartSpeakingSession}
+                >
+                  {speakingSessionStarted ? 'Speaking Session Active' : 'Start AI Speaking Session (−1 credit)'}
+                </Button>
+                {speakingCredits <= 0 && (
+                  <p className="text-xs text-red-700 max-w-xs text-right">
+                    You have no speaking credits left. Please purchase a plan on the Pricing page to continue using the AI interviewer.
+                  </p>
+                )}
+              </div>
             </Card>
             {/* ElevenLabs examiner widget - only rendered for logged-in users on speaking page */}
-            <div className="fixed bottom-6 right-6 z-40">
-              <ElevenLabsExaminer />
-            </div>
+            {speakingSessionStarted && (
+              <div className="fixed bottom-6 right-6 z-40">
+                <ElevenLabsExaminer />
+              </div>
+            )}
           </>
         )}
 
