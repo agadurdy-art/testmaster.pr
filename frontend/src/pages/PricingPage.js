@@ -14,6 +14,8 @@ const plans = [
     priceVnd: '120,000 VND',
     credits: '1 × 10-minute AI Speaking Exam',
     features: [
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
+
       'Instant scoring',
       'Band prediction',
       'Feedback summary',
