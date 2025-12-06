@@ -63,12 +63,11 @@ const plans = [
     cta: 'Go Pro',
   },
 ];
-  const [showDialog, setShowDialog] = React.useState(false);
-  const [paymentInfo, setPaymentInfo] = React.useState(null);
-
 
 export default function PricingPage({ user }) {
   const navigate = useNavigate();
+  const [showDialog, setShowDialog] = React.useState(false);
+  const [paymentInfo, setPaymentInfo] = React.useState(null);
 
   const handleCheckout = async (planId, amountVnd) => {
     if (!user) {
