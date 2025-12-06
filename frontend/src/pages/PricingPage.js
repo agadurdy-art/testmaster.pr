@@ -66,16 +66,35 @@ const plans = [
 export default function PricingPage({ user }) {
   const navigate = useNavigate();
 
-  const handleCheckout = (planId) => {
+  const handleCheckout = async (planId, amountVnd) => {
     if (!user) {
       navigate('/');
       return;
     }
-    // Payments are not live yet – SePay/MoMo integration coming soon.
-    // Keep all features effectively free for now.
-    alert(
-      `Payments are coming soon via SePay/MoMo. The "${planId}" plan is not purchasable yet, and all exams remain accessible while we finish integration.`,
-    );
+
+    try {
+      const res = await api.post('/payments/sepay/create', {
+        plan_id: planId,
+        amount_vnd: amountVnd,
+      }, {
+        headers: {
+          'x-user-email': user.email,
+        },
+      });
+
+      const inst = res.data.instructions;
+      alert(
+        `Please transfer ${inst.amount_vnd.toLocaleString('vi-VN')} VND to:\n\n` +
+        `Bank: ${inst.bank_name}\n` +
+        `Account: ${inst.account_number}\n` +
+        `Name: ${inst.account_name}\n\n` +
+        `IMPORTANT: Add this code in the transfer description: ${inst.payment_code}\n\n` +
+        `Your order ID: ${res.data.order_id}. After payment, your account will be upgraded automatically within ~10 seconds.`,
+      );
+    } catch (err) {
+      console.error('SePay create error', err);
+      alert('Could not start payment. Please try again in a moment.');
+    }
   };
 
   return (
