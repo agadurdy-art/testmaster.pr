@@ -1,0 +1,176 @@
+<analysis>**original_problem_statement:** The user's primary goal is to build a comprehensive IELTS practice platform, IELTS Ace. The project started with fixing an answer evaluation system and has since expanded significantly.
+
+PRODUCT REQUIREMENTS:
+-   Implement full practice tests (Test 1, Test 2, etc.) for Reading, Listening, Writing, and Speaking modules based on Cambridge IELTS 19 content provided by the user.
+-   Implement email/password authentication with a Forgot Password feature.
+-   Create a Courses section with video content.
+-   Integrate a live AI speaking examiner (originally ElevenLabs).
+-   Add a payment system with subscriptions and pay-per-use options to gate access to premium content. Premium content is defined as:
+    -   Any test beyond Test 1 (e.g., Test 2, Test 3).
+    -   The AI Interview Mode (Speaking examiner).
+-   The AI Interviewer should have a 3-minute free trial for every user before requiring payment.
+-   Display prices in both USD and VND.
+-   Integrate with Vietnamese payment gateways like SePay and MoMoPay.
+
+**User's preferred language**: English
+
+**what currently exists?**
+-   A full-stack application (React/FastAPI/MongoDB).
+-   **Authentication**: A functional email/password registration and login system. It includes an in-app Forgot Password flow that resets the password via a browser prompt, without needing an external email provider.
+-   **Test Modules**: All four modules (Reading, Listening, Writing, Speaking) now have a test selector and contain both Test 1 and Test 2. The content (passages, questions, images, audio files) for all tests has been implemented as per user-provided materials.
+-   **Speaking Audio**: All speaking questions for both Test 1 and Test 2 have been meticulously mapped to individual ElevenLabs audio files provided by the user, resolving previous timing and mismatch issues.
+-   **AI Speaking Examiner (ElevenLabs)**: The widget is now correctly gated. It is removed from the global  and only rendered on the  page for logged-in users, resolving the can use without login and blinking issues.
+-   **Pricing Page**: A UI-only pricing page is available at . It displays four plans with prices in both USD and VND as requested. The payment buttons currently show a Coming Soon placeholder message.
+-   **Deployment Readiness**: The application has passed a health check and is ready for deployment. The user has initiated the process of connecting a custom domain ().
+
+**Last working item**:
+-   **Last item agent was working**: The agent was guiding the user to resolve a DNS configuration issue to connect their custom domain ( from GoDaddy) to the Emergent deployment. This is a prerequisite for setting up the SePay payment gateway's IPN/webhook URL. Simultaneously, the user's very last message was now we need to fix forgot password protocol, indicating a potential new or recurring issue with the password reset feature that was just implemented.
+-   **Status**: BLOCKED (on domain connection) / NOT STARTED (on the new password issue).
+-   **Agent Testing Done**: N (for domain connection), Y (for the previously implemented in-app password reset).
+-   **Which testing method agent to use?**: Manual verification for the domain. For the password issue, the agent should first ask the user for clarification, then use  or manual UI testing to reproduce the problem.
+-   **User Testing Done**: N
+
+**All Pending/In progress Issue list**:
+-   **Issue 1 (P0): Complete custom domain linking.**
+-   **Issue 2 (P1): User reports an issue with the forgot password protocol.**
+
+**Issues Detail:**
+-   **Issue 1: Complete custom domain linking.**
+    -   **Attempted fixes**: The user was guided to switch from GoDaddy's custom nameservers to GoDaddy's default nameservers to allow DNS record management. The user is currently waiting for this nameserver change to propagate.
+    -   **Next debug checklist**:
+        1.  Confirm with the user that the Nameservers section in GoDaddy no longer shows the updating message.
+        2.  Guide the user to the DNS Records tab for .
+        3.  Ask the user for the manual linking records (A/CNAME) provided by Emergent's deployment page.
+        4.  Instruct the user on how to add these records in GoDaddy.
+        5.  Wait for Emergent to verify the DNS setup and issue the SSL certificate.
+    -   **Why fix this issue and what will be achieved with the fix?**: A stable, public domain is required to configure the IPN/webhook for the SePay payment gateway, which is essential for implementing the payment system.
+    -   **Status**: BLOCKED (on DNS propagation at GoDaddy).
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: N/A (Infrastructure change).
+    -   **Blocked on other issue**: None.
+
+-   **Issue 2: User reports an issue with the forgot password protocol.**
+    -   **Attempted fixes**: The agent previously replaced the SendGrid-based email reset with a fully in-app flow. It uses a  API endpoint and a browser prompt for the new password. This was done because the user could not configure SendGrid.
+    -   **Next debug checklist**:
+        1.  Start by asking the user to clarify what is not working with the current Forgot Password feature.
+        2.  Request the exact steps they are taking and the result they are seeing.
+        3.  Manually test the flow: Go to the login page, click Forgot password?, enter an email and a new password in the prompt, and then try to log in with the new password.
+        4.  Check backend logs for any errors related to the  endpoint during the user's attempt.
+    -   **Why fix this issue and what will be achieved with the fix?**: A working password reset is a critical feature for user account management.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Blocked on other issue**: User clarification.
+
+**In progress Task List**:
+-   **Task 1 (P0): Implement SePay/MoMo Payment Integration.**
+    -   **Where to resume**: Once the custom domain is linked (Issue 1) and the user provides SePay API keys (, ), the next step is to implement the backend endpoints for creating payments and handling IPN webhooks.
+    -   **What will be achieved with this?**: Users will be able to purchase exam credits and subscriptions, enabling the monetization of the platform.
+    -   **Status**: IN PROGRESS (Blocked).
+    -   **Should Test frontend/backend/both after fix?**: Both.
+    -   **Blocked on something**: Issue 1 (Domain Linking) and waiting for the user to provide SePay API credentials.
+
+**Upcoming and Future Tasks**
+-   **Upcoming Tasks:**
+    *   **(P0) Implement Paywall and Credits Logic**:
+        -   Enforce the 3-minute free trial for the AI interviewer.
+        -   Implement the 100-minute credit system for the Examiner Pro plan.
+        -   Block access to tests other than Test 1 for users without a pro plan.
+        -   Display remaining exam credits on the user's dashboard.
+    *   **(P1) Implement Manual User Upgrade Endpoint**: Create the  endpoint to allow the admin to add credits and set subscriptions for users after a confirmed manual payment (e.g., via SePay).
+    *   **(P2) Refine UI for Listening/Reading question types**.
+-   **Future Tasks:**
+    *   Implement full webhook automation for SePay/MoMo to replace the manual upgrade process.
+    *   Add more practice tests (Test 3, 4, etc.).
+    *   Enhance the Dashboard to show performance summaries.
+    *   Add progress tracking to the Course module.
+
+**Completed work in this session**
+-   **Reading Test 2**: Implemented with content and a UI selector.
+-   **Writing Test 2**: Implemented with content, image, and a UI selector.
+-   **Speaking Test 2**: Implemented with content and a UI selector.
+-   **Speaking Audio Rework**: Mapped all questions for both Speaking Test 1 and 2 to their own dedicated ElevenLabs audio files, fixing all timing and mismatch issues.
+-   **Forgot Password Flow**: Replaced the non-functional email-based reset with a fully in-app password reset mechanism using a browser prompt.
+-   **AI Examiner Gating**: Fixed the ElevenLabs widget to only render on the Speaking page for logged-in users, resolving the can use without login issue.
+-   **Pricing Page Creation**: Built the  page UI with four distinct plans and prices in both USD and VND, with placeholder buttons marked Coming Soon.
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Frameworks**: React (frontend), FastAPI (backend)
+-   **Database**: MongoDB
+-   **UI**: Shadcn UI components
+-   **Payment Integration (Planned)**: SePay and MoMoPay. The strategy is to use payment links and webhooks/IPNs for fulfillment.
+-   **Authentication**: JWT-based session management, in-app password reset.
+-   **Content Gating (Planned)**: User plans (               total        used        free      shared  buff/cache   available
+Mem:        16359156     7979716     1239672       45836     7438508     8379440
+Swap:              0           0           0, ) and credit system () will be used to control access to tests and the AI examiner.
+
+**key DB schema**
+-   : 
+-   : 
+-   : 
+
+**All files of reference**
+-   : Major changes to add in-app password reset, stubs for payment logic, and user schema updates.
+-   : Heavily edited to add content for Reading Test 2, Writing Test 2, and Speaking Test 2.
+-   : Major changes to add selectors for all test types and to map all individual speaking audio files.
+-   : Updated to handle the new in-app password reset flow.
+-   : Updated to add a route for the new pricing page and to conditionally load the ElevenLabs widget.
+-   : New file created to display the payment plans.
+
+**Areas that need refactoring**:
+-   : This component's complexity continues to grow. It handles rendering and logic for all four test modules and would benefit from being broken down into module-specific sub-components.
+
+**key api endpoints**
+-   , 
+-   : (POST) New endpoint for the in-app password reset.
+-   : Fetches available tests for a module.
+-   **(Planned)** : (POST) Webhook to receive payment notifications from SePay.
+-   **(Planned)** : (POST) Endpoint to generate a payment link/session.
+-   **(Planned)** : (POST) Admin-only endpoint to grant credits/subscriptions to users.
+
+**Critical Info for New Agent**
+-   **Payment Gateway**: The user has switched from Stripe/PayPal to Ko-fi, and now to **SePay/MoMo**. Do not implement Stripe. The current plan is to integrate SePay first.
+-   **Manual Upgrades**: The user has agreed to a manual fulfillment flow. After receiving a payment notification from SePay, they will use an admin endpoint to grant credits/subscriptions. Do not build a fully automated webhook fulfillment unless requested.
+-   **Domain Linking**: The immediate blocker is the user's custom domain () setup. They are waiting for GoDaddy nameserver changes to propagate. This must be resolved before the SePay IPN can be configured.
+-   **Forgot Password Issue**: The user's last message was now we need to fix forgot password protocol. This is a high-priority clarification point, as the agent had already implemented a new in-app reset flow. You must investigate what is still wrong from the user's perspective.
+
+**Last 10 User Messages and any pending user messages**
+1.  **user**: Asks if the website can be modified after deployment. (Completed)
+2.  **agent**: Explains that development can continue in preview and be redeployed. (Completed)
+3.  **user**: Asks if they can host the website elsewhere. (Completed)
+4.  **agent**: Confirms the code is standard and exportable, and explains what's needed. (Completed)
+5.  **user**: I am on Sepay now. guide me to complete payment integration (In Progress)
+6.  **agent**: Guides the user on setting the IPN URL and adding credentials to . (In Progress)
+7.  **user**: Shares a screenshot of a SePay DNS error for the IPN URL. (In Progress)
+8.  **agent**: Explains the error is expected for preview URLs and guides the user to proceed with adding env variables. (In Progress)
+9.  **user**: Asks if they have to pay again for redeployments. (Completed)
+10. **agent**: Clarifies that the 50 credits are a monthly hosting fee, and redeploys are free. (Completed)
+11. **user**: (After a long discussion on domains) now we need to fix forgot password protocol. (**Pending - this is the highest priority user-facing issue to clarify**)
+
+**Project Health Check:**
+-   **Broken**:
+    -   Payment integration is non-existent.
+    -   Custom domain linking is in a waiting state.
+-   **Mocked**:
+    -   The  page UI is complete, but the payment buttons are placeholders.
+    -   The paywall logic is planned but not implemented; all content is currently accessible.
+
+**3rd Party Integrations**
+-   **ElevenLabs Convai**: Widget for AI speaking examiner. Now gated to only show for logged-in users on the speaking page.
+-   **SePay / MoMo (Planned)**: Chosen payment gateways for the Vietnamese market. Integration is pending domain setup and user-provided API keys.
+
+**Testing status**
+-   **Testing agent used after significant changes**: NO
+-   **Troubleshoot agent used after agent stuck in loop**: NO
+-   **Test files created**: []
+-   **Known regressions**: None.
+
+**Credentials to test flow:**
+-   Users can be registered with any email/password via the UI.
+-   There are no fixed test credentials.
+
+**What agent forgot to execute**
+-   The user's final request to fix forgot password protocol was not acted upon as the session concluded. This must be the first point of clarification for the next agent.</analysis>
