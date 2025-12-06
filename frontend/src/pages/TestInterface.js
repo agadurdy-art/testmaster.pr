@@ -41,6 +41,9 @@ function ElevenLabsExaminer() {
   const [listeningAudioPlaying, setListeningAudioPlaying] = useState(false);
   const [writingFeedback, setWritingFeedback] = useState({});
   const [speakingFeedback, setSpeakingFeedback] = useState({});
+  const [speakingSessionStarted, setSpeakingSessionStarted] = useState(false);
+  const [speakingCredits, setSpeakingCredits] = useState(user?.examCredits ?? 0);
+
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
