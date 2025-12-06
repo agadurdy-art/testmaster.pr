@@ -70,6 +70,20 @@ export const getSpeakingQuestions = async (part) => {
   return response.data;
 };
 
+export const getPaymentOrder = async (orderId) => {
+  const response = await api.get(`/payments/orders/${orderId}`);
+  return response.data;
+};
+
+export const startSpeakingSession = async (userEmail) => {
+  const response = await api.post('/speaking/session/start', {}, {
+    headers: {
+      'x-user-email': userEmail,
+    },
+  });
+  return response.data;
+};
+
 export const getUserProgress = async (userId) => {
   const response = await api.get(`/progress/${userId}`);
   return response.data;
