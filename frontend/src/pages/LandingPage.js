@@ -261,25 +261,19 @@ export default function LandingPage({ onLogin, user }) {
                       toast.error('Please enter your email first');
                       return;
                     }
-                    const newPassword = window.prompt('Enter your new password (min 8 characters):');
-                    if (!newPassword) return;
-                    if (newPassword.length < 8) {
-                      toast.error('Password must be at least 8 characters long');
-                      return;
-                    }
                     try {
-                      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/direct-reset`, {
+                      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/forgot-password`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: formData.email, new_password: newPassword }),
+                        body: JSON.stringify({ email: formData.email }),
                       });
                       if (!res.ok) {
                         const data = await res.json().catch(() => ({}));
                         throw new Error(data.detail || 'Reset failed');
                       }
-                      toast.success('Password updated. You can now sign in with the new password.');
+                      toast.success('If this email exists, we\'ve sent a reset link. Please check your inbox.');
                     } catch (err) {
-                      toast.error(err.message || 'Failed to reset password. Please try again.');
+                      toast.error(err.message || 'Failed to start reset. Please try again.');
                     }
                   }}
                 >
