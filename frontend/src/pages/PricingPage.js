@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import api from '../lib/api';
 
 
@@ -14,8 +15,6 @@ const plans = [
     priceVnd: '120,000 VND',
     credits: '1 × 10-minute AI Speaking Exam',
     features: [
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
-
       'Instant scoring',
       'Band prediction',
       'Feedback summary',
