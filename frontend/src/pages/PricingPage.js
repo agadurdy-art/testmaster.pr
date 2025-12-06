@@ -83,14 +83,28 @@ export default function PricingPage({ user }) {
       });
 
       const inst = res.data.instructions;
-      alert(
-        `Please transfer ${inst.amount_vnd.toLocaleString('vi-VN')} VND to:\n\n` +
-        `Bank: ${inst.bank_name}\n` +
-        `Account: ${inst.account_number}\n` +
-        `Name: ${inst.account_name}\n\n` +
-        `IMPORTANT: Add this code in the transfer description: ${inst.payment_code}\n\n` +
-        `Your order ID: ${res.data.order_id}. After payment, your account will be upgraded automatically within ~10 seconds.`,
-      );
+
+      const lines = [
+        `Please transfer ${inst.amount_vnd.toLocaleString('vi-VN')} VND to:`,
+        '',
+        `Bank: ${inst.bank_name}`,
+        `Account: ${inst.account_number}`,
+        `Name: ${inst.account_name}`,
+      ];
+
+      if (inst.payment_code) {
+        lines.push('', `IMPORTANT: Add this code in the transfer description: ${inst.payment_code}`);
+      }
+
+      lines.push('', `Your order ID: ${res.data.order_id}. After payment, your account will be upgraded automatically within ~10 seconds.`);
+
+      if (inst.qr_image_url) {
+        // Show QR in a new tab for easy scanning
+        window.open(inst.qr_image_url, '_blank', 'noopener,noreferrer');
+        lines.push('', 'You can also scan the QR code that just opened in a new tab to pay automatically.');
+      }
+
+      alert(lines.join('\n'));
     } catch (err) {
       console.error('SePay create error', err);
       alert('Could not start payment. Please try again in a moment.');
