@@ -445,6 +445,25 @@ async def login_user(input: UserLogin):
     if not verify_password(input.password, user.get("password_hash") or ""):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
+    # If user has a verified flag and it's False, block login and (re)send verification link
+    if user.get("verified") is False:
+        token = generate_reset_token()
+        expires_at = datetime.now(timezone.utc) + timedelta(hours=24)
+        await db.email_verifications.insert_one(
+            {
+                "email": input.email.strip().lower(),
+                "token": token,
+                "expires_at": expires_at.isoformat(),
+            }
+        )
+        frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
+        verify_link = f"{frontend_base}/verify-email?token={token}"
+        send_reset_email(input.email, verify_link)
+        raise HTTPException(
+            status_code=403,
+            detail="Please verify your email. We have sent a new verification link.",
+        )
+
     # Remove password_hash before returning
     user.pop("password_hash", None)
     if isinstance(user.get('created_at'), str):
