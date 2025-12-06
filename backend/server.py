@@ -409,11 +409,29 @@ async def register_user(input: UserCreate):
         email=input.email,
         name=input.name,
         password_hash=hash_password(input.password),
-        verified=True,
+        verified=False,
     )
     doc = user.model_dump()
-    doc['created_at'] = doc['created_at'].isoformat()
+    doc["created_at"] = doc["created_at"].isoformat()
     await db.users.insert_one(doc)
+
+    # Create email verification token
+    token = generate_reset_token()
+    expires_at = datetime.now(timezone.utc) + timedelta(hours=24)
+    await db.email_verifications.insert_one(
+        {
+            "email": input.email.strip().lower(),
+            "token": token,
+            "expires_at": expires_at.isoformat(),
+        }
+    )
+
+    frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
+    verify_link = f"{frontend_base}/verify-email?token={token}"
+
+    # Try sending email; if SendGrid not configured, just log
+    send_reset_email(input.email, verify_link)
+
     # Do not expose password_hash in response
     user.password_hash = None
     return user
