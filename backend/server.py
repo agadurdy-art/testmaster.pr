@@ -507,6 +507,168 @@ async def submit_test(submission: SubmitAnswers):
                 "message": f"You got {correct} out of {total} correct."
             },
             time_taken=submission.time_taken
+
+# ================== Payments: SePay + Manual Credit ==================
+
+async def _get_user_by_email(email: str) -> Optional[dict]:
+    user = await db.users.find_one({"email": email.lower().strip()}, {"_id": 0})
+    return user
+
+
+@api_router.post("/payments/sepay/create")
+async def create_sepay_payment(req: CreatePaymentRequest, request: Request):
+    """Create a payment order for a pricing plan and return bank transfer instructions.
+
+    For now we keep it simple:
+    - Trust the amount sent from the frontend for the selected plan
+    - Create a pending PaymentOrder document
+    - Return static bank details + a unique transfer content code
+    """
+    user_email = request.headers.get("x-user-email")
+    if not user_email:
+        raise HTTPException(status_code=401, detail="Missing user context")
+
+    user = await _get_user_by_email(user_email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    order = PaymentOrder(
+        user_id=user["id"],
+        plan_id=req.plan_id,
+        amount_vnd=req.amount_vnd,
+    )
+
+    # Generate a simple unique payment code and store it on the order
+    payment_code = f"IELTS{order.id[:8].upper()}"
+
+    order_doc = order.model_dump()
+    order_doc["created_at"] = order_doc["created_at"].isoformat()
+    await db.payment_orders.insert_one(order_doc)
+
+    bank_account = os.getenv("SEPAY_BANK_ACCOUNT_NUMBER", "")
+    bank_name = os.getenv("SEPAY_BANK_NAME", "MB Bank")
+    account_name = os.getenv("SEPAY_ACCOUNT_NAME", "")
+
+    if not bank_account:
+        logger.warning("SEPAY_BANK_ACCOUNT_NUMBER not set; returning empty bank details")
+
+    instructions = {
+        "bank_name": bank_name,
+        "account_number": bank_account,
+        "account_name": account_name,
+        "amount_vnd": req.amount_vnd,
+        "payment_code": payment_code,
+        "note": "Transfer EXACT amount and include payment code in description",
+    }
+
+    return {
+        "order_id": order.id,
+        "plan_id": req.plan_id,
+        "status": order.status,
+        "instructions": instructions,
+    }
+
+
+@api_router.post("/payments/sepay/ipn")
+async def sepay_ipn(request: Request):
+    """Handle SePay webhook.
+
+    We currently verify via a static API key header configured on SePay side.
+    """
+    api_key_header = request.headers.get("x-sepay-api-key")
+    expected = os.getenv("SEPAY_WEBHOOK_API_KEY")
+    if not expected or api_key_header != expected:
+        logger.warning("Invalid SePay webhook API key")
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    payload = await request.json()
+
+    try:
+        transfer_type = payload.get("transferType") or payload.get("transfer_type")
+        amount = int(payload.get("transferAmount") or 0)
+        content = (payload.get("content") or "").upper()
+        sepay_tx_id = str(payload.get("id"))
+        reference_code = payload.get("referenceCode")
+    except Exception as e:
+        logger.error(f"Invalid SePay payload: {e}")
+        raise HTTPException(status_code=400, detail="Invalid payload")
+
+    # Only process incoming money
+    if transfer_type != "in":
+        return {"detail": "Ignoring non-income transaction"}
+
+    # Try to find an order whose id fragment is in the content
+    matching_order = await db.payment_orders.find_one(
+        {
+            "status": "pending",
+            "amount_vnd": amount,
+        },
+        {"_id": 0},
+    )
+
+    if not matching_order:
+        logger.warning(f"No matching order for SePay txn {sepay_tx_id} amount={amount}")
+        return {"detail": "No matching order"}
+
+    # Mark order completed
+    await db.payment_orders.update_one(
+        {"id": matching_order["id"]},
+        {"$set": {
+            "status": "completed",
+            "sepay_transaction_id": sepay_tx_id,
+            "sepay_reference_code": reference_code,
+            "completed_at": datetime.now(timezone.utc).isoformat(),
+        }},
+    )
+
+    # Upgrade user plan / credits
+    user = await db.users.find_one({"id": matching_order["user_id"]}, {"_id": 0})
+    if user:
+        plan_id = matching_order.get("plan_id")
+        update_fields: Dict[str, Any] = {}
+        if plan_id == "single":
+            update_fields["plan"] = "pro"
+            update_fields.setdefault("examCredits", 0)
+            update_fields["examCredits"] = user.get("examCredits", 0) + 1
+        elif plan_id == "starter":
+            update_fields["plan"] = "pro"
+            update_fields["examCredits"] = user.get("examCredits", 0) + 2
+        elif plan_id == "booster":
+            update_fields["plan"] = "pro"
+            update_fields["examCredits"] = user.get("examCredits", 0) + 5
+        elif plan_id == "pro":
+            update_fields["plan"] = "pro"
+            update_fields["examCredits"] = user.get("examCredits", 0) + 8
+
+        if update_fields:
+            await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    return {"detail": "OK"}
+
+
+@api_router.post("/payments/manual-credit")
+async def manual_credit(req: ManualCreditRequest):
+    admin_token = os.getenv("MANUAL_CREDIT_ADMIN_TOKEN", "")
+    if not admin_token or req.admin_token != admin_token:
+        raise HTTPException(status_code=401, detail="Invalid admin token")
+
+    user = await _get_user_by_email(req.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    update_fields: Dict[str, Any] = {}
+    if req.plan:
+        update_fields["plan"] = req.plan
+    if req.exam_credits is not None:
+        update_fields["examCredits"] = req.exam_credits
+
+    if not update_fields:
+        raise HTTPException(status_code=400, detail="Nothing to update")
+
+    await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    return {"detail": "User updated", "email": req.email, "update": update_fields}
+
         )
     else:
         # For writing/speaking, return without score (needs AI evaluation)
