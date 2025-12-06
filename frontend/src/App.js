@@ -96,6 +96,8 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route 
             path="/dashboard" 
             element={user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
