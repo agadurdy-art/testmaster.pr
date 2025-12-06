@@ -76,6 +76,15 @@ export default function PricingPage({ user }) {
     }
 
     try {
+      const res = await api.post('/payments/sepay/create', {
+        plan_id: planId,
+        amount_vnd: amountVnd,
+      }, {
+        headers: {
+          'x-user-email': user.email,
+        },
+      });
+
       const inst = res.data.instructions;
       setPaymentInfo({
         orderId: res.data.order_id,
