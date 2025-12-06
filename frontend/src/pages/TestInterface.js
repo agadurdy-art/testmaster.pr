@@ -105,6 +105,21 @@ function ElevenLabsExaminer() {
     }
   };
 
+  const handleStartSpeakingSession = async () => {
+    try {
+      const data = await startSpeakingSession(user.email);
+      setSpeakingSessionStarted(true);
+      setSpeakingCredits(data.remainingCredits);
+      const updatedUser = { ...user, examCredits: data.remainingCredits, plan: data.plan };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      toast.success(`Speaking session started. Credits left: ${data.remainingCredits}`);
+    } catch (err) {
+      console.error('Start speaking session error:', err);
+      const msg = err?.response?.data?.detail || 'Could not start speaking session. Please try again.';
+      toast.error(msg);
+    }
+  };
+
   const handleAnswerChange = (questionId, value) => {
     setAnswers({ ...answers, [questionId]: value });
   };
