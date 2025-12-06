@@ -140,6 +140,31 @@ class ResetPasswordRequest(BaseModel):
     token: str
     new_password: str
 
+class PaymentOrder(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    plan_id: str
+    amount_vnd: int
+    currency: str = "VND"
+    status: str = Field(default="pending", description="pending | completed | failed")
+    sepay_transaction_id: Optional[str] = None
+    sepay_reference_code: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    completed_at: Optional[datetime] = None
+
+
+class CreatePaymentRequest(BaseModel):
+    plan_id: str
+    amount_vnd: int
+
+
+class ManualCreditRequest(BaseModel):
+    email: str
+    plan: Optional[str] = None
+    exam_credits: Optional[int] = None
+    admin_token: str
+
 
 # Password hashing helpers
 
