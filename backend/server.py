@@ -577,9 +577,6 @@ async def verify_email(payload: VerifyEmailRequest):
     return {"detail": "Email verified successfully"}
 
 
-    return attempt
-
-
 # ================== Payments: SePay + Manual Credit ==================
 
 
