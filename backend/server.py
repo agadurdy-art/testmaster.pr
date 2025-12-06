@@ -247,6 +247,8 @@ def send_reset_email(to_email: str, reset_link: str) -> bool:
     if not SENDGRID_API_KEY or not SENDGRID_FROM_EMAIL:
         logging.getLogger(__name__).warning("SendGrid not configured; skipping email send")
         return False
+# In-memory stores (fallback); real flows use MongoDB collections
+
     try:
         message = Mail(
             from_email=SENDGRID_FROM_EMAIL,
