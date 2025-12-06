@@ -575,12 +575,10 @@ async def create_sepay_payment(req: CreatePaymentRequest, request: Request):
     order_doc["created_at"] = order_doc["created_at"].isoformat()
     await db.payment_orders.insert_one(order_doc)
 
-    bank_account = os.getenv("SEPAY_BANK_ACCOUNT_NUMBER", "")
-    bank_name = os.getenv("SEPAY_BANK_NAME", "MB Bank")
-    account_name = os.getenv("SEPAY_ACCOUNT_NAME", "")
-
-    if not bank_account:
-        logger.warning("SEPAY_BANK_ACCOUNT_NUMBER not set; returning empty bank details")
+    # Use env vars when available; fall back to the MB Bank details you configured
+    bank_account = os.getenv("SEPAY_BANK_ACCOUNT_NUMBER") or "038578587"
+    bank_name = os.getenv("SEPAY_BANK_NAME") or "MB Bank"
+    account_name = os.getenv("SEPAY_ACCOUNT_NAME") or "NGUYEN HUYEN THIEN KIEU"
 
     # Build VietQR image URL if bank details are configured
     qr_url = None
