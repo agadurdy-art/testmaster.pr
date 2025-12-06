@@ -11,6 +11,8 @@ import CourseDetail from './pages/CourseDetail';
 import Profile from './pages/Profile';
 import ContentAdmin from './pages/ContentAdmin';
 import PricingPage from './pages/PricingPage';
+import VerifyEmailPage from './pages/VerifyEmailPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import { Toaster } from './components/ui/sonner';
 
 
