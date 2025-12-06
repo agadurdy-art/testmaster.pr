@@ -24,7 +24,6 @@ export const loginUser = async (data) => {
   const response = await api.post('/auth/login', data);
   return response.data;
 };
-};
 
 export const verifyEmail = async (token) => {
   const response = await api.post('/auth/verify-email', { token });
