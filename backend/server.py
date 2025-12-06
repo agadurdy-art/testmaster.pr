@@ -610,6 +610,14 @@ async def create_sepay_payment(req: CreatePaymentRequest, request: Request):
         "instructions": instructions,
     }
 
+@api_router.get("/payments/orders/{order_id}")
+async def get_payment_order(order_id: str):
+    order = await db.payment_orders.find_one({"id": order_id}, {"_id": 0})
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return order
+
+
 
 @api_router.post("/payments/sepay/ipn")
 async def sepay_ipn(request: Request):
