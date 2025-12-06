@@ -856,9 +856,9 @@ async def reset_password(payload: ResetPasswordRequest):
 
 @api_router.post("/auth/direct-reset")
 async def direct_reset(payload: DirectResetRequest):
-    """Directly reset password using email + new password (no email provider).
+    """Legacy direct reset endpoint (no email). Kept for backwards compatibility.
 
-    This is a fallback flow for when SendGrid is not available.
+    Frontend should use the email-based reset flow instead.
     """
     email = payload.email.strip().lower()
 
@@ -869,14 +869,6 @@ async def direct_reset(payload: DirectResetRequest):
     await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
 
     return {"detail": "If this email exists, the password has been updated."}
-
-
-    await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
-
-    # Invalidate token after use
-    password_reset_tokens.pop(payload.token, None)
-
-    return {"detail": "Password has been reset. You can now log in with your new password."}
 
 # Get a specific test attempt
 @api_router.get("/test_attempts/{attempt_id}")
