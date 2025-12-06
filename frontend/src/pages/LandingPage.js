@@ -22,9 +22,8 @@ export default function LandingPage({ onLogin, user }) {
       if (authMode === 'signup') {
         const { name, email, password } = formData;
         const userData = await registerUser({ name, email, password });
-        onLogin(userData);
-        toast.success('Account created! Welcome to IELTS Ace!');
-        navigate('/dashboard');
+        toast.success('Account created! Please check your email to verify your account before logging in.');
+        setAuthMode('signin');
       } else {
         const { email, password } = formData;
         const userData = await loginUser({ email, password });
