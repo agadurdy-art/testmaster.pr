@@ -64,6 +64,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/
     cta: 'Go Pro',
   },
 ];
+  const [showDialog, setShowDialog] = React.useState(false);
+  const [paymentInfo, setPaymentInfo] = React.useState(null);
+
 
 export default function PricingPage({ user }) {
   const navigate = useNavigate();
