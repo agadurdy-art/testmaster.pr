@@ -812,13 +812,19 @@ async def forgot_password(payload: ForgotPasswordRequest):
 
     token = generate_reset_token()
     expires_at = datetime.now(timezone.utc) + timedelta(minutes=RESET_TOKEN_EXPIRY_MINUTES)
-    password_reset_tokens[token] = {"email": email, "expires_at": expires_at}
+    await db.password_resets.insert_one(
+        {
+            "email": email,
+            "token": token,
+            "expires_at": expires_at.isoformat(),
+        }
+    )
 
     # Build reset link pointing to frontend route
     frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
     reset_link = f"{frontend_base}/reset-password?token={token}"
 
-    # Send real email via SendGrid
+    # Send real email via SendGrid (best-effort)
     send_reset_email(email, reset_link)
 
     logging.getLogger(__name__).info(f"Password reset token for {email}: {token}")
