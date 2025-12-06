@@ -161,7 +161,7 @@ export default function PricingPage({ user }) {
 
               <Button
                 className="w-full mt-2 bg-[#D90732] text-white rounded-full hover:bg-red-700 transition-colors"
-                onClick={() => handleCheckout(plan.id)}
+                onClick={() => handleCheckout(plan.id, parseInt(plan.priceVnd.replace(/[^0-9]/g, ''), 10))}
               >
                 {plan.cta}
               </Button>
