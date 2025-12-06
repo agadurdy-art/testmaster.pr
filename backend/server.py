@@ -619,6 +619,38 @@ async def get_payment_order(order_id: str):
 
 
 
+
+@api_router.post("/speaking/session/start")
+async def start_speaking_session(request: Request):
+    """Consume 1 speaking credit when the user starts an AI speaking session.
+
+    Expects header `x-user-email` from the frontend to identify the user.
+    """
+    user_email = request.headers.get("x-user-email")
+    if not user_email:
+        raise HTTPException(status_code=401, detail="Missing user context")
+
+    user = await _get_user_by_email(user_email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Atomically decrement examCredits if > 0
+    result = await db.users.update_one(
+        {"id": user["id"], "examCredits": {"$gt": 0}},
+        {"$inc": {"examCredits": -1}},
+    )
+
+    if result.modified_count == 0:
+        raise HTTPException(status_code=402, detail="No speaking credits left. Please purchase a plan.")
+
+    updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
+    return {
+        "detail": "Speaking session started",
+        "remainingCredits": updated.get("examCredits", 0),
+        "plan": updated.get("plan", "free"),
+    }
+
+
 @api_router.post("/payments/sepay/ipn")
 async def sepay_ipn(request: Request):
     """Handle SePay webhook.
