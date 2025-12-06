@@ -139,6 +139,10 @@ class DirectResetRequest(BaseModel):
 
 
 class ResetPasswordRequest(BaseModel):
+class VerifyEmailRequest(BaseModel):
+    token: str
+
+
     token: str
     new_password: str
 
