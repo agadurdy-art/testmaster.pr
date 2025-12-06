@@ -582,13 +582,26 @@ async def create_sepay_payment(req: CreatePaymentRequest, request: Request):
     if not bank_account:
         logger.warning("SEPAY_BANK_ACCOUNT_NUMBER not set; returning empty bank details")
 
+    # Build VietQR image URL if bank details are configured
+    qr_url = None
+    if bank_account:
+        # 970422 is BIN for MB Bank in VietQR; template "compact" is nice for UI
+        base_qr = f"https://img.vietqr.io/image/970422-{bank_account}-compact.png"
+        params = {
+            "amount": req.amount_vnd,
+            "addInfo": payment_code,
+            "accountName": account_name or "",
+        }
+        qr_url = base_qr + "?" + urllib.parse.urlencode(params)
+
     instructions = {
         "bank_name": bank_name,
         "account_number": bank_account,
         "account_name": account_name,
         "amount_vnd": req.amount_vnd,
         "payment_code": payment_code,
-        "note": "Transfer EXACT amount and include payment code in description",
+        "note": "Scan the QR or transfer EXACT amount and include payment code in description",
+        "qr_image_url": qr_url,
     }
 
     return {
