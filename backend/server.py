@@ -540,6 +540,25 @@ async def submit_test(submission: SubmitAnswers):
         {"$push": {"test_history": attempt.id}},
     )
 
+
+@api_router.post("/auth/verify-email")
+async def verify_email(payload: VerifyEmailRequest):
+    token = payload.token.strip()
+    record = await db.email_verifications.find_one({"token": token})
+    if not record:
+        raise HTTPException(status_code=400, detail="Invalid or expired verification token")
+
+    if datetime.now(timezone.utc) > datetime.fromisoformat(record["expires_at"]):
+        await db.email_verifications.delete_one({"_id": record["_id"]})
+        raise HTTPException(status_code=400, detail="Invalid or expired verification token")
+
+    email = record["email"]
+    await db.users.update_one({"email": email}, {"$set": {"verified": True}})
+    await db.email_verifications.delete_one({"_id": record["_id"]})
+
+    return {"detail": "Email verified successfully"}
+
+
     return attempt
 
 
