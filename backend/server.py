@@ -455,26 +455,26 @@ async def submit_test(submission: SubmitAnswers):
     test = await db.tests.find_one({"id": submission.test_id}, {"_id": 0})
     if not test:
         raise HTTPException(status_code=404, detail="Test not found")
-    
+
     # Calculate score for objective tests (listening/reading)
     if submission.test_type in ["listening", "reading"]:
         # Build a lookup from question_id -> correct answer for robust matching
         answer_key_map = {}
-        for item in test.get('answer_key', []):
-            qid = item.get('question_id')
+        for item in test.get("answer_key", []):
+            qid = item.get("question_id")
             if qid is not None:
                 try:
                     qid_int = int(qid)
                 except (TypeError, ValueError):
                     continue
-                answer_key_map[qid_int] = str(item.get('answer', ''))
+                answer_key_map[qid_int] = str(item.get("answer", ""))
 
         correct = 0
-        total = len(answer_key_map) if answer_key_map else len(test.get('answer_key', []))
+        total = len(answer_key_map) if answer_key_map else len(test.get("answer_key", []))
 
         # Strict comparison: answers must match exactly (case-insensitive, trimmed)
         for ans in submission.answers:
-            qid = ans.get('question_id') or ans.get('id')
+            qid = ans.get("question_id") or ans.get("id")
             if qid is None:
                 continue
             try:
@@ -486,7 +486,7 @@ async def submit_test(submission: SubmitAnswers):
             if correct_answer is None:
                 continue
 
-            user_answer = ans.get('answer', '')
+            user_answer = ans.get("answer", "")
             if str(user_answer).strip().lower() == str(correct_answer).strip().lower():
                 correct += 1
 
@@ -504,11 +504,39 @@ async def submit_test(submission: SubmitAnswers):
                 "correct": correct,
                 "total": total,
                 "percentage": score_percentage,
-                "message": f"You got {correct} out of {total} correct."
+                "message": f"You got {correct} out of {total} correct.",
             },
-            time_taken=submission.time_taken
+            time_taken=submission.time_taken,
+        )
+    else:
+        # For writing/speaking, return without score (needs AI evaluation)
+        attempt = TestAttempt(
+            user_id=submission.user_id,
+            test_id=submission.test_id,
+            test_type=submission.test_type,
+            answers=submission.answers,
+            score=0.0,
+            band_score=0.0,
+            feedback={"message": "Awaiting AI evaluation"},
+            time_taken=submission.time_taken,
+        )
+
+    # Save attempt
+    doc = attempt.model_dump()
+    doc["completed_at"] = doc["completed_at"].isoformat()
+    await db.test_attempts.insert_one(doc)
+
+    # Update user history
+    await db.users.update_one(
+        {"id": submission.user_id},
+        {"$push": {"test_history": attempt.id}},
+    )
+
+    return attempt
+
 
 # ================== Payments: SePay + Manual Credit ==================
+
 
 async def _get_user_by_email(email: str) -> Optional[dict]:
     user = await db.users.find_one({"email": email.lower().strip()}, {"_id": 0})
@@ -524,6 +552,7 @@ async def create_sepay_payment(req: CreatePaymentRequest, request: Request):
     - Create a pending PaymentOrder document
     - Return static bank details + a unique transfer content code
     """
+
     user_email = request.headers.get("x-user-email")
     if not user_email:
         raise HTTPException(status_code=401, detail="Missing user context")
@@ -575,6 +604,7 @@ async def sepay_ipn(request: Request):
 
     We currently verify via a static API key header configured on SePay side.
     """
+
     api_key_header = request.headers.get("x-sepay-api-key")
     expected = os.getenv("SEPAY_WEBHOOK_API_KEY")
     if not expected or api_key_header != expected:
@@ -597,12 +627,9 @@ async def sepay_ipn(request: Request):
     if transfer_type != "in":
         return {"detail": "Ignoring non-income transaction"}
 
-    # Try to find an order whose id fragment is in the content
+    # Try to find an order for this amount that is still pending
     matching_order = await db.payment_orders.find_one(
-        {
-            "status": "pending",
-            "amount_vnd": amount,
-        },
+        {"status": "pending", "amount_vnd": amount},
         {"_id": 0},
     )
 
@@ -613,12 +640,14 @@ async def sepay_ipn(request: Request):
     # Mark order completed
     await db.payment_orders.update_one(
         {"id": matching_order["id"]},
-        {"$set": {
-            "status": "completed",
-            "sepay_transaction_id": sepay_tx_id,
-            "sepay_reference_code": reference_code,
-            "completed_at": datetime.now(timezone.utc).isoformat(),
-        }},
+        {
+            "$set": {
+                "status": "completed",
+                "sepay_transaction_id": sepay_tx_id,
+                "sepay_reference_code": reference_code,
+                "completed_at": datetime.now(timezone.utc).isoformat(),
+            }
+        },
     )
 
     # Upgrade user plan / credits
@@ -628,7 +657,6 @@ async def sepay_ipn(request: Request):
         update_fields: Dict[str, Any] = {}
         if plan_id == "single":
             update_fields["plan"] = "pro"
-            update_fields.setdefault("examCredits", 0)
             update_fields["examCredits"] = user.get("examCredits", 0) + 1
         elif plan_id == "starter":
             update_fields["plan"] = "pro"
@@ -668,33 +696,6 @@ async def manual_credit(req: ManualCreditRequest):
     await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
 
     return {"detail": "User updated", "email": req.email, "update": update_fields}
-
-        )
-    else:
-        # For writing/speaking, return without score (needs AI evaluation)
-        attempt = TestAttempt(
-            user_id=submission.user_id,
-            test_id=submission.test_id,
-            test_type=submission.test_type,
-            answers=submission.answers,
-            score=0.0,
-            band_score=0.0,
-            feedback={"message": "Awaiting AI evaluation"},
-            time_taken=submission.time_taken
-        )
-    
-    # Save attempt
-    doc = attempt.model_dump()
-    doc['completed_at'] = doc['completed_at'].isoformat()
-    await db.test_attempts.insert_one(doc)
-    
-    # Update user history
-    await db.users.update_one(
-        {"id": submission.user_id},
-        {"$push": {"test_history": attempt.id}}
-    )
-    
-    return attempt
 
 @api_router.post("/auth/forgot-password")
 async def forgot_password(payload: ForgotPasswordRequest):
