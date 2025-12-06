@@ -47,6 +47,7 @@ class User(BaseModel):
     verified: bool = True
     google_id: Optional[str] = None
     plan: str = Field(default="free", description="Subscription plan: free or pro")
+    examCredits: int = Field(default=0, description="Number of AI speaking exam credits")
     ai_interview_free_seconds_used: int = Field(default=0, description="Total free AI interviewer seconds used")
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     test_history: List[str] = Field(default_factory=list)
