@@ -834,21 +834,24 @@ async def forgot_password(payload: ForgotPasswordRequest):
 
 @api_router.post("/auth/reset-password")
 async def reset_password(payload: ResetPasswordRequest):
-    token_data = password_reset_tokens.get(payload.token)
-    if not token_data:
+    token = payload.token.strip()
+    record = await db.password_resets.find_one({"token": token})
+    if not record:
         raise HTTPException(status_code=400, detail="Invalid or expired reset token")
 
-    if datetime.now(timezone.utc) > token_data["expires_at"]:
-        password_reset_tokens.pop(payload.token, None)
+    if datetime.now(timezone.utc) > datetime.fromisoformat(record["expires_at"]):
+        await db.password_resets.delete_one({"_id": record["_id"]})
         raise HTTPException(status_code=400, detail="Invalid or expired reset token")
 
     # Basic password strength check
     if len(payload.new_password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
 
-    email = token_data["email"]
+    email = record["email"]
     password_hash = hash_password(payload.new_password)
     await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
+
+    await db.password_resets.delete_one({"_id": record["_id"]})
 
 
 @api_router.post("/auth/direct-reset")
