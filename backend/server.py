@@ -643,8 +643,9 @@ async def create_sepay_payment(req: CreatePaymentRequest, request: Request):
     # Build VietQR image URL if bank details are configured
     qr_url = None
     if bank_account:
-        # Use VietQR image endpoint for MB Bank. "mbbank" provider automatically uses correct BIN.
-        base_qr = f"https://img.vietqr.io/image/mbbank-{bank_account}-compact.png"
+        # Use official VietQR image format for MB Bank via BIN 970422.
+        # Pattern: https://img.vietqr.io/image/970422|<ACCOUNT>-compact.png?amount=...&addInfo=...&accountName=...
+        base_qr = f"https://img.vietqr.io/image/970422|{bank_account}-compact.png"
         params = {
             "amount": req.amount_vnd,
             "addInfo": payment_code,
