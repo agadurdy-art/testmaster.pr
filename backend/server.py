@@ -632,6 +632,7 @@ async def sepay_ipn(request: Request):
         content = (payload.get("content") or "").upper()
         sepay_tx_id = str(payload.get("id"))
         reference_code = payload.get("referenceCode")
+        logger.info(f"SePay webhook content: {content}")
     except Exception as e:
         logger.error(f"Invalid SePay payload: {e}")
         raise HTTPException(status_code=400, detail="Invalid payload")
