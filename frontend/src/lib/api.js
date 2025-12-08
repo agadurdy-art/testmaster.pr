@@ -118,6 +118,17 @@ export const getCourses = async () => {
 };
 
 export const getCourse = async (courseId) => {
+export const manualCreditSimple = async ({ email, plan, exam_credits }) => {
+  const response = await api.post('/payments/manual-credit-simple', {
+    email,
+    plan,
+    exam_credits,
+    admin_token: ''
+  });
+  return response.data;
+};
+
+
   const response = await api.get(`/courses/${courseId}`);
   return response.data;
 };
