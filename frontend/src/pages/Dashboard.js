@@ -21,12 +21,17 @@ export default function Dashboard({ user, onLogout }) {
 
   const loadData = async () => {
     try {
-      const [testsData, progressData] = await Promise.all([
+      const [testsData, progressData, freshUser] = await Promise.all([
         getTests(),
-        getUserProgress(user.id)
+        getUserProgress(user.id),
+        getUser(user.id)
       ]);
       setTests(testsData);
       setProgress(progressData);
+      if (freshUser) {
+        setUserDetails(freshUser);
+        localStorage.setItem('user', JSON.stringify(freshUser));
+      }
     } catch (error) {
       toast.error('Failed to load dashboard data');
     } finally {
