@@ -12,6 +12,8 @@ export default function Dashboard({ user, onLogout }) {
   const [tests, setTests] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userDetails, setUserDetails] = useState(user);
+
 
   useEffect(() => {
     loadData();
