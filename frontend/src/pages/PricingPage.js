@@ -169,19 +169,27 @@ export default function PricingPage({ user }) {
                 </Button>
                 <Button
                   variant="outline"
-                  className="w-full border-[#FF5E5B] text-[#FF5E5B] hover:bg-[#FFF5F5] rounded-full text-xs"
+                  className="w-full border-[#003087] text-[#003087] hover:bg-[#E6F0FF] rounded-full text-xs"
                   onClick={() => {
+                    let url = '';
                     if (plan.id === 'single') {
-                      window.open('https://ko-fi.com/s/cc2c3d9f8c', '_blank', 'noopener,noreferrer');
-                    } else {
-                      window.open('https://ko-fi.com/testmasteredu/tiers', '_blank', 'noopener,noreferrer');
+                      url = 'https://www.paypal.com/ncp/payment/2DETEUHX9892L';
+                    } else if (plan.id === 'starter') {
+                      url = 'https://www.paypal.com/ncp/payment/6SY2PSQA8BW84';
+                    } else if (plan.id === 'booster') {
+                      url = 'https://www.paypal.com/ncp/payment/PWBH852KJJLS8';
+                    } else if (plan.id === 'pro') {
+                      url = 'https://www.paypal.com/ncp/payment/NUBF9QDT9RMBC';
+                    }
+                    if (url) {
+                      window.open(url, '_blank', 'noopener,noreferrer');
                     }
                   }}
                 >
-                  Pay by Card / PayPal via Ko-fi
+                  Pay by Card / PayPal
                 </Button>
                 <p className="text-[10px] text-gray-500 text-center">
-                  Please use the same email on Ko-fi as you used to register on IELTS Ace so your credits can be added automatically.
+                  Please use the same email on PayPal as you used to register on IELTS Ace so your credits can be added automatically.
                 </p>
               </div>
             </Card>
