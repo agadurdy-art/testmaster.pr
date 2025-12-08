@@ -962,6 +962,28 @@ async def paypal_ipn(request: Request):
         {"provider": "paypal", "received_at": datetime.now(timezone.utc).isoformat(), "payload": payload}
     )
 
+
+
+@api_router.post("/payments/manual-credit-simple")
+async def manual_credit_simple(req: ManualCreditRequest):
+    """Simpler admin endpoint: same as manual-credit, but without token for now."""
+    user = await _get_user_by_email(req.email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    update_fields: Dict[str, Any] = {}
+    if req.plan:
+        update_fields["plan"] = req.plan
+    if req.exam_credits is not None:
+        update_fields["examCredits"] = req.exam_credits
+
+    if not update_fields:
+        raise HTTPException(status_code=400, detail="Nothing to update")
+
+    await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    return {"detail": "User updated", "email": req.email, "update": update_fields}
+
     return {"detail": "OK"}
 
 
