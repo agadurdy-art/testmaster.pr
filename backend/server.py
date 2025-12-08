@@ -897,7 +897,6 @@ async def paypal_ipn(request: Request):
     # Amount is in resource.amount.value for NCP payment links
     amount_info = resource.get("amount") or resource.get("gross_amount") or {}
     value_str = amount_info.get("value") or "0"
-    currency = amount_info.get("currency_code") or "USD"
 
     try:
         amount = float(str(value_str))
