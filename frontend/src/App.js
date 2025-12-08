@@ -13,6 +13,7 @@ import ContentAdmin from './pages/ContentAdmin';
 import PricingPage from './pages/PricingPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import AdminCreditsPage from './pages/AdminCreditsPage';
 import { Toaster } from './components/ui/sonner';
 
 
