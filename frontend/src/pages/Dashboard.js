@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { BookOpen, Headphones, Mic, PenTool, Trophy, TrendingUp, Target, BookMarked, LogOut } from 'lucide-react';
-import { getTests, getUserProgress } from '../lib/api';
+import { getTests, getUserProgress, getUser } from '../lib/api';
 import { getBandScoreColor, getBandScoreBg } from '../lib/utils';
 import { toast } from 'sonner';
 
