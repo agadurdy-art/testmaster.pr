@@ -703,6 +703,102 @@ async def start_speaking_session(request: Request):
     )
 
     if result.modified_count == 0:
+
+
+# ================== Ko-fi Webhook Integration ==================
+
+
+def _map_kofi_tier_to_credits(tier_name: str) -> int:
+    name = (tier_name or "").strip().lower()
+    if "starter" in name:
+        return 2
+    if "booster" in name:
+        return 5
+    if "pro" in name:
+        return 8
+    return 0
+
+
+@api_router.post("/payments/kofi/ipn")
+async def kofi_ipn(request: Request):
+    """Handle Ko-fi webhook.
+
+    Ko-fi sends application/x-www-form-urlencoded with a 'data' field
+    that contains a JSON string. We parse it and update the user's plan
+    and examCredits based on membership tier or single exam purchase.
+    """
+    form = await request.form()
+    raw_data = form.get("data")
+    if not raw_data:
+        raise HTTPException(status_code=400, detail="Missing data field")
+
+    try:
+        payload = json.loads(raw_data)
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=400, detail="Invalid JSON in data field")
+
+    verification_token = os.getenv("KOFI_VERIFICATION_TOKEN")
+    if verification_token:
+        if payload.get("verification_token") != verification_token:
+            raise HTTPException(status_code=401, detail="Invalid verification token")
+
+    kofi_type = (payload.get("type") or "").strip()
+    email = (payload.get("email") or "").strip().lower()
+    if not email:
+        raise HTTPException(status_code=400, detail="Missing email in payload")
+
+    name = payload.get("from_name") or payload.get("name") or ""
+    tier_name = payload.get("tier_name") or ""
+    amount_str = payload.get("amount") or "0"
+    try:
+        amount = float(str(amount_str))
+    except ValueError:
+        amount = 0.0
+
+    logger.info(f"Ko-fi webhook: type={kofi_type}, email={email}, tier={tier_name}, amount={amount}")
+
+    # Store raw event for audit/debugging
+    await db.kofi_events.insert_one(
+        {
+            "received_at": datetime.now(timezone.utc).isoformat(),
+            "type": kofi_type,
+            "email": email,
+            "tier_name": tier_name,
+            "amount": amount,
+            "payload": payload,
+        }
+    )
+
+    # Find user by email
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user:
+        # If user does not exist, we log and return success so Ko-fi doesn't retry.
+        logger.warning(f"Ko-fi payment for unknown email: {email}")
+        return {"detail": "No matching user; event recorded."}
+
+    update_fields: Dict[str, Any] = {}
+
+    # Membership subscription tiers
+    if kofi_type.lower() == "subscription":
+        credits = _map_kofi_tier_to_credits(tier_name)
+        if credits > 0:
+            update_fields["plan"] = "pro"
+            update_fields["subscription"] = tier_name
+            update_fields["examCredits"] = user.get("examCredits", 0) + credits
+
+    # One-time single exam purchase (treat as shop order or donation with specific amount)
+    elif kofi_type.lower() in {"shop order", "donation"}:
+        # 4.99 USD single exam purchase → +1 credit
+        # We use a small tolerance for floating point comparisons
+        if abs(amount - 4.99) < 0.01:
+            update_fields["examCredits"] = user.get("examCredits", 0) + 1
+
+    if update_fields:
+        update_fields["lastPayment"] = datetime.now(timezone.utc).isoformat()
+        await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    return {"detail": "OK"}
+
         raise HTTPException(status_code=402, detail="No speaking credits left. Please purchase a plan.")
 
     updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
