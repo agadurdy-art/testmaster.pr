@@ -160,12 +160,30 @@ export default function PricingPage({ user }) {
                 </ul>
               </div>
 
-              <Button
-                className="w-full mt-2 bg-[#D90732] text-white rounded-full hover:bg-red-700 transition-colors"
-                onClick={() => handleCheckout(plan.id, parseInt(plan.priceVnd.replace(/[^0-9]/g, ''), 10))}
-              >
-                {plan.cta}
-              </Button>
+              <div className="space-y-2 mt-2">
+                <Button
+                  className="w-full bg-[#D90732] text-white rounded-full hover:bg-red-700 transition-colors"
+                  onClick={() => handleCheckout(plan.id, parseInt(plan.priceVnd.replace(/[^0-9]/g, ''), 10))}
+                >
+                  Pay by Bank Transfer (Vietnam)
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full border-[#FF5E5B] text-[#FF5E5B] hover:bg-[#FFF5F5] rounded-full text-xs"
+                  onClick={() => {
+                    if (plan.id === 'single') {
+                      window.open('https://ko-fi.com/s/cc2c3d9f8c', '_blank', 'noopener,noreferrer');
+                    } else {
+                      window.open('https://ko-fi.com/testmasteredu/tiers', '_blank', 'noopener,noreferrer');
+                    }
+                  }}
+                >
+                  Pay by Card / PayPal via Ko-fi
+                </Button>
+                <p className="text-[10px] text-gray-500 text-center">
+                  Please use the same email on Ko-fi as you used to register on IELTS Ace so your credits can be added automatically.
+                </p>
+              </div>
             </Card>
           ))}
         </div>
