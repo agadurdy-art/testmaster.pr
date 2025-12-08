@@ -753,7 +753,6 @@ async def kofi_ipn(request: Request):
     if not email:
         raise HTTPException(status_code=400, detail="Missing email in payload")
 
-    name = payload.get("from_name") or payload.get("name") or ""
     tier_name = payload.get("tier_name") or ""
     amount_str = payload.get("amount") or "0"
     try:
