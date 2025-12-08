@@ -119,7 +119,7 @@ export default function PricingPage({ user }) {
             Practice real IELTS-style speaking exams with AI examiner feedback. Prices shown in both USD and VND.
           </p>
           <p className="text-xs text-[#D90732] font-semibold uppercase tracking-wide">
-            Payments coming soon via SePay / MoMo – all plans are preview only, exams remain free for now.
+            Pay by MB Bank transfer or by card/PayPal via Ko-fi. Auto top-up is enabled when emails match.
           </p>
         </div>
 
