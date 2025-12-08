@@ -203,6 +203,54 @@ export default function Dashboard({ user, onLogout }) {
                       return attemptDate >= weekAgo;
                     }).length}
                   </p>
+        {/* Plan & Credits summary */}
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="p-4 flex flex-col justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Current Plan</p>
+              <p className="text-lg font-bold text-gray-900">{userDetails?.plan || 'free'}</p>
+              {userDetails?.subscription && (
+                <p className="text-xs text-gray-600 mt-1">{userDetails.subscription}</p>
+              )}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-3 w-full"
+              onClick={() => navigate('/pricing')}
+            >
+              View / Upgrade Plan
+            </Button>
+          </Card>
+
+          <Card className="p-4 flex flex-col justify-between">
+            <div>
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Speaking Credits</p>
+              <p className="text-3xl font-bold text-gray-900">{userDetails?.examCredits ?? 0}</p>
+            </div>
+            <p className="text-[11px] text-gray-500 mt-2">
+              Each AI Speaking exam session uses 1 credit.
+            </p>
+          </Card>
+
+          {userDetails?.email?.includes('aga.durdy') && (
+            <Card className="p-4 flex flex-col justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Admin Tools</p>
+                <p className="text-sm text-gray-700">Top up credits or change plan for any user.</p>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-3 w-full"
+                onClick={() => navigate('/admin/credits')}
+              >
+                Open Admin Credits
+              </Button>
+            </Card>
+          )}
+        </div>
+
                 </div>
                 <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
                   <Target className="w-6 h-6 text-green-600" />
