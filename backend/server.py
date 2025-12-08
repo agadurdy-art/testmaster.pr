@@ -703,6 +703,14 @@ async def start_speaking_session(request: Request):
     )
 
     if result.modified_count == 0:
+        raise HTTPException(status_code=402, detail="No speaking credits left. Please purchase a plan.")
+
+    updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
+    return {
+        "detail": "Speaking session started",
+        "remainingCredits": updated.get("examCredits", 0),
+        "plan": updated.get("plan", "free"),
+    }
 
 
 # ================== Ko-fi Webhook Integration ==================
@@ -798,15 +806,6 @@ async def kofi_ipn(request: Request):
         await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
 
     return {"detail": "OK"}
-
-        raise HTTPException(status_code=402, detail="No speaking credits left. Please purchase a plan.")
-
-    updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
-    return {
-        "detail": "Speaking session started",
-        "remainingCredits": updated.get("examCredits", 0),
-        "plan": updated.get("plan", "free"),
-    }
 
 
 @api_router.post("/payments/sepay/ipn")
