@@ -879,6 +879,84 @@ async def sepay_ipn(request: Request):
         if update_fields:
             await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
 
+
+@api_router.post("/payments/paypal/ipn")
+async def paypal_ipn(request: Request):
+    """Handle PayPal webhook for auto top-up.
+
+    We rely on amount + payer email to map to user and plan.
+    """
+    payload = await request.json()
+    event_type = payload.get("event_type")
+    logger.info(f"PayPal webhook event_type={event_type}")
+
+    if event_type != "PAYMENT.CAPTURE.COMPLETED":
+        return {"detail": "Event ignored"}
+
+    resource = payload.get("resource", {})
+    # Amount is in resource.amount.value for NCP payment links
+    amount_info = resource.get("amount") or resource.get("gross_amount") or {}
+    value_str = amount_info.get("value") or "0"
+    currency = amount_info.get("currency_code") or "USD"
+
+    try:
+        amount = float(str(value_str))
+    except ValueError:
+        logger.error(f"Invalid PayPal amount: {value_str}")
+        raise HTTPException(status_code=400, detail="Invalid amount")
+
+    # Get payer email
+    payer = resource.get("payer") or resource.get("seller_receivable_breakdown") or {}
+    email = None
+    if isinstance(payer, dict):
+        # For NCP links, payer email is often in resource.paypal_account_id or separate field
+        email = (resource.get("custom_id") or "").strip().lower() or None
+        # Fallback: some payloads include payer_email
+        if not email:
+            email = (resource.get("payer_email") or "").strip().lower() or None
+
+    if not email:
+        logger.warning(f"PayPal webhook without email: resource={resource}")
+        return {"detail": "Missing payer email"}
+
+    # Find user by email
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+    if not user:
+        logger.warning(f"PayPal payment for unknown email: {email}")
+        return {"detail": "No matching user; event recorded."}
+
+    # Map amount to plan/credits
+    update_fields: Dict[str, Any] = {}
+    if abs(amount - 4.99) < 0.01:
+        update_fields["examCredits"] = user.get("examCredits", 0) + 1
+    elif abs(amount - 9.0) < 0.01:
+        update_fields["plan"] = "pro"
+        update_fields["subscription"] = "Starter"
+        update_fields["examCredits"] = user.get("examCredits", 0) + 2
+    elif abs(amount - 19.0) < 0.01:
+        update_fields["plan"] = "pro"
+        update_fields["subscription"] = "Booster"
+        update_fields["examCredits"] = user.get("examCredits", 0) + 5
+    elif abs(amount - 29.0) < 0.01:
+        update_fields["plan"] = "pro"
+        update_fields["subscription"] = "Pro"
+        update_fields["examCredits"] = user.get("examCredits", 0) + 8
+
+    if not update_fields:
+        logger.warning(f"PayPal payment amount {amount} not matching any plan")
+        return {"detail": "Amount not mapped"}
+
+    update_fields["lastPayment"] = datetime.now(timezone.utc).isoformat()
+    await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    # Save raw event
+    await db.kofi_events.insert_one(
+        {"provider": "paypal", "received_at": datetime.now(timezone.utc).isoformat(), "payload": payload}
+    )
+
+    return {"detail": "OK"}
+
+
     return {"detail": "OK"}
 
 
