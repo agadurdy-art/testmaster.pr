@@ -905,23 +905,32 @@ async def paypal_ipn(request: Request):
         raise HTTPException(status_code=400, detail="Invalid amount")
 
     # Get payer email
-    payer = resource.get("payer") or resource.get("seller_receivable_breakdown") or {}
     email = None
+    payer = resource.get("payer")
     if isinstance(payer, dict):
-        # For NCP links, payer email is often in resource.paypal_account_id or separate field
+        email = (payer.get("email_address") or "").strip().lower() or None
+
+    # Fallbacks: some payloads may include custom_id or payer_email directly on resource
+    if not email:
+        email = (resource.get("payer_email") or "").strip().lower() or None
+    if not email:
         email = (resource.get("custom_id") or "").strip().lower() or None
-        # Fallback: some payloads include payer_email
-        if not email:
-            email = (resource.get("payer_email") or "").strip().lower() or None
 
     if not email:
         logger.warning(f"PayPal webhook without email: resource={resource}")
+        # Still log the event below, but cannot map to user
+        await db.kofi_events.insert_one(
+            {"provider": "paypal", "received_at": datetime.now(timezone.utc).isoformat(), "payload": payload}
+        )
         return {"detail": "Missing payer email"}
 
     # Find user by email
     user = await db.users.find_one({"email": email}, {"_id": 0})
     if not user:
         logger.warning(f"PayPal payment for unknown email: {email}")
+        await db.kofi_events.insert_one(
+            {"provider": "paypal", "received_at": datetime.now(timezone.utc).isoformat(), "payload": payload}
+        )
         return {"detail": "No matching user; event recorded."}
 
     # Map amount to plan/credits
