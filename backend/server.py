@@ -18,8 +18,6 @@ import json
 from emergentintegrations.llm.openai import OpenAISpeechToText
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-
-import json
 import io
 
 ROOT_DIR = Path(__file__).parent
