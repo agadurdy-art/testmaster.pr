@@ -439,15 +439,6 @@ export default function Dashboard({ user, onLogout }) {
         )}
 
 
-                </div>
-                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                  <Target className="w-6 h-6 text-green-600" />
-                </div>
-              </div>
-            </Card>
-          </div>
-        )}
-
         {/* Test Modules */}
         <div className="mb-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-6">Choose Your Test</h3>
