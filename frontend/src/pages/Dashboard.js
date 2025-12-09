@@ -191,11 +191,11 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">This Week</p>
-                  <p className="text-3xl font-bold text-gray-900">
+                  <p className="text-xs text-gray-600 mb-1">This Week</p>
+                  <p className="text-2xl font-bold text-gray-900">
                     {progress.recent_attempts.filter(a => {
                       const attemptDate = new Date(a.completed_at);
                       const weekAgo = new Date();
