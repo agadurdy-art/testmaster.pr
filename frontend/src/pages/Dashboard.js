@@ -6,6 +6,8 @@ import { BookOpen, Headphones, Mic, PenTool, Trophy, TrendingUp, Target, BookMar
 import { getTests, getUserProgress, getUser } from '../lib/api';
 import { getBandScoreColor, getBandScoreBg } from '../lib/utils';
 import { toast } from 'sonner';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+import { useI18n } from '../lib/i18n';
 
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
