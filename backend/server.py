@@ -953,6 +953,67 @@ async def direct_reset(payload: DirectResetRequest):
     return {"detail": "If this email exists, the password has been updated."}
 
 # Get a specific test attempt
+
+
+@api_router.post("/payments/bank/upload")
+async def upload_bank_payment(
+    request: Request,
+    plan_id: str = Form(...),
+    email: str = Form(...),
+    screenshot: UploadFile = File(...),
+):
+    """User uploads bank transfer screenshot; we auto-credit based on plan.
+
+    This trusts the user; screenshot is stored for later audit.
+    """
+    email_clean = email.strip().lower()
+    user = await _get_user_by_email(email_clean)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Save file to local uploads folder
+    uploads_dir = os.path.join(os.path.dirname(__file__), "uploads", "bank")
+    os.makedirs(uploads_dir, exist_ok=True)
+    filename = f"{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}_{screenshot.filename}"
+    filepath = os.path.join(uploads_dir, filename)
+    with open(filepath, "wb") as f:
+        f.write(await screenshot.read())
+
+    # Map plan_id to credits
+    credits_map = {
+        "single": 1,
+        "starter": 2,
+        "booster": 5,
+        "pro": 8,
+    }
+    credits = credits_map.get(plan_id)
+    if credits is None:
+        raise HTTPException(status_code=400, detail="Invalid plan_id")
+
+    update_fields: Dict[str, Any] = {
+        "examCredits": user.get("examCredits", 0) + credits,
+        "lastPayment": datetime.now(timezone.utc).isoformat(),
+    }
+    if plan_id in {"starter", "booster", "pro"}:
+        update_fields["plan"] = "pro"
+        update_fields["subscription"] = plan_id.capitalize()
+
+    await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    # Record bank payment event
+    await db.kofi_events.insert_one(
+        {
+            "provider": "bank",
+            "received_at": datetime.now(timezone.utc).isoformat(),
+            "email": email_clean,
+            "plan_id": plan_id,
+            "credits": credits,
+            "screenshot_path": filepath,
+        }
+    )
+
+    return {"detail": "Bank payment recorded", "examCredits": update_fields["examCredits"]}
+
 @api_router.get("/test_attempts/{attempt_id}")
 async def get_test_attempt(attempt_id: str):
     attempt = await db.test_attempts.find_one({"id": attempt_id}, {"_id": 0})
