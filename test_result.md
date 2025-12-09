@@ -205,10 +205,13 @@
 ##     implemented: true
 ##     working: false
 ##     file: "frontend/src/pages/TestInterface.js"
-##     stuck_count: 0
+##     stuck_count: 1
 ##     priority: "high"
-##     needs_retesting: true
+##     needs_retesting: false
 ##     status_history:
 ##       - working: false
 ##         agent: "main"
 ##         comment: "Implemented: (1) Dashboard speaking start now checks for free trial or paid access before navigating; (2) TestInterface selectors for Reading/Listening/Writing/Speaking disable Test 2+ when user has no Pro plan or credits, showing toast using paywallNeedProOrCredits; (3) Speaking session start uses new backend response to handle free trial, update ai_interview_free_seconds_used, and show bilingual messages. Needs UI testing for free trial flow and paywall behaviour."
+##       - working: false
+##         agent: "testing"
+##         comment: "CRITICAL ISSUES FOUND: (1) Free trial logic is broken - users with ai_interview_free_seconds_used=0 cannot start speaking sessions (button disabled) (2) Dashboard missing Speaking Credits and Current Plan sections - users cannot see free trial availability (3) Premium test gating not implemented - no Test 2+ selectors found on any test pages (4) Language switcher works correctly (EN/VI) with proper translations in navigation. WORKING: ✅ Backend free trial API logic (tested via curl: first call grants free trial, second returns 402) ✅ Language switcher functionality ✅ Navigation between test pages ✅ Pro user button enabling. CRITICAL FIXES NEEDED: Dashboard must show Speaking Credits section with free trial message, TestInterface must enable speaking session button for users with unused free trial, implement premium test selectors with 🔒 icons."
