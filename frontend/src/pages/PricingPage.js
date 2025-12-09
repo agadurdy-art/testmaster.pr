@@ -222,12 +222,29 @@ export default function PricingPage({ user }) {
                         fundingSource="paypal"
                         style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' }}
                         createOrder={async () => {
-                          if (!user) return '';
-                          const res = await createPaypalOrder({
-                            planId: plan.id,
-                            email: user.email,
-                          });
-                          return res.orderId;
+                          if (!user) {
+                            alert(
+                              language === 'vi'
+                                ? 'Vui lòng đăng nhập trước khi thanh toán bằng PayPal.'
+                                : 'Please log in before completing a PayPal payment.',
+                            );
+                            throw new Error('No user for PayPal payment');
+                          }
+                          try {
+                            const res = await createPaypalOrder({
+                              planId: plan.id,
+                              email: user.email,
+                            });
+                            return res.orderId;
+                          } catch (err) {
+                            console.error('PayPal create-order error', err);
+                            alert(
+                              language === 'vi'
+                                ? 'Không thể khởi tạo thanh toán PayPal. Vui lòng thử lại hoặc dùng chuyển khoản ngân hàng.'
+                                : 'Could not start PayPal payment. Please try again or use bank transfer.',
+                            );
+                            throw err;
+                          }
                         }}
                         onApprove={async (data) => {
                           if (!user) return;
@@ -265,12 +282,29 @@ export default function PricingPage({ user }) {
                         fundingSource="card"
                         style={{ layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' }}
                         createOrder={async () => {
-                          if (!user) return '';
-                          const res = await createPaypalOrder({
-                            planId: plan.id,
-                            email: user.email,
-                          });
-                          return res.orderId;
+                          if (!user) {
+                            alert(
+                              language === 'vi'
+                                ? 'Vui lòng đăng nhập trước khi thanh toán bằng PayPal.'
+                                : 'Please log in before completing a PayPal payment.',
+                            );
+                            throw new Error('No user for PayPal payment');
+                          }
+                          try {
+                            const res = await createPaypalOrder({
+                              planId: plan.id,
+                              email: user.email,
+                            });
+                            return res.orderId;
+                          } catch (err) {
+                            console.error('PayPal create-order error', err);
+                            alert(
+                              language === 'vi'
+                                ? 'Không thể khởi tạo thanh toán PayPal. Vui lòng thử lại hoặc dùng chuyển khoản ngân hàng.'
+                                : 'Could not start PayPal payment. Please try again or use bank transfer.',
+                            );
+                            throw err;
+                          }
                         }}
                         onApprove={async (data) => {
                           if (!user) return;
