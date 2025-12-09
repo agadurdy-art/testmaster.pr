@@ -149,7 +149,7 @@ export default function Dashboard({ user, onLogout }) {
               className="text-red-600 border-red-200"
             >
               <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              {t('navLogout')}
             </Button>
           </nav>
         </div>
