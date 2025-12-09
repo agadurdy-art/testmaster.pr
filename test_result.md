@@ -147,6 +147,8 @@
 ##     message: "Need to verify /api/tests/submit backend behaviour and frontend submit flow for reading/listening modules."
 ##   - agent: "testing"
 ##     message: "BACKEND TESTING COMPLETE ✅ - Fixed critical syntax error in /api/tests/submit endpoint. The function was missing return statement and had unreachable database save code. All backend APIs now working correctly: user creation, test fetching (reading/listening), test submission with proper scoring (exact answer matching), and test attempt retrieval. Both reading and listening test flows tested end-to-end successfully. Frontend can now proceed with testing - the 'Failed to submit test' issue was caused by the backend syntax error which is now resolved."
+##   - agent: "testing"
+##     message: "PAYWALL & FREE TRIAL TESTING COMPLETE ❌ - Found critical issues preventing proper functionality: (1) Dashboard does not display Speaking Credits section or free trial availability message - users cannot see they have free trial (2) Free trial logic broken in TestInterface - speaking session button disabled even for users with ai_interview_free_seconds_used=0 (3) Premium test gating missing - no Test 2+ selectors with 🔒 icons found on Reading/Listening/Writing/Speaking pages (4) Backend API works correctly (verified with real users: free trial grants 200, subsequent calls return 402). Language switcher works perfectly with EN/VI translations. URGENT: Fix Dashboard to show Speaking Credits card with free trial message, fix TestInterface speaking button enabling logic for free trial users, implement premium test selectors."
 
 
 ## backend:
