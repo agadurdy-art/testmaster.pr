@@ -71,6 +71,19 @@ function EmergentBadgeWrapper() {
       </div>
     </a>
   );
+
+function MobileNavWrapper({ user }) {
+  const location = useLocation();
+
+  // Only show bottom nav when logged in and not on landing/auth-only pages
+  if (!user) return null;
+  if (location.pathname === '/' || location.pathname === '/verify-email' || location.pathname === '/reset-password') {
+    return null;
+  }
+
+  return <MobileBottomNav currentPath={location.pathname} />;
+}
+
 }
 
 function App() {
