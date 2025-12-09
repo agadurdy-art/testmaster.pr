@@ -164,15 +164,15 @@ export default function Dashboard({ user, onLogout }) {
 
         {/* Progress Stats */}
         {progress && progress.total_tests > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 animate-slide-in">
-            <Card className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 animate-slide-in">
+            <Card className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Tests Completed</p>
-                  <p className="text-3xl font-bold text-gray-900">{progress.total_tests}</p>
+                  <p className="text-xs text-gray-600 mb-1">Tests Completed</p>
+                  <p className="text-2xl font-bold text-gray-900">{progress.total_tests}</p>
                 </div>
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Trophy className="w-6 h-6 text-blue-600" />
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <Trophy className="w-5 h-5 text-blue-600" />
                 </div>
               </div>
             </Card>
