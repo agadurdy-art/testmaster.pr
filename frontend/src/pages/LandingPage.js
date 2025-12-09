@@ -58,9 +58,12 @@ export default function LandingPage({ onLogin, user }) {
             </div>
             <h1 className="text-2xl font-bold text-gray-900">IELTS Ace</h1>
           </div>
-          <Button data-testid="get-started-btn" onClick={() => setShowAuth(true)} className="primary-gradient text-white">
-            Get Started
-          </Button>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher compact />
+            <Button data-testid="get-started-btn" onClick={() => setShowAuth(true)} className="primary-gradient text-white">
+              {t('getStarted')}
+            </Button>
+          </div>
         </div>
       </header>
 
