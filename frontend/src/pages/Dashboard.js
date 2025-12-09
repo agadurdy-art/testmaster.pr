@@ -98,6 +98,80 @@ export default function Dashboard({ user, onLogout }) {
       </div>
     );
   }
+  // Derived progress stats for richer dashboard
+  const hasProgress = !!(progress && progress.total_tests > 0);
+  const skillOrder = ['listening', 'reading', 'writing', 'speaking'];
+
+  let perSkillStats = null;
+  let bestAttempt = null;
+  let totalTimeSeconds = 0;
+  let last30Tests = 0;
+  let prev30Tests = 0;
+
+  if (hasProgress && Array.isArray(progress.recent_attempts)) {
+    const bySkill = {};
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now);
+    thirtyDaysAgo.setDate(now.getDate() - 30);
+    const sixtyDaysAgo = new Date(now);
+    sixtyDaysAgo.setDate(now.getDate() - 60);
+
+    progress.recent_attempts.forEach((attempt) => {
+      const band = typeof attempt.band_score === 'number' ? attempt.band_score : 0;
+      const type = attempt.test_type;
+      const dt = attempt.completed_at ? new Date(attempt.completed_at) : null;
+
+      if (dt instanceof Date && !Number.isNaN(dt.getTime())) {
+        if (dt >= thirtyDaysAgo) {
+          last30Tests += 1;
+        } else if (dt >= sixtyDaysAgo && dt < thirtyDaysAgo) {
+          prev30Tests += 1;
+        }
+      }
+
+      if (typeof attempt.time_taken === 'number') {
+        totalTimeSeconds += attempt.time_taken;
+      }
+
+      if (skillOrder.includes(type)) {
+        if (!bySkill[type]) {
+          bySkill[type] = { sum: 0, count: 0, best: 0 };
+        }
+        bySkill[type].sum += band;
+        bySkill[type].count += 1;
+        if (band > bySkill[type].best) {
+          bySkill[type].best = band;
+        }
+      }
+
+      if (!bestAttempt || band > (bestAttempt.band_score ?? 0)) {
+        bestAttempt = attempt;
+      }
+    });
+
+    perSkillStats = {};
+    skillOrder.forEach((skill) => {
+      const stat = bySkill[skill];
+      if (!stat || stat.count === 0) {
+        perSkillStats[skill] = { avg: null, count: 0, best: null };
+      } else {
+        perSkillStats[skill] = {
+          avg: Math.round((stat.sum / stat.count) * 10) / 10,
+          count: stat.count,
+          best: stat.best,
+        };
+      }
+    });
+  }
+
+  const totalHours = Math.floor(totalTimeSeconds / 3600);
+  const totalMinutes = Math.round((totalTimeSeconds % 3600) / 60);
+  const lastTest = hasProgress && progress.recent_attempts.length > 0 ? progress.recent_attempts[0] : null;
+  const lastTestDate = lastTest && lastTest.completed_at
+    ? new Date(lastTest.completed_at).toLocaleDateString()
+    : null;
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50">
