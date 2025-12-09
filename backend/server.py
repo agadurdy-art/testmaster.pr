@@ -1012,7 +1012,12 @@ async def upload_bank_payment(
         }
     )
 
-    return {"detail": "Bank payment recorded", "examCredits": update_fields["examCredits"]}
+    return {
+        "detail": "Bank payment recorded",
+        "examCredits": update_fields["examCredits"],
+        "plan": update_fields.get("plan", user.get("plan", "free")),
+        "subscription": update_fields.get("subscription", user.get("subscription")),
+    }
 
 @api_router.get("/test_attempts/{attempt_id}")
 async def get_test_attempt(attempt_id: str):
