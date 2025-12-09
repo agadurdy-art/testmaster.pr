@@ -237,6 +237,11 @@ export default function Dashboard({ user, onLogout }) {
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Speaking Credits</p>
                 <p className="text-3xl font-extrabold text-sky-700">{userDetails?.examCredits ?? 0}</p>
                 <p className="text-[11px] text-gray-500 mt-1">Each AI Speaking exam session uses 1 credit.</p>
+                {((userDetails?.ai_interview_free_seconds_used ?? user.ai_interview_free_seconds_used ?? 0) < 180) && (
+                  <p className="text-[11px] text-sky-700 mt-1 font-semibold">
+                    {t('speakingFreeTrialAvailable')}
+                  </p>
+                )}
               </div>
             </div>
             <div className="mt-4 flex flex-col sm:flex-row gap-2">
