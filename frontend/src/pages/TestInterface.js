@@ -534,25 +534,35 @@ function ElevenLabsExaminer() {
         <div className="max-w-7xl mx-auto px-6 pt-4">
           <div className="mb-4 flex items-center space-x-3 text-sm">
             <span className="text-gray-700 font-medium">Select Reading Test:</span>
-            {availableTests.map((t) => (
-              <Button
-                key={t.id}
-                variant={t.id === test?.id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => {
-                  setTest(t);
-                  setTimeLeft(t.duration * 60);
-                  const initial = {};
-                  (t.questions || []).forEach((q) => {
-                    initial[q.id] = '';
-                  });
-                  setAnswers(initial);
-                  setCurrentQuestion(0);
-                }}
-              >
-                {t.title || 'Reading Test'}
-              </Button>
-            ))}
+            {availableTests.map((testOption) => {
+              const isPremium = testOption.title && /Test\s*(\d+)/i.test(testOption.title) &&
+                parseInt(testOption.title.match(/Test\s*(\d+)/i)[1], 10) >= 2;
+              const premiumLocked = isPremium && !(user?.plan === 'pro' || (user?.examCredits ?? 0) > 0);
+              return (
+                <Button
+                  key={testOption.id}
+                  variant={testOption.id === test?.id ? 'default' : 'outline'}
+                  size="sm"
+                  disabled={premiumLocked}
+                  onClick={() => {
+                    if (premiumLocked) {
+                      toast.error(t('paywallNeedProOrCredits'));
+                      return;
+                    }
+                    setTest(testOption);
+                    setTimeLeft(testOption.duration * 60);
+                    const initial = {};
+                    (testOption.questions || []).forEach((q) => {
+                      initial[q.id] = '';
+                    });
+                    setAnswers(initial);
+                    setCurrentQuestion(0);
+                  }}
+                >
+                  {testOption.title || 'Reading Test'}{premiumLocked ? ' 🔒' : ''}
+                </Button>
+              );
+            })}
           </div>
         </div>
       )}
