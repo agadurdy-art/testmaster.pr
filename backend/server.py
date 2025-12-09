@@ -19,6 +19,7 @@ from emergentintegrations.llm.openai import OpenAISpeechToText
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import io
+import httpx
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
