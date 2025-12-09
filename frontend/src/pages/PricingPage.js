@@ -218,7 +218,7 @@ export default function PricingPage({ user }) {
                   {paypalClientId ? (
                     <div className="w-full space-y-1">
                       <PayPalButtons
-                        style={{ layout: 'horizontal', color: 'gold', shape: 'rect', label: 'paypal' }}
+                        style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' }}
                         createOrder={async () => {
                           if (!user) return '';
                           const res = await createPaypalOrder({
