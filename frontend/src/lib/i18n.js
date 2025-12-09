@@ -57,6 +57,13 @@ export const translations = {
       'Thank you! Your bank transfer screenshot was uploaded and your credits have been updated.',
     bankUploadError: 'Could not process bank transfer. Please contact support.',
 
+    // Paywall / speaking messages
+    paywallNeedProOrCredits: 'This practice test is part of Test 2+. Please upgrade to Pro or add speaking credits to unlock it.',
+    paywallSpeakingNoCredits: 'You have no speaking credits left and your free trial is used. Please purchase a plan on the Pricing page.',
+    speakingFreeTrialAvailable: 'You still have a free AI speaking trial – your first session will be free.',
+    speakingFreeTrialStarted: 'Free trial speaking session started. Enjoy your first AI interview!',
+    speakingSessionStarted: 'Speaking session started. Credits left:',
+
     // Auth basics
     email: 'Email',
     password: 'Password',
