@@ -125,7 +125,7 @@ export default function Dashboard({ user, onLogout }) {
               className="text-gray-600"
             >
               <Target className="w-4 h-4 mr-2" />
-              Courses
+              {t('navCourses')}
             </Button>
             <Button
               variant="ghost"
