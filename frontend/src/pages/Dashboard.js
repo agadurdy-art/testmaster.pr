@@ -11,6 +11,7 @@ import { useI18n } from '../lib/i18n';
 
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
+  const { t } = useI18n();
   const [tests, setTests] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
