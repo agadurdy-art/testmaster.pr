@@ -243,53 +243,30 @@ export default function Dashboard({ user, onLogout }) {
           </p>
         </div>
 
-        {/* Progress Stats (compact) */}
-        {progress && progress.total_tests > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 animate-slide-in">
-            <Card className="p-3 md:p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[11px] text-gray-600 mb-1">Tests Completed</p>
-                  <p className="text-xl md:text-2xl font-bold text-gray-900">{progress.total_tests}</p>
-                </div>
-                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Trophy className="w-4 h-4 text-blue-600" />
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-3 md:p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[11px] text-gray-600 mb-1">Average Band Score</p>
-                  <p className={`text-xl md:text-2xl font-bold ${getBandScoreColor(progress.average_band_score)}`}>
-                    {progress.average_band_score}
-                  </p>
-                </div>
-                <div className={`w-10 h-10 rounded-full ${getBandScoreBg(progress.average_band_score)} flex items-center justify-center`}>
-                  <TrendingUp className={`w-5 h-5 ${getBandScoreColor(progress.average_band_score)}`} />
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-3 md:p-4 shadow-sm">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[11px] text-gray-600 mb-1">This Week</p>
-                  <p className="text-xl md:text-2xl font-bold text-gray-900">
-                    {progress.recent_attempts.filter(a => {
-                      const attemptDate = new Date(a.completed_at);
-                      const weekAgo = new Date();
-                      weekAgo.setDate(weekAgo.getDate() - 7);
-                      return attemptDate >= weekAgo;
-                    }).length}
-                  </p>
-                </div>
-                <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center">
-                  <Target className="w-4 h-4 text-green-600" />
-                </div>
-              </div>
-            </Card>
+        {/* Tiny quick stats strip so it doesn't dominate the layout */}
+        {hasProgress && (
+          <div className="mb-4 text-xs text-gray-600 flex flex-wrap gap-4">
+            <span>
+              Tests completed:{' '}
+              <span className="font-semibold text-gray-900">{progress.total_tests}</span>
+            </span>
+            <span>
+              Average band:{' '}
+              <span className={`font-semibold ${getBandScoreColor(progress.average_band_score)}`}>
+                {progress.average_band_score}
+              </span>
+            </span>
+            <span>
+              This week:{' '}
+              <span className="font-semibold text-gray-900">
+                {progress.recent_attempts.filter((a) => {
+                  const attemptDate = new Date(a.completed_at);
+                  const weekAgo = new Date();
+                  weekAgo.setDate(weekAgo.getDate() - 7);
+                  return attemptDate >= weekAgo;
+                }).length}
+              </span>
+            </span>
           </div>
         )}
 
