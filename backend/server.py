@@ -595,7 +595,7 @@ async def verify_email(payload: VerifyEmailRequest):
     return {"detail": "Email verified successfully"}
 
 
-# ================== Payments: SePay + Manual Credit ==================
+# ================== Payments: Manual Credit and PayPal ==================
 
 
 async def _get_user_by_email(email: str) -> Optional[dict]:
