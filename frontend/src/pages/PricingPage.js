@@ -5,7 +5,7 @@ import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 
-import { uploadBankPayment } from '../lib/api';
+import { uploadBankPayment, createPaypalOrder, capturePaypalOrder } from '../lib/api';
 import { useI18n } from '../lib/i18n';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 
