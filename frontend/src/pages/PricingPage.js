@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
+import LanguageSwitcher from '../components/LanguageSwitcher';
 
 import { uploadBankPayment } from '../lib/api';
+import { useI18n } from '../lib/i18n';
+
+import qrSingle from '../assets/payments/Single exam 120k.png';
+import qrStarter from '../assets/payments/Starter plan 220k.png';
+import qrBooster from '../assets/payments/Booster plan 460k.png';
+import qrPro from '../assets/payments/Pro plan 700k.png';
 
 
 const plans = [
