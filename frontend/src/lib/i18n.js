@@ -35,6 +35,8 @@ export const translations = {
     aiSpeakingPlansTitle: 'AI Speaking Exam Plans',
     aiSpeakingPlansSubtitle:
       'Practice real IELTS-style speaking exams with AI examiner feedback. Prices shown in both USD and VND.',
+    paypalBannerNote:
+      'Pay by card or PayPal. Auto top-up is enabled when your PayPal email matches your IELTS Ace email.',
     paypalNote:
       'Please use the same email on PayPal as you used to register on IELTS Ace so your credits can be added automatically.',
     payByBank: 'Pay by QR/Bank Transfer',
