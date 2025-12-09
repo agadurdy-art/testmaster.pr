@@ -254,6 +254,28 @@ export default function Dashboard({ user, onLogout }) {
             </div>
           </Card>
 
+          {/* User info card */}
+          <Card className="p-4 flex flex-col justify-between bg-white/80 border-gray-100">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Your Info</p>
+                <p className="text-sm font-semibold text-gray-900">{userDetails?.name || user.name}</p>
+                <p className="text-xs text-gray-600 break-all">{userDetails?.email || user.email}</p>
+              </div>
+            </div>
+            <div className="mt-1 text-xs text-gray-500 space-y-1">
+              <p>
+                Current plan:
+                <span className="font-semibold text-gray-900 ml-1 capitalize">{userDetails?.plan || 'free'}</span>
+              </p>
+              <p>
+                Speaking credits:
+                <span className="font-semibold text-gray-900 ml-1">{userDetails?.examCredits ?? 0}</span>
+              </p>
+            </div>
+          </Card>
+
+
           {userDetails?.email?.includes('aga.durdy') && (
             <Card className="p-4 flex flex-col justify-between">
               <div>
