@@ -7,6 +7,9 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 
 import { uploadBankPayment } from '../lib/api';
 import { useI18n } from '../lib/i18n';
+import { PayPalButtons } from '@paypal/react-paypal-js';
+
+const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 
 const plans = [
   {
