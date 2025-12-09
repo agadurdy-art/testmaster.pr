@@ -87,6 +87,8 @@ export const translations = {
     aiSpeakingPlansTitle: 'Các gói thi nói AI',
     aiSpeakingPlansSubtitle:
       'Luyện thi nói IELTS với giám khảo AI. Giá hiển thị bằng USD và VND.',
+    paypalBannerNote:
+      'Thanh toán bằng thẻ hoặc PayPal. Hệ thống tự động cộng lượt khi email PayPal trùng với email IELTS Ace.',
     paypalNote:
       'Hãy dùng cùng một email PayPal với email đăng ký IELTS Ace để hệ thống tự động cộng lượt thi.',
     payByBank: 'Thanh toán bằng QR/Chuyển khoản',
