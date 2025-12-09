@@ -284,7 +284,16 @@ export default function Dashboard({ user, onLogout }) {
                       return attemptDate >= weekAgo;
                     }).length}
                   </p>
-        {/* Plan & Credits summary + User info */}
+                </div>
+                <div className="w-9 h-9 rounded-full bg-green-100 flex items-center justify-center">
+                  <Target className="w-4 h-4 text-green-600" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
+
+        {/* Plan, credits & user info row. Quick stats moved into a small widget. */}
         <div className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card className="p-6 md:col-span-2 flex flex-col justify-between bg-white/80 border-sky-100">
             <div className="flex items-center justify-between gap-4">
