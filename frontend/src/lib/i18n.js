@@ -1,4 +1,6 @@
 // Simple bilingual (EN/VI) i18n helper for the app
+import React from 'react';
+
 
 export const LANGUAGES = {
   en: 'English',
