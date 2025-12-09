@@ -214,28 +214,65 @@ export default function PricingPage({ user }) {
                   >
                     {t('payByBank')}
                   </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full border-[#003087] text-[#003087] hover:bg-[#E6F0FF] rounded-full text-xs"
-                    onClick={() => {
-                      let url = '';
-                      if (plan.id === 'single') {
-                        url = 'https://www.paypal.com/ncp/payment/2DETEUHX9892L';
-                      } else if (plan.id === 'starter') {
-                        url = 'https://www.paypal.com/ncp/payment/6SY2PSQA8BW84';
-                      } else if (plan.id === 'booster') {
-                        url = 'https://www.paypal.com/ncp/payment/PWBH852KJJLS8';
-                      } else if (plan.id === 'pro') {
-                        url = 'https://www.paypal.com/ncp/payment/NUBF9QDT9RMBC';
-                      }
-                      if (url) {
-                        window.open(url, '_blank', 'noopener,noreferrer');
-                      }
-                    }}
-                  >
-                    {t('payByCardPaypal')}
-                  </Button>
-                  <p className="text-[10px] text-gray-500 text-center">{t('paypalNote')}</p>
+
+                  {paypalClientId ? (
+                    <div className="w-full space-y-1">
+                      <PayPalButtons
+                        style={{ layout: 'horizontal', color: 'gold', shape: 'rect', label: 'paypal' }}
+                        createOrder={(data, actions) => {
+                          const amount = (plan.priceUsd || '').replace(/[^0-9.]/g, '') || '0.00';
+                          return actions.order.create({
+                            purchase_units: [
+                              {
+                                amount: {
+                                  value: amount,
+                                  currency_code: 'USD',
+                                },
+                                description: `${plan.name} - AI Speaking credits`,
+                              },
+                            ],
+                          });
+                        }}
+                        onApprove={(data, actions) => {
+                          return actions.order
+                            .capture()
+                            .then((details) => {
+                              // Auto top-up is handled via PayPal webhooks on the backend when configured.
+                              // Here we just show a confirmation to the user.
+                              alert(
+                                `Payment completed by ${details.payer.name.given_name}. Your credits will be updated shortly.`,
+                              );
+                            });
+                        }}
+                      />
+                      <p className="text-[10px] text-gray-500 text-center">{t('paypalNote')}</p>
+                    </div>
+                  ) : (
+                    <>
+                      <Button
+                        variant="outline"
+                        className="w-full border-[#003087] text-[#003087] hover:bg-[#E6F0FF] rounded-full text-xs"
+                        onClick={() => {
+                          let url = '';
+                          if (plan.id === 'single') {
+                            url = 'https://www.paypal.com/ncp/payment/2DETEUHX9892L';
+                          } else if (plan.id === 'starter') {
+                            url = 'https://www.paypal.com/ncp/payment/6SY2PSQA8BW84';
+                          } else if (plan.id === 'booster') {
+                            url = 'https://www.paypal.com/ncp/payment/PWBH852KJJLS8';
+                          } else if (plan.id === 'pro') {
+                            url = 'https://www.paypal.com/ncp/payment/NUBF9QDT9RMBC';
+                          }
+                          if (url) {
+                            window.open(url, '_blank', 'noopener,noreferrer');
+                          }
+                        }}
+                      >
+                        {t('payByCardPaypal')}
+                      </Button>
+                      <p className="text-[10px] text-gray-500 text-center">{t('paypalNote')}</p>
+                    </>
+                  )}
                 </div>
               </Card>
             );
