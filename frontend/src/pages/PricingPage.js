@@ -160,9 +160,9 @@ export default function PricingPage({ user }) {
               <div className="space-y-2 mt-2">
                 <Button
                   className="w-full bg-[#D90732] text-white rounded-full hover:bg-red-700 transition-colors"
-                  onClick={() => handleCheckout(plan.id, parseInt(plan.priceVnd.replace(/[^0-9]/g, ''), 10))}
+                  onClick={() => handleCheckout(plan.id, parseInt(plan.priceVnd.replace(/[^0-9]/g, ''), 10), plan.name)}
                 >
-                  Pay by Bank Transfer (Vietnam)
+                  Pay by QR/Bank Transfer
                 </Button>
                 <Button
                   variant="outline"
