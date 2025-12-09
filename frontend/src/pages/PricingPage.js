@@ -155,7 +155,7 @@ export default function PricingPage({ user }) {
             {t('aiSpeakingPlansSubtitle')}
           </p>
           <p className="text-xs text-[#D90732] font-semibold uppercase tracking-wide">
-            Pay by card or PayPal. Auto top-up is enabled when your PayPal email matches your IELTS Ace email.
+            {t('paypalBannerNote')}
           </p>
         </div>
 
