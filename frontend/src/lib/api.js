@@ -133,3 +133,12 @@ export const manualCreditSimple = async ({ email, plan, exam_credits }) => {
 };
 
 export default api;
+
+export const uploadBankPayment = async (formData) => {
+  const response = await api.post('/payments/bank/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
