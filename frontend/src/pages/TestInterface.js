@@ -138,7 +138,12 @@ function ElevenLabsExaminer() {
       }
     } catch (err) {
       console.error('Start speaking session error:', err);
-      const msg = err?.response?.data?.detail || 'Could not start speaking session. Please try again.';
+      const status = err?.response?.status;
+      const detail = err?.response?.data?.detail;
+      let msg = detail || 'Could not start speaking session. Please try again.';
+      if (status === 402) {
+        msg = t('paywallSpeakingNoCredits');
+      }
       toast.error(msg);
     }
   };
