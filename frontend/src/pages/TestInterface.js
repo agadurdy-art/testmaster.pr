@@ -677,18 +677,23 @@ function ElevenLabsExaminer() {
                 <p className="text-xs text-blue-800">
                   Each live AI speaking interview uses <span className="font-semibold">1 credit</span> when you start the session.
                 </p>
+                {hasFreeTrial && (
+                  <p className="text-xs text-blue-800 mt-1 font-semibold">
+                    {t('speakingFreeTrialAvailable')}
+                  </p>
+                )}
               </div>
               <div className="flex flex-col items-start md:items-end gap-2">
                 <Button
                   variant="default"
-                  disabled={speakingCredits <= 0}
+                  disabled={!hasFreeTrial && speakingCredits <= 0}
                   onClick={handleStartSpeakingSession}
                 >
                   {speakingSessionStarted ? 'Speaking Session Active' : 'Start AI Speaking Session (−1 credit)'}
                 </Button>
-                {speakingCredits <= 0 && (
+                {!hasFreeTrial && speakingCredits <= 0 && (
                   <p className="text-xs text-red-700 max-w-xs text-right">
-                    You have no speaking credits left. Please purchase a plan on the Pricing page to continue using the AI interviewer.
+                    {t('paywallSpeakingNoCredits')}
                   </p>
                 )}
               </div>
