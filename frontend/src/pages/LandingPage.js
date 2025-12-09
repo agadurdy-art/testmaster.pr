@@ -12,6 +12,7 @@ import { useI18n } from '../lib/i18n';
 
 export default function LandingPage({ onLogin, user }) {
   const navigate = useNavigate();
+  const { t } = useI18n();
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState('signup');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
