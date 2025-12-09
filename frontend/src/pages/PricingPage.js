@@ -64,36 +64,15 @@ const plans = [
 
 export default function PricingPage({ user }) {
   const navigate = useNavigate();
-  const [showDialog, setShowDialog] = React.useState(false);
-  const [paymentInfo, setPaymentInfo] = React.useState(null);
-
-  const handleCheckout = async (planId, amountVnd) => {
+  const handleCheckout = (planId, amountVnd) => {
     if (!user) {
       navigate('/');
       return;
     }
 
-    try {
-      const res = await api.post('/payments/sepay/create', {
-        plan_id: planId,
-        amount_vnd: amountVnd,
-      }, {
-        headers: {
-          'x-user-email': user.email,
-        },
-      });
-
-      const inst = res.data.instructions;
-      setPaymentInfo({
-        orderId: res.data.order_id,
-        planId: planId,
-        ...inst,
-      });
-      setShowDialog(true);
-    } catch (err) {
-      console.error('SePay create error', err);
-      alert('Could not start payment. Please try again in a moment.');
-    }
+    alert(
+      'Bank transfer option is temporarily disabled. Please use PayPal for card payments, or contact admin for manual bank transfer.',
+    );
   };
 
   return (
