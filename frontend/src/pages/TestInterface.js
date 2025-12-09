@@ -122,9 +122,20 @@ function ElevenLabsExaminer() {
       const data = await startSpeakingSession(user.email);
       setSpeakingSessionStarted(true);
       setSpeakingCredits(data.remainingCredits);
-      const updatedUser = { ...user, examCredits: data.remainingCredits, plan: data.plan };
+      const updatedUser = {
+        ...user,
+        examCredits: data.remainingCredits,
+        plan: data.plan,
+        ai_interview_free_seconds_used:
+          data.freeTrialSecondsUsed ?? user.ai_interview_free_seconds_used ?? 0,
+      };
       localStorage.setItem('user', JSON.stringify(updatedUser));
-      toast.success(`Speaking session started. Credits left: ${data.remainingCredits}`);
+
+      if (data.freeTrial) {
+        toast.success(t('speakingFreeTrialStarted'));
+      } else {
+        toast.success(`${t('speakingSessionStarted')} ${data.remainingCredits}`);
+      }
     } catch (err) {
       console.error('Start speaking session error:', err);
       const msg = err?.response?.data?.detail || 'Could not start speaking session. Please try again.';
