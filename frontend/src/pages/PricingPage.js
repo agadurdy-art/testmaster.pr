@@ -219,30 +219,42 @@ export default function PricingPage({ user }) {
                     <div className="w-full space-y-1">
                       <PayPalButtons
                         style={{ layout: 'horizontal', color: 'gold', shape: 'rect', label: 'paypal' }}
-                        createOrder={(data, actions) => {
-                          const amount = (plan.priceUsd || '').replace(/[^0-9.]/g, '') || '0.00';
-                          return actions.order.create({
-                            purchase_units: [
-                              {
-                                amount: {
-                                  value: amount,
-                                  currency_code: 'USD',
-                                },
-                                description: `${plan.name} - AI Speaking credits`,
-                              },
-                            ],
+                        createOrder={async () => {
+                          if (!user) return '';
+                          const res = await createPaypalOrder({
+                            planId: plan.id,
+                            email: user.email,
                           });
+                          return res.orderId;
                         }}
-                        onApprove={(data, actions) => {
-                          return actions.order
-                            .capture()
-                            .then((details) => {
-                              // Auto top-up is handled via PayPal webhooks on the backend when configured.
-                              // Here we just show a confirmation to the user.
-                              alert(
-                                `Payment completed by ${details.payer.name.given_name}. Your credits will be updated shortly.`,
-                              );
+                        onApprove={async (data) => {
+                          if (!user) return;
+                          try {
+                            const res = await capturePaypalOrder({
+                              orderId: data.orderID,
+                              planId: plan.id,
+                              email: user.email,
                             });
+                            const updatedUser = {
+                              ...user,
+                              examCredits: res.examCredits,
+                              plan: res.plan ?? user.plan,
+                              subscription: res.subscription ?? user.subscription,
+                            };
+                            localStorage.setItem('user', JSON.stringify(updatedUser));
+                            alert(
+                              language === 'vi'
+                                ? 'Thanh toán PayPal thành công. Lượt thi của bạn đã được cập nhật.'
+                                : 'PayPal payment successful. Your speaking credits have been updated.',
+                            );
+                          } catch (err) {
+                            console.error('PayPal capture error', err);
+                            alert(
+                              language === 'vi'
+                                ? 'Không thể xử lý thanh toán PayPal. Vui lòng thử lại hoặc dùng chuyển khoản ngân hàng.'
+                                : 'Could not process PayPal payment. Please try again or use bank transfer.',
+                            );
+                          }
                         }}
                       />
                       <p className="text-[10px] text-gray-500 text-center">{t('paypalNote')}</p>
