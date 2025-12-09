@@ -147,3 +147,38 @@
 ##     message: "Need to verify /api/tests/submit backend behaviour and frontend submit flow for reading/listening modules."
 ##   - agent: "testing"
 ##     message: "BACKEND TESTING COMPLETE ✅ - Fixed critical syntax error in /api/tests/submit endpoint. The function was missing return statement and had unreachable database save code. All backend APIs now working correctly: user creation, test fetching (reading/listening), test submission with proper scoring (exact answer matching), and test attempt retrieval. Both reading and listening test flows tested end-to-end successfully. Frontend can now proceed with testing - the 'Failed to submit test' issue was caused by the backend syntax error which is now resolved."
+
+
+## backend:
+##   - task: "Bank transfer upload auto-topup"
+##     implemented: true
+##     working: true
+##     file: "backend/server.py"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: true
+##         agent: "main"
+##         comment: "Updated /api/payments/bank/upload to also return plan and subscription alongside examCredits for instant top-up UI refresh. Manual curl test: bank upload for booster plan correctly set examCredits=5, plan=pro, subscription=Booster."
+## frontend:
+##   - task: "Pricing page bank transfer modal + i18n"
+##     implemented: true
+##     working: false
+##     file: "frontend/src/pages/PricingPage.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: false
+##         agent: "main"
+##         comment: "Implemented bilingual Pricing page with LanguageSwitcher and new bank transfer modal showing QR, bank details and upload screenshot flow. Needs automated UI testing for both EN/VI and modal behaviour."
+## test_plan:
+##   current_focus:
+##     - "Pricing page bank transfer modal + i18n"
+##   stuck_tasks: []
+##   test_all: false
+##   test_priority: "high_first"
+## agent_communication:
+##   - agent: "main"
+##     message: "Please test the Pricing page: language toggle EN/VI, opening bank transfer modal for each plan, and ensuring uploadBankPayment is called with correct formData when user selects a screenshot. For routing, set localStorage.user to a valid object then reload and navigate via Dashboard -> Pricing."
