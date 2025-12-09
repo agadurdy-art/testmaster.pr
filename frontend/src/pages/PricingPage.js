@@ -174,65 +174,6 @@ export default function PricingPage({ user }) {
         </div>
       </main>
 
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Complete Your Payment</DialogTitle>
-          </DialogHeader>
-          {paymentInfo && (
-            <div className="space-y-3 text-sm text-gray-800">
-              <p>
-                Please transfer{' '}
-                <span className="font-semibold">
-                  {paymentInfo.amount_vnd.toLocaleString('vi-VN')} VND
-                </span>{' '}
-                to:
-              </p>
-              <div className="bg-gray-50 rounded-md p-3 space-y-1 text-xs">
-                <p>
-                  <span className="font-semibold">Bank:</span> {paymentInfo.bank_name}
-                </p>
-                <p>
-                  <span className="font-semibold">Account:</span> {paymentInfo.account_number}
-                </p>
-                <p>
-                  <span className="font-semibold">Name:</span> {paymentInfo.account_name}
-                </p>
-                {paymentInfo.payment_code && (
-                  <p className="text-red-700 mt-1">
-                    <span className="font-semibold">Transfer description:</span>{' '}
-                    {paymentInfo.payment_code}
-                  </p>
-                )}
-              </div>
-              {paymentInfo.qr_image_url && (
-                <div className="mt-3 flex flex-col items-center">
-                  <img
-                    src={paymentInfo.qr_image_url}
-                    alt="Payment QR"
-                    className="w-48 h-48 border rounded-md"
-                  />
-                  <p className="mt-2 text-xs text-gray-500 text-center">
-                    Scan this QR code with your banking app to fill in the details automatically.
-                  </p>
-                </div>
-              )}
-              <p className="mt-2 text-xs text-gray-600">
-                Order ID: <span className="font-mono">{paymentInfo.orderId}</span>
-              </p>
-              <p className="mt-1 text-xs text-gray-600">
-                After your transfer is received, your account will be upgraded automatically within about 10 seconds.
-              </p>
-              <div className="flex justify-end pt-2">
-                <Button size="sm" variant="outline" onClick={() => setShowDialog(false)}>
-                  Close
-                </Button>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
-
     </div>
   );
 }
