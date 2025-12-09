@@ -53,6 +53,16 @@ function ElevenLabsExaminer() {
   const speakingQuestionAudioRef = useRef(null);
   const speakingQuestionTimeoutRef = useRef(null);
 
+  // Premium access helper functions
+  const canAccessPremium = (user?.plan === 'pro') || ((user?.examCredits ?? 0) > 0);
+  
+  const isPremiumTest = (title) => {
+    if (!title) return false;
+    const match = title.match(/Test\s*(\d+)/i);
+    if (!match) return false;
+    const num = parseInt(match[1], 10);
+    return num >= 2;
+  };
   useEffect(() => {
     loadTest();
   }, [testType]);
