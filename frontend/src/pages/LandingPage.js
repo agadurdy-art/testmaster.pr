@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/
 import { BookOpen, Headphones, Mic, PenTool, CheckCircle, Clock, Target, Trophy } from 'lucide-react';
 import { registerUser, loginUser } from '../lib/api';
 import { toast } from 'sonner';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+import { useI18n } from '../lib/i18n';
 
 export default function LandingPage({ onLogin, user }) {
   const navigate = useNavigate();
