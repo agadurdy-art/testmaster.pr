@@ -29,6 +29,11 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# PayPal configuration (Smart Buttons + Orders API)
+PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
+PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET")
+PAYPAL_API_BASE = os.getenv("PAYPAL_API_BASE", "https://api-m.paypal.com")
+
 # Initialize OpenAI Speech-to-Text
 stt = OpenAISpeechToText(api_key=os.getenv("EMERGENT_LLM_KEY"))
 
