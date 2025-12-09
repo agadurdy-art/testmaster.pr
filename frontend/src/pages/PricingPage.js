@@ -123,7 +123,6 @@ export default function PricingPage({ user }) {
         alert(t('bankUploadSuccess'));
         setBankModalOpen(false);
       } catch (err) {
-        // eslint-disable-next-line no-console
         console.error('Bank upload error', err);
         alert(t('bankUploadError'));
       }
