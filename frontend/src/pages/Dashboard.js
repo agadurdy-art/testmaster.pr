@@ -116,7 +116,7 @@ export default function Dashboard({ user, onLogout }) {
               className="text-gray-600"
             >
               <BookMarked className="w-4 h-4 mr-2" />
-              Tips
+              {t('navTips')}
             </Button>
             <Button
               data-testid="courses-nav-btn"
