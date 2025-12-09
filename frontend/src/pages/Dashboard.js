@@ -367,6 +367,91 @@ export default function Dashboard({ user, onLogout }) {
           )}
         </div>
 
+        {/* Parent overview + Study summary */}
+        {hasProgress && (
+          <div className="mb-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Card className="p-5 bg-white/80 border-gray-100">
+              <h3 className="text-sm font-semibold text-gray-800 mb-2">Overview for Parents</h3>
+              <p className="text-sm text-gray-700 mb-1">
+                Your child has completed{' '}
+                <span className="font-semibold">{progress.total_tests}</span> practice test
+                {progress.total_tests === 1 ? '' : 's'} with an average band score of{' '}
+                <span className="font-semibold">{progress.average_band_score}</span>.
+              </p>
+              {lastTestDate && (
+                <p className="text-xs text-gray-600">
+                  Last practice:{' '}
+                  <span className="font-semibold">{lastTestDate}</span>
+                </p>
+              )}
+              {bestAttempt && (
+                <p className="text-xs text-gray-600 mt-1">
+                  Best band so far:{' '}
+                  <span className="font-semibold">{bestAttempt.band_score}</span> in{' '}
+                  <span className="capitalize">{bestAttempt.test_type}</span>.
+                </p>
+              )}
+            </Card>
+
+            <Card className="p-5 bg-white/80 border-gray-100">
+              <h3 className="text-sm font-semibold text-gray-800 mb-2">Study summary</h3>
+              <p className="text-sm text-gray-700 mb-1">
+                Total practice time:{' '}
+                <span className="font-semibold">
+                  {totalHours > 0 ? `${totalHours}h ` : ''}
+                  {totalMinutes}m
+                </span>
+              </p>
+              <p className="text-xs text-gray-600">
+                Tests in last 30 days:{' '}
+                <span className="font-semibold">{last30Tests}</span>
+                {prev30Tests > 0 && (
+                  <>
+                    {' '}
+                    (previous 30 days:{' '}
+                    <span className="font-semibold">{prev30Tests}</span>)
+                  </>
+                )}
+              </p>
+            </Card>
+          </div>
+        )}
+
+        {/* Per-skill performance */}
+        {hasProgress && perSkillStats && (
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Skill performance</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {skillOrder.map((skill) => {
+                const stat = perSkillStats[skill];
+                const label = skill.charAt(0).toUpperCase() + skill.slice(1);
+                return (
+                  <Card key={skill} className="p-3 bg-white/80 border-gray-100">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">{label}</p>
+                    <p className="text-sm text-gray-700">
+                      Avg band:{' '}
+                      <span className="font-semibold">
+                        {stat.avg != null ? stat.avg : '—'}
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Best:{' '}
+                      <span className="font-semibold">
+                        {stat.best != null ? stat.best : '—'}
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Tests:{' '}
+                      <span className="font-semibold">{stat.count}</span>
+                    </p>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+
                 </div>
                 <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
                   <Target className="w-6 h-6 text-green-600" />
