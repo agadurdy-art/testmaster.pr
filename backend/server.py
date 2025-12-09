@@ -603,72 +603,7 @@ async def _get_user_by_email(email: str) -> Optional[dict]:
     return user
 
 
-@api_router.post("/payments/sepay/create")
-async def create_sepay_payment(req: CreatePaymentRequest, request: Request):
-    """Create a payment order for a pricing plan and return bank transfer instructions.
-
-    For now we keep it simple:
-    - Trust the amount sent from the frontend for the selected plan
-    - Create a pending PaymentOrder document
-    - Return static bank details + a unique transfer content code
-    """
-
-    user_email = request.headers.get("x-user-email")
-    if not user_email:
-        raise HTTPException(status_code=401, detail="Missing user context")
-
-    user = await _get_user_by_email(user_email)
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    order = PaymentOrder(
-        user_id=user["id"],
-        plan_id=req.plan_id,
-        amount_vnd=req.amount_vnd,
-    )
-
-    # Generate a simple unique payment code and store it on the order
-    payment_code = f"IELTS{order.id[:8].upper()}"
-
-    order_doc = order.model_dump()
-    order_doc["created_at"] = order_doc["created_at"].isoformat()
-    await db.payment_orders.insert_one(order_doc)
-
-    # Use env vars when available; fall back to the MB Bank details you configured
-    bank_account = os.getenv("SEPAY_BANK_ACCOUNT_NUMBER") or "038578587"
-    bank_name = os.getenv("SEPAY_BANK_NAME") or "MB Bank"
-    account_name = os.getenv("SEPAY_ACCOUNT_NAME") or "NGUYEN HUYEN THIEN KIEU"
-
-    # Build VietQR image URL if bank details are configured
-    qr_url = None
-    if bank_account:
-        # Use official VietQR image format for MB Bank via BIN 970422.
-        # Pattern: https://img.vietqr.io/image/970422|<ACCOUNT>-compact.png?amount=...&addInfo=...&accountName=...
-        base_qr = f"https://img.vietqr.io/image/970422|{bank_account}-compact.png"
-        params = {
-            "amount": req.amount_vnd,
-            "addInfo": payment_code,
-        }
-        if account_name:
-            params["accountName"] = account_name
-        qr_url = base_qr + "?" + urllib.parse.urlencode(params)
-
-    instructions = {
-        "bank_name": bank_name,
-        "account_number": bank_account,
-        "account_name": account_name,
-        "amount_vnd": req.amount_vnd,
-        "payment_code": payment_code,
-        "note": "Scan the QR or transfer EXACT amount and include payment code in description",
-        "qr_image_url": qr_url,
-    }
-
-    return {
-        "order_id": order.id,
-        "plan_id": req.plan_id,
-        "status": order.status,
-        "instructions": instructions,
-    }
+# NOTE: SePay/VietQR integration has been disabled. Manual credits and PayPal are used instead.
 
 @api_router.get("/payments/orders/{order_id}")
 async def get_payment_order(order_id: str):
