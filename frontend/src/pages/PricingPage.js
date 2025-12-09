@@ -96,7 +96,7 @@ export default function PricingPage({ user }) {
             Practice real IELTS-style speaking exams with AI examiner feedback. Prices shown in both USD and VND.
           </p>
           <p className="text-xs text-[#D90732] font-semibold uppercase tracking-wide">
-            Pay by MB Bank transfer or by card/PayPal via Ko-fi. Auto top-up is enabled when emails match.
+            Pay by card or PayPal. Auto top-up is enabled when your PayPal email matches your IELTS Ace email.
           </p>
         </div>
 
