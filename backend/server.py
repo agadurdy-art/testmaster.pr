@@ -252,12 +252,34 @@ def send_reset_email(to_email: str, reset_link: str) -> bool:
     if not SENDGRID_API_KEY or not SENDGRID_FROM_EMAIL:
         logging.getLogger(__name__).warning("SendGrid not configured; skipping email send")
         return False
-# In-memory stores (fallback); real flows use MongoDB collections
+    # In-memory stores (fallback); real flows use MongoDB collections
 
     try:
         message = Mail(
             from_email=SENDGRID_FROM_EMAIL,
             to_emails=to_email,
+            subject="IELTS Ace - Password Reset",
+            html_content=f"""
+                <p>Hello,</p>
+                <p>We received a request to reset the password for your IELTS Ace account.</p>
+                <p>Click the link below to set a new password (valid for 60 minutes):</p>
+                <p><a href='{reset_link}'>{reset_link}</a></p>
+                <p>If you did not request this, you can safely ignore this email.</p>
+                <p>– IELTS Ace</p>
+            """,
+        )
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        if response.status_code in (200, 201, 202):
+            logging.getLogger(__name__).info(f"Sent reset email to {to_email}")
+            return True
+        logging.getLogger(__name__).error(
+            f"SendGrid error for {to_email}: status {response.status_code}"
+        )
+        return False
+    except Exception as e:
+        logging.getLogger(__name__).error(f"SendGrid exception for {to_email}: {e}")
+        return False
 
 
 # ============ PayPal Smart Buttons Helpers ============
@@ -290,29 +312,6 @@ async def get_paypal_access_token() -> str:
             logging.getLogger(__name__).error(f"PayPal token missing in response: {data}")
             raise HTTPException(status_code=502, detail="PayPal auth failed")
         return token
-
-            subject="IELTS Ace - Password Reset",
-            html_content=f"""
-                <p>Hello,</p>
-                <p>We received a request to reset the password for your IELTS Ace account.</p>
-                <p>Click the link below to set a new password (valid for 60 minutes):</p>
-                <p><a href='{reset_link}'>{reset_link}</a></p>
-                <p>If you did not request this, you can safely ignore this email.</p>
-                <p>– IELTS Ace</p>
-            """,
-        )
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
-        if response.status_code in (200, 201, 202):
-            logging.getLogger(__name__).info(f"Sent reset email to {to_email}")
-            return True
-        logging.getLogger(__name__).error(
-            f"SendGrid error for {to_email}: status {response.status_code}"
-        )
-        return False
-    except Exception as e:
-        logging.getLogger(__name__).error(f"SendGrid exception for {to_email}: {e}")
-        return False
 
 
 
