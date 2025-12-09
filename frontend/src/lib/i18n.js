@@ -115,6 +115,13 @@ export const translations = {
     bankUploadSuccess: 'Cảm ơn! Ảnh chuyển khoản đã được tải lên và lượt thi của bạn đã được cập nhật.',
     bankUploadError: 'Không thể xử lý chuyển khoản. Vui lòng liên hệ hỗ trợ.',
 
+    // Paywall / speaking messages
+    paywallNeedProOrCredits: 'Bài luyện này thuộc Test 2 trở lên. Hãy nâng cấp gói Pro hoặc mua thêm lượt thi để mở khóa.',
+    paywallSpeakingNoCredits: 'Bạn không còn lượt thi nói và đã dùng hết lượt thử miễn phí. Vui lòng mua gói ở trang Giá.',
+    speakingFreeTrialAvailable: 'Bạn vẫn còn lượt thử miễn phí với giám khảo AI – phiên phỏng vấn đầu tiên sẽ miễn phí.',
+    speakingFreeTrialStarted: 'Đã bắt đầu phiên thử miễn phí. Chúc bạn có một buổi phỏng vấn AI hiệu quả!',
+    speakingSessionStarted: 'Đã bắt đầu phiên thi nói. Lượt còn lại:',
+
     // Auth basics
     email: 'Email',
     password: 'Mật khẩu',
