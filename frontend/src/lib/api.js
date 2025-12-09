@@ -132,6 +132,25 @@ export const manualCreditSimple = async ({ email, plan, exam_credits }) => {
   return response.data;
 };
 
+export const createPaypalOrder = async ({ planId, email }) => {
+  const response = await api.post('/payments/paypal/create-order', {
+    planId,
+    email,
+  });
+  return response.data;
+};
+
+export const capturePaypalOrder = async ({ orderId, planId, email }) => {
+  const response = await api.post('/payments/paypal/capture-order', {
+    orderId,
+    planId,
+    email,
+  });
+  return response.data;
+};
+
+
+
 export default api;
 
 export const uploadBankPayment = async (formData) => {
