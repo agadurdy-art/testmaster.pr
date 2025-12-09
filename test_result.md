@@ -186,3 +186,29 @@
 ##     message: "Please test the Pricing page: language toggle EN/VI, opening bank transfer modal for each plan, and ensuring uploadBankPayment is called with correct formData when user selects a screenshot. For routing, set localStorage.user to a valid object then reload and navigate via Dashboard -> Pricing."
 ##   - agent: "testing"
 ##     message: "BILINGUAL PRICING PAGE TESTING COMPLETE ✅ - All functionality verified and working correctly. The pricing page with bank transfer modal and i18n system is fully functional: ✅ Language switching (EN/VI) works perfectly ✅ All 4 plan modals display correct information ✅ QR codes load successfully from external URLs ✅ Bank details display correctly ✅ File upload triggers proper API calls ✅ Success alerts work in both languages ✅ localStorage updates work correctly ✅ Navigation and page refresh work properly. The implementation meets all requirements from the review request. Ready for production use."
+
+
+## backend:
+##   - task: "Speaking free trial and credit consumption"
+##     implemented: true
+##     working: true
+##     file: "backend/server.py"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: true
+##         agent: "main"
+##         comment: "Added free trial logic to /api/speaking/session/start: first call grants 3-minute free trial based on ai_interview_free_seconds_used, subsequent calls decrement examCredits by 1. Verified via curl (first 200 free trial, second 402 without credits)."
+## frontend:
+##   - task: "Paywall gating for premium tests and AI speaking free trial"
+##     implemented: true
+##     working: false
+##     file: "frontend/src/pages/TestInterface.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: false
+##         agent: "main"
+##         comment: "Implemented: (1) Dashboard speaking start now checks for free trial or paid access before navigating; (2) TestInterface selectors for Reading/Listening/Writing/Speaking disable Test 2+ when user has no Pro plan or credits, showing toast using paywallNeedProOrCredits; (3) Speaking session start uses new backend response to handle free trial, update ai_interview_free_seconds_used, and show bilingual messages. Needs UI testing for free trial flow and paywall behaviour."
