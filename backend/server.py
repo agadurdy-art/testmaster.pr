@@ -617,7 +617,12 @@ async def get_payment_order(order_id: str):
 
 @api_router.post("/speaking/session/start")
 async def start_speaking_session(request: Request):
-    """Consume 1 speaking credit when the user starts an AI speaking session.
+    """Start an AI speaking session.
+
+    Rules:
+    - Every user gets a one-time 3-minute free trial session
+      (tracked via `ai_interview_free_seconds_used`).
+    - After the free trial is used, each session consumes 1 speaking credit.
 
     Expects header `x-user-email` from the frontend to identify the user.
     """
@@ -629,7 +634,26 @@ async def start_speaking_session(request: Request):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Atomically decrement examCredits if > 0
+    FREE_TRIAL_SECONDS = 180
+    free_used = int(user.get("ai_interview_free_seconds_used", 0) or 0)
+
+    # If user has not yet consumed their free trial, grant a free session
+    if free_used < FREE_TRIAL_SECONDS:
+        await db.users.update_one(
+            {"id": user["id"]},
+            {"$set": {"ai_interview_free_seconds_used": FREE_TRIAL_SECONDS}},
+        )
+        updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
+        return {
+            "detail": "Free trial speaking session started",
+            "remainingCredits": updated.get("examCredits", 0),
+            "plan": updated.get("plan", "free"),
+            "freeTrial": True,
+            "freeTrialSecondsUsed": updated.get("ai_interview_free_seconds_used", FREE_TRIAL_SECONDS),
+            "freeTrialSecondsTotal": FREE_TRIAL_SECONDS,
+        }
+
+    # Otherwise consume 1 speaking credit if available
     result = await db.users.update_one(
         {"id": user["id"], "examCredits": {"$gt": 0}},
         {"$inc": {"examCredits": -1}},
@@ -643,6 +667,9 @@ async def start_speaking_session(request: Request):
         "detail": "Speaking session started",
         "remainingCredits": updated.get("examCredits", 0),
         "plan": updated.get("plan", "free"),
+        "freeTrial": False,
+        "freeTrialSecondsUsed": updated.get("ai_interview_free_seconds_used", FREE_TRIAL_SECONDS),
+        "freeTrialSecondsTotal": FREE_TRIAL_SECONDS,
     }
 
 
