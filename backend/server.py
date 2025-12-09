@@ -258,6 +258,39 @@ def send_reset_email(to_email: str, reset_link: str) -> bool:
         message = Mail(
             from_email=SENDGRID_FROM_EMAIL,
             to_emails=to_email,
+
+
+# ============ PayPal Smart Buttons Helpers ============
+
+async def get_paypal_access_token() -> str:
+    """Fetch OAuth2 access token from PayPal using client credentials.
+
+    Uses PAYPAL_CLIENT_ID / PAYPAL_CLIENT_SECRET and PAYPAL_API_BASE.
+    """
+    if not PAYPAL_CLIENT_ID or not PAYPAL_CLIENT_SECRET:
+        logging.getLogger(__name__).error("PayPal client ID/secret not configured")
+        raise HTTPException(status_code=500, detail="PayPal not configured")
+
+    auth = httpx.BasicAuth(PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET)
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{PAYPAL_API_BASE}/v1/oauth2/token",
+            data={"grant_type": "client_credentials"},
+            auth=auth,
+        )
+        try:
+            resp.raise_for_status()
+        except httpx.HTTPError as e:
+            logging.getLogger(__name__).error(f"PayPal token error: {e} - body={resp.text}")
+            raise HTTPException(status_code=502, detail="PayPal auth failed")
+
+        data = resp.json()
+        token = data.get("access_token")
+        if not token:
+            logging.getLogger(__name__).error(f"PayPal token missing in response: {data}")
+            raise HTTPException(status_code=502, detail="PayPal auth failed")
+        return token
+
             subject="IELTS Ace - Password Reset",
             html_content=f"""
                 <p>Hello,</p>
