@@ -153,6 +153,7 @@ function App() {
         </Routes>
         {/* Emergent badge */}
         <EmergentBadgeWrapper />
+        <MobileNavWrapper user={user} />
         <Toaster position="top-right" />
       </div>
     </Router>
