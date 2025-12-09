@@ -104,6 +104,79 @@ export default function Dashboard({ user, onLogout }) {
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+  // Derived progress stats for richer dashboard
+  const hasProgress = !!(progress && progress.total_tests > 0);
+  const skillOrder = ['listening', 'reading', 'writing', 'speaking'];
+
+  let perSkillStats = null;
+  let bestAttempt = null;
+  let totalTimeSeconds = 0;
+  let last30Tests = 0;
+  let prev30Tests = 0;
+
+  if (hasProgress && Array.isArray(progress.recent_attempts)) {
+    const bySkill = {};
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now);
+    thirtyDaysAgo.setDate(now.getDate() - 30);
+    const sixtyDaysAgo = new Date(now);
+    sixtyDaysAgo.setDate(now.getDate() - 60);
+
+    progress.recent_attempts.forEach((attempt) => {
+      const band = typeof attempt.band_score === 'number' ? attempt.band_score : 0;
+      const type = attempt.test_type;
+      const dt = attempt.completed_at ? new Date(attempt.completed_at) : null;
+
+      if (dt instanceof Date && !Number.isNaN(dt.getTime())) {
+        if (dt >= thirtyDaysAgo) {
+          last30Tests += 1;
+        } else if (dt >= sixtyDaysAgo && dt < thirtyDaysAgo) {
+          prev30Tests += 1;
+        }
+      }
+
+      if (typeof attempt.time_taken === 'number') {
+        totalTimeSeconds += attempt.time_taken;
+      }
+
+      if (skillOrder.includes(type)) {
+        if (!bySkill[type]) {
+          bySkill[type] = { sum: 0, count: 0, best: 0 };
+        }
+        bySkill[type].sum += band;
+        bySkill[type].count += 1;
+        if (band > bySkill[type].best) {
+          bySkill[type].best = band;
+        }
+      }
+
+      if (!bestAttempt || band > (bestAttempt.band_score ?? 0)) {
+        bestAttempt = attempt;
+      }
+    });
+
+    perSkillStats = {};
+    skillOrder.forEach((skill) => {
+      const stat = bySkill[skill];
+      if (!stat || stat.count === 0) {
+        perSkillStats[skill] = { avg: null, count: 0, best: null };
+      } else {
+        perSkillStats[skill] = {
+          avg: Math.round((stat.sum / stat.count) * 10) / 10,
+          count: stat.count,
+          best: stat.best,
+        };
+      }
+    });
+  }
+
+  const totalHours = Math.floor(totalTimeSeconds / 3600);
+  const totalMinutes = Math.round((totalTimeSeconds % 3600) / 60);
+  const lastTest = hasProgress && progress.recent_attempts.length > 0 ? progress.recent_attempts[0] : null;
+  const lastTestDate = lastTest && lastTest.completed_at
+    ? new Date(lastTest.completed_at).toLocaleDateString()
+    : null;
+
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-cyan-500 flex items-center justify-center">
               <Trophy className="w-6 h-6 text-white" />
