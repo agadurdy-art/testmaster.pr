@@ -210,8 +210,8 @@ export default function Dashboard({ user, onLogout }) {
                       return attemptDate >= weekAgo;
                     }).length}
                   </p>
-        {/* Plan & Credits summary */}
-        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Plan & Credits summary + User info */}
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
           <Card className="p-6 md:col-span-2 flex flex-col justify-between bg-white/80 border-sky-100">
             <div className="flex items-center justify-between gap-4">
               <div>
