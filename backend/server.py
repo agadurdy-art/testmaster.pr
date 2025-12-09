@@ -652,6 +652,175 @@ async def get_payment_order(order_id: str):
     return order
 
 
+# PayPal Smart Buttons -> Orders API mappings
+PAYPAL_PLAN_PRICES = {
+    "single": "4.99",
+    "starter": "9.00",
+    "booster": "19.00",
+    "pro": "29.00",
+}
+
+PAYPAL_PLAN_CREDITS = {
+    # plan_id: (credits, subscription_name or None, upgrade_to_pro: bool)
+    "single": (1, None, False),
+    "starter": (2, "Starter", True),
+    "booster": (5, "Booster", True),
+    "pro": (8, "Pro", True),
+}
+
+
+class PaypalCreateOrderRequest(BaseModel):
+    planId: str
+    email: str
+
+
+class PaypalCaptureOrderRequest(BaseModel):
+    orderId: str
+    planId: str
+    email: str
+
+
+@api_router.post("/payments/paypal/create-order")
+async def paypal_create_order(req: PaypalCreateOrderRequest):
+    """Create a PayPal order for Smart Buttons using the Orders API.
+
+    We trust planId and look up the expected amount server-side to avoid tampering.
+    """
+    plan_id = req.planId
+    email = req.email.strip().lower()
+
+    if plan_id not in PAYPAL_PLAN_PRICES:
+        raise HTTPException(status_code=400, detail="Invalid planId")
+
+    amount_value = PAYPAL_PLAN_PRICES[plan_id]
+
+    access_token = await get_paypal_access_token()
+
+    order_payload = {
+        "intent": "CAPTURE",
+        "purchase_units": [
+            {
+                "amount": {
+                    "currency_code": "USD",
+                    "value": amount_value,
+                },
+                "description": f"IELTS Ace {plan_id} plan",
+                # Attach user email so it appears in PayPal dashboard
+                "custom_id": email,
+            }
+        ],
+    }
+
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{PAYPAL_API_BASE}/v2/checkout/orders",
+            headers={
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json",
+            },
+            json=order_payload,
+        )
+        try:
+            resp.raise_for_status()
+        except httpx.HTTPError as e:
+            logging.getLogger(__name__).error(f"PayPal create-order error: {e} - body={resp.text}")
+            raise HTTPException(status_code=502, detail="Failed to create PayPal order")
+
+        data = resp.json()
+        order_id = data.get("id")
+        if not order_id:
+            logging.getLogger(__name__).error(f"PayPal create-order missing id: {data}")
+            raise HTTPException(status_code=502, detail="Invalid PayPal response")
+
+        # Store a lightweight record for debugging / reconciliation
+        await db.kofi_events.insert_one(
+            {
+                "provider": "paypal",
+                "kind": "create-order",
+                "order_id": order_id,
+                "plan_id": plan_id,
+                "email": email,
+                "amount_usd": amount_value,
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            }
+        )
+
+        return {"orderId": order_id}
+
+
+@api_router.post("/payments/paypal/capture-order")
+async def paypal_capture_order(req: PaypalCaptureOrderRequest):
+    """Capture a PayPal order after approval and top up credits immediately.
+
+    This endpoint does not rely on webhooks; it uses the capture response
+    to update the user's plan and examCredits synchronously.
+    """
+    plan_id = req.planId
+    email = req.email.strip().lower()
+
+    if plan_id not in PAYPAL_PLAN_PRICES:
+        raise HTTPException(status_code=400, detail="Invalid planId")
+
+    user = await _get_user_by_email(email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    access_token = await get_paypal_access_token()
+
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{PAYPAL_API_BASE}/v2/checkout/orders/{req.orderId}/capture",
+            headers={
+                "Authorization": f"Bearer {access_token}",
+                "Content-Type": "application/json",
+            },
+            json={},
+        )
+        try:
+            resp.raise_for_status()
+        except httpx.HTTPError as e:
+            logging.getLogger(__name__).error(f"PayPal capture error: {e} - body={resp.text}")
+            raise HTTPException(status_code=502, detail="Failed to capture PayPal order")
+
+        data = resp.json()
+
+    status_value = data.get("status")
+    if status_value != "COMPLETED":
+        raise HTTPException(status_code=400, detail=f"Order not completed (status={status_value})")
+
+    credits, subscription_name, upgrade_to_pro = PAYPAL_PLAN_CREDITS[plan_id]
+
+    update_fields: Dict[str, Any] = {}
+    update_fields["examCredits"] = user.get("examCredits", 0) + credits
+    if upgrade_to_pro:
+        update_fields["plan"] = "pro"
+    if subscription_name:
+        update_fields["subscription"] = subscription_name
+    update_fields["lastPayment"] = datetime.now(timezone.utc).isoformat()
+
+    await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    # Store capture event for audit
+    await db.kofi_events.insert_one(
+        {
+            "provider": "paypal",
+            "kind": "capture-order",
+            "order_id": req.orderId,
+            "plan_id": plan_id,
+            "email": email,
+            "payload": data,
+            "processed_at": datetime.now(timezone.utc).isoformat(),
+        }
+    )
+
+    return {
+        "detail": "PayPal payment captured and credits updated",
+        "examCredits": update_fields["examCredits"],
+        "plan": update_fields.get("plan", user.get("plan", "free")),
+        "subscription": update_fields.get("subscription", user.get("subscription")),
+    }
+
+
 
 
 @api_router.post("/speaking/session/start")
