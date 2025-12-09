@@ -205,32 +205,41 @@ export default function Dashboard({ user, onLogout }) {
                   </p>
         {/* Plan & Credits summary */}
         <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="p-4 flex flex-col justify-between">
-            <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Current Plan</p>
-              <p className="text-lg font-bold text-gray-900">{userDetails?.plan || 'free'}</p>
-              {userDetails?.subscription && (
-                <p className="text-xs text-gray-600 mt-1">{userDetails.subscription}</p>
+          <Card className="p-6 md:col-span-2 flex flex-col justify-between bg-white/80 border-sky-100">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold text-sky-600 uppercase tracking-wide mb-1">Current Plan</p>
+                <p className="text-2xl font-bold text-gray-900 capitalize">{userDetails?.plan || 'free'}</p>
+                {userDetails?.subscription && (
+                  <p className="text-xs text-gray-600 mt-1">{userDetails.subscription}</p>
+                )}
+              </div>
+              <div className="text-right">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Speaking Credits</p>
+                <p className="text-3xl font-extrabold text-sky-700">{userDetails?.examCredits ?? 0}</p>
+                <p className="text-[11px] text-gray-500 mt-1">Each AI Speaking exam session uses 1 credit.</p>
+              </div>
+            </div>
+            <div className="mt-4 flex flex-col sm:flex-row gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full sm:w-auto"
+                onClick={() => navigate('/pricing')}
+              >
+                View / Upgrade Plan
+              </Button>
+              {userDetails?.email?.includes('aga.durdy') && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full sm:w-auto border-dashed border-sky-300"
+                  onClick={() => navigate('/admin/credits')}
+                >
+                  Admin: Top Up Credits
+                </Button>
               )}
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="mt-3 w-full"
-              onClick={() => navigate('/pricing')}
-            >
-              View / Upgrade Plan
-            </Button>
-          </Card>
-
-          <Card className="p-4 flex flex-col justify-between">
-            <div>
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Speaking Credits</p>
-              <p className="text-3xl font-bold text-gray-900">{userDetails?.examCredits ?? 0}</p>
-            </div>
-            <p className="text-[11px] text-gray-500 mt-2">
-              Each AI Speaking exam session uses 1 credit.
-            </p>
           </Card>
 
           {userDetails?.email?.includes('aga.durdy') && (
