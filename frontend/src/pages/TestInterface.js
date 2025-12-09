@@ -53,8 +53,9 @@ function ElevenLabsExaminer() {
   const speakingQuestionAudioRef = useRef(null);
   const speakingQuestionTimeoutRef = useRef(null);
 
-  // Premium access helper functions
+  // Premium access / free trial helper functions
   const canAccessPremium = (user?.plan === 'pro') || ((user?.examCredits ?? 0) > 0);
+  const hasFreeTrial = (user?.ai_interview_free_seconds_used ?? 0) < 180;
   
   const isPremiumTest = (title) => {
     if (!title) return false;
