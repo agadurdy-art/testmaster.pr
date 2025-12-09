@@ -164,15 +164,18 @@
 ## frontend:
 ##   - task: "Pricing page bank transfer modal + i18n"
 ##     implemented: true
-##     working: false
+##     working: true
 ##     file: "frontend/src/pages/PricingPage.js"
 ##     stuck_count: 0
 ##     priority: "high"
-##     needs_retesting: true
+##     needs_retesting: false
 ##     status_history:
 ##       - working: false
 ##         agent: "main"
 ##         comment: "Implemented bilingual Pricing page with LanguageSwitcher and new bank transfer modal showing QR, bank details and upload screenshot flow. Needs automated UI testing for both EN/VI and modal behaviour."
+##       - working: true
+##         agent: "testing"
+##         comment: "COMPREHENSIVE TESTING COMPLETE ✅ - Bilingual Pricing page with bank transfer modal is fully functional. Verified: (1) LanguageSwitcher works correctly (EN/VI) with proper content translation including headings 'IELTS Ace Pricing'/'Bảng giá IELTS Ace' and 'AI Speaking Exam Plans'/'Các gói thi nói AI' (2) All 4 plan modals (Single/Starter/Booster/Pro) open correctly showing plan names, VND amounts (120k/220k/460k/700k), QR images from external URLs (no 404s), and complete bank details (OVEZDURDYYEV AGAGELDI, 700036356609, Shinhan bank) (3) Modal close/reopen works without duplicate overlays (4) File upload button triggers correct API calls to /api/payments/bank/upload with multipart/form-data containing plan_id, email, and screenshot fields (5) Success alerts display in correct language (6) localStorage user updates work with examCredits and plan/subscription changes (7) Navigation between Dashboard and Pricing works (8) Page refresh maintains user state. Minor issue: Dashboard API calls fail for test users (404 errors) but this doesn't affect pricing functionality. All core bilingual and payment flow requirements met successfully."
 ## test_plan:
 ##   current_focus:
 ##     - "Pricing page bank transfer modal + i18n"
