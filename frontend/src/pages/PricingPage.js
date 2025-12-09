@@ -216,8 +216,10 @@ export default function PricingPage({ user }) {
                   </Button>
 
                   {paypalClientId ? (
-                    <div className="w-full space-y-1">
+                    <div className="w-full space-y-2">
+                      {/* Pay with PayPal button */}
                       <PayPalButtons
+                        fundingSource="paypal"
                         style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' }}
                         createOrder={async () => {
                           if (!user) return '';
@@ -257,7 +259,54 @@ export default function PricingPage({ user }) {
                           }
                         }}
                       />
-                      <p className="text-[10px] text-gray-500 text-center">{t('paypalNote')}</p>
+
+                      {/* Debit or Credit Card button (still via PayPal) */}
+                      <PayPalButtons
+                        fundingSource="card"
+                        style={{ layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' }}
+                        createOrder={async () => {
+                          if (!user) return '';
+                          const res = await createPaypalOrder({
+                            planId: plan.id,
+                            email: user.email,
+                          });
+                          return res.orderId;
+                        }}
+                        onApprove={async (data) => {
+                          if (!user) return;
+                          try {
+                            const res = await capturePaypalOrder({
+                              orderId: data.orderID,
+                              planId: plan.id,
+                              email: user.email,
+                            });
+                            const updatedUser = {
+                              ...user,
+                              examCredits: res.examCredits,
+                              plan: res.plan ?? user.plan,
+                              subscription: res.subscription ?? user.subscription,
+                            };
+                            localStorage.setItem('user', JSON.stringify(updatedUser));
+                            alert(
+                              language === 'vi'
+                                ? 'Thanh toán bằng thẻ thành công. Lượt thi của bạn đã được cập nhật.'
+                                : 'Card payment successful. Your speaking credits have been updated.',
+                            );
+                          } catch (err) {
+                            console.error('PayPal card capture error', err);
+                            alert(
+                              language === 'vi'
+                                ? 'Không thể xử lý thanh toán thẻ. Vui lòng thử lại hoặc dùng chuyển khoản ngân hàng.'
+                                : 'Could not process card payment. Please try again or use bank transfer.',
+                            );
+                          }
+                        }}
+                      />
+
+                      <p className="text-[10px] text-gray-500 text-center">
+                        {t('paypalNote')}<br />
+                        <span className="font-medium">Powered by PayPal. International cards accepted.</span>
+                      </p>
                     </div>
                   ) : (
                     <>
