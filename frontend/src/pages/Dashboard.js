@@ -177,11 +177,11 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Average Band Score</p>
-                  <p className={`text-3xl font-bold ${getBandScoreColor(progress.average_band_score)}`}>
+                  <p className="text-xs text-gray-600 mb-1">Average Band Score</p>
+                  <p className={`text-2xl font-bold ${getBandScoreColor(progress.average_band_score)}`}>
                     {progress.average_band_score}
                   </p>
                 </div>
