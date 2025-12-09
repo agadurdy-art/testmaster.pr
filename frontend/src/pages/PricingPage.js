@@ -64,15 +64,33 @@ const plans = [
 
 export default function PricingPage({ user }) {
   const navigate = useNavigate();
-  const handleCheckout = (planId, amountVnd) => {
+  const handleCheckout = (planId, amountVnd, planName) => {
     if (!user) {
       navigate('/');
       return;
     }
 
-    alert(
-      'Bank transfer option is temporarily disabled. Please use PayPal for card payments, or contact admin for manual bank transfer.',
-    );
+    const formData = new FormData();
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = async () => {
+      if (!fileInput.files || fileInput.files.length === 0) return;
+      const file = fileInput.files[0];
+      formData.append('plan_id', planId);
+      formData.append('email', user.email);
+      formData.append('screenshot', file);
+      try {
+        const res = await uploadBankPayment(formData);
+        const updatedUser = { ...user, examCredits: res.examCredits };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        alert('Thank you! Your bank transfer screenshot was uploaded and your credits have been updated.');
+      } catch (err) {
+        console.error('Bank upload error', err);
+        alert('Could not process bank transfer. Please contact support.');
+      }
+    };
+    fileInput.click();
   };
 
   return (
