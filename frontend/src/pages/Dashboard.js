@@ -132,7 +132,7 @@ export default function Dashboard({ user, onLogout }) {
               onClick={() => navigate('/pricing')}
               className="text-gray-600"
             >
-              Pricing
+              {t('navPricing')}
             </Button>
             <Button
               data-testid="profile-nav-btn"
