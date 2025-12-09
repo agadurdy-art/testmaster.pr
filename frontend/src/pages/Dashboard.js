@@ -82,21 +82,9 @@ export default function Dashboard({ user, onLogout }) {
   ];
 
   const startTest = (testType) => {
-    const effectiveUser = userDetails || user;
-
-    if (testType === 'speaking') {
-      const freeUsed = effectiveUser?.ai_interview_free_seconds_used ?? 0;
-      const hasFreeTrial = freeUsed < 180;
-      const hasPaidAccess =
-        (effectiveUser?.plan === 'pro') || ((effectiveUser?.examCredits ?? 0) > 0);
-
-      if (!hasFreeTrial && !hasPaidAccess) {
-        toast.error(t('paywallSpeakingNoCredits'));
-        navigate('/pricing');
-        return;
-      }
-    }
-
+    // Speaking Test 1 is always accessible for practice (without AI examiner),
+    // so we don't block navigation here. Paywall is enforced when starting
+    // the live AI speaking session instead.
     navigate(`/test/${testType}`);
   };
 
