@@ -108,6 +108,7 @@ export default function Dashboard({ user, onLogout }) {
             <h1 className="text-2xl font-bold text-gray-900">IELTS Ace</h1>
           </div>
           <nav className="flex items-center space-x-2">
+            <LanguageSwitcher compact />
             <Button
               data-testid="tips-nav-btn"
               variant="ghost"
