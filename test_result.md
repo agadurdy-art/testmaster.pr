@@ -137,9 +137,9 @@
 ##   run_ui: true
 ## test_plan:
 ##   current_focus:
-##     - "Test submission UI and navigation"
+##     - "Paywall gating for premium tests and AI speaking free trial"
 ##   stuck_tasks:
-##     - "Test submission UI and navigation"
+##     - "Paywall gating for premium tests and AI speaking free trial"
 ##   test_all: false
 ##   test_priority: "high_first"
 ## agent_communication:
