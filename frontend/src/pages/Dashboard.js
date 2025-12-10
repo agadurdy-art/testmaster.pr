@@ -245,6 +245,47 @@ export default function Dashboard({ user, onLogout }) {
             >
               Dashboard
             </Button>
+            {/* Test sections inside mobile menu for quick access */}
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/test/listening');
+                setMobileMenuOpen(false);
+              }}
+            >
+              Listening
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/test/reading');
+                setMobileMenuOpen(false);
+              }}
+            >
+              Reading
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/test/writing');
+                setMobileMenuOpen(false);
+              }}
+            >
+              Writing
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/test/speaking');
+                setMobileMenuOpen(false);
+              }}
+            >
+              Speaking
+            </Button>
             <Button
               variant="ghost"
               className="justify-start text-gray-700"
