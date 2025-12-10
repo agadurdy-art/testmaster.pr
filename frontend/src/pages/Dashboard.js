@@ -243,7 +243,7 @@ export default function Dashboard({ user, onLogout }) {
                 setMobileMenuOpen(false);
               }}
             >
-              {t('navPricing') ? 'Dashboard' : 'Dashboard'}
+              Dashboard
             </Button>
             <Button
               variant="ghost"
