@@ -4,12 +4,6 @@ import { LayoutDashboard, Headphones, BookOpen, PenTool, Mic } from 'lucide-reac
 
 const NAV_ITEMS = [
   {
-    key: 'dashboard',
-    label: 'Dashboard',
-    path: '/dashboard',
-    icon: LayoutDashboard,
-  },
-  {
     key: 'listening',
     label: 'Listening',
     path: '/test/listening',
