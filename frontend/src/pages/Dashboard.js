@@ -16,6 +16,7 @@ export default function Dashboard({ user, onLogout }) {
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(user);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 
   useEffect(() => {
