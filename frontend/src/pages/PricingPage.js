@@ -342,7 +342,9 @@ export default function PricingPage({ user }) {
                         <span className="font-medium">Powered by PayPal. International cards accepted.</span>
                       </p>
                     </div>
-                  ) : (
+                  )}
+
+                  {!paypalClientId && (
                     <>
                       <Button
                         variant="outline"
