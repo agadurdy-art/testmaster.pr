@@ -216,7 +216,8 @@ export default function PricingPage({ user }) {
                   </Button>
 
                   {paypalClientId ? (
-                    <div className="w-full space-y-2">
+                    !bankModalOpen && (
+                      <div className="w-full space-y-2">
                       {/* Pay with PayPal button */}
                       <PayPalButtons
                         fundingSource="paypal"
