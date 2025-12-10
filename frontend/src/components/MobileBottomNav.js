@@ -44,9 +44,7 @@ export default function MobileBottomNav({ currentPath }) {
         {NAV_ITEMS.map((item) => {
           const isActive =
             currentPath === item.path ||
-            currentPath.startsWith(item.path) ||
-            (item.key === 'dashboard' && currentPath === '/dashboard') ||
-            (item.key !== 'dashboard' && currentPath.startsWith(`/test/${item.key}`));
+            currentPath.startsWith(`/test/${item.key}`);
 
           const Icon = item.icon;
 
