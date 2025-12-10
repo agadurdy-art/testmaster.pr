@@ -231,6 +231,75 @@ export default function Dashboard({ user, onLogout }) {
                 <LogOut className="w-4 h-4 mr-2" />
                 {t('navLogout')}
               </Button>
+      {/* Mobile top menu (Dashboard, Tips, Courses, Pricing, Profile, Logout) */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-b border-gray-200 bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 py-2 flex flex-col space-y-1">
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/dashboard');
+                setMobileMenuOpen(false);
+              }}
+            >
+              {t('navPricing') ? 'Dashboard' : 'Dashboard'}
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/tips');
+                setMobileMenuOpen(false);
+              }}
+            >
+              {t('navTips')}
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/courses');
+                setMobileMenuOpen(false);
+              }}
+            >
+              {t('navCourses')}
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/pricing');
+                setMobileMenuOpen(false);
+              }}
+            >
+              {t('navPricing')}
+            </Button>
+            <Button
+              variant="ghost"
+              className="justify-start text-gray-700"
+              onClick={() => {
+                navigate('/profile');
+                setMobileMenuOpen(false);
+              }}
+            >
+              {user.name}
+            </Button>
+            <Button
+              variant="outline"
+              className="justify-start text-red-600 border-red-200"
+              onClick={() => {
+                onLogout();
+                setMobileMenuOpen(false);
+              }}
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              {t('navLogout')}
+            </Button>
+          </div>
+        </div>
+      )}
+
             </div>
             {/* Mobile menu toggle */}
             <button
