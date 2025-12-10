@@ -231,6 +231,18 @@ export default function Dashboard({ user, onLogout }) {
                 <LogOut className="w-4 h-4 mr-2" />
                 {t('navLogout')}
               </Button>
+            </div>
+            {/* Mobile menu toggle */}
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          </nav>
+        </div>
+
       {/* Mobile top menu (Dashboard, Tips, Courses, Pricing, Profile, Logout) */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-gray-200 bg-white shadow-sm">
