@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Headphones, BookOpen, PenTool, Mic, BookMarked } from 'lucide-react';
+import { LayoutDashboard, Headphones, BookOpen, PenTool, Mic } from 'lucide-react';
 
 const NAV_ITEMS = [
   {
