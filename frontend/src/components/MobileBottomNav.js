@@ -10,12 +10,6 @@ const NAV_ITEMS = [
     icon: Headphones,
   },
   {
-    key: 'tips',
-    label: 'Tips',
-    path: '/tips',
-    icon: BookMarked,
-  },
-  {
     key: 'reading',
     label: 'Reading',
     path: '/test/reading',
