@@ -48,8 +48,10 @@ export default function MobileBottomNav({ currentPath }) {
     <nav className="fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-200 shadow-sm md:hidden">
       <div className="max-w-7xl mx-auto px-2 py-1 flex justify-between">
         {NAV_ITEMS.map((item) => {
-          const isActive = currentPath === item.path ||
-            (item.key === 'dashboard' && currentPath === '/') ||
+          const isActive =
+            currentPath === item.path ||
+            currentPath.startsWith(item.path) ||
+            (item.key === 'dashboard' && currentPath === '/dashboard') ||
             (item.key !== 'dashboard' && currentPath.startsWith(`/test/${item.key}`));
 
           const Icon = item.icon;
