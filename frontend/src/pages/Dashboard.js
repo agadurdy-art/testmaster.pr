@@ -187,48 +187,59 @@ export default function Dashboard({ user, onLogout }) {
           </div>
           <nav className="flex items-center space-x-2">
             <LanguageSwitcher compact />
-            <Button
-              data-testid="tips-nav-btn"
-              variant="ghost"
-              onClick={() => navigate('/tips')}
-              className="text-gray-600"
+            {/* Desktop nav */}
+            <div className="hidden md:flex items-center space-x-2">
+              <Button
+                data-testid="tips-nav-btn"
+                variant="ghost"
+                onClick={() => navigate('/tips')}
+                className="text-gray-600"
+              >
+                <BookMarked className="w-4 h-4 mr-2" />
+                {t('navTips')}
+              </Button>
+              <Button
+                data-testid="courses-nav-btn"
+                variant="ghost"
+                onClick={() => navigate('/courses')}
+                className="text-gray-600"
+              >
+                <Target className="w-4 h-4 mr-2" />
+                {t('navCourses')}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/pricing')}
+                className="text-gray-600"
+              >
+                {t('navPricing')}
+              </Button>
+              <Button
+                data-testid="profile-nav-btn"
+                variant="ghost"
+                onClick={() => navigate('/profile')}
+                className="text-gray-600"
+              >
+                {user.name}
+              </Button>
+              <Button
+                data-testid="logout-btn"
+                variant="outline"
+                onClick={onLogout}
+                className="text-red-600 border-red-200"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                {t('navLogout')}
+              </Button>
+            </div>
+            {/* Mobile menu toggle */}
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
             >
-              <BookMarked className="w-4 h-4 mr-2" />
-              {t('navTips')}
-            </Button>
-            <Button
-              data-testid="courses-nav-btn"
-              variant="ghost"
-              onClick={() => navigate('/courses')}
-              className="text-gray-600"
-            >
-              <Target className="w-4 h-4 mr-2" />
-              {t('navCourses')}
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/pricing')}
-              className="text-gray-600"
-            >
-              {t('navPricing')}
-            </Button>
-            <Button
-              data-testid="profile-nav-btn"
-              variant="ghost"
-              onClick={() => navigate('/profile')}
-              className="text-gray-600"
-            >
-              {user.name}
-            </Button>
-            <Button
-              data-testid="logout-btn"
-              variant="outline"
-              onClick={onLogout}
-              className="text-red-600 border-red-200"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              {t('navLogout')}
-            </Button>
+              <Menu className="w-5 h-5" />
+            </button>
           </nav>
         </div>
       </header>
