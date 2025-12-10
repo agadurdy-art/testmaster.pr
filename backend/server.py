@@ -518,6 +518,18 @@ async def get_user(user_id: str):
     return User(**user)
 
 # Test routes
+
+
+# Top-level health check for deployment readiness (no /api prefix)
+@app.get("/health")
+async def health_check():
+    """Simple health endpoint used by deployment system.
+
+    Returns 200 OK when the app and event loop are up. Does not touch the DB
+    to avoid failing health checks due to transient database issues.
+    """
+    return {"status": "ok"}
+
 @api_router.get("/tests")
 async def get_tests(test_type: Optional[str] = None):
     query = {"test_type": test_type} if test_type else {}
