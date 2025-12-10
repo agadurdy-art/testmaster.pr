@@ -550,9 +550,11 @@ function ElevenLabsExaminer() {
 
       {/* Reading test selector when multiple tests are available */}
       {testType === 'reading' && availableTests && availableTests.length > 1 && (
-        <div className="max-w-7xl mx-auto px-6 pt-4">
-          <div className="mb-4 flex items-center space-x-3 text-sm">
-            <span className="text-gray-700 font-medium">Select Reading Test:</span>
+        <div className="max-w-7xl mx-auto px-4 pt-4">
+          <div className="mb-2 text-xs font-medium text-gray-700 uppercase tracking-wide">
+            Select Reading Test
+          </div>
+          <div className="mb-4 flex items-center space-x-2 text-sm overflow-x-auto pb-1">
             {availableTests.map((testOption) => {
               const isPremium = testOption.title && /Test\s*(\d+)/i.test(testOption.title) &&
                 parseInt(testOption.title.match(/Test\s*(\d+)/i)[1], 10) >= 2;
