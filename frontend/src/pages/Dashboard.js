@@ -352,18 +352,6 @@ export default function Dashboard({ user, onLogout }) {
           </div>
         </div>
       )}
-
-            </div>
-            {/* Mobile menu toggle */}
-            <button
-              type="button"
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-gray-200 text-gray-700 hover:bg-gray-50"
-              onClick={() => setMobileMenuOpen((prev) => !prev)}
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          </nav>
-        </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
