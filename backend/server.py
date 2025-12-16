@@ -519,6 +519,76 @@ async def register_user(input: UserCreate):
 
 
 
+class EmergentSessionRequest(BaseModel):
+    session_id: str
+
+
+@api_router.post("/auth/emergent/session")
+async def emergent_session_login(payload: EmergentSessionRequest):
+    """Exchange Emergent Google OAuth session for an IELTS Ace user.
+
+    Frontend will receive `#session_id=...` in the URL after Google login.
+    It should call this endpoint with that session_id.
+    """
+    session_id = payload.session_id.strip()
+    if not session_id:
+        raise HTTPException(status_code=400, detail="Missing session_id")
+
+    # Call Emergent auth backend to get user info
+    emergent_backend_url = "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data"
+    headers = {"X-Session-ID": session_id}
+
+    async with httpx.AsyncClient(timeout=10.0) as client_http:
+        try:
+            resp = await client_http.get(emergent_backend_url, headers=headers)
+            resp.raise_for_status()
+        except httpx.HTTPError as e:
+            logging.getLogger(__name__).error("Emergent auth session fetch failed: %s", str(e))
+            raise HTTPException(status_code=401, detail="Invalid or expired session_id")
+
+        session_data = resp.json()
+
+    email = (session_data.get("email") or "").strip().lower()
+    name = session_data.get("name") or "Google User"
+    google_id = session_data.get("id") or None
+
+    if not email:
+        raise HTTPException(status_code=400, detail="No email returned from Google session")
+
+    # Upsert user by email
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+
+    if not user:
+        user_obj = User(
+            email=email,
+            name=name,
+            password_hash=None,
+            verified=True,
+            google_id=google_id,
+        )
+        doc = user_obj.model_dump()
+        doc["created_at"] = doc["created_at"].isoformat()
+        await db.users.insert_one(doc)
+        user = {**doc}
+    else:
+        update_fields: Dict[str, Any] = {"verified": True}
+        if google_id:
+            update_fields["google_id"] = google_id
+        await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+        user.update(update_fields)
+
+    # Prepare response
+    user.pop("password_hash", None)
+    if isinstance(user.get("created_at"), str):
+        try:
+            user["created_at"] = datetime.fromisoformat(user["created_at"])
+        except Exception:
+            pass
+
+    return User(**user)
+
+
+
 @api_router.post("/auth/facebook-login")
 async def facebook_login(payload: FacebookLoginRequest):
     """Log in or sign up a user using Facebook Login.
