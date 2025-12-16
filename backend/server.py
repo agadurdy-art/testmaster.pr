@@ -318,6 +318,76 @@ async def get_paypal_access_token() -> str:
             raise HTTPException(status_code=502, detail="PayPal auth failed")
         return token
 
+# ============ Facebook OAuth Helpers ============
+
+FACEBOOK_GRAPH_API_BASE = "https://graph.facebook.com/v21.0"
+
+
+async def verify_facebook_access_token(access_token: str) -> Optional[Dict[str, Any]]:
+    """Verify Facebook access token and fetch user profile.
+
+    - Uses /debug_token to ensure the token is valid and issued for our app
+    - Then calls /me?fields=id,name,email,picture to get profile data
+    """
+    if not FACEBOOK_APP_ID or not FACEBOOK_APP_SECRET:
+        logging.getLogger(__name__).error("Facebook App ID/Secret not configured")
+        raise HTTPException(status_code=500, detail="Facebook login not configured")
+
+    async with httpx.AsyncClient() as client:
+        # 1) Debug token
+        debug_params = {
+            "input_token": access_token,
+            "access_token": f"{FACEBOOK_APP_ID}|{FACEBOOK_APP_SECRET}",
+        }
+        debug_resp = await client.get(f"{FACEBOOK_GRAPH_API_BASE}/debug_token", params=debug_params)
+        try:
+            debug_resp.raise_for_status()
+        except httpx.HTTPError:
+            logging.getLogger(__name__).warning("Facebook debug_token call failed: %s", debug_resp.text)
+            return None
+
+        debug_data = debug_resp.json().get("data", {})
+        if not debug_data.get("is_valid"):
+            logging.getLogger(__name__).warning("Facebook token invalid: %s", debug_data)
+            return None
+
+        # Optional: ensure token is for our app
+        app_id = debug_data.get("app_id")
+        if app_id and str(app_id) != str(FACEBOOK_APP_ID):
+            logging.getLogger(__name__).warning("Facebook token app_id mismatch: %s", debug_data)
+            return None
+
+        # 2) Fetch user profile
+        me_params = {
+            "fields": "id,name,email,picture.type(large)",
+            "access_token": access_token,
+        }
+        me_resp = await client.get(f"{FACEBOOK_GRAPH_API_BASE}/me", params=me_params)
+        try:
+            me_resp.raise_for_status()
+        except httpx.HTTPError:
+            logging.getLogger(__name__).warning("Facebook /me call failed: %s", me_resp.text)
+            return None
+
+        profile = me_resp.json()
+        # Normalise picture URL
+        picture_url = None
+        picture = profile.get("picture", {}).get("data") if isinstance(profile.get("picture"), dict) else None
+        if isinstance(picture, dict):
+            picture_url = picture.get("url")
+
+        return {
+            "id": profile.get("id"),
+            "email": (profile.get("email") or "").strip().lower() or None,
+            "name": profile.get("name"),
+            "picture": picture_url,
+        }
+
+
+class FacebookLoginRequest(BaseModel):
+    access_token: str
+
+
 
 
 # Simple in-memory reset token store (for demo). In production use DB/Redis.
