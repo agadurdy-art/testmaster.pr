@@ -117,10 +117,13 @@ function AppWithSessionHandler() {
         } catch (err) {
           const message = err?.response?.data?.detail || 'Google login failed. Please try again.';
           toast.error(message);
+        } finally {
+          // Always send user to dashboard (if login worked, they will see it; if not, they stay unauthenticated)
+          navigate('/dashboard');
         }
       })();
     }
-  }, [location]);
+  }, [location, navigate]);
 
   const handleLogin = (userData) => {
     setUser(userData);
