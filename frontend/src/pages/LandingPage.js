@@ -257,6 +257,57 @@ export default function LandingPage({ onLogin, user }) {
                   required={authMode === 'signup'}
                 />
               </div>
+            <div className="flex flex-col space-y-2 pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full border-gray-300"
+                disabled={loading || processingSocial}
+                onClick={() => {
+                  const redirectUrl = `${window.location.origin}/dashboard`;
+                  window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
+                }}
+              >
+                {processingSocial ? 'Processing Google login...' : 'Continue with Google'}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full border-blue-600 text-blue-600"
+                disabled={loading || processingSocial}
+                onClick={() => {
+                  if (!window.FB) {
+                    toast.error('Facebook SDK not loaded. Please try again.');
+                    return;
+                  }
+                  setProcessingSocial(true);
+                  window.FB.login(
+                    async (response) => {
+                      try {
+                        if (!response.authResponse || !response.authResponse.accessToken) {
+                          toast.error('Facebook login was cancelled or failed.');
+                          return;
+                        }
+                        const accessToken = response.authResponse.accessToken;
+                        const userData = await loginWithFacebook(accessToken);
+                        onLogin(userData);
+                        toast.success('Logged in with Facebook');
+                        navigate('/dashboard');
+                      } catch (err) {
+                        const message = err?.response?.data?.detail || 'Facebook login failed. Please try again.';
+                        toast.error(message);
+                      } finally {
+                        setProcessingSocial(false);
+                      }
+                    },
+                    { scope: 'email,public_profile' }
+                  );
+                }}
+              >
+                {processingSocial ? 'Processing Facebook login...' : 'Continue with Facebook'}
+              </Button>
+            </div>
+
             )}
             <div>
               <label className="block text-sm font-medium mb-2">Email</label>
