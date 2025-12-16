@@ -280,6 +280,8 @@ export default function LandingPage({ onLogin, user }) {
                   required={authMode === 'signup'}
                 />
               </div>
+            )}
+
             <div className="flex flex-col space-y-2 pt-2">
               <Button
                 type="button"
