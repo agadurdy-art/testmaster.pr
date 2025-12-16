@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { BookOpen, Headphones, Mic, PenTool, CheckCircle, Clock, Target, Trophy } from 'lucide-react';
-import { registerUser, loginUser } from '../lib/api';
+import { registerUser, loginUser, loginWithFacebook, loginWithEmergentSession } from '../lib/api';
 import { toast } from 'sonner';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
