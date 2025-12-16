@@ -185,74 +185,10 @@ function AppWithSessionHandler() {
 
 
 function App() {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  }, []);
-
-  const handleLogin = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-  };
-
   return (
     <Router>
       <div className="App">
-        <Routes>
-          <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
-          <Route path="/verify-email" element={<VerifyEmailPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
-          <Route 
-            path="/dashboard" 
-            element={user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/test/:testType" 
-            element={user ? <TestInterface user={user} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/results/:attemptId" 
-            element={user ? <Results user={user} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/tips" 
-            element={user ? <TipsPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/courses" 
-            element={user ? <CoursesPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/courses/:courseId" 
-            element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/profile" 
-            element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/pricing" 
-            element={user ? <PricingPage user={user} /> : <Navigate to="/" />} 
-          />
-          <Route 
-            path="/admin/content" 
-            element={<ContentAdmin />} 
-          />
-        </Routes>
-        {/* Emergent badge */}
-        <EmergentBadgeWrapper />
-        <MobileNavWrapper user={user} />
-        <Toaster position="top-right" />
+        <AppWithSessionHandler />
       </div>
     </Router>
   );
