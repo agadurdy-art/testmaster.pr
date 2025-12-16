@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 import LandingPage from './pages/LandingPage';
+import { loginWithEmergentSession } from './lib/api';
+import { toast } from 'sonner';
 import Dashboard from './pages/Dashboard';
 import TestInterface from './pages/TestInterface';
 import Results from './pages/Results';

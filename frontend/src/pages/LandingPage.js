@@ -289,7 +289,7 @@ export default function LandingPage({ onLogin, user }) {
                 className="w-full border-gray-300"
                 disabled={loading || processingSocial}
                 onClick={() => {
-                  const redirectUrl = `${window.location.origin}/dashboard`;
+                  const redirectUrl = window.location.origin;
                   window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
                 }}
               >
