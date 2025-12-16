@@ -25,6 +25,16 @@ export const loginUser = async (data) => {
   return response.data;
 };
 
+export const loginWithFacebook = async (accessToken) => {
+  const response = await api.post('/auth/facebook-login', { access_token: accessToken });
+  return response.data;
+};
+
+export const loginWithEmergentSession = async (sessionId) => {
+  const response = await api.post('/auth/emergent/session', { session_id: sessionId });
+  return response.data;
+};
+
 export const verifyEmail = async (token) => {
   const response = await api.post('/auth/verify-email', { token });
   return response.data;
