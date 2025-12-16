@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import LandingPage from './pages/LandingPage';
 import { loginWithEmergentSession } from './lib/api';
@@ -93,6 +93,7 @@ function MobileNavWrapper({ user }) {
 function AppWithSessionHandler() {
   const [user, setUser] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
