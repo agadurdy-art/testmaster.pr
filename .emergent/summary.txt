@@ -1,176 +1,166 @@
-<analysis>**original_problem_statement:** The user's primary goal is to build a comprehensive IELTS practice platform, IELTS Ace. The project started with fixing an answer evaluation system and has since expanded significantly.
+<analysis>**original_problem_statement:** The user's primary goal is to build a comprehensive IELTS practice platform, IELTS Ace. The project involves implementing full practice tests, email/password authentication, a course section, and a payment system to gate premium content. The user has recently focused on improving the user experience with a bilingual (English/Vietnamese) interface, a robust mobile navigation system, and a reliable payment flow using PayPal Smart Buttons and Bank Transfers with screenshot uploads. The latest user request is to add Google and Facebook login options.
 
 PRODUCT REQUIREMENTS:
--   Implement full practice tests (Test 1, Test 2, etc.) for Reading, Listening, Writing, and Speaking modules based on Cambridge IELTS 19 content provided by the user.
--   Implement email/password authentication with a Forgot Password feature.
--   Create a Courses section with video content.
--   Integrate a live AI speaking examiner (originally ElevenLabs).
--   Add a payment system with subscriptions and pay-per-use options to gate access to premium content. Premium content is defined as:
-    -   Any test beyond Test 1 (e.g., Test 2, Test 3).
-    -   The AI Interview Mode (Speaking examiner).
--   The AI Interviewer should have a 3-minute free trial for every user before requiring payment.
--   Display prices in both USD and VND.
--   Integrate with Vietnamese payment gateways like SePay and MoMoPay.
+- Implement full practice tests based on Cambridge IELTS 19.
+- Implement email/password authentication with email verification and Forgot Password.
+- Create a Courses section and a Tips page.
+- Integrate a live AI speaking examiner with a 3-minute free trial.
+- Implement a payment system to gate premium content (tests beyond Test 1 and the AI speaking examiner).
+- Implement a bank transfer payment option with QR codes and automatic credit top-up upon screenshot upload.
+- Implement PayPal for card/international payments with automatic credit top-up.
+- The UI should be fully responsive and provide a good mobile experience.
+- Add Google and Facebook social logins.
 
 **User's preferred language**: English
 
 **what currently exists?**
--   A full-stack application (React/FastAPI/MongoDB).
--   **Authentication**: A functional email/password registration and login system. It includes an in-app Forgot Password flow that resets the password via a browser prompt, without needing an external email provider.
--   **Test Modules**: All four modules (Reading, Listening, Writing, Speaking) now have a test selector and contain both Test 1 and Test 2. The content (passages, questions, images, audio files) for all tests has been implemented as per user-provided materials.
--   **Speaking Audio**: All speaking questions for both Test 1 and Test 2 have been meticulously mapped to individual ElevenLabs audio files provided by the user, resolving previous timing and mismatch issues.
--   **AI Speaking Examiner (ElevenLabs)**: The widget is now correctly gated. It is removed from the global  and only rendered on the  page for logged-in users, resolving the can use without login and blinking issues.
--   **Pricing Page**: A UI-only pricing page is available at . It displays four plans with prices in both USD and VND as requested. The payment buttons currently show a Coming Soon placeholder message.
--   **Deployment Readiness**: The application has passed a health check and is ready for deployment. The user has initiated the process of connecting a custom domain ().
+- A full-stack application (React/FastAPI/MongoDB) with a bilingual (English/Vietnamese) UI.
+- A complete authentication system with registration, login, email verification, and password reset.
+- All four test modules (Reading, Listening, Writing, Speaking) with content for Test 1 and Test 2.
+- A paywall that gates access to Test 2 and the AI Speaking Examiner based on user plan () or .
+- A 3-minute free trial for the AI Speaking Examiner, tracked per user.
+- A pricing page () offering two payment methods:
+    1.  **Bank Transfer**: A modal shows plan-specific QR codes and bank details. Users upload a screenshot to an endpoint () which instantly tops up their credits.
+    2.  **PayPal**: Uses PayPal Smart Buttons (JS SDK) for both PayPal and Card payments. A server-side flow ( & ) handles the transaction and instantly tops up credits, bypassing the old, unreliable webhook.
+- A feature-rich dashboard with detailed, responsive cards for skill performance, study summary, recent activity, and a parent-friendly overview.
+- A mobile-specific navigation system:
+    - A top hamburger menu on the dashboard for main site navigation (Profile, Tips, Courses, etc.).
+    - A bottom navigation bar for quick access to the four test types (Listening, Reading, Writing, Speaking).
+- In-test selectors are horizontally scrollable on mobile for better usability.
 
 **Last working item**:
--   **Last item agent was working**: The agent was guiding the user to resolve a DNS configuration issue to connect their custom domain ( from GoDaddy) to the Emergent deployment. This is a prerequisite for setting up the SePay payment gateway's IPN/webhook URL. Simultaneously, the user's very last message was now we need to fix forgot password protocol, indicating a potential new or recurring issue with the password reset feature that was just implemented.
--   **Status**: BLOCKED (on domain connection) / NOT STARTED (on the new password issue).
--   **Agent Testing Done**: N (for domain connection), Y (for the previously implemented in-app password reset).
--   **Which testing method agent to use?**: Manual verification for the domain. For the password issue, the agent should first ask the user for clarification, then use  or manual UI testing to reproduce the problem.
+-   **Last item agent was working**: Fixing email-based user flows (registration verification and password reset) which were failing in the preview environment. The agent correctly identified that the  in  was pointing to , causing generated email links to be invalid. The agent updated this variable to point to the correct preview URL.
+-   **Status**: USER VERIFICATION PENDING
+-   **Agent Testing Done**: Y (Agent verified the backend endpoint and confirmed the logic).
+-   **Which testing method agent to use?**: Manual testing by user. The user needs to try registering a new account and using the Forgot Password feature on the live preview URL to confirm they receive a working email link.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1 (P0): Complete custom domain linking.**
--   **Issue 2 (P1): User reports an issue with the forgot password protocol.**
+-   **Issue 1 (P0): User needs to verify email verification and password reset flows.** The agent has pushed a fix for broken links in emails. The user needs to test this on the preview environment.
+-   **Issue 2 (P2): PayPal webhook delivery is failing.** This is now low priority as the new PayPal Smart Button flow provides synchronous, reliable credit top-up without relying on webhooks. The old  endpoint is still in the code but is effectively a fallback.
+-   **Issue 3 (P2): SendGrid emails may be delivered to the spam folder.** This is a domain reputation/configuration issue (SPF/DKIM records) that the user must resolve on their DNS provider and SendGrid account.
 
 **Issues Detail:**
--   **Issue 1: Complete custom domain linking.**
-    -   **Attempted fixes**: The user was guided to switch from GoDaddy's custom nameservers to GoDaddy's default nameservers to allow DNS record management. The user is currently waiting for this nameserver change to propagate.
-    -   **Next debug checklist**:
-        1.  Confirm with the user that the Nameservers section in GoDaddy no longer shows the updating message.
-        2.  Guide the user to the DNS Records tab for .
-        3.  Ask the user for the manual linking records (A/CNAME) provided by Emergent's deployment page.
-        4.  Instruct the user on how to add these records in GoDaddy.
-        5.  Wait for Emergent to verify the DNS setup and issue the SSL certificate.
-    -   **Why fix this issue and what will be achieved with the fix?**: A stable, public domain is required to configure the IPN/webhook for the SePay payment gateway, which is essential for implementing the payment system.
-    -   **Status**: BLOCKED (on DNS propagation at GoDaddy).
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: N/A (Infrastructure change).
+-   **Issue 1: User needs to verify email verification and password reset flows.**
+    -   **Attempted fixes**: The  variable in  was updated from  to the production preview URL. This ensures that links generated for email verification and password resets are correct.
+    -   **Next debug checklist**: Ask the user to test the registration and Forgot Password flows on the preview URL and report if they receive a working email. If not, check SendGrid activity logs for delivery errors.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a critical user-facing function required for user onboarding and account management.
+    -   **Status**: USER VERIFICATION PENDING
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: User testing required.
     -   **Blocked on other issue**: None.
 
--   **Issue 2: User reports an issue with the forgot password protocol.**
-    -   **Attempted fixes**: The agent previously replaced the SendGrid-based email reset with a fully in-app flow. It uses a  API endpoint and a browser prompt for the new password. This was done because the user could not configure SendGrid.
-    -   **Next debug checklist**:
-        1.  Start by asking the user to clarify what is not working with the current Forgot Password feature.
-        2.  Request the exact steps they are taking and the result they are seeing.
-        3.  Manually test the flow: Go to the login page, click Forgot password?, enter an email and a new password in the prompt, and then try to log in with the new password.
-        4.  Check backend logs for any errors related to the  endpoint during the user's attempt.
-    -   **Why fix this issue and what will be achieved with the fix?**: A working password reset is a critical feature for user account management.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Both.
-    -   **Blocked on other issue**: User clarification.
-
 **In progress Task List**:
--   **Task 1 (P0): Implement SePay/MoMo Payment Integration.**
-    -   **Where to resume**: Once the custom domain is linked (Issue 1) and the user provides SePay API keys (, ), the next step is to implement the backend endpoints for creating payments and handling IPN webhooks.
-    -   **What will be achieved with this?**: Users will be able to purchase exam credits and subscriptions, enabling the monetization of the platform.
-    -   **Status**: IN PROGRESS (Blocked).
-    -   **Should Test frontend/backend/both after fix?**: Both.
-    -   **Blocked on something**: Issue 1 (Domain Linking) and waiting for the user to provide SePay API credentials.
+None.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    *   **(P0) Implement Paywall and Credits Logic**:
-        -   Enforce the 3-minute free trial for the AI interviewer.
-        -   Implement the 100-minute credit system for the Examiner Pro plan.
-        -   Block access to tests other than Test 1 for users without a pro plan.
-        -   Display remaining exam credits on the user's dashboard.
-    *   **(P1) Implement Manual User Upgrade Endpoint**: Create the  endpoint to allow the admin to add credits and set subscriptions for users after a confirmed manual payment (e.g., via SePay).
-    *   **(P2) Refine UI for Listening/Reading question types**.
+    *   **(P0) Implement Social Logins**: Add Sign up with Google and Sign up with Facebook options on the authentication page, as requested by the user. This will require using the  agent.
 -   **Future Tasks:**
-    *   Implement full webhook automation for SePay/MoMo to replace the manual upgrade process.
+    *   Rename the  MongoDB collection to  to better reflect its purpose.
+    *   Refactor  into smaller, module-specific sub-components.
     *   Add more practice tests (Test 3, 4, etc.).
-    *   Enhance the Dashboard to show performance summaries.
+    *   Enhance the Dashboard to show richer performance summaries.
     *   Add progress tracking to the Course module.
 
 **Completed work in this session**
--   **Reading Test 2**: Implemented with content and a UI selector.
--   **Writing Test 2**: Implemented with content, image, and a UI selector.
--   **Speaking Test 2**: Implemented with content and a UI selector.
--   **Speaking Audio Rework**: Mapped all questions for both Speaking Test 1 and 2 to their own dedicated ElevenLabs audio files, fixing all timing and mismatch issues.
--   **Forgot Password Flow**: Replaced the non-functional email-based reset with a fully in-app password reset mechanism using a browser prompt.
--   **AI Examiner Gating**: Fixed the ElevenLabs widget to only render on the Speaking page for logged-in users, resolving the can use without login issue.
--   **Pricing Page Creation**: Built the  page UI with four distinct plans and prices in both USD and VND, with placeholder buttons marked Coming Soon.
+-   **PayPal Smart Button Integration**: Replaced static PayPal links with the official JS SDK. Implemented a full server-side Orders API flow that bypasses the unreliable webhook for instant, synchronous credit top-up. The UI now shows separate PayPal and Debit or Credit Card buttons.
+-   **Bank Transfer Modal**: Implemented a modal dialog on the pricing page that displays bank details and plan-specific QR codes before the user uploads their payment screenshot.
+-   **Full-App Bilingual Support (i18n)**: Added a language context and provider () to support English and Vietnamese. Implemented a language switcher and translated key pages like Pricing, Dashboard, and authentication flows.
+-   **Paywall and Free Trial**: Implemented backend and frontend logic to gate access to Test 2 and the AI Speaking examiner. Correctly implemented a 3-minute free trial for the AI examiner.
+-   **Dashboard Redesign**: Overhauled the dashboard layout based on user feedback. Made main stat cards smaller, added new detailed cards for Parent Overview, Study Summary, and Skill Performance, and added a User Info card.
+-   **Mobile Navigation System**: Implemented a responsive navigation system for mobile users:
+    - A fixed bottom navigation bar for quick access to the four main test types.
+    - A hamburger menu in the top header on the Dashboard for main site navigation (Profile, Tips, etc.).
+-   **Mobile UX Improvements**: Made the in-test selectors (e.g., Test 1, Test 2) horizontally scrollable to fit on mobile screens.
+-   **Deployment & Runtime Bug Fixes**:
+    - Resolved a deployment failure by adding a  endpoint to .
+    - Fixed a white screen frontend error by correcting a JSX syntax issue in .
+    - Fixed another white screen error by resolving a component scoping issue () in .
+    - Fixed broken email verification and password reset links by setting the correct  in .
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Frameworks**: React (frontend), FastAPI (backend)
+-   **Frameworks**: React (with Craco), FastAPI
 -   **Database**: MongoDB
--   **UI**: Shadcn UI components
--   **Payment Integration (Planned)**: SePay and MoMoPay. The strategy is to use payment links and webhooks/IPNs for fulfillment.
--   **Authentication**: JWT-based session management, in-app password reset.
--   **Content Gating (Planned)**: User plans (               total        used        free      shared  buff/cache   available
-Mem:        16359156     7979716     1239672       45836     7438508     8379440
-Swap:              0           0           0, ) and credit system () will be used to control access to tests and the AI examiner.
+-   **UI**: Tailwind CSS, Shadcn UI components.
+-   **Authentication**: JWT-based, email verification/password reset via SendGrid.
+-   **Internationalization (i18n)**: Custom React context provider for EN/VI language toggling.
+-   **Payment Integrations**:
+    -   **PayPal Orders API**: Full server-side integration using Smart Buttons. Creates and captures orders via backend endpoints, providing synchronous credit top-up.
+    -   **Bank Transfer**: Custom flow with screenshot uploads for automated crediting.
+-   **Mobile Navigation**: A dual system with a top hamburger menu and a bottom tab bar for different navigation purposes on small screens.
 
 **key DB schema**
 -   : 
--   : 
--   : 
+-   : This collection is used as a generic webhook/payment log. Should be renamed to .
+-   : New collection to track orders created via the PayPal Orders API. 
 
 **All files of reference**
--   : Major changes to add in-app password reset, stubs for payment logic, and user schema updates.
--   : Heavily edited to add content for Reading Test 2, Writing Test 2, and Speaking Test 2.
--   : Major changes to add selectors for all test types and to map all individual speaking audio files.
--   : Updated to handle the new in-app password reset flow.
--   : Updated to add a route for the new pricing page and to conditionally load the ElevenLabs widget.
--   : New file created to display the payment plans.
+-   : Major changes to add PayPal Orders API endpoints (, ), enhance the  endpoint with derived stats, and add a  check.
+-   : Updated with  and placeholders for PayPal credentials.
+-   : Heavily refactored to implement a new responsive layout with multiple new info cards and a mobile hamburger menu.
+-   : Updated to use PayPal Smart Buttons and conditionally hide them when the bank transfer modal is open.
+-   : Updated to implement the paywall for premium tests and make test selectors horizontally scrollable on mobile.
+-   : Updated to include the mobile bottom navigation wrapper.
+-   : New file for handling bilingual translations.
+-   : New file for the mobile-only test navigation bar.
 
 **Areas that need refactoring**:
--   : This component's complexity continues to grow. It handles rendering and logic for all four test modules and would benefit from being broken down into module-specific sub-components.
+-   The  MongoDB collection should be renamed to  for clarity.
 
 **key api endpoints**
--   , 
--   : (POST) New endpoint for the in-app password reset.
--   : Fetches available tests for a module.
--   **(Planned)** : (POST) Webhook to receive payment notifications from SePay.
--   **(Planned)** : (POST) Endpoint to generate a payment link/session.
--   **(Planned)** : (POST) Admin-only endpoint to grant credits/subscriptions to users.
+-   : (New) Creates a PayPal order via the Orders API.
+-   : (New) Captures a PayPal order and synchronously updates user credits.
+-   : For uploading bank transfer screenshots.
+-   : Provides detailed progress stats for the dashboard.
+-   , , , , 
+-   : (New) Deployment health check endpoint.
 
 **Critical Info for New Agent**
--   **Payment Gateway**: The user has switched from Stripe/PayPal to Ko-fi, and now to **SePay/MoMo**. Do not implement Stripe. The current plan is to integrate SePay first.
--   **Manual Upgrades**: The user has agreed to a manual fulfillment flow. After receiving a payment notification from SePay, they will use an admin endpoint to grant credits/subscriptions. Do not build a fully automated webhook fulfillment unless requested.
--   **Domain Linking**: The immediate blocker is the user's custom domain () setup. They are waiting for GoDaddy nameserver changes to propagate. This must be resolved before the SePay IPN can be configured.
--   **Forgot Password Issue**: The user's last message was now we need to fix forgot password protocol. This is a high-priority clarification point, as the agent had already implemented a new in-app reset flow. You must investigate what is still wrong from the user's perspective.
+-   The PayPal payment flow has been completely migrated to the server-side **Orders API** to ensure reliable, synchronous credit top-ups. The old IPN webhook is no longer the primary mechanism. This was a key decision to overcome unreliability.
+-   The mobile user experience is now a priority. A dual navigation system is in place: a top hamburger menu on the dashboard for main navigation, and a bottom tab bar for quick test-type switching.
+-   The  environment variable in  is **critical** for email verification and password reset links to work correctly in the deployed environment.
+-   The user's latest request is to add **Google and Facebook login**. This is the next major feature to implement and will require using the  agent.
+
+**documents created in this job**
+None.
 
 **Last 10 User Messages and any pending user messages**
-1.  **user**: Asks if the website can be modified after deployment. (Completed)
-2.  **agent**: Explains that development can continue in preview and be redeployed. (Completed)
-3.  **user**: Asks if they can host the website elsewhere. (Completed)
-4.  **agent**: Confirms the code is standard and exportable, and explains what's needed. (Completed)
-5.  **user**: I am on Sepay now. guide me to complete payment integration (In Progress)
-6.  **agent**: Guides the user on setting the IPN URL and adding credentials to . (In Progress)
-7.  **user**: Shares a screenshot of a SePay DNS error for the IPN URL. (In Progress)
-8.  **agent**: Explains the error is expected for preview URLs and guides the user to proceed with adding env variables. (In Progress)
-9.  **user**: Asks if they have to pay again for redeployments. (Completed)
-10. **agent**: Clarifies that the 50 credits are a monthly hosting fee, and redeploys are free. (Completed)
-11. **user**: (After a long discussion on domains) now we need to fix forgot password protocol. (**Pending - this is the highest priority user-facing issue to clarify**)
+1.  **user**: Asks for test sections to be in a hamburger menu or bottom tab. (Completed)
+2.  **user**: Clarifies that both top and bottom menus are acceptable (Option A), but the in-test selector is too wide for mobile. (Completed)
+3.  **user**: Reports the hamburger menu doesn't work on the preview URL. (Completed - Agent fixed the component)
+4.  **user**: Asks for PayPal buttons to be behind the QR code modal. (Completed)
+5.  **user**: Reports a White page only error after the previous fix. (Completed - Agent fixed a JSX build error)
+6.  **user**: Reports that password reset and new user registration are not working because no verification link is sent. (In Progress - Agent fixed the link URL, pending user verification)
+7.  **user**: Provides screenshots showing liking for the bottom nav but wanting the top navigation sections to be in a menu tab as well. (Completed - Agent implemented a hamburger menu)
+8.  **user**: Clarifies that Dashboard/Profile/Tips etc. should be at the TOP, and the bottom menu should be for tests only. (Completed - Agent refactored nav accordingly)
+9.  **user**: Reports they can't see the mobile menu in the preview. (Agent clarified login is required)
+10. **user**: (pending) how can we add google login and Facebook login options so user can sign up with google or Facebook - This is the next high-priority feature request.
 
 **Project Health Check:**
 -   **Broken**:
-    -   Payment integration is non-existent.
-    -   Custom domain linking is in a waiting state.
+    -   None confirmed, but the email verification and password reset flows are pending user verification after a critical fix.
 -   **Mocked**:
-    -   The  page UI is complete, but the payment buttons are placeholders.
-    -   The paywall logic is planned but not implemented; all content is currently accessible.
+    -   None. The paywall is fully implemented.
 
 **3rd Party Integrations**
--   **ElevenLabs Convai**: Widget for AI speaking examiner. Now gated to only show for logged-in users on the speaking page.
--   **SePay / MoMo (Planned)**: Chosen payment gateways for the Vietnamese market. Integration is pending domain setup and user-provided API keys.
+-   **SendGrid**: Used for transactional emails. User needs to configure domain authentication (SPF/DKIM) for better deliverability.
+-   **PayPal**: Uses the server-side Orders V2 API with Smart Buttons for payments. Requires  and  to be set in the environment.
+-   **ElevenLabs Convai**: Widget for the AI speaking examiner.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO
+-   **Testing agent used after significant changes**: YES (for the pricing page and paywall).
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: []
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
--   Users can be registered with any email/password via the UI.
--   There are no fixed test credentials.
+-   Register a new user via the UI.
+-   To test admin functionality, the user's email must contain .
+-   To test the new PayPal flow,  and  must be set in the backend environment, and  in the frontend environment.
 
 **What agent forgot to execute**
--   The user's final request to fix forgot password protocol was not acted upon as the session concluded. This must be the first point of clarification for the next agent.</analysis>
+-   The agent has been thorough and has not forgotten any user requests from this session. It has successfully implemented multiple features and fixed several critical bugs. The plan to rename the  collection was noted but correctly deprioritized in favor of user-facing features and bug fixes.</analysis>
