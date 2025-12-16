@@ -517,6 +517,63 @@ async def register_user(input: UserCreate):
     if len(input.password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
 
+
+
+@api_router.post("/auth/facebook-login")
+async def facebook_login(payload: FacebookLoginRequest):
+    """Log in or sign up a user using Facebook Login.
+
+    Frontend should obtain a short-lived Facebook access token (via JS SDK)
+    and send it here as {"access_token": "..."}.
+    """
+    fb_data = await verify_facebook_access_token(payload.access_token)
+    if not fb_data or not fb_data.get("id"):
+        raise HTTPException(status_code=401, detail="Invalid Facebook token")
+
+    email = fb_data.get("email")
+    name = fb_data.get("name") or "Facebook User"
+    facebook_id = fb_data["id"]
+
+    # Prefer email when available; otherwise we will match by facebook_id only
+    user = None
+    if email:
+        user = await db.users.find_one({"email": email}, {"_id": 0})
+
+    if not user:
+        # Try matching by facebook_id only (e.g. email not shared)
+        user = await db.users.find_one({"facebook_id": facebook_id}, {"_id": 0})
+
+    # Create new user if none exists
+    if not user:
+        user_obj = User(
+            email=email or f"fb_{facebook_id}@example.com",
+            name=name,
+            password_hash=None,
+            verified=True,
+        )
+        doc = user_obj.model_dump()
+        doc["created_at"] = doc["created_at"].isoformat()
+        doc["facebook_id"] = facebook_id
+        await db.users.insert_one(doc)
+        user = {**doc}
+    else:
+        # Ensure facebook_id and verified flag are updated
+        update_fields: Dict[str, Any] = {"facebook_id": facebook_id}
+        if not user.get("verified", False):
+            update_fields["verified"] = True
+        await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+        user.update(update_fields)
+
+    # Prepare response (strip internal fields)
+    user.pop("password_hash", None)
+    if isinstance(user.get("created_at"), str):
+        try:
+            user["created_at"] = datetime.fromisoformat(user["created_at"])
+        except Exception:
+            pass
+
+    return User(**user)
+
     user = User(
         email=input.email,
         name=input.name,
