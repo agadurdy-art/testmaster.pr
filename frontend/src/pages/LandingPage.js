@@ -43,31 +43,6 @@ export default function LandingPage({ onLogin, user }) {
 
   const [processingSocial, setProcessingSocial] = useState(false);
 
-  // Handle Emergent Google session_id in URL fragment after redirect
-  useEffect(() => {
-    const hash = window.location.hash || '';
-    if (hash.startsWith('#session_id=')) {
-      const sessionId = hash.replace('#session_id=', '').trim();
-      // Clean URL hash to avoid re-processing
-      window.history.replaceState(null, '', window.location.pathname + window.location.search);
-      if (!sessionId) return;
-      (async () => {
-        try {
-          setProcessingSocial(true);
-          const userData = await loginWithEmergentSession(sessionId);
-          onLogin(userData);
-          toast.success('Logged in with Google');
-          navigate('/dashboard');
-        } catch (err) {
-          const message = err?.response?.data?.detail || 'Google login failed. Please try again.';
-          toast.error(message);
-        } finally {
-          setProcessingSocial(false);
-        }
-      })();
-    }
-  }, [navigate, onLogin]);
-
   const handleAuth = async (e) => {
     e.preventDefault();
     setLoading(true);
