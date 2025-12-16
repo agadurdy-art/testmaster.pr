@@ -90,6 +90,98 @@ function MobileNavWrapper({ user }) {
 
   return <MobileBottomNav currentPath={location.pathname} />;
 }
+function AppWithSessionHandler() {
+  const [user, setUser] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    const hash = window.location.hash || '';
+    if (hash.startsWith('#session_id=')) {
+      const sessionId = hash.replace('#session_id=', '').trim();
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      if (!sessionId) return;
+      (async () => {
+        try {
+          const userData = await loginWithEmergentSession(sessionId);
+          setUser(userData);
+          localStorage.setItem('user', JSON.stringify(userData));
+          toast.success('Logged in with Google');
+        } catch (err) {
+          const message = err?.response?.data?.detail || 'Google login failed. Please try again.';
+          toast.error(message);
+        }
+      })();
+    }
+  }, [location]);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
+
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
+        <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
+        <Route 
+          path="/dashboard" 
+          element={user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/test/:testType" 
+          element={user ? <TestInterface user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/results/:attemptId" 
+          element={user ? <Results user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/tips" 
+          element={user ? <TipsPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/courses" 
+          element={user ? <CoursesPage user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/courses/:courseId" 
+          element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/profile" 
+          element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/pricing" 
+          element={user ? <PricingPage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/admin/content" 
+          element={<ContentAdmin />} 
+        />
+      </Routes>
+      <EmergentBadgeWrapper />
+      <MobileNavWrapper user={user} />
+      <Toaster position="top-right" />
+    </>
+  );
+}
+
 
 
 function App() {
