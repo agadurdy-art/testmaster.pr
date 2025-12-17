@@ -179,6 +179,10 @@ function AppWithSessionHandler() {
           path="/admin/content" 
           element={<ContentAdmin />} 
         />
+        <Route 
+          path="/level-test" 
+          element={user ? <LevelTest user={user} /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
