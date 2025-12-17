@@ -252,6 +252,32 @@
 ##   - agent: "testing"
 ##     message: "LEVEL TEST FEATURE TESTING COMPLETE ✅ - Comprehensive end-to-end testing performed successfully. All components working perfectly: Dashboard integration with purple gradient card, intro page with correct test format description, 5 reading questions with increasing difficulty levels, 2 speaking prompts with textarea input, AI evaluation using Claude API, and complete results page showing level badge, IELTS band estimate, reading score, speaking feedback, and personalized recommendations. Navigation flow works seamlessly. Feature is production-ready and meets all requirements from the review request. No issues found during testing."
 
+## backend:
+##   - task: "Vocabulary & Grammar Course Backend APIs"
+##     implemented: true
+##     working: true
+##     file: "backend/server.py"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: true
+##         agent: "testing"
+##         comment: "BACKEND TESTING COMPLETE ✅ - All vocabulary and grammar backend APIs are fully functional: (1) /api/vocab-grammar/lessons endpoint returns 3 lessons for beginner level including 'Unit 1: Everyday Vocabulary', 'Unit 2: Common Idioms', and 'Unit 1: Present Tenses' (2) Each lesson contains proper vocabulary items with word, pronunciation, definition, and examples (3) TTS endpoint available for pronunciation (4) Pronunciation evaluation endpoint ready (5) Progress tracking endpoints implemented (6) Database seeded with 9 lessons across 3 band levels (beginner, intermediate, advanced) (7) API responses are correctly formatted and return expected data structure. Backend implementation is production-ready."
+## frontend:
+##   - task: "Vocabulary & Grammar Course Frontend Implementation"
+##     implemented: true
+##     working: false
+##     file: "frontend/src/pages/VocabGrammarCourse.js"
+##     stuck_count: 1
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: false
+##         agent: "testing"
+##         comment: "FRONTEND ROUTING ISSUES DETECTED ❌ - Vocabulary & Grammar Course frontend code exists and is properly implemented, but has critical routing/navigation problems: (1) VocabGrammarCourse.js component is complete with all required features (band selection, lessons list, vocabulary items, TTS, practice modes) (2) Dashboard.js contains Vocabulary & Grammar card with emerald gradient and 'Start Learning' button (lines 510-528) (3) App.js has correct route definition for /vocab-grammar (4) CRITICAL ISSUE: React Router navigation fails - users cannot access /vocab-grammar route, app redirects back to landing page (5) Console shows React warnings about navigation calls not being in useEffect (6) Authentication works (localStorage user data set correctly) but protected routes are not accessible (7) Backend APIs work perfectly when tested directly. URGENT FIX NEEDED: React Router navigation and protected route access for authenticated users."
 ## agent_communication:
 ##   - agent: "main"
 ##     message: "VOCABULARY & GRAMMAR COURSE IMPLEMENTED ✅ - Complete implementation of vocabulary and grammar learning feature: (1) Three band levels: Band 4.5 & Below, Band 4.5-6.5, Band 6.5+ (2) Each level has multiple lessons for vocabulary, idioms, phrasal verbs, and grammar (3) Vocabulary items have: word, pronunciation guide, definition, 2-3 examples (4) TTS pronunciation using OpenAI TTS via Emergent key (5) Recording button for user pronunciation practice with AI evaluation via Whisper + Claude (6) Four practice modes: Flashcards, Fill Blanks, Quiz, Matching (7) Progress tracking per user (8) Backend endpoints: /vocab-grammar/lessons, /vocab-grammar/tts, /vocab-grammar/evaluate-pronunciation, /vocab-grammar/progress (9) Seeded 9 sample lessons with 5 items each across all 3 levels. Dashboard now shows 'Vocabulary & Grammar' card with 'Start Learning' button."
+##   - agent: "testing"
+##     message: "VOCABULARY & GRAMMAR COURSE TESTING COMPLETE ❌ - Found critical frontend routing issues preventing access to the feature: (1) BACKEND FULLY FUNCTIONAL ✅ - All APIs working correctly, 3 lessons available for beginner level, proper data structure returned (2) FRONTEND CODE EXISTS ✅ - VocabGrammarCourse.js component complete with band selection, lessons, vocabulary items, TTS, navigation, and practice modes (3) DASHBOARD INTEGRATION EXISTS ✅ - Vocabulary & Grammar card with emerald gradient and Start Learning button present in Dashboard.js (4) CRITICAL ROUTING ISSUE ❌ - React Router fails to navigate to /vocab-grammar route, users cannot access the feature despite proper authentication (5) Console shows React navigation warnings and component update errors (6) App redirects back to landing page instead of protected routes. URGENT: Fix React Router navigation for authenticated users to access vocabulary/grammar course. Backend and frontend components are ready, only routing needs repair."
