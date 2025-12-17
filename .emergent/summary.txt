@@ -1,4 +1,4 @@
-<analysis>**original_problem_statement:** The user's primary goal is to build a comprehensive IELTS practice platform, IELTS Ace. The project involves implementing full practice tests, email/password authentication, a course section, and a payment system to gate premium content. The user has recently focused on improving the user experience with a bilingual (English/Vietnamese) interface, a robust mobile navigation system, and a reliable payment flow using PayPal Smart Buttons and Bank Transfers with screenshot uploads. The latest user request is to add Google and Facebook login options.
+<analysis>**original_problem_statement:** The user's primary goal is to build a comprehensive IELTS practice platform, IELTS Ace. The project involves implementing full practice tests, email/password authentication, a course section, and a payment system to gate premium content. The user has recently focused on improving the user experience with a bilingual (English/Vietnamese) interface, a robust mobile navigation system, and a reliable payment flow using PayPal Smart Buttons and Bank Transfers with screenshot uploads. The latest user requests were to add Google and Facebook login options, provide personalized feedback on tests, and redesign the reading test interface.
 
 PRODUCT REQUIREMENTS:
 - Implement full practice tests based on Cambridge IELTS 19.
@@ -10,157 +10,180 @@ PRODUCT REQUIREMENTS:
 - Implement PayPal for card/international payments with automatic credit top-up.
 - The UI should be fully responsive and provide a good mobile experience.
 - Add Google and Facebook social logins.
+- Provide skill-based evaluation in listening and reading tests with detailed feedback.
+- Redesign the reading test interface for better usability.
 
 **User's preferred language**: English
 
 **what currently exists?**
 - A full-stack application (React/FastAPI/MongoDB) with a bilingual (English/Vietnamese) UI.
-- A complete authentication system with registration, login, email verification, and password reset.
+- A complete authentication system with registration, login, email verification, password reset, and Google Social Login (via Emergent-managed auth).
+- The backend for Facebook login is implemented but disabled in the UI at the user's request.
 - All four test modules (Reading, Listening, Writing, Speaking) with content for Test 1 and Test 2.
-- A paywall that gates access to Test 2 and the AI Speaking Examiner based on user plan () or .
-- A 3-minute free trial for the AI Speaking Examiner, tracked per user.
-- A pricing page () offering two payment methods:
-    1.  **Bank Transfer**: A modal shows plan-specific QR codes and bank details. Users upload a screenshot to an endpoint () which instantly tops up their credits.
-    2.  **PayPal**: Uses PayPal Smart Buttons (JS SDK) for both PayPal and Card payments. A server-side flow ( & ) handles the transaction and instantly tops up credits, bypassing the old, unreliable webhook.
-- A feature-rich dashboard with detailed, responsive cards for skill performance, study summary, recent activity, and a parent-friendly overview.
-- A mobile-specific navigation system:
-    - A top hamburger menu on the dashboard for main site navigation (Profile, Tips, Courses, etc.).
-    - A bottom navigation bar for quick access to the four test types (Listening, Reading, Writing, Speaking).
-- In-test selectors are horizontally scrollable on mobile for better usability.
+- A paywall that gates access to Test 2 and the AI Speaking Examiner.
+- A 3-minute free trial for the AI Speaking Examiner.
+- A pricing page with Bank Transfer (QR code/screenshot upload) and PayPal Smart Buttons payment options.
+- A feature-rich, responsive dashboard and a dedicated mobile navigation system.
+- A new Skill Breakdown feature on the Results page for Reading and Listening tests, providing personalized, teacher-like feedback on user performance by question type.
 
 **Last working item**:
--   **Last item agent was working**: Fixing email-based user flows (registration verification and password reset) which were failing in the preview environment. The agent correctly identified that the  in  was pointing to , causing generated email links to be invalid. The agent updated this variable to point to the correct preview URL.
--   **Status**: USER VERIFICATION PENDING
--   **Agent Testing Done**: Y (Agent verified the backend endpoint and confirmed the logic).
--   **Which testing method agent to use?**: Manual testing by user. The user needs to try registering a new account and using the Forgot Password feature on the live preview URL to confirm they receive a working email link.
+-   **Last item agent was working**: The user requested a redesign of the reading test interface. The goal is to create a two-column layout where the article covers ~80% of the screen and the questions cover the remaining ~20%, with questions grouped into navigable parts similar to the listening test. The agent was in the analysis phase, reviewing .
+-   **Status**: NOT STARTED
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: Frontend testing agent or screenshot tool, as this is a significant UI redesign.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1 (P0): User needs to verify email verification and password reset flows.** The agent has pushed a fix for broken links in emails. The user needs to test this on the preview environment.
--   **Issue 2 (P2): PayPal webhook delivery is failing.** This is now low priority as the new PayPal Smart Button flow provides synchronous, reliable credit top-up without relying on webhooks. The old  endpoint is still in the code but is effectively a fallback.
--   **Issue 3 (P2): SendGrid emails may be delivered to the spam folder.** This is a domain reputation/configuration issue (SPF/DKIM records) that the user must resolve on their DNS provider and SendGrid account.
+-   **Issue 1 (P1): PayPal webhook delivery is failing.** This is low priority as the primary PayPal flow uses the Orders API for synchronous credit top-up, making the webhook a non-critical fallback.
+-   **Issue 2 (P1): SendGrid emails may be delivered to the spam folder.** This is an external configuration issue (SPF/DKIM records) that the user must resolve on their DNS provider and SendGrid account.
+-   **Issue 3 (P2): User needs to verify email verification and password reset flows.** The previous agent fixed an issue with incorrect URLs in emails. This fix is still pending final verification from the user.
 
 **Issues Detail:**
--   **Issue 1: User needs to verify email verification and password reset flows.**
-    -   **Attempted fixes**: The  variable in  was updated from  to the production preview URL. This ensures that links generated for email verification and password resets are correct.
-    -   **Next debug checklist**: Ask the user to test the registration and Forgot Password flows on the preview URL and report if they receive a working email. If not, check SendGrid activity logs for delivery errors.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a critical user-facing function required for user onboarding and account management.
+-   **Issue 1: PayPal webhook delivery is failing.**
+    -   **Attempted fixes**: None in this session. The primary payment flow was migrated away from relying on webhooks.
+    -   **Next debug checklist**: Investigate logs for the  endpoint if this becomes a priority again.
+    -   **Why fix this issue and what will be achieved with the fix?**: Provides a redundant backup for payment confirmation. Currently low priority.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Backend.
+    -   **Blocked on other issue**: None.
+-   **Issue 2: SendGrid emails may go to spam.**
+    -   **Attempted fixes**: None. This is external.
+    -   **Next debug checklist**: User needs to configure SPF/DKIM records for their domain in their DNS provider and SendGrid settings.
+    -   **Why fix this issue and what will be achieved with the fix?**: Improves reliability of critical user emails (registration, password reset).
+    -   **Status**: BLOCKED (on user action).
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: N/A (External).
+    -   **Blocked on other issue**: None.
+-   **Issue 3: User needs to verify email verification and password reset flows.**
+    -   **Attempted fixes**: The  in  was updated by the previous agent to the correct preview URL.
+    -   **Next debug checklist**: Ask the user to test the registration and Forgot Password flows and report if they receive a working email link.
+    -   **Why fix this issue and what will be achieved with the fix?**: Ensures user onboarding and account recovery are functional.
     -   **Status**: USER VERIFICATION PENDING
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: User testing required.
+    -   **Should Test frontend/backend/both after fix?**: User testing.
     -   **Blocked on other issue**: None.
 
 **In progress Task List**:
-None.
+-   **Task 1: Redesign the Reading Test Interface (P0)**
+    -   **Where to resume**: Modify  to implement the new two-column layout. This will likely involve significant changes to the JSX structure and CSS, possibly using Flexbox or Grid. The passage should be in a scrollable container on the left (80% width), and the questions in a component on the right (20% width) with pagination/tabs for different question parts.
+    -   **What will be achieved with this?**: A more ergonomic and user-friendly interface for the reading test, as per the user's explicit design request.
+    -   **Status**: NOT STARTED
+    -   **Should Test frontend/backend/both after fix?**: Frontend.
+    -   **Blocked on something**: No.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    *   **(P0) Implement Social Logins**: Add Sign up with Google and Sign up with Facebook options on the authentication page, as requested by the user. This will require using the  agent.
+    *   **(P1) Re-enable Facebook Login**: The full implementation exists but is blocked. Once the user resolves their Facebook business verification, the task is to re-enable the Continue with Facebook button in .
 -   **Future Tasks:**
-    *   Rename the  MongoDB collection to  to better reflect its purpose.
-    *   Refactor  into smaller, module-specific sub-components.
+    *   Rename the  MongoDB collection to .
     *   Add more practice tests (Test 3, 4, etc.).
-    *   Enhance the Dashboard to show richer performance summaries.
+    *   Enhance the Dashboard to show richer performance summaries (e.g., skill profiles).
     *   Add progress tracking to the Course module.
+    *   Add recommended practice links under weak skills on the results page.
+    *   (Optional) Switch to direct Google OAuth for an in-page popup flow, if the user decides the current redirect flow is insufficient.
 
 **Completed work in this session**
--   **PayPal Smart Button Integration**: Replaced static PayPal links with the official JS SDK. Implemented a full server-side Orders API flow that bypasses the unreliable webhook for instant, synchronous credit top-up. The UI now shows separate PayPal and Debit or Credit Card buttons.
--   **Bank Transfer Modal**: Implemented a modal dialog on the pricing page that displays bank details and plan-specific QR codes before the user uploads their payment screenshot.
--   **Full-App Bilingual Support (i18n)**: Added a language context and provider () to support English and Vietnamese. Implemented a language switcher and translated key pages like Pricing, Dashboard, and authentication flows.
--   **Paywall and Free Trial**: Implemented backend and frontend logic to gate access to Test 2 and the AI Speaking examiner. Correctly implemented a 3-minute free trial for the AI examiner.
--   **Dashboard Redesign**: Overhauled the dashboard layout based on user feedback. Made main stat cards smaller, added new detailed cards for Parent Overview, Study Summary, and Skill Performance, and added a User Info card.
--   **Mobile Navigation System**: Implemented a responsive navigation system for mobile users:
-    - A fixed bottom navigation bar for quick access to the four main test types.
-    - A hamburger menu in the top header on the Dashboard for main site navigation (Profile, Tips, etc.).
--   **Mobile UX Improvements**: Made the in-test selectors (e.g., Test 1, Test 2) horizontally scrollable to fit on mobile screens.
--   **Deployment & Runtime Bug Fixes**:
-    - Resolved a deployment failure by adding a  endpoint to .
-    - Fixed a white screen frontend error by correcting a JSX syntax issue in .
-    - Fixed another white screen error by resolving a component scoping issue () in .
-    - Fixed broken email verification and password reset links by setting the correct  in .
+-   **Social Logins Feature**:
+    -   Implemented Google Login using Emergent-managed Google Auth, including fixing the post-login redirect flow to land the user on the dashboard.
+    -   Implemented the full backend and frontend code for Facebook Login.
+    -   Configured the app with user-provided Facebook credentials.
+    -   Disabled the Facebook login UI at user's request due to external business verification requirements, while keeping the backend code for future use.
+-   **Personalized Test Feedback Feature**:
+    -   Implemented a backend service to analyze Reading and Listening test answers by question type (, , etc.).
+    -   The service generates skill-based performance labels (, , ) and personalized teacher-like feedback tips.
+    -   Redesigned the  page to display this feedback in a new Skill Breakdown section, with a toggle for short vs. detailed tips.
+-   **Critical Bug Fix**:
+    -   Resolved an issue where submitting Listening and Reading tests showed a Failed to submit error. The agent corrected the  endpoint to return the test attempt ID, which fixed the frontend flow. User confirmed the fix.
+-   **UI/UX Polish**:
+    -   Moved the Continue with Google button to the bottom of the authentication form as per user request.
+
+**Earlier issues found/mentioned but not fixed**
+-   **Issue 1: PayPal webhook delivery is failing.** De-prioritized in favor of a synchronous API flow.
+-   **Issue 2: SendGrid emails may go to spam.** Blocked on the user to configure DNS records.
+
+**Known issue recurrence from previous fork**
+-   **Issue recurrence in previous fork**: Broken email verification/password reset links due to incorrect .
+-   **Recurrence count**: 1
+-   **Status**: USER VERIFICATION PENDING (The fix was applied but user confirmation was never received).
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Frameworks**: React (with Craco), FastAPI
+-   **Frameworks**: React, FastAPI
 -   **Database**: MongoDB
--   **UI**: Tailwind CSS, Shadcn UI components.
--   **Authentication**: JWT-based, email verification/password reset via SendGrid.
--   **Internationalization (i18n)**: Custom React context provider for EN/VI language toggling.
--   **Payment Integrations**:
-    -   **PayPal Orders API**: Full server-side integration using Smart Buttons. Creates and captures orders via backend endpoints, providing synchronous credit top-up.
-    -   **Bank Transfer**: Custom flow with screenshot uploads for automated crediting.
--   **Mobile Navigation**: A dual system with a top hamburger menu and a bottom tab bar for different navigation purposes on small screens.
+-   **Authentication**: JWT-based, SendGrid (email), Social Authentication (OAuth via Emergent-managed Google Auth, and direct Facebook Graph API).
+-   **Payment Integrations**: PayPal Orders API, Bank Transfer (manual upload).
+-   **AI Integration**: Claude Sonnet for generating personalized test feedback.
 
 **key DB schema**
 -   : 
--   : This collection is used as a generic webhook/payment log. Should be renamed to .
--   : New collection to track orders created via the PayPal Orders API. 
+-   :  (New  field added).
+
+**changes in tech stack**
+-   Backend dependencies added: , , .
+-   Integration with Emergent LLM Key for  to generate test feedback.
 
 **All files of reference**
--   : Major changes to add PayPal Orders API endpoints (, ), enhance the  endpoint with derived stats, and add a  check.
--   : Updated with  and placeholders for PayPal credentials.
--   : Heavily refactored to implement a new responsive layout with multiple new info cards and a mobile hamburger menu.
--   : Updated to use PayPal Smart Buttons and conditionally hide them when the bank transfer modal is open.
--   : Updated to implement the paywall for premium tests and make test selectors horizontally scrollable on mobile.
--   : Updated to include the mobile bottom navigation wrapper.
--   : New file for handling bilingual translations.
--   : New file for the mobile-only test navigation bar.
+-   : Contains the new social login endpoints (, ), the fix for , and the new feedback generation logic in the submission endpoint.
+-   : Contains the UI logic for adding, positioning, and ultimately hiding the social login buttons.
+-   : Contains the centralized  to process the Google Auth redirect.
+-   : Contains the new UI to display skill-based feedback from the backend.
+-   : This is the file to be modified for the next major task: redesigning the reading test interface.
+-   , : Were updated with Facebook App credentials.
 
 **Areas that need refactoring**:
--   The  MongoDB collection should be renamed to  for clarity.
+-   The  MongoDB collection should still be renamed to  for clarity.
 
 **key api endpoints**
--   : (New) Creates a PayPal order via the Orders API.
--   : (New) Captures a PayPal order and synchronously updates user credits.
--   : For uploading bank transfer screenshots.
--   : Provides detailed progress stats for the dashboard.
--   , , , , 
--   : (New) Deployment health check endpoint.
+-   : (New, Inactive) Verifies a Facebook token and logs in/signs up a user.
+-   : (New, Active) Exchanges an Emergent session ID for a user session.
+-   : (Updated) Now correctly returns the test attempt object, including new  data.
 
 **Critical Info for New Agent**
--   The PayPal payment flow has been completely migrated to the server-side **Orders API** to ensure reliable, synchronous credit top-ups. The old IPN webhook is no longer the primary mechanism. This was a key decision to overcome unreliability.
--   The mobile user experience is now a priority. A dual navigation system is in place: a top hamburger menu on the dashboard for main navigation, and a bottom tab bar for quick test-type switching.
--   The  environment variable in  is **critical** for email verification and password reset links to work correctly in the deployed environment.
--   The user's latest request is to add **Google and Facebook login**. This is the next major feature to implement and will require using the  agent.
+-   **Top Priority**: The user's immediate request is to redesign the reading test UI in . This is a significant frontend task.
+-   **Facebook Login is Paused**: The full code for Facebook login is implemented on both frontend and backend. However, it is **hidden in the UI** because the user cannot complete Facebook's business verification process. Do not work on it unless the user confirms they have resolved the verification issue. The credentials are saved in the  files.
+-   **Google Login Behavior**: Google login uses an Emergent-managed service that redirects the user to an auth page, which then opens the Google login in a new secure window. This is expected and cannot be changed without switching to a direct Google OAuth integration (a future task, if requested).
+-   **AI Feedback Engine**: The backend now uses Claude Sonnet via the Emergent LLM Key to generate personalized feedback for Reading and Listening tests. This logic is in  within the  function.
 
 **documents created in this job**
 None.
 
 **Last 10 User Messages and any pending user messages**
-1.  **user**: Asks for test sections to be in a hamburger menu or bottom tab. (Completed)
-2.  **user**: Clarifies that both top and bottom menus are acceptable (Option A), but the in-test selector is too wide for mobile. (Completed)
-3.  **user**: Reports the hamburger menu doesn't work on the preview URL. (Completed - Agent fixed the component)
-4.  **user**: Asks for PayPal buttons to be behind the QR code modal. (Completed)
-5.  **user**: Reports a White page only error after the previous fix. (Completed - Agent fixed a JSX build error)
-6.  **user**: Reports that password reset and new user registration are not working because no verification link is sent. (In Progress - Agent fixed the link URL, pending user verification)
-7.  **user**: Provides screenshots showing liking for the bottom nav but wanting the top navigation sections to be in a menu tab as well. (Completed - Agent implemented a hamburger menu)
-8.  **user**: Clarifies that Dashboard/Profile/Tips etc. should be at the TOP, and the bottom menu should be for tests only. (Completed - Agent refactored nav accordingly)
-9.  **user**: Reports they can't see the mobile menu in the preview. (Agent clarified login is required)
-10. **user**: (pending) how can we add google login and Facebook login options so user can sign up with google or Facebook - This is the next high-priority feature request.
+1.  **user**: Reports that submitting listening/reading tests fails. (Resolved)
+2.  **user**: Provides network logs showing the submit request gets a 200 status but a  response body. (Input for fix)
+3.  **agent**: Confirms fix for the test submission issue.
+4.  **user**: Confirms test submission now works. Requests skill-based evaluation for listening/reading tests to act like a personal teacher. (Completed)
+5.  **agent**: Proposes options for implementing the feedback feature.
+6.  **user**: Confirms preferences for the feedback feature: analyze by question type and provide both short and detailed tips. (Completed)
+7.  **agent**: Announces completion of the skill-based feedback feature.
+8.  **user**: Requests a redesign of the reading test interface: 80% for the article, 20% for questions, with questions grouped into parts. (In Progress)
+9.  **agent**: Begins analyzing  to plan the redesign.
+10. **agent**: Continues analyzing .
 
 **Project Health Check:**
--   **Broken**:
-    -   None confirmed, but the email verification and password reset flows are pending user verification after a critical fix.
--   **Mocked**:
-    -   None. The paywall is fully implemented.
+-   **Broken**: None confirmed. Email flow is pending user verification.
+-   **Mocked**: Facebook Login is disabled in the UI, rendering it inactive for end-users.
 
 **3rd Party Integrations**
--   **SendGrid**: Used for transactional emails. User needs to configure domain authentication (SPF/DKIM) for better deliverability.
--   **PayPal**: Uses the server-side Orders V2 API with Smart Buttons for payments. Requires  and  to be set in the environment.
--   **ElevenLabs Convai**: Widget for the AI speaking examiner.
+-   **SendGrid**: For transactional emails.
+-   **PayPal**: Server-side Orders V2 API with Smart Buttons.
+-   **ElevenLabs Convai**: For the AI speaking examiner.
+-   **Google Auth (Emergent-managed)**: For Continue with Google flow.
+-   **Facebook Graph API**: (Integrated but UI disabled) For Facebook login.
+-   **Anthropic Claude 3 Sonnet**: Uses Emergent LLM Key for generating test feedback.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES (for the pricing page and paywall).
+-   **Testing agent used after significant changes**: NO
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: []
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
 -   Register a new user via the UI.
--   To test admin functionality, the user's email must contain .
--   To test the new PayPal flow,  and  must be set in the backend environment, and  in the frontend environment.
+-   Use the Continue with Google button to test the social login flow.
+-    and  are set in the  files but the UI is disabled.
 
 **What agent forgot to execute**
--   The agent has been thorough and has not forgotten any user requests from this session. It has successfully implemented multiple features and fixed several critical bugs. The plan to rename the  collection was noted but correctly deprioritized in favor of user-facing features and bug fixes.</analysis>
+-   The agent successfully addressed all user requests in this session, prioritizing new features and critical bug fixes as they arose. No tasks were forgotten.</analysis>
