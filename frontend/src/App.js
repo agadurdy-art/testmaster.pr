@@ -16,6 +16,7 @@ import PricingPage from './pages/PricingPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AdminCreditsPage from './pages/AdminCreditsPage';
+import LevelTest from './pages/LevelTest';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 
