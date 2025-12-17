@@ -716,6 +716,170 @@ function ElevenLabsExaminer() {
           </>
         )}
 
+        {/* READING TEST - New Two-Column Layout */}
+        {testType === 'reading' ? (
+          <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-220px)]">
+            {/* Left Column - Passage (~75% width) */}
+            <div className="lg:w-3/4 flex flex-col">
+              <Card className="flex-1 overflow-hidden flex flex-col">
+                {/* Passage Header */}
+                <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
+                  <h2 className="text-lg font-bold text-gray-900">
+                    {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
+                  </h2>
+                </div>
+                {/* Passage Content - Scrollable */}
+                <div className="flex-1 overflow-y-auto p-6">
+                  <p className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
+                    {test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
+                  </p>
+                </div>
+              </Card>
+            </div>
+
+            {/* Right Column - Questions (~25% width) */}
+            <div className="lg:w-1/4 flex flex-col min-w-[300px]">
+              <Card className="flex-1 overflow-hidden flex flex-col">
+                {/* Passage Tabs */}
+                <div className="p-3 border-b bg-gray-50">
+                  <div className="flex gap-1">
+                    {[1, 2, 3].map((passageNum) => {
+                      const passageQuestions = test.questions?.filter(q => q.passage === passageNum) || [];
+                      const answeredCount = passageQuestions.filter(q => answers[q.id]).length;
+                      return (
+                        <button
+                          key={passageNum}
+                          onClick={() => setCurrentPassage(passageNum)}
+                          className={`flex-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                            currentPassage === passageNum
+                              ? 'bg-sky-500 text-white'
+                              : answeredCount === passageQuestions.length && passageQuestions.length > 0
+                              ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                              : 'bg-white text-gray-600 hover:bg-gray-100 border'
+                          }`}
+                        >
+                          <div>P{passageNum}</div>
+                          <div className="text-[10px] opacity-75">
+                            {answeredCount}/{passageQuestions.length}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Questions List - Scrollable */}
+                <div className="flex-1 overflow-y-auto p-4">
+                  <div className="space-y-4">
+                    {test.questions?.filter(q => q.passage === currentPassage).map((q, idx) => {
+                      const isAnswered = !!answers[q.id];
+                      return (
+                        <div 
+                          key={q.id} 
+                          className={`p-3 rounded-lg border-l-4 ${
+                            isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
+                          } shadow-sm`}
+                        >
+                          <p className="text-sm font-medium text-gray-900 mb-2">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                              {q.id}
+                            </span>
+                            {q.question}
+                          </p>
+                          
+                          {/* Answer Input Based on Question Type */}
+                          {(q.type === 'true_false_notgiven' || q.type === 'yes_no_notgiven') && (
+                            <div className="flex gap-1 mt-2">
+                              {(q.type === 'true_false_notgiven' ? ['True', 'False', 'Not Given'] : ['Yes', 'No', 'Not Given']).map((option) => (
+                                <button
+                                  key={option}
+                                  onClick={() => handleAnswerChange(q.id, option)}
+                                  className={`flex-1 px-2 py-1.5 rounded text-xs font-medium transition-colors ${
+                                    answers[q.id] === option
+                                      ? 'bg-sky-500 text-white'
+                                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                  }`}
+                                >
+                                  {option === 'Not Given' ? 'NG' : option}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+
+                          {q.type === 'multiple_choice' && q.options && (
+                            <div className="space-y-1 mt-2">
+                              {q.options.map((option, optIdx) => (
+                                <button
+                                  key={optIdx}
+                                  onClick={() => handleAnswerChange(q.id, option.split(')')[0])}
+                                  className={`w-full text-left px-2 py-1.5 rounded text-xs transition-colors ${
+                                    answers[q.id] === option.split(')')[0]
+                                      ? 'bg-sky-500 text-white'
+                                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                  }`}
+                                >
+                                  {option}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+
+                          {(q.type === 'sentence_completion' || q.type === 'form_completion' || 
+                            q.type === 'note_completion' || q.type === 'matching_information' || 
+                            q.type === 'matching_headings' || q.type === 'summary_completion') && (
+                            <Input
+                              value={answers[q.id] || ''}
+                              onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                              placeholder="Type your answer..."
+                              className="mt-2 text-sm h-8"
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Navigation Footer */}
+                <div className="p-3 border-t bg-gray-50">
+                  <div className="flex justify-between items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPassage(Math.max(1, currentPassage - 1))}
+                      disabled={currentPassage === 1}
+                      className="text-xs"
+                    >
+                      <ChevronLeft className="w-3 h-3 mr-1" />
+                      Prev
+                    </Button>
+                    
+                    {currentPassage < 3 ? (
+                      <Button
+                        size="sm"
+                        onClick={() => setCurrentPassage(currentPassage + 1)}
+                        className="primary-gradient text-white text-xs"
+                      >
+                        Next
+                        <ChevronRight className="w-3 h-3 ml-1" />
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        onClick={handleSubmit}
+                        disabled={submitting}
+                        className="bg-green-600 text-white hover:bg-green-700 text-xs"
+                      >
+                        {submitting ? 'Submitting...' : 'Submit'}
+                        <Send className="w-3 h-3 ml-1" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        ) : (
         <div className="grid lg:grid-cols-4 gap-6">
           {/* Section Navigator for Listening */}
           {testType === 'listening' ? (
