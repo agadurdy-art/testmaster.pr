@@ -519,7 +519,7 @@ async def register_user(input: UserCreate):
 
     # Create the new user
     user_id = str(uuid.uuid4())
-    hashed_password = bcrypt.hashpw(input.password.encode(), bcrypt.gensalt()).decode()
+    hashed_password = hash_password(input.password)
     
     user = {
         "id": user_id,
