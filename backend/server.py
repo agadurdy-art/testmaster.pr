@@ -2080,8 +2080,9 @@ async def evaluate_writing_practice(request: WritingPracticeRequest):
     try:
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
-            model="claude-3-sonnet-20240229"
-        )
+            session_id=str(uuid.uuid4()),
+            system_message="You are an experienced IELTS examiner providing detailed writing feedback."
+        ).with_model("anthropic", "claude-3-sonnet-20240229")
         
         task_type_desc = {
             "task1_academic": "IELTS Academic Writing Task 1 (graph/chart/diagram description)",
