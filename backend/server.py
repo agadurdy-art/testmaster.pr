@@ -828,6 +828,9 @@ async def submit_test(submission: SubmitAnswers):
         {"$push": {"test_history": attempt.id}},
     )
 
+    # Return attempt so frontend can navigate to results page
+    return attempt
+
 
 @api_router.post("/auth/verify-email")
 async def verify_email(payload: VerifyEmailRequest):
