@@ -184,6 +184,10 @@ function AppWithSessionHandler() {
           path="/level-test" 
           element={user ? <LevelTest user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/vocab-grammar" 
+          element={user ? <VocabGrammarCourse user={user} /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
