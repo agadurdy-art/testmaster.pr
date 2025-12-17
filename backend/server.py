@@ -2125,8 +2125,8 @@ Provide a comprehensive evaluation in the following JSON format:
 
 Be encouraging but honest. Focus on actionable feedback."""
 
-        response = await chat.send_message(UserMessage(content=prompt))
-        response_text = response.content
+        response = await chat.send_message(UserMessage(text=prompt))
+        response_text = response.text.strip()
         
         # Parse JSON from response
         import re
