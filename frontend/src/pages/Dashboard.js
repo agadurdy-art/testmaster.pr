@@ -474,6 +474,27 @@ export default function Dashboard({ user, onLogout }) {
               </Button>
             </Card>
           )}
+
+          {/* Test My Level Card */}
+          <Card className="p-4 flex flex-col justify-between bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+                  <Target className="w-4 h-4 text-white" />
+                </div>
+                <p className="text-xs font-semibold text-purple-700 uppercase tracking-wide">New!</p>
+              </div>
+              <p className="text-sm font-semibold text-gray-900 mb-1">Test My English Level</p>
+              <p className="text-xs text-gray-600">5-7 min quick assessment with AI feedback</p>
+            </div>
+            <Button
+              size="sm"
+              className="mt-3 w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white hover:from-purple-600 hover:to-indigo-700"
+              onClick={() => navigate('/level-test')}
+            >
+              Start Level Test
+            </Button>
+          </Card>
         </div>
 
         {/* Parent overview + Study summary */}
