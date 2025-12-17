@@ -525,7 +525,7 @@ async def register_user(input: UserCreate):
         "id": user_id,
         "email": input.email.strip().lower(),
         "name": input.name.strip(),
-        "password": hashed_password,
+        "password_hash": hashed_password,
         "plan": "free",
         "examCredits": 0,
         "verified": False,
