@@ -505,6 +505,27 @@ export default function Dashboard({ user, onLogout }) {
               Start Level Test
             </Button>
           </Card>
+
+          {/* Vocabulary & Grammar Course Card */}
+          <Card className="p-4 flex flex-col justify-between bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                  <BookMarked className="w-4 h-4 text-white" />
+                </div>
+                <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide">Course</p>
+              </div>
+              <p className="text-sm font-semibold text-gray-900 mb-1">Vocabulary & Grammar</p>
+              <p className="text-xs text-gray-600">3 levels • TTS • AI pronunciation check</p>
+            </div>
+            <Button
+              size="sm"
+              className="mt-3 w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:from-emerald-600 hover:to-teal-700"
+              onClick={() => navigate('/vocab-grammar')}
+            >
+              Start Learning
+            </Button>
+          </Card>
         </div>
 
         {/* Parent overview + Study summary */}
