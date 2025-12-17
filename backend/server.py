@@ -2082,7 +2082,7 @@ async def evaluate_writing_practice(request: WritingPracticeRequest):
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
             system_message="You are an experienced IELTS examiner providing detailed writing feedback."
-        ).with_model("anthropic", "claude-3-sonnet-20240229")
+        ).with_model("openai", "gpt-4o")
         
         task_type_desc = {
             "task1_academic": "IELTS Academic Writing Task 1 (graph/chart/diagram description)",
