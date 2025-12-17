@@ -526,6 +526,48 @@ export default function Dashboard({ user, onLogout }) {
               Start Learning
             </Button>
           </Card>
+
+          {/* Writing Practice Card */}
+          <Card className="p-4 flex flex-col justify-between bg-gradient-to-br from-orange-50 to-red-50 border-orange-200">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                  <PenTool className="w-4 h-4 text-white" />
+                </div>
+                <p className="text-xs font-semibold text-orange-700 uppercase tracking-wide">Practice</p>
+              </div>
+              <p className="text-sm font-semibold text-gray-900 mb-1">Writing Practice</p>
+              <p className="text-xs text-gray-600">Task 1 & 2 • AI feedback • Band scores</p>
+            </div>
+            <Button
+              size="sm"
+              className="mt-3 w-full bg-gradient-to-r from-orange-500 to-red-600 text-white hover:from-orange-600 hover:to-red-700"
+              onClick={() => navigate('/writing-practice')}
+            >
+              Start Writing
+            </Button>
+          </Card>
+
+          {/* Speaking Practice Card */}
+          <Card className="p-4 flex flex-col justify-between bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                  <MessageSquare className="w-4 h-4 text-white" />
+                </div>
+                <p className="text-xs font-semibold text-green-700 uppercase tracking-wide">Practice</p>
+              </div>
+              <p className="text-sm font-semibold text-gray-900 mb-1">Speaking Practice</p>
+              <p className="text-xs text-gray-600">Parts 1-3 • Record & evaluate • Model answers</p>
+            </div>
+            <Button
+              size="sm"
+              className="mt-3 w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700"
+              onClick={() => navigate('/speaking-practice')}
+            >
+              Start Speaking
+            </Button>
+          </Card>
         </div>
 
         {/* Parent overview + Study summary */}
