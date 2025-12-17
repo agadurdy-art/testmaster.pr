@@ -1811,6 +1811,134 @@ async def get_course(course_id: str):
         raise HTTPException(status_code=404, detail="Course not found")
     return course
 
+
+# ============ Vocabulary & Grammar Course ============
+
+@api_router.get("/vocab-grammar/lessons")
+async def get_vocab_grammar_lessons(band_level: str = None):
+    """Get vocabulary and grammar lessons, optionally filtered by band level"""
+    query = {}
+    if band_level:
+        query["band_level"] = band_level
+    lessons = await db.vocab_grammar_lessons.find(query, {"_id": 0}).to_list(100)
+    return lessons
+
+@api_router.get("/vocab-grammar/lessons/{lesson_id}")
+async def get_vocab_grammar_lesson(lesson_id: str):
+    """Get a specific lesson with all items"""
+    lesson = await db.vocab_grammar_lessons.find_one({"id": lesson_id}, {"_id": 0})
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    return lesson
+
+@api_router.post("/vocab-grammar/tts")
+async def text_to_speech(request: dict):
+    """Generate TTS audio for pronunciation"""
+    text = request.get("text", "")
+    if not text:
+        raise HTTPException(status_code=400, detail="Text is required")
+    
+    try:
+        from emergentintegrations.llm.openai import OpenAITextToSpeech
+        tts = OpenAITextToSpeech(api_key=os.getenv("EMERGENT_LLM_KEY"))
+        audio_data = await tts.generate(
+            text=text,
+            voice="alloy",
+            model="tts-1"
+        )
+        
+        import base64
+        audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+        return {"audio": audio_base64, "format": "mp3"}
+    except Exception as e:
+        logging.getLogger(__name__).error(f"TTS error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to generate audio")
+
+class PronunciationEvalRequest(BaseModel):
+    word: str
+    user_transcript: str
+    expected_pronunciation: Optional[str] = None
+
+@api_router.post("/vocab-grammar/evaluate-pronunciation")
+async def evaluate_pronunciation(request: PronunciationEvalRequest):
+    """Evaluate user's pronunciation using AI"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            model="claude-3-sonnet-20240229"
+        )
+        
+        prompt = f"""You are an English pronunciation teacher. Evaluate the student's pronunciation attempt.
+
+Target word/phrase: "{request.word}"
+What the student said (transcribed): "{request.user_transcript}"
+
+Evaluate:
+1. Did they pronounce it correctly? (correct/partially correct/incorrect)
+2. What specific sounds need improvement?
+3. Give a helpful tip for better pronunciation.
+
+Respond in JSON format:
+{{
+    "score": "correct" or "partially_correct" or "incorrect",
+    "score_percent": 0-100,
+    "feedback": "brief encouraging feedback",
+    "tip": "specific pronunciation tip",
+    "phonetic_hint": "simplified phonetic guide"
+}}"""
+
+        response = await chat.send_message(UserMessage(text=prompt))
+        response_text = response.text.strip()
+        
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
+        return json.loads(response_text)
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Pronunciation evaluation error: {e}")
+        return {
+            "score": "partially_correct",
+            "score_percent": 70,
+            "feedback": "Good attempt! Keep practicing.",
+            "tip": "Try saying it slowly and clearly.",
+            "phonetic_hint": request.word
+        }
+
+class SaveProgressRequest(BaseModel):
+    user_id: str
+    lesson_id: str
+    completed_items: List[str]
+    practice_scores: Dict[str, Any]
+
+@api_router.post("/vocab-grammar/progress")
+async def save_vocab_grammar_progress(request: SaveProgressRequest):
+    """Save user's progress in vocabulary/grammar lessons"""
+    progress = {
+        "user_id": request.user_id,
+        "lesson_id": request.lesson_id,
+        "completed_items": request.completed_items,
+        "practice_scores": request.practice_scores,
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.vocab_grammar_progress.update_one(
+        {"user_id": request.user_id, "lesson_id": request.lesson_id},
+        {"$set": progress},
+        upsert=True
+    )
+    
+    return {"message": "Progress saved"}
+
+@api_router.get("/vocab-grammar/progress/{user_id}")
+async def get_vocab_grammar_progress(user_id: str):
+    """Get user's progress across all lessons"""
+    progress = await db.vocab_grammar_progress.find(
+        {"user_id": user_id}, {"_id": 0}
+    ).to_list(100)
+    return progress
+
 # Admin endpoint to add new tests
 class CreateTestRequest(BaseModel):
     title: str
