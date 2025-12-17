@@ -16,6 +16,7 @@ export default function TestInterface({ user }) {
   const { t } = useI18n();
   const [test, setTest] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentPassage, setCurrentPassage] = useState(1); // For reading test passage navigation
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
 
