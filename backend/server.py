@@ -1841,14 +1841,12 @@ async def text_to_speech(request: dict):
     try:
         from emergentintegrations.llm.openai import OpenAITextToSpeech
         tts = OpenAITextToSpeech(api_key=os.getenv("EMERGENT_LLM_KEY"))
-        audio_data = await tts.generate(
+        # Use generate_speech_base64 for direct base64 output
+        audio_base64 = await tts.generate_speech_base64(
             text=text,
             voice="alloy",
             model="tts-1"
         )
-        
-        import base64
-        audio_base64 = base64.b64encode(audio_data).decode('utf-8')
         return {"audio": audio_base64, "format": "mp3"}
     except Exception as e:
         logging.getLogger(__name__).error(f"TTS error: {e}")
