@@ -518,7 +518,7 @@ async def register_user(input: UserCreate):
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
 
     # Create the new user
-    user_id = str(uuid4())
+    user_id = str(uuid.uuid4())
     hashed_password = bcrypt.hashpw(input.password.encode(), bcrypt.gensalt()).decode()
     
     user = {
