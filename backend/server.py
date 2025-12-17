@@ -517,6 +517,27 @@ async def register_user(input: UserCreate):
     if len(input.password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
 
+    # Create the new user
+    user_id = str(uuid4())
+    hashed_password = bcrypt.hashpw(input.password.encode(), bcrypt.gensalt()).decode()
+    
+    user = {
+        "id": user_id,
+        "email": input.email.strip().lower(),
+        "name": input.name.strip(),
+        "password": hashed_password,
+        "plan": "free",
+        "examCredits": 0,
+        "verified": False,
+        "ai_interview_free_seconds_used": 0,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.users.insert_one(user)
+    
+    # Return user without password
+    user_response = {k: v for k, v in user.items() if k != "password"}
+    return user_response
 
 
 class EmergentSessionRequest(BaseModel):
