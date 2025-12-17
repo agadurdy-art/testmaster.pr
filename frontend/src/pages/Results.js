@@ -11,6 +11,7 @@ export default function Results({ user }) {
   const navigate = useNavigate();
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [feedbackMode, setFeedbackMode] = useState('short'); // 'short' | 'detailed'
 
   useEffect(() => {
     loadResults();
