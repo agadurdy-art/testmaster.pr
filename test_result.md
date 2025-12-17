@@ -130,6 +130,17 @@
 ##       - working: false
 ##         agent: "user"
 ##         comment: "User cannot successfully submit tests; toast shows 'Failed to submit test'."
+##   - task: "Reading Test Interface redesign with two-column layout"
+##     implemented: true
+##     working: false
+##     file: "frontend/src/pages/TestInterface.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: false
+##         agent: "testing"
+##         comment: "CRITICAL ISSUES FOUND: (1) Authentication system is broken - users cannot properly login/register, getting 500 errors on registration and 401 on login attempts (2) Navigation to reading test fails - app stays on landing page instead of navigating to /test/reading (3) Two-column layout NOT ACCESSIBLE - code shows new layout exists (lines 720-881 in TestInterface.js with .lg:w-3/4 and .lg:w-1/4 classes) but is not accessible due to authentication/navigation issues (4) Backend API works correctly - /api/tests?test_type=reading returns complete test data with 3 passages and 40 questions (5) Frontend shows old grid layout (.grid.lg:grid-cols-4) instead of new two-column layout. WORKING: Backend reading test API, Test data structure with passages and questions, New layout code exists in TestInterface.js. CRITICAL FIXES NEEDED: Fix authentication system (registration/login), fix navigation to reading test page, ensure new two-column layout is properly rendered when authenticated users access reading tests."
 ## metadata:
 ##   created_by: "main_agent"
 ##   version: "1.0"
