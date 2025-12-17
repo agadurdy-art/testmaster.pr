@@ -190,6 +190,14 @@ function AppWithSessionHandler() {
           path="/vocab-grammar" 
           element={user ? <VocabGrammarCourse user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/writing-practice" 
+          element={user ? <WritingPractice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/speaking-practice" 
+          element={user ? <SpeakingPractice user={user} /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
