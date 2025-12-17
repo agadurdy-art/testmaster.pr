@@ -313,4 +313,19 @@ export default function LandingPage({ onLogin, user }) {
       </Dialog>
     </div>
   );
+            <div className="flex flex-col space-y-2 pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full border-gray-300"
+                disabled={loading || processingSocial}
+                onClick={() => {
+                  const redirectUrl = window.location.origin;
+                  window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
+                }}
+              >
+                {processingSocial ? 'Processing Google login...' : 'Continue with Google'}
+              </Button>
+            </div>
+
 }
