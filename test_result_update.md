@@ -1,0 +1,21 @@
+## frontend:
+  - task: "Vocabulary & Grammar Course Frontend Implementation"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/VocabGrammarCourse.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "FRONTEND ROUTING ISSUES DETECTED ❌ - Vocabulary & Grammar Course frontend code exists and is properly implemented, but has critical routing/navigation problems: (1) VocabGrammarCourse.js component is complete with all required features (band selection, lessons list, vocabulary items, TTS, practice modes) (2) Dashboard.js contains Vocabulary & Grammar card with emerald gradient and 'Start Learning' button (lines 510-528) (3) App.js has correct route definition for /vocab-grammar (4) CRITICAL ISSUE: React Router navigation fails - users cannot access /vocab-grammar route, app redirects back to landing page (5) Console shows React warnings about navigation calls not being in useEffect (6) Authentication works (localStorage user data set correctly) but protected routes are not accessible (7) Backend APIs work perfectly when tested directly. URGENT FIX NEEDED: React Router navigation and protected route access for authenticated users."
+      - working: true
+        agent: "testing"
+        comment: "COMPREHENSIVE VOCABULARY & GRAMMAR COURSE TESTING COMPLETE ✅ - All major functionality verified and working correctly: (1) Dashboard Integration: Vocabulary & Grammar card with emerald gradient visible and clickable ✅ (2) Navigation: Successfully navigates to /vocab-grammar route ✅ (3) Band Selection: Band 4.5 & Below level selection works ✅ (4) Lesson Access: Unit 1: Daily Routine & Time lesson loads correctly ✅ (5) Lesson Detail Page: All required elements present - image illustration, word 'usually', IPA pronunciation /ˈjuː.ʒu.ə.li/, part of speech badge 'Adverb', definition section, examples list, collocations, IELTS tip section, 'Listen to Pronunciation' button, 'Practice Your Pronunciation' section with Record button ✅ (6) Flashcards Practice Mode: Front shows word/IPA/image with 'Tap to see definition →', back shows DEFINITION, example, and collocations as required ✅ (7) Fill Blanks Practice Mode: Shows definition and example with blank (____), input field and Check button present, no React errors ✅ (8) Matching Practice Mode: Two columns (Words and Definitions) with interactive clickable elements, no React errors ✅ (9) Audio TTS: 'Listen to Pronunciation' button shows loading state, no error toast 'Failed to play audio' ✅. Minor issues: Navigation buttons in flashcards need improvement, minor console audio error (empty string). All core functionality working as specified in review request. Previous routing issues have been resolved by main agent."
+
+## agent_communication:
+  - agent: "main"
+    message: "VOCABULARY & GRAMMAR COURSE BUG FIXES COMPLETE ✅ - Fixed all reported bugs: (1) Audio TTS fixed - changed method from generate() to generate_speech_base64() - API now returns HTTP 200 with valid audio (2) Fill Blanks practice mode working (3) Matching practice mode working (4) Flashcard now shows definition on back side (5) Vocabulary illustrations displaying. All fixes verified via screenshots and curl tests."
+  - agent: "testing"
+    message: "VOCABULARY & GRAMMAR COURSE TESTING COMPLETE ✅ - Comprehensive end-to-end testing performed successfully. All major functionality working correctly: Dashboard integration with emerald gradient card, successful navigation to /vocab-grammar route, band selection (Band 4.5 & Below), lesson access (Unit 1: Daily Routine & Time), complete lesson detail page with all required elements (image, word 'usually', IPA pronunciation, part of speech badge, definition, examples, collocations, IELTS tip, audio button, pronunciation practice), flashcards practice mode with proper front/back display including DEFINITION on back side, fill blanks practice mode with definition/example/blank/input field/check button, matching practice mode with two interactive columns, and audio TTS working without error toasts. Minor issues: flashcard navigation buttons need improvement, minor console audio error (empty string). All core requirements from review request verified and working. Previous routing issues resolved by main agent."
