@@ -2214,8 +2214,8 @@ Consider:
 
 Be encouraging but honest. Provide actionable feedback."""
 
-        response = await chat.send_message(UserMessage(content=prompt))
-        response_text = response.content
+        response = await chat.send_message(UserMessage(text=prompt))
+        response_text = response.text.strip()
         
         # Parse JSON from response
         import re
