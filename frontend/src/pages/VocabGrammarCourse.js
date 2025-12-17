@@ -335,7 +335,27 @@ export default function VocabGrammarCourse({ user }) {
         <Card className="p-8 mb-6">
           <div className="text-center mb-6">
             <h3 className="text-3xl font-bold text-gray-900 mb-2">{currentItem.word}</h3>
-            <p className="text-lg text-gray-500 italic mb-4">{currentItem.pronunciation}</p>
+            
+            {/* IPA Pronunciation & Part of Speech */}
+            <div className="flex flex-wrap justify-center gap-2 mb-2">
+              {currentItem.ipa && (
+                <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-mono">
+                  {currentItem.ipa}
+                </span>
+              )}
+              {currentItem.part_of_speech && (
+                <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm capitalize">
+                  {currentItem.part_of_speech}
+                </span>
+              )}
+            </div>
+            
+            {/* Stress Pattern */}
+            {currentItem.stress_pattern && currentItem.stress_pattern !== 'N/A' && (
+              <p className="text-sm text-gray-500 italic mb-4">
+                🔊 Stress: {currentItem.stress_pattern}
+              </p>
+            )}
             
             {/* Audio Button */}
             <Button
@@ -354,15 +374,22 @@ export default function VocabGrammarCourse({ user }) {
             </Button>
           </div>
           
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          {/* Definition */}
+          <div className="bg-gray-50 rounded-lg p-4 mb-4">
             <p className="text-sm font-medium text-gray-500 mb-1">Definition</p>
             <p className="text-gray-900">{currentItem.definition}</p>
-            {currentItem.grammar_note && (
-              <p className="text-sm text-sky-600 mt-2 italic">💡 {currentItem.grammar_note}</p>
-            )}
           </div>
           
-          <div className="mb-6">
+          {/* Grammar Formula (for grammar items) */}
+          {currentItem.grammar_formula && (
+            <div className="bg-purple-50 rounded-lg p-4 mb-4">
+              <p className="text-sm font-medium text-purple-700 mb-1">📐 Formula</p>
+              <p className="text-purple-900 font-mono text-sm">{currentItem.grammar_formula}</p>
+            </div>
+          )}
+          
+          {/* Examples */}
+          <div className="mb-4">
             <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
             <ul className="space-y-2">
               {currentItem.examples.map((ex, idx) => (
@@ -373,6 +400,48 @@ export default function VocabGrammarCourse({ user }) {
               ))}
             </ul>
           </div>
+          
+          {/* Collocations */}
+          {currentItem.collocations && currentItem.collocations.length > 0 && (
+            <div className="mb-4">
+              <p className="text-sm font-medium text-gray-500 mb-2">Common Collocations</p>
+              <div className="flex flex-wrap gap-2">
+                {currentItem.collocations.map((col, idx) => (
+                  <span key={idx} className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm border border-green-200">
+                    {col}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Common Mistakes (for grammar) */}
+          {currentItem.common_mistakes && currentItem.common_mistakes.length > 0 && (
+            <div className="bg-red-50 rounded-lg p-4 mb-4">
+              <p className="text-sm font-medium text-red-700 mb-2">⚠️ Common Mistakes</p>
+              <ul className="space-y-1">
+                {currentItem.common_mistakes.map((mistake, idx) => (
+                  <li key={idx} className="text-sm text-red-800">{mistake}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {/* IELTS Tip */}
+          {(currentItem.ielts_tip || currentItem.ielts_band_impact) && (
+            <div className="bg-sky-50 rounded-lg p-4 mb-4">
+              <p className="text-sm font-medium text-sky-700 mb-1">💡 IELTS Tip</p>
+              <p className="text-sm text-sky-800">{currentItem.ielts_tip || currentItem.ielts_band_impact}</p>
+            </div>
+          )}
+          
+          {/* Grammar Note */}
+          {currentItem.grammar_note && (
+            <div className="bg-amber-50 rounded-lg p-4 mb-4">
+              <p className="text-sm font-medium text-amber-700 mb-1">📝 Grammar Note</p>
+              <p className="text-sm text-amber-800">{currentItem.grammar_note}</p>
+            </div>
+          )}
           
           {/* Pronunciation Practice */}
           <div className="border-t pt-6">
