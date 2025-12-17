@@ -2226,10 +2226,21 @@ Consider:
 Be encouraging but honest. Provide actionable feedback."""
 
         response = await chat.send_message(UserMessage(text=prompt))
-        response_text = response.text.strip()
         
-        # Parse JSON from response
+        # Handle different response formats
+        if isinstance(response, dict):
+            return response
+        
+        response_text = str(response).strip()
+        
+        # Try to extract JSON from response
         import re
+        # Remove markdown code fences if present
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
             result = json.loads(json_match.group())
