@@ -548,7 +548,7 @@ export default function SpeakingPractice({ user }) {
           {selectedPart === 'part2' && isPreparing && (
             <div className="mt-4 p-3 bg-amber-50 rounded-lg">
               <p className="text-sm text-amber-800">
-                ⏱️ You have {formatTime(prepTime)} to prepare. Make notes if needed, then click "Start Speaking".
+                ⏱️ You have {formatTime(prepTime)} to prepare. Make notes if needed, then click &quot;Start Speaking&quot;.
               </p>
             </div>
           )}
