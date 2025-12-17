@@ -139,35 +139,11 @@ export default function VocabGrammarCourse({ user }) {
     }
   };
 
-  // Text-to-Speech using browser's built-in speech synthesis as fallback
+  // Text-to-Speech using OpenAI TTS API with browser fallback
   const playPronunciation = async (text) => {
     setPlayingAudio(text);
     
-    // Try browser's built-in speech synthesis first (more reliable)
-    if ('speechSynthesis' in window) {
-      try {
-        // Cancel any ongoing speech
-        window.speechSynthesis.cancel();
-        
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.8; // Slightly slower for learning
-        utterance.pitch = 1;
-        
-        utterance.onend = () => setPlayingAudio(null);
-        utterance.onerror = () => {
-          setPlayingAudio(null);
-          toast.error('Failed to play audio');
-        };
-        
-        window.speechSynthesis.speak(utterance);
-        return;
-      } catch (error) {
-        console.error('Speech synthesis error:', error);
-      }
-    }
-    
-    // Fallback to API TTS
+    // Try OpenAI TTS API first for better quality pronunciation
     try {
       const response = await fetch(`${API_URL}/api/vocab-grammar/tts`, {
         method: 'POST',
@@ -175,19 +151,48 @@ export default function VocabGrammarCourse({ user }) {
         body: JSON.stringify({ text })
       });
       
-      if (!response.ok) throw new Error('TTS failed');
-      
-      const data = await response.json();
-      const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
-      audio.onended = () => setPlayingAudio(null);
-      audio.onerror = () => {
-        setPlayingAudio(null);
-        toast.error('Failed to play audio');
-      };
-      audio.play();
+      if (response.ok) {
+        const data = await response.json();
+        const audio = new Audio(`data:audio/mp3;base64,${data.audio}`);
+        audio.onended = () => setPlayingAudio(null);
+        audio.onerror = () => {
+          setPlayingAudio(null);
+          // If audio playback fails, try browser speech synthesis
+          fallbackToBrowserTTS(text);
+        };
+        await audio.play();
+        return;
+      }
     } catch (error) {
-      console.error('TTS error:', error);
-      toast.error('Failed to play audio');
+      console.error('API TTS error:', error);
+    }
+    
+    // Fallback to browser's built-in speech synthesis
+    fallbackToBrowserTTS(text);
+  };
+  
+  // Browser fallback TTS
+  const fallbackToBrowserTTS = (text) => {
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.8;
+        utterance.pitch = 1;
+        utterance.onend = () => setPlayingAudio(null);
+        utterance.onerror = () => {
+          setPlayingAudio(null);
+          toast.error('Failed to play audio');
+        };
+        window.speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.error('Browser TTS error:', error);
+        toast.error('Failed to play audio');
+        setPlayingAudio(null);
+      }
+    } else {
+      toast.error('Audio not supported in this browser');
       setPlayingAudio(null);
     }
   };
