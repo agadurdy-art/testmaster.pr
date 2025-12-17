@@ -5,7 +5,7 @@ import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { BookOpen, Headphones, Mic, PenTool, CheckCircle, Clock, Target, Trophy } from 'lucide-react';
-import { registerUser, loginUser, loginWithFacebook, loginWithEmergentSession } from '../lib/api';
+import { registerUser, loginUser, loginWithEmergentSession } from '../lib/api';
 import { toast } from 'sonner';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
@@ -17,29 +17,6 @@ export default function LandingPage({ onLogin, user }) {
   const [authMode, setAuthMode] = useState('signup');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
-
-  // Load Facebook SDK once on mount
-  useEffect(() => {
-    if (document.getElementById('facebook-jssdk')) return;
-
-    const script = document.createElement('script');
-    script.id = 'facebook-jssdk';
-    script.src = 'https://connect.facebook.net/en_US/sdk.js';
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      if (window.FB) {
-        window.FB.init({
-          appId: process.env.REACT_APP_FACEBOOK_APP_ID,
-          cookie: true,
-          xfbml: false,
-          version: 'v21.0',
-        });
-      }
-    };
-    document.body.appendChild(script);
-  }, []);
-
 
   const [processingSocial, setProcessingSocial] = useState(false);
 
