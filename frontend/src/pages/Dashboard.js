@@ -300,6 +300,16 @@ export default function Dashboard({ user, onLogout }) {
             </Button>
             <Button
               variant="ghost"
+              className="justify-start text-purple-700 font-semibold"
+              onClick={() => {
+                navigate('/level-test');
+                setMobileMenuOpen(false);
+              }}
+            >
+              🎯 Level Test
+            </Button>
+            <Button
+              variant="ghost"
               className="justify-start text-gray-700"
               onClick={() => {
                 navigate('/tips');
