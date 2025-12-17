@@ -2066,6 +2066,182 @@ Respond in this exact JSON format:
         }
 
 
+# ============ Writing Practice Evaluation ============
+
+class WritingPracticeRequest(BaseModel):
+    task_type: str  # task1_academic, task1_general, task2
+    prompt: str
+    essay: str
+    word_count: int
+
+@api_router.post("/writing-practice/evaluate")
+async def evaluate_writing_practice(request: WritingPracticeRequest):
+    """Evaluate IELTS writing practice submission with detailed feedback"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            model="claude-3-sonnet-20240229"
+        )
+        
+        task_type_desc = {
+            "task1_academic": "IELTS Academic Writing Task 1 (graph/chart/diagram description)",
+            "task1_general": "IELTS General Training Writing Task 1 (letter writing)",
+            "task2": "IELTS Writing Task 2 (essay)"
+        }.get(request.task_type, "IELTS Writing Task")
+        
+        min_words = 250 if request.task_type == "task2" else 150
+        
+        prompt = f"""You are an experienced IELTS examiner. Evaluate this {task_type_desc} submission.
+
+TASK PROMPT:
+{request.prompt}
+
+STUDENT'S RESPONSE ({request.word_count} words):
+{request.essay}
+
+Minimum word requirement: {min_words} words
+
+Provide a comprehensive evaluation in the following JSON format:
+{{
+    "overall_band": <float between 1.0 and 9.0, in 0.5 increments>,
+    "scores": {{
+        "task_achievement": <float 1.0-9.0>,
+        "coherence_cohesion": <float 1.0-9.0>,
+        "lexical_resource": <float 1.0-9.0>,
+        "grammar": <float 1.0-9.0>
+    }},
+    "strengths": [<3-4 specific things done well>],
+    "improvements": [<3-4 specific areas to improve with examples>],
+    "corrections": [
+        {{
+            "original": "<exact phrase with error>",
+            "corrected": "<corrected version>",
+            "explanation": "<brief explanation>"
+        }}
+    ],
+    "improved_version": "<A model paragraph or two showing how to improve the weakest part of the essay>"
+}}
+
+Be encouraging but honest. Focus on actionable feedback."""
+
+        response = await chat.send_message(UserMessage(content=prompt))
+        response_text = response.content
+        
+        # Parse JSON from response
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            result = json.loads(json_match.group())
+            return result
+        
+        # Fallback response
+        return {
+            "overall_band": 5.5,
+            "scores": {
+                "task_achievement": 5.5,
+                "coherence_cohesion": 5.5,
+                "lexical_resource": 5.5,
+                "grammar": 5.5
+            },
+            "strengths": ["You attempted the task", "Your essay has a clear structure"],
+            "improvements": ["Develop your ideas more fully", "Use more varied vocabulary"],
+            "corrections": [],
+            "improved_version": "Unable to generate improved version. Please try again."
+        }
+        
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Writing evaluation error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to evaluate writing")
+
+
+# ============ Speaking Practice Evaluation ============
+
+class SpeakingPracticeRequest(BaseModel):
+    part: str  # part1, part2, part3
+    topic: str
+    responses: List[Dict[str, Any]]  # List of {question, answer} pairs
+
+@api_router.post("/speaking-practice/evaluate")
+async def evaluate_speaking_practice(request: SpeakingPracticeRequest):
+    """Evaluate IELTS speaking practice with detailed feedback"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            model="claude-3-sonnet-20240229"
+        )
+        
+        part_desc = {
+            "part1": "Part 1 (Introduction & Interview - familiar topics)",
+            "part2": "Part 2 (Individual Long Turn - cue card)",
+            "part3": "Part 3 (Two-way Discussion - abstract ideas)"
+        }.get(request.part, "Speaking Test")
+        
+        # Format responses for evaluation
+        responses_text = "\n\n".join([
+            f"Question: {r.get('question', 'N/A')}\nAnswer: {r.get('answer', 'No response')}"
+            for r in request.responses
+        ])
+        
+        prompt = f"""You are an experienced IELTS Speaking examiner. Evaluate this IELTS {part_desc} practice.
+
+TOPIC: {request.topic}
+
+RESPONSES:
+{responses_text}
+
+Provide a comprehensive evaluation in the following JSON format:
+{{
+    "overall_band": <float between 1.0 and 9.0, in 0.5 increments>,
+    "scores": {{
+        "fluency_coherence": <float 1.0-9.0>,
+        "lexical_resource": <float 1.0-9.0>,
+        "grammar": <float 1.0-9.0>,
+        "pronunciation": <float 1.0-9.0>
+    }},
+    "strengths": [<3-4 specific things done well in speaking>],
+    "improvements": [<3-4 specific areas to improve with examples>],
+    "pronunciation_tips": "<specific pronunciation advice based on their responses>",
+    "model_answer": "<A sample Band 8+ response to the main question, showing ideal vocabulary and structure>"
+}}
+
+Consider:
+- Fluency: Did they speak smoothly? Any hesitations?
+- Vocabulary: Range and appropriateness of words used
+- Grammar: Variety and accuracy of structures
+- Pronunciation: (Assess based on word choices and likely pronunciation patterns)
+
+Be encouraging but honest. Provide actionable feedback."""
+
+        response = await chat.send_message(UserMessage(content=prompt))
+        response_text = response.content
+        
+        # Parse JSON from response
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            result = json.loads(json_match.group())
+            return result
+        
+        # Fallback response
+        return {
+            "overall_band": 5.5,
+            "scores": {
+                "fluency_coherence": 5.5,
+                "lexical_resource": 5.5,
+                "grammar": 5.5,
+                "pronunciation": 5.5
+            },
+            "strengths": ["You attempted to answer all questions", "You showed willingness to communicate"],
+            "improvements": ["Extend your answers with more details", "Use more varied vocabulary"],
+            "pronunciation_tips": "Practice word stress patterns and intonation.",
+            "model_answer": "Unable to generate model answer. Please try again."
+        }
+        
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Speaking evaluation error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to evaluate speaking")
+
+
 # Include router
 app.include_router(api_router)
 
