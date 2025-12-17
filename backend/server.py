@@ -754,8 +754,23 @@ async def submit_test(submission: SubmitAnswers):
 
     # Calculate score for objective tests (listening/reading)
     if submission.test_type in ["listening", "reading"]:
+        test_type = submission.test_type
+
+        # Map question_id -> question_type from the test definition
+        question_type_map: Dict[int, str] = {}
+        for q in test.get("questions", []):
+            qid = q.get("id") or q.get("question_id")
+            if qid is None:
+                continue
+            try:
+                qid_int = int(qid)
+            except (TypeError, ValueError):
+                continue
+            q_type = str(q.get("type") or "unknown").strip().lower()
+            question_type_map[qid_int] = q_type
+
         # Build a lookup from question_id -> correct answer for robust matching
-        answer_key_map = {}
+        answer_key_map: Dict[int, str] = {}
         for item in test.get("answer_key", []):
             qid = item.get("question_id")
             if qid is not None:
@@ -764,6 +779,47 @@ async def submit_test(submission: SubmitAnswers):
                 except (TypeError, ValueError):
                     continue
                 answer_key_map[qid_int] = str(item.get("answer", ""))
+
+        # Prepare per-skill stats (e.g. Reading – True/False/Not Given)
+        # Keyed by (test_type, question_type)
+        skill_stats: Dict[str, Dict[str, Any]] = {}
+
+        def _make_skill_key(t_type: str, q_type: str) -> str:
+            return f"{t_type}:{q_type or 'unknown'}"
+
+        def _skill_label(t_type: str, q_type: str) -> str:
+            base = "Reading" if t_type == "reading" else "Listening"
+            type_map = {
+                # Reading
+                "true_false_notgiven": "True / False / Not Given",
+                "yes_no_notgiven": "Yes / No / Not Given",
+                "sentence_completion": "Sentence / Note Completion",
+                "summary_completion": "Summary Completion",
+                "matching_information": "Matching Information",
+                "multiple_choice": "Multiple Choice",
+                # Listening
+                "note_completion": "Note / Form Completion",
+                "map_labeling": "Map / Diagram Labelling",
+                "multiple_choice_two": "Multiple Choice (Two Options)",
+                "matching": "Matching Features",
+            }
+            pretty = type_map.get(q_type, q_type.replace("_", " ").title() or "Mixed Skills")
+            return f"{base} – {pretty}"
+
+        # Initialise totals per skill from answer key
+        for qid_int, correct_answer in answer_key_map.items():
+            q_type = question_type_map.get(qid_int, "unknown")
+            skey = _make_skill_key(test_type, q_type)
+            if skey not in skill_stats:
+                skill_stats[skey] = {
+                    "skill_id": skey,
+                    "test_type": test_type,
+                    "question_type": q_type,
+                    "label": _skill_label(test_type, q_type),
+                    "correct": 0,
+                    "total": 0,
+                }
+            skill_stats[skey]["total"] += 1
 
         correct = 0
         total = len(answer_key_map) if answer_key_map else len(test.get("answer_key", []))
@@ -783,11 +839,133 @@ async def submit_test(submission: SubmitAnswers):
                 continue
 
             user_answer = ans.get("answer", "")
-            if str(user_answer).strip().lower() == str(correct_answer).strip().lower():
+            is_correct = str(user_answer).strip().lower() == str(correct_answer).strip().lower()
+            if is_correct:
                 correct += 1
+
+            q_type = question_type_map.get(qid_int, "unknown")
+            skey = _make_skill_key(test_type, q_type)
+            if skey not in skill_stats:
+                skill_stats[skey] = {
+                    "skill_id": skey,
+                    "test_type": test_type,
+                    "question_type": q_type,
+                    "label": _skill_label(test_type, q_type),
+                    "correct": 0,
+                    "total": 0,
+                }
+            if is_correct:
+                skill_stats[skey]["correct"] += 1
 
         score_percentage = (correct / total * 100) if total > 0 else 0
         band_score = calculate_band_score(score_percentage)
+
+        # Build teacher-style feedback per skill
+        skill_breakdown: List[Dict[str, Any]] = []
+        strong_skills: List[Dict[str, Any]] = []
+        weak_skills: List[Dict[str, Any]] = []
+
+        def _level_from_ratio(ratio: float) -> str:
+            if ratio >= 0.8:
+                return "strong"
+            if ratio >= 0.5:
+                return "ok"
+            return "needs_practice"
+
+        def _base_tip(t_type: str, q_type: str) -> str:
+            # High-level tips per question type
+            if t_type == "reading":
+                if q_type == "true_false_notgiven" or q_type == "yes_no_notgiven":
+                    return "Focus on underlining keywords in the question and scanning the passage to check exactly what is stated. Be careful with 'Not Given' – if the passage doesn’t clearly support or contradict the statement, it’s usually Not Given."
+                if q_type == "matching_information":
+                    return "Practise skimming paragraphs for topic sentences and key ideas, then matching them to the question prompts."
+                if q_type in {"sentence_completion", "summary_completion"}:
+                    return "Predict the type of word needed (noun/verb/adjective) and read around the gap so you don’t rely only on single-word matching."
+                if q_type == "multiple_choice":
+                    return "Train yourself to eliminate clearly wrong options first, then choose between the last two by checking small details and synonyms in the passage."
+            if t_type == "listening":
+                if q_type in {"note_completion", "sentence_completion"}:
+                    return "Use the preparation time to read questions and predict the kind of word you expect to hear. Listen for synonyms and paraphrases, not only the exact words."
+                if q_type == "map_labeling":
+                    return "Before the recording starts, trace the route with your eyes and note key landmarks (left/right, north/south) so you can follow directions more easily."
+                if q_type in {"multiple_choice", "multiple_choice_two"}:
+                    return "Listen for signpost words that show when the speaker changes their mind, and be ready for distractors where an option is mentioned but then rejected."
+                if q_type == "matching":
+                    return "Practise holding several pieces of information in your mind while listening, and draw quick lines/arrows on the question paper to help you keep track."
+            # Generic fallback
+            return "Review your mistakes in this question type and try to notice patterns: where did you misunderstand, guess, or run out of time? Turn those into small habits to fix next time."
+
+        for skey, stats in skill_stats.items():
+            total_q = stats.get("total", 0) or 0
+            correct_q = stats.get("correct", 0) or 0
+            ratio = (correct_q / total_q) if total_q > 0 else 0.0
+            level = _level_from_ratio(ratio)
+            stats["level"] = level
+
+            if total_q == 0:
+                stats["short_comment"] = "No questions of this type in this test."
+            else:
+                label = stats.get("label") or "This skill"
+                base_tip = _base_tip(test_type, stats.get("question_type", "unknown"))
+                if level == "strong":
+                    stats["short_comment"] = f"You are strong at {label} ({correct_q}/{total_q} correct). Keep using these questions to boost your overall band score."
+                elif level == "ok":
+                    stats["short_comment"] = f"You are doing fairly well with {label} ({correct_q}/{total_q} correct), but a bit more practice will make you more consistent."
+                else:
+                    stats["short_comment"] = f"{label} ({correct_q}/{total_q} correct) is a key area to improve. {base_tip}"
+
+                # Attach a longer tip as well
+                stats["tips"] = base_tip
+
+            skill_breakdown.append(stats)
+
+            if level == "strong":
+                strong_skills.append(stats)
+            elif level == "needs_practice":
+                weak_skills.append(stats)
+
+        # Build overall teacher-style feedback (short + detailed)
+        def _skill_names(skills: List[Dict[str, Any]], max_count: int = 2) -> str:
+            names = [s.get("label", "this skill") for s in skills[:max_count]]
+            if not names:
+                return ""
+            if len(names) == 1:
+                return names[0]
+            return ", ".join(names[:-1]) + " and " + names[-1]
+
+        test_label = "reading" if test_type == "reading" else "listening"
+
+        short_fb_parts: List[str] = []
+        short_fb_parts.append(
+            f"For this {test_label} test, you answered {correct} out of {total} questions correctly (about {score_percentage:.0f}%)."
+        )
+        strong_names = _skill_names(strong_skills)
+        weak_names = _skill_names(weak_skills)
+        if strong_names:
+            short_fb_parts.append(f"Your strongest areas were {strong_names}. Use these questions to secure easy marks.")
+        if weak_names:
+            short_fb_parts.append(f"You should focus more practice time on {weak_names} to raise your band.")
+        short_teacher_feedback = " ".join(short_fb_parts)
+
+        detailed_parts: List[str] = []
+        detailed_parts.append(
+            f"Overall, you achieved about {score_percentage:.0f}% on this {test_label} test, which corresponds to an IELTS band of approximately {band_score:.1f}."
+        )
+        if strong_names:
+            detailed_parts.append(
+                f"You showed clear strength in {strong_names}. Try to always secure these marks first in the exam, because they suit your current skills."
+            )
+        if weak_names:
+            detailed_parts.append(
+                f"The main areas to improve are {weak_names}. After each practice test, carefully review these questions and compare your answer with the explanation to see exactly where your understanding differed."
+            )
+        detailed_parts.append(
+            "When practising, time yourself strictly, underline keywords in the questions, and after you finish, spend at least 5–10 minutes analysing your mistakes rather than jumping to a new test. This reflection is what really improves your score."
+        )
+        detailed_parts.append(
+            "Choose one or two weaker question types at a time and drill them using targeted practice (for example, a page of only True/False/Not Given or only Note Completion questions) until they feel more comfortable."
+        )
+        detailed_teacher_feedback = " ".join(detailed_parts)
 
         attempt = TestAttempt(
             user_id=submission.user_id,
@@ -801,6 +979,11 @@ async def submit_test(submission: SubmitAnswers):
                 "total": total,
                 "percentage": score_percentage,
                 "message": f"You got {correct} out of {total} correct.",
+                "skill_breakdown": skill_breakdown,
+                "teacher_feedback": {
+                    "short": short_teacher_feedback,
+                    "detailed": detailed_teacher_feedback,
+                },
             },
             time_taken=submission.time_taken,
         )
