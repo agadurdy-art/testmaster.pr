@@ -1831,6 +1831,115 @@ async def create_test(test_data: CreateTestRequest):
     await db.tests.insert_one(test)
     return {"message": "Test created successfully", "test_id": test["id"]}
 
+
+# ============ Level Test Evaluation ============
+
+class LevelTestRequest(BaseModel):
+    user_id: Optional[str] = None
+    reading_answers: Dict[str, str]
+    reading_questions: List[Dict[str, Any]]
+    speaking_responses: List[Dict[str, Any]]
+
+@api_router.post("/level-test/evaluate")
+async def evaluate_level_test(request: LevelTestRequest):
+    """Evaluate user's English level based on reading and speaking responses"""
+    
+    # Calculate reading score
+    correct_count = 0
+    for q in request.reading_questions:
+        user_answer = request.reading_answers.get(str(q["id"]), "")
+        if user_answer.upper() == q["correct"].upper():
+            correct_count += 1
+    
+    reading_score = correct_count
+    
+    # Prepare speaking responses for AI evaluation
+    speaking_text = "\n\n".join([
+        f"Prompt: {resp['prompt']}\nResponse: {resp['response']}"
+        for resp in request.speaking_responses
+    ])
+    
+    # Use Claude to evaluate speaking and determine overall level
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            model="claude-3-sonnet-20240229"
+        )
+        
+        evaluation_prompt = f"""You are an experienced English language assessor. Evaluate the following test responses and determine the student's English proficiency level.
+
+READING SCORE: {reading_score}/5 correct answers
+- Questions ranged from Elementary to Advanced level
+- Score breakdown: 0-1 = Beginner, 2 = Elementary, 3 = Pre-Intermediate, 4 = Intermediate/Upper-Intermediate, 5 = Advanced
+
+SPEAKING RESPONSES:
+{speaking_text}
+
+Based on the reading score and speaking responses, evaluate:
+1. Overall English Level (choose ONE): Beginner, Elementary, Pre-Intermediate, Intermediate, Upper-Intermediate, Advanced, or IELTS Ready
+2. Speaking assessment: Comment on fluency, vocabulary, grammar, and coherence
+3. Recommendations: Suggest 3 specific practice areas or test types
+
+Respond in this exact JSON format:
+{{
+    "level": "the level name",
+    "reading_feedback": "brief feedback on reading performance",
+    "speaking_feedback": "detailed speaking assessment (2-3 sentences)",
+    "recommendations": ["recommendation 1", "recommendation 2", "recommendation 3"]
+}}"""
+
+        response = await chat.send_message(UserMessage(text=evaluation_prompt))
+        
+        # Parse the response
+        response_text = response.text.strip()
+        # Extract JSON from response (handle markdown code blocks)
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
+        result = json.loads(response_text)
+        result["reading_score"] = reading_score
+        
+        # Save result to user profile if user_id provided
+        if request.user_id:
+            await db.users.update_one(
+                {"id": request.user_id},
+                {"$set": {
+                    "english_level": result["level"],
+                    "level_test_date": datetime.now(timezone.utc).isoformat(),
+                    "level_test_result": result
+                }}
+            )
+        
+        return result
+        
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Level test evaluation error: {e}")
+        
+        # Fallback evaluation based on reading score alone
+        level_map = {
+            0: "Beginner",
+            1: "Elementary", 
+            2: "Pre-Intermediate",
+            3: "Intermediate",
+            4: "Upper-Intermediate",
+            5: "Advanced"
+        }
+        
+        return {
+            "level": level_map.get(reading_score, "Intermediate"),
+            "reading_score": reading_score,
+            "reading_feedback": f"You answered {reading_score} out of 5 questions correctly.",
+            "speaking_feedback": "Your speaking responses have been recorded. Practice regularly to improve fluency and vocabulary range.",
+            "recommendations": [
+                "Practice reading academic texts daily",
+                "Record yourself speaking and listen back",
+                "Take full IELTS practice tests to build familiarity"
+            ]
+        }
+
+
 # Include router
 app.include_router(api_router)
 
