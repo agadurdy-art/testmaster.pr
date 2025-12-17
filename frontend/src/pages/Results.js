@@ -90,6 +90,102 @@ export default function Results({ user }) {
               </div>
             </div>
           </div>
+        {/* Skill-based Breakdown for Reading & Listening */}
+        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback && result.feedback.skill_breakdown && (
+          <Card className="p-6 mb-6">
+            <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-1">Skill Breakdown</h3>
+                <p className="text-sm text-gray-600">
+                  See which question types you are strong at and which ones need more practice.
+                </p>
+              </div>
+              <div className="inline-flex items-center gap-2 text-sm">
+                <span className="text-gray-600">Feedback mode:</span>
+                <div className="inline-flex rounded-full border border-gray-200 bg-gray-50 overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setFeedbackMode('short')}
+                    className={`px-3 py-1 text-xs font-medium transition-colors ${
+                      feedbackMode === 'short'
+                        ? 'bg-sky-500 text-white'
+                        : 'text-gray-600 hover:bg-white'
+                    }`}
+                  >
+                    Summary
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFeedbackMode('detailed')}
+                    className={`px-3 py-1 text-xs font-medium transition-colors ${
+                      feedbackMode === 'detailed'
+                        ? 'bg-sky-500 text-white'
+                        : 'text-gray-600 hover:bg-white'
+                    }`}
+                  >
+                    Tips for improvement
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Skill grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              {result.feedback.skill_breakdown.map((skill) => {
+                const ratio = skill.total > 0 ? skill.correct / skill.total : 0;
+                const percent = Math.round(ratio * 100);
+                let badgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-200';
+                let badgeLabel = 'OK';
+                if (skill.level === 'strong') {
+                  badgeColor = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+                  badgeLabel = 'Strong area';
+                } else if (skill.level === 'needs_practice') {
+                  badgeColor = 'bg-rose-100 text-rose-800 border-rose-200';
+                  badgeLabel = 'Needs practice';
+                }
+
+                return (
+                  <div
+                    key={skill.skill_id}
+                    className="border border-gray-100 rounded-xl p-4 bg-white/70 shadow-sm"
+                  >
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900 leading-snug">
+                          {skill.label}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          {skill.correct}/{skill.total} correct ({percent}%).
+                        </p>
+                      </div>
+                      <span
+                        className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${badgeColor}`}
+                      >
+                        {badgeLabel}
+                      </span>
+                    </div>
+                    {skill.short_comment && (
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        {skill.short_comment}
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Teacher-style feedback */}
+            <div className="mt-2 border-t pt-4">
+              <h4 className="text-sm font-semibold text-gray-900 mb-2">Teacher feedback</h4>
+              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                {feedbackMode === 'short'
+                  ? result.feedback.teacher_feedback?.short
+                  : result.feedback.teacher_feedback?.detailed}
+              </p>
+            </div>
+          </Card>
+        )}
+
         </Card>
 
         {/* Feedback */}
