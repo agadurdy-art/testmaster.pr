@@ -18,6 +18,8 @@ import ResetPasswordPage from './pages/ResetPasswordPage';
 import AdminCreditsPage from './pages/AdminCreditsPage';
 import LevelTest from './pages/LevelTest';
 import VocabGrammarCourse from './pages/VocabGrammarCourse';
+import WritingPractice from './pages/WritingPractice';
+import SpeakingPractice from './pages/SpeakingPractice';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 
