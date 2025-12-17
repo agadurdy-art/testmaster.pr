@@ -2168,8 +2168,9 @@ async def evaluate_speaking_practice(request: SpeakingPracticeRequest):
     try:
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
-            model="claude-3-sonnet-20240229"
-        )
+            session_id=str(uuid.uuid4()),
+            system_message="You are an experienced IELTS examiner providing detailed speaking feedback."
+        ).with_model("anthropic", "claude-3-sonnet-20240229")
         
         part_desc = {
             "part1": "Part 1 (Introduction & Interview - familiar topics)",
