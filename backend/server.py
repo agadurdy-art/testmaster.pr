@@ -2283,6 +2283,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@app.on_event("startup")
+async def startup_event():
+    """Seed vocab grammar lessons if they don't exist"""
+    try:
+        count = await db.vocab_grammar_lessons.count_documents({})
+        if count == 0:
+            logger.info("No vocab grammar lessons found, running seed...")
+            import subprocess
+            result = subprocess.run(["python", "seed_vocab_grammar_v2.py"], cwd="/app/backend", capture_output=True, text=True)
+            logger.info(f"Seed output: {result.stdout}")
+            if result.returncode != 0:
+                logger.error(f"Seed error: {result.stderr}")
+        else:
+            logger.info(f"Found {count} vocab grammar lessons in database")
+    except Exception as e:
+        logger.error(f"Startup seed error: {e}")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
