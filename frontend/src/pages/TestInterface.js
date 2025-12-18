@@ -806,8 +806,54 @@ function ElevenLabsExaminer() {
                 {/* Questions List - Scrollable */}
                 <div className="flex-1 overflow-y-auto p-4">
                   <div className="space-y-4">
-                    {test.questions?.filter(q => q.passage === currentPassage).map((q, idx) => {
-                      const isAnswered = !!answers[q.id];
+                    {/* Group questions by type and show task descriptions */}
+                    {(() => {
+                      const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
+                      let currentType = null;
+                      const taskDescriptions = {
+                        'true_false_notgiven': {
+                          title: 'TRUE / FALSE / NOT GIVEN',
+                          instruction: 'Do the following statements agree with the information given in the passage? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, NOT GIVEN if there is no information on this.'
+                        },
+                        'yes_no_notgiven': {
+                          title: 'YES / NO / NOT GIVEN',
+                          instruction: 'Do the following statements agree with the claims of the writer? Write YES if the statement agrees with the claims, NO if the statement contradicts the claims, NOT GIVEN if it is impossible to say what the writer thinks.'
+                        },
+                        'multiple_choice': {
+                          title: 'Multiple Choice',
+                          instruction: 'Choose the correct letter, A, B, C or D.'
+                        },
+                        'sentence_completion': {
+                          title: 'Sentence Completion',
+                          instruction: 'Complete the sentences below. Choose NO MORE THAN THREE WORDS from the passage for each answer.'
+                        },
+                        'summary_completion': {
+                          title: 'Summary Completion',
+                          instruction: 'Complete the summary below. Choose NO MORE THAN TWO WORDS from the passage for each answer.'
+                        },
+                        'matching_headings': {
+                          title: 'Matching Headings',
+                          instruction: 'Choose the correct heading for each paragraph from the list of headings below.'
+                        },
+                        'matching_information': {
+                          title: 'Matching Information',
+                          instruction: 'Which paragraph contains the following information? You may use any letter more than once.'
+                        },
+                        'note_completion': {
+                          title: 'Note Completion',
+                          instruction: 'Complete the notes below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.'
+                        },
+                        'form_completion': {
+                          title: 'Form Completion',
+                          instruction: 'Complete the form below. Write NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.'
+                        }
+                      };
+                      
+                      return passageQuestions.map((q, idx) => {
+                        const showTaskHeader = q.type !== currentType;
+                        currentType = q.type;
+                        const taskInfo = taskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Answer the following questions.' };
+                        const isAnswered = !!answers[q.id];
                       return (
                         <div 
                           key={q.id} 
