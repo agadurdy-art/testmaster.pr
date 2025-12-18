@@ -1531,6 +1531,130 @@ async def manual_credit(req: ManualCreditRequest):
 
     return {"detail": "User updated", "email": req.email, "update": update_fields}
 
+# ============ Admin Panel Endpoints ============
+
+ADMIN_EMAILS = ["aga.durdy@gmail.com", "admin@ieltsace.com"]  # Add your admin emails here
+
+def is_admin_email(email: str) -> bool:
+    """Check if email belongs to an admin"""
+    if not email:
+        return False
+    email_lower = email.lower()
+    return any(admin.lower() in email_lower or email_lower == admin.lower() for admin in ADMIN_EMAILS)
+
+@api_router.get("/admin/users")
+async def admin_get_all_users(admin_email: str = None):
+    """Get all users with their details for admin panel"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    users = await db.users.find({}, {"_id": 0, "password_hash": 0}).to_list(1000)
+    
+    # Enrich with progress data
+    enriched_users = []
+    for user in users:
+        # Get test attempts count and last attempt
+        attempts = await db.test_attempts.find(
+            {"user_id": user["id"]}, 
+            {"_id": 0, "test_type": 1, "band_score": 1, "completed_at": 1}
+        ).sort("completed_at", -1).to_list(100)
+        
+        # Calculate stats
+        total_tests = len(attempts)
+        avg_band = sum(a.get("band_score", 0) for a in attempts) / total_tests if total_tests > 0 else 0
+        
+        enriched_users.append({
+            **user,
+            "total_tests": total_tests,
+            "avg_band": round(avg_band, 1),
+            "last_active": attempts[0].get("completed_at") if attempts else user.get("created_at"),
+            "recent_tests": attempts[:5]
+        })
+    
+    return enriched_users
+
+@api_router.get("/admin/users/{user_id}")
+async def admin_get_user_detail(user_id: str, admin_email: str = None):
+    """Get detailed user info including all test attempts"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Get all test attempts
+    attempts = await db.test_attempts.find(
+        {"user_id": user_id}, 
+        {"_id": 0}
+    ).sort("completed_at", -1).to_list(100)
+    
+    # Get progress stats per test type
+    progress_by_type = {}
+    for attempt in attempts:
+        t_type = attempt.get("test_type", "unknown")
+        if t_type not in progress_by_type:
+            progress_by_type[t_type] = {"count": 0, "total_band": 0, "best_band": 0}
+        progress_by_type[t_type]["count"] += 1
+        progress_by_type[t_type]["total_band"] += attempt.get("band_score", 0)
+        progress_by_type[t_type]["best_band"] = max(progress_by_type[t_type]["best_band"], attempt.get("band_score", 0))
+    
+    for t_type in progress_by_type:
+        progress_by_type[t_type]["avg_band"] = round(
+            progress_by_type[t_type]["total_band"] / progress_by_type[t_type]["count"], 1
+        ) if progress_by_type[t_type]["count"] > 0 else 0
+    
+    return {
+        "user": user,
+        "test_attempts": attempts,
+        "progress_by_type": progress_by_type,
+        "total_tests": len(attempts)
+    }
+
+@api_router.put("/admin/users/{user_id}")
+async def admin_update_user(user_id: str, admin_email: str = None, plan: str = None, exam_credits: int = None, add_credits: int = None):
+    """Update user subscription and credits"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    update_fields = {}
+    if plan:
+        update_fields["plan"] = plan
+    if exam_credits is not None:
+        update_fields["examCredits"] = exam_credits
+    if add_credits is not None:
+        update_fields["examCredits"] = user.get("examCredits", 0) + add_credits
+    
+    if not update_fields:
+        raise HTTPException(status_code=400, detail="Nothing to update")
+    
+    await db.users.update_one({"id": user_id}, {"$set": update_fields})
+    
+    # Get updated user
+    updated_user = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
+    return {"detail": "User updated", "user": updated_user}
+
+@api_router.delete("/admin/users/{user_id}")
+async def admin_delete_user(user_id: str, admin_email: str = None):
+    """Delete a user and their test attempts"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    user = await db.users.find_one({"id": user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Delete user's test attempts
+    await db.test_attempts.delete_many({"user_id": user_id})
+    # Delete user
+    await db.users.delete_one({"id": user_id})
+    
+    return {"detail": "User deleted", "email": user.get("email")}
+
 @api_router.post("/auth/forgot-password")
 async def forgot_password(payload: ForgotPasswordRequest):
     """Generate a reset token and (in real setup) send email.
