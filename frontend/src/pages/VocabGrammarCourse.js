@@ -816,14 +816,6 @@ export default function VocabGrammarCourse({ user }) {
     // Multiple Choice Quiz
     if (practiceMode === 'mcq') {
       const answered = practiceAnswers[currentItem.id];
-      const otherItems = items.filter(i => i.id !== currentItem.id);
-      const wrongOptions = otherItems.slice(0, 3).map(i => i.definition);
-      const allOptions = [currentItem.definition, ...wrongOptions];
-      // Shuffle options (but keep them stable for this question)
-      const shuffledOptions = useMemo(() => 
-        [...allOptions].sort(() => 0.5 - Math.random()), 
-        [currentItem.id]
-      );
       
       return (
         <div className="max-w-2xl mx-auto">
@@ -836,7 +828,7 @@ export default function VocabGrammarCourse({ user }) {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">What does "{currentItem.word}" mean?</h2>
             
             <div className="space-y-3">
-              {shuffledOptions.map((option, idx) => (
+              {mcqShuffledOptions.map((option, idx) => (
                 <button
                   key={idx}
                   disabled={!!answered}
