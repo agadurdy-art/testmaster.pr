@@ -138,7 +138,7 @@ export default function Results({ user }) {
               <div className="bg-green-50 rounded-xl p-4 border border-green-100">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <h4 className="font-semibold text-green-800">Your Strengths</h4>
+                  <h4 className="font-semibold text-green-800">{t('yourStrengths')}</h4>
                 </div>
                 <div className="space-y-2">
                   {result.feedback.skill_breakdown?.filter(s => (s.correct / s.total) >= 0.7).slice(0, 3).map((skill, idx) => (
