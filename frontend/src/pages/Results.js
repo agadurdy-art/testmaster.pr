@@ -177,7 +177,7 @@ export default function Results({ user }) {
             <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
               <div className="flex items-center gap-2 mb-3">
                 <Lightbulb className="w-5 h-5 text-violet-600" />
-                <h4 className="font-semibold text-violet-800">💡 Tips to Improve</h4>
+                <h4 className="font-semibold text-violet-800">💡 {t('tipsToImprove')}</h4>
               </div>
               <p className="text-gray-700 leading-relaxed text-sm">{result.feedback.teacher_feedback.detailed}</p>
             </div>
