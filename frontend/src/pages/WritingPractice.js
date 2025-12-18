@@ -167,7 +167,7 @@ export default function WritingPractice({ user }) {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-4">
-            <Button variant="ghost" onClick={() => { if (window.confirm('Exit? Progress will be lost.')) resetPractice(); }} className="text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
+            <Button variant="ghost" onClick={() => resetPractice()} className="text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
             <div className={`px-4 py-2 rounded-xl font-mono text-lg ${timeLeft < 300 ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}`}><Clock className="w-4 h-4 inline mr-2" />{formatTime(timeLeft)}</div>
           </div>
           <div className="grid lg:grid-cols-2 gap-6">

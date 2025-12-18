@@ -101,7 +101,7 @@ export default function PricingPage({ user }) {
                 <div className="space-y-3">
                   <Button className={`w-full ${plan.highlight ? 'bg-gradient-to-r from-violet-500 to-purple-600' : plan.color} text-white border-0 shadow-lg`} onClick={() => handleOpenBankModal(plan)}><Building2 className="w-4 h-4 mr-2" />{t('payByBank')}</Button>
                   {paypalClientId && !bankModalOpen && (
-                    <PayPalButtons fundingSource="paypal" style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 }}
+                    <PayPalButtons style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 }}
                       createOrder={async () => { if (!user) { alert(isVi ? 'Vui lòng đăng nhập.' : 'Please log in.'); throw new Error('No user'); } const res = await createPaypalOrder({ planId: plan.id, email: user.email }); return res.orderId; }}
                       onApprove={async (data) => { if (!user) return; const res = await capturePaypalOrder({ orderId: data.orderID, planId: plan.id, email: user.email }); const updatedUser = { ...user, examCredits: res.examCredits, plan: res.plan ?? user.plan }; localStorage.setItem('user', JSON.stringify(updatedUser)); alert(isVi ? 'Thanh toán thành công!' : 'Payment successful!'); }}
                     />
