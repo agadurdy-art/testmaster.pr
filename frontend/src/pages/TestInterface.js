@@ -932,6 +932,7 @@ function ElevenLabsExaminer() {
                           )}
                         </div>
                       );
+                      });
                     })()}
                   </div>
                 </div>
