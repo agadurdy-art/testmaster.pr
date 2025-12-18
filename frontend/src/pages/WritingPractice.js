@@ -174,7 +174,13 @@ export default function WritingPractice({ user }) {
             <Card className="p-6 h-fit lg:sticky lg:top-4 bg-white border-0 shadow-lg rounded-2xl">
               <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${task.color} text-white mb-4`}>{task.title}</span>
               <h3 className="font-semibold text-gray-900 mb-3">{selectedPrompt.title}</h3>
-              {selectedPrompt.imageUrl && <div className="mb-4 rounded-xl overflow-hidden"><img src={selectedPrompt.imageUrl} alt="Task visual" className="w-full h-48 object-cover" /></div>}
+              <div className="mb-4 p-4 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                <div className="flex items-center gap-2 mb-2 text-blue-600">
+                  <BarChart2 className="w-5 h-5" />
+                  <span className="text-sm font-medium">Task Visual: {selectedPrompt.type?.replace('_', ' ').toUpperCase()}</span>
+                </div>
+                <p className="text-xs text-gray-500 italic">Data reference is included in the prompt below</p>
+              </div>
               <p className="text-gray-700 whitespace-pre-line">{selectedPrompt.prompt}</p>
               <div className="mt-4 p-3 bg-amber-50 rounded-xl"><p className="text-xs text-amber-800"><strong>Remember:</strong> Write at least {minWords} words.</p></div>
             </Card>
