@@ -4,10 +4,13 @@ import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Trophy, TrendingUp, CheckCircle, XCircle, Home, ArrowLeft, Award, Target, BarChart3, Lightbulb, ChevronDown, ChevronUp } from 'lucide-react';
 import api from '../lib/api';
+import { useI18n } from '../lib/i18n';
 
 export default function Results({ user }) {
   const { attemptId } = useParams();
   const navigate = useNavigate();
+  const { t, language } = useI18n();
+  const isVi = language === 'vi';
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
