@@ -266,14 +266,14 @@ export default function Results({ user }) {
                       <p className="text-sm text-gray-800 mb-3">{q.question_text}</p>
                       <div className="flex flex-wrap gap-4 text-sm">
                         <div>
-                          <span className="text-gray-500">Your answer: </span>
+                          <span className="text-gray-500">{t('yourAnswer')}: </span>
                           <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                            {q.user_answer || '(no answer)'}
+                            {q.user_answer || t('noAnswer')}
                           </span>
                         </div>
                         {!q.is_correct && (
                           <div>
-                            <span className="text-gray-500">Correct answer: </span>
+                            <span className="text-gray-500">{t('correctAnswer')}: </span>
                             <span className="font-semibold text-green-700">{q.correct_answer}</span>
                           </div>
                         )}
