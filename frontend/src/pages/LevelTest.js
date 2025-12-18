@@ -376,11 +376,11 @@ export default function LevelTest({ user }) {
   // EVALUATING STAGE
   if (stage === 'evaluating') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <Card className="p-8 text-center max-w-md bg-white/5 backdrop-blur-xl border-white/10">
-          <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold text-white mb-2">Analyzing Your Responses</h2>
-          <p className="text-gray-400">Our AI is evaluating your skills...</p>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
+        <Card className="p-8 text-center max-w-md bg-white border-0 shadow-lg rounded-2xl">
+          <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Analyzing Your Responses</h2>
+          <p className="text-gray-500">Our AI is evaluating your skills...</p>
         </Card>
       </div>
     );
@@ -389,40 +389,36 @@ export default function LevelTest({ user }) {
   // RESULTS STAGE
   if (stage === 'results' && results) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative z-10 max-w-2xl mx-auto">
-          <Card className="p-8 bg-white/5 backdrop-blur-xl border-white/10">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-12 px-4">
+        <div className="max-w-2xl mx-auto">
+          <Card className="p-8 bg-white border-0 shadow-lg rounded-2xl">
             <div className="text-center mb-8">
-              <div className={`w-24 h-24 bg-gradient-to-br ${getLevelGradient(results.level)} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl`}>
+              <div className={`w-24 h-24 bg-gradient-to-br ${getLevelGradient(results.level)} rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl`}>
                 <Award className="w-12 h-12 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-white mb-2">Your English Level</h1>
-              <div className={`inline-block px-6 py-2 bg-gradient-to-r ${getLevelGradient(results.level)} text-white text-xl font-bold rounded-full mb-2`}>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Your English Level</h1>
+              <div className={`inline-block px-6 py-2 bg-gradient-to-r ${getLevelGradient(results.level)} text-white text-xl font-bold rounded-full mb-2 shadow-lg`}>
                 {results.level}
               </div>
-              <p className="text-gray-400">Estimated IELTS Band: {getLevelBand(results.level)}</p>
+              <p className="text-gray-500">Estimated IELTS Band: {getLevelBand(results.level)}</p>
             </div>
             
             <div className="space-y-4 mb-8">
-              <div className="bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
-                <h3 className="font-semibold text-blue-400 mb-2">📖 Reading Score</h3>
-                <p className="text-white">{results.reading_score}/5 correct</p>
-                <p className="text-sm text-gray-400 mt-1">{results.reading_feedback}</p>
+              <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                <h3 className="font-semibold text-blue-700 mb-2">📖 Reading Score</h3>
+                <p className="text-gray-900">{results.reading_score}/5 correct</p>
+                <p className="text-sm text-gray-600 mt-1">{results.reading_feedback}</p>
               </div>
-              <div className="bg-green-500/10 p-4 rounded-xl border border-green-500/20">
-                <h3 className="font-semibold text-green-400 mb-2">🎤 Speaking Assessment</h3>
-                <p className="text-sm text-gray-300 whitespace-pre-line">{results.speaking_feedback}</p>
+              <div className="bg-green-50 p-4 rounded-xl border border-green-200">
+                <h3 className="font-semibold text-green-700 mb-2">🎤 Speaking Assessment</h3>
+                <p className="text-sm text-gray-700 whitespace-pre-line">{results.speaking_feedback}</p>
               </div>
-              <div className="bg-purple-500/10 p-4 rounded-xl border border-purple-500/20">
-                <h3 className="font-semibold text-purple-400 mb-2">📚 Recommended Next Steps</h3>
+              <div className="bg-purple-50 p-4 rounded-xl border border-purple-200">
+                <h3 className="font-semibold text-purple-700 mb-2">📚 Recommended Next Steps</h3>
                 <ul className="space-y-2">
                   {results.recommendations?.map((rec, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-gray-300">
-                      <CheckCircle className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                    <li key={idx} className="flex items-center gap-2 text-gray-700">
+                      <CheckCircle className="w-4 h-4 text-purple-500 flex-shrink-0" />
                       {rec}
                     </li>
                   ))}
@@ -431,10 +427,10 @@ export default function LevelTest({ user }) {
             </div>
             
             <div className="flex gap-4">
-              <Button variant="outline" onClick={() => { setStage('intro'); setCurrentQuestion(0); setReadingAnswers({}); setCurrentSpeakingPrompt(0); setSpeakingResponses([]); setCurrentTranscript(''); setResults(null); }} className="flex-1 border-white/20 text-white hover:bg-white/10">
+              <Button variant="outline" onClick={() => { setStage('intro'); setCurrentQuestion(0); setReadingAnswers({}); setCurrentSpeakingPrompt(0); setSpeakingResponses([]); setCurrentTranscript(''); setResults(null); }} className="flex-1">
                 Take Test Again
               </Button>
-              <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-0">
+              <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
                 Go to Dashboard
               </Button>
             </div>
