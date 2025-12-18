@@ -167,7 +167,7 @@ export default function Results({ user }) {
                     </div>
                   ))}
                   {(!result.feedback.skill_breakdown || result.feedback.skill_breakdown.filter(s => (s.correct / s.total) < 0.5).length === 0) && (
-                    <p className="text-sm text-amber-600">Great job! No major weaknesses detected.</p>
+                    <p className="text-sm text-amber-600">{t('greatJob')}</p>
                   )}
                 </div>
               </div>
