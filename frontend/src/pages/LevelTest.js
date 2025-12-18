@@ -256,27 +256,24 @@ export default function LevelTest({ user }) {
     const progress = ((currentQuestion + 1) / readingQuestions.length) * 50;
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-8 px-4">
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative z-10 max-w-3xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-blue-50/30 to-gray-100 py-8 px-4">
+        <div className="max-w-3xl mx-auto">
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-cyan-400">Reading Section</span>
-              <span className="text-sm text-gray-400">Question {currentQuestion + 1} of {readingQuestions.length}</span>
+              <span className="text-sm font-medium text-blue-600">Reading Section</span>
+              <span className="text-sm text-gray-500">Question {currentQuestion + 1} of {readingQuestions.length}</span>
             </div>
-            <Progress value={progress} className="h-2 bg-white/10" />
+            <Progress value={progress} className="h-2" />
           </div>
           
-          <Card className="p-6 bg-white/5 backdrop-blur-xl border-white/10">
-            <span className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-400 text-xs font-medium rounded-full mb-4 capitalize">
+          <Card className="p-6 bg-white border-0 shadow-lg rounded-2xl">
+            <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full mb-4 capitalize">
               {question.level} Level
             </span>
-            <div className="bg-white/5 p-4 rounded-xl mb-4 border border-white/10">
-              <p className="text-gray-300 leading-relaxed">{question.passage}</p>
+            <div className="bg-gray-50 p-4 rounded-xl mb-4 border border-gray-200">
+              <p className="text-gray-700 leading-relaxed">{question.passage}</p>
             </div>
-            <h3 className="text-lg font-semibold text-white mb-4">{question.question}</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">{question.question}</h3>
             
             <div className="space-y-3 mb-6">
               {question.options.map((option, idx) => (
@@ -285,8 +282,8 @@ export default function LevelTest({ user }) {
                   onClick={() => handleReadingAnswer(question.id, option.charAt(0))}
                   className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
                     readingAnswers[question.id] === option.charAt(0)
-                      ? 'border-cyan-500 bg-cyan-500/20 text-white'
-                      : 'border-white/10 text-gray-300 hover:border-white/30 hover:bg-white/5'
+                      ? 'border-violet-500 bg-violet-50 text-gray-900'
+                      : 'border-gray-200 text-gray-700 hover:border-violet-300 hover:bg-violet-50/50'
                   }`}
                 >
                   {option}
@@ -295,10 +292,10 @@ export default function LevelTest({ user }) {
             </div>
             
             <div className="flex justify-between">
-              <Button variant="ghost" onClick={() => currentQuestion > 0 && setCurrentQuestion(currentQuestion - 1)} disabled={currentQuestion === 0} className="text-gray-400 hover:text-white">
+              <Button variant="ghost" onClick={() => currentQuestion > 0 && setCurrentQuestion(currentQuestion - 1)} disabled={currentQuestion === 0} className="text-gray-500">
                 Previous
               </Button>
-              <Button onClick={nextReadingQuestion} disabled={!readingAnswers[question.id]} className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-0">
+              <Button onClick={nextReadingQuestion} disabled={!readingAnswers[question.id]} className="bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0">
                 {currentQuestion === readingQuestions.length - 1 ? 'Continue to Speaking' : 'Next Question'} <ChevronRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
