@@ -197,16 +197,12 @@ export default function LevelTest({ user }) {
   // INTRO STAGE
   if (stage === 'intro') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative z-10 max-w-2xl mx-auto">
-          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-400 hover:text-white hover:bg-white/10">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-cyan-50/30 to-gray-100 py-12 px-4">
+        <div className="max-w-2xl mx-auto">
+          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-600 hover:text-violet-600">
             <ArrowLeft className="w-4 h-4 mr-2" /> Dashboard
           </Button>
-          <Card className="p-8 bg-white/5 backdrop-blur-xl border-white/10">
+          <Card className="p-8 bg-white border-0 shadow-lg rounded-2xl">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-purple-500/30">
                 <Target className="w-10 h-10 text-white" />
