@@ -718,7 +718,7 @@ function ElevenLabsExaminer() {
 
         {/* READING TEST - New Two-Column Layout */}
         {testType === 'reading' ? (
-          <div className="flex flex-col lg:flex-row gap-4 h-[calc(100vh-220px)]">
+          <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-220px)] lg:h-[calc(100vh-220px)] mb-20">
             {/* Left Column - Passage (~75% width) */}
             <div className="lg:w-3/4 flex flex-col">
               <Card className="flex-1 overflow-hidden flex flex-col">
