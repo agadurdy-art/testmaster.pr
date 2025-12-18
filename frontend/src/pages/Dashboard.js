@@ -5,7 +5,7 @@ import { Card } from '../components/ui/card';
 import { 
   BookOpen, Headphones, Mic, PenTool, Trophy, TrendingUp, Target, BookMarked, 
   LogOut, Menu, MessageSquare, ChevronRight, Clock, Award, Sparkles, 
-  GraduationCap, BarChart3, Flame, Star, X, User, Zap
+  GraduationCap, BarChart3, Flame, Star, X, User, Zap, LayoutDashboard, FileText, CreditCard
 } from 'lucide-react';
 import { getTests, getUserProgress, getUser } from '../lib/api';
 import { toast } from 'sonner';
