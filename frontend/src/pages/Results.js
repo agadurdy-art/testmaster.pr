@@ -111,7 +111,92 @@ export default function Results({ user }) {
           </Card>
         )}
 
-        {/* Feedback Card */}
+        {/* Teacher Feedback Card - For Reading/Listening */}
+        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.teacher_feedback && (
+          <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                <Award className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-blue-900">🎓 Your Personal Feedback</h3>
+                <p className="text-sm text-blue-600">AI-powered analysis of your performance</p>
+              </div>
+            </div>
+            
+            {/* Quick Summary */}
+            <div className="bg-white/60 rounded-xl p-4 mb-4">
+              <p className="text-gray-800 leading-relaxed">{result.feedback.teacher_feedback.short}</p>
+            </div>
+
+            {/* Strengths & Weaknesses */}
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              {/* Strengths */}
+              <div className="bg-green-50 rounded-xl p-4 border border-green-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <h4 className="font-semibold text-green-800">Your Strengths</h4>
+                </div>
+                <div className="space-y-2">
+                  {result.feedback.skill_breakdown?.filter(s => (s.correct / s.total) >= 0.7).slice(0, 3).map((skill, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-sm">
+                      <span className="text-green-700 capitalize">{skill.label || skill.skill_id?.replace(/_/g, ' ')}</span>
+                      <span className="font-medium text-green-800">{Math.round((skill.correct / skill.total) * 100)}%</span>
+                    </div>
+                  ))}
+                  {(!result.feedback.skill_breakdown || result.feedback.skill_breakdown.filter(s => (s.correct / s.total) >= 0.7).length === 0) && (
+                    <p className="text-sm text-green-600">Keep practicing to identify your strengths!</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Areas to Improve */}
+              <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Target className="w-5 h-5 text-amber-600" />
+                  <h4 className="font-semibold text-amber-800">Areas to Improve</h4>
+                </div>
+                <div className="space-y-2">
+                  {result.feedback.skill_breakdown?.filter(s => (s.correct / s.total) < 0.5).slice(0, 3).map((skill, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-sm">
+                      <span className="text-amber-700 capitalize">{skill.label || skill.skill_id?.replace(/_/g, ' ')}</span>
+                      <span className="font-medium text-amber-800">{Math.round((skill.correct / skill.total) * 100)}%</span>
+                    </div>
+                  ))}
+                  {(!result.feedback.skill_breakdown || result.feedback.skill_breakdown.filter(s => (s.correct / s.total) < 0.5).length === 0) && (
+                    <p className="text-sm text-amber-600">Great job! No major weaknesses detected.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Detailed Tips */}
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
+              <div className="flex items-center gap-2 mb-3">
+                <Lightbulb className="w-5 h-5 text-violet-600" />
+                <h4 className="font-semibold text-violet-800">💡 Tips to Improve</h4>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-sm">{result.feedback.teacher_feedback.detailed}</p>
+            </div>
+
+            {/* Skill-specific Tips */}
+            {result.feedback.skill_breakdown?.filter(s => s.tip && (s.correct / s.total) < 0.7).length > 0 && (
+              <div className="mt-4 space-y-3">
+                <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4" /> Focused Practice Recommendations
+                </h4>
+                {result.feedback.skill_breakdown.filter(s => s.tip && (s.correct / s.total) < 0.7).slice(0, 3).map((skill, idx) => (
+                  <div key={idx} className="bg-white/60 rounded-lg p-3 border border-gray-100">
+                    <p className="font-medium text-gray-800 capitalize text-sm mb-1">{skill.label || skill.skill_id?.replace(/_/g, ' ')}</p>
+                    <p className="text-gray-600 text-sm">{skill.tip}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+        )}
+
+        {/* AI Feedback Card - For Writing/Speaking */}
         {result.feedback?.ai_feedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
