@@ -148,7 +148,7 @@ export default function Results({ user }) {
                     </div>
                   ))}
                   {(!result.feedback.skill_breakdown || result.feedback.skill_breakdown.filter(s => (s.correct / s.total) >= 0.7).length === 0) && (
-                    <p className="text-sm text-green-600">Keep practicing to identify your strengths!</p>
+                    <p className="text-sm text-green-600">{t('keepPracticing')}</p>
                   )}
                 </div>
               </div>
