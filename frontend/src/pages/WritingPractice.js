@@ -164,7 +164,7 @@ export default function WritingPractice({ user }) {
     const minWords = selectedTaskType === 'task2' ? 250 : 150;
     const wordProgress = Math.min((wordCount / minWords) * 100, 100);
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-4">
             <Button variant="ghost" onClick={() => resetPractice()} className="text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Exit</Button>
