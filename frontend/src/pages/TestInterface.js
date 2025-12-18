@@ -677,37 +677,72 @@ function ElevenLabsExaminer() {
         {/* Speaking mode selector */}
         {testType === 'speaking' && (
           <>
-            <Card className="mb-6 p-4 bg-blue-50 border border-blue-200 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div>
-                <h2 className="text-lg font-semibold text-blue-900 mb-1">AI Speaking Credits</h2>
-                <p className="text-sm text-blue-900 mb-1">
-                  Remaining credits: <span className="font-bold">{speakingCredits}</span>
-                </p>
-                <p className="text-xs text-blue-800">
-                  Each live AI speaking interview uses <span className="font-semibold">1 credit</span> when you start the session.
-                </p>
-                {hasFreeTrial && (
-                  <p className="text-xs text-blue-800 mt-1 font-semibold">
-                    {t('speakingFreeTrialAvailable')}
+            {/* AI Examiner Hero Card - Prominent & Always Visible */}
+            <Card className={`mb-6 p-6 border-2 transition-all duration-300 ${
+              speakingSessionStarted 
+                ? 'bg-gradient-to-r from-green-500 to-emerald-600 border-green-400 shadow-lg shadow-green-200' 
+                : 'bg-gradient-to-r from-violet-600 to-purple-700 border-violet-400 shadow-lg shadow-violet-200'
+            }`}>
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
+                    speakingSessionStarted ? 'bg-white/20' : 'bg-white/20'
+                  }`}>
+                    {speakingSessionStarted ? (
+                      <div className="relative">
+                        <Mic className="w-8 h-8 text-white animate-pulse" />
+                        <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
+                        <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                      </div>
+                    ) : (
+                      <Mic className="w-8 h-8 text-white" />
+                    )}
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white mb-1">
+                      {speakingSessionStarted ? '🎙️ AI Examiner Active' : '🎯 Live AI Speaking Examiner'}
+                    </h2>
+                    <p className="text-white/90 text-sm">
+                      {speakingSessionStarted 
+                        ? 'Your AI examiner is ready! Click the chat bubble to start speaking.'
+                        : 'Practice with a real-time AI examiner that gives instant feedback'}
+                    </p>
+                    {hasFreeTrial && !speakingSessionStarted && (
+                      <p className="text-yellow-200 text-xs font-semibold mt-1">
+                        ✨ 3 minutes FREE trial available!
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="flex flex-col items-start md:items-end gap-2">
+                  {!speakingSessionStarted ? (
+                    <Button
+                      size="lg"
+                      disabled={!hasFreeTrial && speakingCredits <= 0}
+                      onClick={handleStartSpeakingSession}
+                      className="bg-white text-violet-700 hover:bg-gray-100 font-bold shadow-lg px-6 py-3 text-base"
+                    >
+                      <Mic className="w-5 h-5 mr-2" />
+                      Start AI Interview
+                    </Button>
+                  ) : (
+                    <div className="flex items-center gap-2 bg-white/20 rounded-lg px-4 py-2">
+                      <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-white font-semibold">Session Active</span>
+                    </div>
+                  )}
+                  <p className="text-white/70 text-xs">
+                    Credits: <span className="font-bold text-white">{speakingCredits}</span> remaining
                   </p>
-                )}
-              </div>
-              <div className="flex flex-col items-start md:items-end gap-2">
-                <Button
-                  variant="default"
-                  disabled={!hasFreeTrial && speakingCredits <= 0}
-                  onClick={handleStartSpeakingSession}
-                >
-                  {speakingSessionStarted ? 'Speaking Session Active' : 'Start AI Speaking Session (−1 credit)'}
-                </Button>
-                {!hasFreeTrial && speakingCredits <= 0 && (
-                  <p className="text-xs text-red-700 max-w-xs text-right">
-                    {t('paywallSpeakingNoCredits')}
-                  </p>
-                )}
+                  {!hasFreeTrial && speakingCredits <= 0 && (
+                    <p className="text-yellow-200 text-xs font-semibold">
+                      Get credits to continue practicing
+                    </p>
+                  )}
+                </div>
               </div>
             </Card>
-            {/* ElevenLabs examiner widget - only rendered for logged-in users on speaking page */}
+            {/* ElevenLabs examiner widget */}
             {speakingSessionStarted && (
               <div className="fixed bottom-6 right-6 z-40">
                 <ElevenLabsExaminer />
