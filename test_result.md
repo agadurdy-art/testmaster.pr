@@ -349,12 +349,24 @@
 
 ## test_plan:
 ##   current_focus:
-##     - "Mobile submit button fix in TestInterface.js"
-##     - "Pay by Card option in PricingPage.js"
-##     - "Exit button fix in WritingPractice.js"
+##     - "Test order sorting fix in TestInterface.js"
 ##   stuck_tasks: []
 ##   test_all: false
 ##   test_priority: "high_first"
+
+## TEST ORDER SORTING FIX - December 2024:
+## frontend:
+##   - task: "Test display order (Test 1 before Test 2)"
+##     implemented: true
+##     working: true
+##     file: "frontend/src/pages/TestInterface.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: true
+##         agent: "main"
+##         comment: "Fixed test display order in loadTest() function: (1) Added sorting logic to sort tests by extracting test number from title using regex match (2) Removed incorrect 'prefer Test 2' logic that was causing Listening tests to show Test 2 first (3) Now all test types (Reading, Listening, Speaking) correctly display Test 1 before Test 2. Verified via screenshots - all three test types now show correct order with Test 1 selected by default."
 
 ## BUG FIXES - December 2024:
 ## frontend:
