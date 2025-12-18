@@ -204,7 +204,7 @@ export default function WritingPractice({ user }) {
 
   // Feedback View
   if (view === 'feedback' && feedback) return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
       <div className="max-w-4xl mx-auto">
         <Button variant="ghost" onClick={resetPractice} className="mb-4 text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Back</Button>
         <Card className="p-6 mb-6 text-center bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg rounded-2xl">
