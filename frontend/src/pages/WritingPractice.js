@@ -134,7 +134,7 @@ export default function WritingPractice({ user }) {
     const task = TASK_TYPES.find(t => t.id === selectedTaskType);
     const prompts = WRITING_PROMPTS[selectedTaskType] || [];
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 py-8 px-4 pb-32">
         <div className="max-w-4xl mx-auto">
           <Button variant="ghost" onClick={() => setView('tasks')} className="mb-4 text-gray-600"><ArrowLeft className="w-4 h-4 mr-2" /> Back</Button>
           <div className="flex items-center gap-3 mb-6">
