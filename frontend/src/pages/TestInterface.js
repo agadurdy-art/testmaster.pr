@@ -854,7 +854,22 @@ function ElevenLabsExaminer() {
                         currentType = q.type;
                         const taskInfo = taskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Answer the following questions.' };
                         const isAnswered = !!answers[q.id];
-                      return (
+                        
+                        return (
+                          <React.Fragment key={q.id}>
+                            {/* Task Header */}
+                            {showTaskHeader && (
+                              <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                <h4 className="font-bold text-blue-900 text-sm mb-1">
+                                  {taskInfo.title}
+                                </h4>
+                                <p className="text-xs text-blue-700 leading-relaxed">
+                                  {taskInfo.instruction}
+                                </p>
+                              </div>
+                            )}
+                            
+                            {/* Question */}
                         <div 
                           key={q.id} 
                           className={`p-3 rounded-lg border-l-4 ${
