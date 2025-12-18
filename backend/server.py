@@ -976,17 +976,34 @@ async def submit_test(submission: SubmitAnswers):
             return ", ".join(names[:-1]) + " and " + names[-1]
 
         test_label = "reading" if test_type == "reading" else "listening"
+        
+        # Check if Vietnamese language requested
+        lang = submission.language if hasattr(submission, 'language') else "en"
+        is_vi = lang == "vi"
+        
+        test_label_vi = "đọc hiểu" if test_type == "reading" else "nghe hiểu"
 
         short_fb_parts: List[str] = []
-        short_fb_parts.append(
-            f"For this {test_label} test, you answered {correct} out of {total} questions correctly (about {score_percentage:.0f}%)."
-        )
+        if is_vi:
+            short_fb_parts.append(
+                f"Trong bài thi {test_label_vi} này, bạn đã trả lời đúng {correct} trên {total} câu hỏi (khoảng {score_percentage:.0f}%)."
+            )
+        else:
+            short_fb_parts.append(
+                f"For this {test_label} test, you answered {correct} out of {total} questions correctly (about {score_percentage:.0f}%)."
+            )
         strong_names = _skill_names(strong_skills)
         weak_names = _skill_names(weak_skills)
         if strong_names:
-            short_fb_parts.append(f"Your strongest areas were {strong_names}. Use these questions to secure easy marks.")
+            if is_vi:
+                short_fb_parts.append(f"Điểm mạnh của bạn là {strong_names}. Hãy tận dụng những câu hỏi này để đạt điểm cao hơn.")
+            else:
+                short_fb_parts.append(f"Your strongest areas were {strong_names}. Use these questions to secure easy marks.")
         if weak_names:
-            short_fb_parts.append(f"You should focus more practice time on {weak_names} to raise your band.")
+            if is_vi:
+                short_fb_parts.append(f"Bạn nên dành nhiều thời gian luyện tập hơn cho {weak_names} để cải thiện điểm band.")
+            else:
+                short_fb_parts.append(f"You should focus more practice time on {weak_names} to raise your band.")
         short_teacher_feedback = " ".join(short_fb_parts)
 
         detailed_parts: List[str] = []
