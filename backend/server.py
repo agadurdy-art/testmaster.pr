@@ -844,6 +844,16 @@ async def submit_test(submission: SubmitAnswers):
 
         correct = 0
         total = len(answer_key_map) if answer_key_map else len(test.get("answer_key", []))
+        
+        # Build question results with correct/incorrect status
+        question_results = []
+        
+        # Create a map of question id to question text
+        question_text_map = {}
+        for q in test.get("questions", []):
+            q_id = q.get("id")
+            if q_id:
+                question_text_map[int(q_id)] = q.get("question", "")
 
         # Strict comparison: answers must match exactly (case-insensitive, trimmed)
         for ans in submission.answers:
@@ -865,6 +875,17 @@ async def submit_test(submission: SubmitAnswers):
                 correct += 1
 
             q_type = question_type_map.get(qid_int, "unknown")
+            
+            # Add to question results
+            question_results.append({
+                "question_id": qid_int,
+                "question_text": question_text_map.get(qid_int, f"Question {qid_int}"),
+                "question_type": q_type,
+                "user_answer": user_answer,
+                "correct_answer": str(correct_answer),
+                "is_correct": is_correct,
+            })
+            
             skey = _make_skill_key(test_type, q_type)
             if skey not in skill_stats:
                 skill_stats[skey] = {
