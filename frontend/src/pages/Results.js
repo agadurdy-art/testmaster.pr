@@ -207,6 +207,98 @@ export default function Results({ user }) {
           </Card>
         )}
 
+        {/* Question-by-Question Results - For Reading/Listening */}
+        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.question_results?.length > 0 && (
+          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
+                  <BarChart3 className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">📝 Answer Review</h3>
+                  <p className="text-sm text-gray-500">
+                    {result.feedback.correct} correct / {result.feedback.total} total
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <span className="flex items-center gap-1 text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                  <CheckCircle className="w-3 h-3" /> Correct
+                </span>
+                <span className="flex items-center gap-1 text-xs px-2 py-1 bg-red-100 text-red-700 rounded-full">
+                  <XCircle className="w-3 h-3" /> Incorrect
+                </span>
+              </div>
+            </div>
+            
+            {/* Questions List */}
+            <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+              {result.feedback.question_results.map((q, idx) => (
+                <div 
+                  key={idx} 
+                  className={`p-4 rounded-xl border-l-4 ${
+                    q.is_correct 
+                      ? 'bg-green-50 border-green-500' 
+                      : 'bg-red-50 border-red-500'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
+                          q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                        }`}>
+                          {q.question_id}
+                        </span>
+                        <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600 capitalize">
+                          {q.question_type?.replace(/_/g, ' ') || 'Question'}
+                        </span>
+                        {q.is_correct ? (
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                        ) : (
+                          <XCircle className="w-5 h-5 text-red-600" />
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-800 mb-3">{q.question_text}</p>
+                      <div className="flex flex-wrap gap-4 text-sm">
+                        <div>
+                          <span className="text-gray-500">Your answer: </span>
+                          <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
+                            {q.user_answer || '(no answer)'}
+                          </span>
+                        </div>
+                        {!q.is_correct && (
+                          <div>
+                            <span className="text-gray-500">Correct answer: </span>
+                            <span className="font-semibold text-green-700">{q.correct_answer}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Summary Stats */}
+            <div className="mt-4 pt-4 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
+              <div className="p-3 bg-green-50 rounded-lg">
+                <p className="text-2xl font-bold text-green-600">{result.feedback.question_results.filter(q => q.is_correct).length}</p>
+                <p className="text-xs text-green-700">Correct</p>
+              </div>
+              <div className="p-3 bg-red-50 rounded-lg">
+                <p className="text-2xl font-bold text-red-600">{result.feedback.question_results.filter(q => !q.is_correct).length}</p>
+                <p className="text-xs text-red-700">Incorrect</p>
+              </div>
+              <div className="p-3 bg-blue-50 rounded-lg">
+                <p className="text-2xl font-bold text-blue-600">{Math.round(result.feedback.percentage)}%</p>
+                <p className="text-xs text-blue-700">Accuracy</p>
+              </div>
+            </div>
+          </Card>
+        )}
+
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4">
           <Button onClick={() => navigate('/dashboard')} variant="outline" className="flex-1"><Home className="w-4 h-4 mr-2" /> Dashboard</Button>
