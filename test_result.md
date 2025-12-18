@@ -349,13 +349,48 @@
 
 ## test_plan:
 ##   current_focus:
-##     - "Writing Practice Frontend Implementation"
-##     - "Speaking Practice Frontend Implementation"
-##     - "Writing Practice Backend APIs"
-##     - "Speaking Practice Backend APIs"
+##     - "Mobile submit button fix in TestInterface.js"
+##     - "Pay by Card option in PricingPage.js"
+##     - "Exit button fix in WritingPractice.js"
 ##   stuck_tasks: []
 ##   test_all: false
 ##   test_priority: "high_first"
+
+## BUG FIXES - December 2024:
+## frontend:
+##   - task: "Mobile submit button hidden by bottom nav"
+##     implemented: true
+##     working: "NA"
+##     file: "frontend/src/pages/TestInterface.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: "NA"
+##         agent: "main"
+##         comment: "Added pb-24 (bottom padding) to main container div to ensure submit button is visible above any bottom navigation on mobile devices"
+##   - task: "Pay by Card option missing on PricingPage"
+##     implemented: true
+##     working: "NA"
+##     file: "frontend/src/pages/PricingPage.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: "NA"
+##         agent: "main"
+##         comment: "Removed fundingSource='paypal' prop from PayPalButtons component to allow card payment option to appear alongside PayPal button"
+##   - task: "Exit button in WritingPractice not working"
+##     implemented: true
+##     working: "NA"
+##     file: "frontend/src/pages/WritingPractice.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: "NA"
+##         agent: "main"
+##         comment: "Removed window.confirm dialog from exit button onClick handler - now calls resetPractice() directly without confirmation prompt"
 
 ## agent_communication:
 ##   - agent: "testing"
