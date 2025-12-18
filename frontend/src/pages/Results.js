@@ -219,18 +219,18 @@ export default function Results({ user }) {
                   <BarChart3 className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">📝 Answer Review</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">📝 {t('answerReview')}</h3>
                   <p className="text-sm text-gray-500">
-                    {result.feedback.correct} correct / {result.feedback.total} total
+                    {result.feedback.correct} {t('correct').toLowerCase()} / {result.feedback.total} {isVi ? 'tổng cộng' : 'total'}
                   </p>
                 </div>
               </div>
               <div className="flex gap-2">
                 <span className="flex items-center gap-1 text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">
-                  <CheckCircle className="w-3 h-3" /> Correct
+                  <CheckCircle className="w-3 h-3" /> {t('correct')}
                 </span>
                 <span className="flex items-center gap-1 text-xs px-2 py-1 bg-red-100 text-red-700 rounded-full">
-                  <XCircle className="w-3 h-3" /> Incorrect
+                  <XCircle className="w-3 h-3" /> {t('incorrect')}
                 </span>
               </div>
             </div>
