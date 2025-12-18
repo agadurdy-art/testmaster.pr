@@ -122,8 +122,8 @@ export default function Results({ user }) {
                 <Award className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-blue-900">🎓 Your Personal Feedback</h3>
-                <p className="text-sm text-blue-600">AI-powered analysis of your performance</p>
+                <h3 className="text-lg font-semibold text-blue-900">🎓 {t('personalFeedback')}</h3>
+                <p className="text-sm text-blue-600">{t('aiFeedback')}</p>
               </div>
             </div>
             
