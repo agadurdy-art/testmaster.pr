@@ -204,11 +204,11 @@ export default function LevelTest({ user }) {
           </Button>
           <Card className="p-8 bg-white border-0 shadow-lg rounded-2xl">
             <div className="text-center mb-8">
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-purple-500/30">
+              <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-200">
                 <Target className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-white mb-2">English Level Test</h1>
-              <p className="text-gray-400">Discover your English proficiency in 5-7 minutes</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">English Level Test</h1>
+              <p className="text-gray-500">Discover your English proficiency in 5-7 minutes</p>
             </div>
             
             <div className="space-y-4 mb-8">
