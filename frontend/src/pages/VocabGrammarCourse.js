@@ -111,6 +111,19 @@ export default function VocabGrammarCourse({ user }) {
     setFillBlankInput('');
   }, [currentItemIndex]);
 
+  // Shuffle MCQ options when entering MCQ mode or changing questions
+  useEffect(() => {
+    if (practiceMode === 'mcq' && selectedLesson?.items) {
+      const currentItem = selectedLesson.items[currentItemIndex];
+      if (currentItem) {
+        const otherItems = selectedLesson.items.filter(i => i.id !== currentItem.id);
+        const wrongOptions = otherItems.slice(0, 3).map(i => i.definition);
+        const allOptions = [currentItem.definition, ...wrongOptions];
+        setMcqShuffledOptions([...allOptions].sort(() => 0.5 - Math.random()));
+      }
+    }
+  }, [practiceMode, currentItemIndex, selectedLesson]);
+
   const fetchLessons = async () => {
     setLoading(true);
     try {
