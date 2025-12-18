@@ -1078,28 +1078,75 @@ function ElevenLabsExaminer() {
                 {/* Questions List - Scrollable */}
                 <div className="flex-1 overflow-y-auto p-4">
                   <div className="space-y-4">
-                    {test.questions?.slice(
-                      Math.floor(currentQuestion / 10) * 10,
-                      (Math.floor(currentQuestion / 10) + 1) * 10
-                    ).map((q, idx) => {
-                      const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
-                      const isAnswered = !!answers[q.id];
-                      return (
-                        <div 
-                          key={q.id}
-                          id={`q-${questionNumber}`}
-                          className={`p-3 rounded-lg border-l-4 ${
-                            isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
-                          } shadow-sm`}
-                        >
-                          <p className="text-sm font-medium text-gray-900 mb-2">
-                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
-                              {questionNumber + 1}
-                            </span>
-                            {q.question}
-                          </p>
-                          
-                          {/* Map labeling special display */}
+                    {/* Task descriptions for Listening */}
+                    {(() => {
+                      const partQuestions = test.questions?.slice(
+                        Math.floor(currentQuestion / 10) * 10,
+                        (Math.floor(currentQuestion / 10) + 1) * 10
+                      ) || [];
+                      let currentType = null;
+                      const listeningTaskDescriptions = {
+                        'note_completion': {
+                          title: 'Note Completion',
+                          instruction: 'Complete the notes below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.'
+                        },
+                        'form_completion': {
+                          title: 'Form Completion',
+                          instruction: 'Complete the form below. Write NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.'
+                        },
+                        'sentence_completion': {
+                          title: 'Sentence Completion',
+                          instruction: 'Complete the sentences below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.'
+                        },
+                        'map_labeling': {
+                          title: 'Map/Plan Labeling',
+                          instruction: 'Label the map/plan below. Write the correct letter A-H next to each question.'
+                        },
+                        'matching': {
+                          title: 'Matching',
+                          instruction: 'Choose the correct letter A-H from the list.'
+                        },
+                        'multiple_choice': {
+                          title: 'Multiple Choice',
+                          instruction: 'Choose the correct letter A, B, or C.'
+                        }
+                      };
+                      
+                      return partQuestions.map((q, idx) => {
+                        const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
+                        const showTaskHeader = q.type !== currentType;
+                        currentType = q.type;
+                        const taskInfo = listeningTaskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Listen and answer.' };
+                        const isAnswered = !!answers[q.id];
+                        
+                        return (
+                          <React.Fragment key={q.id}>
+                            {/* Task Header */}
+                            {showTaskHeader && (
+                              <div className="mb-3 p-3 bg-cyan-50 border border-cyan-200 rounded-lg">
+                                <h4 className="font-bold text-cyan-900 text-sm mb-1">
+                                  {taskInfo.title}
+                                </h4>
+                                <p className="text-xs text-cyan-700 leading-relaxed">
+                                  {taskInfo.instruction}
+                                </p>
+                              </div>
+                            )}
+                            
+                    <div 
+                      id={`q-${questionNumber}`}
+                      className={`p-3 rounded-lg border-l-4 ${
+                        isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
+                      } shadow-sm`}
+                    >
+                      <p className="text-sm font-medium text-gray-900 mb-2">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                          {questionNumber + 1}
+                        </span>
+                        {q.question}
+                      </p>
+                      
+                      {/* Map labeling special display */}
                           {q.type === 'map_labeling' && questionNumber === 15 && (
                             <div className="mt-3 mb-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
                               <p className="text-center text-gray-900 font-bold mb-2">Farley House Map</p>
