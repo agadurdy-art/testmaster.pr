@@ -46,8 +46,14 @@ export default function LandingPage({ onLogin, user }) {
     }
   };
 
+  // Redirect to dashboard if user is logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
   if (user) {
-    navigate('/dashboard');
     return null;
   }
 
