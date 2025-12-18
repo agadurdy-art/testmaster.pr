@@ -388,18 +388,48 @@
 ##         comment: "VERIFIED: fundingSource='paypal' prop successfully removed from PayPalButtons component (line 104-107). The PayPalButtons component now renders without funding source restriction, allowing both PayPal and card payment options to appear. Code inspection confirms fix is properly implemented."
 ##   - task: "Exit button in WritingPractice not working"
 ##     implemented: true
-##     working: true
+##     working: "NA"
 ##     file: "frontend/src/pages/WritingPractice.js"
 ##     stuck_count: 0
 ##     priority: "high"
-##     needs_retesting: false
+##     needs_retesting: true
 ##     status_history:
 ##       - working: "NA"
 ##         agent: "main"
 ##         comment: "Removed window.confirm dialog from exit button onClick handler - now calls resetPractice() directly without confirmation prompt"
-##       - working: true
-##         agent: "testing"
-##         comment: "VERIFIED: window.confirm dialog successfully removed from exit button. Exit button (line 170) now calls resetPractice() directly without confirmation prompt: onClick={() => resetPractice()}. The resetPractice function (line 89) properly resets all state and navigates back to task selection. Code inspection confirms fix is properly implemented."
+##   - task: "Vocab Grammar Quiz hooks error"
+##     implemented: true
+##     working: "verified"
+##     file: "frontend/src/pages/VocabGrammarCourse.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: "verified"
+##         agent: "main"
+##         comment: "Fixed React hooks error 'Rendered more hooks than during the previous render' by moving useMemo hook from inside renderPractice() function to component top level as useEffect + useState"
+##   - task: "No lessons available in production"
+##     implemented: true
+##     working: "verified"
+##     file: "backend/server.py"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: "verified"
+##         agent: "main"
+##         comment: "Added startup event to auto-seed vocab_grammar_lessons if none exist. Also ran seed_vocab_grammar_v2.py to populate lessons in current database"
+##   - task: "Writing Task 1 images not loading"
+##     implemented: true
+##     working: "verified"
+##     file: "frontend/src/pages/WritingPractice.js"
+##     stuck_count: 0
+##     priority: "medium"
+##     needs_retesting: false
+##     status_history:
+##       - working: "verified"
+##         agent: "main"
+##         comment: "Replaced unreliable Unsplash image URLs with text-based data references embedded in the prompts. Added visual Task type indicator box instead of external images"
 
 ## agent_communication:
 ##   - agent: "testing"
