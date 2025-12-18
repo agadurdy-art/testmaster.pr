@@ -1026,6 +1026,7 @@ async def submit_test(submission: SubmitAnswers):
                     "short": short_teacher_feedback,
                     "detailed": detailed_teacher_feedback,
                 },
+                "question_results": question_results,
             },
             time_taken=submission.time_taken,
         )
