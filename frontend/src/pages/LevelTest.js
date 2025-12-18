@@ -212,36 +212,36 @@ export default function LevelTest({ user }) {
             </div>
             
             <div className="space-y-4 mb-8">
-              <div className="flex items-start gap-4 p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="w-5 h-5 text-blue-400" />
+              <div className="flex items-start gap-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">Reading Section</h3>
-                  <p className="text-sm text-gray-400">5 questions of increasing difficulty</p>
+                  <h3 className="font-semibold text-gray-900">Reading Section</h3>
+                  <p className="text-sm text-gray-500">5 questions of increasing difficulty</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4 p-4 bg-green-500/10 rounded-xl border border-green-500/20">
-                <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                  <MessageSquare className="w-5 h-5 text-green-400" />
+              <div className="flex items-start gap-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                <div className="w-10 h-10 rounded-lg bg-green-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <MessageSquare className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">Speaking Section</h3>
-                  <p className="text-sm text-gray-400">2 speaking prompts to assess fluency</p>
+                  <h3 className="font-semibold text-gray-900">Speaking Section</h3>
+                  <p className="text-sm text-gray-500">2 speaking prompts to assess fluency</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4 p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                  <Sparkles className="w-5 h-5 text-purple-400" />
+              <div className="flex items-start gap-4 p-4 bg-purple-50 rounded-xl border border-purple-200">
+                <div className="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white">AI Evaluation</h3>
-                  <p className="text-sm text-gray-400">Get personalized recommendations</p>
+                  <h3 className="font-semibold text-gray-900">AI Evaluation</h3>
+                  <p className="text-sm text-gray-500">Get personalized recommendations</p>
                 </div>
               </div>
             </div>
             
-            <Button onClick={() => setStage('reading')} className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-0 py-6 text-lg">
+            <Button onClick={() => setStage('reading')} className="w-full bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 py-6 text-lg shadow-lg shadow-purple-200">
               Start Test <ChevronRight className="w-5 h-5 ml-2" />
             </Button>
           </Card>
