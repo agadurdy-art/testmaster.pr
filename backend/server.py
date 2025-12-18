@@ -1007,23 +1007,42 @@ async def submit_test(submission: SubmitAnswers):
         short_teacher_feedback = " ".join(short_fb_parts)
 
         detailed_parts: List[str] = []
-        detailed_parts.append(
-            f"Overall, you achieved about {score_percentage:.0f}% on this {test_label} test, which corresponds to an IELTS band of approximately {band_score:.1f}."
-        )
-        if strong_names:
+        if is_vi:
             detailed_parts.append(
-                f"You showed clear strength in {strong_names}. Try to always secure these marks first in the exam, because they suit your current skills."
+                f"Nhìn chung, bạn đạt khoảng {score_percentage:.0f}% trong bài thi {test_label_vi} này, tương đương với điểm IELTS khoảng {band_score:.1f}."
             )
-        if weak_names:
+            if strong_names:
+                detailed_parts.append(
+                    f"Bạn thể hiện rõ điểm mạnh ở phần {strong_names}. Hãy luôn làm chắc những câu này trước trong kỳ thi vì chúng phù hợp với kỹ năng hiện tại của bạn."
+                )
+            if weak_names:
+                detailed_parts.append(
+                    f"Những phần cần cải thiện là {weak_names}. Sau mỗi bài thi thử, hãy xem lại kỹ những câu hỏi này và so sánh câu trả lời của bạn với đáp án để hiểu rõ mình sai ở đâu."
+                )
             detailed_parts.append(
-                f"The main areas to improve are {weak_names}. After each practice test, carefully review these questions and compare your answer with the explanation to see exactly where your understanding differed."
+                "Khi luyện tập, hãy bấm giờ nghiêm túc, gạch chân từ khóa trong câu hỏi, và sau khi hoàn thành, dành ít nhất 5-10 phút phân tích lỗi sai thay vì vội chuyển sang bài thi mới. Việc suy ngẫm này mới thực sự giúp cải thiện điểm số."
             )
-        detailed_parts.append(
-            "When practising, time yourself strictly, underline keywords in the questions, and after you finish, spend at least 5–10 minutes analysing your mistakes rather than jumping to a new test. This reflection is what really improves your score."
-        )
-        detailed_parts.append(
-            "Choose one or two weaker question types at a time and drill them using targeted practice (for example, a page of only True/False/Not Given or only Note Completion questions) until they feel more comfortable."
-        )
+            detailed_parts.append(
+                "Chọn một hoặc hai dạng câu hỏi yếu và tập trung luyện tập chuyên sâu (ví dụ: một trang chỉ toàn câu True/False/Not Given hoặc Note Completion) cho đến khi cảm thấy thoải mái hơn."
+            )
+        else:
+            detailed_parts.append(
+                f"Overall, you achieved about {score_percentage:.0f}% on this {test_label} test, which corresponds to an IELTS band of approximately {band_score:.1f}."
+            )
+            if strong_names:
+                detailed_parts.append(
+                    f"You showed clear strength in {strong_names}. Try to always secure these marks first in the exam, because they suit your current skills."
+                )
+            if weak_names:
+                detailed_parts.append(
+                    f"The main areas to improve are {weak_names}. After each practice test, carefully review these questions and compare your answer with the explanation to see exactly where your understanding differed."
+                )
+            detailed_parts.append(
+                "When practising, time yourself strictly, underline keywords in the questions, and after you finish, spend at least 5–10 minutes analysing your mistakes rather than jumping to a new test. This reflection is what really improves your score."
+            )
+            detailed_parts.append(
+                "Choose one or two weaker question types at a time and drill them using targeted practice (for example, a page of only True/False/Not Given or only Note Completion questions) until they feel more comfortable."
+            )
         detailed_teacher_feedback = " ".join(detailed_parts)
 
         attempt = TestAttempt(
