@@ -311,29 +311,26 @@ export default function LevelTest({ user }) {
     const progress = 50 + ((currentSpeakingPrompt + 1) / speakingPrompts.length) * 50;
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-8 px-4">
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl"></div>
-        </div>
-        <div className="relative z-10 max-w-3xl mx-auto">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-green-50/30 to-gray-100 py-8 px-4">
+        <div className="max-w-3xl mx-auto">
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-green-400">Speaking Section</span>
-              <span className="text-sm text-gray-400">Prompt {currentSpeakingPrompt + 1} of {speakingPrompts.length}</span>
+              <span className="text-sm font-medium text-green-600">Speaking Section</span>
+              <span className="text-sm text-gray-500">Prompt {currentSpeakingPrompt + 1} of {speakingPrompts.length}</span>
             </div>
-            <Progress value={progress} className="h-2 bg-white/10" />
+            <Progress value={progress} className="h-2" />
           </div>
           
-          <Card className="p-6 bg-white/5 backdrop-blur-xl border-white/10">
-            <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 p-6 rounded-xl mb-6 border border-green-500/20">
-              <h3 className="text-lg font-semibold text-white mb-3">{prompt.prompt}</h3>
-              <p className="text-sm text-green-300">💡 Tip: {prompt.tip}</p>
+          <Card className="p-6 bg-white border-0 shadow-lg rounded-2xl">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl mb-6 border border-green-200">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">{prompt.prompt}</h3>
+              <p className="text-sm text-green-700">💡 Tip: {prompt.tip}</p>
             </div>
             
             <div className="space-y-4 mb-6">
               <div className="flex gap-3 justify-center">
                 {!recording ? (
-                  <Button onClick={startRecording} className="bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0" disabled={transcribing}>
+                  <Button onClick={startRecording} className="bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0 shadow-lg shadow-green-200" disabled={transcribing}>
                     <Mic className="w-4 h-4 mr-2" /> Start Recording
                   </Button>
                 ) : (
@@ -342,31 +339,31 @@ export default function LevelTest({ user }) {
                   </Button>
                 )}
                 {audioBlob && (
-                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10" onClick={() => { if (audioRef.current) { audioRef.current.src = URL.createObjectURL(audioBlob); audioRef.current.play(); } }}>
+                  <Button variant="outline" onClick={() => { if (audioRef.current) { audioRef.current.src = URL.createObjectURL(audioBlob); audioRef.current.play(); } }}>
                     <Play className="w-4 h-4 mr-2" /> Play Back
                   </Button>
                 )}
               </div>
               <audio ref={audioRef} className="hidden" />
               {transcribing && (
-                <div className="text-center text-gray-400">
-                  <div className="w-6 h-6 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                <div className="text-center text-gray-500">
+                  <div className="w-6 h-6 border-2 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
                   Transcribing...
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Your response:</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Your response:</label>
                 <textarea
                   value={currentTranscript}
                   onChange={(e) => setCurrentTranscript(e.target.value)}
-                  className="w-full h-32 p-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  className="w-full h-32 p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent"
                   placeholder="Your spoken response will appear here..."
                 />
               </div>
             </div>
             
             <div className="flex justify-end">
-              <Button onClick={saveSpeakingResponse} disabled={!currentTranscript.trim() || transcribing} className="bg-gradient-to-r from-cyan-500 to-purple-600 text-white border-0">
+              <Button onClick={saveSpeakingResponse} disabled={!currentTranscript.trim() || transcribing} className="bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0">
                 {currentSpeakingPrompt === speakingPrompts.length - 1 ? 'Finish & Get Results' : 'Next Prompt'} <ChevronRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
