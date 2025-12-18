@@ -1159,33 +1159,91 @@ function ElevenLabsExaminer() {
                             </div>
                           )}
                           
-                          {/* Matching statements display */}
-                          {q.type === 'matching' && questionNumber === 30 && (
-                            <div className="mt-3 mb-3 bg-gray-50 p-3 rounded-lg border border-gray-200 text-xs">
-                              <p className="font-semibold mb-2">Choose from statements A-H:</p>
-                              <div className="grid grid-cols-1 gap-1 text-gray-600">
-                                <div><strong>A</strong> Easy to find out how</div>
-                                <div><strong>B</strong> Should be improved</div>
-                                <div><strong>C</strong> May not work with all products</div>
-                                <div><strong>D</strong> Retailers should encourage</div>
-                                <div><strong>E</strong> More financial support needed</div>
-                                <div><strong>F</strong> Most people know little</div>
-                                <div><strong>G</strong> Stricter regulations needed</div>
-                                <div><strong>H</strong> Could be dangerous</div>
-                              </div>
+                          {/* Multiple Choice Options */}
+                          {(q.type === 'multiple_choice' || q.type === 'multiple_choice_two') && q.options && q.options.length > 0 && (
+                            <div className="mt-3 space-y-2">
+                              {q.options.map((opt, optIdx) => {
+                                const optLetter = opt.charAt(0);
+                                const isSelected = answers[q.id]?.toUpperCase() === optLetter;
+                                return (
+                                  <button
+                                    key={optIdx}
+                                    onClick={() => handleAnswerChange(q.id, optLetter)}
+                                    className={`w-full text-left p-3 rounded-lg border-2 transition-all text-sm ${
+                                      isSelected 
+                                        ? 'border-sky-500 bg-sky-50 text-sky-900' 
+                                        : 'border-gray-200 bg-white hover:border-sky-300 hover:bg-sky-50/50'
+                                    }`}
+                                  >
+                                    <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full mr-2 text-xs font-bold ${
+                                      isSelected ? 'bg-sky-500 text-white' : 'bg-gray-100 text-gray-600'
+                                    }`}>
+                                      {optLetter}
+                                    </span>
+                                    {opt.substring(2).trim()}
+                                  </button>
+                                );
+                              })}
                             </div>
                           )}
 
-                          {/* Answer Input */}
-                          {(q.type === 'map_labeling' || q.type === 'matching') ? (
-                            <Input
-                              value={answers[q.id] || ''}
-                              onChange={(e) => handleAnswerChange(q.id, e.target.value.toUpperCase())}
-                              placeholder="Letter (A-H)"
-                              className="w-24 text-center text-sm font-semibold"
-                              maxLength={1}
-                            />
-                          ) : (
+                          {/* Matching statements display - Show for ALL matching questions in Part 3 */}
+                          {q.type === 'matching' && (
+                            <>
+                              {idx === 0 && (
+                                <div className="mb-3 bg-amber-50 p-3 rounded-lg border border-amber-200 text-xs">
+                                  <p className="font-semibold mb-2 text-amber-800">Choose from statements A-H:</p>
+                                  <div className="grid grid-cols-1 gap-1 text-gray-700">
+                                    <div><strong>A</strong> It's easy to find out how.</div>
+                                    <div><strong>B</strong> This should be improved in the future.</div>
+                                    <div><strong>C</strong> It may not work with all products.</div>
+                                    <div><strong>D</strong> Retailers should do more to encourage this.</div>
+                                    <div><strong>E</strong> More financial support is needed for this.</div>
+                                    <div><strong>F</strong> Most people know little about this.</div>
+                                    <div><strong>G</strong> There should be stricter regulations about this.</div>
+                                    <div><strong>H</strong> This could be dangerous.</div>
+                                  </div>
+                                </div>
+                              )}
+                              <div className="flex items-center gap-2 mt-2">
+                                {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(letter => (
+                                  <button
+                                    key={letter}
+                                    onClick={() => handleAnswerChange(q.id, letter)}
+                                    className={`w-8 h-8 rounded-lg font-bold text-sm transition-all ${
+                                      answers[q.id]?.toUpperCase() === letter
+                                        ? 'bg-sky-500 text-white'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-sky-100'
+                                    }`}
+                                  >
+                                    {letter}
+                                  </button>
+                                ))}
+                              </div>
+                            </>
+                          )}
+
+                          {/* Map labeling answer buttons */}
+                          {q.type === 'map_labeling' && (
+                            <div className="flex items-center gap-2 mt-2">
+                              {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map(letter => (
+                                <button
+                                  key={letter}
+                                  onClick={() => handleAnswerChange(q.id, letter)}
+                                  className={`w-8 h-8 rounded-lg font-bold text-sm transition-all ${
+                                    answers[q.id]?.toUpperCase() === letter
+                                      ? 'bg-sky-500 text-white'
+                                      : 'bg-gray-100 text-gray-600 hover:bg-sky-100'
+                                  }`}
+                                >
+                                  {letter}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Text input for other question types */}
+                          {!['multiple_choice', 'multiple_choice_two', 'matching', 'map_labeling'].includes(q.type) && (
                             <Input
                               value={answers[q.id] || ''}
                               onChange={(e) => handleAnswerChange(q.id, e.target.value)}
