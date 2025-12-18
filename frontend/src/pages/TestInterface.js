@@ -879,29 +879,221 @@ function ElevenLabsExaminer() {
               </Card>
             </div>
           </div>
+        ) : testType === 'listening' ? (
+          /* LISTENING TEST - New Two-Column Layout like Reading */
+          <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-220px)] lg:h-[calc(100vh-220px)] mb-20">
+            {/* Left Column - Audio Player (Compact top bar style) */}
+            <div className="lg:w-1/4 flex flex-col gap-4">
+              {/* Audio Player Card */}
+              <Card className="p-4 bg-gradient-to-br from-blue-500 to-cyan-600 text-white">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-2xl">🎧</span>
+                  <h3 className="font-bold text-lg">
+                    Part {Math.floor(currentQuestion / 10) + 1}
+                  </h3>
+                </div>
+                <audio
+                  ref={listeningAudioRef}
+                  src={test.sections?.[Math.floor(currentQuestion / 10)]?.audio_url}
+                  onEnded={() => setListeningAudioPlaying(false)}
+                  onPlay={() => setListeningAudioPlaying(true)}
+                  onPause={() => setListeningAudioPlaying(false)}
+                  controls
+                  className="w-full rounded"
+                  style={{height: '40px'}}
+                />
+                <p className="text-xs text-white/80 mt-2">
+                  {test.sections?.[Math.floor(currentQuestion / 10)]?.context}
+                </p>
+              </Card>
+
+              {/* Parts Navigator - Compact like Reading */}
+              <Card className="p-3">
+                <h3 className="font-semibold text-gray-700 text-sm mb-2">Parts</h3>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4].map((part) => {
+                    const partQuestions = test.questions?.slice((part - 1) * 10, part * 10) || [];
+                    const answeredCount = partQuestions.filter(q => answers[q.id]).length;
+                    return (
+                      <button
+                        key={part}
+                        onClick={() => setCurrentQuestion((part - 1) * 10)}
+                        className={`flex-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                          Math.floor(currentQuestion / 10) + 1 === part
+                            ? 'bg-sky-500 text-white'
+                            : answeredCount === 10
+                            ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                            : 'bg-white text-gray-600 hover:bg-gray-100 border'
+                        }`}
+                      >
+                        <div>P{part}</div>
+                        <div className="text-[10px] opacity-75">
+                          {answeredCount}/10
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
+
+              {/* Question Numbers Grid - Compact */}
+              <Card className="p-3 flex-1 overflow-y-auto">
+                <h3 className="font-semibold text-gray-700 text-sm mb-2">Questions</h3>
+                <div className="grid grid-cols-5 gap-1">
+                  {test.questions?.slice(
+                    Math.floor(currentQuestion / 10) * 10,
+                    (Math.floor(currentQuestion / 10) + 1) * 10
+                  ).map((q, idx) => {
+                    const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
+                    const isAnswered = !!answers[q.id];
+                    return (
+                      <button
+                        key={q.id}
+                        onClick={() => {
+                          const el = document.getElementById(`q-${questionNumber}`);
+                          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }}
+                        className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
+                          isAnswered
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {questionNumber + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
+            </div>
+
+            {/* Right Column - Questions (~75% width) */}
+            <div className="lg:w-3/4 flex flex-col">
+              <Card className="flex-1 overflow-hidden flex flex-col">
+                {/* Questions Header */}
+                <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
+                  <h2 className="text-lg font-bold text-gray-900">
+                    Part {Math.floor(currentQuestion / 10) + 1} - Questions {Math.floor(currentQuestion / 10) * 10 + 1}-{(Math.floor(currentQuestion / 10) + 1) * 10}
+                  </h2>
+                </div>
+
+                {/* Questions List - Scrollable */}
+                <div className="flex-1 overflow-y-auto p-4">
+                  <div className="space-y-4">
+                    {test.questions?.slice(
+                      Math.floor(currentQuestion / 10) * 10,
+                      (Math.floor(currentQuestion / 10) + 1) * 10
+                    ).map((q, idx) => {
+                      const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
+                      const isAnswered = !!answers[q.id];
+                      return (
+                        <div 
+                          key={q.id}
+                          id={`q-${questionNumber}`}
+                          className={`p-3 rounded-lg border-l-4 ${
+                            isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
+                          } shadow-sm`}
+                        >
+                          <p className="text-sm font-medium text-gray-900 mb-2">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                              {questionNumber + 1}
+                            </span>
+                            {q.question}
+                          </p>
+                          
+                          {/* Map labeling special display */}
+                          {q.type === 'map_labeling' && questionNumber === 15 && (
+                            <div className="mt-3 mb-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                              <p className="text-center text-gray-900 font-bold mb-2">Farley House Map</p>
+                              <img 
+                                src="https://customer-assets.emergentagent.com/job_ieltsace/artifacts/nh3dkxxe_Screenshot%202025-11-22%20at%2015.34.39.png" 
+                                alt="Farley House Map"
+                                className="w-full h-auto max-w-md mx-auto"
+                              />
+                            </div>
+                          )}
+                          
+                          {/* Matching statements display */}
+                          {q.type === 'matching' && questionNumber === 30 && (
+                            <div className="mt-3 mb-3 bg-gray-50 p-3 rounded-lg border border-gray-200 text-xs">
+                              <p className="font-semibold mb-2">Choose from statements A-H:</p>
+                              <div className="grid grid-cols-1 gap-1 text-gray-600">
+                                <div><strong>A</strong> Easy to find out how</div>
+                                <div><strong>B</strong> Should be improved</div>
+                                <div><strong>C</strong> May not work with all products</div>
+                                <div><strong>D</strong> Retailers should encourage</div>
+                                <div><strong>E</strong> More financial support needed</div>
+                                <div><strong>F</strong> Most people know little</div>
+                                <div><strong>G</strong> Stricter regulations needed</div>
+                                <div><strong>H</strong> Could be dangerous</div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Answer Input */}
+                          {(q.type === 'map_labeling' || q.type === 'matching') ? (
+                            <Input
+                              value={answers[q.id] || ''}
+                              onChange={(e) => handleAnswerChange(q.id, e.target.value.toUpperCase())}
+                              placeholder="Letter (A-H)"
+                              className="w-24 text-center text-sm font-semibold"
+                              maxLength={1}
+                            />
+                          ) : (
+                            <Input
+                              value={answers[q.id] || ''}
+                              onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                              placeholder="Type your answer..."
+                              className="mt-2 text-sm h-8"
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Navigation Footer */}
+                <div className="p-3 border-t bg-gray-50">
+                  <div className="flex justify-between items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentQuestion(Math.max(0, Math.floor(currentQuestion / 10) * 10 - 10))}
+                      disabled={currentQuestion < 10}
+                      className="text-xs"
+                    >
+                      <ChevronLeft className="w-3 h-3 mr-1" />
+                      Prev
+                    </Button>
+                    
+                    {currentQuestion < 30 ? (
+                      <Button
+                        size="sm"
+                        onClick={() => setCurrentQuestion((Math.floor(currentQuestion / 10) + 1) * 10)}
+                        className="primary-gradient text-white text-xs"
+                      >
+                        Next
+                        <ChevronRight className="w-3 h-3 ml-1" />
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        onClick={handleSubmit}
+                        disabled={submitting}
+                        className="bg-green-600 text-white hover:bg-green-700 text-xs"
+                      >
+                        {submitting ? 'Submitting...' : 'Submit'}
+                        <Send className="w-3 h-3 ml-1" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
         ) : (
         <div className="grid lg:grid-cols-4 gap-6">
-          {/* Section Navigator for Listening */}
-          {testType === 'listening' ? (
-            <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
-              <h3 className="font-semibold text-gray-900 mb-4">Parts</h3>
-              <div className="space-y-2">
-                {[1, 2, 3, 4].map((part) => (
-                  <button
-                    key={part}
-                    onClick={() => setCurrentQuestion((part - 1) * 10)}
-                    className={`w-full p-3 rounded-lg font-semibold transition-colors text-left ${
-                      Math.floor(currentQuestion / 10) + 1 === part
-                        ? 'bg-sky-500 text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    Part {part} (Q {(part - 1) * 10 + 1}-{part * 10})
-                  </button>
-                ))}
-              </div>
-            </Card>
-          ) : (
             /* Question Navigator for other tests */
             <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
               <h3 className="font-semibold text-gray-900 mb-4">Questions</h3>
@@ -924,11 +1116,10 @@ function ElevenLabsExaminer() {
                 ))}
               </div>
             </Card>
-          )}
 
           {/* Question Content */}
           <Card className="lg:col-span-3 p-8">
-            {testType === 'listening' ? (
+            {(
               /* Show all questions in the current section for Listening */
               <div className="space-y-6">
                 {/* Audio Player at Top */}
