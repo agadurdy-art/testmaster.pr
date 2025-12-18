@@ -186,7 +186,7 @@ export default function Results({ user }) {
             {result.feedback.skill_breakdown?.filter(s => s.tip && (s.correct / s.total) < 0.7).length > 0 && (
               <div className="mt-4 space-y-3">
                 <h4 className="font-semibold text-gray-800 flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4" /> Focused Practice Recommendations
+                  <TrendingUp className="w-4 h-4" /> {t('practiceRecommendations')}
                 </h4>
                 {result.feedback.skill_breakdown.filter(s => s.tip && (s.correct / s.total) < 0.7).slice(0, 3).map((skill, idx) => (
                   <div key={idx} className="bg-white/60 rounded-lg p-3 border border-gray-100">
