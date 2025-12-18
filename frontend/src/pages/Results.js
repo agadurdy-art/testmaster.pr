@@ -157,7 +157,7 @@ export default function Results({ user }) {
               <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
                 <div className="flex items-center gap-2 mb-2">
                   <Target className="w-5 h-5 text-amber-600" />
-                  <h4 className="font-semibold text-amber-800">Areas to Improve</h4>
+                  <h4 className="font-semibold text-amber-800">{t('areasToImprove')}</h4>
                 </div>
                 <div className="space-y-2">
                   {result.feedback.skill_breakdown?.filter(s => (s.correct / s.total) < 0.5).slice(0, 3).map((skill, idx) => (
