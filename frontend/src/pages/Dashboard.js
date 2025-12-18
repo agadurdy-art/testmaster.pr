@@ -118,14 +118,48 @@ export default function Dashboard({ user, onLogout }) {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
             <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
+              {/* Main Navigation */}
+              <Button variant="ghost" className="w-full justify-start text-gray-600 font-medium" onClick={() => { navigate('/dashboard'); setMobileMenuOpen(false); }}>
+                <LayoutDashboard className="w-4 h-4 mr-3" />Dashboard
+              </Button>
+              <hr className="my-2" />
+              {/* Test Modules */}
+              <p className="text-xs text-gray-400 px-3 py-1">Practice Tests</p>
               {testModules.map((m) => (
                 <Button key={m.type} variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { startTest(m.type); setMobileMenuOpen(false); }}>
                   <m.icon className="w-4 h-4 mr-3" />{m.title}
                 </Button>
               ))}
               <hr className="my-2" />
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}><User className="w-4 h-4 mr-3" />Profile</Button>
-              <Button variant="ghost" className="w-full justify-start text-red-500" onClick={onLogout}><LogOut className="w-4 h-4 mr-3" />Logout</Button>
+              {/* Learning & Resources */}
+              <p className="text-xs text-gray-400 px-3 py-1">Learning</p>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/vocab-grammar'); setMobileMenuOpen(false); }}>
+                <BookOpen className="w-4 h-4 mr-3" />Vocab & Grammar
+              </Button>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/writing-practice'); setMobileMenuOpen(false); }}>
+                <FileText className="w-4 h-4 mr-3" />Writing Practice
+              </Button>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/speaking-practice'); setMobileMenuOpen(false); }}>
+                <MessageSquare className="w-4 h-4 mr-3" />Speaking Practice
+              </Button>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/tips'); setMobileMenuOpen(false); }}>
+                <Sparkles className="w-4 h-4 mr-3" />Tips & Strategies
+              </Button>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/courses'); setMobileMenuOpen(false); }}>
+                <Award className="w-4 h-4 mr-3" />Courses
+              </Button>
+              <hr className="my-2" />
+              {/* Account */}
+              <p className="text-xs text-gray-400 px-3 py-1">Account</p>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/pricing'); setMobileMenuOpen(false); }}>
+                <CreditCard className="w-4 h-4 mr-3" />Pricing
+              </Button>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}>
+                <User className="w-4 h-4 mr-3" />Profile
+              </Button>
+              <Button variant="ghost" className="w-full justify-start text-red-500" onClick={onLogout}>
+                <LogOut className="w-4 h-4 mr-3" />Logout
+              </Button>
             </div>
           </div>
         )}
