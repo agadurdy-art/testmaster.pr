@@ -87,6 +87,7 @@ export default function VocabGrammarCourse({ user }) {
   const [matchingSelectedWord, setMatchingSelectedWord] = useState(null);
   const [matchingMatches, setMatchingMatches] = useState({});
   const [shuffledDefs, setShuffledDefs] = useState([]);
+  const [mcqShuffledOptions, setMcqShuffledOptions] = useState([]);
   
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
