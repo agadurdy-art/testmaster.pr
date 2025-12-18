@@ -1094,7 +1094,7 @@ function ElevenLabsExaminer() {
           </div>
         ) : (
         <div className="grid lg:grid-cols-4 gap-6">
-            /* Question Navigator for other tests */
+            {/* Question Navigator for other tests */}
             <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
               <h3 className="font-semibold text-gray-900 mb-4">Questions</h3>
               <div className="grid grid-cols-5 lg:grid-cols-4 gap-2">
