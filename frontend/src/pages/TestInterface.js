@@ -13,7 +13,7 @@ import { useI18n } from '../lib/i18n';
 export default function TestInterface({ user }) {
   const { testType } = useParams();
   const navigate = useNavigate();
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const [test, setTest] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentPassage, setCurrentPassage] = useState(1); // For reading test passage navigation
