@@ -1191,18 +1191,26 @@ function ElevenLabsExaminer() {
                           {q.type === 'matching' && (
                             <>
                               {idx === 0 && (
-                                <div className="mb-3 bg-amber-50 p-3 rounded-lg border border-amber-200 text-xs">
-                                  <p className="font-semibold mb-2 text-amber-800">Choose from statements A-H:</p>
-                                  <div className="grid grid-cols-1 gap-1 text-gray-700">
-                                    <div><strong>A</strong> It's easy to find out how.</div>
-                                    <div><strong>B</strong> This should be improved in the future.</div>
-                                    <div><strong>C</strong> It may not work with all products.</div>
-                                    <div><strong>D</strong> Retailers should do more to encourage this.</div>
-                                    <div><strong>E</strong> More financial support is needed for this.</div>
-                                    <div><strong>F</strong> Most people know little about this.</div>
-                                    <div><strong>G</strong> There should be stricter regulations about this.</div>
-                                    <div><strong>H</strong> This could be dangerous.</div>
+                                <div className="mb-3 bg-amber-50 p-4 rounded-lg border border-amber-200">
+                                  <p className="font-semibold text-amber-900 mb-1 text-sm">Questions 25-30</p>
+                                  <p className="text-xs text-gray-700 mb-3">
+                                    What is the students' opinion about each of the following food trends?<br/>
+                                    Choose <strong>SIX</strong> answers from the box and write the correct letter, <strong>A-H</strong>, next to Questions 25-30.
+                                  </p>
+                                  <div className="bg-white p-3 rounded-lg border border-gray-300">
+                                    <p className="font-bold text-center text-gray-800 mb-2">Opinions</p>
+                                    <div className="grid grid-cols-1 gap-1 text-sm text-gray-700">
+                                      <div><strong>A</strong> This is only relevant to young people.</div>
+                                      <div><strong>B</strong> This may have disappointing results.</div>
+                                      <div><strong>C</strong> This already seems to be widespread.</div>
+                                      <div><strong>D</strong> Retailers should do more to encourage this.</div>
+                                      <div><strong>E</strong> More financial support is needed for this.</div>
+                                      <div><strong>F</strong> Most people know little about this.</div>
+                                      <div><strong>G</strong> There should be stricter regulations about this.</div>
+                                      <div><strong>H</strong> This could be dangerous.</div>
+                                    </div>
                                   </div>
+                                  <p className="font-bold text-gray-800 mt-3 text-sm">Food trends</p>
                                 </div>
                               )}
                               <div className="flex items-center gap-2 mt-2">
