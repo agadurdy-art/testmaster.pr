@@ -290,7 +290,11 @@ export default function Dashboard({ user, onLogout }) {
                   const moduleConfig = testModules.find(m => m.type === attempt.test_type);
                   const Icon = moduleConfig?.icon || BookOpen;
                   return (
-                    <div key={idx} className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                    <div 
+                      key={idx} 
+                      className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
+                      onClick={() => attempt.id && navigate(`/results/${attempt.id}`)}
+                    >
                       <div className="flex items-center gap-4">
                         <div className={`w-12 h-12 rounded-xl ${moduleConfig?.color || 'bg-gray-500'} flex items-center justify-center shadow-lg`}>
                           <Icon className="w-6 h-6 text-white" />
@@ -300,12 +304,15 @@ export default function Dashboard({ user, onLogout }) {
                           <p className="text-sm text-gray-500">{attempt.completed_at ? new Date(attempt.completed_at).toLocaleDateString() : 'Recently'}</p>
                         </div>
                       </div>
-                      <div className={`px-4 py-2 rounded-xl font-bold ${
-                        attempt.band_score >= 7 ? 'bg-green-100 text-green-700' :
-                        attempt.band_score >= 6 ? 'bg-blue-100 text-blue-700' :
-                        attempt.band_score >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
-                      }`}>
-                        Band {attempt.band_score?.toFixed(1) || '-'}
+                      <div className="flex items-center gap-3">
+                        <div className={`px-4 py-2 rounded-xl font-bold ${
+                          attempt.band_score >= 7 ? 'bg-green-100 text-green-700' :
+                          attempt.band_score >= 6 ? 'bg-blue-100 text-blue-700' :
+                          attempt.band_score >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
+                        }`}>
+                          Band {attempt.band_score?.toFixed(1) || '-'}
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-gray-400" />
                       </div>
                     </div>
                   );
