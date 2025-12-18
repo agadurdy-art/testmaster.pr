@@ -34,7 +34,7 @@ export default function Results({ user }) {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-500">Loading results...</p>
+          <p className="text-gray-500">{t('loading')}</p>
         </div>
       </div>
     );
