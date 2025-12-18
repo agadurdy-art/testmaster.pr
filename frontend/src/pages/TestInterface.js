@@ -81,25 +81,22 @@ function ElevenLabsExaminer() {
   const loadTest = async () => {
     try {
       const tests = await getTests(testType);
-      setAvailableTests(tests);
-      if (tests.length > 0) {
-        let selectedTest = tests[0];
-
-        if (testType === 'reading') {
-          // Prefer a test titled with 'Test 1' if available; otherwise use first
-          const test1 = tests.find(t => t.title && t.title.toLowerCase().includes('test 1'));
-          if (test1) {
-            selectedTest = test1;
-          }
-        }
-
-        if (testType === 'listening') {
-          // Prefer Test 2 if available (by title), otherwise fall back to first
-          const test2 = tests.find(t => t.title && t.title.includes('Test 2'));
-          if (test2) {
-            selectedTest = test2;
-          }
-        }
+      
+      // Sort tests by test number extracted from title (Test 1 before Test 2, etc.)
+      const sortedTests = [...tests].sort((a, b) => {
+        const getTestNumber = (title) => {
+          if (!title) return 999;
+          const match = title.match(/Test\s*(\d+)/i);
+          return match ? parseInt(match[1], 10) : 999;
+        };
+        return getTestNumber(a.title) - getTestNumber(b.title);
+      });
+      
+      setAvailableTests(sortedTests);
+      
+      if (sortedTests.length > 0) {
+        // Always select the first test (Test 1) after sorting
+        const selectedTest = sortedTests[0];
 
         setTest(selectedTest);
         setTimeLeft(selectedTest.duration * 60);
