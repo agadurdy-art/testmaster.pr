@@ -426,7 +426,8 @@ function ElevenLabsExaminer() {
         test_id: test.id,
         test_type: testType,
         answers: formattedAnswers,
-        time_taken: (test.duration * 60) - timeLeft
+        time_taken: (test.duration * 60) - timeLeft,
+        language: language
       });
 
       toast.success('Test submitted successfully!');
