@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
@@ -6,12 +6,15 @@ import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { 
   BookOpen, Headphones, Mic, PenTool, CheckCircle, Clock, Target, Trophy,
-  Sparkles, GraduationCap, Award, ArrowRight, Star, Users, Zap, Play
+  Sparkles, GraduationCap, Award, ArrowRight, Star, Users, Zap, Play, X, AlertTriangle
 } from 'lucide-react';
 import { registerUser, loginUser } from '../lib/api';
 import { toast } from 'sonner';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
+
+const LEVEL_TEST_STORAGE_KEY = 'ielts_ace_level_test_used';
+const MAX_SESSION_SECONDS = 240; // 4 minutes
 
 export default function LandingPage({ onLogin, user }) {
   const navigate = useNavigate();
@@ -21,6 +24,96 @@ export default function LandingPage({ onLogin, user }) {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [processingSocial, setProcessingSocial] = useState(false);
+  
+  // Level Test Widget States
+  const [showLevelTest, setShowLevelTest] = useState(false);
+  const [levelTestUsed, setLevelTestUsed] = useState(false);
+  const [showUsedWarning, setShowUsedWarning] = useState(false);
+  const [timerSeconds, setTimerSeconds] = useState(MAX_SESSION_SECONDS);
+  const [timerActive, setTimerActive] = useState(false);
+  const timerIntervalRef = useRef(null);
+  const widgetContainerRef = useRef(null);
+
+  // Check if device has already used the free level test
+  useEffect(() => {
+    const used = localStorage.getItem(LEVEL_TEST_STORAGE_KEY);
+    if (used === 'true') {
+      setLevelTestUsed(true);
+    }
+  }, []);
+
+  // Timer countdown effect
+  useEffect(() => {
+    if (timerActive && timerSeconds > 0) {
+      timerIntervalRef.current = setInterval(() => {
+        setTimerSeconds(prev => {
+          if (prev <= 1) {
+            clearInterval(timerIntervalRef.current);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+      }
+    };
+  }, [timerActive]);
+
+  // When timer reaches 0 or widget closes, redirect to registration
+  const handleLevelTestEnd = useCallback(() => {
+    setShowLevelTest(false);
+    setTimerActive(false);
+    localStorage.setItem(LEVEL_TEST_STORAGE_KEY, 'true');
+    setLevelTestUsed(true);
+    // Redirect to registration
+    setAuthMode('signup');
+    setShowAuth(true);
+  }, []);
+
+  // Handle starting the level test
+  const handleStartLevelTest = () => {
+    if (levelTestUsed) {
+      setShowUsedWarning(true);
+      return;
+    }
+    setTimerSeconds(MAX_SESSION_SECONDS);
+    setShowLevelTest(true);
+    setTimerActive(true);
+  };
+
+  // Format timer display
+  const formatTimer = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Load ElevenLabs widget script when modal opens
+  useEffect(() => {
+    if (showLevelTest && widgetContainerRef.current) {
+      // Create the widget element
+      const widget = document.createElement('elevenlabs-convai');
+      widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
+      widgetContainerRef.current.appendChild(widget);
+
+      // Load the script if not already loaded
+      if (!document.querySelector('script[src*="elevenlabs/convai-widget-embed"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+
+      return () => {
+        if (widgetContainerRef.current) {
+          widgetContainerRef.current.innerHTML = '';
+        }
+      };
+    }
+  }, [showLevelTest]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
