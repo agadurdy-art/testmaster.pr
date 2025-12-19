@@ -1,179 +1,139 @@
-<analysis>**original_problem_statement:** The user's goal is to build a comprehensive IELTS practice platform.
+<analysis>**original_problem_statement:**
+The user's initial goal is to build a comprehensive IELTS practice platform.
 
-In this session, the user's requests were:
-1.  Implement a 14-lesson Beginner English Course using the provided syllabus.
-2.  Fix an issue where academic speaking test results only showed a band score, and enhance it to provide detailed, IELTS Teacher style feedback with criteria breakdown and model answers.
-3.  Remove the non-functional ElevenLabs AI speaking widget from the dashboard and all associated code.
-4.  Implement a credit-check system for the AI Speaking examiner: if a user has 0 credits, they should be redirected to the pricing page and then returned to their task after payment.
-5.  Call the deployer agent and run a health check to verify deployment readiness.
-6.  Implement a new, comprehensive 17-module IELTS Mastery Blueprint course (for Band 4.5-6.5) using a large syllabus provided by the user.
+In this session, the user provided a new, detailed 20-module syllabus for an Advanced IELTS Mastery course targeting learners aiming for Band 7.0-9.0. This new feature request overrides the previous plan to test the existing IELTS Mastery Blueprint course.
 
 **PRODUCT REQUIREMENTS:**
-- A functional 14-lesson beginner course accessible from the dashboard.
-- A detailed speaking test results page that provides in-depth feedback on fluency, pronunciation, grammar, and lexical resource, including model answers.
-- Complete removal of the broken ElevenLabs widget.
-- A user flow that directs users with insufficient credits for premium features to the pricing page.
-- A new, fully-featured IELTS Mastery course with 17 modules covering advanced topics.
-- The application must be in a healthy, deployable state.
+- A new, fully-featured Advanced IELTS Mastery course with 20 modules covering themes like Technology, Environment, Globalisation, Health, Crime, and Media.
+- Each module must be structured with learning goals, advanced vocabulary, grammar lessons, a reading passage with questions, speaking prompts, and a Writing Task 2 with analysis.
+- The course should be accessible from the dashboard.
 
 **User's preferred language**: English
 
 **what currently exists?**
-- A full-stack application (React/FastAPI/MongoDB).
-- Two new, fully implemented courses are now part of the application: a 14-lesson Beginner English course and a 17-module IELTS Mastery course. Both are accessible via cards on the dashboard.
-- The Speaking Test results page has been overhauled to display detailed, AI-generated feedback with a criteria breakdown and model answers.
-- The broken ElevenLabs widget and its associated code have been completely removed from the application.
-- A credit-check and redirect-to-pricing flow has been implemented for the academic speaking test interface.
-- A comprehensive health check was performed, confirming the application is stable and all services are running correctly.
+A full-stack application (React/FastAPI/MongoDB) with two existing courses: a 14-lesson Beginner English course and a 17-module IELTS Mastery course (for Band 4.5-6.5). The agent has just begun implementing the new Advanced IELTS Mastery course by creating an empty seed file.
 
 **Last working item**:
-- **Last item agent was working**: The agent had just finished the full implementation of the 17-module IELTS Mastery Blueprint course. This included creating the frontend component (), seeding all 17 modules of data (), adding the backend API endpoint, and adding a card to the dashboard. The agent was about to begin testing.
+- **Last item agent was working**: The agent had just started Phase 1 of implementing the new Advanced IELTS Mastery course, as per the user's explicit request. It created the Python script file  to hold the data for the 20 new modules. The agent's next step was to populate this file and then create the backend API endpoint.
 - **Status**: IN PROGRESS
 - **Agent Testing Done**: N
-- **Which testing method agent to use?**: Frontend testing agent. This is a very large and complex new feature with multiple interactive elements (quizzes, vocabulary, recording, etc.) that require thorough end-to-end verification.
+- **Which testing method agent to use?**: both. This is a major new feature. The backend testing agent should be used after the API and seeding are complete. The frontend testing agent should be used after the UI is developed.
 - **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-- **Issue 1 (P2): PayPal webhook delivery is failing.**
-- **Issue 2 (P2): SendGrid emails may be delivered to the spam folder.**
-- **Issue 3 (P3): User needs to verify email verification and password reset flows.**
+- **Issue 1 (P0):** Implement the new 20-module Advanced IELTS Mastery course.
 
 **Issues Detail:**
-- **Issue 1: PayPal webhook delivery is failing.**
-    - **Attempted fixes**: None.
-    - **Status**: NOT STARTED
-    - **Is recurring issue?**: N
-    - **Should Test frontend/backend/both after fix?**: Backend
-    - **Blocked on other issue**: None
-- **Issue 2: SendGrid emails may be delivered to the spam folder.**
-    - **Attempted fixes**: None.
-    - **Status**: NOT STARTED
-    - **Is recurring issue?**: N
-    - **Should Test frontend/backend/both after fix?**: Backend
-    - **Blocked on other issue**: None
-- **Issue 3: User needs to verify email verification and password reset flows.**
-    - **Attempted fixes**: None.
-    - **Status**: NOT STARTED
+- **Issue 1: Implement the new 20-module Advanced IELTS Mastery course.**
+    - **Attempted fixes**: None. Work has just commenced.
+    - **Next debug checklist**:
+        1.  Open .
+        2.  Populate the file with the full 20-module syllabus provided by the user in the chat history.
+        3.  Modify  to add a new API endpoint (e.g., ) to fetch this data.
+        4.  Add a command to run the new seed script in .
+    - **Why fix this issue and what will be achieved with the fix?**: This is the current, high-priority feature requested by the user. Completing it will add a major new course to the platform.
+    - **Status**: IN PROGRESS
     - **Is recurring issue?**: N
     - **Should Test frontend/backend/both after fix?**: Both
     - **Blocked on other issue**: None
 
 **In progress Task List**:
-- **Task 1 (P0): Verify IELTS Mastery Course functionality.**
-    - **Where to resume**: Invoke the frontend testing agent to test the new IELTS Mastery course. The test plan should cover navigating to the course, selecting different modules, and checking that all components (vocabulary, grammar, reading, speaking, writing) render and function correctly.
-    - **What will be achieved with this?**: This will confirm that the new flagship course is working as expected and ready for users.
+- **Task 1: Implement the Advanced IELTS Mastery course (P0)**
+    - **Where to resume**: The file  is created but empty. The next step is to populate this file with the 20-module syllabus provided by the user, then create the corresponding backend API endpoint in  and add the logic to run the seeder.
+    - **What will be achieved with this?**: The backend foundation for the new advanced course will be established.
     - **Status**: IN PROGRESS
-    - **Should Test frontend/backend/both after fix?**: Frontend
+    - **Should Test frontend/backend/both after fix?**: Backend after this phase, Both after the entire feature is done.
     - **Blocked on something**: None
 
 **Upcoming and Future Tasks**
 - **Upcoming Tasks:**
-    - **(P1) Add Tutorial Video to Landing Page:** As requested in the previous session, remove the now-defunct Free AI Speaking Test section from  and embed a tutorial video in its place.
-    - **(P2) Expand Vietnamese Localization:** Continue translating UI elements in all components.
-    - **(P2) Re-enable Facebook Login:** Un-hide the button in .
-    - **(P3) Add New Practice Tests:** Prepare the structure to add more tests (e.g., Test 3, 4) when the user provides content.
+    - **(P1)** Create the frontend component () to display the new 20-module course.
+    - **(P1)** Add a route in  and a card on the  to access the new course.
+    - **(P2)** Add a Tutorial Video to the Landing Page (carried over from previous session).
 - **Future Tasks:**
+    - Fix failing PayPal webhooks.
+    - Address SendGrid emails going to spam.
+    - Expand Vietnamese Localization.
+    - Re-enable Facebook Login.
+    - User verification of email/password flows.
     - Build a test generator for all skills.
-    - Rename the  MongoDB collection to .
+    - Rename  MongoDB collection to .
     - Enhance the Dashboard to show richer performance summaries.
     - (Optional) Switch to direct Google OAuth.
 
 **Completed work in this session**
-- **IELTS Mastery Course (NEW)**: Implemented a comprehensive 17-module course () for Band 4.5-6.5 learners, including seeding all content and adding a dashboard card.
-- **Beginner English Course (NEW)**: Implemented a 14-lesson beginner course () with content provided by the user, fully tested and verified.
-- **Detailed Speaking Feedback (Overhaul)**: Fixed the academic speaking test results page () to display detailed, AI-generated feedback, including scores for all criteria (fluency, lexical resource, etc.) and a model answer for each question.
-- **ElevenLabs Widget (Removal)**: Completely removed the broken ElevenLabs widget, its associated code from , and script tags from . This resolved a recurring P0 issue.
-- **Credit Check for AI Speaking (NEW)**: Implemented a flow in  and  to check for speaking credits, redirect users to the pricing page if credits are zero, and redirect them back after a successful purchase.
-- **Application Health Check (Done)**: Performed a full manual health check, verifying all services, APIs, database connections, and environment variables are correctly configured and the application is ready for deployment.
+- **Advanced IELTS Mastery Course (Initiated)**: Began implementation by creating the seed file .
 
 **Earlier issues found/mentioned but not fixed**
-- The tasks from the previous handoff that were not addressed are:
-    - **Issue 1**: Add Tutorial Video to Landing Page. This was requested after the agent decided to remove the ElevenLabs widget from the landing page but was not implemented.
-    - **Issue 2**: PayPal webhook delivery failing.
-    - **Issue 3**: SendGrid emails potentially going to spam.
-    - **Issue 4**: Email/password flows need user verification.
+- **Issue 1**: PayPal webhook delivery is failing.
+- **Issue 2**: SendGrid emails may be delivered to the spam folder.
+- **Issue 3**: User needs to verify email verification and password reset flows.
+- **Issue 4**: Add Tutorial Video to Landing Page.
 
 **Known issue recurrence from previous fork**
-- The primary recurring issue from the previous fork, the **ElevenLabs AI Speaking Test widget**, has been **RESOLVED** by complete removal at the user's request.
+- None.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Component and API Creation**: Demonstrated the full flow of adding new features: creating seed data files, adding backend API endpoints, creating new React page components, and integrating them into the main app router and dashboard.
-- **Feature Enhancement**: Modified an existing feature (speaking test results) by updating both the backend AI prompt to generate richer data and the frontend component to display it.
-- **Code Removal and Cleanup**: Successfully removed a broken third-party integration, ensuring all related code in JS components and  was cleaned up.
-- **Conditional Redirect Logic**: Implemented a user flow that redirects users based on application state (credit count) and uses URL query parameters () to manage post-action navigation.
-- **System Health Checks**: Performed a comprehensive manual health check of a full-stack application, verifying services, APIs, environment variables, and dependencies.
+- **Phased Implementation**: The agent correctly broke down the large feature request into manageable, sequential steps (Data seeding -> Backend API -> Frontend Component -> Routing).
+- **Codebase Exploration**: The agent reviewed existing course components () to understand the implementation pattern before starting new work.
 
 **key DB schema**
-- : (New Collection) Stores the 14 lessons for the beginner course.
-- : (New Collection) Stores the 17 modules for the mastery course.
-- : The  object within this collection now stores a much richer structure, including , , , , , and a .
+- : (New Collection, To be created) Will store the 20 modules for the new advanced course.
+- : (Existing)
+- : (Existing)
+- : (Existing)
 
 **changes in tech stack**
 - None.
 
 **All files of reference**
-- : The newly created component for the main course, needs testing.
-- : The data source for the new mastery course.
-- : The component for the completed beginner course.
-- : Contains the updated logic for displaying speaking feedback.
-- : Contains the entry points for the new courses.
-- : Contains all new API endpoints and updated logic.
+- : Newly created file for the course data.
+- : Will need modification for the new API endpoint and seeder.
+- : A good reference for building the new course UI.
 
 **Areas that need refactoring**:
-- None identified in this session. The agent did a good job of creating new, self-contained components for the new features.
+- None identified.
 
 **key api endpoints**
-- : (New) Fetches all lessons for the beginner course.
-- : (New) Fetches all modules for the IELTS mastery course.
-- : The associated prompt was significantly updated to generate detailed feedback and a model answer.
-- : The logic was implicitly updated to save the new, richer  structure.
+- : (Upcoming) To be created to fetch the new course modules.
 
 **Critical Info for New Agent**
-- **Your first task is to verify the IELTS Mastery course.** The implementation is complete, but it's a large feature that hasn't been tested. Use the frontend testing agent to conduct a thorough review.
-- The most significant blocker from the previous session (the broken ElevenLabs widget) is **resolved**. You do not need to worry about it.
-- After verifying the mastery course, your next priority should be the **tutorial video on the landing page**, as this was a user request from the previous session that was missed.
-- The remaining tasks are lower-priority items from the previous handoff (PayPal, SendGrid, etc.).
+- Your primary task is to continue the implementation of the new **Advanced IELTS Mastery** course. The user has provided a very large and detailed 20-module syllabus in the chat history.
+- This new request supersedes the previous handoff's task of testing the old IELTS Mastery Blueprint course.
+- You must resume work by populating the file  with the 20 modules provided by the user. After that, create the backend API endpoint for it in .
 
 **documents and test_reports created in this job**
--  was updated twice to facilitate testing for the Beginner Course and the Speaking Feedback fix.
+- None.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1. **user:** IELTS Mastery Blueprint: Band 4.5–6.5 Full Course is ready... [full 17-module syllabus]
-2. **user:** Call Deployer Agent and Run Health Check to Check for Readiness for Deployment
-3. **user:** when AI speaking examiner has 0 credits, user should be redirected to pricing page. after paying money come back AI Speaking examiner part
-4. **user:** remove elevenlabs AI speaking widget and part from learning part.
-5. **user:** 1. user can not see detailed teacher feedback... 2. user should see detailed teacher feedback... 3. AI teacher feedback should give example answers...
-6. **user:** [finish message from agent]
-7. **user:** 1. beginner course 2. no 3. use it [providing beginner course syllabus]
-8. **user:** [previous agent's finish message]
-9. **user:** in learning part we can use this syllabus for band 4.5 and below...
-10. **user:** 1. remove FREE AI speaking test part. Add tutorial video there...
+- **User:** 4.b 5. a
+- **User:** 1. Advanced IELTS Mastery 2. yes 3.d
+- **User:** [A very large message containing the complete 20-module syllabus for the Advanced IELTS Mastery course, starting with Module 1: The Digital Frontier...]
 
 **Project Health Check:**
-- **Broken**: None. The primary broken component (ElevenLabs widget) was removed.
-- **Mocked**: Facebook Login UI is still hidden.
+- **Broken**: None.
+- **Mocked**: Facebook Login UI is hidden.
 
 **3rd Party Integrations**
-- **OpenAI GPT-4o**: (Uses Emergent LLM Key) For all AI-based evaluations (Writing, Speaking, Reading).
+- **OpenAI GPT-4o**: (Uses Emergent LLM Key) For all AI-based evaluations.
 - **OpenAI TTS**: For text-to-speech pronunciation audio.
 - **OpenAI Whisper**: For speech-to-text transcription.
 - **SendGrid**: Transactional emails.
 - **PayPal**: Payments (Server-side Orders V2 API).
 - **Google Auth (Emergent-managed)**: Continue with Google flow.
 - **Facebook Graph API**: (Integrated but UI disabled) Facebook login.
-- **~~ElevenLabs Convai~~**: **REMOVED**.
 
 **Testing status**
-- **Testing agent used after significant changes**: YES. Used to verify the Beginner Course implementation and the Speaking Test feedback fix.
+- **Testing agent used after significant changes**: NO
 - **Troubleshoot agent used after agent stuck in loop**: NO
 - **Test files created**: []
 - **Known regressions**: None.
 
 **Credentials to test flow:**
-- Register a new user via the UI to access authenticated features like the dashboard, courses, and progress page.
+- Register a new user via the UI to access authenticated features like the dashboard and courses.
 
 **What agent forgot to execute**
-- The agent did not implement the user's request to **add a tutorial video to the landing page** after removing the AI speaking test section. This task was carried over from the previous session's handoff summary and user messages but was overlooked in favor of the new course implementations. It should be prioritized.</analysis>
+- The agent correctly prioritized the user's new, overriding feature request. All previously planned tasks were appropriately postponed.</analysis>
