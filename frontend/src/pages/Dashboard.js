@@ -175,6 +175,31 @@ export default function Dashboard({ user, onLogout }) {
           <p className="text-gray-500">Continue your IELTS preparation journey</p>
         </div>
 
+        {/* My Progress Card - Prominent CTA */}
+        <Card 
+          className="p-5 mb-8 bg-gradient-to-r from-violet-600 to-purple-600 border-0 shadow-xl shadow-purple-200 rounded-2xl cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+          onClick={() => navigate('/progress')}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                <TrendingUp className="w-7 h-7 text-white" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white mb-1">My Progress</h2>
+                <p className="text-violet-200 text-sm">Track your journey, view all feedback & improve</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right hidden sm:block">
+                <p className="text-3xl font-bold text-white">{progress?.total_tests || 0}</p>
+                <p className="text-violet-200 text-xs">Tests Completed</p>
+              </div>
+              <ChevronRight className="w-6 h-6 text-white" />
+            </div>
+          </div>
+        </Card>
+
         {/* Quick Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
