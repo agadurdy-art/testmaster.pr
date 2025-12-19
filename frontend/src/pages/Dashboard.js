@@ -278,11 +278,22 @@ export default function Dashboard({ user, onLogout }) {
         {/* Recent Activity */}
         {hasProgress && progress.recent_attempts?.length > 0 && (
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-200">
-                <TrendingUp className="w-5 h-5 text-white" />
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-200">
+                  <TrendingUp className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => navigate('/progress')}
+                className="text-violet-600 border-violet-200 hover:bg-violet-50"
+              >
+                View All Progress
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
             </div>
             <Card className="bg-white border-0 shadow-lg shadow-gray-100 rounded-2xl overflow-hidden">
               <div className="divide-y divide-gray-100">
