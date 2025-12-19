@@ -2767,8 +2767,9 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_event():
-    """Seed vocab grammar lessons if they don't exist"""
+    """Seed vocab grammar lessons and beginner english lessons if they don't exist"""
     try:
+        # Seed vocab grammar lessons
         count = await db.vocab_grammar_lessons.count_documents({})
         if count == 0:
             logger.info("No vocab grammar lessons found, running seed...")
@@ -2779,6 +2780,18 @@ async def startup_event():
                 logger.error(f"Seed error: {result.stderr}")
         else:
             logger.info(f"Found {count} vocab grammar lessons in database")
+        
+        # Seed beginner english lessons
+        beginner_count = await db.beginner_english_lessons.count_documents({})
+        if beginner_count == 0:
+            logger.info("No beginner english lessons found, running seed...")
+            import subprocess
+            result = subprocess.run(["python", "seed_beginner_english.py"], cwd="/app/backend", capture_output=True, text=True)
+            logger.info(f"Beginner seed output: {result.stdout}")
+            if result.returncode != 0:
+                logger.error(f"Beginner seed error: {result.stderr}")
+        else:
+            logger.info(f"Found {beginner_count} beginner english lessons in database")
     except Exception as e:
         logger.error(f"Startup seed error: {e}")
 
