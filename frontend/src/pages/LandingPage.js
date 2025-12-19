@@ -69,8 +69,9 @@ export default function LandingPage({ onLogin, user }) {
   const handleLevelTestEnd = useCallback(() => {
     setShowLevelTest(false);
     setTimerActive(false);
-    localStorage.setItem(LEVEL_TEST_STORAGE_KEY, 'true');
-    setLevelTestUsed(true);
+    // TEMPORARILY DISABLED for testing
+    // localStorage.setItem(LEVEL_TEST_STORAGE_KEY, 'true');
+    // setLevelTestUsed(true);
     // Redirect to registration
     setAuthMode('signup');
     setShowAuth(true);
