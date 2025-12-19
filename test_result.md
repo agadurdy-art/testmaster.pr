@@ -499,6 +499,20 @@
   test_all: false
   test_priority: "high_first"
 
+## SPEAKING TEST DETAILED FEEDBACK FIX - December 2024:
+## backend:
+##   - task: "Speaking evaluation with model answers"
+##     implemented: true
+##     working: true
+##     file: "backend/server.py"
+##     comment: "Updated evaluate_with_ai() to include model_answer in speaking feedback response"
+## frontend:
+##   - task: "Display detailed speaking feedback on Results page"
+##     implemented: true
+##     working: "needs_testing"
+##     file: "frontend/src/pages/Results.js"
+##     comment: "Updated Speaking Feedback section to show: all criteria scores (Fluency, Vocabulary, Grammar, Pronunciation), detailed feedback per criterion, overall teacher summary, and model answer examples. Need to test full flow."
+
 ## BEGINNER ENGLISH COURSE - December 2024:
 ## backend:
 ##   - task: "Beginner English Course API"
