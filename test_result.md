@@ -102,6 +102,30 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
+# TEST SESSION: Advanced IELTS Mastery Course Implementation
+# Date: 2024-12-19
+# Feature: 20-module Advanced IELTS course for Band 6.0-9.0 learners
+
+## What to Test:
+1. **Backend API**:
+   - GET /api/advanced-mastery/modules - Should return 20 modules
+   - GET /api/advanced-mastery/modules/advanced-module-1 - Should return module details
+   - POST /api/advanced-mastery/evaluate-speaking - AI speaking evaluation
+   - POST /api/advanced-mastery/evaluate-writing - AI writing evaluation
+   - POST /api/advanced-mastery/evaluate-quiz - Quiz submission and scoring
+
+2. **Frontend**:
+   - Dashboard shows "Advanced Mastery" card with "20 modules for Band 7.0-9.0"
+   - /advanced-mastery page displays all 20 modules in grid
+   - Module detail page shows all 6 tabs: Vocabulary, Grammar, Reading, Speaking, Writing, Quiz
+   - Each section displays correct content
+
+3. **Test User**: advancedtest@example.com / Test1234! (email_verified: true)
+
+## Incorporate User Feedback:
+- Ensure AI evaluation works for both speaking and writing
+- Quiz submission should show estimated band score
+
 ## user_problem_statement: "Reading and listening tests: submissions and evaluation must work correctly (exact answer checking)."
 ## backend:
 ##   - task: "Submit and evaluate tests (reading/listening)"
