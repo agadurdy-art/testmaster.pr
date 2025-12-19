@@ -495,10 +495,36 @@
 
 ## test_plan:
   current_focus:
-    - "Free Level Test feature implementation"
+    - "Beginner English Course feature implementation"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
+
+## BEGINNER ENGLISH COURSE - December 2024:
+## backend:
+##   - task: "Beginner English Course API"
+##     implemented: true
+##     working: true
+##     file: "backend/server.py"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: true
+##         agent: "main"
+##         comment: "Created API endpoints /api/beginner-english/lessons, /api/beginner-english/lessons/{id}, /api/beginner-english/evaluate-speaking, /api/beginner-english/evaluate-writing. All 14 lessons seeded successfully. API returns correct data."
+## frontend:
+##   - task: "Beginner English Course UI"
+##     implemented: true
+##     working: "needs_testing"
+##     file: "frontend/src/pages/BeginnerCourse.js"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: true
+##     status_history:
+##       - working: "needs_testing"
+##         agent: "main"
+##         comment: "Created BeginnerCourse.js with 14 lessons covering topics: Family, Daily Life, Food, Work, Education, Travel, Health, Hobbies, Technology, Environment, Money, Housing, Transportation, Weather. Each lesson has: vocabulary section with TTS, grammar explanation with common mistakes, reading comprehension with questions, speaking practice with recording/evaluation, writing practice with AI feedback, and quiz section. Added route /beginner-course and card on Dashboard. Note: ElevenLabs widget error overlay is blocking UI testing - need testing agent to verify."
 
 ## agent_communication:
   - agent: "testing"
