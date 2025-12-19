@@ -752,9 +752,13 @@ function ElevenLabsExaminer() {
                     Credits: <span className="font-bold text-white">{speakingCredits}</span> remaining
                   </p>
                   {!hasFreeTrial && speakingCredits <= 0 && (
-                    <p className="text-yellow-200 text-xs font-semibold">
-                      Get credits to continue practicing
-                    </p>
+                    <Button
+                      size="sm"
+                      onClick={() => navigate('/pricing?from=speaking')}
+                      className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 font-bold shadow-lg"
+                    >
+                      Get Credits to Practice
+                    </Button>
                   )}
                 </div>
               </div>
