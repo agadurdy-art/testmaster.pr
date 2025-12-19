@@ -117,6 +117,13 @@ function ElevenLabsExaminer() {
   };
 
   const handleStartSpeakingSession = async () => {
+    // Check credits first - redirect to pricing if no credits
+    if (!hasFreeTrial && speakingCredits <= 0) {
+      toast.info('You need credits to use AI Speaking examiner. Redirecting to pricing...');
+      navigate('/pricing?from=speaking');
+      return;
+    }
+    
     try {
       const data = await startSpeakingSession(user.email);
       setSpeakingSessionStarted(true);
@@ -141,7 +148,10 @@ function ElevenLabsExaminer() {
       const detail = err?.response?.data?.detail;
       let msg = detail || 'Could not start speaking session. Please try again.';
       if (status === 402) {
-        msg = t('paywallSpeakingNoCredits');
+        // No credits - redirect to pricing
+        toast.error(t('paywallSpeakingNoCredits'));
+        navigate('/pricing?from=speaking');
+        return;
       }
       toast.error(msg);
     }
