@@ -428,10 +428,8 @@ function ElevenLabsExaminer() {
       });
 
       toast.success('Test submitted successfully!');
-      // For objective tests, go to results page; for writing/speaking, stay and show AI feedback
-      if (testType !== 'writing' && testType !== 'speaking') {
-        navigate(`/results/${result.id}`);
-      }
+      // Navigate to results page for all test types
+      navigate(`/results/${result.id}`);
     } catch (error) {
       console.error('Submit error:', error);
       toast.error('Failed to submit test');
