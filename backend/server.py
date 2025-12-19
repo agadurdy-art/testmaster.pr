@@ -1070,15 +1070,51 @@ async def submit_test(submission: SubmitAnswers):
             time_taken=submission.time_taken,
         )
     else:
-        # For writing/speaking, return without score (needs AI evaluation)
+        # For writing/speaking, include AI evaluation feedback
+        feedback_data = {"message": "AI evaluation complete"}
+        band_score = 0.0
+        
+        if submission.test_type == "writing" and submission.writing_feedback:
+            # Extract band scores from writing feedback
+            task1_fb = submission.writing_feedback.get("task1", {})
+            task2_fb = submission.writing_feedback.get("task2", {})
+            task1_band = task1_fb.get("band_score", 0) if task1_fb else 0
+            task2_band = task2_fb.get("band_score", 0) if task2_fb else 0
+            
+            # Calculate overall band (Task 2 is weighted more - 2/3)
+            if task1_band and task2_band:
+                band_score = round((task1_band + task2_band * 2) / 3 * 2) / 2  # Round to nearest 0.5
+            elif task2_band:
+                band_score = task2_band
+            elif task1_band:
+                band_score = task1_band
+            
+            feedback_data = {
+                "message": "Writing evaluated by AI",
+                "writing_feedback": submission.writing_feedback,
+                "task1": task1_fb,
+                "task2": task2_fb,
+            }
+        
+        if submission.test_type == "speaking" and submission.speaking_feedback:
+            # Calculate average band from speaking feedback
+            speaking_bands = [fb.get("band_score", 0) for fb in submission.speaking_feedback.values() if isinstance(fb, dict)]
+            if speaking_bands:
+                band_score = round(sum(speaking_bands) / len(speaking_bands) * 2) / 2
+            
+            feedback_data = {
+                "message": "Speaking evaluated by AI",
+                "speaking_feedback": submission.speaking_feedback,
+            }
+        
         attempt = TestAttempt(
             user_id=submission.user_id,
             test_id=submission.test_id,
             test_type=submission.test_type,
             answers=submission.answers,
-            score=0.0,
-            band_score=0.0,
-            feedback={"message": "Awaiting AI evaluation"},
+            score=band_score * 10,  # Convert to percentage-like score
+            band_score=band_score,
+            feedback=feedback_data,
             time_taken=submission.time_taken,
         )
 
