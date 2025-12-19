@@ -55,46 +55,7 @@ export default function Progress({ user }) {
     }
   };
 
-  const calculateStats = (testAttempts) => {
-    if (!testAttempts.length) return;
-
-    const byType = {};
-    let totalBand = 0;
-    let bandCount = 0;
-
-    testAttempts.forEach(attempt => {
-      const type = attempt.test_type;
-      if (!byType[type]) {
-        byType[type] = { count: 0, totalBand: 0, avgBand: 0 };
-      }
-      byType[type].count++;
-      if (attempt.band_score > 0) {
-        byType[type].totalBand += attempt.band_score;
-        totalBand += attempt.band_score;
-        bandCount++;
-      }
-    });
-
-    // Calculate averages
-    Object.keys(byType).forEach(type => {
-      if (byType[type].count > 0) {
-        byType[type].avgBand = byType[type].totalBand / byType[type].count;
-      }
-    });
-
-    // Get last 5 attempts for trend
-    const recentTrend = testAttempts
-      .filter(a => a.band_score > 0)
-      .slice(0, 5)
-      .map(a => ({ date: a.completed_at, band: a.band_score, type: a.test_type }));
-
-    setStats({
-      totalTests: testAttempts.length,
-      avgBand: bandCount > 0 ? totalBand / bandCount : 0,
-      byType,
-      recentTrend
-    });
-  };
+  // Stats are now calculated by the backend API
 
   const getTypeIcon = (type) => {
     switch (type) {
