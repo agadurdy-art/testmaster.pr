@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
@@ -7,7 +7,7 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import { uploadBankPayment, createPaypalOrder, capturePaypalOrder } from '../lib/api';
 import { useI18n } from '../lib/i18n';
 import { PayPalButtons } from '@paypal/react-paypal-js';
-import { ArrowLeft, Check, Sparkles, Crown, Zap, Star, Building2 } from 'lucide-react';
+import { ArrowLeft, Check, Sparkles, Crown, Zap, Star, Building2, Mic } from 'lucide-react';
 
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 
