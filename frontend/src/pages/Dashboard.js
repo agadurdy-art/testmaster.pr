@@ -268,6 +268,18 @@ export default function Dashboard({ user, onLogout }) {
               <ChevronRight className="w-5 h-5 text-cyan-500 mt-3 group-hover:translate-x-1 transition-transform" />
             </Card>
 
+            {/* AI Speaking Test - ElevenLabs */}
+            <Card className="p-5 bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg shadow-violet-100 rounded-2xl">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-200">
+                <Mic className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-1">AI Speaking Test</h3>
+              <p className="text-sm text-gray-600 mb-3">Talk with AI examiner</p>
+              <div className="flex justify-center">
+                <elevenlabs-convai agent-id="agent_8701kctavvxafxk90czptrbg2p4r"></elevenlabs-convai>
+              </div>
+            </Card>
+
             {/* Vocabulary & Grammar */}
             <Card className="p-5 bg-gradient-to-br from-emerald-50 to-teal-50 border-0 shadow-lg shadow-emerald-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/vocab-grammar')}>
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4 shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform">
