@@ -101,51 +101,39 @@ export default function LandingPage({ onLogin, user }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Track if widget is loaded
+  const [widgetLoaded, setWidgetLoaded] = useState(false);
+
   // Create ElevenLabs widget when modal opens
   useEffect(() => {
     if (showLevelTest && widgetContainerRef.current) {
       const container = widgetContainerRef.current;
+      setWidgetLoaded(false);
       
-      // Clear container
+      // Create the widget element directly
+      const widget = document.createElement('elevenlabs-convai');
+      widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
+      widget.style.width = '100%';
+      widget.style.height = '100%';
+      widget.style.minHeight = '300px';
+      widget.style.display = 'block';
+      widget.style.position = 'relative';
+      widget.style.zIndex = '10';
+      
+      // Clear and append
       container.innerHTML = '';
+      container.appendChild(widget);
       
-      // Function to create the widget element
-      const createWidget = () => {
-        // Create the elevenlabs-convai element
-        const widget = document.createElement('elevenlabs-convai');
-        widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
-        container.appendChild(widget);
-        console.log('ElevenLabs widget element created');
-      };
+      // Mark as loaded after a short delay
+      setTimeout(() => setWidgetLoaded(true), 1000);
       
-      // Check if script is already loaded
-      const existingScript = document.querySelector('script[src*="elevenlabs/convai-widget-embed"]');
-      
-      if (existingScript) {
-        // Script exists, create widget
-        createWidget();
-      } else {
-        // Load script first, then create widget
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-        script.async = true;
-        script.type = 'text/javascript';
-        script.onload = () => {
-          console.log('ElevenLabs script loaded');
-          // Wait a bit for custom element to register
-          setTimeout(createWidget, 500);
-        };
-        script.onerror = (e) => {
-          console.error('Failed to load ElevenLabs script:', e);
-          container.innerHTML = '<p style="color: red; text-align: center;">Failed to load AI examiner. Please refresh the page.</p>';
-        };
-        document.head.appendChild(script);
-      }
+      console.log('ElevenLabs widget created with agent-id: agent_8701kctavvxafxk90czptrbg2p4r');
 
       return () => {
         if (widgetContainerRef.current) {
           widgetContainerRef.current.innerHTML = '';
         }
+        setWidgetLoaded(false);
       };
     }
   }, [showLevelTest]);
