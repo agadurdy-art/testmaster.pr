@@ -656,17 +656,20 @@ export default function BeginnerCourse({ user }) {
   );
 
   // Render Writing Section
-  const renderWriting = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
-      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-        <PenTool className="w-5 h-5 text-orange-600" />
-        Writing Practice
-      </h3>
-      
-      <div className="bg-orange-50 rounded-xl p-5 mb-6">
-        <p className="text-sm text-orange-600 font-medium mb-2">Task:</p>
-        <p className="text-xl text-gray-900 font-medium">{selectedLesson.writing.task}</p>
-      </div>
+  const renderWriting = () => {
+    if (!selectedLesson?.writing) return <Card className="p-6"><Loader2 className="w-6 h-6 animate-spin mx-auto" /></Card>;
+    
+    return (
+      <Card className="p-6 bg-white border-0 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+          <PenTool className="w-5 h-5 text-orange-600" />
+          Writing Practice
+        </h3>
+        
+        <div className="bg-orange-50 rounded-xl p-5 mb-6">
+          <p className="text-sm text-orange-600 font-medium mb-2">Task:</p>
+          <p className="text-xl text-gray-900 font-medium">{selectedLesson.writing.task}</p>
+        </div>
       
       <div className="mb-6">
         <Textarea
