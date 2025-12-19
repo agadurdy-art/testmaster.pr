@@ -101,6 +101,9 @@ export default function LandingPage({ onLogin, user }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // ElevenLabs widget state
+  const [widgetReady, setWidgetReady] = useState(false);
+
   // Load ElevenLabs widget script on component mount (preload)
   useEffect(() => {
     // Preload the ElevenLabs script
@@ -110,35 +113,28 @@ export default function LandingPage({ onLogin, user }) {
       script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
       script.async = true;
       script.type = 'text/javascript';
+      script.onload = () => {
+        console.log('ElevenLabs script loaded successfully');
+        setWidgetReady(true);
+      };
+      script.onerror = (e) => {
+        console.error('Failed to load ElevenLabs script', e);
+      };
       document.head.appendChild(script);
-      console.log('ElevenLabs script preloaded');
+    } else {
+      setWidgetReady(true);
     }
   }, []);
 
-  // Create widget when modal opens
+  // Create widget when modal opens and script is ready
   useEffect(() => {
     if (showLevelTest && widgetContainerRef.current) {
-      console.log('Modal opened, creating ElevenLabs widget...');
+      console.log('Modal opened, widget ready:', widgetReady);
       
-      // Clear any existing content
-      widgetContainerRef.current.innerHTML = '';
-      
-      // Create widget with a delay to ensure script is loaded
-      const createWidget = () => {
-        if (widgetContainerRef.current && customElements.get('elevenlabs-convai')) {
-          console.log('Creating elevenlabs-convai element');
-          const widget = document.createElement('elevenlabs-convai');
-          widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
-          widgetContainerRef.current.innerHTML = '';
-          widgetContainerRef.current.appendChild(widget);
-        } else {
-          console.log('Custom element not ready, retrying in 500ms...');
-          setTimeout(createWidget, 500);
-        }
-      };
-      
-      // Start creating widget after a short delay
-      setTimeout(createWidget, 300);
+      // Insert the widget HTML directly
+      widgetContainerRef.current.innerHTML = `
+        <elevenlabs-convai agent-id="agent_8701kctavvxafxk90czptrbg2p4r"></elevenlabs-convai>
+      `;
 
       return () => {
         if (widgetContainerRef.current) {
@@ -146,7 +142,7 @@ export default function LandingPage({ onLogin, user }) {
         }
       };
     }
-  }, [showLevelTest]);
+  }, [showLevelTest, widgetReady]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
