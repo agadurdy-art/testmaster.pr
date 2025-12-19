@@ -108,6 +108,8 @@ class SubmitAnswers(BaseModel):
     answers: List[Dict[str, Any]]
     time_taken: int
     language: str = "en"  # "en" or "vi" for localized feedback
+    writing_feedback: Optional[Dict[str, Any]] = None  # AI feedback for writing tests
+    speaking_feedback: Optional[Dict[str, Any]] = None  # AI feedback for speaking tests
 
 class EvaluateWriting(BaseModel):
     user_id: str
