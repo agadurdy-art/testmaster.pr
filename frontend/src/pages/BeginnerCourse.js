@@ -730,7 +730,8 @@ export default function BeginnerCourse({ user }) {
         </Button>
       </div>
     </Card>
-  );
+    );
+  };
 
   // Render Quiz Section
   const renderQuiz = () => (
