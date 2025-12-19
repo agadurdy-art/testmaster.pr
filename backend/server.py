@@ -2283,6 +2283,8 @@ async def evaluate_writing_practice(request: WritingPracticeRequest):
         
         prompt = f"""You are a qualified IELTS teacher evaluating this {task_type_desc} submission.
 
+CRITICAL INSTRUCTION: You MUST be consistent and strict across ALL evaluations. Do NOT give better scores on repeated submissions unless the content genuinely improves.
+
 ====================================
 TASK PROMPT:
 ====================================
@@ -2298,6 +2300,13 @@ IELTS TEACHER EVALUATION FRAMEWORK
 ====================================
 
 **STEP 1: VALIDITY CHECK (MANDATORY - Do this FIRST)**
+
+CRITICAL OFF-TOPIC DETECTION:
+- Compare the student's response with the TASK PROMPT above
+- If the student wrote about something COMPLETELY DIFFERENT from what was asked, mark on_topic as FALSE
+- Examples of off-topic: Writing about personal life when asked to describe a graph, discussing unrelated topics, not addressing the question at all
+- An off-topic response MUST receive Band 1.0-2.0 for Task Achievement, regardless of language quality
+
 Apply these rules strictly BEFORE scoring:
 
 For Task 1 (minimum 150 words):
