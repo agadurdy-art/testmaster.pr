@@ -224,7 +224,7 @@ export default function LandingPage({ onLogin, user }) {
               Practice with real exam questions, get instant AI feedback, and track your progress 
               towards your target band score.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-wrap gap-4 justify-center mb-8">
               <Button 
                 data-testid="start-practicing-btn"
                 onClick={handleStartFreePractice} 
@@ -234,15 +234,22 @@ export default function LandingPage({ onLogin, user }) {
                 Start Free Practice
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="px-8 py-6 text-lg border-2 border-violet-200 text-violet-700 hover:bg-violet-50"
-                onClick={handleStartAILevelTest}
-              >
-                <Mic className="w-5 h-5 mr-2" />
-                Try AI Level Test
-              </Button>
+            </div>
+            
+            {/* AI Level Test Widget - Directly Embedded */}
+            <div className="max-w-md mx-auto">
+              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 mb-3 text-center">
+                <div className="flex items-center justify-center gap-2 text-emerald-700 font-semibold mb-1">
+                  <Mic className="w-5 h-5" />
+                  <span>Free AI Speaking Test</span>
+                </div>
+                <p className="text-sm text-gray-600">Click below to talk with our AI examiner</p>
+              </div>
+              
+              {/* ElevenLabs Widget - Direct Embed */}
+              <div className="flex justify-center">
+                <elevenlabs-convai agent-id="agent_8701kctavvxafxk90czptrbg2p4r"></elevenlabs-convai>
+              </div>
             </div>
 
             {/* Trust Badges */}
