@@ -462,7 +462,7 @@ export default function BeginnerCourse({ user }) {
               <span className="font-medium text-gray-700">Meaning:</span> {item.meaning}
             </p>
             <p className="text-gray-600 italic">
-              <span className="font-medium text-gray-700 not-italic">Example:</span> "{item.example}"
+              <span className="font-medium text-gray-700 not-italic">Example:</span> &ldquo;{item.example}&rdquo;
             </p>
           </div>
         ))}
