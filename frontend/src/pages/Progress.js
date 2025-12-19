@@ -29,12 +29,25 @@ export default function Progress({ user }) {
 
   const loadProgress = async () => {
     try {
-      const response = await api.get(`/users/${user.id}/test-history`);
+      const response = await api.get(`/progress/${user.id}`);
       const data = response.data || response;
-      const testAttempts = data.test_attempts || [];
+      
+      // recent_attempts contains the test attempts
+      const testAttempts = data.recent_attempts || [];
       
       setAttempts(testAttempts);
-      calculateStats(testAttempts);
+      
+      // Use stats from API response
+      setStats({
+        totalTests: data.total_tests || 0,
+        avgBand: data.average_band_score || 0,
+        byType: data.by_type || {},
+        recentTrend: testAttempts.slice(0, 5).map(a => ({ 
+          date: a.completed_at, 
+          band: a.band_score, 
+          type: a.test_type 
+        }))
+      });
     } catch (error) {
       console.error('Failed to load progress', error);
     } finally {
