@@ -77,12 +77,41 @@ export default function WritingPractice({ user }) {
     if (wordCount < 50) { toast.error('Please write at least 50 words.'); return; }
     setLoading(true); setTimerActive(false);
     try {
-      const response = await fetch(`${API_URL}/api/writing-practice/evaluate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ task_type: selectedTaskType, prompt: selectedPrompt.prompt, essay, word_count: wordCount }) });
-      if (!response.ok) throw new Error('Evaluation failed');
+      console.log('Submitting essay for evaluation...', { task_type: selectedTaskType, word_count: wordCount });
+      const response = await fetch(`${API_URL}/api/writing-practice/evaluate`, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ 
+          task_type: selectedTaskType, 
+          prompt: selectedPrompt.prompt, 
+          essay, 
+          word_count: wordCount 
+        }) 
+      });
+      
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Evaluation failed:', response.status, errorText);
+        throw new Error(`Evaluation failed: ${response.status}`);
+      }
+      
       const data = await response.json();
-      setFeedback(data); setView('feedback');
+      console.log('Evaluation result:', data);
+      
+      if (!data || typeof data.overall_band === 'undefined') {
+        console.error('Invalid response format:', data);
+        throw new Error('Invalid response format from server');
+      }
+      
+      setFeedback(data); 
+      setView('feedback');
       toast.success('Essay evaluated!');
-    } catch (error) { toast.error('Failed to evaluate essay.'); }
+    } catch (error) { 
+      console.error('Essay submission error:', error);
+      toast.error(`Failed to evaluate essay: ${error.message || 'Unknown error'}`); 
+    }
     finally { setLoading(false); }
   };
 
