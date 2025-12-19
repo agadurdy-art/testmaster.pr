@@ -858,7 +858,37 @@ async def submit_test(submission: SubmitAnswers):
             if q_id:
                 question_text_map[int(q_id)] = q.get("question", "")
 
-        # Strict comparison: answers must match exactly (case-insensitive, trimmed)
+        # Create explanation map from answer_key
+        explanation_map = {}
+        for item in test.get("answer_key", []):
+            q_id = item.get("question_id")
+            if q_id:
+                explanation_map[int(q_id)] = item.get("explanation", "")
+        
+        # Helper function to check if answers match (handles multiple correct answers)
+        def answers_match(user_ans: str, correct_ans: str) -> bool:
+            user_clean = str(user_ans).strip().lower()
+            correct_clean = str(correct_ans).strip().lower()
+            
+            # Exact match
+            if user_clean == correct_clean:
+                return True
+            
+            # Handle alternative answers separated by "/" (e.g., "intestines" or "gut")
+            if "/" in correct_clean:
+                alternatives = [alt.strip() for alt in correct_clean.split("/")]
+                if user_clean in alternatives:
+                    return True
+            
+            # Handle "or" separator (e.g., "intestines or gut")
+            if " or " in correct_clean:
+                alternatives = [alt.strip() for alt in correct_clean.split(" or ")]
+                if user_clean in alternatives:
+                    return True
+            
+            return False
+        
+        # Comparison with support for multiple correct answers and explanations
         for ans in submission.answers:
             qid = ans.get("question_id") or ans.get("id")
             if qid is None:
@@ -873,13 +903,13 @@ async def submit_test(submission: SubmitAnswers):
                 continue
 
             user_answer = ans.get("answer", "")
-            is_correct = str(user_answer).strip().lower() == str(correct_answer).strip().lower()
+            is_correct = answers_match(user_answer, correct_answer)
             if is_correct:
                 correct += 1
 
             q_type = question_type_map.get(qid_int, "unknown")
             
-            # Add to question results
+            # Add to question results with explanation
             question_results.append({
                 "question_id": qid_int,
                 "question_text": question_text_map.get(qid_int, f"Question {qid_int}"),
@@ -887,6 +917,7 @@ async def submit_test(submission: SubmitAnswers):
                 "user_answer": user_answer,
                 "correct_answer": str(correct_answer),
                 "is_correct": is_correct,
+                "explanation": explanation_map.get(qid_int, ""),
             })
             
             skey = _make_skill_key(test_type, q_type)
