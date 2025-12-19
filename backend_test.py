@@ -425,5 +425,18 @@ def run_complete_test_flow():
         return False
 
 if __name__ == "__main__":
-    success = run_complete_test_flow()
-    exit(0 if success else 1)
+    # Test Writing Practice Evaluation API as requested
+    writing_success = test_writing_practice_evaluation()
+    
+    # Also run the existing test flow for completeness
+    other_success = run_complete_test_flow()
+    
+    overall_success = writing_success and other_success
+    print(f"\n{'='*60}")
+    print(f"🎯 FINAL RESULT:")
+    print(f"   Writing Practice Tests: {'✅ PASSED' if writing_success else '❌ FAILED'}")
+    print(f"   Other Backend Tests: {'✅ PASSED' if other_success else '❌ FAILED'}")
+    print(f"   Overall: {'✅ ALL TESTS PASSED' if overall_success else '❌ SOME TESTS FAILED'}")
+    print(f"{'='*60}")
+    
+    exit(0 if overall_success else 1)
