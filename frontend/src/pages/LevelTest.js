@@ -199,16 +199,19 @@ export default function LevelTest({ user }) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-cyan-50/30 to-gray-100 py-12 px-4">
         <div className="max-w-2xl mx-auto">
-          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-600 hover:text-violet-600">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Dashboard
+          <Button variant="ghost" onClick={() => navigate(user ? '/dashboard' : '/')} className="mb-6 text-gray-600 hover:text-violet-600">
+            <ArrowLeft className="w-4 h-4 mr-2" /> {user ? 'Dashboard' : 'Home'}
           </Button>
           <Card className="p-8 bg-white border-0 shadow-lg rounded-2xl">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-cyan-200">
                 <Target className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">English Level Test</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Free English Level Test</h1>
               <p className="text-gray-500">Discover your English proficiency in 5-7 minutes</p>
+              {!user && (
+                <p className="text-sm text-violet-600 mt-2">✨ No registration required - start testing now!</p>
+              )}
             </div>
             
             <div className="space-y-4 mb-8">
