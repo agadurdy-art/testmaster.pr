@@ -320,23 +320,116 @@ export default function Results({ user }) {
           </div>
         )}
 
-        {/* Speaking Test Feedback */}
+        {/* Speaking Test Feedback - Detailed Teacher Style */}
         {result.test_type === 'speaking' && result.feedback?.speaking_feedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg">
                 <Lightbulb className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-emerald-900">Speaking Feedback</h3>
+              <h3 className="text-lg font-semibold text-emerald-900">📚 Detailed Teacher Feedback</h3>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-6">
               {Object.entries(result.feedback.speaking_feedback).map(([key, fb]) => (
-                <div key={key} className="p-4 bg-white rounded-xl">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium text-gray-900">Response {key}</span>
-                    {fb.band_score && <span className={`px-2 py-0.5 rounded text-sm font-bold ${getBandLightBg(fb.band_score)}`}>Band {fb.band_score}</span>}
+                <div key={key} className="p-5 bg-white rounded-xl shadow-sm border border-emerald-100">
+                  {/* Response Header */}
+                  <div className="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                    <span className="font-bold text-lg text-gray-900">🎤 Response {key}</span>
+                    {fb.band_score && (
+                      <span className={`px-4 py-1.5 rounded-full text-lg font-bold ${getBandLightBg(fb.band_score)}`}>
+                        Band {fb.band_score}
+                      </span>
+                    )}
                   </div>
-                  {fb.feedback && <p className="text-sm text-gray-600">{fb.feedback}</p>}
+                  
+                  {/* Detailed Criteria Scores */}
+                  {(fb.fluency_coherence || fb.lexical_resource || fb.grammatical_accuracy || fb.pronunciation) && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                      {fb.fluency_coherence && (
+                        <div className="p-3 bg-blue-50 rounded-lg text-center">
+                          <div className="text-xs text-blue-600 font-medium">Fluency</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(fb.fluency_coherence.score || fb.fluency_coherence)}`}>
+                            {fb.fluency_coherence.score || fb.fluency_coherence}
+                          </div>
+                        </div>
+                      )}
+                      {fb.lexical_resource && (
+                        <div className="p-3 bg-purple-50 rounded-lg text-center">
+                          <div className="text-xs text-purple-600 font-medium">Vocabulary</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(fb.lexical_resource.score || fb.lexical_resource)}`}>
+                            {fb.lexical_resource.score || fb.lexical_resource}
+                          </div>
+                        </div>
+                      )}
+                      {fb.grammatical_accuracy && (
+                        <div className="p-3 bg-green-50 rounded-lg text-center">
+                          <div className="text-xs text-green-600 font-medium">Grammar</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(fb.grammatical_accuracy.score || fb.grammatical_accuracy)}`}>
+                            {fb.grammatical_accuracy.score || fb.grammatical_accuracy}
+                          </div>
+                        </div>
+                      )}
+                      {fb.pronunciation && (
+                        <div className="p-3 bg-amber-50 rounded-lg text-center">
+                          <div className="text-xs text-amber-600 font-medium">Pronunciation</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(fb.pronunciation.score || fb.pronunciation)}`}>
+                            {fb.pronunciation.score || fb.pronunciation}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Detailed Feedback per Criterion */}
+                  {(fb.fluency_coherence?.feedback || fb.lexical_resource?.feedback || fb.grammatical_accuracy?.feedback || fb.pronunciation?.feedback) && (
+                    <div className="space-y-3 mb-4">
+                      {fb.fluency_coherence?.feedback && (
+                        <div className="p-3 bg-blue-50 rounded-lg">
+                          <p className="text-xs font-bold text-blue-700 mb-1">💬 Fluency & Coherence</p>
+                          <p className="text-sm text-gray-700">{fb.fluency_coherence.feedback}</p>
+                        </div>
+                      )}
+                      {fb.lexical_resource?.feedback && (
+                        <div className="p-3 bg-purple-50 rounded-lg">
+                          <p className="text-xs font-bold text-purple-700 mb-1">📖 Vocabulary</p>
+                          <p className="text-sm text-gray-700">{fb.lexical_resource.feedback}</p>
+                        </div>
+                      )}
+                      {fb.grammatical_accuracy?.feedback && (
+                        <div className="p-3 bg-green-50 rounded-lg">
+                          <p className="text-xs font-bold text-green-700 mb-1">✍️ Grammar</p>
+                          <p className="text-sm text-gray-700">{fb.grammatical_accuracy.feedback}</p>
+                        </div>
+                      )}
+                      {fb.pronunciation?.feedback && (
+                        <div className="p-3 bg-amber-50 rounded-lg">
+                          <p className="text-xs font-bold text-amber-700 mb-1">🗣️ Pronunciation</p>
+                          <p className="text-sm text-gray-700">{fb.pronunciation.feedback}</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Overall Feedback */}
+                  {fb.overall_feedback && (
+                    <div className="p-4 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
+                      <p className="text-xs font-bold text-emerald-700 mb-2">📝 Teacher&apos;s Summary</p>
+                      <p className="text-sm text-gray-700 leading-relaxed">{fb.overall_feedback}</p>
+                    </div>
+                  )}
+                  
+                  {/* Model Answer (Example) */}
+                  {fb.model_answer && (
+                    <div className="mt-4 p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                      <p className="text-xs font-bold text-indigo-700 mb-2">⭐ Example High-Band Answer</p>
+                      <p className="text-sm text-gray-700 italic leading-relaxed">&ldquo;{fb.model_answer}&rdquo;</p>
+                    </div>
+                  )}
+                  
+                  {/* Legacy simple feedback fallback */}
+                  {fb.feedback && !fb.overall_feedback && !fb.fluency_coherence && (
+                    <p className="text-sm text-gray-600">{fb.feedback}</p>
+                  )}
                 </div>
               ))}
             </div>
