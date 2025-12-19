@@ -20,9 +20,21 @@ const plans = [
 
 export default function PricingPage({ user }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { t, language } = useI18n();
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [bankModalOpen, setBankModalOpen] = useState(false);
+  
+  // Check if user came from speaking test
+  const fromSpeaking = searchParams.get('from') === 'speaking';
+  
+  // Get redirect URL after successful payment
+  const getRedirectUrl = () => {
+    if (fromSpeaking) {
+      return '/dashboard'; // Go back to dashboard where they can access speaking tests
+    }
+    return '/dashboard';
+  };
 
   const handleOpenBankModal = (plan) => { if (!user) { navigate('/'); return; } setSelectedPlan(plan); setBankModalOpen(true); };
 
