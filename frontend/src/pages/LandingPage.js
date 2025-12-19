@@ -101,40 +101,23 @@ export default function LandingPage({ onLogin, user }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // ElevenLabs widget state
-  const [widgetReady, setWidgetReady] = useState(false);
-
-  // Load ElevenLabs widget script on component mount (preload)
-  useEffect(() => {
-    // Preload the ElevenLabs script
-    const existingScript = document.querySelector('script[src*="elevenlabs/convai-widget-embed"]');
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-      script.async = true;
-      script.type = 'text/javascript';
-      script.onload = () => {
-        console.log('ElevenLabs script loaded successfully');
-        setWidgetReady(true);
-      };
-      script.onerror = (e) => {
-        console.error('Failed to load ElevenLabs script', e);
-      };
-      document.head.appendChild(script);
-    } else {
-      setWidgetReady(true);
-    }
-  }, []);
-
-  // Create widget when modal opens and script is ready
+  // Create ElevenLabs widget when modal opens
   useEffect(() => {
     if (showLevelTest && widgetContainerRef.current) {
-      console.log('Modal opened, widget ready:', widgetReady);
-      
-      // Insert the widget HTML directly
+      // Insert the widget AND script exactly as provided by ElevenLabs
       widgetContainerRef.current.innerHTML = `
         <elevenlabs-convai agent-id="agent_8701kctavvxafxk90czptrbg2p4r"></elevenlabs-convai>
+        <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
       `;
+      
+      // Also load script in head if not already there (for reinitializing)
+      if (!document.querySelector('script[src*="elevenlabs/convai-widget-embed"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+        script.async = true;
+        script.type = 'text/javascript';
+        document.head.appendChild(script);
+      }
 
       return () => {
         if (widgetContainerRef.current) {
@@ -142,7 +125,7 @@ export default function LandingPage({ onLogin, user }) {
         }
       };
     }
-  }, [showLevelTest, widgetReady]);
+  }, [showLevelTest]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
