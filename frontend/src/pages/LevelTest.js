@@ -430,10 +430,22 @@ export default function LevelTest({ user }) {
               <Button variant="outline" onClick={() => { setStage('intro'); setCurrentQuestion(0); setReadingAnswers({}); setCurrentSpeakingPrompt(0); setSpeakingResponses([]); setCurrentTranscript(''); setResults(null); }} className="flex-1">
                 Take Test Again
               </Button>
-              <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
-                Go to Dashboard
-              </Button>
+              {user ? (
+                <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                  Go to Dashboard
+                </Button>
+              ) : (
+                <Button onClick={() => navigate('/')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                  Create Account to Continue
+                </Button>
+              )}
             </div>
+            
+            {!user && (
+              <p className="text-center text-sm text-gray-500 mt-4">
+                Create an account to save your results and access all IELTS practice features!
+              </p>
+            )}
           </Card>
         </div>
       </div>
