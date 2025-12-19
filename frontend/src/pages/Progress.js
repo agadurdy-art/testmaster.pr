@@ -256,18 +256,18 @@ export default function Progress({ user }) {
               </h3>
               <div className="space-y-2">
                 {Object.entries(stats.byType)
-                  .filter(([_, data]) => data.avgBand > 0 && data.avgBand < 6)
-                  .sort((a, b) => a[1].avgBand - b[1].avgBand)
+                  .filter(([_, data]) => (data.avg_score || data.avgBand || 0) > 0 && (data.avg_score || data.avgBand || 0) < 6)
+                  .sort((a, b) => (a[1].avg_score || a[1].avgBand || 0) - (b[1].avg_score || b[1].avgBand || 0))
                   .slice(0, 3)
                   .map(([type, data]) => (
                     <div key={type} className="flex items-center justify-between p-2 bg-white rounded-lg">
                       <span className="capitalize font-medium text-gray-900">{type}</span>
-                      <span className={`px-2 py-0.5 rounded ${getBandBgColor(data.avgBand)}`}>
-                        Band {data.avgBand.toFixed(1)}
+                      <span className={`px-2 py-0.5 rounded ${getBandBgColor(data.avg_score || data.avgBand || 0)}`}>
+                        Band {(data.avg_score || data.avgBand || 0).toFixed(1)}
                       </span>
                     </div>
                   ))}
-                {Object.entries(stats.byType).filter(([_, data]) => data.avgBand > 0 && data.avgBand < 6).length === 0 && (
+                {Object.entries(stats.byType).filter(([_, data]) => (data.avg_score || data.avgBand || 0) > 0 && (data.avg_score || data.avgBand || 0) < 6).length === 0 && (
                   <p className="text-sm text-gray-500">Great job! Keep practicing to maintain your level.</p>
                 )}
               </div>
@@ -279,18 +279,18 @@ export default function Progress({ user }) {
               </h3>
               <div className="space-y-2">
                 {Object.entries(stats.byType)
-                  .filter(([_, data]) => data.avgBand >= 6)
-                  .sort((a, b) => b[1].avgBand - a[1].avgBand)
+                  .filter(([_, data]) => (data.avg_score || data.avgBand || 0) >= 6)
+                  .sort((a, b) => (b[1].avg_score || b[1].avgBand || 0) - (a[1].avg_score || a[1].avgBand || 0))
                   .slice(0, 3)
                   .map(([type, data]) => (
                     <div key={type} className="flex items-center justify-between p-2 bg-white rounded-lg">
                       <span className="capitalize font-medium text-gray-900">{type}</span>
-                      <span className={`px-2 py-0.5 rounded ${getBandBgColor(data.avgBand)}`}>
-                        Band {data.avgBand.toFixed(1)}
+                      <span className={`px-2 py-0.5 rounded ${getBandBgColor(data.avg_score || data.avgBand || 0)}`}>
+                        Band {(data.avg_score || data.avgBand || 0).toFixed(1)}
                       </span>
                     </div>
                   ))}
-                {Object.entries(stats.byType).filter(([_, data]) => data.avgBand >= 6).length === 0 && (
+                {Object.entries(stats.byType).filter(([_, data]) => (data.avg_score || data.avgBand || 0) >= 6).length === 0 && (
                   <p className="text-sm text-gray-500">Keep practicing! You'll develop strengths with more practice.</p>
                 )}
               </div>
