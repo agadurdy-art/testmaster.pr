@@ -488,7 +488,7 @@ export default function BeginnerCourse({ user }) {
         <p className="text-gray-700 mb-3">{selectedLesson.grammar.explanation}</p>
         <div className="bg-white rounded-lg p-4 border-l-4 border-purple-500">
           <p className="font-medium text-gray-900">Example:</p>
-          <p className="text-purple-700 text-lg">"{selectedLesson.grammar.example}"</p>
+          <p className="text-purple-700 text-lg">&ldquo;{selectedLesson.grammar.example}&rdquo;</p>
         </div>
       </div>
       
