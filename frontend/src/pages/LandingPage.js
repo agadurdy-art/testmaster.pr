@@ -236,19 +236,25 @@ export default function LandingPage({ onLogin, user }) {
               </Button>
             </div>
             
-            {/* AI Level Test Widget - Directly Embedded */}
-            <div className="max-w-md mx-auto">
-              <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-4 mb-3 text-center">
-                <div className="flex items-center justify-center gap-2 text-emerald-700 font-semibold mb-1">
-                  <Mic className="w-5 h-5" />
-                  <span>Free AI Speaking Test</span>
+            {/* Tutorial Video Section */}
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-4 mb-3 text-center">
+                <div className="flex items-center justify-center gap-2 text-violet-700 font-semibold mb-1">
+                  <Play className="w-5 h-5" />
+                  <span>Watch How It Works</span>
                 </div>
-                <p className="text-sm text-gray-600">Click below to talk with our AI examiner</p>
+                <p className="text-sm text-gray-600">See how IELTS Ace helps you achieve your target score</p>
               </div>
               
-              {/* ElevenLabs Widget - Direct Embed */}
-              <div className="flex justify-center">
-                <elevenlabs-convai agent-id="agent_8701kctavvxafxk90czptrbg2p4r"></elevenlabs-convai>
+              {/* Video Placeholder - Replace with actual video */}
+              <div className="aspect-video bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
+                <div className="w-full h-full flex items-center justify-center text-white">
+                  <div className="text-center">
+                    <Play className="w-16 h-16 mx-auto mb-4 opacity-80" />
+                    <p className="text-lg font-medium">Tutorial Video Coming Soon</p>
+                    <p className="text-sm text-gray-400 mt-2">Learn how to use IELTS Ace effectively</p>
+                  </div>
+                </div>
               </div>
             </div>
 
