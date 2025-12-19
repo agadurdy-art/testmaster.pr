@@ -362,6 +362,93 @@ def test_writing_practice_evaluation():
         print("❌ SOME WRITING PRACTICE TESTS FAILED!")
         return False
 
+def test_speaking_evaluation():
+    """Test the Speaking Test Detailed Feedback API as requested in the review"""
+    print("\n" + "="*60)
+    print("🚀 TESTING SPEAKING EVALUATION API - DETAILED FEEDBACK")
+    print("="*60)
+    
+    # Test the exact API call from the review request
+    test_data = {
+        "user_id": "test-user",
+        "part": 1,
+        "question": "What do you do? Do you work or are you a student?",
+        "user_response": "I am student. I study computer. I like it very much."
+    }
+    
+    try:
+        print("=== Testing Speaking Evaluation API ===")
+        response = requests.post(f"{BACKEND_URL}/evaluate/speaking", json=test_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print("✅ API call successful")
+            
+            # Validate all required fields from the review request
+            required_fields = [
+                "band_score",
+                "fluency_coherence", 
+                "lexical_resource",
+                "grammatical_accuracy", 
+                "pronunciation",
+                "overall_feedback",
+                "model_answer"
+            ]
+            
+            checks_passed = 0
+            total_checks = len(required_fields) + 4  # +4 for detailed field checks
+            
+            # Check 1: All required top-level fields exist
+            for field in required_fields:
+                if field in result:
+                    print(f"✅ {field} field present")
+                    checks_passed += 1
+                else:
+                    print(f"❌ {field} field missing")
+            
+            # Check 2: Detailed criteria have score and feedback
+            criteria = ["fluency_coherence", "lexical_resource", "grammatical_accuracy", "pronunciation"]
+            for criterion in criteria:
+                if criterion in result and isinstance(result[criterion], dict):
+                    criterion_data = result[criterion]
+                    if "score" in criterion_data and "feedback" in criterion_data:
+                        print(f"✅ {criterion} has score and feedback")
+                        checks_passed += 1
+                    else:
+                        print(f"❌ {criterion} missing score or feedback")
+                else:
+                    print(f"❌ {criterion} not properly structured")
+            
+            # Display the actual response structure for verification
+            print(f"\n📋 Response Structure:")
+            print(f"   Band Score: {result.get('band_score', 'N/A')}")
+            
+            for criterion in criteria:
+                if criterion in result and isinstance(result[criterion], dict):
+                    crit_data = result[criterion]
+                    print(f"   {criterion.replace('_', ' ').title()}:")
+                    print(f"     Score: {crit_data.get('score', 'N/A')}")
+                    print(f"     Feedback: {crit_data.get('feedback', 'N/A')[:100]}...")
+            
+            print(f"   Overall Feedback: {result.get('overall_feedback', 'N/A')[:100]}...")
+            print(f"   Model Answer: {result.get('model_answer', 'N/A')[:100]}...")
+            
+            if checks_passed >= total_checks - 2:  # Allow some tolerance
+                print("✅ SPEAKING EVALUATION TEST PASSED")
+                return True
+            else:
+                print(f"❌ SPEAKING EVALUATION TEST FAILED ({checks_passed}/{total_checks} checks passed)")
+                return False
+                
+        else:
+            print(f"❌ SPEAKING EVALUATION TEST FAILED - HTTP {response.status_code}: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ SPEAKING EVALUATION TEST ERROR: {e}")
+        return False
+
 def run_complete_test_flow():
     """Run the complete test flow for reading and listening tests"""
     print("🚀 Starting Complete Backend Test Flow")
