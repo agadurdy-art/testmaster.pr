@@ -80,6 +80,19 @@ export default function PricingPage({ user }) {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 py-12">
+        {/* Banner for users coming from speaking test */}
+        {fromSpeaking && (
+          <div className="mb-8 p-4 bg-gradient-to-r from-violet-100 to-purple-100 border border-violet-200 rounded-2xl flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-violet-500 flex items-center justify-center flex-shrink-0">
+              <Mic className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h3 className="font-bold text-violet-900">You need credits for AI Speaking Examiner</h3>
+              <p className="text-sm text-violet-700">Choose a plan below to unlock AI-powered speaking practice. After payment, you&apos;ll be redirected back to continue your practice.</p>
+            </div>
+          </div>
+        )}
+        
         {/* Title */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-100 text-violet-700 text-sm font-medium mb-6"><Crown className="w-4 h-4" /><span>Unlock Premium Features</span></div>
