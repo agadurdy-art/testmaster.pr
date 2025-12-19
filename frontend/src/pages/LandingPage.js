@@ -527,7 +527,7 @@ export default function LandingPage({ onLogin, user }) {
         </DialogContent>
       </Dialog>
 
-      {/* Free Level Test Modal */}
+      {/* AI Speaking Level Test Modal (ElevenLabs) */}
       <Dialog open={showLevelTest} onOpenChange={(open) => {
         if (!open) {
           handleLevelTestEnd();
@@ -537,14 +537,14 @@ export default function LandingPage({ onLogin, user }) {
           <DialogHeader>
             <div className="flex items-center justify-between">
               <DialogTitle className="text-2xl text-gray-900 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
                   <Mic className="w-5 h-5 text-white" />
                 </div>
-                Free Level Test
+                AI Speaking Test
               </DialogTitle>
-              <div className="flex items-center gap-2 bg-violet-100 px-4 py-2 rounded-full">
-                <Clock className="w-4 h-4 text-violet-600" />
-                <span className={`font-bold ${timerSeconds <= 60 ? 'text-red-600' : 'text-violet-600'}`}>
+              <div className="flex items-center gap-2 bg-emerald-100 px-4 py-2 rounded-full">
+                <Clock className="w-4 h-4 text-emerald-600" />
+                <span className={`font-bold ${timerSeconds <= 60 ? 'text-red-600' : 'text-emerald-600'}`}>
                   {formatTimer(timerSeconds)}
                 </span>
               </div>
@@ -552,25 +552,27 @@ export default function LandingPage({ onLogin, user }) {
           </DialogHeader>
           
           <div className="mt-4">
-            <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-6 mb-4">
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 mb-4">
               <p className="text-gray-600 mb-4">
-                Talk to our AI examiner to discover your English level. The session will last up to 4 minutes.
+                <strong>Speak with our AI examiner</strong> to discover your English speaking level. 
+                The conversation will last up to 4 minutes.
               </p>
-              <div className="flex items-center gap-2 text-sm text-violet-600">
+              <div className="flex items-center gap-2 text-sm text-emerald-600">
                 <Sparkles className="w-4 h-4" />
-                <span>AI-powered assessment • Instant feedback</span>
+                <span>Powered by ElevenLabs • Real-time conversation</span>
               </div>
             </div>
             
             {/* ElevenLabs Widget Container */}
             <div 
               ref={widgetContainerRef} 
-              className="min-h-[300px] flex items-center justify-center bg-gray-50 rounded-xl border-2 border-dashed border-gray-200"
+              className="min-h-[350px] flex items-center justify-center bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 overflow-hidden"
             >
               <div className="text-center text-gray-500">
-                <Mic className="w-12 h-12 mx-auto mb-3 text-violet-400" />
-                <p>AI Examiner is loading...</p>
-                <p className="text-sm">Click the microphone to start speaking</p>
+                <Mic className="w-12 h-12 mx-auto mb-3 text-emerald-400 animate-pulse" />
+                <p className="font-medium">AI Examiner Loading...</p>
+                <p className="text-sm mt-1">The widget will appear here shortly</p>
+                <p className="text-xs mt-2 text-gray-400">Click the microphone button when it appears to start</p>
               </div>
             </div>
             
