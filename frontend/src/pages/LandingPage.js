@@ -565,18 +565,19 @@ export default function LandingPage({ onLogin, user }) {
             {/* ElevenLabs Widget Container */}
             <div 
               ref={widgetContainerRef} 
-              className="min-h-[350px] bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 overflow-hidden relative"
+              className="min-h-[350px] bg-white rounded-xl border border-gray-200 overflow-visible"
+              style={{ position: 'relative' }}
             >
-              {/* The widget will be injected here by the useEffect */}
-              {/* Fallback loading indicator - will be hidden when widget loads */}
-              <div className="absolute inset-0 flex items-center justify-center text-center text-gray-500 z-0">
-                <div>
-                  <Mic className="w-12 h-12 mx-auto mb-3 text-emerald-400 animate-pulse" />
-                  <p className="font-medium">AI Examiner Loading...</p>
-                  <p className="text-sm mt-1">Please wait for the widget to load</p>
-                  <p className="text-xs mt-2 text-gray-400">If nothing appears, try refreshing the page</p>
+              {/* Loading indicator - hidden once widget loads */}
+              {!widgetLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center text-center text-gray-500 bg-gray-50 rounded-xl">
+                  <div>
+                    <Mic className="w-12 h-12 mx-auto mb-3 text-emerald-400 animate-pulse" />
+                    <p className="font-medium">AI Examiner Loading...</p>
+                    <p className="text-sm mt-1">Please wait...</p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
             
             <p className="text-xs text-gray-400 text-center mt-4">
