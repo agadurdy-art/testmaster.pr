@@ -309,6 +309,16 @@ export default function Dashboard({ user, onLogout }) {
               <p className="text-sm text-gray-600">Parts 1-3 with evaluation</p>
               <ChevronRight className="w-5 h-5 text-violet-500 mt-3 group-hover:translate-x-1 transition-transform" />
             </Card>
+
+            {/* Beginner English Course */}
+            <Card className="p-5 bg-gradient-to-br from-green-50 to-lime-50 border-0 shadow-lg shadow-green-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/beginner-course')}>
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-lime-600 flex items-center justify-center mb-4 shadow-lg shadow-green-200 group-hover:scale-110 transition-transform">
+                <GraduationCap className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-1">Beginner English</h3>
+              <p className="text-sm text-gray-600">14 lessons for Band 4.5-</p>
+              <ChevronRight className="w-5 h-5 text-green-500 mt-3 group-hover:translate-x-1 transition-transform" />
+            </Card>
           </div>
         </div>
 
