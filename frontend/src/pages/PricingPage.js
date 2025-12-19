@@ -117,7 +117,7 @@ export default function PricingPage({ user }) {
                   {paypalClientId && !bankModalOpen && (
                     <PayPalButtons style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 }}
                       createOrder={async () => { if (!user) { alert(isVi ? 'Vui lòng đăng nhập.' : 'Please log in.'); throw new Error('No user'); } const res = await createPaypalOrder({ planId: plan.id, email: user.email }); return res.orderId; }}
-                      onApprove={async (data) => { if (!user) return; const res = await capturePaypalOrder({ orderId: data.orderID, planId: plan.id, email: user.email }); const updatedUser = { ...user, examCredits: res.examCredits, plan: res.plan ?? user.plan }; localStorage.setItem('user', JSON.stringify(updatedUser)); alert(isVi ? 'Thanh toán thành công!' : 'Payment successful!'); }}
+                      onApprove={async (data) => { if (!user) return; const res = await capturePaypalOrder({ orderId: data.orderID, planId: plan.id, email: user.email }); const updatedUser = { ...user, examCredits: res.examCredits, plan: res.plan ?? user.plan }; localStorage.setItem('user', JSON.stringify(updatedUser)); alert(isVi ? 'Thanh toán thành công!' : 'Payment successful!'); navigate(getRedirectUrl()); }}
                     />
                   )}
                 </div>
