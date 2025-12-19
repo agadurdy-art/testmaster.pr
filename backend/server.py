@@ -2259,12 +2259,17 @@ class WritingPracticeRequest(BaseModel):
 
 @api_router.post("/writing-practice/evaluate")
 async def evaluate_writing_practice(request: WritingPracticeRequest):
-    """Evaluate IELTS writing practice submission with detailed feedback"""
+    """Evaluate IELTS writing practice submission with detailed teacher-style feedback"""
     try:
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
-            system_message="You are an experienced IELTS examiner providing detailed writing feedback."
+            system_message="""You are a qualified IELTS teacher, not just an evaluator. You must think step by step like a real teacher:
+- First check whether the student's response is valid before giving any score
+- If the task is invalid (off-topic, too short, missing required elements), the band score MUST be limited
+- Be honest and strict - do NOT give generous scores by default
+- Prioritize feedback on the most important errors, not every small mistake
+- Adjust your tone based on student level: supportive for weak students, precise for advanced"""
         ).with_model("openai", "gpt-4o")
         
         task_type_desc = {
@@ -2274,39 +2279,107 @@ async def evaluate_writing_practice(request: WritingPracticeRequest):
         }.get(request.task_type, "IELTS Writing Task")
         
         min_words = 250 if request.task_type == "task2" else 150
+        is_task2 = request.task_type == "task2"
         
-        prompt = f"""You are an experienced IELTS examiner. Evaluate this {task_type_desc} submission.
+        prompt = f"""You are a qualified IELTS teacher evaluating this {task_type_desc} submission.
 
+====================================
 TASK PROMPT:
+====================================
 {request.prompt}
 
+====================================
 STUDENT'S RESPONSE ({request.word_count} words):
+====================================
 {request.essay}
 
-Minimum word requirement: {min_words} words
+====================================
+IELTS TEACHER EVALUATION FRAMEWORK
+====================================
 
-Provide a comprehensive evaluation in the following JSON format:
+**STEP 1: VALIDITY CHECK (MANDATORY - Do this FIRST)**
+Apply these rules strictly BEFORE scoring:
+
+For Task 1 (minimum 150 words):
+- If under 150 words → Band is CAPPED at 4.0 maximum
+- If response is off-topic or mostly unrelated → Band CANNOT exceed 4.0
+- If no clear overview/summary of main trends → Band CANNOT exceed 5.0
+
+For Task 2 (minimum 250 words):
+- If under 250 words → Band is CAPPED at 4.0 maximum
+- If response is off-topic or mostly unrelated → Band CANNOT exceed 4.0
+- If no clear position/opinion stated → Band CANNOT exceed 5.0
+- If no clear paragraph structure → Band CANNOT exceed 5.5
+
+Current submission: {request.word_count} words (Minimum required: {min_words} words)
+
+**STEP 2: BAND SCORING (Be Strict)**
+- Do NOT give generous scores by default
+- If response is weak, unclear, short, or off-topic → give Band 1-4
+- Only give Band 5-7 if response clearly meets IELTS criteria
+- Band 8-9 is rare and requires exceptional quality
+
+**STEP 3: ERROR PRIORITIZATION (Teacher Logic)**
+Prioritize errors in this order:
+1. Task misunderstanding or missing required elements
+2. Grammar errors that block meaning
+3. Repeated grammar pattern errors
+4. Vocabulary misuse or unnatural collocations
+5. Minor grammar or spelling mistakes
+
+**STEP 4: TEACHER-STYLE CORRECTIONS**
+For each correction, use this format:
+- Quote the student's exact words
+- Provide the corrected version
+- Give a simple, clear explanation
+- Optionally provide a better/more natural alternative
+
+Provide your evaluation in this JSON format:
 {{
+    "validity_check": {{
+        "is_valid": <true/false>,
+        "word_count_valid": <true/false>,
+        "on_topic": <true/false>,
+        "has_required_elements": <true/false>,
+        "validity_issues": ["<list any validity problems>"],
+        "band_cap_applied": <null or number if capped>,
+        "cap_reason": "<explanation if band is capped>"
+    }},
     "overall_band": <float between 1.0 and 9.0, in 0.5 increments>,
+    "band_confidence": "<high/medium/low>",
     "scores": {{
         "task_achievement": <float 1.0-9.0>,
         "coherence_cohesion": <float 1.0-9.0>,
         "lexical_resource": <float 1.0-9.0>,
         "grammar": <float 1.0-9.0>
     }},
-    "strengths": [<3-4 specific things done well>],
-    "improvements": [<3-4 specific areas to improve with examples>],
-    "corrections": [
+    "teacher_summary": "<2-3 sentences like a real teacher would say, addressing the student directly>",
+    "key_problems": [
         {{
-            "original": "<exact phrase with error>",
-            "corrected": "<corrected version>",
-            "explanation": "<brief explanation>"
+            "priority": <1-5>,
+            "category": "<task_response/grammar/vocabulary/coherence>",
+            "issue": "<specific problem description>",
+            "impact": "<how this affects the score>"
         }}
     ],
-    "improved_version": "<A model paragraph or two showing how to improve the weakest part of the essay>"
+    "strengths": ["<specific things done well with examples from the text>"],
+    "corrections": [
+        {{
+            "original": "<exact quote from student>",
+            "corrected": "<corrected version>",
+            "explanation": "<simple, clear explanation>",
+            "better_alternative": "<more natural/sophisticated option if applicable>"
+        }}
+    ],
+    "next_steps": ["<maximum 3 actionable suggestions for improvement>"],
+    "improved_paragraph": "<rewrite ONE weak paragraph showing how to improve it, or provide a model introduction/conclusion>"
 }}
 
-Be encouraging but honest. Focus on actionable feedback."""
+Remember:
+- Be honest but encouraging - never humiliate the student
+- Adjust tone based on level: supportive for weak students, precise for advanced
+- Focus on the MOST important issues, not every small error
+- Give specific examples from the student's text"""
 
         response = await chat.send_message(UserMessage(text=prompt))
         
@@ -2329,19 +2402,34 @@ Be encouraging but honest. Focus on actionable feedback."""
             result = json.loads(json_match.group())
             return result
         
-        # Fallback response
+        # Fallback response with validity check
+        word_count_valid = request.word_count >= min_words
+        band_cap = 4.0 if not word_count_valid else None
+        
         return {
-            "overall_band": 5.5,
-            "scores": {
-                "task_achievement": 5.5,
-                "coherence_cohesion": 5.5,
-                "lexical_resource": 5.5,
-                "grammar": 5.5
+            "validity_check": {
+                "is_valid": word_count_valid,
+                "word_count_valid": word_count_valid,
+                "on_topic": True,
+                "has_required_elements": True,
+                "validity_issues": [] if word_count_valid else [f"Word count ({request.word_count}) is below minimum ({min_words})"],
+                "band_cap_applied": band_cap,
+                "cap_reason": f"Band capped at 4.0 due to insufficient word count" if band_cap else None
             },
-            "strengths": ["You attempted the task", "Your essay has a clear structure"],
-            "improvements": ["Develop your ideas more fully", "Use more varied vocabulary"],
+            "overall_band": min(4.0, 5.5) if not word_count_valid else 5.5,
+            "band_confidence": "medium",
+            "scores": {
+                "task_achievement": 4.0 if not word_count_valid else 5.5,
+                "coherence_cohesion": 5.0,
+                "lexical_resource": 5.0,
+                "grammar": 5.0
+            },
+            "teacher_summary": "I've reviewed your writing. Let me share some feedback to help you improve." if word_count_valid else f"I notice your response is only {request.word_count} words. For this task, you need at least {min_words} words. This significantly affects your score.",
+            "key_problems": [{"priority": 1, "category": "task_response", "issue": f"Word count below minimum ({request.word_count}/{min_words})", "impact": "Band capped at 4.0"}] if not word_count_valid else [],
+            "strengths": ["You attempted the task"],
             "corrections": [],
-            "improved_version": "Unable to generate improved version. Please try again."
+            "next_steps": [f"Write at least {min_words} words", "Develop your ideas more fully", "Practice time management"],
+            "improved_paragraph": "Unable to generate improved version. Please try again."
         }
         
     except Exception as e:
