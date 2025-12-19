@@ -565,16 +565,17 @@ export default function BeginnerCourse({ user }) {
           ))}
         </div>
       
-      <div className="mt-6 flex justify-between">
-        <Button variant="outline" onClick={() => setCurrentSection('grammar')}>
-          <ChevronLeft className="w-4 h-4 mr-1" /> Grammar
-        </Button>
-        <Button onClick={() => setCurrentSection('speaking')} className="bg-gradient-to-r from-green-500 to-emerald-600 text-white">
-          Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
-        </Button>
-      </div>
-    </Card>
-  );
+        <div className="mt-6 flex justify-between">
+          <Button variant="outline" onClick={() => setCurrentSection('grammar')}>
+            <ChevronLeft className="w-4 h-4 mr-1" /> Grammar
+          </Button>
+          <Button onClick={() => setCurrentSection('speaking')} className="bg-gradient-to-r from-green-500 to-emerald-600 text-white">
+            Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      </Card>
+    );
+  };
 
   // Render Speaking Section
   const renderSpeaking = () => (
