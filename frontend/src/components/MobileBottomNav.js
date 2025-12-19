@@ -1,8 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Headphones, BookOpen, PenTool, Mic } from 'lucide-react';
+import { LayoutDashboard, Headphones, BookOpen, PenTool, TrendingUp } from 'lucide-react';
 
 const NAV_ITEMS = [
+  {
+    key: 'dashboard',
+    label: 'Home',
+    path: '/dashboard',
+    icon: LayoutDashboard,
+  },
   {
     key: 'listening',
     label: 'Listening',
@@ -22,10 +28,10 @@ const NAV_ITEMS = [
     icon: PenTool,
   },
   {
-    key: 'speaking',
-    label: 'Speaking',
-    path: '/test/speaking',
-    icon: Mic,
+    key: 'progress',
+    label: 'Progress',
+    path: '/progress',
+    icon: TrendingUp,
   },
 ];
 
