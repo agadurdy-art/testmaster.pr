@@ -712,6 +712,9 @@ def run_complete_test_flow():
         return False
 
 if __name__ == "__main__":
+    # Test Advanced IELTS Mastery Course API endpoints as requested in the review
+    advanced_mastery_success = test_advanced_mastery_course()
+    
     # Test Speaking Evaluation API as requested in the review
     speaking_success = test_speaking_evaluation()
     
@@ -721,9 +724,10 @@ if __name__ == "__main__":
     # Also run the existing test flow for completeness
     other_success = run_complete_test_flow()
     
-    overall_success = speaking_success and writing_success and other_success
+    overall_success = advanced_mastery_success and speaking_success and writing_success and other_success
     print(f"\n{'='*60}")
     print(f"🎯 FINAL RESULT:")
+    print(f"   Advanced Mastery Course Tests: {'✅ PASSED' if advanced_mastery_success else '❌ FAILED'}")
     print(f"   Speaking Evaluation Tests: {'✅ PASSED' if speaking_success else '❌ FAILED'}")
     print(f"   Writing Practice Tests: {'✅ PASSED' if writing_success else '❌ FAILED'}")
     print(f"   Other Backend Tests: {'✅ PASSED' if other_success else '❌ FAILED'}")
