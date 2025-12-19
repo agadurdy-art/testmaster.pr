@@ -104,18 +104,41 @@ export default function LandingPage({ onLogin, user }) {
   // Create ElevenLabs widget when modal opens
   useEffect(() => {
     if (showLevelTest && widgetContainerRef.current) {
-      // Insert the widget AND script exactly as provided by ElevenLabs
-      widgetContainerRef.current.innerHTML = `
-        <elevenlabs-convai agent-id="agent_8701kctavvxafxk90czptrbg2p4r"></elevenlabs-convai>
-        <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-      `;
+      const container = widgetContainerRef.current;
       
-      // Also load script in head if not already there (for reinitializing)
-      if (!document.querySelector('script[src*="elevenlabs/convai-widget-embed"]')) {
+      // Clear container
+      container.innerHTML = '';
+      
+      // Function to create the widget element
+      const createWidget = () => {
+        // Create the elevenlabs-convai element
+        const widget = document.createElement('elevenlabs-convai');
+        widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
+        container.appendChild(widget);
+        console.log('ElevenLabs widget element created');
+      };
+      
+      // Check if script is already loaded
+      const existingScript = document.querySelector('script[src*="elevenlabs/convai-widget-embed"]');
+      
+      if (existingScript) {
+        // Script exists, create widget
+        createWidget();
+      } else {
+        // Load script first, then create widget
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
         script.async = true;
         script.type = 'text/javascript';
+        script.onload = () => {
+          console.log('ElevenLabs script loaded');
+          // Wait a bit for custom element to register
+          setTimeout(createWidget, 500);
+        };
+        script.onerror = (e) => {
+          console.error('Failed to load ElevenLabs script:', e);
+          container.innerHTML = '<p style="color: red; text-align: center;">Failed to load AI examiner. Please refresh the page.</p>';
+        };
         document.head.appendChild(script);
       }
 
