@@ -307,6 +307,16 @@ export default function Dashboard({ user, onLogout }) {
               <p className="text-sm text-gray-600">14 lessons for Band 4.5-</p>
               <ChevronRight className="w-5 h-5 text-green-500 mt-3 group-hover:translate-x-1 transition-transform" />
             </Card>
+
+            {/* IELTS Mastery Course */}
+            <Card className="p-5 bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg shadow-violet-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/mastery-course')}>
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-200 group-hover:scale-110 transition-transform">
+                <Trophy className="w-7 h-7 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-1">IELTS Mastery</h3>
+              <p className="text-sm text-gray-600">17 modules for Band 4.5-6.5</p>
+              <ChevronRight className="w-5 h-5 text-violet-500 mt-3 group-hover:translate-x-1 transition-transform" />
+            </Card>
           </div>
         </div>
 
