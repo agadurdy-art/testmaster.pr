@@ -2634,6 +2634,129 @@ Be encouraging but honest. Provide actionable feedback."""
         raise HTTPException(status_code=500, detail="Failed to evaluate speaking")
 
 
+# ============ MASTERY COURSE ENDPOINTS (Band 4.5-6.5) ============
+
+@api_router.get("/mastery-course/modules")
+async def get_mastery_modules():
+    """Get all mastery course modules"""
+    modules = await db.mastery_course_modules.find({}, {"_id": 0}).to_list(100)
+    return modules
+
+@api_router.get("/mastery-course/modules/{module_id}")
+async def get_mastery_module(module_id: str):
+    """Get a specific mastery course module"""
+    module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
+    if not module:
+        raise HTTPException(status_code=404, detail="Module not found")
+    return module
+
+class MasterySpeakingRequest(BaseModel):
+    question: str
+    model_answer: str
+    user_response: str
+    module_title: str
+
+@api_router.post("/mastery-course/evaluate-speaking")
+async def evaluate_mastery_speaking(request: MasterySpeakingRequest):
+    """Evaluate speaking response for mastery course (Band 4.5-6.5)"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=str(uuid.uuid4()),
+            system_message="You are an IELTS examiner evaluating Band 4.5-6.5 level students."
+        ).with_model("openai", "gpt-4o")
+        
+        prompt = f"""You are an IELTS Speaking examiner. Evaluate this response for a Band 4.5-6.5 student.
+
+Topic: {request.module_title}
+Question: {request.question}
+Model Answer: {request.model_answer}
+Student's Response: {request.user_response}
+
+Evaluate using IELTS criteria. Be encouraging but accurate.
+
+Return JSON only:
+{{
+    "band_score": <4.5-6.5>,
+    "fluency": <score>,
+    "vocabulary": <score>,
+    "grammar": <score>,
+    "pronunciation": <score>,
+    "feedback": "<2-3 sentences of constructive feedback>",
+    "improvement_tip": "<One specific tip to improve>"
+}}"""
+
+        response = await chat.send_message(UserMessage(text=prompt))
+        response_text = str(response).strip()
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            return json.loads(json_match.group())
+        
+        return {"band_score": 5, "feedback": "Good effort! Keep practicing.", "improvement_tip": "Use more topic vocabulary."}
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Mastery speaking evaluation error: {e}")
+        return {"band_score": 5, "feedback": "Good try! Keep practicing.", "improvement_tip": "Practice speaking regularly."}
+
+class MasteryWritingRequest(BaseModel):
+    task: str
+    model_essay: str
+    user_response: str
+    module_title: str
+
+@api_router.post("/mastery-course/evaluate-writing")
+async def evaluate_mastery_writing(request: MasteryWritingRequest):
+    """Evaluate writing response for mastery course (Band 4.5-6.5)"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=str(uuid.uuid4()),
+            system_message="You are an IELTS Writing examiner evaluating Band 4.5-6.5 level students."
+        ).with_model("openai", "gpt-4o")
+        
+        prompt = f"""You are an IELTS Writing Task 2 examiner. Evaluate this essay for a Band 4.5-6.5 student.
+
+Topic: {request.module_title}
+Task: {request.task}
+Model Essay: {request.model_essay}
+Student's Essay: {request.user_response}
+
+Evaluate using IELTS criteria. Be encouraging but accurate.
+
+Return JSON only:
+{{
+    "band_score": <4.5-6.5>,
+    "task_achievement": <score>,
+    "coherence": <score>,
+    "lexical": <score>,
+    "grammar": <score>,
+    "feedback": "<3-4 sentences of constructive feedback covering strengths and areas to improve>",
+    "suggestions": ["<improvement suggestion 1>", "<improvement suggestion 2>"]
+}}"""
+
+        response = await chat.send_message(UserMessage(text=prompt))
+        response_text = str(response).strip()
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            return json.loads(json_match.group())
+        
+        return {"band_score": 5, "feedback": "Good effort! Keep writing.", "suggestions": ["Work on vocabulary"]}
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Mastery writing evaluation error: {e}")
+        return {"band_score": 5, "feedback": "Good effort!", "suggestions": []}
+
+
 # ============ BEGINNER ENGLISH COURSE ENDPOINTS ============
 
 @api_router.get("/beginner-english/lessons")
