@@ -22,6 +22,7 @@ import VocabGrammarCourse from './pages/VocabGrammarCourse';
 import WritingPractice from './pages/WritingPractice';
 import SpeakingPractice from './pages/SpeakingPractice';
 import Progress from './pages/Progress';
+import BeginnerCourse from './pages/BeginnerCourse';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 
