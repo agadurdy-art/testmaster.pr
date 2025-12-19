@@ -201,6 +201,10 @@ function AppWithSessionHandler() {
           path="/speaking-practice" 
           element={user ? <SpeakingPractice user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/progress" 
+          element={user ? <Progress user={user} /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
