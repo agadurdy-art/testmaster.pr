@@ -313,9 +313,9 @@ export default function Progress({ user }) {
           ))}
         </div>
 
-        {/* Test History */}
+        {/* Test History with Feedback Preview */}
         <Card className="p-6 bg-white border-0 shadow-lg rounded-2xl">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Test History</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Test History with Feedback</h2>
           
           {filteredAttempts.length === 0 ? (
             <div className="text-center py-12">
@@ -326,37 +326,109 @@ export default function Progress({ user }) {
               </Button>
             </div>
           ) : (
-            <div className="space-y-3">
-              {filteredAttempts.map((attempt, idx) => (
-                <div 
-                  key={attempt.id || idx}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 cursor-pointer transition-colors"
-                  onClick={() => navigate(`/results/${attempt.id}`)}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-xl ${getTypeColor(attempt.test_type)} flex items-center justify-center text-white`}>
-                      {getTypeIcon(attempt.test_type)}
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900 capitalize">{attempt.test_type} Test</p>
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <Calendar className="w-3 h-3" />
-                        {formatDate(attempt.completed_at)}
+            <div className="space-y-4">
+              {filteredAttempts.map((attempt, idx) => {
+                // Extract feedback summary for preview
+                const feedback = attempt.feedback || {};
+                const hasWritingFeedback = feedback.writing_feedback || feedback.task1 || feedback.task2;
+                const hasSpeakingFeedback = feedback.speaking_feedback;
+                const hasTeacherFeedback = feedback.teacher_feedback;
+                
+                // Get preview text
+                let feedbackPreview = '';
+                if (attempt.test_type === 'writing' && hasWritingFeedback) {
+                  const task1Fb = feedback.task1?.overall_feedback || '';
+                  const task2Fb = feedback.task2?.overall_feedback || '';
+                  feedbackPreview = (task2Fb || task1Fb).substring(0, 150);
+                  if (feedbackPreview.length === 150) feedbackPreview += '...';
+                } else if (attempt.test_type === 'speaking' && hasSpeakingFeedback) {
+                  const firstFeedback = Object.values(feedback.speaking_feedback)[0];
+                  feedbackPreview = (firstFeedback?.feedback || '').substring(0, 150);
+                  if (feedbackPreview.length === 150) feedbackPreview += '...';
+                } else if (hasTeacherFeedback) {
+                  feedbackPreview = (feedback.teacher_feedback.short || '').substring(0, 150);
+                  if (feedbackPreview.length === 150) feedbackPreview += '...';
+                }
+                
+                return (
+                  <div 
+                    key={attempt.id || idx}
+                    className="p-4 bg-gray-50 rounded-xl hover:bg-gray-100 cursor-pointer transition-colors border-l-4"
+                    style={{ borderLeftColor: attempt.band_score >= 6 ? '#10b981' : attempt.band_score >= 5 ? '#f59e0b' : '#ef4444' }}
+                    onClick={() => navigate(`/results/${attempt.id}`)}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 rounded-xl ${getTypeColor(attempt.test_type)} flex items-center justify-center text-white`}>
+                          {getTypeIcon(attempt.test_type)}
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900 capitalize">{attempt.test_type} Test</p>
+                          <div className="flex items-center gap-2 text-sm text-gray-500">
+                            <Calendar className="w-3 h-3" />
+                            {formatDate(attempt.completed_at)}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4">
+                        <div className="text-right">
+                          <p className={`text-2xl font-bold ${getBandColor(attempt.band_score)}`}>
+                            {attempt.band_score > 0 ? attempt.band_score.toFixed(1) : '-'}
+                          </p>
+                          <p className="text-xs text-gray-500">Band Score</p>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-gray-400" />
                       </div>
                     </div>
+                    
+                    {/* Feedback Preview */}
+                    {feedbackPreview && (
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <p className="text-sm text-gray-600 italic">
+                          "{feedbackPreview}"
+                        </p>
+                        <p className="text-xs text-violet-600 mt-1 font-medium">Click to see full feedback →</p>
+                      </div>
+                    )}
+                    
+                    {/* Score breakdown for writing */}
+                    {attempt.test_type === 'writing' && (feedback.task1 || feedback.task2) && (
+                      <div className="mt-3 pt-3 border-t border-gray-200 flex gap-4">
+                        {feedback.task1?.band_score && (
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-gray-500">Task 1:</span>
+                            <span className={`text-sm font-bold ${getBandColor(feedback.task1.band_score)}`}>
+                              {feedback.task1.band_score}
+                            </span>
+                          </div>
+                        )}
+                        {feedback.task2?.band_score && (
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-gray-500">Task 2:</span>
+                            <span className={`text-sm font-bold ${getBandColor(feedback.task2.band_score)}`}>
+                              {feedback.task2.band_score}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* Score breakdown for reading/listening */}
+                    {(attempt.test_type === 'reading' || attempt.test_type === 'listening') && feedback.correct !== undefined && (
+                      <div className="mt-3 pt-3 border-t border-gray-200 flex gap-4">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <span className="text-sm text-gray-700">{feedback.correct}/{feedback.total} correct</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm text-gray-500">({Math.round(feedback.percentage || 0)}%)</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <p className={`text-2xl font-bold ${getBandColor(attempt.band_score)}`}>
-                        {attempt.band_score > 0 ? attempt.band_score.toFixed(1) : '-'}
-                      </p>
-                      <p className="text-xs text-gray-500">Band Score</p>
-                    </div>
-                    <ChevronRight className="w-5 h-5 text-gray-400" />
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </Card>
