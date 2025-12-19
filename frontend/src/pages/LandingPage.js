@@ -100,16 +100,34 @@ export default function LandingPage({ onLogin, user }) {
   // Load ElevenLabs widget script when modal opens
   useEffect(() => {
     if (showLevelTest && widgetContainerRef.current) {
-      // Create the widget element
-      const widget = document.createElement('elevenlabs-convai');
-      widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
-      widgetContainerRef.current.appendChild(widget);
+      // First load the script, then create the widget
+      const loadWidget = () => {
+        if (widgetContainerRef.current) {
+          // Clear any existing content
+          widgetContainerRef.current.innerHTML = '';
+          
+          // Create the widget element
+          const widget = document.createElement('elevenlabs-convai');
+          widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
+          widgetContainerRef.current.appendChild(widget);
+        }
+      };
 
-      // Load the script if not already loaded
-      if (!document.querySelector('script[src*="elevenlabs/convai-widget-embed"]')) {
+      // Check if script is already loaded
+      const existingScript = document.querySelector('script[src*="elevenlabs/convai-widget-embed"]');
+      
+      if (existingScript) {
+        // Script already loaded, create widget immediately
+        loadWidget();
+      } else {
+        // Load script first, then create widget
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
         script.async = true;
+        script.onload = () => {
+          // Small delay to ensure the custom element is registered
+          setTimeout(loadWidget, 100);
+        };
         document.body.appendChild(script);
       }
 
