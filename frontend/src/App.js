@@ -24,6 +24,7 @@ import SpeakingPractice from './pages/SpeakingPractice';
 import Progress from './pages/Progress';
 import BeginnerCourse from './pages/BeginnerCourse';
 import MasteryCourse from './pages/MasteryCourse';
+import AdvancedMasteryCourse from './pages/AdvancedMasteryCourse';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 
