@@ -73,8 +73,14 @@ export default function LandingPage({ onLogin, user }) {
     setShowAuth(true);
   }, []);
 
-  // Handle starting the level test
-  const handleStartLevelTest = () => {
+  // Handle "Start Free Practice" - navigates to in-app level test
+  const handleStartFreePractice = () => {
+    // Navigate to the in-app Level Test (10 questions from starter to IELTS level)
+    navigate('/level-test');
+  };
+
+  // Handle "Try Free Level Test" - opens ElevenLabs AI examiner widget
+  const handleStartAILevelTest = () => {
     if (levelTestUsed) {
       setShowUsedWarning(true);
       return;
