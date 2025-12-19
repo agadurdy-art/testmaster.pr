@@ -100,39 +100,44 @@ export default function LandingPage({ onLogin, user }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Load ElevenLabs widget script when modal opens
+  // Load ElevenLabs widget script on component mount (preload)
+  useEffect(() => {
+    // Preload the ElevenLabs script
+    const existingScript = document.querySelector('script[src*="elevenlabs/convai-widget-embed"]');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+      script.async = true;
+      script.type = 'text/javascript';
+      document.head.appendChild(script);
+      console.log('ElevenLabs script preloaded');
+    }
+  }, []);
+
+  // Create widget when modal opens
   useEffect(() => {
     if (showLevelTest && widgetContainerRef.current) {
-      // First load the script, then create the widget
-      const loadWidget = () => {
-        if (widgetContainerRef.current) {
-          // Clear any existing content
-          widgetContainerRef.current.innerHTML = '';
-          
-          // Create the widget element
+      console.log('Modal opened, creating ElevenLabs widget...');
+      
+      // Clear any existing content
+      widgetContainerRef.current.innerHTML = '';
+      
+      // Create widget with a delay to ensure script is loaded
+      const createWidget = () => {
+        if (widgetContainerRef.current && customElements.get('elevenlabs-convai')) {
+          console.log('Creating elevenlabs-convai element');
           const widget = document.createElement('elevenlabs-convai');
           widget.setAttribute('agent-id', 'agent_8701kctavvxafxk90czptrbg2p4r');
+          widgetContainerRef.current.innerHTML = '';
           widgetContainerRef.current.appendChild(widget);
+        } else {
+          console.log('Custom element not ready, retrying in 500ms...');
+          setTimeout(createWidget, 500);
         }
       };
-
-      // Check if script is already loaded
-      const existingScript = document.querySelector('script[src*="elevenlabs/convai-widget-embed"]');
       
-      if (existingScript) {
-        // Script already loaded, create widget immediately
-        loadWidget();
-      } else {
-        // Load script first, then create widget
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-        script.async = true;
-        script.onload = () => {
-          // Small delay to ensure the custom element is registered
-          setTimeout(loadWidget, 100);
-        };
-        document.body.appendChild(script);
-      }
+      // Start creating widget after a short delay
+      setTimeout(createWidget, 300);
 
       return () => {
         if (widgetContainerRef.current) {
