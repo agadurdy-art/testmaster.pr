@@ -380,7 +380,7 @@ export default function Results({ user }) {
             </div>
             
             {/* Questions List */}
-            <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+            <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
               {result.feedback.question_results.map((q, idx) => (
                 <div 
                   key={idx} 
@@ -408,20 +408,31 @@ export default function Results({ user }) {
                         )}
                       </div>
                       <p className="text-sm text-gray-800 mb-3">{q.question_text}</p>
-                      <div className="flex flex-wrap gap-4 text-sm">
+                      <div className="flex flex-wrap gap-4 text-sm mb-2">
                         <div>
                           <span className="text-gray-500">{t('yourAnswer')}: </span>
                           <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
                             {q.user_answer || t('noAnswer')}
                           </span>
                         </div>
-                        {!q.is_correct && (
-                          <div>
-                            <span className="text-gray-500">{t('correctAnswer')}: </span>
-                            <span className="font-semibold text-green-700">{q.correct_answer}</span>
-                          </div>
-                        )}
+                        <div>
+                          <span className="text-gray-500">{t('correctAnswer')}: </span>
+                          <span className="font-semibold text-green-700">{q.correct_answer}</span>
+                        </div>
                       </div>
+                      
+                      {/* Explanation */}
+                      {q.explanation && (
+                        <div className="mt-3 p-3 bg-white rounded-lg border border-gray-200">
+                          <div className="flex items-start gap-2">
+                            <Lightbulb className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-xs font-semibold text-amber-700 mb-1">Explanation</p>
+                              <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
