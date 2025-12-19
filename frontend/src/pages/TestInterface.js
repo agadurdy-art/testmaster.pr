@@ -364,6 +364,10 @@ function ElevenLabsExaminer() {
     setSubmitting(true);
     
     try {
+      // Store feedback in local variables to pass to backend (state updates are async)
+      let writingFeedbackToSubmit = null;
+      let speakingFeedbackToSubmit = null;
+      
       // For Writing, get AI evaluation first (per task) and store latest feedback
       if (testType === 'writing') {
         toast.info('Evaluating your writing with AI...');
@@ -386,6 +390,7 @@ function ElevenLabsExaminer() {
           }
         }
         setWritingFeedback(feedbackSummary);
+        writingFeedbackToSubmit = feedbackSummary; // Use local variable for immediate submission
       }
       
       if (testType === 'speaking') {
@@ -411,6 +416,7 @@ function ElevenLabsExaminer() {
           }
         }
         setSpeakingFeedback(feedbackSummary);
+        speakingFeedbackToSubmit = feedbackSummary; // Use local variable for immediate submission
       }
       
       const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => ({
@@ -428,14 +434,16 @@ function ElevenLabsExaminer() {
         language: language
       };
       
-      // Include writing feedback if available
-      if (testType === 'writing' && Object.keys(writingFeedback).length > 0) {
-        submissionPayload.writing_feedback = writingFeedback;
+      // Include writing feedback if available (use local variable, not state)
+      if (testType === 'writing' && writingFeedbackToSubmit && Object.keys(writingFeedbackToSubmit).length > 0) {
+        submissionPayload.writing_feedback = writingFeedbackToSubmit;
+        console.log('Writing feedback to submit:', writingFeedbackToSubmit);
       }
       
-      // Include speaking feedback if available
-      if (testType === 'speaking' && Object.keys(speakingFeedback).length > 0) {
-        submissionPayload.speaking_feedback = speakingFeedback;
+      // Include speaking feedback if available (use local variable, not state)
+      if (testType === 'speaking' && speakingFeedbackToSubmit && Object.keys(speakingFeedbackToSubmit).length > 0) {
+        submissionPayload.speaking_feedback = speakingFeedbackToSubmit;
+        console.log('Speaking feedback to submit:', speakingFeedbackToSubmit);
       }
 
       const result = await submitTest(submissionPayload);
