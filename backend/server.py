@@ -1986,30 +1986,48 @@ async def get_user_progress(user_id: str):
     attempts = await db.test_attempts.find(
         {"user_id": user_id},
         {"_id": 0}
-    ).sort("completed_at", -1).to_list(100)
+    ).sort("completed_at", -1).to_list(500)  # Return more attempts
     
     # Convert datetime strings
     for attempt in attempts:
         if isinstance(attempt.get('completed_at'), str):
             attempt['completed_at'] = datetime.fromisoformat(attempt['completed_at'])
     
-    # Calculate statistics
+    # Calculate statistics per type with averages
+    by_type = {}
+    total_band_score = 0
+    band_count = 0
+    best_band = 0
+    
+    for attempt in attempts:
+        test_type = attempt['test_type']
+        band = attempt.get('band_score', 0)
+        
+        if test_type not in by_type:
+            by_type[test_type] = {"count": 0, "total_band": 0, "avg_score": 0.0}
+        
+        by_type[test_type]['count'] += 1
+        by_type[test_type]['total_band'] += band
+        
+        if band > 0:
+            total_band_score += band
+            band_count += 1
+            if band > best_band:
+                best_band = band
+    
+    # Calculate averages per type
+    for type_key in by_type:
+        count = by_type[type_key]['count']
+        if count > 0:
+            by_type[type_key]['avg_score'] = round(by_type[type_key]['total_band'] / count, 1)
+    
     stats = {
         "total_tests": len(attempts),
-        "by_type": {},
-        "average_band_score": 0.0,
-        "recent_attempts": attempts[:10]
+        "by_type": by_type,
+        "average_band_score": round(total_band_score / band_count, 1) if band_count > 0 else 0.0,
+        "best_band": best_band,
+        "recent_attempts": attempts  # Return ALL attempts for Progress page
     }
-    
-    if attempts:
-        for attempt in attempts:
-            test_type = attempt['test_type']
-            if test_type not in stats['by_type']:
-                stats['by_type'][test_type] = {"count": 0, "avg_score": 0.0}
-            stats['by_type'][test_type]['count'] += 1
-        
-        total_band_score = sum(a.get('band_score', 0) for a in attempts)
-        stats['average_band_score'] = round(total_band_score / len(attempts), 1)
     
     return stats
 
