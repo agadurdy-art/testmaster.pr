@@ -206,6 +206,10 @@ function AppWithSessionHandler() {
           path="/progress" 
           element={user ? <Progress user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/beginner-course" 
+          element={user ? <BeginnerCourse user={user} /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
