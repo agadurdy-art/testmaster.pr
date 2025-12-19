@@ -694,7 +694,7 @@ export default function BeginnerCourse({ user }) {
       {/* Model Answer */}
       <div className="bg-green-50 rounded-xl p-4 mb-4">
         <p className="text-sm text-green-600 font-medium mb-2">Model Answer:</p>
-        <p className="text-gray-800 italic">"{selectedLesson.writing.model_answer}"</p>
+        <p className="text-gray-800 italic">&ldquo;{selectedLesson.writing.model_answer}&rdquo;</p>
       </div>
       
       {/* Feedback */}
