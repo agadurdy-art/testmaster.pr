@@ -56,6 +56,8 @@ export default function PricingPage({ user }) {
         localStorage.setItem('user', JSON.stringify(updatedUser));
         alert(t('bankUploadSuccess'));
         setBankModalOpen(false);
+        // Redirect back to speaking test if that's where user came from
+        navigate(getRedirectUrl());
       } catch (err) { alert(t('bankUploadError')); }
     };
     fileInput.click();
