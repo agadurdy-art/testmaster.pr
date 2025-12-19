@@ -418,14 +418,27 @@ function ElevenLabsExaminer() {
         answer: answer
       }));
 
-      const result = await submitTest({
+      // Build submission payload with feedback for writing/speaking
+      const submissionPayload = {
         user_id: user.id,
         test_id: test.id,
         test_type: testType,
         answers: formattedAnswers,
         time_taken: (test.duration * 60) - timeLeft,
         language: language
-      });
+      };
+      
+      // Include writing feedback if available
+      if (testType === 'writing' && Object.keys(writingFeedback).length > 0) {
+        submissionPayload.writing_feedback = writingFeedback;
+      }
+      
+      // Include speaking feedback if available
+      if (testType === 'speaking' && Object.keys(speakingFeedback).length > 0) {
+        submissionPayload.speaking_feedback = speakingFeedback;
+      }
+
+      const result = await submitTest(submissionPayload);
 
       toast.success('Test submitted successfully!');
       // Navigate to results page for all test types
