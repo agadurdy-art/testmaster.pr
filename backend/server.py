@@ -2633,6 +2633,121 @@ Be encouraging but honest. Provide actionable feedback."""
         raise HTTPException(status_code=500, detail="Failed to evaluate speaking")
 
 
+# ============ BEGINNER ENGLISH COURSE ENDPOINTS ============
+
+@api_router.get("/beginner-english/lessons")
+async def get_beginner_lessons():
+    """Get all beginner English lessons"""
+    lessons = await db.beginner_english_lessons.find({}, {"_id": 0}).to_list(100)
+    return lessons
+
+@api_router.get("/beginner-english/lessons/{lesson_id}")
+async def get_beginner_lesson(lesson_id: str):
+    """Get a specific beginner English lesson"""
+    lesson = await db.beginner_english_lessons.find_one({"id": lesson_id}, {"_id": 0})
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    return lesson
+
+class BeginnerSpeakingRequest(BaseModel):
+    question: str
+    model_answer: str
+    user_response: str
+
+@api_router.post("/beginner-english/evaluate-speaking")
+async def evaluate_beginner_speaking(request: BeginnerSpeakingRequest):
+    """Evaluate beginner speaking response with simple feedback"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=str(uuid.uuid4()),
+            system_message="You are a friendly English teacher helping beginner students."
+        ).with_model("openai", "gpt-4o")
+        
+        prompt = f"""You are a friendly English teacher for beginner students (Band 4.5 and below).
+        
+Question: {request.question}
+Model Answer: {request.model_answer}
+Student's Response: {request.user_response}
+
+Evaluate the student's response. Be encouraging and use simple language.
+
+Return JSON:
+{{
+    "score": <0-100>,
+    "feedback": "<Simple, encouraging feedback in 1-2 sentences>",
+    "tip": "<One simple tip to improve>"
+}}"""
+
+        response = await chat.send_message(UserMessage(text=prompt))
+        
+        response_text = str(response).strip()
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            return json.loads(json_match.group())
+        
+        return {"score": 60, "feedback": "Good try! Keep practicing.", "tip": "Try to answer in complete sentences."}
+        
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Beginner speaking evaluation error: {e}")
+        return {"score": 60, "feedback": "Good effort! Keep practicing.", "tip": "Practice speaking more."}
+
+class BeginnerWritingRequest(BaseModel):
+    task: str
+    model_answer: str
+    user_response: str
+
+@api_router.post("/beginner-english/evaluate-writing")
+async def evaluate_beginner_writing(request: BeginnerWritingRequest):
+    """Evaluate beginner writing response with simple feedback"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=str(uuid.uuid4()),
+            system_message="You are a friendly English teacher helping beginner students."
+        ).with_model("openai", "gpt-4o")
+        
+        prompt = f"""You are a friendly English teacher for beginner students (Band 4.5 and below).
+        
+Writing Task: {request.task}
+Model Answer: {request.model_answer}
+Student's Writing: {request.user_response}
+
+Evaluate the student's writing. Be encouraging and use simple language.
+
+Return JSON:
+{{
+    "score": <0-100>,
+    "feedback": "<Simple, encouraging feedback in 2-3 sentences>",
+    "grammar_tips": ["<1-2 simple grammar tips if needed>"]
+}}"""
+
+        response = await chat.send_message(UserMessage(text=prompt))
+        
+        response_text = str(response).strip()
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            return json.loads(json_match.group())
+        
+        return {"score": 60, "feedback": "Good try! Keep writing.", "grammar_tips": ["Check your verb forms."]}
+        
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Beginner writing evaluation error: {e}")
+        return {"score": 60, "feedback": "Good effort! Keep writing.", "grammar_tips": []}
+
+
 # Include router
 app.include_router(api_router)
 
