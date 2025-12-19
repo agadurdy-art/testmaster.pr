@@ -460,17 +460,18 @@ Return ONLY a JSON object with this structure (no extra text, no markdown, no ``
   }},
   "lexical_resource": {{
     "score": <band 1-9>,
-    "feedback": "2–3 sentences about vocabulary, including 2–3 example phrases."
+    "feedback": "2–3 sentences about vocabulary, including 2–3 example phrases the student could use."
   }},
   "grammatical_accuracy": {{
     "score": <band 1-9>,
-    "feedback": "2–3 sentences about grammar with 1–2 corrected examples."
+    "feedback": "2–3 sentences about grammar with 1–2 corrected examples from the student's answer."
   }},
   "pronunciation": {{
     "score": <band 1-9>,
     "feedback": "2–3 sentences about pronunciation with simple practice ideas."
   }},
-  "overall_feedback": "A short teacher-style summary (4–5 sentences) combining all criteria and giving clear next steps."
+  "overall_feedback": "A short teacher-style summary (4–5 sentences) combining all criteria and giving clear next steps for improvement.",
+  "model_answer": "Write a complete Band 7-8 model answer for this exact question (50-80 words). Show ideal vocabulary, grammar, and natural phrasing that the student can learn from."
 }}
 """
     
