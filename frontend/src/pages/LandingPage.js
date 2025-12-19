@@ -35,11 +35,14 @@ export default function LandingPage({ onLogin, user }) {
   const widgetContainerRef = useRef(null);
 
   // Check if device has already used the free level test
+  // TEMPORARILY DISABLED for testing - will re-enable once confirmed working
   useEffect(() => {
-    const used = localStorage.getItem(LEVEL_TEST_STORAGE_KEY);
-    if (used === 'true') {
-      setLevelTestUsed(true);
-    }
+    // const used = localStorage.getItem(LEVEL_TEST_STORAGE_KEY);
+    // if (used === 'true') {
+    //   setLevelTestUsed(true);
+    // }
+    // For now, always allow testing
+    setLevelTestUsed(false);
   }, []);
 
   // Timer countdown effect
