@@ -204,7 +204,7 @@ export default function LandingPage({ onLogin, user }) {
             <div className="flex flex-wrap gap-4 justify-center">
               <Button 
                 data-testid="start-practicing-btn"
-                onClick={() => setShowAuth(true)} 
+                onClick={handleStartLevelTest} 
                 size="lg" 
                 className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-8 py-6 text-lg shadow-xl shadow-purple-200 border-0"
               >
@@ -215,9 +215,10 @@ export default function LandingPage({ onLogin, user }) {
                 variant="outline" 
                 size="lg" 
                 className="px-8 py-6 text-lg border-2 border-violet-200 text-violet-700 hover:bg-violet-50"
+                onClick={handleStartLevelTest}
               >
-                <Play className="w-5 h-5 mr-2" />
-                Watch Demo
+                <Mic className="w-5 h-5 mr-2" />
+                Try Free Level Test
               </Button>
             </div>
 
