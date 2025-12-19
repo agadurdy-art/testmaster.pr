@@ -199,8 +199,152 @@ export default function Results({ user }) {
           </Card>
         )}
 
-        {/* AI Feedback Card - For Writing/Speaking */}
-        {result.feedback?.ai_feedback && (
+        {/* Writing Test Feedback - Detailed Teacher-Style */}
+        {result.test_type === 'writing' && result.feedback?.writing_feedback && (
+          <div className="space-y-6 mb-6">
+            {/* Task 1 Feedback */}
+            {result.feedback.task1 && (
+              <Card className="p-6 bg-gradient-to-br from-orange-50 to-amber-50 border-orange-200 rounded-2xl">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center shadow-lg">
+                      <BarChart3 className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-orange-900">Task 1 - Graph/Chart Description</h3>
+                      <p className="text-sm text-orange-600">Academic Writing Task 1</p>
+                    </div>
+                  </div>
+                  {result.feedback.task1.band_score && (
+                    <div className={`px-4 py-2 rounded-xl font-bold text-xl ${getBandLightBg(result.feedback.task1.band_score)}`}>
+                      Band {result.feedback.task1.band_score}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Overall Feedback */}
+                {result.feedback.task1.overall_feedback && (
+                  <div className="mb-4 p-4 bg-white rounded-xl">
+                    <h4 className="font-semibold text-gray-900 mb-2">🎓 Teacher's Feedback</h4>
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                      {typeof result.feedback.task1.overall_feedback === 'string' 
+                        ? result.feedback.task1.overall_feedback.replace(/```json|```/g, '').trim()
+                        : ''}
+                    </p>
+                  </div>
+                )}
+                
+                {/* Criteria Scores */}
+                <div className="grid md:grid-cols-2 gap-3">
+                  {[
+                    { key: 'task_achievement', label: 'Task Achievement' },
+                    { key: 'coherence_cohesion', label: 'Coherence & Cohesion' },
+                    { key: 'lexical_resource', label: 'Lexical Resource' },
+                    { key: 'grammatical_accuracy', label: 'Grammar' }
+                  ].map(crit => {
+                    const critData = result.feedback.task1[crit.key];
+                    if (!critData) return null;
+                    return (
+                      <div key={crit.key} className="p-3 bg-white rounded-lg">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-medium text-gray-900">{crit.label}</span>
+                          {critData.score && <span className={`px-2 py-0.5 rounded text-sm font-bold ${getBandLightBg(critData.score)}`}>Band {critData.score}</span>}
+                        </div>
+                        {critData.feedback && (
+                          <p className="text-sm text-gray-600 mt-1">{critData.feedback.replace(/```json|```/g, '').trim()}</p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            )}
+            
+            {/* Task 2 Feedback */}
+            {result.feedback.task2 && (
+              <Card className="p-6 bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200 rounded-2xl">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-violet-500 flex items-center justify-center shadow-lg">
+                      <Lightbulb className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-violet-900">Task 2 - Essay</h3>
+                      <p className="text-sm text-violet-600">Academic Writing Task 2</p>
+                    </div>
+                  </div>
+                  {result.feedback.task2.band_score && (
+                    <div className={`px-4 py-2 rounded-xl font-bold text-xl ${getBandLightBg(result.feedback.task2.band_score)}`}>
+                      Band {result.feedback.task2.band_score}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Overall Feedback */}
+                {result.feedback.task2.overall_feedback && (
+                  <div className="mb-4 p-4 bg-white rounded-xl">
+                    <h4 className="font-semibold text-gray-900 mb-2">🎓 Teacher's Feedback</h4>
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                      {typeof result.feedback.task2.overall_feedback === 'string' 
+                        ? result.feedback.task2.overall_feedback.replace(/```json|```/g, '').trim()
+                        : ''}
+                    </p>
+                  </div>
+                )}
+                
+                {/* Criteria Scores */}
+                <div className="grid md:grid-cols-2 gap-3">
+                  {[
+                    { key: 'task_achievement', label: 'Task Achievement' },
+                    { key: 'coherence_cohesion', label: 'Coherence & Cohesion' },
+                    { key: 'lexical_resource', label: 'Lexical Resource' },
+                    { key: 'grammatical_accuracy', label: 'Grammar' }
+                  ].map(crit => {
+                    const critData = result.feedback.task2[crit.key];
+                    if (!critData) return null;
+                    return (
+                      <div key={crit.key} className="p-3 bg-white rounded-lg">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-medium text-gray-900">{crit.label}</span>
+                          {critData.score && <span className={`px-2 py-0.5 rounded text-sm font-bold ${getBandLightBg(critData.score)}`}>Band {critData.score}</span>}
+                        </div>
+                        {critData.feedback && (
+                          <p className="text-sm text-gray-600 mt-1">{critData.feedback.replace(/```json|```/g, '').trim()}</p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            )}
+          </div>
+        )}
+
+        {/* Speaking Test Feedback */}
+        {result.test_type === 'speaking' && result.feedback?.speaking_feedback && (
+          <Card className="p-6 mb-6 bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200 rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg">
+                <Lightbulb className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-emerald-900">Speaking Feedback</h3>
+            </div>
+            <div className="space-y-4">
+              {Object.entries(result.feedback.speaking_feedback).map(([key, fb]) => (
+                <div key={key} className="p-4 bg-white rounded-xl">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-medium text-gray-900">Response {key}</span>
+                    {fb.band_score && <span className={`px-2 py-0.5 rounded text-sm font-bold ${getBandLightBg(fb.band_score)}`}>Band {fb.band_score}</span>}
+                  </div>
+                  {fb.feedback && <p className="text-sm text-gray-600">{fb.feedback}</p>}
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
+        {/* Legacy AI Feedback Card - For older attempts */}
+        {result.feedback?.ai_feedback && !result.feedback?.writing_feedback && !result.feedback?.speaking_feedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-violet-500 flex items-center justify-center shadow-lg"><Lightbulb className="w-5 h-5 text-white" /></div>
