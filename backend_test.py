@@ -362,6 +362,206 @@ def test_writing_practice_evaluation():
         print("❌ SOME WRITING PRACTICE TESTS FAILED!")
         return False
 
+def test_advanced_mastery_course():
+    """Test the Advanced IELTS Mastery Course API endpoints"""
+    print("\n" + "="*60)
+    print("🚀 TESTING ADVANCED IELTS MASTERY COURSE API ENDPOINTS")
+    print("="*60)
+    
+    success_count = 0
+    total_tests = 5
+    
+    # Test 1: GET /api/advanced-mastery/modules
+    print("\n=== Test 1: GET /api/advanced-mastery/modules ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/advanced-mastery/modules")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            modules = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            if isinstance(modules, list) and len(modules) == 20:
+                print(f"✅ Returns 20 modules as expected")
+                
+                # Check first module structure
+                if modules:
+                    first_module = modules[0]
+                    required_fields = ["id", "title", "subtitle", "module_number", "vocabulary", "grammar", "reading", "speaking", "writing"]
+                    missing_fields = [field for field in required_fields if field not in first_module]
+                    
+                    if not missing_fields:
+                        print(f"✅ Module structure contains all required fields")
+                        success_count += 1
+                    else:
+                        print(f"❌ Module missing fields: {missing_fields}")
+                else:
+                    print(f"❌ No modules returned")
+            else:
+                print(f"❌ Expected 20 modules, got {len(modules) if isinstance(modules, list) else 'non-list'}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 2: GET /api/advanced-mastery/modules/advanced-module-1
+    print("\n=== Test 2: GET /api/advanced-mastery/modules/advanced-module-1 ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/advanced-mastery/modules/advanced-module-1")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            module = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate detailed module structure
+            required_sections = ["vocabulary", "grammar", "reading", "speaking", "writing"]
+            missing_sections = [section for section in required_sections if section not in module]
+            
+            if not missing_sections:
+                print(f"✅ Module contains all required content sections")
+                success_count += 1
+            else:
+                print(f"❌ Module missing sections: {missing_sections}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: POST /api/advanced-mastery/evaluate-speaking
+    print("\n=== Test 3: POST /api/advanced-mastery/evaluate-speaking ===")
+    speaking_data = {
+        "question": "To what extent should governments regulate AI?",
+        "model_answer": "I believe regulation is imperative...",
+        "user_response": "I think the government should control AI because it can be dangerous.",
+        "module_title": "The Digital Frontier",
+        "part": "part3"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/advanced-mastery/evaluate-speaking", json=speaking_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            required_fields = ["band_score", "fluency_coherence", "lexical_resource", "grammatical_range", "pronunciation"]
+            missing_fields = [field for field in required_fields if field not in result]
+            
+            if not missing_fields:
+                print(f"✅ Response contains all required scoring fields")
+                
+                # Check if scores are within valid range
+                band_score = result.get("band_score", 0)
+                if 6.0 <= band_score <= 9.0:
+                    print(f"✅ Band score {band_score} is within expected range (6.0-9.0)")
+                    success_count += 1
+                else:
+                    print(f"❌ Band score {band_score} outside expected range (6.0-9.0)")
+            else:
+                print(f"❌ Response missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: POST /api/advanced-mastery/evaluate-writing
+    print("\n=== Test 4: POST /api/advanced-mastery/evaluate-writing ===")
+    writing_data = {
+        "task": "Discuss automation and quality of life...",
+        "model_essay": "The debate surrounding automation...",
+        "user_response": "Automation has many benefits and drawbacks. Some people think it will improve life quality. Other people worry about unemployment. I believe automation is mostly positive because it makes work easier. For example, factories use robots now. This can help workers do less boring tasks. However, some jobs may be lost. Governments should help workers learn new skills. In conclusion, automation has both good and bad effects but the benefits outweigh the problems.",
+        "module_title": "The Digital Frontier"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/advanced-mastery/evaluate-writing", json=writing_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            required_fields = ["band_score", "task_achievement", "coherence_cohesion", "lexical_resource", "grammatical_range"]
+            missing_fields = [field for field in required_fields if field not in result]
+            
+            if not missing_fields:
+                print(f"✅ Response contains all required scoring fields")
+                
+                # Check if scores are within valid range
+                band_score = result.get("band_score", 0)
+                if 6.0 <= band_score <= 9.0:
+                    print(f"✅ Band score {band_score} is within expected range (6.0-9.0)")
+                    
+                    # Check for detailed feedback
+                    if "overall_feedback" in result:
+                        print(f"✅ Contains detailed feedback")
+                        success_count += 1
+                    else:
+                        print(f"❌ Missing detailed feedback")
+                else:
+                    print(f"❌ Band score {band_score} outside expected range (6.0-9.0)")
+            else:
+                print(f"❌ Response missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 5: POST /api/advanced-mastery/evaluate-quiz
+    print("\n=== Test 5: POST /api/advanced-mastery/evaluate-quiz ===")
+    quiz_data = {
+        "module_id": "advanced-module-1",
+        "answers": {
+            "0": "No",
+            "1": "Paragraph 1", 
+            "2": "profit over individual sovereignty"
+        }
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/advanced-mastery/evaluate-quiz", json=quiz_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            required_fields = ["score", "correct", "estimated_band", "results"]
+            missing_fields = [field for field in required_fields if field not in result]
+            
+            if not missing_fields:
+                print(f"✅ Response contains all required fields")
+                
+                # Check if results array exists and has proper structure
+                results = result.get("results", [])
+                if isinstance(results, list) and len(results) > 0:
+                    print(f"✅ Results array contains {len(results)} question results")
+                    success_count += 1
+                else:
+                    print(f"❌ Results array is empty or invalid")
+            else:
+                print(f"❌ Response missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*60}")
+    print(f"🏁 ADVANCED MASTERY COURSE SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count == total_tests:
+        print("✅ ALL ADVANCED MASTERY COURSE TESTS PASSED!")
+        return True
+    else:
+        print("❌ SOME ADVANCED MASTERY COURSE TESTS FAILED!")
+        return False
+
 def test_speaking_evaluation():
     """Test the Speaking Test Detailed Feedback API as requested in the review"""
     print("\n" + "="*60)
