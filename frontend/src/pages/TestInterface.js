@@ -822,11 +822,15 @@ function ElevenLabsExaminer() {
                     {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
                   </h2>
                 </div>
-                {/* Passage Content - Scrollable */}
+                {/* Passage Content - Scrollable with Highlighter */}
                 <div className="flex-1 overflow-y-auto p-6">
-                  <p className="text-gray-700 leading-relaxed whitespace-pre-line text-base">
-                    {test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
-                  </p>
+                  <HighlightableText
+                    text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
+                    user={user}
+                    testId={`${test?.id}-passage-${currentPassage}`}
+                    testType="reading"
+                    highlightsEnabled={true}
+                  />
                 </div>
               </Card>
             </div>
