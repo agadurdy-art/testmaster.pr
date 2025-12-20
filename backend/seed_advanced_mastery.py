@@ -185,7 +185,14 @@ ADVANCED_MODULES = [
             "questions": [
                 {"type": "multiple_choice", "question": "What is being challenged by new educational approaches?", "options": ["Technology integration", "Traditional pedagogical methods", "Student engagement"], "answer": "Traditional pedagogical methods"},
                 {"type": "true_false_ng", "question": "All students have equal access to educational technology.", "answer": "False"},
-                {"type": "sentence_completion", "question": "Standardized testing may undermine ______ development.", "answer": "holistic"}
+                {"type": "sentence_completion", "question": "Standardized testing may undermine ______ development.", "answer": "holistic"},
+                {"type": "true_false_ng", "question": "Traditional approaches encourage active learning.", "answer": "False"},
+                {"type": "vocabulary_match", "question": "What term describes learning through repetition without understanding?", "answer": "Rote memorization"},
+                {"type": "summary_completion", "question": "The digital revolution offers unprecedented opportunities for ______ education.", "answer": "personalized"},
+                {"type": "true_false_ng", "question": "Inquiry-based learning focuses on passive absorption of information.", "answer": "False"},
+                {"type": "multiple_choice", "question": "What do critics warn about regarding technology in education?", "options": ["It's too expensive", "Widening socio-economic disparity in access", "Students don't like it"], "answer": "Widening socio-economic disparity in access"},
+                {"type": "sentence_completion", "question": "Advocates support experiential and ______-based learning.", "answer": "inquiry"},
+                {"type": "identify_view", "question": "Does the text suggest standardized testing promotes critical thinking?", "answer": "No"}
             ]
         },
         "speaking": {
