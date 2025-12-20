@@ -25,13 +25,8 @@ export default function HighlightableText({
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [selectionInfo, setSelectionInfo] = useState(null);
 
-  useEffect(() => {
-    if (user?.id && testId && highlightsEnabled) {
-      loadHighlights();
-    }
-  }, [testId, user?.id, highlightsEnabled]);
-
-  const loadHighlights = async () => {
+  const loadHighlights = useCallback(async () => {
+    if (!user?.id || !testId) return;
     try {
       const res = await fetch(`${API_URL}/api/highlights/${user.id}/${testId}`);
       if (res.ok) {
@@ -41,7 +36,13 @@ export default function HighlightableText({
     } catch (e) {
       console.error('Failed to load highlights');
     }
-  };
+  }, [user?.id, testId]);
+
+  useEffect(() => {
+    if (user?.id && testId && highlightsEnabled) {
+      loadHighlights();
+    }
+  }, [loadHighlights, highlightsEnabled]);
 
   const saveHighlight = async (start, end, color) => {
     try {
