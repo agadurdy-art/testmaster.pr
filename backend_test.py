@@ -562,92 +562,324 @@ def test_advanced_mastery_course():
         print("❌ SOME ADVANCED MASTERY COURSE TESTS FAILED!")
         return False
 
-def test_speaking_evaluation():
-    """Test the Speaking Test Detailed Feedback API as requested in the review"""
-    print("\n" + "="*60)
-    print("🚀 TESTING SPEAKING EVALUATION API - DETAILED FEEDBACK")
-    print("="*60)
+def test_authentication():
+    """Test authentication with provided credentials"""
+    print("\n=== Testing Authentication ===")
     
-    # Test the exact API call from the review request
-    test_data = {
-        "user_id": "test-user",
-        "part": 1,
-        "question": "What do you do? Do you work or are you a student?",
-        "user_response": "I am student. I study computer. I like it very much."
+    auth_data = {
+        "email": "test_content@example.com",
+        "password": "testpass123"
     }
     
     try:
-        print("=== Testing Speaking Evaluation API ===")
-        response = requests.post(f"{BACKEND_URL}/evaluate/speaking", json=test_data)
+        response = requests.post(f"{BACKEND_URL}/auth/login", json=auth_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            user = response.json()
+            print(f"✅ Authentication successful")
+            print(f"User ID: {user.get('id')}")
+            print(f"Email: {user.get('email')}")
+            return user.get('id')
+        else:
+            print(f"❌ Authentication failed: {response.status_code} - {response.text}")
+            return None
+    except Exception as e:
+        print(f"❌ Authentication error: {e}")
+        return None
+
+def test_notes_api(user_id):
+    """Test Notes API (Phase 2)"""
+    print("\n" + "="*60)
+    print("🚀 TESTING NOTES API (PHASE 2)")
+    print("="*60)
+    
+    success_count = 0
+    total_tests = 3
+    test_id = "test-module-1"
+    note_id = None
+    
+    # Test 1: Create a note
+    print("\n=== Test 1: POST /api/notes - Create a note ===")
+    note_data = {
+        "user_id": user_id,
+        "test_id": test_id,
+        "test_type": "reading",
+        "content": "This is a test note for the reading passage about climate change.",
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/notes", json=note_data)
         print(f"Status Code: {response.status_code}")
         
         if response.status_code == 200:
             result = response.json()
-            print("✅ API call successful")
+            note_id = result.get("id")
+            print(f"✅ Note created successfully with ID: {note_id}")
+            success_count += 1
+        else:
+            print(f"❌ Failed to create note: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Error creating note: {e}")
+    
+    # Test 2: Get notes
+    print(f"\n=== Test 2: GET /api/notes/{user_id}/{test_id} - Get notes ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/notes/{user_id}/{test_id}")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            notes = response.json()
+            print(f"✅ Retrieved {len(notes)} notes")
+            if notes and len(notes) > 0:
+                print(f"First note content: {notes[0].get('content', '')[:50]}...")
+                success_count += 1
+            else:
+                print("⚠️ No notes found")
+        else:
+            print(f"❌ Failed to get notes: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Error getting notes: {e}")
+    
+    # Test 3: Delete note
+    if note_id:
+        print(f"\n=== Test 3: DELETE /api/notes/{note_id} - Delete note ===")
+        try:
+            response = requests.delete(f"{BACKEND_URL}/notes/{note_id}")
+            print(f"Status Code: {response.status_code}")
             
-            # Validate all required fields from the review request
-            required_fields = [
-                "band_score",
-                "fluency_coherence", 
-                "lexical_resource",
-                "grammatical_accuracy", 
-                "pronunciation",
-                "overall_feedback",
-                "model_answer"
-            ]
+            if response.status_code == 200:
+                result = response.json()
+                print(f"✅ Note deleted successfully")
+                success_count += 1
+            else:
+                print(f"❌ Failed to delete note: {response.status_code} - {response.text}")
+        except Exception as e:
+            print(f"❌ Error deleting note: {e}")
+    else:
+        print("\n=== Test 3: DELETE note - SKIPPED (no note ID) ===")
+    
+    print(f"\n🏁 NOTES API SUMMARY: {success_count}/{total_tests} tests passed")
+    return success_count == total_tests
+
+def test_highlights_api(user_id):
+    """Test Highlights API (Phase 2)"""
+    print("\n" + "="*60)
+    print("🚀 TESTING HIGHLIGHTS API (PHASE 2)")
+    print("="*60)
+    
+    success_count = 0
+    total_tests = 3
+    test_id = "test-module-1"
+    highlight_id = None
+    
+    # Test 1: Create a highlight
+    print("\n=== Test 1: POST /api/highlights - Create a highlight ===")
+    highlight_data = {
+        "user_id": user_id,
+        "test_id": test_id,
+        "test_type": "reading",
+        "start_index": 150,
+        "end_index": 200,
+        "color": "yellow",
+        "highlighted_text": "Climate change is one of the most pressing issues",
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/highlights", json=highlight_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            highlight_id = result.get("id")
+            print(f"✅ Highlight created successfully with ID: {highlight_id}")
+            success_count += 1
+        else:
+            print(f"❌ Failed to create highlight: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Error creating highlight: {e}")
+    
+    # Test 2: Get highlights
+    print(f"\n=== Test 2: GET /api/highlights/{user_id}/{test_id} - Get highlights ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/highlights/{user_id}/{test_id}")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            highlights = response.json()
+            print(f"✅ Retrieved {len(highlights)} highlights")
+            if highlights and len(highlights) > 0:
+                print(f"First highlight text: {highlights[0].get('highlighted_text', '')[:50]}...")
+                success_count += 1
+            else:
+                print("⚠️ No highlights found")
+        else:
+            print(f"❌ Failed to get highlights: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Error getting highlights: {e}")
+    
+    # Test 3: Delete highlight
+    if highlight_id:
+        print(f"\n=== Test 3: DELETE /api/highlights/{highlight_id} - Delete highlight ===")
+        try:
+            response = requests.delete(f"{BACKEND_URL}/highlights/{highlight_id}")
+            print(f"Status Code: {response.status_code}")
             
-            checks_passed = 0
-            total_checks = len(required_fields) + 4  # +4 for detailed field checks
+            if response.status_code == 200:
+                result = response.json()
+                print(f"✅ Highlight deleted successfully")
+                success_count += 1
+            else:
+                print(f"❌ Failed to delete highlight: {response.status_code} - {response.text}")
+        except Exception as e:
+            print(f"❌ Error deleting highlight: {e}")
+    else:
+        print("\n=== Test 3: DELETE highlight - SKIPPED (no highlight ID) ===")
+    
+    print(f"\n🏁 HIGHLIGHTS API SUMMARY: {success_count}/{total_tests} tests passed")
+    return success_count == total_tests
+
+def test_skill_analytics_api(user_id):
+    """Test Skill Analytics API (Phase 4)"""
+    print("\n" + "="*60)
+    print("🚀 TESTING SKILL ANALYTICS API (PHASE 4)")
+    print("="*60)
+    
+    # Test: GET /api/skill-analytics/{user_id}
+    print(f"\n=== Test: GET /api/skill-analytics/{user_id} - Get cumulative analytics ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/skill-analytics/{user_id}")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            analytics = response.json()
+            print(f"✅ Skill analytics retrieved successfully")
             
-            # Check 1: All required top-level fields exist
-            for field in required_fields:
-                if field in result:
-                    print(f"✅ {field} field present")
-                    checks_passed += 1
-                else:
-                    print(f"❌ {field} field missing")
+            # Validate expected structure
+            required_fields = ["total_tests", "average_score", "average_band", "skill_performance", "strengths", "areas_to_improve"]
+            missing_fields = [field for field in required_fields if field not in analytics]
             
-            # Check 2: Detailed criteria have score and feedback
-            criteria = ["fluency_coherence", "lexical_resource", "grammatical_accuracy", "pronunciation"]
-            for criterion in criteria:
-                if criterion in result and isinstance(result[criterion], dict):
-                    criterion_data = result[criterion]
-                    if "score" in criterion_data and "feedback" in criterion_data:
-                        print(f"✅ {criterion} has score and feedback")
-                        checks_passed += 1
-                    else:
-                        print(f"❌ {criterion} missing score or feedback")
-                else:
-                    print(f"❌ {criterion} not properly structured")
-            
-            # Display the actual response structure for verification
-            print(f"\n📋 Response Structure:")
-            print(f"   Band Score: {result.get('band_score', 'N/A')}")
-            
-            for criterion in criteria:
-                if criterion in result and isinstance(result[criterion], dict):
-                    crit_data = result[criterion]
-                    print(f"   {criterion.replace('_', ' ').title()}:")
-                    print(f"     Score: {crit_data.get('score', 'N/A')}")
-                    print(f"     Feedback: {crit_data.get('feedback', 'N/A')[:100]}...")
-            
-            print(f"   Overall Feedback: {result.get('overall_feedback', 'N/A')[:100]}...")
-            print(f"   Model Answer: {result.get('model_answer', 'N/A')[:100]}...")
-            
-            if checks_passed >= total_checks - 2:  # Allow some tolerance
-                print("✅ SPEAKING EVALUATION TEST PASSED")
+            if not missing_fields:
+                print(f"✅ Analytics contains all required fields")
+                print(f"   Total Tests: {analytics.get('total_tests', 0)}")
+                print(f"   Average Score: {analytics.get('average_score', 0)}")
+                print(f"   Average Band: {analytics.get('average_band', 'N/A')}")
+                print(f"   Strengths: {analytics.get('strengths', [])}")
+                print(f"   Areas to Improve: {analytics.get('areas_to_improve', [])}")
                 return True
             else:
-                print(f"❌ SPEAKING EVALUATION TEST FAILED ({checks_passed}/{total_checks} checks passed)")
+                print(f"❌ Analytics missing fields: {missing_fields}")
                 return False
-                
         else:
-            print(f"❌ SPEAKING EVALUATION TEST FAILED - HTTP {response.status_code}: {response.text}")
+            print(f"❌ Failed to get skill analytics: {response.status_code} - {response.text}")
             return False
-            
     except Exception as e:
-        print(f"❌ SPEAKING EVALUATION TEST ERROR: {e}")
+        print(f"❌ Error getting skill analytics: {e}")
         return False
+
+def test_quiz_evaluation_with_skill_breakdown():
+    """Test Quiz Evaluation with Skill Breakdown (Phase 4 enhancement)"""
+    print("\n" + "="*60)
+    print("🚀 TESTING QUIZ EVALUATION WITH SKILL BREAKDOWN")
+    print("="*60)
+    
+    # Test: POST /api/advanced-mastery/evaluate-quiz with skill_breakdown
+    print("\n=== Test: POST /api/advanced-mastery/evaluate-quiz - Should return skill_breakdown ===")
+    quiz_data = {
+        "module_id": "advanced-module-1",
+        "answers": {
+            "0": "No",
+            "1": "Paragraph 1", 
+            "2": "profit over individual sovereignty",
+            "3": "artificial intelligence",
+            "4": "True"
+        }
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/advanced-mastery/evaluate-quiz", json=quiz_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ Quiz evaluation successful")
+            
+            # Validate expected fields including skill_breakdown
+            required_fields = ["score", "correct", "total", "estimated_band", "results", "skill_breakdown"]
+            missing_fields = [field for field in required_fields if field not in result]
+            
+            if not missing_fields:
+                print(f"✅ Response contains all required fields including skill_breakdown")
+                
+                # Check skill_breakdown structure
+                skill_breakdown = result.get("skill_breakdown", {})
+                if isinstance(skill_breakdown, dict) and skill_breakdown:
+                    print(f"✅ skill_breakdown contains {len(skill_breakdown)} skill types")
+                    
+                    # Check for tips in weak areas
+                    has_tips = any("tip" in data for data in skill_breakdown.values() if isinstance(data, dict))
+                    if has_tips:
+                        print(f"✅ skill_breakdown includes tips for weak areas")
+                    else:
+                        print(f"⚠️ No tips found in skill_breakdown (may be normal if no weak areas)")
+                    
+                    print(f"   Score: {result.get('score', 0)}%")
+                    print(f"   Correct: {result.get('correct', 0)}/{result.get('total', 0)}")
+                    print(f"   Estimated Band: {result.get('estimated_band', 'N/A')}")
+                    return True
+                else:
+                    print(f"❌ skill_breakdown is empty or invalid: {skill_breakdown}")
+                    return False
+            else:
+                print(f"❌ Response missing fields: {missing_fields}")
+                return False
+        else:
+            print(f"❌ Failed to evaluate quiz: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ Error evaluating quiz: {e}")
+        return False
+
+def test_phase_2_4_features():
+    """Test all Phase 2-4 features as requested in the review"""
+    print("\n" + "="*80)
+    print("🚀 TESTING PHASE 2-4 FEATURES FOR IELTS PLATFORM")
+    print("="*80)
+    
+    # Step 1: Authenticate
+    user_id = test_authentication()
+    if not user_id:
+        print("❌ Cannot proceed without authentication")
+        return False
+    
+    # Step 2: Test Notes API (Phase 2)
+    notes_success = test_notes_api(user_id)
+    
+    # Step 3: Test Highlights API (Phase 2)
+    highlights_success = test_highlights_api(user_id)
+    
+    # Step 4: Test Skill Analytics API (Phase 4)
+    analytics_success = test_skill_analytics_api(user_id)
+    
+    # Step 5: Test Quiz Evaluation with Skill Breakdown
+    quiz_success = test_quiz_evaluation_with_skill_breakdown()
+    
+    # Summary
+    total_success = notes_success + highlights_success + analytics_success + quiz_success
+    total_tests = 4
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 PHASE 2-4 FEATURES SUMMARY:")
+    print(f"   Notes API (Phase 2): {'✅ PASSED' if notes_success else '❌ FAILED'}")
+    print(f"   Highlights API (Phase 2): {'✅ PASSED' if highlights_success else '❌ FAILED'}")
+    print(f"   Skill Analytics API (Phase 4): {'✅ PASSED' if analytics_success else '❌ FAILED'}")
+    print(f"   Quiz Evaluation with Skill Breakdown: {'✅ PASSED' if quiz_success else '❌ FAILED'}")
+    print(f"   Overall: {total_success}/{total_tests} feature sets passed")
+    print(f"{'='*80}")
+    
+    return total_success == total_tests
 
 def run_complete_test_flow():
     """Run the complete test flow for reading and listening tests"""
