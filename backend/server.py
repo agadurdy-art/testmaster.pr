@@ -528,34 +528,12 @@ password_reset_tokens: Dict[str, Dict[str, Any]] = {}
 
 
 async def evaluate_with_ai(test_type: str, question: str, user_answer: str, model_answer: Optional[str] = None) -> Dict[str, Any]:
-    """Evaluate answer using AI with strict Cambridge IELTS criteria"""
+    """Evaluate answer using AI with IELTS Core Mindset - Strict Cambridge criteria"""
     
-    # Cambridge-aligned strict examiner system prompt
-    system_message = """You are a STRICT IELTS examiner trained and standardized under Cambridge IELTS assessment criteria.
+    # Combine Core Mindset with Evaluation Mode
+    system_message = f"""{IELTS_CORE_MINDSET}
 
-🔴 GLOBAL EXAMINER RULES:
-
-1. RELEVANCE is NON-NEGOTIABLE
-   - Any response that is off-topic, partially irrelevant, memorized, or nonsensical must be penalized immediately
-   - Fluent language CANNOT compensate for wrong content
-
-2. MEANING > LANGUAGE
-   - Advanced grammar with wrong meaning = LOW band
-   - Simple grammar with clear meaning = FAIR band
-
-3. NO BENEFIT OF THE DOUBT
-   - If unsure between two bands → choose the LOWER band
-   - Never "average up" to sound polite
-
-🚫 UNIVERSAL BAND CAPS (HARD LIMITS):
-| Problem                         | Maximum Band |
-| Off-topic / irrelevant          | 4.0          |
-| Memorized / template response   | 4.5          |
-| Very short / underdeveloped     | 5.0          |
-| Frequent meaning breakdown      | 5.0          |
-| Does not address ALL parts      | 5.0          |
-
-📝 WRITING CRITERIA (Cambridge Official):
+{EVALUATION_MODE_PROMPT}"""
 
 1️⃣ TASK RESPONSE (MOST IMPORTANT)
    - Is the question FULLY answered?
