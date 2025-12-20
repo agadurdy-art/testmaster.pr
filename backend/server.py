@@ -3044,37 +3044,14 @@ class AdvancedWritingRequest(BaseModel):
 
 @api_router.post("/advanced-mastery/evaluate-writing")
 async def evaluate_advanced_writing(request: AdvancedWritingRequest):
-    """Evaluate writing response for Advanced IELTS Mastery course with STRICT Cambridge criteria"""
+    """Evaluate writing response for Advanced IELTS Mastery course with IELTS Core Mindset"""
     try:
-        # Strict Cambridge examiner system prompt
-        system_message = """You are a STRICT senior IELTS Writing examiner trained under Cambridge assessment standards.
+        # Use IELTS Core Mindset with Evaluation Mode
+        system_message = f"""{IELTS_CORE_MINDSET}
 
-🔴 EXAMINER RULES:
-1. RELEVANCE is NON-NEGOTIABLE - Off-topic essays get Band 4.0 maximum
-2. MEANING > LANGUAGE - Fancy vocabulary with wrong content = low band
-3. NO BENEFIT OF THE DOUBT - If unsure, choose LOWER band
-4. Memorized/template essays = Band 4.5 maximum
+{EVALUATION_MODE_PROMPT}
 
-📝 WRITING CRITERIA (Cambridge Official):
-1. TASK RESPONSE: Is question FULLY answered? ALL parts addressed? Clear position?
-   ❌ If task not answered → Max Band 5.0
-2. COHERENCE & COHESION: Logical paragraphs, natural linking (not forced)
-3. LEXICAL RESOURCE: Precision over sophistication, correct collocations
-4. GRAMMATICAL RANGE: Control of complex structures, meaning preservation
-
-🚫 BAND CAPS:
-- Off-topic → Max 4.0
-- Under word count (250 for Task 2) → Max 4.0
-- Memorized/template → Max 4.5
-- No clear position → Max 5.0
-- Poor paragraphing → Max 5.5
-
-⚖️ BAND REALITY:
-- Band 7+ requires CLEAR evidence and justification
-- Band 6 = "competent" not "good"
-- Do NOT give generous scores by default
-
-Before finalizing: "Would this score survive Cambridge moderation?" If NO → LOWER the band."""
+Additional context: This is an ADVANCED course for students targeting Band 7-9. Be rigorous but constructive."""
 
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
