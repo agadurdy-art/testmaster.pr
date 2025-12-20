@@ -3188,6 +3188,43 @@ async def startup_event():
                 logger.error(f"Beginner seed error: {result.stderr}")
         else:
             logger.info(f"Found {beginner_count} beginner english lessons in database")
+        
+        # Seed IELTS mastery course modules (Band 4.5-6.5)
+        mastery_count = await db.mastery_course_modules.count_documents({})
+        if mastery_count == 0:
+            logger.info("No mastery course modules found, running seed...")
+            import subprocess
+            result = subprocess.run(["python", "seed_mastery_course.py"], cwd="/app/backend", capture_output=True, text=True)
+            logger.info(f"Mastery course seed output: {result.stdout}")
+            if result.returncode != 0:
+                logger.error(f"Mastery course seed error: {result.stderr}")
+        else:
+            logger.info(f"Found {mastery_count} mastery course modules in database")
+        
+        # Seed Advanced IELTS mastery course modules (Band 6.0-9.0)
+        advanced_count = await db.advanced_mastery_modules.count_documents({})
+        if advanced_count == 0:
+            logger.info("No advanced mastery modules found, running seed...")
+            import subprocess
+            result = subprocess.run(["python", "seed_advanced_mastery.py"], cwd="/app/backend", capture_output=True, text=True)
+            logger.info(f"Advanced mastery seed output: {result.stdout}")
+            if result.returncode != 0:
+                logger.error(f"Advanced mastery seed error: {result.stderr}")
+        else:
+            logger.info(f"Found {advanced_count} advanced mastery modules in database")
+        
+        # Seed tests if not present
+        tests_count = await db.tests.count_documents({})
+        if tests_count == 0:
+            logger.info("No tests found, running seed...")
+            import subprocess
+            result = subprocess.run(["python", "seed_data.py"], cwd="/app/backend", capture_output=True, text=True)
+            logger.info(f"Tests seed output: {result.stdout}")
+            if result.returncode != 0:
+                logger.error(f"Tests seed error: {result.stderr}")
+        else:
+            logger.info(f"Found {tests_count} tests in database")
+            
     except Exception as e:
         logger.error(f"Startup seed error: {e}")
 
