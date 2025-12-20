@@ -21,9 +21,6 @@ export default function AdvancedMasteryCourse({ user }) {
   const [view, setView] = useState('modules');
   const [loading, setLoading] = useState(true);
   
-  // Notebook & Highlighter state
-  const [showNotebook, setShowNotebook] = useState(false);
-  
   // Speaking state
   const [isRecording, setIsRecording] = useState(false);
   const [speakingResponse, setSpeakingResponse] = useState('');
