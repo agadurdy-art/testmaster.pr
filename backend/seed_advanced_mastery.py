@@ -1009,5 +1009,481 @@ ADVANCED_MODULES = [
             "Critique the Prompt: At Band 8.0, you can challenge the premises of a question."
         ]
     },
-    # Modules 15-20 continue in next section...
+    # Module 15: Globalisation, Cultural Identity, and the Homogenisation of Society
+    {
+        "id": "advanced-module-15",
+        "module_number": 15,
+        "title": "Globalisation, Cultural Identity, and the Homogenisation of Society",
+        "subtitle": "Cultural Convergence versus the Preservation of Heritage",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Critically evaluate the impact of global economic integration on local traditions",
+            "Master the use of inverted conditionals (e.g., 'Should,' 'Had,' 'Were') to present sophisticated hypothetical arguments",
+            "Develop a lexicon for discussing cultural hegemony, standardisation, and linguistic diversity"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Cultural Homogenisation", "meaning": "The process by which local cultures are transformed or absorbed by a dominant outside culture", "usage": "Noun; central to the 'globalisation' debate", "example": "The primary concern regarding global trade is the potential for cultural homogenisation at the expense of local identity."},
+                {"term": "Hegemony", "meaning": "Leadership or dominance, especially by one country or social group over others", "usage": "Noun; used in political/cultural contexts", "example": "The cultural hegemony of Western media has a profound influence on global consumer habits."},
+                {"term": "To Assimilate", "meaning": "To take in information, ideas, or culture and understand them fully; to become part of a wider society", "usage": "Verb; high-level alternative to 'join' or 'fit in'", "example": "Migrant communities often strive to assimilate while simultaneously maintaining their ancestral traditions."},
+                {"term": "Standardisation", "meaning": "The process of making things of the same type all have the same features or quality", "usage": "Noun; used when discussing products or lifestyles", "example": "The standardisation of urban architecture makes many international cities appear virtually identical."},
+                {"term": "Indigenous", "meaning": "Originating or occurring naturally in a particular place; native", "usage": "Adjective; used for people, languages, or plants", "example": "Globalisation poses a significant threat to the survival of indigenous languages."}
+            ],
+            "synonym_groups": {
+                "widespread": ["Pervasive", "ubiquitous", "rife", "prevalent"],
+                "to_change": ["To alter", "to modify", "to transform", "to evolve"],
+                "loss_of_identity": ["Cultural erosion", "the dilution of heritage", "the effacement of tradition"]
+            }
+        },
+        "grammar": {
+            "title": "Inverted Conditionals",
+            "explanation": "To reach Band 7.5+, you must demonstrate mastery of formal conditional structures that eliminate the word 'if.'",
+            "band_65_example": "If the government doesn't protect local traditions, they will disappear.",
+            "band_80_example": "Should the state fail to implement protective cultural policies, indigenous traditions will inevitably succumb to the pressures of global standardisation.",
+            "past_hypothetical": "Had international bodies intervened earlier, many endangered languages might have been saved from extinction."
+        },
+        "reading": {
+            "title": "The Paradox of the Global Village",
+            "word_count": 340,
+            "text": "The term 'Global Village,' coined by Marshall McLuhan, suggests a world where technological and economic integration brings humanity closer together. In many ways, this has been realized; digital platforms allow for instantaneous 'intercultural dialogue,' fostering a sense of global community. However, critics argue that this 'interconnectedness' is a double-edged sword. While it facilitates the exchange of ideas, it also acts as a conduit for 'cultural imperialism,' where the values of dominant economic powers overshadow local customs.\n\nThe most visible sign of this shift is the 'standardisation' of the global consumer landscape. From the prevalence of multinational fast-food chains to the 'ubiquity' of Hollywood cinema, the nuances of local identity are increasingly being eroded. This 'cultural homogenisation' is often driven by the 'hegemony' of the English language, which, as the global lingua franca, provides immense economic opportunities but simultaneously threatens the survival of minority tongues. When a language dies, the unique worldview and historical knowledge 'assimilated' within its vocabulary are lost forever.\n\nConversely, some sociologists suggest that globalisation triggers a 'counter-movement'—a resurgence of localism and 'cultural revitalisation.' In response to the perceived threat of a uniform world, many communities are doubling down on their heritage, reviving ancient festivals and promoting traditional craftsmanship. This 'glocalisation'—the adaptation of international products to fit local contexts—suggests that cultures are not passive victims of change but active participants in an evolving global narrative. Ultimately, the challenge for the 21st century is to leverage the benefits of a globalised economy without sacrificing the 'indigenous' diversity that makes the human experience rich and multifaceted.",
+            "questions": [
+                {"type": "identify_view", "question": "Who coined the phrase 'Global Village'?", "answer": "Marshall McLuhan"},
+                {"type": "true_false_ng", "question": "Interconnectedness has only positive effects.", "answer": "False"},
+                {"type": "true_false_ng", "question": "English is the most spoken language in history.", "answer": "Not Given"},
+                {"type": "vocabulary_match", "question": "Which term describes the dominance of one group over others?", "answer": "Hegemony"},
+                {"type": "matching_info", "question": "Which paragraph discusses the loss of historical knowledge through language?", "answer": "Paragraph 2"},
+                {"type": "matching_info", "question": "Which paragraph introduces the concept of 'glocalisation'?", "answer": "Paragraph 3"},
+                {"type": "summary_completion", "question": "Globalisation is often described as a ______, bringing both benefits and risks.", "answer": "double-edged sword"},
+                {"type": "summary_completion", "question": "The spread of Western values is sometimes called ______.", "answer": "cultural imperialism"},
+                {"type": "multiple_choice", "question": "What is 'glocalisation'?", "options": ["Complete rejection of global products", "The adaptation of global trends to local tastes", "Government regulation of imports"], "answer": "The adaptation of global trends to local tastes"},
+                {"type": "multiple_choice", "question": "What is the primary cause of cultural erosion mentioned?", "options": ["Government policy", "Economic and technological integration/Standardisation", "Natural disasters"], "answer": "Economic and technological integration/Standardisation"},
+                {"type": "sentence_completion", "question": "Digital platforms have made ______ dialogue much faster.", "answer": "intercultural"},
+                {"type": "identify_view", "question": "The author concludes that global diversity is ______ and should be preserved.", "answer": "multifaceted/rich"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a tradition or festival in your country that you are proud of. You should say what it is, when it happens, how people celebrate it, and explain why it is important to preserve this tradition in a globalised world.",
+                "model_answer": "I'd like to describe the Mid-Autumn Festival in my country. It occurs in September or October, depending on the lunar calendar. Families gather to admire the full moon, enjoy mooncakes, and light lanterns. Preserving this tradition is crucial because it embodies intergenerational solidarity and provides a counter-narrative to the cultural homogenisation driven by globalisation."
+            },
+            "part3": {
+                "question": "Do you think that the world will eventually have one single culture?",
+                "band8_sample": "I suspect we are moving toward a hybridized global culture rather than a completely uniform one. While the standardisation of technology and fashion is ubiquitous, human beings have an inherent drive to differentiate themselves. We might watch the same blockbusters, but we interpret them through the lens of our own local heritage. Therefore, I don't believe a monolithic culture is likely; rather, we will see a multi-layered identity where global and local values coexist."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "Some people believe that the fact that the world is becoming more uniform is a positive development. Others believe that it is a negative trend that destroys cultural identity. Discuss both views and give your opinion.",
+            "band75_excerpt": "The debate over the convergence of global cultures is highly contentious. Proponents of a more uniform world argue that it facilitates international cooperation and reduces the likelihood of conflict by creating a shared set of values. However, I am of the conviction that the erosion of cultural distinctiveness is a profound loss for humanity. The homogenisation of society leads to a reduction in intellectual diversity, as different cultures offer unique ways of problem-solving and understanding the world. Were we to allow local traditions to disappear, we would be sacrificing the collective wisdom of our ancestors for the sake of mere economic convenience.",
+            "examiner_analysis": {
+                "task_response": "Addresses both the 'cooperation' and 'loss of identity' perspectives with a clear stance.",
+                "lexical_resource": "Instead of 'The world is all the same,' use 'The inexorable march toward global uniformity...'",
+                "grammar_upgrade": "Instead of 'If we let traditions go, we will lose them,' use the inverted conditional: 'Should we permit the effacement of local customs, the cultural fabric of society will be irreparably damaged.'"
+            }
+        },
+        "examiner_tips": [
+            "Precision with Abstract Nouns: Use words like 'proliferation,' 'integration,' and 'dilution' to describe cultural changes.",
+            "The 'Third Way' Argument: At Band 8.0, try to argue for a 'middle ground,' such as 'Glocalisation,' to show a more sophisticated understanding.",
+            "Cohesive Devices: Use 'consequently,' 'notwithstanding,' and 'by the same token' to link complex ideas."
+        ]
+    },
+    # Module 16: The Environment: Ecological Integrity and Sustainable Mitigation
+    {
+        "id": "advanced-module-16",
+        "module_number": 16,
+        "title": "The Environment: Ecological Integrity and Sustainable Mitigation",
+        "subtitle": "Environmental Stewardship in the Anthropocene",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Critically evaluate the concept of 'The Tragedy of the Commons' in relation to global resource management",
+            "Master the use of Complex Prepositional Phrases to link causes and effects with academic precision",
+            "Utilize advanced environmental collocations to move from Band 6.5 (descriptive) to Band 8.0+ (analytical)"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Anthropogenic", "meaning": "Originating in human activity (chiefly of environmental pollution and pollutants)", "usage": "Adjective; replaces 'human-made'", "example": "The current rate of species extinction is largely driven by anthropogenic climate change."},
+                {"term": "Biodiversity Loss", "meaning": "The decline in the number, genetic variability, and variety of species in a given area", "usage": "Noun phrase; more academic than 'animals dying'", "example": "The biodiversity loss in the Amazon has reached a critical tipping point."},
+                {"term": "To Mitigate", "meaning": "To make something less severe, serious, or painful", "usage": "Verb; high-level alternative to 'reduce'", "example": "Strict carbon taxes are essential to mitigate the long-term effects of global warming."},
+                {"term": "Ecosystem Services", "meaning": "The many and varied benefits to humans provided by the natural environment and healthy ecosystems", "usage": "Noun phrase; used to argue for economic value of nature", "example": "Forests provide essential ecosystem services, such as water purification and carbon sequestration."},
+                {"term": "Sustainability", "meaning": "The ability to be maintained at a certain rate or level; meeting needs without compromising the future", "usage": "Noun; core topic term for environmental essays", "example": "Corporate sustainability initiatives must move beyond simple 'greenwashing' to effect real change."}
+            ],
+            "synonym_groups": {
+                "environmental_damage": ["Ecological degradation", "habitat destruction", "environmental despoliation"],
+                "to_deplete": ["To exhaust", "to drain", "to use up (resources)"],
+                "inevitable": ["Inescapable", "unavoidable", "inexorable"]
+            }
+        },
+        "grammar": {
+            "title": "Complex Prepositional Phrases",
+            "explanation": "Advanced writing requires linking ideas through prepositions rather than just basic conjunctions like 'because' or 'so.'",
+            "band_65_example": "The environment is dying because companies want to make money.",
+            "band_80_example": "In light of the relentless pursuit of profit, many corporations have historically prioritized short-term gains at the expense of ecological integrity.",
+            "key_phrases": ["With a view to", "By virtue of", "In accordance with", "In the face of"]
+        },
+        "reading": {
+            "title": "The Sixth Mass Extinction and the Tragedy of the Commons",
+            "word_count": 335,
+            "text": "The 'Tragedy of the Commons' is a central concept in environmental economics, describing a situation where individuals, acting independently and rationally according to their own self-interest, behave contrary to the whole group's long-term best interests by depleting a shared resource. In the context of the 21st century, the 'commons' is the global atmosphere and the vast biodiversity of our oceans. As nations compete for industrial dominance, the anthropogenic emission of greenhouse gases continues unabated, leading to what many biologists term the 'Sixth Mass Extinction.'\n\nUnlike previous extinction events caused by volcanic eruptions or asteroid impacts, the current crisis is driven primarily by habitat fragmentation and the over-exploitation of natural resources. The conversion of wildlands into agricultural space has led to a precipitous decline in pollinator populations, which threatens the very ecosystem services upon which human food security depends. Furthermore, the acidification of the oceans—a direct result of carbon absorption—is decimating coral reefs, the 'rainforests of the sea.'\n\nMitigating these effects requires more than individual lifestyle changes; it necessitates a fundamental shift in fiscal policy and international law. Some environmentalists advocate for 'Deep Ecology,' a philosophy that rejects the anthropocentric view that nature exists solely for human use. Instead, it posits that all living things have an inherent right to flourish. To implement this, governments are exploring 'Circular Economy' models, which aim to eliminate waste through the continual use of resources. However, the transition is often hampered by political inertia and the lobbying power of fossil fuel conglomerates. Ultimately, the preservation of our planet depends on our ability to move beyond national borders and recognize that ecological degradation in one region is a threat to stability everywhere.",
+            "questions": [
+                {"type": "identify_view", "question": "Does the author believe the 'Tragedy of the Commons' is caused by irrational behavior?", "answer": "No; it is 'rational' self-interest"},
+                {"type": "vocabulary_match", "question": "Which term in paragraph 1 refers to human-caused emissions?", "answer": "Anthropogenic"},
+                {"type": "true_false_ng", "question": "The current extinction is the first mass extinction in Earth's history.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Ocean acidification is caused by agricultural runoff.", "answer": "False—it's carbon absorption"},
+                {"type": "true_false_ng", "question": "The author believes individual recycling is enough to save the environment.", "answer": "False"},
+                {"type": "summary_completion", "question": "The decline in pollinators is a direct threat to human ______.", "answer": "food security"},
+                {"type": "summary_completion", "question": "The 'Circular Economy' aims to stop ______ by reusing resources.", "answer": "waste"},
+                {"type": "multiple_choice", "question": "What is 'Deep Ecology'?", "options": ["A type of farming", "The belief that nature has value independent of human needs", "A government policy"], "answer": "The belief that nature has value independent of human needs"},
+                {"type": "multiple_choice", "question": "Why is the transition to sustainable models difficult?", "options": ["Lack of technology", "Political inertia and corporate lobbying", "Public opposition"], "answer": "Political inertia and corporate lobbying"},
+                {"type": "matching_info", "question": "Which paragraph discusses the impact of agriculture on wildlands?", "answer": "Paragraph 2"},
+                {"type": "sentence_completion", "question": "Coral reefs are metaphorically referred to as ______.", "answer": "rainforests of the sea"},
+                {"type": "identify_view", "question": "Ecological damage is a ______ to global stability.", "answer": "threat"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe an environmental problem in your country. You should say what it is, how long it has been a problem, what the causes are, and explain what you think could be done to solve it.",
+                "model_answer": "I'd like to discuss air pollution in my city. It has been a persistent issue for over two decades. The primary causes are industrial emissions and vehicle exhaust. To solve it, I believe the government should invest in public transport infrastructure and impose stricter regulations on factories. However, this requires political will and public support."
+            },
+            "part3": {
+                "question": "Who do you think is more responsible for protecting the environment: individuals or the government?",
+                "band8_sample": "I'm of the conviction that while individual actions are laudable, the onus of responsibility lies primarily with the state. Without stringent regulatory frameworks, corporations will continue to externalize their environmental costs. We need systemic reform, such as the implementation of a carbon tax, to incentivize sustainable practices. Individual efforts, though well-intentioned, are often dwarfed by the scale of industrial pollution."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "Some people believe that only governments can make significant changes to protect the environment. Others believe that individuals can have a great impact. Discuss both views and give your opinion.",
+            "band75_excerpt": "The debate regarding environmental stewardship often centers on the efficacy of individual versus collective action. While I acknowledge that widespread shifts in consumer behavior can influence market trends, I contend that meaningful ecological preservation is impossible without robust governmental intervention. Individual choices are often constrained by socio-economic factors, whereas the state possesses the legislative power to enforce industry-wide standards and facilitate the transition to renewable energy.",
+            "examiner_analysis": {
+                "task_response": "Addresses the limitations of both individual and state power while providing a clear preference.",
+                "lexical_resource": "Uses 'stewardship,' 'efficacy,' 'socio-economic factors,' and 'legislative power.'",
+                "error_upgrade": "Instead of 'If people stop using plastic, it helps,' use 'The collective cessation of single-use plastic consumption could significantly alleviate the pressure on marine ecosystems.'"
+            }
+        },
+        "examiner_tips": [
+            "Avoid Emotional Language: Don't say 'It's so sad that trees are dying.' Use 'The loss of forest cover represents a catastrophic depletion of natural capital.'",
+            "Think Globally: In Speaking Part 3, always link the environment to globalization or the economy to show depth.",
+            "Precision in Action: Don't just say 'stop pollution.' Specify 'decarbonizing the economy' or 'enforcing effluent standards.'"
+        ]
+    },
+    # Module 17: Crime, Justice, and Social Reintegration
+    {
+        "id": "advanced-module-17",
+        "module_number": 17,
+        "title": "Crime, Justice, and Social Reintegration",
+        "subtitle": "Punitive versus Rehabilitative Justice",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Critically evaluate the efficacy of custodial sentences versus rehabilitative programmes",
+            "Master the Subjunctive Mood to express necessity and urgency in policy-related writing",
+            "Develop a lexicon for discussing deterrents, correctional facilities, and judicial equity"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Recidivism", "meaning": "The tendency of a convicted criminal to reoffend", "usage": "Noun; vital for discussing prison effectiveness", "example": "High rates of recidivism suggest that purely punitive measures are failing to reform offenders."},
+                {"term": "Deterrent", "meaning": "A thing that discourages or is intended to discourage someone from doing something", "usage": "Noun; common in 'capital punishment' debates", "example": "Longer prison sentences are often cited as a deterrent, yet their impact on crime rates remains disputed."},
+                {"term": "To Rehabilitate", "meaning": "To restore someone to health or normal life through training and therapy after imprisonment", "usage": "Verb; the opposite of 'punish'", "example": "It is far more cost-effective to rehabilitate non-violent offenders than to keep them incarcerated."},
+                {"term": "Capital Punishment", "meaning": "The legally authorized killing of someone as punishment for a crime", "usage": "Noun phrase; high-level academic term", "example": "The abolition of capital punishment is seen by many as a prerequisite for a modern, civilised society."},
+                {"term": "Custodial Sentence", "meaning": "A judicial sentence consisting of a mandatory period of time in a prison or other closed institution", "usage": "Noun phrase; formal alternative to 'prison time'", "example": "Judges are increasingly opting for community service over custodial sentences for minor infractions."}
+            ],
+            "synonym_groups": {
+                "minor_crimes": ["Petty offences", "misdemeanours", "non-violent infractions"],
+                "to_imprison": ["To incarcerate", "to detain", "to commit to a correctional facility"],
+                "punishment": ["Sanctions", "penalties", "retributive measures"]
+            }
+        },
+        "grammar": {
+            "title": "The Subjunctive Mood",
+            "explanation": "To reach Band 7.5+, use the subjunctive to convey a strong sense of recommendation or necessity in Task 2.",
+            "band_65_example": "The government must make sure that prisons are clean.",
+            "band_80_example": "It is imperative that the government ensure (not ensures) that correctional facilities prioritise rehabilitation over mere retribution.",
+            "structure": "It is essential/vital/imperative that + [subject] + [base form of verb]."
+        },
+        "reading": {
+            "title": "The Prison Paradox",
+            "word_count": 335,
+            "text": "The debate over the primary purpose of the penal system—whether it should be retributive or rehabilitative—has intensified as global incarceration rates climb. Traditional 'tough-on-crime' policies operate on the principle of retributive justice, where the severity of the punishment mirrors the gravity of the crime. Advocates of this model argue that the fear of a custodial sentence acts as a powerful deterrent, maintaining social order and providing a sense of closure to victims. However, a growing body of empirical evidence suggests that this approach may be counterproductive, particularly regarding recidivism.\n\nIn many jurisdictions, the 'prison-industrial complex' has been criticized for prioritizing security over transformation. When offenders are isolated from society without access to education or vocational training, they often emerge with fewer prospects than they had prior to their incarceration. This systemic failure creates a 'revolving door' where individuals are trapped in a cycle of crime and imprisonment. To combat this, some nations, particularly in Scandinavia, have shifted toward 'restorative justice.' This model focuses on repairing the harm caused by criminal behavior through mediation and community involvement, rather than focusing solely on the isolation of the perpetrator.\n\nFurthermore, the socio-economic roots of crime cannot be ignored. Research consistently indicates that poverty, lack of education, and mental health issues are significant predictors of criminal activity. Critics of the purely punitive model argue that it is essential that the state address these underlying catalysts through social welfare and community-based intervention. By investing in preventative measures, governments can potentially reduce the fiscal burden of the penal system while fostering a more equitable society. Ultimately, the challenge for the modern judiciary is to balance the public's demand for justice with the practical necessity of integrating former offenders back into the social fabric.",
+            "questions": [
+                {"type": "true_false_ng", "question": "Retributive justice suggests that punishment should match the crime.", "answer": "True"},
+                {"type": "true_false_ng", "question": "The text claims that deterrents are always effective in reducing crime.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Scandinavian prisons are more expensive to run than others.", "answer": "Not Given"},
+                {"type": "vocabulary_match", "question": "Which term describes the cycle of going in and out of prison?", "answer": "Revolving door"},
+                {"type": "vocabulary_match", "question": "Which term refers to the primary causes of crime, like poverty?", "answer": "Underlying catalysts"},
+                {"type": "summary_completion", "question": "Advocates of retributive justice believe it provides ______ to those affected by crime.", "answer": "closure"},
+                {"type": "summary_completion", "question": "Restorative justice emphasizes the ______ of harm.", "answer": "repair/repairing"},
+                {"type": "matching_info", "question": "Which paragraph discusses the lack of opportunities for ex-convicts?", "answer": "Paragraph 2"},
+                {"type": "matching_info", "question": "Which paragraph links mental health to crime rates?", "answer": "Paragraph 3"},
+                {"type": "multiple_choice", "question": "What is a common criticism of the 'prison-industrial complex'?", "options": ["It's too expensive", "The prioritization of security over reform", "It's too lenient"], "answer": "The prioritization of security over reform"},
+                {"type": "sentence_completion", "question": "The state should address poverty to reduce the ______ on the penal system.", "answer": "fiscal burden"},
+                {"type": "identify_view", "question": "The author suggests that the judicial system must be ______.", "answer": "balanced/rehabilitative"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a law in your country that you think is good. You should say what the law is, how it affects people, and explain why you think it is important.",
+                "model_answer": "I'd like to discuss the law requiring free education for all children up to age 16. It ensures that every child, regardless of socio-economic background, has access to basic education. This is important because education is the cornerstone of social mobility and helps mitigate the factors that lead to crime and poverty."
+            },
+            "part3": {
+                "question": "To what extent can education prevent people from committing crimes?",
+                "band8_sample": "I would argue that education is the primary bulwark against criminal activity. It's not just about academic knowledge; it's about socialisation and the acquisition of critical thinking skills. When individuals are equipped with marketable skills, they are far less likely to resort to illicit means of survival. However, education must be coupled with economic opportunity; if the job market is stagnant, even a well-educated populace may feel disenfranchised and turn to crime."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "Some people believe that prison is the best way to punish criminals. Others argue that other forms of punishment, such as community service, are more effective for most crimes. Discuss both views and give your opinion.",
+            "band75_excerpt": "The methodology of modern sentencing is a subject of intense scrutiny. While many maintain that incarceration is the only way to ensure public safety and provide a just retribution, I contend that for non-violent offences, community-based sanctions are far more effective. It is vital that the judicial system distinguish between those who pose a physical threat to society and those who have simply erred in judgement. By mandating community service, the state not only alleviates the overcrowding in prisons but also allows the offender to repay their debt to society in a constructive manner.",
+            "examiner_analysis": {
+                "lexical_resource": "Uses 'scrutiny,' 'just retribution,' 'erred in judgement,' and 'alleviates overcrowding.'",
+                "grammar": "Employs the Subjunctive: 'It is vital that the judicial system distinguish...'",
+                "error_upgrade": "Instead of 'Community service is better because it's cheaper,' use 'The fiscal advantages of non-custodial sentences are substantial, as they circumvent the exorbitant costs of long-term detention.'"
+            }
+        },
+        "examiner_tips": [
+            "Avoid Emotional Appeals: Don't say 'Crime is very sad for families.' Say 'Criminality has profound deleterious effects on the social cohesion of communities.'",
+            "Be Specific: Instead of 'bad people,' use 'offenders,' 'perpetrators,' or 'delinquents.'",
+            "Use Conditionals: Discuss the deterrent effect using second conditionals."
+        ]
+    },
+    # Module 18: Public Health and Medical Resource Allocation
+    {
+        "id": "advanced-module-18",
+        "module_number": 18,
+        "title": "Public Health and Medical Resource Allocation",
+        "subtitle": "Health Equity, Preventative Medicine, and State Responsibility",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Analyze the conflict between individual lifestyle choices and state-funded healthcare",
+            "Master Advanced Concessive Clauses (e.g., Notwithstanding, Much as) to show complex viewpoints",
+            "Develop a lexicon for discussing universal healthcare, pathogens, and lifestyle-related diseases"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Preventative Medicine", "meaning": "Medical practices designed to prevent disease rather than treat it", "usage": "Noun phrase; focus for health policy essays", "example": "Investment in preventative medicine, such as vaccination programs, can save governments billions in the long term."},
+                {"term": "To Exacerbate", "meaning": "To make a problem, bad situation, or negative feeling worse", "usage": "Verb; common in 'pollution and health' topics", "example": "High sugar consumption has exacerbated the global obesity crisis."},
+                {"term": "Universal Healthcare", "meaning": "A system that provides quality health services to all citizens regardless of their ability to pay", "usage": "Noun phrase; core topic for government role debates", "example": "The implementation of universal healthcare is often seen as a hallmark of a developed nation."},
+                {"term": "Pathogen", "meaning": "A bacterium, virus, or other microorganism that can cause disease", "usage": "Noun; academic alternative to 'germ' or 'virus'", "example": "Rapid urbanization has made it easier for pathogens to spread across borders."},
+                {"term": "Socio-economic Gradient", "meaning": "The relationship between social status and health outcomes", "usage": "Noun phrase; high-level sociological term", "example": "The socio-economic gradient in health remains one of the most persistent challenges for policymakers."}
+            ],
+            "synonym_groups": {
+                "disease": ["Ailment", "malady", "affliction", "disorder"],
+                "harmful": ["Deleterious", "detrimental", "pernicious", "injurious"],
+                "treatment": ["Intervention", "therapy", "medical regimen"]
+            }
+        },
+        "grammar": {
+            "title": "Advanced Concessive Clauses",
+            "explanation": "To reach Band 7+, you must be able to acknowledge an opposing view within your own sentence using sophisticated linkers.",
+            "band_65_example": "Although smoking is bad, people should be allowed to choose to do it.",
+            "band_80_example": "Notwithstanding the undeniable risks to public health, some argue that the state should not infringe upon an individual's right to make personal lifestyle choices.",
+            "alternative_structure": "Much as universal healthcare is desirable, the fiscal reality often makes its implementation difficult for developing nations."
+        },
+        "reading": {
+            "title": "The Burden of Choice: Health in the Modern Era",
+            "word_count": 340,
+            "text": "The landscape of global health has undergone a fundamental transformation. In the past, the primary threats were infectious diseases caused by pathogens; today, however, the burden has shifted toward non-communicable diseases (NCDs) such as type 2 diabetes, heart disease, and lung cancer. These 'lifestyle diseases' are often the result of sedentary habits, poor diet, and tobacco use. This shift has ignited a fierce debate regarding where the responsibility for health lies: with the individual or with the state.\n\nProponents of state intervention argue that the modern food environment is 'obesogenic,' meaning it is designed to encourage weight gain through the cheap availability of ultra-processed foods. In this view, individual choice is an illusion, as consumers are constantly bombarded by sophisticated marketing campaigns. Therefore, they suggest that it is imperative that the government implement 'sin taxes' on sugar and tobacco to discourage harmful behavior and fund public health initiatives. They argue that preventative medicine is far more efficient than treating chronic conditions after they have developed.\n\nConversely, critics of the 'nanny state' argue that health is a matter of personal autonomy. They contend that if individuals are forced to pay higher taxes for their lifestyle choices, it sets a dangerous precedent for government overreach. Furthermore, they point out that the socio-economic gradient plays a massive role; the most marginalized communities often lack access to fresh produce and safe areas for exercise. Instead of punitive taxes, they advocate for better health literacy and the improvement of public infrastructure. Ultimately, the challenge for the 21st century is to develop a healthcare model that encourages personal responsibility without abandoning those who are most vulnerable to systemic health disparities.",
+            "questions": [
+                {"type": "identify_view", "question": "What acronym is used for diseases like diabetes and heart disease?", "answer": "NCDs"},
+                {"type": "vocabulary_match", "question": "Which word describes an environment that encourages weight gain?", "answer": "Obesogenic"},
+                {"type": "true_false_ng", "question": "Most people died of lifestyle diseases in the past.", "answer": "False"},
+                {"type": "true_false_ng", "question": "The author believes marketing makes choice difficult.", "answer": "True"},
+                {"type": "true_false_ng", "question": "Sin taxes are the only way to fund healthcare.", "answer": "Not Given"},
+                {"type": "summary_completion", "question": "Critics of the state argue that health is a matter of personal ______.", "answer": "autonomy"},
+                {"type": "summary_completion", "question": "Marginalized groups often lack access to ______ areas for exercise.", "answer": "safe"},
+                {"type": "matching_info", "question": "Which section discusses 'sin taxes'?", "answer": "Paragraph 2"},
+                {"type": "matching_info", "question": "Which section mentions the 'socio-economic gradient'?", "answer": "Paragraph 3"},
+                {"type": "multiple_choice", "question": "What is the primary difference between past and present health threats?", "options": ["Cost of treatment", "A shift from infectious pathogens to lifestyle-related conditions", "Government involvement"], "answer": "A shift from infectious pathogens to lifestyle-related conditions"},
+                {"type": "sentence_completion", "question": "Governments should focus on ______ rather than just treating symptoms.", "answer": "preventative medicine"},
+                {"type": "identify_view", "question": "A successful healthcare model must balance responsibility with ______.", "answer": "disparities/vulnerability"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a healthy habit you have. You should say what it is, how often you do it, and explain how it helps your physical or mental well-being.",
+                "model_answer": "I practice mindfulness meditation every morning for about twenty minutes. I started after reading about its benefits for reducing stress and improving focus. It has significantly improved my mental well-being by helping me manage anxiety and approach challenges with a clearer mindset."
+            },
+            "part3": {
+                "question": "Should people who lead unhealthy lifestyles pay more for healthcare?",
+                "band8_sample": "Much as I understand the argument for fiscal fairness, I find the idea of charging people more based on their lifestyle to be highly problematic. It ignores the systemic factors at play. For instance, someone living in a food desert might not have the luxury of choosing organic produce. Punishing them financially would only exacerbate the wealth gap and lead to even worse health outcomes. Instead, we should focus on subsidising healthy options and improving health literacy across the board."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "Some people think that governments should be responsible for the health of their citizens. Others believe that it is the responsibility of individuals to lead a healthy life. Discuss both views and give your opinion.",
+            "band75_excerpt": "The allocation of responsibility for public health is a complex ethical dilemma. While it is undeniably true that individual choices regarding diet and exercise are pivotal, I believe the state must play a supervisory and supportive role. Notwithstanding the importance of personal autonomy, the government possesses the tools to regulate the food industry and provide universal access to medical care. A purely individualistic approach ignores the socio-economic barriers that prevent many from attaining a healthy lifestyle; therefore, a collaborative framework is essential.",
+            "examiner_analysis": {
+                "task_response": "Explains the importance of both individual and state action, concluding that a collaborative approach is best.",
+                "lexical_resource": "Uses 'allocation,' 'pivotal,' 'supervisory,' and 'socio-economic barriers.'",
+                "grammar": "Uses the concessive 'Notwithstanding...' to balance the sentence.",
+                "error_upgrade": "Instead of 'If the government helps, it's better,' use 'State-led health initiatives are imperative to mitigate the systemic inequalities that underpin global health disparities.'"
+            }
+        },
+        "examiner_tips": [
+            "Use 'Hedges': Avoid saying 'Sugar causes diabetes.' Say 'High sugar consumption is a significant contributing factor to the development of diabetes.'",
+            "Avoid Overusing 'Healthy': Use 'wholesome,' 'nutritious,' 'salubrious,' or 'beneficial to one's well-being.'",
+            "Connect to Other Modules: When discussing health, mention the fiscal burden on the government or the aging population to show comprehensive understanding."
+        ]
+    },
+    # Module 19: The Media Landscape: Journalism, Social Media, and the Public Interest
+    {
+        "id": "advanced-module-19",
+        "module_number": 19,
+        "title": "The Media Landscape",
+        "subtitle": "Journalism, Social Media, and the Public Interest",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Analyze the shift from traditional journalism to user-generated content",
+            "Master Fronting for Emphasis to vary sentence structure and highlight key arguments",
+            "Develop a lexicon for discussing misinformation, media literacy, and agenda-setting"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Dissemination", "meaning": "The act of spreading something, especially information, widely", "usage": "Noun; academic alternative to 'sharing'", "example": "The rapid dissemination of unverified reports can cause widespread public alarm."},
+                {"term": "Sensationalism", "meaning": "The use of exciting or shocking stories at the expense of accuracy to provoke public interest", "usage": "Noun; critical for media ethics discussions", "example": "Traditional news outlets often resort to sensationalism to compete with the speed of social media."},
+                {"term": "Echo Chamber", "meaning": "An environment where a person only encounters information or opinions that reflect and reinforce their own", "usage": "Noun; focus for technology/bias topics", "example": "Social media algorithms frequently create an echo chamber, stifling diverse political discourse."},
+                {"term": "Agenda-setting", "meaning": "The ability of the media to influence the importance placed on the topics of the public agenda", "usage": "Noun/Verb; sociological term", "example": "By focusing on specific scandals, the media performs an agenda-setting role that distracts from policy issues."},
+                {"term": "Media Literacy", "meaning": "The ability to access, analyze, evaluate, and create media in a variety of forms", "usage": "Noun phrase; the 'solution' in many essays", "example": "Improving media literacy is the most effective defense against the spread of fake news."}
+            ]
+        },
+        "grammar": {
+            "title": "Fronting for Emphasis",
+            "explanation": "To achieve Band 7+ in Grammatical Range, use 'fronting' to move a key element to the beginning of the sentence for rhetorical effect.",
+            "band_65_example": "Fake news is more dangerous than ever before.",
+            "band_80_example": "Never before has the threat of misinformation been so pervasive in our democratic processes.",
+            "application": "Move adverbs or prepositional phrases to the front: 'Only by implementing strict regulations can platforms be held accountable.'"
+        },
+        "reading": {
+            "title": "The Algorithmic Editor: News in the 21st Century",
+            "word_count": 338,
+            "text": "The transition from print to digital media has fundamentally altered how society consumes information. Traditionally, 'gatekeepers'—professional editors and journalists—vetted information for accuracy before dissemination. Today, however, this role has been largely supplanted by algorithms designed to maximize 'engagement.' While this allows for a more personalized user experience, it raises profound questions regarding the 'objectivity' of the information presented.\n\nOne of the most concerning phenomena in the digital realm is the 'echo chamber.' Algorithms are programmed to show users content that aligns with their previous interactions, effectively shielding them from dissenting viewpoints. This 'filter bubble' can lead to increased political polarization, as individuals are rarely challenged by opposing arguments. Furthermore, the rise of 'citizen journalism' has democratized the news, yet it has also facilitated the spread of 'misinformation.' Without the rigorous fact-checking standards of traditional media, sensationalist or entirely fabricated stories can go viral in a matter of minutes.\n\nMoreover, the business model of modern media, which relies heavily on 'clickbait' for advertising revenue, has led to a decline in investigative journalism. When news outlets are incentivized to produce high volumes of 'shareable' content, the depth and nuance of reporting often suffer. This has prompted calls for a return to 'public interest journalism,' funded by subsidies or non-profit models rather than commercial interests. Ultimately, the responsibility for navigating this complex landscape lies with both the platform providers and the users themselves. Developing a high degree of 'media literacy' is no longer an optional skill but a civic necessity. By questioning the source, intent, and bias of the information they encounter, citizens can protect themselves from manipulation and contribute to a more informed and healthy public discourse.",
+            "questions": [
+                {"type": "true_false_ng", "question": "Algorithms are primarily designed to ensure information is accurate.", "answer": "False"},
+                {"type": "true_false_ng", "question": "The 'filter bubble' helps people understand opposing viewpoints.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Investigative journalism is more profitable than 'clickbait.'", "answer": "False"},
+                {"type": "matching_info", "question": "Which paragraph discusses the role of traditional 'gatekeepers'?", "answer": "Paragraph 1"},
+                {"type": "matching_info", "question": "Which paragraph mentions the funding of non-profit news models?", "answer": "Paragraph 3"},
+                {"type": "summary_completion", "question": "Algorithms prioritize user ______ over accuracy.", "answer": "engagement"},
+                {"type": "summary_completion", "question": "Political ______ is often a result of being trapped in echo chambers.", "answer": "polarization"},
+                {"type": "vocabulary_match", "question": "Which term in the text means 'to verify or check'?", "answer": "Vetted"},
+                {"type": "multiple_choice", "question": "What is 'citizen journalism' according to the text?", "options": ["Government-controlled news", "The democratization of news through non-professionals", "A type of advertising"], "answer": "The democratization of news through non-professionals"},
+                {"type": "multiple_choice", "question": "What is the primary cause of the decline in reporting depth?", "options": ["Lack of journalists", "The commercial reliance on clickbait/ad revenue", "Government censorship"], "answer": "The commercial reliance on clickbait/ad revenue"},
+                {"type": "sentence_completion", "question": "Citizens must improve their ______ to avoid being manipulated.", "answer": "media literacy"},
+                {"type": "identify_view", "question": "Navigating the media landscape is a ______ responsibility.", "answer": "shared/civic"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a news story that you found particularly interesting. You should say what it was about, where you heard it, why it was important, and explain how you felt about it.",
+                "model_answer": "I'd like to discuss a recent investigative report on plastic pollution in our oceans. I read it in a reputable scientific journal. It was important because it highlighted the scale of the crisis and proposed actionable solutions. I felt a mix of concern and hope—concern about the damage already done, but hope that increased awareness could drive policy change."
+            },
+            "part3": {
+                "question": "To what extent can we trust the news we see on social media?",
+                "band8_sample": "I believe we should approach social media news with a healthy degree of skepticism. While it allows for real-time updates, the lack of editorial oversight means that sensationalism often trumps factual accuracy. We must be discerning consumers and cross-reference information with reputable sources before forming a definitive opinion. Otherwise, we risk becoming beholden to algorithms that prioritize outrage over insight."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "In many countries, social media is replacing traditional newspapers and television as the main source of news. Do you think this is a positive or negative development?",
+            "band75_excerpt": "The shift toward social media as the primary vehicle for news consumption is a transformative trend. While it offers unprecedented accessibility and a plurality of voices, I would argue that it is a predominantly negative development due to the erosion of journalistic integrity and the rise of misinformation. Traditional media, despite its flaws, is bound by professional ethics that are often absent in the unregulated digital sphere.",
+            "examiner_analysis": {
+                "lexical_resource": "Instead of 'Social media is fast,' use 'Social media facilitates the instantaneous dissemination of information.'",
+                "error_upgrade": "Instead of 'People believe fake news,' use 'The lack of rigorous vetting processes leaves the populace vulnerable to sophisticated misinformation campaigns.'"
+            }
+        },
+        "examiner_tips": [
+            "Avoid Over-generalization: Don't say 'All social media is bad.' Instead, say 'The unregulated nature of certain platforms can inadvertently facilitate...'",
+            "Precision: Use 'editorial oversight' instead of 'checking the news.'"
+        ]
+    },
+    # Module 20: Tourism, Cultural Heritage, and Global Mobility
+    {
+        "id": "advanced-module-20",
+        "module_number": 20,
+        "title": "Tourism, Cultural Heritage, and Global Mobility",
+        "subtitle": "Preservation vs. Profit",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Critically evaluate the socio-economic impacts of mass tourism and commodification",
+            "Master Participle Clauses for concise, academic sentence variety",
+            "Develop a lexicon for discussing ecotourism, cultural authenticity, and environmental footprints"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Commodification", "meaning": "The action or process of treating something as a mere commodity (product for sale)", "usage": "Noun; focus for culture/tourism", "example": "The commodification of traditional ceremonies often strips them of their spiritual significance."},
+                {"term": "Overtourism", "meaning": "A condition where there are too many visitors to a particular destination", "usage": "Noun; modern environmental/social topic", "example": "Cities like Venice are struggling with overtourism, which threatens the quality of life for locals."},
+                {"term": "Authenticity", "meaning": "The quality of being authentic; genuineness", "usage": "Noun; used in 'culture' debates", "example": "Travelers today are increasingly seeking authenticity rather than staged tourist experiences."},
+                {"term": "Transient", "meaning": "Lasting only for a short time; impermanent", "usage": "Adjective; used to describe the nature of tourist stays", "example": "The transient nature of the tourism workforce can lead to a lack of community stability."},
+                {"term": "Ecotourism", "meaning": "Tourism directed towards exotic, often threatened, natural environments, intended to support conservation efforts", "usage": "Noun; the 'green' solution", "example": "Sustainable ecotourism provides a financial incentive for local communities to protect their wildlife."}
+            ]
+        },
+        "grammar": {
+            "title": "Participle Clauses",
+            "explanation": "Use participle clauses (-ing or -ed) to provide extra information more concisely, a hallmark of Band 8.0+ writing.",
+            "band_65_example": "Many people visit historical sites and they take photos but they don't learn the history.",
+            "band_80_example": "Attracted by the allure of historical sites, many tourists focus on photography, often neglecting to engage with the cultural significance of the location.",
+            "application": "Having recognized the dangers of overtourism, many cities have implemented visitor caps."
+        },
+        "reading": {
+            "title": "The Paradox of Travel: Mass Tourism and the Erosion of Heritage",
+            "word_count": 342,
+            "text": "In the era of low-cost aviation and digital global mobility, international tourism has become one of the world's largest industries. While it provides essential foreign currency and employment for many developing nations, the environmental and cultural 'footprint' of mass tourism is becoming increasingly difficult to ignore. The phenomenon of 'overtourism' has transformed once-serene heritage sites into crowded hubs of commercial activity, leading to what sociologists call the 'commodification of culture.'\n\nWhen local traditions are adapted to suit the tastes and schedules of international visitors, they often lose their 'authenticity.' Ceremonies that once held deep communal meaning may be shortened or altered for photographic appeal, becoming 'staged authenticity' rather than living culture. Furthermore, the economic benefits of tourism do not always 'trickle down' to the local population. In many instances, 'leakage' occurs, where the profits are absorbed by multinational hotel chains and airlines rather than the communities that host the visitors.\n\nEnvironmental degradation is another significant concern. The carbon emissions from long-haul flights, coupled with the strain on local resources such as water and waste management, often outweigh the immediate financial gains. In response, the concept of 'ecotourism' or 'sustainable travel' has gained traction. This model emphasizes low-impact visits that support conservation and respect local cultures. However, critics argue that 'ecotourism' is often used as a marketing label—a form of 'greenwashing'—rather than a genuine commitment to sustainability. Ultimately, the future of travel depends on a radical shift in perspective. Instead of viewing destinations as 'products' to be consumed, we must see them as fragile ecosystems and living cultures that require 'stewardship' rather than exploitation. By prioritizing the quality of the experience over the quantity of visitors, the tourism industry can become a force for cross-cultural understanding and environmental protection.",
+            "questions": [
+                {"type": "true_false_ng", "question": "Tourism is currently the largest industry in the world.", "answer": "Not Given—text says 'one of the largest'"},
+                {"type": "true_false_ng", "question": "'Staged authenticity' refers to ceremonies that have been changed for tourists.", "answer": "True"},
+                {"type": "true_false_ng", "question": "'Leakage' means that local people get most of the tourism money.", "answer": "False"},
+                {"type": "matching_info", "question": "Which paragraph discusses the carbon footprint of travel?", "answer": "Paragraph 3"},
+                {"type": "matching_info", "question": "Which paragraph explains why traditions lose meaning?", "answer": "Paragraph 2"},
+                {"type": "summary_completion", "question": "Mass tourism leads to the ______ of culture.", "answer": "commodification"},
+                {"type": "summary_completion", "question": "______ travel aims to minimize the negative impact on the environment.", "answer": "Sustainable/Eco-"},
+                {"type": "multiple_choice", "question": "What is 'greenwashing'?", "options": ["A cleaning method", "Using environmental labels for marketing without real action", "A type of tourism"], "answer": "Using environmental labels for marketing without real action"},
+                {"type": "multiple_choice", "question": "What is the author's view on the economic benefits of tourism?", "options": ["They always help locals", "They are often diverted away from local communities", "They are irrelevant"], "answer": "They are often diverted away from local communities"},
+                {"type": "vocabulary_match", "question": "Which word in the text means 'a strong influence or impact'?", "answer": "Footprint"},
+                {"type": "sentence_completion", "question": "Destinations should be treated as ______ rather than products.", "answer": "fragile ecosystems/living cultures"},
+                {"type": "identify_view", "question": "The author believes the tourism industry needs a ______ shift in perspective.", "answer": "radical"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a place you have visited that was of great cultural importance. You should say where it was, why you went there, what you saw, and explain what you learned about the local culture.",
+                "model_answer": "I visited the ancient city of Petra in Jordan. I went there as part of a cultural heritage tour. I saw the incredible rock-carved architecture, including the famous Treasury. What I learned was the importance of preservation—the site is under threat from both overtourism and environmental erosion. It made me appreciate the need for sustainable travel practices."
+            },
+            "part3": {
+                "question": "Do you think that international tourism will eventually destroy local cultures?",
+                "band8_sample": "I wouldn't say it's an inevitability, but it is a substantial risk. When a culture is beholden to the tourist dollar, there is a tendency to package its traditions in a way that is 'digestible' for outsiders. This can lead to a dilution of heritage. However, if managed correctly through community-led initiatives, tourism can actually provide the financial impetus necessary to preserve traditions that might otherwise have been consigned to history."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "International tourism has become a major industry in the world. Some people think it is very beneficial for the host countries, while others think it has many negative effects. Discuss both views and give your opinion.",
+            "band75_excerpt": "The expansion of global tourism is a double-edged sword. While it acts as a catalyst for economic development and provides a lifeline for many developing economies, the resultant environmental despoliation and cultural commodification cannot be overlooked. I believe that while the economic benefits are undeniable, they must be tempered by rigorous regulation to ensure that the host country's natural and cultural capital is not irreparably damaged for the sake of short-term profit.",
+            "examiner_analysis": {
+                "lexical_resource": "Uses 'catalyst,' 'despoliation,' 'tempered by,' and 'cultural capital.'",
+                "grammar": "Uses a complex concessive structure: 'While... I believe that...'",
+                "error_upgrade": "Instead of 'Tourism helps the economy but hurts nature,' use 'The fiscal influx provided by tourism must be balanced against the preservation of ecological integrity.'"
+            }
+        },
+        "examiner_tips": [
+            "Don't forget the 'Local': When discussing tourism, always mention the impact on the indigenous or local population to show socio-economic awareness.",
+            "Use 'Future' Hypotheticals: Use the third conditional to discuss what would have happened without tourism to show high-level grammar range."
+        ]
+    }
 ]
+
+
+# Seeding function
+async def seed_advanced_modules():
+    """Seed the advanced mastery modules to MongoDB."""
+    client = AsyncIOMotorClient(MONGO_URL)
+    db = client[DB_NAME]
+    
+    # Clear existing advanced modules
+    await db.advanced_mastery_modules.delete_many({})
+    
+    # Insert all modules
+    await db.advanced_mastery_modules.insert_many(ADVANCED_MODULES)
+    
+    print(f"✅ Successfully seeded {len(ADVANCED_MODULES)} Advanced IELTS Mastery modules")
+    
+    client.close()
+
+
+if __name__ == "__main__":
+    asyncio.run(seed_advanced_modules())
