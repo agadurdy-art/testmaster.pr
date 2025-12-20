@@ -551,6 +551,17 @@ export default function Results({ user }) {
           </Card>
         )}
 
+        {/* Skill Breakdown - Phase 4 */}
+        {result.feedback?.skill_breakdown && Object.keys(result.feedback.skill_breakdown).length > 0 && (
+          <div className="mb-6">
+            <SkillBreakdown
+              breakdown={result.feedback.skill_breakdown}
+              testType={result.test_type}
+              expanded={true}
+            />
+          </div>
+        )}
+
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4">
           <Button onClick={() => navigate('/dashboard')} variant="outline" className="flex-1"><Home className="w-4 h-4 mr-2" /> Dashboard</Button>
