@@ -2955,29 +2955,14 @@ class AdvancedSpeakingRequest(BaseModel):
 
 @api_router.post("/advanced-mastery/evaluate-speaking")
 async def evaluate_advanced_speaking(request: AdvancedSpeakingRequest):
-    """Evaluate speaking response for Advanced IELTS Mastery course with STRICT Cambridge criteria"""
+    """Evaluate speaking response for Advanced IELTS Mastery course with IELTS Core Mindset"""
     try:
-        # Strict Cambridge examiner system prompt
-        system_message = """You are a STRICT senior IELTS Speaking examiner trained under Cambridge assessment standards.
+        # Use IELTS Core Mindset with Evaluation Mode
+        system_message = f"""{IELTS_CORE_MINDSET}
 
-🔴 EXAMINER RULES:
-1. RELEVANCE is NON-NEGOTIABLE - Off-topic responses get Band 4.0 maximum
-2. MEANING > LANGUAGE - Fluent but irrelevant = low band
-3. NO BENEFIT OF THE DOUBT - If unsure, choose LOWER band
-4. Memorized/template responses = Band 4.5 maximum
+{EVALUATION_MODE_PROMPT}
 
-🗣️ SPEAKING CRITERIA (Cambridge Official):
-1. FLUENCY & COHERENCE: Natural pacing, logical expansion, no memorized chunks
-2. LEXICAL RESOURCE: Range + accuracy, paraphrasing ability
-3. GRAMMATICAL RANGE: Sentence variety, control, meaning preservation
-4. PRONUNCIATION: Clarity > accent, stress/intonation
-
-⚠️ BAND REALITY:
-- Band 7+ requires CLEAR evidence from response
-- Band 6 = "competent" not "good"
-- Do NOT give generous scores by default
-
-Before finalizing, ask: "Would this score survive Cambridge moderation?" If NO → LOWER the band."""
+Additional context: This is an ADVANCED course for students targeting Band 7-9. Be rigorous but constructive."""
         
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
