@@ -319,6 +319,89 @@ export default function Results({ user }) {
                 </div>
               </Card>
             )}
+
+            {/* Phase 3: View Original Writing & Band 8+ Sample */}
+            {result.answers && result.answers.length > 0 && (
+              <Card className="p-6 bg-white border-0 shadow-lg rounded-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-lg">
+                    <Eye className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Your Writing Submissions</h3>
+                    <p className="text-sm text-gray-500">Review your original text and compare with samples</p>
+                  </div>
+                </div>
+
+                {/* Tab Navigation */}
+                <div className="flex gap-2 mb-4 border-b border-gray-100 pb-3">
+                  <Button
+                    variant={writingViewTab === 'original' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setWritingViewTab('original')}
+                    className={writingViewTab === 'original' ? 'bg-cyan-500 text-white' : ''}
+                  >
+                    <Eye className="w-4 h-4 mr-1" /> Your Text
+                  </Button>
+                  <Button
+                    variant={writingViewTab === 'sample' ? 'default' : 'ghost'}
+                    size="sm"
+                    onClick={() => setWritingViewTab('sample')}
+                    className={writingViewTab === 'sample' ? 'bg-cyan-500 text-white' : ''}
+                  >
+                    <FileText className="w-4 h-4 mr-1" /> Band 8+ Sample
+                  </Button>
+                </div>
+
+                {/* Original Text Tab */}
+                {writingViewTab === 'original' && (
+                  <div className="space-y-4">
+                    {result.answers.map((answer, idx) => (
+                      <div key={idx} className="p-4 bg-gray-50 rounded-xl">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-semibold text-gray-700">
+                            {answer.question_id?.includes('task1') || idx === 0 ? 'Task 1' : 'Task 2'}
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            {answer.answer?.split(/\s+/).filter(w => w).length || 0} words
+                          </span>
+                        </div>
+                        <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                          {answer.answer || 'No response submitted'}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Band 8+ Sample Tab */}
+                {writingViewTab === 'sample' && (
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl border border-amber-100">
+                      <h4 className="font-semibold text-amber-800 mb-3 flex items-center gap-2">
+                        <Award className="w-4 h-4" /> Band 8+ Task 2 Model Essay
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed whitespace-pre-wrap text-sm">
+                        {"In today's rapidly evolving world, the question of whether governments should prioritize environmental protection over economic growth has become increasingly pertinent. While some argue that economic development should take precedence, I firmly believe that environmental sustainability must be our primary focus.\n\nFirstly, environmental degradation poses existential threats that no amount of economic prosperity can mitigate. Climate change, for instance, leads to rising sea levels, extreme weather events, and biodiversity loss, which ultimately undermine the very foundations of economic activity. The 2022 floods in Pakistan, which caused over $30 billion in damages, exemplify how environmental neglect can devastate economies.\n\nFurthermore, sustainable practices often stimulate innovation and create new economic opportunities. The renewable energy sector, for example, has generated millions of jobs worldwide while reducing carbon emissions. Countries like Denmark and Germany have demonstrated that environmental leadership can coexist with economic competitiveness.\n\nCritics may argue that developing nations cannot afford to prioritize the environment over growth. However, this perspective ignores the long-term costs of environmental degradation, which disproportionately affect the poorest populations. Moreover, international cooperation and green financing mechanisms can help bridge the gap.\n\nIn conclusion, environmental protection and economic development are not mutually exclusive but rather interdependent. Governments must adopt sustainable policies that ensure both present prosperity and future viability. Only by recognizing this symbiotic relationship can we build truly resilient societies."}
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                      <h5 className="font-medium text-blue-800 mb-2 flex items-center gap-2">
+                        <Lightbulb className="w-4 h-4" /> What Makes This Band 8+
+                      </h5>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        <li>• <strong>Clear thesis and structure:</strong> Position is stated clearly with logical paragraph organization</li>
+                        <li>• <strong>Sophisticated vocabulary:</strong> Uses words like "pertinent," "existential," "symbiotic"</li>
+                        <li>• <strong>Complex sentences:</strong> Varies sentence structures with subordinate clauses</li>
+                        <li>• <strong>Specific examples:</strong> Includes real-world evidence (Pakistan floods, Denmark)</li>
+                        <li>• <strong>Cohesive devices:</strong> Smooth transitions between ideas</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </Card>
+            )}
           </div>
         )}
 
