@@ -100,15 +100,54 @@ backend:
 frontend:
   - task: "Advanced Mastery Course frontend page"
     implemented: true
-    working: "NA"
+    working: false
     file: "frontend/src/components/AdvancedMasteryCourse.js"
-    stuck_count: 0
-    priority: "medium"
-    needs_retesting: true
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "Frontend testing not performed as per system limitations. Backend APIs are fully functional and ready for frontend integration."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: Advanced IELTS Mastery course page is not accessible. When navigating to /advanced-mastery route, user gets redirected back to landing page even when authenticated. Route exists in App.js but appears to have access control issues. Phase 2-4 features (Notebook Panel, Text Highlighter, Skill Breakdown) cannot be tested due to inaccessible course page. Authentication works correctly (test_content@example.com login successful), but Advanced Mastery course is not reachable through any navigation path."
+
+  - task: "Notebook Panel (Phase 2)"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/components/NotebookPanel.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Cannot test Notebook Panel feature - Advanced IELTS Mastery course page is not accessible. Component exists and appears properly implemented with note creation, saving, and deletion functionality."
+
+  - task: "Text Highlighter (Phase 2)"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/components/HighlightableText.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Cannot test Text Highlighter feature - Advanced IELTS Mastery course page is not accessible. Component exists and appears properly implemented with text selection, color picker, and highlight management functionality."
+
+  - task: "Skill Breakdown (Phase 4)"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/components/SkillBreakdown.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Cannot test Skill Breakdown feature - Advanced IELTS Mastery course page is not accessible. Component exists and appears properly implemented with progress bars, question type analysis, and performance indicators."
 
 metadata:
   created_by: "main_agent"
