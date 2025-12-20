@@ -2980,9 +2980,13 @@ async def evaluate_advanced_quiz(request: AdvancedQuizRequest):
         total = len(questions)
         results = []
         
+        # Track skill breakdown by question type
+        skill_breakdown = {}
+        
         for idx, q in enumerate(questions):
             user_answer = request.answers.get(str(idx), "").strip().lower()
             correct_answer = q.get("answer", "").strip().lower()
+            question_type = q.get("type", "unknown")
             
             # Flexible matching for advanced course
             is_correct = user_answer == correct_answer or correct_answer in user_answer or user_answer in correct_answer
@@ -2994,8 +2998,32 @@ async def evaluate_advanced_quiz(request: AdvancedQuizRequest):
                 "user_answer": request.answers.get(str(idx), ""),
                 "correct_answer": q.get("answer", ""),
                 "is_correct": is_correct,
-                "question_type": q.get("type", "unknown")
+                "question_type": question_type
             })
+            
+            # Aggregate by question type for skill breakdown
+            if question_type not in skill_breakdown:
+                skill_breakdown[question_type] = {"correct": 0, "total": 0}
+            skill_breakdown[question_type]["total"] += 1
+            if is_correct:
+                skill_breakdown[question_type]["correct"] += 1
+        
+        # Add tips for weak areas
+        for skill_type in skill_breakdown:
+            data = skill_breakdown[skill_type]
+            percentage = (data["correct"] / data["total"] * 100) if data["total"] > 0 else 0
+            if percentage < 50:
+                # Add targeted tip based on question type
+                tips = {
+                    "true_false_ng": "Look for specific evidence in the text. 'Not Given' means the information isn't stated.",
+                    "matching_info": "Skim for keywords first, then read carefully around those keywords.",
+                    "sentence_completion": "Use the exact words from the passage when possible.",
+                    "summary_completion": "Read the summary first to understand the flow, then locate each answer.",
+                    "vocabulary_match": "Context clues are key - look at surrounding sentences.",
+                    "multiple_choice": "Eliminate obviously wrong answers first.",
+                    "identify_view": "Focus on the author's tone and specific claims made."
+                }
+                skill_breakdown[skill_type]["tip"] = tips.get(skill_type, "Practice more questions of this type.")
         
         score_percentage = (correct / total * 100) if total > 0 else 0
         
@@ -3019,6 +3047,7 @@ async def evaluate_advanced_quiz(request: AdvancedQuizRequest):
             "total": total,
             "estimated_band": band,
             "results": results,
+            "skill_breakdown": skill_breakdown,
             "feedback": f"You got {correct} out of {total} correct ({score_percentage:.0f}%). Estimated Reading Band: {band}"
         }
     except HTTPException:
