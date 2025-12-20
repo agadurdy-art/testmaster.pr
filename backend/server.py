@@ -3144,6 +3144,246 @@ Return JSON:
         return {"score": 60, "feedback": "Good effort! Keep writing.", "grammar_tips": []}
 
 
+# ============ Notes API (Phase 2) ============
+
+class NoteCreate(BaseModel):
+    user_id: str
+    test_id: str
+    test_type: str
+    content: str
+    timestamp: str
+
+@api_router.post("/notes")
+async def create_note(note: NoteCreate):
+    """Create a new note for a test/module"""
+    note_doc = {
+        "id": str(uuid.uuid4()),
+        "user_id": note.user_id,
+        "test_id": note.test_id,
+        "test_type": note.test_type,
+        "content": note.content,
+        "timestamp": note.timestamp or datetime.now(timezone.utc).isoformat()
+    }
+    await db.user_notes.insert_one(note_doc)
+    return {k: v for k, v in note_doc.items() if k != '_id'}
+
+@api_router.get("/notes/{user_id}/{test_id}")
+async def get_notes(user_id: str, test_id: str):
+    """Get all notes for a user and test"""
+    notes = await db.user_notes.find(
+        {"user_id": user_id, "test_id": test_id},
+        {"_id": 0}
+    ).sort("timestamp", 1).to_list(100)
+    return notes
+
+@api_router.delete("/notes/{note_id}")
+async def delete_note(note_id: str):
+    """Delete a note"""
+    result = await db.user_notes.delete_one({"id": note_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Note not found")
+    return {"status": "deleted"}
+
+
+# ============ Highlights API (Phase 2) ============
+
+class HighlightCreate(BaseModel):
+    user_id: str
+    test_id: str
+    test_type: str
+    start_index: int
+    end_index: int
+    color: str
+    highlighted_text: str
+    timestamp: str
+
+@api_router.post("/highlights")
+async def create_highlight(highlight: HighlightCreate):
+    """Create a new text highlight"""
+    highlight_doc = {
+        "id": str(uuid.uuid4()),
+        "user_id": highlight.user_id,
+        "test_id": highlight.test_id,
+        "test_type": highlight.test_type,
+        "start_index": highlight.start_index,
+        "end_index": highlight.end_index,
+        "color": highlight.color,
+        "highlighted_text": highlight.highlighted_text,
+        "timestamp": highlight.timestamp or datetime.now(timezone.utc).isoformat()
+    }
+    await db.user_highlights.insert_one(highlight_doc)
+    return {k: v for k, v in highlight_doc.items() if k != '_id'}
+
+@api_router.get("/highlights/{user_id}/{test_id}")
+async def get_highlights(user_id: str, test_id: str):
+    """Get all highlights for a user and test"""
+    highlights = await db.user_highlights.find(
+        {"user_id": user_id, "test_id": test_id},
+        {"_id": 0}
+    ).sort("start_index", 1).to_list(100)
+    return highlights
+
+@api_router.delete("/highlights/{highlight_id}")
+async def delete_highlight(highlight_id: str):
+    """Delete a highlight"""
+    result = await db.user_highlights.delete_one({"id": highlight_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Highlight not found")
+    return {"status": "deleted"}
+
+
+# ============ Skill Analytics API (Phase 4) ============
+
+@api_router.get("/skill-analytics/{user_id}")
+async def get_skill_analytics(user_id: str):
+    """Get cumulative skill analytics for a user across all tests"""
+    try:
+        # Get all test attempts for this user
+        attempts = await db.test_attempts.find(
+            {"user_id": user_id},
+            {"_id": 0}
+        ).to_list(500)
+        
+        if not attempts:
+            return {
+                "total_tests": 0,
+                "average_score": 0,
+                "average_band": None,
+                "skill_performance": {},
+                "strengths": [],
+                "areas_to_improve": []
+            }
+        
+        # Aggregate skill performance
+        skill_totals = {}
+        total_score = 0
+        total_band = 0
+        band_count = 0
+        
+        for attempt in attempts:
+            # Sum scores
+            if attempt.get("score") is not None:
+                total_score += attempt["score"]
+            
+            # Sum bands
+            if attempt.get("feedback", {}).get("estimated_band"):
+                band = attempt["feedback"]["estimated_band"]
+                if isinstance(band, (int, float)):
+                    total_band += band
+                    band_count += 1
+            
+            # Aggregate skill breakdown
+            breakdown = attempt.get("feedback", {}).get("skill_breakdown", {})
+            if isinstance(breakdown, dict):
+                for skill_type, data in breakdown.items():
+                    if skill_type not in skill_totals:
+                        skill_totals[skill_type] = {"correct": 0, "total": 0}
+                    if isinstance(data, dict):
+                        skill_totals[skill_type]["correct"] += data.get("correct", 0)
+                        skill_totals[skill_type]["total"] += data.get("total", 0)
+        
+        # Calculate strengths and weaknesses
+        strengths = []
+        areas_to_improve = []
+        
+        for skill_type, data in skill_totals.items():
+            if data["total"] > 0:
+                percentage = (data["correct"] / data["total"]) * 100
+                if percentage >= 70:
+                    strengths.append(skill_type)
+                elif percentage < 50:
+                    areas_to_improve.append(skill_type)
+        
+        return {
+            "total_tests": len(attempts),
+            "average_score": round(total_score / len(attempts), 1) if attempts else 0,
+            "average_band": round(total_band / band_count, 1) if band_count > 0 else None,
+            "skill_performance": skill_totals,
+            "strengths": strengths[:5],
+            "areas_to_improve": areas_to_improve[:5]
+        }
+        
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Skill analytics error: {e}")
+        return {
+            "total_tests": 0,
+            "average_score": 0,
+            "skill_performance": {},
+            "strengths": [],
+            "areas_to_improve": []
+        }
+
+
+# ============ Writing Analysis with Grammar Errors API (Phase 3) ============
+
+@api_router.post("/writing/analyze-errors")
+async def analyze_writing_errors(request: Request):
+    """Analyze writing text for grammar/spelling errors using AI"""
+    try:
+        data = await request.json()
+        text = data.get("text", "")
+        
+        if not text:
+            return {"grammar_errors": []}
+        
+        chat = LlmChat(api_key=os.getenv("EMERGENT_LLM_KEY"))
+        prompt = f"""Analyze this IELTS writing text for grammar, spelling, and style errors.
+
+TEXT:
+{text}
+
+Return a JSON object with:
+{{
+  "grammar_errors": [
+    {{
+      "start": <start index in text>,
+      "end": <end index in text>,
+      "type": "grammar" | "spelling" | "style",
+      "original": "<the error text>",
+      "suggestion": "<correction or suggestion>"
+    }}
+  ],
+  "criteria_scores": {{
+    "task_response": <score 1-9>,
+    "coherence": <score 1-9>,
+    "lexical_resource": <score 1-9>,
+    "grammatical_range": <score 1-9>
+  }},
+  "overall_feedback": "<brief overall assessment>",
+  "strengths": ["<strength 1>", "<strength 2>"],
+  "areas_to_improve": ["<area 1>", "<area 2>"],
+  "grammar_upgrade_examples": [
+    {{
+      "original": "<basic sentence from text>",
+      "upgraded": "<Band 8+ version>",
+      "explanation": "<why it's better>"
+    }}
+  ]
+}}
+
+Be precise with start/end indices. Only flag real errors. Return valid JSON only."""
+
+        response = await chat.send_async([UserMessage(text=prompt)])
+        response_text = response.text.strip()
+        
+        # Parse JSON from response
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0].strip()
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0].strip()
+        
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', response_text)
+        if json_match:
+            return json.loads(json_match.group())
+        
+        return {"grammar_errors": [], "overall_feedback": "Analysis complete."}
+        
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Writing analysis error: {e}")
+        return {"grammar_errors": [], "overall_feedback": "Could not analyze text."}
+
+
 # Include router
 app.include_router(api_router)
 
