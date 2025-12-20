@@ -7,12 +7,9 @@ import { Input } from '../components/ui/input';
 import { 
   BookOpen, ChevronLeft, ChevronRight, Home, Trophy, Star, Mic, 
   PenTool, HelpCircle, GraduationCap, Target, Sparkles, Volume2,
-  Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap, BookMarked, Highlighter
+  Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap
 } from 'lucide-react';
 import { toast } from 'sonner';
-import NotebookPanel from '../components/NotebookPanel';
-import HighlightableText from '../components/HighlightableText';
-import SkillBreakdown from '../components/SkillBreakdown';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
