@@ -418,6 +418,30 @@ export default function AdvancedMasteryCourse({ user }) {
           </div>
         </div>
 
+        {/* Type 2 Conditional (for Environment module) */}
+        {selectedModule.grammar?.band_80_example_type2 && (
+          <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+            <h4 className="font-semibold text-green-800 mb-2">✅ Band 8.0 - Type 2 Conditional</h4>
+            <p className="text-gray-700 italic">"{selectedModule.grammar.band_80_example_type2}"</p>
+          </div>
+        )}
+
+        {/* Type 3 Conditional (for Environment module) */}
+        {selectedModule.grammar?.band_80_example_type3 && (
+          <div className="p-4 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
+            <h4 className="font-semibold text-emerald-800 mb-2">✅ Band 8.0 - Type 3 Conditional</h4>
+            <p className="text-gray-700 italic">"{selectedModule.grammar.band_80_example_type3}"</p>
+          </div>
+        )}
+
+        {/* Why it works explanation */}
+        {selectedModule.grammar?.why_it_works && (
+          <div className="p-4 bg-amber-50 rounded-xl">
+            <h4 className="font-semibold text-amber-800 mb-2">💡 Why This Works</h4>
+            <p className="text-gray-700">{selectedModule.grammar.why_it_works}</p>
+          </div>
+        )}
+
         {/* Additional structures */}
         {selectedModule.grammar?.cleft_sentence && (
           <div className="p-4 bg-blue-50 rounded-xl">
