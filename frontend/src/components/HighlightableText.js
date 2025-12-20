@@ -25,24 +25,24 @@ export default function HighlightableText({
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [selectionInfo, setSelectionInfo] = useState(null);
 
-  const loadHighlights = useCallback(async () => {
-    if (!user?.id || !testId) return;
-    try {
-      const res = await fetch(`${API_URL}/api/highlights/${user.id}/${testId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setHighlights(data);
-      }
-    } catch (e) {
-      console.error('Failed to load highlights');
-    }
-  }, [user?.id, testId]);
-
   useEffect(() => {
+    const loadHighlights = async () => {
+      if (!user?.id || !testId) return;
+      try {
+        const res = await fetch(`${API_URL}/api/highlights/${user.id}/${testId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setHighlights(data);
+        }
+      } catch (e) {
+        console.error('Failed to load highlights');
+      }
+    };
+
     if (user?.id && testId && highlightsEnabled) {
       loadHighlights();
     }
-  }, [loadHighlights, highlightsEnabled]);
+  }, [user?.id, testId, highlightsEnabled]);
 
   const saveHighlight = async (start, end, color) => {
     try {
