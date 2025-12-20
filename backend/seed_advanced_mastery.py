@@ -117,7 +117,14 @@ ADVANCED_MODULES = [
             "questions": [
                 {"type": "true_false_ng", "question": "Urban sprawl always leads to improved quality of life.", "answer": "False"},
                 {"type": "true_false_ng", "question": "Smart growth prioritizes walkable urban designs.", "answer": "True"},
-                {"type": "sentence_completion", "question": "The infrastructure of sprawling suburbs generates substantial ______.", "answer": "emissions"}
+                {"type": "sentence_completion", "question": "The infrastructure of sprawling suburbs generates substantial ______.", "answer": "emissions"},
+                {"type": "true_false_ng", "question": "Biodiversity increases as cities expand outward.", "answer": "False"},
+                {"type": "vocabulary_match", "question": "What term describes the uncontrolled expansion of urban areas?", "answer": "Urban sprawl"},
+                {"type": "summary_completion", "question": "Critics argue this pattern of development is fundamentally ______.", "answer": "unsustainable"},
+                {"type": "multiple_choice", "question": "What do proponents of 'smart growth' advocate for?", "options": ["Larger suburbs", "Compact, walkable urban designs", "More highways"], "answer": "Compact, walkable urban designs"},
+                {"type": "true_false_ng", "question": "Roads and utilities in suburbs consume minimal resources.", "answer": "False"},
+                {"type": "sentence_completion", "question": "Natural ______ are destroyed as cities expand.", "answer": "habitats"},
+                {"type": "identify_view", "question": "Does the author believe current suburban development is sustainable?", "answer": "No"}
             ]
         },
         "speaking": {
