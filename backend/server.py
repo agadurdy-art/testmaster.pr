@@ -3016,44 +3016,92 @@ class AdvancedWritingRequest(BaseModel):
 
 @api_router.post("/advanced-mastery/evaluate-writing")
 async def evaluate_advanced_writing(request: AdvancedWritingRequest):
-    """Evaluate writing response for Advanced IELTS Mastery course (Band 6.0-9.0)"""
+    """Evaluate writing response for Advanced IELTS Mastery course with STRICT Cambridge criteria"""
     try:
+        # Strict Cambridge examiner system prompt
+        system_message = """You are a STRICT senior IELTS Writing examiner trained under Cambridge assessment standards.
+
+🔴 EXAMINER RULES:
+1. RELEVANCE is NON-NEGOTIABLE - Off-topic essays get Band 4.0 maximum
+2. MEANING > LANGUAGE - Fancy vocabulary with wrong content = low band
+3. NO BENEFIT OF THE DOUBT - If unsure, choose LOWER band
+4. Memorized/template essays = Band 4.5 maximum
+
+📝 WRITING CRITERIA (Cambridge Official):
+1. TASK RESPONSE: Is question FULLY answered? ALL parts addressed? Clear position?
+   ❌ If task not answered → Max Band 5.0
+2. COHERENCE & COHESION: Logical paragraphs, natural linking (not forced)
+3. LEXICAL RESOURCE: Precision over sophistication, correct collocations
+4. GRAMMATICAL RANGE: Control of complex structures, meaning preservation
+
+🚫 BAND CAPS:
+- Off-topic → Max 4.0
+- Under word count (250 for Task 2) → Max 4.0
+- Memorized/template → Max 4.5
+- No clear position → Max 5.0
+- Poor paragraphing → Max 5.5
+
+⚖️ BAND REALITY:
+- Band 7+ requires CLEAR evidence and justification
+- Band 6 = "competent" not "good"
+- Do NOT give generous scores by default
+
+Before finalizing: "Would this score survive Cambridge moderation?" If NO → LOWER the band."""
+
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
-            system_message="You are an expert IELTS Writing examiner evaluating Band 7-9 level essays with rigorous academic standards."
+            system_message=system_message
         ).with_model("openai", "gpt-4o")
         
         examiner_notes = ""
         if request.examiner_analysis:
             examiner_notes = f"\nExaminer Notes for this topic: {json.dumps(request.examiner_analysis)}"
         
-        prompt = f"""You are a senior IELTS Writing Task 2 examiner. Evaluate this essay for a student targeting Band 7-9.
+        # Count words
+        word_count = len(request.user_response.split())
+        
+        prompt = f"""Evaluate this IELTS Writing Task 2 essay with STRICT Cambridge criteria.
 
 Topic: {request.module_title}
 Task: {request.task}
 Model Essay (Band 7.5+): {request.model_essay}{examiner_notes}
-Student's Essay: {request.user_response}
+Student's Essay ({word_count} words): {request.user_response}
 
-Evaluate using official IELTS criteria for Band 7+:
-- Task Achievement: Full response to all parts, clear position, relevant extended ideas
-- Coherence & Cohesion: Logical paragraphing, sophisticated cohesive devices, clear progression
-- Lexical Resource: Wide range of vocabulary, precise word choice, effective collocations, minimal errors
-- Grammatical Range & Accuracy: Complex structures, accuracy, flexibility
+IMPORTANT CHECKS BEFORE SCORING:
+1. Does the essay address ALL parts of the question?
+2. Is there a clear position maintained throughout?
+3. Word count: {word_count} words (minimum required: 250)
+4. Is this a genuine essay or memorized/template-based?
 
-Be rigorous but constructive. Target audience is Band 6+ students aiming for 7-9.
+Apply band caps if needed:
+- Off-topic or irrelevant → Max 4.0
+- Under 250 words → Max 4.0
+- Memorized/template → Max 4.5
+- No clear position → Max 5.0
+- Poor paragraphing → Max 5.5
 
 Return JSON only:
 {{
-    "band_score": <6.0-9.0>,
-    "task_achievement": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "coherence_cohesion": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "lexical_resource": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "grammatical_range": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "overall_feedback": "<3-4 sentences of detailed feedback>",
-    "strengths": ["<strength 1>", "<strength 2>"],
-    "areas_to_improve": ["<specific improvement 1>", "<specific improvement 2>"],
-    "advanced_vocabulary_suggestions": ["<suggested advanced word/phrase 1>", "<suggested advanced word/phrase 2>"],
+    "band_score": <5.0-9.0 - be strict>,
+    "validity_check": {{
+        "word_count": {word_count},
+        "meets_word_count": <true/false>,
+        "on_topic": <true/false>,
+        "has_clear_position": <true/false>,
+        "band_cap_applied": <null or number>,
+        "cap_reason": "<if capped, explain why>"
+    }},
+    "task_achievement": {{"score": <5-9>, "feedback": "<specific feedback - did it address ALL parts?>"}},
+    "coherence_cohesion": {{"score": <5-9>, "feedback": "<specific feedback on structure and linking>"}},
+    "lexical_resource": {{"score": <5-9>, "feedback": "<specific feedback on vocabulary accuracy>"}},
+    "grammatical_range": {{"score": <5-9>, "feedback": "<specific feedback on grammar control>"}},
+    "major_issues": ["<critical problem 1>", "<critical problem 2>"],
+    "overall_feedback": "<4-5 sentences: honest assessment, specific improvements needed>",
+    "band_justification": "<Why this band would survive Cambridge moderation>",
+    "strengths": ["<genuine strength 1>", "<genuine strength 2>"],
+    "areas_to_improve": ["<specific actionable improvement 1>", "<specific actionable improvement 2>"],
+    "advanced_vocabulary_suggestions": ["<appropriate advanced word/phrase 1>", "<appropriate advanced word/phrase 2>"],
     "grammar_upgrade_examples": [
         {{"original": "<student's sentence>", "upgraded": "<Band 8 version>"}}
     ]
@@ -3072,22 +3120,22 @@ Return JSON only:
             return json.loads(json_match.group())
         
         return {
-            "band_score": 6.5,
-            "task_achievement": {"score": 6.5, "feedback": "Address all parts of the question more fully."},
-            "coherence_cohesion": {"score": 6.5, "feedback": "Improve paragraph organization."},
-            "lexical_resource": {"score": 6.5, "feedback": "Use more topic-specific vocabulary."},
-            "grammatical_range": {"score": 6.5, "feedback": "Incorporate more complex structures."},
-            "overall_feedback": "Good effort! Focus on using more sophisticated vocabulary and argumentation.",
-            "strengths": ["Clear structure"],
-            "areas_to_improve": ["Advanced vocabulary", "Complex sentence structures"],
+            "band_score": 5.5,
+            "task_achievement": {"score": 5.5, "feedback": "Response needs to address all parts more fully."},
+            "coherence_cohesion": {"score": 5.5, "feedback": "Paragraph organization needs improvement."},
+            "lexical_resource": {"score": 5.5, "feedback": "Vocabulary range is limited for Band 7+ target."},
+            "grammatical_range": {"score": 5.5, "feedback": "Complex structures need more control."},
+            "overall_feedback": "Essay needs more development and sophistication for Band 7+ target.",
+            "strengths": ["Attempted to answer the question"],
+            "areas_to_improve": ["Address all parts of the question", "Use more topic-specific vocabulary"],
             "advanced_vocabulary_suggestions": ["Review the module vocabulary"],
             "grammar_upgrade_examples": []
         }
     except Exception as e:
         logging.getLogger(__name__).error(f"Advanced writing evaluation error: {e}")
         return {
-            "band_score": 6.5,
-            "overall_feedback": "Good attempt! Keep practicing advanced writing techniques.",
+            "band_score": 5.5,
+            "overall_feedback": "Evaluation error. Keep practicing with complex topics.",
             "areas_to_improve": ["Practice writing regularly with complex topics"]
         }
 
