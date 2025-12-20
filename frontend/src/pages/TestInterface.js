@@ -48,6 +48,9 @@ function ElevenLabsExaminer() {
   const [speakingFeedback, setSpeakingFeedback] = useState({});
   const [speakingSessionStarted, setSpeakingSessionStarted] = useState(false);
   const [speakingCredits, setSpeakingCredits] = useState(user?.examCredits ?? 0);
+  
+  // Phase 2: Notebook state for reading/listening tests
+  const [showNotebook, setShowNotebook] = useState(false);
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
