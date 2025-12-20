@@ -560,5 +560,454 @@ ADVANCED_MODULES = [
             "Synonym Range: Instead of repeating 'rich' and 'poor,' use 'affluent/privileged' and 'underprivileged/marginalized/low-income demographics'."
         ]
     },
-    # Modules 9-20 continue...
+    # Module 9: Urbanisation and the Architecture of Modern Society
+    {
+        "id": "advanced-module-9",
+        "module_number": 9,
+        "title": "Urbanisation and the Architecture of Modern Society",
+        "subtitle": "Navigating the Complexities of the Modern Megalopolis",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Critically analyze the socio-economic impacts of urban sprawl and gentrification",
+            "Master nominalization to maintain a high level of academic abstraction",
+            "Develop a sophisticated lexicon to discuss the evolution of city infrastructure and 'Smart Cities'"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Urban Sprawl", "meaning": "The uncontrolled expansion of urban areas", "usage": "Noun phrase; subject or object of discussion on city planning", "example": "The rapid acceleration of urban sprawl has placed an unprecedented strain on local ecosystems."},
+                {"term": "Gentrification", "meaning": "The process of changing the character of a neighborhood through the influx of more affluent residents and businesses", "usage": "Noun; focus for social equity and housing topics", "example": "Gentrification often acts as a catalyst for economic growth, yet it frequently results in the displacement of long-term residents."},
+                {"term": "Infrastructure", "meaning": "The basic physical and organizational structures needed for the operation of a society", "usage": "Noun; core topic term", "example": "Investment in green infrastructure is imperative for the resilience of coastal cities."},
+                {"term": "Conurbation", "meaning": "An extended urban area, typically consisting of several towns merging with the suburbs of one or more cities", "usage": "Noun; sophisticated alternative to 'urban area'", "example": "The Tokyo-Yokohama conurbation represents the pinnacle of high-density metropolitan living."},
+                {"term": "Ubiquitous", "meaning": "Present, appearing, or found everywhere", "usage": "Adjective; used for technology or trends in cities", "example": "Digital surveillance has become ubiquitous in modern urban centers, raising concerns regarding privacy."}
+            ]
+        },
+        "grammar": {
+            "title": "Nominalization for Academic Precision",
+            "explanation": "To achieve Band 7+ in Grammatical Range and Accuracy, you must use nominalization (turning verbs or adjectives into nouns) to make your arguments sound more objective and authoritative.",
+            "band_65_example": "When cities grow too fast, it causes many social problems.",
+            "band_80_example": "The rapid expansion of urban centers often precipitates a multitude of socio-economic complications.",
+            "application": "Instead of saying 'People are moving to cities,' use 'The mass migration of rural populations to urban hubs.'"
+        },
+        "reading": {
+            "title": "The Vertical Frontier: The Rise of the Smart City",
+            "word_count": 330,
+            "text": "The 21st century is defined by the inexorable rise of the city. For the first time in human history, more people live in urban environments than in rural ones. This shift has necessitated a radical rethink of urban planning, leading to the emergence of the 'Smart City'—an urban area that uses different types of electronic methods and sensors to collect data. Proponents argue that these data-driven insights allow for more efficient management of resources, from optimizing traffic flow to reducing energy consumption in public buildings. However, the implementation of such technology is not without its detractors.\n\nOne significant challenge is the phenomenon of 'urban heat islands,' where the concentration of concrete and lack of greenery causes city temperatures to soar. Critics argue that while Smart City technology might optimize energy, it does little to address the fundamental environmental flaws of modern architecture. Furthermore, the social fabric of the city is undergoing a transformation. As 'gentrification' sweeps through former industrial districts, the resulting 'social stratification' often leaves lower-income demographics marginalized. These individuals are frequently pushed to the peripheries of the conurbation, where infrastructure is often substandard and public transport links are tenuous.\n\nMoreover, the 'ubiquity' of digital sensors in Smart Cities has ignited a fierce debate over 'algorithmic governance.' When data dictates the distribution of police resources or the placement of public housing, there is a risk that historical biases will be 'baked into' the system. To mitigate these risks, urban planners are now looking toward 'biophilic design'—the integration of natural elements into the built environment—as a way to improve mental health and environmental sustainability simultaneously. Ultimately, the success of the modern city will be measured not just by its technological sophistication, but by its ability to foster inclusive, resilient, and salubrious environments for all its inhabitants.",
+            "questions": [
+                {"type": "true_false_ng", "question": "The majority of the global population now lives in cities.", "answer": "True"},
+                {"type": "true_false_ng", "question": "'Smart Cities' rely primarily on historical data rather than real-time sensors.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Every city in the world has adopted 'biophilic design.'", "answer": "Not Given"},
+                {"type": "matching_info", "question": "Which paragraph discusses the social impact of gentrification?", "answer": "Paragraph 2"},
+                {"type": "matching_info", "question": "Which paragraph mentions the risks of biased algorithms?", "answer": "Paragraph 3"},
+                {"type": "matching_info", "question": "Which paragraph introduces the concept of 'urban heat islands'?", "answer": "Paragraph 2"},
+                {"type": "summary_completion", "question": "Smart Cities aim to ______ the management of resources.", "answer": "optimize"},
+                {"type": "summary_completion", "question": "High concentrations of concrete contribute to the ______ effect.", "answer": "urban heat island"},
+                {"type": "sentence_completion", "question": "'Biophilic design' involves the ______ of nature into architecture.", "answer": "integration"},
+                {"type": "multiple_choice", "question": "What is a major concern regarding 'algorithmic governance'?", "options": ["High costs", "The perpetuation of historical biases", "Lack of data"], "answer": "The perpetuation of historical biases"},
+                {"type": "vocabulary_match", "question": "Which word in the text means 'found everywhere'?", "answer": "Ubiquity"},
+                {"type": "identify_view", "question": "The author believes a city's success depends on its ______ and inclusivity.", "answer": "resilience"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a significant change that has occurred in your hometown or city. You should say what the change was, why it happened, and how it has affected the people living there.",
+                "model_answer": "I'd like to discuss the development of a new metro system in my city. It was necessitated by the increasing urban congestion and pollution. The change has been transformative, significantly reducing commute times and improving air quality for residents."
+            },
+            "part3": {
+                "question": "In what ways do you think cities will change in the next fifty years?",
+                "band8_sample": "I anticipate a move toward hyper-localization, where cities are designed as a series of '15-minute' hubs. This would effectively curb the necessity for long-distance commuting and alleviate the congestion that currently plagues our conurbations. It's about shifting from a car-centric model to a pedestrian-centric one, which is arguably more conducive to social cohesion."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "In many parts of the world, people are moving from rural areas to cities. Does this trend have more advantages or disadvantages?",
+            "band75_excerpt": "The global phenomenon of rural-to-urban migration is a defining characteristic of the modern era. While this shift offers significant opportunities for economic advancement, I would argue that the resultant pressures on urban infrastructure and social equity constitute a net disadvantage if left unmanaged.\n\nOn the one hand, cities act as engines of innovation and economic growth. The concentration of labor and capital in urban hubs allows for specialized industries to flourish, providing migrants with access to better-paying jobs and superior educational facilities. This concentration of resources often leads to a higher standard of living in terms of healthcare and cultural amenities.\n\nHowever, the rapid influx of populations often outpaces the development of essential infrastructure. This leads to the proliferation of informal settlements and the exacerbation of urban sprawl, which degrades the environment and increases commute times. Furthermore, the competitive nature of city life and the high cost of living can lead to social isolation and socio-economic disparity. Without proactive government intervention and rigorous urban planning, the benefits of city living are often overshadowed by these systemic failures.",
+            "examiner_analysis": {
+                "task_response": "Clearly weights the disadvantages while acknowledging the economic benefits.",
+                "coherence": "Uses sophisticated transitions like 'The resultant pressures' and 'On the one hand... However.'",
+                "lexical_resource": "Uses 'engines of innovation,' 'informal settlements,' and 'socio-economic disparity.'",
+                "error_upgrade": "Instead of 'Cities have many people,' use 'The densification of urban populations...'"
+            }
+        },
+        "examiner_tips": [
+            "Avoid Over-Generalization: Instead of saying 'Cities are crowded,' use 'High-density living environments present unique challenges for waste management and public health'.",
+            "Precision in Problem-Solving: When discussing urban issues, distinguish between infrastructure (physical) and social fabric (human/community).",
+            "Lexical Accuracy: 'Urban' is an adjective, but 'Urbanisation' is a process. Using the correct form is essential for a Band 7+ score."
+        ]
+    },
+    # Module 10: Science and Biomedical Ethics
+    {
+        "id": "advanced-module-10",
+        "module_number": 10,
+        "title": "Science and Biomedical Ethics",
+        "subtitle": "Balancing Innovation with Ethical Responsibility",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Critically evaluate the implications of genetic engineering and biotechnology",
+            "Master the use of advanced modal verbs and hedging to express academic caution",
+            "Develop a sophisticated lexicon for discussing scientific integrity, funding, and bioethics"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Genetic Engineering", "meaning": "The deliberate modification of the characteristics of an organism by manipulating its genetic material", "usage": "Noun phrase; central to bioethics debates", "example": "The ethical implications of genetic engineering extend far beyond the laboratory."},
+                {"term": "Paradigm Shift", "meaning": "A fundamental change in approach or underlying assumptions", "usage": "Noun; describes major scientific breakthroughs", "example": "The discovery of CRISPR technology represents a paradigm shift in modern medicine."},
+                {"term": "Inherent Risks", "meaning": "Risks existing as a permanent, essential attribute", "usage": "Collocation; used when discussing new research", "example": "While the benefits of AI in healthcare are vast, the inherent risks to data privacy cannot be ignored."},
+                {"term": "To Leapfrog", "meaning": "To surpass or move ahead of something or someone", "usage": "Verb; often used in 'Technological Leapfrogging'", "example": "Developing nations may leapfrog traditional infrastructure by adopting satellite-based internet."},
+                {"term": "Ethical Dilemma", "meaning": "A situation in which a difficult choice has to be made between two courses of action", "usage": "Noun phrase; high-level alternative to 'problem'", "example": "The use of embryonic stem cells presents a profound ethical dilemma for researchers."}
+            ]
+        },
+        "grammar": {
+            "title": "Advanced Modals and Hedging",
+            "explanation": "To reach Band 7+, you must avoid overly certain or 'black-and-white' statements. Hedging demonstrates academic maturity and precision.",
+            "band_65_example": "Science will solve all our problems in the future.",
+            "band_80_example": "It is arguably the case that scientific innovation could potentially mitigate many of the challenges facing modern society, provided that ethical frameworks are strictly observed.",
+            "application": "Use 'might well,' 'would appear to,' and 'is likely to' instead of 'will.'"
+        },
+        "reading": {
+            "title": "The Architect of Life: Ethics in the CRISPR Era",
+            "word_count": 320,
+            "text": "The advent of CRISPR-Cas9 technology has ushered in a new era of genomic editing, offering the tantalizing prospect of eradicating hereditary diseases. Unlike previous methods, which were often imprecise and prohibitively expensive, CRISPR allows scientists to 'cut and paste' DNA sequences with unprecedented accuracy. Proponents argue that this represents a pinnacle of human achievement, potentially saving millions of lives from conditions such as cystic fibrosis or sickle cell anemia. However, the ability to rewrite the 'blueprint of life' has ignited a firestorm of ethical debate.\n\nThe primary concern among bioethicists is the potential for 'germline editing'—modifications that are passed down to future generations. Critics suggest that such interventions could have unforeseen consequences on the human gene pool, leading to irreversible biological errors. Furthermore, there is the specter of 'designer babies,' where genetic modification is used not for therapeutic purposes, but for enhancement—selecting for traits like intelligence, athletic ability, or physical appearance. This raises significant questions regarding social equity; if such technologies are only available to the affluent, it could lead to a new form of 'genetic aristocracy,' further entrenching socio-economic disparities.\n\nMoreover, the commercialization of scientific research presents its own set of challenges. When breakthroughs are driven by the profit motives of pharmaceutical conglomerates rather than public good, the transparency of clinical trials can be compromised. Many argue that it is imperative for international regulatory bodies to establish a cohesive framework to oversee genetic research. Without such oversight, the pursuit of scientific progress risks outpacing our moral capacity to manage its consequences. Ultimately, the challenge of the 21st century is to ensure that while we possess the power to edit the code of life, we maintain the wisdom to use it ethically and inclusively.",
+            "questions": [
+                {"type": "true_false_ng", "question": "CRISPR is described as being more affordable than earlier gene-editing techniques.", "answer": "True"},
+                {"type": "true_false_ng", "question": "Germline editing only affects the individual receiving the treatment.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Most scientists agree that 'designer babies' are a positive development.", "answer": "False"},
+                {"type": "matching_info", "question": "Which paragraph discusses the risk of increasing social inequality?", "answer": "Paragraph 2"},
+                {"type": "matching_info", "question": "Which paragraph mentions the influence of private companies on research?", "answer": "Paragraph 3"},
+                {"type": "summary_completion", "question": "CRISPR technology allows for the ______ of DNA with high precision.", "answer": "editing/modification"},
+                {"type": "summary_completion", "question": "Critics fear that genetic enhancement could create a ______.", "answer": "genetic aristocracy"},
+                {"type": "multiple_choice", "question": "What does the author mean by 'the blueprint of life'?", "options": ["Medical records", "The genetic code/DNA", "Hospital plans"], "answer": "The genetic code/DNA"},
+                {"type": "multiple_choice", "question": "What is the main concern regarding 'germline editing'?", "options": ["Cost", "Unforeseen effects on future generations", "Lack of interest"], "answer": "Unforeseen effects on future generations"},
+                {"type": "sentence_completion", "question": "The author suggests that ______ should oversee genetic research.", "answer": "international regulatory bodies"},
+                {"type": "vocabulary_match", "question": "Which word in the text means 'extremely expensive'?", "answer": "Prohibitively"},
+                {"type": "identify_view", "question": "The author concludes that scientific power must be balanced with ______.", "answer": "moral wisdom/ethical management"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe an area of science that you find particularly interesting. You should say what it is, how you learned about it, and why you think it is important for the future.",
+                "model_answer": "I'm fascinated by the field of regenerative medicine. I first learned about it through a documentary on stem cell research. It's important because it could potentially revolutionize how we treat degenerative diseases. However, I believe stringent ethical oversight is essential to prevent misuse."
+            },
+            "part3": {
+                "question": "To what extent should governments control scientific research?",
+                "band8_sample": "I'm of the opinion that a delicate equilibrium must be maintained. While unfettered research is often the cradle of innovation, the state has a moral obligation to ensure that such progress does not compromise ethical standards. For instance, in fields like cloning or AI, stringent oversight is essential to prevent malicious applications. We shouldn't stifle curiosity, but we must erect guardrails to protect societal interests."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "Some people believe that scientific research should be carried out and controlled by the government rather than private companies. To what extent do you agree or disagree?",
+            "band75_excerpt": "The question of who should steward scientific inquiry is a pivotal issue in the modern age. While private enterprise is often credited with the rapid commercialization of technology, I would argue that state-led research is fundamentally more aligned with the public interest. Private corporations are predominantly beholden to shareholders, which can lead to a prioritization of profit over long-term societal benefits. In contrast, government-funded initiatives can focus on 'blue-sky' research—endeavors that may not have immediate fiscal returns but are essential for the advancement of human knowledge.",
+            "examiner_analysis": {
+                "task_response": "Presents a nuanced argument for government control while acknowledging the role of private enterprise.",
+                "lexical_resource": "Uses 'steward,' 'private enterprise,' 'beholden,' and 'blue-sky research.'",
+                "error_upgrade": "Instead of 'Private companies only want money,' use 'The profit-centric nature of private corporations may circumvent ethical considerations in favor of financial gain.'"
+            }
+        },
+        "examiner_tips": [
+            "Maintain Academic Neutrality: Avoid saying 'I think this is scary.' Instead, use 'This development has prompted significant apprehension among the scientific community regarding...'",
+            "Use 'Conditionals' for Ethical Arguments: Topics involving 'what if' scenarios are perfect for second and third conditionals.",
+            "Precise Collocations: Use 'conduct research,' 'publish findings,' 'carry out trials,' or 'uphold standards.'"
+        ]
+    },
+    # Module 11: Public Transport and Sustainable Infrastructure
+    {
+        "id": "advanced-module-11",
+        "module_number": 11,
+        "title": "Public Transport and Sustainable Infrastructure",
+        "subtitle": "Mobility, Sustainability, and Public Transit",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Analyze the relationship between mass transit systems and urban sustainability",
+            "Master the use of Cleft Sentences to provide focus and emphasis in academic arguments",
+            "Develop a sophisticated lexicon to discuss fiscal allocation, modal shifts, and carbon sequestration through transit"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Modal Shift", "meaning": "A change from one mode of transport to another (usually from private cars to public transit)", "usage": "Noun; focus for sustainability topics", "example": "Achieving a modal shift requires significant investment in the reliability of rail networks."},
+                {"term": "To Subsidise", "meaning": "To support an organization or activity financially", "usage": "Verb; high-level alternative to 'give money to'", "example": "Many argue that the government must subsidise public transport to make it a viable alternative to driving."},
+                {"term": "Fiscal Burden", "meaning": "The financial weight or pressure on a government or individual", "usage": "Noun phrase; formal economic context", "example": "The maintenance of aging underground networks places a heavy fiscal burden on municipal budgets."},
+                {"term": "Intermodal Connectivity", "meaning": "The seamless integration of different modes of transport", "usage": "Noun phrase; academic/technical", "example": "Enhanced intermodal connectivity is the cornerstone of a functional smart city."},
+                {"term": "Commuter Belt", "meaning": "An area surrounding a large city where people live and travel to work", "usage": "Noun phrase; common in urbanization topics", "example": "Property prices in the commuter belt have skyrocketed due to improved high-speed rail links."}
+            ]
+        },
+        "grammar": {
+            "title": "Cleft Sentences for Emphasis",
+            "explanation": "To reach Band 7+, you must use structures that allow you to emphasize specific parts of a sentence, signaling to the examiner what is most important.",
+            "band_65_example": "The government needs to invest in trains to stop pollution.",
+            "band_80_example": "It is investment in rail infrastructure that will ultimately facilitate a significant reduction in urban carbon emissions.",
+            "alternative_structure": "What many city dwellers require is not more roads, but a more integrated and affordable transit network."
+        },
+        "reading": {
+            "title": "The Transit Revolution: Beyond the Private Automobile",
+            "word_count": 340,
+            "text": "In the mid-20th century, the 'car was king,' and urban planning reflected this by prioritizing expansive highway networks. However, as the 21st century progresses, the 'ubiquity' of traffic congestion and the escalating climate crisis have forced a radical rethink. Modern urban planners now advocate for 'Transit-Oriented Development' (TOD)—a strategy that focuses on high-density, mixed-use housing built around major transit hubs. The goal is to minimize the 'carbon footprint' of the average citizen by making public transport the most convenient option.\n\nThe primary hurdle to this transition is often financial. Implementing a comprehensive underground or light-rail system requires astronomical 'fiscal allocation,' often leading to debates over whether transit should be a 'for-profit' enterprise or a subsidized public service. In cities like Luxembourg, the government has taken the unprecedented step of making all public transport free. Proponents argue that the resulting reduction in road maintenance costs and healthcare savings (due to decreased pollution) far outweigh the loss of ticket revenue. Conversely, critics suggest that without 'farebox recovery,' systems may suffer from underinvestment and poor maintenance over time.\n\nFurthermore, the 'last-mile problem'—the difficulty of getting people from a transit station to their final destination—remains a significant barrier to 'modal shift.' To solve this, many cities are integrating 'micro-mobility' options, such as electric scooters and bike-sharing schemes, into their 'intermodal' frameworks. By utilizing digital apps to bridge these gaps, transit becomes a seamless experience. Ultimately, the success of sustainable infrastructure depends on its ability to compete with the private car in terms of time, cost, and reliability. As the 'commuter belt' continues to expand, the necessity for a robust, green, and efficient public transport network has never been more pressing.",
+            "questions": [
+                {"type": "identify_view", "question": "Does the author believe 20th-century planning was good for the environment?", "answer": "No; it prioritized highways"},
+                {"type": "vocabulary_match", "question": "Which term refers to development focused around transit stations?", "answer": "Transit-Oriented Development / TOD"},
+                {"type": "true_false_ng", "question": "Luxembourg was the first country to offer free public transport.", "answer": "Not Given"},
+                {"type": "true_false_ng", "question": "Healthcare costs can be lowered by reducing traffic.", "answer": "True"},
+                {"type": "true_false_ng", "question": "Farebox recovery is always enough to pay for rail maintenance.", "answer": "False"},
+                {"type": "summary_completion", "question": "Planners use ______ to encourage people to use transit instead of cars.", "answer": "Transit-Oriented Development"},
+                {"type": "summary_completion", "question": "Making transport free can reduce ______ costs.", "answer": "road maintenance"},
+                {"type": "multiple_choice", "question": "What is the 'last-mile problem'?", "options": ["Expensive tickets", "The difficulty of traveling from a station to one's destination", "Traffic congestion"], "answer": "The difficulty of traveling from a station to one's destination"},
+                {"type": "matching_info", "question": "Which paragraph discusses the integration of micro-mobility?", "answer": "Paragraph 3"},
+                {"type": "matching_info", "question": "Which paragraph discusses the debate over for-profit transit?", "answer": "Paragraph 2"},
+                {"type": "sentence_completion", "question": "High-speed rail links have caused prices in the ______ to rise.", "answer": "commuter belt"},
+                {"type": "identify_view", "question": "The author suggests that transit must ______ with the private car to be successful.", "answer": "compete"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a time you had a long journey by public transport. You should say where you went, how long it took, what the experience was like, and explain how you felt about using that mode of transport.",
+                "model_answer": "I once took a high-speed train from Paris to Lyon. The journey took only two hours, which was remarkably efficient. The experience was comfortable and stress-free, allowing me to work during the commute. It reinforced my belief that well-funded public transit can be superior to private car travel."
+            },
+            "part3": {
+                "question": "To what extent should governments discourage the use of private cars in city centers?",
+                "band8_sample": "I believe it is imperative that governments take a proactive stance. Simply asking people to drive less is ineffectual. We need a combination of 'push and pull' factors: taxing congestion in the city center while simultaneously subsidising high-quality, high-frequency transit. If the fiscal burden of driving becomes too high, and the public option becomes sufficiently reliable, we will see a natural modal shift."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "Some people believe that public transport should be free of charge for all citizens. Others argue that this would lead to a lack of funding and poor quality services. Discuss both views and give your opinion.",
+            "band75_excerpt": "The proposal to eliminate fares for public transit is a polarizing issue. Advocates for universal access argue that it is the removal of financial barriers that will most effectively trigger a modal shift away from carbon-intensive private vehicles. However, I am of the view that while the laudable aim is to reduce pollution, the erasure of ticket revenue may inadvertently lead to a deterioration of service quality. A more prudent approach would be to offer targeted subsidies for low-income demographics while maintaining a self-sustaining financial model for the network at large.",
+            "examiner_analysis": {
+                "task_response": "Addresses both sides and offers a nuanced 'third way' (targeted subsidies).",
+                "lexical_resource": "Instead of 'Removing tickets is a good idea,' use 'The abolition of fare-based systems may incentivize transit usage among a broader demographic.'",
+                "error_upgrade": "Instead of 'Trains will get old and break,' use 'The absence of farebox recovery may compromise the long-term maintenance and modernization of the fleet.'"
+            }
+        },
+        "examiner_tips": [
+            "Avoid the 'Traffic' Cliche: Everyone mentions 'traffic' at Band 6.0. At Band 7.5, discuss it as 'urban congestion' or 'gridlock' and focus on its socio-economic impact (lost productivity).",
+            "The 'Nuance' Bonus: Don't just say free transport is good. Acknowledge the fiscal reality—where will the money come from? Mentioning 'reallocation of tax revenue' shows the examiner you have the vocabulary for complex topics.",
+            "Use Anaphoric Reference (e.g., 'This financial shortfall...') to link your sentences without using simple conjunctions."
+        ]
+    },
+    # Module 12: Work, Employment, and the Evolving Labor Market
+    {
+        "id": "advanced-module-12",
+        "module_number": 12,
+        "title": "Work, Employment, and the Evolving Labor Market",
+        "subtitle": "Precarious Employment, Automation, and the Gig Economy",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Analyze the shift from lifelong employment to the gig economy",
+            "Master mixed conditionals to discuss hypothetical socio-economic impacts",
+            "Utilize advanced professional collocations to satisfy 'Lexical Resource' for Band 8.0+"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Precarious Labor", "meaning": "Employment characterized by a lack of security, low wages, and limited benefits", "usage": "Noun phrase; subject or object in economy essays", "example": "The rise of the gig economy has led to a significant increase in precarious labor among the youth."},
+                {"term": "Gig Economy", "meaning": "A labor market characterized by the prevalence of short-term contracts or freelance work", "usage": "Noun; focus for work/tech topics", "example": "While the gig economy offers flexibility, it often lacks the safety nets of traditional employment."},
+                {"term": "Meritocracy", "meaning": "A system where advancement is based on individual ability or achievement", "usage": "Noun; academic context", "example": "Critics argue that a pure meritocracy is difficult to achieve without equal access to education."},
+                {"term": "To Automate", "meaning": "To convert a process to be operated by largely automatic equipment", "usage": "Verb; high-level alternative to 'using machines'", "example": "Industries that fail to automate may find themselves unable to compete in a global market."},
+                {"term": "Work-Life Synthesis", "meaning": "A more holistic approach than 'balance,' where work and life are integrated", "usage": "Noun phrase; sophisticated alternative to 'balance'", "example": "Remote work has forced many professionals to seek a better work-life synthesis."}
+            ],
+            "synonym_groups": {
+                "job_security": ["Career stability", "professional tenure", "employment certainty"],
+                "high_paying": ["Lucrative", "remunerative", "well-compensated"],
+                "to_fire": ["To dismiss", "to terminate employment", "to make redundant"]
+            }
+        },
+        "grammar": {
+            "title": "Mixed Conditionals & Hypothetical Structures",
+            "explanation": "To reach Band 7.5+, you must demonstrate the ability to link past actions to present results (Mixed Conditionals).",
+            "band_65_example": "If companies use more robots, people will lose jobs.",
+            "band_80_example": "If governments had invested in vocational re-skilling a decade ago, the current workforce would not be struggling with the rapid onset of automation.",
+            "alternative_structure": "Were the minimum wage to be significantly increased, the immediate result might be a surge in inflation, though long-term social equity could improve."
+        },
+        "reading": {
+            "title": "The Erosion of the 9-to-5: A New Industrial Revolution",
+            "word_count": 345,
+            "text": "For much of the 20th century, the 'standard employment relationship' was the cornerstone of the middle class. Employees offered loyalty in exchange for a predictable career path and retirement security. However, the 21st century has seen this social contract unravel. The catalyst for this change is two-fold: the digital revolution and the rise of neoliberal economic policies that prioritize 'labor flexibility.'\n\nThis shift has birthed the 'gig economy,' where digital platforms act as intermediaries between independent contractors and customers. Proponents argue that this model democratizes work, allowing individuals to 'be their own boss' and choose their hours. However, sociologists point to a more troubling reality: the externalization of risk. In this new model, the costs of equipment, insurance, and downtime are shifted from the corporation to the individual. This has created a new class of 'precariat' workers who, despite working full-time hours, lack the legal protections and benefits associated with traditional roles.\n\nFurthermore, the specter of automation looms over the service and manufacturing sectors. Unlike the mechanization of the past, which replaced physical brawn, modern artificial intelligence threatens to displace cognitive labor. Financial analysts, legal researchers, and even diagnostic doctors find their roles being supplemented—or in some cases, supplanted—by algorithms. While some economists suggest that technology will eventually create new, more 'human-centric' roles, the transition period is likely to be characterized by significant social upheaval.\n\nThe challenge for modern governance is to adapt the legal framework to these new realities. Some advocate for a 'Universal Basic Income' (UBI) to decouple survival from traditional employment, while others suggest a 'Robot Tax' to fund re-training programs. Regardless of the solution, it is clear that the traditional notions of 'work' and 'career' are undergoing a fundamental transformation. The ability of a society to navigate this change will determine its stability and prosperity in the decades to come.",
+            "questions": [
+                {"type": "true_false_ng", "question": "The 20th-century social contract was based on mutual loyalty between worker and employer.", "answer": "True"},
+                {"type": "true_false_ng", "question": "The gig economy has completely replaced traditional office jobs in most countries.", "answer": "Not Given"},
+                {"type": "true_false_ng", "question": "Gig workers usually receive the same benefits as full-time staff.", "answer": "False"},
+                {"type": "matching_info", "question": "Which paragraph discusses the shift of financial risk to the worker?", "answer": "Paragraph 2"},
+                {"type": "matching_info", "question": "Which paragraph mentions the threat of AI to high-level professional roles?", "answer": "Paragraph 3"},
+                {"type": "summary_completion", "question": "Neoliberal policies often prioritize ______ over job security.", "answer": "labor flexibility"},
+                {"type": "summary_completion", "question": "The gig economy allows platforms to act as ______ between clients and workers.", "answer": "intermediaries"},
+                {"type": "multiple_choice", "question": "What is the 'precariat'?", "options": ["A new political party", "A class of workers with no job security or benefits", "A type of contract"], "answer": "A class of workers with no job security or benefits"},
+                {"type": "multiple_choice", "question": "How does modern automation differ from past mechanization?", "options": ["It's cheaper", "It targets cognitive labor rather than just physical tasks", "It only affects factories"], "answer": "It targets cognitive labor rather than just physical tasks"},
+                {"type": "sentence_completion", "question": "A 'Robot Tax' could be used to pay for ______.", "answer": "re-training programs"},
+                {"type": "identify_view", "question": "Does the author believe the transition to an automated economy will be smooth?", "answer": "No; 'characterized by significant social upheaval'"},
+                {"type": "identify_view", "question": "The future of a society depends on its ability to ______ traditional notions of work.", "answer": "transform/adapt"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a job you would like to do in the future. You should say what it is, what qualifications you would need, and explain why you think you would be good at it.",
+                "model_answer": "I aspire to work as a sustainability consultant. This role would require expertise in environmental science and business strategy. I believe I would excel because I possess strong analytical skills and a genuine passion for addressing climate change through corporate reform."
+            },
+            "part3": {
+                "question": "Do you think the concept of a 'job for life' is still relevant in today's world?",
+                "band8_sample": "I'd say the 'job for life' is essentially a relic of the past. In the current volatile economic climate, adaptability is far more valuable than tenure. Most professionals now expect to pivot between industries several times. While this can be daunting, it also offers a level of professional autonomy that previous generations simply didn't have. It's no longer about staying in one place, but about continual upskilling."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "In the modern world, many people prefer to change jobs frequently rather than staying with one employer for a long time. Does this trend have more advantages or disadvantages?",
+            "band75_excerpt": "The contemporary labor market has shifted away from the long-term tenure that defined previous generations. While some view this professional fluidity as a source of instability, I contend that the advantages—namely skill diversification and market resilience—far outweigh the drawbacks of reduced job security. In a rapidly evolving economy, a worker who has navigated multiple roles is often more versatile than one who has remained in a single siloed position for decades.",
+            "examiner_analysis": {
+                "task_response": "Clearly weights the advantages of flexibility in a modern context.",
+                "lexical_resource": "Instead of 'Changing jobs often,' use 'Embracing professional fluidity.' Instead of 'Learning new things,' use 'The acquisition of a diversified skill set.'",
+                "error_upgrade": "Instead of 'People are scared of losing their jobs,' use 'The erosion of traditional career paths has fostered a sense of professional precarity among the workforce'."
+            }
+        },
+        "examiner_tips": [
+            "Avoid the 'Lazy' Idiom: Don't say 'It's a piece of cake.' Use IELTS-safe, academic idioms like 'The silver lining,' 'A level playing field,' or 'To bear the brunt'.",
+            "Structure Your Argument: Use Nominalization (e.g., 'The implementation of automation') to start your sentences, as it sounds more authoritative to an examiner.",
+            "Critical Thinking: When discussing work, don't just talk about money. Mention pensions, mental health, and social status to show breadth."
+        ]
+    },
+    # Module 13: Social Issues (Demographics and Generational Equity)
+    {
+        "id": "advanced-module-13",
+        "module_number": 13,
+        "title": "Social Issues",
+        "subtitle": "Demographics and Generational Equity",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Analyze the challenges of the 'Silver Tsunami' and the shifting dependency ratio",
+            "Master Negative Inversion to add rhetorical weight and sophistication to arguments",
+            "Utilize advanced sociological collocations to satisfy Band 7+ Lexical Resource requirements"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Dependency Ratio", "meaning": "An age-population measure of those typically not in the labor force and those typically in the labor force", "usage": "Noun; vital for economic/social impact analysis", "example": "A burgeoning dependency ratio threatens the long-term viability of the national pension scheme."},
+                {"term": "Intergenerational Solidarity", "meaning": "Social cohesion and cooperation between different age groups", "usage": "Noun phrase; high-level alternative to 'getting along'", "example": "Maintaining intergenerational solidarity is crucial as the competition for public resources intensifies."},
+                {"term": "Silver Tsunami", "meaning": "A metaphor used to describe a large increase in the number of elderly people", "usage": "Idiomatic (IELTS-safe); use for descriptive flair", "example": "Governments must prepare for the impending Silver Tsunami by restructuring healthcare services."},
+                {"term": "To Alleviate", "meaning": "To make a problem or suffering less severe", "usage": "Verb; high-level alternative to 'lessen' or 'reduce'", "example": "Subsidized home-care programs can alleviate the burden on working-age family members."},
+                {"term": "Socio-economic Stratification", "meaning": "The hierarchical arrangement of individuals into social classes or strata", "usage": "Noun phrase; formal sociological context", "example": "The lack of elderly care often exacerbates existing socio-economic stratification within the community."}
+            ]
+        },
+        "grammar": {
+            "title": "Negative Inversion",
+            "explanation": "To achieve Band 7.5+ in Grammatical Range and Accuracy, you must demonstrate mastery over rare structures like inversion to highlight key points.",
+            "band_65_example": "The government shouldn't just ignore the elderly, and they should also build more hospitals.",
+            "band_80_example": "Not only must the state increase its fiscal allocation for elderly care, but it should also reform the statutory retirement age to reflect increasing life expectancy.",
+            "alternative_structure": "Seldom has the global community faced a demographic challenge as formidable as the current aging trend."
+        },
+        "reading": {
+            "title": "The Aging Paradox: Burden or Boon?",
+            "word_count": 325,
+            "text": "The 21st century is witnessing a demographic shift unparalleled in human history. As birth rates plummet and medical advancements extend life expectancy, many nations are transitioning into 'super-aged' societies. While some economists view this as a testament to human progress, others warn of a looming 'Grey Dawn'—a period where the dwindling working-age population can no longer sustain the fiscal demands of an aging demographic.\n\nThe primary concern lies in the 'dependency ratio.' When the number of retirees significantly outweighs the number of active contributors to the tax base, the pressure on social security systems becomes untenable. This often necessitates unpopular political maneuvers, such as raising the pensionable age or increasing taxation on the youth. Critics argue that such measures risk fracturing 'intergenerational solidarity,' leading to resentment among younger demographics who feel burdened by the needs of their predecessors.\n\nHowever, a counter-narrative suggests that an aging population is not an inherent liability. Proponents of the 'Silver Economy' argue that seniors are not merely consumers of healthcare but are active contributors to the economy through volunteerism, mentorship, and consumer spending. Furthermore, as the workforce shrinks, businesses are forced to innovate, leading to increased automation and productivity gains. In this view, the challenge is not the age of the population itself, but the rigidity of current social structures.\n\nUltimately, the goal for policymakers is to foster 'active aging.' This involves creating urban environments that are 'age-friendly' and providing opportunities for lifelong learning. By integrating the elderly into the social fabric rather than segregating them in specialized facilities, societies can leverage the wisdom of the old while maintaining the dynamism of the young. The success of this transition depends on a holistic rethink of the social contract—one that prioritizes equity and resilience across all age groups.",
+            "questions": [
+                {"type": "true_false_ng", "question": "Medical progress has contributed to the current demographic trend.", "answer": "True"},
+                {"type": "true_false_ng", "question": "The 'Grey Dawn' refers to a rise in global birth rates.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Young people are generally happy to pay higher taxes for pensions.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Automation is a direct result of a shrinking workforce.", "answer": "Not Given"},
+                {"type": "vocabulary_match", "question": "Which term describes the ratio of workers to non-workers?", "answer": "Dependency ratio"},
+                {"type": "vocabulary_match", "question": "Which phrase refers to cooperation between age groups?", "answer": "Intergenerational solidarity"},
+                {"type": "matching_info", "question": "Which section discusses the potential economic benefits of the elderly?", "answer": "Paragraph 3"},
+                {"type": "matching_info", "question": "Which section mentions urban planning for the elderly?", "answer": "Paragraph 4"},
+                {"type": "summary_completion", "question": "The text suggests that the 'dependency ratio' puts ______ on social security.", "answer": "pressure/demands"},
+                {"type": "summary_completion", "question": "'Active aging' requires ______ environments and learning opportunities.", "answer": "age-friendly"},
+                {"type": "sentence_completion", "question": "Critics believe raising the retirement age might ______ the social fabric.", "answer": "fracture"},
+                {"type": "identify_view", "question": "The author argues for a rethink of the ______ to ensure generational equity.", "answer": "social contract"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe an elderly person you know who is an inspiration to you. You should say who they are, how you know them, and explain what qualities they have that you admire.",
+                "model_answer": "I'd like to talk about my grandmother. She's in her eighties but remains incredibly active, volunteering at the local community center. What I admire most is her resilience and her commitment to lifelong learning—she recently took up painting. Her attitude embodies the concept of 'active aging.'"
+            },
+            "part3": {
+                "question": "To what extent should children be responsible for looking after their elderly parents?",
+                "band8_sample": "I believe it's a complex ethical quandary. In many cultures, filial piety is the cornerstone of the family unit, and children are expected to provide care. However, in a modern, mobile society, this can place an insurmountable strain on the 'sandwich generation'—those who are raising children while simultaneously caring for aging parents. I would argue that while emotional support is vital, the state must provide a robust infrastructure of professional care to ensure that the fiscal and physical burden doesn't fall solely on individuals."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "In many countries, the proportion of older people is increasing. Does this trend have more advantages or disadvantages for society?",
+            "band75_excerpt": "The global demographic shift toward an aging population is a multifaceted phenomenon. While many fear the economic repercussions of a shrinking workforce, I believe that if societies adapt their socio-economic frameworks, the wisdom and stability provided by an older demographic can offer significant advantages. However, the success of this transition is contingent upon proactive government intervention to prevent the erosion of intergenerational equity.",
+            "examiner_analysis": {
+                "task_response": "Addresses the 'advantages vs. disadvantages' prompt with a nuanced, balanced thesis.",
+                "lexical_resource": "Uses 'multifaceted,' 'contingent upon,' and 'intergenerational equity' instead of 'many sides' or 'depends on.'",
+                "error_upgrade": "Instead of 'Old people are a problem for the economy,' use 'The burgeoning elderly demographic presents a unique fiscal challenge for modern welfare states.'"
+            }
+        },
+        "examiner_tips": [
+            "Avoid 'The Sandwich' Approach: Do not simply list one advantage and one disadvantage. Show how they interact.",
+            "Precise Terminology: Use 'geriatric care' instead of 'help for old people' and 'demographic dividend' when discussing the benefits of a younger workforce.",
+            "The 'Critical Thinking' Trap: Don't just describe the problem; evaluate the solutions."
+        ]
+    },
+    # Module 14: Education and Pedagogical Philosophy
+    {
+        "id": "advanced-module-14",
+        "module_number": 14,
+        "title": "Education and Pedagogical Philosophy",
+        "subtitle": "From Rote Memorisation to Competency-Based Pedagogy",
+        "level": "band-6.0-9.0",
+        "learning_goals": [
+            "Analyze the efficacy of traditional vs. progressive educational models",
+            "Master Parallelism and Clausal Subjects to enhance academic weight and cohesion",
+            "Critically evaluate the commodification of higher education and its socio-economic impacts"
+        ],
+        "vocabulary": {
+            "advanced_terms": [
+                {"term": "Pedagogical", "meaning": "Relating to the methods and principles of teaching", "usage": "Adjective; used when discussing teaching styles", "example": "Modern pedagogical theories emphasize the importance of student-centered learning over traditional lectures."},
+                {"term": "Rote Learning", "meaning": "A memorization technique based on repetition without a deep understanding of the subject", "usage": "Noun; usually used critically in IELTS essays", "example": "While rote learning may help students pass exams, it often fails to foster critical thinking skills."},
+                {"term": "To Assimilate", "meaning": "To take in and fully understand information or ideas", "usage": "Verb; high-level alternative to 'learn' or 'absorb'", "example": "Students must be given the time to assimilate complex concepts before moving on to new material."},
+                {"term": "Egalitarian", "meaning": "Believing in the principle that all people are equal and deserve equal rights and opportunities", "usage": "Adjective; used in debates about educational access", "example": "A truly egalitarian education system provides the same quality of resources to every child, regardless of background."},
+                {"term": "Cognitive Development", "meaning": "The construction of thought processes, including remembering, problem-solving, and decision-making", "usage": "Noun phrase; academic alternative to 'mental growth'", "example": "Play-based learning is essential for the cognitive development of early-years learners."}
+            ],
+            "synonym_groups": {
+                "curriculum": ["Syllabus", "educational programme", "course of study"],
+                "academic_achievement": ["Scholastic attainment", "educational outcomes", "intellectual proficiency"],
+                "compulsory": ["Mandatory", "obligatory", "requisite"]
+            }
+        },
+        "grammar": {
+            "title": "Clausal Subjects and Parallelism",
+            "explanation": "To achieve Band 7.5+, you must move away from simple sentence starters. Using a clause as the subject of your sentence adds immediate sophistication.",
+            "band_65_example": "It is important that students learn how to solve problems.",
+            "band_80_example": "That students are equipped with problem-solving skills is far more critical than their ability to memorize facts.",
+            "parallelism": "The current education system must focus on fostering creativity, encouraging critical thinking, and promoting digital literacy."
+        },
+        "reading": {
+            "title": "The Flipped Classroom: A Paradigm Shift in Education",
+            "word_count": 335,
+            "text": "The traditional model of education, characterized by a teacher delivering a lecture to a passive audience, is increasingly being viewed as an artifact of the industrial age. In its place, many institutions are adopting the 'flipped classroom' model. In this pedagogical approach, the standard relationship between classroom time and homework is inverted. Students absorb primary content—such as recorded lectures or readings—independently at home, while class time is dedicated to active problem-solving, collaborative projects, and deeper discussion.\n\nProponents of this model suggest that it fosters greater student autonomy. When learners are responsible for their initial encounter with new material, they can proceed at their own pace, re-watching difficult sections of a lecture or skipping familiar content. This promotes a more personalized learning experience, which is particularly beneficial in diverse classrooms where students possess varying levels of prior knowledge. Furthermore, by utilizing class time for application rather than passive listening, educators can provide immediate feedback, addressing misconceptions as they arise.\n\nHowever, the shift toward digital-first pedagogy has also exposed a 'digital divide.' For the flipped classroom to be effective, students must have reliable access to high-speed internet and personal devices. In many regions, this technological requirement exacerbates existing socio-economic disparities, leaving underprivileged students at a significant disadvantage. Moreover, critics argue that this model places an undue burden on students who may lack the self-discipline or the parental support necessary to manage independent study.\n\nThe future of education likely lies in a 'hybrid' or 'blended' approach that combines the best elements of face-to-face instruction with digital flexibility. The ultimate goal of any curriculum should be to move beyond the mere transmission of information. Instead, it must focus on 'meta-cognition'—teaching students how to learn. In an era where information is ubiquitous, the ability to analyze, synthesize, and apply knowledge is far more valuable than the capacity to retain it.",
+            "questions": [
+                {"type": "true_false_ng", "question": "The traditional education model was designed for the industrial age.", "answer": "True"},
+                {"type": "true_false_ng", "question": "In a flipped classroom, students listen to lectures in school.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Flipped classrooms are easier for teachers to manage than traditional ones.", "answer": "Not Given"},
+                {"type": "matching_info", "question": "Which section discusses the risks to underprivileged students?", "answer": "Paragraph 3"},
+                {"type": "matching_info", "question": "Which section defines the concept of 'meta-cognition'?", "answer": "Paragraph 4"},
+                {"type": "summary_completion", "question": "The flipped classroom model is said to increase student ______.", "answer": "autonomy"},
+                {"type": "summary_completion", "question": "One benefit of this model is that students can learn at their own ______.", "answer": "pace"},
+                {"type": "multiple_choice", "question": "What is the 'digital divide' mentioned in the text?", "options": ["A new curriculum", "The gap in access to technology between rich and poor", "A teaching method"], "answer": "The gap in access to technology between rich and poor"},
+                {"type": "multiple_choice", "question": "What is the primary purpose of class time in the new model?", "options": ["Listening to lectures", "Active application and feedback", "Taking exams"], "answer": "Active application and feedback"},
+                {"type": "sentence_completion", "question": "Critics believe the flipped model requires high levels of ______ from learners.", "answer": "self-discipline"},
+                {"type": "vocabulary_match", "question": "Which word in the text means 'present everywhere'?", "answer": "Ubiquitous"},
+                {"type": "identify_view", "question": "Education should focus on the ______ of knowledge rather than its retention.", "answer": "synthesis/application"}
+            ]
+        },
+        "speaking": {
+            "part2": {
+                "cue_card": "Describe a subject you enjoyed studying at school. You should say what it was, who taught you, what you learned, and explain why you found it so interesting.",
+                "model_answer": "I particularly enjoyed studying history. My teacher, Mr. Chen, had an exceptional pedagogical approach—he made the past come alive through storytelling and primary source analysis. What I found most engaging was learning to assimilate complex historical narratives and draw connections to contemporary issues."
+            },
+            "part3": {
+                "question": "Do you think that the traditional classroom will eventually be replaced by online learning?",
+                "band8_sample": "I suspect we are heading toward a blended model rather than a total replacement. While online platforms offer unparalleled accessibility, they cannot replicate the socio-emotional development that occurs during face-to-face interaction. Human beings are inherently social creatures, and the classroom serves as a crucial environment for collaboration and the exchange of ideas. Therefore, I believe digital tools will supplement, rather than supplant, the traditional teacher-student relationship."
+            }
+        },
+        "writing": {
+            "task_type": "Task 2",
+            "prompt": "Some people believe that university students should be allowed to study whatever they like. Others think that they should only be allowed to study subjects that will be useful in the future, such as those related to science and technology. Discuss both views and give your opinion.",
+            "band75_excerpt": "The debate regarding the primary purpose of tertiary education is a contentious one. Some argue that universities should be bastions of intellectual freedom, where the pursuit of knowledge is an end in itself. However, I believe that in an increasingly competitive global economy, a more pragmatic approach is necessary. While the humanities foster critical thinking, a national curriculum that fails to prioritize STEM subjects risks leaving its workforce ill-equipped for the challenges of the digital age.",
+            "examiner_analysis": {
+                "task_response": "Addresses both the 'intellectual freedom' and 'utilitarian' perspectives before providing a balanced opinion.",
+                "lexical_resource": "Uses 'bastions of intellectual freedom,' 'contentious,' 'STEM subjects,' and 'ill-equipped.'",
+                "error_upgrade": "Instead of 'Students should choose their own subjects,' use 'The autonomy of students to select their course of study is a fundamental tenet of liberal education.'"
+            }
+        },
+        "examiner_tips": [
+            "Avoid the 'Good/Bad' Trap: Instead of saying a teaching method is 'good,' use 'It is highly conducive to student engagement.'",
+            "Use Precise Verbs: Instead of 'Education gives people jobs,' use 'Education facilitates professional entry into specialized sectors.'",
+            "Critique the Prompt: At Band 8.0, you can challenge the premises of a question."
+        ]
+    },
+    # Modules 15-20 continue in next section...
 ]
