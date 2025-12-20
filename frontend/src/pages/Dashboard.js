@@ -388,6 +388,17 @@ export default function Dashboard({ user, onLogout }) {
             </Card>
           </div>
         )}
+
+        {/* Overall Skill Analytics - Phase 4 */}
+        {hasProgress && progress.total_tests > 2 && (
+          <div className="mt-8">
+            <SkillBreakdown
+              showCumulative={true}
+              userId={user?.id}
+              expanded={false}
+            />
+          </div>
+        )}
       </main>
     </div>
   );
