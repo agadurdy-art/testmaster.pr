@@ -816,14 +816,24 @@ export default function AdvancedMasteryCourse({ user }) {
             <p className="text-lg text-gray-600 mb-4">Estimated Band: {quizResults?.estimated_band}</p>
           </div>
           
-          {/* Skill Breakdown Component */}
-          {quizResults?.skill_breakdown && (
-            <div className="my-6">
-              <SkillBreakdown
-                breakdown={quizResults.skill_breakdown}
-                testType="advanced-mastery-reading"
-                expanded={true}
-              />
+          {/* Skill Breakdown - Simple inline version for course quizzes */}
+          {quizResults?.skill_breakdown && Object.keys(quizResults.skill_breakdown).length > 0 && (
+            <div className="my-6 p-4 bg-gray-50 rounded-xl">
+              <h5 className="font-semibold text-gray-800 mb-3">📊 Performance by Question Type</h5>
+              <div className="space-y-2">
+                {Object.entries(quizResults.skill_breakdown).map(([type, data]) => (
+                  <div key={type} className="flex items-center justify-between p-2 bg-white rounded-lg">
+                    <span className="text-sm text-gray-700 capitalize">{type.replace(/_/g, ' ')}</span>
+                    <span className={`text-sm font-medium px-2 py-0.5 rounded ${
+                      (data.correct / data.total) >= 0.7 ? 'bg-green-100 text-green-700' :
+                      (data.correct / data.total) >= 0.5 ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {data.correct}/{data.total}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           
