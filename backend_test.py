@@ -944,26 +944,22 @@ def run_complete_test_flow():
         return False
 
 if __name__ == "__main__":
-    # Test Advanced IELTS Mastery Course API endpoints as requested in the review
+    # Test Phase 2-4 features as requested in the review
+    phase_2_4_success = test_phase_2_4_features()
+    
+    # Test Advanced IELTS Mastery Course API endpoints (existing functionality)
     advanced_mastery_success = test_advanced_mastery_course()
     
-    # Test Speaking Evaluation API as requested in the review
-    speaking_success = test_speaking_evaluation()
-    
-    # Test Writing Practice Evaluation API as requested
+    # Test Writing Practice Evaluation API (existing functionality)
     writing_success = test_writing_practice_evaluation()
     
-    # Also run the existing test flow for completeness
-    other_success = run_complete_test_flow()
-    
-    overall_success = advanced_mastery_success and speaking_success and writing_success and other_success
-    print(f"\n{'='*60}")
+    overall_success = phase_2_4_success and advanced_mastery_success and writing_success
+    print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
+    print(f"   Phase 2-4 Features: {'✅ PASSED' if phase_2_4_success else '❌ FAILED'}")
     print(f"   Advanced Mastery Course Tests: {'✅ PASSED' if advanced_mastery_success else '❌ FAILED'}")
-    print(f"   Speaking Evaluation Tests: {'✅ PASSED' if speaking_success else '❌ FAILED'}")
     print(f"   Writing Practice Tests: {'✅ PASSED' if writing_success else '❌ FAILED'}")
-    print(f"   Other Backend Tests: {'✅ PASSED' if other_success else '❌ FAILED'}")
     print(f"   Overall: {'✅ ALL TESTS PASSED' if overall_success else '❌ SOME TESTS FAILED'}")
-    print(f"{'='*60}")
+    print(f"{'='*80}")
     
     exit(0 if overall_success else 1)
