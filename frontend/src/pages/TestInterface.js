@@ -522,6 +522,18 @@ function ElevenLabsExaminer() {
             <p className="text-sm text-gray-600">{test.title}</p>
           </div>
           <div className="flex items-center space-x-4">
+            {/* Notebook button for reading/listening tests */}
+            {(testType === 'reading' || testType === 'listening') && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowNotebook(!showNotebook)}
+                className={`${showNotebook ? 'bg-amber-100 border-amber-300' : ''}`}
+              >
+                <BookMarked className="w-4 h-4 mr-1" />
+                Notes
+              </Button>
+            )}
             <div className="flex items-center space-x-2 px-4 py-2 bg-orange-100 rounded-lg test-timer">
               <Clock className="w-5 h-5 text-orange-600" />
               <span className="text-lg font-semibold text-orange-600">
@@ -538,6 +550,17 @@ function ElevenLabsExaminer() {
           </div>
         </div>
       </header>
+
+      {/* Notebook Panel for reading/listening tests */}
+      {(testType === 'reading' || testType === 'listening') && (
+        <NotebookPanel
+          user={user}
+          testId={test?.id}
+          testType={testType}
+          isOpen={showNotebook}
+          onClose={() => setShowNotebook(false)}
+        />
+      )}
 
       {/* NOTE: Payments not live yet – mark extra tests as coming soon but do not block.
           Once SePay/MoMo is integrated, Test 2+ can be hard-gated based on user subscription/credits.
