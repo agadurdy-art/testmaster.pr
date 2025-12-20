@@ -1932,12 +1932,40 @@ async def get_test_attempt(attempt_id: str):
     attempt = await db.test_attempts.find_one({"id": attempt_id}, {"_id": 0})
     if not attempt:
         raise HTTPException(status_code=404, detail="Test attempt not found")
+    
     # Convert completed_at back to datetime for Pydantic model compatibility if needed
     if isinstance(attempt.get("completed_at"), str):
         try:
             attempt["completed_at"] = datetime.fromisoformat(attempt["completed_at"])
         except Exception:
             pass
+    
+    # Dynamically add explanations from test answer_key if missing
+    feedback = attempt.get("feedback", {})
+    question_results = feedback.get("question_results", [])
+    
+    # Check if explanations are missing
+    if question_results and not question_results[0].get("explanation"):
+        # Fetch the original test to get explanations
+        test = await db.tests.find_one({"id": attempt.get("test_id")}, {"_id": 0})
+        if test:
+            # Build explanation map from answer_key
+            explanation_map = {}
+            for item in test.get("answer_key", []):
+                q_id = item.get("question_id")
+                if q_id is not None:
+                    explanation_map[int(q_id)] = item.get("explanation", "")
+            
+            # Add explanations to question_results
+            for q in question_results:
+                qid = q.get("question_id")
+                if qid and not q.get("explanation"):
+                    q["explanation"] = explanation_map.get(int(qid), "")
+            
+            # Update feedback with explanations
+            feedback["question_results"] = question_results
+            attempt["feedback"] = feedback
+    
     return attempt
 
 # AI Evaluation routes
