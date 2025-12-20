@@ -774,6 +774,16 @@ export default function AdvancedMasteryCourse({ user }) {
             )}
           </div>
         )}
+
+        {/* Module Analogy - for deeper understanding */}
+        {selectedModule.analogy && (
+          <div className="mt-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
+            <h4 className="font-semibold text-indigo-800 mb-2 flex items-center gap-2">
+              💡 Band Level Analogy
+            </h4>
+            <p className="text-gray-700 text-sm">{selectedModule.analogy}</p>
+          </div>
+        )}
       </div>
 
       <div className="mt-6 flex justify-between">
