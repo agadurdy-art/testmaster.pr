@@ -838,14 +838,28 @@ export default function AdvancedMasteryCourse({ user }) {
           </Button>
         </>
       ) : (
-        <div className="text-center py-8">
-          <Trophy className={`w-16 h-16 mx-auto mb-4 ${quizResults?.estimated_band >= 7 ? 'text-yellow-500' : 'text-gray-400'}`} />
-          <h4 className="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h4>
-          <p className="text-4xl font-bold text-cyan-600 mb-2">{quizResults?.score?.toFixed(0)}%</p>
-          <p className="text-lg text-gray-600 mb-4">Estimated Band: {quizResults?.estimated_band}</p>
+        <div className="py-8">
+          <div className="text-center">
+            <Trophy className={`w-16 h-16 mx-auto mb-4 ${quizResults?.estimated_band >= 7 ? 'text-yellow-500' : 'text-gray-400'}`} />
+            <h4 className="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h4>
+            <p className="text-4xl font-bold text-cyan-600 mb-2">{quizResults?.score?.toFixed(0)}%</p>
+            <p className="text-lg text-gray-600 mb-4">Estimated Band: {quizResults?.estimated_band}</p>
+          </div>
+          
+          {/* Skill Breakdown Component */}
+          {quizResults?.skill_breakdown && (
+            <div className="my-6">
+              <SkillBreakdown
+                breakdown={quizResults.skill_breakdown}
+                testType="advanced-mastery-reading"
+                expanded={true}
+              />
+            </div>
+          )}
           
           {/* Results breakdown */}
-          <div className="text-left space-y-3 mb-6">
+          <div className="text-left space-y-3 mb-6 mt-6">
+            <h5 className="font-semibold text-gray-800 mb-3">📝 Detailed Results</h5>
             {quizResults?.results?.map((r, i) => (
               <div key={i} className={`p-3 rounded-lg ${r.is_correct ? 'bg-green-50' : 'bg-red-50'}`}>
                 <div className="flex items-start gap-2">
