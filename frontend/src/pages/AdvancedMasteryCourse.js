@@ -351,6 +351,23 @@ export default function AdvancedMasteryCourse({ user }) {
         ))}
       </div>
 
+      {/* Synonym Groups for Paraphrasing */}
+      {selectedModule.vocabulary?.synonym_groups && selectedModule.vocabulary.synonym_groups.length > 0 && (
+        <div className="mt-6 p-4 bg-blue-50 rounded-xl">
+          <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
+            <Sparkles className="w-4 h-4" /> Synonym Groups for Paraphrasing
+          </h4>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {selectedModule.vocabulary.synonym_groups.map((group, i) => (
+              <div key={i} className="p-3 bg-white rounded-lg border border-blue-200">
+                <p className="font-semibold text-blue-700 mb-1">{group.base}:</p>
+                <p className="text-sm text-gray-600">{group.synonyms.join(', ')}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Examiner Tips */}
       {selectedModule.examiner_tips && (
         <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
