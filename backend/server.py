@@ -2912,15 +2912,37 @@ class AdvancedSpeakingRequest(BaseModel):
 
 @api_router.post("/advanced-mastery/evaluate-speaking")
 async def evaluate_advanced_speaking(request: AdvancedSpeakingRequest):
-    """Evaluate speaking response for Advanced IELTS Mastery course (Band 6.0-9.0)"""
+    """Evaluate speaking response for Advanced IELTS Mastery course with STRICT Cambridge criteria"""
     try:
+        # Strict Cambridge examiner system prompt
+        system_message = """You are a STRICT senior IELTS Speaking examiner trained under Cambridge assessment standards.
+
+🔴 EXAMINER RULES:
+1. RELEVANCE is NON-NEGOTIABLE - Off-topic responses get Band 4.0 maximum
+2. MEANING > LANGUAGE - Fluent but irrelevant = low band
+3. NO BENEFIT OF THE DOUBT - If unsure, choose LOWER band
+4. Memorized/template responses = Band 4.5 maximum
+
+🗣️ SPEAKING CRITERIA (Cambridge Official):
+1. FLUENCY & COHERENCE: Natural pacing, logical expansion, no memorized chunks
+2. LEXICAL RESOURCE: Range + accuracy, paraphrasing ability
+3. GRAMMATICAL RANGE: Sentence variety, control, meaning preservation
+4. PRONUNCIATION: Clarity > accent, stress/intonation
+
+⚠️ BAND REALITY:
+- Band 7+ requires CLEAR evidence from response
+- Band 6 = "competent" not "good"
+- Do NOT give generous scores by default
+
+Before finalizing, ask: "Would this score survive Cambridge moderation?" If NO → LOWER the band."""
+        
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
-            system_message="You are an expert IELTS examiner evaluating Band 7-9 level speaking responses with sophisticated academic criteria."
+            system_message=system_message
         ).with_model("openai", "gpt-4o")
         
-        prompt = f"""You are a senior IELTS Speaking examiner. Evaluate this response for a student targeting Band 7-9.
+        prompt = f"""Evaluate this IELTS Speaking response with STRICT Cambridge criteria.
 
 Topic: {request.module_title}
 Part: {request.part}
@@ -2928,24 +2950,29 @@ Question: {request.question}
 Model Answer (Band 8+): {request.model_answer}
 Student's Response: {request.user_response}
 
-Evaluate using official IELTS criteria for Band 7+:
-- Fluency and Coherence: Extended responses, logical flow, sophisticated connectors
-- Lexical Resource: Topic-specific vocabulary, collocations, paraphrasing ability
-- Grammatical Range: Complex structures, conditionals, passive voice, relative clauses
-- Pronunciation: Natural intonation, word stress, connected speech
+IMPORTANT CHECKS BEFORE SCORING:
+1. Does the response DIRECTLY address the question?
+2. Is it a genuine response or memorized/template-based?
+3. Is there sufficient development?
+4. Are ideas expressed clearly?
 
-Be rigorous but constructive. Target audience is Band 6+ students aiming for 7-9.
+Apply band caps if needed:
+- Off-topic → Max 4.0
+- Memorized/template → Max 4.5
+- Very short/underdeveloped → Max 5.0
 
 Return JSON only:
 {{
-    "band_score": <6.0-9.0>,
-    "fluency_coherence": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "lexical_resource": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "grammatical_range": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "pronunciation": {{"score": <6-9>, "feedback": "<specific feedback>"}},
-    "overall_feedback": "<2-3 sentences of detailed feedback highlighting strengths and specific improvement areas>",
+    "band_score": <5.0-9.0 - be strict>,
+    "fluency_coherence": {{"score": <5-9>, "feedback": "<specific feedback with evidence>"}},
+    "lexical_resource": {{"score": <5-9>, "feedback": "<specific feedback with evidence>"}},
+    "grammatical_range": {{"score": <5-9>, "feedback": "<specific feedback with evidence>"}},
+    "pronunciation": {{"score": <5-9>, "feedback": "<assessment based on transcription clarity>"}},
+    "major_issues": ["<critical problem 1>", "<critical problem 2>"],
+    "overall_feedback": "<3-4 sentences: honest assessment, specific improvements needed>",
+    "band_justification": "<Why this band would survive Cambridge moderation>",
     "advanced_vocabulary_used": ["<list of advanced words/phrases the student used>"],
-    "suggested_improvements": ["<specific suggestion 1>", "<specific suggestion 2>"],
+    "suggested_improvements": ["<specific actionable suggestion 1>", "<specific actionable suggestion 2>"],
     "model_phrase_to_learn": "<One exemplary phrase from the model answer the student should study>"
 }}"""
 
@@ -2962,21 +2989,21 @@ Return JSON only:
             return json.loads(json_match.group())
         
         return {
-            "band_score": 6.5,
-            "fluency_coherence": {"score": 6.5, "feedback": "Good fluency with some room for improvement."},
-            "lexical_resource": {"score": 6.5, "feedback": "Use more advanced collocations."},
-            "grammatical_range": {"score": 6.5, "feedback": "Try incorporating more complex structures."},
-            "pronunciation": {"score": 6.5, "feedback": "Clear pronunciation overall."},
-            "overall_feedback": "Good effort! Focus on using more sophisticated vocabulary and complex sentence structures.",
+            "band_score": 5.5,
+            "fluency_coherence": {"score": 5.5, "feedback": "Needs more natural development."},
+            "lexical_resource": {"score": 5.5, "feedback": "Limited vocabulary range for this level."},
+            "grammatical_range": {"score": 5.5, "feedback": "Basic structures need improvement."},
+            "pronunciation": {"score": 5.5, "feedback": "Clarity needs work."},
+            "overall_feedback": "Response needs more development and sophistication for Band 7+ target.",
             "advanced_vocabulary_used": [],
-            "suggested_improvements": ["Use more topic-specific collocations", "Incorporate complex conditionals"],
+            "suggested_improvements": ["Address the question more directly", "Use more topic-specific vocabulary"],
             "model_phrase_to_learn": "Review the model answer for advanced phrasing."
         }
     except Exception as e:
         logging.getLogger(__name__).error(f"Advanced speaking evaluation error: {e}")
         return {
-            "band_score": 6.5,
-            "overall_feedback": "Good attempt! Keep practicing advanced speaking techniques.",
+            "band_score": 5.5,
+            "overall_feedback": "Evaluation error. Keep practicing with complex topics.",
             "suggested_improvements": ["Practice speaking regularly with complex topics"]
         }
 
