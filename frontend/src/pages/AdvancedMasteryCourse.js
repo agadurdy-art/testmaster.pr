@@ -7,9 +7,12 @@ import { Input } from '../components/ui/input';
 import { 
   BookOpen, ChevronLeft, ChevronRight, Home, Trophy, Star, Mic, 
   PenTool, HelpCircle, GraduationCap, Target, Sparkles, Volume2,
-  Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap
+  Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap, BookMarked, Highlighter
 } from 'lucide-react';
 import { toast } from 'sonner';
+import NotebookPanel from '../components/NotebookPanel';
+import HighlightableText from '../components/HighlightableText';
+import SkillBreakdown from '../components/SkillBreakdown';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -20,6 +23,9 @@ export default function AdvancedMasteryCourse({ user }) {
   const [currentSection, setCurrentSection] = useState('vocabulary');
   const [view, setView] = useState('modules');
   const [loading, setLoading] = useState(true);
+  
+  // Notebook & Highlighter state
+  const [showNotebook, setShowNotebook] = useState(false);
   
   // Speaking state
   const [isRecording, setIsRecording] = useState(false);
