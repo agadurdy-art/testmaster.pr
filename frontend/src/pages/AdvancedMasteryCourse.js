@@ -440,32 +440,17 @@ export default function AdvancedMasteryCourse({ user }) {
         <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <Target className="w-5 h-5 text-blue-600" /> {selectedModule.reading?.title}
         </h3>
-        
-        {/* Notebook toggle button */}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setShowNotebook(!showNotebook)}
-          className={showNotebook ? 'bg-amber-100 border-amber-300' : ''}
-        >
-          <BookMarked className="w-4 h-4 mr-1" />
-          Notes
-        </Button>
       </div>
       
       <div className="mb-4 text-sm text-gray-500">
         Word Count: ~{selectedModule.reading?.word_count}
       </div>
 
-      {/* Reading passage with highlighter */}
+      {/* Reading passage */}
       <div className="p-5 bg-gray-50 rounded-xl mb-6">
-        <HighlightableText
-          text={selectedModule.reading?.text || ''}
-          user={user}
-          testId={selectedModule?.id}
-          testType="advanced-mastery-reading"
-          highlightsEnabled={true}
-        />
+        <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+          {selectedModule.reading?.text || ''}
+        </p>
       </div>
 
       {/* Practice Questions Preview */}
@@ -482,15 +467,6 @@ export default function AdvancedMasteryCourse({ user }) {
           Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
         </Button>
       </div>
-      
-      {/* Notebook Panel */}
-      <NotebookPanel
-        user={user}
-        testId={selectedModule?.id}
-        testType="advanced-mastery-reading"
-        isOpen={showNotebook}
-        onClose={() => setShowNotebook(false)}
-      />
     </Card>
   );
 
