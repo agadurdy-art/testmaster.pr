@@ -229,7 +229,7 @@ export default function AdvancedMasteryCourse({ user }) {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Advanced IELTS Mastery</h1>
-            <p className="text-gray-500">Band 6.0-9.0 • 20 Modules</p>
+            <p className="text-gray-500">Band 6.0-9.0 • Cambridge-Aligned</p>
           </div>
         </div>
       </div>
