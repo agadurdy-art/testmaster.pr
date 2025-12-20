@@ -48,7 +48,14 @@ ADVANCED_MODULES = [
             "questions": [
                 {"type": "identify_view", "question": "Does the author believe algorithms are entirely objective?", "answer": "No"},
                 {"type": "matching_info", "question": "Which paragraph discusses 'encoded bias'?", "answer": "Paragraph 1"},
-                {"type": "summary_completion", "question": "The author suggests that data-mining prioritizes ______ over ______.", "answer": "Profit/Commodity over individual sovereignty"}
+                {"type": "summary_completion", "question": "The author suggests that data-mining prioritizes ______ over ______.", "answer": "Profit/Commodity over individual sovereignty"},
+                {"type": "true_false_ng", "question": "Machine learning models eliminate human prejudices from decision-making.", "answer": "False"},
+                {"type": "true_false_ng", "question": "Algorithmic opacity makes it easier for individuals to challenge automated decisions.", "answer": "False"},
+                {"type": "vocabulary_match", "question": "Which term refers to the difficulty in understanding how algorithms work?", "answer": "Algorithmic opacity"},
+                {"type": "sentence_completion", "question": "Personal information has become the world's most valuable ______.", "answer": "commodity"},
+                {"type": "multiple_choice", "question": "What is the main concern about data-driven decisions?", "options": ["They are too slow", "They institutionalize existing biases", "They are too expensive"], "answer": "They institutionalize existing biases"},
+                {"type": "true_false_ng", "question": "The author fully supports the use of algorithms in credit scoring.", "answer": "Not Given"},
+                {"type": "sentence_completion", "question": "Critics highlight the danger of '______ bias' in machine learning.", "answer": "encoded"}
             ]
         },
         "speaking": {
