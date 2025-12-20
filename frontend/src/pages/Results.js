@@ -349,54 +349,80 @@ export default function Results({ user }) {
                     onClick={() => setWritingViewTab('sample')}
                     className={writingViewTab === 'sample' ? 'bg-cyan-500 text-white' : ''}
                   >
-                    <FileText className="w-4 h-4 mr-1" /> Band 8+ Sample
+                    <FileText className="w-4 h-4 mr-1" /> Band 8+ Samples
                   </Button>
                 </div>
 
                 {/* Original Text Tab */}
                 {writingViewTab === 'original' && (
                   <div className="space-y-4">
-                    {result.answers.map((answer, idx) => (
-                      <div key={idx} className="p-4 bg-gray-50 rounded-xl">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-semibold text-gray-700">
-                            {answer.question_id?.includes('task1') || idx === 0 ? 'Task 1' : 'Task 2'}
-                          </span>
-                          <span className="text-xs text-gray-400">
-                            {answer.answer?.split(/\s+/).filter(w => w).length || 0} words
-                          </span>
+                    {result.answers.map((answer, idx) => {
+                      const questionIdStr = String(answer.question_id || '');
+                      const isTask1 = questionIdStr.toLowerCase().includes('task1') || idx === 0;
+                      const answerText = answer.answer || answer.response || '';
+                      const wordCount = answerText ? answerText.trim().split(/\s+/).filter(w => w).length : 0;
+                      
+                      return (
+                        <div key={idx} className="p-4 bg-gray-50 rounded-xl">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-semibold text-gray-700">
+                              {isTask1 ? 'Task 1 - Graph/Chart Description' : 'Task 2 - Essay'}
+                            </span>
+                            <span className="text-xs text-gray-400">
+                              {wordCount} words
+                            </span>
+                          </div>
+                          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                            {answerText || 'No response submitted'}
+                          </p>
                         </div>
-                        <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                          {answer.answer || 'No response submitted'}
-                        </p>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
 
-                {/* Band 8+ Sample Tab */}
+                {/* Band 8+ Sample Tab - Both Task 1 and Task 2 */}
                 {writingViewTab === 'sample' && (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl border border-amber-100">
-                      <h4 className="font-semibold text-amber-800 mb-3 flex items-center gap-2">
+                  <div className="space-y-6">
+                    {/* Task 1 Sample */}
+                    <div className="p-4 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-100">
+                      <h4 className="font-semibold text-orange-800 mb-3 flex items-center gap-2">
+                        <BarChart3 className="w-4 h-4" /> Band 8+ Task 1 Model Answer
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed whitespace-pre-wrap text-sm mb-4">
+                        {"The line graph illustrates the percentage of households with internet access in three countries—the USA, the UK, and Japan—over a twenty-year period from 2000 to 2020.\n\nOverall, all three countries experienced significant growth in internet penetration, with the USA maintaining the highest rates throughout the period, while Japan showed the most dramatic increase.\n\nIn 2000, the USA led with approximately 45% of households connected to the internet, compared to roughly 30% in the UK and merely 15% in Japan. Over the following decade, all three nations saw substantial growth. By 2010, American households with internet access had risen to approximately 75%, whilst the UK had reached around 70%. Japan's growth was particularly noteworthy, climbing to approximately 65%.\n\nBetween 2010 and 2020, growth continued but at a slower pace as markets approached saturation. By 2020, the USA had reached approximately 90%, with the UK close behind at 88%. Japan had largely caught up with its counterparts, achieving roughly 85% household internet penetration.\n\nIn conclusion, while initial adoption rates varied considerably, all three countries converged toward near-universal household internet access by 2020."}
+                      </p>
+                      <div className="p-3 bg-white rounded-lg border border-orange-100">
+                        <h5 className="font-medium text-orange-700 mb-2 text-sm">Why This Scores Band 8+:</h5>
+                        <ul className="text-xs text-gray-600 space-y-1">
+                          <li>• <strong>Clear overview:</strong> States the main trend immediately</li>
+                          <li>• <strong>Logical organization:</strong> Groups data by time periods</li>
+                          <li>• <strong>Precise data:</strong> Uses specific figures with appropriate approximation</li>
+                          <li>• <strong>Comparison language:</strong> Effectively compares countries</li>
+                          <li>• <strong>Varied vocabulary:</strong> penetration, noteworthy, converged, saturation</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Task 2 Sample */}
+                    <div className="p-4 bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl border border-violet-100">
+                      <h4 className="font-semibold text-violet-800 mb-3 flex items-center gap-2">
                         <Award className="w-4 h-4" /> Band 8+ Task 2 Model Essay
                       </h4>
-                      <p className="text-gray-700 leading-relaxed whitespace-pre-wrap text-sm">
+                      <p className="text-gray-700 leading-relaxed whitespace-pre-wrap text-sm mb-4">
                         {"In today's rapidly evolving world, the question of whether governments should prioritize environmental protection over economic growth has become increasingly pertinent. While some argue that economic development should take precedence, I firmly believe that environmental sustainability must be our primary focus.\n\nFirstly, environmental degradation poses existential threats that no amount of economic prosperity can mitigate. Climate change, for instance, leads to rising sea levels, extreme weather events, and biodiversity loss, which ultimately undermine the very foundations of economic activity. The 2022 floods in Pakistan, which caused over $30 billion in damages, exemplify how environmental neglect can devastate economies.\n\nFurthermore, sustainable practices often stimulate innovation and create new economic opportunities. The renewable energy sector, for example, has generated millions of jobs worldwide while reducing carbon emissions. Countries like Denmark and Germany have demonstrated that environmental leadership can coexist with economic competitiveness.\n\nCritics may argue that developing nations cannot afford to prioritize the environment over growth. However, this perspective ignores the long-term costs of environmental degradation, which disproportionately affect the poorest populations. Moreover, international cooperation and green financing mechanisms can help bridge the gap.\n\nIn conclusion, environmental protection and economic development are not mutually exclusive but rather interdependent. Governments must adopt sustainable policies that ensure both present prosperity and future viability. Only by recognizing this symbiotic relationship can we build truly resilient societies."}
                       </p>
-                    </div>
-                    
-                    <div className="p-4 bg-blue-50 rounded-xl border border-blue-100">
-                      <h5 className="font-medium text-blue-800 mb-2 flex items-center gap-2">
-                        <Lightbulb className="w-4 h-4" /> What Makes This Band 8+
-                      </h5>
-                      <ul className="text-sm text-gray-600 space-y-1">
-                        <li>• <strong>Clear thesis and structure:</strong> Position is stated clearly with logical paragraph organization</li>
-                        <li>• <strong>Sophisticated vocabulary:</strong> Uses words like "pertinent," "existential," "symbiotic"</li>
-                        <li>• <strong>Complex sentences:</strong> Varies sentence structures with subordinate clauses</li>
-                        <li>• <strong>Specific examples:</strong> Includes real-world evidence (Pakistan floods, Denmark)</li>
-                        <li>• <strong>Cohesive devices:</strong> Smooth transitions between ideas</li>
-                      </ul>
+                      <div className="p-3 bg-white rounded-lg border border-violet-100">
+                        <h5 className="font-medium text-violet-700 mb-2 text-sm">Why This Scores Band 8+:</h5>
+                        <ul className="text-xs text-gray-600 space-y-1">
+                          <li>• <strong>Clear thesis:</strong> Position stated in introduction and maintained throughout</li>
+                          <li>• <strong>Sophisticated vocabulary:</strong> pertinent, existential, symbiotic, mitigate</li>
+                          <li>• <strong>Complex sentences:</strong> Varied structures with subordinate clauses</li>
+                          <li>• <strong>Real examples:</strong> Pakistan floods, Denmark, Germany - specific evidence</li>
+                          <li>• <strong>Addresses counterarguments:</strong> Shows critical thinking</li>
+                          <li>• <strong>Strong cohesion:</strong> Smooth paragraph transitions</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 )}
