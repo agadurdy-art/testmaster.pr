@@ -15,6 +15,7 @@ export default function Results({ user }) {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
+  const [writingViewTab, setWritingViewTab] = useState('feedback'); // 'feedback', 'original', 'sample'
 
   useEffect(() => { loadResults(); }, [attemptId]);
 
