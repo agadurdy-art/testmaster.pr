@@ -157,13 +157,14 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Notes API (Phase 2)"
-    - "Highlights API (Phase 2)"
-    - "Skill Analytics API (Phase 4)"
-    - "Quiz Evaluation with Skill Breakdown (Phase 4 enhancement)"
+    - "Test Notebook Panel in Reading tests (Phase 2)"
+    - "Test Highlighter in Reading tests (Phase 2)"
+    - "Test Writing Results Panel with original text view (Phase 3)"
+    - "Skill Breakdown in Results page (Phase 4)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
+  notes: "Phase 2-4 components were removed from AdvancedMasteryCourse.js and integrated into TestInterface.js (for tests) and Results.js (for results). Key changes: Notebook and Highlighter added to academic reading tests, Writing results now show user's original text with Band 8+ sample comparison."
 
 agent_communication:
   - agent: "testing"
@@ -172,3 +173,6 @@ agent_communication:
     message: "✅ PHASE 2-4 FEATURES TESTING COMPLETED - All new Phase 2-4 features tested successfully: Notes API (POST/GET/DELETE), Highlights API (POST/GET/DELETE), Skill Analytics API (cumulative user analytics), and enhanced Quiz Evaluation with skill_breakdown field. All endpoints working correctly with proper data structures and CRUD operations. Minor: Advanced Mastery speaking evaluation returns band 5.5 (slightly below expected 6.0+ range) but core functionality intact. Phase 2-4 implementation is production-ready."
   - agent: "testing"
     message: "❌ CRITICAL FRONTEND ISSUE FOUND - Advanced IELTS Mastery course page (/advanced-mastery) is not accessible despite proper route configuration in App.js. User authentication works correctly (test_content@example.com login successful), but navigating to /advanced-mastery redirects back to landing page. This prevents testing of Phase 2-4 frontend features: Notebook Panel, Text Highlighter, and Skill Breakdown components. All components exist and appear properly implemented, but cannot be functionally tested due to inaccessible course page. REQUIRES IMMEDIATE INVESTIGATION of access control or routing issues."
+  - agent: "main"
+    message: "🔄 PHASE 2-4 COMPONENTS RELOCATED: Removed Notebook, Highlighter, and SkillBreakdown from AdvancedMasteryCourse.js (course page). Integrated into correct locations: 1) NotebookPanel + HighlightableText added to TestInterface.js for academic reading tests. 2) Writing Results now shows user's original text with Band 8+ sample comparison in Results.js. 3) SkillBreakdown remains correctly placed in Results.js and Dashboard.js. Ready for frontend testing of academic test flows."
+
