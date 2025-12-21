@@ -206,10 +206,13 @@ test_plan:
     - "Test Highlighter in Reading tests (Phase 2)"
     - "Test Writing Results Panel with original text view (Phase 3)"
     - "Skill Breakdown in Results page (Phase 4)"
+  completed_testing:
+    - "Try Our Lessons Feature - Landing Page"
+    - "Lesson Preview Pages - Free and Locked Access"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
-  notes: "Phase 2-4 components were removed from AdvancedMasteryCourse.js and integrated into TestInterface.js (for tests) and Results.js (for results). Key changes: Notebook and Highlighter added to academic reading tests, Writing results now show user's original text with Band 8+ sample comparison."
+  notes: "Phase 2-4 components were removed from AdvancedMasteryCourse.js and integrated into TestInterface.js (for tests) and Results.js (for results). Key changes: Notebook and Highlighter added to academic reading tests, Writing results now show user's original text with Band 8+ sample comparison. NEW: Try Our Lessons feature testing completed successfully - all scenarios working as expected."
 
 agent_communication:
   - agent: "testing"
