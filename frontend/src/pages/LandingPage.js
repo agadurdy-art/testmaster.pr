@@ -207,6 +207,16 @@ export default function LandingPage({ onLogin, user }) {
                 {t('landingStartLevelCheck')}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
+              <Button 
+                data-testid="try-lessons-btn"
+                onClick={() => setShowCourseSelector(true)} 
+                size="lg" 
+                variant="outline"
+                className="border-2 border-amber-500 text-amber-600 hover:bg-amber-50 px-8 py-6 text-lg"
+              >
+                <Play className="w-5 h-5 mr-2" />
+                {t('landingTryOurLessons')}
+              </Button>
             </div>
           </div>
         </div>
