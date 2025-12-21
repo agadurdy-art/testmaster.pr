@@ -1,10 +1,11 @@
-// Simple bilingual (EN/VI) i18n helper for the app
+// Simple trilingual (EN/VI/TR) i18n helper for the app
 import React from 'react';
 
 
 export const LANGUAGES = {
   en: 'English',
   vi: 'Tiếng Việt',
+  tr: 'Türkçe',
 };
 
 // Translation keys used across the app. Keep keys stable.
