@@ -195,6 +195,13 @@ export default function Dashboard({ user, onLogout }) {
                 <BarChart3 className="w-4 h-4 mr-2" />{language === 'vi' ? 'Tiến độ' : 'Progress'}
               </Button>
               <Button variant="ghost" onClick={() => navigate('/pricing')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">{t('navPricing')}</Button>
+              <Button 
+                variant="ghost" 
+                onClick={() => window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('IELTS Ace - Support Request')}&body=${encodeURIComponent(`Hi IELTS Ace Team,\n\nUser: ${user.name}\nEmail: ${user.email}\n\nMy question/issue:\n\n`)}`}
+                className="text-gray-600 hover:text-emerald-600 hover:bg-emerald-50"
+              >
+                <Mail className="w-4 h-4 mr-2" />{language === 'vi' ? 'Liên hệ' : 'Contact'}
+              </Button>
               <Button variant="ghost" onClick={() => navigate('/profile')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
                 <User className="w-4 h-4 mr-2" />{user.name}
               </Button>
