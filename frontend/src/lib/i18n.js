@@ -336,6 +336,9 @@ export const translations = {
     landingExploreCourse: 'Explore Course',
     
     // Try Our Lessons
+    landingTryOurLessons: 'Try Our Lessons',
+    landingChooseCourse: 'Choose Your Level',
+    landingChooseCourseDesc: 'Select a course based on your current band level. Try 3 free lessons from each course to find the best fit for you.',
     landingTryLessonsBadge: 'Free Preview',
     landingTryLessonsTitle: 'Try Our Lessons — No Sign Up Required',
     landingTryLessonsDesc: 'Experience our Cambridge-aligned lessons before you commit. Each module includes advanced vocabulary, grammar structures, and AI-powered practice.',
@@ -346,6 +349,8 @@ export const translations = {
     landingStartLesson: 'Start Lesson',
     landingSignUpToUnlock: 'Sign up to unlock all lessons',
     landingMoreLessons: 'Get access to 20+ comprehensive modules covering all IELTS themes',
+    landingMoreLessonsAvailable: 'Many more lessons available!',
+    landingSignUpForMore: 'Sign up to unlock all lessons across all courses.',
     landingUnlockAll: 'Unlock All Lessons',
     
     // Honesty Promise
