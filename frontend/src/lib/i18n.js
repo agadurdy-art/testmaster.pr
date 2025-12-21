@@ -648,6 +648,7 @@ export const translations = {
     landingAceItem5: 'Lộ trình Thi → Học → Luyện lại',
     
     // Practical Skills
+    landingPracticalLearningBadge: 'Học tập thực hành',
     landingPracticalTitle: 'Học kỹ năng bạn thực sự sử dụng được',
     landingPracticalDesc: 'Mỗi bài học được thiết kế để áp dụng thực tế. Sau mỗi module, bạn sẽ có kỹ năng có thể sử dụng ngay — trong kỳ thi và trong cuộc sống.',
     landingSpeakingConfidence: 'Tự tin khi nói',
