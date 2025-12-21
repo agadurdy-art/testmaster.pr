@@ -42,15 +42,22 @@ export default function Dashboard({ user, onLogout }) {
     finally { setLoading(false); }
   };
 
+  // Translation helper for inline texts
+  const getText = (en, vi, tr) => {
+    if (language === 'vi') return vi;
+    if (language === 'tr') return tr;
+    return en;
+  };
+
   const determineContinueSuggestion = (progressData) => {
     // Logic to suggest what to do next based on user's progress
     if (!progressData || progressData.total_tests === 0) {
       setContinueData({
         type: 'start',
-        title: language === 'vi' ? 'Bắt đầu hành trình IELTS' : 'Start Your IELTS Journey',
-        description: language === 'vi' ? 'Làm bài kiểm tra trình độ để xác định điểm xuất phát' : 'Take a level test to determine your starting point',
+        title: getText('Start Your IELTS Journey', 'Bắt đầu hành trình IELTS', 'IELTS Yolculuğunuza Başlayın'),
+        description: getText('Take a level test to determine your starting point', 'Làm bài kiểm tra trình độ để xác định điểm xuất phát', 'Başlangıç noktanızı belirlemek için seviye testi yapın'),
         action: () => navigate('/level-test'),
-        actionLabel: language === 'vi' ? 'Kiểm tra trình độ' : 'Take Level Test',
+        actionLabel: getText('Take Level Test', 'Kiểm tra trình độ', 'Seviye Testi Yap'),
         icon: Target,
         color: 'from-cyan-500 to-blue-600'
       });
@@ -79,6 +86,14 @@ export default function Dashboard({ user, onLogout }) {
       }
     });
 
+    // Skill name translations
+    const skillNames = {
+      reading: getText('Reading', 'Đọc', 'Okuma'),
+      listening: getText('Listening', 'Nghe', 'Dinleme'),
+      writing: getText('Writing', 'Viết', 'Yazma'),
+      speaking: getText('Speaking', 'Nói', 'Konuşma')
+    };
+
     // Suggest based on last activity and weakest skill
     if (lastAttempt && weakestSkill) {
       const skillConfig = {
@@ -89,15 +104,18 @@ export default function Dashboard({ user, onLogout }) {
       };
       
       const config = skillConfig[weakestSkill] || skillConfig.reading;
+      const skillName = skillNames[weakestSkill] || weakestSkill;
       
       setContinueData({
         type: 'improve',
-        title: language === 'vi' ? `Cải thiện kỹ năng ${weakestSkill}` : `Improve Your ${weakestSkill.charAt(0).toUpperCase() + weakestSkill.slice(1)}`,
-        description: language === 'vi' 
-          ? `Điểm trung bình hiện tại: Band ${lowestAvg.toFixed(1)}. Hãy luyện tập thêm!`
-          : `Your current average: Band ${lowestAvg.toFixed(1)}. Let's practice more!`,
+        title: getText(`Improve Your ${skillName}`, `Cải thiện kỹ năng ${skillName}`, `${skillName} Becerinizi Geliştirin`),
+        description: getText(
+          `Your current average: Band ${lowestAvg.toFixed(1)}. Let's practice more!`,
+          `Điểm trung bình hiện tại: Band ${lowestAvg.toFixed(1)}. Hãy luyện tập thêm!`,
+          `Mevcut ortalamanız: Band ${lowestAvg.toFixed(1)}. Daha fazla pratik yapalım!`
+        ),
         action: () => navigate(config.route),
-        actionLabel: language === 'vi' ? 'Tiếp tục luyện tập' : 'Continue Practice',
+        actionLabel: getText('Continue Practice', 'Tiếp tục luyện tập', 'Pratiğe Devam Et'),
         icon: config.icon,
         color: config.color,
         lastAttempt: lastAttempt
@@ -106,10 +124,10 @@ export default function Dashboard({ user, onLogout }) {
       // No clear weakness, suggest taking a test
       setContinueData({
         type: 'explore',
-        title: language === 'vi' ? 'Tiếp tục luyện tập' : 'Continue Practicing',
-        description: language === 'vi' ? 'Chọn một kỹ năng để luyện tập hôm nay' : 'Choose a skill to practice today',
+        title: getText('Continue Practicing', 'Tiếp tục luyện tập', 'Pratik Yapmaya Devam Et'),
+        description: getText('Choose a skill to practice today', 'Chọn một kỹ năng để luyện tập hôm nay', 'Bugün pratik yapmak için bir beceri seçin'),
         action: () => navigate('/test/reading'),
-        actionLabel: language === 'vi' ? 'Làm bài kiểm tra' : 'Take a Test',
+        actionLabel: getText('Take a Test', 'Làm bài kiểm tra', 'Test Yap'),
         icon: GraduationCap,
         color: 'from-violet-500 to-purple-600'
       });
@@ -117,16 +135,16 @@ export default function Dashboard({ user, onLogout }) {
   };
 
   const testModules = [
-    { type: 'reading', icon: BookOpen, title: language === 'vi' ? 'Đọc' : 'Reading', description: '60 min • 40 questions', color: 'bg-blue-500', lightBg: 'bg-blue-50', shadow: 'shadow-blue-100' },
-    { type: 'listening', icon: Headphones, title: language === 'vi' ? 'Nghe' : 'Listening', description: '40 min • 40 questions', color: 'bg-purple-500', lightBg: 'bg-purple-50', shadow: 'shadow-purple-100' },
-    { type: 'writing', icon: PenTool, title: language === 'vi' ? 'Viết' : 'Writing', description: '60 min • 2 tasks', color: 'bg-orange-500', lightBg: 'bg-orange-50', shadow: 'shadow-orange-100' },
-    { type: 'speaking', icon: Mic, title: language === 'vi' ? 'Nói' : 'Speaking', description: '15 min • AI interview', color: 'bg-emerald-500', lightBg: 'bg-emerald-50', shadow: 'shadow-emerald-100' }
+    { type: 'reading', icon: BookOpen, title: getText('Reading', 'Đọc', 'Okuma'), description: '60 min • 40 questions', color: 'bg-blue-500', lightBg: 'bg-blue-50', shadow: 'shadow-blue-100' },
+    { type: 'listening', icon: Headphones, title: getText('Listening', 'Nghe', 'Dinleme'), description: '40 min • 40 questions', color: 'bg-purple-500', lightBg: 'bg-purple-50', shadow: 'shadow-purple-100' },
+    { type: 'writing', icon: PenTool, title: getText('Writing', 'Viết', 'Yazma'), description: '60 min • 2 tasks', color: 'bg-orange-500', lightBg: 'bg-orange-50', shadow: 'shadow-orange-100' },
+    { type: 'speaking', icon: Mic, title: getText('Speaking', 'Nói', 'Konuşma'), description: '15 min • AI interview', color: 'bg-emerald-500', lightBg: 'bg-emerald-50', shadow: 'shadow-emerald-100' }
   ];
 
   const courses = [
-    { id: 'beginner', name: language === 'vi' ? 'Khóa Cơ bản' : 'Beginner Course', band: 'Band 4.0-5.0', icon: '🌱', color: 'from-emerald-500 to-teal-600', route: '/beginner-course', lessons: 14 },
-    { id: 'mastery', name: language === 'vi' ? 'Khóa Trung cấp' : 'Mastery Course', band: 'Band 5.5-6.5', icon: '📚', color: 'from-blue-500 to-indigo-600', route: '/mastery-course', lessons: 17 },
-    { id: 'advanced', name: language === 'vi' ? 'Khóa Nâng cao' : 'Advanced Mastery', band: 'Band 6.5-9.0', icon: '🏆', color: 'from-amber-500 to-orange-600', route: '/advanced-mastery', lessons: 20 }
+    { id: 'beginner', name: getText('Beginner Course', 'Khóa Cơ bản', 'Başlangıç Kursu'), band: 'Band 4.0-5.0', icon: '🌱', color: 'from-emerald-500 to-teal-600', route: '/beginner-course', lessons: 14 },
+    { id: 'mastery', name: getText('Mastery Course', 'Khóa Trung cấp', 'Ustalık Kursu'), band: 'Band 5.5-6.5', icon: '📚', color: 'from-blue-500 to-indigo-600', route: '/mastery-course', lessons: 17 },
+    { id: 'advanced', name: getText('Advanced Mastery', 'Khóa Nâng cao', 'İleri Düzey Ustalık'), band: 'Band 6.5-9.0', icon: '🏆', color: 'from-amber-500 to-orange-600', route: '/advanced-mastery', lessons: 20 }
   ];
 
   const learningTools = [
