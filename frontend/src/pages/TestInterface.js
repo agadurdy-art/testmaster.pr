@@ -801,11 +801,9 @@ function ElevenLabsExaminer() {
                 </div>
               </div>
             </Card>
-            {/* ElevenLabs examiner widget */}
-            {speakingSessionStarted && (
-              <div className="fixed bottom-6 right-6 z-40">
-                <ElevenLabsExaminer />
-              </div>
+            {/* ElevenLabs examiner widget - Show on speaking test page */}
+            {testType === 'speaking' && user && (
+              <ElevenLabsExaminer />
             )}
           </>
         )}
