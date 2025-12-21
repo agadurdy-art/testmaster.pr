@@ -5,7 +5,8 @@ import { Card } from '../components/ui/card';
 import { 
   BookOpen, Headphones, Mic, PenTool, Trophy, TrendingUp, Target, BookMarked, 
   LogOut, Menu, MessageSquare, ChevronRight, Clock, Award, Sparkles, 
-  GraduationCap, BarChart3, Flame, Star, X, User, Zap, LayoutDashboard, FileText, CreditCard
+  GraduationCap, BarChart3, Flame, Star, X, User, Zap, LayoutDashboard, FileText, CreditCard,
+  Play, ArrowRight, History, Lightbulb, CheckCircle
 } from 'lucide-react';
 import { getTests, getUserProgress, getUser } from '../lib/api';
 import { toast } from 'sonner';
@@ -13,14 +14,17 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
 import SkillBreakdown from '../components/SkillBreakdown';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const [tests, setTests] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userDetails, setUserDetails] = useState(user);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [continueData, setContinueData] = useState(null);
 
   useEffect(() => { loadData(); }, [user.id]);
 
@@ -30,15 +34,105 @@ export default function Dashboard({ user, onLogout }) {
       setTests(testsData);
       setProgress(progressData);
       if (freshUser) { setUserDetails(freshUser); localStorage.setItem('user', JSON.stringify(freshUser)); }
+      
+      // Determine "Continue Learning" suggestion
+      determineContinueSuggestion(progressData);
     } catch (error) { toast.error('Failed to load dashboard data'); }
     finally { setLoading(false); }
   };
 
+  const determineContinueSuggestion = (progressData) => {
+    // Logic to suggest what to do next based on user's progress
+    if (!progressData || progressData.total_tests === 0) {
+      setContinueData({
+        type: 'start',
+        title: language === 'vi' ? 'Bắt đầu hành trình IELTS' : 'Start Your IELTS Journey',
+        description: language === 'vi' ? 'Làm bài kiểm tra trình độ để xác định điểm xuất phát' : 'Take a level test to determine your starting point',
+        action: () => navigate('/level-test'),
+        actionLabel: language === 'vi' ? 'Kiểm tra trình độ' : 'Take Level Test',
+        icon: Target,
+        color: 'from-cyan-500 to-blue-600'
+      });
+      return;
+    }
+
+    const recentAttempts = progressData.recent_attempts || [];
+    const lastAttempt = recentAttempts[0];
+    
+    // Find weakest skill
+    const skillScores = {};
+    recentAttempts.forEach(a => {
+      if (!skillScores[a.test_type]) skillScores[a.test_type] = [];
+      if (typeof a.band_score === 'number') skillScores[a.test_type].push(a.band_score);
+    });
+    
+    let weakestSkill = null;
+    let lowestAvg = 10;
+    Object.entries(skillScores).forEach(([skill, scores]) => {
+      if (scores.length > 0) {
+        const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+        if (avg < lowestAvg) {
+          lowestAvg = avg;
+          weakestSkill = skill;
+        }
+      }
+    });
+
+    // Suggest based on last activity and weakest skill
+    if (lastAttempt && weakestSkill) {
+      const skillConfig = {
+        reading: { icon: BookOpen, color: 'from-blue-500 to-indigo-600', route: '/test/reading' },
+        listening: { icon: Headphones, color: 'from-purple-500 to-violet-600', route: '/test/listening' },
+        writing: { icon: PenTool, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
+        speaking: { icon: Mic, color: 'from-emerald-500 to-teal-600', route: '/speaking-practice' }
+      };
+      
+      const config = skillConfig[weakestSkill] || skillConfig.reading;
+      
+      setContinueData({
+        type: 'improve',
+        title: language === 'vi' ? `Cải thiện kỹ năng ${weakestSkill}` : `Improve Your ${weakestSkill.charAt(0).toUpperCase() + weakestSkill.slice(1)}`,
+        description: language === 'vi' 
+          ? `Điểm trung bình hiện tại: Band ${lowestAvg.toFixed(1)}. Hãy luyện tập thêm!`
+          : `Your current average: Band ${lowestAvg.toFixed(1)}. Let's practice more!`,
+        action: () => navigate(config.route),
+        actionLabel: language === 'vi' ? 'Tiếp tục luyện tập' : 'Continue Practice',
+        icon: config.icon,
+        color: config.color,
+        lastAttempt: lastAttempt
+      });
+    } else {
+      // No clear weakness, suggest taking a test
+      setContinueData({
+        type: 'explore',
+        title: language === 'vi' ? 'Tiếp tục luyện tập' : 'Continue Practicing',
+        description: language === 'vi' ? 'Chọn một kỹ năng để luyện tập hôm nay' : 'Choose a skill to practice today',
+        action: () => navigate('/test/reading'),
+        actionLabel: language === 'vi' ? 'Làm bài kiểm tra' : 'Take a Test',
+        icon: GraduationCap,
+        color: 'from-violet-500 to-purple-600'
+      });
+    }
+  };
+
   const testModules = [
-    { type: 'reading', icon: BookOpen, title: 'Reading', description: '60 min • 40 questions', color: 'bg-blue-500', lightBg: 'bg-blue-50', shadow: 'shadow-blue-100' },
-    { type: 'listening', icon: Headphones, title: 'Listening', description: '40 min • 40 questions', color: 'bg-purple-500', lightBg: 'bg-purple-50', shadow: 'shadow-purple-100' },
-    { type: 'writing', icon: PenTool, title: 'Writing', description: '60 min • 2 tasks', color: 'bg-orange-500', lightBg: 'bg-orange-50', shadow: 'shadow-orange-100' },
-    { type: 'speaking', icon: Mic, title: 'Speaking', description: '15 min • AI interview', color: 'bg-emerald-500', lightBg: 'bg-emerald-50', shadow: 'shadow-emerald-100' }
+    { type: 'reading', icon: BookOpen, title: language === 'vi' ? 'Đọc' : 'Reading', description: '60 min • 40 questions', color: 'bg-blue-500', lightBg: 'bg-blue-50', shadow: 'shadow-blue-100' },
+    { type: 'listening', icon: Headphones, title: language === 'vi' ? 'Nghe' : 'Listening', description: '40 min • 40 questions', color: 'bg-purple-500', lightBg: 'bg-purple-50', shadow: 'shadow-purple-100' },
+    { type: 'writing', icon: PenTool, title: language === 'vi' ? 'Viết' : 'Writing', description: '60 min • 2 tasks', color: 'bg-orange-500', lightBg: 'bg-orange-50', shadow: 'shadow-orange-100' },
+    { type: 'speaking', icon: Mic, title: language === 'vi' ? 'Nói' : 'Speaking', description: '15 min • AI interview', color: 'bg-emerald-500', lightBg: 'bg-emerald-50', shadow: 'shadow-emerald-100' }
+  ];
+
+  const courses = [
+    { id: 'beginner', name: language === 'vi' ? 'Khóa Cơ bản' : 'Beginner Course', band: 'Band 4.0-5.0', icon: '🌱', color: 'from-emerald-500 to-teal-600', route: '/beginner-course', lessons: 14 },
+    { id: 'mastery', name: language === 'vi' ? 'Khóa Trung cấp' : 'Mastery Course', band: 'Band 5.5-6.5', icon: '📚', color: 'from-blue-500 to-indigo-600', route: '/mastery-course', lessons: 17 },
+    { id: 'advanced', name: language === 'vi' ? 'Khóa Nâng cao' : 'Advanced Mastery', band: 'Band 6.5-9.0', icon: '🏆', color: 'from-amber-500 to-orange-600', route: '/advanced-mastery', lessons: 20 }
+  ];
+
+  const learningTools = [
+    { name: language === 'vi' ? 'Từ vựng & Ngữ pháp' : 'Vocab & Grammar', icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/vocab-grammar' },
+    { name: language === 'vi' ? 'Luyện viết' : 'Writing Practice', icon: FileText, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
+    { name: language === 'vi' ? 'Luyện nói' : 'Speaking Practice', icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice' },
+    { name: language === 'vi' ? 'Mẹo & Chiến lược' : 'Tips & Strategies', icon: Lightbulb, color: 'from-pink-500 to-rose-600', route: '/tips' }
   ];
 
   const startTest = (testType) => { navigate(`/test/${testType}`); };
@@ -48,7 +142,7 @@ export default function Dashboard({ user, onLogout }) {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-500">Loading dashboard...</p>
+          <p className="text-gray-500">{language === 'vi' ? 'Đang tải...' : 'Loading dashboard...'}</p>
         </div>
       </div>
     );
@@ -96,11 +190,8 @@ export default function Dashboard({ user, onLogout }) {
           <nav className="flex items-center space-x-2">
             <LanguageSwitcher compact />
             <div className="hidden md:flex items-center space-x-1">
-              <Button variant="ghost" onClick={() => navigate('/tips')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
-                <BookMarked className="w-4 h-4 mr-2" />{t('navTips')}
-              </Button>
-              <Button variant="ghost" onClick={() => navigate('/courses')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
-                <Target className="w-4 h-4 mr-2" />{t('navCourses')}
+              <Button variant="ghost" onClick={() => navigate('/progress')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
+                <BarChart3 className="w-4 h-4 mr-2" />{language === 'vi' ? 'Tiến độ' : 'Progress'}
               </Button>
               <Button variant="ghost" onClick={() => navigate('/pricing')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">{t('navPricing')}</Button>
               <Button variant="ghost" onClick={() => navigate('/profile')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
@@ -119,47 +210,36 @@ export default function Dashboard({ user, onLogout }) {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
             <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
-              {/* Main Navigation */}
               <Button variant="ghost" className="w-full justify-start text-gray-600 font-medium" onClick={() => { navigate('/dashboard'); setMobileMenuOpen(false); }}>
-                <LayoutDashboard className="w-4 h-4 mr-3" />Dashboard
+                <LayoutDashboard className="w-4 h-4 mr-3" />{language === 'vi' ? 'Bảng điều khiển' : 'Dashboard'}
+              </Button>
+              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/progress'); setMobileMenuOpen(false); }}>
+                <BarChart3 className="w-4 h-4 mr-3" />{language === 'vi' ? 'Tiến độ' : 'Progress'}
               </Button>
               <hr className="my-2" />
-              {/* Test Modules */}
-              <p className="text-xs text-gray-400 px-3 py-1">Practice Tests</p>
+              <p className="text-xs text-gray-400 px-3 py-1">{language === 'vi' ? 'Bài kiểm tra' : 'Tests'}</p>
               {testModules.map((m) => (
                 <Button key={m.type} variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { startTest(m.type); setMobileMenuOpen(false); }}>
                   <m.icon className="w-4 h-4 mr-3" />{m.title}
                 </Button>
               ))}
               <hr className="my-2" />
-              {/* Learning & Resources */}
-              <p className="text-xs text-gray-400 px-3 py-1">Learning</p>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/vocab-grammar'); setMobileMenuOpen(false); }}>
-                <BookOpen className="w-4 h-4 mr-3" />Vocab & Grammar
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/writing-practice'); setMobileMenuOpen(false); }}>
-                <FileText className="w-4 h-4 mr-3" />Writing Practice
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/speaking-practice'); setMobileMenuOpen(false); }}>
-                <MessageSquare className="w-4 h-4 mr-3" />Speaking Practice
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/tips'); setMobileMenuOpen(false); }}>
-                <Sparkles className="w-4 h-4 mr-3" />Tips & Strategies
-              </Button>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/courses'); setMobileMenuOpen(false); }}>
-                <Award className="w-4 h-4 mr-3" />Courses
-              </Button>
+              <p className="text-xs text-gray-400 px-3 py-1">{language === 'vi' ? 'Khóa học' : 'Courses'}</p>
+              {courses.map((c) => (
+                <Button key={c.id} variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate(c.route); setMobileMenuOpen(false); }}>
+                  <span className="mr-3">{c.icon}</span>{c.name}
+                </Button>
+              ))}
               <hr className="my-2" />
-              {/* Account */}
-              <p className="text-xs text-gray-400 px-3 py-1">Account</p>
+              <p className="text-xs text-gray-400 px-3 py-1">{language === 'vi' ? 'Tài khoản' : 'Account'}</p>
               <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/pricing'); setMobileMenuOpen(false); }}>
-                <CreditCard className="w-4 h-4 mr-3" />Pricing
+                <CreditCard className="w-4 h-4 mr-3" />{language === 'vi' ? 'Giá cả' : 'Pricing'}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}>
-                <User className="w-4 h-4 mr-3" />Profile
+                <User className="w-4 h-4 mr-3" />{language === 'vi' ? 'Hồ sơ' : 'Profile'}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-red-500" onClick={onLogout}>
-                <LogOut className="w-4 h-4 mr-3" />Logout
+                <LogOut className="w-4 h-4 mr-3" />{language === 'vi' ? 'Đăng xuất' : 'Logout'}
               </Button>
             </div>
           </div>
@@ -167,231 +247,274 @@ export default function Dashboard({ user, onLogout }) {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, {user.name?.split(' ')[0] || 'Student'}! 👋
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 pb-24">
+        
+        {/* Welcome + Continue Section */}
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
+            {language === 'vi' ? `Chào mừng trở lại, ${user.name?.split(' ')[0] || 'Học viên'}!` : `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`} 👋
           </h1>
-          <p className="text-gray-500">Continue your IELTS preparation journey</p>
+          <p className="text-gray-500 text-sm">{language === 'vi' ? 'Tiếp tục hành trình IELTS của bạn' : 'Continue your IELTS preparation journey'}</p>
         </div>
 
-        {/* My Progress Card - Prominent CTA */}
-        <Card 
-          className="p-5 mb-8 bg-gradient-to-r from-violet-600 to-purple-600 border-0 shadow-xl shadow-purple-200 rounded-2xl cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-          onClick={() => navigate('/progress')}
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
-                <TrendingUp className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-white mb-1">My Progress</h2>
-                <p className="text-violet-200 text-sm">Track your journey, view all feedback & improve</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-right hidden sm:block">
-                <p className="text-3xl font-bold text-white">{progress?.total_tests || 0}</p>
-                <p className="text-violet-200 text-xs">Tests Completed</p>
-              </div>
-              <ChevronRight className="w-6 h-6 text-white" />
-            </div>
-          </div>
-        </Card>
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {[
-            { icon: BarChart3, label: 'Tests Taken', value: progress?.total_tests || 0, color: 'bg-blue-500', lightBg: 'bg-blue-50', lightText: 'text-blue-600' },
-            { icon: Award, label: 'Avg. Band', value: progress?.average_band?.toFixed(1) || '-', color: 'bg-purple-500', lightBg: 'bg-purple-50', lightText: 'text-purple-600' },
-            { icon: Clock, label: 'Study Time', value: `${totalHours}h ${totalMinutes}m`, color: 'bg-orange-500', lightBg: 'bg-orange-50', lightText: 'text-orange-600' },
-            { icon: Flame, label: 'Best Score', value: progress?.best_band?.toFixed(1) || '-', color: 'bg-emerald-500', lightBg: 'bg-emerald-50', lightText: 'text-emerald-600' }
-          ].map((stat, idx) => (
-            <Card key={idx} className="p-4 bg-white border-0 shadow-lg shadow-gray-100 rounded-2xl">
-              <div className="flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center shadow-lg`}>
-                  <stat.icon className="w-6 h-6 text-white" />
+        {/* Continue Learning Card - Prominent CTA */}
+        {continueData && (
+          <Card 
+            className={`p-5 mb-6 bg-gradient-to-r ${continueData.color} border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1`}
+            onClick={continueData.action}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                  <continueData.icon className="w-7 h-7 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">{stat.label}</p>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Play className="w-4 h-4 text-white/80" />
+                    <span className="text-white/80 text-xs font-medium uppercase tracking-wide">
+                      {language === 'vi' ? 'Tiếp tục học' : 'Continue Learning'}
+                    </span>
+                  </div>
+                  <h2 className="text-xl font-bold text-white">{continueData.title}</h2>
+                  <p className="text-white/80 text-sm">{continueData.description}</p>
                 </div>
               </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* Practice Tests Section */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
-              <GraduationCap className="w-5 h-5 text-white" />
+              <Button className="bg-white/20 hover:bg-white/30 text-white border-0 hidden sm:flex">
+                {continueData.actionLabel}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Practice Tests</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {testModules.map((module) => (
-              <Card key={module.type} className={`p-5 bg-white border-0 shadow-lg ${module.shadow} hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl`} onClick={() => startTest(module.type)}>
-                <div className={`w-14 h-14 rounded-2xl ${module.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
-                  <module.icon className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">{module.title}</h3>
-                <p className="text-sm text-gray-500 mb-3">{module.description}</p>
-                {perSkillStats[module.type]?.best && (
-                  <div className="flex items-center gap-2 text-sm">
-                    <Star className="w-4 h-4 text-yellow-500" />
-                    <span className="text-gray-600">Best: {perSkillStats[module.type].best}</span>
-                  </div>
-                )}
+          </Card>
+        )}
+
+        {/* Quick Stats Row */}
+        {hasProgress && (
+          <div className="grid grid-cols-4 gap-3 mb-6">
+            {[
+              { icon: BarChart3, label: language === 'vi' ? 'Bài thi' : 'Tests', value: progress?.total_tests || 0, color: 'text-blue-600', bg: 'bg-blue-50' },
+              { icon: Award, label: language === 'vi' ? 'TB Band' : 'Avg Band', value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: 'bg-purple-50' },
+              { icon: Flame, label: language === 'vi' ? 'Cao nhất' : 'Best', value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: 'bg-orange-50' },
+              { icon: Clock, label: language === 'vi' ? 'Thời gian' : 'Time', value: `${totalHours}h${totalMinutes}m`, color: 'text-emerald-600', bg: 'bg-emerald-50' }
+            ].map((stat, idx) => (
+              <Card key={idx} className={`p-3 ${stat.bg} border-0 rounded-xl text-center`}>
+                <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-1`} />
+                <p className="text-lg font-bold text-gray-900">{stat.value}</p>
+                <p className="text-xs text-gray-500">{stat.label}</p>
               </Card>
             ))}
           </div>
-        </div>
+        )}
 
-        {/* Learning Tools Section */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-200">
-              <Sparkles className="w-5 h-5 text-white" />
+        {/* Main Navigation Grid */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+          
+          {/* Tests Section */}
+          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
+                <GraduationCap className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Bài kiểm tra' : 'Practice Tests'}</h2>
+                <p className="text-xs text-gray-500">{language === 'vi' ? 'Luyện tập 4 kỹ năng IELTS' : 'Practice all 4 IELTS skills'}</p>
+              </div>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Learning Tools</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Level Test */}
-            <Card className="p-5 bg-gradient-to-br from-cyan-50 to-blue-50 border-0 shadow-lg shadow-cyan-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/level-test')}>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mb-4 shadow-lg shadow-cyan-200 group-hover:scale-110 transition-transform">
-                <Target className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Level Test</h3>
-              <p className="text-sm text-gray-600">Find your current level</p>
-              <ChevronRight className="w-5 h-5 text-cyan-500 mt-3 group-hover:translate-x-1 transition-transform" />
-            </Card>
+            <div className="grid grid-cols-2 gap-3">
+              {testModules.map((module) => (
+                <div
+                  key={module.type}
+                  onClick={() => startTest(module.type)}
+                  className={`p-4 ${module.lightBg} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-lg ${module.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      <module.icon className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{module.title}</p>
+                      <p className="text-xs text-gray-500">{module.description}</p>
+                    </div>
+                  </div>
+                  {perSkillStats[module.type]?.best && (
+                    <div className="flex items-center gap-1 mt-2 text-xs text-gray-500">
+                      <Star className="w-3 h-3 text-yellow-500" />
+                      <span>Best: {perSkillStats[module.type].best}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Card>
 
-            {/* Vocabulary & Grammar */}
-            <Card className="p-5 bg-gradient-to-br from-emerald-50 to-teal-50 border-0 shadow-lg shadow-emerald-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/vocab-grammar')}>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center mb-4 shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform">
-                <BookMarked className="w-7 h-7 text-white" />
+          {/* Lessons/Courses Section */}
+          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-200">
+                <BookOpen className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Vocab & Grammar</h3>
-              <p className="text-sm text-gray-600">Build your foundation</p>
-              <ChevronRight className="w-5 h-5 text-emerald-500 mt-3 group-hover:translate-x-1 transition-transform" />
-            </Card>
-
-            {/* Writing Practice */}
-            <Card className="p-5 bg-gradient-to-br from-orange-50 to-amber-50 border-0 shadow-lg shadow-orange-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/writing-practice')}>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center mb-4 shadow-lg shadow-orange-200 group-hover:scale-110 transition-transform">
-                <PenTool className="w-7 h-7 text-white" />
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Khóa học' : 'Lessons & Courses'}</h2>
+                <p className="text-xs text-gray-500">{language === 'vi' ? 'Chọn khóa phù hợp với trình độ' : 'Choose course for your level'}</p>
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Writing Practice</h3>
-              <p className="text-sm text-gray-600">Task 1 & 2 with AI feedback</p>
-              <ChevronRight className="w-5 h-5 text-orange-500 mt-3 group-hover:translate-x-1 transition-transform" />
-            </Card>
-
-            {/* Speaking Practice */}
-            <Card className="p-5 bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg shadow-violet-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/speaking-practice')}>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-200 group-hover:scale-110 transition-transform">
-                <MessageSquare className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Speaking Practice</h3>
-              <p className="text-sm text-gray-600">Parts 1-3 with evaluation</p>
-              <ChevronRight className="w-5 h-5 text-violet-500 mt-3 group-hover:translate-x-1 transition-transform" />
-            </Card>
-
-            {/* Beginner English Course */}
-            <Card className="p-5 bg-gradient-to-br from-green-50 to-lime-50 border-0 shadow-lg shadow-green-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/beginner-course')}>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-lime-600 flex items-center justify-center mb-4 shadow-lg shadow-green-200 group-hover:scale-110 transition-transform">
-                <GraduationCap className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Beginner English</h3>
-              <p className="text-sm text-gray-600">14 lessons for Band 4.5-</p>
-              <ChevronRight className="w-5 h-5 text-green-500 mt-3 group-hover:translate-x-1 transition-transform" />
-            </Card>
-
-            {/* IELTS Mastery Course */}
-            <Card className="p-5 bg-gradient-to-br from-violet-50 to-purple-50 border-0 shadow-lg shadow-violet-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/mastery-course')}>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mb-4 shadow-lg shadow-violet-200 group-hover:scale-110 transition-transform">
-                <Trophy className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">IELTS Mastery</h3>
-              <p className="text-sm text-gray-600">17 modules for Band 4.5-6.5</p>
-              <ChevronRight className="w-5 h-5 text-violet-500 mt-3 group-hover:translate-x-1 transition-transform" />
-            </Card>
-
-            {/* Advanced IELTS Mastery Course */}
-            <Card className="p-5 bg-gradient-to-br from-amber-50 to-orange-50 border-0 shadow-lg shadow-amber-100 hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl" onClick={() => navigate('/advanced-mastery')}>
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center mb-4 shadow-lg shadow-amber-200 group-hover:scale-110 transition-transform">
-                <Award className="w-7 h-7 text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">Advanced Mastery</h3>
-              <p className="text-sm text-gray-600">20 modules for Band 7.0-9.0</p>
-              <ChevronRight className="w-5 h-5 text-amber-500 mt-3 group-hover:translate-x-1 transition-transform" />
-            </Card>
-          </div>
+            </div>
+            <div className="space-y-3">
+              {courses.map((course) => (
+                <div
+                  key={course.id}
+                  onClick={() => navigate(course.route)}
+                  className="p-4 bg-gray-50 rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-lg group-hover:scale-110 transition-transform`}>
+                      {course.icon}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">{course.name}</p>
+                      <p className="text-xs text-gray-500">{course.band} • {course.lessons} {language === 'vi' ? 'bài' : 'lessons'}</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
+                </div>
+              ))}
+            </div>
+          </Card>
         </div>
 
-        {/* Recent Activity */}
-        {hasProgress && progress.recent_attempts?.length > 0 && (
-          <div>
+        {/* Learning Tools + Recent Tests Row */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-6">
+          
+          {/* Learning Tools */}
+          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-200">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Công cụ học tập' : 'Learning Tools'}</h2>
+                <p className="text-xs text-gray-500">{language === 'vi' ? 'Nâng cao kỹ năng của bạn' : 'Boost your skills'}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {learningTools.map((tool, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => navigate(tool.route)}
+                  className="p-4 bg-gray-50 rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group"
+                >
+                  <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${tool.color} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
+                    <tool.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <p className="font-semibold text-gray-900 text-sm">{tool.name}</p>
+                </div>
+              ))}
+            </div>
+            {/* Level Test CTA */}
+            <div 
+              onClick={() => navigate('/level-test')}
+              className="mt-4 p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl cursor-pointer hover:shadow-md transition-all border border-cyan-200 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3">
+                <Target className="w-6 h-6 text-cyan-600" />
+                <div>
+                  <p className="font-semibold text-gray-900">{language === 'vi' ? 'Kiểm tra trình độ' : 'Level Test'}</p>
+                  <p className="text-xs text-gray-500">{language === 'vi' ? 'Xác định điểm xuất phát' : 'Find your starting point'}</p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-cyan-500" />
+            </div>
+          </Card>
+
+          {/* Recent Tests */}
+          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-200">
-                  <TrendingUp className="w-5 h-5 text-white" />
+                  <History className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
+                <div>
+                  <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Bài thi gần đây' : 'Recent Tests'}</h2>
+                  <p className="text-xs text-gray-500">{language === 'vi' ? 'Xem lại kết quả' : 'Review your results'}</p>
+                </div>
               </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => navigate('/progress')}
-                className="text-violet-600 border-violet-200 hover:bg-violet-50"
-              >
-                View All Progress
-                <ChevronRight className="w-4 h-4 ml-1" />
-              </Button>
+              {hasProgress && (
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => navigate('/progress')}
+                  className="text-violet-600 hover:bg-violet-50 text-xs"
+                >
+                  {language === 'vi' ? 'Xem tất cả' : 'View All'}
+                </Button>
+              )}
             </div>
-            <Card className="bg-white border-0 shadow-lg shadow-gray-100 rounded-2xl overflow-hidden">
-              <div className="divide-y divide-gray-100">
-                {progress.recent_attempts.slice(0, 5).map((attempt, idx) => {
+            
+            {hasProgress && progress.recent_attempts?.length > 0 ? (
+              <div className="space-y-2">
+                {progress.recent_attempts.slice(0, 4).map((attempt, idx) => {
                   const moduleConfig = testModules.find(m => m.type === attempt.test_type);
                   const Icon = moduleConfig?.icon || BookOpen;
                   return (
                     <div 
-                      key={idx} 
-                      className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors cursor-pointer"
+                      key={idx}
                       onClick={() => attempt.id && navigate(`/results/${attempt.id}`)}
+                      className="p-3 bg-gray-50 rounded-xl flex items-center justify-between cursor-pointer hover:bg-gray-100 transition-colors"
                     >
-                      <div className="flex items-center gap-4">
-                        <div className={`w-12 h-12 rounded-xl ${moduleConfig?.color || 'bg-gray-500'} flex items-center justify-center shadow-lg`}>
-                          <Icon className="w-6 h-6 text-white" />
+                      <div className="flex items-center gap-3">
+                        <div className={`w-9 h-9 rounded-lg ${moduleConfig?.color || 'bg-gray-500'} flex items-center justify-center`}>
+                          <Icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900 capitalize">{attempt.test_type} Test</p>
-                          <p className="text-sm text-gray-500">{attempt.completed_at ? new Date(attempt.completed_at).toLocaleDateString() : 'Recently'}</p>
+                          <p className="font-medium text-gray-900 text-sm capitalize">{attempt.test_type}</p>
+                          <p className="text-xs text-gray-500">{attempt.completed_at ? new Date(attempt.completed_at).toLocaleDateString() : 'Recently'}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className={`px-4 py-2 rounded-xl font-bold ${
-                          attempt.band_score >= 7 ? 'bg-green-100 text-green-700' :
-                          attempt.band_score >= 6 ? 'bg-blue-100 text-blue-700' :
-                          attempt.band_score >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
-                        }`}>
-                          Band {attempt.band_score?.toFixed(1) || '-'}
-                        </div>
-                        <ChevronRight className="w-5 h-5 text-gray-400" />
+                      <div className={`px-3 py-1 rounded-lg text-sm font-bold ${
+                        attempt.band_score >= 7 ? 'bg-green-100 text-green-700' :
+                        attempt.band_score >= 6 ? 'bg-blue-100 text-blue-700' :
+                        attempt.band_score >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
+                      }`}>
+                        {attempt.band_score?.toFixed(1) || '-'}
                       </div>
                     </div>
                   );
                 })}
               </div>
-            </Card>
-          </div>
-        )}
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
+                  <GraduationCap className="w-8 h-8 text-gray-400" />
+                </div>
+                <p className="text-gray-500 text-sm mb-3">{language === 'vi' ? 'Chưa có bài thi nào' : 'No tests yet'}</p>
+                <Button onClick={() => navigate('/test/reading')} size="sm" className="bg-violet-600 hover:bg-violet-700 text-white">
+                  {language === 'vi' ? 'Làm bài thi đầu tiên' : 'Take Your First Test'}
+                </Button>
+              </div>
+            )}
+          </Card>
+        </div>
 
-        {/* Overall Skill Analytics - Phase 4 */}
+        {/* Progress Overview - Click to see full progress */}
+        <Card 
+          className="p-5 bg-gradient-to-r from-violet-600 to-purple-600 border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all"
+          onClick={() => navigate('/progress')}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">{language === 'vi' ? 'Xem tiến độ đầy đủ' : 'View Full Progress'}</h3>
+                <p className="text-violet-200 text-sm">{language === 'vi' ? 'Phân tích chi tiết & phản hồi AI' : 'Detailed analytics & AI feedback'}</p>
+              </div>
+            </div>
+            <ChevronRight className="w-6 h-6 text-white" />
+          </div>
+        </Card>
+
+        {/* Skill Breakdown (if user has enough tests) */}
         {hasProgress && progress.total_tests > 2 && (
-          <div className="mt-8">
+          <div className="mt-6">
             <SkillBreakdown
               showCumulative={true}
               userId={user?.id}
