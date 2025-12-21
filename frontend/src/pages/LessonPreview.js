@@ -460,11 +460,11 @@ export default function LessonPreview() {
 
           {speaking.part3 && (
             <div className="p-4 bg-blue-50 rounded-xl">
-              <h4 className="font-semibold text-blue-800 mb-2">Part 3: Discussion</h4>
+              <h4 className="font-semibold text-blue-800 mb-2">{getText(language, 'Part 3: Discussion', 'Phần 3: Thảo luận', 'Bölüm 3: Tartışma')}</h4>
               <p className="text-gray-700 mb-3">{speaking.part3.question}</p>
               {speaking.part3.band8_sample && (
                 <details className="text-sm">
-                  <summary className="text-blue-600 cursor-pointer font-medium">View Band 8 Sample</summary>
+                  <summary className="text-blue-600 cursor-pointer font-medium">{getText(language, 'View Band 8 Sample', 'Xem mẫu Band 8', 'Band 8 Örneğini Görüntüle')}</summary>
                   <p className="mt-2 p-3 bg-white rounded-lg text-gray-600 italic">
                     "{speaking.part3.band8_sample}"
                   </p>
@@ -475,19 +475,21 @@ export default function LessonPreview() {
 
           <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
             <p className="text-amber-800 text-sm">
-              <strong>🎙️ AI Speaking Evaluation</strong> — {language === 'vi' 
-                ? 'Đăng ký để ghi âm câu trả lời và nhận phản hồi AI về độ trôi chảy, từ vựng, ngữ pháp và phát âm.'
-                : 'Sign up to record your responses and get instant AI feedback on fluency, vocabulary, grammar, and pronunciation.'}
+              <strong>🎙️ {getText(language, 'AI Speaking Evaluation', 'Đánh giá nói AI', 'AI Konuşma Değerlendirmesi')}</strong> — {getText(language,
+                'Sign up to record your responses and get instant AI feedback on fluency, vocabulary, grammar, and pronunciation.',
+                'Đăng ký để ghi âm câu trả lời và nhận phản hồi AI về độ trôi chảy, từ vựng, ngữ pháp và phát âm.',
+                'Yanıtlarınızı kaydetmek ve akıcılık, kelime, dilbilgisi ve telaffuz hakkında anında AI geri bildirimi almak için kaydolun.'
+              )}
             </p>
           </div>
         </div>
 
         <div className="mt-6 flex justify-between">
           <Button variant="outline" onClick={() => setCurrentSection('reading')}>
-            <ChevronLeft className="w-4 h-4 mr-1" /> Reading
+            <ChevronLeft className="w-4 h-4 mr-1" /> {getText(language, 'Reading', 'Đọc', 'Okuma')}
           </Button>
           <Button onClick={() => setCurrentSection('writing')} className={`bg-gradient-to-r ${courseInfo.color}`}>
-            Next: Writing <ChevronRight className="w-4 h-4 ml-1" />
+            {getText(language, 'Next: Writing', 'Tiếp: Viết', 'Sonraki: Yazma')} <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
       </Card>
@@ -500,25 +502,25 @@ export default function LessonPreview() {
     return (
       <Card className="p-6 bg-white border-0 shadow-lg">
         <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <PenTool className="w-5 h-5 text-orange-600" /> Writing {writing.task_type || 'Practice'}
+          <PenTool className="w-5 h-5 text-orange-600" /> {getText(language, 'Writing', 'Viết', 'Yazma')} {writing.task_type || getText(language, 'Practice', 'Luyện tập', 'Pratik')}
         </h3>
 
         <div className="space-y-6">
           {writing.prompt && (
             <div className="p-4 bg-orange-50 rounded-xl">
-              <h4 className="font-semibold text-orange-800 mb-2">Task Prompt</h4>
+              <h4 className="font-semibold text-orange-800 mb-2">{getText(language, 'Task Prompt', 'Đề bài', 'Görev İstemi')}</h4>
               <p className="text-gray-700">{writing.prompt}</p>
             </div>
           )}
 
           {writing.band75_excerpt && (
             <details className="p-4 bg-gray-50 rounded-xl">
-              <summary className="font-semibold text-gray-800 cursor-pointer">View Model Essay</summary>
+              <summary className="font-semibold text-gray-800 cursor-pointer">{getText(language, 'View Model Essay', 'Xem bài mẫu', 'Örnek Makaleyi Görüntüle')}</summary>
               <p className="mt-3 text-gray-600 italic leading-relaxed">"{writing.band75_excerpt}"</p>
               
               {writing.examiner_analysis && (
                 <div className="mt-4 p-3 bg-white rounded-lg space-y-2">
-                  <h5 className="font-medium text-gray-800">Examiner Analysis:</h5>
+                  <h5 className="font-medium text-gray-800">{getText(language, 'Examiner Analysis', 'Phân tích của giám khảo', 'Değerlendirici Analizi')}:</h5>
                   {Object.entries(writing.examiner_analysis).map(([key, value]) => (
                     <p key={key} className="text-sm text-gray-600">
                       <span className="font-medium capitalize">{key.replace('_', ' ')}:</span> {value}
@@ -531,9 +533,11 @@ export default function LessonPreview() {
 
           <div className="p-4 bg-violet-50 rounded-xl border border-violet-200">
             <p className="text-violet-800 text-sm">
-              <strong>✍️ AI Writing Evaluation</strong> — {language === 'vi'
-                ? 'Đăng ký để nộp bài luận và nhận phản hồi chi tiết về Task Achievement, Coherence, Vocabulary và Grammar.'
-                : 'Sign up to submit your essays and receive detailed feedback on Task Achievement, Coherence, Vocabulary, and Grammar.'}
+              <strong>✍️ {getText(language, 'AI Writing Evaluation', 'Đánh giá viết AI', 'AI Yazma Değerlendirmesi')}</strong> — {getText(language,
+                'Sign up to submit your essays and receive detailed feedback on Task Achievement, Coherence, Vocabulary, and Grammar.',
+                'Đăng ký để nộp bài luận và nhận phản hồi chi tiết về Task Achievement, Coherence, Vocabulary và Grammar.',
+                'Makalelerinizi göndermek ve Görev Başarısı, Tutarlılık, Kelime ve Dilbilgisi hakkında detaylı geri bildirim almak için kaydolun.'
+              )}
             </p>
           </div>
 
