@@ -976,11 +976,14 @@ function ElevenLabsExaminer() {
                             </div>
                           )}
 
-                          {q.type === 'multiple_choice' && q.options && (
+                          {/* Multiple Choice - Single or Multi-select */}
+                          {(q.type === 'multiple_choice' || q.type === 'multiple_choice_multi') && q.options && (
                             (() => {
-                              // Check if this is a "Choose TWO" question
-                              const isMultiSelect = q.question?.toLowerCase().includes('two') || 
+                              // Check if this is a "Choose TWO" question (by type or question text)
+                              const isMultiSelect = q.type === 'multiple_choice_multi' ||
+                                                    q.question?.toLowerCase().includes('two') || 
                                                     q.question?.toLowerCase().includes('select two');
+                              const requiredCount = q.answer_count || 2;
                               
                               if (isMultiSelect) {
                                 // Multi-select: use checkboxes, store as array
@@ -993,41 +996,52 @@ function ElevenLabsExaminer() {
                                   if (selectedAnswers.includes(optionLetter)) {
                                     // Remove if already selected
                                     newAnswers = selectedAnswers.filter(a => a !== optionLetter);
-                                  } else if (selectedAnswers.length < 2) {
-                                    // Add if less than 2 selected
+                                  } else if (selectedAnswers.length < requiredCount) {
+                                    // Add if less than required selected
                                     newAnswers = [...selectedAnswers, optionLetter];
                                   } else {
-                                    // Replace oldest if already 2 selected
-                                    newAnswers = [selectedAnswers[1], optionLetter];
+                                    // Replace oldest if already at limit
+                                    newAnswers = [...selectedAnswers.slice(1), optionLetter];
                                   }
                                   handleAnswerChange(q.id, newAnswers);
                                 };
                                 
                                 return (
                                   <div className="mt-2">
-                                    <div className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded mb-2 font-medium">
-                                      ⚠️ Select exactly TWO options ({selectedAnswers.length}/2 selected)
+                                    <div className={`text-xs px-2 py-1.5 rounded mb-2 font-medium flex items-center gap-2 ${
+                                      selectedAnswers.length === requiredCount 
+                                        ? 'bg-green-50 text-green-700' 
+                                        : 'bg-amber-50 text-amber-700'
+                                    }`}>
+                                      <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+                                        selectedAnswers.length === requiredCount 
+                                          ? 'bg-green-500 text-white' 
+                                          : 'bg-amber-400 text-white'
+                                      }`}>
+                                        {selectedAnswers.length}
+                                      </span>
+                                      Select exactly {requiredCount} options ({selectedAnswers.length}/{requiredCount} selected)
                                     </div>
-                                    <div className="space-y-1">
+                                    <div className="space-y-1.5">
                                       {q.options.map((option, optIdx) => {
-                                        const optionLetter = option.split(')')[0];
+                                        const optionLetter = option.split(')')[0].trim();
                                         const isSelected = selectedAnswers.includes(optionLetter);
                                         return (
                                           <button
                                             key={optIdx}
                                             onClick={() => handleMultiSelect(optionLetter)}
-                                            className={`w-full text-left px-3 py-2 rounded text-xs transition-colors flex items-center gap-2 ${
+                                            className={`w-full text-left px-3 py-2.5 rounded-lg text-xs transition-all flex items-center gap-3 border ${
                                               isSelected
-                                                ? 'bg-sky-500 text-white'
-                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                ? 'bg-sky-500 text-white border-sky-600 shadow-sm'
+                                                : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                                             }`}
                                           >
-                                            <span className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                                              isSelected ? 'border-white bg-white' : 'border-gray-400'
+                                            <span className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
+                                              isSelected ? 'border-white bg-white' : 'border-gray-300 bg-white'
                                             }`}>
-                                              {isSelected && <span className="text-sky-500 text-xs font-bold">✓</span>}
+                                              {isSelected && <span className="text-sky-500 text-sm font-bold">✓</span>}
                                             </span>
-                                            {option}
+                                            <span className="flex-1">{option}</span>
                                           </button>
                                         );
                                       })}
@@ -1042,11 +1056,11 @@ function ElevenLabsExaminer() {
                                   {q.options.map((option, optIdx) => (
                                     <button
                                       key={optIdx}
-                                      onClick={() => handleAnswerChange(q.id, option.split(')')[0])}
-                                      className={`w-full text-left px-2 py-1.5 rounded text-xs transition-colors ${
-                                        answers[q.id] === option.split(')')[0]
-                                          ? 'bg-sky-500 text-white'
-                                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                      onClick={() => handleAnswerChange(q.id, option.split(')')[0].trim())}
+                                      className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-all border ${
+                                        answers[q.id] === option.split(')')[0].trim()
+                                          ? 'bg-sky-500 text-white border-sky-600'
+                                          : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
                                       }`}
                                     >
                                       {option}
