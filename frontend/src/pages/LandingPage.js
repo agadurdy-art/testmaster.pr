@@ -29,7 +29,7 @@ const COURSES = [
     color: 'from-emerald-500 to-teal-600',
     lightBg: 'bg-emerald-50',
     icon: '🌱',
-    apiEndpoint: '/api/beginner-course/lessons',
+    apiEndpoint: '/api/beginner-english/lessons',
     previewRoute: '/lesson-preview/beginner'
   },
   {
