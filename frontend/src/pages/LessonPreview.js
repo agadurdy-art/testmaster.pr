@@ -13,7 +13,7 @@ import { useI18n } from '../lib/i18n';
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // List of module IDs that are available for free preview
-const FREE_PREVIEW_MODULES = ['module_1', 'module_2', 'module_3'];
+const FREE_PREVIEW_MODULES = ['advanced-module-1', 'advanced-module-2', 'advanced-module-3'];
 
 export default function LessonPreview() {
   const { moduleId } = useParams();
