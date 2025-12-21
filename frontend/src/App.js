@@ -221,6 +221,10 @@ function AppWithSessionHandler() {
           path="/advanced-mastery" 
           element={user ? <AdvancedMasteryCourse user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/lesson-preview/:moduleId" 
+          element={<LessonPreview />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
