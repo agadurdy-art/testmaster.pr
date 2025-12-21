@@ -331,7 +331,7 @@ export default function LandingPage({ onLogin, user }) {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium mb-4">
               <Sparkles className="w-4 h-4" />
-              Practical Learning
+              {t('landingPracticalLearningBadge')}
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
               {t('landingPracticalTitle')}
