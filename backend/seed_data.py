@@ -421,33 +421,21 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
                 "C) recruits new volunteers."
             ]},
 
-            # Questions 17-20: choose TWO letters A–E (modeled as single-letter answers per question)
-            {"id": 17, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David say about the lifeboat volunteer training? (Q17)", "options": [
+            # Questions 17-18 and 19-20: Choose TWO (combined as multi-select questions)
+            {"id": "17-18", "section": 2, "type": "multiple_choice_multi", "question": "Which TWO things does David say about the lifeboat volunteer training?", "options": [
                 "A) The residential course developed his leadership skills.",
                 "B) The training in use of ropes and knots was quite brief.",
                 "C) The training exercises have built up his mental strength.",
                 "D) The casualty care activities were particularly challenging for him.",
                 "E) The wave tank activities provided practice in survival techniques."
-            ]},
-            {"id": 18, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David say about the lifeboat volunteer training? (Q18)", "options": [
-                "A) The residential course developed his leadership skills.",
-                "B) The training in use of ropes and knots was quite brief.",
-                "C) The training exercises have built up his mental strength.",
-                "D) The casualty care activities were particularly challenging for him.",
-                "E) The wave tank activities provided practice in survival techniques."
-            ]},
-            {"id": 19, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David find most motivating about the work he does? (Q19)", "options": [
+            ], "answer_count": 2, "answer_ids": [17, 18]},
+            {"id": "19-20", "section": 2, "type": "multiple_choice_multi", "question": "Which TWO things does David find most motivating about the work he does?", "options": [
                 "A) working as part of a team",
                 "B) experiences when working in winter",
                 "C) being thanked by those he has helped",
                 "D) the fact that it keeps him fit",
                 "E) the chance to develop new equipment"
-            ]},
-            {"id": 20, "section": 2, "type": "multiple_choice", "question": "Which TWO things does David find most motivating about the work he does? (Q20)", "options": [
-                "A) working as part of a team",
-                "B) experiences when working in winter",
-                "C) being thanked by those he has helped",
-                "D) the fact that it keeps him fit",
+            ], "answer_count": 2, "answer_ids": [19, 20]},
                 "E) the chance to develop new equipment"
             ]},
 
