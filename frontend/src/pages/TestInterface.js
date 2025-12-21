@@ -1340,6 +1340,10 @@ function ElevenLabsExaminer() {
                         'multiple_choice': {
                           title: 'Multiple Choice',
                           instruction: 'Choose the correct letter A, B, or C.'
+                        },
+                        'multiple_choice_multi': {
+                          title: 'Multiple Choice (Select TWO)',
+                          instruction: 'Choose TWO correct answers from the options below.'
                         }
                       };
                       
