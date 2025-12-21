@@ -434,8 +434,6 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
                 "D) the fact that it keeps him fit",
                 "E) the chance to develop new equipment"
             ], "answer_count": 2, "answer_ids": [19, 20]},
-                "E) the chance to develop new equipment"
-            ]},
 
             # Part 3 - Questions 21-30 (recycling footwear)
             {"id": 21, "section": 3, "type": "multiple_choice", "question": "At first, Don thought the topic of recycling footwear might be too", "options": [
