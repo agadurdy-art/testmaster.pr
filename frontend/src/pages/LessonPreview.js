@@ -400,31 +400,33 @@ export default function LessonPreview() {
         
         {reading.word_count && (
           <div className="mb-4 text-sm text-gray-500">
-            Word Count: ~{reading.word_count}
+            {getText(language, 'Word Count', 'Số từ', 'Kelime Sayısı')}: ~{reading.word_count}
           </div>
         )}
 
         <div className="p-5 bg-gray-50 rounded-xl mb-6">
           <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-            {reading.text || reading.passage || 'Reading passage content will appear here.'}
+            {reading.text || reading.passage || getText(language, 'Reading passage content will appear here.', 'Nội dung bài đọc sẽ xuất hiện ở đây.', 'Okuma parçası içeriği burada görünecek.')}
           </p>
         </div>
 
         <div className="p-4 bg-blue-50 rounded-xl">
-          <h4 className="font-semibold text-blue-800 mb-2">📚 Practice Questions</h4>
+          <h4 className="font-semibold text-blue-800 mb-2">📚 {getText(language, 'Practice Questions', 'Câu hỏi luyện tập', 'Alıştırma Soruları')}</h4>
           <p className="text-sm text-gray-600">
-            {language === 'vi' 
-              ? 'Đăng ký để truy cập các câu hỏi trắc nghiệm với True/False/Not Given, Summary Completion, và nhiều loại câu hỏi khác.'
-              : 'Sign up to access interactive quizzes with True/False/Not Given, Summary Completion, and more question types.'}
+            {getText(language,
+              'Sign up to access interactive quizzes with True/False/Not Given, Summary Completion, and more question types.',
+              'Đăng ký để truy cập các câu hỏi trắc nghiệm với True/False/Not Given, Summary Completion, và nhiều loại câu hỏi khác.',
+              'Doğru/Yanlış/Belirtilmemiş, Özet Tamamlama ve daha fazla soru tipine sahip etkileşimli testlere erişmek için kaydolun.'
+            )}
           </p>
         </div>
 
         <div className="mt-6 flex justify-between">
           <Button variant="outline" onClick={() => setCurrentSection('grammar')}>
-            <ChevronLeft className="w-4 h-4 mr-1" /> Grammar
+            <ChevronLeft className="w-4 h-4 mr-1" /> {getText(language, 'Grammar', 'Ngữ pháp', 'Dilbilgisi')}
           </Button>
           <Button onClick={() => setCurrentSection('speaking')} className={`bg-gradient-to-r ${courseInfo.color}`}>
-            Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
+            {getText(language, 'Next: Speaking', 'Tiếp: Nói', 'Sonraki: Konuşma')} <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
       </Card>
