@@ -314,7 +314,7 @@ export default function Dashboard({ user, onLogout }) {
                   <div className="flex items-center gap-2 mb-1">
                     <Play className="w-4 h-4 text-white/80" />
                     <span className="text-white/80 text-xs font-medium uppercase tracking-wide">
-                      {language === 'vi' ? 'Tiếp tục học' : 'Continue Learning'}
+                      {getText('Continue Learning', 'Tiếp tục học', 'Öğrenmeye Devam Et')}
                     </span>
                   </div>
                   <h2 className="text-xl font-bold text-white">{continueData.title}</h2>
@@ -332,10 +332,10 @@ export default function Dashboard({ user, onLogout }) {
         {/* Quick Stats Row - Always visible */}
         <div className="grid grid-cols-4 gap-3 mb-6">
           {[
-            { icon: BarChart3, label: language === 'vi' ? 'Bài thi' : 'Tests', value: progress?.total_tests || 0, color: 'text-blue-600', bg: 'bg-blue-50' },
-            { icon: Award, label: language === 'vi' ? 'TB Band' : 'Avg Band', value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: 'bg-purple-50' },
-            { icon: Flame, label: language === 'vi' ? 'Cao nhất' : 'Best', value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: 'bg-orange-50' },
-            { icon: Clock, label: language === 'vi' ? 'Thời gian' : 'Time', value: `${totalHours}h${totalMinutes}m`, color: 'text-emerald-600', bg: 'bg-emerald-50' }
+            { icon: BarChart3, label: getText('Tests', 'Bài thi', 'Testler'), value: progress?.total_tests || 0, color: 'text-blue-600', bg: 'bg-blue-50' },
+            { icon: Award, label: getText('Avg Band', 'TB Band', 'Ort. Band'), value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: 'bg-purple-50' },
+            { icon: Flame, label: getText('Best', 'Cao nhất', 'En İyi'), value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: 'bg-orange-50' },
+            { icon: Clock, label: getText('Time', 'Thời gian', 'Süre'), value: `${totalHours}h${totalMinutes}m`, color: 'text-emerald-600', bg: 'bg-emerald-50' }
           ].map((stat, idx) => (
             <Card key={idx} className={`p-3 ${stat.bg} border-0 rounded-xl text-center`}>
               <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-1`} />
@@ -355,8 +355,8 @@ export default function Dashboard({ user, onLogout }) {
                 <GraduationCap className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Bài kiểm tra' : 'Practice Tests'}</h2>
-                <p className="text-xs text-gray-500">{language === 'vi' ? 'Luyện tập 4 kỹ năng IELTS' : 'Practice all 4 IELTS skills'}</p>
+                <h2 className="text-lg font-bold text-gray-900">{getText('Practice Tests', 'Bài kiểm tra', 'Pratik Testler')}</h2>
+                <p className="text-xs text-gray-500">{getText('Practice all 4 IELTS skills', 'Luyện tập 4 kỹ năng IELTS', '4 IELTS becerisini pratik yapın')}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
