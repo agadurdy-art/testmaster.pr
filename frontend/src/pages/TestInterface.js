@@ -1831,8 +1831,7 @@ function ElevenLabsExaminer() {
 
                   {/* Short Answer / Sentence Completion */}
                   {(question.type === 'sentence_completion' || question.type === 'form_completion' || 
-                    question.type === 'note_completion' || question.type === 'matching_information' || 
-                    question.type === 'matching_headings') && (
+                    question.type === 'note_completion') && (
                     <Input
                       data-testid="text-answer-input"
                       value={answers[question.id] || ''}
@@ -1840,6 +1839,80 @@ function ElevenLabsExaminer() {
                       placeholder="Type your answer..."
                       className="text-lg p-4"
                     />
+                  )}
+
+                  {/* Matching Information - Dropdown */}
+                  {question.type === 'matching_information' && (
+                    <select
+                      value={answers[question.id] || ''}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                    >
+                      <option value="">Select paragraph...</option>
+                      {(question.options || ['A', 'B', 'C', 'D', 'E', 'F', 'G']).map((opt, idx) => {
+                        const letter = typeof opt === 'string' && opt.includes(')') 
+                          ? opt.split(')')[0].replace(/[^A-G]/g, '') 
+                          : opt;
+                        return (
+                          <option key={idx} value={letter}>
+                            Paragraph {letter}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  )}
+
+                  {/* Matching Headings - Dropdown */}
+                  {question.type === 'matching_headings' && (
+                    <select
+                      value={answers[question.id] || ''}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                    >
+                      <option value="">Select heading...</option>
+                      {(question.options || ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x']).map((opt, idx) => (
+                        <option key={idx} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+
+                  {/* Map Labeling - Dropdown for A-H */}
+                  {question.type === 'map_labeling' && (
+                    <select
+                      value={answers[question.id] || ''}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                    >
+                      <option value="">Select location...</option>
+                      {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map((letter) => (
+                        <option key={letter} value={letter}>
+                          Location {letter}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+
+                  {/* Matching - Dropdown for opinion matching (A-H) */}
+                  {question.type === 'matching' && (
+                    <select
+                      value={answers[question.id] || ''}
+                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                    >
+                      <option value="">Select option...</option>
+                      {(question.options || ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']).map((opt, idx) => {
+                        const letter = typeof opt === 'string' && opt.includes(')') 
+                          ? opt.split(')')[0].trim() 
+                          : opt;
+                        return (
+                          <option key={idx} value={letter}>
+                            {opt}
+                          </option>
+                        );
+                      })}
+                    </select>
                   )}
 
                   {/* Writing Task */}
