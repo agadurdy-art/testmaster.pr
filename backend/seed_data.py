@@ -535,10 +535,8 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
             {"question_id": 14, "answer": "B", "explanation": "David says they try to get the boat off the dock and out to sea in another six to eight minutes."},
             {"question_id": 15, "answer": "C", "explanation": "David says it's ultimately his decision whether it's safe to launch the boat."},
             {"question_id": 16, "answer": "A", "explanation": "David says he speaks to youth groups and clubs about the sorts of problems that sailors and swimmers can have if the weather suddenly gets bad."},
-            {"question_id": 17, "answer": "C and E", "explanation": "David says the training gave him confidence (mental strength) to deal with extreme situations without panicking, and the wave-tank provided experience at what to do if the boat turned over in a storm at night."},
-            {"question_id": 18, "answer": "C and E", "explanation": "David says the training gave him confidence (mental strength) to deal with extreme situations without panicking, and the wave-tank provided experience at what to do if the boat turned over in a storm at night."},
-            {"question_id": 19, "answer": "A and B", "explanation": "David says they're a great group - like a family really. He also says it's the colder months that can be the most rewarding time."},
-            {"question_id": 20, "answer": "A and B", "explanation": "David says they're a great group - like a family really. He also says it's the colder months that can be the most rewarding time."},
+            {"question_id": "17-18", "answer": ["C", "E"], "explanation": "David says the training gave him confidence (mental strength) to deal with extreme situations without panicking, and the wave-tank provided experience at what to do if the boat turned over in a storm at night."},
+            {"question_id": "19-20", "answer": ["A", "B"], "explanation": "David says they're a great group - like a family really. He also says it's the colder months that can be the most rewarding time."},
 
             # Part 3
             {"question_id": 21, "answer": "A", "explanation": "Don thought recycling footwear would be a good topic but perhaps there isn't enough to say about it."},
