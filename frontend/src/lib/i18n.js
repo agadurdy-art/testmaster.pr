@@ -704,6 +704,19 @@ export const translations = {
     landingBand6to9: 'Lộ trình Band 6.0 → 9.0',
     landingExploreCourse: 'Khám phá khóa học',
     
+    // Try Our Lessons
+    landingTryLessonsBadge: 'Xem trước miễn phí',
+    landingTryLessonsTitle: 'Thử bài học của chúng tôi — Không cần đăng ký',
+    landingTryLessonsDesc: 'Trải nghiệm bài học theo chuẩn Cambridge trước khi quyết định. Mỗi module bao gồm từ vựng nâng cao, cấu trúc ngữ pháp, và luyện tập với AI.',
+    landingFreePreview: 'MIỄN PHÍ',
+    landingLessonVocab: 'Từ vựng nâng cao',
+    landingLessonGrammar: 'Cấu trúc ngữ pháp',
+    landingLessonWriting: 'Luyện viết',
+    landingStartLesson: 'Bắt đầu bài học',
+    landingSignUpToUnlock: 'Đăng ký để mở khóa tất cả bài học',
+    landingMoreLessons: 'Truy cập hơn 20 module toàn diện bao gồm tất cả chủ đề IELTS',
+    landingUnlockAll: 'Mở khóa tất cả bài học',
+    
     // Honesty Promise
     landingHonestyTitle: 'Cam kết trung thực',
     landingNoPromise: 'Chúng tôi KHÔNG hứa Band 7 ngay lập tức.',
