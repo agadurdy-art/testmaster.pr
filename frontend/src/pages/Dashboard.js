@@ -210,7 +210,7 @@ export default function Dashboard({ user, onLogout }) {
             <LanguageSwitcher compact />
             <div className="hidden md:flex items-center space-x-1">
               <Button variant="ghost" onClick={() => navigate('/progress')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
-                <BarChart3 className="w-4 h-4 mr-2" />{language === 'vi' ? 'Tiến độ' : 'Progress'}
+                <BarChart3 className="w-4 h-4 mr-2" />{getText('Progress', 'Tiến độ', 'İlerleme')}
               </Button>
               <Button variant="ghost" onClick={() => navigate('/pricing')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">{t('navPricing')}</Button>
               <Button 
@@ -218,7 +218,7 @@ export default function Dashboard({ user, onLogout }) {
                 onClick={() => window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('IELTS Ace - Support Request')}&body=${encodeURIComponent(`Hi IELTS Ace Team,\n\nUser: ${user.name}\nEmail: ${user.email}\n\nMy question/issue:\n\n`)}`}
                 className="text-gray-600 hover:text-emerald-600 hover:bg-emerald-50"
               >
-                <Mail className="w-4 h-4 mr-2" />{language === 'vi' ? 'Liên hệ' : 'Contact'}
+                <Mail className="w-4 h-4 mr-2" />{getText('Contact', 'Liên hệ', 'İletişim')}
               </Button>
               <Button variant="ghost" onClick={() => navigate('/profile')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
                 <User className="w-4 h-4 mr-2" />{user.name}
@@ -237,32 +237,32 @@ export default function Dashboard({ user, onLogout }) {
           <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
             <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
               <Button variant="ghost" className="w-full justify-start text-gray-600 font-medium" onClick={() => { navigate('/dashboard'); setMobileMenuOpen(false); }}>
-                <LayoutDashboard className="w-4 h-4 mr-3" />{language === 'vi' ? 'Bảng điều khiển' : 'Dashboard'}
+                <LayoutDashboard className="w-4 h-4 mr-3" />{getText('Dashboard', 'Bảng điều khiển', 'Gösterge Paneli')}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/progress'); setMobileMenuOpen(false); }}>
-                <BarChart3 className="w-4 h-4 mr-3" />{language === 'vi' ? 'Tiến độ' : 'Progress'}
+                <BarChart3 className="w-4 h-4 mr-3" />{getText('Progress', 'Tiến độ', 'İlerleme')}
               </Button>
               <hr className="my-2" />
-              <p className="text-xs text-gray-400 px-3 py-1">{language === 'vi' ? 'Bài kiểm tra' : 'Tests'}</p>
+              <p className="text-xs text-gray-400 px-3 py-1">{getText('Tests', 'Bài kiểm tra', 'Testler')}</p>
               {testModules.map((m) => (
                 <Button key={m.type} variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { startTest(m.type); setMobileMenuOpen(false); }}>
                   <m.icon className="w-4 h-4 mr-3" />{m.title}
                 </Button>
               ))}
               <hr className="my-2" />
-              <p className="text-xs text-gray-400 px-3 py-1">{language === 'vi' ? 'Khóa học' : 'Courses'}</p>
+              <p className="text-xs text-gray-400 px-3 py-1">{getText('Courses', 'Khóa học', 'Kurslar')}</p>
               {courses.map((c) => (
                 <Button key={c.id} variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate(c.route); setMobileMenuOpen(false); }}>
                   <span className="mr-3">{c.icon}</span>{c.name}
                 </Button>
               ))}
               <hr className="my-2" />
-              <p className="text-xs text-gray-400 px-3 py-1">{language === 'vi' ? 'Tài khoản' : 'Account'}</p>
+              <p className="text-xs text-gray-400 px-3 py-1">{getText('Account', 'Tài khoản', 'Hesap')}</p>
               <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/pricing'); setMobileMenuOpen(false); }}>
-                <CreditCard className="w-4 h-4 mr-3" />{language === 'vi' ? 'Giá cả' : 'Pricing'}
+                <CreditCard className="w-4 h-4 mr-3" />{getText('Pricing', 'Giá cả', 'Fiyatlandırma')}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}>
-                <User className="w-4 h-4 mr-3" />{language === 'vi' ? 'Hồ sơ' : 'Profile'}
+                <User className="w-4 h-4 mr-3" />{getText('Profile', 'Hồ sơ', 'Profil')}
               </Button>
               <Button 
                 variant="ghost" 
