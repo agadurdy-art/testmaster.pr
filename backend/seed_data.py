@@ -681,11 +681,9 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
             {"question_id": 18, "answer": "B", "explanation": "The speaker says the adventure playground is at the northern end of the larger lake, in a bend on the path."},
             {"question_id": 19, "answer": "D", "explanation": "The speaker says the kitchen gardens are rectangular and surrounded by a wall, to the north-east of the house, quite near the smaller lake."},
             {"question_id": 20, "answer": "A", "explanation": "The speaker says go past the western sides of the stables and house, when the path forks take the right-hand path with woods on your left."},
-            # Part 3 (21&22 and 23&24 in either order)
-            {"question_id": 21, "answer": "B and D", "explanation": "Colin had time to play around with different patterns for the biscuits and make them a more appetising colour. Marie says it must have been a great feeling to make something appetising out of bits of old bread."},
-            {"question_id": 22, "answer": "B and D", "explanation": "Colin had time to play around with different patterns for the biscuits and make them a more appetising colour. Marie says it must have been a great feeling to make something appetising out of bits of old bread."},
-            {"question_id": 23, "answer": "A and E", "explanation": "Marie thought the sensors might be really good for drug storage in hospitals and pharmacies. Colin suggests other uses like how many kilograms a joint of meat is."},
-            {"question_id": 24, "answer": "A and E", "explanation": "Marie thought the sensors might be really good for drug storage in hospitals and pharmacies. Colin suggests other uses like how many kilograms a joint of meat is."},
+            # Part 3 (21-22 and 23-24 combined multi-select)
+            {"question_id": "21-22", "answer": ["B", "D"], "explanation": "Colin had time to play around with different patterns for the biscuits and make them a more appetising colour. Marie says it must have been a great feeling to make something appetising out of bits of old bread."},
+            {"question_id": "23-24", "answer": ["A", "E"], "explanation": "Marie thought the sensors might be really good for drug storage in hospitals and pharmacies. Colin suggests other uses like how many kilograms a joint of meat is."},
             {"question_id": 25, "answer": "D", "explanation": "Colin says shops need to be more proactive to address selling local products. Marie adds that shops should motivate consumers to change."},
             {"question_id": 26, "answer": "G", "explanation": "Colin says the government needs to do something about unnecessary packaging. Marie agrees saying it's got to change."},
             {"question_id": 27, "answer": "C", "explanation": "Marie says lots of people she knows have been buying that type of food for years now. Colin agrees."},
