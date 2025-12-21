@@ -106,7 +106,7 @@ export default function LandingPage({ onLogin, user }) {
       try {
         // Fetch lessons from all 3 courses
         const [beginnerRes, masteryRes, advancedRes] = await Promise.all([
-          fetch(`${API_URL}/api/beginner-course/lessons`).catch(() => ({ ok: false })),
+          fetch(`${API_URL}/api/beginner-english/lessons`).catch(() => ({ ok: false })),
           fetch(`${API_URL}/api/mastery-course/modules`).catch(() => ({ ok: false })),
           fetch(`${API_URL}/api/advanced-mastery/modules`).catch(() => ({ ok: false }))
         ]);
