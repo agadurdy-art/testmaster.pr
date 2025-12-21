@@ -470,52 +470,7 @@ export default function LandingPage({ onLogin, user }) {
       </section>
 
       {/* HOW OUR AI WORKS - Trust Section */}
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-gray-300">
-                    <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-
-            {/* IELTS Ace */}
-            <Card className="p-8 bg-gradient-to-br from-violet-500/20 to-purple-500/20 backdrop-blur border border-violet-400/30 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5 text-green-400" />
-                </div>
-                <h3 className="text-xl font-bold text-white">IELTS Ace</h3>
-              </div>
-              <ul className="space-y-4">
-                {[
-                  'Explains band decisions with examiner logic',
-                  'Diagnoses your key weaknesses precisely',
-                  'Connects tests directly to study materials',
-                  'Applies strict Cambridge band caps',
-                  'Builds long-term improvement, not false confidence'
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-white">
-                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </div>
-
-          {/* Quote */}
-          <div className="mt-12 text-center">
-            <p className="text-xl text-violet-200 italic">
-              "We don't train you to sound fluent.<br/>
-              <span className="text-white font-semibold">We train you to perform like an IELTS candidate.</span>"
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* HOW OUR AI WORKS - Trust Section */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
