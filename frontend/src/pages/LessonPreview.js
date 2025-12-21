@@ -18,8 +18,8 @@ const COURSE_CONFIG = {
     nameVi: 'Khóa học Cơ bản',
     bandRange: 'Band 4.0 - 5.0',
     color: 'from-emerald-500 to-teal-600',
-    apiEndpoint: '/api/beginner-course/lessons',
-    idField: 'id', // or 'topic' depending on data structure
+    apiEndpoint: '/api/beginner-english/lessons',
+    idField: 'id',
     maxFreePreview: 3
   },
   mastery: {
