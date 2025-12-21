@@ -11,7 +11,14 @@ export default function Results({ user }) {
   const { attemptId } = useParams();
   const navigate = useNavigate();
   const { t, language } = useI18n();
-  const isVi = language === 'vi';
+  
+  // Trilingual helper
+  const getText = (en, vi, tr) => {
+    if (language === 'vi') return vi;
+    if (language === 'tr') return tr;
+    return en;
+  };
+  
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
