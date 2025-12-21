@@ -592,7 +592,7 @@ export default function LessonPreview() {
         <div className="mb-4 flex items-center gap-2">
           <span className={`px-3 py-1 bg-gradient-to-r ${courseInfo.color} text-white text-xs font-bold rounded-full flex items-center gap-1`}>
             <GraduationCap className="w-3 h-3" />
-            {language === 'vi' ? courseInfo.nameVi : courseInfo.name}
+            {getText(language, courseInfo.name, courseInfo.nameVi, courseInfo.nameTr)}
           </span>
           <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
             {courseInfo.bandRange}
@@ -607,12 +607,18 @@ export default function LessonPreview() {
             </div>
             <div className="flex-1">
               <p className="text-violet-800 text-sm font-medium">
-                {language === 'vi' ? 'Bạn đang xem trước bài học miễn phí!' : "You're previewing this lesson for free!"}
+                {getText(language, 
+                  "You're previewing this lesson for free!", 
+                  'Bạn đang xem trước bài học miễn phí!',
+                  'Bu dersi ücretsiz önizliyorsunuz!'
+                )}
               </p>
               <p className="text-violet-600 text-xs">
-                {language === 'vi' 
-                  ? 'Đăng ký để mở khóa đánh giá AI, bài quiz, và tất cả các module.'
-                  : 'Sign up to unlock AI evaluations, quizzes, and all modules.'}
+                {getText(language,
+                  'Sign up to unlock AI evaluations, quizzes, and all modules.',
+                  'Đăng ký để mở khóa đánh giá AI, bài quiz, và tất cả các module.',
+                  'AI değerlendirmelerinin, testlerin ve tüm modüllerin kilidini açmak için kaydolun.'
+                )}
               </p>
             </div>
             <Button 

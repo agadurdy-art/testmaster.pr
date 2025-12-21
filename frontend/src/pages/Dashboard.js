@@ -272,10 +272,10 @@ export default function Dashboard({ user, onLogout }) {
                   setMobileMenuOpen(false);
                 }}
               >
-                <Mail className="w-4 h-4 mr-3" />{language === 'vi' ? 'Liên hệ hỗ trợ' : language === 'tr' ? 'Destek ile İletişim' : 'Contact Support'}
+                <Mail className="w-4 h-4 mr-3" />{getText('Contact Support', 'Liên hệ hỗ trợ', 'Destek ile İletişim')}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-red-500" onClick={onLogout}>
-                <LogOut className="w-4 h-4 mr-3" />{language === 'vi' ? 'Đăng xuất' : language === 'tr' ? 'Çıkış Yap' : 'Logout'}
+                <LogOut className="w-4 h-4 mr-3" />{getText('Logout', 'Đăng xuất', 'Çıkış Yap')}
               </Button>
             </div>
           </div>
@@ -288,14 +288,18 @@ export default function Dashboard({ user, onLogout }) {
         {/* Welcome + Continue Section */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
-            {language === 'vi' ? `Chào mừng trở lại, ${user.name?.split(' ')[0] || 'Học viên'}!` : 
-             language === 'tr' ? `Tekrar hoş geldin, ${user.name?.split(' ')[0] || 'Öğrenci'}!` :
-             `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`} 👋
+            {getText(
+              `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`,
+              `Chào mừng trở lại, ${user.name?.split(' ')[0] || 'Học viên'}!`,
+              `Tekrar hoş geldin, ${user.name?.split(' ')[0] || 'Öğrenci'}!`
+            )} 👋
           </h1>
           <p className="text-gray-500 text-sm">
-            {language === 'vi' ? 'Tiếp tục hành trình IELTS của bạn' : 
-             language === 'tr' ? 'IELTS hazırlık yolculuğunuza devam edin' :
-             'Continue your IELTS preparation journey'}
+            {getText(
+              'Continue your IELTS preparation journey',
+              'Tiếp tục hành trình IELTS của bạn',
+              'IELTS hazırlık yolculuğunuza devam edin'
+            )}
           </p>
         </div>
 
