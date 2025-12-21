@@ -1658,24 +1658,155 @@ function ElevenLabsExaminer() {
                     </div>
                   )}
 
-                  {/* Multiple Choice */}
+                  {/* Multiple Choice - Single select */}
                   {question.type === 'multiple_choice' && question.options && (
-                    <div className="space-y-3">
-                      {question.options.map((option, idx) => (
-                        <button
-                          key={idx}
-                          data-testid={`option-${idx}`}
-                          onClick={() => handleAnswerChange(question.id, option.split(')')[0])}
-                          className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
-                            answers[question.id] === option.split(')')[0]
-                              ? 'border-sky-500 bg-sky-50'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      ))}
-                    </div>
+                    (() => {
+                      // Check if this is a "Choose TWO" question by text
+                      const isMultiSelect = question.question?.toLowerCase().includes('two') || 
+                                            question.question?.toLowerCase().includes('select two');
+                      
+                      if (isMultiSelect) {
+                        const selectedAnswers = Array.isArray(answers[question.id]) 
+                          ? answers[question.id] 
+                          : (answers[question.id] ? [answers[question.id]] : []);
+                        
+                        const handleMultiSelect = (optionLetter) => {
+                          let newAnswers;
+                          if (selectedAnswers.includes(optionLetter)) {
+                            newAnswers = selectedAnswers.filter(a => a !== optionLetter);
+                          } else if (selectedAnswers.length < 2) {
+                            newAnswers = [...selectedAnswers, optionLetter];
+                          } else {
+                            newAnswers = [...selectedAnswers.slice(1), optionLetter];
+                          }
+                          handleAnswerChange(question.id, newAnswers);
+                        };
+                        
+                        return (
+                          <div className="space-y-3">
+                            <div className={`text-sm px-3 py-2 rounded-lg font-medium flex items-center gap-2 ${
+                              selectedAnswers.length === 2 
+                                ? 'bg-green-50 text-green-700' 
+                                : 'bg-amber-50 text-amber-700'
+                            }`}>
+                              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
+                                selectedAnswers.length === 2 
+                                  ? 'bg-green-500 text-white' 
+                                  : 'bg-amber-400 text-white'
+                              }`}>
+                                {selectedAnswers.length}
+                              </span>
+                              Select exactly 2 options ({selectedAnswers.length}/2 selected)
+                            </div>
+                            {question.options.map((option, idx) => {
+                              const optionLetter = option.split(')')[0].trim();
+                              const isSelected = selectedAnswers.includes(optionLetter);
+                              return (
+                                <button
+                                  key={idx}
+                                  onClick={() => handleMultiSelect(optionLetter)}
+                                  className={`w-full text-left p-4 rounded-lg border-2 transition-colors flex items-center gap-3 ${
+                                    isSelected
+                                      ? 'border-sky-500 bg-sky-50'
+                                      : 'border-gray-200 hover:border-gray-300'
+                                  }`}
+                                >
+                                  <span className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
+                                    isSelected ? 'border-sky-500 bg-sky-500' : 'border-gray-300'
+                                  }`}>
+                                    {isSelected && <span className="text-white text-sm font-bold">✓</span>}
+                                  </span>
+                                  {option}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        );
+                      }
+                      
+                      // Single select
+                      return (
+                        <div className="space-y-3">
+                          {question.options.map((option, idx) => (
+                            <button
+                              key={idx}
+                              data-testid={`option-${idx}`}
+                              onClick={() => handleAnswerChange(question.id, option.split(')')[0].trim())}
+                              className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
+                                answers[question.id] === option.split(')')[0].trim()
+                                  ? 'border-sky-500 bg-sky-50'
+                                  : 'border-gray-200 hover:border-gray-300'
+                              }`}
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      );
+                    })()
+                  )}
+
+                  {/* Multiple Choice Multi - Explicit multi-select type */}
+                  {question.type === 'multiple_choice_multi' && question.options && (
+                    (() => {
+                      const requiredCount = question.answer_count || 2;
+                      const selectedAnswers = Array.isArray(answers[question.id]) 
+                        ? answers[question.id] 
+                        : (answers[question.id] ? [answers[question.id]] : []);
+                      
+                      const handleMultiSelect = (optionLetter) => {
+                        let newAnswers;
+                        if (selectedAnswers.includes(optionLetter)) {
+                          newAnswers = selectedAnswers.filter(a => a !== optionLetter);
+                        } else if (selectedAnswers.length < requiredCount) {
+                          newAnswers = [...selectedAnswers, optionLetter];
+                        } else {
+                          newAnswers = [...selectedAnswers.slice(1), optionLetter];
+                        }
+                        handleAnswerChange(question.id, newAnswers);
+                      };
+                      
+                      return (
+                        <div className="space-y-3">
+                          <div className={`text-sm px-3 py-2 rounded-lg font-medium flex items-center gap-2 ${
+                            selectedAnswers.length === requiredCount 
+                              ? 'bg-green-50 text-green-700' 
+                              : 'bg-amber-50 text-amber-700'
+                          }`}>
+                            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
+                              selectedAnswers.length === requiredCount 
+                                ? 'bg-green-500 text-white' 
+                                : 'bg-amber-400 text-white'
+                            }`}>
+                              {selectedAnswers.length}
+                            </span>
+                            Select exactly {requiredCount} options ({selectedAnswers.length}/{requiredCount} selected)
+                          </div>
+                          {question.options.map((option, idx) => {
+                            const optionLetter = option.split(')')[0].trim();
+                            const isSelected = selectedAnswers.includes(optionLetter);
+                            return (
+                              <button
+                                key={idx}
+                                onClick={() => handleMultiSelect(optionLetter)}
+                                className={`w-full text-left p-4 rounded-lg border-2 transition-colors flex items-center gap-3 ${
+                                  isSelected
+                                    ? 'border-sky-500 bg-sky-50'
+                                    : 'border-gray-200 hover:border-gray-300'
+                                }`}
+                              >
+                                <span className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
+                                  isSelected ? 'border-sky-500 bg-sky-500' : 'border-gray-300'
+                                }`}>
+                                  {isSelected && <span className="text-white text-sm font-bold">✓</span>}
+                                </span>
+                                {option}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()
                   )}
 
                   {/* True/False/Not Given */}
