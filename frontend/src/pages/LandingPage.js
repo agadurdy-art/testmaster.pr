@@ -192,32 +192,284 @@ export default function LandingPage({ onLogin, user }) {
         </div>
       </section>
 
-      {/* WHAT MAKES US DIFFERENT - Comparison Section */}
-      <section className="py-20 px-6 bg-gradient-to-br from-slate-900 via-violet-900 to-purple-900">
+      {/* THE METHODOLOGY - Test → Diagnose → Study → Retry */}
+      <section className="py-20 px-6 bg-gradient-to-r from-violet-600 to-purple-700">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              What makes us different
+              Our Learning Methodology
             </h2>
-            <p className="text-lg text-violet-200">See the difference between generic AI and Cambridge-trained AI</p>
+            <p className="text-lg text-violet-100">A proven cycle that builds real IELTS skills, not false confidence</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Most Platforms */}
-            <Card className="p-8 bg-white/5 backdrop-blur border border-white/10 rounded-2xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
-                  <XCircle className="w-5 h-5 text-red-400" />
-                </div>
-                <h3 className="text-xl font-bold text-white">Most Platforms</h3>
+          {/* Methodology Flow */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { 
+                step: '1', 
+                title: 'TEST', 
+                icon: FileText,
+                desc: 'Take a real exam-style test under timed conditions',
+                color: 'bg-blue-500'
+              },
+              { 
+                step: '2', 
+                title: 'DIAGNOSE', 
+                icon: Brain,
+                desc: 'AI identifies your exact weaknesses and limiting factors',
+                color: 'bg-amber-500'
+              },
+              { 
+                step: '3', 
+                title: 'STUDY', 
+                icon: BookOpen,
+                desc: 'Learn targeted lessons designed to fix your specific gaps',
+                color: 'bg-emerald-500'
+              },
+              { 
+                step: '4', 
+                title: 'RETRY', 
+                icon: TrendingUp,
+                desc: 'Practice again with focused improvement until you master it',
+                color: 'bg-pink-500'
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="relative">
+                <Card className="p-6 bg-white/10 backdrop-blur border border-white/20 rounded-2xl text-center h-full">
+                  <div className={`w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center mx-auto mb-4 shadow-lg`}>
+                    <item.icon className="w-7 h-7 text-white" />
+                  </div>
+                  <div className="text-xs font-bold text-violet-200 mb-1">STEP {item.step}</div>
+                  <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                  <p className="text-violet-100 text-sm">{item.desc}</p>
+                </Card>
+                {idx < 3 && (
+                  <div className="hidden lg:flex absolute top-1/2 -right-3 transform -translate-y-1/2 z-10">
+                    <ChevronRight className="w-6 h-6 text-white/50" />
+                  </div>
+                )}
               </div>
-              <ul className="space-y-4">
+            ))}
+          </div>
+
+          {/* Loop indicator */}
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-violet-100">
+              <Clock className="w-4 h-4" />
+              <span className="text-sm">Repeat until you reach your target band</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3-WAY COMPARISON - Traditional vs Other AI vs IELTS Ace */}
+      <section className="py-20 px-6 bg-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              Compare the Methods
+            </h2>
+            <p className="text-lg text-gray-400">Traditional classes, Generic AI, and Cambridge-trained AI</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            {/* Traditional Methods */}
+            <Card className="p-6 bg-gray-800 border border-gray-700 rounded-2xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-gray-300" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Traditional Classes</h3>
+                  <span className="text-xs text-gray-400">Books & Teachers</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-6">
                 {[
-                  'Give a band score without explanation',
-                  'Use generic, encouraging feedback',
-                  'Leave students confused about improvement',
-                  'Inflate scores to make users feel good',
-                  'Focus on quantity of practice, not quality'
+                  { text: 'Limited practice time', bad: true },
+                  { text: 'Expensive private tutors', bad: true },
+                  { text: 'Generic group feedback', bad: true },
+                  { text: 'Fixed schedule required', bad: true },
+                  { text: 'No instant evaluation', bad: true }
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-gray-300 text-sm">
+                    <XCircle className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" />
+                    <span>{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-4 border-t border-gray-700">
+                <p className="text-gray-400 text-xs">Best for: Learners who need in-person motivation</p>
+              </div>
+            </Card>
+
+            {/* Other AI Platforms */}
+            <Card className="p-6 bg-gray-800 border border-gray-700 rounded-2xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-orange-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Other AI Platforms</h3>
+                  <span className="text-xs text-gray-400">Generic AI Scoring</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {[
+                  { text: 'Instant feedback', good: true },
+                  { text: 'Inflated scores for engagement', bad: true },
+                  { text: 'Generic encouraging comments', bad: true },
+                  { text: 'No examiner logic', bad: true },
+                  { text: 'No clear improvement path', bad: true }
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-gray-300 text-sm">
+                    {item.good ? (
+                      <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-orange-400 flex-shrink-0 mt-0.5" />
+                    )}
+                    <span>{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-4 border-t border-gray-700">
+                <p className="text-gray-400 text-xs">Best for: Quick practice without accuracy</p>
+              </div>
+            </Card>
+
+            {/* IELTS Ace */}
+            <Card className="p-6 bg-gradient-to-br from-violet-600/20 to-purple-600/20 border-2 border-violet-500 rounded-2xl relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span className="px-3 py-1 bg-violet-500 text-white text-xs font-bold rounded-full">RECOMMENDED</span>
+              </div>
+              <div className="flex items-center gap-3 mb-6 mt-2">
+                <div className="w-10 h-10 rounded-full bg-violet-500 flex items-center justify-center">
+                  <Trophy className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">IELTS Ace</h3>
+                  <span className="text-xs text-violet-300">Cambridge-Trained AI</span>
+                </div>
+              </div>
+              <ul className="space-y-3 mb-6">
+                {[
+                  'Real examiner evaluation logic',
+                  'Honest band scores (no inflation)',
+                  'Explains WHY you got each band',
+                  'Diagnoses your exact weaknesses',
+                  'Test → Study → Retry pathway'
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-white text-sm">
+                    <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-4 border-t border-violet-500/30">
+                <p className="text-violet-200 text-xs">Best for: Serious learners who want real improvement</p>
+              </div>
+            </Card>
+          </div>
+
+          {/* Quote */}
+          <div className="mt-12 text-center">
+            <p className="text-xl text-gray-300 italic">
+              "We don't train you to sound fluent.<br/>
+              <span className="text-white font-semibold">We train you to think, respond, and perform like an IELTS candidate.</span>"
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* PRACTICAL COURSES - Real-Life Application */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium mb-4">
+              <Sparkles className="w-4 h-4" />
+              Practical Learning
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Learn Skills You'll Actually Use
+            </h2>
+            <p className="text-lg text-gray-500 max-w-2xl mx-auto">
+              Every lesson is designed for real-world application. After each module, you'll have skills you can use immediately — in exams and in life.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: MessageSquare,
+                title: 'Speaking Confidence',
+                desc: 'Learn how to express complex ideas clearly. Use these skills in job interviews, presentations, and daily conversations.',
+                example: 'Part 3: Discuss abstract topics with examiner-level fluency'
+              },
+              {
+                icon: PenTool,
+                title: 'Academic Writing',
+                desc: 'Master essay structure and argumentation. Apply these skills in university assignments, reports, and professional emails.',
+                example: 'Task 2: Build arguments that persuade and inform'
+              },
+              {
+                icon: BookOpen,
+                title: 'Critical Reading',
+                desc: 'Develop skimming, scanning, and inference skills. Use them to quickly understand contracts, articles, and research papers.',
+                example: 'Passage analysis: Extract key information efficiently'
+              },
+              {
+                icon: Headphones,
+                title: 'Active Listening',
+                desc: 'Train your ear for different accents and speeds. Apply in meetings, lectures, and international communication.',
+                example: 'Section 4: Academic lecture comprehension'
+              },
+              {
+                icon: Brain,
+                title: 'Vocabulary Mastery',
+                desc: 'Learn topic-specific vocabulary with real usage. Use sophisticated language naturally in any context.',
+                example: 'Collocations and synonyms for precise expression'
+              },
+              {
+                icon: Target,
+                title: 'Time Management',
+                desc: 'Practice under timed conditions. Develop skills to work efficiently under pressure in any situation.',
+                example: 'Complete tasks within strict time limits'
+              }
+            ].map((item, idx) => (
+              <Card key={idx} className="p-6 bg-gray-50 border-0 rounded-2xl hover:bg-white hover:shadow-lg transition-all">
+                <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center mb-4 shadow-lg">
+                  <item.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600 text-sm mb-3">{item.desc}</p>
+                <div className="p-2 bg-emerald-50 rounded-lg">
+                  <p className="text-emerald-700 text-xs font-medium">📚 {item.example}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Course Value Highlight */}
+          <div className="mt-12 p-6 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl border border-emerald-100">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                  <Award className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">Guaranteed Real-World Application</h3>
+                  <p className="text-gray-600">Each lesson ends with a practical exercise you can apply immediately. No theoretical knowledge that sits unused.</p>
+                </div>
+              </div>
+              <Button onClick={() => setShowAuth(true)} className="bg-emerald-600 hover:bg-emerald-700 text-white whitespace-nowrap">
+                Start Learning <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW OUR AI WORKS - Trust Section */}
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 text-gray-300">
                     <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
