@@ -17,15 +17,60 @@ import { useI18n } from '../lib/i18n';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
+// Course configurations with band ranges
+const COURSES = [
+  {
+    id: 'beginner',
+    name: 'Beginner Course',
+    nameVi: 'Khóa học Cơ bản',
+    bandRange: 'Band 4.0 - 5.0',
+    description: 'Foundation skills for IELTS beginners',
+    descriptionVi: 'Kỹ năng nền tảng cho người mới bắt đầu IELTS',
+    color: 'from-emerald-500 to-teal-600',
+    lightBg: 'bg-emerald-50',
+    icon: '🌱',
+    apiEndpoint: '/api/beginner-course/lessons',
+    previewRoute: '/lesson-preview/beginner'
+  },
+  {
+    id: 'mastery',
+    name: 'Mastery Course',
+    nameVi: 'Khóa học Trung cấp',
+    bandRange: 'Band 5.5 - 6.5',
+    description: 'Intermediate skills to break through plateaus',
+    descriptionVi: 'Kỹ năng trung cấp để phá vỡ rào cản',
+    color: 'from-blue-500 to-indigo-600',
+    lightBg: 'bg-blue-50',
+    icon: '📚',
+    apiEndpoint: '/api/mastery-course/modules',
+    previewRoute: '/lesson-preview/mastery'
+  },
+  {
+    id: 'advanced',
+    name: 'Advanced Mastery',
+    nameVi: 'Khóa học Nâng cao',
+    bandRange: 'Band 6.5 - 9.0',
+    description: 'Advanced strategies for high band scores',
+    descriptionVi: 'Chiến lược nâng cao để đạt band cao',
+    color: 'from-amber-500 to-orange-600',
+    lightBg: 'bg-amber-50',
+    icon: '🏆',
+    apiEndpoint: '/api/advanced-mastery/modules',
+    previewRoute: '/lesson-preview/advanced'
+  }
+];
+
 export default function LandingPage({ onLogin, user }) {
   const navigate = useNavigate();
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState('signup');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [processingSocial, setProcessingSocial] = useState(false);
   const [previewModules, setPreviewModules] = useState([]);
+  const [showCourseSelector, setShowCourseSelector] = useState(false);
+  const [courseLessons, setCourseLessons] = useState({});
   
   const handleStartFreePractice = () => {
     navigate('/level-test');
