@@ -234,6 +234,18 @@ frontend:
         agent: "testing"
         comment: "❌ CRITICAL AUTHENTICATION ISSUE - Dashboard testing blocked by authentication session management problems. Test user (dashboard@test.com/test12345) can successfully login through the login modal, but authentication session is not properly maintained. When navigating to /dashboard, user gets redirected back to landing page (/), indicating session persistence issues. This prevents comprehensive testing of all dashboard features: Welcome message with user name, Continue Learning CTA card, Practice Tests section (4 skill cards), Lessons & Courses section (3 courses), Learning Tools section, Recent Tests section, View Full Progress card, Vietnamese localization, and mobile menu functionality. Dashboard components appear properly implemented in code, but authentication barrier blocks functional verification. REQUIRES IMMEDIATE FIX of user session persistence and authentication state management."
 
+  - task: "Turkish Localization - Comprehensive Verification"
+    implemented: true
+    working: false
+    file: "frontend/src/lib/i18n.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL TURKISH LOCALIZATION FAILURE - Turkish language switching is completely non-functional. TR button is visible in language switcher but clicking it does not change the interface to Turkish. Landing page remains in English showing 'Sign In', 'Get Started', 'Start Free Level Check', 'Try Our Lessons' instead of expected Turkish equivalents 'Giriş Yap', 'Başla', 'Ücretsiz Seviye Kontrolü Başlat', 'Derslerimizi Deneyin'. Vietnamese localization works correctly (VI button successfully switches to Vietnamese), confirming trilingual infrastructure exists but Turkish implementation is broken. All Turkish translations are present in i18n.js file but not being applied to UI components. REQUIRES IMMEDIATE INVESTIGATION: Turkish language state not persisting, i18n context not updating, or translation keys not mapping correctly. Cannot test course selector modal, lesson preview pages, or dashboard in Turkish due to language switching failure."
+
 metadata:
   created_by: "main_agent"
   version: "1.1"
