@@ -102,18 +102,39 @@ export default function LandingPage({ onLogin, user }) {
 
   // Fetch preview modules for "Try Our Lessons" section
   useEffect(() => {
-    const fetchPreviewModules = async () => {
+    const fetchAllCourseLessons = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/advanced-mastery/modules`);
-        if (res.ok) {
-          const data = await res.json();
-          setPreviewModules(data);
+        // Fetch lessons from all 3 courses
+        const [beginnerRes, masteryRes, advancedRes] = await Promise.all([
+          fetch(`${API_URL}/api/beginner-course/lessons`).catch(() => ({ ok: false })),
+          fetch(`${API_URL}/api/mastery-course/modules`).catch(() => ({ ok: false })),
+          fetch(`${API_URL}/api/advanced-mastery/modules`).catch(() => ({ ok: false }))
+        ]);
+        
+        const lessons = {};
+        
+        if (beginnerRes.ok) {
+          const data = await beginnerRes.json();
+          lessons.beginner = Array.isArray(data) ? data.slice(0, 3) : [];
         }
+        
+        if (masteryRes.ok) {
+          const data = await masteryRes.json();
+          lessons.mastery = Array.isArray(data) ? data.slice(0, 3) : [];
+        }
+        
+        if (advancedRes.ok) {
+          const data = await advancedRes.json();
+          lessons.advanced = Array.isArray(data) ? data.slice(0, 3) : [];
+          setPreviewModules(data); // For backwards compatibility
+        }
+        
+        setCourseLessons(lessons);
       } catch (e) {
-        console.error('Failed to fetch preview modules:', e);
+        console.error('Failed to fetch course lessons:', e);
       }
     };
-    fetchPreviewModules();
+    fetchAllCourseLessons();
   }, []);
 
   useEffect(() => {
