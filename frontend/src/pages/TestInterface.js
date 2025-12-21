@@ -1057,9 +1057,85 @@ function ElevenLabsExaminer() {
                             })()
                           )}
 
+                          {/* Matching Information - Dropdown selector for paragraph letters */}
+                          {q.type === 'matching_information' && (
+                            <div className="mt-2">
+                              <select
+                                value={answers[q.id] || ''}
+                                onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                              >
+                                <option value="">Select paragraph...</option>
+                                {(q.options || ['A', 'B', 'C', 'D', 'E', 'F', 'G']).map((opt, idx) => {
+                                  const letter = typeof opt === 'string' && opt.includes(')') 
+                                    ? opt.split(')')[0].replace(/[^A-G]/g, '') 
+                                    : opt;
+                                  return (
+                                    <option key={idx} value={letter}>
+                                      Paragraph {letter}
+                                    </option>
+                                  );
+                                })}
+                              </select>
+                            </div>
+                          )}
+
+                          {/* Matching Headings - Dropdown selector for heading numbers */}
+                          {q.type === 'matching_headings' && (
+                            <div className="mt-2">
+                              <select
+                                value={answers[q.id] || ''}
+                                onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                              >
+                                <option value="">Select heading...</option>
+                                {(q.options || ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x']).map((opt, idx) => (
+                                  <option key={idx} value={opt}>
+                                    {opt}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          )}
+
+                          {/* Summary Completion - Dropdown if options provided, otherwise text input */}
+                          {q.type === 'summary_completion' && (
+                            <div className="mt-2">
+                              {q.options && q.options.length > 0 ? (
+                                <select
+                                  value={answers[q.id] || ''}
+                                  onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
+                                >
+                                  <option value="">Select answer...</option>
+                                  {q.options.map((opt, idx) => {
+                                    const optionText = typeof opt === 'string' && opt.includes(')') 
+                                      ? opt.split(')').slice(1).join(')').trim()
+                                      : opt;
+                                    const optionKey = typeof opt === 'string' && opt.includes(')')
+                                      ? opt.split(')')[0].trim()
+                                      : opt;
+                                    return (
+                                      <option key={idx} value={optionKey}>
+                                        {opt}
+                                      </option>
+                                    );
+                                  })}
+                                </select>
+                              ) : (
+                                <Input
+                                  value={answers[q.id] || ''}
+                                  onChange={(e) => handleAnswerChange(q.id, e.target.value)}
+                                  placeholder="Type your answer..."
+                                  className="text-sm h-8"
+                                />
+                              )}
+                            </div>
+                          )}
+
+                          {/* Text input for other completion types */}
                           {(q.type === 'sentence_completion' || q.type === 'form_completion' || 
-                            q.type === 'note_completion' || q.type === 'matching_information' || 
-                            q.type === 'matching_headings' || q.type === 'summary_completion') && (
+                            q.type === 'note_completion') && (
                             <Input
                               value={answers[q.id] || ''}
                               onChange={(e) => handleAnswerChange(q.id, e.target.value)}
