@@ -287,23 +287,21 @@ export default function Dashboard({ user, onLogout }) {
           </Card>
         )}
 
-        {/* Quick Stats Row */}
-        {hasProgress && (
-          <div className="grid grid-cols-4 gap-3 mb-6">
-            {[
-              { icon: BarChart3, label: language === 'vi' ? 'Bài thi' : 'Tests', value: progress?.total_tests || 0, color: 'text-blue-600', bg: 'bg-blue-50' },
-              { icon: Award, label: language === 'vi' ? 'TB Band' : 'Avg Band', value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: 'bg-purple-50' },
-              { icon: Flame, label: language === 'vi' ? 'Cao nhất' : 'Best', value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: 'bg-orange-50' },
-              { icon: Clock, label: language === 'vi' ? 'Thời gian' : 'Time', value: `${totalHours}h${totalMinutes}m`, color: 'text-emerald-600', bg: 'bg-emerald-50' }
-            ].map((stat, idx) => (
-              <Card key={idx} className={`p-3 ${stat.bg} border-0 rounded-xl text-center`}>
-                <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-1`} />
-                <p className="text-lg font-bold text-gray-900">{stat.value}</p>
-                <p className="text-xs text-gray-500">{stat.label}</p>
-              </Card>
-            ))}
-          </div>
-        )}
+        {/* Quick Stats Row - Always visible */}
+        <div className="grid grid-cols-4 gap-3 mb-6">
+          {[
+            { icon: BarChart3, label: language === 'vi' ? 'Bài thi' : 'Tests', value: progress?.total_tests || 0, color: 'text-blue-600', bg: 'bg-blue-50' },
+            { icon: Award, label: language === 'vi' ? 'TB Band' : 'Avg Band', value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: 'bg-purple-50' },
+            { icon: Flame, label: language === 'vi' ? 'Cao nhất' : 'Best', value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: 'bg-orange-50' },
+            { icon: Clock, label: language === 'vi' ? 'Thời gian' : 'Time', value: `${totalHours}h${totalMinutes}m`, color: 'text-emerald-600', bg: 'bg-emerald-50' }
+          ].map((stat, idx) => (
+            <Card key={idx} className={`p-3 ${stat.bg} border-0 rounded-xl text-center`}>
+              <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-1`} />
+              <p className="text-lg font-bold text-gray-900">{stat.value}</p>
+              <p className="text-xs text-gray-500">{stat.label}</p>
+            </Card>
+          ))}
+        </div>
 
         {/* Main Navigation Grid */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
