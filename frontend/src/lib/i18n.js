@@ -712,6 +712,9 @@ export const translations = {
     landingExploreCourse: 'Khám phá khóa học',
     
     // Try Our Lessons
+    landingTryOurLessons: 'Thử bài học',
+    landingChooseCourse: 'Chọn trình độ của bạn',
+    landingChooseCourseDesc: 'Chọn khóa học phù hợp với band hiện tại của bạn. Thử 3 bài học miễn phí từ mỗi khóa để tìm khóa phù hợp nhất.',
     landingTryLessonsBadge: 'Xem trước miễn phí',
     landingTryLessonsTitle: 'Thử bài học của chúng tôi — Không cần đăng ký',
     landingTryLessonsDesc: 'Trải nghiệm bài học theo chuẩn Cambridge trước khi quyết định. Mỗi module bao gồm từ vựng nâng cao, cấu trúc ngữ pháp, và luyện tập với AI.',
@@ -722,6 +725,8 @@ export const translations = {
     landingStartLesson: 'Bắt đầu bài học',
     landingSignUpToUnlock: 'Đăng ký để mở khóa tất cả bài học',
     landingMoreLessons: 'Truy cập hơn 20 module toàn diện bao gồm tất cả chủ đề IELTS',
+    landingMoreLessonsAvailable: 'Còn nhiều bài học hơn nữa!',
+    landingSignUpForMore: 'Đăng ký để mở khóa tất cả bài học của mọi khóa học.',
     landingUnlockAll: 'Mở khóa tất cả bài học',
     
     // Honesty Promise
