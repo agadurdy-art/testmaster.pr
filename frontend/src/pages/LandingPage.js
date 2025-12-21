@@ -8,12 +8,14 @@ import {
   BookOpen, Headphones, Mic, PenTool, CheckCircle, Target, Trophy,
   Sparkles, GraduationCap, Award, ArrowRight, Users, Zap,
   Brain, ShieldCheck, TrendingUp, XCircle, ChevronRight, Eye, MessageSquare,
-  BarChart3, Lightbulb, Clock, FileText, AlertTriangle
+  BarChart3, Lightbulb, Clock, FileText, AlertTriangle, Lock, Play
 } from 'lucide-react';
 import { registerUser, loginUser } from '../lib/api';
 import { toast } from 'sonner';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function LandingPage({ onLogin, user }) {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ export default function LandingPage({ onLogin, user }) {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [processingSocial, setProcessingSocial] = useState(false);
+  const [previewModules, setPreviewModules] = useState([]);
   
   const handleStartFreePractice = () => {
     navigate('/level-test');
