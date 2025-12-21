@@ -800,6 +800,98 @@ export default function LandingPage({ onLogin, user }) {
         </div>
       </footer>
 
+      {/* Course Selector Dialog */}
+      <Dialog open={showCourseSelector} onOpenChange={setShowCourseSelector}>
+        <DialogContent className="bg-white border-gray-200 max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl text-gray-900 flex items-center gap-2">
+              <GraduationCap className="w-6 h-6 text-violet-600" />
+              {t('landingChooseCourse')}
+            </DialogTitle>
+          </DialogHeader>
+          
+          <p className="text-gray-600 mb-6">{t('landingChooseCourseDesc')}</p>
+          
+          <div className="space-y-6">
+            {COURSES.map((course) => {
+              const lessons = courseLessons[course.id] || [];
+              return (
+                <Card key={course.id} className={`p-6 ${course.lightBg} border-0 rounded-2xl`}>
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${course.color} flex items-center justify-center shadow-lg text-2xl`}>
+                      {course.icon}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {language === 'vi' ? course.nameVi : course.name}
+                        </h3>
+                        <span className="px-3 py-1 bg-white rounded-full text-sm font-bold text-gray-700 shadow-sm">
+                          {course.bandRange}
+                        </span>
+                      </div>
+                      <p className="text-gray-600 text-sm">
+                        {language === 'vi' ? course.descriptionVi : course.description}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {lessons.length > 0 ? (
+                    <div className="grid sm:grid-cols-3 gap-3">
+                      {lessons.map((lesson, idx) => (
+                        <Card
+                          key={lesson.id || idx}
+                          onClick={() => {
+                            setShowCourseSelector(false);
+                            navigate(`/lesson-preview/${course.id}/${lesson.id || lesson.module_number || idx + 1}`);
+                          }}
+                          className="p-4 bg-white border-0 shadow-sm hover:shadow-lg cursor-pointer transition-all hover:-translate-y-1 rounded-xl"
+                        >
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-white font-bold text-sm`}>
+                              {lesson.module_number || idx + 1}
+                            </div>
+                            <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">
+                              {t('landingFreePreview')}
+                            </span>
+                          </div>
+                          <h4 className="font-semibold text-gray-900 text-sm truncate">
+                            {lesson.title || lesson.topic || `Lesson ${idx + 1}`}
+                          </h4>
+                          <p className="text-xs text-gray-500 truncate mt-1">
+                            {lesson.subtitle || lesson.description || ''}
+                          </p>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-4 text-gray-500 text-sm">
+                      {t('loading')}
+                    </div>
+                  )}
+                </Card>
+              );
+            })}
+          </div>
+          
+          <div className="mt-6 p-4 bg-violet-50 rounded-xl border border-violet-200">
+            <div className="flex items-center gap-3">
+              <Award className="w-6 h-6 text-violet-600" />
+              <div>
+                <p className="text-violet-800 font-medium">{t('landingMoreLessonsAvailable')}</p>
+                <p className="text-violet-600 text-sm">{t('landingSignUpForMore')}</p>
+              </div>
+              <Button 
+                onClick={() => { setShowCourseSelector(false); setShowAuth(true); }}
+                className="ml-auto bg-violet-600 hover:bg-violet-700 text-white"
+              >
+                {t('getStarted')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Auth Dialog */}
       <Dialog open={showAuth} onOpenChange={setShowAuth}>
         <DialogContent data-testid="auth-dialog" className="bg-white border-gray-200">
