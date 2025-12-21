@@ -220,6 +220,7 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Newly Redesigned IELTS Ace Dashboard"
     - "Test Notebook Panel in Reading tests (Phase 2)"
     - "Test Highlighter in Reading tests (Phase 2)"
     - "Test Writing Results Panel with original text view (Phase 3)"
@@ -227,10 +228,11 @@ test_plan:
   completed_testing:
     - "Try Our Lessons Feature - Landing Page"
     - "Lesson Preview Pages - Free and Locked Access"
-  stuck_tasks: []
+  stuck_tasks:
+    - "Newly Redesigned IELTS Ace Dashboard"
   test_all: false
   test_priority: "high_first"
-  notes: "Phase 2-4 components were removed from AdvancedMasteryCourse.js and integrated into TestInterface.js (for tests) and Results.js (for results). Key changes: Notebook and Highlighter added to academic reading tests, Writing results now show user's original text with Band 8+ sample comparison. NEW: Try Our Lessons feature testing completed successfully - all scenarios working as expected."
+  notes: "Phase 2-4 components were removed from AdvancedMasteryCourse.js and integrated into TestInterface.js (for tests) and Results.js (for results). Key changes: Notebook and Highlighter added to academic reading tests, Writing results now show user's original text with Band 8+ sample comparison. NEW: Try Our Lessons feature testing completed successfully - all scenarios working as expected. CRITICAL ISSUE: Dashboard testing blocked by authentication session management problems - user login works but session is not maintained, causing redirects to landing page."
 
 agent_communication:
   - agent: "testing"
