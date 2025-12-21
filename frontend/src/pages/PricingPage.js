@@ -153,7 +153,7 @@ export default function PricingPage({ user }) {
               <div className="flex flex-col md:flex-row gap-4 items-center">
                 <div className="w-full md:w-1/2 flex justify-center"><img src={selectedPlan.qrUrl} alt={`QR ${selectedPlan.name}`} className="max-h-64 w-auto rounded-lg border border-gray-200 bg-white p-2" /></div>
                 <div className="w-full md:w-1/2 text-sm space-y-2 text-gray-600">
-                  <p><span className="font-semibold text-gray-900">{t('bankPlan')}:</span> {language === 'vi' ? selectedPlan.nameVi : selectedPlan.name}</p>
+                  <p><span className="font-semibold text-gray-900">{t('bankPlan')}:</span> {language === 'vi' ? selectedPlan.nameVi : language === 'tr' ? selectedPlan.nameTr : selectedPlan.name}</p>
                   <p><span className="font-semibold text-gray-900">{t('bankAmount')}:</span> {selectedPlan.priceVnd}</p>
                   <p><span className="font-semibold text-gray-900">{t('bankAccountName')}:</span> OVEZDURDYYEV AGAGELDI</p>
                   <p><span className="font-semibold text-gray-900">{t('bankAccountNumber')}:</span> 700036356609</p>
