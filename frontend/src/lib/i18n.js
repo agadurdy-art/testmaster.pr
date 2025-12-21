@@ -277,6 +277,7 @@ export const translations = {
     landingAceItem5: 'Test → Study → Retry pathway',
     
     // Practical Skills
+    landingPracticalLearningBadge: 'Practical Learning',
     landingPracticalTitle: 'Learn Skills You\'ll Actually Use',
     landingPracticalDesc: 'Every lesson is designed for real-world application. After each module, you\'ll have skills you can use immediately — in exams and in life.',
     landingSpeakingConfidence: 'Speaking Confidence',
