@@ -920,6 +920,10 @@ function ElevenLabsExaminer() {
                         'form_completion': {
                           title: 'Form Completion',
                           instruction: 'Complete the form below. Write NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.'
+                        },
+                        'multiple_choice_multi': {
+                          title: 'Multiple Choice (Select TWO)',
+                          instruction: 'Choose TWO correct answers from the options below.'
                         }
                       };
                       
