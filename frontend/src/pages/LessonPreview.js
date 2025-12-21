@@ -205,19 +205,24 @@ export default function LessonPreview() {
     const terms = lesson.vocabulary?.advanced_terms || lesson.vocabulary || [];
     const synonymGroups = lesson.vocabulary?.synonym_groups || [];
     
+    // Handle learning_goals as either string or array
+    const learningGoals = lesson.learning_goals 
+      ? (Array.isArray(lesson.learning_goals) ? lesson.learning_goals : [lesson.learning_goals])
+      : null;
+    
     return (
       <Card className="p-6 bg-white border-0 shadow-lg">
         <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-amber-600" /> {t('landingLessonVocab')}
         </h3>
         
-        {lesson.learning_goals && (
+        {learningGoals && (
           <div className="mb-6 p-4 bg-amber-50 rounded-xl">
             <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
               <Target className="w-4 h-4" /> Learning Goals
             </h4>
             <ul className="space-y-1">
-              {lesson.learning_goals.map((goal, i) => (
+              {learningGoals.map((goal, i) => (
                 <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
                   {goal}
