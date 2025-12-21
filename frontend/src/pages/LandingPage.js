@@ -6,7 +6,9 @@ import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
 import { 
   BookOpen, Headphones, Mic, PenTool, CheckCircle, Target, Trophy,
-  Sparkles, GraduationCap, Award, ArrowRight, Star, Users, Zap, Play, AlertTriangle
+  Sparkles, GraduationCap, Award, ArrowRight, Star, Users, Zap, Play, AlertTriangle,
+  Brain, ShieldCheck, TrendingUp, XCircle, ChevronRight, Eye, MessageSquare,
+  BarChart3, Lightbulb, Clock, FileText
 } from 'lucide-react';
 import { registerUser, loginUser } from '../lib/api';
 import { toast } from 'sonner';
@@ -22,7 +24,6 @@ export default function LandingPage({ onLogin, user }) {
   const [loading, setLoading] = useState(false);
   const [processingSocial, setProcessingSocial] = useState(false);
   
-  // Handle "Start Free Practice" - navigates to in-app level test
   const handleStartFreePractice = () => {
     navigate('/level-test');
   };
@@ -51,7 +52,6 @@ export default function LandingPage({ onLogin, user }) {
     }
   };
 
-  // Redirect to dashboard if user is logged in
   useEffect(() => {
     if (user) {
       navigate('/dashboard');
@@ -63,236 +63,424 @@ export default function LandingPage({ onLogin, user }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-violet-50/20 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center shadow-lg shadow-purple-200">
               <Trophy className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">IELTS Ace</h1>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">IELTS Ace</h1>
+              <p className="text-xs text-gray-500">Cambridge-Aligned AI</p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher compact />
-            <Button 
-              variant="ghost" 
-              className="text-gray-600 hover:text-violet-600 hidden sm:flex"
-              onClick={() => setShowAuth(true)}
-            >
+            <Button variant="ghost" className="text-gray-600 hover:text-violet-600 hidden sm:flex" onClick={() => { setAuthMode('signin'); setShowAuth(true); }}>
               Sign In
             </Button>
-            <Button 
-              data-testid="get-started-btn" 
-              onClick={() => setShowAuth(true)} 
-              className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white shadow-lg shadow-purple-200 border-0"
-            >
+            <Button data-testid="get-started-btn" onClick={() => setShowAuth(true)} className="bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 text-white shadow-lg shadow-purple-200 border-0">
               {t('getStarted')}
             </Button>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-16 pb-24 px-6">
-        <div className="max-w-7xl mx-auto">
+      {/* HERO SECTION - Philosophy First */}
+      <section className="pt-20 pb-24 px-6">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-100 text-violet-700 text-sm font-medium mb-8">
-              <Sparkles className="w-4 h-4" />
-              <span>AI-Powered IELTS Preparation</span>
+              <Brain className="w-4 h-4" />
+              <span>AI Trained Like a Real Cambridge Examiner</span>
             </div>
 
-            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
-              Achieve Your Dream
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
+              Prepare for IELTS with an AI that
               <span className="block mt-2 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
-                IELTS Score
+                thinks like a real examiner
               </span>
             </h2>
-            <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
-              Practice with real exam questions, get instant AI feedback, and track your progress 
-              towards your target band score.
+            
+            <p className="text-xl text-gray-600 mb-4 leading-relaxed max-w-3xl mx-auto">
+              Not just scores. <span className="font-semibold text-gray-800">Real examiner-style evaluation</span>, 
+              honest feedback, and a clear path to improvement.
             </p>
-            <div className="flex flex-wrap gap-4 justify-center mb-8">
+            
+            <p className="text-lg text-gray-500 mb-10 max-w-2xl mx-auto">
+              Most platforms only tell you what band you got. We explain <span className="text-violet-600 font-medium">why</span> you received that band, 
+              what stopped you from scoring higher, and exactly what to study next.
+            </p>
+
+            <div className="flex flex-wrap gap-4 justify-center mb-12">
               <Button 
                 data-testid="start-practicing-btn"
                 onClick={handleStartFreePractice} 
                 size="lg" 
-                className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-8 py-6 text-lg shadow-xl shadow-purple-200 border-0"
+                className="bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 text-white px-8 py-6 text-lg shadow-xl shadow-purple-200 border-0"
               >
-                Start Free Practice
+                Start Free Level Check
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-            </div>
-            
-            {/* Tutorial Video Section */}
-            <div className="max-w-2xl mx-auto">
-              <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-4 mb-3 text-center">
-                <div className="flex items-center justify-center gap-2 text-violet-700 font-semibold mb-1">
-                  <Play className="w-5 h-5" />
-                  <span>Watch How It Works</span>
-                </div>
-                <p className="text-sm text-gray-600">See how IELTS Ace helps you achieve your target score</p>
-              </div>
-              
-              {/* Video Placeholder - Replace with actual video */}
-              <div className="aspect-video bg-gray-900 rounded-xl overflow-hidden shadow-2xl">
-                <div className="w-full h-full flex items-center justify-center text-white">
-                  <div className="text-center">
-                    <Play className="w-16 h-16 mx-auto mb-4 opacity-80" />
-                    <p className="text-lg font-medium">Tutorial Video Coming Soon</p>
-                    <p className="text-sm text-gray-400 mt-2">Learn how to use IELTS Ace effectively</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-8 mt-12 text-gray-500 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                  <Users className="w-4 h-4 text-green-600" />
-                </div>
-                <span className="font-medium">10,000+ Students</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
-                  <Star className="w-4 h-4 text-yellow-600" />
-                </div>
-                <span className="font-medium">4.9/5 Rating</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-purple-600" />
-                </div>
-                <span className="font-medium">Instant AI Feedback</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Module Cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mt-20">
-            {[
-              { icon: BookOpen, title: 'Reading', desc: '3 passages • 40 questions', color: 'bg-blue-500', lightBg: 'bg-blue-50', lightText: 'text-blue-600', shadow: 'shadow-blue-100' },
-              { icon: Headphones, title: 'Listening', desc: '4 sections • 40 questions', color: 'bg-purple-500', lightBg: 'bg-purple-50', lightText: 'text-purple-600', shadow: 'shadow-purple-100' },
-              { icon: PenTool, title: 'Writing', desc: '2 tasks • AI scoring', color: 'bg-orange-500', lightBg: 'bg-orange-50', lightText: 'text-orange-600', shadow: 'shadow-orange-100' },
-              { icon: Mic, title: 'Speaking', desc: '3 parts • AI examiner', color: 'bg-emerald-500', lightBg: 'bg-emerald-50', lightText: 'text-emerald-600', shadow: 'shadow-emerald-100' }
-            ].map((module, idx) => (
-              <Card 
-                key={idx} 
-                data-testid={`module-card-${module.title.toLowerCase()}`}
-                className={`p-6 bg-white border-0 shadow-lg ${module.shadow} hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-2 rounded-2xl`}
+              <Button 
+                variant="outline"
+                size="lg" 
+                onClick={() => navigate('/speaking-practice')}
+                className="px-8 py-6 text-lg border-2 border-violet-200 text-violet-700 hover:bg-violet-50"
               >
-                <div className={`w-14 h-14 rounded-2xl ${module.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                  <module.icon className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{module.title}</h3>
-                <p className="text-gray-500">{module.desc}</p>
-              </Card>
-            ))}
+                <Mic className="w-5 h-5 mr-2" />
+                Try AI Speaking Examiner
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+      {/* WHY CHOOSE US - Core Differentiation */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-              Why Choose IELTS Ace?
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Why learners choose IELTS Ace
             </h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              Everything you need to achieve your target band score
-            </p>
+            <p className="text-lg text-gray-500">What makes our AI different from generic scoring tools</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: Sparkles,
-                title: 'AI-Powered Feedback',
-                desc: 'Get instant, detailed feedback on your writing and speaking with advanced AI technology',
+                icon: Brain,
+                title: 'Examiner-based AI',
+                desc: 'Our AI is trained with official IELTS band descriptors and examiner logic — not generic scoring patterns.',
                 color: 'bg-violet-500',
                 lightBg: 'bg-violet-50'
               },
               {
-                icon: Target,
-                title: 'Personalized Learning',
-                desc: 'Adaptive practice that focuses on your weak areas to maximize improvement',
-                color: 'bg-pink-500',
-                lightBg: 'bg-pink-50'
+                icon: ShieldCheck,
+                title: 'No Band Inflation',
+                desc: 'Fluent but irrelevant answers are capped. Just like the real IELTS exam.',
+                color: 'bg-red-500',
+                lightBg: 'bg-red-50'
               },
               {
-                icon: Award,
-                title: 'Real Exam Experience',
-                desc: 'Practice with authentic test formats and timed conditions',
+                icon: Lightbulb,
+                title: 'Teaching, Not Just Testing',
+                desc: "We don't stop at scores. We explain decisions and guide your next steps.",
                 color: 'bg-amber-500',
                 lightBg: 'bg-amber-50'
+              },
+              {
+                icon: TrendingUp,
+                title: 'Personal Learning Path',
+                desc: 'Every result leads to targeted practice based on your specific weaknesses.',
+                color: 'bg-emerald-500',
+                lightBg: 'bg-emerald-50'
               }
             ].map((feature, idx) => (
-              <Card 
-                key={idx} 
-                data-testid={`benefit-card-${idx}`} 
-                className="p-8 bg-gray-50 border-0 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className={`w-16 h-16 rounded-2xl ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg`}>
-                  <feature.icon className="w-8 h-8 text-white" />
+              <Card key={idx} className={`p-6 ${feature.lightBg} border-0 rounded-2xl hover:shadow-lg transition-all duration-300`}>
+                <div className={`w-12 h-12 rounded-xl ${feature.color} flex items-center justify-center mb-4 shadow-lg`}>
+                  <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-500 leading-relaxed">{feature.desc}</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-violet-500 to-purple-600">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: '10K+', label: 'Active Students', icon: Users },
-              { value: '50K+', label: 'Tests Completed', icon: CheckCircle },
-              { value: '7.5', label: 'Avg. Band Score', icon: Award },
-              { value: '95%', label: 'Satisfaction Rate', icon: Star }
-            ].map((stat, idx) => (
-              <div key={idx} className="text-center">
-                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center mx-auto mb-3">
-                  <stat.icon className="w-6 h-6 text-white" />
+      {/* WHAT MAKES US DIFFERENT - Comparison Section */}
+      <section className="py-20 px-6 bg-gradient-to-br from-slate-900 via-violet-900 to-purple-900">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+              What makes us different
+            </h2>
+            <p className="text-lg text-violet-200">See the difference between generic AI and Cambridge-trained AI</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Most Platforms */}
+            <Card className="p-8 bg-white/5 backdrop-blur border border-white/10 rounded-2xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+                  <XCircle className="w-5 h-5 text-red-400" />
                 </div>
-                <div className="text-4xl sm:text-5xl font-bold text-white mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-violet-100">{stat.label}</div>
+                <h3 className="text-xl font-bold text-white">Most Platforms</h3>
               </div>
+              <ul className="space-y-4">
+                {[
+                  'Give a band score without explanation',
+                  'Use generic, encouraging feedback',
+                  'Leave students confused about improvement',
+                  'Inflate scores to make users feel good',
+                  'Focus on quantity of practice, not quality'
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-gray-300">
+                    <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            {/* IELTS Ace */}
+            <Card className="p-8 bg-gradient-to-br from-violet-500/20 to-purple-500/20 backdrop-blur border border-violet-400/30 rounded-2xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                </div>
+                <h3 className="text-xl font-bold text-white">IELTS Ace</h3>
+              </div>
+              <ul className="space-y-4">
+                {[
+                  'Explains band decisions with examiner logic',
+                  'Diagnoses your key weaknesses precisely',
+                  'Connects tests directly to study materials',
+                  'Applies strict Cambridge band caps',
+                  'Builds long-term improvement, not false confidence'
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-white">
+                    <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+
+          {/* Quote */}
+          <div className="mt-12 text-center">
+            <p className="text-xl text-violet-200 italic">
+              "We don't train you to sound fluent.<br/>
+              <span className="text-white font-semibold">We train you to perform like an IELTS candidate.</span>"
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW OUR AI WORKS - Trust Section */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-100 text-violet-700 text-sm font-medium mb-6">
+                <Eye className="w-4 h-4" />
+                How Real Examiners Think
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+                Our AI evaluates like a Cambridge examiner
+              </h2>
+              <p className="text-lg text-gray-600 mb-8">
+                Our AI evaluates your performance using the exact same logic that real IELTS examiners use:
+              </p>
+              
+              <div className="space-y-4">
+                {[
+                  { num: '1', title: 'Question Relevance', desc: 'Did you actually answer the question asked?' },
+                  { num: '2', title: 'Task Fulfilment', desc: 'Did you complete all parts of the task?' },
+                  { num: '3', title: 'Language Control', desc: 'How accurate is your grammar and vocabulary?' },
+                  { num: '4', title: 'Band Evidence', desc: 'Is there clear evidence for the band score?' }
+                ].map((step, idx) => (
+                  <div key={idx} className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
+                    <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-sm">{step.num}</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{step.title}</h4>
+                      <p className="text-sm text-gray-600">{step.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                <p className="text-amber-800 text-sm">
+                  <strong>Key Rule:</strong> If a response does not answer the question, the score is capped — regardless of fluency.
+                  <span className="block mt-1 text-amber-600">This is how real examiners think. And this is how progress actually happens.</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Screenshot Preview */}
+            <div className="relative">
+              <div className="bg-gradient-to-br from-violet-100 to-purple-100 rounded-2xl p-6 shadow-xl">
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                  {/* Mock Feedback Screenshot */}
+                  <div className="p-4 border-b bg-gradient-to-r from-violet-50 to-purple-50">
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="w-5 h-5 text-violet-600" />
+                      <span className="font-semibold text-gray-900">AI Evaluation Result</span>
+                    </div>
+                  </div>
+                  <div className="p-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600">Overall Band</span>
+                      <span className="text-2xl font-bold text-violet-600">5.5</span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="p-2 bg-gray-50 rounded-lg">
+                        <span className="text-gray-500">Task Achievement</span>
+                        <span className="block font-semibold">5.0</span>
+                      </div>
+                      <div className="p-2 bg-gray-50 rounded-lg">
+                        <span className="text-gray-500">Coherence</span>
+                        <span className="block font-semibold">5.5</span>
+                      </div>
+                      <div className="p-2 bg-gray-50 rounded-lg">
+                        <span className="text-gray-500">Vocabulary</span>
+                        <span className="block font-semibold">6.0</span>
+                      </div>
+                      <div className="p-2 bg-gray-50 rounded-lg">
+                        <span className="text-gray-500">Grammar</span>
+                        <span className="block font-semibold">5.5</span>
+                      </div>
+                    </div>
+                    <div className="p-3 bg-red-50 rounded-lg border border-red-100">
+                      <p className="text-sm text-red-800 font-medium">Main Limiting Factor:</p>
+                      <p className="text-sm text-red-600">Response does not fully address all parts of the question.</p>
+                    </div>
+                    <div className="p-3 bg-blue-50 rounded-lg border border-blue-100">
+                      <p className="text-sm text-blue-800 font-medium">Next Step:</p>
+                      <p className="text-sm text-blue-600">Focus on task response strategies in Module 2.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -bottom-4 -right-4 bg-violet-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-medium">
+                Real examiner-style feedback
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHO IS THIS FOR */}
+      <section className="py-20 px-6 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Who is IELTS Ace for?
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: Target, title: 'Students stuck at Band 4–5', desc: 'Breaking through the intermediate ceiling' },
+              { icon: TrendingUp, title: 'Aiming for Band 6–7+', desc: 'Need precise feedback to reach your goal' },
+              { icon: BookOpen, title: 'Self-study learners', desc: 'Need clear guidance without a tutor' },
+              { icon: MessageSquare, title: 'Tired of vague feedback', desc: 'Want honest, actionable advice' }
+            ].map((item, idx) => (
+              <Card key={idx} className="p-6 bg-white border-0 rounded-2xl hover:shadow-lg transition-all text-center">
+                <div className="w-14 h-14 rounded-2xl bg-violet-100 flex items-center justify-center mx-auto mb-4">
+                  <item.icon className="w-7 h-7 text-violet-600" />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-500">{item.desc}</p>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <Card className="p-12 text-center bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200 rounded-3xl">
-            <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-purple-200">
-              <GraduationCap className="w-10 h-10 text-white" />
-            </div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Ready to Start Your IELTS Journey?
+      {/* WHAT'S INSIDE - Features Preview */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Complete IELTS Preparation
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Join thousands of successful students achieving their dream scores
-            </p>
+            <p className="text-lg text-gray-500">All four skills with AI-powered evaluation</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: BookOpen, title: 'Reading', desc: 'Academic & General • Full passages • 12 question types', color: 'bg-blue-500', shadow: 'shadow-blue-100' },
+              { icon: Headphones, title: 'Listening', desc: '4 sections • Real audio • Timed practice', color: 'bg-purple-500', shadow: 'shadow-purple-100' },
+              { icon: PenTool, title: 'Writing', desc: 'Task 1 & 2 • AI scoring • Band 8+ samples', color: 'bg-orange-500', shadow: 'shadow-orange-100' },
+              { icon: Mic, title: 'Speaking', desc: '3 parts • AI examiner • Model answers', color: 'bg-emerald-500', shadow: 'shadow-emerald-100' }
+            ].map((module, idx) => (
+              <Card key={idx} className={`p-6 bg-white border-0 shadow-lg ${module.shadow} hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-2 rounded-2xl`}>
+                <div className={`w-14 h-14 rounded-2xl ${module.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                  <module.icon className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{module.title}</h3>
+                <p className="text-gray-500 text-sm">{module.desc}</p>
+              </Card>
+            ))}
+          </div>
+
+          {/* Advanced Course Preview */}
+          <div className="mt-12 p-6 bg-gradient-to-r from-violet-50 to-purple-50 rounded-2xl border border-violet-100">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <GraduationCap className="w-5 h-5 text-violet-600" />
+                  <span className="font-semibold text-violet-700">Advanced IELTS Mastery Course</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Band 6.0 → 9.0 Pathway</h3>
+                <p className="text-gray-600">20 comprehensive modules with vocabulary, grammar, reading passages, writing prompts, and speaking practice — all with Cambridge-aligned content.</p>
+              </div>
+              <Button onClick={() => setShowAuth(true)} className="bg-violet-600 hover:bg-violet-700 text-white whitespace-nowrap">
+                Explore Course <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TRANSPARENCY & HONESTY */}
+      <section className="py-20 px-6 bg-gray-900">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="w-16 h-16 rounded-2xl bg-violet-600 flex items-center justify-center mx-auto mb-6">
+            <ShieldCheck className="w-8 h-8 text-white" />
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+            Our Honesty Promise
+          </h2>
+          <p className="text-xl text-gray-300 mb-8">
+            We do <span className="text-red-400 font-semibold">not</span> promise instant Band 7.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-6 mb-10">
+            {[
+              { icon: CheckCircle, text: 'Honest evaluation' },
+              { icon: FileText, text: 'Clear explanations' },
+              { icon: TrendingUp, text: 'Structured improvement path' }
+            ].map((item, idx) => (
+              <div key={idx} className="flex items-center justify-center gap-3 text-white">
+                <item.icon className="w-5 h-5 text-green-400" />
+                <span>{item.text}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-violet-300 text-lg">
+            That's how real results are built.
+          </p>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="py-20 px-6 bg-gradient-to-br from-violet-600 to-purple-700">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Ready to see how an examiner really thinks?
+          </h2>
+          <p className="text-xl text-violet-100 mb-8">
+            Start with one test. Let IELTS Ace guide your journey.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
             <Button 
-              data-testid="cta-start-btn"
-              onClick={() => setShowAuth(true)}
+              onClick={handleStartFreePractice}
               size="lg" 
-              className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-10 py-6 text-lg shadow-xl shadow-purple-200 border-0"
+              className="bg-white text-violet-700 hover:bg-gray-100 px-10 py-6 text-lg shadow-xl border-0"
             >
-              Get Started Free
+              Start Free Level Check
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-          </Card>
+          </div>
         </div>
       </section>
 
@@ -305,7 +493,8 @@ export default function LandingPage({ onLogin, user }) {
             </div>
             <h3 className="text-2xl font-bold text-white">IELTS Ace</h3>
           </div>
-          <p className="text-gray-400 mb-4">Your AI-powered IELTS preparation partner</p>
+          <p className="text-gray-400 mb-2">Your Cambridge-aligned IELTS AI examiner</p>
+          <p className="text-violet-400 text-sm mb-4">Think like an examiner. Perform like a candidate.</p>
           <p className="text-gray-500 text-sm">© 2025 IELTS Ace. All rights reserved.</p>
         </div>
       </footer>
@@ -319,7 +508,6 @@ export default function LandingPage({ onLogin, user }) {
             </DialogTitle>
           </DialogHeader>
           
-          {/* Google Sign Up - Now at TOP for signup mode */}
           {authMode === 'signup' && (
             <>
               <Button 
@@ -343,41 +531,16 @@ export default function LandingPage({ onLogin, user }) {
             {authMode === 'signup' && (
               <div>
                 <label className="block text-sm font-medium mb-2 text-gray-700">Name</label>
-                <Input
-                  data-testid="name-input"
-                  type="text"
-                  placeholder="Enter your name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required={authMode === 'signup'}
-                  className="border-gray-300"
-                />
+                <Input data-testid="name-input" type="text" placeholder="Enter your name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required={authMode === 'signup'} className="border-gray-300" />
               </div>
             )}
             <div>
               <label className="block text-sm font-medium mb-2 text-gray-700">Email</label>
-              <Input
-                data-testid="email-input"
-                type="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-                className="border-gray-300"
-              />
+              <Input data-testid="email-input" type="email" placeholder="Enter your email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required className="border-gray-300" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-2 text-gray-700">Password</label>
-              <Input
-                data-testid="password-input"
-                type="password"
-                placeholder={authMode === 'signup' ? 'Create a password (min 8 characters)' : 'Enter your password'}
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                required
-                minLength={8}
-                className="border-gray-300"
-              />
+              <Input data-testid="password-input" type="password" placeholder={authMode === 'signup' ? 'Create a password (min 8 characters)' : 'Enter your password'} value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required minLength={8} className="border-gray-300" />
             </div>
             {authMode === 'signin' && (
               <div className="text-right text-xs">
@@ -392,12 +555,11 @@ export default function LandingPage({ onLogin, user }) {
               </div>
             )}
             
-            {/* Spam Warning for Email Signup */}
             {authMode === 'signup' && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-2">
                 <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <p className="text-xs text-amber-700">
-                  <strong>Important:</strong> After signing up, please check your <strong>Spam</strong> or <strong>Promotions</strong> folder for the verification email to activate your account.
+                  <strong>Important:</strong> After signing up, please check your <strong>Spam</strong> or <strong>Promotions</strong> folder for the verification email.
                 </p>
               </div>
             )}
@@ -412,7 +574,6 @@ export default function LandingPage({ onLogin, user }) {
             </button>
           </div>
           
-          {/* Google Sign In - For signin mode only */}
           {authMode === 'signin' && (
             <>
               <div className="relative my-4">
@@ -427,7 +588,6 @@ export default function LandingPage({ onLogin, user }) {
           )}
         </DialogContent>
       </Dialog>
-
     </div>
   );
 }
