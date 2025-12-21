@@ -30,6 +30,17 @@ export default function LanguageSwitcher({ compact = false }) {
         >
           VI
         </button>
+        <button
+          type="button"
+          onClick={() => setLanguage('tr')}
+          className={`px-2 py-1 rounded-full border text-xs font-medium ${
+            language === 'tr'
+              ? 'bg-sky-600 text-white border-sky-600'
+              : 'bg-white text-gray-700 border-gray-300'
+          }`}
+        >
+          TR
+        </button>
       </div>
     );
   }
@@ -52,6 +63,14 @@ export default function LanguageSwitcher({ compact = false }) {
         onClick={() => setLanguage('vi')}
       >
         {LANGUAGES.vi}
+      </Button>
+      <Button
+        variant={language === 'tr' ? 'default' : 'outline'}
+        size="sm"
+        className="text-xs px-2 py-1 h-7"
+        onClick={() => setLanguage('tr')}
+      >
+        {LANGUAGES.tr}
       </Button>
     </div>
   );
