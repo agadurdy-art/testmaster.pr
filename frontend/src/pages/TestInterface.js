@@ -801,9 +801,9 @@ function ElevenLabsExaminer() {
                 </div>
               </div>
             </Card>
-            {/* ElevenLabs examiner widget - Show on speaking test page */}
-            {testType === 'speaking' && user && (
-              <ElevenLabsExaminer />
+            {/* ElevenLabs examiner widget - Show only after starting session (uses 1 credit) */}
+            {speakingSessionStarted && (
+              <ElevenLabsExaminer autoStart={true} />
             )}
           </>
         )}
