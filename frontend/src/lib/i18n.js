@@ -1023,7 +1023,7 @@ export function I18nProvider({ children }) {
   const [language, setLanguage] = React.useState(() => {
     if (typeof window === 'undefined') return 'en';
     const stored = window.localStorage.getItem('ieltsace_language');
-    return stored === 'vi' ? 'vi' : 'en';
+    return ['en', 'vi', 'tr'].includes(stored) ? stored : 'en';
   });
 
   const t = React.useCallback(
