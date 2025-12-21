@@ -16,6 +16,7 @@ const COURSE_CONFIG = {
   beginner: {
     name: 'Beginner Course',
     nameVi: 'Khóa học Cơ bản',
+    nameTr: 'Başlangıç Kursu',
     bandRange: 'Band 4.0 - 5.0',
     color: 'from-emerald-500 to-teal-600',
     apiEndpoint: '/api/beginner-english/lessons',
@@ -25,6 +26,7 @@ const COURSE_CONFIG = {
   mastery: {
     name: 'Mastery Course',
     nameVi: 'Khóa học Trung cấp',
+    nameTr: 'Ustalık Kursu',
     bandRange: 'Band 5.5 - 6.5',
     color: 'from-blue-500 to-indigo-600',
     apiEndpoint: '/api/mastery-course/modules',
@@ -34,12 +36,20 @@ const COURSE_CONFIG = {
   advanced: {
     name: 'Advanced Mastery',
     nameVi: 'Khóa học Nâng cao',
+    nameTr: 'İleri Düzey Ustalık',
     bandRange: 'Band 6.5 - 9.0',
     color: 'from-amber-500 to-orange-600',
     apiEndpoint: '/api/advanced-mastery/modules',
     idField: 'id',
     maxFreePreview: 3
   }
+};
+
+// Helper function for trilingual text
+const getText = (language, en, vi, tr) => {
+  if (language === 'vi') return vi;
+  if (language === 'tr') return tr;
+  return en;
 };
 
 export default function LessonPreview() {
