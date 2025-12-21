@@ -334,6 +334,19 @@ export const translations = {
     landingBand6to9: 'Band 6.0 → 9.0 Pathway',
     landingExploreCourse: 'Explore Course',
     
+    // Try Our Lessons
+    landingTryLessonsBadge: 'Free Preview',
+    landingTryLessonsTitle: 'Try Our Lessons — No Sign Up Required',
+    landingTryLessonsDesc: 'Experience our Cambridge-aligned lessons before you commit. Each module includes advanced vocabulary, grammar structures, and AI-powered practice.',
+    landingFreePreview: 'FREE',
+    landingLessonVocab: 'Advanced Vocabulary',
+    landingLessonGrammar: 'Grammar Structures',
+    landingLessonWriting: 'Writing Practice',
+    landingStartLesson: 'Start Lesson',
+    landingSignUpToUnlock: 'Sign up to unlock all lessons',
+    landingMoreLessons: 'Get access to 20+ comprehensive modules covering all IELTS themes',
+    landingUnlockAll: 'Unlock All Lessons',
+    
     // Honesty Promise
     landingHonestyTitle: 'Our Honesty Promise',
     landingNoPromise: 'We do not promise instant Band 7.',
