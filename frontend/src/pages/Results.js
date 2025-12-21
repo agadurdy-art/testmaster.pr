@@ -576,7 +576,7 @@ export default function Results({ user }) {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">📝 {t('answerReview')}</h3>
                   <p className="text-sm text-gray-500">
-                    {result.feedback.correct} {t('correct').toLowerCase()} / {result.feedback.total} {isVi ? 'tổng cộng' : 'total'}
+                    {result.feedback.correct} {t('correct').toLowerCase()} / {result.feedback.total} {getText('total', 'tổng cộng', 'toplam')}
                   </p>
                 </div>
               </div>
