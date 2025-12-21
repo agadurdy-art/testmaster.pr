@@ -456,8 +456,8 @@ export default function Dashboard({ user, onLogout }) {
               <div className="flex items-center gap-3">
                 <Target className="w-6 h-6 text-cyan-600" />
                 <div>
-                  <p className="font-semibold text-gray-900">{language === 'vi' ? 'Kiểm tra trình độ' : 'Level Test'}</p>
-                  <p className="text-xs text-gray-500">{language === 'vi' ? 'Xác định điểm xuất phát' : 'Find your starting point'}</p>
+                  <p className="font-semibold text-gray-900">{getText('Level Test', 'Kiểm tra trình độ', 'Seviye Testi')}</p>
+                  <p className="text-xs text-gray-500">{getText('Find your starting point', 'Xác định điểm xuất phát', 'Başlangıç noktanızı bulun')}</p>
                 </div>
               </div>
               <ChevronRight className="w-5 h-5 text-cyan-500" />
@@ -472,8 +472,8 @@ export default function Dashboard({ user, onLogout }) {
                   <History className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Bài thi gần đây' : 'Recent Tests'}</h2>
-                  <p className="text-xs text-gray-500">{language === 'vi' ? 'Xem lại kết quả' : 'Review your results'}</p>
+                  <h2 className="text-lg font-bold text-gray-900">{getText('Recent Tests', 'Bài thi gần đây', 'Son Testler')}</h2>
+                  <p className="text-xs text-gray-500">{getText('Review your results', 'Xem lại kết quả', 'Sonuçlarınızı inceleyin')}</p>
                 </div>
               </div>
               {hasProgress && (
@@ -483,7 +483,7 @@ export default function Dashboard({ user, onLogout }) {
                   onClick={() => navigate('/progress')}
                   className="text-violet-600 hover:bg-violet-50 text-xs"
                 >
-                  {language === 'vi' ? 'Xem tất cả' : 'View All'}
+                  {getText('View All', 'Xem tất cả', 'Tümünü Gör')}
                 </Button>
               )}
             </div>
