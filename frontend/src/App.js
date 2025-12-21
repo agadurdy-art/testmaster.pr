@@ -222,7 +222,7 @@ function AppWithSessionHandler() {
           element={user ? <AdvancedMasteryCourse user={user} /> : <Navigate to="/" />} 
         />
         <Route 
-          path="/lesson-preview/:moduleId" 
+          path="/lesson-preview/:courseType/:lessonId" 
           element={<LessonPreview />} 
         />
       </Routes>
