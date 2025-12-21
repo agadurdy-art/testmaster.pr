@@ -104,14 +104,16 @@ export default function PricingPage({ user }) {
         {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {plans.map((plan) => {
-            const isVi = language === 'vi';
-            const displayName = isVi ? plan.nameVi : plan.name;
-            const displayBadge = isVi ? plan.badgeVi : plan.badge;
-            const displayCredits = isVi ? plan.creditsVi : plan.credits;
+            const displayName = language === 'vi' ? plan.nameVi : language === 'tr' ? plan.nameTr : plan.name;
+            const displayBadge = language === 'vi' ? plan.badgeVi : language === 'tr' ? plan.badgeTr : plan.badge;
+            const displayCredits = language === 'vi' ? plan.creditsVi : language === 'tr' ? plan.creditsTr : plan.credits;
+            const displayFeatures = language === 'vi' ? plan.featuresVi : language === 'tr' ? plan.featuresTr : plan.features;
+            const loginAlert = language === 'vi' ? 'Vui lòng đăng nhập.' : language === 'tr' ? 'Lütfen giriş yapın.' : 'Please log in.';
+            const paymentSuccessAlert = language === 'vi' ? 'Thanh toán thành công!' : language === 'tr' ? 'Ödeme başarılı!' : 'Payment successful!';
             const Icon = plan.icon;
             return (
               <Card key={plan.id} className={`relative p-6 flex flex-col justify-between bg-white border-0 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl rounded-2xl ${plan.highlight ? 'ring-2 ring-violet-400 scale-[1.02]' : ''}`}>
-                {plan.highlight && <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs font-semibold px-4 py-1 rounded-full shadow-lg">⭐ Most Popular</div>}
+                {plan.highlight && <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-xs font-semibold px-4 py-1 rounded-full shadow-lg">⭐ {language === 'vi' ? 'Phổ biến nhất' : language === 'tr' ? 'En Popüler' : 'Most Popular'}</div>}
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className={`w-12 h-12 rounded-2xl ${plan.color} flex items-center justify-center shadow-lg`}><Icon className="w-6 h-6 text-white" /></div>
@@ -121,16 +123,16 @@ export default function PricingPage({ user }) {
                   <div className="mb-4"><p className="text-3xl font-bold text-gray-900">{plan.priceUsd}</p><p className="text-sm text-gray-500">{plan.priceVnd}</p></div>
                   <p className="text-sm font-medium text-violet-600 mb-4">{displayCredits}</p>
                   <ul className="space-y-2 mb-6">
-                    {(isVi ? plan.featuresVi : plan.features).map((f, idx) => <li key={idx} className="flex items-center gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-green-500 flex-shrink-0" />{f}</li>)}
-                    <li className="flex items-center gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-green-500" />Exam history &amp; feedback</li>
+                    {displayFeatures.map((f, idx) => <li key={idx} className="flex items-center gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-green-500 flex-shrink-0" />{f}</li>)}
+                    <li className="flex items-center gap-2 text-sm text-gray-600"><Check className="w-4 h-4 text-green-500" />{language === 'vi' ? 'Lịch sử thi & phản hồi' : language === 'tr' ? 'Sınav geçmişi & geri bildirim' : 'Exam history & feedback'}</li>
                   </ul>
                 </div>
                 <div className="space-y-3">
                   <Button className={`w-full ${plan.highlight ? 'bg-gradient-to-r from-violet-500 to-purple-600' : plan.color} text-white border-0 shadow-lg`} onClick={() => handleOpenBankModal(plan)}><Building2 className="w-4 h-4 mr-2" />{t('payByBank')}</Button>
                   {paypalClientId && !bankModalOpen && (
                     <PayPalButtons style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 40 }}
-                      createOrder={async () => { if (!user) { alert(isVi ? 'Vui lòng đăng nhập.' : 'Please log in.'); throw new Error('No user'); } const res = await createPaypalOrder({ planId: plan.id, email: user.email }); return res.orderId; }}
-                      onApprove={async (data) => { if (!user) return; const res = await capturePaypalOrder({ orderId: data.orderID, planId: plan.id, email: user.email }); const updatedUser = { ...user, examCredits: res.examCredits, plan: res.plan ?? user.plan }; localStorage.setItem('user', JSON.stringify(updatedUser)); alert(isVi ? 'Thanh toán thành công!' : 'Payment successful!'); navigate(getRedirectUrl()); }}
+                      createOrder={async () => { if (!user) { alert(loginAlert); throw new Error('No user'); } const res = await createPaypalOrder({ planId: plan.id, email: user.email }); return res.orderId; }}
+                      onApprove={async (data) => { if (!user) return; const res = await capturePaypalOrder({ orderId: data.orderID, planId: plan.id, email: user.email }); const updatedUser = { ...user, examCredits: res.examCredits, plan: res.plan ?? user.plan }; localStorage.setItem('user', JSON.stringify(updatedUser)); alert(paymentSuccessAlert); navigate(getRedirectUrl()); }}
                     />
                   )}
                 </div>
