@@ -393,8 +393,8 @@ export default function Dashboard({ user, onLogout }) {
                 <BookOpen className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Khóa học' : 'Lessons & Courses'}</h2>
-                <p className="text-xs text-gray-500">{language === 'vi' ? 'Chọn khóa phù hợp với trình độ' : 'Choose course for your level'}</p>
+                <h2 className="text-lg font-bold text-gray-900">{getText('Lessons & Courses', 'Khóa học', 'Dersler & Kurslar')}</h2>
+                <p className="text-xs text-gray-500">{getText('Choose course for your level', 'Chọn khóa phù hợp với trình độ', 'Seviyenize uygun kurs seçin')}</p>
               </div>
             </div>
             <div className="space-y-3">
@@ -410,7 +410,7 @@ export default function Dashboard({ user, onLogout }) {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">{course.name}</p>
-                      <p className="text-xs text-gray-500">{course.band} • {course.lessons} {language === 'vi' ? 'bài' : 'lessons'}</p>
+                      <p className="text-xs text-gray-500">{course.band} • {course.lessons} {getText('lessons', 'bài', 'ders')}</p>
                     </div>
                   </div>
                   <ChevronRight className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
@@ -430,8 +430,8 @@ export default function Dashboard({ user, onLogout }) {
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-900">{language === 'vi' ? 'Công cụ học tập' : 'Learning Tools'}</h2>
-                <p className="text-xs text-gray-500">{language === 'vi' ? 'Nâng cao kỹ năng của bạn' : 'Boost your skills'}</p>
+                <h2 className="text-lg font-bold text-gray-900">{getText('Learning Tools', 'Công cụ học tập', 'Öğrenme Araçları')}</h2>
+                <p className="text-xs text-gray-500">{getText('Boost your skills', 'Nâng cao kỹ năng của bạn', 'Becerilerinizi geliştirin')}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
