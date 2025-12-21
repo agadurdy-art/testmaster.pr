@@ -140,9 +140,11 @@ export default function LessonPreview() {
             {t('landingSignUpToUnlock')}
           </h2>
           <p className="text-gray-600 mb-6">
-            {language === 'vi' 
-              ? 'Bài học này chỉ dành cho người dùng đã đăng ký. Đăng ký để truy cập tất cả các module IELTS toàn diện.'
-              : 'This lesson is only available for registered users. Sign up to access all comprehensive IELTS modules.'}
+            {getText(language,
+              'This lesson is only available for registered users. Sign up to access all comprehensive IELTS modules.',
+              'Bài học này chỉ dành cho người dùng đã đăng ký. Đăng ký để truy cập tất cả các module IELTS toàn diện.',
+              'Bu ders sadece kayıtlı kullanıcılar için mevcuttur. Tüm kapsamlı IELTS modüllerine erişmek için kaydolun.'
+            )}
           </p>
           <div className="flex flex-col gap-3">
             <Button 
