@@ -824,13 +824,24 @@ function ElevenLabsExaminer() {
                 </div>
                 {/* Passage Content - Scrollable with Highlighter */}
                 <div className="flex-1 overflow-y-auto p-6">
-                  <HighlightableText
-                    text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
-                    user={user}
-                    testId={`${test?.id}-passage-${currentPassage}`}
-                    testType="reading"
-                    highlightsEnabled={true}
-                  />
+                  {(() => {
+                    // Check if current passage has matching_information or matching_headings questions
+                    const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
+                    const needsParagraphLabels = passageQuestions.some(q => 
+                      q.type === 'matching_information' || q.type === 'matching_headings'
+                    );
+                    
+                    return (
+                      <HighlightableText
+                        text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
+                        user={user}
+                        testId={`${test?.id}-passage-${currentPassage}`}
+                        testType="reading"
+                        highlightsEnabled={true}
+                        showParagraphLabels={needsParagraphLabels}
+                      />
+                    );
+                  })()}
                 </div>
               </Card>
             </div>
