@@ -708,6 +708,8 @@ export default function LandingPage({ onLogin, user }) {
           <div className="space-y-6">
             {COURSES.map((course) => {
               const lessons = courseLessons[course.id] || [];
+              const courseName = language === 'vi' ? course.nameVi : language === 'tr' ? course.nameTr : course.name;
+              const courseDesc = language === 'vi' ? course.descriptionVi : language === 'tr' ? course.descriptionTr : course.description;
               return (
                 <Card key={course.id} className={`p-6 ${course.lightBg} border-0 rounded-2xl`}>
                   <div className="flex items-start gap-4 mb-4">
@@ -717,14 +719,14 @@ export default function LandingPage({ onLogin, user }) {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-1">
                         <h3 className="text-xl font-bold text-gray-900">
-                          {language === 'vi' ? course.nameVi : course.name}
+                          {courseName}
                         </h3>
                         <span className="px-3 py-1 bg-white rounded-full text-sm font-bold text-gray-700 shadow-sm">
                           {course.bandRange}
                         </span>
                       </div>
                       <p className="text-gray-600 text-sm">
-                        {language === 'vi' ? course.descriptionVi : course.description}
+                        {courseDesc}
                       </p>
                     </div>
                   </div>
