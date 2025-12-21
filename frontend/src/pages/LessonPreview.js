@@ -270,7 +270,7 @@ export default function LessonPreview() {
           </div>
         )}
 
-        {lesson.examiner_tips && (
+        {lesson.examiner_tips && Array.isArray(lesson.examiner_tips) && lesson.examiner_tips.length > 0 && (
           <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl">
             <h4 className="font-semibold text-purple-800 mb-2 flex items-center gap-2">
               <Lightbulb className="w-4 h-4" /> Examiner Tips
@@ -283,6 +283,25 @@ export default function LessonPreview() {
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {/* Common Mistake section for beginner lessons */}
+        {lesson.common_mistake && (
+          <div className="mt-6 p-4 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl">
+            <h4 className="font-semibold text-red-800 mb-3 flex items-center gap-2">
+              <Lightbulb className="w-4 h-4" /> Common Mistake
+            </h4>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div className="p-3 bg-red-100 rounded-lg">
+                <p className="text-xs text-red-600 font-medium mb-1">❌ Wrong</p>
+                <p className="text-sm text-red-800">{lesson.common_mistake.wrong}</p>
+              </div>
+              <div className="p-3 bg-green-100 rounded-lg">
+                <p className="text-xs text-green-600 font-medium mb-1">✓ Correct</p>
+                <p className="text-sm text-green-800">{lesson.common_mistake.correct}</p>
+              </div>
+            </div>
           </div>
         )}
 
