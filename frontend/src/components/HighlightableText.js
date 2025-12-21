@@ -134,8 +134,93 @@ export default function HighlightableText({
     }
   };
 
-  // Render text with highlights
+  // Render text with highlights and optional paragraph labels
   const renderHighlightedText = () => {
+    // If showParagraphLabels is enabled, split by paragraphs and add labels
+    if (showParagraphLabels) {
+      const paragraphs = text.split(/\n\n+/).filter(p => p.trim());
+      
+      return paragraphs.map((paragraph, idx) => {
+        const paragraphLabel = String.fromCharCode(65 + idx); // A, B, C, ...
+        const paragraphText = paragraph.trim();
+        
+        // Calculate the start index of this paragraph in the original text
+        let startIndex = 0;
+        for (let i = 0; i < idx; i++) {
+          const prevParagraph = paragraphs[i];
+          startIndex = text.indexOf(prevParagraph, startIndex) + prevParagraph.length;
+          // Skip past the newlines
+          while (startIndex < text.length && (text[startIndex] === '\n' || text[startIndex] === ' ')) {
+            startIndex++;
+          }
+        }
+        
+        // Find highlights that belong to this paragraph
+        const paragraphHighlights = highlights.filter(h => {
+          const actualStart = text.indexOf(paragraphText, startIndex - 10);
+          const actualEnd = actualStart + paragraphText.length;
+          return h.start_index >= actualStart && h.end_index <= actualEnd;
+        });
+        
+        // Render paragraph with highlights
+        let content;
+        if (paragraphHighlights.length === 0) {
+          content = paragraphText;
+        } else {
+          // Apply highlights to this paragraph
+          const sortedHighlights = [...paragraphHighlights].sort((a, b) => a.start_index - b.start_index);
+          const elements = [];
+          let lastIdx = 0;
+          const actualParagraphStart = text.indexOf(paragraphText, startIndex - 10);
+          
+          sortedHighlights.forEach((highlight, hIdx) => {
+            const relativeStart = highlight.start_index - actualParagraphStart;
+            const relativeEnd = highlight.end_index - actualParagraphStart;
+            
+            if (relativeStart > lastIdx) {
+              elements.push(
+                <span key={`p${idx}-text-${hIdx}`}>
+                  {paragraphText.substring(lastIdx, relativeStart)}
+                </span>
+              );
+            }
+            
+            const colorClass = HIGHLIGHT_COLORS.find(c => c.name === highlight.color)?.color || 'bg-yellow-200';
+            elements.push(
+              <span
+                key={`p${idx}-highlight-${hIdx}`}
+                className={`${colorClass} rounded px-0.5 cursor-pointer`}
+                onClick={() => removeHighlight(highlight.id)}
+                title="Click to remove highlight"
+              >
+                {paragraphText.substring(relativeStart, relativeEnd)}
+              </span>
+            );
+            
+            lastIdx = relativeEnd;
+          });
+          
+          if (lastIdx < paragraphText.length) {
+            elements.push(
+              <span key={`p${idx}-text-end`}>{paragraphText.substring(lastIdx)}</span>
+            );
+          }
+          
+          content = elements;
+        }
+        
+        return (
+          <div key={`paragraph-${idx}`} className="mb-4">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-sm font-bold mr-2 align-top mt-0.5">
+              {paragraphLabel}
+            </span>
+            <span className="inline">{content}</span>
+          </div>
+        );
+      });
+    }
+    
+    // Default rendering without paragraph labels
     if (highlights.length === 0) {
       return <span>{text}</span>;
     }
