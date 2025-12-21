@@ -22,20 +22,29 @@ function LevelTestAgent({ user, onShowSignup }) {
   const [callStarted, setCallStarted] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(240); // 4 minutes = 240 seconds
   const [callEnded, setCallEnded] = useState(false);
+  const [shouldShow, setShouldShow] = useState(false);
   const { language } = useI18n();
 
-  // Show widget only for non-logged visitors who haven't seen it before
-  const shouldShow = !user && !localStorage.getItem('ielts_level_test_agent_shown');
-
+  // Check if should show on mount
   useEffect(() => {
-    if (!shouldShow) return;
-
-    // Show the agent widget
-    const widget = document.getElementById('ielts-level-test-agent');
-    if (widget) {
-      widget.style.display = 'block';
+    // Only show for non-logged in visitors who haven't seen it before
+    const hasSeenAgent = localStorage.getItem('ielts_level_test_agent_shown');
+    if (!user && !hasSeenAgent) {
+      setShouldShow(true);
       // Mark as shown on this device
       localStorage.setItem('ielts_level_test_agent_shown', 'true');
+    }
+  }, [user]);
+
+  // Show/hide widget based on shouldShow state
+  useEffect(() => {
+    const widget = document.getElementById('ielts-level-test-agent');
+    if (!widget) return;
+    
+    if (shouldShow) {
+      widget.style.display = 'block';
+    } else {
+      widget.style.display = 'none';
     }
 
     return () => {
