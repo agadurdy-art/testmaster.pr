@@ -1036,7 +1036,7 @@ export function I18nProvider({ children }) {
 
   const value = React.useMemo(
     () => ({ language, setLanguage: (lng) => {
-      const next = lng === 'vi' ? 'vi' : 'en';
+      const next = ['en', 'vi', 'tr'].includes(lng) ? lng : 'en';
       setLanguage(next);
       if (typeof window !== 'undefined') {
         window.localStorage.setItem('ieltsace_language', next);
