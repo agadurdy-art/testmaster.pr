@@ -148,10 +148,10 @@ export default function Dashboard({ user, onLogout }) {
   ];
 
   const learningTools = [
-    { name: language === 'vi' ? 'Từ vựng & Ngữ pháp' : 'Vocab & Grammar', icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/vocab-grammar' },
-    { name: language === 'vi' ? 'Luyện viết' : 'Writing Practice', icon: FileText, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
-    { name: language === 'vi' ? 'Luyện nói' : 'Speaking Practice', icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice' },
-    { name: language === 'vi' ? 'Mẹo & Chiến lược' : 'Tips & Strategies', icon: Lightbulb, color: 'from-pink-500 to-rose-600', route: '/tips' }
+    { name: getText('Vocab & Grammar', 'Từ vựng & Ngữ pháp', 'Kelime & Dilbilgisi'), icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/vocab-grammar' },
+    { name: getText('Writing Practice', 'Luyện viết', 'Yazma Pratiği'), icon: FileText, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
+    { name: getText('Speaking Practice', 'Luyện nói', 'Konuşma Pratiği'), icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice' },
+    { name: getText('Tips & Strategies', 'Mẹo & Chiến lược', 'İpuçları & Stratejiler'), icon: Lightbulb, color: 'from-pink-500 to-rose-600', route: '/tips' }
   ];
 
   const startTest = (testType) => { navigate(`/test/${testType}`); };
@@ -161,7 +161,7 @@ export default function Dashboard({ user, onLogout }) {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-500">{language === 'vi' ? 'Đang tải...' : 'Loading dashboard...'}</p>
+          <p className="text-gray-500">{getText('Loading dashboard...', 'Đang tải...', 'Gösterge paneli yükleniyor...')}</p>
         </div>
       </div>
     );
