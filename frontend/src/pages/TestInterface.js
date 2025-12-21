@@ -815,9 +815,9 @@ function ElevenLabsExaminer({ autoStart = false }) {
                 </div>
               </div>
             </Card>
-            {/* ElevenLabs examiner widget - Show only after starting session (uses 1 credit) */}
-            {speakingSessionStarted && (
-              <ElevenLabsExaminer autoStart={true} />
+            {/* ElevenLabs examiner widget - Show directly when user has speaking credits */}
+            {testType === 'speaking' && user && (user.examCredits > 0 || (user.ai_interview_free_seconds_used || 0) < 180) && (
+              <ElevenLabsExaminer />
             )}
           </>
         )}
