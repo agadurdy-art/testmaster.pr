@@ -254,10 +254,10 @@ export default function Dashboard({ user, onLogout }) {
                   setMobileMenuOpen(false);
                 }}
               >
-                <Mail className="w-4 h-4 mr-3" />{language === 'vi' ? 'Liên hệ hỗ trợ' : 'Contact Support'}
+                <Mail className="w-4 h-4 mr-3" />{language === 'vi' ? 'Liên hệ hỗ trợ' : language === 'tr' ? 'Destek ile İletişim' : 'Contact Support'}
               </Button>
               <Button variant="ghost" className="w-full justify-start text-red-500" onClick={onLogout}>
-                <LogOut className="w-4 h-4 mr-3" />{language === 'vi' ? 'Đăng xuất' : 'Logout'}
+                <LogOut className="w-4 h-4 mr-3" />{language === 'vi' ? 'Đăng xuất' : language === 'tr' ? 'Çıkış Yap' : 'Logout'}
               </Button>
             </div>
           </div>
