@@ -65,7 +65,7 @@ function LevelTestAgent({ user, onShowSignup }) {
 
   // Listen for call start (when user clicks the phone button)
   useEffect(() => {
-    if (!showAgent) return;
+    if (!shouldShow) return;
 
     const checkCallStatus = () => {
       const widget = document.querySelector('#ielts-level-test-agent elevenlabs-convai');
@@ -80,7 +80,7 @@ function LevelTestAgent({ user, onShowSignup }) {
 
     const interval = setInterval(checkCallStatus, 1000);
     return () => clearInterval(interval);
-  }, [showAgent, callStarted]);
+  }, [shouldShow, callStarted]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -94,7 +94,7 @@ function LevelTestAgent({ user, onShowSignup }) {
     return en;
   };
 
-  if (!showAgent) return null;
+  if (!shouldShow) return null;
 
   return (
     <>
