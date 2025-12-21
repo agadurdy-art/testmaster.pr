@@ -270,9 +270,15 @@ export default function Dashboard({ user, onLogout }) {
         {/* Welcome + Continue Section */}
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
-            {language === 'vi' ? `Chào mừng trở lại, ${user.name?.split(' ')[0] || 'Học viên'}!` : `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`} 👋
+            {language === 'vi' ? `Chào mừng trở lại, ${user.name?.split(' ')[0] || 'Học viên'}!` : 
+             language === 'tr' ? `Tekrar hoş geldin, ${user.name?.split(' ')[0] || 'Öğrenci'}!` :
+             `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`} 👋
           </h1>
-          <p className="text-gray-500 text-sm">{language === 'vi' ? 'Tiếp tục hành trình IELTS của bạn' : 'Continue your IELTS preparation journey'}</p>
+          <p className="text-gray-500 text-sm">
+            {language === 'vi' ? 'Tiếp tục hành trình IELTS của bạn' : 
+             language === 'tr' ? 'IELTS hazırlık yolculuğunuza devam edin' :
+             'Continue your IELTS preparation journey'}
+          </p>
         </div>
 
         {/* Continue Learning Card - Prominent CTA */}
