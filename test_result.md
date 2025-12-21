@@ -200,6 +200,18 @@ frontend:
         agent: "testing"
         comment: "✅ ALL LESSON PREVIEW SCENARIOS VERIFIED - Beginner lesson (/lesson-preview/beginner/beginner-lesson-1) displays 'Lesson 1: Family' with FREE badge, Beginner Course badge (Band 4.0-5.0), preview notice, and all 5 section tabs with learning goals and vocabulary content. Mastery lesson (/lesson-preview/mastery/1) shows 'Education' title with FREE badge, Mastery Course badge (Band 5.5-6.5), learning goals, and Common Mistake section. Advanced lesson (/lesson-preview/advanced/advanced-module-1) displays 'Linguistic Evolution' with FREE badge, Advanced Mastery badge (Band 6.5-9.0), and all section tabs. Locked lesson (/lesson-preview/mastery/10) correctly shows 'Sign up to unlock all lessons' message with lock icon and Get Started button. All authorization logic working perfectly."
 
+  - task: "Newly Redesigned IELTS Ace Dashboard"
+    implemented: true
+    working: false
+    file: "frontend/src/pages/Dashboard.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL AUTHENTICATION ISSUE - Dashboard testing blocked by authentication session management problems. Test user (dashboard@test.com/test12345) can successfully login through the login modal, but authentication session is not properly maintained. When navigating to /dashboard, user gets redirected back to landing page (/), indicating session persistence issues. This prevents comprehensive testing of all dashboard features: Welcome message with user name, Continue Learning CTA card, Practice Tests section (4 skill cards), Lessons & Courses section (3 courses), Learning Tools section, Recent Tests section, View Full Progress card, Vietnamese localization, and mobile menu functionality. Dashboard components appear properly implemented in code, but authentication barrier blocks functional verification. REQUIRES IMMEDIATE FIX of user session persistence and authentication state management."
+
 metadata:
   created_by: "main_agent"
   version: "1.1"
