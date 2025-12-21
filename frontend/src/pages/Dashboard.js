@@ -6,7 +6,7 @@ import {
   BookOpen, Headphones, Mic, PenTool, Trophy, TrendingUp, Target, BookMarked, 
   LogOut, Menu, MessageSquare, ChevronRight, Clock, Award, Sparkles, 
   GraduationCap, BarChart3, Flame, Star, X, User, Zap, LayoutDashboard, FileText, CreditCard,
-  Play, ArrowRight, History, Lightbulb, CheckCircle
+  Play, ArrowRight, History, Lightbulb, CheckCircle, Mail, HelpCircle
 } from 'lucide-react';
 import { getTests, getUserProgress, getUser } from '../lib/api';
 import { toast } from 'sonner';
@@ -15,6 +15,7 @@ import { useI18n } from '../lib/i18n';
 import SkillBreakdown from '../components/SkillBreakdown';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+const SUPPORT_EMAIL = 'testmaster.edu.ai@proton.me';
 
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
