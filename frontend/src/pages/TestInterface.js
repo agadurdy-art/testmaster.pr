@@ -22,8 +22,8 @@ export default function TestInterface({ user }) {
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
 
-// ElevenLabs examiner widget controller (only for logged-in users on speaking test page)
-function ElevenLabsExaminer({ autoStart = false }) {
+// ElevenLabs examiner widget controller (shows when user has credits on speaking test)
+function ElevenLabsExaminer() {
   React.useEffect(() => {
     const widget = document.getElementById('ielts-ace-examiner');
     if (!widget) {
@@ -31,22 +31,22 @@ function ElevenLabsExaminer({ autoStart = false }) {
       return;
     }
     
-    // Show the widget with fixed positioning
+    // Show the widget with fixed positioning in bottom right
     widget.style.display = 'block';
     widget.style.position = 'fixed';
     widget.style.bottom = '20px';
     widget.style.right = '20px';
     widget.style.zIndex = '9999';
     
-    console.log('ElevenLabs widget shown');
+    console.log('ElevenLabs AI Examiner visible');
 
     return () => {
       if (widget) {
         widget.style.display = 'none';
-        console.log('ElevenLabs widget hidden');
+        console.log('ElevenLabs AI Examiner hidden');
       }
     };
-  }, [autoStart]);
+  }, []);
 
   return null;
 }
