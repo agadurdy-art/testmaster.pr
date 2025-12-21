@@ -181,6 +181,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED - Landing page 'Try Our Lessons' section working correctly. Found 3 free preview lesson cards with 'FREE' badges and 'Start Lesson' buttons. 'Unlock All Lessons' button present. Vietnamese localization functional (detected Vietnamese text elements). API endpoint /api/advanced-mastery/modules returns 200 status with 3 modules. All UI elements render properly and section is accessible after scrolling."
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE TESTING COMPLETED - Updated course selector feature fully functional. Hero section displays both 'Start Free Level Check' (purple) and 'Try Our Lessons' (amber outline) buttons correctly. Course selector modal opens with proper title 'Choose Your Level' and displays all 3 courses (Beginner Band 4.0-5.0, Mastery Band 5.5-6.5, Advanced Band 6.5-9.0) with 3 free lessons each showing FREE badges. Vietnamese localization working perfectly - modal title changes to 'Chọn trình độ của bạn', course names translate to Vietnamese, and FREE badges show as 'MIỄN PHÍ'. All test scenarios from review request passed successfully."
 
   - task: "Lesson Preview Pages - Free and Locked Access"
     implemented: true
@@ -193,6 +196,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED - Lesson preview functionality working correctly. Free module (advanced-module-1) loads successfully with title 'Linguistic Evolution', FREE badge, preview notice banner, and all 5 section tabs (Vocabulary, Grammar, Reading, Speaking, Writing). Tab navigation functions properly. Locked modules (module_4) correctly show 'Sign up to unlock all lessons' message with lock icon and Get Started button. Authorization logic working as expected."
+      - working: true
+        agent: "testing"
+        comment: "✅ ALL LESSON PREVIEW SCENARIOS VERIFIED - Beginner lesson (/lesson-preview/beginner/beginner-lesson-1) displays 'Lesson 1: Family' with FREE badge, Beginner Course badge (Band 4.0-5.0), preview notice, and all 5 section tabs with learning goals and vocabulary content. Mastery lesson (/lesson-preview/mastery/1) shows 'Education' title with FREE badge, Mastery Course badge (Band 5.5-6.5), learning goals, and Common Mistake section. Advanced lesson (/lesson-preview/advanced/advanced-module-1) displays 'Linguistic Evolution' with FREE badge, Advanced Mastery badge (Band 6.5-9.0), and all section tabs. Locked lesson (/lesson-preview/mastery/10) correctly shows 'Sign up to unlock all lessons' message with lock icon and Get Started button. All authorization logic working perfectly."
 
 metadata:
   created_by: "main_agent"
