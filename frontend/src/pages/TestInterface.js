@@ -26,38 +26,25 @@ export default function TestInterface({ user }) {
 function ElevenLabsExaminer({ autoStart = false }) {
   React.useEffect(() => {
     const widget = document.getElementById('ielts-ace-examiner');
-    if (!widget) return;
-    
-    // Show the widget
-    widget.style.display = 'block';
-    
-    // Auto-start the call if requested
-    if (autoStart) {
-      // Wait for widget to fully load, then click the call button
-      const startCall = () => {
-        const convaiWidget = document.querySelector('elevenlabs-convai');
-        if (convaiWidget) {
-          // Try to find and click the call/phone button inside the widget
-          const shadowRoot = convaiWidget.shadowRoot;
-          if (shadowRoot) {
-            const callButton = shadowRoot.querySelector('button[aria-label*="call"], button[aria-label*="Call"], button.call-button, [data-testid="call-button"]');
-            if (callButton) {
-              callButton.click();
-              console.log('ElevenLabs call started automatically');
-            }
-          }
-          // Alternative: dispatch a custom event that the widget might listen to
-          convaiWidget.dispatchEvent(new CustomEvent('start-conversation'));
-        }
-      };
-      
-      // Try immediately and also after a delay for widget to load
-      setTimeout(startCall, 1000);
-      setTimeout(startCall, 2000);
+    if (!widget) {
+      console.error('ElevenLabs widget container not found');
+      return;
     }
+    
+    // Show the widget with fixed positioning
+    widget.style.display = 'block';
+    widget.style.position = 'fixed';
+    widget.style.bottom = '20px';
+    widget.style.right = '20px';
+    widget.style.zIndex = '9999';
+    
+    console.log('ElevenLabs widget shown');
 
     return () => {
-      widget.style.display = 'none';
+      if (widget) {
+        widget.style.display = 'none';
+        console.log('ElevenLabs widget hidden');
+      }
     };
   }, [autoStart]);
 
