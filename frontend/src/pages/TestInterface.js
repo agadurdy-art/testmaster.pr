@@ -23,16 +23,43 @@ export default function TestInterface({ user }) {
   const [timeLeft, setTimeLeft] = useState(0);
 
 // ElevenLabs examiner widget controller (only for logged-in users on speaking test page)
-function ElevenLabsExaminer() {
+function ElevenLabsExaminer({ autoStart = false }) {
   React.useEffect(() => {
     const widget = document.getElementById('ielts-ace-examiner');
     if (!widget) return;
+    
+    // Show the widget
     widget.style.display = 'block';
+    
+    // Auto-start the call if requested
+    if (autoStart) {
+      // Wait for widget to fully load, then click the call button
+      const startCall = () => {
+        const convaiWidget = document.querySelector('elevenlabs-convai');
+        if (convaiWidget) {
+          // Try to find and click the call/phone button inside the widget
+          const shadowRoot = convaiWidget.shadowRoot;
+          if (shadowRoot) {
+            const callButton = shadowRoot.querySelector('button[aria-label*="call"], button[aria-label*="Call"], button.call-button, [data-testid="call-button"]');
+            if (callButton) {
+              callButton.click();
+              console.log('ElevenLabs call started automatically');
+            }
+          }
+          // Alternative: dispatch a custom event that the widget might listen to
+          convaiWidget.dispatchEvent(new CustomEvent('start-conversation'));
+        }
+      };
+      
+      // Try immediately and also after a delay for widget to load
+      setTimeout(startCall, 1000);
+      setTimeout(startCall, 2000);
+    }
 
     return () => {
       widget.style.display = 'none';
     };
-  }, []);
+  }, [autoStart]);
 
   return null;
 }
