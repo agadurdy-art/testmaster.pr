@@ -246,6 +246,16 @@ export default function Dashboard({ user, onLogout }) {
               <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}>
                 <User className="w-4 h-4 mr-3" />{language === 'vi' ? 'Hồ sơ' : 'Profile'}
               </Button>
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-emerald-600" 
+                onClick={() => {
+                  window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('IELTS Ace - Support Request')}&body=${encodeURIComponent(`Hi IELTS Ace Team,\n\nUser: ${user.name}\nEmail: ${user.email}\n\nMy question/issue:\n\n`)}`;
+                  setMobileMenuOpen(false);
+                }}
+              >
+                <Mail className="w-4 h-4 mr-3" />{language === 'vi' ? 'Liên hệ hỗ trợ' : 'Contact Support'}
+              </Button>
               <Button variant="ghost" className="w-full justify-start text-red-500" onClick={onLogout}>
                 <LogOut className="w-4 h-4 mr-3" />{language === 'vi' ? 'Đăng xuất' : 'Logout'}
               </Button>
