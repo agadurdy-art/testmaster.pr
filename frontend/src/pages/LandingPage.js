@@ -55,6 +55,22 @@ export default function LandingPage({ onLogin, user }) {
     }
   };
 
+  // Fetch preview modules for "Try Our Lessons" section
+  useEffect(() => {
+    const fetchPreviewModules = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/advanced-mastery/modules`);
+        if (res.ok) {
+          const data = await res.json();
+          setPreviewModules(data);
+        }
+      } catch (e) {
+        console.error('Failed to fetch preview modules:', e);
+      }
+    };
+    fetchPreviewModules();
+  }, []);
+
   useEffect(() => {
     if (user) {
       navigate('/dashboard');
