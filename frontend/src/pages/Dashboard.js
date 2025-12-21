@@ -524,9 +524,9 @@ export default function Dashboard({ user, onLogout }) {
                 <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
                   <GraduationCap className="w-8 h-8 text-gray-400" />
                 </div>
-                <p className="text-gray-500 text-sm mb-3">{language === 'vi' ? 'Chưa có bài thi nào' : 'No tests yet'}</p>
+                <p className="text-gray-500 text-sm mb-3">{getText('No tests yet', 'Chưa có bài thi nào', 'Henüz test yok')}</p>
                 <Button onClick={() => navigate('/test/reading')} size="sm" className="bg-violet-600 hover:bg-violet-700 text-white">
-                  {language === 'vi' ? 'Làm bài thi đầu tiên' : 'Take Your First Test'}
+                  {getText('Take Your First Test', 'Làm bài thi đầu tiên', 'İlk Testinizi Yapın')}
                 </Button>
               </div>
             )}
@@ -544,8 +544,8 @@ export default function Dashboard({ user, onLogout }) {
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white">{language === 'vi' ? 'Xem tiến độ đầy đủ' : 'View Full Progress'}</h3>
-                <p className="text-violet-200 text-sm">{language === 'vi' ? 'Phân tích chi tiết & phản hồi AI' : 'Detailed analytics & AI feedback'}</p>
+                <h3 className="text-lg font-bold text-white">{getText('View Full Progress', 'Xem tiến độ đầy đủ', 'Tüm İlerlemeyi Gör')}</h3>
+                <p className="text-violet-200 text-sm">{getText('Detailed analytics & AI feedback', 'Phân tích chi tiết & phản hồi AI', 'Detaylı analitik & AI geri bildirimi')}</p>
               </div>
             </div>
             <ChevronRight className="w-6 h-6 text-white" />
