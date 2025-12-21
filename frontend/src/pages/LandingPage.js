@@ -1027,6 +1027,15 @@ export default function LandingPage({ onLogin, user }) {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Level Test Agent - Shows for non-logged visitors once per device */}
+      <LevelTestAgent 
+        user={user} 
+        onShowSignup={() => {
+          setAuthMode('signup');
+          setShowAuth(true);
+        }} 
+      />
     </div>
   );
 }
