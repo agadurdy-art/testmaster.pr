@@ -977,21 +977,84 @@ function ElevenLabsExaminer() {
                           )}
 
                           {q.type === 'multiple_choice' && q.options && (
-                            <div className="space-y-1 mt-2">
-                              {q.options.map((option, optIdx) => (
-                                <button
-                                  key={optIdx}
-                                  onClick={() => handleAnswerChange(q.id, option.split(')')[0])}
-                                  className={`w-full text-left px-2 py-1.5 rounded text-xs transition-colors ${
-                                    answers[q.id] === option.split(')')[0]
-                                      ? 'bg-sky-500 text-white'
-                                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                  }`}
-                                >
-                                  {option}
-                                </button>
-                              ))}
-                            </div>
+                            (() => {
+                              // Check if this is a "Choose TWO" question
+                              const isMultiSelect = q.question?.toLowerCase().includes('two') || 
+                                                    q.question?.toLowerCase().includes('select two');
+                              
+                              if (isMultiSelect) {
+                                // Multi-select: use checkboxes, store as array
+                                const selectedAnswers = Array.isArray(answers[q.id]) 
+                                  ? answers[q.id] 
+                                  : (answers[q.id] ? [answers[q.id]] : []);
+                                
+                                const handleMultiSelect = (optionLetter) => {
+                                  let newAnswers;
+                                  if (selectedAnswers.includes(optionLetter)) {
+                                    // Remove if already selected
+                                    newAnswers = selectedAnswers.filter(a => a !== optionLetter);
+                                  } else if (selectedAnswers.length < 2) {
+                                    // Add if less than 2 selected
+                                    newAnswers = [...selectedAnswers, optionLetter];
+                                  } else {
+                                    // Replace oldest if already 2 selected
+                                    newAnswers = [selectedAnswers[1], optionLetter];
+                                  }
+                                  handleAnswerChange(q.id, newAnswers);
+                                };
+                                
+                                return (
+                                  <div className="mt-2">
+                                    <div className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded mb-2 font-medium">
+                                      ⚠️ Select exactly TWO options ({selectedAnswers.length}/2 selected)
+                                    </div>
+                                    <div className="space-y-1">
+                                      {q.options.map((option, optIdx) => {
+                                        const optionLetter = option.split(')')[0];
+                                        const isSelected = selectedAnswers.includes(optionLetter);
+                                        return (
+                                          <button
+                                            key={optIdx}
+                                            onClick={() => handleMultiSelect(optionLetter)}
+                                            className={`w-full text-left px-3 py-2 rounded text-xs transition-colors flex items-center gap-2 ${
+                                              isSelected
+                                                ? 'bg-sky-500 text-white'
+                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                            }`}
+                                          >
+                                            <span className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
+                                              isSelected ? 'border-white bg-white' : 'border-gray-400'
+                                            }`}>
+                                              {isSelected && <span className="text-sky-500 text-xs font-bold">✓</span>}
+                                            </span>
+                                            {option}
+                                          </button>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+                                );
+                              }
+                              
+                              // Single select: use radio-style buttons
+                              return (
+                                <div className="space-y-1 mt-2">
+                                  {q.options.map((option, optIdx) => (
+                                    <button
+                                      key={optIdx}
+                                      onClick={() => handleAnswerChange(q.id, option.split(')')[0])}
+                                      className={`w-full text-left px-2 py-1.5 rounded text-xs transition-colors ${
+                                        answers[q.id] === option.split(')')[0]
+                                          ? 'bg-sky-500 text-white'
+                                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                      }`}
+                                    >
+                                      {option}
+                                    </button>
+                                  ))}
+                                </div>
+                              );
+                            })()
                           )}
 
                           {(q.type === 'sentence_completion' || q.type === 'form_completion' || 
