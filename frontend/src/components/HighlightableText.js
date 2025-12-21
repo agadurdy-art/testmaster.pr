@@ -18,7 +18,8 @@ export default function HighlightableText({
   user, 
   testId, 
   testType,
-  highlightsEnabled = true 
+  highlightsEnabled = true,
+  showParagraphLabels = false
 }) {
   const [highlights, setHighlights] = useState([]);
   const [selectedColor, setSelectedColor] = useState(HIGHLIGHT_COLORS[0]);
