@@ -1312,7 +1312,10 @@ export default function ComprehensiveLevelTest({ user }) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {!user && (
               <Button
-                onClick={() => navigate('/register')}
+                onClick={() => {
+                  // Navigate to landing page with signup modal trigger
+                  window.location.href = '/?action=signup';
+                }}
                 size="lg"
                 className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
               >
@@ -1321,15 +1324,28 @@ export default function ComprehensiveLevelTest({ user }) {
               </Button>
             )}
             <Button
-              onClick={() => navigate('/practice')}
+              onClick={() => {
+                if (user) {
+                  navigate('/dashboard');
+                } else {
+                  // Navigate to landing page with signup modal trigger
+                  window.location.href = '/?action=signup';
+                }
+              }}
               size="lg"
               className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white"
             >
-              Start Practice Tests
+              {user ? 'Go to Dashboard' : 'Start Free Practice'}
               <ChevronRight className="w-5 h-5 ml-2" />
             </Button>
             <Button
-              onClick={() => navigate(user ? '/dashboard' : '/login')}
+              onClick={() => {
+                if (user) {
+                  navigate('/dashboard');
+                } else {
+                  window.location.href = '/?action=login';
+                }
+              }}
               size="lg"
               variant="outline"
               className="border-2 border-violet-600 text-violet-600 hover:bg-violet-50"
