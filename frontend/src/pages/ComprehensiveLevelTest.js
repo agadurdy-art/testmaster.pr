@@ -248,23 +248,51 @@ export default function ComprehensiveLevelTest({ user }) {
 
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        } 
+      });
+      
+      // Try to use high-quality audio format
+      const options = { mimeType: 'audio/webm;codecs=opus' };
+      let mediaRecorder;
+      
+      try {
+        mediaRecorder = new MediaRecorder(stream, options);
+      } catch (e) {
+        // Fallback to default if opus not supported
+        mediaRecorder = new MediaRecorder(stream);
+      }
+      
       mediaRecorderRef.current = mediaRecorder;
       audioChunksRef.current = [];
       
       mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) audioChunksRef.current.push(event.data);
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
       };
       
       mediaRecorder.onstop = async () => {
-        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        const mimeType = mediaRecorder.mimeType || 'audio/webm';
+        const blob = new Blob(audioChunksRef.current, { type: mimeType });
+        
+        console.log('Audio recorded:', {
+          size: blob.size,
+          type: blob.type,
+          chunks: audioChunksRef.current.length
+        });
+        
         setAudioBlob(blob);
         await transcribeAudio(blob);
         stream.getTracks().forEach(track => track.stop());
       };
       
-      mediaRecorder.start();
+      // Request data every 1 second to ensure we capture everything
+      mediaRecorder.start(1000);
       setRecording(true);
       setTimerActive(true);
       setTimeRemaining(speakingPrompts[currentSpeakingPrompt].duration);
