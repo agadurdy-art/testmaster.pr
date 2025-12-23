@@ -379,14 +379,26 @@ export default function ComprehensiveLevelTest({ user }) {
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'Transcription failed');
+        const errorMessage = errorData.detail || 'Transcription failed';
+        
+        // Check if it's a language detection error
+        if (errorMessage.includes('speak in English') || errorMessage.includes('Detected language')) {
+          toast.error('🌐 Please speak in English only. This is an English proficiency test.', {
+            duration: 5000
+          });
+          setTranscribing(false);
+          return;
+        }
+        
+        throw new Error(errorMessage);
       }
       
       const data = await response.json();
       
       console.log('Transcription result:', {
         text: data.text,
-        length: data.text?.length
+        length: data.text?.length,
+        language: data.language
       });
       
       if (!data.text || data.text.trim().length < 10) {
