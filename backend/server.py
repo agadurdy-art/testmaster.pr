@@ -2935,6 +2935,269 @@ Remember:
         raise HTTPException(status_code=500, detail="Failed to evaluate writing")
 
 
+# ============ Level Test Evaluation & Recommendations ============
+
+class LevelTestSpeakingEvaluation(BaseModel):
+    responses: List[Dict[str, Any]]  # [{"level": "A1-A2", "transcript": "..."}]
+
+class CourseRecommendationRequest(BaseModel):
+    overall_band: float
+    reading_band: float
+    speaking_band: float
+    weaknesses: List[str]
+    skill_breakdown: Dict[str, Any]
+
+@api_router.post("/level-test/evaluate-speaking")
+async def evaluate_level_test_speaking(request: LevelTestSpeakingEvaluation):
+    """
+    Evaluate speaking responses from comprehensive level test.
+    Returns detailed band score, weaknesses, and specific improvement areas.
+    """
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=str(uuid.uuid4()),
+            system_message=IELTS_CORE_MINDSET
+        ).with_model("anthropic", "claude-sonnet-4-20250514")
+        
+        # Format all responses for evaluation
+        responses_formatted = []
+        for idx, r in enumerate(request.responses, 1):
+            level = r.get('level', 'Unknown')
+            transcript = r.get('transcript', '')
+            responses_formatted.append(f"Question {idx} (Target Level: {level}):\nTranscript: {transcript}\n")
+        
+        responses_text = "\n".join(responses_formatted)
+        
+        evaluation_prompt = f"""You are an expert IELTS examiner conducting a comprehensive speaking assessment.
+
+The candidate has responded to 3 speaking questions of increasing difficulty:
+- Question 1: Basic personal information (A1-A2 level)
+- Question 2: Description/comparison task (B1-B2 level)  
+- Question 3: Opinion/abstract discussion (C1-C2 level)
+
+CANDIDATE RESPONSES:
+{responses_text}
+
+Evaluate this candidate comprehensively and provide detailed feedback in the following JSON format:
+
+{{
+    "overall_band": <float between 2.0 and 9.0, in 0.5 increments>,
+    "criteria_scores": {{
+        "fluency_coherence": <float 2.0-9.0>,
+        "lexical_resource": <float 2.0-9.0>,
+        "grammatical_range_accuracy": <float 2.0-9.0>,
+        "pronunciation": <float 2.0-9.0>
+    }},
+    "cefr_level": "<A1, A2, B1, B2, C1, or C2>",
+    "strengths": [
+        "<Specific strength 1 with example from their response>",
+        "<Specific strength 2 with example>",
+        "<Specific strength 3 with example>"
+    ],
+    "weaknesses": [
+        "<Specific weakness 1 - e.g., 'Limited vocabulary range - used basic words like 'good' and 'nice' repeatedly'>",
+        "<Specific weakness 2 - e.g., 'Frequent grammar errors with past tense (said 'I go yesterday' instead of 'I went')'>",
+        "<Specific weakness 3 - e.g., 'Long pauses between sentences affecting fluency'>",
+        "<Specific weakness 4 if applicable>"
+    ],
+    "pronunciation_issues": [
+        "<Issue 1 - e.g., 'Difficulty with 'th' sounds'>",
+        "<Issue 2 if detected>"
+    ],
+    "improvement_recommendations": [
+        "<Actionable tip 1 - e.g., 'Practice past tense with daily journal entries'>",
+        "<Actionable tip 2>",
+        "<Actionable tip 3>"
+    ],
+    "vocabulary_gaps": [
+        "<Topic area 1 - e.g., 'Academic/formal vocabulary'>",
+        "<Topic area 2>"
+    ],
+    "detailed_feedback": "<2-3 paragraph comprehensive assessment explaining the band score, what they did well, and what needs improvement>"
+}}
+
+ASSESSMENT GUIDELINES:
+- Band 2.0-3.0: Very limited vocabulary, frequent long pauses, basic errors
+- Band 3.5-4.5: Simple sentences only, limited vocabulary, noticeable errors
+- Band 5.0-5.5: Can communicate basic ideas but with effort, some fluency
+- Band 6.0-6.5: Can discuss familiar topics fairly well, good vocabulary range
+- Band 7.0-7.5: Speaks fluently on most topics, uses advanced vocabulary
+- Band 8.0-9.0: Near-native fluency, sophisticated language, minimal errors
+
+Be honest but constructive. Identify SPECIFIC examples from their responses."""
+
+        response = await chat.send_message(UserMessage(text=evaluation_prompt))
+        
+        # Parse AI response
+        if isinstance(response, dict):
+            result = response
+        else:
+            import re
+            json_match = re.search(r'\{[\s\S]*\}', str(response))
+            if json_match:
+                result = json.loads(json_match.group())
+            else:
+                raise ValueError("Could not parse AI response")
+        
+        return result
+        
+    except Exception as e:
+        logger.error(f"Speaking evaluation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(e)}")
+
+@api_router.post("/level-test/recommend-courses")
+async def recommend_courses(request: CourseRecommendationRequest):
+    """
+    Generate personalized course recommendations based on level test results.
+    Returns recommended courses with reasoning and a learning roadmap.
+    """
+    try:
+        # Determine primary course based on overall band
+        if request.overall_band < 4.5:
+            primary_course = {
+                "id": "beginner",
+                "name": "Foundation Course",
+                "band_range": "Band 2.0 - 4.5",
+                "reason": "Build essential English fundamentals",
+                "priority": "Start Here"
+            }
+            secondary_course = {
+                "id": "mastery",
+                "name": "Mastery Course",
+                "band_range": "Band 5.5 - 6.5",
+                "reason": "Progress to after completing foundation",
+                "priority": "Next Step"
+            }
+        elif 4.5 <= request.overall_band < 6.5:
+            primary_course = {
+                "id": "mastery",
+                "name": "Mastery Course",
+                "band_range": "Band 5.5 - 6.5",
+                "reason": "Break through intermediate plateau",
+                "priority": "Start Here"
+            }
+            secondary_course = {
+                "id": "advanced",
+                "name": "Advanced Mastery",
+                "band_range": "Band 6.5 - 9.0",
+                "reason": "Target high band scores after mastery",
+                "priority": "Next Step"
+            }
+        else:
+            primary_course = {
+                "id": "advanced",
+                "name": "Advanced Mastery",
+                "band_range": "Band 6.5 - 9.0",
+                "reason": "Achieve Band 7+ with advanced strategies",
+                "priority": "Start Here"
+            }
+            secondary_course = {
+                "id": "mastery",
+                "name": "Mastery Course",
+                "band_range": "Band 5.5 - 6.5",
+                "reason": "Review fundamentals if needed",
+                "priority": "Optional Review"
+            }
+        
+        # Generate personalized learning roadmap using AI
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=str(uuid.uuid4()),
+            system_message="You are an expert IELTS preparation advisor creating personalized study plans."
+        ).with_model("anthropic", "claude-sonnet-4-20250514")
+        
+        weaknesses_text = "\n".join([f"- {w}" for w in request.weaknesses])
+        
+        roadmap_prompt = f"""Create a personalized 8-12 week learning roadmap for an IELTS student.
+
+STUDENT PROFILE:
+- Overall Band: {request.overall_band}
+- Reading Band: {request.reading_band}
+- Speaking Band: {request.speaking_band}
+- Key Weaknesses: {weaknesses_text}
+
+RECOMMENDED COURSE: {primary_course['name']} ({primary_course['band_range']})
+
+Generate a JSON study plan:
+{{
+    "target_band": <realistic target band after 8-12 weeks>,
+    "estimated_weeks": <8-12 weeks based on current level>,
+    "weekly_plan": [
+        {{
+            "week": 1,
+            "focus": "<Main skill to work on>",
+            "goals": [
+                "<Specific goal 1>",
+                "<Specific goal 2>"
+            ],
+            "activities": [
+                "<Activity 1 from the course>",
+                "<Activity 2>"
+            ]
+        }},
+        // ... 3-4 week milestones
+    ],
+    "priority_skills": [
+        "<Skill 1 to focus on immediately>",
+        "<Skill 2>",
+        "<Skill 3>"
+    ],
+    "study_tips": [
+        "<Personalized tip 1 based on weaknesses>",
+        "<Tip 2>",
+        "<Tip 3>"
+    ],
+    "milestone_goals": [
+        {{
+            "weeks": 4,
+            "goal": "<What they should achieve by week 4>",
+            "band_target": <expected band>
+        }},
+        {{
+            "weeks": 8,
+            "goal": "<What they should achieve by week 8>",
+            "band_target": <expected band>
+        }},
+        {{
+            "weeks": 12,
+            "goal": "<Final goal>",
+            "band_target": <target band>
+        }}
+    ]
+}}
+
+Make it motivating but realistic. Address their specific weaknesses."""
+
+        response = await chat.send_message(UserMessage(text=roadmap_prompt))
+        
+        # Parse roadmap
+        if isinstance(response, dict):
+            roadmap = response
+        else:
+            import re
+            json_match = re.search(r'\{[\s\S]*\}', str(response))
+            if json_match:
+                roadmap = json.loads(json_match.group())
+            else:
+                roadmap = {"target_band": request.overall_band + 1.0, "estimated_weeks": 12}
+        
+        return {
+            "recommended_courses": [primary_course, secondary_course],
+            "learning_roadmap": roadmap,
+            "immediate_actions": [
+                f"Enroll in {primary_course['name']} to start building your skills",
+                f"Focus first on: {', '.join(request.weaknesses[:2]) if request.weaknesses else 'core fundamentals'}",
+                "Practice speaking 15-20 minutes daily",
+                "Complete at least 3 reading practice passages per week"
+            ]
+        }
+        
+    except Exception as e:
+        logger.error(f"Course recommendation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Recommendation failed: {str(e)}")
+
+
 # ============ Speaking Practice Evaluation ============
 
 class SpeakingPracticeRequest(BaseModel):
