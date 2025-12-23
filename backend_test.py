@@ -1342,7 +1342,10 @@ def run_complete_test_flow():
         return False
 
 if __name__ == "__main__":
-    # Test the specific listening test submission fix for combined questions
+    # Test the specific partial credit fix for combined "Choose TWO" questions as requested in review
+    partial_credit_success = test_partial_credit_combined_questions()
+    
+    # Test the general listening test submission fix for combined questions
     listening_fix_success = test_listening_combined_questions_fix()
     
     # Test Phase 2-4 features as requested in the review
@@ -1354,9 +1357,10 @@ if __name__ == "__main__":
     # Test Writing Practice Evaluation API (existing functionality)
     writing_success = test_writing_practice_evaluation()
     
-    overall_success = listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
+    overall_success = partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
+    print(f"   Partial Credit Fix (Review Request): {'✅ PASSED' if partial_credit_success else '❌ FAILED'}")
     print(f"   Listening Combined Questions Fix: {'✅ PASSED' if listening_fix_success else '❌ FAILED'}")
     print(f"   Phase 2-4 Features: {'✅ PASSED' if phase_2_4_success else '❌ FAILED'}")
     print(f"   Advanced Mastery Course Tests: {'✅ PASSED' if advanced_mastery_success else '❌ FAILED'}")
