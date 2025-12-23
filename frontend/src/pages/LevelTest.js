@@ -431,7 +431,7 @@ export default function LevelTest({ user }) {
             
             <div className="flex flex-col gap-4">
               {!user && (
-                <Button onClick={() => navigate('/', { state: { openSignup: true } })} size="lg" className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0 shadow-lg hover:from-green-600 hover:to-emerald-700">
+                <Button onClick={() => window.location.href = '/'} size="lg" className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0 shadow-lg hover:from-green-600 hover:to-emerald-700">
                   <Award className="w-5 h-5 mr-2" />
                   Sign Up to Save Results & Start Learning
                 </Button>
@@ -445,8 +445,8 @@ export default function LevelTest({ user }) {
                     Go to Dashboard
                   </Button>
                 ) : (
-                  <Button onClick={() => navigate('/', { state: { openSignup: true } })} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
-                    Get Started
+                  <Button onClick={() => window.location.href = '/'} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                    Back to Home
                   </Button>
                 )}
               </div>
