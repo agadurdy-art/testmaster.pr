@@ -997,46 +997,48 @@ export default function ComprehensiveLevelTest({ user }) {
           </div>
 
           {/* Strengths & Weaknesses */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {/* Strengths */}
-            <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 border-0">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-600" />
-                Your Strengths
-              </h3>
-              <ul className="space-y-3">
-                {results.speaking.strengths.map((strength, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                    <Sparkles className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>{strength}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+          {results.speaking && (
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              {/* Strengths */}
+              <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 border-0">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  {language === 'vi' ? 'Điểm Mạnh' : language === 'tr' ? 'Güçlü Yönler' : 'Your Strengths'}
+                </h3>
+                <ul className="space-y-3">
+                  {results.speaking.strengths.map((strength, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                      <Sparkles className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <span>{strength}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
 
-            {/* Areas for Improvement */}
-            <Card className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 border-0">
-              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Target className="w-5 h-5 text-amber-600" />
-                Areas to Improve
-              </h3>
-              <ul className="space-y-3">
-                {results.speaking.weaknesses.map((weakness, idx) => (
-                  <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                    <TrendingUp className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-                    <span>{weakness}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </div>
+              {/* Areas for Improvement */}
+              <Card className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 border-0">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <Target className="w-5 h-5 text-amber-600" />
+                  {language === 'vi' ? 'Cần Cải Thiện' : language === 'tr' ? 'Geliştirilecek Alanlar' : 'Areas to Improve'}
+                </h3>
+                <ul className="space-y-3">
+                  {results.speaking.weaknesses.map((weakness, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                      <TrendingUp className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                      <span>{weakness}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          )}
 
           {/* Detailed Feedback */}
-          {results.speaking.detailed_feedback && (
+          {results.speaking?.detailed_feedback && (
             <Card className="p-6 bg-white shadow-lg mb-8">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Brain className="w-5 h-5 text-indigo-600" />
-                Comprehensive Analysis
+                {language === 'vi' ? 'Phân Tích Toàn Diện' : language === 'tr' ? 'Kapsamlı Analiz' : 'Comprehensive Analysis'}
               </h3>
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                 {results.speaking.detailed_feedback}
@@ -1045,22 +1047,24 @@ export default function ComprehensiveLevelTest({ user }) {
           )}
 
           {/* Improvement Recommendations */}
-          <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-0 mb-8">
-            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <Lightbulb className="w-5 h-5 text-blue-600" />
-              Action Plan: How to Improve
-            </h3>
-            <div className="space-y-4">
-              {results.speaking.improvement_recommendations.map((rec, idx) => (
-                <div key={idx} className="flex items-start gap-3 bg-white p-4 rounded-lg">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
-                    {idx + 1}
+          {results.speaking?.improvement_recommendations && (
+            <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-0 mb-8">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-blue-600" />
+                {language === 'vi' ? 'Kế Hoạch Hành Động' : language === 'tr' ? 'Eylem Planı' : 'Action Plan: How to Improve'}
+              </h3>
+              <div className="space-y-4">
+                {results.speaking.improvement_recommendations.map((rec, idx) => (
+                  <div key={idx} className="flex items-start gap-3 bg-white p-4 rounded-lg">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                      {idx + 1}
+                    </div>
+                    <p className="text-gray-700 text-sm pt-1">{rec}</p>
                   </div>
-                  <p className="text-gray-700 text-sm pt-1">{rec}</p>
-                </div>
-              ))}
-            </div>
-          </Card>
+                ))}
+              </div>
+            </Card>
+          )}
 
           {/* Course Recommendations */}
           {results.recommendations && (
