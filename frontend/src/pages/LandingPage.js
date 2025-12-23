@@ -301,6 +301,23 @@ export default function LandingPage({ onLogin, user }) {
     }
   }, [user, navigate]);
 
+  // Handle URL query params for opening auth modal (e.g., ?action=signup or ?action=login)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const action = params.get('action');
+    if (action === 'signup') {
+      setAuthMode('signup');
+      setShowAuth(true);
+      // Clean up the URL without reloading
+      window.history.replaceState({}, '', '/');
+    } else if (action === 'login') {
+      setAuthMode('signin');
+      setShowAuth(true);
+      // Clean up the URL without reloading
+      window.history.replaceState({}, '', '/');
+    }
+  }, [location.search]);
+
   if (user) {
     return null;
   }
