@@ -2234,7 +2234,7 @@ function ElevenLabsExaminer() {
                 {/* Writing feedback summary (shown below tasks) */}
                 {testType === 'writing' && Object.keys(writingFeedback).length > 0 && (
                   <div className="mt-6 p-6 bg-green-50 border border-green-200 rounded-lg">
-                    <h3 className="text-xl font-semibold text-green-900 mb-3">Your Writing Feedback (Like a Teacher's Report)</h3>
+                    <h3 className="text-xl font-semibold text-green-900 mb-3">Your Writing Feedback (Like a Teacher&apos;s Report)</h3>
                     <p className="text-sm text-green-900 mb-4">
                       Below is friendly feedback on each task, with clear comments for each IELTS criterion and ideas to improve your skills.
                     </p>
