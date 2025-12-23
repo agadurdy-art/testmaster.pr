@@ -10,6 +10,7 @@ import { PayPalButtons } from '@paypal/react-paypal-js';
 import { ArrowLeft, Check, Sparkles, Crown, Zap, Star, Building2, Mic, Mail } from 'lucide-react';
 
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
+const SUPPORT_EMAIL = 'testmaster.edu.ai@proton.me';
 
 const plans = [
   { id: 'single', name: 'Single Exam', nameVi: 'Một bài thi lẻ', nameTr: 'Tek Sınav', badge: 'Flexible', badgeVi: 'Linh hoạt', badgeTr: 'Esnek', priceUsd: '$4.99', priceVnd: '120,000 VND', credits: '1 × 10-minute AI Speaking Exam', creditsVi: '1 lần thi nói AI (10 phút)', creditsTr: '1 × 10 dakikalık AI Konuşma Sınavı', features: ['Instant scoring', 'Band prediction', 'Feedback summary'], featuresVi: ['Chấm điểm ngay', 'Dự đoán band điểm', 'Tóm tắt phản hồi'], featuresTr: ['Anında puanlama', 'Band tahmini', 'Geri bildirim özeti'], cta: 'Start Exam', ctaVi: 'Bắt đầu thi', ctaTr: 'Sınava Başla', color: 'bg-blue-500', lightBg: 'bg-blue-50', icon: Zap, qrUrl: 'https://customer-assets.emergentagent.com/job_examprep-ai-14/artifacts/cofsn5nj_Single%20exam%20120k.png' },
