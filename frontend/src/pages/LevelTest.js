@@ -429,19 +429,27 @@ export default function LevelTest({ user }) {
               </div>
             </div>
             
-            <div className="flex gap-4">
-              <Button variant="outline" onClick={() => { setStage('intro'); setCurrentQuestion(0); setReadingAnswers({}); setCurrentSpeakingPrompt(0); setSpeakingResponses([]); setCurrentTranscript(''); setResults(null); }} className="flex-1">
-                Take Test Again
-              </Button>
-              {user ? (
-                <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
-                  Go to Dashboard
-                </Button>
-              ) : (
-                <Button onClick={() => navigate('/')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
-                  Create Account to Continue
+            <div className="flex flex-col gap-4">
+              {!user && (
+                <Button onClick={() => navigate('/register')} size="lg" className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0 shadow-lg hover:from-green-600 hover:to-emerald-700">
+                  <Award className="w-5 h-5 mr-2" />
+                  Sign Up to Save Results & Start Learning
                 </Button>
               )}
+              <div className="flex gap-4">
+                <Button variant="outline" onClick={() => { setStage('intro'); setCurrentQuestion(0); setReadingAnswers({}); setCurrentSpeakingPrompt(0); setSpeakingResponses([]); setCurrentTranscript(''); setResults(null); }} className="flex-1">
+                  Take Test Again
+                </Button>
+                {user ? (
+                  <Button onClick={() => navigate('/dashboard')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                    Go to Dashboard
+                  </Button>
+                ) : (
+                  <Button onClick={() => navigate('/practice')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                    Start Free Practice
+                  </Button>
+                )}
+              </div>
             </div>
             
             {!user && (
