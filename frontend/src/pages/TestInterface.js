@@ -1354,7 +1354,7 @@ function ElevenLabsExaminer() {
                 {/* Questions Header */}
                 <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
                   <h2 className="text-lg font-bold text-gray-900">
-                    Part {Math.floor(currentQuestion / 10) + 1} - Questions {Math.floor(currentQuestion / 10) * 10 + 1}-{(Math.floor(currentQuestion / 10) + 1) * 10}
+                    Part {currentListeningPart} - Questions {(currentListeningPart - 1) * 10 + 1}-{currentListeningPart * 10}
                   </h2>
                 </div>
 
@@ -1363,10 +1363,8 @@ function ElevenLabsExaminer() {
                   <div className="space-y-4">
                     {/* Task descriptions for Listening */}
                     {(() => {
-                      const partQuestions = test.questions?.slice(
-                        Math.floor(currentQuestion / 10) * 10,
-                        (Math.floor(currentQuestion / 10) + 1) * 10
-                      ) || [];
+                      // Filter questions by section number instead of index slicing
+                      const partQuestions = test.questions?.filter(q => q.section === currentListeningPart) || [];
                       let currentType = null;
                       const listeningTaskDescriptions = {
                         'note_completion': {
@@ -1394,13 +1392,15 @@ function ElevenLabsExaminer() {
                           instruction: 'Choose the correct letter A, B, or C.'
                         },
                         'multiple_choice_multi': {
-                          title: 'Multiple Choice (Select TWO)',
-                          instruction: 'Choose TWO correct answers from the options below.'
+                          title: 'multiple choice two',
+                          instruction: 'Listen and answer.'
                         }
                       };
                       
                       return partQuestions.map((q, idx) => {
-                        const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
+                        // Get display question number(s) from the question ID
+                        const qId = String(q.id);
+                        const displayNumber = qId.includes('-') ? qId.replace('-', ', ') : qId;
                         const showTaskHeader = q.type !== currentType;
                         currentType = q.type;
                         const taskInfo = listeningTaskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Listen and answer.' };
@@ -1421,20 +1421,23 @@ function ElevenLabsExaminer() {
                             )}
                             
                     <div 
-                      id={`q-${questionNumber}`}
+                      id={`q-${q.id}`}
                       className={`p-3 rounded-lg border-l-4 ${
                         isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
                       } shadow-sm`}
                     >
                       <p className="text-sm font-medium text-gray-900 mb-2">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
-                          {questionNumber + 1}
+                        <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                          {displayNumber}
                         </span>
                         {q.question}
+                        {q.type === 'multiple_choice_multi' && (
+                          <span className="ml-2 text-amber-600 text-xs font-medium">(Select TWO)</span>
+                        )}
                       </p>
                       
                       {/* Map labeling special display */}
-                          {q.type === 'map_labeling' && questionNumber === 15 && (
+                          {q.type === 'map_labeling' && q.id === 16 && (
                             <div className="mt-3 mb-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
                               <p className="text-center text-gray-900 font-bold mb-2">Farley House Map</p>
                               <img 
