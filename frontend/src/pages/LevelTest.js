@@ -445,8 +445,8 @@ export default function LevelTest({ user }) {
                     Go to Dashboard
                   </Button>
                 ) : (
-                  <Button onClick={() => navigate('/practice')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
-                    Start Free Practice
+                  <Button onClick={() => navigate('/register')} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg shadow-purple-200">
+                    Get Started
                   </Button>
                 )}
               </div>
