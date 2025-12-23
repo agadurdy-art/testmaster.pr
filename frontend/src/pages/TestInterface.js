@@ -1230,12 +1230,12 @@ function ElevenLabsExaminer() {
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-2xl">🎧</span>
                   <h3 className="font-bold text-lg">
-                    Part {Math.floor(currentQuestion / 10) + 1}
+                    Part {currentListeningPart}
                   </h3>
                 </div>
                 <audio
                   ref={listeningAudioRef}
-                  src={test.sections?.[Math.floor(currentQuestion / 10)]?.audio_url}
+                  src={test.sections?.[currentListeningPart - 1]?.audio_url}
                   onEnded={() => setListeningAudioPlaying(false)}
                   onPlay={() => setListeningAudioPlaying(true)}
                   onPause={() => setListeningAudioPlaying(false)}
@@ -1244,7 +1244,7 @@ function ElevenLabsExaminer() {
                   style={{height: '40px'}}
                 />
                 <p className="text-xs text-white/80 mt-2">
-                  {test.sections?.[Math.floor(currentQuestion / 10)]?.context}
+                  {test.sections?.[currentListeningPart - 1]?.context}
                 </p>
               </Card>
 
@@ -1253,23 +1253,34 @@ function ElevenLabsExaminer() {
                 <h3 className="font-semibold text-gray-700 text-sm mb-2">Parts</h3>
                 <div className="flex gap-2">
                   {[1, 2, 3, 4].map((part) => {
-                    const partQuestions = test.questions?.slice((part - 1) * 10, part * 10) || [];
+                    // Filter questions by section number
+                    const partQuestions = test.questions?.filter(q => q.section === part) || [];
+                    // Count answered, accounting for combined questions
                     const answeredCount = partQuestions.filter(q => answers[q.id]).length;
+                    // Calculate total question numbers for this part (accounting for combined questions)
+                    const totalQuestionsInPart = partQuestions.reduce((sum, q) => {
+                      const qId = String(q.id);
+                      if (qId.includes('-')) {
+                        const [start, end] = qId.split('-').map(Number);
+                        return sum + (end - start + 1);
+                      }
+                      return sum + 1;
+                    }, 0);
                     return (
                       <button
                         key={part}
-                        onClick={() => setCurrentQuestion((part - 1) * 10)}
+                        onClick={() => setCurrentListeningPart(part)}
                         className={`flex-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors ${
-                          Math.floor(currentQuestion / 10) + 1 === part
+                          currentListeningPart === part
                             ? 'bg-sky-500 text-white'
-                            : answeredCount === 10
+                            : answeredCount === partQuestions.length
                             ? 'bg-green-100 text-green-700 hover:bg-green-200'
                             : 'bg-white text-gray-600 hover:bg-gray-100 border'
                         }`}
                       >
                         <div>P{part}</div>
                         <div className="text-[10px] opacity-75">
-                          {answeredCount}/10
+                          {answeredCount}/{partQuestions.length}
                         </div>
                       </button>
                     );
@@ -1281,29 +1292,57 @@ function ElevenLabsExaminer() {
               <Card className="p-3 flex-1 overflow-y-auto">
                 <h3 className="font-semibold text-gray-700 text-sm mb-2">Questions</h3>
                 <div className="grid grid-cols-5 gap-1">
-                  {test.questions?.slice(
-                    Math.floor(currentQuestion / 10) * 10,
-                    (Math.floor(currentQuestion / 10) + 1) * 10
-                  ).map((q, idx) => {
-                    const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
-                    const isAnswered = !!answers[q.id];
-                    return (
-                      <button
-                        key={q.id}
-                        onClick={() => {
-                          const el = document.getElementById(`q-${questionNumber}`);
-                          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }}
-                        className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
-                          isAnswered
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                        }`}
-                      >
-                        {questionNumber + 1}
-                      </button>
-                    );
-                  })}
+                  {(() => {
+                    // Get questions for current part by section
+                    const partQuestions = test.questions?.filter(q => q.section === currentListeningPart) || [];
+                    // Build question number buttons - expand combined questions
+                    const buttons = [];
+                    partQuestions.forEach((q, idx) => {
+                      const qId = String(q.id);
+                      const isAnswered = !!answers[q.id];
+                      if (qId.includes('-')) {
+                        // Combined question like "21-22" - show both numbers
+                        const [start, end] = qId.split('-').map(Number);
+                        for (let num = start; num <= end; num++) {
+                          buttons.push(
+                            <button
+                              key={`${q.id}-${num}`}
+                              onClick={() => {
+                                const el = document.getElementById(`q-${q.id}`);
+                                el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              }}
+                              className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
+                                isAnswered
+                                  ? 'bg-green-100 text-green-700'
+                                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                              }`}
+                            >
+                              {num}
+                            </button>
+                          );
+                        }
+                      } else {
+                        // Single question
+                        buttons.push(
+                          <button
+                            key={q.id}
+                            onClick={() => {
+                              const el = document.getElementById(`q-${q.id}`);
+                              el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }}
+                            className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
+                              isAnswered
+                                ? 'bg-green-100 text-green-700'
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
+                          >
+                            {q.id}
+                          </button>
+                        );
+                      }
+                    });
+                    return buttons;
+                  })()}
                 </div>
               </Card>
             </div>
