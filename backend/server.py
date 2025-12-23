@@ -2372,18 +2372,33 @@ async def transcribe_audio(file: UploadFile = File(...)):
     try:
         # Read audio file
         audio_data = await file.read()
-        audio_file = io.BytesIO(audio_data)
-        audio_file.name = file.filename
         
-        # Transcribe
+        # Log audio size for debugging
+        logger.info(f"Transcribing audio: {len(audio_data)} bytes ({len(audio_data)/1024/1024:.2f} MB)")
+        
+        if len(audio_data) < 1000:
+            raise HTTPException(status_code=400, detail="Audio file too small")
+        
+        audio_file = io.BytesIO(audio_data)
+        audio_file.name = file.filename or "audio.webm"
+        
+        # Transcribe with language detection
         response = await stt.transcribe(
             file=audio_file,
             model="whisper-1",
-            response_format="json"
+            response_format="json",
+            language="en"  # Force English for better accuracy
         )
         
-        return {"text": response.text}
+        transcribed_text = response.text.strip()
+        logger.info(f"Transcription result: {len(transcribed_text)} chars, {len(transcribed_text.split())} words")
+        
+        if len(transcribed_text) < 5:
+            raise HTTPException(status_code=400, detail="Could not transcribe audio clearly. Please speak louder.")
+        
+        return {"text": transcribed_text}
     except Exception as e:
+        logger.error(f"Transcription error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @api_router.get("/speaking/questions/{part}")
