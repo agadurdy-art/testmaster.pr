@@ -566,10 +566,14 @@ export default function ComprehensiveLevelTest({ user }) {
                 <Target className="w-10 h-10 text-white" />
               </div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Comprehensive Level Assessment
+                {language === 'vi' ? 'Đánh Giá Trình Độ Toàn Diện' :
+                 language === 'tr' ? 'Kapsamlı Seviye Değerlendirmesi' :
+                 'Comprehensive Level Assessment'}
               </h1>
               <p className="text-gray-600 text-lg">
-                Discover your true English level in 10-15 minutes
+                {language === 'vi' ? 'Khám phá trình độ tiếng Anh thực của bạn trong 10-15 phút' :
+                 language === 'tr' ? 'Gerçek İngilizce seviyenizi 10-15 dakikada keşfedin' :
+                 'Discover your true English level in 10-15 minutes'}
               </p>
             </div>
 
