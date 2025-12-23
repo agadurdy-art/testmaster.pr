@@ -1186,45 +1186,51 @@ async def submit_test(submission: SubmitAnswers):
             qid = ans.get("question_id") or ans.get("id")
             if qid is None:
                 continue
-            try:
-                qid_int = int(qid)
-            except (TypeError, ValueError):
+            
+            # Parse question IDs (handles combined IDs like "21-22")
+            qid_list = parse_question_ids(qid)
+            if not qid_list:
                 continue
-
-            correct_answer = answer_key_map.get(qid_int)
-            if correct_answer is None:
-                continue
-
+            
+            # Get user answer (for combined questions, this should be a single answer)
             user_answer = ans.get("answer", "")
-            is_correct = answers_match(user_answer, correct_answer)
-            if is_correct:
-                correct += 1
+            
+            # For combined questions (e.g., "21-22"), we need to check each question separately
+            # The user provides one answer, and we check it against each question's correct answer
+            for qid_int in qid_list:
+                correct_answer = answer_key_map.get(qid_int)
+                if correct_answer is None:
+                    continue
 
-            q_type = question_type_map.get(qid_int, "unknown")
-            
-            # Add to question results with explanation
-            question_results.append({
-                "question_id": qid_int,
-                "question_text": question_text_map.get(qid_int, f"Question {qid_int}"),
-                "question_type": q_type,
-                "user_answer": user_answer,
-                "correct_answer": str(correct_answer),
-                "is_correct": is_correct,
-                "explanation": explanation_map.get(qid_int, ""),
-            })
-            
-            skey = _make_skill_key(test_type, q_type)
-            if skey not in skill_stats:
-                skill_stats[skey] = {
-                    "skill_id": skey,
-                    "test_type": test_type,
+                is_correct = answers_match(user_answer, correct_answer)
+                if is_correct:
+                    correct += 1
+
+                q_type = question_type_map.get(qid_int, "unknown")
+                
+                # Add to question results with explanation
+                question_results.append({
+                    "question_id": qid_int,
+                    "question_text": question_text_map.get(qid_int, f"Question {qid_int}"),
                     "question_type": q_type,
-                    "label": _skill_label(test_type, q_type),
-                    "correct": 0,
-                    "total": 0,
-                }
-            if is_correct:
-                skill_stats[skey]["correct"] += 1
+                    "user_answer": user_answer,
+                    "correct_answer": str(correct_answer),
+                    "is_correct": is_correct,
+                    "explanation": explanation_map.get(qid_int, ""),
+                })
+                
+                skey = _make_skill_key(test_type, q_type)
+                if skey not in skill_stats:
+                    skill_stats[skey] = {
+                        "skill_id": skey,
+                        "test_type": test_type,
+                        "question_type": q_type,
+                        "label": _skill_label(test_type, q_type),
+                        "correct": 0,
+                        "total": 0,
+                    }
+                if is_correct:
+                    skill_stats[skey]["correct"] += 1
 
         score_percentage = (correct / total * 100) if total > 0 else 0
         band_score = calculate_band_score(score_percentage)
