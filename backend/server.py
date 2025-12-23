@@ -1139,20 +1139,24 @@ async def submit_test(submission: SubmitAnswers):
                 explanation_map[q_id] = item.get("explanation", "")
         
         # Helper function to check if answers match (handles multiple correct answers)
-        def answers_match(user_ans, correct_ans) -> bool:
+        def answers_match(user_ans, correct_ans):
             """
             Check if user answer matches correct answer.
+            Returns:
+            - For single answers: True/False
+            - For multiple answers (Choose TWO): number of correct matches
             Handles:
             - Single answers (string comparison)
             - Multiple answers (list comparison for "Choose TWO" questions)
-            - Alternative answers separated by "/"  or "or"
+            - Alternative answers separated by "/" or "or"
             """
             # Handle multiple choice multi questions (user_ans and correct_ans are lists)
             if isinstance(user_ans, list) and isinstance(correct_ans, list):
-                # Sort both lists and compare
-                user_sorted = sorted([str(a).strip().upper() for a in user_ans])
-                correct_sorted = sorted([str(a).strip().upper() for a in correct_ans])
-                return user_sorted == correct_sorted
+                # Count how many user answers match correct answers
+                user_upper = [str(a).strip().upper() for a in user_ans]
+                correct_upper = [str(a).strip().upper() for a in correct_ans]
+                matches = sum(1 for ans in user_upper if ans in correct_upper)
+                return matches  # Return count of matches (0, 1, or 2 for "Choose TWO")
             
             # Single answer comparison
             user_clean = str(user_ans).strip().lower()
