@@ -860,7 +860,7 @@ export default function LandingPage({ onLogin, user }) {
           <p className="text-gray-400 mb-2">{t('landingFooterTagline')}</p>
           <p className="text-violet-400 text-sm mb-4">{t('landingFooterMotto')}</p>
           <a 
-            href="mailto:support@testmaster.pro?subject=Support%20Request" 
+            href={`mailto:${SUPPORT_EMAIL}?subject=Support%20Request`}
             className="inline-flex items-center gap-2 text-gray-400 hover:text-violet-400 transition-colors mb-4"
           >
             <Mail className="w-4 h-4" />
