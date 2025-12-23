@@ -313,6 +313,20 @@ export default function ComprehensiveLevelTest({ user }) {
 
   const transcribeAudio = async (blob) => {
     setTranscribing(true);
+    
+    // Show size for debugging
+    console.log('Transcribing audio blob:', {
+      size: blob.size,
+      type: blob.type,
+      sizeMB: (blob.size / 1024 / 1024).toFixed(2) + ' MB'
+    });
+    
+    if (blob.size < 1000) {
+      toast.error('Recording too short. Please try again and speak for longer.');
+      setTranscribing(false);
+      return;
+    }
+    
     const formData = new FormData();
     formData.append('file', blob, 'audio.webm');
 
@@ -322,9 +336,24 @@ export default function ComprehensiveLevelTest({ user }) {
         body: formData
       });
       
-      if (!response.ok) throw new Error('Transcription failed');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Transcription failed');
+      }
       
       const data = await response.json();
+      
+      console.log('Transcription result:', {
+        text: data.text,
+        length: data.text?.length
+      });
+      
+      if (!data.text || data.text.trim().length < 10) {
+        toast.error('Could not transcribe audio clearly. Please speak louder and try again.');
+        setTranscribing(false);
+        return;
+      }
+      
       setCurrentTranscript(data.text);
       
       // Save response
@@ -337,7 +366,7 @@ export default function ComprehensiveLevelTest({ user }) {
       };
       setSpeakingResponses(updatedResponses);
       
-      toast.success('Transcription complete!');
+      toast.success(`Transcribed: ${data.text.split(' ').length} words`);
     } catch (error) {
       console.error('Transcription error:', error);
       toast.error('Failed to transcribe audio. Please try again.');
