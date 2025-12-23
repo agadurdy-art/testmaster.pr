@@ -449,10 +449,17 @@ function ElevenLabsExaminer() {
         speakingFeedbackToSubmit = feedbackSummary; // Use local variable for immediate submission
       }
       
-      const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => ({
-        question_id: parseInt(questionId),
-        answer: answer
-      }));
+      const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => {
+        // Handle combined question IDs (e.g., "20-21") - keep as string
+        // For single IDs, parse to int
+        const parsedId = questionId.includes('-') || questionId.includes(',') 
+          ? questionId 
+          : parseInt(questionId);
+        return {
+          question_id: parsedId,
+          answer: answer
+        };
+      });
 
       // Build submission payload with feedback for writing/speaking
       const submissionPayload = {
