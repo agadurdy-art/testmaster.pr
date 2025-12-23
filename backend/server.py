@@ -2958,7 +2958,7 @@ async def evaluate_level_test_speaking(request: LevelTestSpeakingEvaluation):
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
             system_message=IELTS_CORE_MINDSET
-        ).with_model("anthropic", "claude-sonnet-4-20250514")
+        ).with_model("openai", "gpt-5.1")  # Using GPT-5.1 instead of Claude
         
         # Format all responses for evaluation
         responses_formatted = []
@@ -3105,7 +3105,7 @@ async def recommend_courses(request: CourseRecommendationRequest):
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
             system_message="You are an expert IELTS preparation advisor creating personalized study plans."
-        ).with_model("anthropic", "claude-sonnet-4-20250514")
+        ).with_model("openai", "gpt-5.1")  # Using GPT-5.1 instead of Claude
         
         weaknesses_text = "\n".join([f"- {w}" for w in request.weaknesses])
         
