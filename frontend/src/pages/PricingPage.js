@@ -7,7 +7,7 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import { uploadBankPayment, createPaypalOrder, capturePaypalOrder } from '../lib/api';
 import { useI18n } from '../lib/i18n';
 import { PayPalButtons } from '@paypal/react-paypal-js';
-import { ArrowLeft, Check, Sparkles, Crown, Zap, Star, Building2, Mic } from 'lucide-react';
+import { ArrowLeft, Check, Sparkles, Crown, Zap, Star, Building2, Mic, Mail } from 'lucide-react';
 
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 
