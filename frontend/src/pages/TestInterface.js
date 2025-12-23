@@ -1632,18 +1632,18 @@ function ElevenLabsExaminer() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setCurrentQuestion(Math.max(0, Math.floor(currentQuestion / 10) * 10 - 10))}
-                      disabled={currentQuestion < 10}
+                      onClick={() => setCurrentListeningPart(Math.max(1, currentListeningPart - 1))}
+                      disabled={currentListeningPart <= 1}
                       className="text-xs"
                     >
                       <ChevronLeft className="w-3 h-3 mr-1" />
                       Prev
                     </Button>
                     
-                    {currentQuestion < 30 ? (
+                    {currentListeningPart < 4 ? (
                       <Button
                         size="sm"
-                        onClick={() => setCurrentQuestion((Math.floor(currentQuestion / 10) + 1) * 10)}
+                        onClick={() => setCurrentListeningPart(currentListeningPart + 1)}
                         className="primary-gradient text-white text-xs"
                       >
                         Next
@@ -1665,7 +1665,6 @@ function ElevenLabsExaminer() {
               </Card>
             </div>
           </div>
-        ) : (
         <div className="grid lg:grid-cols-4 gap-6">
             {/* Question Navigator for other tests */}
             <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
