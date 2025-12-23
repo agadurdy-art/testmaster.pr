@@ -19,6 +19,7 @@ export default function TestInterface({ user }) {
   const [test, setTest] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentPassage, setCurrentPassage] = useState(1); // For reading test passage navigation
+  const [currentListeningPart, setCurrentListeningPart] = useState(1); // For listening test part navigation
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
 
