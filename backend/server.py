@@ -1213,45 +1213,96 @@ async def submit_test(submission: SubmitAnswers):
             user_answer = ans.get("answer", "")
             match_result = answers_match(user_answer, correct_answer)
             
-            # Handle different types of matches
-            if isinstance(match_result, int):
-                # Multiple choice multi - match_result is the count of correct answers
-                is_correct_full = match_result == len(correct_answer) if isinstance(correct_answer, list) else match_result > 0
-                correct += match_result  # Add number of correct individual answers
-            else:
-                # Single answer - match_result is boolean
-                is_correct_full = match_result
-                if is_correct_full:
-                    correct += 1
-
             q_type = question_type_map.get(qid_normalized, "unknown")
             
-            # For display purposes, convert question ID to int if possible
-            display_qid = qid_normalized if isinstance(qid_normalized, int) else qid_normalized
-            
-            # Add to question results with explanation
-            question_results.append({
-                "question_id": display_qid,
-                "question_text": question_text_map.get(qid_normalized, f"Question {display_qid}"),
-                "question_type": q_type,
-                "user_answer": user_answer,
-                "correct_answer": correct_answer,
-                "is_correct": is_correct_full,
-                "explanation": explanation_map.get(qid_normalized, ""),
-            })
-            
-            skey = _make_skill_key(test_type, q_type)
-            if skey not in skill_stats:
-                skill_stats[skey] = {
-                    "skill_id": skey,
-                    "test_type": test_type,
+            # Handle combined questions (e.g., "21-22") - split into individual results for clarity
+            if isinstance(correct_answer, list) and isinstance(user_answer, list):
+                # This is a "Choose TWO" type question - split into individual questions
+                # Extract individual question numbers from combined ID (e.g., "21-22" -> [21, 22])
+                if isinstance(qid_normalized, str) and '-' in qid_normalized:
+                    individual_q_ids = [int(x.strip()) for x in qid_normalized.split('-')]
+                else:
+                    # Fallback if format is unexpected
+                    individual_q_ids = [qid_normalized]
+                
+                # Ensure we have enough question IDs for the answers
+                if len(individual_q_ids) < len(correct_answer):
+                    # Generate sequential IDs if needed
+                    start_id = individual_q_ids[0] if individual_q_ids else 1
+                    individual_q_ids = list(range(start_id, start_id + len(correct_answer)))
+                
+                # Create separate result entries for each answer
+                user_upper = [str(a).strip().upper() for a in user_answer]
+                correct_upper = [str(a).strip().upper() for a in correct_answer]
+                
+                for idx, (q_id, correct_ans) in enumerate(zip(individual_q_ids, correct_upper)):
+                    # Check if user provided an answer for this position
+                    user_ans = user_upper[idx] if idx < len(user_upper) else ""
+                    is_correct_individual = user_ans == correct_ans
+                    
+                    if is_correct_individual:
+                        correct += 1
+                    
+                    # Add individual question result
+                    question_results.append({
+                        "question_id": q_id,
+                        "question_text": question_text_map.get(qid_normalized, f"Question {q_id}"),
+                        "question_type": q_type,
+                        "user_answer": user_ans,
+                        "correct_answer": correct_ans,
+                        "is_correct": is_correct_individual,
+                        "explanation": explanation_map.get(qid_normalized, ""),
+                    })
+                    
+                    # Update skill stats
+                    skey = _make_skill_key(test_type, q_type)
+                    if skey not in skill_stats:
+                        skill_stats[skey] = {
+                            "skill_id": skey,
+                            "test_type": test_type,
+                            "question_type": q_type,
+                            "label": _skill_label(test_type, q_type),
+                            "correct": 0,
+                            "total": 0,
+                        }
+                    if is_correct_individual:
+                        skill_stats[skey]["correct"] += 1
+            else:
+                # Single answer question
+                if isinstance(match_result, bool):
+                    is_correct_full = match_result
+                    if is_correct_full:
+                        correct += 1
+                else:
+                    # Shouldn't happen, but handle gracefully
+                    is_correct_full = False
+                
+                # For display purposes, convert question ID to int if possible
+                display_qid = qid_normalized if isinstance(qid_normalized, int) else qid_normalized
+                
+                # Add to question results
+                question_results.append({
+                    "question_id": display_qid,
+                    "question_text": question_text_map.get(qid_normalized, f"Question {display_qid}"),
                     "question_type": q_type,
-                    "label": _skill_label(test_type, q_type),
-                    "correct": 0,
-                    "total": 0,
-                }
-            if is_correct_full:
-                skill_stats[skey]["correct"] += 1
+                    "user_answer": user_answer,
+                    "correct_answer": correct_answer,
+                    "is_correct": is_correct_full,
+                    "explanation": explanation_map.get(qid_normalized, ""),
+                })
+                
+                skey = _make_skill_key(test_type, q_type)
+                if skey not in skill_stats:
+                    skill_stats[skey] = {
+                        "skill_id": skey,
+                        "test_type": test_type,
+                        "question_type": q_type,
+                        "label": _skill_label(test_type, q_type),
+                        "correct": 0,
+                        "total": 0,
+                    }
+                if is_correct_full:
+                    skill_stats[skey]["correct"] += 1
 
         score_percentage = (correct / total * 100) if total > 0 else 0
         band_score = calculate_band_score(score_percentage)
