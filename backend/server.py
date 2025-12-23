@@ -1108,19 +1108,55 @@ async def submit_test(submission: SubmitAnswers):
         # Build question results with correct/incorrect status
         question_results = []
         
+        # Helper function to parse question IDs (handles combined IDs like "21-22")
+        def parse_question_ids(q_id):
+            """Parse question ID, handling both single IDs and combined IDs like '21-22'"""
+            if q_id is None:
+                return []
+            q_id_str = str(q_id).strip()
+            if not q_id_str:
+                return []
+            
+            # Check if it's a combined ID (contains dash or comma)
+            if '-' in q_id_str or ',' in q_id_str:
+                # Split by dash or comma and parse each part
+                separator = '-' if '-' in q_id_str else ','
+                parts = q_id_str.split(separator)
+                ids = []
+                for part in parts:
+                    part = part.strip()
+                    if part:
+                        try:
+                            ids.append(int(part))
+                        except (TypeError, ValueError):
+                            continue
+                return ids
+            else:
+                # Single ID
+                try:
+                    return [int(q_id_str)]
+                except (TypeError, ValueError):
+                    return []
+        
         # Create a map of question id to question text
         question_text_map = {}
         for q in test.get("questions", []):
             q_id = q.get("id")
             if q_id:
-                question_text_map[int(q_id)] = q.get("question", "")
+                try:
+                    question_text_map[int(q_id)] = q.get("question", "")
+                except (TypeError, ValueError):
+                    continue
 
         # Create explanation map from answer_key
         explanation_map = {}
         for item in test.get("answer_key", []):
             q_id = item.get("question_id")
             if q_id:
-                explanation_map[int(q_id)] = item.get("explanation", "")
+                try:
+                    explanation_map[int(q_id)] = item.get("explanation", "")
+                except (TypeError, ValueError):
+                    continue
         
         # Helper function to check if answers match (handles multiple correct answers)
         def answers_match(user_ans: str, correct_ans: str) -> bool:
