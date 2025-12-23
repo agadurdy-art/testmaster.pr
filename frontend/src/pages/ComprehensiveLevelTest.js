@@ -1054,6 +1054,16 @@ export default function ComprehensiveLevelTest({ user }) {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {!user && (
+              <Button
+                onClick={() => navigate('/register')}
+                size="lg"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+              >
+                <Award className="w-5 h-5 mr-2" />
+                Sign Up to Save Your Results
+              </Button>
+            )}
             <Button
               onClick={() => navigate('/practice')}
               size="lg"
@@ -1063,12 +1073,12 @@ export default function ComprehensiveLevelTest({ user }) {
               <ChevronRight className="w-5 h-5 ml-2" />
             </Button>
             <Button
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate(user ? '/dashboard' : '/login')}
               size="lg"
               variant="outline"
               className="border-2 border-violet-600 text-violet-600 hover:bg-violet-50"
             >
-              Go to Dashboard
+              {user ? 'Go to Dashboard' : 'Login'}
             </Button>
           </div>
         </div>
