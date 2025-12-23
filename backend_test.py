@@ -1158,6 +1158,9 @@ def run_complete_test_flow():
         return False
 
 if __name__ == "__main__":
+    # Test the specific listening test submission fix for combined questions
+    listening_fix_success = test_listening_combined_questions_fix()
+    
     # Test Phase 2-4 features as requested in the review
     phase_2_4_success = test_phase_2_4_features()
     
@@ -1167,9 +1170,10 @@ if __name__ == "__main__":
     # Test Writing Practice Evaluation API (existing functionality)
     writing_success = test_writing_practice_evaluation()
     
-    overall_success = phase_2_4_success and advanced_mastery_success and writing_success
+    overall_success = listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
+    print(f"   Listening Combined Questions Fix: {'✅ PASSED' if listening_fix_success else '❌ FAILED'}")
     print(f"   Phase 2-4 Features: {'✅ PASSED' if phase_2_4_success else '❌ FAILED'}")
     print(f"   Advanced Mastery Course Tests: {'✅ PASSED' if advanced_mastery_success else '❌ FAILED'}")
     print(f"   Writing Practice Tests: {'✅ PASSED' if writing_success else '❌ FAILED'}")
