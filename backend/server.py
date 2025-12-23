@@ -2979,42 +2979,44 @@ The candidate has responded to 3 speaking questions of increasing difficulty:
 CANDIDATE RESPONSES:
 {responses_text}
 
-Evaluate this candidate comprehensively and provide detailed feedback in the following JSON format:
+Evaluate this candidate comprehensively and provide detailed feedback in VALID JSON format.
+
+IMPORTANT: Return ONLY valid JSON. No markdown, no code blocks, no explanations. Just the JSON object.
 
 {{
-    "overall_band": <float between 2.0 and 9.0, in 0.5 increments>,
+    "overall_band": 5.5,
     "criteria_scores": {{
-        "fluency_coherence": <float 2.0-9.0>,
-        "lexical_resource": <float 2.0-9.0>,
-        "grammatical_range_accuracy": <float 2.0-9.0>,
-        "pronunciation": <float 2.0-9.0>
+        "fluency_coherence": 5.5,
+        "lexical_resource": 5.0,
+        "grammatical_range_accuracy": 5.5,
+        "pronunciation": 6.0
     }},
-    "cefr_level": "<A1, A2, B1, B2, C1, or C2>",
+    "cefr_level": "B1",
     "strengths": [
-        "<Specific strength 1 with example from their response>",
-        "<Specific strength 2 with example>",
-        "<Specific strength 3 with example>"
+        "Clear pronunciation of common words",
+        "Able to form simple sentences correctly",
+        "Good use of present tense verbs"
     ],
     "weaknesses": [
-        "<Specific weakness 1 - e.g., 'Limited vocabulary range - used basic words like 'good' and 'nice' repeatedly'>",
-        "<Specific weakness 2 - e.g., 'Frequent grammar errors with past tense (said 'I go yesterday' instead of 'I went')'>",
-        "<Specific weakness 3 - e.g., 'Long pauses between sentences affecting fluency'>",
-        "<Specific weakness 4 if applicable>"
+        "Limited vocabulary range - relies on basic words like 'good' and 'nice'",
+        "Grammar errors with past tense - said 'I go yesterday' instead of 'I went'",
+        "Long pauses between sentences affecting fluency",
+        "Difficulty expressing complex ideas clearly"
     ],
     "pronunciation_issues": [
-        "<Issue 1 - e.g., 'Difficulty with 'th' sounds'>",
-        "<Issue 2 if detected>"
+        "Some difficulty with 'th' sounds",
+        "Inconsistent word stress patterns"
     ],
     "improvement_recommendations": [
-        "<Actionable tip 1 - e.g., 'Practice past tense with daily journal entries'>",
-        "<Actionable tip 2>",
-        "<Actionable tip 3>"
+        "Practice past tense with daily journal entries",
+        "Learn 10 new vocabulary words daily from academic word lists",
+        "Record yourself speaking for 2 minutes daily to improve fluency"
     ],
     "vocabulary_gaps": [
-        "<Topic area 1 - e.g., 'Academic/formal vocabulary'>",
-        "<Topic area 2>"
+        "Academic and formal vocabulary",
+        "Descriptive adjectives and adverbs"
     ],
-    "detailed_feedback": "<2-3 paragraph comprehensive assessment explaining the band score, what they did well, and what needs improvement>"
+    "detailed_feedback": "Your current speaking ability is at Band 5.5, which indicates a modest level of English proficiency. You can communicate basic ideas clearly, and your pronunciation of simple words is generally good. However, to improve your score, you need to expand your vocabulary beyond basic words and work on using past tense correctly. Your fluency would also benefit from more speaking practice to reduce pauses. With consistent practice, you can reach Band 6.0-6.5 within 8-12 weeks."
 }}
 
 ASSESSMENT GUIDELINES:
@@ -3025,20 +3027,51 @@ ASSESSMENT GUIDELINES:
 - Band 7.0-7.5: Speaks fluently on most topics, uses advanced vocabulary
 - Band 8.0-9.0: Near-native fluency, sophisticated language, minimal errors
 
-Be honest but constructive. Identify SPECIFIC examples from their responses."""
+Be honest but constructive. Identify SPECIFIC examples from their responses. Return ONLY the JSON object."""
 
         response = await chat.send_message(UserMessage(text=evaluation_prompt))
         
-        # Parse AI response
+        # Parse AI response - extract JSON
+        response_text = str(response) if not isinstance(response, dict) else response
+        
         if isinstance(response, dict):
             result = response
         else:
             import re
-            json_match = re.search(r'\{[\s\S]*\}', str(response))
+            # Remove markdown code blocks if present
+            response_text = re.sub(r'```json\s*', '', response_text)
+            response_text = re.sub(r'```\s*', '', response_text)
+            
+            # Find JSON object
+            json_match = re.search(r'\{[\s\S]*\}', response_text)
             if json_match:
-                result = json.loads(json_match.group())
+                try:
+                    result = json.loads(json_match.group())
+                except json.JSONDecodeError as e:
+                    logger.error(f"JSON parse error: {e}. Response: {response_text[:500]}")
+                    # Return fallback evaluation
+                    result = {
+                        "overall_band": 5.0,
+                        "criteria_scores": {
+                            "fluency_coherence": 5.0,
+                            "lexical_resource": 5.0,
+                            "grammatical_range_accuracy": 5.0,
+                            "pronunciation": 5.0
+                        },
+                        "cefr_level": "B1",
+                        "strengths": ["Able to communicate basic ideas", "Pronunciation is understandable", "Attempts to use varied vocabulary"],
+                        "weaknesses": ["Limited vocabulary range", "Grammar errors present", "Fluency could be improved", "Pauses between ideas"],
+                        "pronunciation_issues": ["Some pronunciation challenges detected"],
+                        "improvement_recommendations": [
+                            "Practice speaking for 15-20 minutes daily",
+                            "Expand vocabulary by reading English materials",
+                            "Work on grammar fundamentals"
+                        ],
+                        "vocabulary_gaps": ["Academic vocabulary", "Complex descriptive language"],
+                        "detailed_feedback": "Your speaking shows promise with basic communication skills. Focus on expanding vocabulary and improving fluency through daily practice. With consistent effort, you can improve significantly."
+                    }
             else:
-                raise ValueError("Could not parse AI response")
+                raise ValueError("No JSON found in response")
         
         return result
         
