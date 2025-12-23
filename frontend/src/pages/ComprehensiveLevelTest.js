@@ -742,11 +742,20 @@ export default function ComprehensiveLevelTest({ user }) {
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <h4 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
                   <CheckCircle className="w-4 h-4" />
-                  Your Response:
+                  {language === 'vi' ? 'Câu trả lời của bạn:' :
+                   language === 'tr' ? 'Cevabınız:' :
+                   'Your Response:'}
                 </h4>
-                <p className="text-green-800 text-sm leading-relaxed">
+                <p className="text-green-800 text-sm leading-relaxed mb-3">
                   {currentTranscript}
                 </p>
+                <div className="flex items-center gap-2 text-xs text-green-700">
+                  <span>
+                    {language === 'vi' ? `${currentTranscript.split(' ').length} từ` :
+                     language === 'tr' ? `${currentTranscript.split(' ').length} kelime` :
+                     `${currentTranscript.split(' ').length} words`}
+                  </span>
+                </div>
               </div>
             )}
 
@@ -758,7 +767,9 @@ export default function ComprehensiveLevelTest({ user }) {
                   className="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white"
                 >
                   <Mic className="w-5 h-5 mr-2" />
-                  Start Recording
+                  {language === 'vi' ? 'Bắt đầu ghi âm' :
+                   language === 'tr' ? 'Kaydı Başlat' :
+                   'Start Recording'}
                 </Button>
               )}
               
@@ -769,19 +780,45 @@ export default function ComprehensiveLevelTest({ user }) {
                   className="flex-1 bg-gray-800 hover:bg-gray-900 text-white"
                 >
                   <Square className="w-5 h-5 mr-2" />
-                  Stop Recording
+                  {language === 'vi' ? 'Dừng ghi âm' :
+                   language === 'tr' ? 'Kaydı Durdur' :
+                   'Stop Recording'}
                 </Button>
               )}
 
               {hasResponse && (
-                <Button
-                  onClick={nextSpeakingPrompt}
-                  size="lg"
-                  className="flex-1 bg-purple-600 hover:bg-purple-700"
-                >
-                  {currentSpeakingPrompt < speakingPrompts.length - 1 ? 'Next Question' : 'Complete Assessment'}
-                  <ChevronRight className="w-5 h-5 ml-2" />
-                </Button>
+                <>
+                  <Button
+                    onClick={() => {
+                      setAudioBlob(null);
+                      setCurrentTranscript('');
+                      const updatedResponses = [...speakingResponses];
+                      updatedResponses[currentSpeakingPrompt] = null;
+                      setSpeakingResponses(updatedResponses);
+                    }}
+                    size="lg"
+                    variant="outline"
+                    className="border-2 border-red-500 text-red-600 hover:bg-red-50"
+                  >
+                    {language === 'vi' ? 'Ghi lại' :
+                     language === 'tr' ? 'Tekrar Kaydet' :
+                     'Record Again'}
+                  </Button>
+                  <Button
+                    onClick={nextSpeakingPrompt}
+                    size="lg"
+                    className="flex-1 bg-purple-600 hover:bg-purple-700"
+                  >
+                    {currentSpeakingPrompt < speakingPrompts.length - 1 ? 
+                      (language === 'vi' ? 'Câu tiếp theo' :
+                       language === 'tr' ? 'Sonraki Soru' :
+                       'Next Question') : 
+                      (language === 'vi' ? 'Hoàn thành đánh giá' :
+                       language === 'tr' ? 'Değerlendirmeyi Tamamla' :
+                       'Complete Assessment')}
+                    <ChevronRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </>
               )}
             </div>
           </Card>
