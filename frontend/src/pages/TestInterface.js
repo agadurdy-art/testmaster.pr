@@ -2170,7 +2170,7 @@ function ElevenLabsExaminer() {
                       {/* Speaking feedback summary for this question if available */}
                       {Object.keys(speakingFeedback).length > 0 && speakingFeedback[currentQuestion + 1] && (
                         <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                          <h3 className="text-sm font-semibold text-blue-900 mb-2">Speaking Feedback (Like an Examiner's Notes)</h3>
+                          <h3 className="text-sm font-semibold text-blue-900 mb-2">Speaking Feedback (Like an Examiner&apos;s Notes)</h3>
                           {(() => {
                             const fb = speakingFeedback[currentQuestion + 1];
                             const overallText =
