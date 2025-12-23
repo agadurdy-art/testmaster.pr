@@ -220,49 +220,92 @@ export default function HighlightableText({
       });
     }
     
-    // Default rendering without paragraph labels
+    // Default rendering - Split by paragraphs for better readability
+    const paragraphs = text.split('\n\n').filter(p => p.trim());
+    
+    // If no highlights, render paragraphs with spacing
     if (highlights.length === 0) {
-      return <span>{text}</span>;
+      return (
+        <>
+          {paragraphs.map((para, idx) => (
+            <p key={`para-${idx}`} className="mb-6 leading-relaxed">
+              {para.trim()}
+            </p>
+          ))}
+        </>
+      );
     }
 
-    // Sort highlights by start index
-    const sortedHighlights = [...highlights].sort((a, b) => a.start_index - b.start_index);
-    
+    // With highlights - render with paragraph breaks
     const elements = [];
-    let lastIndex = 0;
-
-    sortedHighlights.forEach((highlight, idx) => {
-      // Add text before highlight
-      if (highlight.start_index > lastIndex) {
+    let globalOffset = 0;
+    
+    paragraphs.forEach((para, paraIdx) => {
+      const paraStart = globalOffset;
+      const paraEnd = paraStart + para.length;
+      const paraHighlights = highlights.filter(h => 
+        h.start_index < paraEnd && h.end_index > paraStart
+      );
+      
+      if (paraHighlights.length === 0) {
+        // No highlights in this paragraph
         elements.push(
-          <span key={`text-${idx}`}>
-            {text.substring(lastIndex, highlight.start_index)}
-          </span>
+          <p key={`para-${paraIdx}`} className="mb-6 leading-relaxed">
+            {para.trim()}
+          </p>
+        );
+      } else {
+        // Has highlights - render with highlight spans
+        const paraElements = [];
+        let lastIdx = 0;
+        
+        paraHighlights.forEach((highlight, hIdx) => {
+          const relStart = Math.max(0, highlight.start_index - paraStart);
+          const relEnd = Math.min(para.length, highlight.end_index - paraStart);
+          
+          // Text before highlight
+          if (relStart > lastIdx) {
+            paraElements.push(
+              <span key={`p${paraIdx}-t${hIdx}`}>
+                {para.substring(lastIdx, relStart)}
+              </span>
+            );
+          }
+          
+          // Highlighted text
+          const colorClass = HIGHLIGHT_COLORS.find(c => c.name === highlight.color)?.color || 'bg-yellow-200';
+          paraElements.push(
+            <span
+              key={`p${paraIdx}-h${hIdx}`}
+              className={`${colorClass} rounded px-0.5 cursor-pointer`}
+              onClick={() => removeHighlight(highlight.id)}
+              title="Click to remove highlight"
+            >
+              {para.substring(relStart, relEnd)}
+            </span>
+          );
+          
+          lastIdx = relEnd;
+        });
+        
+        // Remaining text
+        if (lastIdx < para.length) {
+          paraElements.push(
+            <span key={`p${paraIdx}-end`}>
+              {para.substring(lastIdx)}
+            </span>
+          );
+        }
+        
+        elements.push(
+          <p key={`para-${paraIdx}`} className="mb-6 leading-relaxed">
+            {paraElements}
+          </p>
         );
       }
-
-      // Add highlighted text
-      const colorClass = HIGHLIGHT_COLORS.find(c => c.name === highlight.color)?.color || 'bg-yellow-200';
-      elements.push(
-        <span
-          key={`highlight-${idx}`}
-          className={`${colorClass} rounded px-0.5 cursor-pointer group relative`}
-          onClick={() => removeHighlight(highlight.id)}
-          title="Click to remove highlight"
-        >
-          {text.substring(highlight.start_index, highlight.end_index)}
-        </span>
-      );
-
-      lastIndex = highlight.end_index;
+      
+      globalOffset = paraEnd + 2; // +2 for \n\n
     });
-
-    // Add remaining text
-    if (lastIndex < text.length) {
-      elements.push(
-        <span key="text-end">{text.substring(lastIndex)}</span>
-      );
-    }
 
     return elements;
   };
