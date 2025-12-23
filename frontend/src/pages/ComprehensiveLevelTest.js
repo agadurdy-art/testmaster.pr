@@ -753,16 +753,321 @@ export default function ComprehensiveLevelTest({ user }) {
     );
   }
 
-  // RESULTS SCREEN - Will be implemented next
+  // RESULTS SCREEN
   if (stage === 'results' && results) {
+    const getBandColor = (band) => {
+      if (band >= 8.0) return 'from-green-500 to-emerald-600';
+      if (band >= 7.0) return 'from-blue-500 to-cyan-600';
+      if (band >= 6.0) return 'from-indigo-500 to-purple-600';
+      if (band >= 5.0) return 'from-violet-500 to-purple-600';
+      if (band >= 4.0) return 'from-amber-500 to-orange-600';
+      return 'from-red-500 to-rose-600';
+    };
+
+    const getBandLabel = (band) => {
+      if (band >= 8.0) return 'Excellent';
+      if (band >= 7.0) return 'Very Good';
+      if (band >= 6.0) return 'Competent';
+      if (band >= 5.0) return 'Modest';
+      if (band >= 4.0) return 'Limited';
+      return 'Basic';
+    };
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 py-12 px-4">
-        <div className="max-w-5xl mx-auto">
-          {/* Results content will go here */}
-          <Card className="p-8 bg-white shadow-xl">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Your Results</h1>
-            <p>Results screen - to be completed</p>
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 mb-4">
+              <Trophy className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              Your Comprehensive Assessment Results
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Detailed analysis of your English proficiency level
+            </p>
+          </div>
+
+          {/* Overall Band Score - Hero Card */}
+          <Card className={`p-8 bg-gradient-to-br ${getBandColor(results.overall_band)} text-white shadow-2xl mb-8`}>
+            <div className="text-center">
+              <p className="text-white/90 text-lg mb-2">Your Overall IELTS Band</p>
+              <div className="text-7xl font-bold mb-2">
+                {results.overall_band.toFixed(1)}
+              </div>
+              <p className="text-2xl font-semibold text-white/95 mb-4">
+                {getBandLabel(results.overall_band)} - {results.speaking.cefr_level || 'B1'}
+              </p>
+              <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mt-6">
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                  <BookOpen className="w-6 h-6 mx-auto mb-2" />
+                  <p className="text-sm text-white/80">Reading</p>
+                  <p className="text-2xl font-bold">{results.reading.band.toFixed(1)}</p>
+                </div>
+                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                  <Mic className="w-6 h-6 mx-auto mb-2" />
+                  <p className="text-sm text-white/80">Speaking</p>
+                  <p className="text-2xl font-bold">{results.speaking.overall_band.toFixed(1)}</p>
+                </div>
+              </div>
+            </div>
           </Card>
+
+          {/* Detailed Breakdown */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Reading Skills */}
+            <Card className="p-6 bg-white shadow-lg">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-blue-600" />
+                Reading Performance
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-1">
+                    <span className="text-sm font-medium text-gray-700">Score</span>
+                    <span className="text-sm font-bold text-blue-600">
+                      {results.reading.correct}/{results.reading.total} correct
+                    </span>
+                  </div>
+                  <Progress value={(results.reading.correct / results.reading.total) * 100} className="h-2" />
+                </div>
+                
+                <div className="pt-2 border-t">
+                  <h4 className="font-semibold text-gray-700 mb-2 text-sm">Skill Breakdown:</h4>
+                  <div className="space-y-2">
+                    {Object.entries(results.reading.skill_breakdown).map(([skill, data]) => {
+                      const percentage = (data.correct / data.total) * 100;
+                      return (
+                        <div key={skill} className="text-xs">
+                          <div className="flex justify-between mb-1">
+                            <span className="text-gray-600 capitalize">{skill.replace(/_/g, ' ')}</span>
+                            <span className="font-medium">{data.correct}/{data.total}</span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-1.5">
+                            <div 
+                              className={`h-1.5 rounded-full ${percentage >= 70 ? 'bg-green-500' : percentage >= 50 ? 'bg-amber-500' : 'bg-red-500'}`}
+                              style={{ width: `${percentage}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Speaking Skills */}
+            <Card className="p-6 bg-white shadow-lg">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Mic className="w-5 h-5 text-purple-600" />
+                Speaking Performance
+              </h3>
+              <div className="space-y-3">
+                {results.speaking.criteria_scores && Object.entries(results.speaking.criteria_scores).map(([criterion, score]) => (
+                  <div key={criterion}>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-700 capitalize">
+                        {criterion.replace(/_/g, ' ')}
+                      </span>
+                      <span className="text-sm font-bold text-purple-600">{score.toFixed(1)}</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className={`h-2 rounded-full bg-gradient-to-r ${getBandColor(score)}`}
+                        style={{ width: `${(score / 9) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
+
+          {/* Strengths & Weaknesses */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Strengths */}
+            <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 border-0">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                Your Strengths
+              </h3>
+              <ul className="space-y-3">
+                {results.speaking.strengths.map((strength, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                    <Sparkles className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>{strength}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+
+            {/* Areas for Improvement */}
+            <Card className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 border-0">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Target className="w-5 h-5 text-amber-600" />
+                Areas to Improve
+              </h3>
+              <ul className="space-y-3">
+                {results.speaking.weaknesses.map((weakness, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                    <TrendingUp className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                    <span>{weakness}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+
+          {/* Detailed Feedback */}
+          {results.speaking.detailed_feedback && (
+            <Card className="p-6 bg-white shadow-lg mb-8">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Brain className="w-5 h-5 text-indigo-600" />
+                Comprehensive Analysis
+              </h3>
+              <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+                {results.speaking.detailed_feedback}
+              </p>
+            </Card>
+          )}
+
+          {/* Improvement Recommendations */}
+          <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-0 mb-8">
+            <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-blue-600" />
+              Action Plan: How to Improve
+            </h3>
+            <div className="space-y-4">
+              {results.speaking.improvement_recommendations.map((rec, idx) => (
+                <div key={idx} className="flex items-start gap-3 bg-white p-4 rounded-lg">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
+                    {idx + 1}
+                  </div>
+                  <p className="text-gray-700 text-sm pt-1">{rec}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Course Recommendations */}
+          {results.recommendations && (
+            <>
+              <Card className="p-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-2xl mb-8">
+                <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                  <Award className="w-6 h-6" />
+                  Recommended Courses for You
+                </h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {results.recommendations.recommended_courses.map((course, idx) => (
+                    <div key={idx} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="px-3 py-1 bg-white/20 rounded-full text-sm font-bold">
+                          {course.priority}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold mb-2">{course.name}</h3>
+                      <p className="text-white/80 text-sm mb-2">{course.band_range}</p>
+                      <p className="text-white/90 mb-4">{course.reason}</p>
+                      <Button
+                        onClick={() => navigate(`/lesson-preview/${course.id}`)}
+                        className="w-full bg-white text-violet-600 hover:bg-gray-100"
+                      >
+                        Explore Course
+                        <ChevronRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              {/* Learning Roadmap */}
+              {results.recommendations.learning_roadmap && (
+                <Card className="p-8 bg-white shadow-lg mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <Target className="w-6 h-6 text-violet-600" />
+                    Your Personalized Learning Roadmap
+                  </h3>
+                  
+                  <div className="grid md:grid-cols-3 gap-4 mb-6">
+                    <div className="bg-violet-50 p-4 rounded-lg text-center">
+                      <p className="text-sm text-gray-600 mb-1">Current Band</p>
+                      <p className="text-3xl font-bold text-violet-600">{results.overall_band.toFixed(1)}</p>
+                    </div>
+                    <div className="bg-blue-50 p-4 rounded-lg text-center">
+                      <p className="text-sm text-gray-600 mb-1">Target Band</p>
+                      <p className="text-3xl font-bold text-blue-600">
+                        {results.recommendations.learning_roadmap.target_band?.toFixed(1) || (results.overall_band + 1.0).toFixed(1)}
+                      </p>
+                    </div>
+                    <div className="bg-green-50 p-4 rounded-lg text-center">
+                      <p className="text-sm text-gray-600 mb-1">Timeline</p>
+                      <p className="text-3xl font-bold text-green-600">
+                        {results.recommendations.learning_roadmap.estimated_weeks || 12} weeks
+                      </p>
+                    </div>
+                  </div>
+
+                  {results.recommendations.learning_roadmap.milestone_goals && (
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-gray-900">Milestone Goals:</h4>
+                      {results.recommendations.learning_roadmap.milestone_goals.map((milestone, idx) => (
+                        <div key={idx} className="flex items-start gap-4 border-l-4 border-violet-500 pl-4 py-2">
+                          <div className="flex-shrink-0">
+                            <Clock className="w-5 h-5 text-violet-600" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-900">Week {milestone.weeks}</p>
+                            <p className="text-sm text-gray-600">{milestone.goal}</p>
+                            <p className="text-sm font-semibold text-violet-600 mt-1">
+                              Target: Band {milestone.band_target?.toFixed(1)}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Immediate Actions */}
+              <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 border-0 mb-8">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-green-600" />
+                  Start Today: Immediate Actions
+                </h3>
+                <ul className="space-y-3">
+                  {results.recommendations.immediate_actions.map((action, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700">{action}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </>
+          )}
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => navigate('/practice')}
+              size="lg"
+              className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white"
+            >
+              Start Practice Tests
+              <ChevronRight className="w-5 h-5 ml-2" />
+            </Button>
+            <Button
+              onClick={() => navigate('/dashboard')}
+              size="lg"
+              variant="outline"
+              className="border-2 border-violet-600 text-violet-600 hover:bg-violet-50"
+            >
+              Go to Dashboard
+            </Button>
+          </div>
         </div>
       </div>
     );
