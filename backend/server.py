@@ -1117,7 +1117,17 @@ async def submit_test(submission: SubmitAnswers):
             skill_stats[skey]["total"] += 1
 
         correct = 0
-        total = len(answer_key_map) if answer_key_map else len(test.get("answer_key", []))
+        # Calculate total questions, accounting for combined questions
+        total = 0
+        for item in test.get("answer_key", []):
+            answer = item.get("answer")
+            qid = item.get("question_id")
+            # Combined questions (like "20-21") count as 2 questions
+            if isinstance(qid, str) and ('-' in qid or ',' in qid):
+                # Count based on number of answers in the list
+                total += len(answer) if isinstance(answer, list) else 1
+            else:
+                total += 1
         
         # Build question results with correct/incorrect status
         question_results = []
