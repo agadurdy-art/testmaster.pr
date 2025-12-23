@@ -306,3 +306,15 @@ backend:
         agent: "testing"
         comment: "✅ PASSED - Listening test submission fix for combined questions (21-22, 23-24 type) working correctly. Test submissions with multiple_choice_multi questions return 200 status instead of 500 errors. Combined questions are properly scored with partial credit support. Authentication with dashboard@test.com works. Cambridge IELTS 19 - Test 1 contains required combined questions. All edge cases (mixed ID types, partial answers, all wrong answers) handled correctly. Total question count accurate (40 questions). Fix resolves the critical bug where combined question IDs like '21-22' caused submission failures."
 
+  - task: "Partial Credit Fix for Combined 'Choose TWO' Questions"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED - Partial credit fix for combined 'Choose TWO' questions working perfectly as specified in review request. Authentication with dashboard@test.com/test12345 successful. Found reading test with combined Q20-21 questions (correct answers: B, D). Test scenario executed: user answers A (wrong) and D (correct). Results show individual questions Q20 and Q21 separately as expected. Q20 shows as INCORRECT (user: A, correct: B), Q21 shows as CORRECT (user: D, correct: D). Partial credit correctly awarded (1 point out of 2). Test submission returns 200 status. Individual question breakdown displayed properly in results. All requirements from review request satisfied."
+
