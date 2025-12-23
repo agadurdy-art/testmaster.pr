@@ -195,6 +195,10 @@ function AppWithSessionHandler() {
           element={<LevelTest user={user} />} 
         />
         <Route 
+          path="/comprehensive-level-test" 
+          element={<ComprehensiveLevelTest user={user} />} 
+        />
+        <Route 
           path="/vocab-grammar" 
           element={user ? <VocabGrammarCourse user={user} /> : <Navigate to="/" />} 
         />
