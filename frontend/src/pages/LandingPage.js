@@ -230,7 +230,7 @@ export default function LandingPage({ onLogin, user }) {
   const [courseLessons, setCourseLessons] = useState({});
   
   const handleStartFreePractice = () => {
-    navigate('/level-test');
+    navigate('/comprehensive-level-test');
   };
 
   const handleAuth = async (e) => {
