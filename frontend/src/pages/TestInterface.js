@@ -1665,6 +1665,7 @@ function ElevenLabsExaminer() {
               </Card>
             </div>
           </div>
+        ) : (
         <div className="grid lg:grid-cols-4 gap-6">
             {/* Question Navigator for other tests */}
             <Card className="lg:col-span-1 p-4 h-fit sticky top-24">
