@@ -57,7 +57,7 @@ const speakingPrompts = [
   { id: 2, level: 'ielts', prompt: "Describe a skill you would like to learn. You should say: what the skill is, why you want to learn it, how you would learn it, and explain how this skill would benefit you.", duration: 120, tip: "Try to speak for 1-2 minutes, covering all points" }
 ];
 
-export default function LevelTest({ user }) {
+export default function LevelTest({ user, onShowAuth }) {
   const navigate = useNavigate();
   const { t } = useI18n();
   
@@ -72,6 +72,8 @@ export default function LevelTest({ user }) {
   const [currentTranscript, setCurrentTranscript] = useState('');
   const [results, setResults] = useState(null);
   const [evaluating, setEvaluating] = useState(false);
+  const [showAuth, setShowAuth] = useState(false);
+  const [authMode, setAuthMode] = useState('signup');
   
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
