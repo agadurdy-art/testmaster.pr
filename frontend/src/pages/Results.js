@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
-import { Trophy, TrendingUp, CheckCircle, XCircle, Home, ArrowLeft, Award, Target, BarChart3, Lightbulb, ChevronDown, ChevronUp, Eye, FileText } from 'lucide-react';
+import { Trophy, TrendingUp, CheckCircle, XCircle, Home, ArrowLeft, Award, Target, BarChart3, Lightbulb, Eye, FileText } from 'lucide-react';
 import api from '../lib/api';
 import { useI18n } from '../lib/i18n';
 import SkillBreakdown from '../components/SkillBreakdown';
