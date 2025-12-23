@@ -219,6 +219,7 @@ const COURSES = [
 
 export default function LandingPage({ onLogin, user }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, language } = useI18n();
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState('signup');
