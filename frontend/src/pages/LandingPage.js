@@ -16,6 +16,7 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+const SUPPORT_EMAIL = 'testmaster.edu.ai@proton.me';
 
 // Level Test Agent Component - Shows once per device for non-logged visitors
 function LevelTestAgent({ user, onShowSignup }) {
