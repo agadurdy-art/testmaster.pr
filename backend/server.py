@@ -1201,9 +1201,18 @@ async def submit_test(submission: SubmitAnswers):
                 continue
 
             user_answer = ans.get("answer", "")
-            is_correct = answers_match(user_answer, correct_answer)
-            if is_correct:
-                correct += 1
+            match_result = answers_match(user_answer, correct_answer)
+            
+            # Handle different types of matches
+            if isinstance(match_result, int):
+                # Multiple choice multi - match_result is the count of correct answers
+                is_correct_full = match_result == len(correct_answer) if isinstance(correct_answer, list) else match_result > 0
+                correct += match_result  # Add number of correct individual answers
+            else:
+                # Single answer - match_result is boolean
+                is_correct_full = match_result
+                if is_correct_full:
+                    correct += 1
 
             q_type = question_type_map.get(qid_normalized, "unknown")
             
@@ -1217,7 +1226,7 @@ async def submit_test(submission: SubmitAnswers):
                 "question_type": q_type,
                 "user_answer": user_answer,
                 "correct_answer": correct_answer,
-                "is_correct": is_correct,
+                "is_correct": is_correct_full,
                 "explanation": explanation_map.get(qid_normalized, ""),
             })
             
@@ -1231,7 +1240,7 @@ async def submit_test(submission: SubmitAnswers):
                     "correct": 0,
                     "total": 0,
                 }
-            if is_correct:
+            if is_correct_full:
                 skill_stats[skey]["correct"] += 1
 
         score_percentage = (correct / total * 100) if total > 0 else 0
