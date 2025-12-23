@@ -1693,6 +1693,9 @@ def run_complete_test_flow():
         return False
 
 if __name__ == "__main__":
+    # Test the Comprehensive Level Test flow as requested in the review
+    comprehensive_test_success = test_comprehensive_level_test_flow()
+    
     # Test the specific partial credit fix for combined "Choose TWO" questions as requested in review
     partial_credit_success = test_partial_credit_combined_questions()
     
@@ -1708,9 +1711,10 @@ if __name__ == "__main__":
     # Test Writing Practice Evaluation API (existing functionality)
     writing_success = test_writing_practice_evaluation()
     
-    overall_success = partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
+    overall_success = comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
+    print(f"   Comprehensive Level Test Flow (Review Request): {'✅ PASSED' if comprehensive_test_success else '❌ FAILED'}")
     print(f"   Partial Credit Fix (Review Request): {'✅ PASSED' if partial_credit_success else '❌ FAILED'}")
     print(f"   Listening Combined Questions Fix: {'✅ PASSED' if listening_fix_success else '❌ FAILED'}")
     print(f"   Phase 2-4 Features: {'✅ PASSED' if phase_2_4_success else '❌ FAILED'}")
