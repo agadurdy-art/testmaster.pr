@@ -1610,7 +1610,7 @@ function ElevenLabsExaminer() {
                           )}
 
                           {/* Text input for other question types */}
-                          {!['multiple_choice', 'multiple_choice_two', 'matching', 'map_labeling'].includes(q.type) && (
+                          {!['multiple_choice', 'multiple_choice_two', 'multiple_choice_multi', 'matching', 'map_labeling'].includes(q.type) && (
                             <Input
                               value={answers[q.id] || ''}
                               onChange={(e) => handleAnswerChange(q.id, e.target.value)}
