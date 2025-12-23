@@ -72,8 +72,6 @@ export default function LevelTest({ user, onShowAuth }) {
   const [currentTranscript, setCurrentTranscript] = useState('');
   const [results, setResults] = useState(null);
   const [evaluating, setEvaluating] = useState(false);
-  const [showAuth, setShowAuth] = useState(false);
-  const [authMode, setAuthMode] = useState('signup');
   
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
