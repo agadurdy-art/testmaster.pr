@@ -2939,6 +2939,7 @@ Remember:
 
 class LevelTestSpeakingEvaluation(BaseModel):
     responses: List[Dict[str, Any]]  # [{"level": "A1-A2", "transcript": "..."}]
+    language: Optional[str] = "en"  # en, vi, tr
 
 class CourseRecommendationRequest(BaseModel):
     overall_band: float
@@ -2946,6 +2947,7 @@ class CourseRecommendationRequest(BaseModel):
     speaking_band: float
     weaknesses: List[str]
     skill_breakdown: Dict[str, Any]
+    language: Optional[str] = "en"  # en, vi, tr
 
 @api_router.post("/level-test/evaluate-speaking")
 async def evaluate_level_test_speaking(request: LevelTestSpeakingEvaluation):
@@ -2968,6 +2970,15 @@ async def evaluate_level_test_speaking(request: LevelTestSpeakingEvaluation):
             responses_formatted.append(f"Question {idx} (Target Level: {level}):\nTranscript: {transcript}\n")
         
         responses_text = "\n".join(responses_formatted)
+        
+        # Language-specific instructions
+        language_instructions = {
+            "vi": "\n\nIMPORTANT: Provide ALL feedback text fields (strengths, weaknesses, improvement_recommendations, detailed_feedback) in VIETNAMESE language. Parents should be able to read and understand the feedback clearly in Vietnamese.",
+            "tr": "\n\nIMPORTANT: Provide ALL feedback text fields (strengths, weaknesses, improvement_recommendations, detailed_feedback) in TURKISH language. Parents should be able to read and understand the feedback clearly in Turkish.",
+            "en": ""
+        }
+        
+        language_note = language_instructions.get(request.language, "")
         
         evaluation_prompt = f"""You are an expert IELTS examiner conducting a comprehensive speaking assessment.
 
@@ -3027,7 +3038,7 @@ ASSESSMENT GUIDELINES:
 - Band 7.0-7.5: Speaks fluently on most topics, uses advanced vocabulary
 - Band 8.0-9.0: Near-native fluency, sophisticated language, minimal errors
 
-Be honest but constructive. Identify SPECIFIC examples from their responses. Return ONLY the JSON object."""
+Be honest but constructive. Identify SPECIFIC examples from their responses. Return ONLY the JSON object.{language_note}"""
 
         response = await chat.send_message(UserMessage(text=evaluation_prompt))
         
@@ -3142,6 +3153,15 @@ async def recommend_courses(request: CourseRecommendationRequest):
         
         weaknesses_text = "\n".join([f"- {w}" for w in request.weaknesses])
         
+        # Language-specific instructions
+        language_instructions = {
+            "vi": "\n\nIMPORTANT: Provide ALL text fields (weekly_plan goals/activities, priority_skills, study_tips, milestone_goals) in VIETNAMESE language so parents can understand the roadmap clearly.",
+            "tr": "\n\nIMPORTANT: Provide ALL text fields (weekly_plan goals/activities, priority_skills, study_tips, milestone_goals) in TURKISH language so parents can understand the roadmap clearly.",
+            "en": ""
+        }
+        
+        language_note = language_instructions.get(request.language, "")
+        
         roadmap_prompt = f"""Create a personalized 8-12 week learning roadmap for an IELTS student.
 
 STUDENT PROFILE:
@@ -3200,7 +3220,7 @@ Generate a JSON study plan:
     ]
 }}
 
-Make it motivating but realistic. Address their specific weaknesses."""
+Make it motivating but realistic. Address their specific weaknesses.{language_note}"""
 
         response = await chat.send_message(UserMessage(text=roadmap_prompt))
         
