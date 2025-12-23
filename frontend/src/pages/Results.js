@@ -100,29 +100,6 @@ export default function Results({ user }) {
           </div>
         </Card>
 
-        {/* Skill Breakdown */}
-        {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.skill_breakdown && (
-          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-            <div className="flex items-center justify-between cursor-pointer" onClick={() => setShowDetails(!showDetails)}>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-cyan-500 flex items-center justify-center shadow-lg"><BarChart3 className="w-5 h-5 text-white" /></div>
-                <div><h3 className="text-lg font-semibold text-gray-900">Skill Breakdown</h3><p className="text-sm text-gray-500">See performance by question type</p></div>
-              </div>
-              {showDetails ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
-            </div>
-            {showDetails && (
-              <div className="mt-6 space-y-4">
-                {Object.entries(result.feedback.skill_breakdown).map(([skill, data]) => (
-                  <div key={skill} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                    <div><p className="font-medium text-gray-900 capitalize">{skill.replace(/_/g, ' ')}</p><p className="text-sm text-gray-500">{data.correct}/{data.total} correct</p></div>
-                    <div className={`px-3 py-1 rounded-full text-sm font-medium ${data.correct/data.total >= 0.7 ? 'bg-green-100 text-green-700' : data.correct/data.total >= 0.5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>{Math.round((data.correct/data.total) * 100)}%</div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </Card>
-        )}
-
         {/* Teacher Feedback Card - For Reading/Listening */}
         {(result.test_type === 'reading' || result.test_type === 'listening') && result.feedback?.teacher_feedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 rounded-2xl">
