@@ -263,6 +263,7 @@ test_plan:
   completed_testing:
     - "Try Our Lessons Feature - Landing Page"
     - "Lesson Preview Pages - Free and Locked Access"
+    - "Listening Test Submission Fix for Combined Questions"
   stuck_tasks:
     - "Turkish Localization - Comprehensive Verification"
     - "Newly Redesigned IELTS Ace Dashboard"
