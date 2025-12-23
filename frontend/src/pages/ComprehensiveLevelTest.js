@@ -6,12 +6,53 @@ import { Progress } from '../components/ui/progress';
 import { 
   Mic, Square, Play, ChevronRight, CheckCircle, Award, BookOpen, 
   MessageSquare, ArrowLeft, Target, Sparkles, Clock, Brain, Zap,
-  Trophy, TrendingUp, AlertCircle, Lightbulb
+  Trophy, TrendingUp, AlertCircle, Lightbulb, Globe
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+// Language Switcher Component
+const LanguageSwitcher = () => {
+  const { language, setLanguage } = useI18n();
+  
+  return (
+    <div className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white rounded-full shadow-lg px-4 py-2">
+      <Globe className="w-4 h-4 text-gray-600" />
+      <button
+        onClick={() => setLanguage('en')}
+        className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+          language === 'en' 
+            ? 'bg-violet-600 text-white' 
+            : 'text-gray-600 hover:bg-gray-100'
+        }`}
+      >
+        EN
+      </button>
+      <button
+        onClick={() => setLanguage('vi')}
+        className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+          language === 'vi' 
+            ? 'bg-violet-600 text-white' 
+            : 'text-gray-600 hover:bg-gray-100'
+        }`}
+      >
+        VI
+      </button>
+      <button
+        onClick={() => setLanguage('tr')}
+        className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+          language === 'tr' 
+            ? 'bg-violet-600 text-white' 
+            : 'text-gray-600 hover:bg-gray-100'
+        }`}
+      >
+        TR
+      </button>
+    </div>
+  );
+};
 
 // ENHANCED READING QUESTIONS - 10 questions covering Band 2.0 to 9.0
 const readingQuestions = [
