@@ -1306,6 +1306,9 @@ async def submit_test(submission: SubmitAnswers):
 
         score_percentage = (correct / total * 100) if total > 0 else 0
         band_score = calculate_band_score(score_percentage)
+        
+        # Sort question results by question_id for proper display order
+        question_results.sort(key=lambda x: x.get("question_id", 0))
 
         # Build teacher-style feedback per skill
         skill_breakdown: List[Dict[str, Any]] = []
