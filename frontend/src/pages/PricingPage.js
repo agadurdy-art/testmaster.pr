@@ -141,7 +141,18 @@ export default function PricingPage({ user }) {
           })}
         </div>
 
-        <div className="mt-12 text-center"><p className="text-gray-500 text-sm">Need help choosing? <button className="text-violet-600 hover:underline">Contact support</button></p></div>
+        <div className="mt-12 text-center">
+          <p className="text-gray-500 text-sm">
+            Need help choosing?{' '}
+            <a 
+              href="mailto:support@testmaster.pro?subject=Help%20with%20choosing%20a%20plan" 
+              className="text-violet-600 hover:underline inline-flex items-center gap-1"
+            >
+              <Mail className="w-4 h-4" />
+              Contact support
+            </a>
+          </p>
+        </div>
       </main>
 
       {/* Bank Modal */}
