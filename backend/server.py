@@ -1038,28 +1038,42 @@ async def submit_test(submission: SubmitAnswers):
         test_type = submission.test_type
 
         # Map question_id -> question_type from the test definition
-        question_type_map: Dict[int, str] = {}
+        # Keys can be int or str (e.g., "20-21" for combined questions)
+        question_type_map: Dict[Union[int, str], str] = {}
         for q in test.get("questions", []):
             qid = q.get("id") or q.get("question_id")
             if qid is None:
                 continue
-            try:
-                qid_int = int(qid)
-            except (TypeError, ValueError):
-                continue
-            q_type = str(q.get("type") or "unknown").strip().lower()
-            question_type_map[qid_int] = q_type
-
-        # Build a lookup from question_id -> correct answer for robust matching
-        answer_key_map: Dict[int, str] = {}
-        for item in test.get("answer_key", []):
-            qid = item.get("question_id")
-            if qid is not None:
+            # Try to convert to int, but keep as string if it contains separators
+            if isinstance(qid, str) and ('-' in qid or ',' in qid):
+                # Combined question ID like "20-21"
+                question_type_map[qid] = str(q.get("type") or "unknown").strip().lower()
+            else:
                 try:
                     qid_int = int(qid)
+                    question_type_map[qid_int] = str(q.get("type") or "unknown").strip().lower()
                 except (TypeError, ValueError):
                     continue
-                answer_key_map[qid_int] = str(item.get("answer", ""))
+
+        # Build a lookup from question_id -> correct answer for robust matching
+        # Keys can be int or str (e.g., "20-21" for combined questions)
+        # Values can be str or list (for multiple correct answers)
+        answer_key_map: Dict[Union[int, str], Union[str, List]] = {}
+        for item in test.get("answer_key", []):
+            qid = item.get("question_id")
+            if qid is None:
+                continue
+            answer = item.get("answer", "")
+            # Try to convert to int, but keep as string if it contains separators
+            if isinstance(qid, str) and ('-' in qid or ',' in qid):
+                # Combined question ID like "20-21"
+                answer_key_map[qid] = answer  # Can be a list like ['B', 'D']
+            else:
+                try:
+                    qid_int = int(qid)
+                    answer_key_map[qid_int] = str(answer) if not isinstance(answer, list) else answer
+                except (TypeError, ValueError):
+                    continue
 
         # Prepare per-skill stats (e.g. Reading – True/False/Not Given)
         # Keyed by (test_type, question_type)
