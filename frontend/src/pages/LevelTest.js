@@ -125,7 +125,20 @@ export default function LevelTest({ user, onShowAuth }) {
       const formData = new FormData();
       formData.append('file', new File([blob], 'recording.webm', { type: 'audio/webm' }));
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/speaking/transcribe`, { method: 'POST', body: formData });
-      if (!response.ok) throw new Error('Transcription failed');
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.detail || 'Transcription failed';
+        
+        // Check if it's a language detection error
+        if (errorMessage.includes('speak in English') || errorMessage.includes('Detected language')) {
+          toast.error('🌐 Please speak in English only. This is an English proficiency test.', { duration: 5000 });
+          setTranscribing(false);
+          return;
+        }
+        throw new Error(errorMessage);
+      }
+      
       const data = await response.json();
       setCurrentTranscript(data.text || '');
       toast.success('Audio transcribed!');
