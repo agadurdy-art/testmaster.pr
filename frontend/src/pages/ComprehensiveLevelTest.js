@@ -822,6 +822,8 @@ export default function ComprehensiveLevelTest({ user }) {
       if (band >= 4.0) return 'Limited';
       return 'Basic';
     };
+    
+    const isStillEvaluating = evaluating || !results.speaking || !results.recommendations;
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 py-12 px-4">
@@ -832,37 +834,74 @@ export default function ComprehensiveLevelTest({ user }) {
               <Trophy className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              Your Comprehensive Assessment Results
+              {language === 'vi' ? 'Kết Quả Đánh Giá Toàn Diện' :
+               language === 'tr' ? 'Kapsamlı Değerlendirme Sonuçlarınız' :
+               'Your Comprehensive Assessment Results'}
             </h1>
             <p className="text-gray-600 text-lg">
-              Detailed analysis of your English proficiency level
+              {language === 'vi' ? 'Phân tích chi tiết trình độ tiếng Anh của bạn' :
+               language === 'tr' ? 'İngilizce yeterlilik seviyenizin detaylı analizi' :
+               'Detailed analysis of your English proficiency level'}
             </p>
           </div>
 
-          {/* Overall Band Score - Hero Card */}
-          <Card className={`p-8 bg-gradient-to-br ${getBandColor(results.overall_band)} text-white shadow-2xl mb-8`}>
-            <div className="text-center">
-              <p className="text-white/90 text-lg mb-2">Your Overall IELTS Band</p>
-              <div className="text-7xl font-bold mb-2">
-                {results.overall_band.toFixed(1)}
-              </div>
-              <p className="text-2xl font-semibold text-white/95 mb-4">
-                {getBandLabel(results.overall_band)} - {results.speaking.cefr_level || 'B1'}
-              </p>
-              <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mt-6">
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
-                  <BookOpen className="w-6 h-6 mx-auto mb-2" />
-                  <p className="text-sm text-white/80">Reading</p>
-                  <p className="text-2xl font-bold">{results.reading.band.toFixed(1)}</p>
+          {/* Overall Band Score - Show immediately with reading, or full score when ready */}
+          {results.overall_band ? (
+            <Card className={`p-8 bg-gradient-to-br ${getBandColor(results.overall_band)} text-white shadow-2xl mb-8`}>
+              <div className="text-center">
+                <p className="text-white/90 text-lg mb-2">
+                  {language === 'vi' ? 'Band IELTS Tổng Quát' :
+                   language === 'tr' ? 'Genel IELTS Bandınız' :
+                   'Your Overall IELTS Band'}
+                </p>
+                <div className="text-7xl font-bold mb-2">
+                  {results.overall_band.toFixed(1)}
                 </div>
-                <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
-                  <Mic className="w-6 h-6 mx-auto mb-2" />
-                  <p className="text-sm text-white/80">Speaking</p>
-                  <p className="text-2xl font-bold">{results.speaking.overall_band.toFixed(1)}</p>
+                <p className="text-2xl font-semibold text-white/95 mb-4">
+                  {getBandLabel(results.overall_band)} - {results.speaking?.cefr_level || 'B1'}
+                </p>
+                <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mt-6">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                    <BookOpen className="w-6 h-6 mx-auto mb-2" />
+                    <p className="text-sm text-white/80">
+                      {language === 'vi' ? 'Đọc' : language === 'tr' ? 'Okuma' : 'Reading'}
+                    </p>
+                    <p className="text-2xl font-bold">{results.reading.band.toFixed(1)}</p>
+                  </div>
+                  <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                    <Mic className="w-6 h-6 mx-auto mb-2" />
+                    <p className="text-sm text-white/80">
+                      {language === 'vi' ? 'Nói' : language === 'tr' ? 'Konuşma' : 'Speaking'}
+                    </p>
+                    <p className="text-2xl font-bold">{results.speaking.overall_band.toFixed(1)}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          ) : (
+            <Card className="p-8 bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-2xl mb-8">
+              <div className="text-center">
+                <p className="text-white/90 text-lg mb-2">
+                  {language === 'vi' ? 'Điểm Đọc Hiểu Của Bạn' :
+                   language === 'tr' ? 'Okuma Puanınız' :
+                   'Your Reading Score'}
+                </p>
+                <div className="text-7xl font-bold mb-2">
+                  {results.reading.band.toFixed(1)}
+                </div>
+                <p className="text-xl text-white/90 mb-4">
+                  {language === 'vi' ? '🔄 Đang đánh giá kỹ năng Nói của bạn...' :
+                   language === 'tr' ? '🔄 Konuşma beceriniz değerlendiriliyor...' :
+                   '🔄 Evaluating your Speaking performance...'}
+                </p>
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-2 h-2 bg-white rounded-full animate-bounce" />
+                  <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                  <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+                </div>
+              </div>
+            </Card>
+          )}
 
           {/* Detailed Breakdown */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
