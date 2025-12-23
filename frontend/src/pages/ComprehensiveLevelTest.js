@@ -189,7 +189,7 @@ const speakingPrompts = [
 
 export default function ComprehensiveLevelTest({ user }) {
   const navigate = useNavigate();
-  const { t } = useI18n();
+  const { t, language } = useI18n();  // Get language from i18n context
   
   // Stage management
   const [stage, setStage] = useState('intro'); // intro, reading, speaking, evaluating, results
@@ -361,7 +361,7 @@ export default function ComprehensiveLevelTest({ user }) {
 
       const readingBand = totalReadingPoints / readingQuestions.length;
 
-      // Evaluate speaking responses
+      // Evaluate speaking responses with language context
       const speakingEvaluationResponse = await fetch(`${API_URL}/api/level-test/evaluate-speaking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -369,7 +369,8 @@ export default function ComprehensiveLevelTest({ user }) {
           responses: speakingResponses.map(r => ({
             level: r.level,
             transcript: r.transcript
-          }))
+          })),
+          language: language  // Pass current UI language
         })
       });
 
@@ -377,7 +378,7 @@ export default function ComprehensiveLevelTest({ user }) {
       
       const speakingEval = await speakingEvaluationResponse.json();
 
-      // Get course recommendations
+      // Get course recommendations with language context
       const overallBand = (readingBand + speakingEval.overall_band) / 2;
       
       const recommendationsResponse = await fetch(`${API_URL}/api/level-test/recommend-courses`, {
@@ -388,7 +389,8 @@ export default function ComprehensiveLevelTest({ user }) {
           reading_band: readingBand,
           speaking_band: speakingEval.overall_band,
           weaknesses: speakingEval.weaknesses,
-          skill_breakdown: skillBreakdown
+          skill_breakdown: skillBreakdown,
+          language: language  // Pass current UI language
         })
       });
 
@@ -412,6 +414,7 @@ export default function ComprehensiveLevelTest({ user }) {
     } catch (error) {
       console.error('Evaluation error:', error);
       toast.error('Failed to evaluate test. Please try again.');
+      setStage('speaking');  // Go back to speaking stage if evaluation fails
     } finally {
       setEvaluating(false);
     }
