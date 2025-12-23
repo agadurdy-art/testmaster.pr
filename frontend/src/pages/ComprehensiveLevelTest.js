@@ -951,26 +951,48 @@ export default function ComprehensiveLevelTest({ user }) {
             <Card className="p-6 bg-white shadow-lg">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Mic className="w-5 h-5 text-purple-600" />
-                Speaking Performance
+                {language === 'vi' ? 'Kết Quả Nói' : language === 'tr' ? 'Konuşma Performansı' : 'Speaking Performance'}
               </h3>
-              <div className="space-y-3">
-                {results.speaking.criteria_scores && Object.entries(results.speaking.criteria_scores).map(([criterion, score]) => (
-                  <div key={criterion}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-700 capitalize">
-                        {criterion.replace(/_/g, ' ')}
-                      </span>
-                      <span className="text-sm font-bold text-purple-600">{score.toFixed(1)}</span>
+              {results.speaking ? (
+                <div className="space-y-3">
+                  {results.speaking.criteria_scores && Object.entries(results.speaking.criteria_scores).map(([criterion, score]) => (
+                    <div key={criterion}>
+                      <div className="flex justify-between mb-1">
+                        <span className="text-sm font-medium text-gray-700 capitalize">
+                          {criterion.replace(/_/g, ' ')}
+                        </span>
+                        <span className="text-sm font-bold text-purple-600">{score.toFixed(1)}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`h-2 rounded-full bg-gradient-to-r ${getBandColor(score)}`}
+                          style={{ width: `${(score / 9) * 100}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className={`h-2 rounded-full bg-gradient-to-r ${getBandColor(score)}`}
-                        style={{ width: `${(score / 9) * 100}%` }}
-                      />
-                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 text-purple-600">
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-purple-600 border-t-transparent" />
+                    <span className="text-sm font-medium">
+                      {language === 'vi' ? 'Đang phân tích...' :
+                       language === 'tr' ? 'Analiz ediliyor...' :
+                       'Analyzing your speaking...'}
+                    </span>
                   </div>
-                ))}
-              </div>
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="animate-pulse">
+                      <div className="flex justify-between mb-1">
+                        <div className="h-4 bg-gray-200 rounded w-32" />
+                        <div className="h-4 bg-gray-200 rounded w-8" />
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2" />
+                    </div>
+                  ))}
+                </div>
+              )}
             </Card>
           </div>
 
