@@ -2382,21 +2382,32 @@ async def transcribe_audio(file: UploadFile = File(...)):
         audio_file = io.BytesIO(audio_data)
         audio_file.name = file.filename or "audio.webm"
         
-        # Transcribe with language detection
+        # First, transcribe with auto-detection to check the language
         response = await stt.transcribe(
             file=audio_file,
             model="whisper-1",
-            response_format="json",
-            language="en"  # Force English for better accuracy
+            response_format="verbose_json"  # This includes language detection
         )
         
         transcribed_text = response.text.strip()
-        logger.info(f"Transcription result: {len(transcribed_text)} chars, {len(transcribed_text.split())} words")
+        detected_language = getattr(response, 'language', 'en')
+        
+        logger.info(f"Transcription result: {len(transcribed_text)} chars, detected language: {detected_language}")
+        
+        # Check if the detected language is English
+        if detected_language and detected_language.lower() not in ['en', 'english']:
+            logger.warning(f"Non-English speech detected: {detected_language}")
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Please speak in English only. Detected language: {detected_language}. This is an English proficiency test."
+            )
         
         if len(transcribed_text) < 5:
             raise HTTPException(status_code=400, detail="Could not transcribe audio clearly. Please speak louder.")
         
-        return {"text": transcribed_text}
+        return {"text": transcribed_text, "language": detected_language}
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Transcription error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
