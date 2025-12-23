@@ -334,11 +334,8 @@ export default function ComprehensiveLevelTest({ user }) {
   };
 
   const evaluateTest = async () => {
-    setStage('evaluating');
-    setEvaluating(true);
-
     try {
-      // Calculate reading score
+      // Calculate reading score immediately
       let readingCorrect = 0;
       let totalReadingPoints = 0;
       let skillBreakdown = {};
@@ -361,7 +358,23 @@ export default function ComprehensiveLevelTest({ user }) {
 
       const readingBand = totalReadingPoints / readingQuestions.length;
 
-      // Evaluate speaking responses with language context
+      // Show reading results immediately with loading state for speaking
+      setResults({
+        overall_band: null, // Will be calculated after speaking
+        reading: {
+          band: readingBand,
+          correct: readingCorrect,
+          total: readingQuestions.length,
+          skill_breakdown: skillBreakdown
+        },
+        speaking: null, // Still evaluating
+        recommendations: null // Still evaluating
+      });
+      
+      setStage('results');
+      setEvaluating(true);
+
+      // Evaluate speaking in background
       const speakingEvaluationResponse = await fetch(`${API_URL}/api/level-test/evaluate-speaking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -370,17 +383,16 @@ export default function ComprehensiveLevelTest({ user }) {
             level: r.level,
             transcript: r.transcript
           })),
-          language: language  // Pass current UI language
+          language: language
         })
       });
 
       if (!speakingEvaluationResponse.ok) throw new Error('Speaking evaluation failed');
       
       const speakingEval = await speakingEvaluationResponse.json();
-
-      // Get course recommendations with language context
       const overallBand = (readingBand + speakingEval.overall_band) / 2;
-      
+
+      // Get course recommendations
       const recommendationsResponse = await fetch(`${API_URL}/api/level-test/recommend-courses`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -390,7 +402,7 @@ export default function ComprehensiveLevelTest({ user }) {
           speaking_band: speakingEval.overall_band,
           weaknesses: speakingEval.weaknesses,
           skill_breakdown: skillBreakdown,
-          language: language  // Pass current UI language
+          language: language
         })
       });
 
@@ -398,6 +410,7 @@ export default function ComprehensiveLevelTest({ user }) {
       
       const recommendations = await recommendationsResponse.json();
 
+      // Update with complete results
       setResults({
         overall_band: overallBand,
         reading: {
@@ -410,11 +423,10 @@ export default function ComprehensiveLevelTest({ user }) {
         recommendations: recommendations
       });
 
-      setStage('results');
     } catch (error) {
       console.error('Evaluation error:', error);
       toast.error('Failed to evaluate test. Please try again.');
-      setStage('speaking');  // Go back to speaking stage if evaluation fails
+      setStage('speaking');
     } finally {
       setEvaluating(false);
     }
