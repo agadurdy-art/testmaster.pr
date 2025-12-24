@@ -24,14 +24,24 @@ export default function PronunciationRecorder({
   const [feedback, setFeedback] = useState(null);
   const [attempts, setAttempts] = useState(0);
   const [isPlayingReference, setIsPlayingReference] = useState(false);
+  const [isPlayingRecording, setIsPlayingRecording] = useState(false);
   
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const referenceAudioRef = useRef(null);
+  const recordedAudioRef = useRef(null);
 
+  // Create audio element for recorded audio
   useEffect(() => {
+    if (recordedAudioURL && !recordedAudioRef.current) {
+      recordedAudioRef.current = new Audio(recordedAudioURL);
+      recordedAudioRef.current.onended = () => setIsPlayingRecording(false);
+    }
     return () => {
-      if (recordedAudioURL) URL.revokeObjectURL(recordedAudioURL);
+      if (recordedAudioRef.current) {
+        recordedAudioRef.current.pause();
+        recordedAudioRef.current = null;
+      }
     };
   }, [recordedAudioURL]);
 
