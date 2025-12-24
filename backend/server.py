@@ -295,6 +295,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load learning platform routes: {e}")
 
+# Import pronunciation routes
+try:
+    from pronunciation_routes import router as pronunciation_router
+    app.include_router(pronunciation_router)
+    print("✅ Pronunciation routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load pronunciation routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
