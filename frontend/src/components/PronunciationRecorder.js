@@ -298,28 +298,24 @@ export default function PronunciationRecorder({
             {/* Correct/Incorrect indicator for word practice */}
             {type === 'word' && (
               <div className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
-                feedback.correct || score >= 70 ? 'bg-green-50' : 'bg-amber-50'
+                feedback.correct ? 'bg-green-50' : feedback.status === 'fail' ? 'bg-red-50' : 'bg-amber-50'
               }`}>
-                {feedback.correct || score >= 70 ? (
+                {feedback.correct ? (
                   <>
                     <Check className="w-5 h-5 text-green-600" />
                     <span className="text-green-700 font-medium">Correct pronunciation!</span>
                   </>
+                ) : feedback.status === 'fail' ? (
+                  <>
+                    <X className="w-5 h-5 text-red-600" />
+                    <span className="text-red-700 font-medium">Could not recognize. Try again.</span>
+                  </>
                 ) : (
                   <>
                     <X className="w-5 h-5 text-amber-600" />
-                    <span className="text-amber-700 font-medium">Try saying it more clearly</span>
+                    <span className="text-amber-700 font-medium">{feedback.feedback || 'Try again'}</span>
                   </>
                 )}
-              </div>
-            )}
-
-            {/* Quick tip - only show simple string tips */}
-            {feedback.feedback && typeof feedback.feedback === 'string' && feedback.feedback.length < 100 && (
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
-                <p className="text-blue-800 text-sm">
-                  💡 {feedback.feedback}
-                </p>
               </div>
             )}
 
