@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Progress } from '../components/ui/progress';
 import { Input } from '../components/ui/input';
 import { 
-  BookOpen, Volume2, Mic, Square, Play, ChevronLeft, ChevronRight, 
+  BookOpen, Volume2, Play, ChevronLeft, ChevronRight, 
   CheckCircle, XCircle, RotateCcw, Shuffle, Trophy, Star, GraduationCap,
-  ArrowLeft, Loader2, Image
+  ArrowLeft, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PronunciationRecorder from '../components/PronunciationRecorder';
