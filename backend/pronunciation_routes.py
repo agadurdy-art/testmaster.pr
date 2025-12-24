@@ -287,6 +287,165 @@ def analyze_audio_quality(audio_data: bytes, is_sentence: bool = False) -> Dict[
     return result
 
 # =============================================================================
+# LAYER B: CONTENT GATE (Whisper STT)
+# =============================================================================
+
+def levenshtein_distance(s1: str, s2: str) -> int:
+    """Calculate Levenshtein edit distance between two strings."""
+    if len(s1) < len(s2):
+        return levenshtein_distance(s2, s1)
+    if len(s2) == 0:
+        return len(s1)
+    
+    prev_row = list(range(len(s2) + 1))
+    for i, c1 in enumerate(s1):
+        curr_row = [i + 1]
+        for j, c2 in enumerate(s2):
+            insertions = prev_row[j + 1] + 1
+            deletions = curr_row[j] + 1
+            substitutions = prev_row[j] + (c1 != c2)
+            curr_row.append(min(insertions, deletions, substitutions))
+        prev_row = curr_row
+    return prev_row[-1]
+
+def normalize_text(text: str) -> str:
+    """Normalize text for comparison."""
+    text = text.lower()
+    text = re.sub(r'[^\w\s]', '', text)
+    text = ' '.join(text.split())
+    return text
+
+def check_content_match(target: str, transcript: str, is_sentence: bool = False) -> Dict[str, Any]:
+    """
+    Check if the spoken content matches the target.
+    Returns match result with details.
+    """
+    result = {
+        "passed": False,
+        "reason": "",
+        "normalized_target": "",
+        "normalized_transcript": "",
+        "match_type": "none",
+        "similarity_score": 0,
+    }
+    
+    norm_target = normalize_text(target)
+    norm_transcript = normalize_text(transcript)
+    
+    result["normalized_target"] = norm_target
+    result["normalized_transcript"] = norm_transcript
+    
+    if not norm_transcript:
+        result["reason"] = "Couldn't hear you clearly. Please speak louder."
+        return result
+    
+    if is_sentence:
+        # Sentence matching - more lenient
+        target_words = norm_target.split()
+        transcript_words = norm_transcript.split()
+        
+        if not target_words:
+            result["passed"] = True
+            return result
+            
+        # Count matching words
+        matches = sum(1 for tw in target_words if tw in transcript_words)
+        match_ratio = matches / len(target_words)
+        result["similarity_score"] = int(match_ratio * 100)
+        
+        if match_ratio >= 0.6:  # 60% of words match
+            result["passed"] = True
+            result["match_type"] = "exact" if match_ratio >= 0.9 else "partial"
+        else:
+            result["reason"] = "You said something different. Listen and try again."
+    else:
+        # Single word matching
+        target_words = norm_target.split()
+        transcript_words = norm_transcript.split()
+        
+        first_word = transcript_words[0] if transcript_words else ""
+        target_word = target_words[0] if target_words else ""
+        
+        # Check exact match
+        if first_word == target_word:
+            result["passed"] = True
+            result["match_type"] = "exact"
+            result["similarity_score"] = 100
+        # Check if target appears anywhere in transcript
+        elif target_word in transcript_words:
+            result["passed"] = True
+            result["match_type"] = "exact"
+            result["similarity_score"] = 95
+        # Check similar sounds (Whisper mishears)
+        elif target_word in SIMILAR_SOUNDS and first_word in SIMILAR_SOUNDS[target_word]:
+            result["passed"] = True
+            result["match_type"] = "similar"
+            result["similarity_score"] = 85
+        else:
+            # Check edit distance
+            edit_dist = levenshtein_distance(first_word, target_word)
+            max_edit = CONTENT_CONFIG["max_edit_distance_word"]
+            
+            if edit_dist <= max_edit:
+                result["passed"] = True
+                result["match_type"] = "partial"
+                result["similarity_score"] = max(60, 100 - (edit_dist * 15))
+            else:
+                result["reason"] = f"You said '{first_word}'. Try saying '{target_word}' again."
+    
+    return result
+
+async def transcribe_audio(audio_data: bytes, timeout: float = 12.0) -> Dict[str, Any]:
+    """
+    Transcribe audio using Whisper with proper response parsing.
+    """
+    result = {
+        "success": False,
+        "transcript": "",
+        "error": "",
+    }
+    
+    audio_file = io.BytesIO(audio_data)
+    audio_file.name = "recording.webm"
+    
+    try:
+        transcription_result = await asyncio.wait_for(
+            stt.transcribe(
+                file=audio_file,
+                model="whisper-1",
+                response_format="text"
+            ),
+            timeout=timeout
+        )
+        
+        # Parse the response properly
+        transcript = ""
+        if transcription_result:
+            if hasattr(transcription_result, 'text'):
+                transcript = transcription_result.text
+            elif isinstance(transcription_result, dict) and 'text' in transcription_result:
+                transcript = transcription_result['text']
+            elif isinstance(transcription_result, str):
+                if 'text=' in transcription_result or 'text:' in transcription_result:
+                    match = re.search(r"text[=:]\s*['\"]?([^'\"}\]]+)['\"]?", transcription_result)
+                    if match:
+                        transcript = match.group(1).strip()
+                else:
+                    transcript = transcription_result
+            else:
+                transcript = str(transcription_result)
+        
+        result["success"] = True
+        result["transcript"] = transcript.strip()
+        
+    except asyncio.TimeoutError:
+        result["error"] = "timeout"
+    except Exception as e:
+        result["error"] = str(e)
+    
+    return result
+
+# =============================================================================
 # HELPER: GET STARS AND FEEDBACK
 # =============================================================================
 
