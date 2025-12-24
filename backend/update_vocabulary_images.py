@@ -9,7 +9,7 @@ load_dotenv()
 # Clip art style images for body parts - using reliable Flaticon icons
 BODY_PARTS_IMAGES = {
     "head": "https://cdn-icons-png.flaticon.com/512/3048/3048127.png",
-    "face": "https://cdn-icons-png.flaticon.com/512/1326/1326405.png",  # Smiling face
+    "face": "https://cdn-icons-png.flaticon.com/512/1326/1326405.png",
     "hair": "https://cdn-icons-png.flaticon.com/512/1245/1245876.png",
     "eye": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",
     "eyes": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",
@@ -25,19 +25,10 @@ BODY_PARTS_IMAGES = {
     "body": "https://cdn-icons-png.flaticon.com/512/3048/3048122.png",
     "neck": "https://cdn-icons-png.flaticon.com/512/3588/3588258.png",
     "shoulder": "https://cdn-icons-png.flaticon.com/512/4348/4348083.png",
-    "elbow": "https://cdn-icons-png.flaticon.com/512/4348/4348083.png",
-    "wrist": "https://cdn-icons-png.flaticon.com/512/3588/3588244.png",
-    "knee": "https://cdn-icons-png.flaticon.com/512/3048/3048394.png",
-    "ankle": "https://cdn-icons-png.flaticon.com/512/3588/3588287.png",
-    "thumb": "https://cdn-icons-png.flaticon.com/512/1176/1176315.png",  # Thumbs up
+    "thumb": "https://cdn-icons-png.flaticon.com/512/1176/1176315.png",
     "teeth": "https://cdn-icons-png.flaticon.com/512/2933/2933258.png",
     "tongue": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png",
-    "lip": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png",
     "lips": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png",
-    "chin": "https://cdn-icons-png.flaticon.com/512/1326/1326405.png",
-    "cheek": "https://cdn-icons-png.flaticon.com/512/1326/1326405.png",
-    "forehead": "https://cdn-icons-png.flaticon.com/512/3048/3048127.png",
-    "eyebrow": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",
 }
 
 async def update_vocabulary_images():
@@ -62,14 +53,25 @@ async def update_vocabulary_images():
                 content = lesson.get("content", {})
                 vocabulary = content.get("vocabulary", [])
                 
-                for vocab in vocabulary:
-                    word = vocab.get("word", "").lower().strip()
-                    if word in BODY_PARTS_IMAGES:
-                        old_url = vocab.get("visual_url", "")
-                        vocab["visual_url"] = BODY_PARTS_IMAGES[word]
-                        if old_url != vocab["visual_url"]:
-                            print(f"Updated: {word}")
+                for i, vocab in enumerate(vocabulary):
+                    # Handle both string and dict formats
+                    if isinstance(vocab, str):
+                        word = vocab.lower().strip()
+                        if word in BODY_PARTS_IMAGES:
+                            vocabulary[i] = {
+                                "word": vocab,
+                                "visual_url": BODY_PARTS_IMAGES[word]
+                            }
+                            print(f"Converted string to dict and updated: {word}")
                             level_changed = True
+                    elif isinstance(vocab, dict):
+                        word = vocab.get("word", "").lower().strip()
+                        if word in BODY_PARTS_IMAGES:
+                            old_url = vocab.get("visual_url", "")
+                            vocab["visual_url"] = BODY_PARTS_IMAGES[word]
+                            if old_url != vocab["visual_url"]:
+                                print(f"Updated: {word}")
+                                level_changed = True
         
         if level_changed:
             await db.learning_levels.update_one(
