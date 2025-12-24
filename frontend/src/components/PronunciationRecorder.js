@@ -291,7 +291,9 @@ export default function PronunciationRecorder({
               <div className="bg-slate-50 p-3 rounded-lg border">
                 <p className="text-xs text-slate-500 mb-1">You said:</p>
                 <p className="text-slate-700 font-medium">
-                  "{feedback.transcribed || feedback.transcribed_text}"
+                  "{typeof feedback.transcribed === 'string' ? feedback.transcribed : 
+                    typeof feedback.transcribed_text === 'string' ? feedback.transcribed_text : 
+                    '(audio recorded)'}"
                 </p>
               </div>
             )}
@@ -299,9 +301,9 @@ export default function PronunciationRecorder({
             {/* Correct/Incorrect indicator for word practice */}
             {type === 'word' && (
               <div className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
-                feedback.correct ? 'bg-green-50' : 'bg-amber-50'
+                feedback.correct || score >= 70 ? 'bg-green-50' : 'bg-amber-50'
               }`}>
-                {feedback.correct ? (
+                {feedback.correct || score >= 70 ? (
                   <>
                     <Check className="w-5 h-5 text-green-600" />
                     <span className="text-green-700 font-medium">Correct pronunciation!</span>
@@ -315,11 +317,11 @@ export default function PronunciationRecorder({
               </div>
             )}
 
-            {/* Quick tip */}
-            {(feedback.focus_areas?.length > 0 || feedback.errors?.length > 0) && (
+            {/* Quick tip - only show simple string tips */}
+            {feedback.feedback && typeof feedback.feedback === 'string' && feedback.feedback.length < 100 && (
               <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
                 <p className="text-blue-800 text-sm">
-                  💡 <strong>Tip:</strong> {feedback.focus_areas?.[0] || feedback.errors?.[0]?.tip || 'Practice speaking slowly and clearly'}
+                  💡 {feedback.feedback}
                 </p>
               </div>
             )}
