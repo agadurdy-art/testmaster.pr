@@ -2976,6 +2976,7 @@ from adaptive_level_test_routes import (
     generate_learning_path
 )
 from adaptive_level_test_data import READING_QUESTIONS, BAND_SCORE_RANGES
+from comprehensive_test_data import WRITING_PROMPTS, SPEAKING_PROMPTS
 
 @api_router.post("/adaptive-level-test/start")
 async def start_adaptive_test(request: InitialAssessmentRequest):
