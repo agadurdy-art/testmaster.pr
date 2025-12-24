@@ -27,6 +27,10 @@ export default function Dashboard({ user, onLogout }) {
   const [userDetails, setUserDetails] = useState(user);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [continueData, setContinueData] = useState(null);
+  
+  // Verification modal state - must be at top level
+  const [showLockedModal, setShowLockedModal] = useState(false);
+  const [lockedFeatureName, setLockedFeatureName] = useState('');
 
   useEffect(() => { loadData(); }, [user.id]);
 
