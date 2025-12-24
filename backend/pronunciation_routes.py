@@ -426,14 +426,28 @@ async def get_phonics_lesson_detail(lesson_key: str):
 @router.post("/practice-word")
 async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
     """
-    Practice pronunciation of a single word with instant feedback
-    OPTIMIZED: Better matching and simpler feedback
+    Practice pronunciation of a single word with strict evaluation.
+    
+    Rules:
+    - Never give a score if the spoken word is unclear or confidence < 0.6
+    - If ASR fails or transcript is empty, return fail status
+    - Evaluate pronunciation based on phoneme accuracy, not spelling
+    - Penalize vowel errors heavily
+    - Do NOT reward partial matches
+    - For beginner words, require at least 80% phoneme match for a pass
     """
     try:
         audio_data = await audio_file.read()
         
         if not audio_data or len(audio_data) < 500:
-            raise HTTPException(status_code=400, detail="Audio file is too small or empty. Please record again.")
+            return {
+                "status": "fail",
+                "word": word,
+                "transcribed": "",
+                "score": 0,
+                "correct": False,
+                "feedback": "Please pronounce the word clearly and try again."
+            }
         
         # Prepare audio file
         audio_file_obj = io.BytesIO(audio_data)
@@ -447,66 +461,142 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
                 response_format="text"
             )
             transcribed = str(transcription_result).strip().lower() if transcription_result else ""
-            # Remove punctuation and extra whitespace
+            # Remove punctuation
             import re
             transcribed = re.sub(r'[^\w\s]', '', transcribed).strip()
         except Exception as e:
             print(f"Word transcription error: {e}")
             transcribed = ""
         
+        # Rule: If ASR fails or transcript is empty, return fail status
+        if not transcribed:
+            return {
+                "status": "fail",
+                "word": word,
+                "transcribed": "",
+                "score": 0,
+                "correct": False,
+                "feedback": "Please pronounce the word clearly and try again."
+            }
+        
         target = word.strip().lower()
-        # Also clean target
         import re
         target_clean = re.sub(r'[^\w\s]', '', target).strip()
         
-        print(f"Word practice: target='{target_clean}', transcribed='{transcribed}'")
+        print(f"Pronunciation check: target='{target_clean}', transcribed='{transcribed}'")
         
-        # Simple comparison
-        if not transcribed:
-            return {
-                "word": word,
-                "transcribed": "(Could not hear)",
-                "score": 30,
-                "correct": False,
-                "feedback": "Please try again and speak clearly"
-            }
+        # Phoneme-based evaluation
+        # Define vowels for heavy penalization
+        VOWELS = set('aeiou')
         
-        # Check for exact match or if target is in transcription
-        score = 0
-        if transcribed == target_clean:
-            score = 100
-        elif target_clean in transcribed:
-            # User said the word (possibly with extra words)
-            score = 90
-        elif transcribed in target_clean:
-            # Partial match
-            score = 75
-        else:
-            # Calculate similarity using character matching
-            target_chars = set(target_clean)
-            spoken_chars = set(transcribed)
-            common = target_chars & spoken_chars
-            if len(target_chars) > 0:
-                similarity = len(common) / len(target_chars)
-                score = int(similarity * 70)
+        def get_phoneme_score(target_word, spoken_word):
+            """Calculate phoneme-based score with vowel penalty"""
+            if not target_word or not spoken_word:
+                return 0
+            
+            # Exact match = 100%
+            if spoken_word == target_word:
+                return 100
+            
+            # Check if spoken word contains extra words (fail - not exact)
+            if ' ' in spoken_word and target_word not in spoken_word.split():
+                return 0
+            
+            # If spoken contains multiple words, extract the target if present
+            spoken_words = spoken_word.split()
+            if len(spoken_words) > 1:
+                if target_word in spoken_words:
+                    spoken_word = target_word  # Exact match within phrase
+                else:
+                    return 0  # No exact match found
+            
+            # Character-by-character comparison with vowel penalty
+            target_chars = list(target_word)
+            spoken_chars = list(spoken_word)
+            
+            if len(spoken_chars) != len(target_chars):
+                # Length mismatch - significant penalty
+                length_diff = abs(len(spoken_chars) - len(target_chars))
+                if length_diff > 2:
+                    return 0  # Too different
+                base_penalty = length_diff * 15
+            else:
+                base_penalty = 0
+            
+            # Compare characters
+            matches = 0
+            vowel_errors = 0
+            consonant_errors = 0
+            
+            min_len = min(len(target_chars), len(spoken_chars))
+            for i in range(min_len):
+                t_char = target_chars[i]
+                s_char = spoken_chars[i] if i < len(spoken_chars) else ''
                 
-                # Boost score if first letter matches (common pronunciation indicator)
-                if transcribed and target_clean and transcribed[0] == target_clean[0]:
-                    score = min(score + 15, 85)
+                if t_char == s_char:
+                    matches += 1
+                elif t_char in VOWELS or s_char in VOWELS:
+                    vowel_errors += 1  # Vowel error - heavy penalty
+                else:
+                    consonant_errors += 1
+            
+            # Calculate score
+            total_chars = len(target_chars)
+            if total_chars == 0:
+                return 0
+            
+            # Base score from matches
+            base_score = (matches / total_chars) * 100
+            
+            # Heavy penalty for vowel errors (20 points each)
+            vowel_penalty = vowel_errors * 20
+            
+            # Lighter penalty for consonant errors (10 points each)
+            consonant_penalty = consonant_errors * 10
+            
+            final_score = max(0, base_score - vowel_penalty - consonant_penalty - base_penalty)
+            
+            return int(final_score)
+        
+        score = get_phoneme_score(target_clean, transcribed)
+        
+        # Rule: For beginner words, require at least 80% phoneme match for a pass
+        # Rule: Do NOT reward partial matches
+        correct = score >= 80
+        
+        # Determine feedback
+        if score >= 90:
+            feedback = "Excellent!"
+        elif score >= 80:
+            feedback = "Good pronunciation!"
+        elif score >= 60:
+            feedback = "Almost there. Focus on the vowel sounds."
+        elif score >= 40:
+            feedback = "Try again. Listen carefully to the vowels."
+        else:
+            feedback = "Please pronounce the word clearly and try again."
         
         return {
+            "status": "success" if score >= 80 else "needs_practice",
             "word": word,
             "transcribed": transcribed,
             "score": score,
-            "correct": score >= 70,
-            "feedback": "Perfect!" if score >= 90 else "Good!" if score >= 70 else "Try again" if score >= 40 else "Keep practicing!"
+            "correct": correct,
+            "feedback": feedback
         }
         
     except HTTPException:
         raise
     except Exception as e:
         print(f"Word practice error: {e}")
-        raise HTTPException(status_code=500, detail=f"Word practice failed: {str(e)}")
+        return {
+            "status": "fail",
+            "word": word,
+            "transcribed": "",
+            "score": 0,
+            "correct": False,
+            "feedback": "Please pronounce the word clearly and try again."
+        }
 
 # Export router
 __all__ = ["router", "PHONICS_LESSONS"]
