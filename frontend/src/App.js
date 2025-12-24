@@ -19,6 +19,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage';
 import AdminCreditsPage from './pages/AdminCreditsPage';
 import LevelTest from './pages/LevelTest';
 import ComprehensiveLevelTest from './pages/ComprehensiveLevelTest';
+import AdaptiveLevelTest from './pages/AdaptiveLevelTest';
 import VocabGrammarCourse from './pages/VocabGrammarCourse';
 import WritingPractice from './pages/WritingPractice';
 import SpeakingPractice from './pages/SpeakingPractice';
