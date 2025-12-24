@@ -486,7 +486,7 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
             transcribed = str(transcription_result).strip() if transcription_result else ""
         except asyncio.TimeoutError:
             debug_info["status"] = "fail_timeout"
-            print(f"[Pronunciation] Transcription timeout")
+            print("[Pronunciation] Transcription timeout")
             return {
                 "status": "fail",
                 "word": word,
@@ -514,7 +514,7 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
         # Rule: NEVER score when transcript is empty
         if not transcribed or transcribed.strip() == "":
             debug_info["status"] = "fail_empty_transcript"
-            print(f"[Pronunciation] Empty transcript")
+            print("[Pronunciation] Empty transcript")
             return {
                 "status": "fail",
                 "word": word,
