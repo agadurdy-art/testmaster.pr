@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/
 import { 
   BookOpen, Headphones, Mic, PenTool, CheckCircle, Target, Trophy,
   Sparkles, GraduationCap, Award, ArrowRight, Users, Zap,
-  Brain, ShieldCheck, TrendingUp, XCircle, ChevronRight, Eye, MessageSquare,
+  Brain, ShieldCheck, TrendingUp, XCircle, ChevronRight, Eye, EyeOff, MessageSquare,
   BarChart3, Lightbulb, Clock, FileText, AlertTriangle, Lock, Play, Mail
 } from 'lucide-react';
 import { registerUser, loginUser } from '../lib/api';
