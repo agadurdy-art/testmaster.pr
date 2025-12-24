@@ -11,6 +11,7 @@ import io
 import wave
 import struct
 import tempfile
+import math
 from datetime import datetime
 
 # Get backend URL from frontend env
