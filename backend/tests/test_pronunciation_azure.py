@@ -295,7 +295,6 @@ def test_error_handling():
     # Test 4b: Missing word parameter
     print("\n--- Test 4b: Missing word parameter ---")
     try:
-        import math
         test_audio = create_test_audio_wav(duration_seconds=1.0)
         files = {'audio_file': ('test.wav', test_audio, 'audio/wav')}
         params = {'user_id': 'test_user_123'}  # Missing 'word'
@@ -319,7 +318,6 @@ def test_error_handling():
     # Test 4c: Missing user_id parameter
     print("\n--- Test 4c: Missing user_id parameter ---")
     try:
-        import math
         test_audio = create_test_audio_wav(duration_seconds=1.0)
         files = {'audio_file': ('test.wav', test_audio, 'audio/wav')}
         params = {'word': 'hello'}  # Missing 'user_id'
