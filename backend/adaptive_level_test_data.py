@@ -1,10 +1,12 @@
 """
-Adaptive Level Test Question Banks
+Adaptive Level Test Question Banks - COMPREHENSIVE VERSION
 Band Range: 2.0 - 9.0 (A1 to C2)
+Over 60+ reading questions, varied listening scenarios, comprehensive writing/speaking prompts
 """
 
 # ============ READING QUESTIONS ============
 # Organized by CEFR level and target band
+# 8-10 questions per level for accurate adaptive testing
 
 READING_QUESTIONS = {
     "A1": [
@@ -21,7 +23,7 @@ READING_QUESTIONS = {
         {
             "id": "r_a1_2",
             "level": "A1",
-            "target_band": 3.0,
+            "target_band": 2.5,
             "passage": "The shop opens at 9:00 AM. It closes at 6:00 PM. On Sunday, the shop is closed all day.",
             "question": "When is the shop closed all day?",
             "options": ["A) Monday", "B) Friday", "C) Saturday", "D) Sunday"],
@@ -31,12 +33,62 @@ READING_QUESTIONS = {
         {
             "id": "r_a1_3",
             "level": "A1",
-            "target_band": 3.0,
+            "target_band": 2.5,
             "passage": "I have a cat and a dog. My cat is black. My dog is brown. They are good friends.",
             "question": "What color is the cat?",
             "options": ["A) Brown", "B) White", "C) Black", "D) Grey"],
             "correct": "C",
             "skill": "descriptive_detail"
+        },
+        {
+            "id": "r_a1_4",
+            "level": "A1",
+            "target_band": 2.5,
+            "passage": "Today is Monday. Tomorrow is Tuesday. Yesterday was Sunday.",
+            "question": "What day was yesterday?",
+            "options": ["A) Monday", "B) Tuesday", "C) Sunday", "D) Saturday"],
+            "correct": "C",
+            "skill": "time_sequence"
+        },
+        {
+            "id": "r_a1_5",
+            "level": "A1",
+            "target_band": 3.0,
+            "passage": "I have three brothers and two sisters. My family is big. We live in a house with a garden.",
+            "question": "How many sisters does the person have?",
+            "options": ["A) Two", "B) Three", "C) Five", "D) One"],
+            "correct": "A",
+            "skill": "number_comprehension"
+        },
+        {
+            "id": "r_a1_6",
+            "level": "A1",
+            "target_band": 3.0,
+            "passage": "The bus costs $2. The train costs $5. The taxi costs $20.",
+            "question": "What is the cheapest way to travel?",
+            "options": ["A) Taxi", "B) Train", "C) Bus", "D) Car"],
+            "correct": "C",
+            "skill": "comparison"
+        },
+        {
+            "id": "r_a1_7",
+            "level": "A1",
+            "target_band": 3.0,
+            "passage": "Maria likes apples. She doesn't like oranges. She loves bananas.",
+            "question": "What fruit does Maria NOT like?",
+            "options": ["A) Apples", "B) Oranges", "C) Bananas", "D) Grapes"],
+            "correct": "B",
+            "skill": "negative_understanding"
+        },
+        {
+            "id": "r_a1_8",
+            "level": "A1",
+            "target_band": 3.0,
+            "passage": "The restaurant is open from Monday to Saturday. It is closed on Sunday. Lunch is from 12:00 to 2:00.",
+            "question": "When can you have lunch at this restaurant?",
+            "options": ["A) Sunday at 1:00 PM", "B) Monday at 3:00 PM", "C) Tuesday at 1:00 PM", "D) Sunday at 12:00 PM"],
+            "correct": "C",
+            "skill": "schedule_reading"
         }
     ],
     
