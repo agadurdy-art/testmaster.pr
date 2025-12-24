@@ -465,3 +465,28 @@ backend:
         agent: "testing"
         comment: "✅ COMPREHENSIVE LEVEL TEST BACKEND FULLY FUNCTIONAL - Complete testing of all backend APIs for the Comprehensive Level Test flow completed successfully. ALL ENDPOINTS WORKING: 1) POST /api/level-test/evaluate - Processes 10 reading questions with progressive difficulty (Band 2.0-9.0) and speaking responses, returns level assessment (Beginner to Advanced), reading score, and personalized feedback. 2) POST /api/level-test/evaluate-speaking - Uses GPT-5.1 for comprehensive speaking evaluation, returns detailed band scores for all 4 IELTS criteria (fluency_coherence, lexical_resource, grammatical_range_accuracy, pronunciation), CEFR level, strengths/weaknesses analysis, and improvement recommendations. 3) POST /api/level-test/recommend-courses - Generates personalized course recommendations based on overall band score with primary/secondary course suggestions and learning roadmap. 4) POST /api/speaking/transcribe - Audio transcription endpoint exists and handles requests properly (422 error expected without file upload). 5) Complete flow integration with user authentication works correctly, saves results to user profile. All AI evaluations using IELTS Core Mindset provide accurate band scoring and detailed feedback. The backend APIs are production-ready and support the complete comprehensive level test user journey from reading questions through speaking evaluation to course recommendations."
 
+
+  - task: "Azure Speech Pronunciation Assessment Integration"
+    implemented: true
+    working: "pending"
+    file: "backend/pronunciation_routes.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "pending"
+        agent: "main"
+        comment: "🔧 AZURE INTEGRATION IMPLEMENTED - Completely rewrote pronunciation_routes.py to use Azure Speech SDK for professional pronunciation assessment. Features: 1) Audio conversion to WAV 16kHz mono using ffmpeg. 2) Azure Pronunciation Assessment with phoneme-level granularity. 3) Returns accuracy, fluency, prosody, and completeness scores. 4) Backwards-compatible /practice-word and /check endpoints. Azure credentials configured in .env. NEEDS TESTING to verify the integration works correctly with real audio recordings."
+
+  - task: "Pronunciation Evaluation for Vocabulary Practice (Azure)"
+    implemented: true
+    working: "pending"
+    file: "backend/pronunciation_routes.py, frontend/src/components/PronunciationRecorder.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "pending"
+        agent: "main"
+        comment: "🔧 PRONUNCIATION PRACTICE WORKFLOW: Frontend PronunciationRecorder.js calls POST /api/pronunciation/practice-word with audio blob and target word. Backend converts audio to WAV, sends to Azure Speech SDK for pronunciation assessment, returns score with detailed subscores (accuracy, fluency, prosody, completeness). Frontend displays star rating and feedback. NEEDS TESTING with actual audio recordings."
+
