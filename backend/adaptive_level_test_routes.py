@@ -273,11 +273,23 @@ async def evaluate_speaking_detailed(transcripts: List[Dict], target_level: str)
     Evaluate speaking with detailed error analysis
     Analyze: fluency, pronunciation, vocabulary, grammar
     """
-    if not transcripts:
+    # Strict validation - if no responses or empty responses
+    if not transcripts or len(transcripts) == 0:
         return {
-            "band": 2.0,
+            "band_score": 2.0,
             "feedback": "No speaking responses recorded",
-            "errors": []
+            "errors": [],
+            "main_weaknesses": ["No responses provided"]
+        }
+    
+    # Check if all transcripts are very short or empty
+    total_words = sum(len(t.get('transcript', '').split()) for t in transcripts)
+    if total_words < 10:
+        return {
+            "band_score": 2.0,
+            "feedback": "Responses too short or empty",
+            "errors": [],
+            "main_weaknesses": ["Insufficient speaking content"]
         }
     
     try:
@@ -292,42 +304,76 @@ async def evaluate_speaking_detailed(transcripts: List[Dict], target_level: str)
             model="claude-3-7-sonnet-20250219"
         )
         
-        prompt = f"""You are an IELTS speaking examiner. Evaluate these speaking responses in detail.
+        prompt = f"""You are a STRICT IELTS speaking examiner. Evaluate these speaking responses honestly and rigorously.
 
 TARGET LEVEL: {target_level}
 
 SPEAKING TRANSCRIPT:
 {full_transcript}
 
-Evaluate on 4 criteria (Band 2.0-9.0):
-1. Fluency & Coherence
-2. Lexical Resource (vocabulary)
-3. Grammatical Range & Accuracy
-4. Pronunciation (inferred from transcript quality)
+CRITICAL EVALUATION RULES:
+1. If responses are VERY SHORT (under 20 words total), max band is 3.0
+2. If responses are IRRELEVANT to questions, max band is 3.5
+3. If grammar errors are FREQUENT (more than 3 per response), max band is 4.5
+4. If vocabulary is VERY LIMITED (only basic words), max band is 4.0
+5. BE STRICT - IELTS standards, not casual conversation
 
-Provide feedback in this JSON format:
+Evaluate on 4 criteria (Band 2.0-9.0):
+1. Fluency & Coherence - Can they speak smoothly?
+2. Lexical Resource - Vocabulary range
+3. Grammatical Range & Accuracy - Grammar quality
+4. Pronunciation - Based on transcript quality
+
+Provide feedback in this EXACT JSON format:
 {{
-    "band_score": 5.5,
+    "band_score": 4.0,
+    "total_word_count": {total_words},
     "fluency_coherence": {{
-        "score": 5.5,
-        "feedback": "...",
-        "hesitations": "some pauses noted",
-        "self_corrections": 2,
-        "discourse_markers": ["well", "actually"]
+        "score": 4.0,
+        "feedback": "Limited fluency, short responses",
+        "hesitations": "many pauses likely",
+        "self_corrections": 0,
+        "discourse_markers": []
     }},
     "lexical_resource": {{
-        "score": 5.0,
-        "feedback": "...",
-        "vocabulary_range": "limited",
-        "word_count": 120,
-        "unique_words": 45,
-        "repetitions": ["very", "good", "I think"],
-        "topic_vocabulary": ["minimal"]
+        "score": 3.5,
+        "feedback": "Very basic vocabulary only",
+        "vocabulary_range": "very limited",
+        "word_count": {total_words},
+        "unique_words": 15,
+        "repetitions": ["I", "very", "good"],
+        "topic_vocabulary": ["none"]
     }},
     "grammar": {{
-        "score": 5.5,
-        "feedback": "...",
+        "score": 4.0,
+        "feedback": "Many basic grammar errors",
         "error_examples": [
+            {{"error": "[exact error]", "correction": "[fix]", "rule": "[rule]"}}
+        ],
+        "tense_variety": ["only present simple"],
+        "complex_sentences": 0
+    }},
+    "pronunciation": {{
+        "score": 4.0,
+        "feedback": "Basic pronunciation issues likely",
+        "likely_issues": ["word stress", "sentence intonation"],
+        "intelligibility": "mostly understandable but with effort"
+    }},
+    "strengths": ["Attempts to answer"],
+    "main_weaknesses": ["Very short responses", "Basic vocabulary only", "Many grammar errors"],
+    "specific_advice": [
+        "Practice speaking for longer (1-2 minutes per question)",
+        "Learn 10-15 new words daily",
+        "Study basic grammar rules (tenses, articles)"
+    ]
+}}
+
+IMPORTANT:
+- If responses are VERY SHORT, set band_score to 2.5-3.5
+- If IRRELEVANT answers, set band_score to 2.5-3.0
+- Count ACTUAL errors and include specific examples
+- Band 5.0+ requires: decent length, relevant answers, good grammar, varied vocabulary
+- BE HONEST about weaknesses
             {{"error": "I go yesterday", "correction": "I went yesterday", "rule": "Use past tense"}},
             {{"error": "She don't like", "correction": "She doesn't like", "rule": "Third person singular"}}
         ],
