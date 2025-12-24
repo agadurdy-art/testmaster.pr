@@ -362,6 +362,36 @@ export default function Dashboard({ user, onLogout }) {
           </Card>
         )}
 
+        {/* Learning Platform CTA */}
+        <Card 
+          className="p-5 mb-6 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+          onClick={() => navigate('/learning')}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+                <GraduationCap className="w-7 h-7 text-white" />
+              </div>
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-1">
+                  {getText('Complete Learning Platform', 'Nền tảng học tập hoàn chỉnh', 'Tam Öğrenme Platformu')}
+                </h2>
+                <p className="text-white/80 text-sm">
+                  {getText(
+                    'Cambridge YLE → CEFR → IELTS 9.0 Pathway',
+                    'Lộ trình Cambridge YLE → CEFR → IELTS 9.0',
+                    'Cambridge YLE → CEFR → IELTS 9.0 Yolu'
+                  )}
+                </p>
+              </div>
+            </div>
+            <Button className="bg-white/20 hover:bg-white/30 text-white border-0 hidden sm:flex">
+              {getText('Start Learning', 'Bắt đầu', 'Başla')}
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+        </Card>
+
         {/* Quick Stats Row - Always visible */}
         <div className="grid grid-cols-4 gap-3 mb-6">
           {[
