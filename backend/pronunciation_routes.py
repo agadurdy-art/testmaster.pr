@@ -427,7 +427,7 @@ async def get_phonics_lesson_detail(lesson_key: str):
 async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
     """
     Practice pronunciation of a single word with instant feedback
-    OPTIMIZED: Simpler, faster feedback
+    OPTIMIZED: Better matching and simpler feedback
     """
     try:
         audio_data = await audio_file.read()
@@ -447,11 +447,19 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
                 response_format="text"
             )
             transcribed = str(transcription_result).strip().lower() if transcription_result else ""
+            # Remove punctuation and extra whitespace
+            import re
+            transcribed = re.sub(r'[^\w\s]', '', transcribed).strip()
         except Exception as e:
             print(f"Word transcription error: {e}")
             transcribed = ""
         
         target = word.strip().lower()
+        # Also clean target
+        import re
+        target_clean = re.sub(r'[^\w\s]', '', target).strip()
+        
+        print(f"Word practice: target='{target_clean}', transcribed='{transcribed}'")
         
         # Simple comparison
         if not transcribed:
@@ -463,24 +471,35 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
                 "feedback": "Please try again and speak clearly"
             }
         
-        score = 100 if transcribed == target else 0
-        
-        # If not exact match, calculate similarity
-        if score == 0:
-            # Check if target word is in the transcription
-            if target in transcribed or transcribed in target:
-                score = 80
-            else:
-                # Check character overlap
-                common_chars = set(transcribed) & set(target)
-                score = int((len(common_chars) / max(len(target), 1)) * 70)
+        # Check for exact match or if target is in transcription
+        score = 0
+        if transcribed == target_clean:
+            score = 100
+        elif target_clean in transcribed:
+            # User said the word (possibly with extra words)
+            score = 90
+        elif transcribed in target_clean:
+            # Partial match
+            score = 75
+        else:
+            # Calculate similarity using character matching
+            target_chars = set(target_clean)
+            spoken_chars = set(transcribed)
+            common = target_chars & spoken_chars
+            if len(target_chars) > 0:
+                similarity = len(common) / len(target_chars)
+                score = int(similarity * 70)
+                
+                # Boost score if first letter matches (common pronunciation indicator)
+                if transcribed and target_clean and transcribed[0] == target_clean[0]:
+                    score = min(score + 15, 85)
         
         return {
             "word": word,
             "transcribed": transcribed,
             "score": score,
             "correct": score >= 70,
-            "feedback": "Perfect!" if score >= 90 else "Good!" if score >= 70 else "Try again - say it slowly" if score >= 40 else "Keep practicing!"
+            "feedback": "Perfect!" if score >= 90 else "Good!" if score >= 70 else "Try again" if score >= 40 else "Keep practicing!"
         }
         
     except HTTPException:
