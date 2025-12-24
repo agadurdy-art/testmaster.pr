@@ -241,14 +241,21 @@ export default function LandingPage({ onLogin, user }) {
     try {
       if (authMode === 'signup') {
         const { name, email, password } = formData;
-        await registerUser({ name, email, password });
-        toast.success('Account created! Please check your email to verify your account.');
-        setAuthMode('signin');
+        const userData = await registerUser({ name, email, password });
+        // NEW: Log user in immediately after registration
+        onLogin(userData);
+        toast.success('Welcome! Check your email to verify and unlock all features.', { duration: 5000 });
+        setShowAuth(false);
+        navigate('/dashboard');
       } else {
         const { email, password } = formData;
         const userData = await loginUser({ email, password });
         onLogin(userData);
-        toast.success('Welcome back!');
+        if (!userData.verified && !userData.email_verified) {
+          toast.success('Welcome back! Verify your email to unlock all features.', { duration: 5000 });
+        } else {
+          toast.success('Welcome back!');
+        }
         navigate('/dashboard');
       }
     } catch (error) {
