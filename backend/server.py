@@ -4727,6 +4727,161 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# =============================================================================
+# FIX COMBINED QUESTION IDS (Q20-21 deployment issue)
+# =============================================================================
+async def fix_combined_question_ids():
+    """
+    Fix combined question IDs that may have been incorrectly split during deployment.
+    This runs on startup to ensure Q20-21 style questions display correctly.
+    """
+    try:
+        # Define the correct combined question mappings
+        # These are "Choose TWO" questions that should have combined IDs
+        combined_mappings = {
+            # Reading Test 1 - Passage 2
+            "reading_passage2_q20_21": {
+                "test_title_contains": "Academic Reading Practice Test 1",
+                "old_ids": [20, 21],
+                "new_id": "20-21",
+                "passage": 2
+            },
+            "reading_passage2_q22_23": {
+                "test_title_contains": "Academic Reading Practice Test 1",
+                "old_ids": [22, 23],
+                "new_id": "22-23",
+                "passage": 2
+            },
+            # Reading Test 2 - Passage 2
+            "reading2_passage2_q23_24": {
+                "test_title_contains": "Academic Reading Practice Test 2",
+                "old_ids": [23, 24],
+                "new_id": "23-24",
+                "passage": 2
+            },
+            # Listening Test 1 - Part 3
+            "listening1_part3_q21_22": {
+                "test_title_contains": "Test 1 - Listening",
+                "old_ids": [21, 22],
+                "new_id": "21-22",
+                "section": 3
+            },
+            "listening1_part3_q23_24": {
+                "test_title_contains": "Test 1 - Listening",
+                "old_ids": [23, 24],
+                "new_id": "23-24",
+                "section": 3
+            },
+        }
+        
+        fixed_count = 0
+        
+        for mapping_key, mapping in combined_mappings.items():
+            # Find the test
+            test = await db.tests.find_one({
+                "title": {"$regex": mapping["test_title_contains"], "$options": "i"}
+            })
+            
+            if not test:
+                continue
+            
+            questions = test.get("questions", [])
+            answer_key = test.get("answer_key", [])
+            
+            # Check if already has combined ID
+            has_combined = any(str(q.get("id")) == mapping["new_id"] for q in questions)
+            if has_combined:
+                continue  # Already fixed
+            
+            # Find the individual questions to combine
+            old_id_1, old_id_2 = mapping["old_ids"]
+            q1 = None
+            q2 = None
+            q1_idx = None
+            q2_idx = None
+            
+            for idx, q in enumerate(questions):
+                q_id = q.get("id")
+                if q_id == old_id_1 or str(q_id) == str(old_id_1):
+                    q1 = q
+                    q1_idx = idx
+                elif q_id == old_id_2 or str(q_id) == str(old_id_2):
+                    q2 = q
+                    q2_idx = idx
+            
+            if not q1 or not q2:
+                continue  # Questions not found as separate
+            
+            # Check if they're multi-select questions that should be combined
+            if q1.get("type") != "multiple_choice_multi" and "two" not in q1.get("question", "").lower():
+                continue  # Not a "choose two" question
+            
+            logger.info(f"🔧 Fixing combined questions in: {test.get('title')}")
+            logger.info(f"   Combining Q{old_id_1} + Q{old_id_2} → Q{mapping['new_id']}")
+            
+            # Create combined question
+            combined_q = q1.copy()
+            combined_q["id"] = mapping["new_id"]
+            combined_q["answer_count"] = 2
+            combined_q["answer_ids"] = [old_id_1, old_id_2]
+            
+            # Build new questions list
+            new_questions = []
+            for idx, q in enumerate(questions):
+                if idx == q1_idx:
+                    new_questions.append(combined_q)
+                elif idx == q2_idx:
+                    continue  # Skip the second question (now combined)
+                else:
+                    new_questions.append(q)
+            
+            # Fix answer key
+            new_answer_key = []
+            ak1 = None
+            ak2 = None
+            
+            for ak in answer_key:
+                ak_id = ak.get("question_id")
+                if ak_id == old_id_1 or str(ak_id) == str(old_id_1):
+                    ak1 = ak
+                elif ak_id == old_id_2 or str(ak_id) == str(old_id_2):
+                    ak2 = ak
+                else:
+                    new_answer_key.append(ak)
+            
+            if ak1:
+                combined_ak = ak1.copy()
+                combined_ak["question_id"] = mapping["new_id"]
+                if ak2:
+                    # Combine answers
+                    ans1 = ak1.get("answer", [])
+                    ans2 = ak2.get("answer", [])
+                    if isinstance(ans1, list) and isinstance(ans2, list):
+                        combined_ak["answer"] = ans1 + ans2
+                    elif isinstance(ans1, str) and isinstance(ans2, str):
+                        combined_ak["answer"] = [ans1, ans2]
+                new_answer_key.append(combined_ak)
+            
+            # Update the test
+            await db.tests.update_one(
+                {"id": test["id"]},
+                {"$set": {
+                    "questions": new_questions,
+                    "answer_key": new_answer_key
+                }}
+            )
+            
+            fixed_count += 1
+            logger.info(f"   ✅ Fixed: Q{mapping['new_id']}")
+        
+        if fixed_count > 0:
+            logger.info(f"🎉 Fixed {fixed_count} combined question issues")
+        else:
+            logger.info("✅ All combined questions are correctly formatted")
+            
+    except Exception as e:
+        logger.error(f"Error fixing combined questions: {e}")
+
 @app.on_event("startup")
 async def startup_event():
     """Seed vocab grammar lessons and beginner english lessons if they don't exist"""
