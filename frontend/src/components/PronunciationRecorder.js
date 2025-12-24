@@ -286,18 +286,6 @@ export default function PronunciationRecorder({
               <p className="text-sm text-slate-500 mt-1">Score: {score}/100</p>
             </div>
 
-            {/* What you said */}
-            {(feedback.transcribed || feedback.transcribed_text) && (
-              <div className="bg-slate-50 p-3 rounded-lg border">
-                <p className="text-xs text-slate-500 mb-1">You said:</p>
-                <p className="text-slate-700 font-medium">
-                  "{typeof feedback.transcribed === 'string' ? feedback.transcribed : 
-                    typeof feedback.transcribed_text === 'string' ? feedback.transcribed_text : 
-                    '(audio recorded)'}"
-                </p>
-              </div>
-            )}
-
             {/* Correct/Incorrect indicator for word practice */}
             {type === 'word' && (
               <div className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
@@ -328,14 +316,26 @@ export default function PronunciationRecorder({
 
             {/* Action Buttons */}
             <div className="flex gap-3 pt-2">
-              {audioUrl && (
+              {/* Play your recording */}
+              {recordedAudioURL && (
                 <Button
-                  onClick={playReferenceAudio}
+                  onClick={() => {
+                    try {
+                      if (recordedAudioRef.current) {
+                        recordedAudioRef.current.play().catch(err => {
+                          console.log('Audio play error:', err);
+                          toast.error('Could not play recording');
+                        });
+                      }
+                    } catch (err) {
+                      console.log('Play error:', err);
+                    }
+                  }}
                   variant="outline"
                   className="flex-1"
                 >
-                  <Volume2 className="w-4 h-4 mr-2" />
-                  Listen Again
+                  <Play className="w-4 h-4 mr-2" />
+                  Play Recording
                 </Button>
               )}
               
@@ -354,29 +354,6 @@ export default function PronunciationRecorder({
               )}
             </div>
 
-            {/* Play your recording */}
-            {recordedAudioURL && (
-              <Button
-                onClick={() => {
-                  try {
-                    if (recordedAudioRef.current) {
-                      recordedAudioRef.current.play().catch(err => {
-                        console.log('Audio play error:', err);
-                        toast.error('Could not play recording');
-                      });
-                    }
-                  } catch (err) {
-                    console.log('Play error:', err);
-                  }
-                }}
-                variant="ghost"
-                size="sm"
-                className="w-full text-slate-500"
-              >
-                <Play className="w-4 h-4 mr-2" />
-                Play your recording
-              </Button>
-            )}
             {recordedAudioURL && <audio ref={recordedAudioRef} src={recordedAudioURL} />}
           </div>
         )}
