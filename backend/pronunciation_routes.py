@@ -1,9 +1,10 @@
 """
-PRONUNCIATION EVALUATION MODULE - AZURE SPEECH INTEGRATION
+PRONUNCIATION EVALUATION MODULE - COMPLETE 3-LAYER SYSTEM
 Professional pronunciation assessment using Azure Cognitive Services Speech SDK.
 
-Layer A: Audio Quality Gate (basic validation)
-Layer B: Azure Speech Pronunciation Assessment (professional scoring)
+Layer A: Audio Quality Gate (basic validation - blob size, duration)
+Layer B: Content Gate (Whisper STT verification - confirms user said the right word)  
+Layer C: Azure Speech Pronunciation Assessment (professional scoring with phoneme details)
 
 Output schema is consistent across all lesson types.
 """
