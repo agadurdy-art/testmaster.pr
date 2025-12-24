@@ -427,7 +427,7 @@ async def get_phonics_lesson_detail(lesson_key: str):
 async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
     """
     Fast and accurate single word pronunciation check.
-    Optimized for speed - simple matching, quick response.
+    Fixed: Properly extract text from Whisper response object.
     """
     import re
     
@@ -460,9 +460,42 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
                     model="whisper-1",
                     response_format="text"
                 ),
-                timeout=10.0  # 10 second timeout
+                timeout=10.0
             )
-            transcribed = str(transcription_result).strip() if transcription_result else ""
+            
+            # Properly extract text from response
+            # The response might be a TranscriptionResponse object or a string
+            if transcription_result:
+                if hasattr(transcription_result, 'text'):
+                    # It's a response object with text attribute
+                    transcribed = transcription_result.text
+                elif isinstance(transcription_result, dict) and 'text' in transcription_result:
+                    # It's a dict with text key
+                    transcribed = transcription_result['text']
+                elif isinstance(transcription_result, str):
+                    # It's already a string - check if it contains 'text' from object repr
+                    if 'text' in transcription_result and 'TranscriptionResponse' in transcription_result:
+                        # Parse the text from the repr string
+                        import re as regex
+                        text_match = regex.search(r"text['\"]?\s*[:=]\s*['\"]([^'\"]+)['\"]", transcription_result)
+                        if text_match:
+                            transcribed = text_match.group(1)
+                        else:
+                            # Try another pattern - look for actual spoken text
+                            # The repr shows: text=' head' or text=" head"
+                            text_match2 = regex.search(r"text\s*=\s*['\"](.+?)['\"]", transcription_result)
+                            if text_match2:
+                                transcribed = text_match2.group(1)
+                            else:
+                                transcribed = ""
+                    else:
+                        transcribed = transcription_result
+                else:
+                    transcribed = str(transcription_result)
+            
+            transcribed = transcribed.strip() if transcribed else ""
+            print(f"[Pronunciation] Raw transcription: '{transcribed}'")
+            
         except asyncio.TimeoutError:
             print("[Pronunciation] Timeout")
             return {
@@ -504,35 +537,63 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
         
         print(f"[Pronunciation] Target: '{target}', Heard: '{spoken_first}' (full: '{spoken}')")
         
-        # Simple scoring
+        # More lenient scoring for similar sounding words
+        # Common Whisper mishears:
+        # - "eye" → "ice", "i", "aye"
+        # - "hair" → "here", "hare", "yeah", "air"
+        # - "mouth" → "mouse", "math"
+        # - "face" → "phase", "faith"
+        SIMILAR_SOUNDS = {
+            "eye": ["i", "ice", "aye", "ai"],
+            "hair": ["here", "hare", "air", "yeah", "her", "hear"],
+            "ear": ["here", "year", "air", "e"],
+            "mouth": ["mouse", "math", "moth"],
+            "face": ["phase", "faith", "bass", "base"],
+            "nose": ["knows", "nos", "no"],
+            "head": ["had", "ed", "hid", "bed"],
+            "hand": ["and", "had", "hound"],
+            "arm": ["om", "am"],
+            "leg": ["lake", "lag", "lack"],
+            "foot": ["food", "put", "full"],
+            "toe": ["tow", "to", "though"],
+            "finger": ["figure"],
+            "thumb": ["some", "sum", "come"],
+        }
+        
+        # Check for exact match first
         if spoken_first == target:
-            # Exact match
             score = 100
             correct = True
             feedback = "Perfect! 🎉"
         elif target in spoken.split():
-            # Target word found in what was said
-            score = 90
+            # Target word found somewhere in what was said
+            score = 95
             correct = True
-            feedback = "Great job!"
+            feedback = "Excellent!"
+        elif target in SIMILAR_SOUNDS and spoken_first in SIMILAR_SOUNDS[target]:
+            # Whisper commonly mishears this word, but it sounds similar
+            score = 85
+            correct = True
+            feedback = "Very good!"
         elif spoken_first and target:
-            # Check similarity
-            # Count matching characters
+            # Check character similarity
             matches = sum(1 for a, b in zip(spoken_first, target) if a == b)
             max_len = max(len(spoken_first), len(target))
             similarity = matches / max_len if max_len > 0 else 0
             
             # First letter match bonus
             first_match = spoken_first[0] == target[0] if spoken_first and target else False
+            # Last letter match bonus
+            last_match = spoken_first[-1] == target[-1] if spoken_first and target else False
             
-            if similarity >= 0.8:
+            if similarity >= 0.75 or (first_match and last_match and len(target) <= 5):
                 score = 85
                 correct = True
-                feedback = "Very close!"
-            elif similarity >= 0.6 or first_match:
-                score = 60
+                feedback = "Great job!"
+            elif similarity >= 0.5 or first_match:
+                score = 65
                 correct = False
-                feedback = "Almost! Try again."
+                feedback = "Close! Try again."
             else:
                 score = 30
                 correct = False
