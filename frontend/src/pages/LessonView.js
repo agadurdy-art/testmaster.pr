@@ -126,9 +126,19 @@ export default function LessonView({ user }) {
                 <h1 className="text-xl sm:text-2xl font-bold">{lesson.title}</h1>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Clock className="w-4 h-4" />
-              {lesson.duration_minutes} min
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-white hover:bg-white/20"
+                onClick={() => navigate('/dashboard')}
+              >
+                Dashboard
+              </Button>
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="w-4 h-4" />
+                {lesson.duration_minutes} min
+              </div>
             </div>
           </div>
         </div>
