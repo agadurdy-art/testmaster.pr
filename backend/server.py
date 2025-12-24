@@ -287,6 +287,14 @@ Your task:
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
+# Import learning platform routes
+try:
+    from learning_platform_routes import router as learning_platform_router
+    app.include_router(learning_platform_router)
+    print("✅ Learning platform routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load learning platform routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
