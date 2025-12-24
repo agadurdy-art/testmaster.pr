@@ -502,20 +502,26 @@ export default function PronunciationRecorder({
 
         {/* Recording Button - Only show when not showing results */}
         {!showResult && (
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center">
             {state === STATES.RECORDING ? (
-              <Button
-                onClick={stopRecording}
-                className="w-24 h-24 rounded-full bg-slate-700 hover:bg-slate-800 flex flex-col items-center justify-center gap-1 animate-pulse"
-              >
-                <Square className="w-8 h-8 text-white" />
-                <span className="text-xs text-white">Stop</span>
-              </Button>
+              <>
+                <div className="mb-2 text-red-600 font-semibold animate-pulse flex items-center gap-2">
+                  <span className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></span>
+                  Recording... Speak now!
+                </div>
+                <Button
+                  onClick={stopRecording}
+                  className="w-28 h-28 rounded-full bg-red-600 hover:bg-red-700 flex flex-col items-center justify-center gap-1 animate-pulse shadow-lg shadow-red-300"
+                >
+                  <Square className="w-10 h-10 text-white" />
+                  <span className="text-sm text-white font-semibold">STOP</span>
+                </Button>
+              </>
             ) : state === STATES.VALIDATING || state === STATES.UPLOADING || state === STATES.ANALYZING ? (
               <div className="w-24 h-24 rounded-full bg-violet-100 flex flex-col items-center justify-center gap-2">
                 <Loader2 className="w-8 h-8 text-violet-600 animate-spin" />
                 <span className="text-xs text-violet-600">
-                  {state === STATES.ANALYZING ? 'Analyzing...' : 'Processing...'}
+                  {state === STATES.ANALYZING ? 'Analyzing...' : 'Preparing...'}
                 </span>
               </div>
             ) : (
