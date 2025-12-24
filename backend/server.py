@@ -295,12 +295,16 @@ class User(BaseModel):
     email: str
     name: str
     password_hash: Optional[str] = None
-    verified: bool = True
+    verified: bool = False  # Changed default to False for new users
+    email_verified: bool = False  # New field for clarity
     google_id: Optional[str] = None
     facebook_id: Optional[str] = None
     plan: str = Field(default="free", description="Subscription plan: free or pro")
     examCredits: int = Field(default=0, description="Number of AI speaking exam credits")
     ai_interview_free_seconds_used: int = Field(default=0, description="Total free AI interviewer seconds used")
+    ai_mentor_messages_used: int = Field(default=0, description="AI mentor messages used (limit 3 for unverified)")
+    verification_sent_at: Optional[str] = None
+    last_resend_at: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     test_history: List[str] = Field(default_factory=list)
 
