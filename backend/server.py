@@ -1037,37 +1037,89 @@ async def facebook_login(payload: FacebookLoginRequest):
 
 @api_router.post("/auth/login", response_model=User)
 async def login_user(input: UserLogin):
-    user = await db.users.find_one({"email": input.email}, {"_id": 0})
+    """Login user - allows both verified and unverified users to login."""
+    user = await db.users.find_one({"email": input.email.strip().lower()}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     if not verify_password(input.password, user.get("password_hash") or ""):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    # If user has a verified flag and it's False, block login and (re)send verification link
-    if user.get("verified") is False:
-        token = generate_reset_token()
-        expires_at = datetime.now(timezone.utc) + timedelta(hours=24)
-        await db.email_verifications.insert_one(
-            {
-                "email": input.email.strip().lower(),
-                "token": token,
-                "expires_at": expires_at.isoformat(),
-            }
-        )
-        frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
-        verify_link = f"{frontend_base}/verify-email?token={token}"
-        send_reset_email(input.email, verify_link)
-        raise HTTPException(
-            status_code=403,
-            detail="Please verify your email. We have sent a new verification link.",
-        )
-
-    # Remove password_hash before returning
+    # NEW FLOW: Allow unverified users to login with limited access
+    # Don't block login - frontend will handle feature restrictions
+    
+    # Remove sensitive fields before returning
     user.pop("password_hash", None)
+    user.pop("verification_token", None)
+    
     if isinstance(user.get('created_at'), str):
         user['created_at'] = datetime.fromisoformat(user['created_at'])
+    
     return User(**user)
+
+
+class ResendVerificationRequest(BaseModel):
+    email: str
+
+
+@api_router.post("/auth/resend-verification")
+async def resend_verification_email(input: ResendVerificationRequest):
+    """Resend verification email with rate limiting (60 seconds cooldown)."""
+    email = input.email.strip().lower()
+    user = await db.users.find_one({"email": email}, {"_id": 0})
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Check if already verified
+    if user.get("verified") or user.get("email_verified"):
+        return {"message": "Email is already verified", "already_verified": True}
+    
+    # Rate limiting: check last_resend_at
+    last_resend = user.get("last_resend_at")
+    if last_resend:
+        if isinstance(last_resend, str):
+            last_resend = datetime.fromisoformat(last_resend)
+        
+        cooldown_seconds = 60
+        time_since_last = (datetime.now(timezone.utc) - last_resend.replace(tzinfo=timezone.utc)).total_seconds()
+        
+        if time_since_last < cooldown_seconds:
+            wait_time = int(cooldown_seconds - time_since_last)
+            raise HTTPException(
+                status_code=429, 
+                detail=f"Please wait {wait_time} seconds before requesting another email"
+            )
+    
+    # Generate new verification token
+    now = datetime.now(timezone.utc)
+    verification_token = generate_reset_token()
+    verification_expires_at = now + timedelta(hours=24)
+    
+    # Update user with new token
+    await db.users.update_one(
+        {"email": email},
+        {
+            "$set": {
+                "verification_token": verification_token,
+                "verification_sent_at": now.isoformat(),
+                "verification_expires_at": verification_expires_at.isoformat(),
+                "last_resend_at": now.isoformat()
+            }
+        }
+    )
+    
+    # Send verification email
+    frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
+    verify_link = f"{frontend_base}/verify-email?token={verification_token}"
+    
+    email_sent = send_verification_email(email, verify_link, user.get("name", "there"))
+    
+    if email_sent:
+        return {"message": "Verification email sent! Check your inbox and spam folder.", "sent": True}
+    else:
+        return {"message": "Email service temporarily unavailable. Please try again later.", "sent": False}
+
 
 @api_router.get("/users/{user_id}", response_model=User)
 async def get_user(user_id: str):
