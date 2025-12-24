@@ -45,8 +45,13 @@ export default function UnitDetail({ user }) {
   };
 
   const isLessonUnlocked = (lesson) => {
-    // First lesson is always unlocked if unit is unlocked
-    if (lesson.lesson_number === 1) return unit?.user_progress?.is_unlocked || false;
+    // First lesson is always unlocked (Unit 1's first lesson should always be accessible)
+    // Also unlock if the unit itself is marked as unlocked in user progress
+    if (lesson.lesson_number === 1) {
+      // For unit 1, first lesson is always unlocked
+      // For other units, check if the unit is unlocked
+      return unit.unit_number === 1 || unit?.user_progress?.is_unlocked || false;
+    }
     
     // Check if previous lesson is completed
     const prevLesson = unit.lessons.find(l => l.lesson_number === lesson.lesson_number - 1);
