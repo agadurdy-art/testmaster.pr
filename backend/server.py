@@ -2966,16 +2966,96 @@ async def start_adaptive_test(request: InitialAssessmentRequest):
     """Get starting questions based on user's self-assessment"""
     starting_level = determine_starting_level(request.experience_level)
     
-    # Get first set of reading questions
+    # Get questions for the starting level - START WITH 5 QUESTIONS
     reading_questions = get_adaptive_questions(starting_level, "reading")
+    
+    # Select appropriate writing and speaking prompts
+    writing_prompts = WRITING_PROMPTS.get(starting_level, {}).get("prompts", [])
+    speaking_prompts = SPEAKING_PROMPTS.get(starting_level, [])
+    
+    # Select one writing prompt randomly
+    import random
+    selected_writing = random.choice(writing_prompts) if writing_prompts else {
+        "id": "default",
+        "prompt": "Write about your typical day. (50-100 words)",
+        "min_words": 50,
+        "max_words": 100
+    }
+    
+    # Select 3 speaking prompts
+    selected_speaking = random.sample(speaking_prompts, min(3, len(speaking_prompts))) if speaking_prompts else [
+        {"id": "s_default_1", "question": "Tell me about yourself."},
+        {"id": "s_default_2", "question": "What do you like to do in your free time?"},
+        {"id": "s_default_3", "question": "Describe a place you like to visit."}
+    ]
     
     return {
         "starting_level": starting_level,
-        "reading_questions": reading_questions[:3] if reading_questions else [],
+        "reading_questions": reading_questions[:5] if reading_questions else [],  # First 5 questions
+        "writing_prompt": selected_writing,
+        "speaking_prompts": selected_speaking,
         "instructions": {
-            "reading": "Answer these questions. We'll adapt the difficulty based on your performance.",
-            "time_limit": "No strict time limit, but try to answer within 15-20 minutes"
+            "reading": f"You'll start with {starting_level} level questions. Answer carefully - difficulty will adapt based on your performance.",
+            "total_reading_questions": "8-12 questions (adapts to your level)",
+            "time_estimate": "15-25 minutes total"
         }
+    }
+
+@api_router.post("/adaptive-level-test/next-questions")
+async def get_next_adaptive_questions(
+    current_level: str,
+    recent_answers: dict,
+    questions_so_far: int
+):
+    """
+    Get next set of questions based on performance
+    Called after user completes a batch of questions
+    """
+    # Calculate accuracy on recent questions
+    correct_count = sum(1 for ans in recent_answers.values() if ans.get("correct", False))
+    total = len(recent_answers)
+    accuracy = correct_count / total if total > 0 else 0
+    
+    # Determine next level based on adaptive rules
+    level_order = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6}
+    current_level_num = level_order.get(current_level, 2)
+    
+    next_level = current_level
+    
+    if accuracy >= 0.70 and current_level_num < 6:  # 70%+ correct → level up
+        next_level_num = current_level_num + 1
+        next_level = [k for k, v in level_order.items() if v == next_level_num][0]
+    elif accuracy < 0.50 and current_level_num > 1:  # <50% correct → level down
+        next_level_num = current_level_num - 1
+        next_level = [k for k, v in level_order.items() if v == next_level_num][0]
+    
+    # Stop if we've asked enough questions (8-12 range)
+    if questions_so_far >= 12:
+        return {
+            "continue": False,
+            "message": "Assessment complete. Proceeding to speaking section.",
+            "final_level": next_level
+        }
+    
+    if questions_so_far >= 8 and accuracy >= 0.70:
+        # Can stop early if performing well
+        return {
+            "continue": False,
+            "message": "Strong performance detected. Moving to next section.",
+            "final_level": next_level
+        }
+    
+    # Get more questions at the next level
+    next_questions = get_adaptive_questions(next_level, "reading")
+    
+    # Determine how many more questions to ask
+    remaining = min(5, 12 - questions_so_far)
+    
+    return {
+        "continue": True,
+        "next_level": next_level,
+        "questions": next_questions[:remaining] if next_questions else [],
+        "progress": f"{questions_so_far} of 8-12 completed"
     }
 
 @api_router.post("/adaptive-level-test/evaluate")
