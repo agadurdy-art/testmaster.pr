@@ -400,19 +400,16 @@ export default function PronunciationRecorder({
             )}
           </div>
           
-          {referenceAudioUrl && (
-            <>
-              <audio ref={referenceAudioRef} src={referenceAudioUrl} />
-              <Button
-                onClick={playReferenceAudio}
-                variant="ghost"
-                size="sm"
-                className="text-white hover:bg-white/20"
-              >
-                <Volume2 className="w-5 h-5" />
-              </Button>
-            </>
-          )}
+          {/* Listen button - always show for words */}
+          <Button
+            onClick={() => speakWord(displayWord)}
+            variant="ghost"
+            size="sm"
+            className="text-white hover:bg-white/20"
+            title="Listen to pronunciation"
+          >
+            <Volume2 className="w-5 h-5" />
+          </Button>
         </div>
       </div>
 
@@ -425,6 +422,21 @@ export default function PronunciationRecorder({
             className="w-32 h-32 object-cover rounded-lg shadow-md"
             onError={(e) => { e.target.style.display = 'none'; }}
           />
+        </div>
+      )}
+
+      {/* Listen and Repeat instruction */}
+      {!showResult && state === STATES.IDLE && (
+        <div className="px-6 pt-4">
+          <Button
+            onClick={() => speakWord(displayWord)}
+            variant="outline"
+            className="w-full mb-2 text-violet-600 border-violet-300 hover:bg-violet-50"
+          >
+            <Volume2 className="w-4 h-4 mr-2" />
+            Listen First
+          </Button>
+          <p className="text-center text-sm text-slate-500">Then record yourself saying it</p>
         </div>
       )}
 
