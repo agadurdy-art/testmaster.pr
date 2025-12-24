@@ -28,7 +28,6 @@ export default function PronunciationRecorder({
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const referenceAudioRef = useRef(null);
-  const recordedAudioRef = useRef(null);
 
   useEffect(() => {
     return () => {
