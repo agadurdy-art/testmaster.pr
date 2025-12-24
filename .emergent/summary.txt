@@ -1,95 +1,104 @@
 <analysis>**original_problem_statement:**
-The user initiated this session with several requests and bug reports. The primary goals for this session were:
+The user's primary goal is to transform the application into a comprehensive English learning platform, following a detailed MASTER INSTRUCTION prompt that specifies a full pathway from Cambridge YLE to IELTS.
+
+The session started with these carry-over goals:
 1.  **Critical Bug**: Fix a test submission failed error.
 2.  **New Feature**: Implement a new, comprehensive free level test.
 3.  **UI/UX Improvements**: Fix scoring, question order, add multilingual support, progressive loading, improve transcription, add a language switcher, enhance the reading test UI, fix result page button redirects, and add a Contact for support link.
-
-During the session, the user added the following requests:
-1.  **JUST COMPLETE LEVEL TEST RESULTS BUTTON ISSUE ONLY**: Prioritize fixing the redirect buttons on the level test result page.
-2.  **CONTACT SUPPORT**: Implement the Contact for support email link functionality.
-3.  **Remove Duplicate Component**: Remove a redundant Skill breakdown section from the test results page.
-4.  **Enforce English in Speaking Test**: Prevent the speech-to-text from accepting and translating other languages (like Turkish) into English.
+4.  **Auth System**: Complete the new authentication system with feature-gating for unverified users and password confirmation.
 5.  **Deployment Discrepancy**: Fix an issue where question numbers (e.g., Q21-22) are shown correctly combined in preview but separately after deployment.
-6.  **AUTHENTICATION SYSTEM DESIGN**: A major request to overhaul the entire authentication system to allow users to sign up and log in immediately with limited access, requiring email verification to unlock all features.
-7.  **Add Password Confirmation**: Enhance the signup form with a confirm password field and a show/hide password toggle.
+
+During this session, the user provided a master specification for building a full learning platform and prioritized the implementation of a new, truly comprehensive and adaptive level test as the first major step. The user also reported a critical bug where the test evaluation was too lenient and provided incorrect feedback.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is an IELTS exam preparation platform. The agent has just completed a major overhaul of the authentication system. Users can now sign up and are logged in immediately with an unverified status, giving them limited access to the platform. The backend supports creating users with a  status, sending verification emails via SendGrid, and handling verification link clicks.
+The agent has successfully implemented a new, comprehensive, and adaptive level test that replaces the old one. This new system features a massive, structured question bank () spanning multiple CEFR levels (A1-C2). It includes new backend logic () for adaptive question delivery and a significantly stricter AI-based evaluation for reading, writing, and speaking.
 
-On the frontend, a Confirm Password field with a show/hide toggle has been added to the signup form. A  component has been created and integrated into the  to prompt unverified users to check their email. The user registration and login flows have been updated to support this new immediate-access model.
+On the frontend, a new  component has been created to run the test, and a banner on the  page directs users to this new feature.
 
-Additionally, several user-requested fixes have been completed: the level test result buttons now correctly redirect to the homepage to open the auth modal, Contact Support  links have been added to the landing, pricing, and dashboard pages, a duplicate UI component on the results page was removed, and the speaking test transcription now attempts to detect and reject non-English audio.
+Crucially, the agent has fixed a critical bug where the evaluation logic was too lenient. The system now correctly assigns very low scores for irrelevant, skipped, or nonsensical answers, providing more accurate feedback.
 
 **Last working item**:
-- **Last item agent was working**: Adding a Confirm Password field and a show/hide password toggle to the signup form on the .
-- **Status**: USER VERIFICATION PENDING
-- **Agent Testing Done**: Y
-- **Which testing method agent to use?**: manual testing by curl
+- **Last item agent was working**: Implementing the full-scale learning platform based on the user's detailed MASTER INSTRUCTION prompt. The agent created the comprehensive data structure and question bank () and integrated it with the backend.
+- **Status**: IN PROGRESS
+- **Agent Testing Done**: N
+- **Which testing method agent to use?**: both
 - **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
 -   **Issue 1 (P0)**: Deployed version shows separate questions (Q21, Q22) while the preview correctly shows them combined (Q21-22).
--   **Issue 2 (P1)**: Inaccurate speech-to-text transcription for English audio.
--   **Issue 3 (P2)**: Reading test UI is broken for passages 2 and 3.
--   **Issue 4 (P3)**: Linting errors persist in the codebase.
+-   **Issue 2 (P1)**: The new adaptive test evaluation, while stricter, needs detailed testing and potential fine-tuning by the user.
+-   **Issue 3 (P2)**: Inaccurate speech-to-text transcription for English audio.
+-   **Issue 4 (P3)**: Reading test UI is broken for passages 2 and 3.
+-   **Issue 5 (P4)**: Linting errors persist in the codebase.
 
 **Issues Detail:**
 - **Issue 1: Deployed version shows separate questions**
-    - **Description**: The user reported a discrepancy where a fix for combining question numbers works in the preview environment but not in the deployed production version.
-    - **Attempted fixes**: The agent ran the , which confirmed the code was deployable. The agent concluded it's a synchronization issue and the user needs to redeploy the application.
-    - **Next debug checklist**:
-        1.  Confirm with the user if they have redeployed the application.
-        2.  If the issue persists after redeployment, investigate potential caching issues or environment variable differences between preview and production.
-    - **Why fix this issue and what will be achieved with the fix?**: Ensures a consistent user experience between preview and production environments and correctly displays test questions as intended.
-    - **Status**: BLOCKED (Waiting on user action/confirmation)
+    - **Attempted fixes**: The agent investigated thoroughly and concluded the issue is not with the code but with stale data in the production database. The agent created a markdown file  and a script  explaining the problem and providing the solution for the user to run on their production environment.
+    - **Next debug checklist**: Await user confirmation that they have run the provided fix on their production database. Do not attempt to debug the code further for this issue.
+    - **Why fix this issue and what will be achieved with the fix?**: Ensures a consistent user experience between preview and production environments.
+    - **Status**: BLOCKED
     - **Is recurring issue?**: N
     - **Should Test frontend/backend/both after fix?**: Frontend
+    - **Blocked on other issue**: User action required.
+- **Issue 2: New adaptive test evaluation needs user testing**
+    - **Attempted fixes**: The agent made the evaluation prompts for the AI much stricter to handle irrelevant or empty answers, which fixed the immediate bug of getting good scores for bad input.
+    - **Next debug checklist**: The user needs to perform detailed tests to verify if the evaluation quality and strictness meet their standards. Be prepared to educate AI evaluator for detailed feedback as requested by the user.
+    - **Why fix this issue and what will be achieved with the fix?**: Ensures the core feature of the platform provides accurate and reliable feedback.
+    - **Status**: USER VERIFICATION PENDING
+    - **Is recurring issue?**: N
+    - **Should Test frontend/backend/both after fix?**: Both
     - **Blocked on other issue**: None.
-- **Issue 2: Inaccurate speech-to-text transcription.**
-    - **Description**: User reported that the transcription service captures only a small fraction of spoken English, leading to incorrect AI evaluation.
-    - **Attempted fixes**: The agent added a backend check to reject non-English audio. However, the root cause of poor accuracy for English speech has not been addressed. The previous agent had tried adjusting .
+- **Issue 3: Inaccurate speech-to-text transcription.**
+    - **Description**: User reported that the transcription service captures only a small fraction of spoken English. This was not addressed in the current session.
     - **Next debug checklist**:
-        1.  Review the  and  events in  to check audio chunk collection.
-        2.  Log the size of the audio blob being sent from the frontend and received by the backend to identify potential truncation.
-        3.  Consider increasing the recording time or testing with different audio formats/settings in the  API.
-    - **Why fix this issue and what will be achieved with the fix?**: Accurate transcription is critical for the speaking evaluation feature to function correctly.
-    - **Status**: IN PROGRESS
+        1.  Review  and  events in  to check audio chunk collection.
+        2.  Log the size and format of the audio blob being sent to the backend.
+        3.  Consider testing alternative audio formats or bitrates in the  API.
+    - **Why fix this issue and what will be achieved with the fix?**: Accurate transcription is critical for the speaking evaluation feature.
+    - **Status**: NOT STARTED
     - **Is recurring issue?**: Y
     - **Should Test frontend/backend/both after fix?**: Both
     - **Blocked on other issue**: None.
-- **Issue 3: Reading test UI is broken for passages 2 and 3.**
-    - **Description**: After a database migration attempt, Passages 2 and 3 of Academic Reading Practice Test 1 are not displaying any content.
-    - **Attempted fixes**: A previous agent tried to restore data and add backward compatibility, but it was unsuccessful. No new fixes were attempted in this session.
+- **Issue 4: Reading test UI is broken for passages 2 and 3.**
+    - **Description**: Passages 2 and 3 of Academic Reading Practice Test 1 are not displaying content. This was not addressed in the current session.
     - **Next debug checklist**:
-        1.  Write and run a backend script to query the  collection for Academic Reading Practice Test 1 and inspect the content of all three passages.
-        2.  Ensure all passage documents contain the  field as an array of strings.
-        3.  Inspect  to confirm it correctly maps and renders the  array.
-    - **Why fix this issue and what will be achieved with the fix?**: This is a critical bug that makes the primary reading test unusable.
+        1.  Write a script to query the  collection for Academic Reading Practice Test 1 and inspect the content of all passages.
+        2.  Inspect  to confirm it correctly renders the passage content.
+    - **Why fix this issue and what will be achieved with the fix?**: Fixes a critical bug making a primary test unusable.
     - **Status**: NOT STARTED
     - **Is recurring issue?**: N
     - **Should Test frontend/backend/both after fix?**: Frontend
     - **Blocked on other issue**: None.
 
 **In progress Task List**:
-- **Task 1: Implement feature-gating for unverified users.**
-    - **Description**: The new authentication system allows unverified users to log in, but the logic to actually restrict their access to premium content (lessons beyond the first, full practice tests, etc.) has not been implemented.
+- **Task 1: Implement the full Cambridge YLE -> CEFR -> IELTS learning platform (P0)**
+    - **Description**: This is the primary ongoing task based on the user's MASTER INSTRUCTION. It involves building out the full course structure with units, lessons, quizzes, and progression logic.
     - **Where to resume**:
-        1.  Create a higher-order component (e.g., ) or use a context provider to manage and distribute the user's verification status.
-        2.  In components that render premium content (e.g., , ), check the  status.
-        3.  If the user is not verified, either disable the content (e.g., show a lock icon) or render a modal prompting them to verify their email.
-    - **What will be achieved with this?**: Completes the new authentication flow by creating the incentive for users to verify their emails.
+        1.  The database schema and a large question bank are defined in the user prompt and implemented conceptually in .
+        2.  Flesh out the backend models and API endpoints for , , , and .
+        3.  Implement the progression logic (e.g., unlocking units/levels after passing quizzes/exit tests).
+        4.  Build the frontend UI to display the course structure, lessons, and user progress.
+    - **What will be achieved with this?**: The application will evolve from a test platform into a full-featured learning management system.
+    - **Status**: IN PROGRESS
+    - **Should Test frontend/backend/both after fix?**: Both
+    - **Blocked on something**: None.
+- **Task 2: Implement feature-gating for unverified users (P1)**
+    - **Description**: The logic to restrict unverified users from accessing premium content is still missing.
+    - **Where to resume**: Create a HOC or use a context to check  status and conditionally render or block access to premium courses/lessons.
+    - **What will be achieved with this?**: Completes the new authentication flow.
     - **Status**: NOT STARTED
     - **Should Test frontend/backend/both after fix?**: Frontend
     - **Blocked on something**: None.
 
 **Upcoming and Future Tasks**
 - **Upcoming Tasks:**
-    - **(P0)** Perform full End-to-End (E2E) testing of the new authentication flow (sign up, get blocked from premium content, verify email, gain full access).
-    - **(P1)** Complete the Academic Reading Test UI overhaul to match the real IELTS exam format.
-    - **(P2)** Add a top navigation bar with quick-jump numbers (1-40) for Reading and Listening tests.
-    - **(P3)** Integrate the  endpoint into the frontend to provide a What to study next diagnosis.
+    - **(P0)** Perform full End-to-End (E2E) testing of the new authentication flow.
+    - **(P1)** Add multilingual support (Vietnamese, Turkish) for feedback in the new adaptive test (currently skipped).
+    - **(P2)** Overhaul the Academic Reading Test UI to match the real IELTS exam format.
+    - **(P3)** Add a top navigation bar with quick-jump numbers (1-40) for Reading and Listening tests.
+    - **(P4)** Integrate the  endpoint into the frontend to provide a What to study next diagnosis.
 - **Future Tasks:**
     - Fix failing PayPal webhooks.
     - Address SendGrid emails going to spam.
@@ -99,21 +108,22 @@ Additionally, several user-requested fixes have been completed: the level test r
     - Enhance the Dashboard to show richer performance summaries.
 
 **Completed work in this session**
-- **Authentication System Redesign (Phase 1)**:
-  - Backend now allows immediate login for unverified users ().
-  - New database fields added to  model for verification status and tokens ().
-  - Implemented backend logic for sending verification emails and resending them with rate limiting ().
-  - Created a frontend  component for the dashboard (, ).
-- **Signup Form Enhancement**:
-  - Added a Confirm Password field with validation ().
-  - Added a show/hide password toggle (eye icon) to both password fields ().
-- **Level Test Redirect Fix**: Fixed buttons on  to redirect to the landing page, which now opens the auth modal based on URL query parameters.
-- **Contact for Support Feature**: Added  links to the , , and confirmed functionality in .
-- **UI Cleanup**: Removed a duplicate Skill Breakdown component from the  page.
-- **Speech-to-Text Enhancement**: Added a backend check to detect the audio language and reject non-English submissions in the speaking test ().
+- **New Comprehensive Adaptive Level Test**:
+  - Designed and implemented a new adaptive level test system from the ground up.
+  - Created a massive, structured question bank in .
+  - Developed new backend logic for adaptive testing and evaluation in .
+  - Integrated new endpoints into .
+  - Built a new frontend component  to render the test.
+  - Added a NEW banner to  to direct users.
+- **Critical Bug Fix: Lenient Evaluation**:
+  - Rewrote the AI evaluation prompts in  to be much stricter.
+  - The system now correctly assigns low scores (e.g., Band 2.0) for skipped questions, irrelevant answers, or very short responses, ensuring accurate feedback.
+- **Deployment Issue Investigation**:
+  - Investigated the Q21-22 display issue, correctly identifying it as a production database data inconsistency, not a code bug.
+  - Provided the user with a markdown guide () and a fix script to resolve the issue on their end.
 
 **Earlier issues found/mentioned but not fixed**
-- The original Level Test Agent on the landing page is not visible. This is likely obsolete but should be confirmed with the user.
+-   The original Level Test Agent on the landing page is not visible. This is likely obsolete but should be confirmed with the user.
 
 **Known issue recurrence from previous fork**
 - **Issue recurrence in previous fork**: Linting Errors.
@@ -124,64 +134,75 @@ Additionally, several user-requested fixes have been completed: the level test r
 
 
 **Key Technical Concepts**
-- **Immediate-Login Authentication**: Users are created and logged in with , restricting access until they click a verification link sent via email. This encourages signup while pushing for verification.
-- **Backend Rate Limiting**: The  endpoint uses a timestamp () to prevent users from spamming the email service.
-- **Client-Side Navigation with Query Parameters**: Redirecting from one page () to another () and using URL query parameters () to trigger a specific UI state (opening an auth modal) on the destination page.
-- **Conditional UI Rendering**: The signup form conditionally disables the submit button and shows error/success messages based on password match state. The  conditionally renders the .
+- **Adaptive Testing**: The core concept implemented. The test serves questions from different difficulty levels (A1-C2) based on user performance.
+- **Stricter AI Evaluation**: Modified LLM prompts to be highly critical of low-quality input (irrelevant, too short, empty) to prevent inflated scores and provide realistic feedback.
+- **Modular Backend Design**: The new feature was built in separate files (, ) and imported into  to keep the main server file cleaner.
+- **Database Seeding & Migration**: The agent correctly diagnosed that code deployment does not update database content. It used seeding and created a specific migration script to address data inconsistencies between environments.
+- **Full Platform Specification**: The user provided a detailed, professional-grade specification for a complete learning platform, which is now the guiding document for all future development.
 
 **key DB schema**
--  collection updated with new fields:
-  -  (default: )
-  - 
-  - 
-  - 
+The user has provided a comprehensive and detailed schema for the future platform, covering levels, courses, units, lessons, questions, and user mastery. This schema, present in the user's MASTER INSTRUCTION prompt, should be used as the blueprint for building the new features.
 
 **changes in tech stack**
-- No changes to the core stack. Heavier reliance on **SendGrid** for the new authentication email flow.
+- No changes to the core stack.
 
 **All files of reference**
-- 
-- 
-- 
-- 
-- 
-- 
-- 
+-  (The new source of truth for test questions)
+-  (The logic for the new test)
+-  (The UI for the new test)
+-  (Integrates the new routes)
+-  (Links to the new test)
+-  (Explanation for the user on a production issue)
+
+**Areas that need refactoring**:
+- The old  file was backed up, and its route in  was commented out. These should be cleaned up and removed to avoid confusion.
+- The entire application will need significant structural refactoring to accommodate the new platform design (e.g., creating dedicated directories for models, routes, services, etc., as per standard FastAPI and React best practices).
+
+**key api endpoints**
+- : To begin the new adaptive test.
+- : To submit answers and get a comprehensive evaluation.
 
 **Critical Info for New Agent**
-- **Top Priority**: Implement the feature-gating for the new authentication system. The backend and UI are partially ready, but the logic that actually blocks unverified users from accessing premium content is missing. This is a critical step to complete the feature.
-- **User Confirmation Needed**: Check with the user if they have redeployed the application. Do not debug the Q21-22 display issue until confirming a redeploy didn't fix it.
-- **Remaining Bugs**: The critical bugs from the previous session still need attention: inaccurate speech-to-text and the broken reading test UI for passages 2 and 3.
+- **Follow the Master Plan**: Your top priority is to continue implementing the full learning platform based on the user's detailed MASTER INSTRUCTION prompt (Message 239). The groundwork (data/questions) is laid, but the application logic (courses, units, progression) needs to be built.
+- **Await User Feedback**: The user will be doing detailed testing on the new adaptive test's evaluation logic. Be prepared to receive feedback and further fine-tune the AI evaluator's strictness and feedback quality.
+- **Production DB Issue**: Do NOT try to fix the Q21-22 display issue with code. It is a production database problem. If the user asks about it, refer them to the  file.
+
+**documents and test_reports created in this job**
+- 
+- 
+- 
 
 **Last 10 User Messages and any pending HUMAN messages**
--   now we should add verify password with second password area to be sure that they entered correct password. password can be hide/show model so they can see password exactly
--   AUTHENTICATION SYSTEM DESIGN... (long detailed message)
--   in preview mode, it is how we want but after deployment it is still showing q21-22 separately
--   free level test, during speaking part, I speak in Turkish and it can trasnlateinto English and save as answer. it should accetp only English .
--   remove this Skill breakdown cause it doesn't show details. there is another one which shows details well blow newer review. so keep below answer review, remove on above oe
--   CONTACT SUPPORT
--   JUST COMPLETE LEVEL TEST RESULTS BUTTO ISSUE ONLY
--   all pages should have language switch button
--   now lets revise academic reading test 1... we need to enhance testing experience
--   1. after evaluation on landing page, start free practice and other button can not redirect me sign up page 2. about academic reading test, u can go for your own plan
+1. go ahead
+2. SYSTEM / MASTER INSTRUCTION (COPY-PASTE ALL)...
+3. Excellent! Backend is running. Now let me create a comprehensive summary document...
+4. please complete whole test progress now including all skills. then I will do detailed tests. if necessary we can educate AI evaluator for detailed feedback
+5. Perfect! Now the evaluation is working correctly... The adaptive level test now provides honest, accurate evaluation! 🎯
+6. giving feedback evaluation does not work. even I skip questions and write irrelevant things it still show me good results
+7. I've made a strong start by expanding the question banks significantly...
+8. did you complete it for last user cause it has same questions with land page level test. it should be more better. now complete full test progress.
+9. Excellent! Now let me provide a final comprehensive summary...
+10. continue
 
 **Project Health Check:**
 - **Broken**:
-    - **Reading Test UI**: Passages 2 and 3 for the main reading test are not displaying content.
+    - **Reading Test UI**: Passages 2 and 3 for the legacy reading test are still not displaying content.
 - **Incomplete**:
-    - **Authentication System**: The feature-gating part is not implemented. Unverified users can currently access all content despite the new system's intent. Full E2E testing is required.
+    - **Learning Platform**: The main task of building the full course structure is in its very early stages.
+    - **Authentication System**: Feature-gating for unverified users is not implemented.
     - **Speech-to-Text**: The core accuracy issue for English speech remains unsolved.
 - **Needs User Action**:
-    - **Deployment Sync Issue**: Awaiting user confirmation on whether a redeployment fixed the question display bug.
+    - **Deployment Sync Issue**: Awaiting user confirmation on running the production database fix for the Q21-22 display bug.
+    - **Adaptive Test Feedback**: Awaiting detailed user testing and feedback on the new evaluation system's quality.
 
 **3rd Party Integrations**
-- **OpenAI GPT-4o**: (Uses Emergent LLM Key) For level test evaluation and recommendations.
-- **OpenAI Whisper**: For speech-to-text transcription.
-- **SendGrid**: Now critical for the new email verification and resend flow.
+- **OpenAI GPT-4o**: (Uses Emergent LLM Key) Used for the core evaluation logic in the adaptive level test.
+- **OpenAI Whisper**: For speech-to-text transcription (accuracy issue pending).
+- **SendGrid**: For email verification in the auth flow.
 - **PayPal, Google Auth (Emergent-managed), Facebook Graph API**: Existing integrations.
 
 **Testing status**
-- **Testing agent used after significant changes**: YES (For backend auth endpoints and some UI fixes).
+- **Testing agent used after significant changes**: NO
 - **Troubleshoot agent used after agent stuck in loop**: NO
 - **Test files created**: []
 - **Known regressions**: Reading test UI for passages 2 & 3 remains broken.
@@ -193,5 +214,7 @@ Additionally, several user-requested fixes have been completed: the level test r
 - **New User Registration**: Use the signup form on the landing page to create a new unverified user.
 
 **What agent forgot to execute**
-- The agent did not implement the most critical part of the new authentication feature: **the actual content restriction (feature-gating)**. While the backend and UI components for identifying an unverified user are in place, there is no code to prevent that user from accessing premium features.
-- A full, end-to-end test of the entire authentication user journey (signup -> attempt to access locked content -> verify email -> successfully access content) was not performed.</analysis>
+- The agent did not implement the feature-gating logic for unverified users, a carry-over task.
+- The agent did not address the two long-standing bugs from the previous session: inaccurate speech-to-text and the broken reading test UI for passages 2 & 3.
+- Multilingual support for the new test, while part of the original plan, was explicitly skipped by the user for now.
+- No end-to-end testing was performed on the new adaptive test before the user found a critical bug. The agent relied on basic  checks which were insufficient.</analysis>
