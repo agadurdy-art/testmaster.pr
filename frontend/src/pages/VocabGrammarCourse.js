@@ -10,6 +10,7 @@ import {
   ArrowLeft, Loader2, Image
 } from 'lucide-react';
 import { toast } from 'sonner';
+import PronunciationRecorder from '../components/PronunciationRecorder';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
