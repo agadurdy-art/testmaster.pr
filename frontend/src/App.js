@@ -184,6 +184,22 @@ function AppWithSessionHandler() {
           element={user ? <CourseDetail user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
         />
         <Route 
+          path="/learning" 
+          element={user ? <LearningPlatform user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/level/:levelId" 
+          element={user ? <LevelDetail user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/unit/:unitId" 
+          element={user ? <UnitDetail user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/learning/lesson/:lessonId" 
+          element={user ? <LessonView user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
           path="/profile" 
           element={user ? <Profile user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 
         />
