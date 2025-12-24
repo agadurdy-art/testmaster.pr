@@ -147,8 +147,8 @@ export default function Dashboard({ user, onLogout }) {
   ];
 
   const courses = [
-    { id: 'beginner', name: getText('Beginner Course', 'Khóa Cơ bản', 'Başlangıç Kursu'), band: 'Band 4.0-5.0', icon: '🌱', color: 'from-emerald-500 to-teal-600', route: '/beginner-course', lessons: 14 },
-    { id: 'mastery', name: getText('Mastery Course', 'Khóa Trung cấp', 'Ustalık Kursu'), band: 'Band 5.5-6.5', icon: '📚', color: 'from-blue-500 to-indigo-600', route: '/mastery-course', lessons: 17 },
+    { id: 'beginner', name: getText('Beginner Course', 'Khóa Cơ bản', 'Başlangıç Kursu'), band: 'Band 2.0-4.5', icon: '🌱', color: 'from-emerald-500 to-teal-600', route: '/beginner-course', lessons: 14 },
+    { id: 'mastery', name: getText('Mastery Course', 'Khóa Trung cấp', 'Ustalık Kursu'), band: 'Band 4.5-6.5', icon: '📚', color: 'from-blue-500 to-indigo-600', route: '/mastery-course', lessons: 17 },
     { id: 'advanced', name: getText('Advanced Mastery', 'Khóa Nâng cao', 'İleri Düzey Ustalık'), band: 'Band 6.5-9.0', icon: '🏆', color: 'from-amber-500 to-orange-600', route: '/advanced-mastery', lessons: 20 }
   ];
 
