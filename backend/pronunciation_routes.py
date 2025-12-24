@@ -429,142 +429,207 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
     Practice pronunciation of a single word with strict evaluation.
     
     Rules:
-    - Never give a score if the spoken word is unclear or confidence < 0.6
-    - If ASR fails or transcript is empty, return fail status
-    - Evaluate pronunciation based on phoneme accuracy, not spelling
-    - Penalize vowel errors heavily
-    - Do NOT reward partial matches
-    - For beginner words, require at least 80% phoneme match for a pass
+    - Never give a score if Whisper transcript is empty or unclear
+    - Phoneme-based evaluation with vowel penalty
+    - 80% threshold for pass
+    - Debug logging for QA
     """
+    import re
+    from difflib import SequenceMatcher
+    
+    # Debug info
+    debug_info = {
+        "word": word,
+        "user_id": user_id,
+        "audio_size": 0,
+        "transcribed": "",
+        "score": 0,
+        "status": ""
+    }
+    
     try:
         audio_data = await audio_file.read()
+        debug_info["audio_size"] = len(audio_data)
+        debug_info["mime_type"] = audio_file.content_type
         
-        if not audio_data or len(audio_data) < 500:
+        print(f"[Pronunciation] Received audio: {len(audio_data)} bytes, type: {audio_file.content_type}")
+        
+        # Validate audio size
+        if not audio_data or len(audio_data) < 5000:
+            debug_info["status"] = "fail_audio_too_small"
+            print(f"[Pronunciation] Audio too small: {len(audio_data)} bytes")
             return {
                 "status": "fail",
                 "word": word,
                 "transcribed": "",
                 "score": 0,
                 "correct": False,
-                "feedback": "Please pronounce the word clearly and try again."
+                "feedback": "Recording too short or quiet. Please try again.",
+                "debug": debug_info
             }
         
         # Prepare audio file
         audio_file_obj = io.BytesIO(audio_data)
         audio_file_obj.name = audio_file.filename or "recording.webm"
         
+        # Transcribe with timeout
         transcribed = ""
         try:
-            transcription_result = await stt.transcribe(
-                file=audio_file_obj,
-                model="whisper-1",
-                response_format="text"
+            transcription_result = await asyncio.wait_for(
+                stt.transcribe(
+                    file=audio_file_obj,
+                    model="whisper-1",
+                    response_format="text"
+                ),
+                timeout=15.0
             )
-            transcribed = str(transcription_result).strip().lower() if transcription_result else ""
-            # Remove punctuation
-            import re
-            transcribed = re.sub(r'[^\w\s]', '', transcribed).strip()
-        except Exception as e:
-            print(f"Word transcription error: {e}")
-            transcribed = ""
-        
-        # Rule: If ASR fails or transcript is empty, return fail status
-        if not transcribed:
+            transcribed = str(transcription_result).strip() if transcription_result else ""
+        except asyncio.TimeoutError:
+            debug_info["status"] = "fail_timeout"
+            print(f"[Pronunciation] Transcription timeout")
             return {
                 "status": "fail",
                 "word": word,
                 "transcribed": "",
                 "score": 0,
                 "correct": False,
-                "feedback": "Please pronounce the word clearly and try again."
+                "feedback": "Analysis took too long. Please try again.",
+                "debug": debug_info
+            }
+        except Exception as e:
+            debug_info["status"] = f"fail_transcribe_error: {str(e)}"
+            print(f"[Pronunciation] Transcription error: {e}")
+            return {
+                "status": "fail",
+                "word": word,
+                "transcribed": "",
+                "score": 0,
+                "correct": False,
+                "feedback": "We couldn't analyze your recording. Please try again.",
+                "debug": debug_info
             }
         
+        debug_info["transcribed_raw"] = transcribed
+        
+        # Rule: NEVER score when transcript is empty
+        if not transcribed or transcribed.strip() == "":
+            debug_info["status"] = "fail_empty_transcript"
+            print(f"[Pronunciation] Empty transcript")
+            return {
+                "status": "fail",
+                "word": word,
+                "transcribed": "",
+                "score": 0,
+                "correct": False,
+                "feedback": "We couldn't hear you clearly. Please try again.",
+                "debug": debug_info
+            }
+        
+        # Normalize transcript
+        # - lowercase
+        # - remove punctuation
+        # - keep first token only (for single word expected)
+        normalized = transcribed.lower()
+        normalized = re.sub(r'[^\w\s]', '', normalized).strip()
+        tokens = normalized.split()
+        first_token = tokens[0] if tokens else ""
+        
+        debug_info["normalized"] = normalized
+        debug_info["first_token"] = first_token
+        
+        # Target word normalization
         target = word.strip().lower()
-        import re
-        target_clean = re.sub(r'[^\w\s]', '', target).strip()
+        target = re.sub(r'[^\w\s]', '', target).strip()
         
-        print(f"Pronunciation check: target='{target_clean}', transcribed='{transcribed}'")
+        print(f"[Pronunciation] Target: '{target}', Transcribed: '{first_token}' (full: '{normalized}')")
         
-        # Phoneme-based evaluation
-        # Define vowels for heavy penalization
-        VOWELS = set('aeiou')
+        # Rule: If transcript has multiple unrelated words, treat as fail unless first token matches
+        if len(tokens) > 1 and first_token != target:
+            # Check if target appears anywhere
+            if target not in tokens:
+                debug_info["status"] = "fail_multiple_unrelated_words"
+                return {
+                    "status": "fail",
+                    "word": word,
+                    "transcribed": normalized,
+                    "score": 20,
+                    "correct": False,
+                    "feedback": f"Please say only the word '{word}'.",
+                    "debug": debug_info
+                }
         
-        def get_phoneme_score(target_word, spoken_word):
-            """Calculate phoneme-based score with vowel penalty"""
-            if not target_word or not spoken_word:
-                return 0
+        # Calculate score based on edit distance
+        def calculate_score(expected, spoken):
+            if expected == spoken:
+                return 100  # Exact match
             
-            # Exact match = 100%
-            if spoken_word == target_word:
+            # Calculate similarity ratio
+            ratio = SequenceMatcher(None, expected, spoken).ratio()
+            
+            # Calculate edit distance
+            def levenshtein(s1, s2):
+                if len(s1) < len(s2):
+                    return levenshtein(s2, s1)
+                if len(s2) == 0:
+                    return len(s1)
+                prev_row = range(len(s2) + 1)
+                for i, c1 in enumerate(s1):
+                    curr_row = [i + 1]
+                    for j, c2 in enumerate(s2):
+                        insertions = prev_row[j + 1] + 1
+                        deletions = curr_row[j] + 1
+                        substitutions = prev_row[j] + (c1 != c2)
+                        curr_row.append(min(insertions, deletions, substitutions))
+                    prev_row = curr_row
+                return prev_row[-1]
+            
+            edit_dist = levenshtein(expected, spoken)
+            
+            # Scoring rules:
+            # - exact match -> 90-100
+            # - edit distance 1 -> 60-75
+            # - else -> 0-40
+            
+            if edit_dist == 0:
                 return 100
-            
-            # Check if spoken word contains extra words (fail - not exact)
-            if ' ' in spoken_word and target_word not in spoken_word.split():
-                return 0
-            
-            # If spoken contains multiple words, extract the target if present
-            spoken_words = spoken_word.split()
-            if len(spoken_words) > 1:
-                if target_word in spoken_words:
-                    spoken_word = target_word  # Exact match within phrase
-                else:
-                    return 0  # No exact match found
-            
-            # Character-by-character comparison with vowel penalty
-            target_chars = list(target_word)
-            spoken_chars = list(spoken_word)
-            
-            if len(spoken_chars) != len(target_chars):
-                # Length mismatch - significant penalty
-                length_diff = abs(len(spoken_chars) - len(target_chars))
-                if length_diff > 2:
-                    return 0  # Too different
-                base_penalty = length_diff * 15
+            elif edit_dist == 1:
+                return 70 + int(ratio * 15)  # 70-85
+            elif edit_dist == 2:
+                return 40 + int(ratio * 20)  # 40-60
             else:
-                base_penalty = 0
-            
-            # Compare characters
-            matches = 0
-            vowel_errors = 0
-            consonant_errors = 0
-            
-            min_len = min(len(target_chars), len(spoken_chars))
-            for i in range(min_len):
-                t_char = target_chars[i]
-                s_char = spoken_chars[i] if i < len(spoken_chars) else ''
-                
-                if t_char == s_char:
-                    matches += 1
-                elif t_char in VOWELS or s_char in VOWELS:
-                    vowel_errors += 1  # Vowel error - heavy penalty
-                else:
-                    consonant_errors += 1
-            
-            # Calculate score
-            total_chars = len(target_chars)
-            if total_chars == 0:
-                return 0
-            
-            # Base score from matches
-            base_score = (matches / total_chars) * 100
-            
-            # Heavy penalty for vowel errors (20 points each)
-            vowel_penalty = vowel_errors * 20
-            
-            # Lighter penalty for consonant errors (10 points each)
-            consonant_penalty = consonant_errors * 10
-            
-            final_score = max(0, base_score - vowel_penalty - consonant_penalty - base_penalty)
-            
-            return int(final_score)
+                # Significant difference
+                return max(0, int(ratio * 40))  # 0-40
         
-        score = get_phoneme_score(target_clean, transcribed)
+        score = calculate_score(target, first_token)
         
-        # Rule: For beginner words, require at least 80% phoneme match for a pass
-        # Rule: Do NOT reward partial matches
+        # Check vowel errors for additional penalty
+        VOWELS = set('aeiou')
+        target_vowels = [c for c in target if c in VOWELS]
+        spoken_vowels = [c for c in first_token if c in VOWELS]
+        
+        # Heavy penalty for vowel count mismatch
+        vowel_diff = abs(len(target_vowels) - len(spoken_vowels))
+        if vowel_diff > 0:
+            score = max(0, score - (vowel_diff * 15))
+        
+        debug_info["score"] = score
+        debug_info["target_vowels"] = target_vowels
+        debug_info["spoken_vowels"] = spoken_vowels
+        
+        # Determine pass/fail (80% threshold for beginner words)
         correct = score >= 80
         
-        # Determine feedback
+        # Determine status
+        if correct:
+            status = "success"
+        elif score >= 60:
+            status = "needs_practice"
+        else:
+            status = "fail"
+        
+        debug_info["status"] = status
+        
+        # Feedback message
         if score >= 90:
             feedback = "Excellent!"
         elif score >= 80:
@@ -576,26 +641,29 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
         else:
             feedback = "Please pronounce the word clearly and try again."
         
+        print(f"[Pronunciation] Result: score={score}, status={status}, correct={correct}")
+        
         return {
-            "status": "success" if score >= 80 else "needs_practice",
+            "status": status,
             "word": word,
-            "transcribed": transcribed,
+            "transcribed": first_token,
             "score": score,
             "correct": correct,
-            "feedback": feedback
+            "feedback": feedback,
+            "debug": debug_info
         }
         
-    except HTTPException:
-        raise
     except Exception as e:
-        print(f"Word practice error: {e}")
+        print(f"[Pronunciation] Unexpected error: {e}")
+        debug_info["status"] = f"fail_exception: {str(e)}"
         return {
             "status": "fail",
             "word": word,
             "transcribed": "",
             "score": 0,
             "correct": False,
-            "feedback": "Please pronounce the word clearly and try again."
+            "feedback": "An error occurred. Please try again.",
+            "debug": debug_info
         }
 
 # Export router
