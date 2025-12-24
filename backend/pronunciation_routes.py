@@ -41,6 +41,34 @@ QUALITY_CONFIG = {
     "min_blob_size_sentence": 10000,   # 10KB for sentence
 }
 
+# Content Gate - Similar sounding words (Whisper commonly mishears these)
+SIMILAR_SOUNDS = {
+    "eye": ["i", "ice", "aye", "ai", "eyes"],
+    "hair": ["here", "hare", "air", "yeah", "her", "hear", "hairs"],
+    "ear": ["here", "year", "air", "e", "ears", "ear"],
+    "mouth": ["mouse", "math", "moth", "mouths"],
+    "face": ["phase", "faith", "bass", "base", "faces"],
+    "nose": ["knows", "nos", "no", "noes", "noses"],
+    "head": ["had", "ed", "hid", "bed", "heads", "dead"],
+    "hand": ["and", "had", "hound", "hands", "hanged"],
+    "arm": ["om", "am", "arms", "harm"],
+    "leg": ["lake", "lag", "lack", "legs", "like"],
+    "foot": ["food", "put", "full", "feet"],
+    "toe": ["tow", "to", "though", "toes", "two"],
+    "finger": ["figure", "fingers"],
+    "thumb": ["some", "sum", "come", "thumbs"],
+    "body": ["buddy", "boddy", "bodies"],
+    "neck": ["nick", "knack", "next"],
+    "shoulder": ["shoulders", "older"],
+    "knee": ["need", "knees", "me", "key"],
+    "ankle": ["uncle", "angle", "ankles"],
+}
+
+CONTENT_CONFIG = {
+    "max_edit_distance_word": 2,       # Allow edit distance of 2 for words
+    "max_wer_sentence": 0.40,          # 40% WER threshold for sentences
+}
+
 SCORE_TO_STARS = [
     (90, 5, "Excellent!"),
     (75, 4, "Good!"),
