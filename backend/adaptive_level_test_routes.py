@@ -156,12 +156,26 @@ async def evaluate_writing_detailed(writing_text: str, target_level: str) -> Dic
     Evaluate writing with detailed error analysis
     Returns band score and specific feedback
     """
+    # Strict validation
     if not writing_text or len(writing_text.strip()) < 20:
         return {
-            "band": 2.0,
+            "band_score": 2.0,
             "feedback": "Response too short or empty",
             "errors": [],
-            "strengths": []
+            "strengths": [],
+            "main_weaknesses": ["No meaningful content provided"]
+        }
+    
+    word_count = len(writing_text.strip().split())
+    
+    # Check for very short responses
+    if word_count < 30:
+        return {
+            "band_score": 2.0,
+            "feedback": f"Response too short ({word_count} words). Minimum 30 words required.",
+            "errors": [],
+            "strengths": [],
+            "main_weaknesses": ["Insufficient content"]
         }
     
     try:
@@ -170,56 +184,69 @@ async def evaluate_writing_detailed(writing_text: str, target_level: str) -> Dic
             model="claude-3-7-sonnet-20250219"
         )
         
-        prompt = f"""You are an IELTS examiner. Evaluate this writing response and provide detailed feedback.
+        prompt = f"""You are a STRICT IELTS examiner. Evaluate this writing response honestly and rigorously.
 
 TARGET LEVEL: {target_level}
 
 WRITING RESPONSE:
-{writing_text}
+"{writing_text}"
 
-Evaluate based on IELTS Writing criteria:
-1. Task Achievement (2.0-9.0 scale)
-2. Coherence & Cohesion
-3. Lexical Resource (vocabulary)
-4. Grammatical Range & Accuracy
+CRITICAL EVALUATION RULES:
+1. If the response is IRRELEVANT to the topic (about daily routine), give band 2.0-3.0
+2. If it's just random words or gibberish, give band 2.0
+3. If it has MANY grammar errors (more than 5 errors per 50 words), max band is 4.0
+4. If vocabulary is very basic/repetitive, max band is 4.5
+5. BE STRICT - this is IELTS standard, not conversational English
 
-Provide feedback in this JSON format:
+Evaluate based on IELTS Writing criteria (Band 2.0-9.0):
+1. Task Achievement - Does it answer the topic?
+2. Coherence & Cohesion - Is it organized?
+3. Lexical Resource - Vocabulary quality
+4. Grammatical Range & Accuracy - Grammar errors?
+
+Provide feedback in this EXACT JSON format:
 {{
-    "band_score": 5.5,
+    "band_score": 3.5,
+    "is_relevant_to_topic": true,
+    "word_count": {word_count},
     "task_achievement": {{
-        "score": 5.5,
-        "feedback": "..."
+        "score": 3.0,
+        "feedback": "Partially addresses the topic but lacks detail"
     }},
     "coherence_cohesion": {{
-        "score": 5.0,
-        "feedback": "...",
-        "linking_words_used": ["however", "moreover"],
-        "paragraphing": "needs improvement"
+        "score": 3.5,
+        "feedback": "Basic organization but lacks linking words",
+        "linking_words_used": [],
+        "paragraphing": "no clear paragraphs"
     }},
     "lexical_resource": {{
-        "score": 6.0,
-        "feedback": "...",
-        "vocabulary_range": "adequate",
-        "repetition_issues": ["uses 'very' 5 times"],
-        "good_collocations": ["make a decision", "take into account"]
+        "score": 3.5,
+        "feedback": "Very limited vocabulary range",
+        "vocabulary_range": "basic",
+        "repetition_issues": ["repeats same words multiple times"],
+        "good_collocations": []
     }},
     "grammar": {{
-        "score": 5.5,
-        "feedback": "...",
+        "score": 3.0,
+        "feedback": "Many basic grammar errors throughout",
         "error_examples": [
-            {{"error": "I am work", "correction": "I work", "rule": "Don't use 'am' with base verb"}},
-            {{"error": "peoples", "correction": "people", "rule": "People is already plural"}}
+            {{"error": "[exact error from text]", "correction": "[correction]", "rule": "[grammar rule]"}}
         ],
-        "sentence_variety": "mostly simple sentences"
+        "sentence_variety": "only simple sentences",
+        "error_count": 8
     }},
-    "word_count": 156,
-    "spelling_errors": 3,
-    "strengths": ["Clear main idea", "Good use of examples"],
-    "main_weaknesses": ["Limited vocabulary", "Grammar errors"],
-    "specific_advice": ["Practice using present perfect tense", "Learn more linking words"]
+    "spelling_errors": 2,
+    "strengths": ["Attempts to answer question"],
+    "main_weaknesses": ["Too many grammar errors", "Very basic vocabulary", "Lacks organization"],
+    "specific_advice": ["Study basic grammar rules", "Learn more vocabulary", "Practice writing daily"]
 }}
 
-BE HONEST and SPECIFIC. If the writing is poor, say so. Provide actual examples from the text."""
+IMPORTANT:
+- If response is IRRELEVANT or OFF-TOPIC, set band_score to 2.0-2.5
+- If it's NONSENSE/GIBBERISH, set band_score to 2.0
+- Count ACTUAL errors from the text and include them
+- Be HONEST - if it's bad, say so clearly
+- Band 5.0+ requires good grammar, vocabulary, and organization
 
         response = await chat.send_message(UserMessage(text=prompt))
         result_text = response.text.strip()
