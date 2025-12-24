@@ -234,7 +234,7 @@ export default function LandingPage({ onLogin, user }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
   const handleStartFreePractice = () => {
-    navigate('/level-test');
+    navigate('/comprehensive-level-test');
   };
 
   const handleAuth = async (e) => {
