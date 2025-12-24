@@ -235,37 +235,37 @@ export default function PronunciationRecorder({
         await evaluatePronunciation(blob);
       };
       
-      // Wait for recorder to be ready, then start
+      // Wait for recorder to be ready
       mediaRecorderRef.current.onstart = () => {
         debugLog('Recording actually started', { mimeType });
       };
       
-      // Small delay to ensure microphone is ready, then start
-      await new Promise(resolve => setTimeout(resolve, 100));
+      // Longer delay to ensure microphone is fully ready
+      await new Promise(resolve => setTimeout(resolve, 300));
       
-      // Start recording - collect data continuously
-      mediaRecorderRef.current.start(50); // Smaller chunks = less data loss
+      // Start recording - collect data continuously with small chunks
+      mediaRecorderRef.current.start(30); // Very small chunks for better capture
       setRecordingStartTime(Date.now());
       setState(STATES.RECORDING);
       setFeedback(null);
       
-      // Play a beep sound to indicate recording started
+      // Play a short beep to indicate recording started
       try {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
-        oscillator.frequency.value = 800;
-        gainNode.gain.value = 0.1;
+        oscillator.frequency.value = 880; // Higher pitch
+        gainNode.gain.value = 0.15;
         oscillator.start();
-        oscillator.stop(audioContext.currentTime + 0.1);
+        oscillator.stop(audioContext.currentTime + 0.15);
       } catch (e) {
         // Beep failed, continue anyway
       }
       
       debugLog('Recording started', { mimeType });
-      toast.success('Recording... Speak now!', { duration: 1500 });
+      toast.success('🎤 Speak now!', { duration: 2000 });
       
     } catch (error) {
       console.error('Error accessing microphone:', error);
