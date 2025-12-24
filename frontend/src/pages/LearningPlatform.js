@@ -109,6 +109,14 @@ export default function LearningPlatform({ user }) {
       {/* Header */}
       <div className="bg-gradient-to-r from-violet-600 to-purple-600 text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
+          <Button 
+            variant="ghost" 
+            className="text-white hover:bg-white/20 mb-4"
+            onClick={() => navigate('/dashboard')}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Dashboard
+          </Button>
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-4">
