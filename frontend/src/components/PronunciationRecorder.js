@@ -323,28 +323,26 @@ export default function PronunciationRecorder({
         status: result.status,
         score: result.score,
         transcribed: result.transcribed,
-        feedback: result.feedback
+        feedback: result.feedback,
+        should_count_attempt: result.should_count_attempt
       });
 
-      // Check if we got a valid evaluation
-      if (result.status === 'fail' && !result.transcribed) {
-        // System couldn't hear - this is a valid evaluation result
-        setFeedback(result);
-        setState(STATES.FAILED);
-        setAttempts(prev => prev + 1); // Increment attempt
-      } else if (result.status === 'success' || result.status === 'needs_practice') {
-        setFeedback(result);
-        setState(result.correct ? STATES.SUCCESS : STATES.FAILED);
-        setAttempts(prev => prev + 1); // Increment attempt
-        
-        if (onFeedback) {
-          onFeedback(result);
-        }
+      setFeedback(result);
+      
+      // Determine state based on status
+      if (result.status === 'success') {
+        setState(STATES.SUCCESS);
       } else {
-        // Unknown status
-        setFeedback(result);
         setState(STATES.FAILED);
+      }
+      
+      // Only increment attempts if should_count_attempt is true
+      if (result.should_count_attempt !== false) {
         setAttempts(prev => prev + 1);
+      }
+      
+      if (onFeedback) {
+        onFeedback(result);
       }
       
     } catch (error) {
@@ -366,10 +364,11 @@ export default function PronunciationRecorder({
       toast.error("We couldn't analyze your recording. Please try again.");
       setState(STATES.FAILED);
       setFeedback({
-        status: 'error',
+        status: 'fail_system',
         score: 0,
         correct: false,
-        feedback: "We couldn't analyze your recording. Please try again."
+        feedback: "We couldn't analyze your recording. Please try again.",
+        should_count_attempt: false
       });
     }
   };
