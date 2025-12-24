@@ -291,72 +291,113 @@ async def check_pronunciation(audio_file: UploadFile, target_text: str, user_id:
     """
     Check pronunciation of recorded audio against target text
     Returns detailed feedback with specific issues and recommendations
+    OPTIMIZED: Faster evaluation with timeout handling
     """
     try:
         # Read audio file
         audio_data = await audio_file.read()
         
-        if not audio_data or len(audio_data) < 100:
+        if not audio_data or len(audio_data) < 500:
             raise HTTPException(status_code=400, detail="Audio file is too small or empty. Please record again.")
         
+        # Prepare audio file like the main transcription endpoint
+        audio_file_obj = io.BytesIO(audio_data)
+        audio_file_obj.name = audio_file.filename or "recording.webm"
+        
         # Transcribe using Whisper
+        transcribed_text = ""
         try:
-            transcription_result = await stt.transcribe(audio_data)
-            transcribed_text = transcription_result.get("text", "")
+            transcription_result = await stt.transcribe(
+                file=audio_file_obj,
+                model="whisper-1",
+                response_format="text"
+            )
+            transcribed_text = str(transcription_result).strip() if transcription_result else ""
         except Exception as transcribe_error:
-            # If transcription fails, provide a helpful error
             error_msg = str(transcribe_error)
+            print(f"Transcription error: {error_msg}")
             if "Unrecognized file format" in error_msg:
                 raise HTTPException(status_code=400, detail="Audio format not recognized. Please try recording again.")
-            raise HTTPException(status_code=500, detail=f"Could not transcribe audio: {error_msg}")
+            # Try to continue with empty transcription for simpler evaluation
+            transcribed_text = ""
         
         if not transcribed_text:
-            raise HTTPException(status_code=400, detail="Could not detect speech in the audio. Please speak clearly and try again.")
-        
-        # Analyze pronunciation with LLM
-        llm = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
-            session_id=f"pronunciation_{user_id}",
-            system_message="You are an expert pronunciation teacher specializing in helping Asian English learners."
-        )
-        
-        prompt = PRONUNCIATION_ANALYSIS_PROMPT.format(
-            target_text=target_text,
-            transcribed_text=transcribed_text
-        )
-        
-        response = llm.chat([UserMessage(content=prompt)])
-        
-        # Parse JSON response
-        import json
-        import re
-        feedback_text = response.content
-        
-        # Extract JSON from response
-        json_match = re.search(r'\{[\s\S]*\}', feedback_text)
-        if json_match:
-            feedback_data = json.loads(json_match.group())
-            feedback_data["transcribed_text"] = transcribed_text
-            feedback_data["target_text"] = target_text
-            
-            return feedback_data
-        else:
-            # Fallback basic feedback
+            # Return a quick evaluation even without transcription
             return {
                 "overall_score": 50,
-                "pronunciation_grade": "Needs Practice",
+                "pronunciation_grade": "Try Again",
                 "matched_words": [],
-                "errors": [{"word": "general", "issue": "Could not analyze in detail", "explanation": "", "correct_pronunciation": "", "tip": "Try speaking more clearly"}],
-                "strengths": [],
-                "focus_areas": ["clarity", "volume"],
+                "errors": [],
+                "strengths": ["Recording received"],
+                "focus_areas": ["Try speaking more clearly and louder"],
                 "phonics_lesson_recommended": None,
-                "transcribed_text": transcribed_text,
+                "transcribed_text": "(Could not detect clear speech)",
                 "target_text": target_text
             }
+        
+        # Quick comparison without LLM for faster response
+        target_words = set(target_text.lower().split())
+        spoken_words = set(transcribed_text.lower().split())
+        matched_words = target_words & spoken_words
+        
+        match_ratio = len(matched_words) / max(len(target_words), 1)
+        quick_score = int(match_ratio * 100)
+        
+        if quick_score >= 80:
+            grade = "Excellent"
+        elif quick_score >= 60:
+            grade = "Good"
+        elif quick_score >= 40:
+            grade = "Fair"
+        else:
+            grade = "Needs Practice"
+        
+        # Try to get AI feedback with timeout
+        try:
+            llm = LlmChat(
+                api_key=os.getenv("EMERGENT_LLM_KEY"),
+                session_id=f"pronunciation_{user_id}",
+                system_message="You are a pronunciation teacher. Be brief."
+            ).with_model("openai", "gpt-4o-mini")
+            
+            prompt = f"""Target: "{target_text}"
+Said: "{transcribed_text}"
+Quick feedback in JSON: {{"score": 0-100, "feedback": "brief feedback", "tip": "one improvement tip"}}"""
+            
+            response = await asyncio.wait_for(
+                llm.send_message(UserMessage(text=prompt)),
+                timeout=8.0
+            )
+            
+            import json
+            import re
+            response_text = str(response)
+            json_match = re.search(r'\{[\s\S]*\}', response_text)
+            if json_match:
+                ai_data = json.loads(json_match.group())
+                quick_score = ai_data.get("score", quick_score)
+                ai_feedback = ai_data.get("feedback", "")
+                ai_tip = ai_data.get("tip", "")
+        except:
+            ai_feedback = ""
+            ai_tip = "Practice saying each word clearly"
+        
+        return {
+            "overall_score": quick_score,
+            "pronunciation_grade": grade,
+            "matched_words": list(matched_words),
+            "errors": [] if quick_score >= 70 else [{"word": "general", "issue": "Some words unclear", "tip": ai_tip or "Speak each word distinctly"}],
+            "strengths": [ai_feedback] if ai_feedback else ["Good attempt!"],
+            "focus_areas": [ai_tip] if ai_tip else ["Practice speaking slowly and clearly"],
+            "phonics_lesson_recommended": "final_consonants" if quick_score < 60 else None,
+            "transcribed_text": transcribed_text,
+            "target_text": target_text
+        }
         
     except HTTPException:
         raise
     except Exception as e:
+        print(f"Pronunciation check error: {e}")
         raise HTTPException(status_code=500, detail=f"Pronunciation check failed: {str(e)}")
 
 @router.get("/phonics-lessons")
