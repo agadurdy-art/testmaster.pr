@@ -349,8 +349,6 @@ def test_azure_credentials():
     # by making a request and seeing if we get system errors vs. processing errors
     
     try:
-        import math
-        
         # Create valid audio
         test_audio = create_test_audio_wav(duration_seconds=2.0)
         
