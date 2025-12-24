@@ -163,6 +163,10 @@ export default function LessonView({ user }) {
                         src={vocabItem.visual_url} 
                         alt={vocabItem.word}
                         className="w-full h-32 object-cover rounded-lg mb-3"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.style.display = 'none';
+                        }}
                       />
                     )}
                     <div className="space-y-2">
