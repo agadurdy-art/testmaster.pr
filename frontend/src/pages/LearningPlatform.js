@@ -17,8 +17,13 @@ export default function LearningPlatform({ user }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user || !user.id) {
+      console.error('No user found in LearningPlatform');
+      navigate('/');
+      return;
+    }
     loadLearningPlatform();
-  }, [user.id]);
+  }, [user]);
 
   const loadLearningPlatform = async () => {
     try {
