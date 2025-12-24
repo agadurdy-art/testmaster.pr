@@ -180,10 +180,6 @@ export default function Dashboard({ user, onLogout }) {
   // Check if user is verified
   const isVerified = user?.verified || user?.email_verified;
   
-  // State for locked content modal
-  const [showLockedModal, setShowLockedModal] = useState(false);
-  const [lockedFeatureName, setLockedFeatureName] = useState('');
-  
   // Handler for locked content
   const handleLockedContent = (featureName) => {
     if (!isVerified) {
