@@ -1021,8 +1021,60 @@ export default function LandingPage({ onLogin, user }) {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2 text-gray-700">Password</label>
-              <Input data-testid="password-input" type="password" placeholder={authMode === 'signup' ? t('landingCreatePassword') : t('landingEnterPassword')} value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} required minLength={8} className="border-gray-300" />
+              <div className="relative">
+                <Input 
+                  data-testid="password-input" 
+                  type={showPassword ? "text" : "password"} 
+                  placeholder={authMode === 'signup' ? t('landingCreatePassword') : t('landingEnterPassword')} 
+                  value={formData.password} 
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })} 
+                  required 
+                  minLength={8} 
+                  className="border-gray-300 pr-10" 
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
+            {authMode === 'signup' && (
+              <div>
+                <label className="block text-sm font-medium mb-2 text-gray-700">Confirm Password</label>
+                <div className="relative">
+                  <Input 
+                    data-testid="confirm-password-input" 
+                    type={showConfirmPassword ? "text" : "password"} 
+                    placeholder="Re-enter your password" 
+                    value={formData.confirmPassword} 
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} 
+                    required 
+                    minLength={8} 
+                    className={`border-gray-300 pr-10 ${formData.confirmPassword && formData.password !== formData.confirmPassword ? 'border-red-300 focus:ring-red-500' : ''}`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    tabIndex={-1}
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                  <p className="text-xs text-red-500 mt-1">Passwords do not match</p>
+                )}
+                {formData.confirmPassword && formData.password === formData.confirmPassword && formData.password.length >= 8 && (
+                  <p className="text-xs text-green-500 mt-1 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" /> Passwords match
+                  </p>
+                )}
+              </div>
+            )}
             {authMode === 'signin' && (
               <div className="text-right text-xs">
                 <button type="button" className="text-violet-600 hover:underline" onClick={async () => {
@@ -1043,7 +1095,7 @@ export default function LandingPage({ onLogin, user }) {
               </div>
             )}
             
-            <Button data-testid="submit-auth-btn" type="submit" className="w-full bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0" disabled={loading}>
+            <Button data-testid="submit-auth-btn" type="submit" className="w-full bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0" disabled={loading || (authMode === 'signup' && formData.password !== formData.confirmPassword)}>
               {loading ? t('loading') : authMode === 'signup' ? t('landingCreateAccount') : t('landingSignIn')}
             </Button>
           </form>
