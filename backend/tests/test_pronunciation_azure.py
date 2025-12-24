@@ -145,8 +145,6 @@ def test_valid_audio_word():
     print("\n=== Test 2: Valid Audio Test - Single Word ===")
     
     try:
-        import math
-        
         # Create a proper test audio file (longer duration)
         test_audio = create_test_audio_wav(duration_seconds=2.0, frequency=440)
         print(f"Created test audio: {len(test_audio)} bytes")
@@ -198,9 +196,6 @@ def test_valid_audio_word():
         else:
             print(f"❌ Request failed: {response.status_code}")
         
-        return False
-    except ImportError:
-        print("⚠️ Math module not available, skipping audio generation")
         return False
     except Exception as e:
         print(f"❌ Error in valid audio test: {e}")
