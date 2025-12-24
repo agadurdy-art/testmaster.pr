@@ -17,8 +17,8 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 # Import question banks
 from adaptive_level_test_data import (
-    READING_QUESTIONS, LISTENING_QUESTIONS, WRITING_PROMPTS,
-    SPEAKING_PROMPTS, ADAPTIVE_RULES, BAND_SCORE_RANGES
+    READING_QUESTIONS, WRITING_PROMPTS, SPEAKING_PROMPTS,
+    ADAPTIVE_RULES, BAND_SCORE_RANGES
 )
 
 logger = logging.getLogger(__name__)
