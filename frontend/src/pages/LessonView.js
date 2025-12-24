@@ -18,8 +18,13 @@ export default function LessonView({ user }) {
   const [startTime] = useState(Date.now());
 
   useEffect(() => {
+    if (!user || !user.id) {
+      console.error('No user found, redirecting to home');
+      navigate('/');
+      return;
+    }
     loadLesson();
-  }, [lessonId, user.id]);
+  }, [lessonId, user]);
 
   const loadLesson = async () => {
     try {

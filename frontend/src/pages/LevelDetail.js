@@ -17,8 +17,13 @@ export default function LevelDetail({ user }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user || !user.id) {
+      console.error('No user found, redirecting to home');
+      navigate('/');
+      return;
+    }
     loadLevel();
-  }, [levelId, user.id]);
+  }, [levelId, user]);
 
   const loadLevel = async () => {
     try {

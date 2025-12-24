@@ -16,8 +16,13 @@ export default function UnitDetail({ user }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user || !user.id) {
+      console.error('No user found, redirecting to home');
+      navigate('/');
+      return;
+    }
     loadUnit();
-  }, [unitId, user.id]);
+  }, [unitId, user]);
 
   const loadUnit = async () => {
     try {
