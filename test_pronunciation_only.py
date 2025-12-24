@@ -30,11 +30,11 @@ def test_pronunciation_evaluation_system():
         # Create a temporary file-like object
         audio_file = io.BytesIO(small_audio_data)
         
-        # Test word endpoint
+        # Test word endpoint with query parameters
         files = {"audio_file": ("test.webm", audio_file, "audio/webm")}
-        data = {"word": "hello", "user_id": user_id}
+        params = {"word": "hello", "user_id": user_id}
         
-        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, data=data)
+        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, params=params)
         print(f"Status Code: {response.status_code}")
         
         if response.status_code == 200:
@@ -64,9 +64,9 @@ def test_pronunciation_evaluation_system():
         
         audio_file = io.BytesIO(large_audio_data)
         files = {"audio_file": ("test.webm", audio_file, "audio/webm")}
-        data = {"word": "hello", "user_id": user_id}
+        params = {"word": "hello", "user_id": user_id}
         
-        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, data=data)
+        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, params=params)
         print(f"Status Code: {response.status_code}")
         
         if response.status_code == 200:
@@ -94,9 +94,9 @@ def test_pronunciation_evaluation_system():
         
         audio_file = io.BytesIO(large_audio_data)
         files = {"audio_file": ("test.webm", audio_file, "audio/webm")}
-        data = {"word": "test", "user_id": user_id}
+        params = {"word": "test", "user_id": user_id}
         
-        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, data=data)
+        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, params=params)
         print(f"Status Code: {response.status_code}")
         
         if response.status_code == 200:
@@ -127,9 +127,9 @@ def test_pronunciation_evaluation_system():
         
         audio_file = io.BytesIO(large_audio_data)
         files = {"audio_file": ("test.webm", audio_file, "audio/webm")}
-        data = {"target_text": "This is a test sentence", "user_id": user_id}
+        params = {"target_text": "This is a test sentence", "user_id": user_id}
         
-        response = requests.post(f"{BACKEND_URL}/pronunciation/check", files=files, data=data)
+        response = requests.post(f"{BACKEND_URL}/pronunciation/check", files=files, params=params)
         print(f"Status Code: {response.status_code}")
         
         if response.status_code == 200:
@@ -170,8 +170,8 @@ def test_pronunciation_evaluation_system():
     print("\n=== Test 5: Error Handling - Missing Parameters ===")
     try:
         # Test missing audio_file
-        data = {"word": "test", "user_id": user_id}
-        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", data=data)
+        params = {"word": "test", "user_id": user_id}
+        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", params=params)
         print(f"Missing audio_file - Status Code: {response.status_code}")
         
         if response.status_code == 422:
@@ -181,9 +181,9 @@ def test_pronunciation_evaluation_system():
             large_audio_data = b"test_audio" * 200
             audio_file = io.BytesIO(large_audio_data)
             files = {"audio_file": ("test.webm", audio_file, "audio/webm")}
-            data = {"user_id": user_id}  # Missing word
+            params = {"user_id": user_id}  # Missing word
             
-            response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, data=data)
+            response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, params=params)
             print(f"Missing word - Status Code: {response.status_code}")
             
             if response.status_code == 422:
@@ -204,9 +204,9 @@ def test_pronunciation_evaluation_system():
         
         audio_file = io.BytesIO(large_audio_data)
         files = {"audio_file": ("test.webm", audio_file, "audio/webm")}
-        data = {"word": "azure", "user_id": user_id}
+        params = {"word": "azure", "user_id": user_id}
         
-        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, data=data)
+        response = requests.post(f"{BACKEND_URL}/pronunciation/practice-word", files=files, params=params)
         print(f"Status Code: {response.status_code}")
         
         if response.status_code == 200:
