@@ -217,11 +217,11 @@ function AppWithSessionHandler() {
         />
         <Route 
           path="/comprehensive-level-test" 
-          element={<AdaptiveLevelTest user={user} />} 
+          element={<ComprehensiveLevelTest user={user} />} 
         />
         <Route 
-          path="/old-level-test" 
-          element={<ComprehensiveLevelTest user={user} />} 
+          path="/adaptive-level-test" 
+          element={<AdaptiveLevelTest user={user} />} 
         />
         <Route 
           path="/vocab-grammar" 
