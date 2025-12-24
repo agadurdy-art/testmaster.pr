@@ -206,8 +206,6 @@ def test_sentence_pronunciation():
     print("\n=== Test 3: Sentence Pronunciation Check ===")
     
     try:
-        import math
-        
         # Create test audio for sentence
         test_audio = create_test_audio_wav(duration_seconds=3.0, frequency=500)
         print(f"Created sentence audio: {len(test_audio)} bytes")
@@ -266,9 +264,6 @@ def test_sentence_pronunciation():
         else:
             print(f"❌ Request failed: {response.status_code}")
         
-        return False
-    except ImportError:
-        print("⚠️ Math module not available, skipping audio generation")
         return False
     except Exception as e:
         print(f"❌ Error in sentence test: {e}")
