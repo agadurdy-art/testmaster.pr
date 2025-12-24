@@ -246,7 +246,7 @@ IMPORTANT:
 - If it's NONSENSE/GIBBERISH, set band_score to 2.0
 - Count ACTUAL errors from the text and include them
 - Be HONEST - if it's bad, say so clearly
-- Band 5.0+ requires good grammar, vocabulary, and organization
+- Band 5.0+ requires good grammar, vocabulary, and organization"""
 
         response = await chat.send_message(UserMessage(text=prompt))
         result_text = response.text.strip()
