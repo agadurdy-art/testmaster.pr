@@ -378,7 +378,7 @@ Quick feedback in JSON: {{"score": 0-100, "feedback": "brief feedback", "tip": "
                 quick_score = ai_data.get("score", quick_score)
                 ai_feedback = ai_data.get("feedback", "")
                 ai_tip = ai_data.get("tip", "")
-        except:
+        except Exception:
             ai_feedback = ""
             ai_tip = "Practice saying each word clearly"
         
