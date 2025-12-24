@@ -535,14 +535,14 @@ export default function VocabGrammarCourse({ user }) {
         <div className="flex justify-between items-center mb-6">
           <Button
             variant="outline"
-            onClick={() => { setCurrentItemIndex(Math.max(0, currentItemIndex - 1)); setPronunciationResult(null); }}
+            onClick={() => { setCurrentItemIndex(Math.max(0, currentItemIndex - 1)); }}
             disabled={currentItemIndex === 0}
           >
             <ChevronLeft className="w-4 h-4 mr-2" /> Previous
           </Button>
           
           <Button
-            onClick={() => { setCurrentItemIndex(Math.min(selectedLesson.items.length - 1, currentItemIndex + 1)); setPronunciationResult(null); }}
+            onClick={() => { setCurrentItemIndex(Math.min(selectedLesson.items.length - 1, currentItemIndex + 1)); }}
             disabled={currentItemIndex === selectedLesson.items.length - 1}
             className="primary-gradient text-white"
           >
