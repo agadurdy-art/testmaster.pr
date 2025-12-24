@@ -172,6 +172,23 @@ export default function Dashboard({ user, onLogout }) {
   const skillOrder = ['listening', 'reading', 'writing', 'speaking'];
   let perSkillStats = {};
   let totalTimeSeconds = 0;
+  
+  // Check if user is verified
+  const isVerified = user?.verified || user?.email_verified;
+  
+  // State for locked content modal
+  const [showLockedModal, setShowLockedModal] = useState(false);
+  const [lockedFeatureName, setLockedFeatureName] = useState('');
+  
+  // Handler for locked content
+  const handleLockedContent = (featureName) => {
+    if (!isVerified) {
+      setLockedFeatureName(featureName);
+      setShowLockedModal(true);
+      return true; // Content is locked
+    }
+    return false; // Content is not locked
+  };
 
   if (hasProgress && Array.isArray(progress.recent_attempts)) {
     const bySkill = {};
@@ -197,6 +214,17 @@ export default function Dashboard({ user, onLogout }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100">
+      {/* Verification Banner for Unverified Users */}
+      {!isVerified && <VerificationBanner user={user} />}
+      
+      {/* Locked Content Modal */}
+      <LockedContentModal 
+        isOpen={showLockedModal} 
+        onClose={() => setShowLockedModal(false)} 
+        user={user}
+        featureName={lockedFeatureName}
+      />
+      
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
