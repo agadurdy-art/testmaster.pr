@@ -329,25 +329,32 @@ export default function PronunciationRecorder({
               {recordedAudioURL && (
                 <Button
                   onClick={() => {
-                    try {
-                      // Create a new Audio object to play the recorded audio
+                    if (recordedAudioRef.current) {
+                      if (isPlayingRecording) {
+                        recordedAudioRef.current.pause();
+                        recordedAudioRef.current.currentTime = 0;
+                        setIsPlayingRecording(false);
+                      } else {
+                        recordedAudioRef.current.play()
+                          .then(() => setIsPlayingRecording(true))
+                          .catch(err => {
+                            console.log('Audio play error:', err);
+                            toast.error('Could not play recording');
+                          });
+                      }
+                    } else {
+                      // Fallback: create new Audio
                       const audio = new Audio(recordedAudioURL);
-                      audio.play().then(() => {
-                        toast.success('Playing your recording');
-                      }).catch(err => {
-                        console.log('Audio play error:', err);
-                        toast.error('Could not play recording');
-                      });
-                    } catch (err) {
-                      console.log('Play error:', err);
-                      toast.error('Could not play recording');
+                      audio.play()
+                        .then(() => toast.success('Playing...'))
+                        .catch(() => toast.error('Could not play'));
                     }
                   }}
                   variant="outline"
                   className="flex-1"
                 >
                   <Play className="w-4 h-4 mr-2" />
-                  Play Recording
+                  {isPlayingRecording ? 'Stop' : 'Play Recording'}
                 </Button>
               )}
               
@@ -356,7 +363,12 @@ export default function PronunciationRecorder({
                   onClick={() => {
                     setFeedback(null);
                     setAudioBlob(null);
+                    if (recordedAudioRef.current) {
+                      recordedAudioRef.current.pause();
+                      recordedAudioRef.current = null;
+                    }
                     setRecordedAudioURL(null);
+                    setIsPlayingRecording(false);
                   }}
                   className="flex-1 bg-violet-600 hover:bg-violet-700"
                 >
