@@ -555,12 +555,28 @@ export default function PronunciationRecorder({
 
             {/* Result indicator */}
             <div className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
-              feedback.correct ? 'bg-green-50' : 'bg-amber-50'
+              feedback.correct || feedback.status === 'success' ? 'bg-green-50' : 
+              feedback.status === 'fail_quality' || feedback.status === 'fail_system' ? 'bg-slate-50' :
+              'bg-amber-50'
             }`}>
-              {feedback.correct ? (
+              {feedback.correct || feedback.status === 'success' ? (
                 <>
                   <Check className="w-5 h-5 text-green-600" />
                   <span className="text-green-700 font-medium">Correct pronunciation!</span>
+                </>
+              ) : feedback.status === 'fail_quality' ? (
+                <>
+                  <Volume2 className="w-5 h-5 text-slate-600" />
+                  <span className="text-slate-700 font-medium">
+                    {feedback.feedback || 'Recording issue. Try again.'}
+                  </span>
+                </>
+              ) : feedback.status === 'fail_system' ? (
+                <>
+                  <Loader2 className="w-5 h-5 text-slate-600" />
+                  <span className="text-slate-700 font-medium">
+                    {feedback.feedback || 'Could not analyze. Try again.'}
+                  </span>
                 </>
               ) : (
                 <>
@@ -571,6 +587,18 @@ export default function PronunciationRecorder({
                 </>
               )}
             </div>
+
+            {/* Listen to correct pronunciation button */}
+            {(feedback.status === 'fail_content' || (!feedback.correct && feedback.status !== 'success')) && (
+              <Button
+                onClick={() => speakWord(displayWord)}
+                variant="outline"
+                className="w-full text-violet-600 border-violet-300"
+              >
+                <Volume2 className="w-4 h-4 mr-2" />
+                Listen to correct pronunciation
+              </Button>
+            )}
 
             {/* Action Buttons */}
             <div className="flex gap-3 pt-2">
