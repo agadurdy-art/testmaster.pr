@@ -388,8 +388,19 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
     """
     try:
         audio_data = await audio_file.read()
-        transcription_result = await stt.transcribe(audio_data)
-        transcribed = transcription_result.get("text", "").strip().lower()
+        
+        if not audio_data or len(audio_data) < 100:
+            raise HTTPException(status_code=400, detail="Audio file is too small or empty. Please record again.")
+        
+        try:
+            transcription_result = await stt.transcribe(audio_data)
+            transcribed = transcription_result.get("text", "").strip().lower()
+        except Exception as transcribe_error:
+            error_msg = str(transcribe_error)
+            if "Unrecognized file format" in error_msg:
+                raise HTTPException(status_code=400, detail="Audio format not recognized. Please try recording again.")
+            raise HTTPException(status_code=500, detail=f"Could not transcribe audio: {error_msg}")
+        
         target = word.strip().lower()
         
         # Simple comparison
@@ -403,7 +414,7 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
             else:
                 # Check character overlap
                 common_chars = set(transcribed) & set(target)
-                score = int((len(common_chars) / len(target)) * 60)
+                score = int((len(common_chars) / len(target)) * 60) if target else 0
         
         return {
             "word": word,
@@ -413,6 +424,8 @@ async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
             "feedback": "Perfect!" if score == 100 else "Close! Try again." if score >= 70 else "Keep practicing!"
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Word practice failed: {str(e)}")
 
