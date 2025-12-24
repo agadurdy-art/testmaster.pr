@@ -294,12 +294,22 @@ async def check_pronunciation(audio_file: UploadFile, target_text: str, user_id:
         # Read audio file
         audio_data = await audio_file.read()
         
+        if not audio_data or len(audio_data) < 100:
+            raise HTTPException(status_code=400, detail="Audio file is too small or empty. Please record again.")
+        
         # Transcribe using Whisper
-        transcription_result = await stt.transcribe(audio_data)
-        transcribed_text = transcription_result.get("text", "")
+        try:
+            transcription_result = await stt.transcribe(audio_data)
+            transcribed_text = transcription_result.get("text", "")
+        except Exception as transcribe_error:
+            # If transcription fails, provide a helpful error
+            error_msg = str(transcribe_error)
+            if "Unrecognized file format" in error_msg:
+                raise HTTPException(status_code=400, detail="Audio format not recognized. Please try recording again.")
+            raise HTTPException(status_code=500, detail=f"Could not transcribe audio: {error_msg}")
         
         if not transcribed_text:
-            raise HTTPException(status_code=400, detail="Could not transcribe audio")
+            raise HTTPException(status_code=400, detail="Could not detect speech in the audio. Please speak clearly and try again.")
         
         # Analyze pronunciation with LLM
         llm = LlmChat(
@@ -342,6 +352,8 @@ async def check_pronunciation(audio_file: UploadFile, target_text: str, user_id:
                 "target_text": target_text
             }
         
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pronunciation check failed: {str(e)}")
 
