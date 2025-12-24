@@ -1,416 +1,587 @@
 """
-PRONUNCIATION & PHONICS SYSTEM
-Advanced speech recognition and pronunciation feedback for YLE learners
-Special focus on Asian learners' challenges (final sounds, difficult consonants)
+PRONUNCIATION EVALUATION MODULE
+Site-wide 3-layer pronunciation evaluation stack
+
+Layer A: Audio Quality Gate
+Layer B: Content Gate (Whisper STT)
+Layer C: Pronunciation Scoring (Phase 2: Azure/MFA integration)
+
+Output schema is consistent across all lesson types.
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import os
 import io
 import asyncio
+import re
+import struct
+import math
 from emergentintegrations.llm.openai import OpenAISpeechToText
-from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 router = APIRouter(prefix="/api/pronunciation", tags=["pronunciation"])
 
 # Initialize Speech-to-Text
 stt = OpenAISpeechToText(api_key=os.getenv("EMERGENT_LLM_KEY"))
 
-# LLM will be initialized per request for pronunciation analysis
+# =============================================================================
+# CONFIGURATION
+# =============================================================================
 
-# ============ PHONICS LESSONS FOR ASIAN LEARNERS ============
-
-PHONICS_LESSONS = {
-    "final_consonants": {
-        "title": "Final Consonant Sounds",
-        "description": "Master ending sounds that are often silent in Asian languages",
-        "challenge": "Many Asian languages don't emphasize final consonants, making words like 'cat' sound like 'ca'",
-        "sounds": [
-            {
-                "sound": "/t/",
-                "examples": ["cat", "hat", "sit", "hot", "not"],
-                "tip": "Touch your tongue to the roof of your mouth and release air",
-                "common_mistake": "Saying 'ca' instead of 'cat'",
-                "practice": "Say: cat - CAT (stress the T)"
-            },
-            {
-                "sound": "/d/",
-                "examples": ["bed", "red", "had", "good", "did"],
-                "tip": "Like /t/ but with voice - your throat vibrates",
-                "common_mistake": "Silent or very soft /d/",
-                "practice": "Say: bed - BED (feel the vibration)"
-            },
-            {
-                "sound": "/p/",
-                "examples": ["cup", "map", "stop", "up", "top"],
-                "tip": "Press lips together and release with a small burst of air",
-                "common_mistake": "Open mouth too early, sound becomes 'u'",
-                "practice": "Hold: cu...P (burst at the end)"
-            },
-            {
-                "sound": "/k/",
-                "examples": ["book", "look", "back", "duck", "stick"],
-                "tip": "Back of tongue touches soft palate, release air",
-                "common_mistake": "Weak or missing /k/",
-                "practice": "booK - feel the stop at the back"
-            },
-            {
-                "sound": "/s/",
-                "examples": ["bus", "yes", "miss", "grass", "face"],
-                "tip": "Tongue behind teeth, continuous air flow",
-                "common_mistake": "Adding extra vowel: 'bus-u'",
-                "practice": "Extend: busssss (no extra sound)"
-            },
-            {
-                "sound": "/z/",
-                "examples": ["has", "is", "buzz", "quiz", "dogs"],
-                "tip": "Like /s/ but with voice - throat vibrates",
-                "common_mistake": "Pronouncing as /s/ without voice",
-                "practice": "Feel vibration: haszzz"
-            }
-        ]
-    },
-    "consonant_clusters": {
-        "title": "Consonant Clusters",
-        "description": "Two or more consonants together - challenging for Asian learners",
-        "challenge": "Asian languages rarely have consonant clusters, making words like 'stop' difficult",
-        "sounds": [
-            {
-                "sound": "st-",
-                "examples": ["stop", "star", "stand", "stick", "story"],
-                "tip": "Say /s/ first, then add /t/ without pause",
-                "common_mistake": "Adding vowel: 'su-top'",
-                "practice": "Blend: sss-t-top (no gap)"
-            },
-            {
-                "sound": "sp-",
-                "examples": ["sport", "speak", "spell", "spider", "space"],
-                "tip": "Press lips for /p/ while making /s/",
-                "common_mistake": "Separating sounds: 'su-port'",
-                "practice": "Quick: sp-ort (together)"
-            },
-            {
-                "sound": "sk-",
-                "examples": ["skip", "sky", "skate", "school", "ski"],
-                "tip": "/s/ flows into /k/ - back of tongue ready",
-                "common_mistake": "'su-kip' or missing /k/",
-                "practice": "Continuous: ssskip"
-            },
-            {
-                "sound": "-nd",
-                "examples": ["hand", "stand", "friend", "and", "send"],
-                "tip": "Tongue touches roof for /n/, stays for /d/",
-                "common_mistake": "Only /n/ or /d/, not both",
-                "practice": "han-d (both sounds clear)"
-            },
-            {
-                "sound": "-ld",
-                "examples": ["old", "cold", "told", "child", "field"],
-                "tip": "/l/ tongue position, then /d/",
-                "common_mistake": "Dropping the /l/ or /d/",
-                "practice": "Feel: col-d (two movements)"
-            }
-        ]
-    },
-    "difficult_vowels": {
-        "title": "English Vowel Sounds",
-        "description": "English has more vowel sounds than many Asian languages",
-        "challenge": "Distinguishing between similar vowels like /i/ (sheep) and /ɪ/ (ship)",
-        "sounds": [
-            {
-                "sound": "/i:/ vs /ɪ/",
-                "examples": ["sheep/ship", "seat/sit", "beat/bit", "feet/fit"],
-                "tip": "/i:/ is long and tense, /ɪ/ is short and relaxed",
-                "common_mistake": "Using same sound for both",
-                "practice": "Long: sheeeep vs Short: ship"
-            },
-            {
-                "sound": "/æ/ (cat)",
-                "examples": ["cat", "bag", "hat", "map", "bad"],
-                "tip": "Open mouth wide, tongue low and front",
-                "common_mistake": "Saying /e/ like 'bet' instead of /æ/ like 'bat'",
-                "practice": "Wide mouth: caaat"
-            },
-            {
-                "sound": "/ʌ/ (cup)",
-                "examples": ["cup", "bus", "run", "sun", "fun"],
-                "tip": "Relaxed, mouth slightly open, tongue middle",
-                "common_mistake": "Using /a/ or /o/ sound",
-                "practice": "Relaxed: cuuup"
-            },
-            {
-                "sound": "/ɔː/ (ball)",
-                "examples": ["ball", "call", "fall", "tall", "small"],
-                "tip": "Round lips, tongue back and low",
-                "common_mistake": "Not rounding lips enough",
-                "practice": "Round: baaall"
-            }
-        ]
-    },
-    "th_sounds": {
-        "title": "The 'TH' Sounds",
-        "description": "The most challenging sound for Asian learners",
-        "challenge": "Most Asian languages don't have 'th' - often replaced with /s/, /t/, or /d/",
-        "sounds": [
-            {
-                "sound": "/θ/ (voiceless)",
-                "examples": ["think", "thank", "three", "bath", "math"],
-                "tip": "Tongue between teeth, blow air (no voice)",
-                "common_mistake": "Saying 'sink' instead of 'think'",
-                "practice": "Tongue out: thththink"
-            },
-            {
-                "sound": "/ð/ (voiced)",
-                "examples": ["this", "that", "the", "mother", "brother"],
-                "tip": "Same position but with voice - throat vibrates",
-                "common_mistake": "Saying 'dis' instead of 'this'",
-                "practice": "Voice on: thththis"
-            }
-        ]
-    },
-    "r_and_l": {
-        "title": "R and L Sounds",
-        "description": "Distinguishing /r/ and /l/ - common challenge for East Asian learners",
-        "challenge": "Some languages don't distinguish between /r/ and /l/",
-        "sounds": [
-            {
-                "sound": "/r/",
-                "examples": ["red", "run", "right", "tree", "friend"],
-                "tip": "Curl tongue back, don't touch roof",
-                "common_mistake": "Using /l/ sound or rolling /r/",
-                "practice": "Curl: rrrred (tongue back)"
-            },
-            {
-                "sound": "/l/",
-                "examples": ["light", "love", "like", "play", "blue"],
-                "tip": "Tongue touches roof behind teeth",
-                "common_mistake": "Keeping tongue in center",
-                "practice": "Touch: llllight (feel the touch)"
-            },
-            {
-                "sound": "r vs l practice",
-                "examples": ["read/lead", "right/light", "rock/lock", "pray/play"],
-                "tip": "For /r/ curl back, for /l/ touch front",
-                "common_mistake": "Using same sound for both",
-                "practice": "Contrast: read (curl) vs lead (touch)"
-            }
-        ]
-    },
-    "stress_and_rhythm": {
-        "title": "Word Stress & Rhythm",
-        "description": "English is a stress-timed language",
-        "challenge": "Many Asian languages are syllable-timed, making English rhythm unnatural",
-        "sounds": [
-            {
-                "sound": "Two-syllable stress",
-                "examples": ["TEAcher", "STUdent", "HAPpy", "TAble"],
-                "tip": "First syllable is STRONG and LONG, second is weak and short",
-                "common_mistake": "Equal stress: tea-cher (wrong)",
-                "practice": "Strong-weak: TEA-cher"
-            },
-            {
-                "sound": "Three-syllable stress",
-                "examples": ["FAMily", "BEAUtiful", "IMportant", "comPUter"],
-                "tip": "One syllable is stressed, others are reduced",
-                "common_mistake": "Stressing all syllables equally",
-                "practice": "Find the stress: fam-i-ly (stress on 'fam')"
-            }
-        ]
-    }
+# Quality Gate thresholds
+QUALITY_CONFIG = {
+    "min_duration_word_ms": 600,      # 0.6s for single word
+    "min_duration_sentence_ms": 1200,  # 1.2s for sentence
+    "min_blob_size_word": 8000,        # 8KB for word
+    "min_blob_size_sentence": 15000,   # 15KB for sentence
+    "max_silence_ratio": 0.85,         # Max 85% silence
 }
 
-# ============ PRONUNCIATION ANALYSIS PROMPT ============
+# Content Gate thresholds
+CONTENT_CONFIG = {
+    "max_edit_distance_word": 2,       # Allow edit distance of 2 for words
+    "max_wer_sentence": 0.40,          # 40% WER threshold for sentences
+}
 
-PRONUNCIATION_ANALYSIS_PROMPT = """You are an expert pronunciation teacher specializing in helping Asian English learners.
+# Scoring thresholds
+SCORE_TO_STARS = [
+    (90, 5, "Excellent!"),
+    (75, 4, "Good!"),
+    (60, 3, "Okay"),
+    (40, 2, "Needs work"),
+    (0, 1, "Try again"),
+]
 
-TASK: Analyze the pronunciation accuracy and provide detailed, actionable feedback.
+# Similar sounding words (Whisper commonly mishears these)
+SIMILAR_SOUNDS = {
+    "eye": ["i", "ice", "aye", "ai", "eyes"],
+    "hair": ["here", "hare", "air", "yeah", "her", "hear", "hairs"],
+    "ear": ["here", "year", "air", "e", "ears", "ear"],
+    "mouth": ["mouse", "math", "moth", "mouths"],
+    "face": ["phase", "faith", "bass", "base", "faces"],
+    "nose": ["knows", "nos", "no", "noes", "noses"],
+    "head": ["had", "ed", "hid", "bed", "heads", "dead"],
+    "hand": ["and", "had", "hound", "hands", "hanged"],
+    "arm": ["om", "am", "arms", "harm"],
+    "leg": ["lake", "lag", "lack", "legs", "like"],
+    "foot": ["food", "put", "full", "feet"],
+    "toe": ["tow", "to", "though", "toes", "two"],
+    "finger": ["figure", "fingers"],
+    "thumb": ["some", "sum", "come", "thumbs"],
+    "body": ["buddy", "boddy", "bodies"],
+    "neck": ["nick", "knack", "next"],
+    "shoulder": ["shoulders", "older"],
+    "knee": ["need", "knees", "me", "key"],
+    "ankle": ["uncle", "angle", "ankles"],
+}
 
-TARGET TEXT: "{target_text}"
-USER'S PRONUNCIATION: "{transcribed_text}"
+# =============================================================================
+# OUTPUT SCHEMA
+# =============================================================================
 
-ASIAN LEARNER CHALLENGES TO CHECK:
-1. Final consonants (t, d, p, k, s, z) - Are they pronounced fully?
-2. Consonant clusters (st, sp, sk, nd, ld) - Are they blended properly?
-3. TH sounds - Is tongue between teeth?
-4. R and L distinction - Are they clearly different?
-5. Vowel sounds - Correct length and quality?
-6. Word stress - Strong-weak pattern correct?
+class PronunciationError(BaseModel):
+    type: str  # "phoneme", "stress", "fluency"
+    expected: Optional[str] = None
+    got: Optional[str] = None
+    hint: str
 
-PROVIDE FEEDBACK IN THIS JSON FORMAT:
-{{
-  "overall_score": 0-100,
-  "pronunciation_grade": "Excellent/Good/Fair/Needs Practice",
-  "matched_words": ["list", "of", "correctly", "pronounced", "words"],
-  "errors": [
-    {{
-      "word": "word_with_error",
-      "issue": "specific_problem",
-      "explanation": "why this is wrong",
-      "correct_pronunciation": "how to say it",
-      "tip": "actionable advice"
-    }}
-  ],
-  "strengths": ["what was good"],
-  "focus_areas": ["what to practice"],
-  "phonics_lesson_recommended": "lesson_key_from_PHONICS_LESSONS or null"
-}}
+class PronunciationSubscores(BaseModel):
+    accuracy: int = 0
+    fluency: int = 0
+    prosody: int = 0
+    completeness: int = 0
 
-Be encouraging but honest. Focus on the 1-2 most important issues first.
-If pronunciation is very different from target, recommend specific phonics lessons.
-"""
+class PronunciationResult(BaseModel):
+    status: str  # "success", "fail_quality", "fail_content", "fail_system"
+    score: Optional[int] = None
+    stars: Optional[int] = None
+    subscores: Optional[PronunciationSubscores] = None
+    transcript: str = ""
+    target: str = ""
+    errors: List[Dict[str, Any]] = []
+    feedback_short: str = ""
+    feedback_long: str = ""
+    should_count_attempt: bool = False  # Only True for content/pronunciation outcomes
 
-# ============ REQUEST/RESPONSE MODELS ============
+# =============================================================================
+# LAYER A: AUDIO QUALITY GATE
+# =============================================================================
 
-class PronunciationCheckRequest(BaseModel):
-    user_id: str
-    target_text: str
-    audio_data: str  # Base64 encoded audio
-    lesson_id: Optional[str] = None
-    word_id: Optional[str] = None
+def analyze_audio_quality(audio_data: bytes, is_sentence: bool = False) -> Dict[str, Any]:
+    """
+    Analyze audio quality before processing.
+    Returns quality metrics and pass/fail status.
+    """
+    result = {
+        "passed": False,
+        "reason": "",
+        "metrics": {
+            "size_bytes": len(audio_data),
+            "estimated_duration_ms": 0,
+        }
+    }
+    
+    size = len(audio_data)
+    min_size = QUALITY_CONFIG["min_blob_size_sentence" if is_sentence else "min_blob_size_word"]
+    
+    # Check blob size
+    if size < min_size:
+        result["reason"] = "Recording too short or too quiet. Please try again."
+        return result
+    
+    # Estimate duration from file size (rough approximation for webm/opus)
+    # webm/opus typically ~6-12 KB per second
+    estimated_duration_ms = (size / 8) # Very rough estimate
+    result["metrics"]["estimated_duration_ms"] = estimated_duration_ms
+    
+    min_duration = QUALITY_CONFIG["min_duration_sentence_ms" if is_sentence else "min_duration_word_ms"]
+    if estimated_duration_ms < min_duration * 0.5:  # Allow some tolerance
+        result["reason"] = "Recording too short. Please speak for longer."
+        return result
+    
+    # For more accurate quality checks, we would analyze the actual audio
+    # For now, size-based validation is sufficient for Phase 1
+    
+    result["passed"] = True
+    return result
 
-class PronunciationFeedback(BaseModel):
-    overall_score: int
-    pronunciation_grade: str
-    matched_words: List[str]
-    errors: List[Dict[str, str]]
-    strengths: List[str]
-    focus_areas: List[str]
-    phonics_lesson_recommended: Optional[str]
-    transcribed_text: str
-    target_text: str
+# =============================================================================
+# LAYER B: CONTENT GATE
+# =============================================================================
 
-class PhonicsLessonRequest(BaseModel):
-    lesson_key: str  # e.g., "final_consonants", "th_sounds"
+def levenshtein_distance(s1: str, s2: str) -> int:
+    """Calculate Levenshtein edit distance between two strings."""
+    if len(s1) < len(s2):
+        return levenshtein_distance(s2, s1)
+    if len(s2) == 0:
+        return len(s1)
+    
+    prev_row = list(range(len(s2) + 1))
+    for i, c1 in enumerate(s1):
+        curr_row = [i + 1]
+        for j, c2 in enumerate(s2):
+            insertions = prev_row[j + 1] + 1
+            deletions = curr_row[j] + 1
+            substitutions = prev_row[j] + (c1 != c2)
+            curr_row.append(min(insertions, deletions, substitutions))
+        prev_row = curr_row
+    return prev_row[-1]
 
-# ============ API ENDPOINTS ============
+def calculate_wer(reference: str, hypothesis: str) -> float:
+    """Calculate Word Error Rate between reference and hypothesis."""
+    ref_words = reference.lower().split()
+    hyp_words = hypothesis.lower().split()
+    
+    if not ref_words:
+        return 1.0 if hyp_words else 0.0
+    
+    # Simple WER calculation
+    distance = levenshtein_distance(' '.join(ref_words), ' '.join(hyp_words))
+    return distance / len(' '.join(ref_words))
+
+def normalize_text(text: str) -> str:
+    """Normalize text for comparison."""
+    # Lowercase, remove punctuation, strip whitespace
+    text = text.lower()
+    text = re.sub(r'[^\w\s]', '', text)
+    text = ' '.join(text.split())  # Normalize whitespace
+    return text
+
+def check_content_match(target: str, transcript: str, is_sentence: bool = False) -> Dict[str, Any]:
+    """
+    Check if the spoken content matches the target.
+    Returns match result with details.
+    """
+    result = {
+        "passed": False,
+        "reason": "",
+        "normalized_target": "",
+        "normalized_transcript": "",
+        "match_type": "none",  # "exact", "similar", "partial", "none"
+        "similarity_score": 0,
+    }
+    
+    # Normalize both
+    norm_target = normalize_text(target)
+    norm_transcript = normalize_text(transcript)
+    
+    result["normalized_target"] = norm_target
+    result["normalized_transcript"] = norm_transcript
+    
+    if not norm_transcript:
+        result["reason"] = "Couldn't hear you clearly. Please speak louder."
+        return result
+    
+    if is_sentence:
+        # Sentence matching using WER
+        wer = calculate_wer(norm_target, norm_transcript)
+        result["similarity_score"] = int((1 - wer) * 100)
+        
+        if wer <= CONTENT_CONFIG["max_wer_sentence"]:
+            result["passed"] = True
+            result["match_type"] = "exact" if wer < 0.1 else "partial"
+        else:
+            result["reason"] = "You said something different. Listen and try again."
+    else:
+        # Single word matching
+        target_words = norm_target.split()
+        transcript_words = norm_transcript.split()
+        
+        # Get first word of transcript
+        first_word = transcript_words[0] if transcript_words else ""
+        target_word = target_words[0] if target_words else ""
+        
+        # Check exact match
+        if first_word == target_word:
+            result["passed"] = True
+            result["match_type"] = "exact"
+            result["similarity_score"] = 100
+        # Check if target appears anywhere in transcript
+        elif target_word in transcript_words:
+            result["passed"] = True
+            result["match_type"] = "exact"
+            result["similarity_score"] = 95
+        # Check similar sounds (Whisper mishears)
+        elif target_word in SIMILAR_SOUNDS and first_word in SIMILAR_SOUNDS[target_word]:
+            result["passed"] = True
+            result["match_type"] = "similar"
+            result["similarity_score"] = 85
+        else:
+            # Check edit distance
+            edit_dist = levenshtein_distance(first_word, target_word)
+            max_edit = CONTENT_CONFIG["max_edit_distance_word"]
+            
+            if edit_dist <= max_edit:
+                result["passed"] = True
+                result["match_type"] = "partial"
+                result["similarity_score"] = max(60, 100 - (edit_dist * 15))
+            else:
+                # Check character similarity
+                if first_word and target_word:
+                    common = sum(1 for a, b in zip(first_word, target_word) if a == b)
+                    sim = common / max(len(first_word), len(target_word))
+                    result["similarity_score"] = int(sim * 50)
+                
+                result["reason"] = f"You said '{first_word}'. Try saying '{target_word}' again."
+    
+    return result
+
+# =============================================================================
+# LAYER C: PRONUNCIATION SCORING (Phase 1 - Simplified)
+# =============================================================================
+
+def calculate_pronunciation_score(content_result: Dict[str, Any], is_sentence: bool = False) -> Dict[str, Any]:
+    """
+    Calculate pronunciation score based on content match.
+    
+    Phase 1: Simplified scoring based on STT confidence and match quality.
+    Phase 2: Will integrate Azure Pronunciation Assessment or MFA.
+    """
+    base_score = content_result.get("similarity_score", 0)
+    match_type = content_result.get("match_type", "none")
+    
+    # Adjust score based on match type
+    if match_type == "exact":
+        score = max(85, base_score)  # Minimum 85 for exact match
+    elif match_type == "similar":
+        score = max(75, min(85, base_score))  # 75-85 for similar sounds
+    elif match_type == "partial":
+        score = max(60, min(75, base_score))  # 60-75 for partial match
+    else:
+        score = min(40, base_score)  # Max 40 for no match
+    
+    # Calculate subscores (simplified for Phase 1)
+    subscores = {
+        "accuracy": score,
+        "fluency": min(100, score + 10) if match_type in ["exact", "similar"] else score,
+        "prosody": score,  # Will be calculated properly in Phase 2
+        "completeness": 100 if match_type == "exact" else 80 if match_type == "similar" else 50,
+    }
+    
+    # Get stars and feedback
+    stars = 1
+    feedback_short = "Try again"
+    for threshold, star_count, feedback in SCORE_TO_STARS:
+        if score >= threshold:
+            stars = star_count
+            feedback_short = feedback
+            break
+    
+    # Generate errors/tips (simplified for Phase 1)
+    errors = []
+    if match_type == "similar":
+        errors.append({
+            "type": "phoneme",
+            "expected": content_result.get("normalized_target", ""),
+            "got": content_result.get("normalized_transcript", ""),
+            "hint": "Good attempt! The sound is close."
+        })
+    elif match_type == "partial":
+        errors.append({
+            "type": "phoneme",
+            "hint": "Focus on pronouncing each sound clearly."
+        })
+    
+    return {
+        "score": score,
+        "stars": stars,
+        "subscores": subscores,
+        "errors": errors,
+        "feedback_short": feedback_short,
+    }
+
+# =============================================================================
+# WHISPER TRANSCRIPTION HELPER
+# =============================================================================
+
+async def transcribe_audio(audio_data: bytes, timeout: float = 12.0) -> Dict[str, Any]:
+    """
+    Transcribe audio using Whisper with proper response parsing.
+    """
+    result = {
+        "success": False,
+        "transcript": "",
+        "error": "",
+    }
+    
+    audio_file = io.BytesIO(audio_data)
+    audio_file.name = "recording.webm"
+    
+    try:
+        transcription_result = await asyncio.wait_for(
+            stt.transcribe(
+                file=audio_file,
+                model="whisper-1",
+                response_format="text"
+            ),
+            timeout=timeout
+        )
+        
+        # Parse the response properly
+        transcript = ""
+        if transcription_result:
+            if hasattr(transcription_result, 'text'):
+                transcript = transcription_result.text
+            elif isinstance(transcription_result, dict) and 'text' in transcription_result:
+                transcript = transcription_result['text']
+            elif isinstance(transcription_result, str):
+                # Check if it's a repr string
+                if 'text=' in transcription_result or 'text:' in transcription_result:
+                    # Extract text from repr
+                    match = re.search(r"text[=:]\s*['\"]?([^'\"}\]]+)['\"]?", transcription_result)
+                    if match:
+                        transcript = match.group(1).strip()
+                else:
+                    transcript = transcription_result
+            else:
+                transcript = str(transcription_result)
+        
+        result["success"] = True
+        result["transcript"] = transcript.strip()
+        
+    except asyncio.TimeoutError:
+        result["error"] = "timeout"
+    except Exception as e:
+        result["error"] = str(e)
+    
+    return result
+
+# =============================================================================
+# MAIN EVALUATION ENDPOINT
+# =============================================================================
+
+@router.post("/evaluate")
+async def evaluate_pronunciation(
+    audio_file: UploadFile,
+    target: str,
+    user_id: str,
+    is_sentence: bool = False
+):
+    """
+    Main pronunciation evaluation endpoint.
+    Implements 3-layer evaluation: Quality Gate -> Content Gate -> Pronunciation Scoring
+    
+    Returns consistent schema across all lesson types.
+    """
+    print(f"[Pronunciation] Evaluating: target='{target}', is_sentence={is_sentence}")
+    
+    # Read audio data
+    audio_data = await audio_file.read()
+    print(f"[Pronunciation] Audio size: {len(audio_data)} bytes")
+    
+    # =================================
+    # LAYER A: Quality Gate
+    # =================================
+    quality_result = analyze_audio_quality(audio_data, is_sentence)
+    
+    if not quality_result["passed"]:
+        print(f"[Pronunciation] Quality gate failed: {quality_result['reason']}")
+        return {
+            "status": "fail_quality",
+            "score": None,
+            "stars": None,
+            "subscores": None,
+            "transcript": "",
+            "target": target,
+            "errors": [],
+            "feedback_short": quality_result["reason"],
+            "feedback_long": "Please ensure you're in a quiet environment and speak clearly into the microphone.",
+            "should_count_attempt": False  # Don't count quality failures
+        }
+    
+    # =================================
+    # LAYER B: Content Gate (Whisper STT)
+    # =================================
+    transcription = await transcribe_audio(audio_data)
+    
+    if not transcription["success"]:
+        print(f"[Pronunciation] Transcription failed: {transcription['error']}")
+        return {
+            "status": "fail_system",
+            "score": None,
+            "stars": None,
+            "subscores": None,
+            "transcript": "",
+            "target": target,
+            "errors": [],
+            "feedback_short": "Could not analyze your recording. Please try again.",
+            "feedback_long": "There was a technical issue. Please try recording again.",
+            "should_count_attempt": False  # Don't count system failures
+        }
+    
+    transcript = transcription["transcript"]
+    print(f"[Pronunciation] Transcript: '{transcript}'")
+    
+    # Check content match
+    content_result = check_content_match(target, transcript, is_sentence)
+    print(f"[Pronunciation] Content check: passed={content_result['passed']}, type={content_result['match_type']}")
+    
+    if not content_result["passed"]:
+        # Content gate failed - they said something different
+        return {
+            "status": "fail_content",
+            "score": content_result["similarity_score"],
+            "stars": 1,
+            "subscores": {
+                "accuracy": content_result["similarity_score"],
+                "fluency": 0,
+                "prosody": 0,
+                "completeness": 0
+            },
+            "transcript": content_result["normalized_transcript"],
+            "target": target,
+            "errors": [{
+                "type": "content",
+                "expected": content_result["normalized_target"],
+                "got": content_result["normalized_transcript"],
+                "hint": "Listen to the correct pronunciation and try again."
+            }],
+            "feedback_short": content_result["reason"],
+            "feedback_long": f"You said '{content_result['normalized_transcript']}' but the target was '{target}'. Listen to the model audio and try again.",
+            "should_count_attempt": True  # Count content failures as attempts
+        }
+    
+    # =================================
+    # LAYER C: Pronunciation Scoring
+    # =================================
+    scoring_result = calculate_pronunciation_score(content_result, is_sentence)
+    
+    # Determine status based on score
+    score = scoring_result["score"]
+    if score >= 75:
+        status = "success"
+    elif score >= 50:
+        status = "partial"
+    else:
+        status = "needs_practice"
+    
+    print(f"[Pronunciation] Final score: {score}, stars: {scoring_result['stars']}, status: {status}")
+    
+    return {
+        "status": status,
+        "score": score,
+        "stars": scoring_result["stars"],
+        "subscores": scoring_result["subscores"],
+        "transcript": content_result["normalized_transcript"],
+        "target": target,
+        "errors": scoring_result["errors"],
+        "feedback_short": scoring_result["feedback_short"],
+        "feedback_long": f"You said the word correctly! " if score >= 75 else "Keep practicing for better pronunciation.",
+        "should_count_attempt": True  # Count evaluated pronunciations
+    }
+
+# =============================================================================
+# BACKWARD COMPATIBLE ENDPOINT (for existing frontend)
+# =============================================================================
+
+@router.post("/practice-word")
+async def practice_word(audio_file: UploadFile, word: str, user_id: str):
+    """
+    Backward compatible endpoint for single word practice.
+    Wraps the new evaluation system.
+    """
+    result = await evaluate_pronunciation(
+        audio_file=audio_file,
+        target=word,
+        user_id=user_id,
+        is_sentence=False
+    )
+    
+    # Convert to old format for backward compatibility
+    return {
+        "status": result["status"] if result["status"] != "partial" else "needs_practice",
+        "word": word,
+        "transcribed": result["transcript"],
+        "score": result["score"] or 0,
+        "correct": result["status"] == "success",
+        "feedback": result["feedback_short"],
+        "should_count_attempt": result["should_count_attempt"]
+    }
+
+# =============================================================================
+# LEGACY ENDPOINTS (kept for compatibility)
+# =============================================================================
 
 @router.post("/check")
 async def check_pronunciation(audio_file: UploadFile, target_text: str, user_id: str):
-    """
-    Check pronunciation of recorded audio against target text
-    Returns detailed feedback with specific issues and recommendations
-    OPTIMIZED: Faster evaluation with timeout handling
-    """
-    try:
-        # Read audio file
-        audio_data = await audio_file.read()
-        
-        if not audio_data or len(audio_data) < 500:
-            raise HTTPException(status_code=400, detail="Audio file is too small or empty. Please record again.")
-        
-        # Prepare audio file like the main transcription endpoint
-        audio_file_obj = io.BytesIO(audio_data)
-        audio_file_obj.name = audio_file.filename or "recording.webm"
-        
-        # Transcribe using Whisper
-        transcribed_text = ""
-        try:
-            transcription_result = await stt.transcribe(
-                file=audio_file_obj,
-                model="whisper-1",
-                response_format="text"
-            )
-            transcribed_text = str(transcription_result).strip() if transcription_result else ""
-        except Exception as transcribe_error:
-            error_msg = str(transcribe_error)
-            print(f"Transcription error: {error_msg}")
-            if "Unrecognized file format" in error_msg:
-                raise HTTPException(status_code=400, detail="Audio format not recognized. Please try recording again.")
-            # Try to continue with empty transcription for simpler evaluation
-            transcribed_text = ""
-        
-        if not transcribed_text:
-            # Return a quick evaluation even without transcription
-            return {
-                "overall_score": 50,
-                "pronunciation_grade": "Try Again",
-                "matched_words": [],
-                "errors": [],
-                "strengths": ["Recording received"],
-                "focus_areas": ["Try speaking more clearly and louder"],
-                "phonics_lesson_recommended": None,
-                "transcribed_text": "(Could not detect clear speech)",
-                "target_text": target_text
-            }
-        
-        # Quick comparison without LLM for faster response
-        target_words = set(target_text.lower().split())
-        spoken_words = set(transcribed_text.lower().split())
-        matched_words = target_words & spoken_words
-        
-        match_ratio = len(matched_words) / max(len(target_words), 1)
-        quick_score = int(match_ratio * 100)
-        
-        if quick_score >= 80:
-            grade = "Excellent"
-        elif quick_score >= 60:
-            grade = "Good"
-        elif quick_score >= 40:
-            grade = "Fair"
-        else:
-            grade = "Needs Practice"
-        
-        # Try to get AI feedback with timeout
-        try:
-            llm = LlmChat(
-                api_key=os.getenv("EMERGENT_LLM_KEY"),
-                session_id=f"pronunciation_{user_id}",
-                system_message="You are a pronunciation teacher. Be brief."
-            ).with_model("openai", "gpt-4o-mini")
-            
-            prompt = f"""Target: "{target_text}"
-Said: "{transcribed_text}"
-Quick feedback in JSON: {{"score": 0-100, "feedback": "brief feedback", "tip": "one improvement tip"}}"""
-            
-            response = await asyncio.wait_for(
-                llm.send_message(UserMessage(text=prompt)),
-                timeout=8.0
-            )
-            
-            import json
-            import re
-            response_text = str(response)
-            json_match = re.search(r'\{[\s\S]*\}', response_text)
-            if json_match:
-                ai_data = json.loads(json_match.group())
-                quick_score = ai_data.get("score", quick_score)
-                ai_feedback = ai_data.get("feedback", "")
-                ai_tip = ai_data.get("tip", "")
-        except Exception:
-            ai_feedback = ""
-            ai_tip = "Practice saying each word clearly"
-        
-        return {
-            "overall_score": quick_score,
-            "pronunciation_grade": grade,
-            "matched_words": list(matched_words),
-            "errors": [] if quick_score >= 70 else [{"word": "general", "issue": "Some words unclear", "tip": ai_tip or "Speak each word distinctly"}],
-            "strengths": [ai_feedback] if ai_feedback else ["Good attempt!"],
-            "focus_areas": [ai_tip] if ai_tip else ["Practice speaking slowly and clearly"],
-            "phonics_lesson_recommended": "final_consonants" if quick_score < 60 else None,
-            "transcribed_text": transcribed_text,
-            "target_text": target_text
-        }
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        print(f"Pronunciation check error: {e}")
-        raise HTTPException(status_code=500, detail=f"Pronunciation check failed: {str(e)}")
+    """Legacy endpoint for sentence pronunciation check."""
+    result = await evaluate_pronunciation(
+        audio_file=audio_file,
+        target=target_text,
+        user_id=user_id,
+        is_sentence=True
+    )
+    return result
+
+# Phonics lessons data (simplified)
+PHONICS_LESSONS = {
+    "final_consonants": {
+        "title": "Final Consonant Sounds",
+        "description": "Practice pronouncing final consonants clearly",
+        "challenge": "Asian language speakers often drop final consonants",
+        "sounds": ["/t/", "/d/", "/s/", "/z/"]
+    },
+    "th_sounds": {
+        "title": "TH Sounds",
+        "description": "Practice the voiced and voiceless TH sounds",
+        "challenge": "TH sounds don't exist in many Asian languages",
+        "sounds": ["/θ/", "/ð/"]
+    },
+    "vowel_length": {
+        "title": "Vowel Length",
+        "description": "Practice distinguishing long and short vowels",
+        "challenge": "Vowel length changes meaning in English",
+        "sounds": ["/iː/", "/ɪ/", "/uː/", "/ʊ/"]
+    },
+}
 
 @router.get("/phonics-lessons")
 async def get_phonics_lessons():
     """Get all available phonics lessons"""
     return {
         "lessons": [
-            {
-                "key": key,
-                "title": lesson["title"],
-                "description": lesson["description"],
-                "challenge": lesson["challenge"]
-            }
+            {"key": key, **{k: v for k, v in lesson.items() if k != "sounds"}}
             for key, lesson in PHONICS_LESSONS.items()
         ]
     }
@@ -420,208 +591,4 @@ async def get_phonics_lesson_detail(lesson_key: str):
     """Get detailed phonics lesson content"""
     if lesson_key not in PHONICS_LESSONS:
         raise HTTPException(status_code=404, detail="Phonics lesson not found")
-    
     return PHONICS_LESSONS[lesson_key]
-
-@router.post("/practice-word")
-async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
-    """
-    Fast and accurate single word pronunciation check.
-    Fixed: Properly extract text from Whisper response object.
-    """
-    import re
-    
-    try:
-        audio_data = await audio_file.read()
-        
-        print(f"[Pronunciation] Audio: {len(audio_data)} bytes for word '{word}'")
-        
-        # Quick validation
-        if not audio_data or len(audio_data) < 3000:
-            return {
-                "status": "fail",
-                "word": word,
-                "transcribed": "",
-                "score": 0,
-                "correct": False,
-                "feedback": "Recording too short. Please try again."
-            }
-        
-        # Prepare audio
-        audio_file_obj = io.BytesIO(audio_data)
-        audio_file_obj.name = "recording.webm"
-        
-        # Fast transcription with short timeout
-        transcribed = ""
-        try:
-            transcription_result = await asyncio.wait_for(
-                stt.transcribe(
-                    file=audio_file_obj,
-                    model="whisper-1",
-                    response_format="text"
-                ),
-                timeout=10.0
-            )
-            
-            # Properly extract text from response
-            # The response might be a TranscriptionResponse object or a string
-            if transcription_result:
-                if hasattr(transcription_result, 'text'):
-                    # It's a response object with text attribute
-                    transcribed = transcription_result.text
-                elif isinstance(transcription_result, dict) and 'text' in transcription_result:
-                    # It's a dict with text key
-                    transcribed = transcription_result['text']
-                elif isinstance(transcription_result, str):
-                    # It's already a string - check if it contains 'text' from object repr
-                    if 'text' in transcription_result and 'TranscriptionResponse' in transcription_result:
-                        # Parse the text from the repr string
-                        import re as regex
-                        text_match = regex.search(r"text['\"]?\s*[:=]\s*['\"]([^'\"]+)['\"]", transcription_result)
-                        if text_match:
-                            transcribed = text_match.group(1)
-                        else:
-                            # Try another pattern - look for actual spoken text
-                            # The repr shows: text=' head' or text=" head"
-                            text_match2 = regex.search(r"text\s*=\s*['\"](.+?)['\"]", transcription_result)
-                            if text_match2:
-                                transcribed = text_match2.group(1)
-                            else:
-                                transcribed = ""
-                    else:
-                        transcribed = transcription_result
-                else:
-                    transcribed = str(transcription_result)
-            
-            transcribed = transcribed.strip() if transcribed else ""
-            print(f"[Pronunciation] Raw transcription: '{transcribed}'")
-            
-        except asyncio.TimeoutError:
-            print("[Pronunciation] Timeout")
-            return {
-                "status": "fail",
-                "word": word,
-                "transcribed": "",
-                "score": 0,
-                "correct": False,
-                "feedback": "Taking too long. Please try again."
-            }
-        except Exception as e:
-            print(f"[Pronunciation] Error: {e}")
-            return {
-                "status": "fail",
-                "word": word,
-                "transcribed": "",
-                "score": 0,
-                "correct": False,
-                "feedback": "Could not analyze. Please try again."
-            }
-        
-        # Empty check
-        if not transcribed.strip():
-            return {
-                "status": "fail",
-                "word": word,
-                "transcribed": "",
-                "score": 0,
-                "correct": False,
-                "feedback": "Couldn't hear you. Please speak louder."
-            }
-        
-        # Normalize both
-        spoken = re.sub(r'[^\w\s]', '', transcribed.lower()).strip()
-        target = re.sub(r'[^\w\s]', '', word.lower()).strip()
-        
-        # Get first word only (user might say extra words)
-        spoken_first = spoken.split()[0] if spoken.split() else ""
-        
-        print(f"[Pronunciation] Target: '{target}', Heard: '{spoken_first}' (full: '{spoken}')")
-        
-        # More lenient scoring for similar sounding words
-        # Common Whisper mishears:
-        # - "eye" → "ice", "i", "aye"
-        # - "hair" → "here", "hare", "yeah", "air"
-        # - "mouth" → "mouse", "math"
-        # - "face" → "phase", "faith"
-        SIMILAR_SOUNDS = {
-            "eye": ["i", "ice", "aye", "ai"],
-            "hair": ["here", "hare", "air", "yeah", "her", "hear"],
-            "ear": ["here", "year", "air", "e"],
-            "mouth": ["mouse", "math", "moth"],
-            "face": ["phase", "faith", "bass", "base"],
-            "nose": ["knows", "nos", "no"],
-            "head": ["had", "ed", "hid", "bed"],
-            "hand": ["and", "had", "hound"],
-            "arm": ["om", "am"],
-            "leg": ["lake", "lag", "lack"],
-            "foot": ["food", "put", "full"],
-            "toe": ["tow", "to", "though"],
-            "finger": ["figure"],
-            "thumb": ["some", "sum", "come"],
-        }
-        
-        # Check for exact match first
-        if spoken_first == target:
-            score = 100
-            correct = True
-            feedback = "Perfect! 🎉"
-        elif target in spoken.split():
-            # Target word found somewhere in what was said
-            score = 95
-            correct = True
-            feedback = "Excellent!"
-        elif target in SIMILAR_SOUNDS and spoken_first in SIMILAR_SOUNDS[target]:
-            # Whisper commonly mishears this word, but it sounds similar
-            score = 85
-            correct = True
-            feedback = "Very good!"
-        elif spoken_first and target:
-            # Check character similarity
-            matches = sum(1 for a, b in zip(spoken_first, target) if a == b)
-            max_len = max(len(spoken_first), len(target))
-            similarity = matches / max_len if max_len > 0 else 0
-            
-            # First letter match bonus
-            first_match = spoken_first[0] == target[0] if spoken_first and target else False
-            # Last letter match bonus
-            last_match = spoken_first[-1] == target[-1] if spoken_first and target else False
-            
-            if similarity >= 0.75 or (first_match and last_match and len(target) <= 5):
-                score = 85
-                correct = True
-                feedback = "Great job!"
-            elif similarity >= 0.5 or first_match:
-                score = 65
-                correct = False
-                feedback = "Close! Try again."
-            else:
-                score = 30
-                correct = False
-                feedback = "Not quite. Listen and try again."
-        else:
-            score = 0
-            correct = False
-            feedback = "Please try again."
-        
-        return {
-            "status": "success" if correct else "needs_practice",
-            "word": word,
-            "transcribed": spoken_first,
-            "score": score,
-            "correct": correct,
-            "feedback": feedback
-        }
-        
-    except Exception as e:
-        print(f"[Pronunciation] Unexpected: {e}")
-        return {
-            "status": "fail",
-            "word": word,
-            "transcribed": "",
-            "score": 0,
-            "correct": False,
-            "feedback": "Error occurred. Please try again."
-        }
-
-# Export router
-__all__ = ["router", "PHONICS_LESSONS"]
