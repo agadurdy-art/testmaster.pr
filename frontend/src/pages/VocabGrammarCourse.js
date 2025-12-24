@@ -597,41 +597,20 @@ export default function VocabGrammarCourse({ user }) {
             </div>
           )}
           
-          {/* Pronunciation Practice */}
+          {/* Pronunciation Practice - Using Azure-powered component */}
           <div className="border-t pt-6">
             <p className="text-sm font-medium text-gray-700 mb-3">🎤 Practice Your Pronunciation</p>
-            <div className="flex gap-3 justify-center">
-              {!recording ? (
-                <Button onClick={startRecording} className="primary-gradient text-white">
-                  <Mic className="w-4 h-4 mr-2" /> Record
-                </Button>
-              ) : (
-                <Button onClick={stopRecording} className="bg-red-500 text-white hover:bg-red-600">
-                  <Square className="w-4 h-4 mr-2" /> Stop
-                </Button>
-              )}
-            </div>
-            
-            {pronunciationResult && (
-              <div className={`mt-4 p-4 rounded-lg ${
-                pronunciationResult.score === 'correct' ? 'bg-green-50 border border-green-200' :
-                pronunciationResult.score === 'partially_correct' ? 'bg-yellow-50 border border-yellow-200' :
-                'bg-red-50 border border-red-200'
-              }`}>
-                <div className="flex items-center gap-2 mb-2">
-                  {pronunciationResult.score === 'correct' ? (
-                    <CheckCircle className="w-5 h-5 text-green-600" />
-                  ) : pronunciationResult.score === 'partially_correct' ? (
-                    <Star className="w-5 h-5 text-yellow-600" />
-                  ) : (
-                    <XCircle className="w-5 h-5 text-red-600" />
-                  )}
-                  <span className="font-medium">{pronunciationResult.score_percent}% Match</span>
-                </div>
-                <p className="text-sm text-gray-700">{pronunciationResult.feedback}</p>
-                <p className="text-sm text-gray-600 mt-1">💡 Tip: {pronunciationResult.tip}</p>
-              </div>
-            )}
+            <PronunciationRecorder
+              word={currentItem.word}
+              phonetic={currentItem.ipa}
+              imageUrl={selectedLesson.type !== 'grammar' ? vocabImage : null}
+              userId={user?.id || 'anonymous'}
+              type="word"
+              maxAttempts={5}
+              onFeedback={(result) => {
+                console.log('Pronunciation result:', result);
+              }}
+            />
           </div>
         </Card>
         
