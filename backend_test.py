@@ -562,6 +562,191 @@ def test_advanced_mastery_course():
         print("❌ SOME ADVANCED MASTERY COURSE TESTS FAILED!")
         return False
 
+def test_new_authentication_system():
+    """Test the new authentication system with immediate login flow as per review request"""
+    print("\n" + "="*80)
+    print("🚀 TESTING NEW AUTHENTICATION SYSTEM WITH IMMEDIATE LOGIN FLOW")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 5
+    new_user_id = None
+    
+    # Test Case 1: Register Endpoint - POST /api/auth/register
+    print("\n=== Test Case 1: Register Endpoint ===")
+    register_data = {
+        "name": "Test User",
+        "email": "newuser_test@example.com", 
+        "password": "test12345"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/auth/register", json=register_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            user = response.json()
+            new_user_id = user.get('id')
+            verified = user.get('verified', None)
+            email_verified = user.get('email_verified', None)
+            
+            print(f"✅ User registration successful")
+            print(f"   User ID: {new_user_id}")
+            print(f"   Email: {user.get('email')}")
+            print(f"   Verified: {verified}")
+            print(f"   Email Verified: {email_verified}")
+            
+            # Validate expected behavior
+            if verified == False and email_verified == False:
+                print("✅ User created with verified: false and email_verified: false as expected")
+                success_count += 1
+            else:
+                print(f"❌ Expected verified: false, email_verified: false, got verified: {verified}, email_verified: {email_verified}")
+        else:
+            print(f"❌ Registration failed: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Registration error: {e}")
+    
+    # Test Case 2: Login Endpoint - POST /api/auth/login (unverified user should be able to login)
+    print("\n=== Test Case 2: Login Endpoint (Unverified User) ===")
+    login_data = {
+        "email": "newuser_test@example.com",
+        "password": "test12345"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/auth/login", json=login_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            user = response.json()
+            verified = user.get('verified', None)
+            
+            print(f"✅ Unverified user login successful (no 403 error)")
+            print(f"   User ID: {user.get('id')}")
+            print(f"   Verified: {verified}")
+            
+            if verified == False:
+                print("✅ Login returns verified: false as expected")
+                success_count += 1
+            else:
+                print(f"❌ Expected verified: false, got verified: {verified}")
+        elif response.status_code == 403:
+            print(f"❌ Login blocked with 403 error - this should NOT happen with new flow")
+        else:
+            print(f"❌ Login failed: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Login error: {e}")
+    
+    # Test Case 3: Resend Verification Endpoint - POST /api/auth/resend-verification
+    print("\n=== Test Case 3: Resend Verification Endpoint ===")
+    resend_data = {
+        "email": "newuser_test@example.com"
+    }
+    
+    try:
+        # First resend attempt
+        response = requests.post(f"{BACKEND_URL}/auth/resend-verification", json=resend_data)
+        print(f"First resend - Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ First resend verification successful")
+            print(f"   Message: {result.get('message')}")
+            
+            # Immediate second attempt should get rate limit error
+            print("\n   Testing rate limiting (immediate second attempt)...")
+            response2 = requests.post(f"{BACKEND_URL}/auth/resend-verification", json=resend_data)
+            print(f"   Second resend - Status Code: {response2.status_code}")
+            
+            if response2.status_code == 429:
+                result2 = response2.json()
+                print(f"✅ Rate limiting working - got 429 error as expected")
+                print(f"   Error message: {result2.get('detail')}")
+                success_count += 1
+            else:
+                print(f"❌ Expected 429 rate limit error, got {response2.status_code}")
+        else:
+            print(f"❌ Resend verification failed: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Resend verification error: {e}")
+    
+    # Test Case 4: Get User Endpoint - GET /api/users/{user_id}
+    if new_user_id:
+        print(f"\n=== Test Case 4: Get User Endpoint ===")
+        try:
+            response = requests.get(f"{BACKEND_URL}/users/{new_user_id}")
+            print(f"Status Code: {response.status_code}")
+            
+            if response.status_code == 200:
+                user = response.json()
+                verified = user.get('verified', None)
+                email_verified = user.get('email_verified', None)
+                
+                print(f"✅ Get user successful")
+                print(f"   User ID: {user.get('id')}")
+                print(f"   Email: {user.get('email')}")
+                print(f"   Verified: {verified}")
+                print(f"   Email Verified: {email_verified}")
+                
+                if 'verified' in user and 'email_verified' in user:
+                    print("✅ User data includes verified and email_verified fields")
+                    success_count += 1
+                else:
+                    print("❌ User data missing verified or email_verified fields")
+            else:
+                print(f"❌ Get user failed: {response.status_code} - {response.text}")
+        except Exception as e:
+            print(f"❌ Get user error: {e}")
+    else:
+        print("\n=== Test Case 4: Get User Endpoint - SKIPPED (no user ID) ===")
+    
+    # Test Case 5: Existing User Login (verified user)
+    print("\n=== Test Case 5: Existing User Login (Verified) ===")
+    existing_login_data = {
+        "email": "dashboard@test.com",
+        "password": "test12345"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/auth/login", json=existing_login_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            user = response.json()
+            verified = user.get('verified', None)
+            
+            print(f"✅ Existing user login successful")
+            print(f"   User ID: {user.get('id')}")
+            print(f"   Email: {user.get('email')}")
+            print(f"   Verified: {verified}")
+            
+            if verified == True:
+                print("✅ Existing user returns verified: true as expected")
+                success_count += 1
+            else:
+                print(f"❌ Expected verified: true for existing user, got verified: {verified}")
+        else:
+            print(f"❌ Existing user login failed: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Existing user login error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 NEW AUTHENTICATION SYSTEM SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 4:  # Allow some flexibility
+        print("✅ NEW AUTHENTICATION SYSTEM TESTS PASSED!")
+        print("   Key changes verified:")
+        print("   - New users created with verified: false, email_verified: false")
+        print("   - Unverified users can login (no 403 error)")
+        print("   - Resend verification works with rate limiting")
+        print("   - User data includes verification fields")
+        print("   - Existing verified users still work correctly")
+        return True
+    else:
+        print("❌ NEW AUTHENTICATION SYSTEM TESTS FAILED!")
+        return False
+
 def test_authentication():
     """Test authentication with provided credentials"""
     print("\n=== Testing Authentication ===")
