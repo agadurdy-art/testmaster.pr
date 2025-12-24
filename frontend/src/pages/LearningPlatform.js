@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { 
-  BookOpen, Lock, CheckCircle, Clock, Trophy, ArrowRight, 
+  BookOpen, Lock, CheckCircle, Clock, Trophy, ArrowRight, ArrowLeft,
   GraduationCap, Target, Flame, Star, TrendingUp, Award
 } from 'lucide-react';
 import { toast } from 'sonner';
