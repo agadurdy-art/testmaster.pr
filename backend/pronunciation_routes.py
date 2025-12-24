@@ -427,49 +427,66 @@ async def get_phonics_lesson_detail(lesson_key: str):
 async def practice_single_word(audio_file: UploadFile, word: str, user_id: str):
     """
     Practice pronunciation of a single word with instant feedback
-    Simpler, faster feedback for individual word practice
+    OPTIMIZED: Simpler, faster feedback
     """
     try:
         audio_data = await audio_file.read()
         
-        if not audio_data or len(audio_data) < 100:
+        if not audio_data or len(audio_data) < 500:
             raise HTTPException(status_code=400, detail="Audio file is too small or empty. Please record again.")
         
+        # Prepare audio file
+        audio_file_obj = io.BytesIO(audio_data)
+        audio_file_obj.name = audio_file.filename or "recording.webm"
+        
+        transcribed = ""
         try:
-            transcription_result = await stt.transcribe(audio_data)
-            transcribed = transcription_result.get("text", "").strip().lower()
-        except Exception as transcribe_error:
-            error_msg = str(transcribe_error)
-            if "Unrecognized file format" in error_msg:
-                raise HTTPException(status_code=400, detail="Audio format not recognized. Please try recording again.")
-            raise HTTPException(status_code=500, detail=f"Could not transcribe audio: {error_msg}")
+            transcription_result = await stt.transcribe(
+                file=audio_file_obj,
+                model="whisper-1",
+                response_format="text"
+            )
+            transcribed = str(transcription_result).strip().lower() if transcription_result else ""
+        except Exception as e:
+            print(f"Word transcription error: {e}")
+            transcribed = ""
         
         target = word.strip().lower()
         
         # Simple comparison
+        if not transcribed:
+            return {
+                "word": word,
+                "transcribed": "(Could not hear)",
+                "score": 30,
+                "correct": False,
+                "feedback": "Please try again and speak clearly"
+            }
+        
         score = 100 if transcribed == target else 0
         
         # If not exact match, calculate similarity
         if score == 0:
-            # Basic similarity check
-            if transcribed in target or target in transcribed:
-                score = 70
+            # Check if target word is in the transcription
+            if target in transcribed or transcribed in target:
+                score = 80
             else:
                 # Check character overlap
                 common_chars = set(transcribed) & set(target)
-                score = int((len(common_chars) / len(target)) * 60) if target else 0
+                score = int((len(common_chars) / max(len(target), 1)) * 70)
         
         return {
             "word": word,
             "transcribed": transcribed,
             "score": score,
-            "correct": score >= 80,
-            "feedback": "Perfect!" if score == 100 else "Close! Try again." if score >= 70 else "Keep practicing!"
+            "correct": score >= 70,
+            "feedback": "Perfect!" if score >= 90 else "Good!" if score >= 70 else "Try again - say it slowly" if score >= 40 else "Keep practicing!"
         }
         
     except HTTPException:
         raise
     except Exception as e:
+        print(f"Word practice error: {e}")
         raise HTTPException(status_code=500, detail=f"Word practice failed: {str(e)}")
 
 # Export router
