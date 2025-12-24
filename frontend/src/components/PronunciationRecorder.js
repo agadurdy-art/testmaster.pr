@@ -168,18 +168,27 @@ export default function PronunciationRecorder({
     }
 
     try {
+      // Show preparing state
+      setState(STATES.VALIDATING);
+      
       const stream = await navigator.mediaDevices.getUserMedia({ 
         audio: {
           echoCancellation: true,
           noiseSuppression: true,
-          sampleRate: 44100
+          autoGainControl: true
         }
       });
       
       streamRef.current = stream;
-      mediaRecorderRef.current = new MediaRecorder(stream, {
-        mimeType: MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4'
-      });
+      
+      // Use audio/webm with opus codec for better quality
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') 
+        ? 'audio/webm;codecs=opus' 
+        : MediaRecorder.isTypeSupported('audio/webm') 
+          ? 'audio/webm' 
+          : 'audio/mp4';
+      
+      mediaRecorderRef.current = new MediaRecorder(stream, { mimeType });
       audioChunksRef.current = [];
       
       mediaRecorderRef.current.ondataavailable = (event) => {
@@ -189,7 +198,7 @@ export default function PronunciationRecorder({
       };
       
       mediaRecorderRef.current.onstop = async () => {
-        const blob = new Blob(audioChunksRef.current, { type: mediaRecorderRef.current.mimeType });
+        const blob = new Blob(audioChunksRef.current, { type: mimeType });
         const durationMs = Date.now() - recordingStartTime;
         
         // Stop stream tracks
@@ -209,7 +218,6 @@ export default function PronunciationRecorder({
         if (!validation.valid) {
           toast.error(validation.error);
           setState(STATES.IDLE);
-          // Do NOT increment attempts on validation failure
           return;
         }
         
@@ -227,7 +235,44 @@ export default function PronunciationRecorder({
         await evaluatePronunciation(blob);
       };
       
-      mediaRecorderRef.current.start(100); // Collect data every 100ms
+      // Wait for recorder to be ready, then start
+      mediaRecorderRef.current.onstart = () => {
+        debugLog('Recording actually started', { mimeType });
+      };
+      
+      // Small delay to ensure microphone is ready, then start
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Start recording - collect data continuously
+      mediaRecorderRef.current.start(50); // Smaller chunks = less data loss
+      setRecordingStartTime(Date.now());
+      setState(STATES.RECORDING);
+      setFeedback(null);
+      
+      // Play a beep sound to indicate recording started
+      try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        oscillator.frequency.value = 800;
+        gainNode.gain.value = 0.1;
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.1);
+      } catch (e) {
+        // Beep failed, continue anyway
+      }
+      
+      debugLog('Recording started', { mimeType });
+      toast.success('Recording... Speak now!', { duration: 1500 });
+      
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+      toast.error('Could not access microphone. Please allow microphone access.');
+      setState(STATES.IDLE);
+    }
+  };
       setRecordingStartTime(Date.now());
       setState(STATES.RECORDING);
       setFeedback(null);
