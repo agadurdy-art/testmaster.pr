@@ -16,9 +16,14 @@ import io
 import asyncio
 import tempfile
 import subprocess
+import re
 from concurrent.futures import ThreadPoolExecutor
+from emergentintegrations.llm.openai import OpenAISpeechToText
 
 router = APIRouter(prefix="/api/pronunciation", tags=["pronunciation"])
+
+# Initialize Whisper STT for Content Gate
+stt = OpenAISpeechToText(api_key=os.getenv("EMERGENT_LLM_KEY"))
 
 # Azure Speech configuration
 AZURE_SPEECH_KEY = os.getenv("AZURE_SPEECH_KEY")
