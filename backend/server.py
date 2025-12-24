@@ -4790,6 +4790,8 @@ async def startup_event():
                 logger.error(f"Tests seed error: {result.stderr}")
         else:
             logger.info(f"Found {tests_count} tests in database")
+            # Fix combined question IDs if needed (Q20-21 issue)
+            await fix_combined_question_ids()
             
     except Exception as e:
         logger.error(f"Startup seed error: {e}")
