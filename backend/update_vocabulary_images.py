@@ -6,69 +6,80 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Clip art style images for body parts - using reliable image sources
+# Clip art style images for body parts - using reliable Flaticon icons
 BODY_PARTS_IMAGES = {
-    "head": "https://cdn-icons-png.flaticon.com/512/3048/3048127.png",  # Cartoon head icon
-    "face": "https://cdn-icons-png.flaticon.com/512/2922/2922561.png",  # Cartoon face with features
-    "hair": "https://cdn-icons-png.flaticon.com/512/1245/1245876.png",  # Hair style icon
-    "eye": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",   # Eye icon
-    "eyes": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",  # Eyes icon
-    "ear": "https://cdn-icons-png.flaticon.com/512/2933/2933245.png",   # Ear icon
-    "nose": "https://cdn-icons-png.flaticon.com/512/3588/3588435.png",  # Nose icon
-    "mouth": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png", # Mouth/lips icon
-    "hand": "https://cdn-icons-png.flaticon.com/512/3588/3588244.png",  # Hand icon
-    "arm": "https://cdn-icons-png.flaticon.com/512/4348/4348083.png",   # Arm icon
-    "leg": "https://cdn-icons-png.flaticon.com/512/3048/3048394.png",   # Leg icon
-    "foot": "https://cdn-icons-png.flaticon.com/512/3588/3588287.png",  # Foot icon
-    "finger": "https://cdn-icons-png.flaticon.com/512/3588/3588263.png", # Finger pointing
-    "toe": "https://cdn-icons-png.flaticon.com/512/3588/3588287.png",   # Toes/foot
-    "body": "https://cdn-icons-png.flaticon.com/512/3048/3048122.png",  # Full body icon
-}
-
-# Alternative: Use OpenMoji style illustrations
-BODY_PARTS_OPENMOJI = {
-    "head": "https://openmoji.org/data/color/svg/1F9D2.svg",
-    "face": "https://openmoji.org/data/color/svg/1F642.svg",
-    "hair": "https://openmoji.org/data/color/svg/1F9D4.svg", 
-    "eye": "https://openmoji.org/data/color/svg/1F441.svg",
-    "ear": "https://openmoji.org/data/color/svg/1F442.svg",
-    "nose": "https://openmoji.org/data/color/svg/1F443.svg",
-    "mouth": "https://openmoji.org/data/color/svg/1F444.svg",
-    "hand": "https://openmoji.org/data/color/svg/1F91A.svg",
-    "arm": "https://openmoji.org/data/color/svg/1F4AA.svg",
-    "leg": "https://openmoji.org/data/color/svg/1F9B5.svg",
-    "foot": "https://openmoji.org/data/color/svg/1F9B6.svg",
+    "head": "https://cdn-icons-png.flaticon.com/512/3048/3048127.png",
+    "face": "https://cdn-icons-png.flaticon.com/512/1326/1326405.png",  # Smiling face
+    "hair": "https://cdn-icons-png.flaticon.com/512/1245/1245876.png",
+    "eye": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",
+    "eyes": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",
+    "ear": "https://cdn-icons-png.flaticon.com/512/2933/2933245.png",
+    "nose": "https://cdn-icons-png.flaticon.com/512/3588/3588435.png",
+    "mouth": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png",
+    "hand": "https://cdn-icons-png.flaticon.com/512/3588/3588244.png",
+    "arm": "https://cdn-icons-png.flaticon.com/512/4348/4348083.png",
+    "leg": "https://cdn-icons-png.flaticon.com/512/3048/3048394.png",
+    "foot": "https://cdn-icons-png.flaticon.com/512/3588/3588287.png",
+    "finger": "https://cdn-icons-png.flaticon.com/512/3588/3588263.png",
+    "toe": "https://cdn-icons-png.flaticon.com/512/3588/3588287.png",
+    "body": "https://cdn-icons-png.flaticon.com/512/3048/3048122.png",
+    "neck": "https://cdn-icons-png.flaticon.com/512/3588/3588258.png",
+    "shoulder": "https://cdn-icons-png.flaticon.com/512/4348/4348083.png",
+    "elbow": "https://cdn-icons-png.flaticon.com/512/4348/4348083.png",
+    "wrist": "https://cdn-icons-png.flaticon.com/512/3588/3588244.png",
+    "knee": "https://cdn-icons-png.flaticon.com/512/3048/3048394.png",
+    "ankle": "https://cdn-icons-png.flaticon.com/512/3588/3588287.png",
+    "thumb": "https://cdn-icons-png.flaticon.com/512/1176/1176315.png",  # Thumbs up
+    "teeth": "https://cdn-icons-png.flaticon.com/512/2933/2933258.png",
+    "tongue": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png",
+    "lip": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png",
+    "lips": "https://cdn-icons-png.flaticon.com/512/3588/3588419.png",
+    "chin": "https://cdn-icons-png.flaticon.com/512/1326/1326405.png",
+    "cheek": "https://cdn-icons-png.flaticon.com/512/1326/1326405.png",
+    "forehead": "https://cdn-icons-png.flaticon.com/512/3048/3048127.png",
+    "eyebrow": "https://cdn-icons-png.flaticon.com/512/2807/2807510.png",
 }
 
 async def update_vocabulary_images():
     mongo_url = os.getenv("MONGO_URL")
+    db_name = os.getenv("DB_NAME", "ielts_database")
     client = AsyncIOMotorClient(mongo_url)
-    db = client.ielts_pathway
+    db = client[db_name]
     
-    # Get all lessons
-    lessons = await db.learning_lessons.find({}).to_list(None)
+    # Get all learning levels
+    levels = await db.learning_levels.find({}).to_list(None)
+    print(f"Found {len(levels)} learning levels")
     
     updated_count = 0
-    for lesson in lessons:
-        content = lesson.get("content", {})
-        vocabulary = content.get("vocabulary", [])
+    for level in levels:
+        units = level.get("units", [])
+        level_changed = False
         
-        changed = False
-        for vocab in vocabulary:
-            word = vocab.get("word", "").lower()
-            if word in BODY_PARTS_IMAGES:
-                vocab["visual_url"] = BODY_PARTS_IMAGES[word]
-                changed = True
-                print(f"Updated image for: {word}")
+        for unit in units:
+            lessons = unit.get("lessons", [])
+            
+            for lesson in lessons:
+                content = lesson.get("content", {})
+                vocabulary = content.get("vocabulary", [])
+                
+                for vocab in vocabulary:
+                    word = vocab.get("word", "").lower().strip()
+                    if word in BODY_PARTS_IMAGES:
+                        old_url = vocab.get("visual_url", "")
+                        vocab["visual_url"] = BODY_PARTS_IMAGES[word]
+                        if old_url != vocab["visual_url"]:
+                            print(f"Updated: {word}")
+                            level_changed = True
         
-        if changed:
-            await db.learning_lessons.update_one(
-                {"id": lesson["id"]},
-                {"$set": {"content.vocabulary": vocabulary}}
+        if level_changed:
+            await db.learning_levels.update_one(
+                {"id": level["id"]},
+                {"$set": {"units": units}}
             )
             updated_count += 1
+            print(f"Saved updates for level: {level.get('title', level.get('id'))}")
     
-    print(f"\nUpdated {updated_count} lessons with new vocabulary images")
+    print(f"\nUpdated {updated_count} levels with new vocabulary images")
     client.close()
 
 if __name__ == "__main__":
