@@ -77,8 +77,6 @@ export default function VocabGrammarCourse({ user }) {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [playingAudio, setPlayingAudio] = useState(null);
-  const [recording, setRecording] = useState(false);
-  const [pronunciationResult, setPronunciationResult] = useState(null);
   const [practiceAnswers, setPracticeAnswers] = useState({});
   const [practiceScore, setPracticeScore] = useState({ correct: 0, total: 0 });
   const [showResults, setShowResults] = useState(false);
@@ -89,9 +87,7 @@ export default function VocabGrammarCourse({ user }) {
   const [matchingMatches, setMatchingMatches] = useState({});
   const [shuffledDefs, setShuffledDefs] = useState([]);
   const [mcqShuffledOptions, setMcqShuffledOptions] = useState([]);
-  
-  const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
+
 
   // Fetch lessons for selected band
   useEffect(() => {
