@@ -826,17 +826,23 @@ async def root():
 # User & Auth routes
 @api_router.post("/auth/register", response_model=User)
 async def register_user(input: UserCreate):
+    """Register a new user - logs them in immediately, sends verification email in background."""
     # Check if user exists
-    existing = await db.users.find_one({"email": input.email}, {"_id": 0})
+    existing = await db.users.find_one({"email": input.email.strip().lower()}, {"_id": 0})
     if existing:
         raise HTTPException(status_code=400, detail="Email is already registered")
 
     if len(input.password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
 
-    # Create the new user
+    # Create the new user with unverified status
     user_id = str(uuid.uuid4())
     hashed_password = hash_password(input.password)
+    now = datetime.now(timezone.utc)
+    
+    # Generate verification token
+    verification_token = generate_reset_token()
+    verification_expires_at = now + timedelta(hours=24)
     
     user = {
         "id": user_id,
@@ -845,15 +851,31 @@ async def register_user(input: UserCreate):
         "password_hash": hashed_password,
         "plan": "free",
         "examCredits": 0,
-        "verified": False,
+        "verified": False,  # Unverified by default
+        "email_verified": False,  # New field for clarity
+        "verification_token": verification_token,
+        "verification_sent_at": now.isoformat(),
+        "verification_expires_at": verification_expires_at.isoformat(),
+        "last_resend_at": None,
         "ai_interview_free_seconds_used": 0,
-        "created_at": datetime.now(timezone.utc).isoformat()
+        "ai_mentor_messages_used": 0,  # Track AI mentor usage for unverified users
+        "created_at": now.isoformat()
     }
     
     await db.users.insert_one(user)
     
-    # Return user without password
-    user_response = {k: v for k, v in user.items() if k != "password"}
+    # Send verification email in background (don't block registration)
+    frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
+    verify_link = f"{frontend_base}/verify-email?token={verification_token}"
+    
+    # Try to send email (non-blocking)
+    try:
+        send_verification_email(input.email.strip().lower(), verify_link, input.name.strip())
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Failed to send verification email: {e}")
+    
+    # Return user without password - USER IS LOGGED IN IMMEDIATELY
+    user_response = {k: v for k, v in user.items() if k not in ["password_hash", "verification_token"]}
     return user_response
 
 
