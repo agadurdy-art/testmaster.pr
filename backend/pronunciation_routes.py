@@ -16,8 +16,7 @@ router = APIRouter(prefix="/api/pronunciation", tags=["pronunciation"])
 # Initialize Speech-to-Text
 stt = OpenAISpeechToText(api_key=os.getenv("EMERGENT_LLM_KEY"))
 
-# Initialize LLM for pronunciation analysis
-llm = LlmChat(api_key=os.getenv("EMERGENT_LLM_KEY"))
+# LLM will be initialized per request for pronunciation analysis
 
 # ============ PHONICS LESSONS FOR ASIAN LEARNERS ============
 
@@ -303,6 +302,12 @@ async def check_pronunciation(audio_file: UploadFile, target_text: str, user_id:
             raise HTTPException(status_code=400, detail="Could not transcribe audio")
         
         # Analyze pronunciation with LLM
+        llm = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=f"pronunciation_{user_id}",
+            system_message="You are an expert pronunciation teacher specializing in helping Asian English learners."
+        )
+        
         prompt = PRONUNCIATION_ANALYSIS_PROMPT.format(
             target_text=target_text,
             transcribed_text=transcribed_text
