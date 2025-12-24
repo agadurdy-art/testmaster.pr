@@ -481,19 +481,49 @@ export default function Dashboard({ user, onLogout }) {
                 </div>
               ))}
             </div>
-            {/* Level Test CTA */}
+            {/* NEW Adaptive Level Test CTA */}
             <div 
-              onClick={() => navigate('/level-test')}
-              className="mt-4 p-4 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl cursor-pointer hover:shadow-md transition-all border border-cyan-200 flex items-center justify-between"
+              onClick={() => navigate('/comprehensive-level-test')}
+              className="mt-4 p-5 bg-gradient-to-r from-violet-600 to-purple-700 rounded-xl cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all border-2 border-violet-400 flex items-center justify-between relative overflow-hidden group"
             >
-              <div className="flex items-center gap-3">
-                <Target className="w-6 h-6 text-cyan-600" />
+              {/* Animated background effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-400/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              
+              <div className="flex items-center gap-3 relative z-10">
+                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
                 <div>
-                  <p className="font-semibold text-gray-900">{getText('Level Test', 'Kiểm tra trình độ', 'Seviye Testi')}</p>
-                  <p className="text-xs text-gray-500">{getText('Find your starting point', 'Xác định điểm xuất phát', 'Başlangıç noktanızı bulun')}</p>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2 py-0.5 bg-yellow-400 text-yellow-900 text-[10px] font-bold rounded uppercase tracking-wide">
+                      🆕 New
+                    </span>
+                    <p className="font-bold text-white">{getText('Adaptive Level Test', 'Kiểm tra trình độ thích ứng', 'Uyarlanabilir Seviye Testi')}</p>
+                  </div>
+                  <p className="text-xs text-violet-100">{getText('Band 2.0-9.0 | Detailed feedback with errors | Learning path', 'Band 2.0-9.0 | Phản hồi chi tiết | Lộ trình học tập', 'Band 2.0-9.0 | Detaylı geri bildirim | Öğrenme yolu')}</p>
                 </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-cyan-500" />
+              <div className="flex items-center gap-2 relative z-10">
+                <span className="text-white/80 text-sm font-semibold hidden sm:inline">
+                  {getText('Start Now', 'Bắt đầu', 'Şimdi Başla')}
+                </span>
+                <ChevronRight className="w-6 h-6 text-white" />
+              </div>
+            </div>
+
+            {/* Old Level Test CTA */}
+            <div 
+              onClick={() => navigate('/level-test')}
+              className="mt-3 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl cursor-pointer hover:shadow-md transition-all border border-gray-200 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3">
+                <Target className="w-6 h-6 text-gray-600" />
+                <div>
+                  <p className="font-semibold text-gray-900 text-sm">{getText('Quick Level Test', 'Kiểm tra nhanh', 'Hızlı Seviye Testi')}</p>
+                  <p className="text-xs text-gray-500">{getText('Simple & fast assessment', 'Đánh giá nhanh', 'Basit ve hızlı')}</p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400" />
             </div>
           </Card>
 
