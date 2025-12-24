@@ -30,6 +30,10 @@ import AdvancedMasteryCourse from './pages/AdvancedMasteryCourse';
 import LessonPreview from './pages/LessonPreview';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
+import LearningPlatform from './pages/LearningPlatform';
+import LevelDetail from './pages/LevelDetail';
+import UnitDetail from './pages/UnitDetail';
+import LessonView from './pages/LessonView';
 
 
 function EmergentBadgeWrapper() {
