@@ -321,14 +321,17 @@ export default function PronunciationRecorder({
                 <Button
                   onClick={() => {
                     try {
-                      if (recordedAudioRef.current) {
-                        recordedAudioRef.current.play().catch(err => {
-                          console.log('Audio play error:', err);
-                          toast.error('Could not play recording');
-                        });
-                      }
+                      // Create a new Audio object to play the recorded audio
+                      const audio = new Audio(recordedAudioURL);
+                      audio.play().then(() => {
+                        toast.success('Playing your recording');
+                      }).catch(err => {
+                        console.log('Audio play error:', err);
+                        toast.error('Could not play recording');
+                      });
                     } catch (err) {
                       console.log('Play error:', err);
+                      toast.error('Could not play recording');
                     }
                   }}
                   variant="outline"
@@ -353,8 +356,6 @@ export default function PronunciationRecorder({
                 </Button>
               )}
             </div>
-
-            {recordedAudioURL && <audio ref={recordedAudioRef} src={recordedAudioURL} />}
           </div>
         )}
 
