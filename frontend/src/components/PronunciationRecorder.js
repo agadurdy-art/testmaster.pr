@@ -357,7 +357,18 @@ export default function PronunciationRecorder({
             {/* Play your recording */}
             {recordedAudioURL && (
               <Button
-                onClick={() => recordedAudioRef.current?.play()}
+                onClick={() => {
+                  try {
+                    if (recordedAudioRef.current) {
+                      recordedAudioRef.current.play().catch(err => {
+                        console.log('Audio play error:', err);
+                        toast.error('Could not play recording');
+                      });
+                    }
+                  } catch (err) {
+                    console.log('Play error:', err);
+                  }
+                }}
                 variant="ghost"
                 size="sm"
                 className="w-full text-slate-500"
@@ -366,7 +377,7 @@ export default function PronunciationRecorder({
                 Play your recording
               </Button>
             )}
-            <audio ref={recordedAudioRef} src={recordedAudioURL} />
+            {recordedAudioURL && <audio ref={recordedAudioRef} src={recordedAudioURL} />}
           </div>
         )}
 
