@@ -1,220 +1,176 @@
 <analysis>**original_problem_statement:**
 The user's primary goal is to transform the application into a comprehensive English learning platform, following a detailed MASTER INSTRUCTION prompt that specifies a full pathway from Cambridge YLE to IELTS.
 
-The session started with these carry-over goals:
-1.  **Critical Bug**: Fix a test submission failed error.
-2.  **New Feature**: Implement a new, comprehensive free level test.
-3.  **UI/UX Improvements**: Fix scoring, question order, add multilingual support, progressive loading, improve transcription, add a language switcher, enhance the reading test UI, fix result page button redirects, and add a Contact for support link.
-4.  **Auth System**: Complete the new authentication system with feature-gating for unverified users and password confirmation.
-5.  **Deployment Discrepancy**: Fix an issue where question numbers (e.g., Q21-22) are shown correctly combined in preview but separately after deployment.
-
-During this session, the user provided a master specification for building a full learning platform and prioritized the implementation of a new, truly comprehensive and adaptive level test as the first major step. The user also reported a critical bug where the test evaluation was too lenient and provided incorrect feedback.
+During this session, the user's requests were:
+1.  **Prioritize the Full Learning Platform**: Build out the complete course structure as the main goal.
+2.  **Complete All Lessons**: Populate the entire learning journey with content.
+3.  **Enhance YLE Starters**: Based on a reference website, add a detailed phonics and pronunciation checking system to the YLE Starters level, with a focus on challenges for Asian learners. The user requested visuals, audio, and the ability for users to record their voice for feedback.
+4.  **Fix Core Functionality**: The user reported being unable to see or start any lessons, indicating a critical bug.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The agent has successfully implemented a new, comprehensive, and adaptive level test that replaces the old one. This new system features a massive, structured question bank () spanning multiple CEFR levels (A1-C2). It includes new backend logic () for adaptive question delivery and a significantly stricter AI-based evaluation for reading, writing, and speaking.
+The agent has built the foundational backend and frontend for a complete learning platform. This includes:
+-   **Backend**: New Pydantic models (), API routes (), and pronunciation-checking routes ().
+-   **Database**: The database has been seeded with a comprehensive curriculum spanning from Cambridge YLE Starters to IELTS 7.0, including 13 detailed units for the YLE level with vocabulary, phonics, and audio placeholders.
+-   **Frontend**: New pages have been created for the learning platform (, , , ) and a  component has been built. Routes have been added to  and a link has been placed on the .
 
-On the frontend, a new  component has been created to run the test, and a banner on the  page directs users to this new feature.
-
-Crucially, the agent has fixed a critical bug where the evaluation logic was too lenient. The system now correctly assigns very low scores for irrelevant, skipped, or nonsensical answers, providing more accurate feedback.
+However, the entire authenticated portion of the application is currently non-functional due to a critical session management bug.
 
 **Last working item**:
-- **Last item agent was working**: Implementing the full-scale learning platform based on the user's detailed MASTER INSTRUCTION prompt. The agent created the comprehensive data structure and question bank () and integrated it with the backend.
-- **Status**: IN PROGRESS
-- **Agent Testing Done**: N
-- **Which testing method agent to use?**: both
-- **User Testing Done**: N
+-   **Last item agent was working**: Debugging a critical authentication/session management failure. The agent identified that while the backend login API works correctly, the user's session is not being persisted on the frontend, causing immediate logout or redirection to the landing page.
+-   **Status**: BLOCKED
+-   **Agent Testing Done**: Y (Testing revealed the bug)
+-   **Which testing method agent to use?**: Frontend testing agent. The issue is a complex session management problem that requires a thorough trace of the frontend state and navigation logic.
+-   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1 (P0)**: Deployed version shows separate questions (Q21, Q22) while the preview correctly shows them combined (Q21-22).
--   **Issue 2 (P1)**: The new adaptive test evaluation, while stricter, needs detailed testing and potential fine-tuning by the user.
--   **Issue 3 (P2)**: Inaccurate speech-to-text transcription for English audio.
--   **Issue 4 (P3)**: Reading test UI is broken for passages 2 and 3.
--   **Issue 5 (P4)**: Linting errors persist in the codebase.
+-   **Issue 1 (P0)**: Critical Auth/Session Failure. Users cannot access any authenticated routes (Dashboard, Learning Platform).
+-   **Issue 2 (P1)**: Deployed version shows separate questions (Q21, Q22).
+-   **Issue 3 (P2)**: New adaptive test evaluation needs user testing.
+-   **Issue 4 (P3)**: Inaccurate speech-to-text transcription.
+-   **Issue 5 (P4)**: Reading test UI is broken for passages 2 and 3.
+-   **Issue 6 (P5)**: Linting errors persist in the codebase.
 
 **Issues Detail:**
-- **Issue 1: Deployed version shows separate questions**
-    - **Attempted fixes**: The agent investigated thoroughly and concluded the issue is not with the code but with stale data in the production database. The agent created a markdown file  and a script  explaining the problem and providing the solution for the user to run on their production environment.
-    - **Next debug checklist**: Await user confirmation that they have run the provided fix on their production database. Do not attempt to debug the code further for this issue.
-    - **Why fix this issue and what will be achieved with the fix?**: Ensures a consistent user experience between preview and production environments.
-    - **Status**: BLOCKED
-    - **Is recurring issue?**: N
-    - **Should Test frontend/backend/both after fix?**: Frontend
-    - **Blocked on other issue**: User action required.
-- **Issue 2: New adaptive test evaluation needs user testing**
-    - **Attempted fixes**: The agent made the evaluation prompts for the AI much stricter to handle irrelevant or empty answers, which fixed the immediate bug of getting good scores for bad input.
-    - **Next debug checklist**: The user needs to perform detailed tests to verify if the evaluation quality and strictness meet their standards. Be prepared to educate AI evaluator for detailed feedback as requested by the user.
-    - **Why fix this issue and what will be achieved with the fix?**: Ensures the core feature of the platform provides accurate and reliable feedback.
-    - **Status**: USER VERIFICATION PENDING
-    - **Is recurring issue?**: N
-    - **Should Test frontend/backend/both after fix?**: Both
-    - **Blocked on other issue**: None.
-- **Issue 3: Inaccurate speech-to-text transcription.**
-    - **Description**: User reported that the transcription service captures only a small fraction of spoken English. This was not addressed in the current session.
-    - **Next debug checklist**:
-        1.  Review  and  events in  to check audio chunk collection.
-        2.  Log the size and format of the audio blob being sent to the backend.
-        3.  Consider testing alternative audio formats or bitrates in the  API.
-    - **Why fix this issue and what will be achieved with the fix?**: Accurate transcription is critical for the speaking evaluation feature.
-    - **Status**: NOT STARTED
-    - **Is recurring issue?**: Y
-    - **Should Test frontend/backend/both after fix?**: Both
-    - **Blocked on other issue**: None.
-- **Issue 4: Reading test UI is broken for passages 2 and 3.**
-    - **Description**: Passages 2 and 3 of Academic Reading Practice Test 1 are not displaying content. This was not addressed in the current session.
-    - **Next debug checklist**:
-        1.  Write a script to query the  collection for Academic Reading Practice Test 1 and inspect the content of all passages.
-        2.  Inspect  to confirm it correctly renders the passage content.
-    - **Why fix this issue and what will be achieved with the fix?**: Fixes a critical bug making a primary test unusable.
-    - **Status**: NOT STARTED
-    - **Is recurring issue?**: N
-    - **Should Test frontend/backend/both after fix?**: Frontend
-    - **Blocked on other issue**: None.
+-   **Issue 1: Critical Auth/Session Failure**
+    -   **Attempted fixes**: Verified backend  works correctly via . Checked frontend logic in  and , confirming navigation and state-setting functions are being called. Added a null-check guard in . The last action was to attempt to bypass the login flow by programmatically setting the user in  and navigating directly to the learning platform to isolate the fault.
+    -   **Next debug checklist**:
+        1.  **Analyze the result of the last screenshot tool call (from Msg 212)**. This will reveal if the learning platform works when the user session is manually injected.
+        2.  If it works, the fault is in the login process ( in  or  in ). Use browser developer tools to inspect  and console logs during login.
+        3.  If it fails, the fault is in the session handling logic within  or the authenticated pages themselves, which may be incorrectly clearing the session.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a show-stopping bug. Fixing it will make the entire authenticated application, including the new learning platform, accessible to users.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: Frontend
+    -   **Blocked on other issue**: None. This is the primary blocker.
+-   **Issue 2: Deployed version shows separate questions**
+    -   **Status**: BLOCKED (Awaiting user action to run the provided database fix script).
+-   **Issue 3: New adaptive test evaluation needs user testing**
+    -   **Status**: USER VERIFICATION PENDING
+-   **Issue 4: Inaccurate speech-to-text transcription**
+    -   **Status**: NOT STARTED
+-   **Issue 5: Reading test UI is broken**
+    -   **Status**: NOT STARTED
 
 **In progress Task List**:
-- **Task 1: Implement the full Cambridge YLE -> CEFR -> IELTS learning platform (P0)**
-    - **Description**: This is the primary ongoing task based on the user's MASTER INSTRUCTION. It involves building out the full course structure with units, lessons, quizzes, and progression logic.
-    - **Where to resume**:
-        1.  The database schema and a large question bank are defined in the user prompt and implemented conceptually in .
-        2.  Flesh out the backend models and API endpoints for , , , and .
-        3.  Implement the progression logic (e.g., unlocking units/levels after passing quizzes/exit tests).
-        4.  Build the frontend UI to display the course structure, lessons, and user progress.
-    - **What will be achieved with this?**: The application will evolve from a test platform into a full-featured learning management system.
-    - **Status**: IN PROGRESS
-    - **Should Test frontend/backend/both after fix?**: Both
-    - **Blocked on something**: None.
-- **Task 2: Implement feature-gating for unverified users (P1)**
-    - **Description**: The logic to restrict unverified users from accessing premium content is still missing.
-    - **Where to resume**: Create a HOC or use a context to check  status and conditionally render or block access to premium courses/lessons.
-    - **What will be achieved with this?**: Completes the new authentication flow.
-    - **Status**: NOT STARTED
-    - **Should Test frontend/backend/both after fix?**: Frontend
-    - **Blocked on something**: None.
+-   **Task 1: Implement the full Cambridge YLE -> CEFR -> IELTS learning platform (P0)**
+    -   **Where to resume**: This is blocked by the auth issue. Once fixed, the immediate next step is to test the full user flow: log in -> go to dashboard -> click Learning Platform -> see the list of levels -> click a level to see its units -> click a unit to see its lessons -> click a lesson to view it.
+    -   **What will be achieved with this?**: The main feature requested by the user will become functional.
+    -   **Status**: BLOCKED
+    -   **Blocked on something**: **Issue 1: Critical Auth/Session Failure**
+-   **Task 2: Implement comprehensive pronunciation and phonics system (P1)**
+    -   **Where to resume**: This is also blocked by the auth issue. The backend is ready and the frontend component () is integrated into the  page. Once unblocked, it requires E2E testing.
+    -   **What will be achieved with this?**: Fulfills a key user requirement for the YLE Starters course.
+    -   **Status**: BLOCKED
+    -   **Blocked on something**: **Issue 1: Critical Auth/Session Failure**
 
 **Upcoming and Future Tasks**
-- **Upcoming Tasks:**
-    - **(P0)** Perform full End-to-End (E2E) testing of the new authentication flow.
-    - **(P1)** Add multilingual support (Vietnamese, Turkish) for feedback in the new adaptive test (currently skipped).
-    - **(P2)** Overhaul the Academic Reading Test UI to match the real IELTS exam format.
-    - **(P3)** Add a top navigation bar with quick-jump numbers (1-40) for Reading and Listening tests.
-    - **(P4)** Integrate the  endpoint into the frontend to provide a What to study next diagnosis.
-- **Future Tasks:**
-    - Fix failing PayPal webhooks.
-    - Address SendGrid emails going to spam.
-    - Re-enable Facebook Login.
-    - Build a test generator for all skills.
-    - Rename  MongoDB collection to .
-    - Enhance the Dashboard to show richer performance summaries.
+-   **(P0)** Perform full End-to-End (E2E) testing of the new authentication flow.
+-   **(P1)** Add multilingual support (Vietnamese, Turkish) for feedback in the new adaptive test.
+-   **(P2)** Overhaul the Academic Reading Test UI to match the real IELTS exam format.
+-   **(P3)** Add a top navigation bar with quick-jump numbers (1-40) for Reading and Listening tests.
+-   **(P4)** Integrate the  endpoint into the frontend.
+-   **Future Tasks:** Fix PayPal webhooks, address SendGrid spam issues, re-enable Facebook Login, build a test generator, rename  collection, and enhance the Dashboard.
 
 **Completed work in this session**
-- **New Comprehensive Adaptive Level Test**:
-  - Designed and implemented a new adaptive level test system from the ground up.
-  - Created a massive, structured question bank in .
-  - Developed new backend logic for adaptive testing and evaluation in .
-  - Integrated new endpoints into .
-  - Built a new frontend component  to render the test.
-  - Added a NEW banner to  to direct users.
-- **Critical Bug Fix: Lenient Evaluation**:
-  - Rewrote the AI evaluation prompts in  to be much stricter.
-  - The system now correctly assigns low scores (e.g., Band 2.0) for skipped questions, irrelevant answers, or very short responses, ensuring accurate feedback.
-- **Deployment Issue Investigation**:
-  - Investigated the Q21-22 display issue, correctly identifying it as a production database data inconsistency, not a code bug.
-  - Provided the user with a markdown guide () and a fix script to resolve the issue on their end.
+-   **Backend Scaffolding for Learning Platform**:
+    -   Created models, API routes, and integrated them into .
+-   **Comprehensive Curriculum Seeding**:
+    -   Wrote and executed scripts to populate MongoDB with a full learning path from YLE to IELTS, including a detailed 13-unit curriculum for YLE Starters.
+-   **Pronunciation Checker Backend**:
+    -   Created  with an endpoint for AI-based feedback.
+-   **Frontend Scaffolding for Learning Platform**:
+    -   Created pages: , , , .
+    -   Created a  component.
+    -   Added routes to  and a CTA card to .
 
 **Earlier issues found/mentioned but not fixed**
--   The original Level Test Agent on the landing page is not visible. This is likely obsolete but should be confirmed with the user.
+-   The original Level Test Agent on the landing page is not visible.
 
 **Known issue recurrence from previous fork**
-- **Issue recurrence in previous fork**: Linting Errors.
-- **Recurrence count**: 3+
-- **Status**: NOT STARTED
+-   **Issue recurrence in previous fork**: Linting Errors.
+-   **Recurrence count**: 3+
+-   **Status**: NOT STARTED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Adaptive Testing**: The core concept implemented. The test serves questions from different difficulty levels (A1-C2) based on user performance.
-- **Stricter AI Evaluation**: Modified LLM prompts to be highly critical of low-quality input (irrelevant, too short, empty) to prevent inflated scores and provide realistic feedback.
-- **Modular Backend Design**: The new feature was built in separate files (, ) and imported into  to keep the main server file cleaner.
-- **Database Seeding & Migration**: The agent correctly diagnosed that code deployment does not update database content. It used seeding and created a specific migration script to address data inconsistencies between environments.
-- **Full Platform Specification**: The user provided a detailed, professional-grade specification for a complete learning platform, which is now the guiding document for all future development.
+-   **Modular Feature Development**: Building new features (learning platform, pronunciation) in dedicated route and model files to keep  clean.
+-   **Database Seeding**: Using Python scripts to programmatically populate MongoDB with a complex, structured curriculum.
+-   **Component-Based Frontend**: Creating dedicated React components for each new page () and feature ().
+-   **React State & Session Management**: The application uses  and  with  to manage user sessions. This system is currently broken and is the source of the critical bug.
 
 **key DB schema**
-The user has provided a comprehensive and detailed schema for the future platform, covering levels, courses, units, lessons, questions, and user mastery. This schema, present in the user's MASTER INSTRUCTION prompt, should be used as the blueprint for building the new features.
+-   **learning_levels**: 
+-   **units**: 
+-   **lessons**: 
 
 **changes in tech stack**
-- No changes to the core stack.
+-   None.
 
 **All files of reference**
--  (The new source of truth for test questions)
--  (The logic for the new test)
--  (The UI for the new test)
--  (Integrates the new routes)
--  (Links to the new test)
--  (Explanation for the user on a production issue)
+-    (Auth and routing logic)
+-    (Login API call)
+-    (Entry point for the new feature)
+-    (Main server file with login route)
+-    (New platform APIs)
+-    (New pronunciation API)
 
 **Areas that need refactoring**:
-- The old  file was backed up, and its route in  was commented out. These should be cleaned up and removed to avoid confusion.
-- The entire application will need significant structural refactoring to accommodate the new platform design (e.g., creating dedicated directories for models, routes, services, etc., as per standard FastAPI and React best practices).
+-   The entire authentication and session management flow in the frontend (, , ) is fragile and needs to be rewritten or debugged for reliability.
 
 **key api endpoints**
-- : To begin the new adaptive test.
-- : To submit answers and get a comprehensive evaluation.
+-   
+-   
+-   
+-   
 
 **Critical Info for New Agent**
-- **Follow the Master Plan**: Your top priority is to continue implementing the full learning platform based on the user's detailed MASTER INSTRUCTION prompt (Message 239). The groundwork (data/questions) is laid, but the application logic (courses, units, progression) needs to be built.
-- **Await User Feedback**: The user will be doing detailed testing on the new adaptive test's evaluation logic. Be prepared to receive feedback and further fine-tune the AI evaluator's strictness and feedback quality.
-- **Production DB Issue**: Do NOT try to fix the Q21-22 display issue with code. It is a production database problem. If the user asks about it, refer them to the  file.
+-   **Your absolute #1 priority is to fix the authentication/session bug (Issue 1).** No other feature development or debugging can proceed until users can successfully log in and access authenticated pages.
+-   The previous agent's last action was a test to programmatically set the user in  and navigate to the learning platform. **You must analyze the result of that test (from message 212) as your very first step.** It will tell you whether the problem is in the login process itself or in the authenticated pages' handling of the session.
 
 **documents and test_reports created in this job**
-- 
-- 
-- 
+-   None.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1. go ahead
-2. SYSTEM / MASTER INSTRUCTION (COPY-PASTE ALL)...
-3. Excellent! Backend is running. Now let me create a comprehensive summary document...
-4. please complete whole test progress now including all skills. then I will do detailed tests. if necessary we can educate AI evaluator for detailed feedback
-5. Perfect! Now the evaluation is working correctly... The adaptive level test now provides honest, accurate evaluation! 🎯
-6. giving feedback evaluation does not work. even I skip questions and write irrelevant things it still show me good results
-7. I've made a strong start by expanding the question banks significantly...
-8. did you complete it for last user cause it has same questions with land page level test. it should be more better. now complete full test progress.
-9. Excellent! Now let me provide a final comprehensive summary...
-10. continue
+1.  complete next steps 1-6
+2.  i can not see complete lesson. i can not start any lesson to study.
+3.  Great! The testing confirms that all 13 units are created and visible...
+4.  i can not see complete starters course
+5.  Perfect! Now let me create a frontend component for pronunciation practice:
+6.  https://bestflashcard.com/learning-english-vocabulary/topic/cambridge-yle-pre-a1-starters here is the link...
+7.  Perfect! All backend APIs are working. Now let me use the finish tool to summarize everything:
+8.  complete whole lessons and journey
+9.  I have implemented the foundation of the learning platform...
+10. I prioritize the full learning platform
 
 **Project Health Check:**
-- **Broken**:
-    - **Reading Test UI**: Passages 2 and 3 for the legacy reading test are still not displaying content.
-- **Incomplete**:
-    - **Learning Platform**: The main task of building the full course structure is in its very early stages.
-    - **Authentication System**: Feature-gating for unverified users is not implemented.
-    - **Speech-to-Text**: The core accuracy issue for English speech remains unsolved.
-- **Needs User Action**:
-    - **Deployment Sync Issue**: Awaiting user confirmation on running the production database fix for the Q21-22 display bug.
-    - **Adaptive Test Feedback**: Awaiting detailed user testing and feedback on the new evaluation system's quality.
+-   **Broken**:
+    -   **Critical: Authentication & Session Management**: The entire user login and session persistence mechanism is broken, blocking access to all authenticated features.
+-   **Incomplete**:
+    -   **Learning Platform Feature**: While backend data and frontend components exist, they are completely inaccessible due to the auth bug.
+    -   **Pronunciation Feature**: Same as above.
+-   **Needs User Action**:
+    -   **Deployment Sync Issue (Q21-22)**: Awaiting user confirmation on running the production database fix script.
+    -   **Adaptive Test Feedback**: Awaiting detailed user testing.
 
 **3rd Party Integrations**
-- **OpenAI GPT-4o**: (Uses Emergent LLM Key) Used for the core evaluation logic in the adaptive level test.
-- **OpenAI Whisper**: For speech-to-text transcription (accuracy issue pending).
-- **SendGrid**: For email verification in the auth flow.
-- **PayPal, Google Auth (Emergent-managed), Facebook Graph API**: Existing integrations.
+-   **OpenAI GPT-4o**: (Uses Emergent LLM Key) Used for adaptive test evaluation and likely for the new pronunciation checker.
+-   **OpenAI Whisper**: For speech-to-text transcription.
+-   **SendGrid, PayPal, Google Auth, Facebook Graph API**: Existing integrations.
 
 **Testing status**
-- **Testing agent used after significant changes**: NO
-- **Troubleshoot agent used after agent stuck in loop**: NO
-- **Test files created**: []
-- **Known regressions**: Reading test UI for passages 2 & 3 remains broken.
+-   **Testing agent used after significant changes**: YES (The frontend testing agent was used and helped identify the session management bug).
+-   **Troubleshoot agent used after agent stuck in loop**: NO
+-   **Test files created**: []
+-   **Known regressions**: A major regression in authentication has occurred, making the authenticated app unusable.
 
 **Credentials to test flow:**
-- **Dashboard/Authenticated Routes**:
-    - **Email**: 
-    - **Password**: 
-- **New User Registration**: Use the signup form on the landing page to create a new unverified user.
+-   **Email**: 
+-   **Password**: 
 
 **What agent forgot to execute**
-- The agent did not implement the feature-gating logic for unverified users, a carry-over task.
-- The agent did not address the two long-standing bugs from the previous session: inaccurate speech-to-text and the broken reading test UI for passages 2 & 3.
-- Multilingual support for the new test, while part of the original plan, was explicitly skipped by the user for now.
-- No end-to-end testing was performed on the new adaptive test before the user found a critical bug. The agent relied on basic  checks which were insufficient.</analysis>
+-   The agent repeatedly attempted to call subagents in parallel with other tools, which is an invalid action. This wasted time and caused errors.
+-   The agent struggled significantly with the  tool, requiring multiple attempts to edit React components, indicating a weakness in targeting specific code blocks for modification.</analysis>
