@@ -197,6 +197,10 @@ function AppWithSessionHandler() {
         />
         <Route 
           path="/comprehensive-level-test" 
+          element={<AdaptiveLevelTest user={user} />} 
+        />
+        <Route 
+          path="/old-level-test" 
           element={<ComprehensiveLevelTest user={user} />} 
         />
         <Route 
