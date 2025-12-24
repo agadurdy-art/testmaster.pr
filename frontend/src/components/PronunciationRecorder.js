@@ -19,8 +19,35 @@ const STATES = {
 
 // Validation constants
 const MIN_RECORDING_DURATION_MS = 600; // 0.6 seconds
-const MIN_BLOB_SIZE_BYTES = 10000; // 10kb
-const WHISPER_TIMEOUT_MS = 15000; // 15 seconds
+const MIN_BLOB_SIZE_BYTES = 8000; // 8kb (reduced for faster validation)
+const WHISPER_TIMEOUT_MS = 10000; // 10 seconds (reduced from 15)
+
+// Text-to-Speech for native pronunciation
+const speakWord = (word) => {
+  if ('speechSynthesis' in window) {
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.8; // Slower for learning
+    utterance.pitch = 1;
+    
+    // Try to use a native English voice
+    const voices = window.speechSynthesis.getVoices();
+    const englishVoice = voices.find(v => 
+      v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Native') || v.name.includes('Samantha'))
+    ) || voices.find(v => v.lang.startsWith('en'));
+    
+    if (englishVoice) {
+      utterance.voice = englishVoice;
+    }
+    
+    window.speechSynthesis.speak(utterance);
+    return true;
+  }
+  return false;
+};
 
 export default function PronunciationRecorder({ 
   targetText, 
