@@ -512,7 +512,7 @@ def generate_pronunciation_feedback(azure_result: Dict[str, Any], target: str) -
     }
 
 # =============================================================================
-# MAIN EVALUATION ENDPOINT
+# MAIN EVALUATION ENDPOINT - 3-LAYER SYSTEM
 # =============================================================================
 
 @router.post("/evaluate")
@@ -523,7 +523,10 @@ async def evaluate_pronunciation(
     is_sentence: bool = False
 ):
     """
-    Main pronunciation evaluation endpoint using Azure Speech.
+    Main pronunciation evaluation endpoint using 3-layer system:
+    Layer A: Quality Gate (audio validation)
+    Layer B: Content Gate (Whisper STT verification)
+    Layer C: Azure Pronunciation Assessment (professional scoring)
     """
     print(f"[Pronunciation] Evaluating: target='{target}', is_sentence={is_sentence}")
     
@@ -531,7 +534,9 @@ async def evaluate_pronunciation(
     audio_data = await audio_file.read()
     print(f"[Pronunciation] Audio size: {len(audio_data)} bytes")
     
+    # =========================================================================
     # LAYER A: Quality Gate
+    # =========================================================================
     quality_result = analyze_audio_quality(audio_data, is_sentence)
     
     if not quality_result["passed"]:
@@ -549,38 +554,13 @@ async def evaluate_pronunciation(
             "should_count_attempt": False
         }
     
-    # Convert audio to WAV for Azure
-    try:
-        wav_data = await asyncio.get_event_loop().run_in_executor(
-            executor, convert_to_wav, audio_data
-        )
-        print(f"[Pronunciation] Converted to WAV: {len(wav_data)} bytes")
-    except Exception as e:
-        print(f"[Pronunciation] Conversion failed: {e}")
-        return {
-            "status": "fail_system",
-            "score": None,
-            "stars": None,
-            "subscores": None,
-            "transcript": "",
-            "target": target,
-            "errors": [],
-            "feedback_short": "Could not process audio. Please try again.",
-            "feedback_long": "There was a technical issue with the audio format.",
-            "should_count_attempt": False
-        }
+    # =========================================================================
+    # LAYER B: Content Gate (Whisper STT)
+    # =========================================================================
+    transcription = await transcribe_audio(audio_data)
     
-    # LAYER B: Azure Pronunciation Assessment
-    try:
-        azure_result = await asyncio.get_event_loop().run_in_executor(
-            executor,
-            azure_assess_pronunciation,
-            wav_data,
-            target,
-            "Phoneme" if not is_sentence else "FullText"
-        )
-    except Exception as e:
-        print(f"[Pronunciation] Azure assessment failed: {e}")
+    if not transcription["success"]:
+        print(f"[Pronunciation] Transcription failed: {transcription['error']}")
         return {
             "status": "fail_system",
             "score": None,
@@ -594,26 +574,113 @@ async def evaluate_pronunciation(
             "should_count_attempt": False
         }
     
+    transcript = transcription["transcript"]
+    print(f"[Pronunciation] Whisper transcript: '{transcript}'")
+    
+    # Check content match
+    content_result = check_content_match(target, transcript, is_sentence)
+    print(f"[Pronunciation] Content check: passed={content_result['passed']}, type={content_result['match_type']}")
+    
+    if not content_result["passed"]:
+        # Content gate failed - they said something different
+        return {
+            "status": "fail_content",
+            "score": content_result["similarity_score"],
+            "stars": 1,
+            "subscores": {
+                "accuracy": content_result["similarity_score"],
+                "fluency": 0,
+                "prosody": 0,
+                "completeness": 0
+            },
+            "transcript": content_result["normalized_transcript"],
+            "target": target,
+            "errors": [{
+                "type": "content",
+                "expected": content_result["normalized_target"],
+                "got": content_result["normalized_transcript"],
+                "hint": "Listen to the correct pronunciation and try again."
+            }],
+            "feedback_short": content_result["reason"],
+            "feedback_long": f"You said '{content_result['normalized_transcript']}' but the target was '{target}'. Listen to the model audio and try again.",
+            "should_count_attempt": True
+        }
+    
+    # =========================================================================
+    # LAYER C: Azure Pronunciation Assessment
+    # =========================================================================
+    # Convert audio to WAV for Azure
+    try:
+        wav_data = await asyncio.get_event_loop().run_in_executor(
+            executor, convert_to_wav, audio_data
+        )
+        print(f"[Pronunciation] Converted to WAV: {len(wav_data)} bytes")
+    except Exception as e:
+        print(f"[Pronunciation] Conversion failed: {e}")
+        return {
+            "status": "fail_system",
+            "score": None,
+            "stars": None,
+            "subscores": None,
+            "transcript": transcript,
+            "target": target,
+            "errors": [],
+            "feedback_short": "Could not process audio. Please try again.",
+            "feedback_long": "There was a technical issue with the audio format.",
+            "should_count_attempt": False
+        }
+    
+    # Azure Pronunciation Assessment
+    try:
+        azure_result = await asyncio.get_event_loop().run_in_executor(
+            executor,
+            azure_assess_pronunciation,
+            wav_data,
+            target,
+            "Phoneme" if not is_sentence else "FullText"
+        )
+    except Exception as e:
+        print(f"[Pronunciation] Azure assessment failed: {e}")
+        # Fallback: use content match score if Azure fails
+        score = content_result.get("similarity_score", 70)
+        stars, feedback_short = get_stars_and_feedback(score)
+        return {
+            "status": "success" if score >= 75 else "partial",
+            "score": score,
+            "stars": stars,
+            "subscores": {"accuracy": score, "fluency": score, "prosody": score, "completeness": 100},
+            "transcript": transcript,
+            "target": target,
+            "errors": [],
+            "feedback_short": feedback_short,
+            "feedback_long": "Good attempt! (Detailed scoring temporarily unavailable)",
+            "should_count_attempt": True
+        }
+    
     if not azure_result["success"]:
-        # No speech detected or recognition failed
+        # Azure failed but content matched - give credit based on content match
         error_msg = azure_result.get("error", "")
         print(f"[Pronunciation] Azure error: {error_msg}")
         
+        # Use content match score as fallback
+        score = content_result.get("similarity_score", 70)
+        stars, feedback_short = get_stars_and_feedback(score)
+        
         return {
-            "status": "fail_content",
-            "score": 0,
-            "stars": 1,
-            "subscores": {"accuracy": 0, "fluency": 0, "prosody": 0, "completeness": 0},
-            "transcript": "",
+            "status": "success" if score >= 75 else "partial",
+            "score": score,
+            "stars": stars,
+            "subscores": {"accuracy": score, "fluency": score, "prosody": score, "completeness": 100},
+            "transcript": transcript,
             "target": target,
             "errors": [],
-            "feedback_short": "Couldn't hear you clearly. Please speak louder.",
-            "feedback_long": "Make sure your microphone is working and speak clearly.",
+            "feedback_short": feedback_short,
+            "feedback_long": "Good attempt! Your pronunciation was recognized.",
             "should_count_attempt": True
         }
     
     # Process Azure results
-    transcript = azure_result.get("transcript", "")
+    azure_transcript = azure_result.get("transcript", "") or transcript
     accuracy = int(azure_result.get("accuracy_score", 0))
     fluency = int(azure_result.get("fluency_score", 0))
     prosody = int(azure_result.get("prosody_score", 0))
@@ -648,7 +715,7 @@ async def evaluate_pronunciation(
             "prosody": prosody,
             "completeness": completeness
         },
-        "transcript": transcript,
+        "transcript": azure_transcript,
         "target": target,
         "errors": feedback_data["errors"],
         "feedback_short": feedback_short,
