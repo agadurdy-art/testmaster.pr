@@ -80,16 +80,31 @@ def calculate_reading_band(answers: Dict[str, str], questions_attempted: List[st
     highest_level = "A1"
     errors = []
     
+    # CEFR level order for comparison
+    level_order = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6}
+    highest_level_num = 1  # Start at A1
+    
+    # If user didn't answer ANY questions, return lowest score
+    if not answers or len(answers) == 0:
+        return (2.0, 0.0, "A1", [])
+    
     for q_id, user_answer in answers.items():
         # Find the question
         for level, questions in READING_QUESTIONS.items():
             for q in questions:
                 if q["id"] == q_id:
                     total_questions += 1
-                    if user_answer.upper() == q["correct"].upper():
+                    
+                    # Check if answer is correct (case-insensitive, strip whitespace)
+                    user_ans = str(user_answer).strip().upper()
+                    correct_ans = str(q["correct"]).strip().upper()
+                    
+                    if user_ans == correct_ans:
                         correct_count += 1
                         # Track highest level where user got correct answers
-                        if level > highest_level:
+                        level_num = level_order.get(level, 1)
+                        if level_num > highest_level_num:
+                            highest_level_num = level_num
                             highest_level = level
                     else:
                         errors.append({
@@ -100,6 +115,10 @@ def calculate_reading_band(answers: Dict[str, str], questions_attempted: List[st
                             "level": level
                         })
                     break
+    
+    # If no questions were answered correctly, give minimum score
+    if correct_count == 0:
+        return (2.0, 0.0, "A1", errors)
     
     accuracy = correct_count / total_questions if total_questions > 0 else 0
     
@@ -113,15 +132,22 @@ def calculate_reading_band(answers: Dict[str, str], questions_attempted: List[st
         "C2": 8.5
     }
     
-    base_band = level_bands.get(highest_level, 4.0)
+    base_band = level_bands.get(highest_level, 2.5)
     
-    # Adjust based on accuracy at that level
-    if accuracy >= 0.8:
+    # Strict accuracy-based adjustment
+    if accuracy >= 0.9:  # 90%+ correct
         band_score = base_band + 0.5
-    elif accuracy >= 0.6:
+    elif accuracy >= 0.7:  # 70-89% correct
         band_score = base_band
-    else:
-        band_score = max(2.0, base_band - 0.5)
+    elif accuracy >= 0.5:  # 50-69% correct
+        band_score = base_band - 0.5
+    elif accuracy >= 0.3:  # 30-49% correct
+        band_score = base_band - 1.0
+    else:  # Less than 30% correct
+        band_score = 2.0  # Minimum score
+    
+    # Ensure band doesn't exceed reasonable limits
+    band_score = max(2.0, min(9.0, band_score))
     
     return (round(band_score, 1), accuracy, highest_level, errors)
 
