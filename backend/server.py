@@ -497,6 +497,63 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL")
 
 
+def send_verification_email(to_email: str, verify_link: str, user_name: str = "there") -> bool:
+    """Send email verification email via SendGrid. Returns True on success."""
+    if not SENDGRID_API_KEY or not SENDGRID_FROM_EMAIL:
+        logging.getLogger(__name__).warning("SendGrid not configured; skipping verification email send")
+        return False
+
+    try:
+        message = Mail(
+            from_email=SENDGRID_FROM_EMAIL,
+            to_emails=to_email,
+            subject="Verify your email - testmaster.pro",
+            html_content=f"""
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #7c3aed; margin: 0;">testmaster.pro</h1>
+                        <p style="color: #6b7280; margin-top: 5px;">IELTS & Cambridge AI Exam Prep</p>
+                    </div>
+                    
+                    <p style="font-size: 16px; color: #374151;">Hi {user_name},</p>
+                    
+                    <p style="font-size: 16px; color: #374151;">Welcome to testmaster.pro! 🎉</p>
+                    
+                    <p style="font-size: 16px; color: #374151;">Click below to verify your email and unlock all courses:</p>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="{verify_link}" style="background: linear-gradient(to right, #7c3aed, #9333ea); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; display: inline-block;">
+                            Verify Email
+                        </a>
+                    </div>
+                    
+                    <p style="font-size: 14px; color: #6b7280;">This link expires in 24 hours.</p>
+                    
+                    <p style="font-size: 14px; color: #6b7280;">Didn't sign up? You can safely ignore this email.</p>
+                    
+                    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+                    
+                    <p style="font-size: 12px; color: #9ca3af; text-align: center;">
+                        testmaster.pro team<br>
+                        Your Cambridge-aligned IELTS AI examiner
+                    </p>
+                </div>
+            """,
+        )
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        if response.status_code in (200, 201, 202):
+            logging.getLogger(__name__).info(f"Sent verification email to {to_email}")
+            return True
+        logging.getLogger(__name__).error(
+            f"SendGrid verification email error for {to_email}: status {response.status_code}"
+        )
+        return False
+    except Exception as e:
+        logging.getLogger(__name__).error(f"SendGrid verification email exception for {to_email}: {e}")
+        return False
+
+
 def send_reset_email(to_email: str, reset_link: str) -> bool:
     """Send a password reset email via SendGrid. Returns True on success."""
     if not SENDGRID_API_KEY or not SENDGRID_FROM_EMAIL:
