@@ -17,7 +17,7 @@ router = APIRouter(prefix="/api/pronunciation", tags=["pronunciation"])
 stt = OpenAISpeechToText(api_key=os.getenv("EMERGENT_LLM_KEY"))
 
 # Initialize LLM for pronunciation analysis
-llm = LlmChat(api_key=os.getenv("EMERGENT_LLM_KEY"), model="gpt-4o")
+llm = LlmChat(api_key=os.getenv("EMERGENT_LLM_KEY"))
 
 # ============ PHONICS LESSONS FOR ASIAN LEARNERS ============
 
