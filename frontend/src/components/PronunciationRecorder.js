@@ -273,18 +273,6 @@ export default function PronunciationRecorder({
       setState(STATES.IDLE);
     }
   };
-      setRecordingStartTime(Date.now());
-      setState(STATES.RECORDING);
-      setFeedback(null);
-      
-      debugLog('Recording started', { mimeType: mediaRecorderRef.current.mimeType });
-      
-    } catch (error) {
-      console.error('Error accessing microphone:', error);
-      toast.error('Could not access microphone. Please allow microphone access.');
-      setState(STATES.IDLE);
-    }
-  };
 
   // Stop recording
   const stopRecording = () => {
