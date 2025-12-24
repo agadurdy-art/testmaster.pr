@@ -373,30 +373,7 @@ IMPORTANT:
 - If IRRELEVANT answers, set band_score to 2.5-3.0
 - Count ACTUAL errors and include specific examples
 - Band 5.0+ requires: decent length, relevant answers, good grammar, varied vocabulary
-- BE HONEST about weaknesses
-            {{"error": "I go yesterday", "correction": "I went yesterday", "rule": "Use past tense"}},
-            {{"error": "She don't like", "correction": "She doesn't like", "rule": "Third person singular"}}
-        ],
-        "tense_variety": ["present simple only"],
-        "complex_sentences": 0
-    }},
-    "pronunciation": {{
-        "score": 5.0,
-        "feedback": "...",
-        "likely_issues": ["final consonants", "word stress"],
-        "intelligibility": "mostly understandable"
-    }},
-    "strengths": ["Attempts to answer all questions", "Uses some connectors"],
-    "main_weaknesses": ["Very limited vocabulary", "Only simple tenses", "Many basic errors"],
-    "specific_advice": [
-        "Practice using past tense verbs correctly",
-        "Learn 10-15 new words daily",
-        "Record yourself and listen back",
-        "Practice pronunciation of word endings"
-    ]
-}}
-
-BE SPECIFIC and HONEST."""
+- BE HONEST about weaknesses"""
 
         response = await chat.send_message(UserMessage(text=prompt))
         result_text = response.text.strip()
@@ -411,9 +388,10 @@ BE SPECIFIC and HONEST."""
     except Exception as e:
         logger.error(f"Speaking evaluation error: {e}")
         return {
-            "band": 4.0,
+            "band_score": 2.0,
             "feedback": "Could not evaluate speaking",
-            "errors": []
+            "errors": [],
+            "main_weaknesses": ["Evaluation failed"]
         }
 
 def generate_learning_path(overall_band: float, skill_bands: Dict[str, float]) -> List[Dict]:
