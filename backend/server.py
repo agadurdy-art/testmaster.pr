@@ -1671,20 +1671,67 @@ async def submit_test(submission: SubmitAnswers):
 
 @api_router.post("/auth/verify-email")
 async def verify_email(payload: VerifyEmailRequest):
+    """Verify email using token - now uses token stored in user document."""
     token = payload.token.strip()
+    
+    # First, try to find user by verification_token (new flow)
+    user = await db.users.find_one({"verification_token": token}, {"_id": 0})
+    
+    if user:
+        # New flow: token stored in user document
+        expires_at_str = user.get("verification_expires_at")
+        if expires_at_str:
+            expires_at = datetime.fromisoformat(expires_at_str)
+            if datetime.now(timezone.utc) > expires_at.replace(tzinfo=timezone.utc):
+                raise HTTPException(
+                    status_code=400, 
+                    detail="Verification link has expired. Please request a new one."
+                )
+        
+        # Check if already verified
+        if user.get("verified") or user.get("email_verified"):
+            return {"detail": "Email is already verified!", "already_verified": True}
+        
+        # Verify the user
+        await db.users.update_one(
+            {"id": user["id"]},
+            {
+                "$set": {
+                    "verified": True,
+                    "email_verified": True
+                },
+                "$unset": {
+                    "verification_token": "",
+                    "verification_expires_at": ""
+                }
+            }
+        )
+        
+        return {"detail": "Email verified successfully! You now have full access.", "success": True}
+    
+    # Fallback: try old email_verifications collection (backwards compatibility)
     record = await db.email_verifications.find_one({"token": token})
     if not record:
-        raise HTTPException(status_code=400, detail="Invalid or expired verification token")
+        raise HTTPException(
+            status_code=400, 
+            detail="Invalid or expired verification token. Please request a new verification email."
+        )
 
-    if datetime.now(timezone.utc) > datetime.fromisoformat(record["expires_at"]):
+    if datetime.now(timezone.utc) > datetime.fromisoformat(record["expires_at"]).replace(tzinfo=timezone.utc):
         await db.email_verifications.delete_one({"_id": record["_id"]})
-        raise HTTPException(status_code=400, detail="Invalid or expired verification token")
+        raise HTTPException(
+            status_code=400, 
+            detail="Verification link has expired. Please request a new one."
+        )
 
     email = record["email"]
-    await db.users.update_one({"email": email}, {"$set": {"verified": True}})
+    await db.users.update_one(
+        {"email": email}, 
+        {"$set": {"verified": True, "email_verified": True}}
+    )
     await db.email_verifications.delete_one({"_id": record["_id"]})
 
-    return {"detail": "Email verified successfully"}
+    return {"detail": "Email verified successfully! You now have full access.", "success": True}
 
 
 # ================== Payments: Manual Credit and PayPal ==================
