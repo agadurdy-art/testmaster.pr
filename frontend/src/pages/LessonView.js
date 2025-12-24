@@ -252,22 +252,61 @@ export default function LessonView({ user }) {
             {content.pronunciation_practice.map((practice, idx) => (
               <div key={idx} className="mb-6 last:mb-0">
                 <p className="text-sm text-slate-600 mb-3">{practice.instruction}</p>
-                <div className="space-y-3">
-                  {practice.words?.map((word, wordIdx) => (
-                    <div key={wordIdx}>
-                      <PronunciationRecorder
-                        word={word}
-                        userId={user.id}
-                        type="word"
-                        onFeedback={(feedback) => {
-                          console.log('Pronunciation feedback:', feedback);
-                        }}
-                      />
-                    </div>
-                  ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {practice.words?.map((wordItem, wordIdx) => {
+                    // Handle both string and object word formats
+                    const word = typeof wordItem === 'string' ? wordItem : wordItem.word;
+                    const phonetic = typeof wordItem === 'object' ? wordItem.phonetic : null;
+                    return (
+                      <div key={wordIdx}>
+                        <PronunciationRecorder
+                          word={word}
+                          phonetic={phonetic}
+                          userId={user.id}
+                          type="word"
+                          maxAttempts={3}
+                          onFeedback={(feedback) => {
+                            console.log('Pronunciation feedback:', feedback);
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
+          </Card>
+        )}
+
+        {/* Quick Vocabulary Practice - Record each word */}
+        {content.vocabulary && content.vocabulary.length > 0 && (
+          <Card className="p-6 mb-6 bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200">
+            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <Mic className="w-6 h-6 text-emerald-600" />
+              Practice Pronunciation
+            </h2>
+            <p className="text-slate-600 mb-4">Record yourself saying each word. Click the speaker icon to hear the correct pronunciation first!</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {content.vocabulary.slice(0, 4).map((item, idx) => {
+                const vocabItem = typeof item === 'string' ? { word: item } : item;
+                return (
+                  <PronunciationRecorder
+                    key={idx}
+                    word={vocabItem.word}
+                    phonetic={vocabItem.phonetic}
+                    imageUrl={vocabItem.visual_url}
+                    userId={user.id}
+                    type="word"
+                    maxAttempts={3}
+                    onFeedback={(feedback) => {
+                      if (feedback.correct || feedback.score >= 70) {
+                        toast.success(`Great job saying "${vocabItem.word}"! 🌟`);
+                      }
+                    }}
+                  />
+                );
+              })}
+            </div>
           </Card>
         )}
 
