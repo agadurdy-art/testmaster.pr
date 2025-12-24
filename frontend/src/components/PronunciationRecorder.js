@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
-import { Mic, Square, Play, Pause, Volume2, CheckCircle, AlertCircle, TrendingUp } from 'lucide-react';
+import { Mic, Square, Play, Volume2, RotateCcw, Star, Check, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -9,29 +9,60 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 export default function PronunciationRecorder({ 
   targetText, 
   word, 
+  phonetic,
+  audioUrl, // Audio URL to play the correct pronunciation
+  imageUrl,
   userId,
   onFeedback,
-  type = 'sentence' // 'sentence' or 'word'
+  type = 'sentence', // 'sentence' or 'word'
+  maxAttempts = 3
 }) {
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
-  const [audioURL, setAudioURL] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [recordedAudioURL, setRecordedAudioURL] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [feedback, setFeedback] = useState(null);
-  const [recordingTime, setRecordingTime] = useState(0);
+  const [attempts, setAttempts] = useState(0);
+  const [isPlayingReference, setIsPlayingReference] = useState(false);
   
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
-  const audioRef = useRef(null);
-  const timerRef = useRef(null);
+  const referenceAudioRef = useRef(null);
+  const recordedAudioRef = useRef(null);
 
   useEffect(() => {
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-      if (audioURL) URL.revokeObjectURL(audioURL);
+      if (recordedAudioURL) URL.revokeObjectURL(recordedAudioURL);
     };
-  }, [audioURL]);
+  }, [recordedAudioURL]);
+
+  // Get star rating based on score
+  const getStars = (score) => {
+    if (score >= 90) return 5;
+    if (score >= 75) return 4;
+    if (score >= 60) return 3;
+    if (score >= 40) return 2;
+    if (score >= 20) return 1;
+    return 0;
+  };
+
+  // Get feedback message based on score
+  const getFeedbackMessage = (score) => {
+    if (score >= 90) return { text: 'Excellent!', color: 'text-green-600' };
+    if (score >= 75) return { text: 'Very Good!', color: 'text-green-500' };
+    if (score >= 60) return { text: 'Good job!', color: 'text-blue-600' };
+    if (score >= 40) return { text: 'Keep practicing!', color: 'text-yellow-600' };
+    if (score >= 20) return { text: 'Need more effort', color: 'text-orange-600' };
+    return { text: 'Try again', color: 'text-red-500' };
+  };
+
+  // Play reference audio (correct pronunciation)
+  const playReferenceAudio = () => {
+    if (referenceAudioRef.current) {
+      referenceAudioRef.current.play();
+      setIsPlayingReference(true);
+    }
+  };
 
   const startRecording = async () => {
     try {
@@ -46,29 +77,24 @@ export default function PronunciationRecorder({
         }
       };
       
-      mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-        setAudioBlob(audioBlob);
-        const url = URL.createObjectURL(audioBlob);
-        setAudioURL(url);
-        
+      mediaRecorderRef.current.onstop = async () => {
+        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        setAudioBlob(blob);
+        const url = URL.createObjectURL(blob);
+        setRecordedAudioURL(url);
         stream.getTracks().forEach(track => track.stop());
+        
+        // Automatically check pronunciation after recording
+        await checkPronunciationWithBlob(blob);
       };
       
       mediaRecorderRef.current.start();
       setIsRecording(true);
-      setRecordingTime(0);
       setFeedback(null);
       
-      // Start timer
-      timerRef.current = setInterval(() => {
-        setRecordingTime(prev => prev + 1);
-      }, 1000);
-      
-      toast.success('Recording started');
     } catch (error) {
       console.error('Error accessing microphone:', error);
-      toast.error('Could not access microphone');
+      toast.error('Could not access microphone. Please allow microphone access.');
     }
   };
 
@@ -76,43 +102,21 @@ export default function PronunciationRecorder({
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-      toast.success('Recording stopped');
+      setAttempts(prev => prev + 1);
     }
   };
 
-  const playAudio = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play();
-        setIsPlaying(true);
-      }
-    }
-  };
-
-  const checkPronunciation = async () => {
-    if (!audioBlob) {
-      toast.error('Please record audio first');
-      return;
-    }
-
+  const checkPronunciationWithBlob = async (blob) => {
     setIsAnalyzing(true);
     
     try {
       const formData = new FormData();
-      formData.append('audio_file', audioBlob, 'recording.webm');
-      formData.append('target_text', type === 'word' ? word : targetText);
-      formData.append('user_id', userId);
+      formData.append('audio_file', blob, 'recording.webm');
 
+      const targetTextValue = type === 'word' ? word : targetText;
       const endpoint = type === 'word' 
         ? `${API_URL}/api/pronunciation/practice-word?word=${encodeURIComponent(word)}&user_id=${userId}`
-        : `${API_URL}/api/pronunciation/check?target_text=${encodeURIComponent(targetText)}&user_id=${userId}`;
+        : `${API_URL}/api/pronunciation/check?target_text=${encodeURIComponent(targetTextValue)}&user_id=${userId}`;
       
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -120,7 +124,8 @@ export default function PronunciationRecorder({
       });
 
       if (!response.ok) {
-        throw new Error('Pronunciation check failed');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Pronunciation check failed');
       }
 
       const result = await response.json();
@@ -130,226 +135,247 @@ export default function PronunciationRecorder({
         onFeedback(result);
       }
       
-      toast.success('Pronunciation checked!');
     } catch (error) {
       console.error('Error checking pronunciation:', error);
-      toast.error('Failed to check pronunciation');
+      toast.error(error.message || 'Failed to check pronunciation. Try again.');
+      // Set a basic feedback even on error
+      setFeedback({
+        score: 0,
+        overall_score: 0,
+        feedback: 'Could not analyze. Please try again.',
+        correct: false
+      });
     } finally {
       setIsAnalyzing(false);
     }
   };
 
-  const getScoreColor = (score) => {
-    if (score >= 80) return 'text-green-600 bg-green-100';
-    if (score >= 60) return 'text-yellow-600 bg-yellow-100';
-    return 'text-red-600 bg-red-100';
+  const resetPractice = () => {
+    setFeedback(null);
+    setAudioBlob(null);
+    setRecordedAudioURL(null);
+    setAttempts(0);
   };
 
-  const getGradeIcon = (grade) => {
-    if (grade === 'Excellent' || grade === 'Good') return <CheckCircle className="w-5 h-5 text-green-600" />;
-    return <AlertCircle className="w-5 h-5 text-yellow-600" />;
-  };
+  const score = feedback?.score || feedback?.overall_score || 0;
+  const stars = getStars(score);
+  const feedbackMsg = getFeedbackMessage(score);
+  const displayWord = type === 'word' ? word : targetText;
 
   return (
-    <Card className="p-6">
-      <div className="space-y-4">
-        {/* Target Text Display */}
-        <div className="bg-violet-50 p-4 rounded-lg border-l-4 border-l-violet-500">
-          <p className="text-sm text-violet-600 font-medium mb-1">
-            {type === 'word' ? 'Practice Word' : 'Practice Sentence'}
-          </p>
-          <p className="text-lg font-bold text-slate-800">
-            {type === 'word' ? word : targetText}
-          </p>
-        </div>
-
-        {/* Recording Controls */}
-        <div className="flex gap-3 items-center">
-          {!isRecording ? (
-            <Button
-              onClick={startRecording}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white"
-              disabled={isAnalyzing}
-            >
-              <Mic className="w-5 h-5 mr-2" />
-              Start Recording
-            </Button>
-          ) : (
+    <Card className="overflow-hidden bg-white shadow-lg">
+      {/* Header with word/sentence and phonetic */}
+      <div className="bg-gradient-to-r from-violet-500 to-purple-600 p-4 text-white">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <h3 className="text-2xl font-bold">{displayWord}</h3>
+            {phonetic && (
+              <p className="text-violet-100 mt-1 font-mono">{phonetic}</p>
+            )}
+          </div>
+          
+          {/* Listen to correct pronunciation */}
+          {audioUrl && (
             <>
+              <audio
+                ref={referenceAudioRef}
+                src={audioUrl}
+                onEnded={() => setIsPlayingReference(false)}
+              />
               <Button
-                onClick={stopRecording}
-                className="flex-1 bg-slate-700 hover:bg-slate-800 text-white"
+                onClick={playReferenceAudio}
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/20"
               >
-                <Square className="w-5 h-5 mr-2" />
-                Stop Recording
+                <Volume2 className={`w-5 h-5 ${isPlayingReference ? 'animate-pulse' : ''}`} />
               </Button>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
-                <span className="text-sm font-mono">{recordingTime}s</span>
-              </div>
             </>
           )}
         </div>
+      </div>
 
-        {/* Audio Playback */}
-        {audioURL && (
-          <div className="flex gap-3">
-            <audio
-              ref={audioRef}
-              src={audioURL}
-              onEnded={() => setIsPlaying(false)}
-              className="hidden"
-            />
+      {/* Image (if provided for vocabulary) */}
+      {imageUrl && (
+        <div className="flex justify-center p-4 bg-slate-50">
+          <img 
+            src={imageUrl} 
+            alt={displayWord}
+            className="w-32 h-32 object-cover rounded-lg shadow-md"
+            onError={(e) => { e.target.style.display = 'none'; }}
+          />
+        </div>
+      )}
+
+      {/* Recording Area */}
+      <div className="p-6">
+        {/* Attempts counter */}
+        <div className="flex justify-between items-center mb-4">
+          <p className="text-sm text-slate-500">
+            Attempts: <span className="font-semibold text-slate-700">{attempts}/{maxAttempts}</span>
+          </p>
+          {attempts > 0 && (
             <Button
-              onClick={playAudio}
-              variant="outline"
-              className="flex-1"
+              onClick={resetPractice}
+              variant="ghost"
+              size="sm"
+              className="text-slate-500 hover:text-slate-700"
             >
-              {isPlaying ? (
-                <>
-                  <Pause className="w-4 h-4 mr-2" />
-                  Pause
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4 mr-2" />
-                  Play Recording
-                </>
-              )}
+              <RotateCcw className="w-4 h-4 mr-1" />
+              Reset
             </Button>
-            <Button
-              onClick={checkPronunciation}
-              className="flex-1 bg-green-600 hover:bg-green-700"
-              disabled={isAnalyzing}
-            >
-              {isAnalyzing ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></div>
-                  Analyzing...
-                </>
-              ) : (
-                <>
-                  <TrendingUp className="w-4 h-4 mr-2" />
-                  Check Pronunciation
-                </>
-              )}
-            </Button>
+          )}
+        </div>
+
+        {/* Recording Button */}
+        {!feedback && (
+          <div className="flex justify-center">
+            {!isRecording ? (
+              <Button
+                onClick={startRecording}
+                disabled={isAnalyzing || attempts >= maxAttempts}
+                className={`w-24 h-24 rounded-full flex flex-col items-center justify-center gap-1 ${
+                  attempts >= maxAttempts 
+                    ? 'bg-slate-300 cursor-not-allowed' 
+                    : 'bg-red-500 hover:bg-red-600 hover:scale-105 transition-transform'
+                }`}
+              >
+                <Mic className="w-8 h-8 text-white" />
+                <span className="text-xs text-white">Record</span>
+              </Button>
+            ) : (
+              <Button
+                onClick={stopRecording}
+                className="w-24 h-24 rounded-full bg-slate-700 hover:bg-slate-800 flex flex-col items-center justify-center gap-1 animate-pulse"
+              >
+                <Square className="w-8 h-8 text-white" />
+                <span className="text-xs text-white">Stop</span>
+              </Button>
+            )}
+          </div>
+        )}
+
+        {/* Analyzing State */}
+        {isAnalyzing && (
+          <div className="flex flex-col items-center justify-center py-6">
+            <div className="w-12 h-12 rounded-full border-4 border-violet-200 border-t-violet-600 animate-spin mb-3"></div>
+            <p className="text-slate-600">Analyzing your pronunciation...</p>
           </div>
         )}
 
         {/* Feedback Display */}
-        {feedback && (
-          <div className="space-y-4 mt-6">
-            {type === 'word' ? (
-              // Simple word feedback
-              <Card className={`p-4 ${feedback.correct ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'}`}>
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    {feedback.correct ? (
-                      <CheckCircle className="w-6 h-6 text-green-600" />
-                    ) : (
-                      <AlertCircle className="w-6 h-6 text-yellow-600" />
-                    )}
-                    <span className="font-bold text-lg">Score: {feedback.score}/100</span>
-                  </div>
-                </div>
-                <p className="text-sm text-slate-700">
-                  <strong>You said:</strong> "{feedback.transcribed}"
+        {feedback && !isAnalyzing && (
+          <div className="space-y-4">
+            {/* Star Rating */}
+            <div className="flex flex-col items-center py-4">
+              <div className="flex gap-1 mb-2">
+                {[1, 2, 3, 4, 5].map((starNum) => (
+                  <Star
+                    key={starNum}
+                    className={`w-8 h-8 ${
+                      starNum <= stars 
+                        ? 'text-yellow-400 fill-yellow-400' 
+                        : 'text-slate-200 fill-slate-200'
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className={`text-xl font-bold ${feedbackMsg.color}`}>
+                {feedbackMsg.text}
+              </p>
+              <p className="text-sm text-slate-500 mt-1">Score: {score}/100</p>
+            </div>
+
+            {/* What you said */}
+            {(feedback.transcribed || feedback.transcribed_text) && (
+              <div className="bg-slate-50 p-3 rounded-lg border">
+                <p className="text-xs text-slate-500 mb-1">You said:</p>
+                <p className="text-slate-700 font-medium">
+                  "{feedback.transcribed || feedback.transcribed_text}"
                 </p>
-                <p className="text-sm font-medium mt-2">{feedback.feedback}</p>
-              </Card>
-            ) : (
-              // Detailed sentence feedback
-              <>
-                <Card className={`p-4 ${getScoreColor(feedback.overall_score)}`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      {getGradeIcon(feedback.pronunciation_grade)}
-                      <div>
-                        <p className="font-bold text-lg">{feedback.overall_score}/100</p>
-                        <p className="text-sm">{feedback.pronunciation_grade}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-slate-600">Words Correct</p>
-                      <p className="font-bold">{feedback.matched_words?.length || 0}</p>
-                    </div>
-                  </div>
-                </Card>
-
-                {/* What you said */}
-                <div className="bg-slate-100 p-3 rounded-lg">
-                  <p className="text-xs text-slate-600 mb-1">What you said:</p>
-                  <p className="font-medium">"{feedback.transcribed_text}"</p>
-                </div>
-
-                {/* Strengths */}
-                {feedback.strengths && feedback.strengths.length > 0 && (
-                  <Card className="p-4 bg-green-50 border-green-200">
-                    <p className="font-semibold text-green-700 mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      Strengths
-                    </p>
-                    <ul className="space-y-1">
-                      {feedback.strengths.map((strength, idx) => (
-                        <li key={idx} className="text-sm text-slate-700 flex items-start gap-2">
-                          <span className="text-green-600">✓</span>
-                          {strength}
-                        </li>
-                      ))}
-                    </ul>
-                  </Card>
-                )}
-
-                {/* Errors & Tips */}
-                {feedback.errors && feedback.errors.length > 0 && (
-                  <Card className="p-4 bg-amber-50 border-amber-200">
-                    <p className="font-semibold text-amber-700 mb-3 flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4" />
-                      Areas to Improve
-                    </p>
-                    <div className="space-y-3">
-                      {feedback.errors.map((error, idx) => (
-                        <div key={idx} className="bg-white p-3 rounded border-l-4 border-l-amber-400">
-                          <p className="font-medium text-slate-800 mb-1">
-                            Word: <span className="text-amber-700">{error.word}</span>
-                          </p>
-                          <p className="text-sm text-slate-600 mb-1">
-                            <strong>Issue:</strong> {error.issue}
-                          </p>
-                          <p className="text-sm text-slate-600 mb-1">
-                            <strong>Correct:</strong> {error.correct_pronunciation}
-                          </p>
-                          <p className="text-sm bg-blue-50 p-2 rounded mt-2 border-l-2 border-blue-400">
-                            💡 <strong>Tip:</strong> {error.tip}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                )}
-
-                {/* Phonics Lesson Recommendation */}
-                {feedback.phonics_lesson_recommended && (
-                  <Card className="p-4 bg-purple-50 border-purple-200">
-                    <p className="font-semibold text-purple-700 mb-2">
-                      📚 Recommended Lesson
-                    </p>
-                    <p className="text-sm text-slate-700">
-                      Practice the <strong>{feedback.phonics_lesson_recommended.replace('_', ' ')}</strong> phonics lesson to improve this sound!
-                    </p>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="mt-2"
-                      onClick={() => window.open(`/phonics/${feedback.phonics_lesson_recommended}`, '_blank')}
-                    >
-                      View Lesson
-                    </Button>
-                  </Card>
-                )}
-              </>
+              </div>
             )}
+
+            {/* Correct/Incorrect indicator for word practice */}
+            {type === 'word' && (
+              <div className={`flex items-center justify-center gap-2 p-3 rounded-lg ${
+                feedback.correct ? 'bg-green-50' : 'bg-amber-50'
+              }`}>
+                {feedback.correct ? (
+                  <>
+                    <Check className="w-5 h-5 text-green-600" />
+                    <span className="text-green-700 font-medium">Correct pronunciation!</span>
+                  </>
+                ) : (
+                  <>
+                    <X className="w-5 h-5 text-amber-600" />
+                    <span className="text-amber-700 font-medium">Try saying it more clearly</span>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* Quick tip */}
+            {(feedback.focus_areas?.length > 0 || feedback.errors?.length > 0) && (
+              <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                <p className="text-blue-800 text-sm">
+                  💡 <strong>Tip:</strong> {feedback.focus_areas?.[0] || feedback.errors?.[0]?.tip || 'Practice speaking slowly and clearly'}
+                </p>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-2">
+              {audioUrl && (
+                <Button
+                  onClick={playReferenceAudio}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <Volume2 className="w-4 h-4 mr-2" />
+                  Listen Again
+                </Button>
+              )}
+              
+              {attempts < maxAttempts && (
+                <Button
+                  onClick={() => {
+                    setFeedback(null);
+                    setAudioBlob(null);
+                    setRecordedAudioURL(null);
+                  }}
+                  className="flex-1 bg-violet-600 hover:bg-violet-700"
+                >
+                  <Mic className="w-4 h-4 mr-2" />
+                  Try Again
+                </Button>
+              )}
+            </div>
+
+            {/* Play your recording */}
+            {recordedAudioURL && (
+              <Button
+                onClick={() => recordedAudioRef.current?.play()}
+                variant="ghost"
+                size="sm"
+                className="w-full text-slate-500"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Play your recording
+              </Button>
+            )}
+            <audio ref={recordedAudioRef} src={recordedAudioURL} />
+          </div>
+        )}
+
+        {/* Max attempts reached */}
+        {attempts >= maxAttempts && !feedback && !isAnalyzing && (
+          <div className="text-center py-4">
+            <p className="text-slate-600 mb-3">Maximum attempts reached</p>
+            <Button onClick={resetPractice} variant="outline">
+              <RotateCcw className="w-4 h-4 mr-2" />
+              Start Over
+            </Button>
           </div>
         )}
       </div>
