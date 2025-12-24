@@ -224,12 +224,14 @@ export default function LandingPage({ onLogin, user }) {
   const { t, language } = useI18n();
   const [showAuth, setShowAuth] = useState(false);
   const [authMode, setAuthMode] = useState('signup');
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const [processingSocial, setProcessingSocial] = useState(false);
   const [previewModules, setPreviewModules] = useState([]);
   const [showCourseSelector, setShowCourseSelector] = useState(false);
   const [courseLessons, setCourseLessons] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
   const handleStartFreePractice = () => {
     navigate('/comprehensive-level-test');
@@ -237,6 +239,13 @@ export default function LandingPage({ onLogin, user }) {
 
   const handleAuth = async (e) => {
     e.preventDefault();
+    
+    // Validate passwords match for signup
+    if (authMode === 'signup' && formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match. Please try again.');
+      return;
+    }
+    
     setLoading(true);
     try {
       if (authMode === 'signup') {
