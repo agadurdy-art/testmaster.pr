@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { 
-  BookOpen, CheckCircle, Clock, ArrowRight, ArrowLeft, Award, Lightbulb, Volume2
+  BookOpen, CheckCircle, Clock, ArrowRight, ArrowLeft, Award, Lightbulb, Volume2, Mic
 } from 'lucide-react';
 import { toast } from 'sonner';
+import PronunciationRecorder from '../components/PronunciationRecorder';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -142,12 +143,59 @@ export default function LessonView({ user }) {
               <BookOpen className="w-6 h-6 text-violet-600" />
               Vocabulary
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {content.vocabulary.map((word, idx) => (
-                <div key={idx} className="p-3 bg-violet-50 rounded-lg">
-                  <p className="font-semibold text-violet-900">{word}</p>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {content.vocabulary.map((item, idx) => {
+                const vocabItem = typeof item === 'string' ? { word: item } : item;
+                return (
+                  <Card key={idx} className="p-4 bg-violet-50 border-violet-200 hover:shadow-lg transition-shadow">
+                    {vocabItem.visual_url && (
+                      <img 
+                        src={vocabItem.visual_url} 
+                        alt={vocabItem.word}
+                        className="w-full h-32 object-cover rounded-lg mb-3"
+                      />
+                    )}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <p className="font-bold text-xl text-violet-900">{vocabItem.word}</p>
+                        {vocabItem.audio_url && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => {
+                              const audio = new Audio(`${API_URL}${vocabItem.audio_url}`);
+                              audio.play().catch(() => {
+                                // Fallback to text-to-speech
+                                const utterance = new SpeechSynthesisUtterance(vocabItem.word);
+                                utterance.lang = 'en-US';
+                                window.speechSynthesis.speak(utterance);
+                              });
+                            }}
+                          >
+                            <Volume2 className="w-4 h-4 text-violet-600" />
+                          </Button>
+                        )}
+                      </div>
+                      {vocabItem.phonetic && (
+                        <p className="text-sm text-slate-600 font-mono">{vocabItem.phonetic}</p>
+                      )}
+                      {vocabItem.pronunciation_focus && (
+                        <p className="text-xs bg-amber-100 text-amber-800 p-2 rounded border-l-2 border-amber-500">
+                          <strong>Focus:</strong> {vocabItem.pronunciation_focus}
+                        </p>
+                      )}
+                      {vocabItem.example && (
+                        <p className="text-sm text-slate-700 italic">"{vocabItem.example}"</p>
+                      )}
+                      {vocabItem.animal_sound && (
+                        <p className="text-sm bg-green-100 text-green-700 p-1 rounded text-center">
+                          🔊 {vocabItem.animal_sound}
+                        </p>
+                      )}
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
           </Card>
         )}
@@ -180,7 +228,36 @@ export default function LessonView({ user }) {
           </Card>
         )}
 
-        {/* Exercises */}
+        {/* Pronunciation Practice Section */}
+        {content.pronunciation_practice && content.pronunciation_practice.length > 0 && (
+          <Card className="p-6 mb-6 bg-gradient-to-r from-red-50 to-pink-50 border-red-200">
+            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <Mic className="w-6 h-6 text-red-600" />
+              Pronunciation Practice
+            </h2>
+            {content.pronunciation_practice.map((practice, idx) => (
+              <div key={idx} className="mb-6 last:mb-0">
+                <p className="text-sm text-slate-600 mb-3">{practice.instruction}</p>
+                <div className="space-y-3">
+                  {practice.words?.map((word, wordIdx) => (
+                    <div key={wordIdx}>
+                      <PronunciationRecorder
+                        word={word}
+                        userId={user.id}
+                        type="word"
+                        onFeedback={(feedback) => {
+                          console.log('Pronunciation feedback:', feedback);
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </Card>
+        )}
+
+        {/* Exercises Section */}
         {content.exercises && content.exercises.length > 0 && (
           <Card className="p-6 mb-6">
             <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
@@ -189,32 +266,45 @@ export default function LessonView({ user }) {
             </h2>
             <div className="space-y-6">
               {content.exercises.map((exercise, idx) => (
-                <div key={idx} className="p-4 bg-blue-50 rounded-lg">
-                  <p className="font-semibold mb-3 text-slate-800">
-                    {idx + 1}. {exercise.prompt}
-                  </p>
-                  {exercise.type === 'fill_blank' && (
-                    <div className="space-y-2">
-                      {exercise.options?.map((option, optIdx) => (
-                        <button
-                          key={optIdx}
-                          className="block w-full text-left px-4 py-2 bg-white rounded hover:bg-blue-100 transition-colors"
-                        >
-                          {option}
-                        </button>
-                      ))}
+                <div key={idx}>
+                  {exercise.type === 'pronunciation_record' && (
+                    <div>
+                      <p className="font-semibold mb-3 text-slate-800">
+                        {exercise.prompt}
+                      </p>
+                      <PronunciationRecorder
+                        targetText={exercise.target_text}
+                        userId={user.id}
+                        type="sentence"
+                        onFeedback={(feedback) => {
+                          if (feedback.overall_score >= 80) {
+                            toast.success('Excellent pronunciation! 🎉');
+                          } else if (feedback.overall_score >= 60) {
+                            toast.success('Good job! Keep practicing.');
+                          } else {
+                            toast.info('Keep practicing! Check the tips below.');
+                          }
+                        }}
+                      />
                     </div>
                   )}
-                  {exercise.type === 'multiple_choice' && (
-                    <div className="space-y-2">
-                      {exercise.options?.map((option, optIdx) => (
-                        <button
-                          key={optIdx}
-                          className="block w-full text-left px-4 py-2 bg-white rounded hover:bg-blue-100 transition-colors"
-                        >
-                          {option}
-                        </button>
-                      ))}
+                  {exercise.type !== 'pronunciation_record' && (
+                    <div className="p-4 bg-blue-50 rounded-lg">
+                      <p className="font-semibold mb-3 text-slate-800">
+                        {idx + 1}. {exercise.prompt}
+                      </p>
+                      {exercise.type === 'fill_blank' && exercise.options && (
+                        <div className="space-y-2">
+                          {exercise.options.map((option, optIdx) => (
+                            <button
+                              key={optIdx}
+                              className="block w-full text-left px-4 py-2 bg-white rounded hover:bg-blue-100 transition-colors"
+                            >
+                              {option}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
