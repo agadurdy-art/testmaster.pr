@@ -858,66 +858,91 @@ function ElevenLabsExaminer() {
 
         {/* READING TEST - New Two-Column Layout */}
         {testType === 'reading' ? (
-          <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-220px)] lg:h-[calc(100vh-220px)] mb-20">
-            {/* Left Column - Passage (~75% width) */}
-            <div className="lg:w-3/4 flex flex-col">
-              <Card className="flex-1 overflow-hidden flex flex-col">
-                {/* Passage Header */}
-                <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
-                  <h2 className="text-lg font-bold text-gray-900">
-                    {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
-                  </h2>
-                </div>
-                {/* Passage Content - Scrollable with Highlighter */}
-                <div className="flex-1 overflow-y-auto p-6">
-                  {(() => {
-                    // Check if current passage has matching_information or matching_headings questions
-                    const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
-                    const needsParagraphLabels = passageQuestions.some(q => 
-                      q.type === 'matching_information' || q.type === 'matching_headings'
-                    );
-                    
-                    return (
-                      <HighlightableText
-                        text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
-                        user={user}
-                        testId={`${test?.id}-passage-${currentPassage}`}
-                        testType="reading"
-                        highlightsEnabled={true}
-                        showParagraphLabels={needsParagraphLabels}
-                      />
-                    );
-                  })()}
-                </div>
-              </Card>
+          <div className="flex flex-col min-h-[calc(100vh-220px)] mb-20">
+            {/* Layout Control Bar - Desktop */}
+            <div className="hidden lg:flex items-center justify-between px-4 py-2 mb-2 bg-white rounded-lg shadow-sm border">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500 font-medium">Layout:</span>
+                {layoutPresets.map((preset) => (
+                  <button
+                    key={preset.value}
+                    onClick={() => setPassageRatio(preset.value)}
+                    className={`px-3 py-1.5 text-xs rounded-lg transition-colors font-medium ${
+                      passageRatio === preset.value
+                        ? 'bg-sky-500 text-white shadow-sm'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+              <span className="text-xs text-gray-400">
+                Passage {passageRatio}% | Questions {100 - passageRatio}%
+              </span>
             </div>
 
-            {/* Right Column - Questions (~25% width) */}
-            <div className="lg:w-1/4 flex flex-col min-w-[300px]">
-              <Card className="flex-1 overflow-hidden flex flex-col">
-                {/* Question Navigation Bar - All 40 questions */}
-                <div className="p-2 border-b bg-white">
-                  <QuestionNavigation
-                    totalQuestions={test.questions?.length || 40}
-                    currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
-                    answers={answers}
-                    flaggedQuestions={flaggedQuestions}
-                    onQuestionSelect={(index) => {
-                      const question = test.questions?.[index];
-                      if (question) {
-                        setCurrentPassage(question.passage || 1);
-                      }
-                    }}
-                    questionIds={test.questions?.map(q => q.id) || []}
-                    className="mb-0"
-                  />
-                </div>
-                
-                {/* Passage Tabs */}
-                <div className="p-3 border-b bg-gray-50">
-                  <div className="flex gap-1">
-                    {[1, 2, 3].map((passageNum) => {
-                      const passageQuestions = test.questions?.filter(q => q.passage === passageNum) || [];
+            {/* Question Navigation Bar - Full width at top */}
+            <div className="mb-2">
+              <QuestionNavigation
+                totalQuestions={test.questions?.length || 40}
+                currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
+                answers={answers}
+                flaggedQuestions={flaggedQuestions}
+                onQuestionSelect={(index) => {
+                  const question = test.questions?.[index];
+                  if (question) {
+                    setCurrentPassage(question.passage || 1);
+                  }
+                }}
+                questionIds={test.questions?.map(q => q.id) || []}
+                compact={true}
+              />
+            </div>
+
+            {/* Two Column Layout */}
+            <div className="flex flex-col lg:flex-row gap-4 flex-1 lg:h-[calc(100vh-320px)]">
+              {/* Left Column - Passage (Dynamic width) */}
+              <div className="flex flex-col" style={{ width: window.innerWidth >= 1024 ? `${passageRatio}%` : '100%' }}>
+                <Card className="flex-1 overflow-hidden flex flex-col">
+                  {/* Passage Header */}
+                  <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
+                    <h2 className="text-lg font-bold text-gray-900">
+                      {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
+                    </h2>
+                  </div>
+                  {/* Passage Content - Scrollable with Highlighter */}
+                  <div className="flex-1 overflow-y-auto p-6">
+                    {(() => {
+                      // Check if current passage has matching_information or matching_headings questions
+                      const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
+                      const needsParagraphLabels = passageQuestions.some(q => 
+                        q.type === 'matching_information' || q.type === 'matching_headings'
+                      );
+                      
+                      return (
+                        <HighlightableText
+                          text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
+                          user={user}
+                          testId={`${test?.id}-passage-${currentPassage}`}
+                          testType="reading"
+                          highlightsEnabled={true}
+                          showParagraphLabels={needsParagraphLabels}
+                        />
+                      );
+                    })()}
+                  </div>
+                </Card>
+              </div>
+
+              {/* Right Column - Questions (Dynamic width) */}
+              <div className="flex flex-col min-w-[280px]" style={{ width: window.innerWidth >= 1024 ? `${100 - passageRatio}%` : '100%' }}>
+                <Card className="flex-1 overflow-hidden flex flex-col">
+                  {/* Passage Tabs */}
+                  <div className="p-3 border-b bg-gray-50">
+                    <div className="flex gap-1">
+                      {[1, 2, 3].map((passageNum) => {
+                        const passageQuestions = test.questions?.filter(q => q.passage === passageNum) || [];
                       const answeredCount = passageQuestions.filter(q => answers[q.id]).length;
                       return (
                         <button
