@@ -274,6 +274,7 @@ export default function ComprehensiveLevelTest({ user }) {
   const [stage, setStage] = useState('select'); // select, intro, reading, listening, writing, speaking, evaluating, results
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [readingAnswers, setReadingAnswers] = useState({});
+  const [flaggedQuestions, setFlaggedQuestions] = useState(new Set()); // For question navigation
   const [currentSpeakingPrompt, setCurrentSpeakingPrompt] = useState(0);
   const [speakingResponses, setSpeakingResponses] = useState([]);
   
@@ -281,6 +282,7 @@ export default function ComprehensiveLevelTest({ user }) {
   const [listeningQuestions, setListeningQuestions] = useState([]);
   const [currentListeningSection, setCurrentListeningSection] = useState(0);
   const [listeningAnswers, setListeningAnswers] = useState({});
+  const [flaggedListeningQuestions, setFlaggedListeningQuestions] = useState(new Set()); // For listening navigation
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [audioPlayed, setAudioPlayed] = useState({});
   const listeningAudioRef = useRef(null);
@@ -307,6 +309,32 @@ export default function ComprehensiveLevelTest({ user }) {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
+
+  // Toggle flag for a question
+  const toggleFlagQuestion = (questionId) => {
+    setFlaggedQuestions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(questionId)) {
+        newSet.delete(questionId);
+      } else {
+        newSet.add(questionId);
+      }
+      return newSet;
+    });
+  };
+
+  // Toggle flag for listening question
+  const toggleFlagListeningQuestion = (questionId) => {
+    setFlaggedListeningQuestions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(questionId)) {
+        newSet.delete(questionId);
+      } else {
+        newSet.add(questionId);
+      }
+      return newSet;
+    });
+  };
 
   // Speaking timer
   useEffect(() => {
