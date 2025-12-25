@@ -1167,6 +1167,7 @@ function ElevenLabsExaminer() {
               </Card>
             </div>
           </div>
+          </div>
         ) : testType === 'listening' ? (
           /* LISTENING TEST - New Two-Column Layout like Reading */
           <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-220px)] lg:h-[calc(100vh-220px)] mb-20">
