@@ -69,13 +69,16 @@ frontend:
     working: "NA"
     file: "/app/frontend/src/components/test/SideBySideReader.js"
     notes: "Adjustable ratio with preset buttons and drag handle"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: true
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "CRITICAL: Cannot test due to authentication issue. Component exists but test flow is blocked at selection screen. User cannot progress to reading test where side-by-side layout is implemented."
+      - working: "NA"
+        agent: "testing"
+        comment: "AUTHENTICATION VERIFIED BUT ACCESS BLOCKED (Dec 25, 2024): Component exists in codebase with proper implementation - adjustable ratios (50-50, 60-40, 70-30, 80-20), draggable resizer handle, and fullscreen mode. However, actual TestInterface.js implements side-by-side layout directly rather than using SideBySideReader component. Layout controls implemented in TestInterface.js lines 57-64 with preset buttons and 70% default ratio. CANNOT TEST FUNCTIONALITY without authenticated access to /test/reading."
 
   - task: "Locate & Explain Feature"
     implemented: true
