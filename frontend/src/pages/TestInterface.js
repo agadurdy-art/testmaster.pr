@@ -823,16 +823,58 @@ function ElevenLabsExaminer() {
 
         {/* READING TEST - New Two-Column Layout */}
         {testType === 'reading' ? (
-          <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-220px)] lg:h-[calc(100vh-220px)] mb-20">
-            {/* Left Column - Passage (~75% width) */}
-            <div className="lg:w-3/4 flex flex-col">
-              <Card className="flex-1 overflow-hidden flex flex-col">
-                {/* Passage Header */}
-                <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
-                  <h2 className="text-lg font-bold text-gray-900">
-                    {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
-                  </h2>
-                </div>
+          <div className="flex flex-col mb-20">
+            {/* Layout Control Bar - Desktop only */}
+            <div className="hidden lg:flex items-center justify-between px-4 py-2 mb-2 bg-white rounded-lg shadow-sm border">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500 font-medium">Layout:</span>
+                {layoutPresets.map((preset) => (
+                  <button
+                    key={preset.value}
+                    onClick={() => setPassageRatio(preset.value)}
+                    className={`px-3 py-1.5 text-xs rounded-lg transition-colors font-medium ${
+                      passageRatio === preset.value
+                        ? 'bg-sky-500 text-white shadow-sm'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+              <span className="text-xs text-gray-400">
+                Passage {passageRatio}% | Questions {100 - passageRatio}%
+              </span>
+            </div>
+
+            {/* Question Navigation Bar - Full width, scrollable row */}
+            <QuestionNavigation
+              totalQuestions={test.questions?.length || 40}
+              currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
+              answers={answers}
+              flaggedQuestions={flaggedQuestions}
+              onQuestionSelect={(index) => {
+                const question = test.questions?.[index];
+                if (question) {
+                  setCurrentPassage(question.passage || 1);
+                }
+              }}
+              questionIds={test.questions?.map(q => q.id) || []}
+              compact={true}
+              className="mb-2"
+            />
+
+            {/* Two Column Layout */}
+            <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-[calc(100vh-300px)] lg:h-[calc(100vh-300px)]">
+              {/* Left Column - Passage */}
+              <div className="flex flex-col" style={{ flex: `0 0 ${passageRatio}%` }}>
+                <Card className="flex-1 overflow-hidden flex flex-col">
+                  {/* Passage Header */}
+                  <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
+                    <h2 className="text-lg font-bold text-gray-900">
+                      {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
+                    </h2>
+                  </div>
                 {/* Passage Content - Scrollable with Highlighter */}
                 <div className="flex-1 overflow-y-auto p-6">
                   {(() => {
