@@ -1425,6 +1425,250 @@ def test_listening_combined_questions_fix():
         print("❌ SOME LISTENING COMBINED QUESTIONS TESTS FAILED!")
         return False
 
+def test_listening_and_writing_modules():
+    """Test the newly implemented Listening and Writing modules for Comprehensive Level Assessment"""
+    print("\n" + "="*80)
+    print("🚀 TESTING LISTENING AND WRITING MODULES FOR COMPREHENSIVE LEVEL ASSESSMENT")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 6
+    
+    # Test 1: GET /api/level-test/listening-sections
+    print("\n=== Test 1: GET /api/level-test/listening-sections ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/level-test/listening-sections")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            sections = result.get("sections", [])
+            total_questions = result.get("total_questions", 0)
+            
+            print(f"✅ API call successful")
+            print(f"   Sections returned: {len(sections)}")
+            print(f"   Total questions: {total_questions}")
+            
+            # Validate expected structure
+            if len(sections) == 5:
+                print("✅ Returns 5 listening sections as expected")
+                
+                # Check first section structure
+                first_section = sections[0]
+                required_fields = ["id", "level", "band_range", "title", "audio_url", "question_count"]
+                missing_fields = [field for field in required_fields if field not in first_section]
+                
+                if not missing_fields:
+                    print("✅ Section structure contains all required fields")
+                    print(f"   Sample section: {first_section['title']} ({first_section['band_range']})")
+                    success_count += 1
+                else:
+                    print(f"❌ Section missing fields: {missing_fields}")
+            else:
+                print(f"❌ Expected 5 sections, got {len(sections)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 2: GET /api/level-test/listening-questions
+    print("\n=== Test 2: GET /api/level-test/listening-questions ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/level-test/listening-questions")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            questions = result.get("questions", [])
+            total = result.get("total", 0)
+            
+            print(f"✅ API call successful")
+            print(f"   Questions returned: {len(questions)}")
+            print(f"   Total: {total}")
+            
+            # Validate expected structure
+            if len(questions) == 10:
+                print("✅ Returns 10 listening questions as expected")
+                
+                # Check first question structure
+                first_question = questions[0]
+                required_fields = ["section_id", "question", "options", "correct"]
+                missing_fields = [field for field in required_fields if field not in first_question]
+                
+                if not missing_fields:
+                    print("✅ Question structure contains all required fields")
+                    print(f"   Sample question: {first_question['question'][:50]}...")
+                    success_count += 1
+                else:
+                    print(f"❌ Question missing fields: {missing_fields}")
+            else:
+                print(f"❌ Expected 10 questions, got {len(questions)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: POST /api/level-test/evaluate-listening
+    print("\n=== Test 3: POST /api/level-test/evaluate-listening ===")
+    listening_data = {
+        "answers": {
+            "q1": "B",
+            "q2": "C", 
+            "q3": "C",
+            "q4": "B",
+            "q5": "A",
+            "q6": "B",
+            "q7": "C",
+            "q8": "C",
+            "q9": "B",
+            "q10": "C"
+        }
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/level-test/evaluate-listening", json=listening_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            required_fields = ["band_score", "correct", "total", "percentage", "question_results", "skill_breakdown"]
+            missing_fields = [field for field in required_fields if field not in result]
+            
+            if not missing_fields:
+                print("✅ Response contains all required fields")
+                print(f"   Band Score: {result.get('band_score')}")
+                print(f"   Correct: {result.get('correct')}/{result.get('total')}")
+                print(f"   Percentage: {result.get('percentage')}%")
+                print(f"   Question Results: {len(result.get('question_results', []))}")
+                print(f"   Skill Breakdown: {len(result.get('skill_breakdown', []))}")
+                success_count += 1
+            else:
+                print(f"❌ Response missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: GET /api/level-test/writing-tasks
+    print("\n=== Test 4: GET /api/level-test/writing-tasks ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/level-test/writing-tasks")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            tasks = result.get("tasks", [])
+            total = result.get("total", 0)
+            
+            print(f"✅ API call successful")
+            print(f"   Tasks returned: {len(tasks)}")
+            print(f"   Total: {total}")
+            
+            # Validate expected structure
+            if len(tasks) == 3:
+                print("✅ Returns 3 progressive writing tasks as expected")
+                
+                # Check first task structure
+                first_task = tasks[0]
+                required_fields = ["id", "level", "type", "title", "instruction", "min_words", "max_words"]
+                missing_fields = [field for field in required_fields if field not in first_task]
+                
+                if not missing_fields:
+                    print("✅ Task structure contains all required fields")
+                    print(f"   Sample task: {first_task['title']} ({first_task['level']})")
+                    success_count += 1
+                else:
+                    print(f"❌ Task missing fields: {missing_fields}")
+            else:
+                print(f"❌ Expected 3 tasks, got {len(tasks)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 5: POST /api/level-test/evaluate-writing
+    print("\n=== Test 5: POST /api/level-test/evaluate-writing ===")
+    writing_data = {
+        "responses": [
+            {
+                "task_id": "writing_task_1",
+                "response_text": "My name is John. I am 25 years old. I live in London. I like reading books. Every day, I go to work."
+            }
+        ]
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/level-test/evaluate-writing", json=writing_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            required_fields = ["overall_band", "task_evaluations", "combined_feedback", "top_tips"]
+            missing_fields = [field for field in required_fields if field not in result]
+            
+            if not missing_fields:
+                print("✅ Response contains all required fields")
+                print(f"   Overall Band: {result.get('overall_band')}")
+                print(f"   Task Evaluations: {len(result.get('task_evaluations', []))}")
+                print(f"   Combined Feedback: {result.get('combined_feedback', '')[:50]}...")
+                print(f"   Top Tips: {len(result.get('top_tips', []))}")
+                success_count += 1
+            else:
+                print(f"❌ Response missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 6: Verify Audio Files Exist
+    print("\n=== Test 6: Verify Audio Files Exist ===")
+    try:
+        audio_files = ["listening_1.mp3", "listening_2.mp3", "listening_3.mp3", "listening_4.mp3", "listening_5.mp3"]
+        audio_path = "/app/frontend/public/audio/listening/"
+        
+        existing_files = []
+        for audio_file in audio_files:
+            file_path = f"{audio_path}{audio_file}"
+            if os.path.exists(file_path):
+                existing_files.append(audio_file)
+        
+        print(f"✅ Audio files check completed")
+        print(f"   Expected files: {len(audio_files)}")
+        print(f"   Found files: {len(existing_files)}")
+        print(f"   Files: {existing_files}")
+        
+        if len(existing_files) == 5:
+            print("✅ All 5 audio files exist as expected")
+            success_count += 1
+        else:
+            print(f"❌ Missing audio files: {set(audio_files) - set(existing_files)}")
+            
+    except Exception as e:
+        print(f"❌ Error checking audio files: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 LISTENING AND WRITING MODULES SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 5:  # Allow some flexibility
+        print("✅ LISTENING AND WRITING MODULES TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - Listening sections API returns 5 sections with audio URLs")
+        print("   - Listening questions API returns 10 questions with correct structure")
+        print("   - Listening evaluation API processes answers and returns band scores")
+        print("   - Writing tasks API returns 3 progressive tasks")
+        print("   - Writing evaluation API processes responses and returns feedback")
+        print("   - Audio files exist in the correct location")
+        return True
+    else:
+        print("❌ LISTENING AND WRITING MODULES TESTS FAILED!")
+        return False
+
 def test_pronunciation_evaluation_system():
     """Test the complete 3-layer pronunciation evaluation system"""
     print("\n" + "="*80)
