@@ -37,7 +37,31 @@ frontend:
     implemented: true
     working: true
     notes: "Reading → Listening → Writing → Speaking flow verified"
+    
+  - task: "Comprehensive Level Test - Test Mode Selection Feature"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/ComprehensiveLevelTest.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "VERIFIED: Test mode selection feature working perfectly. All 5 test options (Full Test, Reading, Listening, Writing, Speaking) display correctly with proper icons, duration estimates, and 'Recommended' badge on Full Test. Language switching (EN/VI/TR) works correctly. Single skill tests show appropriate intro pages with 'Back to Test Selection' navigation. Full test intro displays all 4 skills overview. Navigation between screens working properly."
 
 metadata:
-  version: "1.4"
-  test_sequence: 5
+  created_by: "main_agent"
+  version: "1.5"
+  test_sequence: 6
+
+test_plan:
+  current_focus:
+    - "Comprehensive Level Test - Test Mode Selection Feature"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "testing"
+    message: "Successfully tested the updated Comprehensive Level Test with test mode selection feature. All key scenarios from the review request have been verified: 1) Test Selection Screen shows 5 options with proper UI elements, 2) Language support (EN/VI/TR) working correctly, 3) Single skill test flow navigation verified, 4) Full test flow shows all 4 skills in overview, 5) Navigation between screens working properly. The implementation is working as expected and ready for use."
