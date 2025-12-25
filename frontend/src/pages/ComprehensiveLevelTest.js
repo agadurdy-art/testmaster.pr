@@ -131,7 +131,10 @@ const readingQuestions = [
       "D) More vacation time required"
     ],
     correct: "B",
-    skill: "inference"
+    skill: "inference",
+    passageExcerpt: "it also presents challenges such as maintaining work-life balance",
+    explanation: "The passage lists 'maintaining work-life balance' as one of the challenges. The word 'However' signals a contrast between benefits and drawbacks.",
+    skillTip: "Words like 'However', 'but', 'although' often introduce contrasting information - pay attention to what follows them."
   },
   {
     id: 6,
@@ -146,7 +149,10 @@ const readingQuestions = [
       "D) They are difficult to use"
     ],
     correct: "B",
-    skill: "critical_analysis"
+    skill: "critical_analysis",
+    passageExcerpt: "may be detrimental to interpersonal relationships and cognitive development",
+    explanation: "'Detrimental' means harmful. The passage states critics worry about harm to relationships and cognitive (brain) development.",
+    skillTip: "Learn to recognize formal vocabulary: 'detrimental' = harmful, 'cognitive' = related to thinking/brain."
   },
   
   // Band 6.0-6.5 (Upper-intermediate)
@@ -163,7 +169,10 @@ const readingQuestions = [
       "D) Change their opinions frequently"
     ],
     correct: "B",
-    skill: "complex_inference"
+    skill: "complex_inference",
+    passageExcerpt: "the tendency to seek out information that supports one's existing beliefs",
+    explanation: "The passage defines confirmation bias in the dash—this is the key information. 'Seek out' means 'favor' or 'look for'.",
+    skillTip: "Information between dashes (—) or parentheses often provides definitions or explanations of difficult terms."
   },
   {
     id: 8,
@@ -178,7 +187,10 @@ const readingQuestions = [
       "D) Building taller buildings"
     ],
     correct: "B",
-    skill: "paradox_understanding"
+    skill: "paradox_understanding",
+    passageExcerpt: "simultaneously accommodating population growth while preserving environmental sustainability",
+    explanation: "The 'paradox' is described as needing to do two things at once: grow (population) while protecting (environment). This is the 'balance' mentioned in option B.",
+    skillTip: "The word 'paradox' indicates a conflict between two things. Look for what these two conflicting elements are."
   },
   
   // Band 7.0-8.0 (Advanced)
@@ -195,7 +207,10 @@ const readingQuestions = [
       "D) When AI was first invented"
     ],
     correct: "B",
-    skill: "abstract_reasoning"
+    skill: "abstract_reasoning",
+    passageExcerpt: "whether computational processes can be said to 'comprehend' in any meaningful sense, or whether they merely simulate comprehension",
+    explanation: "The passage asks whether AI truly 'comprehends' (understands) or just 'simulates' (imitates) comprehension. Option B captures this distinction.",
+    skillTip: "In advanced passages, look for philosophical questions often framed as 'whether X or Y' constructions."
   },
   {
     id: 10,
@@ -210,7 +225,10 @@ const readingQuestions = [
       "D) They encourage more research"
     ],
     correct: "B",
-    skill: "sophisticated_analysis"
+    skill: "sophisticated_analysis",
+    passageExcerpt: "resultant narrative frameworks can inadvertently perpetuate cognitive distortions that impede nuanced understanding",
+    explanation: "'Cognitive distortions that impede understanding' = misleading frameworks that prevent understanding. 'Obscures rather than illuminates' reinforces this negative outcome.",
+    skillTip: "In complex texts, identify the main verb direction: 'obscures' (negative), 'illuminates' (positive). Here the text favors the negative outcome."
   }
 ];
 
