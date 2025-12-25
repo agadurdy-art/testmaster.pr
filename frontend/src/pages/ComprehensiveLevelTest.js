@@ -2310,6 +2310,7 @@ export default function ComprehensiveLevelTest({ user }) {
                 </div>
               )}
             </Card>
+            )}
           </div>
           )}
 
