@@ -1372,16 +1372,18 @@ export default function ComprehensiveLevelTest({ user }) {
     const currentQ = readingQuestions[currentQuestion];
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
-        <LanguageSwitcher />
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4 relative">
+        <div className="max-w-4xl mx-auto relative">
+          <LanguageSwitcher />
+          <div className="mb-6 pt-2">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
-                Reading Assessment - Question {currentQuestion + 1} of {readingQuestions.length}
+                {language === 'vi' ? `Đánh Giá Đọc - Câu ${currentQuestion + 1} / ${readingQuestions.length}` :
+                 language === 'tr' ? `Okuma Değerlendirmesi - Soru ${currentQuestion + 1} / ${readingQuestions.length}` :
+                 `Reading Assessment - Question ${currentQuestion + 1} of ${readingQuestions.length}`}
               </span>
               <span className="text-sm font-medium text-blue-600">
-                Level: {currentQ.level}
+                {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentQ.level}
               </span>
             </div>
             <Progress value={getProgressPercentage()} className="h-2" />
@@ -1391,7 +1393,9 @@ export default function ComprehensiveLevelTest({ user }) {
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-4">
                 <BookOpen className="w-5 h-5 text-blue-600" />
-                <h3 className="font-semibold text-gray-700">Reading Passage</h3>
+                <h3 className="font-semibold text-gray-700">
+                  {language === 'vi' ? 'Đoạn Văn' : language === 'tr' ? 'Okuma Parçası' : 'Reading Passage'}
+                </h3>
               </div>
               <p className="text-gray-800 leading-relaxed text-lg">
                 {currentQ.passage}
