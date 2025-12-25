@@ -4,14 +4,13 @@ import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { Clock, ChevronLeft, ChevronRight, Send, Mic, Square, Play, Pause, BookMarked, Flag } from 'lucide-react';
+import { Clock, ChevronLeft, ChevronRight, Send, Mic, Square, Play, Pause, BookMarked } from 'lucide-react';
 import { getTests, submitTest, transcribeAudio, evaluateWriting, evaluateSpeaking, startSpeakingSession } from '../lib/api';
 import { formatTime } from '../lib/utils';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 import NotebookPanel from '../components/NotebookPanel';
 import HighlightableText from '../components/HighlightableText';
-import QuestionNavigation from '../components/test/QuestionNavigation';
 
 export default function TestInterface({ user }) {
   const { testType } = useParams();
@@ -20,33 +19,18 @@ export default function TestInterface({ user }) {
   const [test, setTest] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [currentPassage, setCurrentPassage] = useState(1); // For reading test passage navigation
-  const [currentListeningPart, setCurrentListeningPart] = useState(1); // For listening test part navigation
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(0);
 
-// ElevenLabs examiner widget controller (shows when user has credits on speaking test)
+// ElevenLabs examiner widget controller (only for logged-in users on speaking test page)
 function ElevenLabsExaminer() {
   React.useEffect(() => {
     const widget = document.getElementById('ielts-ace-examiner');
-    if (!widget) {
-      console.error('ElevenLabs widget container not found');
-      return;
-    }
-    
-    // Show the widget with fixed positioning in bottom right
+    if (!widget) return;
     widget.style.display = 'block';
-    widget.style.position = 'fixed';
-    widget.style.bottom = '20px';
-    widget.style.right = '20px';
-    widget.style.zIndex = '9999';
-    
-    console.log('ElevenLabs AI Examiner visible');
 
     return () => {
-      if (widget) {
-        widget.style.display = 'none';
-        console.log('ElevenLabs AI Examiner hidden');
-      }
+      widget.style.display = 'none';
     };
   }, []);
 
@@ -67,18 +51,6 @@ function ElevenLabsExaminer() {
   
   // Phase 2: Notebook state for reading/listening tests
   const [showNotebook, setShowNotebook] = useState(false);
-  
-  // NEW: Question flagging for navigation
-  const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
-  
-  // NEW: Adjustable layout ratio for reading test
-  const [passageRatio, setPassageRatio] = useState(75); // Default 75% passage, 25% questions
-  const layoutPresets = [
-    { label: '50-50', value: 50 },
-    { label: '60-40', value: 60 },
-    { label: '70-30', value: 70 },
-    { label: '75-25', value: 75 },
-  ];
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
@@ -86,19 +58,6 @@ function ElevenLabsExaminer() {
   const listeningAudioRef = useRef(null);
   const speakingQuestionAudioRef = useRef(null);
   const speakingQuestionTimeoutRef = useRef(null);
-
-  // Toggle flag for a question
-  const toggleFlagQuestion = (questionId) => {
-    setFlaggedQuestions(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(questionId)) {
-        newSet.delete(questionId);
-      } else {
-        newSet.add(questionId);
-      }
-      return newSet;
-    });
-  };
 
   // Premium access / free trial helper functions
   const canAccessPremium = (user?.plan === 'pro') || ((user?.examCredits ?? 0) > 0);
@@ -475,17 +434,10 @@ function ElevenLabsExaminer() {
         speakingFeedbackToSubmit = feedbackSummary; // Use local variable for immediate submission
       }
       
-      const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => {
-        // Handle combined question IDs (e.g., "20-21") - keep as string
-        // For single IDs, parse to int
-        const parsedId = questionId.includes('-') || questionId.includes(',') 
-          ? questionId 
-          : parseInt(questionId);
-        return {
-          question_id: parsedId,
-          answer: answer
-        };
-      });
+      const formattedAnswers = Object.entries(answers).map(([questionId, answer]) => ({
+        question_id: parseInt(questionId),
+        answer: answer
+      }));
 
       // Build submission payload with feedback for writing/speaking
       const submissionPayload = {
@@ -849,96 +801,54 @@ function ElevenLabsExaminer() {
                 </div>
               </div>
             </Card>
-            {/* ElevenLabs examiner widget - Show directly when user has speaking credits */}
-            {testType === 'speaking' && user && (user.examCredits > 0 || (user.ai_interview_free_seconds_used || 0) < 180) && (
-              <ElevenLabsExaminer />
+            {/* ElevenLabs examiner widget */}
+            {speakingSessionStarted && (
+              <div className="fixed bottom-6 right-6 z-40">
+                <ElevenLabsExaminer />
+              </div>
             )}
           </>
         )}
 
-        {/* READING TEST - New Layout with Controls */}
+        {/* READING TEST - New Two-Column Layout */}
         {testType === 'reading' ? (
-          <div className="flex flex-col mb-20">
-            {/* Layout Control Bar - Desktop only */}
-            <div className="hidden lg:flex items-center justify-between px-4 py-2 mb-2 bg-white rounded-lg shadow-sm border">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-500 font-medium">Layout:</span>
-                {layoutPresets.map((preset) => (
-                  <button
-                    key={preset.value}
-                    onClick={() => setPassageRatio(preset.value)}
-                    className={`px-3 py-1.5 text-xs rounded-lg transition-colors font-medium ${
-                      passageRatio === preset.value
-                        ? 'bg-sky-500 text-white shadow-sm'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
-              <span className="text-xs text-gray-400">
-                Passage {passageRatio}% | Questions {100 - passageRatio}%
-              </span>
+          <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-220px)] lg:h-[calc(100vh-220px)] mb-20">
+            {/* Left Column - Passage (~75% width) */}
+            <div className="lg:w-3/4 flex flex-col">
+              <Card className="flex-1 overflow-hidden flex flex-col">
+                {/* Passage Header */}
+                <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
+                  <h2 className="text-lg font-bold text-gray-900">
+                    {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
+                  </h2>
+                </div>
+                {/* Passage Content - Scrollable with Highlighter */}
+                <div className="flex-1 overflow-y-auto p-6">
+                  {(() => {
+                    // Check if current passage has matching_information or matching_headings questions
+                    const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
+                    const needsParagraphLabels = passageQuestions.some(q => 
+                      q.type === 'matching_information' || q.type === 'matching_headings'
+                    );
+                    
+                    return (
+                      <HighlightableText
+                        text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
+                        user={user}
+                        testId={`${test?.id}-passage-${currentPassage}`}
+                        testType="reading"
+                        highlightsEnabled={true}
+                        showParagraphLabels={needsParagraphLabels}
+                      />
+                    );
+                  })()}
+                </div>
+              </Card>
             </div>
 
-            {/* Question Navigation Bar - Full width, scrollable row */}
-            <div className="mb-2">
-              <QuestionNavigation
-                totalQuestions={test.questions?.length || 40}
-                currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
-                answers={answers}
-                flaggedQuestions={flaggedQuestions}
-                onQuestionSelect={(index) => {
-                  const question = test.questions?.[index];
-                  if (question) {
-                    setCurrentPassage(question.passage || 1);
-                  }
-                }}
-                questionIds={test.questions?.map(q => q.id) || []}
-                compact={true}
-              />
-            </div>
-
-            {/* Two Column Layout */}
-            <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-300px)] lg:h-[calc(100vh-300px)]">
-              {/* Left Column - Passage */}
-              <div className="flex flex-col" style={{ flex: `0 0 ${passageRatio}%` }}>
-                <Card className="flex-1 overflow-hidden flex flex-col">
-                  {/* Passage Header */}
-                  <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
-                    <h2 className="text-lg font-bold text-gray-900">
-                      {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
-                    </h2>
-                  </div>
-                  {/* Passage Content - Scrollable with Highlighter */}
-                  <div className="flex-1 overflow-y-auto p-6">
-                    {(() => {
-                      // Check if current passage has matching_information or matching_headings questions
-                      const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
-                      const needsParagraphLabels = passageQuestions.some(q => 
-                        q.type === 'matching_information' || q.type === 'matching_headings'
-                      );
-                      
-                      return (
-                        <HighlightableText
-                          text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
-                          user={user}
-                          testId={`${test?.id}-passage-${currentPassage}`}
-                          testType="reading"
-                          highlightsEnabled={true}
-                          showParagraphLabels={needsParagraphLabels}
-                        />
-                      );
-                    })()}
-                  </div>
-                </Card>
-              </div>
-
-              {/* Right Column - Questions */}
-              <div className="flex-1 flex flex-col min-w-[280px]">
-                <Card className="flex-1 overflow-hidden flex flex-col">
-                {/* Question Navigation Bar - All 40 questions */}
+            {/* Right Column - Questions (~25% width) */}
+            <div className="lg:w-1/4 flex flex-col min-w-[300px]">
+              <Card className="flex-1 overflow-hidden flex flex-col">
                 {/* Passage Tabs */}
                 <div className="p-3 border-b bg-gray-50">
                   <div className="flex gap-1">
@@ -1010,10 +920,6 @@ function ElevenLabsExaminer() {
                         'form_completion': {
                           title: 'Form Completion',
                           instruction: 'Complete the form below. Write NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.'
-                        },
-                        'multiple_choice_multi': {
-                          title: 'Multiple Choice (Select TWO)',
-                          instruction: 'Choose TWO correct answers from the options below.'
                         }
                       };
                       
@@ -1041,31 +947,15 @@ function ElevenLabsExaminer() {
                         <div 
                           key={q.id} 
                           className={`p-3 rounded-lg border-l-4 ${
-                            flaggedQuestions.has(q.id) ? 'border-l-yellow-500 bg-yellow-50' :
                             isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
                           } shadow-sm`}
                         >
-                          <div className="flex items-start justify-between mb-2">
-                            <p className="text-sm font-medium text-gray-900 flex-1">
-                              <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold mr-2 ${
-                                flaggedQuestions.has(q.id) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-100 text-sky-700'
-                              }`}>
-                                {q.id}
-                              </span>
-                              {q.question}
-                            </p>
-                            <button
-                              onClick={() => toggleFlagQuestion(q.id)}
-                              className={`ml-2 p-1 rounded transition-colors flex-shrink-0 ${
-                                flaggedQuestions.has(q.id) 
-                                  ? 'bg-yellow-200 text-yellow-700 hover:bg-yellow-300' 
-                                  : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
-                              }`}
-                              title={flaggedQuestions.has(q.id) ? 'Remove flag' : 'Flag for review'}
-                            >
-                              <Flag className="w-3 h-3" />
-                            </button>
-                          </div>
+                          <p className="text-sm font-medium text-gray-900 mb-2">
+                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                              {q.id}
+                            </span>
+                            {q.question}
+                          </p>
                           
                           {/* Answer Input Based on Question Type */}
                           {(q.type === 'true_false_notgiven' || q.type === 'yes_no_notgiven') && (
@@ -1086,14 +976,11 @@ function ElevenLabsExaminer() {
                             </div>
                           )}
 
-                          {/* Multiple Choice - Single or Multi-select */}
-                          {(q.type === 'multiple_choice' || q.type === 'multiple_choice_multi') && q.options && (
+                          {q.type === 'multiple_choice' && q.options && (
                             (() => {
-                              // Check if this is a "Choose TWO" question (by type or question text)
-                              const isMultiSelect = q.type === 'multiple_choice_multi' ||
-                                                    q.question?.toLowerCase().includes('two') || 
+                              // Check if this is a "Choose TWO" question
+                              const isMultiSelect = q.question?.toLowerCase().includes('two') || 
                                                     q.question?.toLowerCase().includes('select two');
-                              const requiredCount = q.answer_count || 2;
                               
                               if (isMultiSelect) {
                                 // Multi-select: use checkboxes, store as array
@@ -1106,52 +993,41 @@ function ElevenLabsExaminer() {
                                   if (selectedAnswers.includes(optionLetter)) {
                                     // Remove if already selected
                                     newAnswers = selectedAnswers.filter(a => a !== optionLetter);
-                                  } else if (selectedAnswers.length < requiredCount) {
-                                    // Add if less than required selected
+                                  } else if (selectedAnswers.length < 2) {
+                                    // Add if less than 2 selected
                                     newAnswers = [...selectedAnswers, optionLetter];
                                   } else {
-                                    // Replace oldest if already at limit
-                                    newAnswers = [...selectedAnswers.slice(1), optionLetter];
+                                    // Replace oldest if already 2 selected
+                                    newAnswers = [selectedAnswers[1], optionLetter];
                                   }
                                   handleAnswerChange(q.id, newAnswers);
                                 };
                                 
                                 return (
                                   <div className="mt-2">
-                                    <div className={`text-xs px-2 py-1.5 rounded mb-2 font-medium flex items-center gap-2 ${
-                                      selectedAnswers.length === requiredCount 
-                                        ? 'bg-green-50 text-green-700' 
-                                        : 'bg-amber-50 text-amber-700'
-                                    }`}>
-                                      <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
-                                        selectedAnswers.length === requiredCount 
-                                          ? 'bg-green-500 text-white' 
-                                          : 'bg-amber-400 text-white'
-                                      }`}>
-                                        {selectedAnswers.length}
-                                      </span>
-                                      Select exactly {requiredCount} options ({selectedAnswers.length}/{requiredCount} selected)
+                                    <div className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded mb-2 font-medium">
+                                      ⚠️ Select exactly TWO options ({selectedAnswers.length}/2 selected)
                                     </div>
-                                    <div className="space-y-1.5">
+                                    <div className="space-y-1">
                                       {q.options.map((option, optIdx) => {
-                                        const optionLetter = option.split(')')[0].trim();
+                                        const optionLetter = option.split(')')[0];
                                         const isSelected = selectedAnswers.includes(optionLetter);
                                         return (
                                           <button
                                             key={optIdx}
                                             onClick={() => handleMultiSelect(optionLetter)}
-                                            className={`w-full text-left px-3 py-2.5 rounded-lg text-xs transition-all flex items-center gap-3 border ${
+                                            className={`w-full text-left px-3 py-2 rounded text-xs transition-colors flex items-center gap-2 ${
                                               isSelected
-                                                ? 'bg-sky-500 text-white border-sky-600 shadow-sm'
-                                                : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+                                                ? 'bg-sky-500 text-white'
+                                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                             }`}
                                           >
-                                            <span className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
-                                              isSelected ? 'border-white bg-white' : 'border-gray-300 bg-white'
+                                            <span className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
+                                              isSelected ? 'border-white bg-white' : 'border-gray-400'
                                             }`}>
-                                              {isSelected && <span className="text-sky-500 text-sm font-bold">✓</span>}
+                                              {isSelected && <span className="text-sky-500 text-xs font-bold">✓</span>}
                                             </span>
-                                            <span className="flex-1">{option}</span>
+                                            {option}
                                           </button>
                                         );
                                       })}
@@ -1166,11 +1042,11 @@ function ElevenLabsExaminer() {
                                   {q.options.map((option, optIdx) => (
                                     <button
                                       key={optIdx}
-                                      onClick={() => handleAnswerChange(q.id, option.split(')')[0].trim())}
-                                      className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-all border ${
-                                        answers[q.id] === option.split(')')[0].trim()
-                                          ? 'bg-sky-500 text-white border-sky-600'
-                                          : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
+                                      onClick={() => handleAnswerChange(q.id, option.split(')')[0])}
+                                      className={`w-full text-left px-2 py-1.5 rounded text-xs transition-colors ${
+                                        answers[q.id] === option.split(')')[0]
+                                          ? 'bg-sky-500 text-white'
+                                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                       }`}
                                     >
                                       {option}
@@ -1181,85 +1057,9 @@ function ElevenLabsExaminer() {
                             })()
                           )}
 
-                          {/* Matching Information - Dropdown selector for paragraph letters */}
-                          {q.type === 'matching_information' && (
-                            <div className="mt-2">
-                              <select
-                                value={answers[q.id] || ''}
-                                onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                              >
-                                <option value="">Select paragraph...</option>
-                                {(q.options || ['A', 'B', 'C', 'D', 'E', 'F', 'G']).map((opt, idx) => {
-                                  const letter = typeof opt === 'string' && opt.includes(')') 
-                                    ? opt.split(')')[0].replace(/[^A-G]/g, '') 
-                                    : opt;
-                                  return (
-                                    <option key={idx} value={letter}>
-                                      Paragraph {letter}
-                                    </option>
-                                  );
-                                })}
-                              </select>
-                            </div>
-                          )}
-
-                          {/* Matching Headings - Dropdown selector for heading numbers */}
-                          {q.type === 'matching_headings' && (
-                            <div className="mt-2">
-                              <select
-                                value={answers[q.id] || ''}
-                                onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                              >
-                                <option value="">Select heading...</option>
-                                {(q.options || ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x']).map((opt, idx) => (
-                                  <option key={idx} value={opt}>
-                                    {opt}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                          )}
-
-                          {/* Summary Completion - Dropdown if options provided, otherwise text input */}
-                          {q.type === 'summary_completion' && (
-                            <div className="mt-2">
-                              {q.options && q.options.length > 0 ? (
-                                <select
-                                  value={answers[q.id] || ''}
-                                  onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                                >
-                                  <option value="">Select answer...</option>
-                                  {q.options.map((opt, idx) => {
-                                    const optionText = typeof opt === 'string' && opt.includes(')') 
-                                      ? opt.split(')').slice(1).join(')').trim()
-                                      : opt;
-                                    const optionKey = typeof opt === 'string' && opt.includes(')')
-                                      ? opt.split(')')[0].trim()
-                                      : opt;
-                                    return (
-                                      <option key={idx} value={optionKey}>
-                                        {opt}
-                                      </option>
-                                    );
-                                  })}
-                                </select>
-                              ) : (
-                                <Input
-                                  value={answers[q.id] || ''}
-                                  onChange={(e) => handleAnswerChange(q.id, e.target.value)}
-                                  placeholder="Type your answer..."
-                                  className="text-sm h-8"
-                                />
-                              )}
-                            </div>
-                          )}
-
-                          {/* Text input for other completion types */}
                           {(q.type === 'sentence_completion' || q.type === 'form_completion' || 
-                            q.type === 'note_completion') && (
+                            q.type === 'note_completion' || q.type === 'matching_information' || 
+                            q.type === 'matching_headings' || q.type === 'summary_completion') && (
                             <Input
                               value={answers[q.id] || ''}
                               onChange={(e) => handleAnswerChange(q.id, e.target.value)}
@@ -1324,12 +1124,12 @@ function ElevenLabsExaminer() {
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-2xl">🎧</span>
                   <h3 className="font-bold text-lg">
-                    Part {currentListeningPart}
+                    Part {Math.floor(currentQuestion / 10) + 1}
                   </h3>
                 </div>
                 <audio
                   ref={listeningAudioRef}
-                  src={test.sections?.[currentListeningPart - 1]?.audio_url}
+                  src={test.sections?.[Math.floor(currentQuestion / 10)]?.audio_url}
                   onEnded={() => setListeningAudioPlaying(false)}
                   onPlay={() => setListeningAudioPlaying(true)}
                   onPause={() => setListeningAudioPlaying(false)}
@@ -1338,7 +1138,7 @@ function ElevenLabsExaminer() {
                   style={{height: '40px'}}
                 />
                 <p className="text-xs text-white/80 mt-2">
-                  {test.sections?.[currentListeningPart - 1]?.context}
+                  {test.sections?.[Math.floor(currentQuestion / 10)]?.context}
                 </p>
               </Card>
 
@@ -1347,34 +1147,23 @@ function ElevenLabsExaminer() {
                 <h3 className="font-semibold text-gray-700 text-sm mb-2">Parts</h3>
                 <div className="flex gap-2">
                   {[1, 2, 3, 4].map((part) => {
-                    // Filter questions by section number
-                    const partQuestions = test.questions?.filter(q => q.section === part) || [];
-                    // Count answered, accounting for combined questions
+                    const partQuestions = test.questions?.slice((part - 1) * 10, part * 10) || [];
                     const answeredCount = partQuestions.filter(q => answers[q.id]).length;
-                    // Calculate total question numbers for this part (accounting for combined questions)
-                    const totalQuestionsInPart = partQuestions.reduce((sum, q) => {
-                      const qId = String(q.id);
-                      if (qId.includes('-')) {
-                        const [start, end] = qId.split('-').map(Number);
-                        return sum + (end - start + 1);
-                      }
-                      return sum + 1;
-                    }, 0);
                     return (
                       <button
                         key={part}
-                        onClick={() => setCurrentListeningPart(part)}
+                        onClick={() => setCurrentQuestion((part - 1) * 10)}
                         className={`flex-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors ${
-                          currentListeningPart === part
+                          Math.floor(currentQuestion / 10) + 1 === part
                             ? 'bg-sky-500 text-white'
-                            : answeredCount === partQuestions.length
+                            : answeredCount === 10
                             ? 'bg-green-100 text-green-700 hover:bg-green-200'
                             : 'bg-white text-gray-600 hover:bg-gray-100 border'
                         }`}
                       >
                         <div>P{part}</div>
                         <div className="text-[10px] opacity-75">
-                          {answeredCount}/{partQuestions.length}
+                          {answeredCount}/10
                         </div>
                       </button>
                     );
@@ -1386,57 +1175,29 @@ function ElevenLabsExaminer() {
               <Card className="p-3 flex-1 overflow-y-auto">
                 <h3 className="font-semibold text-gray-700 text-sm mb-2">Questions</h3>
                 <div className="grid grid-cols-5 gap-1">
-                  {(() => {
-                    // Get questions for current part by section
-                    const partQuestions = test.questions?.filter(q => q.section === currentListeningPart) || [];
-                    // Build question number buttons - expand combined questions
-                    const buttons = [];
-                    partQuestions.forEach((q, idx) => {
-                      const qId = String(q.id);
-                      const isAnswered = !!answers[q.id];
-                      if (qId.includes('-')) {
-                        // Combined question like "21-22" - show both numbers
-                        const [start, end] = qId.split('-').map(Number);
-                        for (let num = start; num <= end; num++) {
-                          buttons.push(
-                            <button
-                              key={`${q.id}-${num}`}
-                              onClick={() => {
-                                const el = document.getElementById(`q-${q.id}`);
-                                el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                              }}
-                              className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
-                                isAnswered
-                                  ? 'bg-green-100 text-green-700'
-                                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                              }`}
-                            >
-                              {num}
-                            </button>
-                          );
-                        }
-                      } else {
-                        // Single question
-                        buttons.push(
-                          <button
-                            key={q.id}
-                            onClick={() => {
-                              const el = document.getElementById(`q-${q.id}`);
-                              el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }}
-                            className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
-                              isAnswered
-                                ? 'bg-green-100 text-green-700'
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                            }`}
-                          >
-                            {q.id}
-                          </button>
-                        );
-                      }
-                    });
-                    return buttons;
-                  })()}
+                  {test.questions?.slice(
+                    Math.floor(currentQuestion / 10) * 10,
+                    (Math.floor(currentQuestion / 10) + 1) * 10
+                  ).map((q, idx) => {
+                    const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
+                    const isAnswered = !!answers[q.id];
+                    return (
+                      <button
+                        key={q.id}
+                        onClick={() => {
+                          const el = document.getElementById(`q-${questionNumber}`);
+                          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }}
+                        className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
+                          isAnswered
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {questionNumber + 1}
+                      </button>
+                    );
+                  })}
                 </div>
               </Card>
             </div>
@@ -1447,7 +1208,7 @@ function ElevenLabsExaminer() {
                 {/* Questions Header */}
                 <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
                   <h2 className="text-lg font-bold text-gray-900">
-                    Part {currentListeningPart} - Questions {(currentListeningPart - 1) * 10 + 1}-{currentListeningPart * 10}
+                    Part {Math.floor(currentQuestion / 10) + 1} - Questions {Math.floor(currentQuestion / 10) * 10 + 1}-{(Math.floor(currentQuestion / 10) + 1) * 10}
                   </h2>
                 </div>
 
@@ -1456,8 +1217,10 @@ function ElevenLabsExaminer() {
                   <div className="space-y-4">
                     {/* Task descriptions for Listening */}
                     {(() => {
-                      // Filter questions by section number instead of index slicing
-                      const partQuestions = test.questions?.filter(q => q.section === currentListeningPart) || [];
+                      const partQuestions = test.questions?.slice(
+                        Math.floor(currentQuestion / 10) * 10,
+                        (Math.floor(currentQuestion / 10) + 1) * 10
+                      ) || [];
                       let currentType = null;
                       const listeningTaskDescriptions = {
                         'note_completion': {
@@ -1483,17 +1246,11 @@ function ElevenLabsExaminer() {
                         'multiple_choice': {
                           title: 'Multiple Choice',
                           instruction: 'Choose the correct letter A, B, or C.'
-                        },
-                        'multiple_choice_multi': {
-                          title: 'multiple choice two',
-                          instruction: 'Listen and answer.'
                         }
                       };
                       
                       return partQuestions.map((q, idx) => {
-                        // Get display question number(s) from the question ID
-                        const qId = String(q.id);
-                        const displayNumber = qId.includes('-') ? qId.replace('-', ', ') : qId;
+                        const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
                         const showTaskHeader = q.type !== currentType;
                         currentType = q.type;
                         const taskInfo = listeningTaskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Listen and answer.' };
@@ -1514,23 +1271,20 @@ function ElevenLabsExaminer() {
                             )}
                             
                     <div 
-                      id={`q-${q.id}`}
+                      id={`q-${questionNumber}`}
                       className={`p-3 rounded-lg border-l-4 ${
                         isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
                       } shadow-sm`}
                     >
                       <p className="text-sm font-medium text-gray-900 mb-2">
-                        <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
-                          {displayNumber}
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                          {questionNumber + 1}
                         </span>
                         {q.question}
-                        {q.type === 'multiple_choice_multi' && (
-                          <span className="ml-2 text-amber-600 text-xs font-medium">(Select TWO)</span>
-                        )}
                       </p>
                       
                       {/* Map labeling special display */}
-                          {q.type === 'map_labeling' && q.id === 16 && (
+                          {q.type === 'map_labeling' && questionNumber === 15 && (
                             <div className="mt-3 mb-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
                               <p className="text-center text-gray-900 font-bold mb-2">Farley House Map</p>
                               <img 
@@ -1541,8 +1295,8 @@ function ElevenLabsExaminer() {
                             </div>
                           )}
                           
-                          {/* Multiple Choice Options - Single select */}
-                          {(q.type === 'multiple_choice' || q.type === 'multiple_choice_two') && q.options && q.options.length > 0 && !q.question?.toLowerCase().includes('two') && (
+                          {/* Multiple Choice Options */}
+                          {(q.type === 'multiple_choice' || q.type === 'multiple_choice_two') && q.options && q.options.length > 0 && (
                             <div className="mt-3 space-y-2">
                               {q.options.map((opt, optIdx) => {
                                 const optLetter = opt.charAt(0);
@@ -1569,83 +1323,13 @@ function ElevenLabsExaminer() {
                             </div>
                           )}
 
-                          {/* Multiple Choice Multi - Select TWO */}
-                          {(q.type === 'multiple_choice_multi' || (q.type === 'multiple_choice' && q.question?.toLowerCase().includes('two'))) && q.options && q.options.length > 0 && (
-                            (() => {
-                              const requiredCount = q.answer_count || 2;
-                              const selectedAnswers = Array.isArray(answers[q.id]) 
-                                ? answers[q.id] 
-                                : (answers[q.id] ? [answers[q.id]] : []);
-                              
-                              const handleMultiSelect = (optionLetter) => {
-                                let newAnswers;
-                                if (selectedAnswers.includes(optionLetter)) {
-                                  newAnswers = selectedAnswers.filter(a => a !== optionLetter);
-                                } else if (selectedAnswers.length < requiredCount) {
-                                  newAnswers = [...selectedAnswers, optionLetter];
-                                } else {
-                                  newAnswers = [...selectedAnswers.slice(1), optionLetter];
-                                }
-                                handleAnswerChange(q.id, newAnswers);
-                              };
-                              
-                              return (
-                                <div className="mt-3">
-                                  <div className={`text-xs px-2 py-1.5 rounded mb-2 font-medium flex items-center gap-2 ${
-                                    selectedAnswers.length === requiredCount 
-                                      ? 'bg-green-50 text-green-700' 
-                                      : 'bg-amber-50 text-amber-700'
-                                  }`}>
-                                    <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
-                                      selectedAnswers.length === requiredCount 
-                                        ? 'bg-green-500 text-white' 
-                                        : 'bg-amber-400 text-white'
-                                    }`}>
-                                      {selectedAnswers.length}
-                                    </span>
-                                    Select {requiredCount} options ({selectedAnswers.length}/{requiredCount})
-                                  </div>
-                                  <div className="space-y-2">
-                                    {q.options.map((opt, optIdx) => {
-                                      const optLetter = opt.charAt(0);
-                                      const isSelected = selectedAnswers.includes(optLetter);
-                                      return (
-                                        <button
-                                          key={optIdx}
-                                          onClick={() => handleMultiSelect(optLetter)}
-                                          className={`w-full text-left p-3 rounded-lg border-2 transition-all text-sm flex items-center gap-2 ${
-                                            isSelected 
-                                              ? 'border-sky-500 bg-sky-50 text-sky-900' 
-                                              : 'border-gray-200 bg-white hover:border-sky-300 hover:bg-sky-50/50'
-                                          }`}
-                                        >
-                                          <span className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
-                                            isSelected ? 'border-sky-500 bg-sky-500' : 'border-gray-300'
-                                          }`}>
-                                            {isSelected && <span className="text-white text-xs font-bold">✓</span>}
-                                          </span>
-                                          <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full mr-1 text-xs font-bold ${
-                                            isSelected ? 'bg-sky-500 text-white' : 'bg-gray-100 text-gray-600'
-                                          }`}>
-                                            {optLetter}
-                                          </span>
-                                          {opt.substring(2).trim()}
-                                        </button>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              );
-                            })()
-                          )}
-
                           {/* Matching statements display - Show for the first matching question in Part 3 */}
                           {q.type === 'matching' && showTaskHeader && (
                             <div className="mb-4 bg-amber-50 p-4 rounded-lg border border-amber-200">
-                              <p className="font-semibold text-amber-900 mb-1 text-sm">Questions 25-30</p>
+                              <p className="font-semibold text-amber-900 mb-1 text-sm">Questions {questionNumber + 1}-{questionNumber + 6}</p>
                               <p className="text-xs text-gray-700 mb-3">
-                                What is the students&apos; opinion about each of the following food trends?<br/>
-                                Choose <strong>SIX</strong> answers from the box and write the correct letter, <strong>A-H</strong>, next to Questions 25-30.
+                                What is the students' opinion about each of the following food trends?<br/>
+                                Choose <strong>SIX</strong> answers from the box and write the correct letter, <strong>A-H</strong>, next to Questions {questionNumber + 1}-{questionNumber + 6}.
                               </p>
                               <div className="bg-white p-3 rounded-lg border border-gray-300">
                                 <p className="font-bold text-center text-gray-800 mb-2">Opinions</p>
@@ -1703,7 +1387,7 @@ function ElevenLabsExaminer() {
                           )}
 
                           {/* Text input for other question types */}
-                          {!['multiple_choice', 'multiple_choice_two', 'multiple_choice_multi', 'matching', 'map_labeling'].includes(q.type) && (
+                          {!['multiple_choice', 'multiple_choice_two', 'matching', 'map_labeling'].includes(q.type) && (
                             <Input
                               value={answers[q.id] || ''}
                               onChange={(e) => handleAnswerChange(q.id, e.target.value)}
@@ -1725,18 +1409,18 @@ function ElevenLabsExaminer() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setCurrentListeningPart(Math.max(1, currentListeningPart - 1))}
-                      disabled={currentListeningPart <= 1}
+                      onClick={() => setCurrentQuestion(Math.max(0, Math.floor(currentQuestion / 10) * 10 - 10))}
+                      disabled={currentQuestion < 10}
                       className="text-xs"
                     >
                       <ChevronLeft className="w-3 h-3 mr-1" />
                       Prev
                     </Button>
                     
-                    {currentListeningPart < 4 ? (
+                    {currentQuestion < 30 ? (
                       <Button
                         size="sm"
-                        onClick={() => setCurrentListeningPart(currentListeningPart + 1)}
+                        onClick={() => setCurrentQuestion((Math.floor(currentQuestion / 10) + 1) * 10)}
                         className="primary-gradient text-white text-xs"
                       >
                         Next
@@ -1880,155 +1564,24 @@ function ElevenLabsExaminer() {
                     </div>
                   )}
 
-                  {/* Multiple Choice - Single select */}
+                  {/* Multiple Choice */}
                   {question.type === 'multiple_choice' && question.options && (
-                    (() => {
-                      // Check if this is a "Choose TWO" question by text
-                      const isMultiSelect = question.question?.toLowerCase().includes('two') || 
-                                            question.question?.toLowerCase().includes('select two');
-                      
-                      if (isMultiSelect) {
-                        const selectedAnswers = Array.isArray(answers[question.id]) 
-                          ? answers[question.id] 
-                          : (answers[question.id] ? [answers[question.id]] : []);
-                        
-                        const handleMultiSelect = (optionLetter) => {
-                          let newAnswers;
-                          if (selectedAnswers.includes(optionLetter)) {
-                            newAnswers = selectedAnswers.filter(a => a !== optionLetter);
-                          } else if (selectedAnswers.length < 2) {
-                            newAnswers = [...selectedAnswers, optionLetter];
-                          } else {
-                            newAnswers = [...selectedAnswers.slice(1), optionLetter];
-                          }
-                          handleAnswerChange(question.id, newAnswers);
-                        };
-                        
-                        return (
-                          <div className="space-y-3">
-                            <div className={`text-sm px-3 py-2 rounded-lg font-medium flex items-center gap-2 ${
-                              selectedAnswers.length === 2 
-                                ? 'bg-green-50 text-green-700' 
-                                : 'bg-amber-50 text-amber-700'
-                            }`}>
-                              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
-                                selectedAnswers.length === 2 
-                                  ? 'bg-green-500 text-white' 
-                                  : 'bg-amber-400 text-white'
-                              }`}>
-                                {selectedAnswers.length}
-                              </span>
-                              Select exactly 2 options ({selectedAnswers.length}/2 selected)
-                            </div>
-                            {question.options.map((option, idx) => {
-                              const optionLetter = option.split(')')[0].trim();
-                              const isSelected = selectedAnswers.includes(optionLetter);
-                              return (
-                                <button
-                                  key={idx}
-                                  onClick={() => handleMultiSelect(optionLetter)}
-                                  className={`w-full text-left p-4 rounded-lg border-2 transition-colors flex items-center gap-3 ${
-                                    isSelected
-                                      ? 'border-sky-500 bg-sky-50'
-                                      : 'border-gray-200 hover:border-gray-300'
-                                  }`}
-                                >
-                                  <span className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
-                                    isSelected ? 'border-sky-500 bg-sky-500' : 'border-gray-300'
-                                  }`}>
-                                    {isSelected && <span className="text-white text-sm font-bold">✓</span>}
-                                  </span>
-                                  {option}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        );
-                      }
-                      
-                      // Single select
-                      return (
-                        <div className="space-y-3">
-                          {question.options.map((option, idx) => (
-                            <button
-                              key={idx}
-                              data-testid={`option-${idx}`}
-                              onClick={() => handleAnswerChange(question.id, option.split(')')[0].trim())}
-                              className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
-                                answers[question.id] === option.split(')')[0].trim()
-                                  ? 'border-sky-500 bg-sky-50'
-                                  : 'border-gray-200 hover:border-gray-300'
-                              }`}
-                            >
-                              {option}
-                            </button>
-                          ))}
-                        </div>
-                      );
-                    })()
-                  )}
-
-                  {/* Multiple Choice Multi - Explicit multi-select type */}
-                  {question.type === 'multiple_choice_multi' && question.options && (
-                    (() => {
-                      const requiredCount = question.answer_count || 2;
-                      const selectedAnswers = Array.isArray(answers[question.id]) 
-                        ? answers[question.id] 
-                        : (answers[question.id] ? [answers[question.id]] : []);
-                      
-                      const handleMultiSelect = (optionLetter) => {
-                        let newAnswers;
-                        if (selectedAnswers.includes(optionLetter)) {
-                          newAnswers = selectedAnswers.filter(a => a !== optionLetter);
-                        } else if (selectedAnswers.length < requiredCount) {
-                          newAnswers = [...selectedAnswers, optionLetter];
-                        } else {
-                          newAnswers = [...selectedAnswers.slice(1), optionLetter];
-                        }
-                        handleAnswerChange(question.id, newAnswers);
-                      };
-                      
-                      return (
-                        <div className="space-y-3">
-                          <div className={`text-sm px-3 py-2 rounded-lg font-medium flex items-center gap-2 ${
-                            selectedAnswers.length === requiredCount 
-                              ? 'bg-green-50 text-green-700' 
-                              : 'bg-amber-50 text-amber-700'
-                          }`}>
-                            <span className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${
-                              selectedAnswers.length === requiredCount 
-                                ? 'bg-green-500 text-white' 
-                                : 'bg-amber-400 text-white'
-                            }`}>
-                              {selectedAnswers.length}
-                            </span>
-                            Select exactly {requiredCount} options ({selectedAnswers.length}/{requiredCount} selected)
-                          </div>
-                          {question.options.map((option, idx) => {
-                            const optionLetter = option.split(')')[0].trim();
-                            const isSelected = selectedAnswers.includes(optionLetter);
-                            return (
-                              <button
-                                key={idx}
-                                onClick={() => handleMultiSelect(optionLetter)}
-                                className={`w-full text-left p-4 rounded-lg border-2 transition-colors flex items-center gap-3 ${
-                                  isSelected
-                                    ? 'border-sky-500 bg-sky-50'
-                                    : 'border-gray-200 hover:border-gray-300'
-                                }`}
-                              >
-                                <span className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
-                                  isSelected ? 'border-sky-500 bg-sky-500' : 'border-gray-300'
-                                }`}>
-                                  {isSelected && <span className="text-white text-sm font-bold">✓</span>}
-                                </span>
-                                {option}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      );
-                    })()
+                    <div className="space-y-3">
+                      {question.options.map((option, idx) => (
+                        <button
+                          key={idx}
+                          data-testid={`option-${idx}`}
+                          onClick={() => handleAnswerChange(question.id, option.split(')')[0])}
+                          className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
+                            answers[question.id] === option.split(')')[0]
+                              ? 'border-sky-500 bg-sky-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          {option}
+                        </button>
+                      ))}
+                    </div>
                   )}
 
                   {/* True/False/Not Given */}
@@ -2053,7 +1606,8 @@ function ElevenLabsExaminer() {
 
                   {/* Short Answer / Sentence Completion */}
                   {(question.type === 'sentence_completion' || question.type === 'form_completion' || 
-                    question.type === 'note_completion') && (
+                    question.type === 'note_completion' || question.type === 'matching_information' || 
+                    question.type === 'matching_headings') && (
                     <Input
                       data-testid="text-answer-input"
                       value={answers[question.id] || ''}
@@ -2061,80 +1615,6 @@ function ElevenLabsExaminer() {
                       placeholder="Type your answer..."
                       className="text-lg p-4"
                     />
-                  )}
-
-                  {/* Matching Information - Dropdown */}
-                  {question.type === 'matching_information' && (
-                    <select
-                      value={answers[question.id] || ''}
-                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                    >
-                      <option value="">Select paragraph...</option>
-                      {(question.options || ['A', 'B', 'C', 'D', 'E', 'F', 'G']).map((opt, idx) => {
-                        const letter = typeof opt === 'string' && opt.includes(')') 
-                          ? opt.split(')')[0].replace(/[^A-G]/g, '') 
-                          : opt;
-                        return (
-                          <option key={idx} value={letter}>
-                            Paragraph {letter}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  )}
-
-                  {/* Matching Headings - Dropdown */}
-                  {question.type === 'matching_headings' && (
-                    <select
-                      value={answers[question.id] || ''}
-                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                    >
-                      <option value="">Select heading...</option>
-                      {(question.options || ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x']).map((opt, idx) => (
-                        <option key={idx} value={opt}>
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-
-                  {/* Map Labeling - Dropdown for A-H */}
-                  {question.type === 'map_labeling' && (
-                    <select
-                      value={answers[question.id] || ''}
-                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                    >
-                      <option value="">Select location...</option>
-                      {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map((letter) => (
-                        <option key={letter} value={letter}>
-                          Location {letter}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-
-                  {/* Matching - Dropdown for opinion matching (A-H) */}
-                  {question.type === 'matching' && (
-                    <select
-                      value={answers[question.id] || ''}
-                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                      className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                    >
-                      <option value="">Select option...</option>
-                      {(question.options || ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']).map((opt, idx) => {
-                        const letter = typeof opt === 'string' && opt.includes(')') 
-                          ? opt.split(')')[0].trim() 
-                          : opt;
-                        return (
-                          <option key={idx} value={letter}>
-                            {opt}
-                          </option>
-                        );
-                      })}
-                    </select>
                   )}
 
                   {/* Writing Task */}
@@ -2263,7 +1743,7 @@ function ElevenLabsExaminer() {
                       {/* Speaking feedback summary for this question if available */}
                       {Object.keys(speakingFeedback).length > 0 && speakingFeedback[currentQuestion + 1] && (
                         <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                          <h3 className="text-sm font-semibold text-blue-900 mb-2">Speaking Feedback (Like an Examiner&apos;s Notes)</h3>
+                          <h3 className="text-sm font-semibold text-blue-900 mb-2">Speaking Feedback (Like an Examiner's Notes)</h3>
                           {(() => {
                             const fb = speakingFeedback[currentQuestion + 1];
                             const overallText =
@@ -2327,7 +1807,7 @@ function ElevenLabsExaminer() {
                 {/* Writing feedback summary (shown below tasks) */}
                 {testType === 'writing' && Object.keys(writingFeedback).length > 0 && (
                   <div className="mt-6 p-6 bg-green-50 border border-green-200 rounded-lg">
-                    <h3 className="text-xl font-semibold text-green-900 mb-3">Your Writing Feedback (Like a Teacher&apos;s Report)</h3>
+                    <h3 className="text-xl font-semibold text-green-900 mb-3">Your Writing Feedback (Like a Teacher's Report)</h3>
                     <p className="text-sm text-green-900 mb-4">
                       Below is friendly feedback on each task, with clear comments for each IELTS criterion and ideas to improve your skills.
                     </p>
