@@ -785,10 +785,16 @@ export default function ComprehensiveLevelTest({ user }) {
   };
 
   const getProgressPercentage = () => {
+    // New flow: reading (25%) → listening (25%) → writing (25%) → speaking (25%)
     if (stage === 'reading') {
-      return ((currentQuestion + 1) / readingQuestions.length) * 50; // Reading is 50% of test
+      return ((currentQuestion + 1) / readingQuestions.length) * 25;
+    } else if (stage === 'listening') {
+      const sections = getListeningSections();
+      return 25 + ((currentListeningSection + 1) / Math.max(sections.length, 1)) * 25;
+    } else if (stage === 'writing') {
+      return 50 + ((currentWritingTask + 1) / Math.max(writingTasks.length, 1)) * 25;
     } else if (stage === 'speaking') {
-      return 50 + ((currentSpeakingPrompt + 1) / speakingPrompts.length) * 50; // Speaking is other 50%
+      return 75 + ((currentSpeakingPrompt + 1) / speakingPrompts.length) * 25;
     }
     return 0;
   };
