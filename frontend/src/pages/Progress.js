@@ -448,16 +448,31 @@ export default function Progress({ user }) {
                   .filter(([_, data]) => (data.avg_score || data.avgBand || 0) > 0 && (data.avg_score || data.avgBand || 0) < 6)
                   .sort((a, b) => (a[1].avg_score || a[1].avgBand || 0) - (b[1].avg_score || b[1].avgBand || 0))
                   .slice(0, 3)
-                  .map(([type, data]) => (
-                    <div key={type} className="flex items-center justify-between p-2 bg-white rounded-lg">
-                      <span className="capitalize font-medium text-gray-900">{type}</span>
-                      <span className={`px-2 py-0.5 rounded ${getBandBgColor(data.avg_score || data.avgBand || 0)}`}>
-                        Band {(data.avg_score || data.avgBand || 0).toFixed(1)}
-                      </span>
-                    </div>
-                  ))}
+                  .map(([type, data]) => {
+                    const score = data.avg_score || data.avgBand || 0;
+                    const gap = targetBand - score;
+                    const tips = {
+                      reading: 'Focus on skimming, scanning, and vocabulary building',
+                      listening: 'Practice with different accents and note-taking',
+                      writing: 'Work on essay structure and grammar accuracy',
+                      speaking: 'Record yourself and practice fluency'
+                    };
+                    return (
+                      <div key={type} className="p-3 bg-white rounded-lg">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="capitalize font-medium text-gray-900">{type}</span>
+                          <span className={`px-2 py-0.5 rounded text-sm ${getBandBgColor(score)}`}>
+                            Band {score.toFixed(1)}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          {gap > 0 ? `${gap.toFixed(1)} bands to target` : 'On track!'} • {tips[type] || 'Keep practicing'}
+                        </p>
+                      </div>
+                    );
+                  })}
                 {Object.entries(stats.byType).filter(([_, data]) => (data.avg_score || data.avgBand || 0) > 0 && (data.avg_score || data.avgBand || 0) < 6).length === 0 && (
-                  <p className="text-sm text-gray-500">Great job! Keep practicing to maintain your level.</p>
+                  <p className="text-sm text-green-600 font-medium">🎉 Great job! All skills are at Band 6+. Keep practicing to maintain your level.</p>
                 )}
               </div>
             </Card>
@@ -471,16 +486,30 @@ export default function Progress({ user }) {
                   .filter(([_, data]) => (data.avg_score || data.avgBand || 0) >= 6)
                   .sort((a, b) => (b[1].avg_score || b[1].avgBand || 0) - (a[1].avg_score || a[1].avgBand || 0))
                   .slice(0, 3)
-                  .map(([type, data]) => (
-                    <div key={type} className="flex items-center justify-between p-2 bg-white rounded-lg">
-                      <span className="capitalize font-medium text-gray-900">{type}</span>
-                      <span className={`px-2 py-0.5 rounded ${getBandBgColor(data.avg_score || data.avgBand || 0)}`}>
-                        Band {(data.avg_score || data.avgBand || 0).toFixed(1)}
-                      </span>
-                    </div>
-                  ))}
+                  .map(([type, data]) => {
+                    const score = data.avg_score || data.avgBand || 0;
+                    const strengths = {
+                      reading: 'Strong comprehension and analysis',
+                      listening: 'Good at understanding spoken English',
+                      writing: 'Clear and structured writing',
+                      speaking: 'Confident verbal communication'
+                    };
+                    return (
+                      <div key={type} className="p-3 bg-white rounded-lg">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="capitalize font-medium text-gray-900">{type}</span>
+                          <span className={`px-2 py-0.5 rounded text-sm ${getBandBgColor(score)}`}>
+                            Band {score.toFixed(1)}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          ✓ {strengths[type] || 'Strong performance'}
+                        </p>
+                      </div>
+                    );
+                  })}
                 {Object.entries(stats.byType).filter(([_, data]) => (data.avg_score || data.avgBand || 0) >= 6).length === 0 && (
-                  <p className="text-sm text-gray-500">Keep practicing! You'll develop strengths with more practice.</p>
+                  <p className="text-sm text-gray-500">Keep practicing! Band 6+ achievements will appear here.</p>
                 )}
               </div>
             </Card>
