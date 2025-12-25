@@ -296,6 +296,180 @@ export default function ComprehensiveLevelTest({ user }) {
     if (currentQuestion < readingQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
+      // Move to listening instead of speaking
+      loadListeningQuestions();
+      setStage('listening');
+      setCurrentListeningSection(0);
+    }
+  };
+  
+  // Load listening questions from API
+  const loadListeningQuestions = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/level-test/listening-questions`);
+      if (response.ok) {
+        const data = await response.json();
+        setListeningQuestions(data.questions || []);
+      }
+    } catch (error) {
+      console.error('Failed to load listening questions:', error);
+      // Fallback to static questions if API fails
+      setListeningQuestions([]);
+    }
+  };
+  
+  // Load writing tasks from API
+  const loadWritingTasks = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/level-test/writing-tasks`);
+      if (response.ok) {
+        const data = await response.json();
+        setWritingTasks(data.tasks || []);
+      }
+    } catch (error) {
+      console.error('Failed to load writing tasks:', error);
+      // Use default tasks
+      setWritingTasks([
+        {
+          id: 'writing_task_1',
+          level: 'Band 2-4',
+          type: 'guided',
+          title: 'Introduce Yourself',
+          instruction: 'Complete the sentences about yourself. Write 3-5 simple sentences.',
+          min_words: 20,
+          max_words: 50,
+          time_minutes: 5
+        },
+        {
+          id: 'writing_task_2',
+          level: 'Band 4-6',
+          type: 'paragraph',
+          title: 'Describe Your Daily Routine',
+          instruction: 'Write a short paragraph (60-90 words) describing what you do on a typical day.',
+          min_words: 60,
+          max_words: 90,
+          time_minutes: 8
+        },
+        {
+          id: 'writing_task_3',
+          level: 'Band 6-7+',
+          type: 'essay',
+          title: 'Opinion Essay',
+          instruction: 'Some people believe that technology makes our lives easier, while others think it creates more problems. What is your opinion? Write a short essay (120-180 words).',
+          min_words: 120,
+          max_words: 200,
+          time_minutes: 12
+        }
+      ]);
+    }
+  };
+  
+  // Handle listening audio play
+  const playListeningAudio = (sectionId, audioUrl) => {
+    if (listeningAudioRef.current) {
+      listeningAudioRef.current.pause();
+    }
+    
+    const audio = new Audio(audioUrl);
+    listeningAudioRef.current = audio;
+    
+    audio.onplay = () => setAudioPlaying(true);
+    audio.onpause = () => setAudioPlaying(false);
+    audio.onended = () => {
+      setAudioPlaying(false);
+      setAudioPlayed(prev => ({ ...prev, [sectionId]: true }));
+    };
+    audio.onerror = () => {
+      setAudioPlaying(false);
+      // Allow continuing even if audio fails
+      setAudioPlayed(prev => ({ ...prev, [sectionId]: true }));
+      toast.info('Audio not available. You can still answer the questions.');
+    };
+    
+    audio.play().catch(() => {
+      setAudioPlayed(prev => ({ ...prev, [sectionId]: true }));
+      toast.info('Audio playback not available in this browser.');
+    });
+  };
+  
+  const pauseListeningAudio = () => {
+    if (listeningAudioRef.current) {
+      listeningAudioRef.current.pause();
+    }
+  };
+  
+  // Handle listening answer selection
+  const handleListeningAnswer = (questionId, answer) => {
+    setListeningAnswers(prev => ({ ...prev, [questionId]: answer }));
+  };
+  
+  // Get unique sections from listening questions
+  const getListeningSections = () => {
+    const sectionsMap = {};
+    listeningQuestions.forEach(q => {
+      if (!sectionsMap[q.section_id]) {
+        sectionsMap[q.section_id] = {
+          id: q.section_id,
+          title: q.section_title,
+          audio_url: q.audio_url,
+          level: q.level,
+          band_range: q.band_range,
+          questions: []
+        };
+      }
+      sectionsMap[q.section_id].questions.push(q);
+    });
+    return Object.values(sectionsMap);
+  };
+  
+  // Navigate to next listening section
+  const nextListeningSection = () => {
+    const sections = getListeningSections();
+    const currentSection = sections[currentListeningSection];
+    
+    // Check if all questions in current section are answered
+    const unanswered = currentSection.questions.find(q => !listeningAnswers[q.id]);
+    if (unanswered) {
+      toast.error('Please answer all questions before continuing');
+      return;
+    }
+    
+    if (currentListeningSection < sections.length - 1) {
+      setCurrentListeningSection(currentListeningSection + 1);
+    } else {
+      // Move to writing
+      loadWritingTasks();
+      setStage('writing');
+      setCurrentWritingTask(0);
+    }
+  };
+  
+  // Handle writing response change
+  const handleWritingChange = (taskId, text) => {
+    setWritingResponses(prev => ({ ...prev, [taskId]: text }));
+  };
+  
+  // Get word count for writing response
+  const getWordCount = (text) => {
+    if (!text) return 0;
+    return text.trim().split(/\s+/).filter(w => w).length;
+  };
+  
+  // Navigate to next writing task
+  const nextWritingTask = () => {
+    const currentTask = writingTasks[currentWritingTask];
+    const response = writingResponses[currentTask.id] || '';
+    const wordCount = getWordCount(response);
+    
+    if (wordCount < 5) {
+      toast.error('Please write at least a few words before continuing');
+      return;
+    }
+    
+    if (currentWritingTask < writingTasks.length - 1) {
+      setCurrentWritingTask(currentWritingTask + 1);
+    } else {
+      // Move to speaking
       setStage('speaking');
       setCurrentSpeakingPrompt(0);
     }
