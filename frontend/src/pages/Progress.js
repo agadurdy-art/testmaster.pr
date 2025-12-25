@@ -20,6 +20,11 @@ export default function Progress({ user }) {
     recentTrend: []
   });
   const [filter, setFilter] = useState('all');
+  const [targetBand, setTargetBand] = useState(() => {
+    const saved = localStorage.getItem('targetBand');
+    return saved ? parseFloat(saved) : 7.0;
+  });
+  const [showTargetModal, setShowTargetModal] = useState(false);
 
   useEffect(() => {
     if (user?.id) {
