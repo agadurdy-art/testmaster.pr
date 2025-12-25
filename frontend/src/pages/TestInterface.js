@@ -1382,7 +1382,7 @@ function ElevenLabsExaminer() {
                             <div className="mb-4 bg-amber-50 p-4 rounded-lg border border-amber-200">
                               <p className="font-semibold text-amber-900 mb-1 text-sm">Questions {questionNumber + 1}-{questionNumber + 6}</p>
                               <p className="text-xs text-gray-700 mb-3">
-                                What is the students' opinion about each of the following food trends?<br/>
+                                What is the students&apos; opinion about each of the following food trends?<br/>
                                 Choose <strong>SIX</strong> answers from the box and write the correct letter, <strong>A-H</strong>, next to Questions {questionNumber + 1}-{questionNumber + 6}.
                               </p>
                               <div className="bg-white p-3 rounded-lg border border-gray-300">
