@@ -2348,8 +2348,8 @@ export default function ComprehensiveLevelTest({ user }) {
             </div>
           )}
 
-          {/* Detailed Feedback */}
-          {results.speaking?.detailed_feedback && (
+          {/* Detailed Feedback - Only for full test */}
+          {!isSingleSkillTest && results.speaking?.detailed_feedback && (
             <Card className="p-6 bg-white shadow-lg mb-8">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Brain className="w-5 h-5 text-indigo-600" />
