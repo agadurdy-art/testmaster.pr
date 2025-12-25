@@ -1680,19 +1680,21 @@ export default function ComprehensiveLevelTest({ user }) {
     const hasResponse = speakingResponses[currentSpeakingPrompt];
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 py-8 px-4 relative">
-        <div className="max-w-4xl mx-auto relative">
-          <LanguageSwitcher />
-          <div className="mb-6 pt-2">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
                 {language === 'vi' ? `Đánh Giá Nói - Câu ${currentSpeakingPrompt + 1} / ${speakingPrompts.length}` :
                  language === 'tr' ? `Konuşma Değerlendirmesi - Soru ${currentSpeakingPrompt + 1} / ${speakingPrompts.length}` :
                  `Speaking Assessment - Question ${currentSpeakingPrompt + 1} of ${speakingPrompts.length}`}
               </span>
-              <span className="text-sm font-medium text-purple-600">
-                {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentPrompt.level}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-purple-600">
+                  {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentPrompt.level}
+                </span>
+                <LanguageSwitcher />
+              </div>
             </div>
             <Progress value={getProgressPercentage()} className="h-2" />
           </div>
