@@ -65,3 +65,6 @@ test_plan:
 agent_communication:
   - agent: "testing"
     message: "Successfully tested the updated Comprehensive Level Test with test mode selection feature. All key scenarios from the review request have been verified: 1) Test Selection Screen shows 5 options with proper UI elements, 2) Language support (EN/VI/TR) working correctly, 3) Single skill test flow navigation verified, 4) Full test flow shows all 4 skills in overview, 5) Navigation between screens working properly. The implementation is working as expected and ready for use."
+  
+  - agent: "testing"
+    message: "LISTENING ASSESSMENT SINGLE SKILL TEST RESULTS: ✅ CORE FUNCTIONALITY WORKING: Test selection, intro page, authentication, listening test interface (5 sections, audio player, multiple choice questions, progress tracking) all working correctly. Backend APIs (listening-questions, evaluate-listening) returning 200 OK. ❌ CRITICAL ISSUE: Results page not displaying after test completion - test redirects back to selection page instead of showing detailed results with explanations, improvement guidance, and course recommendations. This prevents verification of the key new features (answer explanations, skill guidance, course recommendations) requested in the review."
