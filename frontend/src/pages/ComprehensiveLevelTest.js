@@ -1501,13 +1501,27 @@ export default function ComprehensiveLevelTest({ user }) {
                 <p className="text-2xl font-semibold text-white/95 mb-4">
                   {getBandLabel(results.overall_band)} - {results.speaking?.cefr_level || 'B1'}
                 </p>
-                <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mt-6">
+                <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mt-6">
                   <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
                     <BookOpen className="w-6 h-6 mx-auto mb-2" />
                     <p className="text-sm text-white/80">
                       {language === 'vi' ? 'Đọc' : language === 'tr' ? 'Okuma' : 'Reading'}
                     </p>
                     <p className="text-2xl font-bold">{results.reading.band.toFixed(1)}</p>
+                  </div>
+                  <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                    <Headphones className="w-6 h-6 mx-auto mb-2" />
+                    <p className="text-sm text-white/80">
+                      {language === 'vi' ? 'Nghe' : language === 'tr' ? 'Dinleme' : 'Listening'}
+                    </p>
+                    <p className="text-2xl font-bold">{results.listening?.band_score?.toFixed(1) || '4.0'}</p>
+                  </div>
+                  <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                    <PenTool className="w-6 h-6 mx-auto mb-2" />
+                    <p className="text-sm text-white/80">
+                      {language === 'vi' ? 'Viết' : language === 'tr' ? 'Yazma' : 'Writing'}
+                    </p>
+                    <p className="text-2xl font-bold">{results.writing?.overall_band?.toFixed(1) || '4.0'}</p>
                   </div>
                   <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
                     <Mic className="w-6 h-6 mx-auto mb-2" />
@@ -1523,11 +1537,12 @@ export default function ComprehensiveLevelTest({ user }) {
             <Card className="p-8 bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-2xl mb-8">
               <div className="text-center">
                 <p className="text-white/90 text-lg mb-2">
-                  {language === 'vi' ? 'Điểm Đọc Hiểu Của Bạn' :
-                   language === 'tr' ? 'Okuma Puanınız' :
-                   'Your Reading Score'}
+                  {language === 'vi' ? 'Đang đánh giá bài kiểm tra của bạn...' :
+                   language === 'tr' ? 'Sınavınız değerlendiriliyor...' :
+                   'Evaluating your test...'}
                 </p>
                 <div className="text-7xl font-bold mb-2">
+                  {results.reading.band.toFixed(1)}
                   {results.reading.band.toFixed(1)}
                 </div>
                 <p className="text-xl text-white/90 mb-4">
