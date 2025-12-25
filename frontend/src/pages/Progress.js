@@ -122,6 +122,72 @@ export default function Progress({ user }) {
     ? attempts 
     : attempts.filter(a => a.test_type === filter);
 
+  // Calculate weekly comparison
+  const getWeeklyComparison = () => {
+    const now = new Date();
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const twoWeeksAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000);
+    
+    const thisWeek = attempts.filter(a => new Date(a.completed_at) > oneWeekAgo);
+    const lastWeek = attempts.filter(a => new Date(a.completed_at) > twoWeeksAgo && new Date(a.completed_at) <= oneWeekAgo);
+    
+    const thisWeekAvg = thisWeek.length > 0 
+      ? thisWeek.reduce((acc, a) => acc + (a.band_score || 0), 0) / thisWeek.length 
+      : 0;
+    const lastWeekAvg = lastWeek.length > 0 
+      ? lastWeek.reduce((acc, a) => acc + (a.band_score || 0), 0) / lastWeek.length 
+      : 0;
+    
+    return {
+      thisWeek: { count: thisWeek.length, avg: thisWeekAvg },
+      lastWeek: { count: lastWeek.length, avg: lastWeekAvg },
+      change: thisWeekAvg - lastWeekAvg
+    };
+  };
+
+  // Get study plan recommendation
+  const getStudyPlan = () => {
+    const weakest = Object.entries(stats.byType)
+      .filter(([_, data]) => (data.avg_score || data.avgBand || 0) > 0)
+      .sort((a, b) => (a[1].avg_score || a[1].avgBand || 0) - (b[1].avg_score || b[1].avgBand || 0))[0];
+    
+    const gap = targetBand - stats.avgBand;
+    
+    if (!weakest || stats.totalTests === 0) {
+      return {
+        focus: 'Start with Level Test',
+        recommendation: 'Take a comprehensive level test to identify your current IELTS band and areas for improvement.',
+        weeklyGoal: '2-3 practice tests',
+        icon: Target
+      };
+    }
+    
+    if (gap <= 0) {
+      return {
+        focus: 'Maintain & Polish',
+        recommendation: `Great job! You've reached your target. Focus on maintaining your level and polishing weak areas like ${weakest[0]}.`,
+        weeklyGoal: '1-2 full tests + review',
+        icon: Award
+      };
+    }
+    
+    return {
+      focus: `Focus on ${weakest[0].charAt(0).toUpperCase() + weakest[0].slice(1)}`,
+      recommendation: `Your ${weakest[0]} score (${(weakest[1].avg_score || weakest[1].avgBand || 0).toFixed(1)}) needs the most improvement. Practice ${weakest[0]} daily to boost your overall band.`,
+      weeklyGoal: gap > 1 ? '5-7 focused sessions' : '3-4 practice tests',
+      icon: TrendingUp
+    };
+  };
+
+  const handleSetTarget = (band) => {
+    setTargetBand(band);
+    localStorage.setItem('targetBand', band.toString());
+    setShowTargetModal(false);
+  };
+
+  const weeklyData = getWeeklyComparison();
+  const studyPlan = getStudyPlan();
+
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
