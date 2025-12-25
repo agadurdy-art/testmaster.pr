@@ -1458,11 +1458,13 @@ export default function ComprehensiveLevelTest({ user }) {
   // READING SECTION
   if (stage === 'reading') {
     const currentQ = readingQuestions[currentQuestion];
+    const questionIds = readingQuestions.map(q => q.id);
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-4 px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
                 {language === 'vi' ? `Đánh Giá Đọc - Câu ${currentQuestion + 1} / ${readingQuestions.length}` :
@@ -1479,24 +1481,49 @@ export default function ComprehensiveLevelTest({ user }) {
             <Progress value={getProgressPercentage()} className="h-2" />
           </div>
 
-          <Card className="p-8 bg-white shadow-xl">
-            <div className="mb-6">
-              <div className="flex items-center gap-2 mb-4">
-                <BookOpen className="w-5 h-5 text-blue-600" />
-                <h3 className="font-semibold text-gray-700">
-                  {language === 'vi' ? 'Đoạn Văn' : language === 'tr' ? 'Okuma Parçası' : 'Reading Passage'}
-                </h3>
-              </div>
-              <p className="text-gray-800 leading-relaxed text-lg">
-                {currentQ.passage}
-              </p>
-            </div>
+          {/* Question Navigation Bar */}
+          <QuestionNavigation
+            totalQuestions={readingQuestions.length}
+            currentQuestion={currentQuestion}
+            answers={readingAnswers}
+            flaggedQuestions={flaggedQuestions}
+            onQuestionSelect={(index) => setCurrentQuestion(index)}
+            questionIds={questionIds}
+            className="mb-4"
+          />
 
-            <div className="border-t pt-6">
-              <h3 className="font-semibold text-gray-900 mb-4">
-                {currentQ.question}
-              </h3>
-              <div className="space-y-3">
+          {/* Side-by-Side Reader */}
+          <SideBySideReader
+            passage={currentQ.passage}
+            passageTitle={language === 'vi' ? 'Đoạn Văn' : language === 'tr' ? 'Okuma Parçası' : 'Reading Passage'}
+            defaultRatio={70}
+          >
+            {/* Questions Panel Content */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="font-semibold text-gray-900">
+                  {language === 'vi' ? `Câu ${currentQuestion + 1}` : 
+                   language === 'tr' ? `Soru ${currentQuestion + 1}` :
+                   `Question ${currentQuestion + 1}`}
+                </h4>
+                <button
+                  onClick={() => toggleFlagQuestion(currentQ.id)}
+                  className={`flex items-center gap-1 px-2 py-1 rounded text-sm transition-colors ${
+                    flaggedQuestions.has(currentQ.id) 
+                      ? 'bg-yellow-100 text-yellow-700' 
+                      : 'bg-gray-100 text-gray-500 hover:bg-yellow-50'
+                  }`}
+                >
+                  <Flag className="w-4 h-4" />
+                  {flaggedQuestions.has(currentQ.id) ? 
+                    (language === 'tr' ? 'İşaretli' : 'Flagged') : 
+                    (language === 'tr' ? 'İşaretle' : 'Flag')}
+                </button>
+              </div>
+
+              <p className="text-gray-800 font-medium">{currentQ.question}</p>
+
+              <div className="space-y-2">
                 {currentQ.options.map((option) => {
                   const optionLetter = option.charAt(0);
                   const isSelected = readingAnswers[currentQ.id] === optionLetter;
@@ -1505,7 +1532,7 @@ export default function ComprehensiveLevelTest({ user }) {
                     <button
                       key={option}
                       onClick={() => handleReadingAnswer(currentQ.id, optionLetter)}
-                      className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                      className={`w-full text-left p-3 rounded-lg border-2 transition-all text-sm ${
                         isSelected
                           ? 'border-blue-500 bg-blue-50'
                           : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/50'
@@ -1518,20 +1545,32 @@ export default function ComprehensiveLevelTest({ user }) {
                   );
                 })}
               </div>
-            </div>
 
-            <div className="mt-8 flex justify-end">
-              <Button
-                onClick={nextReadingQuestion}
-                size="lg"
-                className="bg-blue-600 hover:bg-blue-700"
-                disabled={!readingAnswers[currentQ.id]}
-              >
-                {currentQuestion < readingQuestions.length - 1 ? 'Next Question' : 'Continue to Listening'}
-                <ChevronRight className="w-5 h-5 ml-2" />
-              </Button>
+              {/* Navigation Buttons */}
+              <div className="flex justify-between pt-4 border-t">
+                <Button
+                  onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
+                  variant="outline"
+                  size="sm"
+                  disabled={currentQuestion === 0}
+                >
+                  <ArrowLeft className="w-4 h-4 mr-1" />
+                  {language === 'tr' ? 'Önceki' : 'Previous'}
+                </Button>
+                <Button
+                  onClick={nextReadingQuestion}
+                  size="sm"
+                  className="bg-blue-600 hover:bg-blue-700"
+                  disabled={!readingAnswers[currentQ.id]}
+                >
+                  {currentQuestion < readingQuestions.length - 1 ? 
+                    (language === 'tr' ? 'Sonraki' : 'Next') : 
+                    (language === 'tr' ? 'Dinlemeye Geç' : 'Continue to Listening')}
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
             </div>
-          </Card>
+          </SideBySideReader>
         </div>
       </div>
     );
