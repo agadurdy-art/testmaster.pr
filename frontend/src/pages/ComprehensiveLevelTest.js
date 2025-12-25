@@ -2128,38 +2128,147 @@ export default function ComprehensiveLevelTest({ user }) {
 
               {/* Listening specific feedback */}
               {testMode === 'listening' && results.listening && (
-                <Card className="p-6 bg-white shadow-lg">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Headphones className="w-5 h-5 text-cyan-600" />
-                    {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
-                  </h3>
-                  <div className="mb-4">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-700">
-                        {language === 'vi' ? 'Điểm' : language === 'tr' ? 'Puan' : 'Score'}
-                      </span>
-                      <span className="text-sm font-bold text-cyan-600">
-                        {results.listening.correct}/{results.listening.total} {language === 'vi' ? 'đúng' : language === 'tr' ? 'doğru' : 'correct'} ({results.listening.percentage?.toFixed(0)}%)
-                      </span>
+                <div className="space-y-6">
+                  {/* Overall Feedback */}
+                  <Card className="p-6 bg-white shadow-lg">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <Headphones className="w-5 h-5 text-cyan-600" />
+                      {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
+                    </h3>
+                    
+                    {/* Score Overview */}
+                    <div className="mb-4">
+                      <div className="flex justify-between mb-1">
+                        <span className="text-sm font-medium text-gray-700">
+                          {language === 'vi' ? 'Điểm' : language === 'tr' ? 'Puan' : 'Score'}
+                        </span>
+                        <span className="text-sm font-bold text-cyan-600">
+                          {results.listening.correct}/{results.listening.total} {language === 'vi' ? 'đúng' : language === 'tr' ? 'doğru' : 'correct'} ({results.listening.percentage?.toFixed(0)}%)
+                        </span>
+                      </div>
+                      <Progress value={results.listening.percentage || 0} className="h-2" />
                     </div>
-                    <Progress value={results.listening.percentage || 0} className="h-2" />
-                  </div>
-                  {results.listening.skill_breakdown && results.listening.skill_breakdown.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-sm font-medium text-gray-700 mb-2">
-                        {language === 'vi' ? 'Phân tích kỹ năng:' : language === 'tr' ? 'Beceri Dağılımı:' : 'Skill Breakdown:'}
+                    
+                    {/* Overall Feedback Message */}
+                    {results.listening.overall_feedback && (
+                      <p className="text-sm text-gray-700 bg-cyan-50 p-3 rounded-lg mb-4">
+                        {results.listening.overall_feedback}
                       </p>
-                      {results.listening.skill_breakdown.map((skill, idx) => (
-                        <div key={idx} className="flex justify-between items-center text-sm">
-                          <span className="text-gray-600">{skill.label}</span>
-                          <span className={`font-medium ${skill.correct === skill.total ? 'text-green-600' : 'text-amber-600'}`}>
-                            {skill.correct}/{skill.total}
-                          </span>
+                    )}
+                    
+                    {/* Skill Breakdown */}
+                    {results.listening.skill_breakdown && results.listening.skill_breakdown.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-sm font-medium text-gray-700 mb-2">
+                          {language === 'vi' ? 'Phân tích kỹ năng:' : language === 'tr' ? 'Beceri Dağılımı:' : 'Skill Breakdown:'}
+                        </p>
+                        <div className="space-y-2">
+                          {results.listening.skill_breakdown.map((skill, idx) => (
+                            <div key={idx} className="flex justify-between items-center text-sm">
+                              <span className="text-gray-600">{skill.label}</span>
+                              <span className={`font-medium ${skill.correct === skill.total ? 'text-green-600' : skill.correct > 0 ? 'text-amber-600' : 'text-red-500'}`}>
+                                {skill.correct}/{skill.total}
+                              </span>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    )}
+                  </Card>
+
+                  {/* Question-by-Question Review */}
+                  {results.listening.question_results && results.listening.question_results.length > 0 && (
+                    <Card className="p-6 bg-white shadow-lg">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-cyan-600" />
+                        {language === 'vi' ? 'Đáp Án Chi Tiết' : language === 'tr' ? 'Detaylı Cevaplar' : 'Answer Review'}
+                      </h3>
+                      <div className="space-y-4">
+                        {results.listening.question_results.map((q, idx) => (
+                          <div key={idx} className={`p-4 rounded-lg border-l-4 ${q.is_correct ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'}`}>
+                            <div className="flex items-start justify-between mb-2">
+                              <p className="font-medium text-gray-900 text-sm flex-1">{idx + 1}. {q.question_text}</p>
+                              <span className={`ml-2 px-2 py-0.5 text-xs rounded-full ${q.is_correct ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
+                                {q.is_correct ? (language === 'vi' ? 'Đúng' : language === 'tr' ? 'Doğru' : 'Correct') : (language === 'vi' ? 'Sai' : language === 'tr' ? 'Yanlış' : 'Incorrect')}
+                              </span>
+                            </div>
+                            <div className="text-sm space-y-1">
+                              <p className="text-gray-600">
+                                <span className="font-medium">{language === 'vi' ? 'Câu trả lời của bạn:' : language === 'tr' ? 'Cevabınız:' : 'Your answer:'}</span> 
+                                <span className={q.is_correct ? 'text-green-700' : 'text-red-700'}> {q.user_answer}</span>
+                              </p>
+                              {!q.is_correct && (
+                                <p className="text-gray-600">
+                                  <span className="font-medium">{language === 'vi' ? 'Đáp án đúng:' : language === 'tr' ? 'Doğru cevap:' : 'Correct answer:'}</span> 
+                                  <span className="text-green-700"> {q.correct_option_text || q.correct_answer}</span>
+                                </p>
+                              )}
+                              {q.explanation && (
+                                <div className="mt-2 p-2 bg-white rounded border">
+                                  <p className="text-xs text-gray-500 font-medium mb-1">
+                                    {language === 'vi' ? 'Giải thích:' : language === 'tr' ? 'Açıklama:' : 'Explanation:'}
+                                  </p>
+                                  <p className="text-xs text-gray-700">{q.explanation}</p>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
                   )}
-                </Card>
+
+                  {/* Skill Improvement Guidance */}
+                  {results.listening.skill_guidance && results.listening.skill_guidance.length > 0 && (
+                    <Card className="p-6 bg-white shadow-lg">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <Lightbulb className="w-5 h-5 text-amber-500" />
+                        {language === 'vi' ? 'Hướng Dẫn Cải Thiện' : language === 'tr' ? 'İyileştirme Rehberi' : 'Improvement Guidance'}
+                      </h3>
+                      <div className="space-y-3">
+                        {results.listening.skill_guidance.map((item, idx) => (
+                          <div key={idx} className="p-3 bg-amber-50 rounded-lg">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-medium text-gray-900 text-sm">{item.skill}</span>
+                              <span className={`text-xs px-2 py-0.5 rounded-full ${item.priority === 'high' ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'}`}>
+                                {item.priority === 'high' ? (language === 'vi' ? 'Ưu tiên' : language === 'tr' ? 'Öncelikli' : 'Priority') : (language === 'vi' ? 'Khuyến nghị' : language === 'tr' ? 'Önerilen' : 'Recommended')}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-600">{item.tip}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
+                  )}
+
+                  {/* Course Recommendations */}
+                  {results.listening.course_recommendations && results.listening.course_recommendations.length > 0 && (
+                    <Card className="p-6 bg-gradient-to-br from-cyan-50 to-teal-50 border-0">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <BookOpen className="w-5 h-5 text-cyan-600" />
+                        {language === 'vi' ? 'Khóa Học Đề Xuất' : language === 'tr' ? 'Önerilen Kurslar' : 'Recommended Courses'}
+                      </h3>
+                      <div className="space-y-3">
+                        {results.listening.course_recommendations.map((course, idx) => (
+                          <div key={idx} className="p-4 bg-white rounded-lg shadow-sm">
+                            <div className="flex items-start justify-between">
+                              <div>
+                                <h4 className="font-medium text-gray-900">{course.name}</h4>
+                                <p className="text-sm text-gray-600 mt-1">{course.description}</p>
+                                <p className="text-xs text-gray-500 mt-2">
+                                  {language === 'vi' ? 'Thời lượng:' : language === 'tr' ? 'Süre:' : 'Duration:'} {course.duration}
+                                </p>
+                              </div>
+                              <span className={`text-xs px-2 py-1 rounded-full ${course.priority === 'recommended' ? 'bg-cyan-100 text-cyan-700' : 'bg-gray-100 text-gray-600'}`}>
+                                {course.priority === 'recommended' ? (language === 'vi' ? 'Đề xuất' : language === 'tr' ? 'Önerilen' : 'Recommended') : (language === 'vi' ? 'Bổ sung' : language === 'tr' ? 'Ek' : 'Supplementary')}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
+                  )}
+                </div>
               )}
 
               {/* Writing specific feedback */}
