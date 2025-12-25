@@ -1120,37 +1120,72 @@ export default function ComprehensiveLevelTest({ user }) {
 
   // INTRO SCREEN (after test mode is selected)
   if (stage === 'intro') {
+    // Get title and description based on test mode
+    const getTestTitle = () => {
+      if (testMode === 'full') return language === 'vi' ? 'Bài Kiểm Tra Đầy Đủ' : language === 'tr' ? 'Tam Test' : 'Full Assessment Test';
+      if (testMode === 'reading') return language === 'vi' ? 'Bài Kiểm Tra Đọc' : language === 'tr' ? 'Okuma Testi' : 'Reading Assessment';
+      if (testMode === 'listening') return language === 'vi' ? 'Bài Kiểm Tra Nghe' : language === 'tr' ? 'Dinleme Testi' : 'Listening Assessment';
+      if (testMode === 'writing') return language === 'vi' ? 'Bài Kiểm Tra Viết' : language === 'tr' ? 'Yazma Testi' : 'Writing Assessment';
+      if (testMode === 'speaking') return language === 'vi' ? 'Bài Kiểm Tra Nói' : language === 'tr' ? 'Konuşma Testi' : 'Speaking Assessment';
+      return 'Level Assessment';
+    };
+
+    const getTestDescription = () => {
+      if (testMode === 'full') return language === 'vi' ? 'Đánh giá 4 kỹ năng: Đọc, Nghe, Viết, Nói' : language === 'tr' ? '4 beceriyi değerlendir: Okuma, Dinleme, Yazma, Konuşma' : 'Assess all 4 skills: Reading, Listening, Writing, Speaking';
+      if (testMode === 'reading') return language === 'vi' ? 'Đánh giá khả năng đọc hiểu của bạn' : language === 'tr' ? 'Okuma anlama becerinizi değerlendirin' : 'Assess your reading comprehension skills';
+      if (testMode === 'listening') return language === 'vi' ? 'Đánh giá khả năng nghe hiểu của bạn' : language === 'tr' ? 'Dinleme anlama becerinizi değerlendirin' : 'Assess your listening comprehension skills';
+      if (testMode === 'writing') return language === 'vi' ? 'Đánh giá khả năng viết của bạn' : language === 'tr' ? 'Yazma becerinizi değerlendirin' : 'Assess your writing skills';
+      if (testMode === 'speaking') return language === 'vi' ? 'Đánh giá khả năng nói của bạn' : language === 'tr' ? 'Konuşma becerinizi değerlendirin' : 'Assess your speaking skills';
+      return '';
+    };
+
+    const getIconComponent = () => {
+      if (testMode === 'reading') return BookOpen;
+      if (testMode === 'listening') return Headphones;
+      if (testMode === 'writing') return PenTool;
+      if (testMode === 'speaking') return Mic;
+      return Target;
+    };
+
+    const getIconColor = () => {
+      if (testMode === 'reading') return 'from-blue-500 to-indigo-600';
+      if (testMode === 'listening') return 'from-cyan-500 to-teal-600';
+      if (testMode === 'writing') return 'from-amber-500 to-orange-600';
+      if (testMode === 'speaking') return 'from-purple-500 to-pink-600';
+      return 'from-violet-500 to-purple-600';
+    };
+
+    const IconComponent = getIconComponent();
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 py-12 px-4">
         <LanguageSwitcher />
         <div className="max-w-4xl mx-auto">
           <Button
-            onClick={() => navigate('/')}
+            onClick={() => setStage('select')}
             variant="ghost"
             className="mb-6"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
+            {language === 'vi' ? 'Quay Lại Chọn Bài Kiểm Tra' : language === 'tr' ? 'Test Seçimine Dön' : 'Back to Test Selection'}
           </Button>
 
           <Card className="p-8 bg-white shadow-xl">
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 mb-4">
-                <Target className="w-10 h-10 text-white" />
+              <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br ${getIconColor()} mb-4`}>
+                <IconComponent className="w-10 h-10 text-white" />
               </div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                {language === 'vi' ? 'Đánh Giá Trình Độ Toàn Diện' :
-                 language === 'tr' ? 'Kapsamlı Seviye Değerlendirmesi' :
-                 'Comprehensive Level Assessment'}
+                {getTestTitle()}
               </h1>
               <p className="text-gray-600 text-lg">
-                {language === 'vi' ? 'Khám phá trình độ tiếng Anh thực của bạn trong 10-15 phút' :
-                 language === 'tr' ? 'Gerçek İngilizce seviyenizi 10-15 dakikada keşfedin' :
-                 'Discover your true English level in 10-15 minutes'}
+                {getTestDescription()}
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
+            {/* Show relevant skill cards based on test mode */}
+            {testMode === 'full' ? (
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
               <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-0">
                 <div className="flex items-center gap-3 mb-3">
                   <BookOpen className="w-6 h-6 text-blue-600" />
