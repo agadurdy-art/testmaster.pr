@@ -610,14 +610,40 @@ export default function Results({ user }) {
                         </div>
                       </div>
                       
+                      {/* Locate in Passage */}
+                      {q.passage_excerpt && (
+                        <div className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                          <div className="flex items-start gap-2">
+                            <MapPin className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-xs font-semibold text-yellow-700 mb-1">{t('locateInPassage') || 'Located in Passage'}</p>
+                              <p className="text-sm text-gray-700 italic leading-relaxed">&ldquo;...{q.passage_excerpt}...&rdquo;</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
                       {/* Explanation */}
                       {q.explanation && (
-                        <div className="mt-3 p-3 bg-white rounded-lg border border-gray-200">
+                        <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
                           <div className="flex items-start gap-2">
-                            <Lightbulb className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                            <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
                             <div>
-                              <p className="text-xs font-semibold text-amber-700 mb-1">Explanation</p>
+                              <p className="text-xs font-semibold text-blue-700 mb-1">{t('explanation') || 'Explanation'}</p>
                               <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Skill Tip */}
+                      {q.skill_tip && (
+                        <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+                          <div className="flex items-start gap-2">
+                            <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-xs font-semibold text-purple-700 mb-1">{t('skillTip') || 'Skill Tip'}</p>
+                              <p className="text-sm text-gray-700 leading-relaxed">{q.skill_tip}</p>
                             </div>
                           </div>
                         </div>
