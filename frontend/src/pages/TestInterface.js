@@ -70,6 +70,15 @@ function ElevenLabsExaminer() {
   
   // NEW: Question flagging for navigation
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
+  
+  // NEW: Adjustable layout ratio for reading test (passage % width)
+  const [passageRatio, setPassageRatio] = useState(75);
+  const layoutPresets = [
+    { label: '50-50', value: 50 },
+    { label: '60-40', value: 60 },
+    { label: '70-30', value: 70 },
+    { label: '75-25', value: 75 },
+  ];
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
