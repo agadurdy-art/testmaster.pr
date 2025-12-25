@@ -1579,13 +1579,15 @@ export default function ComprehensiveLevelTest({ user }) {
     const wordCount = getWordCount(currentResponse);
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-8 px-4">
-        <LanguageSwitcher />
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-8 px-4 relative">
+        <div className="max-w-4xl mx-auto relative">
+          <LanguageSwitcher />
+          <div className="mb-6 pt-2">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
-                Writing Assessment - Task {currentWritingTask + 1} of {writingTasks.length}
+                {language === 'vi' ? `Đánh Giá Viết - Bài ${currentWritingTask + 1} / ${writingTasks.length}` :
+                 language === 'tr' ? `Yazma Değerlendirmesi - Görev ${currentWritingTask + 1} / ${writingTasks.length}` :
+                 `Writing Assessment - Task ${currentWritingTask + 1} of ${writingTasks.length}`}
               </span>
               <span className="text-sm font-medium text-amber-600">
                 {currentTask.level}
@@ -1610,10 +1612,10 @@ export default function ComprehensiveLevelTest({ user }) {
               <div className="flex items-center gap-4 text-sm text-gray-500">
                 <span className="flex items-center gap-1">
                   <Clock className="w-4 h-4" />
-                  {currentTask.time_minutes} minutes
+                  {currentTask.time_minutes} {language === 'vi' ? 'phút' : language === 'tr' ? 'dakika' : 'minutes'}
                 </span>
                 <span>
-                  Target: {currentTask.min_words}-{currentTask.max_words} words
+                  {language === 'vi' ? 'Mục tiêu' : language === 'tr' ? 'Hedef' : 'Target'}: {currentTask.min_words}-{currentTask.max_words} {language === 'vi' ? 'từ' : language === 'tr' ? 'kelime' : 'words'}
                 </span>
               </div>
             </div>
