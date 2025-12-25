@@ -28,6 +28,7 @@ import BeginnerCourse from './pages/BeginnerCourse';
 import MasteryCourse from './pages/MasteryCourse';
 import AdvancedMasteryCourse from './pages/AdvancedMasteryCourse';
 import LessonPreview from './pages/LessonPreview';
+import FeatureShowcase from './pages/FeatureShowcase';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
 import LearningPlatform from './pages/LearningPlatform';
