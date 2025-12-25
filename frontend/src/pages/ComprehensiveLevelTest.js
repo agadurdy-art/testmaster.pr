@@ -2260,8 +2260,10 @@ export default function ComprehensiveLevelTest({ user }) {
                 </div>
               </div>
             </Card>
+            )}
 
             {/* Speaking Skills */}
+            {results.speaking && (
             <Card className="p-6 bg-white shadow-lg">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Mic className="w-5 h-5 text-purple-600" />
