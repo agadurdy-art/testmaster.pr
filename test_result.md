@@ -50,27 +50,55 @@ backend:
 frontend:
   - task: "Question Navigation Bar"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/components/test/QuestionNavigation.js"
     notes: "Shows 1-40 numbered buttons with color coding"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "CRITICAL: Cannot test due to authentication issue. Test selection page loads but clicking Reading Test does not progress to test interface. User authentication is failing, preventing access to the actual test where new features are implemented. Authentication system must be fixed before features can be properly tested."
 
   - task: "Side-by-Side Reader (70-30 adjustable)"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/components/test/SideBySideReader.js"
     notes: "Adjustable ratio with preset buttons and drag handle"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "CRITICAL: Cannot test due to authentication issue. Component exists but test flow is blocked at selection screen. User cannot progress to reading test where side-by-side layout is implemented."
 
   - task: "Locate & Explain Feature"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/components/test/LocateExplain.js"
     notes: "Shows passage excerpt, explanation, wrong answer feedback, skill tips"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "CRITICAL: Cannot test due to authentication issue. Feature appears in results page but cannot reach results due to blocked test flow. Authentication must be fixed to complete test and see results with Locate & Explain feature."
 
   - task: "Progress Analytics"
     implemented: true
-    working: true
+    working: "NA"
     file: "/app/frontend/src/components/test/ProgressAnalytics.js"
     notes: "Overall band, skill scores, weak areas"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "CRITICAL: Cannot test due to authentication issue. Progress Analytics appears in full test results but cannot access due to blocked test flow. Authentication system prevents proper testing."
 
 metadata:
   created_by: "main_agent"
