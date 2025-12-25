@@ -70,7 +70,10 @@ const readingQuestions = [
     question: "What is John's job?",
     options: ["A) Doctor", "B) Teacher", "C) Student", "D) Driver"],
     correct: "B",
-    skill: "basic_comprehension"
+    skill: "basic_comprehension",
+    passageExcerpt: "I am a teacher",
+    explanation: "The passage directly states 'I am a teacher.' This is a straightforward factual question.",
+    skillTip: "For 'What is/are' questions, look for direct statements using 'is', 'am', or 'are'."
   },
   {
     id: 2,
@@ -80,7 +83,10 @@ const readingQuestions = [
     question: "When is the library closed?",
     options: ["A) Monday", "B) Saturday", "C) Sunday", "D) Every day"],
     correct: "C",
-    skill: "time_information"
+    skill: "time_information",
+    passageExcerpt: "On Sunday, it is closed",
+    explanation: "The passage explicitly states 'On Sunday, it is closed.' The word 'except' indicates Sunday is different from other days.",
+    skillTip: "Pay attention to words like 'except', 'but', 'however' - they often indicate exceptions or important information."
   },
   
   // Band 3.5-4.5 (Pre-intermediate)
@@ -92,7 +98,10 @@ const readingQuestions = [
     question: "How often does Sarah go to the gym?",
     options: ["A) Every day", "B) Once a week", "C) Three times a week", "D) Twice a month"],
     correct: "C",
-    skill: "frequency_detail"
+    skill: "frequency_detail",
+    passageExcerpt: "goes to the gym three times a week",
+    explanation: "The frequency 'three times a week' is stated directly at the beginning of the passage.",
+    skillTip: "Frequency questions often contain phrases like 'times a week/month', 'every day', 'once', 'twice', etc."
   },
   {
     id: 4,
@@ -102,7 +111,10 @@ const readingQuestions = [
     question: "According to the passage, what is one benefit of regular exercise?",
     options: ["A) It makes you taller", "B) It reduces stress", "C) It helps you sleep longer", "D) It increases appetite"],
     correct: "B",
-    skill: "detail_comprehension"
+    skill: "detail_comprehension",
+    passageExcerpt: "can reduce stress and improve mood",
+    explanation: "The passage states exercise 'can reduce stress and improve mood.' Option B matches this information directly.",
+    skillTip: "When asked for 'one benefit', scan for positive outcome words like 'improve', 'reduce (negative)', 'help', 'benefit'."
   },
   
   // Band 5.0-5.5 (Intermediate)
