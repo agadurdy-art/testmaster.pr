@@ -1333,9 +1333,16 @@ function ElevenLabsExaminer() {
                       } shadow-sm`}
                     >
                       <p className="text-sm font-medium text-gray-900 mb-2">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
-                          {questionNumber + 1}
-                        </span>
+                        {/* Show combined question numbers for multiple_choice_multi */}
+                        {q.type === 'multiple_choice_multi' && q.answer_count ? (
+                          <span className="inline-flex items-center justify-center px-2 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold mr-2">
+                            Q{questionNumber + 1}-{questionNumber + q.answer_count}
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                            {questionNumber + 1}
+                          </span>
+                        )}
                         {q.question}
                       </p>
                       
