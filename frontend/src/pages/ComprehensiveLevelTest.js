@@ -1705,23 +1705,20 @@ export default function ComprehensiveLevelTest({ user }) {
       instruction: 'Write your response below.',
       min_words: 20,
       max_words: 100,
-      level: 'Band 4-6',
-      time_minutes: 5
+      level: 'Band 4-6'
     };
     const currentResponse = writingResponses[currentTask.id] || '';
     const wordCount = getWordCount(currentResponse);
-    const totalTasks = writingTasks.length;
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-4 px-4">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="mb-4">
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
-                {language === 'vi' ? `Đánh Giá Viết - Bài ${currentWritingTask + 1} / ${totalTasks}` :
-                 language === 'tr' ? `Yazma Değerlendirmesi - Görev ${currentWritingTask + 1} / ${totalTasks}` :
-                 `Writing Assessment - Task ${currentWritingTask + 1} of ${totalTasks}`}
+                {language === 'vi' ? `Đánh Giá Viết - Bài ${currentWritingTask + 1} / ${writingTasks.length}` :
+                 language === 'tr' ? `Yazma Değerlendirmesi - Görev ${currentWritingTask + 1} / ${writingTasks.length}` :
+                 `Writing Assessment - Task ${currentWritingTask + 1} of ${writingTasks.length}`}
               </span>
               <div className="flex items-center gap-3">
                 <span className="text-sm font-medium text-amber-600">
@@ -1730,50 +1727,11 @@ export default function ComprehensiveLevelTest({ user }) {
                 <LanguageSwitcher />
               </div>
             </div>
-            <Progress value={((currentWritingTask + 1) / totalTasks) * 100} className="h-2" />
+            <Progress value={getProgressPercentage()} className="h-2" />
           </div>
 
-          {/* Task Navigation Bar */}
-          <Card className="p-4 mb-4 bg-white shadow-lg">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-gray-600">
-                {language === 'vi' ? 'Bài viết' : language === 'tr' ? 'Görevler' : 'Tasks'} {Object.keys(writingResponses).filter(k => getWordCount(writingResponses[k]) >= 5).length}/{totalTasks}
-              </span>
-              <div className="flex items-center gap-4 text-xs">
-                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-green-500"></span> {language === 'vi' ? 'Hoàn thành' : language === 'tr' ? 'Tamamlandı' : 'Completed'}</span>
-                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-yellow-500"></span> {language === 'vi' ? 'Đang viết' : language === 'tr' ? 'Devam ediyor' : 'In Progress'}</span>
-                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-gray-300"></span> {language === 'vi' ? 'Chưa bắt đầu' : language === 'tr' ? 'Başlanmadı' : 'Not Started'}</span>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 overflow-x-auto sm:overflow-x-visible pb-2">
-              {writingTasks.map((task, idx) => {
-                const taskWordCount = getWordCount(writingResponses[task.id] || '');
-                const isCompleted = taskWordCount >= task.min_words;
-                const isInProgress = taskWordCount > 0 && taskWordCount < task.min_words;
-                const isCurrent = idx === currentWritingTask;
-                
-                return (
-                  <button
-                    key={task.id}
-                    onClick={() => setCurrentWritingTask(idx)}
-                    className={`w-9 h-9 rounded-lg font-medium text-sm transition-all flex-shrink-0 ${
-                      isCurrent ? 'bg-amber-600 text-white ring-2 ring-amber-300' :
-                      isCompleted ? 'bg-green-500 text-white' :
-                      isInProgress ? 'bg-yellow-500 text-white' :
-                      'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                    }`}
-                  >
-                    {idx + 1}
-                  </button>
-                );
-              })}
-            </div>
-          </Card>
-
-          {/* Main Content - Side by Side */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {/* Left: Task Instructions */}
-            <Card className="p-6 bg-white shadow-xl">
+          <Card className="p-8 bg-white shadow-xl">
+            <div className="mb-6">
               <div className="flex items-center gap-2 mb-4">
                 <PenTool className="w-5 h-5 text-amber-600" />
                 <h3 className="font-semibold text-gray-900 text-lg">{currentTask.title}</h3>
@@ -1794,25 +1752,10 @@ export default function ComprehensiveLevelTest({ user }) {
                   {language === 'vi' ? 'Mục tiêu' : language === 'tr' ? 'Hedef' : 'Target'}: {currentTask.min_words}-{currentTask.max_words} {language === 'vi' ? 'từ' : language === 'tr' ? 'kelime' : 'words'}
                 </span>
               </div>
-            </Card>
+            </div>
 
-            {/* Right: Writing Area */}
-            <Card className="p-6 bg-white shadow-xl">
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="font-semibold text-gray-900">
-                  {language === 'vi' ? 'Câu trả lời của bạn' : 
-                   language === 'tr' ? 'Cevabınız' : 
-                   'Your Response'}
-                </h4>
-                <span className={`text-sm font-medium px-2 py-1 rounded ${
-                  wordCount < currentTask.min_words ? 'bg-red-100 text-red-600' :
-                  wordCount > currentTask.max_words ? 'bg-amber-100 text-amber-600' :
-                  'bg-green-100 text-green-600'
-                }`}>
-                  {wordCount} / {currentTask.min_words}-{currentTask.max_words} {language === 'vi' ? 'từ' : language === 'tr' ? 'kelime' : 'words'}
-                </span>
-              </div>
-              
+            {/* Writing Area */}
+            <div className="relative">
               <textarea
                 value={currentResponse}
                 onChange={(e) => handleWritingChange(currentTask.id, e.target.value)}
@@ -1821,65 +1764,39 @@ export default function ComprehensiveLevelTest({ user }) {
                   language === 'tr' ? 'Cevabınızı buraya yazın...' :
                   'Write your response here...'
                 }
-                className="w-full h-48 p-4 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 resize-none text-gray-800"
+                className="w-full h-64 p-4 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 resize-none text-gray-800"
               />
-              
-              {wordCount < currentTask.min_words && wordCount > 0 && (
-                <p className="text-sm text-amber-600 mt-2">
-                  {language === 'vi' ? `Cần thêm ${currentTask.min_words - wordCount} từ nữa` :
-                   language === 'tr' ? `${currentTask.min_words - wordCount} kelime daha gerekli` :
-                   `Need ${currentTask.min_words - wordCount} more words`}
-                </p>
-              )}
-
-              {/* Navigation Buttons */}
-              <div className="mt-6 flex justify-between">
-                <Button
-                  onClick={() => setCurrentWritingTask(Math.max(0, currentWritingTask - 1))}
-                  variant="outline"
-                  disabled={currentWritingTask === 0}
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  {language === 'vi' ? 'Trước' : language === 'tr' ? 'Önceki' : 'Previous'}
-                </Button>
-                
-                {currentWritingTask < totalTasks - 1 ? (
-                  <Button
-                    onClick={() => setCurrentWritingTask(currentWritingTask + 1)}
-                    className="bg-amber-600 hover:bg-amber-700"
-                    disabled={wordCount < 5}
-                  >
-                    {language === 'vi' ? 'Tiếp theo' : language === 'tr' ? 'Sonraki' : 'Next'}
-                    <ChevronRight className="w-4 h-4 ml-2" />
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      if (wordCount < 5) {
-                        toast.error(language === 'vi' ? 'Vui lòng viết ít nhất 5 từ' : 
-                                   language === 'tr' ? 'Lütfen en az 5 kelime yazın' : 
-                                   'Please write at least 5 words');
-                        return;
-                      }
-                      if (testMode === 'full') {
-                        setStage('speaking');
-                      } else {
-                        setStage('evaluating');
-                        evaluateTest();
-                      }
-                    }}
-                    className="bg-amber-600 hover:bg-amber-700"
-                    disabled={wordCount < 5}
-                  >
-                    {testMode === 'full' 
-                      ? (language === 'vi' ? 'Tiếp tục Nói' : language === 'tr' ? 'Konuşmaya Devam' : 'Continue to Speaking')
-                      : (language === 'vi' ? 'Hoàn thành' : language === 'tr' ? 'Bitir' : 'Finish')}
-                    <ChevronRight className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
+              <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                <span className={`text-sm font-medium ${
+                  wordCount < currentTask.min_words ? 'text-red-500' :
+                  wordCount > currentTask.max_words ? 'text-amber-500' :
+                  'text-green-500'
+                }`}>
+                  {wordCount} / {currentTask.min_words}-{currentTask.max_words} words
+                </span>
               </div>
-            </Card>
-          </div>
+            </div>
+            
+            {wordCount < currentTask.min_words && wordCount > 0 && (
+              <p className="text-sm text-amber-600 mt-2">
+                {language === 'vi' ? `Cần thêm ${currentTask.min_words - wordCount} từ nữa` :
+                 language === 'tr' ? `${currentTask.min_words - wordCount} kelime daha gerekli` :
+                 `Need ${currentTask.min_words - wordCount} more words`}
+              </p>
+            )}
+
+            <div className="mt-8 flex justify-end">
+              <Button
+                onClick={nextWritingTask}
+                size="lg"
+                className="bg-amber-600 hover:bg-amber-700"
+                disabled={wordCount < 5}
+              >
+                {currentWritingTask < writingTasks.length - 1 ? 'Next Task' : 'Continue to Speaking'}
+                <ChevronRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+          </Card>
         </div>
       </div>
     );
