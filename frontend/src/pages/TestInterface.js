@@ -1029,7 +1029,7 @@ function ElevenLabsExaminer() {
                             </div>
                           )}
 
-                          {q.type === 'multiple_choice' && q.options && (
+                          {(q.type === 'multiple_choice' || q.type === 'multiple_choice_multi') && q.options && (
                             (() => {
                               // Check if this is a "Choose TWO" question
                               const isMultiSelect = q.question?.toLowerCase().includes('two') || 
