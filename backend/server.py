@@ -3741,6 +3741,169 @@ Make it motivating but realistic. Address their specific weaknesses.{language_no
         raise HTTPException(status_code=500, detail=f"Recommendation failed: {str(e)}")
 
 
+# ============ LISTENING MODULE (Level Assessment) ============
+
+from listening_data import get_listening_sections, get_all_listening_questions
+
+@api_router.get("/level-test/listening-sections")
+async def get_listening_sections_endpoint():
+    """Get all listening sections with metadata for the level test."""
+    sections = get_listening_sections()
+    return {
+        "sections": [
+            {
+                "id": s["id"],
+                "level": s["level"],
+                "band_range": s["band_range"],
+                "title": s["title"],
+                "audio_url": f"/audio/listening/{s['id']}.mp3",
+                "question_count": len(s["questions"])
+            }
+            for s in sections
+        ],
+        "total_questions": sum(len(s["questions"]) for s in sections)
+    }
+
+@api_router.get("/level-test/listening-questions")
+async def get_listening_questions():
+    """Get all listening questions for the level test."""
+    sections = get_listening_sections()
+    all_questions = []
+    
+    for section in sections:
+        for q in section["questions"]:
+            all_questions.append({
+                "section_id": section["id"],
+                "section_title": section["title"],
+                "audio_url": f"/audio/listening/{section['id']}.mp3",
+                "level": section["level"],
+                "band_range": section["band_range"],
+                **q
+            })
+    
+    return {"questions": all_questions, "total": len(all_questions)}
+
+
+class ListeningEvaluationRequest(BaseModel):
+    answers: Dict[str, str]  # {question_id: answer}
+    language: Optional[str] = "en"
+
+
+@api_router.post("/level-test/evaluate-listening")
+async def evaluate_listening(request: ListeningEvaluationRequest):
+    """Evaluate listening section answers and return band score."""
+    try:
+        sections = get_listening_sections()
+        
+        correct_count = 0
+        total_count = 0
+        total_band_points = 0
+        question_results = []
+        skill_breakdown = {}
+        
+        for section in sections:
+            for q in section["questions"]:
+                total_count += 1
+                user_answer = request.answers.get(q["id"], "").strip().upper()
+                correct_answer = q["correct"].strip().upper()
+                is_correct = user_answer == correct_answer
+                
+                # Get band value from section
+                band_range = section["band_range"]
+                avg_band = (float(band_range.split("-")[0]) + float(band_range.split("-")[1])) / 2
+                
+                if is_correct:
+                    correct_count += 1
+                    total_band_points += avg_band
+                
+                # Track skill breakdown
+                skill = q.get("skill", "general")
+                if skill not in skill_breakdown:
+                    skill_breakdown[skill] = {"correct": 0, "total": 0, "label": skill.replace("_", " ").title()}
+                skill_breakdown[skill]["total"] += 1
+                if is_correct:
+                    skill_breakdown[skill]["correct"] += 1
+                
+                question_results.append({
+                    "question_id": q["id"],
+                    "section_title": section["title"],
+                    "question_text": q["question"],
+                    "user_answer": user_answer or "No answer",
+                    "correct_answer": correct_answer,
+                    "is_correct": is_correct,
+                    "skill": skill
+                })
+        
+        # Calculate listening band score
+        if total_count > 0:
+            percentage = (correct_count / total_count) * 100
+            listening_band = (total_band_points / total_count) if correct_count > 0 else 2.0
+            # Adjust band based on performance
+            if percentage >= 90:
+                listening_band = min(9.0, listening_band + 1.0)
+            elif percentage >= 70:
+                listening_band = min(8.0, listening_band + 0.5)
+            elif percentage < 40:
+                listening_band = max(2.0, listening_band - 1.0)
+        else:
+            percentage = 0
+            listening_band = 2.0
+        
+        # Round to nearest 0.5
+        listening_band = round(listening_band * 2) / 2
+        
+        return {
+            "band_score": listening_band,
+            "correct": correct_count,
+            "total": total_count,
+            "percentage": percentage,
+            "question_results": question_results,
+            "skill_breakdown": list(skill_breakdown.values())
+        }
+        
+    except Exception as e:
+        logger.error(f"Listening evaluation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(e)}")
+
+
+# ============ WRITING MODULE (Level Assessment) ============
+
+from writing_evaluator import get_writing_tasks, evaluate_writing_response, evaluate_all_writing_tasks
+
+@api_router.get("/level-test/writing-tasks")
+async def get_writing_tasks_endpoint():
+    """Get all writing tasks for the level test."""
+    tasks = get_writing_tasks()
+    return {"tasks": tasks, "total": len(tasks)}
+
+
+class WritingSubmission(BaseModel):
+    task_id: str
+    response_text: str
+
+
+class WritingEvaluationRequest(BaseModel):
+    responses: List[WritingSubmission]
+    language: Optional[str] = "en"
+
+
+@api_router.post("/level-test/evaluate-writing")
+async def evaluate_writing(request: WritingEvaluationRequest):
+    """Evaluate writing responses and return band score with feedback."""
+    try:
+        responses = [
+            {"task_id": r.task_id, "response_text": r.response_text}
+            for r in request.responses
+        ]
+        
+        result = await evaluate_all_writing_tasks(responses, request.language)
+        return result
+        
+    except Exception as e:
+        logger.error(f"Writing evaluation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(e)}")
+
+
 # ============ Speaking Practice Evaluation ============
 
 class SpeakingPracticeRequest(BaseModel):
