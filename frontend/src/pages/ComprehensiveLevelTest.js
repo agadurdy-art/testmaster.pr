@@ -792,20 +792,26 @@ export default function ComprehensiveLevelTest({ user }) {
       // Evaluate Writing if applicable
       if (testMode === 'full' || testMode === 'writing') {
         try {
-          const writingResponse = await fetch(`${API_URL}/api/level-test/evaluate-writing`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              responses: writingTasks.map(task => ({
-                task_id: task.id,
-                response_text: writingResponses[task.id] || ''
-              })),
-              language
-            })
-          });
-          if (writingResponse.ok) {
-            writingResults = await writingResponse.json();
-            writingBand = writingResults.overall_band;
+          // Only send writing tasks if we have responses
+          const writingTasksToEvaluate = writingTasks.length > 0 ? 
+            writingTasks.map(task => ({
+              task_id: task.id,
+              response_text: writingResponses[task.id] || ''
+            })) : [];
+          
+          if (writingTasksToEvaluate.length > 0) {
+            const writingResponse = await fetch(`${API_URL}/api/level-test/evaluate-writing`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                responses: writingTasksToEvaluate,
+                language
+              })
+            });
+            if (writingResponse.ok) {
+              writingResults = await writingResponse.json();
+              writingBand = writingResults.overall_band;
+            }
           }
         } catch (e) {
           console.error('Writing evaluation error:', e);
@@ -815,23 +821,26 @@ export default function ComprehensiveLevelTest({ user }) {
 
       // Evaluate Speaking if applicable
       if (testMode === 'full' || testMode === 'speaking') {
-        try {
-          const speakingEvaluationResponse = await fetch(`${API_URL}/api/level-test/evaluate-speaking`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              responses: speakingResponses.map(r => ({
-                level: r.level,
-                transcript: r.transcript
-              })),
-              language: language
-            })
-          });
-          if (speakingEvaluationResponse.ok) {
-            speakingEval = await speakingEvaluationResponse.json();
+        // Only evaluate if we have speaking responses
+        if (speakingResponses.length > 0) {
+          try {
+            const speakingEvaluationResponse = await fetch(`${API_URL}/api/level-test/evaluate-speaking`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                responses: speakingResponses.map(r => ({
+                  level: r.level,
+                  transcript: r.transcript
+                })),
+                language: language
+              })
+            });
+            if (speakingEvaluationResponse.ok) {
+              speakingEval = await speakingEvaluationResponse.json();
+            }
+          } catch (e) {
+            console.error('Speaking evaluation error:', e);
           }
-        } catch (e) {
-          console.error('Speaking evaluation error:', e);
         }
       }
       
