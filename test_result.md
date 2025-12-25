@@ -90,3 +90,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Implemented 4 new competitor-inspired features: Question Navigation, Side-by-Side Reader, Locate & Explain, and Progress Analytics. All features tested via screenshots and working correctly. Ready for comprehensive testing."
+  - agent: "testing"
+    message: "CRITICAL ISSUE FOUND: Comprehensive Level Test requires user authentication but test flow is blocked. User authentication is not working properly in the test environment. The test selection page loads correctly but clicking on test options does not progress to the actual test interface. This prevents testing of the new features: Question Navigation Bar, Side-by-Side Reader, Locate & Explain, and Progress Analytics. Authentication system needs to be fixed for proper testing."
