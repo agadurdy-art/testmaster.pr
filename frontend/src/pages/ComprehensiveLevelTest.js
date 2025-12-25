@@ -2219,38 +2219,73 @@ export default function ComprehensiveLevelTest({ user }) {
             <div className="mb-8">
               {/* Reading specific feedback */}
               {testMode === 'reading' && results.reading && (
-                <Card className="p-6 bg-white shadow-lg">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-blue-600" />
-                    {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
-                  </h3>
-                  <div className="mb-4">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-700">
-                        {language === 'vi' ? 'Điểm' : language === 'tr' ? 'Puan' : 'Score'}
-                      </span>
-                      <span className="text-sm font-bold text-blue-600">
-                        {results.reading.correct}/{results.reading.total} {language === 'vi' ? 'đúng' : language === 'tr' ? 'doğru' : 'correct'}
-                      </span>
+                <div className="space-y-6">
+                  {/* Score Overview */}
+                  <Card className="p-6 bg-white shadow-lg">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-blue-600" />
+                      {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
+                    </h3>
+                    <div className="mb-4">
+                      <div className="flex justify-between mb-1">
+                        <span className="text-sm font-medium text-gray-700">
+                          {language === 'vi' ? 'Điểm' : language === 'tr' ? 'Puan' : 'Score'}
+                        </span>
+                        <span className="text-sm font-bold text-blue-600">
+                          {results.reading.correct}/{results.reading.total} {language === 'vi' ? 'đúng' : language === 'tr' ? 'doğru' : 'correct'}
+                        </span>
+                      </div>
+                      <Progress value={(results.reading.correct / results.reading.total) * 100} className="h-2" />
                     </div>
-                    <Progress value={(results.reading.correct / results.reading.total) * 100} className="h-2" />
-                  </div>
-                  {results.reading.skill_breakdown && Object.keys(results.reading.skill_breakdown).length > 0 && (
+                    {results.reading.skill_breakdown && Object.keys(results.reading.skill_breakdown).length > 0 && (
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium text-gray-700 mb-2">
+                          {language === 'vi' ? 'Phân tích kỹ năng:' : language === 'tr' ? 'Beceri Dağılımı:' : 'Skill Breakdown:'}
+                        </p>
+                        {Object.entries(results.reading.skill_breakdown).map(([skill, data]) => (
+                          <div key={skill} className="flex justify-between items-center text-sm">
+                            <span className="text-gray-600 capitalize">{skill.replace(/_/g, ' ')}</span>
+                            <span className={`font-medium ${data.correct === data.total ? 'text-green-600' : 'text-amber-600'}`}>
+                              {data.correct}/{data.total}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </Card>
+
+                  {/* Locate & Explain - Question by Question Review */}
+                  <Card className="p-6 bg-white shadow-lg">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-blue-600" />
+                      {language === 'vi' ? 'Đáp Án Chi Tiết' : language === 'tr' ? 'Detaylı Cevap İncelemesi' : 'Answer Review - Locate & Explain'}
+                    </h3>
                     <div className="space-y-2">
-                      <p className="text-sm font-medium text-gray-700 mb-2">
-                        {language === 'vi' ? 'Phân tích kỹ năng:' : language === 'tr' ? 'Beceri Dağılımı:' : 'Skill Breakdown:'}
-                      </p>
-                      {Object.entries(results.reading.skill_breakdown).map(([skill, data]) => (
-                        <div key={skill} className="flex justify-between items-center text-sm">
-                          <span className="text-gray-600 capitalize">{skill.replace(/_/g, ' ')}</span>
-                          <span className={`font-medium ${data.correct === data.total ? 'text-green-600' : 'text-amber-600'}`}>
-                            {data.correct}/{data.total}
-                          </span>
-                        </div>
-                      ))}
+                      {readingQuestions.map((q, idx) => {
+                        const userAnswer = readingAnswers[q.id];
+                        const isCorrect = userAnswer === q.correct;
+                        const userAnswerText = q.options.find(opt => opt.startsWith(userAnswer))?.substring(3) || userAnswer;
+                        const correctAnswerText = q.options.find(opt => opt.startsWith(q.correct))?.substring(3) || q.correct;
+                        
+                        return (
+                          <LocateExplain
+                            key={q.id}
+                            questionNumber={idx + 1}
+                            questionText={q.question}
+                            userAnswer={userAnswerText}
+                            correctAnswer={correctAnswerText}
+                            isCorrect={isCorrect}
+                            passageExcerpt={q.passageExcerpt}
+                            explanation={q.explanation}
+                            wrongExplanation={!isCorrect ? `You selected "${userAnswerText}" but the passage indicates "${correctAnswerText}".` : null}
+                            skillTip={q.skillTip}
+                            language={language}
+                          />
+                        );
+                      })}
                     </div>
-                  )}
-                </Card>
+                  </Card>
+                </div>
               )}
 
               {/* Listening specific feedback */}
