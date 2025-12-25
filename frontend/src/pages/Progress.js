@@ -225,6 +225,124 @@ export default function Progress({ user }) {
           <p className="text-gray-500">Track your IELTS journey and improvement</p>
         </div>
 
+        {/* Target Band & Weekly Comparison */}
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          {/* Target Band Card */}
+          <Card className="p-6 bg-gradient-to-br from-violet-500 to-purple-600 border-0 shadow-xl rounded-2xl text-white">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Target className="w-5 h-5" />
+                <span className="font-semibold">Target Band Score</span>
+              </div>
+              <button 
+                onClick={() => setShowTargetModal(true)}
+                className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-all"
+              >
+                Change
+              </button>
+            </div>
+            <div className="flex items-end gap-4">
+              <span className="text-5xl font-bold">{targetBand.toFixed(1)}</span>
+              <div className="flex-1 mb-2">
+                <div className="flex items-center justify-between text-sm mb-1">
+                  <span>Current: {stats.avgBand > 0 ? stats.avgBand.toFixed(1) : '-'}</span>
+                  <span>Gap: {stats.avgBand > 0 ? (targetBand - stats.avgBand).toFixed(1) : '-'}</span>
+                </div>
+                <div className="h-3 bg-white/20 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-white rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min((stats.avgBand / targetBand) * 100, 100)}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Weekly Comparison Card */}
+          <Card className="p-6 bg-white border-0 shadow-xl rounded-2xl">
+            <div className="flex items-center gap-2 mb-4">
+              <Calendar className="w-5 h-5 text-violet-500" />
+              <span className="font-semibold text-gray-900">Weekly Comparison</span>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-3 bg-gray-50 rounded-xl">
+                <p className="text-xs text-gray-500 mb-1">This Week</p>
+                <p className="text-2xl font-bold text-gray-900">{weeklyData.thisWeek.count} tests</p>
+                <p className="text-sm text-gray-600">Avg: {weeklyData.thisWeek.avg > 0 ? weeklyData.thisWeek.avg.toFixed(1) : '-'}</p>
+              </div>
+              <div className="p-3 bg-gray-50 rounded-xl">
+                <p className="text-xs text-gray-500 mb-1">Last Week</p>
+                <p className="text-2xl font-bold text-gray-900">{weeklyData.lastWeek.count} tests</p>
+                <p className="text-sm text-gray-600">Avg: {weeklyData.lastWeek.avg > 0 ? weeklyData.lastWeek.avg.toFixed(1) : '-'}</p>
+              </div>
+            </div>
+            {weeklyData.change !== 0 && weeklyData.thisWeek.avg > 0 && weeklyData.lastWeek.avg > 0 && (
+              <div className={`mt-3 p-2 rounded-lg text-sm font-medium flex items-center gap-2 ${
+                weeklyData.change > 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+              }`}>
+                {weeklyData.change > 0 ? <TrendingUp className="w-4 h-4" /> : <TrendingUp className="w-4 h-4 transform rotate-180" />}
+                {weeklyData.change > 0 ? '+' : ''}{weeklyData.change.toFixed(1)} band from last week
+              </div>
+            )}
+          </Card>
+        </div>
+
+        {/* Study Plan Recommendation */}
+        <Card className="p-6 mb-8 bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200 shadow-lg rounded-2xl">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg flex-shrink-0">
+              <studyPlan.icon className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-gray-900 text-lg mb-1">📚 Study Plan: {studyPlan.focus}</h3>
+              <p className="text-gray-700 mb-3">{studyPlan.recommendation}</p>
+              <div className="flex items-center gap-4">
+                <span className="text-sm bg-amber-200 text-amber-800 px-3 py-1 rounded-full font-medium">
+                  Weekly Goal: {studyPlan.weeklyGoal}
+                </span>
+                <Button 
+                  onClick={() => navigate('/test/reading')}
+                  className="bg-amber-600 hover:bg-amber-700 text-white text-sm"
+                >
+                  Start Practice
+                </Button>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Target Band Modal */}
+        {showTargetModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <Card className="p-6 bg-white rounded-2xl w-full max-w-md shadow-2xl">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Set Your Target Band</h3>
+              <p className="text-gray-600 mb-4">What IELTS band score are you aiming for?</p>
+              <div className="grid grid-cols-4 gap-2 mb-6">
+                {[5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5].map(band => (
+                  <button
+                    key={band}
+                    onClick={() => handleSetTarget(band)}
+                    className={`p-3 rounded-xl font-bold transition-all ${
+                      targetBand === band 
+                        ? 'bg-violet-600 text-white' 
+                        : 'bg-gray-100 text-gray-700 hover:bg-violet-100'
+                    }`}
+                  >
+                    {band}
+                  </button>
+                ))}
+              </div>
+              <Button 
+                onClick={() => setShowTargetModal(false)} 
+                variant="outline" 
+                className="w-full"
+              >
+                Cancel
+              </Button>
+            </Card>
+          </div>
+        )}
+
         {/* Stats Overview */}
         <div className="grid md:grid-cols-4 gap-4 mb-8">
           <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
