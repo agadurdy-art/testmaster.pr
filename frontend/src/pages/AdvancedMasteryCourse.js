@@ -477,31 +477,50 @@ export default function AdvancedMasteryCourse({ user }) {
 
   // Render reading section
   const renderReading = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
-      <div className="flex items-center justify-between mb-4">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
         <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <Target className="w-5 h-5 text-blue-600" /> {selectedModule.reading?.title}
         </h3>
-      </div>
-      
-      <div className="mb-4 text-sm text-gray-500">
-        Word Count: ~{selectedModule.reading?.word_count}
-      </div>
-
-      {/* Reading passage */}
-      <div className="p-5 bg-gray-50 rounded-xl mb-6">
-        <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-          {selectedModule.reading?.text || ''}
-        </p>
+        <span className="text-sm text-gray-500">
+          ~{selectedModule.reading?.word_count} words
+        </span>
       </div>
 
-      {/* Practice Questions Preview */}
-      <div className="p-4 bg-blue-50 rounded-xl">
-        <h4 className="font-semibold text-blue-800 mb-2">📚 Practice Questions ({selectedModule.reading?.questions?.length || 0})</h4>
-        <p className="text-sm text-gray-600">Complete the quiz section to test your comprehension with advanced question types: True/False/Not Given, Summary Completion, Matching Information, and more.</p>
-      </div>
+      {/* Reading passage with Side-by-Side */}
+      <SideBySideReader
+        passage={selectedModule.reading?.text || ''}
+        passageTitle="Academic Reading Passage"
+        defaultRatio={70}
+      >
+        {/* Practice Questions Preview */}
+        <div className="space-y-4">
+          <div className="p-4 bg-blue-50 rounded-lg">
+            <h4 className="font-semibold text-blue-800 text-sm mb-2">
+              📚 Practice Questions ({selectedModule.reading?.questions?.length || 0})
+            </h4>
+            <p className="text-xs text-gray-600">
+              Complete the quiz section to test your comprehension with advanced question types: True/False/Not Given, Summary Completion, Matching Information, and more.
+            </p>
+          </div>
+          
+          {/* Quick Preview of first few questions */}
+          {selectedModule.reading?.questions?.slice(0, 3).map((q, idx) => (
+            <div key={idx} className="p-3 bg-gray-50 rounded-lg">
+              <p className="text-xs text-gray-500 mb-1">Question {idx + 1}</p>
+              <p className="text-sm text-gray-700 font-medium">{q.question}</p>
+            </div>
+          ))}
+          
+          {selectedModule.reading?.questions?.length > 3 && (
+            <p className="text-xs text-center text-gray-500">
+              + {selectedModule.reading.questions.length - 3} more questions in Quiz section
+            </p>
+          )}
+        </div>
+      </SideBySideReader>
 
-      <div className="mt-6 flex justify-between">
+      <div className="flex justify-between">
         <Button variant="outline" onClick={() => setCurrentSection('grammar')}>
           <ChevronLeft className="w-4 h-4 mr-1" /> Grammar
         </Button>
@@ -509,7 +528,7 @@ export default function AdvancedMasteryCourse({ user }) {
           Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
         </Button>
       </div>
-    </Card>
+    </div>
   );
 
   // Render speaking section
