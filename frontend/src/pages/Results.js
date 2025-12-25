@@ -656,6 +656,33 @@ export default function Results({ user }) {
             />
           </div>
         )}
+        
+        {/* Progress Analytics */}
+        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-violet-600" />
+            {getText('Performance Analytics', 'Phân Tích Hiệu Suất', 'Performans Analizi')}
+          </h3>
+          <ProgressAnalytics
+            overallBand={result.band_score}
+            skillScores={{
+              [result.test_type]: result.band_score
+            }}
+            testsCompleted={1}
+            studyTime="--"
+            weakAreas={
+              result.feedback?.skill_breakdown ? 
+              Object.entries(result.feedback.skill_breakdown)
+                .filter(([_, data]) => {
+                  const ratio = data.correct !== undefined ? data.correct / data.total : 0;
+                  return ratio < 0.5;
+                })
+                .map(([skill]) => skill.replace(/_/g, ' '))
+                .slice(0, 3) : []
+            }
+            language={language}
+          />
+        </Card>
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4">
