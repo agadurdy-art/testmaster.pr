@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 import NotebookPanel from '../components/NotebookPanel';
 import HighlightableText from '../components/HighlightableText';
+import QuestionNavigation from '../components/test/QuestionNavigation';
 
 export default function TestInterface({ user }) {
   const { testType } = useParams();
