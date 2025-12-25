@@ -1579,55 +1579,103 @@ export default function ComprehensiveLevelTest({ user }) {
 
   // LISTENING SECTION
   if (stage === 'listening') {
-    const sections = getListeningSections();
-    const currentSection = sections[currentListeningSection] || { questions: [], title: 'Loading...' };
+    const allQuestions = listeningQuestions;
+    const currentQ = allQuestions[currentListeningQuestion] || allQuestions[0];
+    const totalQuestions = allQuestions.length;
+    
+    // Get current section info for audio
+    const currentSectionId = currentQ?.section_id;
+    const currentSectionInfo = {
+      id: currentSectionId,
+      title: currentQ?.section_title || 'Listening',
+      audio_url: currentQ?.audio_url,
+      level: currentQ?.level,
+      band_range: currentQ?.band_range
+    };
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-emerald-50 py-8 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-emerald-50 py-4 px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
-                {language === 'vi' ? `Đánh Giá Nghe - Phần ${currentListeningSection + 1} / ${sections.length}` :
-                 language === 'tr' ? `Dinleme Değerlendirmesi - Bölüm ${currentListeningSection + 1} / ${sections.length}` :
-                 `Listening Assessment - Section ${currentListeningSection + 1} of ${sections.length}`}
+                {language === 'vi' ? `Đánh Giá Nghe - Câu hỏi ${currentListeningQuestion + 1} / ${totalQuestions}` :
+                 language === 'tr' ? `Dinleme Değerlendirmesi - Soru ${currentListeningQuestion + 1} / ${totalQuestions}` :
+                 `Listening Assessment - Question ${currentListeningQuestion + 1} of ${totalQuestions}`}
               </span>
               <div className="flex items-center gap-3">
                 <span className="text-sm font-medium text-cyan-600">
-                  {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentSection.level}
+                  {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentSectionInfo.level}
                 </span>
                 <LanguageSwitcher />
               </div>
             </div>
-            <Progress value={getProgressPercentage()} className="h-2" />
+            <Progress value={((currentListeningQuestion + 1) / totalQuestions) * 100} className="h-2" />
           </div>
 
-          <Card className="p-8 bg-white shadow-xl">
-            {/* Section Header */}
-            <div className="mb-6">
+          {/* Question Navigation Bar */}
+          <Card className="p-4 mb-4 bg-white shadow-lg">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-gray-600">
+                {language === 'vi' ? 'Câu hỏi' : language === 'tr' ? 'Sorular' : 'Questions'} {Object.keys(listeningAnswers).length}/{totalQuestions}
+              </span>
+              <div className="flex items-center gap-4 text-xs">
+                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-green-500"></span> {language === 'vi' ? 'Đã trả lời' : language === 'tr' ? 'Cevaplandı' : 'Answered'}</span>
+                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-yellow-500"></span> {language === 'vi' ? 'Đánh dấu' : language === 'tr' ? 'İşaretli' : 'Flagged'}</span>
+                <span className="flex items-center gap-1"><span className="w-3 h-3 rounded bg-gray-300"></span> {language === 'vi' ? 'Chưa trả lời' : language === 'tr' ? 'Cevaplanmamış' : 'Unanswered'}</span>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2 overflow-x-auto sm:overflow-x-visible pb-2">
+              {allQuestions.map((q, idx) => {
+                const isAnswered = !!listeningAnswers[q.id];
+                const isFlagged = flaggedListeningQuestions.has(q.id);
+                const isCurrent = idx === currentListeningQuestion;
+                
+                return (
+                  <button
+                    key={q.id}
+                    onClick={() => setCurrentListeningQuestion(idx)}
+                    className={`w-9 h-9 rounded-lg font-medium text-sm transition-all flex-shrink-0 ${
+                      isCurrent ? 'bg-cyan-600 text-white ring-2 ring-cyan-300' :
+                      isFlagged ? 'bg-yellow-500 text-white' :
+                      isAnswered ? 'bg-green-500 text-white' :
+                      'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                    }`}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
+            </div>
+          </Card>
+
+          {/* Main Content - Side by Side */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Left: Audio Player */}
+            <Card className="p-6 bg-white shadow-xl">
               <div className="flex items-center gap-2 mb-4">
                 <Headphones className="w-5 h-5 text-cyan-600" />
-                <h3 className="font-semibold text-gray-700">{currentSection.title}</h3>
+                <h3 className="font-semibold text-gray-700">{currentSectionInfo.title}</h3>
                 <span className="text-xs px-2 py-1 bg-cyan-100 text-cyan-700 rounded-full">
-                  {currentSection.band_range}
+                  {currentSectionInfo.band_range}
                 </span>
               </div>
               
-              {/* Audio Player */}
-              <div className="bg-cyan-50 p-4 rounded-lg mb-6">
+              <div className="bg-cyan-50 p-4 rounded-lg">
                 <p className="text-sm text-gray-600 mb-3">
-                  {language === 'vi' ? 'Nghe đoạn ghi âm và trả lời các câu hỏi bên dưới:' :
-                   language === 'tr' ? 'Ses kaydını dinleyin ve aşağıdaki soruları cevaplayın:' :
-                   'Listen to the recording and answer the questions below:'}
+                  {language === 'vi' ? 'Nghe đoạn ghi âm và trả lời câu hỏi:' :
+                   language === 'tr' ? 'Ses kaydını dinleyin ve soruyu cevaplayın:' :
+                   'Listen to the recording and answer the question:'}
                 </p>
                 <div className="flex items-center gap-4">
                   {!audioPlaying ? (
                     <Button
-                      onClick={() => playListeningAudio(currentSection.id, currentSection.audio_url)}
+                      onClick={() => playListeningAudio(currentSectionInfo.id, currentSectionInfo.audio_url)}
                       className="bg-cyan-600 hover:bg-cyan-700"
                     >
                       <Volume2 className="w-4 h-4 mr-2" />
-                      {audioPlayed[currentSection.id] ? 'Play Again' : 'Play Audio'}
+                      {audioPlayed[currentSectionInfo.id] ? 'Play Again' : 'Play Audio'}
                     </Button>
                   ) : (
                     <Button
@@ -1639,59 +1687,109 @@ export default function ComprehensiveLevelTest({ user }) {
                       Pause
                     </Button>
                   )}
-                  {audioPlayed[currentSection.id] && (
+                  {audioPlayed[currentSectionInfo.id] && (
                     <span className="text-xs text-green-600 flex items-center gap-1">
                       <CheckCircle className="w-3 h-3" /> Audio played
                     </span>
                   )}
                 </div>
               </div>
-            </div>
+            </Card>
 
-            {/* Questions */}
-            <div className="space-y-6">
-              {currentSection.questions.map((q, idx) => (
-                <div key={q.id} className="border-b pb-6 last:border-b-0">
-                  <h4 className="font-semibold text-gray-900 mb-3">
-                    {idx + 1}. {q.question}
-                  </h4>
-                  <div className="space-y-2">
-                    {q.options.map((option) => {
-                      const optionLetter = option.charAt(0);
-                      const isSelected = listeningAnswers[q.id] === optionLetter;
-                      
-                      return (
-                        <button
-                          key={option}
-                          onClick={() => handleListeningAnswer(q.id, optionLetter)}
-                          className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
-                            isSelected
-                              ? 'border-cyan-500 bg-cyan-50'
-                              : 'border-gray-200 hover:border-cyan-300 hover:bg-cyan-50/50'
-                          }`}
-                        >
-                          <span className={`font-medium ${isSelected ? 'text-cyan-700' : 'text-gray-700'}`}>
-                            {option}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* Right: Question */}
+            <Card className="p-6 bg-white shadow-xl">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="font-semibold text-gray-900">
+                  {language === 'vi' ? `Câu hỏi ${currentListeningQuestion + 1}` : 
+                   language === 'tr' ? `Soru ${currentListeningQuestion + 1}` : 
+                   `Question ${currentListeningQuestion + 1}`}
+                </h4>
+                <button
+                  onClick={() => toggleFlagListeningQuestion(currentQ?.id)}
+                  className={`flex items-center gap-1 px-2 py-1 rounded text-sm ${
+                    flaggedListeningQuestions.has(currentQ?.id) 
+                      ? 'bg-yellow-100 text-yellow-700' 
+                      : 'text-gray-500 hover:bg-gray-100'
+                  }`}
+                >
+                  <Flag className="w-4 h-4" />
+                  {language === 'vi' ? 'Đánh dấu' : language === 'tr' ? 'İşaretle' : 'Flag'}
+                </button>
+              </div>
+              
+              <p className="text-gray-800 mb-4">{currentQ?.question}</p>
+              
+              <div className="space-y-2">
+                {currentQ?.options?.map((option) => {
+                  const optionLetter = option.charAt(0);
+                  const isSelected = listeningAnswers[currentQ?.id] === optionLetter;
+                  
+                  return (
+                    <button
+                      key={option}
+                      onClick={() => handleListeningAnswer(currentQ?.id, optionLetter)}
+                      className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
+                        isSelected
+                          ? 'border-cyan-500 bg-cyan-50'
+                          : 'border-gray-200 hover:border-cyan-300 hover:bg-cyan-50/50'
+                      }`}
+                    >
+                      <span className={`font-medium ${isSelected ? 'text-cyan-700' : 'text-gray-700'}`}>
+                        {option}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
 
-            <div className="mt-8 flex justify-end">
-              <Button
-                onClick={nextListeningSection}
-                size="lg"
-                className="bg-cyan-600 hover:bg-cyan-700"
-              >
-                {currentListeningSection < sections.length - 1 ? 'Next Section' : 'Continue to Writing'}
-                <ChevronRight className="w-5 h-5 ml-2" />
-              </Button>
-            </div>
-          </Card>
+              {/* Navigation Buttons */}
+              <div className="mt-6 flex justify-between">
+                <Button
+                  onClick={() => setCurrentListeningQuestion(Math.max(0, currentListeningQuestion - 1))}
+                  variant="outline"
+                  disabled={currentListeningQuestion === 0}
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  {language === 'vi' ? 'Trước' : language === 'tr' ? 'Önceki' : 'Previous'}
+                </Button>
+                
+                {currentListeningQuestion < totalQuestions - 1 ? (
+                  <Button
+                    onClick={() => setCurrentListeningQuestion(currentListeningQuestion + 1)}
+                    className="bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    {language === 'vi' ? 'Tiếp theo' : language === 'tr' ? 'Sonraki' : 'Next'}
+                    <ChevronRight className="w-4 h-4 ml-2" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      const unanswered = allQuestions.find(q => !listeningAnswers[q.id]);
+                      if (unanswered) {
+                        toast.error(language === 'vi' ? 'Vui lòng trả lời tất cả câu hỏi' : 
+                                   language === 'tr' ? 'Lütfen tüm soruları cevaplayın' : 
+                                   'Please answer all questions before continuing');
+                        return;
+                      }
+                      if (testMode === 'full') {
+                        loadWritingTasks();
+                        setStage('writing');
+                      } else {
+                        setStage('evaluating');
+                        evaluateTest();
+                      }
+                    }}
+                    className="bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    {testMode === 'full' 
+                      ? (language === 'vi' ? 'Tiếp tục Viết' : language === 'tr' ? 'Yazmaya Devam' : 'Continue to Writing')
+                      : (language === 'vi' ? 'Hoàn thành' : language === 'tr' ? 'Bitir' : 'Finish')}
+                    <ChevronRight className="w-4 h-4 ml-2" />
+                  </Button>
+                )}
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     );
