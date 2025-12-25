@@ -1031,15 +1031,17 @@ function ElevenLabsExaminer() {
 
                           {(q.type === 'multiple_choice' || q.type === 'multiple_choice_multi') && q.options && (
                             (() => {
-                              // Check if this is a "Choose TWO" question
-                              const isMultiSelect = q.question?.toLowerCase().includes('two') || 
+                              // Check if this is a "Choose TWO" question or multiple_choice_multi type
+                              const isMultiSelect = q.type === 'multiple_choice_multi' ||
+                                                    q.question?.toLowerCase().includes('two') || 
                                                     q.question?.toLowerCase().includes('select two');
+                              const maxSelections = q.answer_count || 2;
                               
                               if (isMultiSelect) {
                                 // Multi-select: use checkboxes, store as array
                                 const selectedAnswers = Array.isArray(answers[q.id]) 
                                   ? answers[q.id] 
-                                  : (answers[q.id] ? [answers[q.id]] : []);
+                                  : (answers[q.id] ? (typeof answers[q.id] === 'string' ? answers[q.id].split(',').map(a => a.trim()) : [answers[q.id]]) : []);
                                 
                                 const handleMultiSelect = (optionLetter) => {
                                   let newAnswers;
