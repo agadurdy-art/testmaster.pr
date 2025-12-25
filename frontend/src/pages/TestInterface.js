@@ -67,6 +67,9 @@ function ElevenLabsExaminer() {
   
   // Phase 2: Notebook state for reading/listening tests
   const [showNotebook, setShowNotebook] = useState(false);
+  
+  // NEW: Question flagging for navigation
+  const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
@@ -74,6 +77,19 @@ function ElevenLabsExaminer() {
   const listeningAudioRef = useRef(null);
   const speakingQuestionAudioRef = useRef(null);
   const speakingQuestionTimeoutRef = useRef(null);
+
+  // Toggle flag for a question
+  const toggleFlagQuestion = (questionId) => {
+    setFlaggedQuestions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(questionId)) {
+        newSet.delete(questionId);
+      } else {
+        newSet.add(questionId);
+      }
+      return newSet;
+    });
+  };
 
   // Premium access / free trial helper functions
   const canAccessPremium = (user?.plan === 'pro') || ((user?.examCredits ?? 0) > 0);
