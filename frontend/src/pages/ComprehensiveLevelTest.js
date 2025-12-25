@@ -1372,19 +1372,21 @@ export default function ComprehensiveLevelTest({ user }) {
     const currentQ = readingQuestions[currentQuestion];
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4 relative">
-        <div className="max-w-4xl mx-auto relative">
-          <LanguageSwitcher />
-          <div className="mb-6 pt-2">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
                 {language === 'vi' ? `Đánh Giá Đọc - Câu ${currentQuestion + 1} / ${readingQuestions.length}` :
                  language === 'tr' ? `Okuma Değerlendirmesi - Soru ${currentQuestion + 1} / ${readingQuestions.length}` :
                  `Reading Assessment - Question ${currentQuestion + 1} of ${readingQuestions.length}`}
               </span>
-              <span className="text-sm font-medium text-blue-600">
-                {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentQ.level}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-blue-600">
+                  {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentQ.level}
+                </span>
+                <LanguageSwitcher />
+              </div>
             </div>
             <Progress value={getProgressPercentage()} className="h-2" />
           </div>
