@@ -6,6 +6,8 @@ import { Trophy, TrendingUp, CheckCircle, XCircle, Home, ArrowLeft, Award, Targe
 import api from '../lib/api';
 import { useI18n } from '../lib/i18n';
 import SkillBreakdown from '../components/SkillBreakdown';
+import LocateExplain from '../components/test/LocateExplain';
+import ProgressAnalytics from '../components/test/ProgressAnalytics';
 
 export default function Results({ user }) {
   const { attemptId } = useParams();
