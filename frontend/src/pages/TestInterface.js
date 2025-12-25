@@ -899,8 +899,8 @@ function ElevenLabsExaminer() {
               </Card>
             </div>
 
-            {/* Right Column - Questions (~25% width) */}
-            <div className="lg:w-1/4 flex flex-col min-w-[300px]">
+            {/* Right Column - Questions */}
+            <div className="flex-1 flex flex-col min-w-[280px]">
               <Card className="flex-1 overflow-hidden flex flex-col">
                 {/* Passage Tabs */}
                 <div className="p-3 border-b bg-gray-50">
