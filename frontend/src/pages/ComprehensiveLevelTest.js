@@ -281,6 +281,7 @@ export default function ComprehensiveLevelTest({ user }) {
   // Listening state
   const [listeningQuestions, setListeningQuestions] = useState([]);
   const [currentListeningSection, setCurrentListeningSection] = useState(0);
+  const [currentListeningQuestion, setCurrentListeningQuestion] = useState(0); // For question navigation
   const [listeningAnswers, setListeningAnswers] = useState({});
   const [flaggedListeningQuestions, setFlaggedListeningQuestions] = useState(new Set()); // For listening navigation
   const [audioPlaying, setAudioPlaying] = useState(false);
