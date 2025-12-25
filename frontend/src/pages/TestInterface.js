@@ -52,6 +52,16 @@ function ElevenLabsExaminer() {
   
   // Phase 2: Notebook state for reading/listening tests
   const [showNotebook, setShowNotebook] = useState(false);
+  
+  // NEW: Layout controls for reading test
+  const [passageRatio, setPassageRatio] = useState(75);
+  const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
+  const layoutPresets = [
+    { label: '50-50', value: 50 },
+    { label: '60-40', value: 60 },
+    { label: '70-30', value: 70 },
+    { label: '75-25', value: 75 },
+  ];
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
