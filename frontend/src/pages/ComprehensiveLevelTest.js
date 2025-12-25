@@ -2046,7 +2046,7 @@ export default function ComprehensiveLevelTest({ user }) {
                 </div>
               </div>
             </Card>
-          ) : (
+          ) : !isSingleSkillTest && isStillEvaluating && (
             <Card className="p-8 bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-2xl mb-8">
               <div className="text-center">
                 <p className="text-white/90 text-lg mb-2">
@@ -2054,31 +2054,176 @@ export default function ComprehensiveLevelTest({ user }) {
                    language === 'tr' ? 'Sınavınız değerlendiriliyor...' :
                    'Evaluating your test...'}
                 </p>
-                <div className="text-7xl font-bold mb-2">
-                  {results.reading.band.toFixed(1)}
-                  {results.reading.band.toFixed(1)}
-                </div>
-                <p className="text-xl text-white/90 mb-4">
-                  {language === 'vi' ? '🔄 Đang đánh giá kỹ năng Nói của bạn...' :
-                   language === 'tr' ? '🔄 Konuşma beceriniz değerlendiriliyor...' :
-                   '🔄 Evaluating your Speaking performance...'}
-                </p>
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-white rounded-full animate-bounce" />
-                  <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                  <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+                <div className="flex items-center justify-center gap-2 mt-4">
+                  <div className="w-3 h-3 bg-white rounded-full animate-bounce" />
+                  <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                  <div className="w-3 h-3 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
                 </div>
               </div>
             </Card>
           )}
 
-          {/* Detailed Breakdown */}
+          {/* Single Skill Specific Feedback */}
+          {isSingleSkillTest && !isStillEvaluating && (
+            <div className="mb-8">
+              {/* Reading specific feedback */}
+              {testMode === 'reading' && results.reading && (
+                <Card className="p-6 bg-white shadow-lg">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-blue-600" />
+                    {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
+                  </h3>
+                  <div className="mb-4">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-700">
+                        {language === 'vi' ? 'Điểm' : language === 'tr' ? 'Puan' : 'Score'}
+                      </span>
+                      <span className="text-sm font-bold text-blue-600">
+                        {results.reading.correct}/{results.reading.total} {language === 'vi' ? 'đúng' : language === 'tr' ? 'doğru' : 'correct'}
+                      </span>
+                    </div>
+                    <Progress value={(results.reading.correct / results.reading.total) * 100} className="h-2" />
+                  </div>
+                  {results.reading.skill_breakdown && Object.keys(results.reading.skill_breakdown).length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-gray-700 mb-2">
+                        {language === 'vi' ? 'Phân tích kỹ năng:' : language === 'tr' ? 'Beceri Dağılımı:' : 'Skill Breakdown:'}
+                      </p>
+                      {Object.entries(results.reading.skill_breakdown).map(([skill, data]) => (
+                        <div key={skill} className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600 capitalize">{skill.replace(/_/g, ' ')}</span>
+                          <span className={`font-medium ${data.correct === data.total ? 'text-green-600' : 'text-amber-600'}`}>
+                            {data.correct}/{data.total}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Listening specific feedback */}
+              {testMode === 'listening' && results.listening && (
+                <Card className="p-6 bg-white shadow-lg">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <Headphones className="w-5 h-5 text-cyan-600" />
+                    {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
+                  </h3>
+                  <div className="mb-4">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-700">
+                        {language === 'vi' ? 'Điểm' : language === 'tr' ? 'Puan' : 'Score'}
+                      </span>
+                      <span className="text-sm font-bold text-cyan-600">
+                        {results.listening.correct}/{results.listening.total} {language === 'vi' ? 'đúng' : language === 'tr' ? 'doğru' : 'correct'} ({results.listening.percentage?.toFixed(0)}%)
+                      </span>
+                    </div>
+                    <Progress value={results.listening.percentage || 0} className="h-2" />
+                  </div>
+                  {results.listening.skill_breakdown && results.listening.skill_breakdown.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-gray-700 mb-2">
+                        {language === 'vi' ? 'Phân tích kỹ năng:' : language === 'tr' ? 'Beceri Dağılımı:' : 'Skill Breakdown:'}
+                      </p>
+                      {results.listening.skill_breakdown.map((skill, idx) => (
+                        <div key={idx} className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600">{skill.label}</span>
+                          <span className={`font-medium ${skill.correct === skill.total ? 'text-green-600' : 'text-amber-600'}`}>
+                            {skill.correct}/{skill.total}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Writing specific feedback */}
+              {testMode === 'writing' && results.writing && (
+                <Card className="p-6 bg-white shadow-lg">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <PenTool className="w-5 h-5 text-amber-600" />
+                    {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
+                  </h3>
+                  {results.writing.task_evaluations && results.writing.task_evaluations.map((task, idx) => (
+                    <div key={idx} className="mb-4 p-4 bg-amber-50 rounded-lg">
+                      <p className="font-medium text-gray-900 mb-2">
+                        {language === 'vi' ? `Bài ${idx + 1}` : language === 'tr' ? `Görev ${idx + 1}` : `Task ${idx + 1}`}: Band {task.band_score?.toFixed(1)}
+                      </p>
+                      <p className="text-sm text-gray-600 mb-2">{task.feedback}</p>
+                      <p className="text-xs text-gray-500">
+                        {language === 'vi' ? 'Số từ' : language === 'tr' ? 'Kelime sayısı' : 'Word count'}: {task.word_count}
+                      </p>
+                    </div>
+                  ))}
+                  {results.writing.top_tips && results.writing.top_tips.length > 0 && (
+                    <div className="mt-4">
+                      <p className="font-medium text-gray-900 mb-2 flex items-center gap-2">
+                        <Lightbulb className="w-4 h-4 text-amber-600" />
+                        {language === 'vi' ? 'Gợi ý cải thiện:' : language === 'tr' ? 'İyileştirme ipuçları:' : 'Improvement Tips:'}
+                      </p>
+                      <ul className="space-y-1">
+                        {results.writing.top_tips.map((tip, idx) => (
+                          <li key={idx} className="text-sm text-gray-600 flex items-start gap-2">
+                            <span className="text-amber-500">•</span>
+                            {tip}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </Card>
+              )}
+
+              {/* Speaking specific feedback */}
+              {testMode === 'speaking' && results.speaking && (
+                <Card className="p-6 bg-white shadow-lg">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <Mic className="w-5 h-5 text-purple-600" />
+                    {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
+                  </h3>
+                  {results.speaking.criteria_breakdown && (
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      {Object.entries(results.speaking.criteria_breakdown).map(([criterion, score]) => (
+                        <div key={criterion} className="p-3 bg-purple-50 rounded-lg">
+                          <p className="text-xs text-gray-500 capitalize">{criterion.replace(/_/g, ' ')}</p>
+                          <p className="text-lg font-bold text-purple-600">{score?.toFixed(1) || 'N/A'}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {results.speaking.feedback && (
+                    <p className="text-sm text-gray-600 mb-4">{results.speaking.feedback}</p>
+                  )}
+                  {results.speaking.weaknesses && results.speaking.weaknesses.length > 0 && (
+                    <div>
+                      <p className="font-medium text-gray-900 mb-2">
+                        {language === 'vi' ? 'Điểm cần cải thiện:' : language === 'tr' ? 'Geliştirilecek alanlar:' : 'Areas to Improve:'}
+                      </p>
+                      <ul className="space-y-1">
+                        {results.speaking.weaknesses.map((weakness, idx) => (
+                          <li key={idx} className="text-sm text-gray-600 flex items-start gap-2">
+                            <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                            {weakness}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </Card>
+              )}
+            </div>
+          )}
+
+          {/* Detailed Breakdown - Only show for full test */}
+          {!isSingleSkillTest && (
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             {/* Reading Skills */}
+            {results.reading && (
             <Card className="p-6 bg-white shadow-lg">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-blue-600" />
-                Reading Performance
+                {language === 'vi' ? 'Kết Quả Đọc' : language === 'tr' ? 'Okuma Performansı' : 'Reading Performance'}
               </h3>
               <div className="space-y-4">
                 <div>
