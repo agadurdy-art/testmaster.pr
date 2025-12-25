@@ -1449,16 +1449,18 @@ export default function ComprehensiveLevelTest({ user }) {
     const currentSection = sections[currentListeningSection] || { questions: [], title: 'Loading...' };
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-emerald-50 py-8 px-4">
-        <LanguageSwitcher />
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-emerald-50 py-8 px-4 relative">
+        <div className="max-w-4xl mx-auto relative">
+          <LanguageSwitcher />
+          <div className="mb-6 pt-2">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
-                Listening Assessment - Section {currentListeningSection + 1} of {sections.length}
+                {language === 'vi' ? `Đánh Giá Nghe - Phần ${currentListeningSection + 1} / ${sections.length}` :
+                 language === 'tr' ? `Dinleme Değerlendirmesi - Bölüm ${currentListeningSection + 1} / ${sections.length}` :
+                 `Listening Assessment - Section ${currentListeningSection + 1} of ${sections.length}`}
               </span>
               <span className="text-sm font-medium text-cyan-600">
-                Level: {currentSection.level}
+                {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentSection.level}
               </span>
             </div>
             <Progress value={getProgressPercentage()} className="h-2" />
