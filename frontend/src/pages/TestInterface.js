@@ -1006,15 +1006,31 @@ function ElevenLabsExaminer() {
                         <div 
                           key={q.id} 
                           className={`p-3 rounded-lg border-l-4 ${
+                            flaggedQuestions.has(q.id) ? 'border-l-yellow-500 bg-yellow-50' :
                             isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
                           } shadow-sm`}
                         >
-                          <p className="text-sm font-medium text-gray-900 mb-2">
-                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
-                              {q.id}
-                            </span>
-                            {q.question}
-                          </p>
+                          <div className="flex items-start justify-between mb-2">
+                            <p className="text-sm font-medium text-gray-900 flex-1">
+                              <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold mr-2 ${
+                                flaggedQuestions.has(q.id) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-100 text-sky-700'
+                              }`}>
+                                {q.id}
+                              </span>
+                              {q.question}
+                            </p>
+                            <button
+                              onClick={() => toggleFlagQuestion(q.id)}
+                              className={`ml-2 p-1 rounded transition-colors flex-shrink-0 ${
+                                flaggedQuestions.has(q.id) 
+                                  ? 'bg-yellow-200 text-yellow-700 hover:bg-yellow-300' 
+                                  : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
+                              }`}
+                              title={flaggedQuestions.has(q.id) ? 'Remove flag' : 'Flag for review'}
+                            >
+                              <Flag className="w-3 h-3" />
+                            </button>
+                          </div>
                           
                           {/* Answer Input Based on Question Type */}
                           {(q.type === 'true_false_notgiven' || q.type === 'yes_no_notgiven') && (
