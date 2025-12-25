@@ -117,7 +117,7 @@ const LocateExplain = ({
                 {t.locatedIn}:
               </p>
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 text-sm text-gray-700 italic">
-                "...{passageExcerpt}..."
+                &ldquo;...{passageExcerpt}...&rdquo;
               </div>
             </div>
           )}
