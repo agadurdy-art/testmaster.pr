@@ -7,10 +7,14 @@ import {
   Mic, Square, Play, ChevronRight, CheckCircle, Award, BookOpen, 
   MessageSquare, ArrowLeft, Target, Sparkles, Clock, Brain, Zap,
   Trophy, TrendingUp, AlertCircle, Lightbulb, Globe, Headphones, 
-  PenTool, Volume2, Pause
+  PenTool, Volume2, Pause, Flag
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
+import QuestionNavigation from '../components/test/QuestionNavigation';
+import SideBySideReader from '../components/test/SideBySideReader';
+import LocateExplain from '../components/test/LocateExplain';
+import ProgressAnalytics from '../components/test/ProgressAnalytics';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
