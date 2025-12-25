@@ -393,12 +393,13 @@ export default function Dashboard({ user, onLogout }) {
         </Card>
 
         {/* Quick Stats Row - Always visible */}
-        <div className="grid grid-cols-4 gap-3 mb-6">
+        <div className="grid grid-cols-5 gap-3 mb-6">
           {[
             { icon: BarChart3, label: getText('Tests', 'Bài thi', 'Testler'), value: progress?.total_tests || 0, color: 'text-blue-600', bg: 'bg-blue-50' },
             { icon: Award, label: getText('Avg Band', 'TB Band', 'Ort. Band'), value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: 'bg-purple-50' },
             { icon: Flame, label: getText('Best', 'Cao nhất', 'En İyi'), value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: 'bg-orange-50' },
-            { icon: Clock, label: getText('Time', 'Thời gian', 'Süre'), value: `${totalHours}h${totalMinutes}m`, color: 'text-emerald-600', bg: 'bg-emerald-50' }
+            { icon: Zap, label: getText('Streak', 'Streak', 'Seri'), value: `${progress?.streak || 0}🔥`, color: 'text-red-600', bg: 'bg-red-50' },
+            { icon: Star, label: getText('Badges', 'Huy hiệu', 'Rozetler'), value: progress?.badges?.length || 0, color: 'text-amber-600', bg: 'bg-amber-50' }
           ].map((stat, idx) => (
             <Card key={idx} className={`p-3 ${stat.bg} border-0 rounded-xl text-center`}>
               <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-1`} />
@@ -407,6 +408,39 @@ export default function Dashboard({ user, onLogout }) {
             </Card>
           ))}
         </div>
+
+        {/* Badges Section - Show if user has badges */}
+        {progress?.badges?.length > 0 && (
+          <Card className="p-4 mb-6 bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200 rounded-2xl">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-gray-900 flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-500" />
+                {getText('Your Achievements', 'Thành tích của bạn', 'Başarılarınız')}
+              </h3>
+              <span className="text-sm text-amber-700">{progress.badges.length} {getText('badges', 'huy hiệu', 'rozet')}</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {progress.badges.slice(0, 8).map((badge, idx) => (
+                <div 
+                  key={idx} 
+                  className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg shadow-sm"
+                  title={badge.description}
+                >
+                  <span className="text-xl">{badge.icon}</span>
+                  <span className="text-sm font-medium text-gray-700">{badge.name}</span>
+                </div>
+              ))}
+              {progress.badges.length > 8 && (
+                <button 
+                  onClick={() => navigate('/progress')}
+                  className="text-sm text-amber-700 hover:text-amber-800 font-medium px-3 py-2"
+                >
+                  +{progress.badges.length - 8} {getText('more', 'khác', 'daha fazla')}
+                </button>
+              )}
+            </div>
+          </Card>
+        )}
 
         {/* Main Navigation Grid */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
