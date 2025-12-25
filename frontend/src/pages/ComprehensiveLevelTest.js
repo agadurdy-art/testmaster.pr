@@ -1674,16 +1674,18 @@ export default function ComprehensiveLevelTest({ user }) {
     const hasResponse = speakingResponses[currentSpeakingPrompt];
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 py-8 px-4">
-        <LanguageSwitcher />
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 py-8 px-4 relative">
+        <div className="max-w-4xl mx-auto relative">
+          <LanguageSwitcher />
+          <div className="mb-6 pt-2">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
-                Speaking Assessment - Question {currentSpeakingPrompt + 1} of {speakingPrompts.length}
+                {language === 'vi' ? `Đánh Giá Nói - Câu ${currentSpeakingPrompt + 1} / ${speakingPrompts.length}` :
+                 language === 'tr' ? `Konuşma Değerlendirmesi - Soru ${currentSpeakingPrompt + 1} / ${speakingPrompts.length}` :
+                 `Speaking Assessment - Question ${currentSpeakingPrompt + 1} of ${speakingPrompts.length}`}
               </span>
               <span className="text-sm font-medium text-purple-600">
-                Level: {currentPrompt.level}
+                {language === 'vi' ? 'Cấp độ' : language === 'tr' ? 'Seviye' : 'Level'}: {currentPrompt.level}
               </span>
             </div>
             <Progress value={getProgressPercentage()} className="h-2" />
@@ -1693,7 +1695,9 @@ export default function ComprehensiveLevelTest({ user }) {
             <div className="mb-6">
               <div className="flex items-center gap-2 mb-4">
                 <MessageSquare className="w-5 h-5 text-purple-600" />
-                <h3 className="font-semibold text-gray-700">Speaking Prompt</h3>
+                <h3 className="font-semibold text-gray-700">
+                  {language === 'vi' ? 'Câu Hỏi Nói' : language === 'tr' ? 'Konuşma Sorusu' : 'Speaking Prompt'}
+                </h3>
               </div>
               <p className="text-gray-900 text-lg leading-relaxed mb-4">
                 {currentPrompt.prompt}
@@ -1709,7 +1713,9 @@ export default function ComprehensiveLevelTest({ user }) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" />
-                    <span className="text-red-700 font-medium">Recording...</span>
+                    <span className="text-red-700 font-medium">
+                      {language === 'vi' ? 'Đang ghi...' : language === 'tr' ? 'Kaydediliyor...' : 'Recording...'}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-red-700 font-mono">
                     <Clock className="w-4 h-4" />
@@ -1723,7 +1729,9 @@ export default function ComprehensiveLevelTest({ user }) {
               <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-600 border-t-transparent" />
-                  <span className="text-blue-700 font-medium">Transcribing your response...</span>
+                  <span className="text-blue-700 font-medium">
+                    {language === 'vi' ? 'Đang chuyển đổi câu trả lời...' : language === 'tr' ? 'Yanıtınız yazıya çevriliyor...' : 'Transcribing your response...'}
+                  </span>
                 </div>
               </div>
             )}
