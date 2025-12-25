@@ -1,7 +1,7 @@
 """
 Listening Assessment Data for Comprehensive Level Test
 5-10 progressive difficulty questions (Band 2.0 to 9.0)
-Each item has: id, script_text (for TTS), questions, answers
+Each item has: id, script_text (for TTS), questions, answers, explanations
 """
 
 # Listening sections with progressive difficulty
@@ -21,7 +21,10 @@ LISTENING_SECTIONS = [
                 "question": "What time does Sarah wake up?",
                 "options": ["A) 6 o'clock", "B) 7 o'clock", "C) 8 o'clock", "D) 9 o'clock"],
                 "correct": "B",
-                "skill": "specific_information"
+                "skill": "specific_information",
+                "explanation": "Sarah clearly states 'I wake up at seven o'clock every morning.' This tests your ability to identify specific time information.",
+                "explanation_vi": "Sarah nói rõ ràng 'Tôi thức dậy lúc bảy giờ mỗi sáng.' Câu này kiểm tra khả năng nhận biết thông tin thời gian cụ thể.",
+                "explanation_tr": "Sarah açıkça 'Her sabah saat yedide kalkarım' diyor. Bu, belirli zaman bilgisini tanımlama yeteneğinizi test eder."
             },
             {
                 "id": "q2",
@@ -29,7 +32,10 @@ LISTENING_SECTIONS = [
                 "question": "What does Sarah have for breakfast?",
                 "options": ["A) Eggs and coffee", "B) Cereal and milk", "C) Toast and tea", "D) Fruit and juice"],
                 "correct": "C",
-                "skill": "detail_comprehension"
+                "skill": "detail_comprehension",
+                "explanation": "Sarah says 'I eat toast and drink tea' for breakfast. Listen for specific food and drink items mentioned together.",
+                "explanation_vi": "Sarah nói 'Tôi ăn bánh mì nướng và uống trà' vào bữa sáng. Hãy nghe các món ăn và đồ uống cụ thể được đề cập cùng nhau.",
+                "explanation_tr": "Sarah kahvaltıda 'Tost yerim ve çay içerim' diyor. Birlikte bahsedilen belirli yiyecek ve içecekleri dinleyin."
             }
         ]
     },
@@ -49,7 +55,10 @@ LISTENING_SECTIONS = [
                 "question": "Which platform does the train to London leave from?",
                 "options": ["A) Platform 1", "B) Platform 2", "C) Platform 3", "D) Platform 4"],
                 "correct": "C",
-                "skill": "specific_information"
+                "skill": "specific_information",
+                "explanation": "The station attendant says 'Platform three, sir.' Numbers in travel contexts are crucial to understand correctly.",
+                "explanation_vi": "Nhân viên nhà ga nói 'Sân ga ba, thưa ông.' Số trong ngữ cảnh du lịch rất quan trọng để hiểu đúng.",
+                "explanation_tr": "İstasyon görevlisi 'Üç numaralı peron, efendim' diyor. Seyahat bağlamında sayılar doğru anlamak için çok önemlidir."
             },
             {
                 "id": "q4",
@@ -57,7 +66,10 @@ LISTENING_SECTIONS = [
                 "question": "How long does the journey take?",
                 "options": ["A) 1 hour", "B) 1 hour 20 minutes", "C) 2 hours", "D) 2 hours 15 minutes"],
                 "correct": "B",
-                "skill": "number_comprehension"
+                "skill": "number_comprehension",
+                "explanation": "The speaker says 'It takes about one hour and twenty minutes.' Be careful not to confuse '2:15' (departure time) with the journey duration.",
+                "explanation_vi": "Người nói nói 'Mất khoảng một giờ hai mươi phút.' Cẩn thận không nhầm '2:15' (giờ khởi hành) với thời gian hành trình.",
+                "explanation_tr": "Konuşmacı 'Yaklaşık bir saat yirmi dakika sürer' diyor. '2:15' (kalkış saati) ile yolculuk süresini karıştırmamaya dikkat edin."
             }
         ]
     },
