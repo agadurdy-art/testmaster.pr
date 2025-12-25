@@ -100,14 +100,6 @@ function ElevenLabsExaminer() {
     });
   };
 
-  // Layout presets for reading test
-  const layoutPresets = [
-    { label: '50-50', value: 50 },
-    { label: '60-40', value: 60 },
-    { label: '70-30', value: 70 },
-    { label: '75-25', value: 75 },
-  ];
-
   // Premium access / free trial helper functions
   const canAccessPremium = (user?.plan === 'pro') || ((user?.examCredits ?? 0) > 0);
   const hasFreeTrial = (user?.ai_interview_free_seconds_used ?? 0) < 180;
