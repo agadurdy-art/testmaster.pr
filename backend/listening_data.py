@@ -157,7 +157,10 @@ LISTENING_SECTIONS = [
                 "question": "What do critics say about algorithmic systems in judicial sentencing?",
                 "options": ["A) They are too expensive", "B) They may perpetuate inequalities", "C) They are too slow", "D) They replace human judges entirely"],
                 "correct": "B",
-                "skill": "inference"
+                "skill": "inference",
+                "explanation": "The speaker states 'critics contend that they may perpetuate historical inequalities embedded in the training data.' This requires understanding contrasting viewpoints in academic discussion.",
+                "explanation_vi": "Người nói nói 'các nhà phê bình cho rằng chúng có thể duy trì sự bất bình đẳng lịch sử được nhúng trong dữ liệu huấn luyện.' Điều này đòi hỏi hiểu các quan điểm trái chiều trong thảo luận học thuật.",
+                "explanation_tr": "Konuşmacı 'eleştirmenler eğitim verilerine gömülü tarihi eşitsizlikleri sürdürebileceklerini iddia ediyor' diyor. Bu, akademik tartışmada zıt görüşleri anlamayı gerektirir."
             },
             {
                 "id": "q10",
@@ -165,7 +168,10 @@ LISTENING_SECTIONS = [
                 "question": "What is the 'black box' problem?",
                 "options": ["A) AI systems are too large", "B) AI is too expensive", "C) AI decisions lack transparency", "D) AI cannot be transported"],
                 "correct": "C",
-                "skill": "concept_understanding"
+                "skill": "concept_understanding",
+                "explanation": "The 'black box' problem refers to 'the opacity of many machine learning models' - AI systems that don't provide clear explanations for their decisions. Understanding technical concepts in context is essential at higher levels.",
+                "explanation_vi": "Vấn đề 'hộp đen' đề cập đến 'tính không rõ ràng của nhiều mô hình học máy' - các hệ thống AI không cung cấp giải thích rõ ràng cho các quyết định của chúng. Hiểu các khái niệm kỹ thuật trong ngữ cảnh là cần thiết ở cấp độ cao hơn.",
+                "explanation_tr": "'Kara kutu' problemi 'birçok makine öğrenimi modelinin opak olması'na atıfta bulunur - kararları için net açıklamalar sunmayan AI sistemleri. Bağlamda teknik kavramları anlamak, daha yüksek seviyelerde önemlidir."
             }
         ]
     }
