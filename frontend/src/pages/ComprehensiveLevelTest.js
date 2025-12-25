@@ -6,7 +6,8 @@ import { Progress } from '../components/ui/progress';
 import { 
   Mic, Square, Play, ChevronRight, CheckCircle, Award, BookOpen, 
   MessageSquare, ArrowLeft, Target, Sparkles, Clock, Brain, Zap,
-  Trophy, TrendingUp, AlertCircle, Lightbulb, Globe
+  Trophy, TrendingUp, AlertCircle, Lightbulb, Globe, Headphones, 
+  PenTool, Volume2, Pause
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
