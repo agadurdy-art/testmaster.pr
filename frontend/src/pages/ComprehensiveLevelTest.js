@@ -233,8 +233,11 @@ export default function ComprehensiveLevelTest({ user }) {
   const navigate = useNavigate();
   const { t, language } = useI18n();  // Get language from i18n context
   
-  // Stage management - NEW FLOW: reading → listening → writing → speaking → results
-  const [stage, setStage] = useState('intro'); // intro, reading, listening, writing, speaking, evaluating, results
+  // Test mode selection: "full" | "reading" | "listening" | "writing" | "speaking"
+  const [testMode, setTestMode] = useState(null);
+  
+  // Stage management - supports both full and individual tests
+  const [stage, setStage] = useState('select'); // select, intro, reading, listening, writing, speaking, evaluating, results
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [readingAnswers, setReadingAnswers] = useState({});
   const [currentSpeakingPrompt, setCurrentSpeakingPrompt] = useState(0);
