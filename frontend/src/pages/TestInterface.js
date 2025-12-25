@@ -4,13 +4,14 @@ import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
-import { Clock, ChevronLeft, ChevronRight, Send, Mic, Square, Play, Pause, BookMarked } from 'lucide-react';
+import { Clock, ChevronLeft, ChevronRight, Send, Mic, Square, Play, Pause, BookMarked, Flag } from 'lucide-react';
 import { getTests, submitTest, transcribeAudio, evaluateWriting, evaluateSpeaking, startSpeakingSession } from '../lib/api';
 import { formatTime } from '../lib/utils';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 import NotebookPanel from '../components/NotebookPanel';
 import HighlightableText from '../components/HighlightableText';
+import QuestionNavigation from '../components/test/QuestionNavigation';
 
 export default function TestInterface({ user }) {
   const { testType } = useParams();
