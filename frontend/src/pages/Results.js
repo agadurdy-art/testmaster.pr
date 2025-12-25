@@ -212,7 +212,7 @@ export default function Results({ user }) {
                 {/* Overall Feedback */}
                 {result.feedback.task1.overall_feedback && (
                   <div className="mb-4 p-4 bg-white rounded-xl">
-                    <h4 className="font-semibold text-gray-900 mb-2">🎓 Teacher's Feedback</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">🎓 Teacher&apos;s Feedback</h4>
                     <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                       {typeof result.feedback.task1.overall_feedback === 'string' 
                         ? result.feedback.task1.overall_feedback.replace(/```json|```/g, '').trim()
