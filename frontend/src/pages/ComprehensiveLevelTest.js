@@ -1254,28 +1254,111 @@ export default function ComprehensiveLevelTest({ user }) {
                 </ul>
               </Card>
             </div>
+            ) : (
+              /* Single skill intro - show specific details */
+              <div className="mb-8">
+                {testMode === 'reading' && (
+                  <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-0">
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? '10 câu hỏi với độ khó tăng dần' : language === 'tr' ? 'Artan zorluk seviyesinde 10 soru' : '10 questions with progressive difficulty'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Đánh giá từ Band 2.0 đến 9.0' : language === 'tr' ? 'Band 2.0 ile 9.0 arası değerlendirme' : 'Band 2.0 to 9.0 assessment'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Phân tích kỹ năng chi tiết' : language === 'tr' ? 'Detaylı beceri analizi' : 'Detailed skill breakdown'}</span>
+                      </li>
+                    </ul>
+                  </Card>
+                )}
+                {testMode === 'listening' && (
+                  <Card className="p-6 bg-gradient-to-br from-cyan-50 to-teal-50 border-0">
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? '5 phần nghe với 10 câu hỏi' : language === 'tr' ? '10 soru ile 5 dinleme bölümü' : '5 listening sections with 10 questions'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Giọng UK bản địa (Anh Quốc)' : language === 'tr' ? 'UK ana dili konuşmacıları' : 'UK native speaker audio'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Độ khó từ Band 2.0 đến 9.0' : language === 'tr' ? 'Band 2.0 ile 9.0 arası zorluk' : 'Band 2.0 to 9.0 difficulty'}</span>
+                      </li>
+                    </ul>
+                  </Card>
+                )}
+                {testMode === 'writing' && (
+                  <Card className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 border-0">
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? '3 bài viết với độ khó tăng dần' : language === 'tr' ? 'Artan zorluk seviyesinde 3 yazma görevi' : '3 progressive writing tasks'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Đánh giá theo tiêu chí IELTS' : language === 'tr' ? 'IELTS kriterlerine göre değerlendirme' : 'IELTS rubric-based evaluation'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Phản hồi và gợi ý cải thiện' : language === 'tr' ? 'Geri bildirim ve iyileştirme ipuçları' : 'Feedback and improvement tips'}</span>
+                      </li>
+                    </ul>
+                  </Card>
+                )}
+                {testMode === 'speaking' && (
+                  <Card className="p-6 bg-gradient-to-br from-purple-50 to-pink-50 border-0">
+                    <ul className="space-y-3 text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? '3 câu hỏi nói với độ khó tăng dần' : language === 'tr' ? 'Artan zorluk seviyesinde 3 konuşma sorusu' : '3 speaking questions with progressive difficulty'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Đánh giá phát âm và lưu loát' : language === 'tr' ? 'Telaffuz ve akıcılık değerlendirmesi' : 'Pronunciation & fluency analysis'}</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span>{language === 'vi' ? 'Phân tích ngữ pháp và từ vựng' : language === 'tr' ? 'Dilbilgisi ve kelime analizi' : 'Grammar & vocabulary assessment'}</span>
+                      </li>
+                    </ul>
+                  </Card>
+                )}
+              </div>
+            )}
 
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-8">
               <div className="flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                 <div className="text-sm text-amber-900">
-                  <p className="font-semibold mb-1">What you'll receive:</p>
+                  <p className="font-semibold mb-1">
+                    {language === 'vi' ? 'Bạn sẽ nhận được:' : language === 'tr' ? 'Ne alacaksınız:' : 'What you\'ll receive:'}
+                  </p>
                   <ul className="space-y-1 ml-4 list-disc">
-                    <li>Your IELTS band equivalent (2.0-9.0)</li>
-                    <li>Detailed skill breakdown & weaknesses</li>
-                    <li>Personalized course recommendations</li>
-                    <li>Custom learning roadmap to reach your target</li>
+                    <li>{language === 'vi' ? 'Điểm Band IELTS (2.0-9.0)' : language === 'tr' ? 'IELTS band puanı (2.0-9.0)' : 'Your IELTS band equivalent (2.0-9.0)'}</li>
+                    {testMode === 'full' && (
+                      <>
+                        <li>{language === 'vi' ? 'Phân tích kỹ năng chi tiết' : language === 'tr' ? 'Detaylı beceri analizi' : 'Detailed skill breakdown & weaknesses'}</li>
+                        <li>{language === 'vi' ? 'Gợi ý khóa học phù hợp' : language === 'tr' ? 'Kişiselleştirilmiş kurs önerileri' : 'Personalized course recommendations'}</li>
+                      </>
+                    )}
+                    <li>{language === 'vi' ? 'Phản hồi và gợi ý cải thiện' : language === 'tr' ? 'Geri bildirim ve iyileştirme ipuçları' : 'Feedback and improvement tips'}</li>
                   </ul>
                 </div>
               </div>
             </div>
 
             <Button
-              onClick={() => setStage('reading')}
+              onClick={startTest}
               size="lg"
-              className="w-full bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white py-6 text-lg"
+              className={`w-full bg-gradient-to-r ${getIconColor()} hover:opacity-90 text-white py-6 text-lg`}
             >
-              Start Assessment
+              {language === 'vi' ? 'Bắt Đầu Kiểm Tra' : language === 'tr' ? 'Teste Başla' : 'Start Assessment'}
               <ChevronRight className="w-5 h-5 ml-2" />
             </Button>
           </Card>
