@@ -1892,6 +1892,22 @@ export default function ComprehensiveLevelTest({ user }) {
     };
 
     const getBandLabel = (band) => {
+      if (language === 'vi') {
+        if (band >= 8.0) return 'Xuất Sắc';
+        if (band >= 7.0) return 'Rất Tốt';
+        if (band >= 6.0) return 'Thành Thạo';
+        if (band >= 5.0) return 'Trung Bình';
+        if (band >= 4.0) return 'Hạn Chế';
+        return 'Cơ Bản';
+      }
+      if (language === 'tr') {
+        if (band >= 8.0) return 'Mükemmel';
+        if (band >= 7.0) return 'Çok İyi';
+        if (band >= 6.0) return 'Yetkin';
+        if (band >= 5.0) return 'Orta';
+        if (band >= 4.0) return 'Sınırlı';
+        return 'Temel';
+      }
       if (band >= 8.0) return 'Excellent';
       if (band >= 7.0) return 'Very Good';
       if (band >= 6.0) return 'Competent';
@@ -1899,8 +1915,37 @@ export default function ComprehensiveLevelTest({ user }) {
       if (band >= 4.0) return 'Limited';
       return 'Basic';
     };
-    
-    const isStillEvaluating = evaluating || !results.speaking || !results.recommendations;
+
+    // Get the skill name based on test mode
+    const getSkillName = () => {
+      if (testMode === 'reading') return language === 'vi' ? 'Đọc' : language === 'tr' ? 'Okuma' : 'Reading';
+      if (testMode === 'listening') return language === 'vi' ? 'Nghe' : language === 'tr' ? 'Dinleme' : 'Listening';
+      if (testMode === 'writing') return language === 'vi' ? 'Viết' : language === 'tr' ? 'Yazma' : 'Writing';
+      if (testMode === 'speaking') return language === 'vi' ? 'Nói' : language === 'tr' ? 'Konuşma' : 'Speaking';
+      return '';
+    };
+
+    // Get the skill band for single skill tests
+    const getSkillBand = () => {
+      if (testMode === 'reading') return results.reading?.band || 4.0;
+      if (testMode === 'listening') return results.listening?.band_score || 4.0;
+      if (testMode === 'writing') return results.writing?.overall_band || 4.0;
+      if (testMode === 'speaking') return results.speaking?.overall_band || 4.0;
+      return 4.0;
+    };
+
+    // Get skill icon
+    const getSkillIcon = () => {
+      if (testMode === 'reading') return BookOpen;
+      if (testMode === 'listening') return Headphones;
+      if (testMode === 'writing') return PenTool;
+      if (testMode === 'speaking') return Mic;
+      return Target;
+    };
+
+    const isStillEvaluating = evaluating;
+    const isSingleSkillTest = testMode !== 'full';
+    const SkillIconComponent = getSkillIcon();
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 py-12 px-4">
@@ -1908,23 +1953,54 @@ export default function ComprehensiveLevelTest({ user }) {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 mb-4">
-              <Trophy className="w-10 h-10 text-white" />
+            <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br ${isSingleSkillTest ? getBandColor(getSkillBand()) : 'from-violet-500 to-purple-600'} mb-4`}>
+              {isSingleSkillTest ? <SkillIconComponent className="w-10 h-10 text-white" /> : <Trophy className="w-10 h-10 text-white" />}
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              {language === 'vi' ? 'Kết Quả Đánh Giá Toàn Diện' :
-               language === 'tr' ? 'Kapsamlı Değerlendirme Sonuçlarınız' :
-               'Your Comprehensive Assessment Results'}
+              {isSingleSkillTest ? (
+                language === 'vi' ? `Kết Quả Kiểm Tra ${getSkillName()}` :
+                language === 'tr' ? `${getSkillName()} Testi Sonuçlarınız` :
+                `Your ${getSkillName()} Test Results`
+              ) : (
+                language === 'vi' ? 'Kết Quả Đánh Giá Toàn Diện' :
+                language === 'tr' ? 'Kapsamlı Değerlendirme Sonuçlarınız' :
+                'Your Comprehensive Assessment Results'
+              )}
             </h1>
             <p className="text-gray-600 text-lg">
-              {language === 'vi' ? 'Phân tích chi tiết trình độ tiếng Anh của bạn' :
-               language === 'tr' ? 'İngilizce yeterlilik seviyenizin detaylı analizi' :
-               'Detailed analysis of your English proficiency level'}
+              {isSingleSkillTest ? (
+                language === 'vi' ? `Phân tích chi tiết kỹ năng ${getSkillName().toLowerCase()} của bạn` :
+                language === 'tr' ? `${getSkillName()} becerinizin detaylı analizi` :
+                `Detailed analysis of your ${getSkillName().toLowerCase()} skills`
+              ) : (
+                language === 'vi' ? 'Phân tích chi tiết trình độ tiếng Anh của bạn' :
+                language === 'tr' ? 'İngilizce yeterlilik seviyenizin detaylı analizi' :
+                'Detailed analysis of your English proficiency level'
+              )}
             </p>
           </div>
 
-          {/* Overall Band Score - Show immediately with reading, or full score when ready */}
-          {results.overall_band ? (
+          {/* Single Skill Result Display */}
+          {isSingleSkillTest && !isStillEvaluating && (
+            <Card className={`p-8 bg-gradient-to-br ${getBandColor(getSkillBand())} text-white shadow-2xl mb-8`}>
+              <div className="text-center">
+                <p className="text-white/90 text-lg mb-2">
+                  {language === 'vi' ? `Band ${getSkillName()} Của Bạn` :
+                   language === 'tr' ? `${getSkillName()} Bandınız` :
+                   `Your ${getSkillName()} Band`}
+                </p>
+                <div className="text-7xl font-bold mb-2">
+                  {getSkillBand().toFixed(1)}
+                </div>
+                <p className="text-2xl font-semibold text-white/95 mb-4">
+                  {getBandLabel(getSkillBand())}
+                </p>
+              </div>
+            </Card>
+          )}
+
+          {/* Full Test Result Display - Overall Band Score */}
+          {!isSingleSkillTest && results.overall_band ? (
             <Card className={`p-8 bg-gradient-to-br ${getBandColor(results.overall_band)} text-white shadow-2xl mb-8`}>
               <div className="text-center">
                 <p className="text-white/90 text-lg mb-2">
@@ -1944,7 +2020,7 @@ export default function ComprehensiveLevelTest({ user }) {
                     <p className="text-sm text-white/80">
                       {language === 'vi' ? 'Đọc' : language === 'tr' ? 'Okuma' : 'Reading'}
                     </p>
-                    <p className="text-2xl font-bold">{results.reading.band.toFixed(1)}</p>
+                    <p className="text-2xl font-bold">{results.reading?.band?.toFixed(1) || '4.0'}</p>
                   </div>
                   <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
                     <Headphones className="w-6 h-6 mx-auto mb-2" />
@@ -1965,7 +2041,7 @@ export default function ComprehensiveLevelTest({ user }) {
                     <p className="text-sm text-white/80">
                       {language === 'vi' ? 'Nói' : language === 'tr' ? 'Konuşma' : 'Speaking'}
                     </p>
-                    <p className="text-2xl font-bold">{results.speaking.overall_band.toFixed(1)}</p>
+                    <p className="text-2xl font-bold">{results.speaking?.overall_band?.toFixed(1) || '4.0'}</p>
                   </div>
                 </div>
               </div>
