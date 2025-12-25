@@ -171,16 +171,18 @@ async def evaluate_writing_response(
     """
     
     try:
-        # Call LLM for evaluation
-        result = await llm.ask(
-            question=evaluation_prompt,
-            model="gpt-4o-mini",
-            max_tokens=500
-        )
+        # Call LLM for evaluation using LlmChat
+        chat = get_llm_chat()
+        response = await chat.send_message(UserMessage(text=evaluation_prompt))
         
         # Parse JSON response
+        # Handle different response types
+        if isinstance(response, dict):
+            result_text = json.dumps(response)
+        else:
+            result_text = str(response).strip()
+        
         # Clean up potential markdown formatting
-        result_text = result.strip()
         if result_text.startswith("```json"):
             result_text = result_text[7:]
         if result_text.startswith("```"):
