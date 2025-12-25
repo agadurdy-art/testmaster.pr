@@ -125,3 +125,16 @@ agent_communication:
     message: "Implemented 4 new competitor-inspired features: Question Navigation, Side-by-Side Reader, Locate & Explain, and Progress Analytics. All features tested via screenshots and working correctly. Ready for comprehensive testing."
   - agent: "testing"
     message: "CRITICAL ISSUE FOUND: Comprehensive Level Test requires user authentication but test flow is blocked. User authentication is not working properly in the test environment. The test selection page loads correctly but clicking on test options does not progress to the actual test interface. This prevents testing of the new features: Question Navigation Bar, Side-by-Side Reader, Locate & Explain, and Progress Analytics. Authentication system needs to be fixed for proper testing."
+  - agent: "main"
+    message: "NEW FORK SESSION (Dec 25, 2024): TestInterface.js syntax fixed. Google Auth (Emergent-managed) is used for login. Need to verify: 1) Question Navigator responsive design (single row desktop, scrollable mobile) 2) Side-by-Side adjustable layout (70/30 default) 3) Features work on /test/reading page after authentication. Please test full flow including auth."
+
+testing_instructions:
+  auth_type: "Emergent-managed Google Auth"
+  test_pages:
+    - "/test/reading" - Main reading test with new features
+    - "/comprehensive-level-test" - Comprehensive test page
+  features_to_verify:
+    - "Question Navigation Bar - responsive, single row on desktop, scrollable on mobile"
+    - "Side-by-Side Reader - 70/30 default ratio, adjustable buttons"
+    - "Layout controls work correctly"
+  priority: "P0"
