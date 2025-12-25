@@ -1263,33 +1263,53 @@ function ElevenLabsExaminer() {
                 </div>
               </Card>
 
-              {/* Question Numbers Grid - Compact */}
+              {/* Question Numbers Grid - Compact with span-aware numbering */}
               <Card className="p-3 flex-1 overflow-y-auto">
                 <h3 className="font-semibold text-gray-700 text-sm mb-2">Questions</h3>
                 <div className="grid grid-cols-5 gap-1">
-                  {test.questions?.slice(
-                    Math.floor(currentQuestion / 10) * 10,
-                    (Math.floor(currentQuestion / 10) + 1) * 10
-                  ).map((q, idx) => {
-                    const questionNumber = Math.floor(currentQuestion / 10) * 10 + idx;
-                    const isAnswered = !!answers[q.id];
-                    return (
-                      <button
-                        key={q.id}
-                        onClick={() => {
-                          const el = document.getElementById(`q-${questionNumber}`);
-                          el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }}
-                        className={`w-8 h-8 rounded text-xs font-semibold transition-colors ${
-                          isAnswered
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                        }`}
-                      >
-                        {questionNumber + 1}
-                      </button>
-                    );
-                  })}
+                  {(() => {
+                    const currentPart = Math.floor(currentQuestion / 10) + 1;
+                    const partQuestions = test.questions?.slice(
+                      (currentPart - 1) * 10,
+                      currentPart * 10
+                    ) || [];
+                    
+                    // Calculate starting question number based on previous parts' spans
+                    let startNum = 0;
+                    for (let p = 1; p < currentPart; p++) {
+                      const prevPartQuestions = test.questions?.slice((p - 1) * 10, p * 10) || [];
+                      for (const pq of prevPartQuestions) {
+                        const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
+                        startNum += span;
+                      }
+                    }
+                    
+                    let runningNum = startNum;
+                    return partQuestions.map((q, idx) => {
+                      const questionSpan = (q.type === 'multiple_choice_multi' && q.answer_count) ? q.answer_count : 1;
+                      const questionNumber = runningNum;
+                      runningNum += questionSpan;
+                      
+                      const isAnswered = !!answers[q.id];
+                      
+                      return (
+                        <button
+                          key={q.id}
+                          onClick={() => {
+                            const el = document.getElementById(`q-${questionNumber}`);
+                            el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                          }}
+                          className={`${questionSpan > 1 ? 'col-span-2 w-full' : 'w-8'} h-8 rounded text-xs font-semibold transition-colors ${
+                            isAnswered
+                              ? 'bg-green-100 text-green-700'
+                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          }`}
+                        >
+                          {questionSpan > 1 ? `${questionNumber + 1}-${questionNumber + questionSpan}` : questionNumber + 1}
+                        </button>
+                      );
+                    });
+                  })()}
                 </div>
               </Card>
             </div>
