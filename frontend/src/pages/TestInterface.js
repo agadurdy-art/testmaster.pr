@@ -1349,7 +1349,7 @@ function ElevenLabsExaminer() {
                             </div>
                           )}
                           
-                          {/* Multiple Choice Options */}
+                          {/* Multiple Choice Options - Single Answer */}
                           {(q.type === 'multiple_choice' || q.type === 'multiple_choice_two') && q.options && q.options.length > 0 && (
                             <div className="mt-3 space-y-2">
                               {q.options.map((opt, optIdx) => {
@@ -1374,6 +1374,53 @@ function ElevenLabsExaminer() {
                                   </button>
                                 );
                               })}
+                            </div>
+                          )}
+
+                          {/* Multiple Choice Multi - Multiple Answers (TWO options) */}
+                          {q.type === 'multiple_choice_multi' && q.options && q.options.length > 0 && (
+                            <div className="mt-3">
+                              <p className="text-xs text-amber-600 mb-2 font-medium">
+                                Select {q.answer_count || 2} answers
+                              </p>
+                              <div className="space-y-2">
+                                {q.options.map((opt, optIdx) => {
+                                  const optLetter = opt.charAt(0);
+                                  const currentAnswers = answers[q.id] ? answers[q.id].split(',').map(a => a.trim().toUpperCase()) : [];
+                                  const isSelected = currentAnswers.includes(optLetter);
+                                  const maxAnswers = q.answer_count || 2;
+                                  
+                                  return (
+                                    <button
+                                      key={optIdx}
+                                      onClick={() => {
+                                        let newAnswers = [...currentAnswers];
+                                        if (isSelected) {
+                                          newAnswers = newAnswers.filter(a => a !== optLetter);
+                                        } else if (newAnswers.length < maxAnswers) {
+                                          newAnswers.push(optLetter);
+                                        }
+                                        handleAnswerChange(q.id, newAnswers.sort().join(', '));
+                                      }}
+                                      className={`w-full text-left p-3 rounded-lg border-2 transition-all text-sm ${
+                                        isSelected 
+                                          ? 'border-amber-500 bg-amber-50 text-amber-900' 
+                                          : 'border-gray-200 bg-white hover:border-amber-300 hover:bg-amber-50/50'
+                                      }`}
+                                    >
+                                      <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full mr-2 text-xs font-bold ${
+                                        isSelected ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600'
+                                      }`}>
+                                        {optLetter}
+                                      </span>
+                                      {opt.substring(2).trim()}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                              <p className="text-xs text-gray-500 mt-2">
+                                Selected: {answers[q.id] || 'None'} ({(answers[q.id]?.split(',').filter(a => a.trim()).length) || 0}/{q.answer_count || 2})
+                              </p>
                             </div>
                           )}
 
