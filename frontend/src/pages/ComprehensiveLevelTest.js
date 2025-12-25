@@ -309,13 +309,42 @@ export default function ComprehensiveLevelTest({ user }) {
       const response = await fetch(`${API_URL}/api/level-test/listening-questions`);
       if (response.ok) {
         const data = await response.json();
-        setListeningQuestions(data.questions || []);
+        if (data.questions && data.questions.length > 0) {
+          setListeningQuestions(data.questions);
+          return;
+        }
       }
     } catch (error) {
       console.error('Failed to load listening questions:', error);
-      // Fallback to static questions if API fails
-      setListeningQuestions([]);
     }
+    
+    // Fallback static questions if API fails
+    setListeningQuestions([
+      {
+        id: 'q1', section_id: 'listening_1', section_title: 'Daily Schedule',
+        audio_url: '/audio/listening/listening_1.mp3', level: 'A1-A2', band_range: '2.0-3.5',
+        type: 'mcq', question: "What time does Sarah wake up?",
+        options: ["A) 6 o'clock", "B) 7 o'clock", "C) 8 o'clock", "D) 9 o'clock"], correct: 'B'
+      },
+      {
+        id: 'q2', section_id: 'listening_1', section_title: 'Daily Schedule',
+        audio_url: '/audio/listening/listening_1.mp3', level: 'A1-A2', band_range: '2.0-3.5',
+        type: 'mcq', question: "What does Sarah have for breakfast?",
+        options: ["A) Eggs and coffee", "B) Cereal and milk", "C) Toast and tea", "D) Fruit and juice"], correct: 'C'
+      },
+      {
+        id: 'q3', section_id: 'listening_2', section_title: 'At the Train Station',
+        audio_url: '/audio/listening/listening_2.mp3', level: 'A2', band_range: '3.5-4.5',
+        type: 'mcq', question: "Which platform does the train to London leave from?",
+        options: ["A) Platform 1", "B) Platform 2", "C) Platform 3", "D) Platform 4"], correct: 'C'
+      },
+      {
+        id: 'q4', section_id: 'listening_2', section_title: 'At the Train Station',
+        audio_url: '/audio/listening/listening_2.mp3', level: 'A2', band_range: '3.5-4.5',
+        type: 'mcq', question: "How long does the journey take?",
+        options: ["A) 1 hour", "B) 1 hour 20 minutes", "C) 2 hours", "D) 2 hours 15 minutes"], correct: 'B'
+      }
+    ]);
   };
   
   // Load writing tasks from API
