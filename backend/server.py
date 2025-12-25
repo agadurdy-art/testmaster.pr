@@ -4772,6 +4772,19 @@ async def fix_combined_question_ids():
                 "new_id": "23-24",
                 "section": 3
             },
+            # Listening Test 2 - Part 2 (Q17-18, Q19-20)
+            "listening2_part2_q17_18": {
+                "test_title_contains": "Test 2 - Listening",
+                "old_ids": [17, 18],
+                "new_id": "17-18",
+                "section": 2
+            },
+            "listening2_part2_q19_20": {
+                "test_title_contains": "Test 2 - Listening",
+                "old_ids": [19, 20],
+                "new_id": "19-20",
+                "section": 2
+            },
         }
         
         fixed_count = 0
