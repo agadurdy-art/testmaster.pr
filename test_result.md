@@ -107,11 +107,16 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Fix authentication system for comprehensive level test"
     - "Verify Question Navigation Bar in Reading test"
     - "Verify Side-by-Side layout with adjustable ratio"
     - "Verify Locate & Explain in results page"
     - "Verify Progress Analytics for full test"
-  stuck_tasks: []
+  stuck_tasks:
+    - "Question Navigation Bar"
+    - "Side-by-Side Reader (70-30 adjustable)"
+    - "Locate & Explain Feature"
+    - "Progress Analytics"
   test_all: true
   test_priority: "high_first"
 
