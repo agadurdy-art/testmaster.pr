@@ -1006,6 +1006,223 @@ export default function ComprehensiveLevelTest({ user }) {
     );
   }
 
+  // LISTENING SECTION
+  if (stage === 'listening') {
+    const sections = getListeningSections();
+    const currentSection = sections[currentListeningSection] || { questions: [], title: 'Loading...' };
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-teal-50 to-emerald-50 py-8 px-4">
+        <LanguageSwitcher />
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-gray-600">
+                Listening Assessment - Section {currentListeningSection + 1} of {sections.length}
+              </span>
+              <span className="text-sm font-medium text-cyan-600">
+                Level: {currentSection.level}
+              </span>
+            </div>
+            <Progress value={getProgressPercentage()} className="h-2" />
+          </div>
+
+          <Card className="p-8 bg-white shadow-xl">
+            {/* Section Header */}
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Headphones className="w-5 h-5 text-cyan-600" />
+                <h3 className="font-semibold text-gray-700">{currentSection.title}</h3>
+                <span className="text-xs px-2 py-1 bg-cyan-100 text-cyan-700 rounded-full">
+                  {currentSection.band_range}
+                </span>
+              </div>
+              
+              {/* Audio Player */}
+              <div className="bg-cyan-50 p-4 rounded-lg mb-6">
+                <p className="text-sm text-gray-600 mb-3">
+                  {language === 'vi' ? 'Nghe đoạn ghi âm và trả lời các câu hỏi bên dưới:' :
+                   language === 'tr' ? 'Ses kaydını dinleyin ve aşağıdaki soruları cevaplayın:' :
+                   'Listen to the recording and answer the questions below:'}
+                </p>
+                <div className="flex items-center gap-4">
+                  {!audioPlaying ? (
+                    <Button
+                      onClick={() => playListeningAudio(currentSection.id, currentSection.audio_url)}
+                      className="bg-cyan-600 hover:bg-cyan-700"
+                    >
+                      <Volume2 className="w-4 h-4 mr-2" />
+                      {audioPlayed[currentSection.id] ? 'Play Again' : 'Play Audio'}
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={pauseListeningAudio}
+                      variant="outline"
+                      className="border-cyan-600 text-cyan-600"
+                    >
+                      <Pause className="w-4 h-4 mr-2" />
+                      Pause
+                    </Button>
+                  )}
+                  {audioPlayed[currentSection.id] && (
+                    <span className="text-xs text-green-600 flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" /> Audio played
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Questions */}
+            <div className="space-y-6">
+              {currentSection.questions.map((q, idx) => (
+                <div key={q.id} className="border-b pb-6 last:border-b-0">
+                  <h4 className="font-semibold text-gray-900 mb-3">
+                    {idx + 1}. {q.question}
+                  </h4>
+                  <div className="space-y-2">
+                    {q.options.map((option) => {
+                      const optionLetter = option.charAt(0);
+                      const isSelected = listeningAnswers[q.id] === optionLetter;
+                      
+                      return (
+                        <button
+                          key={option}
+                          onClick={() => handleListeningAnswer(q.id, optionLetter)}
+                          className={`w-full text-left p-3 rounded-lg border-2 transition-all ${
+                            isSelected
+                              ? 'border-cyan-500 bg-cyan-50'
+                              : 'border-gray-200 hover:border-cyan-300 hover:bg-cyan-50/50'
+                          }`}
+                        >
+                          <span className={`font-medium ${isSelected ? 'text-cyan-700' : 'text-gray-700'}`}>
+                            {option}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex justify-end">
+              <Button
+                onClick={nextListeningSection}
+                size="lg"
+                className="bg-cyan-600 hover:bg-cyan-700"
+              >
+                {currentListeningSection < sections.length - 1 ? 'Next Section' : 'Continue to Writing'}
+                <ChevronRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // WRITING SECTION
+  if (stage === 'writing') {
+    const currentTask = writingTasks[currentWritingTask] || {
+      id: 'default',
+      title: 'Writing Task',
+      instruction: 'Write your response below.',
+      min_words: 20,
+      max_words: 100,
+      level: 'Band 4-6'
+    };
+    const currentResponse = writingResponses[currentTask.id] || '';
+    const wordCount = getWordCount(currentResponse);
+    
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-8 px-4">
+        <LanguageSwitcher />
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-gray-600">
+                Writing Assessment - Task {currentWritingTask + 1} of {writingTasks.length}
+              </span>
+              <span className="text-sm font-medium text-amber-600">
+                {currentTask.level}
+              </span>
+            </div>
+            <Progress value={getProgressPercentage()} className="h-2" />
+          </div>
+
+          <Card className="p-8 bg-white shadow-xl">
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-4">
+                <PenTool className="w-5 h-5 text-amber-600" />
+                <h3 className="font-semibold text-gray-900 text-lg">{currentTask.title}</h3>
+              </div>
+              
+              <div className="bg-amber-50 p-4 rounded-lg mb-4">
+                <p className="text-gray-800 leading-relaxed">
+                  {currentTask.instruction}
+                </p>
+              </div>
+              
+              <div className="flex items-center gap-4 text-sm text-gray-500">
+                <span className="flex items-center gap-1">
+                  <Clock className="w-4 h-4" />
+                  {currentTask.time_minutes} minutes
+                </span>
+                <span>
+                  Target: {currentTask.min_words}-{currentTask.max_words} words
+                </span>
+              </div>
+            </div>
+
+            {/* Writing Area */}
+            <div className="relative">
+              <textarea
+                value={currentResponse}
+                onChange={(e) => handleWritingChange(currentTask.id, e.target.value)}
+                placeholder={
+                  language === 'vi' ? 'Viết câu trả lời của bạn ở đây...' :
+                  language === 'tr' ? 'Cevabınızı buraya yazın...' :
+                  'Write your response here...'
+                }
+                className="w-full h-64 p-4 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 resize-none text-gray-800"
+              />
+              <div className="absolute bottom-3 right-3 flex items-center gap-2">
+                <span className={`text-sm font-medium ${
+                  wordCount < currentTask.min_words ? 'text-red-500' :
+                  wordCount > currentTask.max_words ? 'text-amber-500' :
+                  'text-green-500'
+                }`}>
+                  {wordCount} / {currentTask.min_words}-{currentTask.max_words} words
+                </span>
+              </div>
+            </div>
+            
+            {wordCount < currentTask.min_words && wordCount > 0 && (
+              <p className="text-sm text-amber-600 mt-2">
+                {language === 'vi' ? `Cần thêm ${currentTask.min_words - wordCount} từ nữa` :
+                 language === 'tr' ? `${currentTask.min_words - wordCount} kelime daha gerekli` :
+                 `Need ${currentTask.min_words - wordCount} more words`}
+              </p>
+            )}
+
+            <div className="mt-8 flex justify-end">
+              <Button
+                onClick={nextWritingTask}
+                size="lg"
+                className="bg-amber-600 hover:bg-amber-700"
+                disabled={wordCount < 5}
+              >
+                {currentWritingTask < writingTasks.length - 1 ? 'Next Task' : 'Continue to Speaking'}
+                <ChevronRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   // SPEAKING SECTION  
   if (stage === 'speaking') {
     const currentPrompt = speakingPrompts[currentSpeakingPrompt];
