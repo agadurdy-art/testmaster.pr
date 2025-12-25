@@ -976,7 +976,26 @@ function ElevenLabsExaminer() {
                         }
                       };
                       
+                      // Calculate question numbers with span support for Reading
+                      let runningQuestionNumber = 0;
+                      // First pass to calculate starting number for this passage
+                      const passagesBeforeCurrent = [1, 2, 3].filter(p => p < currentPassage);
+                      for (const p of passagesBeforeCurrent) {
+                        const pQuestions = test.questions?.filter(q => q.passage === p) || [];
+                        for (const pq of pQuestions) {
+                          const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
+                          runningQuestionNumber += span;
+                        }
+                      }
+                      
                       return passageQuestions.map((q, idx) => {
+                        // Get span for this question
+                        const questionSpan = (q.type === 'multiple_choice_multi' && q.answer_count) ? q.answer_count : 1;
+                        const questionNumber = runningQuestionNumber;
+                        
+                        // Increment for next question
+                        runningQuestionNumber += questionSpan;
+                        
                         const showTaskHeader = q.type !== currentType;
                         currentType = q.type;
                         const taskInfo = taskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Answer the following questions.' };
@@ -1004,9 +1023,16 @@ function ElevenLabsExaminer() {
                           } shadow-sm`}
                         >
                           <p className="text-sm font-medium text-gray-900 mb-2">
-                            <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
-                              {q.id}
-                            </span>
+                            {/* Show combined question numbers for multi-answer questions */}
+                            {questionSpan > 1 ? (
+                              <span className="inline-flex items-center justify-center px-2 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold mr-2">
+                                Q{questionNumber + 1}-{questionNumber + questionSpan}
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-sky-100 text-sky-700 text-xs font-bold mr-2">
+                                {questionNumber + 1}
+                              </span>
+                            )}
                             {q.question}
                           </p>
                           
