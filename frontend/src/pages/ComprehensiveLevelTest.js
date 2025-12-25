@@ -2361,8 +2361,8 @@ export default function ComprehensiveLevelTest({ user }) {
             </Card>
           )}
 
-          {/* Improvement Recommendations */}
-          {results.speaking?.improvement_recommendations && (
+          {/* Improvement Recommendations - Only for full test */}
+          {!isSingleSkillTest && results.speaking?.improvement_recommendations && (
             <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-0 mb-8">
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
                 <Lightbulb className="w-5 h-5 text-blue-600" />
