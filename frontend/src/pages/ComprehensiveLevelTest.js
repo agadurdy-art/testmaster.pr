@@ -905,7 +905,22 @@ export default function ComprehensiveLevelTest({ user }) {
   };
 
   const getProgressPercentage = () => {
-    // New flow: reading (25%) → listening (25%) → writing (25%) → speaking (25%)
+    // For single skill tests, progress is 0-100% for that skill only
+    if (testMode !== 'full') {
+      if (stage === 'reading') {
+        return ((currentQuestion + 1) / readingQuestions.length) * 100;
+      } else if (stage === 'listening') {
+        const sections = getListeningSections();
+        return ((currentListeningSection + 1) / Math.max(sections.length, 1)) * 100;
+      } else if (stage === 'writing') {
+        return ((currentWritingTask + 1) / Math.max(writingTasks.length, 1)) * 100;
+      } else if (stage === 'speaking') {
+        return ((currentSpeakingPrompt + 1) / speakingPrompts.length) * 100;
+      }
+      return 0;
+    }
+    
+    // Full test: reading (25%) → listening (25%) → writing (25%) → speaking (25%)
     if (stage === 'reading') {
       return ((currentQuestion + 1) / readingQuestions.length) * 25;
     } else if (stage === 'listening') {
