@@ -232,12 +232,25 @@ export default function ComprehensiveLevelTest({ user }) {
   const navigate = useNavigate();
   const { t, language } = useI18n();  // Get language from i18n context
   
-  // Stage management
-  const [stage, setStage] = useState('intro'); // intro, reading, speaking, evaluating, results
+  // Stage management - NEW FLOW: reading → listening → writing → speaking → results
+  const [stage, setStage] = useState('intro'); // intro, reading, listening, writing, speaking, evaluating, results
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [readingAnswers, setReadingAnswers] = useState({});
   const [currentSpeakingPrompt, setCurrentSpeakingPrompt] = useState(0);
   const [speakingResponses, setSpeakingResponses] = useState([]);
+  
+  // Listening state
+  const [listeningQuestions, setListeningQuestions] = useState([]);
+  const [currentListeningSection, setCurrentListeningSection] = useState(0);
+  const [listeningAnswers, setListeningAnswers] = useState({});
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [audioPlayed, setAudioPlayed] = useState({});
+  const listeningAudioRef = useRef(null);
+  
+  // Writing state
+  const [writingTasks, setWritingTasks] = useState([]);
+  const [currentWritingTask, setCurrentWritingTask] = useState(0);
+  const [writingResponses, setWritingResponses] = useState({});
   
   // Recording state
   const [recording, setRecording] = useState(false);
