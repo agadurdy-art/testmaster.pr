@@ -846,9 +846,39 @@ export default function ComprehensiveLevelTest({ user }) {
                     <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
                     <span>Progressive difficulty (Band 2.0-9.0)</span>
                   </li>
+                </ul>
+              </Card>
+
+              <Card className="p-6 bg-gradient-to-br from-cyan-50 to-teal-50 border-0">
+                <div className="flex items-center gap-3 mb-3">
+                  <Headphones className="w-6 h-6 text-cyan-600" />
+                  <h3 className="font-bold text-gray-900">Listening Assessment</h3>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Tests comprehension & analysis skills</span>
+                    <span>10 questions (5-7 minutes)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>UK native speaker audio</span>
+                  </li>
+                </ul>
+              </Card>
+
+              <Card className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 border-0">
+                <div className="flex items-center gap-3 mb-3">
+                  <PenTool className="w-6 h-6 text-amber-600" />
+                  <h3 className="font-bold text-gray-900">Writing Assessment</h3>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>3 progressive tasks (8-12 minutes)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span>AI-powered rubric evaluation</span>
                   </li>
                 </ul>
               </Card>
@@ -865,11 +895,7 @@ export default function ComprehensiveLevelTest({ user }) {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>AI-powered evaluation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                    <span>Pronunciation, fluency, vocabulary & grammar</span>
+                    <span>Pronunciation & fluency analysis</span>
                   </li>
                 </ul>
               </Card>
