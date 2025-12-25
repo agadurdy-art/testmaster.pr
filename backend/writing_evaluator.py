@@ -17,8 +17,13 @@ import uuid
 from typing import Dict, List, Any
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
-# Initialize LLM for evaluation
-llm = OpenAITextCompletion(api_key=os.getenv("EMERGENT_LLM_KEY"))
+# Initialize LlmChat for evaluation
+def get_llm_chat():
+    return LlmChat(
+        api_key=os.getenv("EMERGENT_LLM_KEY"),
+        session_id=str(uuid.uuid4()),
+        system_message="You are an IELTS writing examiner providing accurate band score assessments."
+    ).with_model("openai", "gpt-4o-mini")
 
 # Writing tasks with progressive difficulty
 WRITING_TASKS = [
