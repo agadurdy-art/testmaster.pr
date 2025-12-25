@@ -113,16 +113,16 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Fix authentication system for comprehensive level test"
-    - "Verify Question Navigation Bar in Reading test"
-    - "Verify Side-by-Side layout with adjustable ratio"
-    - "Verify Locate & Explain in results page"
-    - "Verify Progress Analytics for full test"
+    - "Resolve authentication issue for /test/reading access"
+    - "Verify Question Navigation Bar responsive design and functionality"
+    - "Verify Side-by-Side layout with adjustable ratio controls"
+    - "Test layout controls (50-50, 60-40, 70-30, 80-20 buttons)"
+    - "Verify mobile responsiveness (scrollable navigation)"
   stuck_tasks:
-    - "Question Navigation Bar"
-    - "Side-by-Side Reader (70-30 adjustable)"
-    - "Locate & Explain Feature"
-    - "Progress Analytics"
+    - "Question Navigation Bar - blocked by authentication"
+    - "Side-by-Side Reader (70-30 adjustable) - blocked by authentication"
+    - "Locate & Explain Feature - blocked by authentication"
+    - "Progress Analytics - blocked by authentication"
   test_all: true
   test_priority: "high_first"
 
