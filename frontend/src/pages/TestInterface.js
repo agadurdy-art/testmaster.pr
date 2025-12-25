@@ -848,21 +848,31 @@ function ElevenLabsExaminer() {
             </div>
 
             {/* Question Navigation Bar - Full width, scrollable row */}
-            <QuestionNavigation
-              totalQuestions={test.questions?.length || 40}
-              currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
-              answers={answers}
-              flaggedQuestions={flaggedQuestions}
-              onQuestionSelect={(index) => {
-                const question = test.questions?.[index];
-                if (question) {
-                  setCurrentPassage(question.passage || 1);
-                }
-              }}
-              questionIds={test.questions?.map(q => q.id) || []}
-              compact={true}
-              className="mb-2"
-            />
+            {(() => {
+              // Calculate total questions accounting for spans
+              const actualTotalQuestions = test.questions?.reduce((total, q) => {
+                const span = (q.type === 'multiple_choice_multi' && q.answer_count) ? q.answer_count : 1;
+                return total + span;
+              }, 0) || 40;
+              
+              return (
+                <QuestionNavigation
+                  totalQuestions={actualTotalQuestions}
+                  currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
+                  answers={answers}
+                  flaggedQuestions={flaggedQuestions}
+                  onQuestionSelect={(index) => {
+                    const question = test.questions?.[index];
+                    if (question) {
+                      setCurrentPassage(question.passage || 1);
+                    }
+                  }}
+                  questionIds={test.questions?.map(q => q.id) || []}
+                  compact={true}
+                  className="mb-2"
+                />
+              );
+            })()}
 
             {/* Two Column Layout */}
             <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-[calc(100vh-300px)] lg:h-[calc(100vh-300px)]">
