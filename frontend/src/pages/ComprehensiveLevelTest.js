@@ -2309,9 +2309,10 @@ export default function ComprehensiveLevelTest({ user }) {
               )}
             </Card>
           </div>
+          )}
 
-          {/* Strengths & Weaknesses */}
-          {results.speaking && (
+          {/* Strengths & Weaknesses - Only show for full test */}
+          {!isSingleSkillTest && results.speaking && (
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               {/* Strengths */}
               <Card className="p-6 bg-gradient-to-br from-green-50 to-emerald-50 border-0">
