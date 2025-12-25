@@ -1583,19 +1583,21 @@ export default function ComprehensiveLevelTest({ user }) {
     const wordCount = getWordCount(currentResponse);
     
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-8 px-4 relative">
-        <div className="max-w-4xl mx-auto relative">
-          <LanguageSwitcher />
-          <div className="mb-6 pt-2">
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
                 {language === 'vi' ? `Đánh Giá Viết - Bài ${currentWritingTask + 1} / ${writingTasks.length}` :
                  language === 'tr' ? `Yazma Değerlendirmesi - Görev ${currentWritingTask + 1} / ${writingTasks.length}` :
                  `Writing Assessment - Task ${currentWritingTask + 1} of ${writingTasks.length}`}
               </span>
-              <span className="text-sm font-medium text-amber-600">
-                {currentTask.level}
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-amber-600">
+                  {currentTask.level}
+                </span>
+                <LanguageSwitcher />
+              </div>
             </div>
             <Progress value={getProgressPercentage()} className="h-2" />
           </div>
