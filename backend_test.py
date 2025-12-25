@@ -2669,6 +2669,9 @@ def run_complete_test_flow():
         return False
 
 if __name__ == "__main__":
+    # Test the Listening and Writing Modules (CURRENT REVIEW REQUEST)
+    listening_writing_success = test_listening_and_writing_modules()
+    
     # Test the 3-Layer Pronunciation Evaluation System (REVIEW REQUEST)
     pronunciation_success = test_pronunciation_evaluation_system()
     
@@ -2696,7 +2699,7 @@ if __name__ == "__main__":
     # Test Writing Practice Evaluation API (existing functionality)
     writing_success = test_writing_practice_evaluation()
     
-    overall_success = pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
+    overall_success = listening_writing_success and pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
     print(f"   3-Layer Pronunciation Evaluation (REVIEW REQUEST): {'✅ PASSED' if pronunciation_success else '❌ FAILED'}")
