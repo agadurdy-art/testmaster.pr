@@ -89,7 +89,10 @@ LISTENING_SECTIONS = [
                 "question": "Where is the dinosaur exhibition located?",
                 "options": ["A) Ground floor", "B) First floor", "C) Second floor", "D) In the café"],
                 "correct": "A",
-                "skill": "spatial_information"
+                "skill": "spatial_information",
+                "explanation": "The guide states 'On the ground floor, you'll find the dinosaur exhibition.' Pay attention to spatial markers and floor descriptions.",
+                "explanation_vi": "Hướng dẫn viên nói 'Ở tầng trệt, bạn sẽ tìm thấy triển lãm khủng long.' Chú ý đến các dấu hiệu không gian và mô tả tầng.",
+                "explanation_tr": "Rehber 'Zemin katta dinozor sergisini bulacaksınız' diyor. Mekansal işaretlere ve kat açıklamalarına dikkat edin."
             },
             {
                 "id": "q6",
@@ -97,7 +100,10 @@ LISTENING_SECTIONS = [
                 "question": "Why should visitors not use flash photography?",
                 "options": ["A) It disturbs other visitors", "B) It can damage specimens", "C) It's against the law", "D) The batteries will run out"],
                 "correct": "B",
-                "skill": "reason_comprehension"
+                "skill": "reason_comprehension",
+                "explanation": "The guide explicitly says 'please don't use flash as it can damage some of the older specimens.' Listen for cause-effect relationships.",
+                "explanation_vi": "Hướng dẫn viên nói rõ 'xin đừng dùng đèn flash vì nó có thể làm hỏng một số mẫu vật cũ.' Lắng nghe các mối quan hệ nhân quả.",
+                "explanation_tr": "Rehber açıkça 'lütfen flaş kullanmayın çünkü bazı eski örneklere zarar verebilir' diyor. Neden-sonuç ilişkilerini dinleyin."
             }
         ]
     },
@@ -117,7 +123,10 @@ LISTENING_SECTIONS = [
                 "question": "By how much has wheat production decreased in tropical regions?",
                 "options": ["A) 5 percent", "B) 10 percent", "C) 15 percent", "D) 20 percent"],
                 "correct": "C",
-                "skill": "numerical_data"
+                "skill": "numerical_data",
+                "explanation": "The lecturer says 'wheat production has decreased by approximately fifteen percent in tropical regions.' Academic lectures often contain precise numerical data.",
+                "explanation_vi": "Giảng viên nói 'sản lượng lúa mì đã giảm khoảng mười lăm phần trăm ở các vùng nhiệt đới.' Bài giảng học thuật thường chứa dữ liệu số chính xác.",
+                "explanation_tr": "Öğretim üyesi 'tropikal bölgelerde buğday üretimi yaklaşık yüzde on beş azaldı' diyor. Akademik dersler genellikle kesin sayısal veriler içerir."
             },
             {
                 "id": "q8",
@@ -125,7 +134,10 @@ LISTENING_SECTIONS = [
                 "question": "What solution does the speaker mention for food production challenges?",
                 "options": ["A) Importing more food", "B) Reducing population", "C) Genetic modification", "D) Building more farms"],
                 "correct": "C",
-                "skill": "main_idea"
+                "skill": "main_idea",
+                "explanation": "The lecturer mentions 'drought-resistant crop varieties through genetic modification' as a potential solution. Understanding proposed solutions in academic contexts is key.",
+                "explanation_vi": "Giảng viên đề cập 'các giống cây trồng chịu hạn thông qua biến đổi gen' như một giải pháp tiềm năng. Hiểu các giải pháp được đề xuất trong bối cảnh học thuật là chìa khóa.",
+                "explanation_tr": "Öğretim üyesi potansiyel bir çözüm olarak 'genetik modifikasyon yoluyla kuraklığa dayanıklı mahsul çeşitleri'nden bahsediyor. Akademik bağlamlarda önerilen çözümleri anlamak önemlidir."
             }
         ]
     },
