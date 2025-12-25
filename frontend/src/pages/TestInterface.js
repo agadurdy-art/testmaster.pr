@@ -1298,17 +1298,43 @@ function ElevenLabsExaminer() {
             <div className="lg:w-3/4 flex flex-col">
               <Card className="flex-1 overflow-hidden flex flex-col">
                 {/* Questions Header */}
-                <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
-                  <h2 className="text-lg font-bold text-gray-900">
-                    Part {Math.floor(currentQuestion / 10) + 1} - Questions {Math.floor(currentQuestion / 10) * 10 + 1}-{(Math.floor(currentQuestion / 10) + 1) * 10}
-                  </h2>
-                </div>
+                {(() => {
+                  // Calculate actual question numbers based on spans for all parts
+                  const currentPart = Math.floor(currentQuestion / 10) + 1;
+                  let startQuestionNumber = 0;
+                  
+                  // Sum up spans from previous parts
+                  for (let p = 1; p < currentPart; p++) {
+                    const prevPartQuestions = test.questions?.slice((p - 1) * 10, p * 10) || [];
+                    for (const pq of prevPartQuestions) {
+                      const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
+                      startQuestionNumber += span;
+                    }
+                  }
+                  
+                  // Calculate end question number for current part
+                  const currentPartQuestions = test.questions?.slice((currentPart - 1) * 10, currentPart * 10) || [];
+                  let endQuestionNumber = startQuestionNumber;
+                  for (const cq of currentPartQuestions) {
+                    const span = (cq.type === 'multiple_choice_multi' && cq.answer_count) ? cq.answer_count : 1;
+                    endQuestionNumber += span;
+                  }
+                  
+                  return (
+                    <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
+                      <h2 className="text-lg font-bold text-gray-900">
+                        Part {currentPart} - Questions {startQuestionNumber + 1}-{endQuestionNumber}
+                      </h2>
+                    </div>
+                  );
+                })()}
 
                 {/* Questions List - Scrollable */}
                 <div className="flex-1 overflow-y-auto p-4">
                   <div className="space-y-4">
                     {/* Task descriptions for Listening */}
                     {(() => {
+                      const currentPart = Math.floor(currentQuestion / 10) + 1;
                       const partQuestions = test.questions?.slice(
                         Math.floor(currentQuestion / 10) * 10,
                         (Math.floor(currentQuestion / 10) + 1) * 10
@@ -1338,11 +1364,22 @@ function ElevenLabsExaminer() {
                         'multiple_choice': {
                           title: 'Multiple Choice',
                           instruction: 'Choose the correct letter A, B, or C.'
+                        },
+                        'multiple_choice_multi': {
+                          title: 'Multiple Choice (Multiple Answers)',
+                          instruction: 'Choose the correct letters. You must select ALL correct answers.'
                         }
                       };
                       
-                      // Calculate question numbers with span support
-                      let runningQuestionNumber = Math.floor(currentQuestion / 10) * 10;
+                      // Calculate starting question number based on previous parts' spans
+                      let runningQuestionNumber = 0;
+                      for (let p = 1; p < currentPart; p++) {
+                        const prevPartQuestions = test.questions?.slice((p - 1) * 10, p * 10) || [];
+                        for (const pq of prevPartQuestions) {
+                          const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
+                          runningQuestionNumber += span;
+                        }
+                      }
                       
                       return partQuestions.map((q, idx) => {
                         // Get span for this question (combined questions have span > 1)
@@ -1353,6 +1390,7 @@ function ElevenLabsExaminer() {
                         runningQuestionNumber += questionSpan;
                         
                         const showTaskHeader = q.type !== currentType;
+
                         currentType = q.type;
                         const taskInfo = listeningTaskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Listen and answer.' };
                         const isAnswered = !!answers[q.id];
