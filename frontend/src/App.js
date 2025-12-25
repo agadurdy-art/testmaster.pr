@@ -256,6 +256,10 @@ function AppWithSessionHandler() {
           path="/lesson-preview/:courseType/:lessonId" 
           element={<LessonPreview />} 
         />
+        <Route 
+          path="/feature-showcase" 
+          element={<FeatureShowcase />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
