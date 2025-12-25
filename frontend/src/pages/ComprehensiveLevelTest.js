@@ -2381,8 +2381,8 @@ export default function ComprehensiveLevelTest({ user }) {
             </Card>
           )}
 
-          {/* Course Recommendations */}
-          {results.recommendations && (
+          {/* Course Recommendations - Only for full test */}
+          {!isSingleSkillTest && results.recommendations && (
             <>
               <Card className="p-8 bg-gradient-to-br from-violet-500 to-purple-600 text-white shadow-2xl mb-8">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
