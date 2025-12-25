@@ -2777,6 +2777,35 @@ export default function ComprehensiveLevelTest({ user }) {
             </>
           )}
 
+          {/* Progress Analytics Section - For Full Test */}
+          {!isSingleSkillTest && results.overall_band && (
+            <Card className="p-6 bg-white shadow-lg mb-8">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-violet-600" />
+                {language === 'vi' ? 'Phân Tích Tiến Độ' : language === 'tr' ? 'İlerleme Analizi' : 'Performance Analytics'}
+              </h3>
+              <ProgressAnalytics
+                overallBand={results.overall_band}
+                skillScores={{
+                  reading: results.reading?.band || 0,
+                  listening: results.listening?.band_score || 0,
+                  writing: results.writing?.overall_band || 0,
+                  speaking: results.speaking?.overall_band || 0
+                }}
+                testsCompleted={1}
+                studyTime="--"
+                weakAreas={
+                  results.reading?.skill_breakdown ? 
+                  Object.entries(results.reading.skill_breakdown)
+                    .filter(([_, data]) => data.correct < data.total)
+                    .map(([skill]) => skill.replace(/_/g, ' '))
+                    .slice(0, 3) : []
+                }
+                language={language}
+              />
+            </Card>
+          )}
+
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {/* Take Another Test Button */}
