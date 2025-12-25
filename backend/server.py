@@ -4736,7 +4736,7 @@ async def fix_combined_question_ids():
     This runs on startup to ensure Q20-21 style questions display correctly.
     """
     try:
-        # Define the correct combined question mappings
+        # Define the correct combined question mappings with full data
         # These are "Choose TWO" questions that should have combined IDs
         combined_mappings = {
             # Reading Test 1 - Passage 2
@@ -4744,46 +4744,67 @@ async def fix_combined_question_ids():
                 "test_title_contains": "Academic Reading Practice Test 1",
                 "old_ids": [20, 21],
                 "new_id": "20-21",
-                "passage": 2
+                "passage": 2,
+                "type": "multiple_choice_multi",
+                "question": "Which TWO statements does the writer make about inhabitants of the Mediterranean region in the ancient world?",
+                "options": ["A) They often used stolen vessels to carry out pirate attacks", "B) They managed to escape capture by the authorities because they knew the area so well", "C) They paid for information about the routes merchant ships would take", "D) They depended more on the sea for their livelihood than on farming", "E) They stored many of the goods taken in pirate attacks in coves along the coastline"]
             },
             "reading_passage2_q22_23": {
                 "test_title_contains": "Academic Reading Practice Test 1",
                 "old_ids": [22, 23],
                 "new_id": "22-23",
-                "passage": 2
+                "passage": 2,
+                "type": "multiple_choice_multi",
+                "question": "Which TWO statements does the writer make about piracy and ancient Greece?",
+                "options": ["A) The state estimated that very few people were involved in piracy", "B) Attitudes towards piracy changed shortly after the Iliad and the Odyssey were written", "C) Important officials were known to occasionally take part in piracy", "D) Every citizen regarded pirate attacks on cities as unacceptable", "E) A favourable view of piracy is evident in certain ancient Greek texts"]
             },
             # Reading Test 2 - Passage 2
             "reading2_passage2_q23_24": {
                 "test_title_contains": "Academic Reading Practice Test 2",
                 "old_ids": [23, 24],
                 "new_id": "23-24",
-                "passage": 2
+                "passage": 2,
+                "type": "multiple_choice_multi",
+                "question": "Which TWO facts about Emma Raducanu's withdrawal from the Wimbledon tournament are mentioned in the text?",
+                "options": ["A) the stage at which she dropped out of the tournament", "B) symptoms of her performance stress at the tournament", "C) measures which she had taken to manage her stress levels", "D) aspects of the Wimbledon tournament which increased her stress levels", "E) reactions to her social media posts about her experience at Wimbledon"]
             },
             # Listening Test 1 - Part 3
             "listening1_part3_q21_22": {
                 "test_title_contains": "Test 1 - Listening",
                 "old_ids": [21, 22],
                 "new_id": "21-22",
-                "section": 3
+                "section": 3,
+                "type": "multiple_choice_multi",
+                "question": "Which TWO things did Colin find most satisfying about his bread reuse project?",
+                "options": ["A) receiving support from local restaurants", "B) finding a good way to prevent waste", "C) overcoming problems in a basic process", "D) experimenting with designs and colours", "E) learning how to apply 3-D printing"]
             },
             "listening1_part3_q23_24": {
                 "test_title_contains": "Test 1 - Listening",
                 "old_ids": [23, 24],
                 "new_id": "23-24",
-                "section": 3
+                "section": 3,
+                "type": "multiple_choice_multi",
+                "question": "Which TWO ways do the students agree that touch-sensitive sensors for food labels could be developed in future?",
+                "options": ["A) for use on medical products", "B) to show that food is no longer fit to eat", "C) for use with drinks as well as foods", "D) to provide applications for blind people", "E) to indicate the weight of certain foods"]
             },
             # Listening Test 2 - Part 2 (Q17-18, Q19-20)
             "listening2_part2_q17_18": {
                 "test_title_contains": "Test 2 - Listening",
                 "old_ids": [17, 18],
                 "new_id": "17-18",
-                "section": 2
+                "section": 2,
+                "type": "multiple_choice_multi",
+                "question": "Which TWO things does David say about the lifeboat volunteer training?",
+                "options": ["A) It often involves putting to sea.", "B) It teaches both practical and academic skills.", "C) It is based on a fixed schedule.", "D) It can take up to a year to complete.", "E) It includes preparation for emergency situations."]
             },
             "listening2_part2_q19_20": {
                 "test_title_contains": "Test 2 - Listening",
                 "old_ids": [19, 20],
                 "new_id": "19-20",
-                "section": 2
+                "section": 2,
+                "type": "multiple_choice_multi",
+                "question": "Which TWO things does David find most motivating about the work he does?",
+                "options": ["A) the knowledge that he is protecting people's safety", "B) the range of tasks that he is given to do", "C) the chance to work alongside full-time lifeboat crews", "D) the reputation that the lifeboat service has", "E) the chance to develop new equipment"]
             },
         }
         
