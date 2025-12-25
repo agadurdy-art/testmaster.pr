@@ -439,40 +439,57 @@ export default function Progress({ user }) {
         {/* Weaknesses & Strengths */}
         {stats.avgBand > 0 && (
           <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card className="p-6 bg-gradient-to-br from-red-50 to-orange-50 border-red-200 rounded-2xl">
-              <h3 className="font-semibold text-red-800 mb-3 flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5" /> Areas to Improve
+            <Card className="p-6 bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200 rounded-2xl">
+              <h3 className="font-semibold text-violet-800 mb-3 flex items-center gap-2">
+                <Target className="w-5 h-5" /> Recommended Courses
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {Object.entries(stats.byType)
                   .filter(([_, data]) => (data.avg_score || data.avgBand || 0) > 0 && (data.avg_score || data.avgBand || 0) < 6)
                   .sort((a, b) => (a[1].avg_score || a[1].avgBand || 0) - (b[1].avg_score || b[1].avgBand || 0))
                   .slice(0, 3)
                   .map(([type, data]) => {
                     const score = data.avg_score || data.avgBand || 0;
-                    const gap = targetBand - score;
-                    const tips = {
-                      reading: 'Focus on skimming, scanning, and vocabulary building',
-                      listening: 'Practice with different accents and note-taking',
-                      writing: 'Work on essay structure and grammar accuracy',
-                      speaking: 'Record yourself and practice fluency'
+                    const courses = {
+                      reading: { name: 'Reading Mastery Course', path: '/course/mastery', icon: '📖', level: score < 4 ? 'Beginner' : 'Intermediate' },
+                      listening: { name: 'Listening Skills Course', path: '/course/beginner', icon: '🎧', level: score < 4 ? 'Beginner' : 'Intermediate' },
+                      writing: { name: 'Writing Excellence Course', path: '/course/advanced-mastery', icon: '✍️', level: score < 4 ? 'Beginner' : 'Advanced' },
+                      speaking: { name: 'Speaking Confidence Course', path: '/speaking-practice', icon: '🎤', level: score < 4 ? 'Beginner' : 'Intermediate' }
                     };
+                    const course = courses[type] || { name: `${type} Course`, path: '/learning', icon: '📚', level: 'All Levels' };
                     return (
-                      <div key={type} className="p-3 bg-white rounded-lg">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="capitalize font-medium text-gray-900">{type}</span>
-                          <span className={`px-2 py-0.5 rounded text-sm ${getBandBgColor(score)}`}>
-                            Band {score.toFixed(1)}
-                          </span>
+                      <div key={type} className="p-3 bg-white rounded-lg shadow-sm">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xl">{course.icon}</span>
+                            <div>
+                              <p className="font-medium text-gray-900 text-sm">{course.name}</p>
+                              <p className="text-xs text-gray-500">{course.level} • Band {score.toFixed(1)} → {targetBand}</p>
+                            </div>
+                          </div>
                         </div>
-                        <p className="text-xs text-gray-500">
-                          {gap > 0 ? `${gap.toFixed(1)} bands to target` : 'On track!'} • {tips[type] || 'Keep practicing'}
-                        </p>
+                        <Button 
+                          onClick={() => navigate(course.path)}
+                          size="sm"
+                          className="w-full bg-violet-600 hover:bg-violet-700 text-white text-xs"
+                        >
+                          Start Course →
+                        </Button>
                       </div>
                     );
                   })}
                 {Object.entries(stats.byType).filter(([_, data]) => (data.avg_score || data.avgBand || 0) > 0 && (data.avg_score || data.avgBand || 0) < 6).length === 0 && (
-                  <p className="text-sm text-green-600 font-medium">🎉 Great job! All skills are at Band 6+. Keep practicing to maintain your level.</p>
+                  <div className="text-center py-4">
+                    <p className="text-sm text-green-600 font-medium mb-2">🎉 All skills at Band 6+!</p>
+                    <Button 
+                      onClick={() => navigate('/course/advanced-mastery')}
+                      variant="outline"
+                      size="sm"
+                      className="text-violet-600 border-violet-300"
+                    >
+                      Try Advanced Course
+                    </Button>
+                  </div>
                 )}
               </div>
             </Card>
@@ -489,10 +506,10 @@ export default function Progress({ user }) {
                   .map(([type, data]) => {
                     const score = data.avg_score || data.avgBand || 0;
                     const strengths = {
-                      reading: 'Strong comprehension and analysis',
-                      listening: 'Good at understanding spoken English',
-                      writing: 'Clear and structured writing',
-                      speaking: 'Confident verbal communication'
+                      reading: '📖 Strong comprehension and analysis',
+                      listening: '🎧 Good at understanding spoken English',
+                      writing: '✍️ Clear and structured writing',
+                      speaking: '🎤 Confident verbal communication'
                     };
                     return (
                       <div key={type} className="p-3 bg-white rounded-lg">
@@ -503,7 +520,7 @@ export default function Progress({ user }) {
                           </span>
                         </div>
                         <p className="text-xs text-gray-500">
-                          ✓ {strengths[type] || 'Strong performance'}
+                          {strengths[type] || '⭐ Strong performance'}
                         </p>
                       </div>
                     );
