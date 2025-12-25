@@ -1043,7 +1043,7 @@ export default function ComprehensiveLevelTest({ user }) {
                 className="bg-blue-600 hover:bg-blue-700"
                 disabled={!readingAnswers[currentQ.id]}
               >
-                {currentQuestion < readingQuestions.length - 1 ? 'Next Question' : 'Continue to Speaking'}
+                {currentQuestion < readingQuestions.length - 1 ? 'Next Question' : 'Continue to Listening'}
                 <ChevronRight className="w-5 h-5 ml-2" />
               </Button>
             </div>
