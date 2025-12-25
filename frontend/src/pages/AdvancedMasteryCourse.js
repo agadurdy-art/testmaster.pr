@@ -10,6 +10,7 @@ import {
   Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap
 } from 'lucide-react';
 import { toast } from 'sonner';
+import SideBySideReader from '../components/test/SideBySideReader';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
