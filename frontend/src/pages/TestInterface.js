@@ -70,9 +70,6 @@ function ElevenLabsExaminer() {
   
   // NEW: Question flagging for navigation
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
-  
-  // NEW: Adjustable layout ratio for reading test
-  const [passageRatio, setPassageRatio] = useState(75); // Default 75% passage, 25% questions
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
@@ -93,14 +90,6 @@ function ElevenLabsExaminer() {
       return newSet;
     });
   };
-
-  // Layout presets for reading test
-  const layoutPresets = [
-    { label: '50-50', value: 50 },
-    { label: '60-40', value: 60 },
-    { label: '70-30', value: 70 },
-    { label: '75-25', value: 75 },
-  ];
 
   // Premium access / free trial helper functions
   const canAccessPremium = (user?.plan === 'pro') || ((user?.examCredits ?? 0) > 0);
@@ -858,101 +847,76 @@ function ElevenLabsExaminer() {
           </>
         )}
 
-        {/* READING TEST - New Two-Column Layout with Adjustable Ratio */}
+        {/* READING TEST - New Two-Column Layout */}
         {testType === 'reading' ? (
-          <div className="flex flex-col min-h-[calc(100vh-220px)] mb-20">
-            {/* Layout Control Bar */}
-            <div className="flex items-center justify-between px-4 py-2 mb-2 bg-white rounded-lg shadow-sm border">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-500 font-medium">Layout:</span>
-                {layoutPresets.map((preset) => (
-                  <button
-                    key={preset.value}
-                    onClick={() => setPassageRatio(preset.value)}
-                    className={`px-3 py-1.5 text-xs rounded-lg transition-colors font-medium ${
-                      passageRatio === preset.value
-                        ? 'bg-sky-500 text-white shadow-sm'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {preset.label}
-                  </button>
-                ))}
-              </div>
-              <span className="text-xs text-gray-400">
-                Passage {passageRatio}% | Questions {100 - passageRatio}%
-              </span>
+          <div className="flex flex-col lg:flex-row gap-4 min-h-[calc(100vh-220px)] lg:h-[calc(100vh-220px)] mb-20">
+            {/* Left Column - Passage (~75% width) */}
+            <div className="lg:w-3/4 flex flex-col">
+              <Card className="flex-1 overflow-hidden flex flex-col">
+                {/* Passage Header */}
+                <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
+                  <h2 className="text-lg font-bold text-gray-900">
+                    {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
+                  </h2>
+                </div>
+                {/* Passage Content - Scrollable with Highlighter */}
+                <div className="flex-1 overflow-y-auto p-6">
+                  {(() => {
+                    // Check if current passage has matching_information or matching_headings questions
+                    const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
+                    const needsParagraphLabels = passageQuestions.some(q => 
+                      q.type === 'matching_information' || q.type === 'matching_headings'
+                    );
+                    
+                    return (
+                      <HighlightableText
+                        text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
+                        user={user}
+                        testId={`${test?.id}-passage-${currentPassage}`}
+                        testType="reading"
+                        highlightsEnabled={true}
+                        showParagraphLabels={needsParagraphLabels}
+                      />
+                    );
+                  })()}
+                </div>
+              </Card>
             </div>
-            
-            {/* Two Column Layout */}
-            <div className="flex flex-col lg:flex-row gap-4 flex-1 lg:h-[calc(100vh-280px)]">
-              {/* Left Column - Passage (Dynamic width) */}
-              <div className="flex flex-col" style={{ width: `${passageRatio}%` }}>
-                <Card className="flex-1 overflow-hidden flex flex-col">
-                  {/* Passage Header */}
-                  <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
-                    <h2 className="text-lg font-bold text-gray-900">
-                      {test.passages?.[currentPassage - 1]?.title || `Passage ${currentPassage}`}
-                    </h2>
-                  </div>
-                  {/* Passage Content - Scrollable with Highlighter */}
-                  <div className="flex-1 overflow-y-auto p-6">
-                    {(() => {
-                      // Check if current passage has matching_information or matching_headings questions
-                      const passageQuestions = test.questions?.filter(q => q.passage === currentPassage) || [];
-                      const needsParagraphLabels = passageQuestions.some(q => 
-                        q.type === 'matching_information' || q.type === 'matching_headings'
-                      );
-                      
-                      return (
-                        <HighlightableText
-                          text={test.passages?.[currentPassage - 1]?.text || 'No passage content available.'}
-                          user={user}
-                          testId={`${test?.id}-passage-${currentPassage}`}
-                          testType="reading"
-                          highlightsEnabled={true}
-                          showParagraphLabels={needsParagraphLabels}
-                        />
-                      );
-                    })()}
-                  </div>
-                </Card>
-              </div>
 
-              {/* Right Column - Questions (Dynamic width) */}
-              <div className="flex flex-col min-w-[280px]" style={{ width: `${100 - passageRatio}%` }}>
-                <Card className="flex-1 overflow-hidden flex flex-col">
-                  {/* Question Navigation Bar - All 40 questions */}
-                  <div className="p-2 border-b bg-white">
-                    <QuestionNavigation
-                      totalQuestions={test.questions?.length || 40}
-                      currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
-                      answers={answers}
-                      flaggedQuestions={flaggedQuestions}
-                      onQuestionSelect={(index) => {
-                        const question = test.questions?.[index];
-                        if (question) {
-                          setCurrentPassage(question.passage || 1);
-                        }
-                      }}
-                      questionIds={test.questions?.map(q => q.id) || []}
-                      className="mb-0"
-                    />
-                  </div>
-                  
-                  {/* Passage Tabs */}
-                  <div className="p-3 border-b bg-gray-50">
-                    <div className="flex gap-1">
-                      {[1, 2, 3].map((passageNum) => {
-                        const passageQuestions = test.questions?.filter(q => q.passage === passageNum) || [];
-                        const answeredCount = passageQuestions.filter(q => answers[q.id]).length;
-                        return (
-                          <button
-                            key={passageNum}
-                            onClick={() => setCurrentPassage(passageNum)}
-                            className={`flex-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors ${
-                              currentPassage === passageNum
-                                ? 'bg-sky-500 text-white'
+            {/* Right Column - Questions (~25% width) */}
+            <div className="lg:w-1/4 flex flex-col min-w-[300px]">
+              <Card className="flex-1 overflow-hidden flex flex-col">
+                {/* Question Navigation Bar - All 40 questions */}
+                <div className="p-2 border-b bg-white">
+                  <QuestionNavigation
+                    totalQuestions={test.questions?.length || 40}
+                    currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
+                    answers={answers}
+                    flaggedQuestions={flaggedQuestions}
+                    onQuestionSelect={(index) => {
+                      const question = test.questions?.[index];
+                      if (question) {
+                        setCurrentPassage(question.passage || 1);
+                      }
+                    }}
+                    questionIds={test.questions?.map(q => q.id) || []}
+                    className="mb-0"
+                  />
+                </div>
+                
+                {/* Passage Tabs */}
+                <div className="p-3 border-b bg-gray-50">
+                  <div className="flex gap-1">
+                    {[1, 2, 3].map((passageNum) => {
+                      const passageQuestions = test.questions?.filter(q => q.passage === passageNum) || [];
+                      const answeredCount = passageQuestions.filter(q => answers[q.id]).length;
+                      return (
+                        <button
+                          key={passageNum}
+                          onClick={() => setCurrentPassage(passageNum)}
+                          className={`flex-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                            currentPassage === passageNum
+                              ? 'bg-sky-500 text-white'
                               : answeredCount === passageQuestions.length && passageQuestions.length > 0
                               ? 'bg-green-100 text-green-700 hover:bg-green-200'
                               : 'bg-white text-gray-600 hover:bg-gray-100 border'
@@ -1039,33 +1003,34 @@ function ElevenLabsExaminer() {
                             )}
                             
                             {/* Question */}
-                            <div 
-                              className={`p-3 rounded-lg border-l-4 mb-3 ${
-                                flaggedQuestions.has(q.id) ? 'border-l-yellow-500 bg-yellow-50' :
-                                isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
-                              } shadow-sm`}
+                        <div 
+                          key={q.id} 
+                          className={`p-3 rounded-lg border-l-4 ${
+                            flaggedQuestions.has(q.id) ? 'border-l-yellow-500 bg-yellow-50' :
+                            isAnswered ? 'border-l-green-500 bg-green-50' : 'border-l-sky-500 bg-white'
+                          } shadow-sm`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <p className="text-sm font-medium text-gray-900 flex-1">
+                              <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold mr-2 ${
+                                flaggedQuestions.has(q.id) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-100 text-sky-700'
+                              }`}>
+                                {q.id}
+                              </span>
+                              {q.question}
+                            </p>
+                            <button
+                              onClick={() => toggleFlagQuestion(q.id)}
+                              className={`ml-2 p-1 rounded transition-colors flex-shrink-0 ${
+                                flaggedQuestions.has(q.id) 
+                                  ? 'bg-yellow-200 text-yellow-700 hover:bg-yellow-300' 
+                                  : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
+                              }`}
+                              title={flaggedQuestions.has(q.id) ? 'Remove flag' : 'Flag for review'}
                             >
-                              <div className="flex items-start justify-between mb-2">
-                                <p className="text-sm font-medium text-gray-900 flex-1">
-                                  <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold mr-2 ${
-                                    flaggedQuestions.has(q.id) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-100 text-sky-700'
-                                  }`}>
-                                    {q.id}
-                                  </span>
-                                  {q.question}
-                                </p>
-                                <button
-                                  onClick={() => toggleFlagQuestion(q.id)}
-                                  className={`ml-2 p-1 rounded transition-colors flex-shrink-0 ${
-                                    flaggedQuestions.has(q.id) 
-                                      ? 'bg-yellow-200 text-yellow-700 hover:bg-yellow-300' 
-                                      : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-600'
-                                  }`}
-                                  title={flaggedQuestions.has(q.id) ? 'Remove flag' : 'Flag for review'}
-                                >
-                                  <Flag className="w-3 h-3" />
-                                </button>
-                              </div>
+                              <Flag className="w-3 h-3" />
+                            </button>
+                          </div>
                           
                           {/* Answer Input Based on Question Type */}
                           {(q.type === 'true_false_notgiven' || q.type === 'yes_no_notgiven') && (
@@ -1267,7 +1232,7 @@ function ElevenLabsExaminer() {
                               className="mt-2 text-sm h-8"
                             />
                           )}
-                            </div>
+                        </div>
                           </React.Fragment>
                         );
                       });
