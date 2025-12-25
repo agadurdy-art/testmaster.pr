@@ -532,10 +532,15 @@ export default function ComprehensiveLevelTest({ user }) {
     if (currentListeningSection < sections.length - 1) {
       setCurrentListeningSection(currentListeningSection + 1);
     } else {
-      // Move to writing
-      loadWritingTasks();
-      setStage('writing');
-      setCurrentWritingTask(0);
+      // Check test mode for next stage
+      if (testMode === 'full') {
+        loadWritingTasks();
+        setStage('writing');
+        setCurrentWritingTask(0);
+      } else {
+        // Single listening test - go to evaluation
+        evaluateTest();
+      }
     }
   };
   
@@ -564,9 +569,14 @@ export default function ComprehensiveLevelTest({ user }) {
     if (currentWritingTask < writingTasks.length - 1) {
       setCurrentWritingTask(currentWritingTask + 1);
     } else {
-      // Move to speaking
-      setStage('speaking');
-      setCurrentSpeakingPrompt(0);
+      // Check test mode for next stage
+      if (testMode === 'full') {
+        setStage('speaking');
+        setCurrentSpeakingPrompt(0);
+      } else {
+        // Single writing test - go to evaluation
+        evaluateTest();
+      }
     }
   };
 
