@@ -527,46 +527,48 @@ export default function BeginnerCourse({ user }) {
     if (!selectedLesson?.reading) return <Card className="p-6"><Loader2 className="w-6 h-6 animate-spin mx-auto" /></Card>;
     
     return (
-      <Card className="p-6 bg-white border-0 shadow-lg">
-        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          <FileText className="w-5 h-5 text-blue-600" />
-          Reading Practice
-        </h3>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <FileText className="w-5 h-5 text-blue-600" />
+            Reading Practice
+          </h3>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => playPronunciation(selectedLesson.reading.text)}
+            disabled={playingAudio === selectedLesson.reading.text}
+          >
+            {playingAudio === selectedLesson.reading.text ? (
+              <Loader2 className="w-4 h-4 animate-spin mr-1" />
+            ) : (
+              <Volume2 className="w-4 h-4 mr-1" />
+            )}
+            Listen
+          </Button>
+        </div>
         
-        <div className="bg-blue-50 rounded-xl p-5 mb-6">
-          <div className="flex justify-end mb-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => playPronunciation(selectedLesson.reading.text)}
-              disabled={playingAudio === selectedLesson.reading.text}
-            >
-              {playingAudio === selectedLesson.reading.text ? (
-                <Loader2 className="w-4 h-4 animate-spin mr-1" />
-              ) : (
-                <Volume2 className="w-4 h-4 mr-1" />
-              )}
-              Listen
-            </Button>
+        <SideBySideReader
+          passage={selectedLesson.reading.text}
+          passageTitle="Reading Passage"
+          defaultRatio={60}
+        >
+          {/* Comprehension Questions */}
+          <div className="space-y-4">
+            <h4 className="font-bold text-gray-900 text-sm">Comprehension Questions</h4>
+            {selectedLesson.reading.questions?.map((q, idx) => (
+              <div key={idx} className="p-3 bg-gray-50 rounded-lg">
+                <p className="font-medium text-gray-900 text-sm mb-2">{idx + 1}. {q.question}</p>
+                <details className="cursor-pointer">
+                  <summary className="text-xs text-green-600 hover:text-green-700">Click to see answer</summary>
+                  <p className="mt-2 text-gray-700 text-sm bg-green-50 p-2 rounded">{q.answer}</p>
+                </details>
+              </div>
+            ))}
           </div>
-          <p className="text-gray-800 leading-relaxed text-lg">{selectedLesson.reading.text}</p>
-        </div>
-        
-        {/* Comprehension Questions */}
-        <div className="space-y-4">
-          <h4 className="font-bold text-gray-900">Comprehension Questions</h4>
-          {selectedLesson.reading.questions?.map((q, idx) => (
-            <div key={idx} className="p-4 bg-gray-50 rounded-xl">
-              <p className="font-medium text-gray-900 mb-2">{idx + 1}. {q.question}</p>
-              <details className="cursor-pointer">
-                <summary className="text-sm text-green-600 hover:text-green-700">Click to see answer</summary>
-                <p className="mt-2 text-gray-700 bg-green-50 p-3 rounded-lg">{q.answer}</p>
-              </details>
-            </div>
-          ))}
-        </div>
+        </SideBySideReader>
       
-        <div className="mt-6 flex justify-between">
+        <div className="flex justify-between">
           <Button variant="outline" onClick={() => setCurrentSection('grammar')}>
             <ChevronLeft className="w-4 h-4 mr-1" /> Grammar
           </Button>
@@ -574,7 +576,7 @@ export default function BeginnerCourse({ user }) {
             Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
-      </Card>
+      </div>
     );
   };
 
