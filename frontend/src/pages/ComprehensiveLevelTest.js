@@ -290,6 +290,46 @@ export default function ComprehensiveLevelTest({ user }) {
     setReadingAnswers(prev => ({ ...prev, [questionId]: answer }));
   };
 
+  // Handle test mode selection
+  const selectTestMode = (mode) => {
+    setTestMode(mode);
+    setStage('intro');
+  };
+
+  // Start the selected test
+  const startTest = () => {
+    if (testMode === 'full') {
+      // Full test starts with reading
+      setStage('reading');
+      setCurrentQuestion(0);
+    } else if (testMode === 'reading') {
+      setStage('reading');
+      setCurrentQuestion(0);
+    } else if (testMode === 'listening') {
+      loadListeningQuestions();
+      setStage('listening');
+      setCurrentListeningSection(0);
+    } else if (testMode === 'writing') {
+      loadWritingTasks();
+      setStage('writing');
+      setCurrentWritingTask(0);
+    } else if (testMode === 'speaking') {
+      setStage('speaking');
+      setCurrentSpeakingPrompt(0);
+    }
+  };
+
+  // Get next stage based on test mode
+  const getNextStage = (currentStage) => {
+    if (testMode === 'full') {
+      const fullOrder = ['reading', 'listening', 'writing', 'speaking', 'evaluating'];
+      const currentIdx = fullOrder.indexOf(currentStage);
+      return currentIdx < fullOrder.length - 1 ? fullOrder[currentIdx + 1] : 'results';
+    }
+    // Single skill tests go directly to evaluating after completion
+    return 'evaluating';
+  };
+
   const nextReadingQuestion = () => {
     if (!readingAnswers[readingQuestions[currentQuestion].id]) {
       toast.error('Please select an answer before continuing');
@@ -299,10 +339,15 @@ export default function ComprehensiveLevelTest({ user }) {
     if (currentQuestion < readingQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      // Move to listening instead of speaking
-      loadListeningQuestions();
-      setStage('listening');
-      setCurrentListeningSection(0);
+      // Check test mode for next stage
+      if (testMode === 'full') {
+        loadListeningQuestions();
+        setStage('listening');
+        setCurrentListeningSection(0);
+      } else {
+        // Single reading test - go to evaluation
+        evaluateTest();
+      }
     }
   };
   
