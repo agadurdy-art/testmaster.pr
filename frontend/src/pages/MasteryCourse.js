@@ -516,58 +516,62 @@ export default function MasteryCourse({ user }) {
 
   // Reading Section
   const renderReading = () => (
-    <Card className="p-6 bg-white border-0 shadow-lg">
-      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-        <FileText className="w-5 h-5 text-blue-600" /> {selectedModule.reading?.title}
-      </h3>
-      
-      <div className="bg-blue-50 rounded-xl p-5 mb-6">
-        <Button variant="outline" size="sm" onClick={() => playPronunciation(selectedModule.reading.text)} disabled={playingAudio === selectedModule.reading.text} className="mb-3">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <FileText className="w-5 h-5 text-blue-600" /> {selectedModule.reading?.title}
+        </h3>
+        <Button variant="outline" size="sm" onClick={() => playPronunciation(selectedModule.reading.text)} disabled={playingAudio === selectedModule.reading.text}>
           {playingAudio === selectedModule.reading.text ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : <Volume2 className="w-4 h-4 mr-1" />}
           Listen
         </Button>
-        <p className="text-gray-800 leading-relaxed">{selectedModule.reading?.text}</p>
       </div>
       
-      <div className="space-y-4">
-        <h4 className="font-bold text-gray-900">Comprehension Questions</h4>
-        {selectedModule.reading?.questions?.map((q, idx) => (
-          <div key={idx} className="p-4 bg-gray-50 rounded-xl">
-            <p className="font-medium text-gray-900 mb-2">
-              {idx + 1}. {q.question}
-              {q.type === 'true_false_ng' && <span className="text-xs text-gray-500 ml-2">(True/False/Not Given)</span>}
-              {q.type === 'multiple_choice' && <span className="text-xs text-gray-500 ml-2">(Multiple Choice)</span>}
-            </p>
-            {q.options ? (
-              <div className="space-y-1">
-                {q.options.map((opt, i) => (
-                  <label key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                    <input type="radio" name={`q_${idx}`} value={opt} onChange={() => handleQuizAnswer(`q_${idx}`, opt)} />
-                    {opt}
-                  </label>
-                ))}
-              </div>
-            ) : q.type === 'true_false_ng' ? (
-              <div className="flex gap-4">
-                {['True', 'False', 'Not Given'].map(opt => (
-                  <label key={opt} className="flex items-center gap-2 text-sm">
-                    <input type="radio" name={`q_${idx}`} value={opt} onChange={() => handleQuizAnswer(`q_${idx}`, opt)} />
-                    {opt}
-                  </label>
-                ))}
-              </div>
-            ) : (
-              <Input placeholder="Your answer..." onChange={(e) => handleQuizAnswer(`q_${idx}`, e.target.value)} />
-            )}
-            <details className="mt-2 cursor-pointer">
-              <summary className="text-sm text-green-600">Show Answer</summary>
-              <p className="mt-1 text-sm text-gray-700 bg-green-50 p-2 rounded">{q.answer}</p>
-            </details>
-          </div>
-        ))}
-      </div>
+      <SideBySideReader
+        passage={selectedModule.reading?.text || ''}
+        passageTitle="Reading Passage"
+        defaultRatio={65}
+      >
+        <div className="space-y-4">
+          <h4 className="font-bold text-gray-900 text-sm">Comprehension Questions</h4>
+          {selectedModule.reading?.questions?.map((q, idx) => (
+            <div key={idx} className="p-3 bg-gray-50 rounded-lg">
+              <p className="font-medium text-gray-900 mb-2 text-sm">
+                {idx + 1}. {q.question}
+                {q.type === 'true_false_ng' && <span className="text-xs text-gray-500 ml-2">(T/F/NG)</span>}
+                {q.type === 'multiple_choice' && <span className="text-xs text-gray-500 ml-2">(MC)</span>}
+              </p>
+              {q.options ? (
+                <div className="space-y-1">
+                  {q.options.map((opt, i) => (
+                    <label key={i} className="flex items-center gap-2 text-xs text-gray-700">
+                      <input type="radio" name={`q_${idx}`} value={opt} onChange={() => handleQuizAnswer(`q_${idx}`, opt)} />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              ) : q.type === 'true_false_ng' ? (
+                <div className="flex gap-3 flex-wrap">
+                  {['True', 'False', 'Not Given'].map(opt => (
+                    <label key={opt} className="flex items-center gap-1 text-xs">
+                      <input type="radio" name={`q_${idx}`} value={opt} onChange={() => handleQuizAnswer(`q_${idx}`, opt)} />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <Input placeholder="Your answer..." className="text-sm h-8" onChange={(e) => handleQuizAnswer(`q_${idx}`, e.target.value)} />
+              )}
+              <details className="mt-2 cursor-pointer">
+                <summary className="text-xs text-green-600">Show Answer</summary>
+                <p className="mt-1 text-xs text-gray-700 bg-green-50 p-2 rounded">{q.answer}</p>
+              </details>
+            </div>
+          ))}
+        </div>
+      </SideBySideReader>
       
-      <div className="mt-6 flex justify-between">
+      <div className="flex justify-between">
         <Button variant="outline" onClick={() => setCurrentSection('grammar')}>
           <ChevronLeft className="w-4 h-4 mr-1" /> Grammar
         </Button>
@@ -575,7 +579,7 @@ export default function MasteryCourse({ user }) {
           Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
         </Button>
       </div>
-    </Card>
+    </div>
   );
 
   // Speaking Section
