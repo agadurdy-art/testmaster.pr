@@ -1048,12 +1048,12 @@ function ElevenLabsExaminer() {
                                   if (selectedAnswers.includes(optionLetter)) {
                                     // Remove if already selected
                                     newAnswers = selectedAnswers.filter(a => a !== optionLetter);
-                                  } else if (selectedAnswers.length < 2) {
-                                    // Add if less than 2 selected
+                                  } else if (selectedAnswers.length < maxSelections) {
+                                    // Add if less than max selected
                                     newAnswers = [...selectedAnswers, optionLetter];
                                   } else {
-                                    // Replace oldest if already 2 selected
-                                    newAnswers = [selectedAnswers[1], optionLetter];
+                                    // Replace oldest if already max selected
+                                    newAnswers = [...selectedAnswers.slice(1), optionLetter];
                                   }
                                   handleAnswerChange(q.id, newAnswers);
                                 };
@@ -1061,7 +1061,7 @@ function ElevenLabsExaminer() {
                                 return (
                                   <div className="mt-2">
                                     <div className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded mb-2 font-medium">
-                                      ⚠️ Select exactly TWO options ({selectedAnswers.length}/2 selected)
+                                      ⚠️ Select exactly {maxSelections} options ({selectedAnswers.length}/{maxSelections} selected)
                                     </div>
                                     <div className="space-y-1">
                                       {q.options.map((option, optIdx) => {
