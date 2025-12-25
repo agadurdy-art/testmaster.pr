@@ -4853,11 +4853,23 @@ async def fix_combined_question_ids():
             logger.info(f"🔧 Fixing combined questions in: {test.get('title')}")
             logger.info(f"   Combining Q{old_id_1} + Q{old_id_2} → Q{mapping['new_id']}")
             
-            # Create combined question
-            combined_q = q1.copy()
-            combined_q["id"] = mapping["new_id"]
-            combined_q["answer_count"] = 2
-            combined_q["answer_ids"] = [old_id_1, old_id_2]
+            # Create combined question with full data from mapping
+            combined_q = {
+                "id": mapping["new_id"],
+                "type": mapping.get("type", "multiple_choice_multi"),
+                "question": mapping.get("question", q1.get("question", "")),
+                "options": mapping.get("options", q1.get("options", [])),
+                "answer_count": 2,
+                "answer_ids": [old_id_1, old_id_2]
+            }
+            
+            # Add passage or section if present
+            if "passage" in mapping:
+                combined_q["passage"] = mapping["passage"]
+            if "section" in mapping:
+                combined_q["section"] = mapping["section"]
+            elif "section" in q1:
+                combined_q["section"] = q1["section"]
             
             # Build new questions list
             new_questions = []
