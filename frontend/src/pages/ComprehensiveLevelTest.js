@@ -2335,6 +2335,29 @@ export default function ComprehensiveLevelTest({ user }) {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* Take Another Test Button */}
+            <Button
+              onClick={() => {
+                // Reset state and go back to selection
+                setTestMode(null);
+                setStage('select');
+                setCurrentQuestion(0);
+                setReadingAnswers({});
+                setListeningAnswers({});
+                setWritingResponses({});
+                setSpeakingResponses([]);
+                setCurrentListeningSection(0);
+                setCurrentWritingTask(0);
+                setCurrentSpeakingPrompt(0);
+                setResults(null);
+              }}
+              size="lg"
+              variant="outline"
+              className="border-2 border-violet-600 text-violet-600 hover:bg-violet-50"
+            >
+              <Target className="w-5 h-5 mr-2" />
+              {language === 'vi' ? 'Làm Bài Kiểm Tra Khác' : language === 'tr' ? 'Başka Bir Test Yap' : 'Take Another Test'}
+            </Button>
             {!user && (
               <Button
                 onClick={() => {
@@ -2345,7 +2368,7 @@ export default function ComprehensiveLevelTest({ user }) {
                 className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
               >
                 <Award className="w-5 h-5 mr-2" />
-                Sign Up to Save Your Results
+                {language === 'vi' ? 'Đăng Ký Lưu Kết Quả' : language === 'tr' ? 'Sonuçları Kaydetmek için Üye Ol' : 'Sign Up to Save Your Results'}
               </Button>
             )}
             <Button
@@ -2360,22 +2383,8 @@ export default function ComprehensiveLevelTest({ user }) {
               size="lg"
               className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white"
             >
-              {user ? 'Go to Dashboard' : 'Start Free Practice'}
+              {user ? (language === 'vi' ? 'Đến Trang Cá Nhân' : language === 'tr' ? 'Panele Git' : 'Go to Dashboard') : (language === 'vi' ? 'Bắt Đầu Luyện Tập Miễn Phí' : language === 'tr' ? 'Ücretsiz Pratik Başlat' : 'Start Free Practice')}
               <ChevronRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button
-              onClick={() => {
-                if (user) {
-                  navigate('/dashboard');
-                } else {
-                  window.location.href = '/?action=login';
-                }
-              }}
-              size="lg"
-              variant="outline"
-              className="border-2 border-violet-600 text-violet-600 hover:bg-violet-50"
-            >
-              {user ? 'Go to Dashboard' : 'Login'}
             </Button>
           </div>
         </div>
