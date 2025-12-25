@@ -13,8 +13,9 @@ Outputs: Band score (2.0-9.0), brief feedback, 3 improvement tips
 
 import os
 import json
+import uuid
 from typing import Dict, List, Any
-from emergentintegrations.llm.openai import OpenAITextCompletion
+from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 # Initialize LLM for evaluation
 llm = OpenAITextCompletion(api_key=os.getenv("EMERGENT_LLM_KEY"))
