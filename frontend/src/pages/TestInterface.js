@@ -52,6 +52,29 @@ function ElevenLabsExaminer() {
   
   // Phase 2: Notebook state for reading/listening tests
   const [showNotebook, setShowNotebook] = useState(false);
+  
+  // NEW: Question flagging and layout controls
+  const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
+  const [passageRatio, setPassageRatio] = useState(75);
+  const layoutPresets = [
+    { label: '50-50', value: 50 },
+    { label: '60-40', value: 60 },
+    { label: '70-30', value: 70 },
+    { label: '75-25', value: 75 },
+  ];
+  
+  // Toggle flag for a question
+  const toggleFlagQuestion = (questionId) => {
+    setFlaggedQuestions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(questionId)) {
+        newSet.delete(questionId);
+      } else {
+        newSet.add(questionId);
+      }
+      return newSet;
+    });
+  };
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
