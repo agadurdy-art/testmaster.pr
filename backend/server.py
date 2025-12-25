@@ -2679,11 +2679,69 @@ async def get_user_progress(user_id: str):
         if count > 0:
             by_type[type_key]['avg_score'] = round(by_type[type_key]['total_band'] / count, 1)
     
+    # Calculate streak (consecutive days with tests)
+    streak = 0
+    if attempts:
+        today = datetime.now(timezone.utc).date()
+        dates_with_tests = set()
+        for attempt in attempts:
+            if attempt.get('completed_at'):
+                completed = attempt['completed_at']
+                if isinstance(completed, str):
+                    completed = datetime.fromisoformat(completed.replace('Z', '+00:00'))
+                dates_with_tests.add(completed.date())
+        
+        # Count consecutive days from today going backwards
+        current_date = today
+        while current_date in dates_with_tests:
+            streak += 1
+            current_date -= timedelta(days=1)
+    
+    # Calculate badges/achievements
+    badges = []
+    total_tests = len(attempts)
+    avg_band = round(total_band_score / band_count, 1) if band_count > 0 else 0.0
+    
+    # Test count badges
+    if total_tests >= 1:
+        badges.append({"id": "first_test", "name": "First Steps", "icon": "🎯", "description": "Completed your first test"})
+    if total_tests >= 5:
+        badges.append({"id": "five_tests", "name": "Getting Started", "icon": "📚", "description": "Completed 5 tests"})
+    if total_tests >= 10:
+        badges.append({"id": "ten_tests", "name": "Dedicated Learner", "icon": "🔥", "description": "Completed 10 tests"})
+    if total_tests >= 25:
+        badges.append({"id": "twentyfive_tests", "name": "IELTS Warrior", "icon": "⚔️", "description": "Completed 25 tests"})
+    if total_tests >= 50:
+        badges.append({"id": "fifty_tests", "name": "Master Practitioner", "icon": "👑", "description": "Completed 50 tests"})
+    
+    # Band score badges
+    if best_band >= 6:
+        badges.append({"id": "band_6", "name": "Band 6 Achiever", "icon": "🥉", "description": "Achieved Band 6 or higher"})
+    if best_band >= 7:
+        badges.append({"id": "band_7", "name": "Band 7 Expert", "icon": "🥈", "description": "Achieved Band 7 or higher"})
+    if best_band >= 8:
+        badges.append({"id": "band_8", "name": "Band 8 Master", "icon": "🥇", "description": "Achieved Band 8 or higher"})
+    
+    # Streak badges
+    if streak >= 3:
+        badges.append({"id": "streak_3", "name": "On Fire", "icon": "🔥", "description": "3 day streak"})
+    if streak >= 7:
+        badges.append({"id": "streak_7", "name": "Week Warrior", "icon": "💪", "description": "7 day streak"})
+    if streak >= 30:
+        badges.append({"id": "streak_30", "name": "Monthly Champion", "icon": "🏆", "description": "30 day streak"})
+    
+    # Skill mastery badges
+    for skill, data in by_type.items():
+        if data['avg_score'] >= 7:
+            badges.append({"id": f"{skill}_master", "name": f"{skill.capitalize()} Master", "icon": "⭐", "description": f"Band 7+ average in {skill}"})
+    
     stats = {
-        "total_tests": len(attempts),
+        "total_tests": total_tests,
         "by_type": by_type,
-        "average_band_score": round(total_band_score / band_count, 1) if band_count > 0 else 0.0,
+        "average_band_score": avg_band,
         "best_band": best_band,
+        "streak": streak,
+        "badges": badges,
         "recent_attempts": attempts  # Return ALL attempts for Progress page
     }
     
