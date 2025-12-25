@@ -886,6 +886,24 @@ function ElevenLabsExaminer() {
             {/* Right Column - Questions (~25% width) */}
             <div className="lg:w-1/4 flex flex-col min-w-[300px]">
               <Card className="flex-1 overflow-hidden flex flex-col">
+                {/* Question Navigation Bar - All 40 questions */}
+                <div className="p-2 border-b bg-white">
+                  <QuestionNavigation
+                    totalQuestions={test.questions?.length || 40}
+                    currentQuestion={test.questions?.findIndex(q => q.passage === currentPassage) || 0}
+                    answers={answers}
+                    flaggedQuestions={flaggedQuestions}
+                    onQuestionSelect={(index) => {
+                      const question = test.questions?.[index];
+                      if (question) {
+                        setCurrentPassage(question.passage || 1);
+                      }
+                    }}
+                    questionIds={test.questions?.map(q => q.id) || []}
+                    className="mb-0"
+                  />
+                </div>
+                
                 {/* Passage Tabs */}
                 <div className="p-3 border-b bg-gray-50">
                   <div className="flex gap-1">
