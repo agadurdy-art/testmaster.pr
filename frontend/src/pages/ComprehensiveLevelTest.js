@@ -425,7 +425,25 @@ export default function ComprehensiveLevelTest({ user }) {
   // Navigate to next listening section
   const nextListeningSection = () => {
     const sections = getListeningSections();
+    
+    // Safety check - if no sections, move to writing
+    if (!sections || sections.length === 0) {
+      loadWritingTasks();
+      setStage('writing');
+      setCurrentWritingTask(0);
+      return;
+    }
+    
     const currentSection = sections[currentListeningSection];
+    
+    // Safety check for current section
+    if (!currentSection || !currentSection.questions) {
+      // Skip to writing if section data is invalid
+      loadWritingTasks();
+      setStage('writing');
+      setCurrentWritingTask(0);
+      return;
+    }
     
     // Check if all questions in current section are answered
     const unanswered = currentSection.questions.find(q => !listeningAnswers[q.id]);
