@@ -1051,22 +1051,42 @@ export default function MasteryCourse({ user }) {
             <h5 className="font-semibold text-gray-900">📋 Detailed Results:</h5>
             {(selectedModule.quiz?.questions || []).map((q, idx) => {
               const userAnswer = quizAnswers[`q_${idx}`];
-              const isCorrect = userAnswer?.toLowerCase()?.includes(q.correct?.toLowerCase()) || 
-                               userAnswer?.toLowerCase() === q.answer?.toLowerCase() ||
-                               q.correct?.toLowerCase()?.includes(userAnswer?.toLowerCase()?.replace(/^[a-d]\)\s*/i, ''));
+              const correctAnswer = q.correct || q.answer;
+              const isAnswered = userAnswer && userAnswer.trim() !== '';
+              const isCorrect = isAnswered && (
+                userAnswer?.toLowerCase()?.includes(correctAnswer?.toLowerCase()) || 
+                userAnswer?.toLowerCase() === correctAnswer?.toLowerCase() ||
+                correctAnswer?.toLowerCase()?.includes(userAnswer?.toLowerCase()?.replace(/^[a-d]\)\s*/i, ''))
+              );
+              
+              // Determine color: unanswered=gray, correct=green, incorrect=red
+              const bgColor = !isAnswered ? 'bg-gray-100 border-gray-300' : isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200';
               
               return (
-                <div key={idx} className={`p-4 rounded-lg border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                <div key={idx} className={`p-4 rounded-lg border ${bgColor}`}>
                   <div className="flex items-start gap-2 mb-2">
-                    {isCorrect ? <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" /> : <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />}
+                    {!isAnswered ? (
+                      <AlertCircle className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                    ) : isCorrect ? (
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+                    )}
                     <div>
                       <p className="font-medium text-gray-900 text-sm">{idx + 1}. {q.question}</p>
-                      {!isCorrect && (
+                      {!isAnswered && (
                         <>
-                          <p className="text-red-600 text-sm mt-1">Your answer: {userAnswer || 'No answer'}</p>
-                          <p className="text-green-600 text-sm font-medium">Correct: {q.correct || q.answer}</p>
+                          <p className="text-gray-500 text-sm mt-1 italic">⚠️ Not answered (skipped)</p>
+                          <p className="text-green-600 text-sm font-medium">Correct answer: {correctAnswer}</p>
                         </>
                       )}
+                      {isAnswered && !isCorrect && (
+                        <>
+                          <p className="text-red-600 text-sm mt-1">Your answer: {userAnswer}</p>
+                          <p className="text-green-600 text-sm font-medium">Correct: {correctAnswer}</p>
+                        </>
+                      )}
+                      {isAnswered && isCorrect && <p className="text-green-600 text-sm mt-1">✓ Correct!</p>}
                       {q.explanation && (
                         <div className="mt-2 p-2 bg-white rounded text-sm">
                           <p className="text-gray-600"><strong>💡 Explanation:</strong> {q.explanation}</p>
