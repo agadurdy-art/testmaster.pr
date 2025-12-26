@@ -120,14 +120,30 @@ def parse_dialogue(transcript: str) -> List[Dict]:
     return turns
 
 
-def synthesize_turn(client: ElevenLabs, text: str, voice_id: str) -> bytes:
-    """Synthesize a single turn using ElevenLabs TTS."""
-    voice_settings = VoiceSettings(
-        stability=0.5,           # Natural variation
-        similarity_boost=0.75,   # Voice consistency
-        style=0.3,               # Some expressiveness
-        use_speaker_boost=True   # Clarity
-    )
+def synthesize_turn(client: ElevenLabs, text: str, voice_id: str, more_natural: bool = True) -> bytes:
+    """Synthesize a single turn using ElevenLabs TTS.
+    
+    Args:
+        client: ElevenLabs client
+        text: Text to synthesize
+        voice_id: Voice ID to use
+        more_natural: If True, use settings optimized for natural speech
+    """
+    # More natural settings with slight variations
+    if more_natural:
+        voice_settings = VoiceSettings(
+            stability=0.35,           # Lower = more expressive variation
+            similarity_boost=0.85,    # Higher = closer to original voice
+            style=0.45,               # More expressiveness
+            use_speaker_boost=True    # Enhanced clarity
+        )
+    else:
+        voice_settings = VoiceSettings(
+            stability=0.5,
+            similarity_boost=0.75,
+            style=0.3,
+            use_speaker_boost=True
+        )
     
     audio_generator = client.text_to_speech.convert(
         text=text,
