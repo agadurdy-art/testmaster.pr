@@ -15,7 +15,7 @@ import math
 from datetime import datetime
 
 # Get backend URL from frontend env
-BACKEND_URL = "https://ieltsace-learn.preview.emergentagent.com/api"
+BACKEND_URL = "https://english-theme-update.preview.emergentagent.com/api"
 
 def create_test_audio_wav(duration_seconds=1.0, frequency=440, sample_rate=16000):
     """
