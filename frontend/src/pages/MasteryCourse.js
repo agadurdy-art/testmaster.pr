@@ -233,24 +233,40 @@ export default function MasteryCourse({ user }) {
 
   const submitQuiz = () => {
     if (!selectedModule) return;
-    let correct = 0;
-    let total = selectedModule.reading.questions.length;
+    const questions = selectedModule.quiz?.questions || [];
     
-    selectedModule.reading.questions.forEach((q, idx) => {
+    // Count only answered questions
+    let correct = 0;
+    let answered = 0;
+    
+    questions.forEach((q, idx) => {
       const userAns = (quizAnswers[`q_${idx}`] || '').toLowerCase().trim();
-      const correctAns = q.answer.toLowerCase().trim();
+      
+      // Skip unanswered questions
+      if (!userAns) return;
+      
+      answered++;
+      const correctAns = (q.correct || q.answer || '').toLowerCase().trim();
+      
       if (q.type === 'true_false_ng') {
         if (userAns === correctAns.toLowerCase()) correct++;
-      } else if (q.type === 'multiple_choice') {
-        if (userAns === correctAns.toLowerCase()) correct++;
+      } else if (q.options) {
+        // Multiple choice - compare option letter or full text
+        const cleanUser = userAns.replace(/^[a-d]\)\s*/i, '');
+        const cleanCorrect = correctAns.replace(/^[a-d]\)\s*/i, '');
+        if (cleanUser === cleanCorrect || userAns === correctAns || userAns.startsWith(correctAns.charAt(0))) correct++;
       } else {
         if (correctAns.includes(userAns) || userAns.includes(correctAns.split('/')[0].trim())) correct++;
       }
     });
     
-    setQuizScore(Math.round((correct / total) * 100));
+    // Calculate score based on answered questions only (unanswered = 0 points)
+    const total = questions.length;
+    const score = total > 0 ? Math.round((correct / total) * 100) : 0;
+    
+    setQuizScore(score);
     setQuizSubmitted(true);
-    toast.success(`Quiz completed! Score: ${Math.round((correct / total) * 100)}%`);
+    toast.success(`Quiz completed! ${correct}/${total} correct (${answered} answered, ${total - answered} skipped)`);
   };
 
   // Render modules list
