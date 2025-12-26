@@ -545,22 +545,26 @@ export default function MasteryCourse({ user }) {
             <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
               📝 Band 5.5-6.0 Example
             </h4>
-            <p className="text-gray-700 italic text-sm">
+            <p className="text-gray-600 text-xs mb-2">Simple structure with basic vocabulary:</p>
+            <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
               {selectedModule.grammar?.band_55_example || 
-               `"${selectedModule.grammar?.title ? `I think ${selectedModule.grammar.title.toLowerCase()} is important.` : 'Simple sentence structure without complexity.'}"`}
+               selectedModule.common_mistake?.wrong ||
+               '"Many people think this topic is very important today."'}
             </p>
-            <p className="text-xs text-amber-600 mt-2">Basic but correct - limited range</p>
+            <p className="text-xs text-amber-600 mt-2">⚠️ Basic but correct - shows limited grammatical range</p>
           </div>
           <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
             <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
               ⭐ Band 7.0+ Example
             </h4>
-            <p className="text-gray-700 italic text-sm">
+            <p className="text-gray-600 text-xs mb-2">Complex structure demonstrating range:</p>
+            <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
               {selectedModule.grammar?.band_70_example || 
+               selectedModule.common_mistake?.correct ||
                selectedModule.grammar?.examples?.[0] ||
-               `"Using ${selectedModule.grammar?.title?.toLowerCase() || 'this structure'} effectively demonstrates sophisticated grammatical control."`}
+               '"Not only has this issue gained significant attention, but it has also prompted widespread debate among experts."'}
             </p>
-            <p className="text-xs text-green-600 mt-2">Complex structure - shows grammatical range</p>
+            <p className="text-xs text-green-600 mt-2">✓ Shows sophisticated grammar and vocabulary</p>
           </div>
         </div>
       </div>
