@@ -595,49 +595,66 @@ export default function BeginnerCourse({ user }) {
       }
       
       setIsPlayingListening(true);
-      toast.info('Loading audio...', { duration: 2000 });
       
       try {
-        // Fetch Azure TTS generated audio from backend
-        const response = await fetch(`${API_URL}/api/beginner-english/listening-audio/${selectedLesson.id}`);
-        const data = await response.json();
+        // Use pre-generated local audio files (much faster!)
+        const lessonNum = selectedLesson.lesson_number;
+        const audioUrl = `/audio/listening/lesson-${lessonNum}.mp3`;
         
-        if (data.success && data.audio_base64) {
-          // Create audio from base64
-          const audioBlob = new Blob(
-            [Uint8Array.from(atob(data.audio_base64), c => c.charCodeAt(0))],
-            { type: 'audio/mp3' }
-          );
-          const audioUrl = URL.createObjectURL(audioBlob);
-          const audio = new Audio(audioUrl);
-          
-          window.currentListeningAudio = audio;
-          
-          audio.onended = () => {
+        const audio = new Audio(audioUrl);
+        window.currentListeningAudio = audio;
+        
+        audio.onloadeddata = () => {
+          toast.success('Playing audio', { duration: 1500 });
+        };
+        
+        audio.onended = () => {
+          setIsPlayingListening(false);
+          window.currentListeningAudio = null;
+        };
+        
+        audio.onerror = async () => {
+          // Fallback to API if local file not found
+          console.log('Local audio not found, fetching from API...');
+          try {
+            const response = await fetch(`${API_URL}/api/beginner-english/listening-audio/${selectedLesson.id}`);
+            const data = await response.json();
+            
+            if (data.success && data.audio_base64) {
+              const audioBlob = new Blob(
+                [Uint8Array.from(atob(data.audio_base64), c => c.charCodeAt(0))],
+                { type: 'audio/mp3' }
+              );
+              const blobUrl = URL.createObjectURL(audioBlob);
+              const fallbackAudio = new Audio(blobUrl);
+              
+              window.currentListeningAudio = fallbackAudio;
+              fallbackAudio.onended = () => {
+                setIsPlayingListening(false);
+                URL.revokeObjectURL(blobUrl);
+                window.currentListeningAudio = null;
+              };
+              
+              await fallbackAudio.play();
+              toast.success('Playing audio');
+            } else {
+              throw new Error('API fallback failed');
+            }
+          } catch (apiError) {
             setIsPlayingListening(false);
-            URL.revokeObjectURL(audioUrl);
+            toast.error('Audio not available');
             window.currentListeningAudio = null;
-          };
-          
-          audio.onerror = () => {
-            setIsPlayingListening(false);
-            toast.error('Audio playback failed');
-            URL.revokeObjectURL(audioUrl);
-            window.currentListeningAudio = null;
-          };
-          
-          await audio.play();
-          toast.success('Playing audio with multiple speakers');
-        } else {
-          throw new Error(data.detail || 'Audio generation failed');
-        }
+          }
+        };
+        
+        await audio.play();
       } catch (error) {
         console.error('Audio error:', error);
         setIsPlayingListening(false);
-        
-        // Fallback to browser TTS if Azure fails
-        toast.warning('Using fallback audio...');
-        const utterance = new SpeechSynthesisUtterance(listening.transcript);
+        toast.error('Failed to play audio');
+        window.currentListeningAudio = null;
+      }
+    };
         utterance.lang = 'en-GB';
         utterance.rate = 0.85;
         utterance.onend = () => setIsPlayingListening(false);
