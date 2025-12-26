@@ -444,6 +444,8 @@ export default function BeginnerCourse({ user }) {
         return renderVocabulary();
       case 'grammar':
         return renderGrammar();
+      case 'listening':
+        return renderListening();
       case 'reading':
         return renderReading();
       case 'speaking':
