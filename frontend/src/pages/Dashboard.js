@@ -23,6 +23,10 @@ const SUPPORT_EMAIL = 'ieltsace@testmaster.pro';
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
   const { t, language } = useI18n();
+  const { activeTheme } = useTheme();
+  const isDark = activeTheme === THEME_MODES.DARK;
+  const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
+  
   const [tests, setTests] = useState([]);
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,6 +37,13 @@ export default function Dashboard({ user, onLogout }) {
   // Verification modal state - must be at top level
   const [showLockedModal, setShowLockedModal] = useState(false);
   const [lockedFeatureName, setLockedFeatureName] = useState('');
+  
+  // Theme-aware class helpers
+  const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-br from-slate-50 to-purple-50';
+  const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-200';
+  const textPrimary = isDark ? 'text-gray-100' : isNightShift ? 'text-amber-900' : 'text-gray-900';
+  const textSecondary = isDark ? 'text-gray-400' : isNightShift ? 'text-amber-700' : 'text-gray-600';
+  const bgHeader = isDark ? 'bg-gray-800/95 border-gray-700' : isNightShift ? 'bg-amber-100/95 border-amber-200' : 'bg-white/80 border-gray-100';
 
   useEffect(() => { loadData(); }, [user.id]);
 
