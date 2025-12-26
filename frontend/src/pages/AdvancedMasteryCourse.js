@@ -430,68 +430,84 @@ export default function AdvancedMasteryCourse({ user }) {
         <Brain className="w-5 h-5 text-purple-600" /> {selectedModule.grammar?.title}
       </h3>
       
-      <div className="space-y-6">
+      {/* Visual Grammar Structure - Mastery Style */}
+      <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 mb-6">
+        {/* Mind Map Style Visualization */}
+        <div className="flex flex-col items-center mb-6">
+          <div className="bg-purple-600 text-white px-6 py-3 rounded-full font-bold text-lg shadow-lg">
+            {selectedModule.grammar?.title || 'Advanced Grammar'}
+          </div>
+          <div className="w-1 h-8 bg-purple-300"></div>
+          <div className="flex flex-wrap justify-center gap-4 relative">
+            <div className="absolute top-0 left-1/2 w-3/4 h-0.5 bg-purple-300 -translate-x-1/2"></div>
+            <div className="bg-white p-4 rounded-xl shadow-md border-2 border-purple-200 text-center min-w-[120px] mt-4">
+              <p className="text-purple-600 font-bold text-sm">📐 Form</p>
+              <p className="text-xs text-gray-600 mt-1">{selectedModule.grammar?.form || 'Complex structures'}</p>
+            </div>
+            <div className="bg-white p-4 rounded-xl shadow-md border-2 border-blue-200 text-center min-w-[120px] mt-4">
+              <p className="text-blue-600 font-bold text-sm">🎯 Use</p>
+              <p className="text-xs text-gray-600 mt-1">{selectedModule.grammar?.use || 'Band 7+ writing/speaking'}</p>
+            </div>
+            <div className="bg-white p-4 rounded-xl shadow-md border-2 border-green-200 text-center min-w-[120px] mt-4">
+              <p className="text-green-600 font-bold text-sm">⭐ Effect</p>
+              <p className="text-xs text-gray-600 mt-1">{selectedModule.grammar?.effect || 'Sophistication'}</p>
+            </div>
+          </div>
+        </div>
+
         {/* Explanation */}
-        <div className="p-4 bg-purple-50 rounded-xl">
-          <p className="text-gray-700">{selectedModule.grammar?.explanation}</p>
-        </div>
+        <p className="text-gray-700 mb-4 text-center">{selectedModule.grammar?.explanation}</p>
 
-        {/* Band Comparison */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="p-4 bg-red-50 rounded-xl border-l-4 border-red-400">
-            <h4 className="font-semibold text-red-800 mb-2">❌ Band 6.5 Example</h4>
-            <p className="text-gray-700 italic">"{selectedModule.grammar?.band_65_example}"</p>
-          </div>
-          <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-            <h4 className="font-semibold text-green-800 mb-2">✅ Band 8.0 Example</h4>
-            <p className="text-gray-700 italic">"{selectedModule.grammar?.band_80_example}"</p>
-          </div>
-        </div>
-
-        {/* Type 2 Conditional (for Environment module) */}
-        {selectedModule.grammar?.band_80_example_type2 && (
-          <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-            <h4 className="font-semibold text-green-800 mb-2">✅ Band 8.0 - Type 2 Conditional</h4>
-            <p className="text-gray-700 italic">"{selectedModule.grammar.band_80_example_type2}"</p>
+        {selectedModule.grammar?.benefit && (
+          <div className="flex items-center justify-center gap-2 text-sm text-purple-700 bg-purple-100 p-3 rounded-lg mb-4">
+            <Lightbulb className="w-4 h-4" />
+            <span><strong>IELTS Band 7+ Tip:</strong> {selectedModule.grammar.benefit}</span>
           </div>
         )}
 
-        {/* Type 3 Conditional (for Environment module) */}
-        {selectedModule.grammar?.band_80_example_type3 && (
-          <div className="p-4 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
-            <h4 className="font-semibold text-emerald-800 mb-2">✅ Band 8.0 - Type 3 Conditional</h4>
-            <p className="text-gray-700 italic">"{selectedModule.grammar.band_80_example_type3}"</p>
-          </div>
-        )}
-
-        {/* Why it works explanation */}
-        {selectedModule.grammar?.why_it_works && (
-          <div className="p-4 bg-amber-50 rounded-xl">
-            <h4 className="font-semibold text-amber-800 mb-2">💡 Why This Works</h4>
-            <p className="text-gray-700">{selectedModule.grammar.why_it_works}</p>
-          </div>
-        )}
-
-        {/* Additional structures */}
-        {selectedModule.grammar?.cleft_sentence && (
-          <div className="p-4 bg-blue-50 rounded-xl">
-            <h4 className="font-semibold text-blue-800 mb-2">🎯 Cleft Sentence</h4>
-            <p className="text-gray-700 italic">"{selectedModule.grammar.cleft_sentence}"</p>
-          </div>
-        )}
-        {selectedModule.grammar?.alternative_structure && (
-          <div className="p-4 bg-indigo-50 rounded-xl">
-            <h4 className="font-semibold text-indigo-800 mb-2">💡 Alternative Structure</h4>
-            <p className="text-gray-700 italic">"{selectedModule.grammar.alternative_structure}"</p>
-          </div>
-        )}
-        {selectedModule.grammar?.subjunctive_example && (
-          <div className="p-4 bg-teal-50 rounded-xl">
-            <h4 className="font-semibold text-teal-800 mb-2">📝 Subjunctive Example</h4>
-            <p className="text-gray-700 italic">"{selectedModule.grammar.subjunctive_example}"</p>
+        {/* Examples with Visual Flow */}
+        {selectedModule.grammar?.examples && selectedModule.grammar.examples.length > 0 && (
+          <div className="space-y-3 mt-4">
+            <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+              <Award className="w-4 h-4 text-purple-600" /> Advanced Examples
+            </h4>
+            {selectedModule.grammar.examples.map((ex, idx) => (
+              <div key={idx} className="bg-white p-4 rounded-lg shadow-sm">
+                <div className="flex items-center gap-3">
+                  <span className="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">{idx + 1}</span>
+                  <p className="text-purple-700 font-medium">{ex}</p>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
+
+      {/* Band Comparison - Only show if data exists */}
+      {(selectedModule.grammar?.band_65_example || selectedModule.grammar?.band_80_example) && (
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          {selectedModule.grammar?.band_65_example && (
+            <div className="p-4 bg-red-50 rounded-xl border-l-4 border-red-400">
+              <h4 className="font-semibold text-red-800 mb-2">❌ Band 6.5 Example</h4>
+              <p className="text-gray-700 italic">"{selectedModule.grammar.band_65_example}"</p>
+            </div>
+          )}
+          {selectedModule.grammar?.band_80_example && (
+            <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+              <h4 className="font-semibold text-green-800 mb-2">✅ Band 8.0 Example</h4>
+              <p className="text-gray-700 italic">"{selectedModule.grammar.band_80_example}"</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Why it works explanation */}
+      {selectedModule.grammar?.why_it_works && (
+        <div className="p-4 bg-amber-50 rounded-xl mb-4">
+          <h4 className="font-semibold text-amber-800 mb-2">💡 Why This Works</h4>
+          <p className="text-gray-700">{selectedModule.grammar.why_it_works}</p>
+        </div>
+      )}
 
       <div className="mt-6 flex justify-between">
         <Button variant="outline" onClick={() => setCurrentSection('vocabulary')}>
