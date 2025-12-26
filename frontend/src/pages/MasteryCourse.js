@@ -647,12 +647,79 @@ export default function MasteryCourse({ user }) {
         </div>
         
         {speakingFeedback && (
-          <div className={`p-4 rounded-xl ${speakingFeedback.band_score >= 6 ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="font-bold text-lg">Band {speakingFeedback.band_score}</span>
+          <div className={`p-5 rounded-xl ${speakingFeedback.band_score >= 6 ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
+            <div className="flex items-center gap-2 mb-3">
+              <Award className="w-6 h-6 text-amber-600" />
+              <span className="font-bold text-xl">Band {speakingFeedback.band_score}</span>
             </div>
-            <p className="text-gray-700 mb-2">{speakingFeedback.feedback}</p>
-            {speakingFeedback.improvement_tip && <p className="text-sm text-gray-600">💡 {speakingFeedback.improvement_tip}</p>}
+            
+            {/* Criteria Scores */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+              {speakingFeedback.fluency && (
+                <div className="p-2 bg-white rounded-lg text-center">
+                  <p className="text-xs text-gray-500">Fluency</p>
+                  <p className="font-bold">{typeof speakingFeedback.fluency === 'object' ? speakingFeedback.fluency.score : speakingFeedback.fluency}</p>
+                </div>
+              )}
+              {speakingFeedback.vocabulary && (
+                <div className="p-2 bg-white rounded-lg text-center">
+                  <p className="text-xs text-gray-500">Vocabulary</p>
+                  <p className="font-bold">{typeof speakingFeedback.vocabulary === 'object' ? speakingFeedback.vocabulary.score : speakingFeedback.vocabulary}</p>
+                </div>
+              )}
+              {speakingFeedback.grammar && (
+                <div className="p-2 bg-white rounded-lg text-center">
+                  <p className="text-xs text-gray-500">Grammar</p>
+                  <p className="font-bold">{typeof speakingFeedback.grammar === 'object' ? speakingFeedback.grammar.score : speakingFeedback.grammar}</p>
+                </div>
+              )}
+              {speakingFeedback.pronunciation && (
+                <div className="p-2 bg-white rounded-lg text-center">
+                  <p className="text-xs text-gray-500">Pronunciation</p>
+                  <p className="font-bold">{typeof speakingFeedback.pronunciation === 'object' ? speakingFeedback.pronunciation.score : speakingFeedback.pronunciation}</p>
+                </div>
+              )}
+            </div>
+            
+            <p className="text-gray-700 mb-4">{speakingFeedback.overall_feedback || speakingFeedback.feedback}</p>
+            
+            {/* Mistakes with Corrections */}
+            {speakingFeedback.mistakes && speakingFeedback.mistakes.length > 0 && (
+              <div className="mb-4 p-3 bg-red-50 rounded-lg border border-red-200">
+                <h5 className="font-semibold text-red-700 mb-2 flex items-center gap-1">
+                  <XCircle className="w-4 h-4" /> Mistakes to Correct
+                </h5>
+                {speakingFeedback.mistakes.map((mistake, idx) => (
+                  <div key={idx} className="mb-2 text-sm">
+                    <p className="text-red-600 line-through">{mistake.original}</p>
+                    <p className="text-green-600 font-medium">✓ {mistake.corrected}</p>
+                    <p className="text-gray-600 text-xs italic">{mistake.explanation}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            {/* Vocabulary to Use */}
+            {speakingFeedback.vocabulary_to_use && speakingFeedback.vocabulary_to_use.length > 0 && (
+              <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                <h5 className="font-semibold text-blue-700 mb-2">📚 Vocabulary from Lesson to Use</h5>
+                <div className="flex flex-wrap gap-2">
+                  {speakingFeedback.vocabulary_to_use.map((word, idx) => (
+                    <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-sm">{word}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {speakingFeedback.improvement_tip && (
+              <div className="p-3 bg-yellow-50 rounded-lg mb-3">
+                <p className="text-sm text-yellow-800">💡 <strong>Tip:</strong> {speakingFeedback.improvement_tip}</p>
+              </div>
+            )}
+            
+            {speakingFeedback.lesson_reference && (
+              <p className="text-sm text-purple-600 mt-2">📖 <strong>Review:</strong> {speakingFeedback.lesson_reference}</p>
+            )}
           </div>
         )}
         
