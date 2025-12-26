@@ -780,26 +780,59 @@ export default function AdvancedMasteryCourse({ user }) {
         {/* Task Prompt */}
         <div className="p-4 bg-orange-50 rounded-xl">
           <h4 className="font-semibold text-orange-800 mb-2">Task Prompt</h4>
-          <p className="text-gray-700">{selectedModule.writing?.prompt}</p>
+          <p className="text-gray-700">{selectedModule.writing?.question || selectedModule.writing?.prompt}</p>
         </div>
 
-        {/* Model Essay Excerpt */}
-        <details className="p-4 bg-gray-50 rounded-xl">
-          <summary className="font-semibold text-gray-800 cursor-pointer">View Band 7.5+ Model Excerpt</summary>
-          <p className="mt-3 text-gray-600 italic leading-relaxed">"{selectedModule.writing?.band75_excerpt}"</p>
-          
-          {/* Examiner Analysis */}
-          {selectedModule.writing?.examiner_analysis && (
-            <div className="mt-4 p-3 bg-white rounded-lg space-y-2">
-              <h5 className="font-medium text-gray-800">Examiner Analysis:</h5>
-              {Object.entries(selectedModule.writing.examiner_analysis).map(([key, value]) => (
-                <p key={key} className="text-sm text-gray-600">
-                  <span className="font-medium capitalize">{key.replace('_', ' ')}:</span> {value}
-                </p>
+        {/* Tips */}
+        {selectedModule.writing?.tips && selectedModule.writing.tips.length > 0 && (
+          <div className="p-4 bg-yellow-50 rounded-xl">
+            <h4 className="font-semibold text-yellow-800 mb-2">💡 Writing Tips</h4>
+            <ul className="space-y-1">
+              {selectedModule.writing.tips.map((tip, i) => (
+                <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Useful Phrases */}
+        {selectedModule.writing?.useful_phrases && selectedModule.writing.useful_phrases.length > 0 && (
+          <div className="p-4 bg-blue-50 rounded-xl">
+            <h4 className="font-semibold text-blue-800 mb-2">📝 Useful Phrases</h4>
+            <div className="flex flex-wrap gap-2">
+              {selectedModule.writing.useful_phrases.map((phrase, i) => (
+                <span key={i} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">{phrase}</span>
               ))}
             </div>
-          )}
-        </details>
+          </div>
+        )}
+
+        {/* Model Essay */}
+        {(selectedModule.writing?.model_essay || selectedModule.writing?.band75_excerpt) && (
+          <details className="p-4 bg-gray-50 rounded-xl">
+            <summary className="font-semibold text-gray-800 cursor-pointer hover:text-orange-600">View Band 7.5+ Model Essay</summary>
+            <div className="mt-3 p-4 bg-white rounded-lg border border-gray-200">
+              <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                {selectedModule.writing?.model_essay || selectedModule.writing?.band75_excerpt}
+              </p>
+            </div>
+            
+            {/* Examiner Analysis */}
+            {selectedModule.writing?.examiner_analysis && (
+              <div className="mt-4 p-3 bg-white rounded-lg space-y-2">
+                <h5 className="font-medium text-gray-800">Examiner Analysis:</h5>
+                {Object.entries(selectedModule.writing.examiner_analysis).map(([key, value]) => (
+                  <p key={key} className="text-sm text-gray-600">
+                    <span className="font-medium capitalize">{key.replace('_', ' ')}:</span> {value}
+                  </p>
+                ))}
+              </div>
+            )}
+          </details>
+        )}
 
         {/* Writing Input */}
         <div>
@@ -839,15 +872,16 @@ export default function AdvancedMasteryCourse({ user }) {
             <div className="grid grid-cols-2 gap-3 mb-4">
               {writingFeedback.task_achievement && (
                 <div className="p-3 bg-white rounded-lg">
-                  <p className="text-sm font-medium text-blue-600">Task Achievement: {writingFeedback.task_achievement.score}</p>
-                  <p className="text-xs text-gray-600">{writingFeedback.task_achievement.feedback}</p>
+                  <p className="text-sm font-medium text-blue-600">Task Achievement: {typeof writingFeedback.task_achievement === 'object' ? writingFeedback.task_achievement.score : writingFeedback.task_achievement}</p>
+                  {typeof writingFeedback.task_achievement === 'object' && <p className="text-xs text-gray-600">{writingFeedback.task_achievement.feedback}</p>}
                 </div>
               )}
-              {writingFeedback.coherence_cohesion && (
+              {(writingFeedback.coherence_cohesion || writingFeedback.coherence) && (
                 <div className="p-3 bg-white rounded-lg">
-                  <p className="text-sm font-medium text-purple-600">Coherence: {writingFeedback.coherence_cohesion.score}</p>
-                  <p className="text-xs text-gray-600">{writingFeedback.coherence_cohesion.feedback}</p>
+                  <p className="text-sm font-medium text-purple-600">Coherence: {typeof (writingFeedback.coherence_cohesion || writingFeedback.coherence) === 'object' ? (writingFeedback.coherence_cohesion || writingFeedback.coherence).score : (writingFeedback.coherence_cohesion || writingFeedback.coherence)}</p>
+                  {typeof (writingFeedback.coherence_cohesion || writingFeedback.coherence) === 'object' && <p className="text-xs text-gray-600">{(writingFeedback.coherence_cohesion || writingFeedback.coherence).feedback}</p>}
                 </div>
+              )}
               )}
               {writingFeedback.lexical_resource && (
                 <div className="p-3 bg-white rounded-lg">
