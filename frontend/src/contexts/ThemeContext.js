@@ -19,29 +19,32 @@ export function ThemeProvider({ children }) {
   const [activeTheme, setActiveTheme] = useState(THEME_MODES.LIGHT);
 
   // Determine active theme based on mode
-  useEffect(() => {
-    const determineTheme = () => {
-      if (themeMode === THEME_MODES.AUTO) {
-        const hour = new Date().getHours();
-        // Night time: 7pm - 7am
-        if (hour >= 19 || hour < 7) {
-          return THEME_MODES.DARK;
-        }
-        return THEME_MODES.LIGHT;
+  const determineTheme = React.useCallback(() => {
+    if (themeMode === THEME_MODES.AUTO) {
+      const hour = new Date().getHours();
+      // Night time: 7pm - 7am
+      if (hour >= 19 || hour < 7) {
+        return THEME_MODES.DARK;
       }
-      return themeMode;
-    };
+      return THEME_MODES.LIGHT;
+    }
+    return themeMode;
+  }, [themeMode]);
 
-    setActiveTheme(determineTheme());
+  // Update active theme when mode changes or for auto mode timer
+  useEffect(() => {
+    const newTheme = determineTheme();
+    setActiveTheme(newTheme);
 
     // If auto mode, check every minute for time changes
     if (themeMode === THEME_MODES.AUTO) {
       const interval = setInterval(() => {
-        setActiveTheme(determineTheme());
+        const updatedTheme = determineTheme();
+        setActiveTheme(updatedTheme);
       }, 60000); // Check every minute
       return () => clearInterval(interval);
     }
-  }, [themeMode]);
+  }, [themeMode, determineTheme]);
 
   // Apply theme to document
   useEffect(() => {
