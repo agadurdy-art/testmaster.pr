@@ -224,6 +224,18 @@ export default function LandingPage({ onLogin, user, showLogin }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, language } = useI18n();
+  const { activeTheme } = useTheme();
+  const isDark = activeTheme === THEME_MODES.DARK;
+  const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
+  
+  // Theme-aware classes
+  const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-b from-slate-50 via-violet-50/20 to-white';
+  const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-200';
+  const bgHeader = isDark ? 'bg-gray-800/90 border-gray-700' : isNightShift ? 'bg-amber-100/90 border-amber-200' : 'bg-white/90 border-gray-100';
+  const textPrimary = isDark ? 'text-gray-100' : isNightShift ? 'text-amber-900' : 'text-gray-900';
+  const textSecondary = isDark ? 'text-gray-400' : isNightShift ? 'text-amber-700' : 'text-gray-600';
+  const bgSection = isDark ? 'bg-gray-800' : isNightShift ? 'bg-amber-100/50' : 'bg-white';
+  
   const [showAuth, setShowAuth] = useState(showLogin || false);
   const [authMode, setAuthMode] = useState(showLogin ? 'login' : 'signup');
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
