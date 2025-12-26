@@ -45,7 +45,16 @@ export default function LevelDetail({ user }) {
     return level.user_progress.unit_progress.find(up => up.unit_id === unitId);
   };
 
+  // Check if user is admin - all content unlocked for admins
+  const isAdmin = user?.email && (
+    user.email.toLowerCase().includes('admin@ieltsace') || 
+    user.email.toLowerCase() === 'aga.durdy@gmail.com'
+  );
+
   const isUnitUnlocked = (unit) => {
+    // Admin users have access to all units
+    if (isAdmin) return true;
+    
     // First unit is always unlocked
     if (unit.unit_number === 1) return true;
     
