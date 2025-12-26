@@ -307,7 +307,7 @@ export default function AdvancedMasteryCourse({ user }) {
     );
   };
 
-  // Render vocabulary section
+  // Render vocabulary section - Updated to handle nouns/verbs/adjectives/adverbs structure
   const renderVocabulary = () => (
     <Card className="p-6 bg-white border-0 shadow-lg">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
@@ -331,26 +331,55 @@ export default function AdvancedMasteryCourse({ user }) {
         </div>
       )}
 
-      {/* Vocabulary Terms */}
-      <div className="space-y-4">
-        {selectedModule.vocabulary?.advanced_terms?.map((term, idx) => (
-          <div key={idx} className="p-4 bg-gray-50 rounded-xl border-l-4 border-amber-500">
-            <div className="flex items-start justify-between mb-2">
-              <div>
-                <h4 className="font-bold text-gray-900">{term.term}</h4>
-                <p className="text-sm text-gray-500 italic">{term.usage}</p>
-              </div>
-              <Button variant="ghost" size="sm" onClick={() => speakText(term.term)}>
-                <Volume2 className="w-4 h-4" />
-              </Button>
-            </div>
-            <p className="text-gray-700 mb-2">{term.meaning}</p>
-            <div className="p-3 bg-white rounded-lg border border-amber-200">
-              <p className="text-sm text-amber-800 italic">"{term.example}"</p>
+      {/* Vocabulary by Category */}
+      {['nouns', 'verbs', 'adjectives', 'adverbs'].map(category => (
+        selectedModule.vocabulary?.[category]?.length > 0 && (
+          <div key={category} className="mb-6">
+            <h4 className="font-semibold text-gray-800 mb-3 capitalize flex items-center gap-2">
+              {category === 'nouns' && '📚'}
+              {category === 'verbs' && '⚡'}
+              {category === 'adjectives' && '🎨'}
+              {category === 'adverbs' && '💫'}
+              {category}
+            </h4>
+            <div className="grid md:grid-cols-2 gap-3">
+              {selectedModule.vocabulary[category].map((item, idx) => (
+                <div key={idx} className="p-4 bg-gray-50 rounded-xl border-l-4 border-amber-500">
+                  <div className="flex items-start justify-between mb-2">
+                    <h5 className="font-bold text-gray-900">{item.word}</h5>
+                    <Button variant="ghost" size="sm" onClick={() => speakText(item.word)}>
+                      <Volume2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  <p className="text-gray-700 text-sm mb-2">{item.meaning}</p>
+                  <div className="p-2 bg-white rounded-lg border border-amber-200">
+                    <p className="text-xs text-amber-800 italic">"{item.example}"</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
+        )
+      ))}
+
+      {/* Advanced Terms (if exists) */}
+      {selectedModule.vocabulary?.advanced_terms?.map((term, idx) => (
+        <div key={idx} className="p-4 bg-gray-50 rounded-xl border-l-4 border-amber-500 mb-3">
+          <div className="flex items-start justify-between mb-2">
+            <div>
+              <h4 className="font-bold text-gray-900">{term.term}</h4>
+              <p className="text-sm text-gray-500 italic">{term.usage}</p>
+            </div>
+            <Button variant="ghost" size="sm" onClick={() => speakText(term.term)}>
+              <Volume2 className="w-4 h-4" />
+            </Button>
+          </div>
+          <p className="text-gray-700 mb-2">{term.meaning}</p>
+          <div className="p-3 bg-white rounded-lg border border-amber-200">
+            <p className="text-sm text-amber-800 italic">"{term.example}"</p>
+          </div>
+        </div>
+      ))}
 
       {/* Synonym Groups for Paraphrasing */}
       {selectedModule.vocabulary?.synonym_groups && selectedModule.vocabulary.synonym_groups.length > 0 && (
