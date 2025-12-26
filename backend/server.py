@@ -4987,6 +4987,82 @@ Return JSON:
         return {"score": 60, "feedback": "Good effort! Keep writing.", "grammar_tips": []}
 
 
+# ============ Listening Audio Generation ============
+
+from utils.multi_speaker_tts import generate_multi_speaker_audio
+
+class ListeningAudioRequest(BaseModel):
+    lesson_id: str
+    transcript: str
+    level: str = "beginner"
+
+@api_router.post("/beginner-english/generate-listening-audio")
+async def generate_listening_audio(request: ListeningAudioRequest):
+    """Generate multi-speaker audio for listening section using Azure TTS"""
+    try:
+        audio_base64 = await generate_multi_speaker_audio(
+            transcript=request.transcript,
+            level=request.level
+        )
+        return {
+            "success": True,
+            "audio_base64": audio_base64,
+            "format": "mp3"
+        }
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Audio generation failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/beginner-english/listening-audio/{lesson_id}")
+async def get_listening_audio(lesson_id: str):
+    """Get or generate listening audio for a lesson"""
+    # First check if pre-generated audio exists
+    cached = await db.listening_audio_cache.find_one({"lesson_id": lesson_id}, {"_id": 0})
+    if cached and cached.get("audio_base64"):
+        return {
+            "success": True,
+            "audio_base64": cached["audio_base64"],
+            "format": "mp3",
+            "cached": True
+        }
+    
+    # Get lesson and generate audio
+    lesson = await db.beginner_english_lessons.find_one({"id": lesson_id}, {"_id": 0})
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    listening = lesson.get("listening")
+    if not listening or not listening.get("transcript"):
+        raise HTTPException(status_code=404, detail="No listening content for this lesson")
+    
+    try:
+        audio_base64 = await generate_multi_speaker_audio(
+            transcript=listening["transcript"],
+            level="beginner"
+        )
+        
+        # Cache the generated audio
+        await db.listening_audio_cache.update_one(
+            {"lesson_id": lesson_id},
+            {"$set": {
+                "lesson_id": lesson_id,
+                "audio_base64": audio_base64,
+                "generated_at": datetime.now(timezone.utc).isoformat()
+            }},
+            upsert=True
+        )
+        
+        return {
+            "success": True,
+            "audio_base64": audio_base64,
+            "format": "mp3",
+            "cached": False
+        }
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Audio generation failed for {lesson_id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # ============ Notes API (Phase 2) ============
 
 class NoteCreate(BaseModel):
