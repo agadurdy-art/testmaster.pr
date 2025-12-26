@@ -14,6 +14,8 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
 import SkillBreakdown from '../components/SkillBreakdown';
 import VerificationBanner, { LockedContentModal, canAccessFeature } from '../components/VerificationBanner';
+import ThemeToggle from '../components/ThemeToggle';
+import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const SUPPORT_EMAIL = 'ieltsace@testmaster.pro';
