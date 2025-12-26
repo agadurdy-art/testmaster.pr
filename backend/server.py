@@ -1064,8 +1064,8 @@ async def facebook_login(payload: FacebookLoginRequest):
     frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
     verify_link = f"{frontend_base}/verify-email?token={token}"
 
-    # Try sending email; if SendGrid not configured, just log
-    send_reset_email(input.email, verify_link)
+    # Try sending email via Resend
+    await send_verification_email(input.email, verify_link, input.name.strip())
 
     # Do not expose password_hash in response
     user.password_hash = None
