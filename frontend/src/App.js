@@ -156,6 +156,7 @@ function AppWithSessionHandler() {
     <>
       <Routes>
         <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
+        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
