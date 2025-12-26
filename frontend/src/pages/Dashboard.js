@@ -535,14 +535,14 @@ export default function Dashboard({ user, onLogout }) {
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
           
           {/* Learning Tools */}
-          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
+          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center shadow-lg shadow-pink-200">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-900">{getText('Learning Tools', 'Công cụ học tập', 'Öğrenme Araçları')}</h2>
-                <p className="text-xs text-gray-500">{getText('Boost your skills', 'Nâng cao kỹ năng của bạn', 'Becerilerinizi geliştirin')}</p>
+                <h2 className={`text-lg font-bold ${textPrimary}`}>{getText('Learning Tools', 'Công cụ học tập', 'Öğrenme Araçları')}</h2>
+                <p className={`text-xs ${textSecondary}`}>{getText('Boost your skills', 'Nâng cao kỹ năng của bạn', 'Becerilerinizi geliştirin')}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -550,12 +550,12 @@ export default function Dashboard({ user, onLogout }) {
                 <div
                   key={idx}
                   onClick={() => navigate(tool.route)}
-                  className="p-4 bg-gray-50 rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group"
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group`}
                 >
                   <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${tool.color} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
                     <tool.icon className="w-5 h-5 text-white" />
                   </div>
-                  <p className="font-semibold text-gray-900 text-sm">{tool.name}</p>
+                  <p className={`font-semibold ${textPrimary} text-sm`}>{tool.name}</p>
                 </div>
               ))}
             </div>
@@ -592,16 +592,16 @@ export default function Dashboard({ user, onLogout }) {
             {/* Old Level Test CTA */}
             <div 
               onClick={() => navigate('/level-test')}
-              className="mt-3 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl cursor-pointer hover:shadow-md transition-all border border-gray-200 flex items-center justify-between"
+              className={`mt-3 p-4 ${isDark ? 'bg-gradient-to-r from-gray-700 to-gray-600 border-gray-600' : 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200'} rounded-xl cursor-pointer hover:shadow-md transition-all border flex items-center justify-between`}
             >
               <div className="flex items-center gap-3">
-                <Target className="w-6 h-6 text-gray-600" />
+                <Target className={`w-6 h-6 ${textSecondary}`} />
                 <div>
-                  <p className="font-semibold text-gray-900 text-sm">{getText('Quick Level Test', 'Kiểm tra nhanh', 'Hızlı Seviye Testi')}</p>
-                  <p className="text-xs text-gray-500">{getText('Simple & fast assessment', 'Đánh giá nhanh', 'Basit ve hızlı')}</p>
+                  <p className={`font-semibold ${textPrimary} text-sm`}>{getText('Quick Level Test', 'Kiểm tra nhanh', 'Hızlı Seviye Testi')}</p>
+                  <p className={`text-xs ${textSecondary}`}>{getText('Simple & fast assessment', 'Đánh giá nhanh', 'Basit ve hızlı')}</p>
                 </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-gray-400" />
+              <ChevronRight className={`w-5 h-5 ${textSecondary}`} />
             </div>
           </Card>
 
