@@ -173,17 +173,19 @@ export default function LevelDetail({ user }) {
                       <p className="text-slate-600 mb-4">{unit.description}</p>
                       
                       {/* Learning Objectives */}
-                      <div className="mb-4">
-                        <p className="font-semibold text-sm text-slate-700 mb-2">Learning Objectives:</p>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                          {unit.learning_objectives.map((obj, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                              <CheckCircle className="w-4 h-4 text-violet-500 mt-0.5 flex-shrink-0" />
-                              <span>{obj}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      {unit.learning_objectives && unit.learning_objectives.length > 0 && (
+                        <div className="mb-4">
+                          <p className="font-semibold text-sm text-slate-700 mb-2">Learning Objectives:</p>
+                          <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {unit.learning_objectives.map((obj, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
+                                <CheckCircle className="w-4 h-4 text-violet-500 mt-0.5 flex-shrink-0" />
+                                <span>{obj}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
                       {/* Stats */}
                       <div className="flex flex-wrap gap-4 mb-4">
