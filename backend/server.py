@@ -5415,6 +5415,89 @@ async def fix_combined_question_ids():
     except Exception as e:
         logger.error(f"Error fixing combined questions: {e}")
 
+async def seed_a2_level():
+    """Seed A2 Pre-Intermediate level if missing"""
+    try:
+        a2_level = {
+            "id": "level_a2",
+            "level_code": "A2",
+            "level_name": "A2 Pre-Intermediate",
+            "level_order": 3,
+            "description": "Build confidence with everyday conversations, travel, shopping, and describing experiences",
+            "target_band_range": "4.0-4.5",
+            "pathway": "cefr",
+            "total_estimated_hours": 55,
+            "units": [
+                {
+                    "id": "unit_a2_1",
+                    "unit_number": 1,
+                    "title": "Travel & Transport",
+                    "description": "Learn to navigate travel situations and discuss journeys",
+                    "learning_objectives": ["Book tickets and accommodation", "Ask for and give directions", "Describe travel experiences", "Use past simple for completed actions"],
+                    "estimated_hours": 11,
+                    "is_locked": True,
+                    "lessons": [
+                        {"id": "lesson_a2_1_1", "lesson_number": 1, "title": "At the Airport", "description": "Learn vocabulary for air travel", "duration_minutes": 45, "lesson_type": "vocabulary", "required_for_next": True, "content": {"vocabulary": ["check-in", "boarding pass", "gate", "departure", "arrival", "luggage", "passport", "flight", "delayed", "cancelled"], "grammar_focus": "Past Simple: I flew to London", "example_sentences": ["I checked in online yesterday.", "My flight was delayed by two hours.", "Where is gate 12?"], "exercises": []}},
+                        {"id": "lesson_a2_1_2", "lesson_number": 2, "title": "Asking for Directions", "description": "Navigate cities and ask for help", "duration_minutes": 45, "lesson_type": "speaking", "required_for_next": True, "content": {"vocabulary": ["turn left", "turn right", "go straight", "next to", "opposite", "corner", "roundabout", "traffic lights"], "grammar_focus": "Imperatives and prepositions of place", "example_sentences": ["Excuse me, where is the train station?", "Go straight and turn left at the traffic lights.", "It's opposite the bank."], "exercises": []}}
+                    ],
+                    "unit_quiz": {"id": "quiz_a2_1", "title": "Unit 1 Quiz: Travel & Transport", "quiz_type": "unit_quiz", "duration_minutes": 20, "passing_score": 70, "questions": [{"id": "q1", "type": "multiple_choice", "question": "I ___ to Paris last summer.", "options": ["A) fly", "B) flew", "C) flying"], "correct_answer": "B"}]}
+                },
+                {
+                    "id": "unit_a2_2",
+                    "unit_number": 2,
+                    "title": "Shopping & Services",
+                    "description": "Handle shopping situations and describe products",
+                    "learning_objectives": ["Ask about prices and compare products", "Describe clothes and items", "Make complaints politely", "Use comparatives and superlatives"],
+                    "estimated_hours": 11,
+                    "is_locked": True,
+                    "lessons": [
+                        {"id": "lesson_a2_2_1", "lesson_number": 1, "title": "In the Shop", "description": "Shopping vocabulary and phrases", "duration_minutes": 45, "lesson_type": "vocabulary", "required_for_next": True, "content": {"vocabulary": ["receipt", "refund", "exchange", "discount", "sale", "fitting room", "size", "price", "cash", "card"], "grammar_focus": "Comparatives: cheaper than, more expensive", "example_sentences": ["Can I try this on?", "Do you have this in a smaller size?", "This one is cheaper than that one."], "exercises": []}}
+                    ],
+                    "unit_quiz": {"id": "quiz_a2_2", "title": "Unit 2 Quiz: Shopping", "quiz_type": "unit_quiz", "duration_minutes": 15, "passing_score": 70, "questions": [{"id": "q1", "type": "multiple_choice", "question": "This jacket is ___ than that one.", "options": ["A) expensive", "B) more expensive", "C) most expensive"], "correct_answer": "B"}]}
+                },
+                {
+                    "id": "unit_a2_3",
+                    "unit_number": 3,
+                    "title": "Health & Body",
+                    "description": "Describe symptoms and visit the doctor",
+                    "learning_objectives": ["Describe health problems", "Understand medical advice", "Talk about healthy habits", "Use should/shouldn't for advice"],
+                    "estimated_hours": 11,
+                    "is_locked": True,
+                    "lessons": [
+                        {"id": "lesson_a2_3_1", "lesson_number": 1, "title": "At the Doctor's", "description": "Medical vocabulary and expressions", "duration_minutes": 45, "lesson_type": "vocabulary", "required_for_next": True, "content": {"vocabulary": ["headache", "fever", "cough", "prescription", "medicine", "appointment", "symptom", "pain", "rest", "recover"], "grammar_focus": "Should/Shouldn't: You should rest", "example_sentences": ["I have a terrible headache.", "You should take this medicine twice a day.", "How long have you had this cough?"], "exercises": []}}
+                    ],
+                    "unit_quiz": {"id": "quiz_a2_3", "title": "Unit 3 Quiz: Health", "quiz_type": "unit_quiz", "duration_minutes": 15, "passing_score": 70, "questions": [{"id": "q1", "type": "multiple_choice", "question": "You ___ eat more vegetables.", "options": ["A) should", "B) shouldn't", "C) must to"], "correct_answer": "A"}]}
+                }
+            ],
+            "exit_test": {
+                "id": "exit_test_a2",
+                "title": "A2 Exit Test",
+                "description": "Complete assessment to unlock B1 level",
+                "quiz_type": "exit_test",
+                "duration_minutes": 45,
+                "passing_score": 75,
+                "target_band": 4.5,
+                "questions": [
+                    {"id": "q1", "type": "multiple_choice", "question": "We ___ to Italy last year.", "options": ["A) go", "B) went", "C) going"], "correct_answer": "B"},
+                    {"id": "q2", "type": "multiple_choice", "question": "This hotel is ___ than the other one.", "options": ["A) comfortable", "B) more comfortable", "C) most comfortable"], "correct_answer": "B"},
+                    {"id": "q3", "type": "multiple_choice", "question": "You ___ smoke in the hospital.", "options": ["A) should", "B) shouldn't", "C) must"], "correct_answer": "B"}
+                ]
+            },
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        
+        # Insert A2 level
+        await db.learning_levels.insert_one(a2_level)
+        
+        # Update level orders for B1 and higher
+        await db.learning_levels.update_one({"id": "level_b1"}, {"$set": {"level_order": 4}})
+        await db.learning_levels.update_one({"id": "level_b2"}, {"$set": {"level_order": 5}})
+        await db.learning_levels.update_one({"id": "level_ielts_7"}, {"$set": {"level_order": 6}})
+        
+        logger.info("✅ A2 level seeded successfully")
+    except Exception as e:
+        logger.error(f"Error seeding A2 level: {e}")
+
 @app.on_event("startup")
 async def startup_event():
     """Seed vocab grammar lessons and beginner english lessons if they don't exist"""
