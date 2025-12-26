@@ -9,7 +9,7 @@ import {
   BookOpen, Volume2, Mic, Square, ChevronLeft, ChevronRight, 
   CheckCircle, XCircle, ArrowLeft, Loader2, GraduationCap,
   MessageSquare, PenTool, AlertCircle, Trophy, Star, Home,
-  Languages, FileText, HelpCircle
+  Languages, FileText, HelpCircle, Headphones, Play, Pause
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
