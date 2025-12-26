@@ -717,14 +717,16 @@ export default function MasteryCourse({ user }) {
           <Mic className="w-5 h-5 text-violet-600" /> Speaking Practice
         </h3>
         
-        {speaking?.part1 && (
+        {speaking?.part1 && speaking.part1.question && (
           <div className="mb-6 p-4 bg-violet-50 rounded-xl">
             <h4 className="font-bold text-violet-800 mb-2">Part 1</h4>
             <p className="text-lg text-gray-900 mb-2">{speaking.part1.question}</p>
-            <details className="cursor-pointer">
-              <summary className="text-sm text-violet-600">Model Answer</summary>
-              <p className="mt-2 text-gray-700 bg-white p-3 rounded-lg italic">&ldquo;{speaking.part1.model_answer}&rdquo;</p>
-            </details>
+            {speaking.part1.model_answer && (
+              <details className="cursor-pointer">
+                <summary className="text-sm text-violet-600 font-medium">View Model Answer</summary>
+                <p className="mt-2 text-gray-700 bg-white p-3 rounded-lg italic text-sm">&ldquo;{speaking.part1.model_answer}&rdquo;</p>
+              </details>
+            )}
           </div>
         )}
         
