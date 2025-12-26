@@ -35,6 +35,7 @@ import LearningPlatform from './pages/LearningPlatform';
 import LevelDetail from './pages/LevelDetail';
 import UnitDetail from './pages/UnitDetail';
 import LessonView from './pages/LessonView';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 
 function EmergentBadgeWrapper() {
