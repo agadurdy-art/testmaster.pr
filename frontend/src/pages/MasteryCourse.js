@@ -299,7 +299,7 @@ export default function MasteryCourse({ user }) {
   // Render modules list
   const renderModulesList = () => (
     <div className="max-w-5xl mx-auto">
-      <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-4">
+      <Button variant="ghost" onClick={() => navigate('/dashboard')} className={`mb-4 ${textSecondary}`}>
         <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
       </Button>
       
@@ -307,9 +307,9 @@ export default function MasteryCourse({ user }) {
         <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
           <Award className="w-10 h-10 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">IELTS Mastery Blueprint</h1>
-        <p className="text-gray-600">Band 4.5-6.5 Full Course • 17 Comprehensive Modules</p>
-        <p className="text-sm text-gray-500 mt-2 max-w-2xl mx-auto">
+        <h1 className={`text-3xl font-bold ${textPrimary} mb-2`}>IELTS Mastery Blueprint</h1>
+        <p className={textSecondary}>Band 4.5-6.5 Full Course • 17 Comprehensive Modules</p>
+        <p className={`text-sm ${textSecondary} mt-2 max-w-2xl mx-auto`}>
           Master vocabulary, grammar, reading, speaking, and writing skills across all core IELTS topics.
         </p>
       </div>
@@ -323,7 +323,7 @@ export default function MasteryCourse({ user }) {
             return (
               <Card 
                 key={module.id}
-                className="p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border-0 shadow-md bg-white"
+                className={`p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border shadow-md ${bgCard}`}
                 onClick={() => selectModule(module)}
               >
                 <div className="flex items-start gap-4">
