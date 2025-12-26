@@ -521,22 +521,24 @@ export default function AdvancedMasteryCourse({ user }) {
             <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
               📝 Band 6.5 Example
             </h4>
-            <p className="text-gray-700 italic text-sm">
+            <p className="text-gray-600 text-xs mb-2">Adequate structure but lacks sophistication:</p>
+            <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
               {selectedModule.grammar?.band_65_example || 
-               `"${selectedModule.grammar?.title ? `This topic is very important in modern society.` : 'Basic sentence with limited complexity.'}"`}
+               '"This issue is very important and many people have different opinions about it."'}
             </p>
-            <p className="text-xs text-amber-600 mt-2">Adequate but simple - limited sophistication</p>
+            <p className="text-xs text-amber-600 mt-2">⚠️ Correct but simple - needs more complexity for Band 7+</p>
           </div>
           <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
             <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
               ⭐ Band 8.0+ Example
             </h4>
-            <p className="text-gray-700 italic text-sm">
+            <p className="text-gray-600 text-xs mb-2">Sophisticated structure with natural flow:</p>
+            <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
               {selectedModule.grammar?.band_80_example || 
                selectedModule.grammar?.examples?.[0] ||
-               `"${selectedModule.grammar?.title ? `The multifaceted nature of ${selectedModule.grammar.title.toLowerCase()} necessitates a nuanced examination of its implications.` : 'Sophisticated structure demonstrating grammatical mastery.'}"`}
+               '"While proponents of this view contend that immediate action is imperative, critics argue that a more nuanced approach would yield more sustainable outcomes."'}
             </p>
-            <p className="text-xs text-green-600 mt-2">Complex & natural - demonstrates full range</p>
+            <p className="text-xs text-green-600 mt-2">✓ Demonstrates grammatical mastery and lexical precision</p>
           </div>
         </div>
       </div>
