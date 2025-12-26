@@ -129,7 +129,7 @@ export default function LevelDetail({ user }) {
             </div>
             <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg">
               <p className="text-sm text-violet-100">Units</p>
-              <p className="text-xl font-bold">{level.units.length}</p>
+              <p className="text-xl font-bold">{level.units?.length || 0}</p>
             </div>
           </div>
         </div>
