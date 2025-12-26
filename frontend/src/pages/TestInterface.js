@@ -81,6 +81,20 @@ function ElevenLabsExaminer() {
     const num = parseInt(match[1], 10);
     return num >= 2;
   };
+  
+  // Cleanup audio when component unmounts
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    };
+  }, []);
+  
   useEffect(() => {
     loadTest();
   }, [testType]);
