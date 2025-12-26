@@ -277,34 +277,34 @@ export default function Dashboard({ user, onLogout }) {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
+          <div className={`md:hidden border-t ${isDark ? 'border-gray-700 bg-gray-800' : isNightShift ? 'border-amber-200 bg-amber-50' : 'border-gray-100 bg-white'} shadow-lg`}>
             <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
-              <Button variant="ghost" className="w-full justify-start text-gray-600 font-medium" onClick={() => { navigate('/dashboard'); setMobileMenuOpen(false); }}>
+              <Button variant="ghost" className={`w-full justify-start ${textSecondary} font-medium`} onClick={() => { navigate('/dashboard'); setMobileMenuOpen(false); }}>
                 <LayoutDashboard className="w-4 h-4 mr-3" />{getText('Dashboard', 'Bảng điều khiển', 'Gösterge Paneli')}
               </Button>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/progress'); setMobileMenuOpen(false); }}>
+              <Button variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { navigate('/progress'); setMobileMenuOpen(false); }}>
                 <BarChart3 className="w-4 h-4 mr-3" />{getText('Progress', 'Tiến độ', 'İlerleme')}
               </Button>
-              <hr className="my-2" />
-              <p className="text-xs text-gray-400 px-3 py-1">{getText('Tests', 'Bài kiểm tra', 'Testler')}</p>
+              <hr className={`my-2 ${isDark ? 'border-gray-700' : isNightShift ? 'border-amber-200' : 'border-gray-200'}`} />
+              <p className={`text-xs ${textSecondary} px-3 py-1`}>{getText('Tests', 'Bài kiểm tra', 'Testler')}</p>
               {testModules.map((m) => (
-                <Button key={m.type} variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { startTest(m.type); setMobileMenuOpen(false); }}>
+                <Button key={m.type} variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { startTest(m.type); setMobileMenuOpen(false); }}>
                   <m.icon className="w-4 h-4 mr-3" />{m.title}
                 </Button>
               ))}
-              <hr className="my-2" />
-              <p className="text-xs text-gray-400 px-3 py-1">{getText('Courses', 'Khóa học', 'Kurslar')}</p>
+              <hr className={`my-2 ${isDark ? 'border-gray-700' : isNightShift ? 'border-amber-200' : 'border-gray-200'}`} />
+              <p className={`text-xs ${textSecondary} px-3 py-1`}>{getText('Courses', 'Khóa học', 'Kurslar')}</p>
               {courses.map((c) => (
-                <Button key={c.id} variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate(c.route); setMobileMenuOpen(false); }}>
+                <Button key={c.id} variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { navigate(c.route); setMobileMenuOpen(false); }}>
                   <span className="mr-3">{c.icon}</span>{c.name}
                 </Button>
               ))}
-              <hr className="my-2" />
-              <p className="text-xs text-gray-400 px-3 py-1">{getText('Account', 'Tài khoản', 'Hesap')}</p>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/pricing'); setMobileMenuOpen(false); }}>
+              <hr className={`my-2 ${isDark ? 'border-gray-700' : isNightShift ? 'border-amber-200' : 'border-gray-200'}`} />
+              <p className={`text-xs ${textSecondary} px-3 py-1`}>{getText('Account', 'Tài khoản', 'Hesap')}</p>
+              <Button variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { navigate('/pricing'); setMobileMenuOpen(false); }}>
                 <CreditCard className="w-4 h-4 mr-3" />{getText('Pricing', 'Giá cả', 'Fiyatlandırma')}
               </Button>
-              <Button variant="ghost" className="w-full justify-start text-gray-600" onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}>
+              <Button variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { navigate('/profile'); setMobileMenuOpen(false); }}>
                 <User className="w-4 h-4 mr-3" />{getText('Profile', 'Hồ sơ', 'Profil')}
               </Button>
               <Button 
@@ -330,14 +330,14 @@ export default function Dashboard({ user, onLogout }) {
         
         {/* Welcome + Continue Section */}
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
+          <h1 className={`text-2xl sm:text-3xl font-bold ${textPrimary} mb-1`}>
             {getText(
               `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`,
               `Chào mừng trở lại, ${user.name?.split(' ')[0] || 'Học viên'}!`,
               `Tekrar hoş geldin, ${user.name?.split(' ')[0] || 'Öğrenci'}!`
             )} 👋
           </h1>
-          <p className="text-gray-500 text-sm">
+          <p className={`${textSecondary} text-sm`}>
             {getText(
               'Continue your IELTS preparation journey',
               'Tiếp tục hành trình IELTS của bạn',
