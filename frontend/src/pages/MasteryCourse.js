@@ -521,14 +521,14 @@ export default function MasteryCourse({ user }) {
         <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
           <FileText className="w-5 h-5 text-blue-600" /> {selectedModule.reading?.title}
         </h3>
-        <Button variant="outline" size="sm" onClick={() => playPronunciation(selectedModule.reading.text)} disabled={playingAudio === selectedModule.reading.text}>
-          {playingAudio === selectedModule.reading.text ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : <Volume2 className="w-4 h-4 mr-1" />}
+        <Button variant="outline" size="sm" onClick={() => playPronunciation(selectedModule.reading.passage || selectedModule.reading.text)} disabled={playingAudio === (selectedModule.reading.passage || selectedModule.reading.text)}>
+          {playingAudio === (selectedModule.reading.passage || selectedModule.reading.text) ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : <Volume2 className="w-4 h-4 mr-1" />}
           Listen
         </Button>
       </div>
       
       <SideBySideReader
-        passage={selectedModule.reading?.text || ''}
+        passage={selectedModule.reading?.passage || selectedModule.reading?.text || ''}
         passageTitle="Reading Passage"
         defaultRatio={65}
       >
