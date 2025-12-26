@@ -889,7 +889,7 @@ export default function MasteryCourse({ user }) {
       {!quizSubmitted ? (
         <>
           <div className="space-y-4 mb-6">
-            {selectedModule.reading?.questions?.map((q, idx) => (
+            {(selectedModule.quiz?.questions || []).map((q, idx) => (
               <div key={idx} className="p-4 bg-gray-50 rounded-xl">
                 <p className="font-medium text-gray-900 mb-2">{idx + 1}. {q.question}</p>
                 {q.options ? (
@@ -919,11 +919,47 @@ export default function MasteryCourse({ user }) {
           <Button onClick={submitQuiz} className="w-full bg-gradient-to-r from-cyan-500 to-blue-600">Submit Quiz</Button>
         </>
       ) : (
-        <div className="text-center py-8">
-          <Trophy className={`w-16 h-16 mx-auto mb-4 ${quizScore >= 70 ? 'text-yellow-500' : 'text-gray-400'}`} />
-          <h4 className="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h4>
-          <p className="text-4xl font-bold text-cyan-600 mb-4">{quizScore}%</p>
-          <p className="text-gray-600 mb-6">{quizScore >= 70 ? '🎉 Excellent work!' : 'Keep practicing to improve.'}</p>
+        <div className="py-6">
+          <div className="text-center mb-6">
+            <Trophy className={`w-16 h-16 mx-auto mb-4 ${quizScore >= 70 ? 'text-yellow-500' : 'text-gray-400'}`} />
+            <h4 className="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h4>
+            <p className="text-4xl font-bold text-cyan-600 mb-2">{quizScore}%</p>
+            <p className="text-gray-600">{quizScore >= 90 ? '🌟 Outstanding!' : quizScore >= 70 ? '🎉 Great job!' : quizScore >= 50 ? '👍 Good effort!' : '📚 Keep studying!'}</p>
+          </div>
+          
+          {/* Detailed Results */}
+          <div className="space-y-3 mb-6">
+            <h5 className="font-semibold text-gray-900">📋 Detailed Results:</h5>
+            {(selectedModule.quiz?.questions || []).map((q, idx) => {
+              const userAnswer = quizAnswers[`q_${idx}`];
+              const isCorrect = userAnswer?.toLowerCase()?.includes(q.correct?.toLowerCase()) || 
+                               userAnswer?.toLowerCase() === q.answer?.toLowerCase() ||
+                               q.correct?.toLowerCase()?.includes(userAnswer?.toLowerCase()?.replace(/^[a-d]\)\s*/i, ''));
+              
+              return (
+                <div key={idx} className={`p-4 rounded-lg border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                  <div className="flex items-start gap-2 mb-2">
+                    {isCorrect ? <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" /> : <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />}
+                    <div>
+                      <p className="font-medium text-gray-900 text-sm">{idx + 1}. {q.question}</p>
+                      {!isCorrect && (
+                        <>
+                          <p className="text-red-600 text-sm mt-1">Your answer: {userAnswer || 'No answer'}</p>
+                          <p className="text-green-600 text-sm font-medium">Correct: {q.correct || q.answer}</p>
+                        </>
+                      )}
+                      {q.explanation && (
+                        <div className="mt-2 p-2 bg-white rounded text-sm">
+                          <p className="text-gray-600"><strong>💡 Explanation:</strong> {q.explanation}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
           <div className="flex gap-3 justify-center">
             <Button variant="outline" onClick={() => { setQuizSubmitted(false); setQuizAnswers({}); }}>Try Again</Button>
             <Button onClick={() => { setView('modules'); setSelectedModule(null); }} className="bg-gradient-to-r from-violet-500 to-purple-600">
