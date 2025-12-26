@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 
 // Theme modes
 export const THEME_MODES = {
@@ -10,43 +10,44 @@ export const THEME_MODES = {
 
 const ThemeContext = createContext();
 
+// Helper function to determine theme based on time
+const getTimeBasedTheme = () => {
+  const hour = new Date().getHours();
+  // Night time: 7pm - 7am
+  if (hour >= 19 || hour < 7) {
+    return THEME_MODES.DARK;
+  }
+  return THEME_MODES.LIGHT;
+};
+
 export function ThemeProvider({ children }) {
   const [themeMode, setThemeMode] = useState(() => {
     const saved = localStorage.getItem('themeMode');
     return saved || THEME_MODES.LIGHT;
   });
   
-  const [activeTheme, setActiveTheme] = useState(THEME_MODES.LIGHT);
+  // For auto mode, we need to track time-based changes
+  const [timeBasedTheme, setTimeBasedTheme] = useState(getTimeBasedTheme);
 
-  // Determine active theme based on mode
-  const determineTheme = React.useCallback(() => {
+  // Calculate active theme based on mode
+  const activeTheme = useMemo(() => {
     if (themeMode === THEME_MODES.AUTO) {
-      const hour = new Date().getHours();
-      // Night time: 7pm - 7am
-      if (hour >= 19 || hour < 7) {
-        return THEME_MODES.DARK;
-      }
-      return THEME_MODES.LIGHT;
+      return timeBasedTheme;
     }
     return themeMode;
-  }, [themeMode]);
+  }, [themeMode, timeBasedTheme]);
 
-  // Update active theme when mode changes or for auto mode timer
+  // Set up interval for auto mode time checking
   useEffect(() => {
-    const newTheme = determineTheme();
-    setActiveTheme(newTheme);
-
-    // If auto mode, check every minute for time changes
     if (themeMode === THEME_MODES.AUTO) {
       const interval = setInterval(() => {
-        const updatedTheme = determineTheme();
-        setActiveTheme(updatedTheme);
+        setTimeBasedTheme(getTimeBasedTheme());
       }, 60000); // Check every minute
       return () => clearInterval(interval);
     }
-  }, [themeMode, determineTheme]);
+  }, [themeMode]);
 
-  // Apply theme to document
+  // Apply theme classes to document
   useEffect(() => {
     const root = document.documentElement;
     const body = document.body;
@@ -68,28 +69,30 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('themeMode', themeMode);
   }, [activeTheme, themeMode]);
 
-  const setTheme = (mode) => {
+  const setTheme = useCallback((mode) => {
     setThemeMode(mode);
-  };
-
-  const toggleDark = () => {
-    if (themeMode === THEME_MODES.DARK) {
-      setThemeMode(THEME_MODES.LIGHT);
-    } else {
-      setThemeMode(THEME_MODES.DARK);
+    // If switching to auto, also update time-based theme immediately
+    if (mode === THEME_MODES.AUTO) {
+      setTimeBasedTheme(getTimeBasedTheme());
     }
-  };
+  }, []);
+
+  const toggleDark = useCallback(() => {
+    setThemeMode(prev => prev === THEME_MODES.DARK ? THEME_MODES.LIGHT : THEME_MODES.DARK);
+  }, []);
+
+  const value = useMemo(() => ({
+    themeMode, 
+    activeTheme, 
+    setTheme, 
+    toggleDark,
+    isDark: activeTheme === THEME_MODES.DARK,
+    isNightShift: activeTheme === THEME_MODES.NIGHT_SHIFT,
+    isAuto: themeMode === THEME_MODES.AUTO
+  }), [themeMode, activeTheme, setTheme, toggleDark]);
 
   return (
-    <ThemeContext.Provider value={{ 
-      themeMode, 
-      activeTheme, 
-      setTheme, 
-      toggleDark,
-      isDark: activeTheme === THEME_MODES.DARK,
-      isNightShift: activeTheme === THEME_MODES.NIGHT_SHIFT,
-      isAuto: themeMode === THEME_MODES.AUTO
-    }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
