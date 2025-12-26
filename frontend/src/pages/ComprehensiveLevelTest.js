@@ -336,6 +336,19 @@ export default function ComprehensiveLevelTest({ user }) {
     });
   };
 
+  // Cleanup audio when component unmounts
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    };
+  }, []);
+
   // Speaking timer
   useEffect(() => {
     if (timerActive && timeRemaining > 0) {
