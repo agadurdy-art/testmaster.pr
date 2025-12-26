@@ -957,18 +957,18 @@ export default function AdvancedMasteryCourse({ user }) {
   const renderQuiz = () => (
     <Card className="p-6 bg-white border-0 shadow-lg">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-        <HelpCircle className="w-5 h-5 text-cyan-600" /> Reading Comprehension Quiz
+        <HelpCircle className="w-5 h-5 text-cyan-600" /> Module Quiz
       </h3>
 
       {!quizSubmitted ? (
         <>
           <div className="space-y-4 mb-6">
-            {selectedModule.reading?.questions?.map((q, idx) => (
+            {(selectedModule.quiz?.questions || selectedModule.reading?.questions || []).map((q, idx) => (
               <div key={idx} className="p-4 bg-gray-50 rounded-xl">
                 <p className="font-medium text-gray-900 mb-2">
                   {idx + 1}. {q.question}
                 </p>
-                <p className="text-xs text-gray-500 mb-2 capitalize">Type: {q.type?.replace('_', ' ')}</p>
+                {q.type && <p className="text-xs text-gray-500 mb-2 capitalize">Type: {q.type?.replace('_', ' ')}</p>}
                 
                 {q.options ? (
                   <div className="space-y-2">
@@ -1015,15 +1015,51 @@ export default function AdvancedMasteryCourse({ user }) {
           </Button>
         </>
       ) : (
-        <div className="py-8">
-          <div className="text-center">
-            <Trophy className={`w-16 h-16 mx-auto mb-4 ${quizResults?.estimated_band >= 7 ? 'text-yellow-500' : 'text-gray-400'}`} />
+        <div className="py-6">
+          <div className="text-center mb-6">
+            <Trophy className={`w-16 h-16 mx-auto mb-4 ${(quizResults?.score || 0) >= 70 ? 'text-yellow-500' : 'text-gray-400'}`} />
             <h4 className="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h4>
-            <p className="text-4xl font-bold text-cyan-600 mb-2">{quizResults?.score?.toFixed(0)}%</p>
-            <p className="text-lg text-gray-600 mb-4">Estimated Band: {quizResults?.estimated_band}</p>
+            <p className="text-4xl font-bold text-cyan-600 mb-2">{quizResults?.score?.toFixed(0) || 0}%</p>
+            <p className="text-gray-600">{quizResults?.score >= 90 ? '🌟 Outstanding!' : quizResults?.score >= 70 ? '🎉 Great job!' : quizResults?.score >= 50 ? '👍 Good effort!' : '📚 Keep studying!'}</p>
+            {quizResults?.estimated_band && <p className="text-lg text-gray-600 mt-2">Estimated Band: {quizResults.estimated_band}</p>}
           </div>
           
-          {/* Skill Breakdown - Simple inline version for course quizzes */}
+          {/* Detailed Results */}
+          <div className="space-y-3 mb-6">
+            <h5 className="font-semibold text-gray-900">📋 Detailed Results:</h5>
+            {(selectedModule.quiz?.questions || selectedModule.reading?.questions || []).map((q, idx) => {
+              const userAnswer = quizAnswers[idx];
+              const correctAnswer = q.correct || q.answer;
+              const isCorrect = userAnswer?.toLowerCase()?.trim() === correctAnswer?.toLowerCase()?.trim() ||
+                               userAnswer?.toLowerCase()?.includes(correctAnswer?.toLowerCase()) ||
+                               correctAnswer?.toLowerCase()?.includes(userAnswer?.toLowerCase()?.replace(/^[a-d]\)\s*/i, ''));
+              
+              return (
+                <div key={idx} className={`p-4 rounded-lg border ${isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                  <div className="flex items-start gap-2 mb-2">
+                    {isCorrect ? <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" /> : <XCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />}
+                    <div className="flex-1">
+                      <p className="font-medium text-gray-900 text-sm">{idx + 1}. {q.question}</p>
+                      {!isCorrect && (
+                        <>
+                          <p className="text-red-600 text-sm mt-1">Your answer: {userAnswer || 'No answer'}</p>
+                          <p className="text-green-600 text-sm font-medium">Correct: {correctAnswer}</p>
+                        </>
+                      )}
+                      {isCorrect && <p className="text-green-600 text-sm mt-1">✓ Correct!</p>}
+                      {q.explanation && (
+                        <div className="mt-2 p-2 bg-white rounded text-sm">
+                          <p className="text-gray-600"><strong>💡 Explanation:</strong> {q.explanation}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Skill Breakdown */}
           {quizResults?.skill_breakdown && Object.keys(quizResults.skill_breakdown).length > 0 && (
             <div className="my-6 p-4 bg-gray-50 rounded-xl">
               <h5 className="font-semibold text-gray-800 mb-3">📊 Performance by Question Type</h5>
