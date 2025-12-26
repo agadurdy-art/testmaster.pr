@@ -741,12 +741,34 @@ export default function MasteryCourse({ user }) {
         
         {speaking?.part3 && (
           <div className="mb-6 p-4 bg-green-50 rounded-xl">
-            <h4 className="font-bold text-green-800 mb-2">Part 3</h4>
-            <p className="text-lg text-gray-900 mb-2">{speaking.part3.question}</p>
-            <details className="cursor-pointer">
-              <summary className="text-sm text-green-600">Model Answer</summary>
-              <p className="mt-2 text-gray-700 bg-white p-3 rounded-lg italic">&ldquo;{speaking.part3.model_answer}&rdquo;</p>
-            </details>
+            <h4 className="font-bold text-green-800 mb-2">Part 3 (Discussion)</h4>
+            {/* Check if part3 has questions array */}
+            {speaking.part3.questions && speaking.part3.questions.length > 0 ? (
+              <div className="space-y-4">
+                {speaking.part3.questions.map((q, idx) => (
+                  <div key={idx} className="bg-white p-4 rounded-lg border border-green-200">
+                    <p className="font-medium text-gray-900 mb-2">Q{idx + 1}: {q.question}</p>
+                    {q.model_answer && (
+                      <details className="cursor-pointer">
+                        <summary className="text-sm text-green-600 font-medium">View Model Answer</summary>
+                        <p className="mt-2 text-gray-700 bg-green-50 p-3 rounded-lg italic text-sm">&ldquo;{q.model_answer}&rdquo;</p>
+                      </details>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              /* Fallback for old format with single question/model_answer */
+              <>
+                <p className="text-lg text-gray-900 mb-2">{speaking.part3.question}</p>
+                {speaking.part3.model_answer && (
+                  <details className="cursor-pointer">
+                    <summary className="text-sm text-green-600">Model Answer</summary>
+                    <p className="mt-2 text-gray-700 bg-white p-3 rounded-lg italic">&ldquo;{speaking.part3.model_answer}&rdquo;</p>
+                  </details>
+                )}
+              </>
+            )}
           </div>
         )}
         
