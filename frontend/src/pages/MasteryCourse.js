@@ -731,11 +731,41 @@ export default function MasteryCourse({ user }) {
         {speaking?.part2 && (
           <div className="mb-6 p-4 bg-blue-50 rounded-xl">
             <h4 className="font-bold text-blue-800 mb-2">Part 2 (Cue Card)</h4>
-            <p className="text-lg text-gray-900 mb-2">{speaking.part2.cue_card}</p>
-            <details className="cursor-pointer">
-              <summary className="text-sm text-blue-600">Model Answer</summary>
-              <p className="mt-2 text-gray-700 bg-white p-3 rounded-lg italic">&ldquo;{speaking.part2.model_answer}&rdquo;</p>
-            </details>
+            <div className="bg-white p-4 rounded-lg border border-blue-200 mb-3 whitespace-pre-line">
+              {speaking.part2.cue_card}
+            </div>
+            {speaking.part2.tips && speaking.part2.tips.length > 0 && (
+              <div className="mb-3">
+                <p className="text-sm font-medium text-blue-700 mb-1">💡 Tips:</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {speaking.part2.tips.map((tip, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <CheckCircle className="w-3 h-3 text-blue-500 mt-1 flex-shrink-0" />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {speaking.part2.model_answer && (
+              <details className="cursor-pointer">
+                <summary className="text-sm text-blue-600 font-medium">View Model Answer</summary>
+                <p className="mt-2 text-gray-700 bg-white p-3 rounded-lg italic text-sm">&ldquo;{speaking.part2.model_answer}&rdquo;</p>
+              </details>
+            )}
+            {speaking.part2.follow_up_questions && speaking.part2.follow_up_questions.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-blue-200">
+                <p className="text-sm font-medium text-blue-700 mb-2">Follow-up Questions:</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {speaking.part2.follow_up_questions.map((q, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-blue-500">•</span>
+                      {q}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
         
