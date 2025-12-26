@@ -78,6 +78,11 @@ export default function BeginnerCourse({ user }) {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
+      // Stop Azure TTS audio if playing
+      if (window.currentListeningAudio) {
+        window.currentListeningAudio.pause();
+        window.currentListeningAudio = null;
+      }
       document.querySelectorAll('audio').forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
