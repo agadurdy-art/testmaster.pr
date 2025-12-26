@@ -65,6 +65,17 @@ export default function BeginnerCourse({ user }) {
   // Fetch lessons on mount
   useEffect(() => {
     fetchLessons();
+    
+    // Cleanup audio when component unmounts
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    };
   }, []);
 
   const fetchLessons = async () => {
