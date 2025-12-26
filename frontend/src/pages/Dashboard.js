@@ -176,10 +176,10 @@ export default function Dashboard({ user, onLogout }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100 flex items-center justify-center">
+      <div className={`min-h-screen ${bgMain} flex items-center justify-center transition-colors duration-300`}>
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-500">{getText('Loading dashboard...', 'Đang tải...', 'Gösterge paneli yükleniyor...')}</p>
+          <p className={textSecondary}>{getText('Loading dashboard...', 'Đang tải...', 'Gösterge paneli yükleniyor...')}</p>
         </div>
       </div>
     );
@@ -226,7 +226,7 @@ export default function Dashboard({ user, onLogout }) {
   const totalMinutes = Math.round((totalTimeSeconds % 3600) / 60);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100">
+    <div className={`min-h-screen ${bgMain} transition-colors duration-300`}>
       {/* Verification Banner for Unverified Users */}
       {!isVerified && <VerificationBanner user={user} />}
       
@@ -239,7 +239,7 @@ export default function Dashboard({ user, onLogout }) {
       />
       
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
+      <header className={`sticky top-0 z-50 ${bgHeader} backdrop-blur-xl border-b shadow-sm transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
@@ -252,25 +252,25 @@ export default function Dashboard({ user, onLogout }) {
             <ThemeToggle />
             <LanguageSwitcher compact />
             <div className="hidden md:flex items-center space-x-1">
-              <Button variant="ghost" onClick={() => navigate('/progress')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
+              <Button variant="ghost" onClick={() => navigate('/progress')} className={`${textSecondary} hover:text-violet-600 ${isDark ? 'hover:bg-violet-900/30' : 'hover:bg-violet-50'}`}>
                 <BarChart3 className="w-4 h-4 mr-2" />{getText('Progress', 'Tiến độ', 'İlerleme')}
               </Button>
-              <Button variant="ghost" onClick={() => navigate('/pricing')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">{t('navPricing')}</Button>
+              <Button variant="ghost" onClick={() => navigate('/pricing')} className={`${textSecondary} hover:text-violet-600 ${isDark ? 'hover:bg-violet-900/30' : 'hover:bg-violet-50'}`}>{t('navPricing')}</Button>
               <Button 
                 variant="ghost" 
                 onClick={() => window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('IELTS Ace - Support Request')}&body=${encodeURIComponent(`Hi IELTS Ace Team,\n\nUser: ${user.name}\nEmail: ${user.email}\n\nMy question/issue:\n\n`)}`}
-                className="text-gray-600 hover:text-emerald-600 hover:bg-emerald-50"
+                className={`${textSecondary} hover:text-emerald-600 ${isDark ? 'hover:bg-emerald-900/30' : 'hover:bg-emerald-50'}`}
               >
                 <Mail className="w-4 h-4 mr-2" />{getText('Contact', 'Liên hệ', 'İletişim')}
               </Button>
-              <Button variant="ghost" onClick={() => navigate('/profile')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
+              <Button variant="ghost" onClick={() => navigate('/profile')} className={`${textSecondary} hover:text-violet-600 ${isDark ? 'hover:bg-violet-900/30' : 'hover:bg-violet-50'}`}>
                 <User className="w-4 h-4 mr-2" />{user.name}
               </Button>
-              <Button variant="ghost" onClick={onLogout} className="text-red-500 hover:text-red-600 hover:bg-red-50">
+              <Button variant="ghost" onClick={onLogout} className={`text-red-500 hover:text-red-600 ${isDark ? 'hover:bg-red-900/30' : 'hover:bg-red-50'}`}>
                 <LogOut className="w-4 h-4 mr-2" />{t('navLogout')}
               </Button>
             </div>
-            <button type="button" className="md:hidden p-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <button type="button" className={`md:hidden p-2 rounded-lg border ${isDark ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : isNightShift ? 'border-amber-200 text-amber-700 hover:bg-amber-100' : 'border-gray-200 text-gray-600 hover:bg-gray-50'}`} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </nav>
