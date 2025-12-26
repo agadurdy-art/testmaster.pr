@@ -196,24 +196,44 @@ export default function AdvancedMasteryCourse({ user }) {
   };
 
   const submitQuiz = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/advanced-mastery/evaluate-quiz`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          module_id: selectedModule.id,
-          answers: quizAnswers
-        })
-      });
-      if (res.ok) {
-        const results = await res.json();
-        setQuizResults(results);
-        setQuizSubmitted(true);
-        toast.success(`Quiz complete! Band: ${results.estimated_band}`);
+    // Calculate score locally first
+    const questions = selectedModule.quiz?.questions || selectedModule.reading?.questions || [];
+    let correct = 0;
+    let answered = 0;
+    
+    questions.forEach((q, idx) => {
+      const userAns = (quizAnswers[idx] || '').toLowerCase().trim();
+      
+      // Skip unanswered questions
+      if (!userAns) return;
+      
+      answered++;
+      const correctAns = (q.correct || q.answer || '').toLowerCase().trim();
+      
+      // Compare answers
+      const cleanUser = userAns.replace(/^[a-d]\)\s*/i, '');
+      const cleanCorrect = correctAns.replace(/^[a-d]\)\s*/i, '');
+      
+      if (cleanUser === cleanCorrect || userAns === correctAns || 
+          correctAns.includes(cleanUser) || cleanUser.includes(cleanCorrect.split('/')[0].trim())) {
+        correct++;
       }
-    } catch (e) {
-      toast.error('Failed to submit quiz');
-    }
+    });
+    
+    const total = questions.length;
+    const score = total > 0 ? Math.round((correct / total) * 100) : 0;
+    const estimatedBand = score >= 90 ? 8.5 : score >= 80 ? 8.0 : score >= 70 ? 7.5 : score >= 60 ? 7.0 : score >= 50 ? 6.5 : 6.0;
+    
+    setQuizResults({
+      score: score,
+      estimated_band: estimatedBand,
+      correct: correct,
+      total: total,
+      answered: answered,
+      skipped: total - answered
+    });
+    setQuizSubmitted(true);
+    toast.success(`Quiz complete! ${correct}/${total} correct (${answered} answered, ${total - answered} skipped)`);
   };
 
   // Render modules list
