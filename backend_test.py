@@ -362,6 +362,66 @@ def test_writing_practice_evaluation():
         print("❌ SOME WRITING PRACTICE TESTS FAILED!")
         return False
 
+def test_mastery_course_features():
+    """Test the Mastery Course features mentioned in review request"""
+    print("\n" + "="*80)
+    print("🚀 TESTING MASTERY COURSE FEATURES FOR REVIEW REQUEST")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 6
+    
+    # Test 1: Authentication with provided credentials
+    print("\n=== Test 1: Authentication with dashboard@test.com ===")
+    auth_data = {
+        "email": "dashboard@test.com",
+        "password": "test12345"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/auth/login", json=auth_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            user = response.json()
+            user_id = user.get('id')
+            print(f"✅ Authentication successful - User ID: {user_id}")
+            success_count += 1
+        else:
+            print(f"❌ Authentication failed: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ Authentication error: {e}")
+        return False
+    
+    # Test 2: GET /api/mastery-course/modules
+    print("\n=== Test 2: GET /api/mastery-course/modules ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/mastery-course/modules")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            modules = response.json()
+            print(f"✅ Mastery course modules API successful")
+            print(f"   Modules found: {len(modules)}")
+            
+            # Check if Education module exists (mentioned in review request)
+            education_module = None
+            for module in modules:
+                if 'education' in module.get('title', '').lower():
+                    education_module = module
+                    break
+            
+            if education_module:
+                print(f"✅ Education module found: {education_module.get('title')}")
+                success_count += 1
+            else:
+                print(f"❌ Education module not found in {len(modules)} modules")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+
 def test_advanced_mastery_course():
     """Test the Advanced IELTS Mastery Course API endpoints"""
     print("\n" + "="*60)
