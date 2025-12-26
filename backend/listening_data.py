@@ -40,14 +40,23 @@ LISTENING_SECTIONS = [
         ]
     },
     
-    # Section 2: Band 3.5-4.5 - Short Conversation
+    # Section 2: Band 3.5-4.5 - Short Conversation (TWO SPEAKERS DIALOGUE)
     {
         "id": "listening_2",
         "level": "A2",
         "band_range": "3.5-4.5",
         "title": "At the Train Station",
-        "voice": "male",  # en-GB-RyanNeural
-        "script_text": "Excuse me, can you help me? I need to get to London. Which platform should I go to? Platform three, sir. The next train to London leaves at two fifteen. It takes about one hour and twenty minutes. The ticket costs thirty-two pounds for a single journey, or fifty-eight pounds for a return ticket. Thank you very much. That's very helpful.",
+        "type": "dialogue",  # NEW: marks this as multi-speaker
+        "speakers": ["Passenger", "Staff"],  # NEW: speaker list
+        "script_text": """Passenger: Excuse me, can you help me? I need to get to London. Which platform should I go to?
+Staff: Platform three, sir. The next train to London leaves at two fifteen.
+Passenger: Okay. And how long does the journey take?
+Staff: It takes about one hour and twenty minutes.
+Passenger: I see. How much is a ticket?
+Staff: The ticket costs thirty-two pounds for a single journey, or fifty-eight pounds for a return ticket.
+Passenger: I'll have a return ticket please.
+Staff: Certainly. That's fifty-eight pounds. Here's your ticket.
+Passenger: Thank you very much. That's very helpful.""",
         "questions": [
             {
                 "id": "q3",
