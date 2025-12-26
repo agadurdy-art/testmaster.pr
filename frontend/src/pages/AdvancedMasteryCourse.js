@@ -512,40 +512,56 @@ export default function AdvancedMasteryCourse({ user }) {
           <Target className="w-5 h-5 text-blue-600" /> {selectedModule.reading?.title}
         </h3>
         <span className="text-sm text-gray-500">
-          ~{selectedModule.reading?.word_count} words
+          ~{selectedModule.reading?.passage?.split(' ').length || 0} words
         </span>
       </div>
 
       {/* Reading passage with Side-by-Side */}
       <SideBySideReader
-        passage={selectedModule.reading?.text || ''}
+        passage={selectedModule.reading?.passage || selectedModule.reading?.text || ''}
         passageTitle="Academic Reading Passage"
         defaultRatio={70}
       >
-        {/* Practice Questions Preview */}
+        {/* Practice Questions */}
         <div className="space-y-4">
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-semibold text-blue-800 text-sm mb-2">
-              📚 Practice Questions ({selectedModule.reading?.questions?.length || 0})
-            </h4>
-            <p className="text-xs text-gray-600">
-              Complete the quiz section to test your comprehension with advanced question types: True/False/Not Given, Summary Completion, Matching Information, and more.
-            </p>
-          </div>
-          
-          {/* Quick Preview of first few questions */}
-          {selectedModule.reading?.questions?.slice(0, 3).map((q, idx) => (
+          <h4 className="font-bold text-gray-900 text-sm">Comprehension Questions</h4>
+          {selectedModule.reading?.questions?.map((q, idx) => (
             <div key={idx} className="p-3 bg-gray-50 rounded-lg">
-              <p className="text-xs text-gray-500 mb-1">Question {idx + 1}</p>
-              <p className="text-sm text-gray-700 font-medium">{q.question}</p>
+              <p className="font-medium text-gray-900 mb-2 text-sm">
+                {idx + 1}. {q.question}
+                {q.type === 'true_false_ng' && <span className="text-xs text-gray-500 ml-2">(T/F/NG)</span>}
+                {q.type === 'multiple_choice' && <span className="text-xs text-gray-500 ml-2">(MC)</span>}
+              </p>
+              {q.options ? (
+                <div className="space-y-1">
+                  {q.options.map((opt, i) => (
+                    <label key={i} className="flex items-center gap-2 text-xs text-gray-700">
+                      <input type="radio" name={`reading_q_${idx}`} value={opt} />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              ) : q.type === 'true_false_ng' ? (
+                <div className="flex gap-3 flex-wrap">
+                  {['True', 'False', 'Not Given'].map(opt => (
+                    <label key={opt} className="flex items-center gap-1 text-xs">
+                      <input type="radio" name={`reading_q_${idx}`} value={opt} />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <input type="text" placeholder="Your answer..." className="w-full p-2 border rounded text-sm" />
+              )}
+              <details className="mt-2">
+                <summary className="text-xs text-blue-600 cursor-pointer">Show Answer</summary>
+                <div className="mt-1 p-2 bg-green-50 rounded text-xs">
+                  <p className="text-green-700 font-medium">✓ {q.answer || q.correct}</p>
+                  {q.explanation && <p className="text-gray-600 mt-1">{q.explanation}</p>}
+                </div>
+              </details>
             </div>
           ))}
-          
-          {selectedModule.reading?.questions?.length > 3 && (
-            <p className="text-xs text-center text-gray-500">
-              + {selectedModule.reading.questions.length - 3} more questions in Quiz section
-            </p>
-          )}
         </div>
       </SideBySideReader>
 
