@@ -1149,7 +1149,7 @@ async def resend_verification_email(input: ResendVerificationRequest):
     frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
     verify_link = f"{frontend_base}/verify-email?token={verification_token}"
     
-    email_sent = send_verification_email(email, verify_link, user.get("name", "there"))
+    email_sent = await send_verification_email(email, verify_link, user.get("name", "there"))
     
     if email_sent:
         return {"message": "Verification email sent! Check your inbox and spam folder.", "sent": True}
