@@ -40,7 +40,20 @@ export default function AdvancedMasteryCourse({ user }) {
   const [quizResults, setQuizResults] = useState(null);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
 
-  useEffect(() => { loadModules(); }, []);
+  useEffect(() => { 
+    loadModules(); 
+    
+    // Cleanup audio when component unmounts
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    };
+  }, []);
 
   const loadModules = async () => {
     try {
