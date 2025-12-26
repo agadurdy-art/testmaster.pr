@@ -14,6 +14,8 @@ import { registerUser, loginUser } from '../lib/api';
 import { toast } from 'sonner';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
+import ThemeToggle from '../components/ThemeToggle';
+import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const SUPPORT_EMAIL = 'ieltsace@testmaster.pro';
