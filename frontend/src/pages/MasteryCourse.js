@@ -331,15 +331,15 @@ export default function MasteryCourse({ user }) {
                     {config.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <span className="text-xs font-medium text-violet-600 bg-violet-50 px-2 py-0.5 rounded-full">
+                    <span className={`text-xs font-medium text-violet-600 ${isDark ? 'bg-violet-900/30' : 'bg-violet-50'} px-2 py-0.5 rounded-full`}>
                       Module {module.module_number}
                     </span>
-                    <h3 className="font-bold text-gray-900 mt-1">{module.title}</h3>
-                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                    <h3 className={`font-bold ${textPrimary} mt-1`}>{module.title}</h3>
+                    <p className={`text-xs ${textSecondary} mt-1 line-clamp-2`}>
                       {module.learning_goals?.[0]}
                     </p>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                  <ChevronRight className={`w-5 h-5 ${textSecondary} flex-shrink-0`} />
                 </div>
               </Card>
             );
