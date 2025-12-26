@@ -140,7 +140,7 @@ export default function LevelDetail({ user }) {
         <h2 className="text-2xl font-bold mb-6">Units</h2>
         
         <div className="space-y-4">
-          {level.units.map((unit) => {
+          {(level.units || []).map((unit) => {
             const unitProg = getUnitProgress(unit.id);
             const unlocked = isUnitUnlocked(unit);
             const completion = calculateUnitCompletion(unit);
