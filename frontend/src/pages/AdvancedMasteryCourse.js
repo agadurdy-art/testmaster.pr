@@ -1233,17 +1233,17 @@ export default function AdvancedMasteryCourse({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-amber-50/30 to-gray-100 flex items-center justify-center">
+      <div className={`min-h-screen ${bgMain} flex items-center justify-center transition-colors duration-300`}>
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-500">Loading Advanced Mastery Course...</p>
+          <p className={textSecondary}>Loading Advanced Mastery Course...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-amber-50/30 to-gray-100 pb-24">
+    <div className={`min-h-screen ${bgMain} pb-24 transition-colors duration-300`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {view === 'modules' && renderModulesList()}
         {view === 'module-detail' && selectedModule && renderModuleDetail()}
