@@ -763,17 +763,108 @@ export default function MasteryCourse({ user }) {
       </details>
       
       {writingFeedback && (
-        <div className={`p-4 rounded-xl ${writingFeedback.band_score >= 6 ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="font-bold text-lg">Band {writingFeedback.band_score}</span>
+        <div className={`p-5 rounded-xl ${writingFeedback.band_score >= 6 ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
+          <div className="flex items-center gap-2 mb-3">
+            <Award className="w-6 h-6 text-orange-600" />
+            <span className="font-bold text-xl">Band {writingFeedback.band_score}</span>
           </div>
-          <div className="grid grid-cols-2 gap-2 mb-3 text-sm">
-            {writingFeedback.task_achievement && <div className="p-2 bg-white rounded">Task: {writingFeedback.task_achievement}</div>}
-            {writingFeedback.coherence && <div className="p-2 bg-white rounded">Coherence: {writingFeedback.coherence}</div>}
-            {writingFeedback.lexical && <div className="p-2 bg-white rounded">Lexical: {writingFeedback.lexical}</div>}
-            {writingFeedback.grammar && <div className="p-2 bg-white rounded">Grammar: {writingFeedback.grammar}</div>}
+          
+          {/* Criteria Scores */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+            {writingFeedback.task_achievement && (
+              <div className="p-2 bg-white rounded-lg text-center">
+                <p className="text-xs text-gray-500">Task</p>
+                <p className="font-bold">{typeof writingFeedback.task_achievement === 'object' ? writingFeedback.task_achievement.score : writingFeedback.task_achievement}</p>
+              </div>
+            )}
+            {writingFeedback.coherence && (
+              <div className="p-2 bg-white rounded-lg text-center">
+                <p className="text-xs text-gray-500">Coherence</p>
+                <p className="font-bold">{typeof writingFeedback.coherence === 'object' ? writingFeedback.coherence.score : writingFeedback.coherence}</p>
+              </div>
+            )}
+            {writingFeedback.lexical && (
+              <div className="p-2 bg-white rounded-lg text-center">
+                <p className="text-xs text-gray-500">Lexical</p>
+                <p className="font-bold">{typeof writingFeedback.lexical === 'object' ? writingFeedback.lexical.score : writingFeedback.lexical}</p>
+              </div>
+            )}
+            {writingFeedback.grammar && (
+              <div className="p-2 bg-white rounded-lg text-center">
+                <p className="text-xs text-gray-500">Grammar</p>
+                <p className="font-bold">{typeof writingFeedback.grammar === 'object' ? writingFeedback.grammar.score : writingFeedback.grammar}</p>
+              </div>
+            )}
           </div>
-          <p className="text-gray-700">{writingFeedback.feedback}</p>
+          
+          <p className="text-gray-700 mb-4">{writingFeedback.overall_feedback || writingFeedback.feedback}</p>
+          
+          {/* Good Points */}
+          {writingFeedback.good_points && writingFeedback.good_points.length > 0 && (
+            <div className="mb-4 p-3 bg-green-100 rounded-lg">
+              <h5 className="font-semibold text-green-700 mb-2 flex items-center gap-1">
+                <CheckCircle className="w-4 h-4" /> What You Did Well
+              </h5>
+              <ul className="text-sm text-green-800 space-y-1">
+                {writingFeedback.good_points.map((point, idx) => (
+                  <li key={idx}>✓ {point}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {/* Mistakes with Corrections */}
+          {writingFeedback.mistakes && writingFeedback.mistakes.length > 0 && (
+            <div className="mb-4 p-3 bg-red-50 rounded-lg border border-red-200">
+              <h5 className="font-semibold text-red-700 mb-2 flex items-center gap-1">
+                <XCircle className="w-4 h-4" /> Mistakes to Correct
+              </h5>
+              {writingFeedback.mistakes.map((mistake, idx) => (
+                <div key={idx} className="mb-3 p-2 bg-white rounded">
+                  <p className="text-red-600 line-through text-sm">{mistake.original}</p>
+                  <p className="text-green-600 font-medium text-sm">✓ {mistake.corrected}</p>
+                  <p className="text-gray-600 text-xs italic mt-1">
+                    <span className="bg-gray-100 px-1 rounded">{mistake.type}</span> - {mistake.explanation}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {/* Vocabulary Suggestions */}
+          {writingFeedback.vocabulary_suggestions && writingFeedback.vocabulary_suggestions.length > 0 && (
+            <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+              <h5 className="font-semibold text-blue-700 mb-2">📚 Upgrade Your Vocabulary</h5>
+              {writingFeedback.vocabulary_suggestions.map((sug, idx) => (
+                <div key={idx} className="mb-2 text-sm">
+                  <span className="text-gray-500">{sug.basic}</span> → <span className="text-blue-600 font-medium">{sug.advanced}</span>
+                  <p className="text-xs text-gray-600 italic">"{sug.example}"</p>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {writingFeedback.structure_tip && (
+            <div className="p-3 bg-yellow-50 rounded-lg mb-3">
+              <p className="text-sm text-yellow-800">📝 <strong>Structure Tip:</strong> {writingFeedback.structure_tip}</p>
+            </div>
+          )}
+          
+          {writingFeedback.lesson_reference && (
+            <p className="text-sm text-purple-600 mb-2">📖 <strong>Review:</strong> {writingFeedback.lesson_reference}</p>
+          )}
+          
+          {/* Next Steps */}
+          {writingFeedback.next_steps && writingFeedback.next_steps.length > 0 && (
+            <div className="p-3 bg-indigo-50 rounded-lg mt-3">
+              <h5 className="font-semibold text-indigo-700 mb-2">🎯 Next Steps</h5>
+              <ol className="text-sm text-indigo-800 space-y-1 list-decimal list-inside">
+                {writingFeedback.next_steps.map((step, idx) => (
+                  <li key={idx}>{step}</li>
+                ))}
+              </ol>
+            </div>
+          )}
         </div>
       )}
       
