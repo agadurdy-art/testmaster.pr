@@ -47,7 +47,8 @@ export default function UnitDetail({ user }) {
   // Check if user is admin - all content unlocked for admins
   const isAdmin = user?.email && (
     user.email.toLowerCase().includes('admin@ieltsace') || 
-    user.email.toLowerCase() === 'aga.durdy@gmail.com'
+    user.email.toLowerCase() === 'aga.durdy@gmail.com' ||
+    user.email.toLowerCase() === 'ieltsace@tesmaster.pro'
   );
 
   const isLessonUnlocked = (lesson) => {
