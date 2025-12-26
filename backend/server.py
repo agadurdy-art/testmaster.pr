@@ -513,22 +513,27 @@ def generate_reset_token() -> str:
     # For simplicity use uuid4; safer crypto token could be used in production
     return str(uuid.uuid4())
 
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL")
+# Resend Email Configuration
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+RESEND_FROM_EMAIL = os.getenv("RESEND_FROM_EMAIL", "onboarding@resend.dev")
+
+# Initialize Resend
+if RESEND_API_KEY:
+    resend.api_key = RESEND_API_KEY
 
 
-def send_verification_email(to_email: str, verify_link: str, user_name: str = "there") -> bool:
-    """Send email verification email via SendGrid. Returns True on success."""
-    if not SENDGRID_API_KEY or not SENDGRID_FROM_EMAIL:
-        logging.getLogger(__name__).warning("SendGrid not configured; skipping verification email send")
+async def send_verification_email(to_email: str, verify_link: str, user_name: str = "there") -> bool:
+    """Send email verification email via Resend. Returns True on success."""
+    if not RESEND_API_KEY:
+        logging.getLogger(__name__).warning("Resend not configured; skipping verification email send")
         return False
 
     try:
-        message = Mail(
-            from_email=SENDGRID_FROM_EMAIL,
-            to_emails=to_email,
-            subject="Verify your email - testmaster.pro",
-            html_content=f"""
+        params = {
+            "from": RESEND_FROM_EMAIL,
+            "to": [to_email],
+            "subject": "Verify your email - testmaster.pro",
+            "html": f"""
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
                     <div style="text-align: center; margin-bottom: 30px;">
                         <h1 style="color: #7c3aed; margin: 0;">testmaster.pro</h1>
@@ -559,53 +564,64 @@ def send_verification_email(to_email: str, verify_link: str, user_name: str = "t
                     </p>
                 </div>
             """,
-        )
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
-        if response.status_code in (200, 201, 202):
-            logging.getLogger(__name__).info(f"Sent verification email to {to_email}")
-            return True
-        logging.getLogger(__name__).error(
-            f"SendGrid verification email error for {to_email}: status {response.status_code}"
-        )
-        return False
+        }
+        
+        # Run sync SDK in thread to keep FastAPI non-blocking
+        email = await asyncio.to_thread(resend.Emails.send, params)
+        logging.getLogger(__name__).info(f"Sent verification email to {to_email}, email_id: {email.get('id')}")
+        return True
     except Exception as e:
-        logging.getLogger(__name__).error(f"SendGrid verification email exception for {to_email}: {e}")
+        logging.getLogger(__name__).error(f"Resend verification email exception for {to_email}: {e}")
         return False
 
 
-def send_reset_email(to_email: str, reset_link: str) -> bool:
-    """Send a password reset email via SendGrid. Returns True on success."""
-    if not SENDGRID_API_KEY or not SENDGRID_FROM_EMAIL:
-        logging.getLogger(__name__).warning("SendGrid not configured; skipping email send")
+async def send_reset_email(to_email: str, reset_link: str) -> bool:
+    """Send a password reset email via Resend. Returns True on success."""
+    if not RESEND_API_KEY:
+        logging.getLogger(__name__).warning("Resend not configured; skipping email send")
         return False
-    # In-memory stores (fallback); real flows use MongoDB collections
 
     try:
-        message = Mail(
-            from_email=SENDGRID_FROM_EMAIL,
-            to_emails=to_email,
-            subject="IELTS Ace - Password Reset",
-            html_content=f"""
-                <p>Hello,</p>
-                <p>We received a request to reset the password for your IELTS Ace account.</p>
-                <p>Click the link below to set a new password (valid for 60 minutes):</p>
-                <p><a href='{reset_link}'>{reset_link}</a></p>
-                <p>If you did not request this, you can safely ignore this email.</p>
-                <p>– IELTS Ace</p>
+        params = {
+            "from": RESEND_FROM_EMAIL,
+            "to": [to_email],
+            "subject": "IELTS Ace - Password Reset",
+            "html": f"""
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #7c3aed; margin: 0;">testmaster.pro</h1>
+                        <p style="color: #6b7280; margin-top: 5px;">IELTS & Cambridge AI Exam Prep</p>
+                    </div>
+                    
+                    <p style="font-size: 16px; color: #374151;">Hello,</p>
+                    
+                    <p style="font-size: 16px; color: #374151;">We received a request to reset the password for your account.</p>
+                    
+                    <p style="font-size: 16px; color: #374151;">Click the link below to set a new password (valid for 60 minutes):</p>
+                    
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="{reset_link}" style="background: linear-gradient(to right, #7c3aed, #9333ea); color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; display: inline-block;">
+                            Reset Password
+                        </a>
+                    </div>
+                    
+                    <p style="font-size: 14px; color: #6b7280;">If you did not request this, you can safely ignore this email.</p>
+                    
+                    <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+                    
+                    <p style="font-size: 12px; color: #9ca3af; text-align: center;">
+                        testmaster.pro team
+                    </p>
+                </div>
             """,
-        )
-        sg = SendGridAPIClient(SENDGRID_API_KEY)
-        response = sg.send(message)
-        if response.status_code in (200, 201, 202):
-            logging.getLogger(__name__).info(f"Sent reset email to {to_email}")
-            return True
-        logging.getLogger(__name__).error(
-            f"SendGrid error for {to_email}: status {response.status_code}"
-        )
-        return False
+        }
+        
+        # Run sync SDK in thread to keep FastAPI non-blocking
+        email = await asyncio.to_thread(resend.Emails.send, params)
+        logging.getLogger(__name__).info(f"Sent reset email to {to_email}, email_id: {email.get('id')}")
+        return True
     except Exception as e:
-        logging.getLogger(__name__).error(f"SendGrid exception for {to_email}: {e}")
+        logging.getLogger(__name__).error(f"Resend reset email exception for {to_email}: {e}")
         return False
 
 
