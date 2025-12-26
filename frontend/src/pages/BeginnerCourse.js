@@ -110,6 +110,11 @@ export default function BeginnerCourse({ user }) {
     setSpeakingFeedback(null);
     setWritingResponse('');
     setWritingFeedback(null);
+    // Reset listening states
+    setListeningAnswers({});
+    setListeningSubmitted(false);
+    setListeningScore(0);
+    setShowTranscript(false);
   };
 
   // Text-to-Speech
