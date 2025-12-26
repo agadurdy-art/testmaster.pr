@@ -526,6 +526,31 @@ export default function MasteryCourse({ user }) {
             </div>
           ))}
         </div>
+        
+        {/* Band Level Comparison */}
+        <div className="mt-6 grid md:grid-cols-2 gap-4">
+          <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-400">
+            <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+              📝 Band 5.5-6.0 Example
+            </h4>
+            <p className="text-gray-700 italic text-sm">
+              {selectedModule.grammar?.band_55_example || 
+               `"${selectedModule.grammar?.title ? `I think ${selectedModule.grammar.title.toLowerCase()} is important.` : 'Simple sentence structure without complexity.'}"`}
+            </p>
+            <p className="text-xs text-amber-600 mt-2">Basic but correct - limited range</p>
+          </div>
+          <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+            <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+              ⭐ Band 7.0+ Example
+            </h4>
+            <p className="text-gray-700 italic text-sm">
+              {selectedModule.grammar?.band_70_example || 
+               selectedModule.grammar?.examples?.[0] ||
+               `"Using ${selectedModule.grammar?.title?.toLowerCase() || 'this structure'} effectively demonstrates sophisticated grammatical control."`}
+            </p>
+            <p className="text-xs text-green-600 mt-2">Complex structure - shows grammatical range</p>
+          </div>
+        </div>
       </div>
       
       {/* Signal Words Visual */}
