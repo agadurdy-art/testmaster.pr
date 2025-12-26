@@ -2913,9 +2913,10 @@ if __name__ == "__main__":
     # Test Writing Practice Evaluation API (existing functionality)
     writing_success = test_writing_practice_evaluation()
     
-    overall_success = listening_writing_success and pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
+    overall_success = admin_access_success and listening_writing_success and pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
+    print(f"   IELTS Ace Learning Platform Admin Access (CURRENT REVIEW): {'✅ PASSED' if admin_access_success else '❌ FAILED'}")
     print(f"   Listening & Writing Modules (CURRENT REVIEW): {'✅ PASSED' if listening_writing_success else '❌ FAILED'}")
     print(f"   3-Layer Pronunciation Evaluation (REVIEW REQUEST): {'✅ PASSED' if pronunciation_success else '❌ FAILED'}")
     print(f"   Learning Platform APIs (REVIEW REQUEST): {'✅ PASSED' if learning_platform_success else '❌ FAILED'}")
