@@ -606,15 +606,15 @@ export default function Dashboard({ user, onLogout }) {
           </Card>
 
           {/* Recent Tests */}
-          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
+          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-200">
                   <History className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-gray-900">{getText('Recent Tests', 'Bài thi gần đây', 'Son Testler')}</h2>
-                  <p className="text-xs text-gray-500">{getText('Review your results', 'Xem lại kết quả', 'Sonuçlarınızı inceleyin')}</p>
+                  <h2 className={`text-lg font-bold ${textPrimary}`}>{getText('Recent Tests', 'Bài thi gần đây', 'Son Testler')}</h2>
+                  <p className={`text-xs ${textSecondary}`}>{getText('Review your results', 'Xem lại kết quả', 'Sonuçlarınızı inceleyin')}</p>
                 </div>
               </div>
               {hasProgress && (
@@ -622,7 +622,7 @@ export default function Dashboard({ user, onLogout }) {
                   variant="ghost" 
                   size="sm"
                   onClick={() => navigate('/progress')}
-                  className="text-violet-600 hover:bg-violet-50 text-xs"
+                  className={`text-violet-600 ${isDark ? 'hover:bg-violet-900/30' : 'hover:bg-violet-50'} text-xs`}
                 >
                   {getText('View All', 'Xem tất cả', 'Tümünü Gör')}
                 </Button>
@@ -638,15 +638,15 @@ export default function Dashboard({ user, onLogout }) {
                     <div 
                       key={idx}
                       onClick={() => attempt.id && navigate(`/results/${attempt.id}`)}
-                      className="p-3 bg-gray-50 rounded-xl flex items-center justify-between cursor-pointer hover:bg-gray-100 transition-colors"
+                      className={`p-3 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'} rounded-xl flex items-center justify-between cursor-pointer transition-colors`}
                     >
                       <div className="flex items-center gap-3">
                         <div className={`w-9 h-9 rounded-lg ${moduleConfig?.color || 'bg-gray-500'} flex items-center justify-center`}>
                           <Icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
-                          <p className="font-medium text-gray-900 text-sm capitalize">{attempt.test_type}</p>
-                          <p className="text-xs text-gray-500">{attempt.completed_at ? new Date(attempt.completed_at).toLocaleDateString() : 'Recently'}</p>
+                          <p className={`font-medium ${textPrimary} text-sm capitalize`}>{attempt.test_type}</p>
+                          <p className={`text-xs ${textSecondary}`}>{attempt.completed_at ? new Date(attempt.completed_at).toLocaleDateString() : 'Recently'}</p>
                         </div>
                       </div>
                       <div className={`px-3 py-1 rounded-lg text-sm font-bold ${
@@ -662,10 +662,10 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             ) : (
               <div className="text-center py-8">
-                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
-                  <GraduationCap className="w-8 h-8 text-gray-400" />
+                <div className={`w-16 h-16 rounded-full ${isDark ? 'bg-gray-700' : 'bg-gray-100'} flex items-center justify-center mx-auto mb-3`}>
+                  <GraduationCap className={`w-8 h-8 ${textSecondary}`} />
                 </div>
-                <p className="text-gray-500 text-sm mb-3">{getText('No tests yet', 'Chưa có bài thi nào', 'Henüz test yok')}</p>
+                <p className={`${textSecondary} text-sm mb-3`}>{getText('No tests yet', 'Chưa có bài thi nào', 'Henüz test yok')}</p>
                 <Button onClick={() => navigate('/test/reading')} size="sm" className="bg-violet-600 hover:bg-violet-700 text-white">
                   {getText('Take Your First Test', 'Làm bài thi đầu tiên', 'İlk Testinizi Yapın')}
                 </Button>
