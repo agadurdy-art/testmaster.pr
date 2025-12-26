@@ -17,8 +17,7 @@ import urllib.parse
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 from emergentintegrations.llm.openai import OpenAISpeechToText
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+import resend
 import io
 import httpx
 
