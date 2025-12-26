@@ -2877,6 +2877,12 @@ def test_ielts_ace_learning_platform_admin_access():
         return False
 
 if __name__ == "__main__":
+    print("🚀 Starting Backend API Testing for IELTS Ace Application")
+    print("="*80)
+    
+    # Test IELTS Ace Learning Platform with Admin Access (CURRENT REVIEW REQUEST)
+    admin_access_success = test_ielts_ace_learning_platform_admin_access()
+    
     # Test the Listening and Writing Modules (CURRENT REVIEW REQUEST)
     listening_writing_success = test_listening_and_writing_modules()
     
