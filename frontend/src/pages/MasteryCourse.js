@@ -66,6 +66,18 @@ export default function MasteryCourse({ user }) {
 
   useEffect(() => {
     fetchModules();
+    
+    // Cleanup audio when component unmounts or page changes
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      // Stop all audio elements
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    };
   }, []);
 
   const fetchModules = async () => {
