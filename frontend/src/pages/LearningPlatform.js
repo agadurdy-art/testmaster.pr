@@ -54,7 +54,7 @@ export default function LearningPlatform({ user }) {
   const isAdmin = user?.email && (
     user.email.toLowerCase().includes('admin@ieltsace') || 
     user.email.toLowerCase() === 'aga.durdy@gmail.com' ||
-    user.email.toLowerCase() === 'ieltsace@tesmaster.pro'
+    user.email.toLowerCase() === 'ieltsace@testmaster.pro'
   );
 
   const isLevelUnlocked = (level) => {
