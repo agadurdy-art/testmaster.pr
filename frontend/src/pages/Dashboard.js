@@ -16,7 +16,7 @@ import SkillBreakdown from '../components/SkillBreakdown';
 import VerificationBanner, { LockedContentModal, canAccessFeature } from '../components/VerificationBanner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
-const SUPPORT_EMAIL = 'testmaster.edu.ai@proton.me';
+const SUPPORT_EMAIL = 'ieltsace@testmaster.pro';
 
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
