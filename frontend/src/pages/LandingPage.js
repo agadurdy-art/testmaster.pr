@@ -362,22 +362,23 @@ export default function LandingPage({ onLogin, user, showLogin }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-violet-50/20 to-white">
+    <div className={`min-h-screen ${bgMain} transition-colors duration-300`}>
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+      <header className={`sticky top-0 z-50 ${bgHeader} backdrop-blur-xl border-b shadow-sm transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-700 flex items-center justify-center shadow-lg shadow-purple-200">
               <Trophy className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">{t('appName')}</h1>
-              <p className="text-xs text-gray-500">Cambridge-Aligned AI</p>
+              <h1 className={`text-xl font-bold ${textPrimary}`}>{t('appName')}</h1>
+              <p className={`text-xs ${textSecondary}`}>Cambridge-Aligned AI</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <LanguageSwitcher compact />
-            <Button variant="ghost" className="text-gray-600 hover:text-violet-600 hidden sm:flex" onClick={() => { setAuthMode('signin'); setShowAuth(true); }}>
+            <Button variant="ghost" className={`${textSecondary} hover:text-violet-600 hidden sm:flex`} onClick={() => { setAuthMode('signin'); setShowAuth(true); }}>
               {t('landingSignIn')}
             </Button>
             <Button data-testid="get-started-btn" onClick={() => setShowAuth(true)} className="bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 text-white shadow-lg shadow-purple-200 border-0">
@@ -391,23 +392,23 @@ export default function LandingPage({ onLogin, user, showLogin }) {
       <section className="pt-20 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-100 text-violet-700 text-sm font-medium mb-8">
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-violet-900/50 text-violet-300' : 'bg-violet-100 text-violet-700'} text-sm font-medium mb-8`}>
               <Brain className="w-4 h-4" />
               <span>{t('landingBadge')}</span>
             </div>
 
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
+            <h2 className={`text-4xl sm:text-5xl lg:text-6xl font-bold ${textPrimary} mb-6 leading-tight tracking-tight`}>
               {t('landingHeroTitle1')}
               <span className="block mt-2 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                 {t('landingHeroTitle2')}
               </span>
             </h2>
             
-            <p className="text-xl text-gray-600 mb-4 leading-relaxed max-w-3xl mx-auto">
+            <p className={`text-xl ${textSecondary} mb-4 leading-relaxed max-w-3xl mx-auto`}>
               {t('landingHeroSubtitle')}
             </p>
             
-            <p className="text-lg text-gray-500 mb-10 max-w-2xl mx-auto">
+            <p className={`text-lg ${isDark ? 'text-gray-500' : 'text-gray-500'} mb-10 max-w-2xl mx-auto`}>
               {t('landingHeroDesc')}
             </p>
 
@@ -426,7 +427,7 @@ export default function LandingPage({ onLogin, user, showLogin }) {
                 onClick={() => setShowCourseSelector(true)} 
                 size="lg" 
                 variant="outline"
-                className="border-2 border-amber-500 text-amber-600 hover:bg-amber-50 px-8 py-6 text-lg"
+                className={`border-2 border-amber-500 text-amber-600 ${isDark ? 'hover:bg-amber-900/30' : 'hover:bg-amber-50'} px-8 py-6 text-lg`}
               >
                 <Play className="w-5 h-5 mr-2" />
                 {t('landingTryOurLessons')}
@@ -437,28 +438,28 @@ export default function LandingPage({ onLogin, user, showLogin }) {
       </section>
 
       {/* WHY CHOOSE US */}
-      <section className="py-20 px-6 bg-white">
+      <section className={`py-20 px-6 ${bgSection} transition-colors duration-300`}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className={`text-3xl sm:text-4xl font-bold ${textPrimary} mb-4`}>
               {t('landingWhyChooseUs')}
             </h2>
-            <p className="text-lg text-gray-500">{t('landingWhyChooseUsDesc')}</p>
+            <p className={`text-lg ${textSecondary}`}>{t('landingWhyChooseUsDesc')}</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Brain, title: t('landingExaminerAI'), desc: t('landingExaminerAIDesc'), color: 'bg-violet-500', lightBg: 'bg-violet-50' },
-              { icon: ShieldCheck, title: t('landingNoBandInflation'), desc: t('landingNoBandInflationDesc'), color: 'bg-red-500', lightBg: 'bg-red-50' },
-              { icon: Lightbulb, title: t('landingTeaching'), desc: t('landingTeachingDesc'), color: 'bg-amber-500', lightBg: 'bg-amber-50' },
-              { icon: TrendingUp, title: t('landingPersonalPath'), desc: t('landingPersonalPathDesc'), color: 'bg-emerald-500', lightBg: 'bg-emerald-50' }
+              { icon: Brain, title: t('landingExaminerAI'), desc: t('landingExaminerAIDesc'), color: 'bg-violet-500', lightBg: isDark ? 'bg-violet-900/30' : 'bg-violet-50' },
+              { icon: ShieldCheck, title: t('landingNoBandInflation'), desc: t('landingNoBandInflationDesc'), color: 'bg-red-500', lightBg: isDark ? 'bg-red-900/30' : 'bg-red-50' },
+              { icon: Lightbulb, title: t('landingTeaching'), desc: t('landingTeachingDesc'), color: 'bg-amber-500', lightBg: isDark ? 'bg-amber-900/30' : 'bg-amber-50' },
+              { icon: TrendingUp, title: t('landingPersonalPath'), desc: t('landingPersonalPathDesc'), color: 'bg-emerald-500', lightBg: isDark ? 'bg-emerald-900/30' : 'bg-emerald-50' }
             ].map((feature, idx) => (
               <Card key={idx} className={`p-6 ${feature.lightBg} border-0 rounded-2xl hover:shadow-lg transition-all duration-300`}>
                 <div className={`w-12 h-12 rounded-xl ${feature.color} flex items-center justify-center mb-4 shadow-lg`}>
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{feature.desc}</p>
+                <h3 className={`text-lg font-bold ${textPrimary} mb-2`}>{feature.title}</h3>
+                <p className={`${textSecondary} text-sm leading-relaxed`}>{feature.desc}</p>
               </Card>
             ))}
           </div>
