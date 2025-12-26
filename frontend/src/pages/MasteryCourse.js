@@ -12,6 +12,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
+import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -38,6 +40,19 @@ const MODULE_CONFIG = {
 
 export default function MasteryCourse({ user }) {
   const navigate = useNavigate();
+  
+  // Theme support
+  const { activeTheme } = useTheme();
+  const isDark = activeTheme === THEME_MODES.DARK;
+  const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
+  
+  // Theme-aware classes
+  const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100';
+  const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-200';
+  const bgHeader = isDark ? 'bg-gray-800/95 border-gray-700' : isNightShift ? 'bg-amber-100/95 border-amber-200' : 'bg-white/80 border-gray-100';
+  const textPrimary = isDark ? 'text-gray-100' : isNightShift ? 'text-amber-900' : 'text-gray-900';
+  const textSecondary = isDark ? 'text-gray-400' : isNightShift ? 'text-amber-700' : 'text-gray-600';
+  const bgSubtle = isDark ? 'bg-gray-700/50' : isNightShift ? 'bg-amber-100/30' : 'bg-gray-50';
   
   const [modules, setModules] = useState([]);
   const [selectedModule, setSelectedModule] = useState(null);
