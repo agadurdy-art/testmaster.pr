@@ -238,6 +238,7 @@ export default function Dashboard({ user, onLogout }) {
           </div>
           
           <nav className="flex items-center space-x-2">
+            <ThemeToggle />
             <LanguageSwitcher compact />
             <div className="hidden md:flex items-center space-x-1">
               <Button variant="ghost" onClick={() => navigate('/progress')} className="text-gray-600 hover:text-violet-600 hover:bg-violet-50">
