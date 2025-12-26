@@ -795,8 +795,8 @@ export default function BeginnerCourse({ user }) {
         </SideBySideReader>
       
         <div className="flex justify-between">
-          <Button variant="outline" onClick={() => setCurrentSection('grammar')}>
-            <ChevronLeft className="w-4 h-4 mr-1" /> Grammar
+          <Button variant="outline" onClick={() => setCurrentSection('listening')}>
+            <ChevronLeft className="w-4 h-4 mr-1" /> Listening
           </Button>
           <Button onClick={() => setCurrentSection('speaking')} className="bg-gradient-to-r from-green-500 to-emerald-600 text-white">
             Next: Speaking <ChevronRight className="w-4 h-4 ml-1" />
