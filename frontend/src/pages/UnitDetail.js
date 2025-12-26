@@ -44,7 +44,16 @@ export default function UnitDetail({ user }) {
     return unit.user_progress.lesson_progress.find(lp => lp.lesson_id === lessonId);
   };
 
+  // Check if user is admin - all content unlocked for admins
+  const isAdmin = user?.email && (
+    user.email.toLowerCase().includes('admin@ieltsace') || 
+    user.email.toLowerCase() === 'aga.durdy@gmail.com'
+  );
+
   const isLessonUnlocked = (lesson) => {
+    // Admin users have access to all lessons
+    if (isAdmin) return true;
+    
     // First lesson is always unlocked (Unit 1's first lesson should always be accessible)
     // Also unlock if the unit itself is marked as unlocked in user progress
     if (lesson.lesson_number === 1) {

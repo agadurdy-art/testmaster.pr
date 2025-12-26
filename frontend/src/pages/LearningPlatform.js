@@ -50,7 +50,16 @@ export default function LearningPlatform({ user }) {
     return userProgress.level_progress.find(lp => lp.level_id === levelId);
   };
 
+  // Check if user is admin - all content unlocked for admins
+  const isAdmin = user?.email && (
+    user.email.toLowerCase().includes('admin@ieltsace') || 
+    user.email.toLowerCase() === 'aga.durdy@gmail.com'
+  );
+
   const isLevelUnlocked = (level) => {
+    // Admin users have access to all levels
+    if (isAdmin) return true;
+    
     // First level is always unlocked
     if (level.level_order === 1) return true;
     
