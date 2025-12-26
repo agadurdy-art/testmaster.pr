@@ -122,22 +122,24 @@ export default function UnitDetail({ user }) {
       {/* Content */}
       <div className="max-w-5xl mx-auto px-4 py-8">
         {/* Learning Objectives */}
-        <Card className="p-6 mb-8">
-          <h2 className="text-xl font-bold mb-4">What You'll Learn</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {unit.learning_objectives.map((obj, idx) => (
-              <div key={idx} className="flex items-start gap-2">
-                <CheckCircle className="w-5 h-5 text-violet-500 mt-0.5 flex-shrink-0" />
-                <span className="text-slate-700">{obj}</span>
-              </div>
-            ))}
-          </div>
-        </Card>
+        {unit.learning_objectives && unit.learning_objectives.length > 0 && (
+          <Card className="p-6 mb-8">
+            <h2 className="text-xl font-bold mb-4">What You'll Learn</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {unit.learning_objectives.map((obj, idx) => (
+                <div key={idx} className="flex items-start gap-2">
+                  <CheckCircle className="w-5 h-5 text-violet-500 mt-0.5 flex-shrink-0" />
+                  <span className="text-slate-700">{obj}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
 
         {/* Lessons */}
         <h2 className="text-2xl font-bold mb-4">Lessons</h2>
         <div className="space-y-4 mb-8">
-          {unit.lessons.map((lesson) => {
+          {(unit.lessons || []).map((lesson) => {
             const lessonProg = getLessonProgress(lesson.id);
             const unlocked = isLessonUnlocked(lesson);
 
