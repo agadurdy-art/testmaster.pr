@@ -539,33 +539,38 @@ export default function MasteryCourse({ user }) {
           ))}
         </div>
         
-        {/* Band Level Comparison */}
-        <div className="mt-6 grid md:grid-cols-2 gap-4">
-          <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-400">
-            <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
-              📝 Band 5.5-6.0 Example
-            </h4>
-            <p className="text-gray-600 text-xs mb-2">Simple structure with basic vocabulary:</p>
-            <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
-              {selectedModule.grammar?.band_55_example || 
-               selectedModule.common_mistake?.wrong ||
-               '"Many people think this topic is very important today."'}
-            </p>
-            <p className="text-xs text-amber-600 mt-2">⚠️ Basic but correct - shows limited grammatical range</p>
+        {/* Band Level Comparison - Same idea at different levels */}
+        <div className="mt-6">
+          <h4 className="font-semibold text-gray-800 mb-3 text-center">📊 Same Idea - Different Band Levels</h4>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-400">
+              <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+                📝 Band 5.5-6.0 Example
+              </h4>
+              <p className="text-gray-600 text-xs mb-2">Simple structure, basic vocabulary:</p>
+              <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
+                {selectedModule.grammar?.band_55_example || 
+                 '"Many people think education is very important. It helps people get good jobs."'}
+              </p>
+              <p className="text-xs text-amber-600 mt-2 flex items-center gap-1">
+                ⚠️ Correct but simple - short sentences, basic words
+              </p>
+            </div>
+            <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+              <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                ⭐ Band 7.0+ Example
+              </h4>
+              <p className="text-gray-600 text-xs mb-2">Same idea with complex structure:</p>
+              <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
+                {selectedModule.grammar?.band_70_example || 
+                 '"It is widely acknowledged that education plays a pivotal role in society, as it not only equips individuals with essential skills but also enhances their employment prospects."'}
+              </p>
+              <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
+                ✓ Complex sentence + advanced vocabulary + linking
+              </p>
+            </div>
           </div>
-          <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-            <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
-              ⭐ Band 7.0+ Example
-            </h4>
-            <p className="text-gray-600 text-xs mb-2">Complex structure demonstrating range:</p>
-            <p className="text-gray-700 italic text-sm bg-white p-2 rounded">
-              {selectedModule.grammar?.band_70_example || 
-               selectedModule.common_mistake?.correct ||
-               selectedModule.grammar?.examples?.[0] ||
-               '"Not only has this issue gained significant attention, but it has also prompted widespread debate among experts."'}
-            </p>
-            <p className="text-xs text-green-600 mt-2">✓ Shows sophisticated grammar and vocabulary</p>
-          </div>
+          <p className="text-xs text-center text-gray-500 mt-3">💡 Notice: Same concept expressed differently - Band 7+ uses complex structures and academic vocabulary</p>
         </div>
       </div>
       
