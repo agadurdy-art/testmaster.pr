@@ -274,11 +274,13 @@ function AppWithSessionHandler() {
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <AppWithSessionHandler />
-      </div>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <div className="App min-h-screen bg-background text-foreground">
+          <AppWithSessionHandler />
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
