@@ -655,13 +655,6 @@ export default function BeginnerCourse({ user }) {
         window.currentListeningAudio = null;
       }
     };
-        utterance.lang = 'en-GB';
-        utterance.rate = 0.85;
-        utterance.onend = () => setIsPlayingListening(false);
-        utterance.onerror = () => setIsPlayingListening(false);
-        window.speechSynthesis.speak(utterance);
-      }
-    };
 
     return (
       <Card className="p-6 bg-white border-0 shadow-lg">
