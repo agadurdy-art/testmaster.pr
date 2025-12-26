@@ -460,14 +460,14 @@ export default function Dashboard({ user, onLogout }) {
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
           
           {/* Tests Section */}
-          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
+          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
                 <GraduationCap className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-900">{getText('Practice Tests', 'Bài kiểm tra', 'Pratik Testler')}</h2>
-                <p className="text-xs text-gray-500">{getText('Practice all 4 IELTS skills', 'Luyện tập 4 kỹ năng IELTS', '4 IELTS becerisini pratik yapın')}</p>
+                <h2 className={`text-lg font-bold ${textPrimary}`}>{getText('Practice Tests', 'Bài kiểm tra', 'Pratik Testler')}</h2>
+                <p className={`text-xs ${textSecondary}`}>{getText('Practice all 4 IELTS skills', 'Luyện tập 4 kỹ năng IELTS', '4 IELTS becerisini pratik yapın')}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -475,19 +475,19 @@ export default function Dashboard({ user, onLogout }) {
                 <div
                   key={module.type}
                   onClick={() => startTest(module.type)}
-                  className={`p-4 ${module.lightBg} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group`}
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : module.lightBg} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-lg ${module.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                       <module.icon className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">{module.title}</p>
-                      <p className="text-xs text-gray-500">{module.description}</p>
+                      <p className={`font-semibold ${textPrimary}`}>{module.title}</p>
+                      <p className={`text-xs ${textSecondary}`}>{module.description}</p>
                     </div>
                   </div>
                   {perSkillStats[module.type]?.best && (
-                    <div className="flex items-center gap-1 mt-2 text-xs text-gray-500">
+                    <div className={`flex items-center gap-1 mt-2 text-xs ${textSecondary}`}>
                       <Star className="w-3 h-3 text-yellow-500" />
                       <span>Best: {perSkillStats[module.type].best}</span>
                     </div>
@@ -498,14 +498,14 @@ export default function Dashboard({ user, onLogout }) {
           </Card>
 
           {/* Lessons/Courses Section */}
-          <Card className="p-5 bg-white border-0 shadow-lg rounded-2xl">
+          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-amber-200">
                 <BookOpen className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h2 className="text-lg font-bold text-gray-900">{getText('Lessons & Courses', 'Khóa học', 'Dersler & Kurslar')}</h2>
-                <p className="text-xs text-gray-500">{getText('Choose course for your level', 'Chọn khóa phù hợp với trình độ', 'Seviyenize uygun kurs seçin')}</p>
+                <h2 className={`text-lg font-bold ${textPrimary}`}>{getText('Lessons & Courses', 'Khóa học', 'Dersler & Kurslar')}</h2>
+                <p className={`text-xs ${textSecondary}`}>{getText('Choose course for your level', 'Chọn khóa phù hợp với trình độ', 'Seviyenize uygun kurs seçin')}</p>
               </div>
             </div>
             <div className="space-y-3">
@@ -513,18 +513,18 @@ export default function Dashboard({ user, onLogout }) {
                 <div
                   key={course.id}
                   onClick={() => navigate(course.route)}
-                  className="p-4 bg-gray-50 rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group flex items-center justify-between"
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group flex items-center justify-between`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-lg group-hover:scale-110 transition-transform`}>
                       {course.icon}
                     </div>
                     <div>
-                      <p className="font-semibold text-gray-900">{course.name}</p>
-                      <p className="text-xs text-gray-500">{course.band} • {course.lessons} {getText('lessons', 'bài', 'ders')}</p>
+                      <p className={`font-semibold ${textPrimary}`}>{course.name}</p>
+                      <p className={`text-xs ${textSecondary}`}>{course.band} • {course.lessons} {getText('lessons', 'bài', 'ders')}</p>
                     </div>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className={`w-5 h-5 ${textSecondary} group-hover:translate-x-1 transition-transform`} />
                 </div>
               ))}
             </div>
