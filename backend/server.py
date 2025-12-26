@@ -904,9 +904,9 @@ async def register_user(input: UserCreate):
     frontend_base = os.getenv("FRONTEND_BASE_URL", "http://localhost:3000")
     verify_link = f"{frontend_base}/verify-email?token={verification_token}"
     
-    # Try to send email (non-blocking)
+    # Try to send email (async, non-blocking)
     try:
-        send_verification_email(input.email.strip().lower(), verify_link, input.name.strip())
+        await send_verification_email(input.email.strip().lower(), verify_link, input.name.strip())
     except Exception as e:
         logging.getLogger(__name__).error(f"Failed to send verification email: {e}")
     
