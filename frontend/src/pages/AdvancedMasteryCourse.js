@@ -604,27 +604,68 @@ export default function AdvancedMasteryCourse({ user }) {
         {selectedModule.speaking?.part2 && (
           <div className="p-4 bg-emerald-50 rounded-xl">
             <h4 className="font-semibold text-emerald-800 mb-2">Part 2: Cue Card</h4>
-            <p className="text-gray-700 mb-3">{selectedModule.speaking.part2.cue_card}</p>
-            <details className="text-sm">
-              <summary className="text-emerald-600 cursor-pointer font-medium">View Model Answer</summary>
-              <p className="mt-2 p-3 bg-white rounded-lg text-gray-600 italic">
-                "{selectedModule.speaking.part2.model_answer}"
-              </p>
-            </details>
+            <div className="bg-white p-4 rounded-lg border border-emerald-200 mb-3">
+              <p className="text-gray-700 whitespace-pre-line">{selectedModule.speaking.part2.cue_card}</p>
+            </div>
+            {selectedModule.speaking.part2.tips && selectedModule.speaking.part2.tips.length > 0 && (
+              <div className="mb-3">
+                <p className="text-sm font-medium text-emerald-700 mb-1">💡 Tips:</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {selectedModule.speaking.part2.tips.map((tip, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <CheckCircle className="w-3 h-3 text-emerald-500 mt-1 flex-shrink-0" />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {selectedModule.speaking.part2.model_answer && (
+              <details className="text-sm">
+                <summary className="text-emerald-600 cursor-pointer font-medium hover:underline">View Model Answer</summary>
+                <div className="mt-2 p-3 bg-white rounded-lg text-gray-600 border border-emerald-100">
+                  <p>{selectedModule.speaking.part2.model_answer}</p>
+                </div>
+              </details>
+            )}
           </div>
         )}
 
-        {/* Part 3 Discussion */}
-        {selectedModule.speaking?.part3 && (
+        {/* Part 3 Discussion Questions */}
+        {selectedModule.speaking?.part3?.questions && selectedModule.speaking.part3.questions.length > 0 && (
+          <div className="p-4 bg-blue-50 rounded-xl">
+            <h4 className="font-semibold text-blue-800 mb-3">Part 3: Discussion Questions</h4>
+            <div className="space-y-4">
+              {selectedModule.speaking.part3.questions.map((q, idx) => (
+                <div key={idx} className="bg-white p-4 rounded-lg border border-blue-200">
+                  <p className="font-medium text-gray-900 mb-2">Q{idx + 1}: {q.question}</p>
+                  {q.model_answer && (
+                    <details className="text-sm">
+                      <summary className="text-blue-600 cursor-pointer font-medium hover:underline">View Model Answer</summary>
+                      <div className="mt-2 p-3 bg-blue-50 rounded-lg text-gray-600">
+                        <p>{q.model_answer}</p>
+                      </div>
+                    </details>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Legacy Part 3 format support */}
+        {selectedModule.speaking?.part3 && !selectedModule.speaking.part3.questions && selectedModule.speaking.part3.question && (
           <div className="p-4 bg-blue-50 rounded-xl">
             <h4 className="font-semibold text-blue-800 mb-2">Part 3: Abstract Discussion</h4>
             <p className="text-gray-700 mb-3">{selectedModule.speaking.part3.question}</p>
-            <details className="text-sm">
-              <summary className="text-blue-600 cursor-pointer font-medium">View Band 8 Sample</summary>
-              <p className="mt-2 p-3 bg-white rounded-lg text-gray-600 italic">
-                "{selectedModule.speaking.part3.band8_sample}"
-              </p>
-            </details>
+            {selectedModule.speaking.part3.band8_sample && (
+              <details className="text-sm">
+                <summary className="text-blue-600 cursor-pointer font-medium">View Band 8 Sample</summary>
+                <p className="mt-2 p-3 bg-white rounded-lg text-gray-600 italic">
+                  {selectedModule.speaking.part3.band8_sample}
+                </p>
+              </details>
+            )}
           </div>
         )}
 
