@@ -25,6 +25,17 @@ export default function LessonView({ user }) {
       return;
     }
     loadLesson();
+    
+    // Cleanup audio when component unmounts
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.querySelectorAll('audio').forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    };
   }, [lessonId, user]);
 
   const loadLesson = async () => {
