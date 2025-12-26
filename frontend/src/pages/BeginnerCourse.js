@@ -42,7 +42,7 @@ export default function BeginnerCourse({ user }) {
   const [selectedLesson, setSelectedLesson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [view, setView] = useState('lessons'); // lessons, lesson-detail, section
-  const [currentSection, setCurrentSection] = useState('vocabulary'); // vocabulary, grammar, reading, speaking, writing, quiz
+  const [currentSection, setCurrentSection] = useState('vocabulary'); // vocabulary, grammar, listening, reading, speaking, writing, quiz
   const [playingAudio, setPlayingAudio] = useState(null);
   
   // Quiz states
@@ -61,6 +61,13 @@ export default function BeginnerCourse({ user }) {
   const [writingResponse, setWritingResponse] = useState('');
   const [writingFeedback, setWritingFeedback] = useState(null);
   const [evaluatingWriting, setEvaluatingWriting] = useState(false);
+  
+  // Listening states
+  const [listeningAnswers, setListeningAnswers] = useState({});
+  const [listeningSubmitted, setListeningSubmitted] = useState(false);
+  const [listeningScore, setListeningScore] = useState(0);
+  const [isPlayingListening, setIsPlayingListening] = useState(false);
+  const [showTranscript, setShowTranscript] = useState(false);
 
   // Fetch lessons on mount
   useEffect(() => {
