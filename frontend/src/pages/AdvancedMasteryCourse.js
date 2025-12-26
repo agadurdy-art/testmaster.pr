@@ -501,25 +501,32 @@ export default function AdvancedMasteryCourse({ user }) {
             ))}
           </div>
         )}
-      </div>
-
-      {/* Band Comparison - Only show if data exists */}
-      {(selectedModule.grammar?.band_65_example || selectedModule.grammar?.band_80_example) && (
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          {selectedModule.grammar?.band_65_example && (
-            <div className="p-4 bg-red-50 rounded-xl border-l-4 border-red-400">
-              <h4 className="font-semibold text-red-800 mb-2">❌ Band 6.5 Example</h4>
-              <p className="text-gray-700 italic">"{selectedModule.grammar.band_65_example}"</p>
-            </div>
-          )}
-          {selectedModule.grammar?.band_80_example && (
-            <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-              <h4 className="font-semibold text-green-800 mb-2">✅ Band 8.0 Example</h4>
-              <p className="text-gray-700 italic">"{selectedModule.grammar.band_80_example}"</p>
-            </div>
-          )}
+        
+        {/* Band Level Comparison - Always show */}
+        <div className="mt-6 grid md:grid-cols-2 gap-4">
+          <div className="p-4 bg-amber-50 rounded-xl border-l-4 border-amber-400">
+            <h4 className="font-semibold text-amber-800 mb-2 flex items-center gap-2">
+              📝 Band 6.5 Example
+            </h4>
+            <p className="text-gray-700 italic text-sm">
+              {selectedModule.grammar?.band_65_example || 
+               `"${selectedModule.grammar?.title ? `This topic is very important in modern society.` : 'Basic sentence with limited complexity.'}"`}
+            </p>
+            <p className="text-xs text-amber-600 mt-2">Adequate but simple - limited sophistication</p>
+          </div>
+          <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
+            <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+              ⭐ Band 8.0+ Example
+            </h4>
+            <p className="text-gray-700 italic text-sm">
+              {selectedModule.grammar?.band_80_example || 
+               selectedModule.grammar?.examples?.[0] ||
+               `"${selectedModule.grammar?.title ? `The multifaceted nature of ${selectedModule.grammar.title.toLowerCase()} necessitates a nuanced examination of its implications.` : 'Sophisticated structure demonstrating grammatical mastery.'}"`}
+            </p>
+            <p className="text-xs text-green-600 mt-2">Complex & natural - demonstrates full range</p>
+          </div>
         </div>
-      )}
+      </div>
 
       {/* Why it works explanation */}
       {selectedModule.grammar?.why_it_works && (
