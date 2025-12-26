@@ -218,12 +218,12 @@ const COURSES = [
   }
 ];
 
-export default function LandingPage({ onLogin, user }) {
+export default function LandingPage({ onLogin, user, showLogin }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, language } = useI18n();
-  const [showAuth, setShowAuth] = useState(false);
-  const [authMode, setAuthMode] = useState('signup');
+  const [showAuth, setShowAuth] = useState(showLogin || false);
+  const [authMode, setAuthMode] = useState(showLogin ? 'login' : 'signup');
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [loading, setLoading] = useState(false);
   const [processingSocial, setProcessingSocial] = useState(false);
@@ -232,6 +232,14 @@ export default function LandingPage({ onLogin, user }) {
   const [courseLessons, setCourseLessons] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  // Update showAuth when showLogin prop changes
+  useEffect(() => {
+    if (showLogin) {
+      setShowAuth(true);
+      setAuthMode('login');
+    }
+  }, [showLogin]);
   
   const handleStartFreePractice = () => {
     navigate('/comprehensive-level-test');
