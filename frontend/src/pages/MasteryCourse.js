@@ -461,45 +461,107 @@ export default function MasteryCourse({ user }) {
         <Languages className="w-5 h-5 text-purple-600" /> {selectedModule.grammar?.title}
       </h3>
       
-      <div className="bg-purple-50 rounded-xl p-5 mb-6">
-        <p className="text-gray-700 mb-3">{selectedModule.grammar?.explanation}</p>
+      {/* Visual Grammar Structure */}
+      <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 mb-6">
+        {/* Mind Map Style Visualization */}
+        <div className="flex flex-col items-center mb-6">
+          <div className="bg-purple-600 text-white px-6 py-3 rounded-full font-bold text-lg shadow-lg">
+            {selectedModule.grammar?.title || 'Grammar Point'}
+          </div>
+          <div className="w-1 h-8 bg-purple-300"></div>
+          <div className="flex flex-wrap justify-center gap-4 relative">
+            <div className="absolute top-0 left-1/2 w-3/4 h-0.5 bg-purple-300 -translate-x-1/2"></div>
+            {/* Structure branches */}
+            <div className="bg-white p-4 rounded-xl shadow-md border-2 border-purple-200 text-center min-w-[120px] mt-4">
+              <p className="text-purple-600 font-bold text-sm">📐 Form</p>
+              <p className="text-xs text-gray-600 mt-1">{selectedModule.grammar?.form || 'Subject + Verb + Object'}</p>
+            </div>
+            <div className="bg-white p-4 rounded-xl shadow-md border-2 border-blue-200 text-center min-w-[120px] mt-4">
+              <p className="text-blue-600 font-bold text-sm">🎯 Use</p>
+              <p className="text-xs text-gray-600 mt-1">{selectedModule.grammar?.use || 'Express actions/states'}</p>
+            </div>
+            <div className="bg-white p-4 rounded-xl shadow-md border-2 border-green-200 text-center min-w-[120px] mt-4">
+              <p className="text-green-600 font-bold text-sm">⏰ Time</p>
+              <p className="text-xs text-gray-600 mt-1">{selectedModule.grammar?.time_reference || 'Past / Present / Future'}</p>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-gray-700 mb-4 text-center">{selectedModule.grammar?.explanation}</p>
+        
         {selectedModule.grammar?.benefit && (
-          <p className="text-sm text-purple-700 bg-purple-100 p-3 rounded-lg mb-3">
-            <strong>Why it helps:</strong> {selectedModule.grammar.benefit}
-          </p>
+          <div className="flex items-center justify-center gap-2 text-sm text-purple-700 bg-purple-100 p-3 rounded-lg mb-4">
+            <Lightbulb className="w-4 h-4" />
+            <span><strong>IELTS Tip:</strong> {selectedModule.grammar.benefit}</span>
+          </div>
         )}
-        <div className="space-y-2">
+        
+        {/* Examples with Visual Flow */}
+        <div className="space-y-3 mt-4">
+          <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+            <Award className="w-4 h-4 text-purple-600" /> Examples
+          </h4>
           {selectedModule.grammar?.examples?.map((ex, idx) => (
-            <div key={idx} className="bg-white p-3 rounded-lg border-l-4 border-purple-500">
-              <p className="text-purple-700">{ex}</p>
+            <div key={idx} className="bg-white p-4 rounded-lg shadow-sm">
+              <div className="flex items-center gap-3">
+                <span className="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">{idx + 1}</span>
+                <p className="text-purple-700 font-medium">{ex}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
       
-      {/* Common Mistake */}
+      {/* Signal Words Visual */}
+      {selectedModule.grammar?.signal_words && (
+        <div className="bg-blue-50 rounded-xl p-5 mb-4">
+          <h4 className="font-bold text-blue-700 mb-3 flex items-center gap-2">
+            🔑 Signal Words & Phrases
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {(selectedModule.grammar.signal_words || '').split(',').map((word, idx) => (
+              <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium border border-blue-200">
+                {word.trim()}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      
+      {/* Common Mistake with Visual Comparison */}
       {selectedModule.common_mistake && (
         <div className="bg-red-50 rounded-xl p-5 mb-4">
           <h4 className="font-bold text-red-700 mb-3 flex items-center gap-2">
             <AlertCircle className="w-5 h-5" /> Common Mistake
           </h4>
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <XCircle className="w-5 h-5 text-red-500" />
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-red-100 p-4 rounded-lg border-2 border-red-300">
+              <div className="flex items-center gap-2 mb-2">
+                <XCircle className="w-5 h-5 text-red-500" />
+                <span className="font-bold text-red-700">❌ Incorrect</span>
+              </div>
               <p className="text-red-700 line-through">{selectedModule.common_mistake.wrong}</p>
             </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-green-500" />
+            <div className="bg-green-100 p-4 rounded-lg border-2 border-green-300">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle className="w-5 h-5 text-green-500" />
+                <span className="font-bold text-green-700">✓ Correct</span>
+              </div>
               <p className="text-green-700 font-medium">{selectedModule.common_mistake.correct}</p>
             </div>
-            <p className="text-sm text-gray-600 mt-2">{selectedModule.common_mistake.explanation}</p>
           </div>
+          <p className="text-sm text-gray-600 mt-3 bg-white p-3 rounded-lg">
+            💡 <strong>Remember:</strong> {selectedModule.common_mistake.explanation}
+          </p>
         </div>
       )}
       
       {selectedModule.tip && (
-        <div className="p-4 bg-amber-50 rounded-xl">
-          <p className="text-amber-800"><strong>💡 Tip:</strong> {selectedModule.tip}</p>
+        <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
+          <p className="text-amber-800 flex items-center gap-2">
+            <Lightbulb className="w-5 h-5" />
+            <span><strong>Pro Tip:</strong> {selectedModule.tip}</span>
+          </p>
         </div>
       )}
       
