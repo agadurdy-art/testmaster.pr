@@ -5480,6 +5480,25 @@ async def startup_event():
             logger.info(f"Found {tests_count} tests in database")
             # Fix combined question IDs if needed (Q20-21 issue)
             await fix_combined_question_ids()
+        
+        # Seed learning platform levels if not present
+        learning_levels_count = await db.learning_levels.count_documents({})
+        if learning_levels_count == 0:
+            logger.info("No learning levels found, running seed...")
+            import subprocess
+            result = subprocess.run(["python", "seed_learning_platform.py"], cwd="/app/backend", capture_output=True, text=True)
+            logger.info(f"Learning platform seed output: {result.stdout}")
+            if result.returncode != 0:
+                logger.error(f"Learning platform seed error: {result.stderr}")
+            # Also add A2 level
+            await seed_a2_level()
+        else:
+            logger.info(f"Found {learning_levels_count} learning levels in database")
+            # Check if A2 exists, add if missing
+            a2_exists = await db.learning_levels.find_one({"id": "level_a2"})
+            if not a2_exists:
+                logger.info("A2 level missing, adding...")
+                await seed_a2_level()
             
     except Exception as e:
         logger.error(f"Startup seed error: {e}")
