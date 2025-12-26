@@ -205,9 +205,9 @@ export default function Progress({ user }) {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
-        <Card className="p-8 text-center bg-white border-0 shadow-lg rounded-2xl">
-          <p className="text-gray-500 mb-4">Please login to view your progress</p>
+      <div className={`min-h-screen ${bgMain} flex items-center justify-center transition-colors duration-300`}>
+        <Card className={`p-8 text-center ${bgCard} shadow-lg rounded-2xl`}>
+          <p className={`${textSecondary} mb-4`}>Please login to view your progress</p>
           <Button onClick={() => navigate('/')} className="bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0">
             Go to Login
           </Button>
@@ -218,26 +218,26 @@ export default function Progress({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
+      <div className={`min-h-screen ${bgMain} flex items-center justify-center transition-colors duration-300`}>
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-500">Loading your progress...</p>
+          <p className={textSecondary}>Loading your progress...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
+    <div className={`min-h-screen ${bgMain} py-8 px-4 sm:px-6 transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto">
-        <Button variant="ghost" onClick={() => navigate('/dashboard')} className="mb-6 text-gray-600 hover:text-violet-600">
+        <Button variant="ghost" onClick={() => navigate('/dashboard')} className={`mb-6 ${textSecondary} hover:text-violet-600`}>
           <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
         </Button>
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Progress</h1>
-          <p className="text-gray-500">Track your IELTS journey and improvement</p>
+          <h1 className={`text-3xl font-bold ${textPrimary} mb-2`}>My Progress</h1>
+          <p className={textSecondary}>Track your IELTS journey and improvement</p>
         </div>
 
         {/* Target Band & Weekly Comparison */}
