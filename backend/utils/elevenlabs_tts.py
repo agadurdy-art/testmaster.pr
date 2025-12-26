@@ -42,35 +42,46 @@ VOICE_POOL = {
 
 # Speaker Role Assignments - optimized for natural dialogue
 SPEAKER_VOICES = {
-    # Generic roles
-    "Woman": "british_female",
-    "Man": "british_male",
-    "Customer": "british_female",
-    "Waiter": "british_male",
-    "Shop assistant": "american_female",
-    "Doctor": "british_male_2",
-    "Patient": "british_female",
-    "Teacher": "british_male_2",
-    "Student": "young_female",
-    "Student 1": "young_female",
-    "Student 2": "young_male",
-    "Student 3": "young_female_2",
-    "Agent": "american_female",
-    "Visitor": "british_female",
-    "Bank clerk": "british_male",
-    "Staff": "british_male_2",
-    "Passenger": "british_female",
-    "Interviewer": "british_male_2",
-    "Maria": "young_female",
-    "John": "young_male",
-    "Presenter": "british_male_2",
+    # Generic roles - using most natural voices
+    "Woman": "british_female",         # Lily - most feminine
+    "Man": "british_male",             # George - warm, natural
+    "Female": "american_female",       # Sarah - mature, reassuring
+    "Male": "american_male",           # Eric - smooth
     
-    # Education context - younger voices
-    "Sophie": "young_female",
-    "David": "young_male",
-    "Lisa": "young_female_2",
-    "Tom": "young_male_2",
-    "Sarah": "british_female",
+    # Service roles
+    "Customer": "american_female",     # Sarah
+    "Waiter": "british_male",          # George
+    "Shop assistant": "british_female_2", # Alice
+    "Bank clerk": "british_male_2",    # Daniel
+    "Staff": "british_male_2",         # Daniel - professional
+    "Passenger": "american_female",    # Sarah - natural conversation
+    "Agent": "american_female_2",      # Matilda
+    "Visitor": "british_female",       # Lily
+    
+    # Medical
+    "Doctor": "american_male_2",       # Brian - comforting
+    "Patient": "british_female",       # Lily
+    
+    # Education - using warm, clear voices
+    "Teacher": "british_male_2",       # Daniel - broadcaster style
+    "Presenter": "british_male_2",     # Daniel
+    "Guide": "british_female",         # Lily
+    "Interviewer": "british_male",     # George
+    
+    # Students - young, energetic voices
+    "Student": "young_female_2",       # Jessica - playful
+    "Student 1": "young_female",       # Laura
+    "Student 2": "young_male",         # Will
+    "Student 3": "young_female_2",     # Jessica
+    
+    # Named characters
+    "Maria": "young_female",           # Laura
+    "John": "young_male",              # Will
+    "Sophie": "young_female_2",        # Jessica
+    "David": "young_male",             # Will
+    "Lisa": "young_female",            # Laura
+    "Tom": "young_male_2",             # Liam
+    "Sarah": "american_female",        # Sarah
 }
 
 # Pause durations (milliseconds)
