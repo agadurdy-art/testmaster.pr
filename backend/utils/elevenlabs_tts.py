@@ -15,23 +15,29 @@ from elevenlabs import VoiceSettings
 # API Configuration
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "sk_6d53acc086b064e9d104119ba83ff0dd4d85a7e5141420e7")
 
-# Voice Pool - Natural, diverse voices
+# Voice Pool - Natural, diverse voices (Optimized for realism)
 VOICE_POOL = {
-    # British Voices (Primary for IELTS)
-    "british_male": "JBFqnCBsd6RMkjVDRZzb",      # George - Warm storyteller
-    "british_female": "Xb7hH8MSUJpSbSDYk0k2",    # Alice - Clear educator
-    "british_male_2": "onwK4e9ZLuTAKqWW03F9",    # Daniel - Steady broadcaster
-    "british_female_2": "pFZP5JQG7iQjIQuC4Bku",  # Lily - Velvety actress
+    # British Voices (Primary for IELTS) - Most natural sounding
+    "british_male": "JBFqnCBsd6RMkjVDRZzb",       # George - Warm storyteller, very natural
+    "british_female": "pFZP5JQG7iQjIQuC4Bku",     # Lily - Velvety actress, most feminine
+    "british_male_2": "onwK4e9ZLuTAKqWW03F9",     # Daniel - Steady broadcaster
+    "british_female_2": "Xb7hH8MSUJpSbSDYk0k2",   # Alice - Clear educator
     
-    # Young Voices (for students/children context)
-    "young_female": "cgSgspJ2msm6clMCkdW9",      # Jessica - Playful, bright
-    "young_male": "bIHbv24MWmeRgasZH58o",        # Will - Relaxed optimist
-    "young_female_2": "FGY2WhTYpPnrIDTdsKH5",    # Laura - Enthusiast
-    "young_male_2": "TX3LPaxmHKxFdv7VOQHJ",      # Liam - Energetic
+    # American Voices (Natural, warm) 
+    "american_female": "EXAVITQu4vr4xnSDxMaL",    # Sarah - Mature, reassuring, very natural
+    "american_female_2": "XrExE9yKIg1WjnnlVkGX",  # Matilda - Professional, knowledgeable
+    "american_male": "cjVigY5qzO86Huf0OWal",      # Eric - Smooth, trustworthy
+    "american_male_2": "nPczCjzI2devNBz1zQrb",    # Brian - Deep, comforting
     
-    # American Voices (variety)
-    "american_female": "EXAVITQu4vr4xnSDxMaL",   # Sarah - Mature, reassuring
-    "american_male": "cjVigY5qzO86Huf0OWal",     # Eric - Smooth, trustworthy
+    # Young Voices (for students/children context) - Bright, energetic
+    "young_female": "FGY2WhTYpPnrIDTdsKH5",       # Laura - Enthusiastic, quirky
+    "young_female_2": "cgSgspJ2msm6clMCkdW9",     # Jessica - Playful, bright, warm
+    "young_male": "bIHbv24MWmeRgasZH58o",         # Will - Relaxed optimist
+    "young_male_2": "TX3LPaxmHKxFdv7VOQHJ",       # Liam - Energetic, social
+    
+    # Neutral/Conversational
+    "conversational_male": "CwhRBWXzGAHq8TQ4Fs17", # Roger - Laid-back, casual
+    "conversational_female": "SAz9YHcvj6GT2YYXdXww", # River - Relaxed, neutral
 }
 
 # Speaker Role Assignments - optimized for natural dialogue
