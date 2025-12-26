@@ -89,10 +89,10 @@ LEVEL_SPEEDS = {
     "advanced": 1.08
 }
 
-# Pause durations (milliseconds)
-PAUSE_SHORT = 200      # Same topic continuation
-PAUSE_MEDIUM = 400     # New response
-PAUSE_LONG = 600       # Topic shift or question
+# Pause durations (milliseconds) - reduced by 50ms
+PAUSE_SHORT = 150      # Same topic continuation
+PAUSE_MEDIUM = 350     # New response
+PAUSE_LONG = 550       # Topic shift or question
 
 
 def get_voice_name(speaker: str) -> str:
