@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { GripVertical, Maximize2, Minimize2 } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { GripVertical, Maximize2, Minimize2, Highlighter, X, Eraser } from 'lucide-react';
 
 /**
  * Side-by-Side Reader Component
  * Displays passage on left, questions on right with adjustable ratio
- * Default: 70% passage / 30% questions
+ * Includes text highlighter feature
  */
 const SideBySideReader = ({
   passage,
@@ -18,6 +18,9 @@ const SideBySideReader = ({
   const [passageRatio, setPassageRatio] = useState(defaultRatio);
   const [isDragging, setIsDragging] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [highlights, setHighlights] = useState([]);
+  const [highlightMode, setHighlightMode] = useState(false);
+  const [highlightColor, setHighlightColor] = useState('yellow');
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
@@ -44,19 +47,103 @@ const SideBySideReader = ({
     { label: '80-20', value: 80 },
   ];
 
-  // Highlight text in passage
-  const renderPassageWithHighlight = () => {
-    if (!highlightedText || !passage.includes(highlightedText)) {
-      return passage;
+  const highlightColors = [
+    { name: 'yellow', bg: 'bg-yellow-200', hover: 'hover:bg-yellow-300' },
+    { name: 'green', bg: 'bg-green-200', hover: 'hover:bg-green-300' },
+    { name: 'blue', bg: 'bg-blue-200', hover: 'hover:bg-blue-300' },
+    { name: 'pink', bg: 'bg-pink-200', hover: 'hover:bg-pink-300' },
+  ];
+
+  // Handle text selection for highlighting
+  const handleTextSelection = useCallback(() => {
+    if (!highlightMode) return;
+    
+    const selection = window.getSelection();
+    const selectedText = selection?.toString()?.trim();
+    
+    if (selectedText && selectedText.length > 0) {
+      // Check if already highlighted
+      const alreadyHighlighted = highlights.some(h => h.text === selectedText);
+      if (!alreadyHighlighted) {
+        setHighlights(prev => [...prev, { text: selectedText, color: highlightColor }]);
+      }
+      selection.removeAllRanges();
     }
-    const parts = passage.split(highlightedText);
-    return parts.map((part, i) => (
-      <React.Fragment key={i}>
-        {part}
-        {i < parts.length - 1 && (
-          <mark className="bg-yellow-200 px-0.5 rounded">{highlightedText}</mark>
-        )}
-      </React.Fragment>
+  }, [highlightMode, highlightColor, highlights]);
+
+  // Remove a specific highlight
+  const removeHighlight = (textToRemove) => {
+    setHighlights(prev => prev.filter(h => h.text !== textToRemove));
+  };
+
+  // Clear all highlights
+  const clearAllHighlights = () => {
+    setHighlights([]);
+  };
+
+  // Render passage with all highlights
+  const renderPassageWithHighlights = () => {
+    if (!passage) return null;
+    
+    let result = passage;
+    const allHighlights = [...highlights];
+    
+    // Add external highlight if provided
+    if (highlightedText && !allHighlights.some(h => h.text === highlightedText)) {
+      allHighlights.push({ text: highlightedText, color: 'yellow' });
+    }
+    
+    if (allHighlights.length === 0) {
+      return <span>{passage}</span>;
+    }
+    
+    // Sort by length (longest first) to handle overlapping
+    const sortedHighlights = allHighlights.sort((a, b) => b.text.length - a.text.length);
+    
+    // Create a map of positions
+    let segments = [{ text: passage, highlighted: false, color: null }];
+    
+    sortedHighlights.forEach(({ text, color }) => {
+      const newSegments = [];
+      segments.forEach(segment => {
+        if (segment.highlighted) {
+          newSegments.push(segment);
+          return;
+        }
+        
+        const parts = segment.text.split(text);
+        parts.forEach((part, i) => {
+          if (part) {
+            newSegments.push({ text: part, highlighted: false, color: null });
+          }
+          if (i < parts.length - 1) {
+            newSegments.push({ text, highlighted: true, color });
+          }
+        });
+      });
+      segments = newSegments;
+    });
+    
+    const colorMap = {
+      yellow: 'bg-yellow-200',
+      green: 'bg-green-200',
+      blue: 'bg-blue-200',
+      pink: 'bg-pink-200',
+    };
+    
+    return segments.map((segment, i) => (
+      segment.highlighted ? (
+        <mark 
+          key={i} 
+          className={`${colorMap[segment.color] || 'bg-yellow-200'} px-0.5 rounded cursor-pointer`}
+          onClick={() => highlightMode && removeHighlight(segment.text)}
+          title={highlightMode ? 'Click to remove highlight' : ''}
+        >
+          {segment.text}
+        </mark>
+      ) : (
+        <span key={i}>{segment.text}</span>
+      )
     ));
   };
 
