@@ -777,8 +777,32 @@ MASTERY_MODULES = [
                 "model_answer": "I usually keep up to date with the news through my phone. I follow a few reliable journalism sites so I don't have to wait for the evening broadcast."
             },
             "part2": {
-                "cue_card": "Describe an interesting advertisement you saw.",
-                "model_answer": "I saw an ad for a new electric car. It was very sensational because it used beautiful music and scenic views. It was clearly aimed at a young target audience who cares about the environment."
+                "cue_card": "Describe an interesting advertisement you saw.\n\nYou should say:\n- what the advertisement was for\n- where you saw it\n- what happened in it\n\nand explain why you found it interesting.",
+                "model_answer": "I saw an ad for a new electric car. It was very sensational because it used beautiful music and scenic views. It was clearly aimed at a young target audience who cares about the environment.",
+                "tips": [
+                    "Describe the visual elements and music used in the advertisement.",
+                    "Explain your emotional reaction - did it make you want to buy the product?"
+                ],
+                "follow_up_questions": [
+                    "Do you usually pay attention to advertisements?",
+                    "Do you think this advertisement would be effective for everyone?"
+                ]
+            },
+            "part3": {
+                "questions": [
+                    {
+                        "question": "How do you think social media has changed the advertising industry?",
+                        "model_answer": "Social media has fundamentally transformed the advertising industry in several ways. Firstly, it has enabled highly targeted advertising, where companies can reach specific demographics based on users' interests, behaviours, and online activity. This is far more efficient than traditional media like television or newspapers, which broadcast to a general audience. Secondly, social media has made advertising more interactive - consumers can now engage directly with brands, share content, and even become brand ambassadors themselves through influencer marketing. However, this shift has also raised concerns about privacy and the manipulation of consumer behaviour. Overall, I believe social media has made advertising more personalised and measurable, but it has also created new ethical challenges."
+                    },
+                    {
+                        "question": "Do you think advertising has too much influence on children?",
+                        "model_answer": "I do think advertising has a significant and potentially harmful influence on children. Children are particularly vulnerable to advertising because they often cannot distinguish between entertainment and commercial content, especially in formats like YouTube videos or mobile games. Advertisements for unhealthy foods, toys, and certain lifestyle choices can shape children's preferences and demands, putting pressure on parents. Some countries have introduced restrictions on advertising targeted at children, particularly for junk food, and I believe this is a reasonable approach. Media literacy education should be part of the school curriculum, teaching children to critically evaluate the messages they receive from advertisements."
+                    },
+                    {
+                        "question": "What responsibility do companies have regarding the truthfulness of their advertisements?",
+                        "model_answer": "I believe companies have a significant ethical and legal responsibility to ensure their advertisements are truthful and not misleading. False advertising can harm consumers financially and even physically - for example, if a health product makes exaggerated claims. In most countries, there are advertising standards authorities that regulate commercial communications, and companies can face penalties for deceptive practices. However, many advertisements operate in a grey area, using clever wording or impressive imagery that technically doesn't lie but creates misleading impressions. I think companies should go beyond mere legal compliance and adopt ethical marketing practices because honest advertising builds consumer trust and brand loyalty."
+                    }
+                ]
             }
         },
         "writing": {
