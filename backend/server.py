@@ -2234,7 +2234,7 @@ async def manual_credit(req: ManualCreditRequest):
 
 # ============ Admin Panel Endpoints ============
 
-ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@tesmaster.pro"]  # Add your admin emails here
+ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@testmaster.pro"]  # Add your admin emails here
 
 def is_admin_email(email: str) -> bool:
     """Check if email belongs to an admin"""
