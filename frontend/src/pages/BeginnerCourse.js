@@ -578,20 +578,67 @@ export default function BeginnerCourse({ user }) {
       toast.success(`You got ${correct}/${listening.questions.length} correct!`);
     };
 
-    const playListeningAudio = () => {
+    const playListeningAudio = async () => {
       if (isPlayingListening) {
-        window.speechSynthesis.cancel();
+        // Stop currently playing audio
+        if (window.currentListeningAudio) {
+          window.currentListeningAudio.pause();
+          window.currentListeningAudio = null;
+        }
         setIsPlayingListening(false);
         return;
       }
       
       setIsPlayingListening(true);
-      const utterance = new SpeechSynthesisUtterance(listening.transcript);
-      utterance.lang = 'en-GB';
-      utterance.rate = 0.85;
-      utterance.onend = () => setIsPlayingListening(false);
-      utterance.onerror = () => setIsPlayingListening(false);
-      window.speechSynthesis.speak(utterance);
+      toast.info('Loading audio...', { duration: 2000 });
+      
+      try {
+        // Fetch Azure TTS generated audio from backend
+        const response = await fetch(`${API_URL}/api/beginner-english/listening-audio/${selectedLesson.id}`);
+        const data = await response.json();
+        
+        if (data.success && data.audio_base64) {
+          // Create audio from base64
+          const audioBlob = new Blob(
+            [Uint8Array.from(atob(data.audio_base64), c => c.charCodeAt(0))],
+            { type: 'audio/mp3' }
+          );
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+          
+          window.currentListeningAudio = audio;
+          
+          audio.onended = () => {
+            setIsPlayingListening(false);
+            URL.revokeObjectURL(audioUrl);
+            window.currentListeningAudio = null;
+          };
+          
+          audio.onerror = () => {
+            setIsPlayingListening(false);
+            toast.error('Audio playback failed');
+            URL.revokeObjectURL(audioUrl);
+            window.currentListeningAudio = null;
+          };
+          
+          await audio.play();
+          toast.success('Playing audio with multiple speakers');
+        } else {
+          throw new Error(data.detail || 'Audio generation failed');
+        }
+      } catch (error) {
+        console.error('Audio error:', error);
+        setIsPlayingListening(false);
+        
+        // Fallback to browser TTS if Azure fails
+        toast.warning('Using fallback audio...');
+        const utterance = new SpeechSynthesisUtterance(listening.transcript);
+        utterance.lang = 'en-GB';
+        utterance.rate = 0.85;
+        utterance.onend = () => setIsPlayingListening(false);
+        utterance.onerror = () => setIsPlayingListening(false);
+        window.speechSynthesis.speak(utterance);
+      }
     };
 
     return (
