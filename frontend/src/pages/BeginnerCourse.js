@@ -382,6 +382,7 @@ export default function BeginnerCourse({ user }) {
     const sections = [
       { id: 'vocabulary', icon: BookOpen, label: 'Vocabulary' },
       { id: 'grammar', icon: Languages, label: 'Grammar' },
+      { id: 'listening', icon: Headphones, label: 'Listening' },
       { id: 'reading', icon: FileText, label: 'Reading' },
       { id: 'speaking', icon: Mic, label: 'Speaking' },
       { id: 'writing', icon: PenTool, label: 'Writing' },
