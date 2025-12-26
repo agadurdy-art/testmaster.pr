@@ -4411,32 +4411,41 @@ class MasteryWritingRequest(BaseModel):
 
 @api_router.post("/mastery-course/evaluate-writing")
 async def evaluate_mastery_writing(request: MasteryWritingRequest):
-    """Evaluate writing response for mastery course (Band 4.5-6.5)"""
+    """Evaluate writing response for mastery course (Band 4.5-6.5) with comprehensive feedback"""
     try:
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
-            system_message="You are an IELTS Writing examiner evaluating Band 4.5-6.5 level students."
+            system_message="You are an expert IELTS Writing examiner providing detailed, educational feedback."
         ).with_model("openai", "gpt-4o")
         
-        prompt = f"""You are an IELTS Writing Task 2 examiner. Evaluate this essay for a Band 4.5-6.5 student.
+        prompt = f"""You are an IELTS Writing Task 2 examiner providing comprehensive feedback for a Band 4.5-6.5 student.
 
 Topic: {request.module_title}
 Task: {request.task}
 Model Essay: {request.model_essay}
 Student's Essay: {request.user_response}
 
-Evaluate using IELTS criteria. Be encouraging but accurate.
+Provide detailed, educational feedback. Identify specific mistakes and show how to correct them.
 
 Return JSON only:
 {{
     "band_score": <4.5-6.5>,
-    "task_achievement": <score>,
-    "coherence": <score>,
-    "lexical": <score>,
-    "grammar": <score>,
-    "feedback": "<3-4 sentences of constructive feedback covering strengths and areas to improve>",
-    "suggestions": ["<improvement suggestion 1>", "<improvement suggestion 2>"]
+    "task_achievement": {{"score": <number>, "feedback": "<specific feedback>"}},
+    "coherence": {{"score": <number>, "feedback": "<specific feedback>"}},
+    "lexical": {{"score": <number>, "feedback": "<specific feedback>"}},
+    "grammar": {{"score": <number>, "feedback": "<specific feedback>"}},
+    "overall_feedback": "<3-4 sentences summarizing performance with encouragement>",
+    "mistakes": [
+        {{"original": "<incorrect sentence/phrase>", "corrected": "<correct version>", "explanation": "<grammar rule or vocabulary tip>", "type": "<grammar/vocabulary/coherence>"}}
+    ],
+    "good_points": ["<what student did well 1>", "<what student did well 2>"],
+    "vocabulary_suggestions": [
+        {{"basic": "<simple word used>", "advanced": "<better alternative from lesson>", "example": "<example sentence>"}}
+    ],
+    "structure_tip": "<Advice on essay structure>",
+    "lesson_reference": "<Which part of the lesson to review>",
+    "next_steps": ["<step 1 to improve>", "<step 2 to improve>"]
 }}"""
 
         response = await chat.send_message(UserMessage(text=prompt))
@@ -4451,10 +4460,10 @@ Return JSON only:
         if json_match:
             return json.loads(json_match.group())
         
-        return {"band_score": 5, "feedback": "Good effort! Keep writing.", "suggestions": ["Work on vocabulary"]}
+        return {"band_score": 5, "overall_feedback": "Good effort! Keep writing.", "mistakes": [], "good_points": [], "vocabulary_suggestions": [], "next_steps": ["Practice more essays"]}
     except Exception as e:
         logging.getLogger(__name__).error(f"Mastery writing evaluation error: {e}")
-        return {"band_score": 5, "feedback": "Good effort!", "suggestions": []}
+        return {"band_score": 5, "overall_feedback": "Good effort!", "mistakes": [], "good_points": [], "vocabulary_suggestions": [], "next_steps": []}
 
 
 
