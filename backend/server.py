@@ -5882,9 +5882,77 @@ async def startup_event():
             if not a2_exists:
                 logger.info("A2 level missing, adding...")
                 await seed_a2_level()
+        
+        # ============ AUTO-SEED COURSES ON STARTUP ============
+        await auto_seed_courses()
             
     except Exception as e:
         logger.error(f"Startup seed error: {e}")
+
+
+async def auto_seed_courses():
+    """Automatically seed all course data if missing on startup"""
+    try:
+        logger.info("🔄 Checking course data...")
+        
+        # Check and seed Advanced Mastery (should be 20 modules)
+        advanced_count = await db.advanced_mastery_modules.count_documents({})
+        if advanced_count < 20:
+            logger.info(f"⚠️ Advanced Mastery has {advanced_count} modules, expected 20. Seeding...")
+            try:
+                from seed_advanced_mastery import ADVANCED_MODULES
+                await db.advanced_mastery_modules.delete_many({})
+                for module in ADVANCED_MODULES:
+                    await db.advanced_mastery_modules.update_one(
+                        {"id": module["id"]}, {"$set": module}, upsert=True
+                    )
+                new_count = await db.advanced_mastery_modules.count_documents({})
+                logger.info(f"✅ Advanced Mastery seeded: {new_count} modules")
+            except Exception as e:
+                logger.error(f"❌ Advanced Mastery seed error: {e}")
+        else:
+            logger.info(f"✅ Advanced Mastery OK: {advanced_count} modules")
+        
+        # Check and seed Mastery (should be 17 modules)
+        mastery_count = await db.mastery_course_modules.count_documents({})
+        if mastery_count < 17:
+            logger.info(f"⚠️ Mastery has {mastery_count} modules, expected 17. Seeding...")
+            try:
+                from seed_mastery_course import MASTERY_MODULES
+                await db.mastery_course_modules.delete_many({})
+                for module in MASTERY_MODULES:
+                    await db.mastery_course_modules.update_one(
+                        {"id": module["id"]}, {"$set": module}, upsert=True
+                    )
+                new_count = await db.mastery_course_modules.count_documents({})
+                logger.info(f"✅ Mastery seeded: {new_count} modules")
+            except Exception as e:
+                logger.error(f"❌ Mastery seed error: {e}")
+        else:
+            logger.info(f"✅ Mastery OK: {mastery_count} modules")
+        
+        # Check and seed Beginner (should be 14 lessons)
+        beginner_count = await db.beginner_english_lessons.count_documents({})
+        if beginner_count < 14:
+            logger.info(f"⚠️ Beginner has {beginner_count} lessons, expected 14. Seeding...")
+            try:
+                from seed_beginner_english import BEGINNER_LESSONS
+                await db.beginner_english_lessons.delete_many({})
+                for lesson in BEGINNER_LESSONS:
+                    await db.beginner_english_lessons.update_one(
+                        {"id": lesson["id"]}, {"$set": lesson}, upsert=True
+                    )
+                new_count = await db.beginner_english_lessons.count_documents({})
+                logger.info(f"✅ Beginner seeded: {new_count} lessons")
+            except Exception as e:
+                logger.error(f"❌ Beginner seed error: {e}")
+        else:
+            logger.info(f"✅ Beginner OK: {beginner_count} lessons")
+        
+        logger.info("🎉 Course data check complete!")
+        
+    except Exception as e:
+        logger.error(f"Auto-seed courses error: {e}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
