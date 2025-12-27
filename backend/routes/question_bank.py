@@ -338,3 +338,284 @@ async def record_attempt(user_id: str, attempt: Dict[str, Any]):
         "attempt_id": str(uuid.uuid4()),
         "user_id": user_id
     }
+
+# ============ AI EVALUATION ENDPOINTS ============
+
+from pydantic import BaseModel
+
+class WritingEvaluationRequest(BaseModel):
+    response: str
+    task_type: str = "task1"  # task1 or task2
+    visual_type: Optional[str] = None  # For task1: line_graph, bar_chart, etc.
+    topic: Optional[str] = None
+    band_level: str = "5.5-6.5"
+
+@router.post("/writing/evaluate")
+async def evaluate_writing(request: WritingEvaluationRequest):
+    """
+    AI evaluation for Writing Task 1 and Task 2.
+    Uses IELTS band descriptors for accurate scoring.
+    """
+    import os
+    from emergentintegrations.llm.chat import LlmChat, UserMessage
+    
+    response_text = request.response.strip()
+    word_count = len(response_text.split())
+    
+    # Minimum word check
+    min_words = 150 if request.task_type == "task1" else 250
+    if word_count < min_words * 0.6:  # Allow some flexibility
+        return {
+            "success": False,
+            "error": f"Response too short. Minimum {min_words} words required, you wrote {word_count}.",
+            "word_count": word_count
+        }
+    
+    # Build evaluation prompt
+    if request.task_type == "task1":
+        task_description = f"""
+IELTS Academic Writing Task 1 Evaluation
+
+Visual Type: {request.visual_type or 'chart/graph'}
+Topic: {request.topic or 'general'}
+Target Band: {request.band_level}
+
+The candidate was asked to describe a {request.visual_type or 'visual'} showing information about {request.topic or 'a topic'}.
+They should summarize the main features and make comparisons where relevant.
+Minimum 150 words required.
+"""
+    else:
+        task_description = f"""
+IELTS Academic Writing Task 2 Evaluation
+
+Topic: {request.topic or 'general'}
+Target Band: {request.band_level}
+
+The candidate was asked to write an essay on a given topic.
+They should present a clear position with supporting arguments.
+Minimum 250 words required.
+"""
+    
+    evaluation_prompt = f"""You are an official IELTS examiner. Evaluate this Writing {request.task_type.upper()} response using the official IELTS band descriptors.
+
+{task_description}
+
+CANDIDATE'S RESPONSE ({word_count} words):
+\"\"\"
+{response_text}
+\"\"\"
+
+Evaluate using these EXACT criteria:
+
+1. TASK ACHIEVEMENT (Task 1) / TASK RESPONSE (Task 2):
+   - Does it address all parts of the task?
+   - Is there a clear overview? (Task 1)
+   - Are main features/key points covered?
+   - Is the position clear throughout? (Task 2)
+
+2. COHERENCE AND COHESION:
+   - Logical organization of information
+   - Clear progression of ideas
+   - Appropriate use of cohesive devices
+   - Effective paragraphing
+
+3. LEXICAL RESOURCE:
+   - Range of vocabulary
+   - Accuracy of word choice
+   - Spelling and word formation
+   - Less common vocabulary usage
+
+4. GRAMMATICAL RANGE AND ACCURACY:
+   - Range of sentence structures
+   - Accuracy of grammar
+   - Punctuation control
+   - Error frequency and impact
+
+IMPORTANT SCORING RULES:
+- Be strict and fair - no inflated scores
+- Band 6.0 = competent but limited
+- Band 7.0 = good with occasional errors
+- Band 8.0+ = very good with rare errors
+- Penalize off-topic content heavily
+- Penalize memorized templates if detected
+
+Return your evaluation in this EXACT JSON format:
+{{
+    "overall_band": 6.5,
+    "task_achievement": {{
+        "score": 6,
+        "feedback": "Specific feedback here"
+    }},
+    "coherence_cohesion": {{
+        "score": 7,
+        "feedback": "Specific feedback here"
+    }},
+    "lexical_resource": {{
+        "score": 6,
+        "feedback": "Specific feedback here"
+    }},
+    "grammatical_range": {{
+        "score": 7,
+        "feedback": "Specific feedback here"
+    }},
+    "strengths": ["strength1", "strength2"],
+    "weaknesses": ["weakness1", "weakness2"],
+    "improvement_suggestions": ["suggestion1", "suggestion2", "suggestion3"],
+    "vocabulary_to_use": ["word1", "word2", "word3"],
+    "grammar_corrections": [
+        {{"original": "error text", "corrected": "correct text", "explanation": "why"}}
+    ],
+    "examiner_comment": "Overall comment about the response"
+}}
+
+Return ONLY the JSON, no other text."""
+
+    try:
+        llm = LlmChat(
+            api_key=os.environ.get("EMERGENT_LLM_KEY"),
+            model="gpt-4o"
+        )
+        
+        result = await llm.chat([UserMessage(content=evaluation_prompt)])
+        
+        # Parse the JSON response
+        import json
+        # Clean the response - remove markdown code blocks if present
+        result_text = result.strip()
+        if result_text.startswith("```"):
+            result_text = result_text.split("```")[1]
+            if result_text.startswith("json"):
+                result_text = result_text[4:]
+        result_text = result_text.strip()
+        
+        evaluation = json.loads(result_text)
+        
+        return {
+            "success": True,
+            "word_count": word_count,
+            "evaluation": evaluation
+        }
+        
+    except json.JSONDecodeError as e:
+        return {
+            "success": False,
+            "error": "Failed to parse evaluation response",
+            "raw_response": result_text[:500] if 'result_text' in dir() else None
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+# ============ WRITING TASK 2 ENDPOINTS ============
+
+@router.get("/writing/task2/prompts")
+async def get_writing_task2_prompts(
+    topic: Optional[str] = Query(None, description="Filter by topic"),
+    band_level: Optional[str] = Query(None, description="Filter by band level"),
+    essay_type: Optional[str] = Query(None, description="Essay type: opinion, discussion, advantage_disadvantage, problem_solution")
+):
+    """Get Writing Task 2 essay prompts."""
+    
+    # Sample prompts - in production, these would come from DB
+    prompts = [
+        {
+            "id": "t2-001",
+            "type": "opinion",
+            "topic": "education",
+            "band_level": "5.5-6.5",
+            "prompt": "Some people believe that children should be taught to be competitive in school, while others think they should learn to cooperate with each other. Discuss both views and give your own opinion.",
+            "key_points": ["Competition benefits", "Cooperation benefits", "Your view with reasons"],
+            "useful_vocabulary": ["competitive spirit", "collaborative learning", "teamwork skills", "academic achievement"]
+        },
+        {
+            "id": "t2-002",
+            "type": "advantage_disadvantage",
+            "topic": "technology",
+            "band_level": "5.5-6.5",
+            "prompt": "Many people today use the internet and smartphones to do their banking. What are the advantages and disadvantages of this trend?",
+            "key_points": ["Advantages of online banking", "Disadvantages/risks", "Balance the discussion"],
+            "useful_vocabulary": ["convenience", "cyber security", "digital literacy", "financial transactions"]
+        },
+        {
+            "id": "t2-003",
+            "type": "problem_solution",
+            "topic": "environment",
+            "band_level": "7.0-9.0",
+            "prompt": "Global warming is one of the biggest threats to our environment. What causes global warming and what solutions can governments and individuals take to address this problem?",
+            "key_points": ["Causes of global warming", "Government solutions", "Individual solutions"],
+            "useful_vocabulary": ["greenhouse gases", "carbon footprint", "renewable energy", "sustainable development"]
+        },
+        {
+            "id": "t2-004",
+            "type": "discussion",
+            "topic": "society_government",
+            "band_level": "5.5-6.5",
+            "prompt": "Some people think that governments should spend money on public services rather than spending on the arts such as music and painting. To what extent do you agree or disagree?",
+            "key_points": ["Arguments for public services", "Arguments for arts funding", "Your balanced view"],
+            "useful_vocabulary": ["cultural heritage", "essential services", "quality of life", "budget allocation"]
+        },
+        {
+            "id": "t2-005",
+            "type": "opinion",
+            "topic": "work_employment",
+            "band_level": "7.0-9.0",
+            "prompt": "In many countries, people are working longer hours than ever before. What are the reasons for this? Is this a positive or negative development?",
+            "key_points": ["Reasons for longer hours", "Positive aspects", "Negative aspects", "Your opinion"],
+            "useful_vocabulary": ["work-life balance", "productivity", "job security", "burnout", "career advancement"]
+        }
+    ]
+    
+    # Filter prompts
+    filtered = prompts
+    if topic:
+        filtered = [p for p in filtered if p["topic"] == topic]
+    if band_level:
+        filtered = [p for p in filtered if p["band_level"] == band_level]
+    if essay_type:
+        filtered = [p for p in filtered if p["type"] == essay_type]
+    
+    return {
+        "prompts": filtered,
+        "total": len(filtered)
+    }
+
+@router.get("/writing/task2/prompt/{prompt_id}")
+async def get_writing_task2_prompt(prompt_id: str):
+    """Get a specific Writing Task 2 prompt with model answers."""
+    
+    # Sample - in production from DB
+    if prompt_id == "t2-001":
+        return {
+            "id": "t2-001",
+            "type": "opinion",
+            "topic": "education",
+            "band_level": "5.5-6.5",
+            "prompt": "Some people believe that children should be taught to be competitive in school, while others think they should learn to cooperate with each other. Discuss both views and give your own opinion.",
+            "model_answer_band9": """The debate over whether schools should foster competition or cooperation among students has been ongoing for decades. While both approaches have their merits, I believe that a balanced combination of the two is most beneficial for children's development.
+
+On the one hand, proponents of competitive education argue that it prepares children for the real world. In today's job market, individuals must often compete for positions and promotions, and early exposure to competition can develop resilience and ambition. Furthermore, competitive environments can motivate students to excel academically, as the desire to outperform peers drives them to study harder and achieve better results.
+
+On the other hand, advocates of cooperative learning emphasize the importance of teamwork skills. In most professional settings, employees are required to collaborate with colleagues to achieve common goals. Children who learn to cooperate from an early age are better equipped to communicate effectively, share responsibilities, and resolve conflicts peacefully. Additionally, cooperative learning creates a supportive environment where students can learn from each other and build lasting friendships.
+
+In my opinion, the ideal approach combines elements of both competition and cooperation. Schools should provide opportunities for healthy competition through academic contests and sports, while also incorporating group projects and collaborative activities. This balanced approach would help children develop a complete set of skills necessary for success in both their personal and professional lives.
+
+In conclusion, rather than viewing competition and cooperation as mutually exclusive, educational institutions should recognize the value of both and integrate them thoughtfully into the curriculum.""",
+            "model_answer_band6": """There are different opinions about whether children should learn to be competitive or cooperative at school. This essay will discuss both views and give my opinion.
+
+Some people think competition is important in schools. When students compete with each other, they work harder to get good grades. This can help them be successful in the future because they will need to compete for jobs. Also, winning competitions can make students feel proud and confident.
+
+However, other people believe cooperation is more important. In the workplace, people usually need to work in teams. If children learn to cooperate at school, they will be better at working with others when they grow up. Cooperative learning also helps students make friends and support each other.
+
+In my opinion, I think both competition and cooperation are important. Schools should have some competitions like sports and quiz contests, but also many group activities. This way, students can learn different skills.
+
+To sum up, competition and cooperation both have benefits for children. I believe schools should teach both of these skills to help students become successful in life.""",
+            "examiner_notes": {
+                "must_mention": ["Benefits of competition", "Benefits of cooperation", "Clear personal opinion", "Real-world connections"],
+                "common_mistakes": ["Not discussing both views equally", "Weak conclusion", "Repetitive vocabulary"],
+                "vocabulary_focus": ["competitive spirit", "collaborative learning", "teamwork", "resilience", "academic achievement"]
+            }
+        }
+    
+    raise HTTPException(status_code=404, detail="Prompt not found")
