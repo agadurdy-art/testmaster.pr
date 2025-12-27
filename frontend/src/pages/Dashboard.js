@@ -166,6 +166,7 @@ export default function Dashboard({ user, onLogout }) {
   ];
 
   const learningTools = [
+    { name: getText('Question Bank', 'Ngân hàng câu hỏi', 'Soru Bankası'), icon: LayoutDashboard, color: 'from-indigo-500 to-purple-600', route: '/question-bank', badge: 'NEW' },
     { name: getText('Vocab & Grammar', 'Từ vựng & Ngữ pháp', 'Kelime & Dilbilgisi'), icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/vocab-grammar' },
     { name: getText('Writing Practice', 'Luyện viết', 'Yazma Pratiği'), icon: FileText, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
     { name: getText('Speaking Practice', 'Luyện nói', 'Konuşma Pratiği'), icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice' },
