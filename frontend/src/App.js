@@ -38,6 +38,7 @@ import LessonView from './pages/LessonView';
 import { ThemeProvider } from './contexts/ThemeContext';
 import QuestionBank from './pages/QuestionBank';
 import WritingTask1Practice from './pages/WritingTask1Practice';
+import WritingTask2Practice from './pages/WritingTask2Practice';
 
 
 function EmergentBadgeWrapper() {
