@@ -7,7 +7,7 @@ import {
   BookOpen, Headphones, PenTool, Mic, BookMarked,
   Target, Clock, Shuffle, Brain, TrendingUp,
   ChevronRight, Play, Filter, BarChart3, 
-  CheckCircle, ArrowLeft, Layers, Zap
+  CheckCircle, ArrowLeft, Layers, Zap, X, FileText, Edit3
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -24,6 +24,7 @@ export default function QuestionBank() {
   const [bandLevels, setBandLevels] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showWritingModal, setShowWritingModal] = useState(false);
 
   useEffect(() => {
     loadData();
