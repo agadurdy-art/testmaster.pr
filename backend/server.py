@@ -5931,10 +5931,12 @@ async def auto_seed_courses():
         else:
             logger.info(f"✅ Mastery OK: {mastery_count} modules")
         
-        # Check and seed Beginner (should be 14 lessons)
+        # Check and seed Beginner WITH LISTENING (should be 14 lessons)
         beginner_count = await db.beginner_english_lessons.count_documents({})
-        if beginner_count < 14:
-            logger.info(f"⚠️ Beginner has {beginner_count} lessons, expected 14. Seeding...")
+        beginner_with_listening = await db.beginner_english_lessons.count_documents({"listening": {"$exists": True, "$ne": None}})
+        
+        if beginner_count < 14 or beginner_with_listening < 14:
+            logger.info(f"⚠️ Beginner has {beginner_count} lessons ({beginner_with_listening} with listening), expected 14. Seeding...")
             try:
                 from seed_beginner_english import BEGINNER_LESSONS
                 await db.beginner_english_lessons.delete_many({})
@@ -5943,11 +5945,12 @@ async def auto_seed_courses():
                         {"id": lesson["id"]}, {"$set": lesson}, upsert=True
                     )
                 new_count = await db.beginner_english_lessons.count_documents({})
-                logger.info(f"✅ Beginner seeded: {new_count} lessons")
+                new_listening = await db.beginner_english_lessons.count_documents({"listening": {"$exists": True, "$ne": None}})
+                logger.info(f"✅ Beginner seeded: {new_count} lessons ({new_listening} with listening)")
             except Exception as e:
                 logger.error(f"❌ Beginner seed error: {e}")
         else:
-            logger.info(f"✅ Beginner OK: {beginner_count} lessons")
+            logger.info(f"✅ Beginner OK: {beginner_count} lessons ({beginner_with_listening} with listening)")
         
         logger.info("🎉 Course data check complete!")
         
