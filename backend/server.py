@@ -2417,7 +2417,7 @@ async def admin_seed_advanced_mastery(admin_email: str = None):
 
 
 @api_router.post("/admin/seed-mastery")
-async def admin_seed_mastery(admin_email: str = None):
+async def admin_seed_mastery(admin_email: str = None, force: bool = False):
     """Seed Mastery course modules to database"""
     if not admin_email or not is_admin_email(admin_email):
         raise HTTPException(status_code=403, detail="Admin access required")
@@ -2429,8 +2429,8 @@ async def admin_seed_mastery(admin_email: str = None):
         # Check current count
         current_count = await db.mastery_course_modules.count_documents({})
         
-        # Clear existing and re-seed if count doesn't match expected (17)
-        if current_count != len(MASTERY_MODULES):
+        # Force reseed or if count doesn't match expected (17)
+        if force or current_count != len(MASTERY_MODULES):
             await db.mastery_course_modules.delete_many({})
             
             # Insert all modules
@@ -2446,7 +2446,8 @@ async def admin_seed_mastery(admin_email: str = None):
                 "status": "success",
                 "message": f"Seeded {new_count} Mastery modules",
                 "previous_count": current_count,
-                "new_count": new_count
+                "new_count": new_count,
+                "forced": force
             }
         else:
             return {
