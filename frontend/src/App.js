@@ -266,6 +266,10 @@ function AppWithSessionHandler() {
           element={<FeatureShowcase />} 
         />
         <Route 
+          path="/demo/writing-task1" 
+          element={<WritingTask1Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
           path="/question-bank/writing/task1" 
           element={user ? <WritingTask1Practice user={user} /> : <Navigate to="/" />} 
         />
