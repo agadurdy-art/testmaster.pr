@@ -1245,7 +1245,7 @@ export default function MasteryCourse({ user }) {
               {writingFeedback.vocabulary_suggestions.map((sug, idx) => (
                 <div key={idx} className="mb-2 text-sm">
                   <span className="text-gray-500">{sug.basic}</span> → <span className="text-blue-600 font-medium">{sug.advanced}</span>
-                  <p className="text-xs text-gray-600 italic">"{sug.example}"</p>
+                  <p className="text-xs text-gray-600 italic">&ldquo;{sug.example}&rdquo;</p>
                 </div>
               ))}
             </div>
