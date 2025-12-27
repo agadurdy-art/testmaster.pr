@@ -303,6 +303,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load pronunciation routes: {e}")
 
+# Import question bank routes
+try:
+    from routes.question_bank import router as question_bank_router
+    app.include_router(question_bank_router)
+    print("✅ Question Bank routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load question bank routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
