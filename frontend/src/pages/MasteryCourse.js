@@ -357,6 +357,7 @@ export default function MasteryCourse({ user }) {
     const sections = [
       { id: 'vocabulary', icon: BookOpen, label: 'Vocabulary' },
       { id: 'grammar', icon: Languages, label: 'Grammar' },
+      { id: 'listening', icon: Volume2, label: 'Listening' },
       { id: 'reading', icon: FileText, label: 'Reading' },
       { id: 'speaking', icon: Mic, label: 'Speaking' },
       { id: 'writing', icon: PenTool, label: 'Writing' },
