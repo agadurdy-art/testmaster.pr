@@ -198,7 +198,7 @@ The economic case strengthens as technology improves. Electric vehicles now achi
         "questions": [
             {"number": 1, "type": "multiple_choice", "question": "What percentage of global CO2 emissions comes from transportation?", "options": ["A) 14%", "B) 24%", "C) 34%", "D) 44%"], "answer": "B"},
             {"number": 2, "type": "completion", "question": "Swiss transit systems maintain punctuality rates exceeding _____%. ", "answer": "97", "word_limit": 2},
-            {"number": 3, "type": "multiple_choice", "question": "Which city converted its entire bus fleet to electric?", "options": ["A) Zurich", "B) Amsterdam", "C) Shenzhen", "D") Singapore"], "answer": "C"},
+            {"number": 3, "type": "multiple_choice", "question": "Which city converted its entire bus fleet to electric?", "options": ["A) Zurich", "B) Amsterdam", "C) Shenzhen", "D) Singapore"], "answer": "C"},
             {"number": 4, "type": "true_false", "question": "Shenzhen's electric bus transition increased carbon emissions.", "answer": "False"},
             {"number": 5, "type": "completion", "question": "Amsterdam residents make _____% of all trips by bicycle.", "answer": "38", "word_limit": 2},
             {"number": 6, "type": "multiple_choice", "question": "What does research show about transit frequency?", "options": ["A) Frequency doesn't affect ridership", "B) Ridership increases with intervals of 10 minutes or less", "C) Longer intervals are preferred", "D) Frequency only matters for trains"], "answer": "B"}
