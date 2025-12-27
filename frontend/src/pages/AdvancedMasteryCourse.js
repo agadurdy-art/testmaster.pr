@@ -402,7 +402,7 @@ export default function AdvancedMasteryCourse({ user }) {
                   </div>
                   <p className="text-gray-700 text-sm mb-2">{item.meaning}</p>
                   <div className="p-2 bg-white rounded-lg border border-amber-200">
-                    <p className="text-xs text-amber-800 italic">"{item.example}"</p>
+                    <p className="text-xs text-amber-800 italic">&ldquo;{item.example}&rdquo;</p>
                   </div>
                 </div>
               ))}
