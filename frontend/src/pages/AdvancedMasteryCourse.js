@@ -464,6 +464,126 @@ export default function AdvancedMasteryCourse({ user }) {
         </div>
       )}
 
+      {/* IDIOMS SECTION */}
+      {selectedModule.vocabulary?.idioms?.length > 0 && (
+        <div className="mt-6 p-4 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl">
+          <h4 className="font-semibold text-indigo-800 mb-3 flex items-center gap-2">
+            💬 Idioms for Band 7+
+          </h4>
+          <div className="grid md:grid-cols-2 gap-3">
+            {selectedModule.vocabulary.idioms.map((item, idx) => (
+              <div key={idx} className="p-3 bg-white rounded-lg border border-indigo-200">
+                <div className="flex items-start justify-between">
+                  <h5 className="font-bold text-indigo-700">{item.idiom}</h5>
+                  <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded">{item.usage_context}</span>
+                </div>
+                <p className="text-sm text-gray-600 mt-1">{item.meaning}</p>
+                <p className="text-xs text-indigo-600 italic mt-2">&ldquo;{item.example}&rdquo;</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* COLLOCATIONS SECTION */}
+      {selectedModule.vocabulary?.collocations?.length > 0 && (
+        <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl">
+          <h4 className="font-semibold text-green-800 mb-3 flex items-center gap-2">
+            🔗 Collocations
+          </h4>
+          <div className="grid md:grid-cols-2 gap-3">
+            {selectedModule.vocabulary.collocations.map((item, idx) => (
+              <div key={idx} className="p-3 bg-white rounded-lg border border-green-200">
+                <div className="flex items-center justify-between mb-1">
+                  <h5 className="font-bold text-green-700">{item.collocation}</h5>
+                  <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded">{item.type}</span>
+                </div>
+                <p className="text-xs text-gray-600 italic">&ldquo;{item.example}&rdquo;</p>
+                {item.alternatives && (
+                  <p className="text-xs text-green-600 mt-2">Also: {item.alternatives.join(', ')}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* PHRASAL VERBS SECTION */}
+      {selectedModule.vocabulary?.phrasal_verbs?.length > 0 && (
+        <div className="mt-6 p-4 bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl">
+          <h4 className="font-semibold text-orange-800 mb-3 flex items-center gap-2">
+            ⚡ Phrasal Verbs
+          </h4>
+          <div className="grid md:grid-cols-2 gap-3">
+            {selectedModule.vocabulary.phrasal_verbs.map((item, idx) => (
+              <div key={idx} className="p-3 bg-white rounded-lg border border-orange-200">
+                <h5 className="font-bold text-orange-700">{item.phrasal_verb}</h5>
+                <p className="text-sm text-gray-600 mt-1">{item.meaning}</p>
+                <p className="text-xs text-orange-600 italic mt-2">&ldquo;{item.example}&rdquo;</p>
+                <p className="text-xs text-gray-500 mt-1">📝 Formal: {item.formal_alternative}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* PRONUNCIATION GUIDE */}
+      {selectedModule.vocabulary?.pronunciation_guide?.length > 0 && (
+        <div className="mt-6 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl">
+          <h4 className="font-semibold text-pink-800 mb-3 flex items-center gap-2">
+            🎯 Pronunciation Guide
+          </h4>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+            {selectedModule.vocabulary.pronunciation_guide.map((item, idx) => (
+              <div key={idx} className="p-3 bg-white rounded-lg border border-pink-200">
+                <div className="flex items-center justify-between">
+                  <h5 className="font-bold text-pink-700">{item.word}</h5>
+                  <Button variant="ghost" size="sm" onClick={() => speakText(item.word)} className="h-6 w-6 p-0">
+                    <Volume2 className="w-3 h-3" />
+                  </Button>
+                </div>
+                <p className="text-xs font-mono text-gray-600">{item.ipa}</p>
+                <p className="text-xs text-pink-600 mt-1">{item.stress}</p>
+                <p className="text-xs text-gray-500 mt-1">⚠️ {item.common_mistake}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* WORD FORMATION */}
+      {selectedModule.vocabulary?.word_formation?.length > 0 && (
+        <div className="mt-6 p-4 bg-gradient-to-r from-cyan-50 to-teal-50 rounded-xl">
+          <h4 className="font-semibold text-cyan-800 mb-3 flex items-center gap-2">
+            🔄 Word Formation
+          </h4>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-cyan-100">
+                  <th className="px-3 py-2 text-left text-cyan-800">Root</th>
+                  <th className="px-3 py-2 text-left text-cyan-800">Noun</th>
+                  <th className="px-3 py-2 text-left text-cyan-800">Verb</th>
+                  <th className="px-3 py-2 text-left text-cyan-800">Adjective</th>
+                  <th className="px-3 py-2 text-left text-cyan-800">Adverb</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedModule.vocabulary.word_formation.map((item, idx) => (
+                  <tr key={idx} className="border-b border-cyan-100">
+                    <td className="px-3 py-2 font-semibold text-cyan-700">{item.root}</td>
+                    <td className="px-3 py-2 text-gray-600">{item.noun}</td>
+                    <td className="px-3 py-2 text-gray-600">{item.verb}</td>
+                    <td className="px-3 py-2 text-gray-600">{item.adjective}</td>
+                    <td className="px-3 py-2 text-gray-600">{item.adverb}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       <div className="mt-6 flex justify-end">
         <Button onClick={() => setCurrentSection('grammar')} className="bg-gradient-to-r from-amber-500 to-orange-600">
           Next: Grammar <ChevronRight className="w-4 h-4 ml-1" />
