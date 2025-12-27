@@ -291,49 +291,74 @@ async def generate_task1_authentic(
         # ============ PIE CHART ============
         elif visual_type == "pie_chart":
             task_data = authentic_task_generator.generate_pie_chart_task(topic, band_level)
-            # For pie charts with comparison, generate two charts
-            if task_data.get("has_comparison") and len(task_data["datasets"]) > 1:
-                svg = chart_generator.generate_pie_chart_comparison(
-                    title=task_data["title"],
-                    segments=task_data["segments"],
-                    dataset1=task_data["datasets"][0],
-                    dataset2=task_data["datasets"][1]
-                )
-            else:
-                svg = chart_generator.generate_pie_chart(
-                    title=task_data["title"],
-                    segments=task_data["segments"],
-                    values=task_data["datasets"][0]["values"],
-                    year=task_data["datasets"][0]["label"]
-                )
+            # Convert to the format expected by chart_generator
+            pie_data = [
+                {"label": seg, "value": task_data["datasets"][0]["values"][idx]}
+                for idx, seg in enumerate(task_data["segments"])
+            ]
+            svg = chart_generator.generate_pie_chart(
+                title=task_data["title"],
+                data=pie_data
+            )
         
         # ============ TABLE ============
         elif visual_type == "table":
             task_data = authentic_task_generator.generate_table_task(topic, band_level)
+            # Convert rows to string format
+            rows_str = [[str(cell) for cell in row] for row in task_data["rows"]]
             svg = chart_generator.generate_table(
                 title=task_data["title"],
-                columns=task_data["columns"],
-                rows=task_data["rows"]
+                headers=task_data["columns"],
+                rows=rows_str
             )
         
         # ============ PROCESS ============
         elif visual_type == "process":
             task_data = authentic_task_generator.generate_process_task(topic, band_level)
+            # Convert stages to steps format
+            steps = [
+                {"label": f"Stage {idx+1}", "description": stage.get("name", stage.get("description", ""))}
+                for idx, stage in enumerate(task_data["stages"])
+            ]
             svg = chart_generator.generate_process_diagram(
                 title=task_data["title"],
-                stages=task_data["stages"],
-                is_cyclical=task_data.get("is_cyclical", False)
+                steps=steps
             )
         
         # ============ MAP ============
         elif visual_type == "map":
             task_data = authentic_task_generator.generate_map_task(topic, band_level)
+            # Convert feature lists to element dicts for map rendering
+            before_elements = []
+            after_elements = []
+            
+            # Generate simple building/area layouts
+            for idx, feature in enumerate(task_data["features_before"]):
+                before_elements.append({
+                    "type": "area",
+                    "x": 30 + (idx % 3) * 120,
+                    "y": 30 + (idx // 3) * 100,
+                    "width": 100,
+                    "height": 60,
+                    "label": feature,
+                    "fill": "#86efac" if "park" in feature.lower() or "forest" in feature.lower() else "#94a3b8"
+                })
+            
+            for idx, feature in enumerate(task_data["features_after"]):
+                after_elements.append({
+                    "type": "area",
+                    "x": 30 + (idx % 3) * 120,
+                    "y": 30 + (idx // 3) * 100,
+                    "width": 100,
+                    "height": 60,
+                    "label": feature,
+                    "fill": "#fbbf24" if "new" in feature.lower() or "modern" in feature.lower() else "#60a5fa"
+                })
+            
             svg = chart_generator.generate_map_comparison(
                 title=task_data["title"],
-                before_elements=task_data["features_before"],
-                after_elements=task_data["features_after"],
-                year_before=task_data.get("year_before"),
-                year_after=task_data.get("year_after")
+                before_elements=before_elements,
+                after_elements=after_elements
             )
         
         else:
