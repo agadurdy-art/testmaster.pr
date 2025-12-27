@@ -2371,6 +2371,200 @@ async def admin_delete_user(user_id: str, admin_email: str = None):
     
     return {"detail": "User deleted", "email": user.get("email")}
 
+
+# ============ ADMIN SEED ENDPOINTS ============
+
+@api_router.post("/admin/seed-advanced-mastery")
+async def admin_seed_advanced_mastery(admin_email: str = None):
+    """Seed Advanced Mastery course modules to database"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Import seed data
+        from seed_advanced_mastery import ADVANCED_MODULES
+        
+        # Check current count
+        current_count = await db.advanced_mastery_modules.count_documents({})
+        
+        # Clear existing and re-seed if count doesn't match
+        if current_count != len(ADVANCED_MODULES):
+            await db.advanced_mastery_modules.delete_many({})
+            
+            # Insert all modules
+            for module in ADVANCED_MODULES:
+                await db.advanced_mastery_modules.update_one(
+                    {"id": module["id"]},
+                    {"$set": module},
+                    upsert=True
+                )
+            
+            new_count = await db.advanced_mastery_modules.count_documents({})
+            return {
+                "status": "success",
+                "message": f"Seeded {new_count} Advanced Mastery modules",
+                "previous_count": current_count,
+                "new_count": new_count
+            }
+        else:
+            return {
+                "status": "already_seeded",
+                "message": f"Database already has {current_count} modules",
+                "count": current_count
+            }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Seed failed: {str(e)}")
+
+
+@api_router.post("/admin/seed-mastery")
+async def admin_seed_mastery(admin_email: str = None):
+    """Seed Mastery course modules to database"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Import seed data
+        from seed_mastery_course import MASTERY_MODULES
+        
+        # Check current count
+        current_count = await db.mastery_course_modules.count_documents({})
+        
+        # Clear existing and re-seed if count doesn't match expected (17)
+        if current_count != len(MASTERY_MODULES):
+            await db.mastery_course_modules.delete_many({})
+            
+            # Insert all modules
+            for module in MASTERY_MODULES:
+                await db.mastery_course_modules.update_one(
+                    {"id": module["id"]},
+                    {"$set": module},
+                    upsert=True
+                )
+            
+            new_count = await db.mastery_course_modules.count_documents({})
+            return {
+                "status": "success",
+                "message": f"Seeded {new_count} Mastery modules",
+                "previous_count": current_count,
+                "new_count": new_count
+            }
+        else:
+            return {
+                "status": "already_seeded",
+                "message": f"Database already has {current_count} modules",
+                "count": current_count
+            }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Seed failed: {str(e)}")
+
+
+@api_router.post("/admin/seed-beginner")
+async def admin_seed_beginner(admin_email: str = None):
+    """Seed Beginner English course lessons to database"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Import seed data
+        from seed_beginner_english import BEGINNER_LESSONS
+        
+        # Check current count
+        current_count = await db.beginner_english_lessons.count_documents({})
+        
+        # Clear existing and re-seed if count doesn't match expected (14)
+        if current_count != len(BEGINNER_LESSONS):
+            await db.beginner_english_lessons.delete_many({})
+            
+            # Insert all lessons
+            for lesson in BEGINNER_LESSONS:
+                await db.beginner_english_lessons.update_one(
+                    {"id": lesson["id"]},
+                    {"$set": lesson},
+                    upsert=True
+                )
+            
+            new_count = await db.beginner_english_lessons.count_documents({})
+            return {
+                "status": "success",
+                "message": f"Seeded {new_count} Beginner lessons",
+                "previous_count": current_count,
+                "new_count": new_count
+            }
+        else:
+            return {
+                "status": "already_seeded",
+                "message": f"Database already has {current_count} lessons",
+                "count": current_count
+            }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Seed failed: {str(e)}")
+
+
+@api_router.post("/admin/seed-all-courses")
+async def admin_seed_all_courses(admin_email: str = None):
+    """Seed all course data to database at once"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    results = {}
+    
+    # Seed Advanced Mastery
+    try:
+        from seed_advanced_mastery import ADVANCED_MODULES
+        await db.advanced_mastery_modules.delete_many({})
+        for module in ADVANCED_MODULES:
+            await db.advanced_mastery_modules.update_one(
+                {"id": module["id"]}, {"$set": module}, upsert=True
+            )
+        results["advanced_mastery"] = await db.advanced_mastery_modules.count_documents({})
+    except Exception as e:
+        results["advanced_mastery_error"] = str(e)
+    
+    # Seed Mastery
+    try:
+        from seed_mastery_course import MASTERY_MODULES
+        await db.mastery_course_modules.delete_many({})
+        for module in MASTERY_MODULES:
+            await db.mastery_course_modules.update_one(
+                {"id": module["id"]}, {"$set": module}, upsert=True
+            )
+        results["mastery"] = await db.mastery_course_modules.count_documents({})
+    except Exception as e:
+        results["mastery_error"] = str(e)
+    
+    # Seed Beginner
+    try:
+        from seed_beginner_english import BEGINNER_LESSONS
+        await db.beginner_english_lessons.delete_many({})
+        for lesson in BEGINNER_LESSONS:
+            await db.beginner_english_lessons.update_one(
+                {"id": lesson["id"]}, {"$set": lesson}, upsert=True
+            )
+        results["beginner"] = await db.beginner_english_lessons.count_documents({})
+    except Exception as e:
+        results["beginner_error"] = str(e)
+    
+    return {
+        "status": "success",
+        "message": "All courses seeded",
+        "results": results
+    }
+
+
+@api_router.get("/admin/db-status")
+async def admin_db_status(admin_email: str = None):
+    """Get database status - count of all course modules"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    return {
+        "advanced_mastery_modules": await db.advanced_mastery_modules.count_documents({}),
+        "mastery_modules": await db.mastery_course_modules.count_documents({}),
+        "beginner_lessons": await db.beginner_english_lessons.count_documents({}),
+        "users": await db.users.count_documents({}),
+        "test_attempts": await db.test_attempts.count_documents({})
+    }
+
 @api_router.post("/auth/forgot-password")
 async def forgot_password(payload: ForgotPasswordRequest):
     """Generate a reset token and (in real setup) send email.
