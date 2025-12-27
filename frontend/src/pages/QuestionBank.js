@@ -204,7 +204,7 @@ export default function QuestionBank() {
                       className="p-5 cursor-pointer hover:shadow-lg transition-all border-0 shadow-md overflow-hidden relative group"
                       onClick={() => {
                         if (skill.id === 'writing') {
-                          navigate('/question-bank/writing/task1');
+                          setShowWritingModal(true);
                         } else {
                           setSelectedSkill(skill.id);
                           setActiveTab('practice');
