@@ -1020,45 +1020,6 @@ class IELTSDataGenerator:
             "before": map_data["before"],
             "after": map_data["after"]
         }
-            values = [random.randint(15, 85) for _ in categories]
-            datasets.append({"label": year, "values": values})
-        
-        return {
-            "title": f"{topic.title()} Statistics by Country",
-            "x_label": "Country",
-            "y_label": "Value",
-            "categories": categories,
-            "datasets": datasets
-        }
-    
-    @staticmethod
-    def generate_pie_chart_data(topic: str, band_level: str) -> Dict[str, Any]:
-        """Generate data for a pie chart."""
-        if band_level == "4.0-5.0":
-            num_slices = 4
-        elif band_level == "5.5-6.5":
-            num_slices = 5
-        else:
-            num_slices = 6
-        
-        labels = ["Category A", "Category B", "Category C", "Category D", "Category E", "Category F"][:num_slices]
-        
-        # Generate values that sum to 100
-        values = []
-        remaining = 100
-        for i in range(num_slices - 1):
-            max_val = remaining - (num_slices - i - 1) * 5
-            val = random.randint(10, min(40, max_val))
-            values.append(val)
-            remaining -= val
-        values.append(remaining)
-        
-        data = [{"label": labels[i], "value": values[i]} for i in range(num_slices)]
-        
-        return {
-            "title": f"Distribution of {topic.title()} (2023)",
-            "data": data
-        }
 
 
 # Create singleton instance
