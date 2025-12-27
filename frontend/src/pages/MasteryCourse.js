@@ -667,10 +667,6 @@ export default function MasteryCourse({ user }) {
     const hasAudio = moduleNum >= 1 && moduleNum <= 17;
     const audioPath = `/audio/mastery_course/module_${moduleNum}_listening.mp3`;
     
-    const [showTranscript, setShowTranscript] = useState(false);
-    const [listeningAnswers, setListeningAnswers] = useState({});
-    const [showListeningResults, setShowListeningResults] = useState(false);
-    
     const handleListeningAnswer = (qIdx, answer) => {
       setListeningAnswers(prev => ({ ...prev, [qIdx]: answer }));
     };
