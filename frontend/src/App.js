@@ -264,6 +264,14 @@ function AppWithSessionHandler() {
           path="/feature-showcase" 
           element={<FeatureShowcase />} 
         />
+        <Route 
+          path="/question-bank" 
+          element={user ? <QuestionBank user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/task1" 
+          element={user ? <WritingTask1Practice user={user} /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
