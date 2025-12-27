@@ -423,6 +423,7 @@ export default function MasteryCourse({ user }) {
     switch (currentSection) {
       case 'vocabulary': return renderVocabulary();
       case 'grammar': return renderGrammar();
+      case 'listening': return renderListening();
       case 'reading': return renderReading();
       case 'speaking': return renderSpeaking();
       case 'writing': return renderWriting();
