@@ -23,6 +23,7 @@ LAYER C: Alternative Academic Expressions
 
 import os
 import json
+import random
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
