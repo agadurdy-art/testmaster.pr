@@ -1,0 +1,387 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Badge } from '../components/ui/badge';
+import { 
+  BookOpen, Headphones, PenTool, Mic, BookMarked,
+  Target, Clock, Shuffle, Brain, TrendingUp,
+  ChevronRight, Play, Filter, BarChart3, 
+  CheckCircle, ArrowLeft, Layers, Zap
+} from 'lucide-react';
+import { toast } from 'sonner';
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+export default function QuestionBank() {
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('overview');
+  const [selectedSkill, setSelectedSkill] = useState(null);
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [selectedBand, setSelectedBand] = useState(null);
+  const [skills, setSkills] = useState([]);
+  const [topics, setTopics] = useState([]);
+  const [bandLevels, setBandLevels] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const [skillsRes, topicsRes, bandsRes, statsRes] = await Promise.all([
+        fetch(`${API_URL}/api/question-bank/skills`),
+        fetch(`${API_URL}/api/question-bank/topics`),
+        fetch(`${API_URL}/api/question-bank/band-levels`),
+        fetch(`${API_URL}/api/question-bank/stats`)
+      ]);
+
+      const [skillsData, topicsData, bandsData, statsData] = await Promise.all([
+        skillsRes.json(),
+        topicsRes.json(),
+        bandsRes.json(),
+        statsRes.json()
+      ]);
+
+      setSkills(skillsData.skills || []);
+      setTopics(topicsData.topics || []);
+      setBandLevels(bandsData.band_levels || []);
+      setStats(statsData);
+    } catch (error) {
+      console.error('Error loading data:', error);
+      toast.error('Failed to load question bank data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const skillIcons = {
+    reading: BookOpen,
+    listening: Headphones,
+    writing: PenTool,
+    speaking: Mic,
+    grammar_vocab: BookMarked
+  };
+
+  const skillColors = {
+    reading: 'from-blue-500 to-blue-600',
+    listening: 'from-purple-500 to-purple-600',
+    writing: 'from-green-500 to-green-600',
+    speaking: 'from-orange-500 to-orange-600',
+    grammar_vocab: 'from-pink-500 to-pink-600'
+  };
+
+  const practiceModesConfig = [
+    {
+      id: 'timed',
+      name: 'Timed Practice',
+      icon: Clock,
+      description: 'Simulate real IELTS exam conditions',
+      color: 'from-red-500 to-orange-500',
+      badge: 'Exam Mode'
+    },
+    {
+      id: 'random',
+      name: 'Random Practice',
+      icon: Shuffle,
+      description: 'Fresh questions every attempt',
+      color: 'from-blue-500 to-cyan-500',
+      badge: 'Variety'
+    },
+    {
+      id: 'smart',
+      name: 'Smart Practice',
+      icon: Brain,
+      description: 'AI-powered focus on your weak areas',
+      color: 'from-purple-500 to-pink-500',
+      badge: 'AI Powered'
+    }
+  ];
+
+  const startPractice = (mode, skill) => {
+    if (!skill) {
+      toast.error('Please select a skill first');
+      return;
+    }
+    
+    // Navigate to practice page with params
+    navigate(`/question-bank/practice?mode=${mode}&skill=${skill}${selectedTopic ? `&topic=${selectedTopic}` : ''}${selectedBand ? `&band=${selectedBand}` : ''}`);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 text-white py-12 px-6">
+        <div className="max-w-7xl mx-auto">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/dashboard')}
+            className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+          </Button>
+          
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
+              <Layers className="w-8 h-8" />
+            </div>
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold">IELTS Soru Bankası</h1>
+              <p className="text-white/80 text-lg">Cambridge IELTS uyumlu, AI destekli soru bankası</p>
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+              <div className="text-2xl font-bold">{stats?.total_questions || 0}</div>
+              <div className="text-white/70 text-sm">Toplam Soru</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+              <div className="text-2xl font-bold">{stats?.full_tests || 0}</div>
+              <div className="text-white/70 text-sm">Tam Test</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+              <div className="text-2xl font-bold">4</div>
+              <div className="text-white/70 text-sm">Beceri Alanı</div>
+            </div>
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+              <div className="text-2xl font-bold">18</div>
+              <div className="text-white/70 text-sm">Konu</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Tab Navigation */}
+        <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
+          {[
+            { id: 'overview', label: 'Genel Bakış', icon: BarChart3 },
+            { id: 'practice', label: 'Pratik Yap', icon: Target },
+            { id: 'tests', label: 'Tam Testler', icon: Clock },
+            { id: 'progress', label: 'İlerleme', icon: TrendingUp }
+          ].map(tab => {
+            const Icon = tab.icon;
+            return (
+              <Button
+                key={tab.id}
+                variant={activeTab === tab.id ? 'default' : 'outline'}
+                onClick={() => setActiveTab(tab.id)}
+                className={activeTab === tab.id ? 'bg-indigo-600 hover:bg-indigo-700' : ''}
+              >
+                <Icon className="w-4 h-4 mr-2" /> {tab.label}
+              </Button>
+            );
+          })}
+        </div>
+
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <div className="space-y-8">
+            {/* Skills Grid */}
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Beceri Alanları</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {skills.map(skill => {
+                  const Icon = skillIcons[skill.id] || BookOpen;
+                  const colorClass = skillColors[skill.id] || 'from-gray-500 to-gray-600';
+                  return (
+                    <Card
+                      key={skill.id}
+                      className="p-5 cursor-pointer hover:shadow-lg transition-all border-0 shadow-md overflow-hidden relative group"
+                      onClick={() => {
+                        setSelectedSkill(skill.id);
+                        setActiveTab('practice');
+                      }}
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-br ${colorClass} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
+                      <div className={`w-12 h-12 bg-gradient-to-br ${colorClass} rounded-xl flex items-center justify-center mb-3`}>
+                        <Icon className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="font-bold text-gray-900 mb-1">{skill.name}</h3>
+                      <p className="text-sm text-gray-500 mb-3">{skill.description}</p>
+                      <div className="flex items-center text-indigo-600 text-sm font-medium">
+                        Başla <ChevronRight className="w-4 h-4 ml-1" />
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Band Levels */}
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Band Seviyeleri</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {bandLevels.map(band => (
+                  <Card
+                    key={band.id}
+                    className="p-5 cursor-pointer hover:shadow-lg transition-all border-2 hover:border-indigo-300"
+                    style={{ borderColor: selectedBand === band.id ? band.color : 'transparent' }}
+                    onClick={() => setSelectedBand(selectedBand === band.id ? null : band.id)}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <div 
+                        className="w-4 h-4 rounded-full"
+                        style={{ backgroundColor: band.color }}
+                      ></div>
+                      <h3 className="font-bold text-gray-900">{band.name}</h3>
+                    </div>
+                    <p className="text-sm text-gray-500">{band.description}</p>
+                    {selectedBand === band.id && (
+                      <div className="mt-2 flex items-center text-green-600 text-sm">
+                        <CheckCircle className="w-4 h-4 mr-1" /> Seçildi
+                      </div>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Topics Grid */}
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Konular</h2>
+              <div className="flex flex-wrap gap-2">
+                {topics.map(topic => (
+                  <Badge
+                    key={topic.id}
+                    variant={selectedTopic === topic.id ? 'default' : 'outline'}
+                    className={`cursor-pointer py-2 px-4 text-sm ${
+                      selectedTopic === topic.id 
+                        ? 'bg-indigo-600 hover:bg-indigo-700' 
+                        : 'hover:bg-gray-100'
+                    }`}
+                    onClick={() => setSelectedTopic(selectedTopic === topic.id ? null : topic.id)}
+                  >
+                    <span className="mr-1">{topic.icon}</span> {topic.name}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Practice Tab */}
+        {activeTab === 'practice' && (
+          <div className="space-y-8">
+            {/* Skill Selection */}
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Filter className="w-5 h-5" /> Beceri Seç
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                {skills.map(skill => {
+                  const Icon = skillIcons[skill.id] || BookOpen;
+                  const isSelected = selectedSkill === skill.id;
+                  return (
+                    <Button
+                      key={skill.id}
+                      variant={isSelected ? 'default' : 'outline'}
+                      onClick={() => setSelectedSkill(skill.id)}
+                      className={`h-auto py-4 flex flex-col items-center gap-2 ${
+                        isSelected ? 'bg-indigo-600 hover:bg-indigo-700' : ''
+                      }`}
+                    >
+                      <Icon className="w-6 h-6" />
+                      <span className="text-sm">{skill.name}</span>
+                    </Button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Practice Modes */}
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                <Zap className="w-5 h-5" /> Pratik Modu
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {practiceModesConfig.map(mode => {
+                  const Icon = mode.icon;
+                  return (
+                    <Card
+                      key={mode.id}
+                      className="p-6 cursor-pointer hover:shadow-xl transition-all border-0 shadow-lg overflow-hidden relative group"
+                      onClick={() => startPractice(mode.id, selectedSkill)}
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-br ${mode.color} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
+                      <Badge className="mb-3 bg-white/80 text-gray-700">{mode.badge}</Badge>
+                      <div className={`w-14 h-14 bg-gradient-to-br ${mode.color} rounded-2xl flex items-center justify-center mb-4`}>
+                        <Icon className="w-7 h-7 text-white" />
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">{mode.name}</h3>
+                      <p className="text-sm text-gray-500 mb-4">{mode.description}</p>
+                      <Button className={`w-full bg-gradient-to-r ${mode.color} border-0`}>
+                        <Play className="w-4 h-4 mr-2" /> Başla
+                      </Button>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Active Filters */}
+            {(selectedSkill || selectedTopic || selectedBand) && (
+              <div className="p-4 bg-indigo-50 rounded-xl">
+                <div className="flex items-center flex-wrap gap-2">
+                  <span className="text-sm text-gray-600">Aktif Filtreler:</span>
+                  {selectedSkill && (
+                    <Badge variant="secondary" className="cursor-pointer" onClick={() => setSelectedSkill(null)}>
+                      {skills.find(s => s.id === selectedSkill)?.name} ✕
+                    </Badge>
+                  )}
+                  {selectedTopic && (
+                    <Badge variant="secondary" className="cursor-pointer" onClick={() => setSelectedTopic(null)}>
+                      {topics.find(t => t.id === selectedTopic)?.name} ✕
+                    </Badge>
+                  )}
+                  {selectedBand && (
+                    <Badge variant="secondary" className="cursor-pointer" onClick={() => setSelectedBand(null)}>
+                      {bandLevels.find(b => b.id === selectedBand)?.name} ✕
+                    </Badge>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Tests Tab */}
+        {activeTab === 'tests' && (
+          <div className="space-y-6">
+            <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+              <Clock className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Tam IELTS Testleri</h3>
+              <p className="text-gray-500 mb-6">Gerçek sınav koşullarında tam test deneyimi</p>
+              <Badge className="bg-amber-100 text-amber-700">Yakında Geliyor</Badge>
+            </div>
+          </div>
+        )}
+
+        {/* Progress Tab */}
+        {activeTab === 'progress' && (
+          <div className="space-y-6">
+            <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+              <TrendingUp className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">İlerleme Analizi</h3>
+              <p className="text-gray-500 mb-6">Performansınızı takip edin ve zayıf noktalarınızı keşfedin</p>
+              <Badge className="bg-amber-100 text-amber-700">Yakında Geliyor</Badge>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
