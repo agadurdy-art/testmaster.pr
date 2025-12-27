@@ -1250,7 +1250,8 @@ export default function AdvancedMasteryCourse({ user }) {
                 size="sm"
                 className="border-purple-300 text-purple-700 hover:bg-purple-50"
               >
-                <RotateCcw className="w-4 h-4" />
+                <RotateCcw className="w-4 h-4 mr-1" />
+                Restart
               </Button>
               <div className="flex-1">
                 <div className="h-2 bg-purple-200 rounded-full overflow-hidden">
