@@ -660,108 +660,113 @@ Return ONLY the JSON, no other text."""
 async def get_writing_task2_prompts(
     topic: Optional[str] = Query(None, description="Filter by topic"),
     band_level: Optional[str] = Query(None, description="Filter by band level"),
-    essay_type: Optional[str] = Query(None, description="Essay type: opinion, discussion, advantage_disadvantage, problem_solution")
+    essay_type: Optional[str] = Query(None, description="Essay type: opinion, discussion, advantage_disadvantage, problem_solution, two_part")
 ):
-    """Get Writing Task 2 essay prompts."""
+    """Get Writing Task 2 essay prompts with authentic IELTS content."""
+    from services.writing_task2_generator import writing_task2_generator
     
-    # Sample prompts - in production, these would come from DB
-    prompts = [
-        {
-            "id": "t2-001",
-            "type": "opinion",
-            "topic": "education",
-            "band_level": "5.5-6.5",
-            "prompt": "Some people believe that children should be taught to be competitive in school, while others think they should learn to cooperate with each other. Discuss both views and give your own opinion.",
-            "key_points": ["Competition benefits", "Cooperation benefits", "Your view with reasons"],
-            "useful_vocabulary": ["competitive spirit", "collaborative learning", "teamwork skills", "academic achievement"]
-        },
-        {
-            "id": "t2-002",
-            "type": "advantage_disadvantage",
-            "topic": "technology",
-            "band_level": "5.5-6.5",
-            "prompt": "Many people today use the internet and smartphones to do their banking. What are the advantages and disadvantages of this trend?",
-            "key_points": ["Advantages of online banking", "Disadvantages/risks", "Balance the discussion"],
-            "useful_vocabulary": ["convenience", "cyber security", "digital literacy", "financial transactions"]
-        },
-        {
-            "id": "t2-003",
-            "type": "problem_solution",
-            "topic": "environment",
-            "band_level": "7.0-9.0",
-            "prompt": "Global warming is one of the biggest threats to our environment. What causes global warming and what solutions can governments and individuals take to address this problem?",
-            "key_points": ["Causes of global warming", "Government solutions", "Individual solutions"],
-            "useful_vocabulary": ["greenhouse gases", "carbon footprint", "renewable energy", "sustainable development"]
-        },
-        {
-            "id": "t2-004",
-            "type": "discussion",
-            "topic": "society_government",
-            "band_level": "5.5-6.5",
-            "prompt": "Some people think that governments should spend money on public services rather than spending on the arts such as music and painting. To what extent do you agree or disagree?",
-            "key_points": ["Arguments for public services", "Arguments for arts funding", "Your balanced view"],
-            "useful_vocabulary": ["cultural heritage", "essential services", "quality of life", "budget allocation"]
-        },
-        {
-            "id": "t2-005",
-            "type": "opinion",
-            "topic": "work_employment",
-            "band_level": "7.0-9.0",
-            "prompt": "In many countries, people are working longer hours than ever before. What are the reasons for this? Is this a positive or negative development?",
-            "key_points": ["Reasons for longer hours", "Positive aspects", "Negative aspects", "Your opinion"],
-            "useful_vocabulary": ["work-life balance", "productivity", "job security", "burnout", "career advancement"]
-        }
-    ]
+    prompts = writing_task2_generator.get_essay_prompts(essay_type, band_level)
     
-    # Filter prompts
-    filtered = prompts
+    # Filter by topic if provided
     if topic:
-        filtered = [p for p in filtered if p["topic"] == topic]
-    if band_level:
-        filtered = [p for p in filtered if p["band_level"] == band_level]
-    if essay_type:
-        filtered = [p for p in filtered if p["type"] == essay_type]
+        prompts = [p for p in prompts if p["topic"] == topic]
     
     return {
-        "prompts": filtered,
-        "total": len(filtered)
+        "prompts": prompts,
+        "total": len(prompts)
     }
 
 @router.get("/writing/task2/prompt/{prompt_id}")
 async def get_writing_task2_prompt(prompt_id: str):
-    """Get a specific Writing Task 2 prompt with model answers."""
+    """Get a specific Writing Task 2 prompt with model answers at Band 6 and Band 8.5."""
+    from services.writing_task2_generator import writing_task2_generator
     
-    # Sample - in production from DB
-    if prompt_id == "t2-001":
-        return {
-            "id": "t2-001",
-            "type": "opinion",
-            "topic": "education",
-            "band_level": "5.5-6.5",
-            "prompt": "Some people believe that children should be taught to be competitive in school, while others think they should learn to cooperate with each other. Discuss both views and give your own opinion.",
-            "model_answer_band9": """The debate over whether schools should foster competition or cooperation among students has been ongoing for decades. While both approaches have their merits, I believe that a balanced combination of the two is most beneficial for children's development.
-
-On the one hand, proponents of competitive education argue that it prepares children for the real world. In today's job market, individuals must often compete for positions and promotions, and early exposure to competition can develop resilience and ambition. Furthermore, competitive environments can motivate students to excel academically, as the desire to outperform peers drives them to study harder and achieve better results.
-
-On the other hand, advocates of cooperative learning emphasize the importance of teamwork skills. In most professional settings, employees are required to collaborate with colleagues to achieve common goals. Children who learn to cooperate from an early age are better equipped to communicate effectively, share responsibilities, and resolve conflicts peacefully. Additionally, cooperative learning creates a supportive environment where students can learn from each other and build lasting friendships.
-
-In my opinion, the ideal approach combines elements of both competition and cooperation. Schools should provide opportunities for healthy competition through academic contests and sports, while also incorporating group projects and collaborative activities. This balanced approach would help children develop a complete set of skills necessary for success in both their personal and professional lives.
-
-In conclusion, rather than viewing competition and cooperation as mutually exclusive, educational institutions should recognize the value of both and integrate them thoughtfully into the curriculum.""",
-            "model_answer_band6": """There are different opinions about whether children should learn to be competitive or cooperative at school. This essay will discuss both views and give my opinion.
-
-Some people think competition is important in schools. When students compete with each other, they work harder to get good grades. This can help them be successful in the future because they will need to compete for jobs. Also, winning competitions can make students feel proud and confident.
-
-However, other people believe cooperation is more important. In the workplace, people usually need to work in teams. If children learn to cooperate at school, they will be better at working with others when they grow up. Cooperative learning also helps students make friends and support each other.
-
-In my opinion, I think both competition and cooperation are important. Schools should have some competitions like sports and quiz contests, but also many group activities. This way, students can learn different skills.
-
-To sum up, competition and cooperation both have benefits for children. I believe schools should teach both of these skills to help students become successful in life.""",
-            "examiner_notes": {
-                "must_mention": ["Benefits of competition", "Benefits of cooperation", "Clear personal opinion", "Real-world connections"],
-                "common_mistakes": ["Not discussing both views equally", "Weak conclusion", "Repetitive vocabulary"],
-                "vocabulary_focus": ["competitive spirit", "collaborative learning", "teamwork", "resilience", "academic achievement"]
-            }
+    # Get all prompts
+    all_prompts = writing_task2_generator.get_essay_prompts()
+    
+    # Find the specific prompt
+    prompt = None
+    for p in all_prompts:
+        if str(p["id"]) == prompt_id:
+            prompt = p
+            break
+    
+    if not prompt:
+        raise HTTPException(status_code=404, detail="Prompt not found")
+    
+    # Get model answers for both bands
+    model_band6 = writing_task2_generator.get_model_answer(prompt["type"], prompt["topic"], 6.0)
+    model_band85 = writing_task2_generator.get_model_answer(prompt["type"], prompt["topic"], 8.5)
+    
+    return {
+        **prompt,
+        "model_answers": {
+            "band_6": model_band6,
+            "band_8_5": model_band85
         }
+    }
+
+@router.get("/writing/task2/model-answers/{essay_type}")
+async def get_task2_model_answers(
+    essay_type: str,
+    topic: str = Query("education", description="Topic of the essay")
+):
+    """Get model answers at different band levels for a specific essay type."""
+    from services.writing_task2_generator import writing_task2_generator
     
-    raise HTTPException(status_code=404, detail="Prompt not found")
+    band6 = writing_task2_generator.get_model_answer(essay_type, topic, 6.0)
+    band85 = writing_task2_generator.get_model_answer(essay_type, topic, 8.5)
+    
+    return {
+        "essay_type": essay_type,
+        "topic": topic,
+        "model_answers": {
+            "band_6": band6,
+            "band_8_5": band85
+        }
+    }
+
+# ============ GENERAL TRAINING TASK 1 (LETTER WRITING) ============
+
+@router.get("/writing/general/task1/prompts")
+async def get_general_task1_prompts(
+    letter_type: Optional[str] = Query(None, description="Letter type: formal, semi_formal, informal")
+):
+    """Get General Training Writing Task 1 prompts (letter writing)."""
+    from services.writing_task2_generator import writing_task2_generator
+    
+    prompts = writing_task2_generator.get_letter_prompts(letter_type)
+    
+    return {
+        "prompts": prompts,
+        "total": len(prompts),
+        "letter_types": ["formal", "semi_formal", "informal"]
+    }
+
+@router.get("/writing/general/task1/prompt/{prompt_id}")
+async def get_general_task1_prompt(prompt_id: str):
+    """Get a specific General Training Task 1 prompt with model answers."""
+    from services.writing_task2_generator import writing_task2_generator
+    
+    all_prompts = writing_task2_generator.get_letter_prompts()
+    
+    prompt = None
+    for p in all_prompts:
+        if str(p["id"]) == prompt_id:
+            prompt = p
+            break
+    
+    if not prompt:
+        raise HTTPException(status_code=404, detail="Prompt not found")
+    
+    # Get model answers for both bands
+    model_band6 = writing_task2_generator.get_letter_model_answer(prompt["type"], prompt["topic"], 6.0)
+    model_band85 = writing_task2_generator.get_letter_model_answer(prompt["type"], prompt["topic"], 8.5)
+    
+    return {
+        **prompt,
+        "model_answers": {
+            "band_6": model_band6,
+            "band_8_5": model_band85
+        }
+    }
