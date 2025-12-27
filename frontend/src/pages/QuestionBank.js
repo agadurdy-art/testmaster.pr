@@ -202,8 +202,12 @@ export default function QuestionBank() {
                       key={skill.id}
                       className="p-5 cursor-pointer hover:shadow-lg transition-all border-0 shadow-md overflow-hidden relative group"
                       onClick={() => {
-                        setSelectedSkill(skill.id);
-                        setActiveTab('practice');
+                        if (skill.id === 'writing') {
+                          navigate('/question-bank/writing/task1');
+                        } else {
+                          setSelectedSkill(skill.id);
+                          setActiveTab('practice');
+                        }
                       }}
                     >
                       <div className={`absolute inset-0 bg-gradient-to-br ${colorClass} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
