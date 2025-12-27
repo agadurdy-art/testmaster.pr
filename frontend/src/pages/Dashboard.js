@@ -551,8 +551,13 @@ export default function Dashboard({ user, onLogout }) {
                 <div
                   key={idx}
                   onClick={() => navigate(tool.route)}
-                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group`}
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group relative`}
                 >
+                  {tool.badge && (
+                    <span className="absolute top-2 right-2 px-1.5 py-0.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-[10px] font-bold rounded-full">
+                      {tool.badge}
+                    </span>
+                  )}
                   <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${tool.color} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
                     <tool.icon className="w-5 h-5 text-white" />
                   </div>
