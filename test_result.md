@@ -301,3 +301,26 @@
 - Grammar visualizations
 - Quiz detailed explanations
 - Advanced course content complete
+
+## Advanced Mastery Listening Feature Test - $(date)
+
+### Test Scope:
+1. Listening section displays correctly for modules 1-5
+2. Audio player works (play, pause, restart, progress bar)
+3. Comprehension questions display correctly
+4. Show Transcript functionality works
+5. Vocabulary Focus section displays
+6. Listening Tips section displays
+7. Navigation to/from Listening section works
+
+### Test Credentials:
+- Email: dashboard@test.com
+- Password: test12345
+
+### Test Flow:
+1. Login -> Dashboard -> Advanced Mastery Course -> Module 1 -> Listening tab
+2. Verify audio player UI and controls
+3. Verify 6 comprehension questions
+4. Click "Show Transcript" and verify transcript appears
+5. Scroll and verify Vocabulary Focus and Listening Tips sections
+6. Test Module 2-5 to verify they all have listening content
