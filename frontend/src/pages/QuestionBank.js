@@ -387,6 +387,67 @@ export default function QuestionBank() {
           </div>
         )}
       </div>
+
+      {/* Writing Task Selection Modal */}
+      {showWritingModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md p-6 relative">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="absolute top-4 right-4"
+              onClick={() => setShowWritingModal(false)}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+            
+            <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
+              <PenTool className="w-5 h-5 text-green-600" /> Writing Practice
+            </h2>
+            <p className="text-gray-500 mb-6">Hangi görevi pratik yapmak istiyorsunuz?</p>
+            
+            <div className="space-y-3">
+              <Card 
+                className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-green-300"
+                onClick={() => {
+                  setShowWritingModal(false);
+                  navigate('/question-bank/writing/task1');
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <BarChart3 className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900">Task 1 - Academic</h3>
+                    <p className="text-sm text-gray-500">Grafik, tablo, süreç veya harita açıklaması</p>
+                    <Badge className="mt-2 bg-green-100 text-green-700">150+ kelime</Badge>
+                  </div>
+                </div>
+              </Card>
+              
+              <Card 
+                className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-blue-300"
+                onClick={() => {
+                  setShowWritingModal(false);
+                  navigate('/question-bank/writing/task2');
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Edit3 className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900">Task 2 - Essay</h3>
+                    <p className="text-sm text-gray-500">Opinion, Discussion, Problem-Solution essay</p>
+                    <Badge className="mt-2 bg-blue-100 text-blue-700">250+ kelime</Badge>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
