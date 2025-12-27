@@ -703,10 +703,11 @@ Return ONLY this JSON (no other text):
     try:
         llm = LlmChat(
             api_key=os.environ.get("EMERGENT_LLM_KEY"),
-            model="gpt-4o"
-        )
+            session_id=f"writing_eval_{uuid.uuid4()}",
+            system_message="You are an official IELTS examiner with 15+ years of experience."
+        ).with_model("openai", "gpt-4o")
         
-        result = await llm.chat([UserMessage(content=evaluation_prompt)])
+        result = await llm.send_message(UserMessage(text=evaluation_prompt))
         
         # Parse the JSON response
         result_text = result.strip()
