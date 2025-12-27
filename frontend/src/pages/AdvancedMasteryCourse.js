@@ -1605,6 +1605,7 @@ export default function AdvancedMasteryCourse({ user }) {
       {/* Section Content */}
       {currentSection === 'vocabulary' && renderVocabulary()}
       {currentSection === 'grammar' && renderGrammar()}
+      {currentSection === 'listening' && renderListening()}
       {currentSection === 'reading' && renderReading()}
       {currentSection === 'speaking' && renderSpeaking()}
       {currentSection === 'writing' && renderWriting()}
