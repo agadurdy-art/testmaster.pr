@@ -1082,13 +1082,23 @@ async def facebook_login(payload: FacebookLoginRequest):
 @api_router.post("/auth/login", response_model=User)
 async def login_user(input: UserLogin):
     """Login user - allows both verified and unverified users to login."""
-    user = await db.users.find_one({"email": input.email.strip().lower()}, {"_id": 0})
+    email = input.email.strip().lower()
+    logger.info(f"Login attempt for email: {email}")
+    
+    user = await db.users.find_one({"email": email}, {"_id": 0})
     if not user:
+        logger.warning(f"User not found: {email}")
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    if not verify_password(input.password, user.get("password_hash") or ""):
+    pwd_hash = user.get("password_hash") or ""
+    logger.info(f"User found, password_hash exists: {bool(pwd_hash)}, length: {len(pwd_hash)}")
+    
+    if not verify_password(input.password, pwd_hash):
+        logger.warning(f"Password verification failed for: {email}")
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
+    logger.info(f"Login successful for: {email}")
+    
     # NEW FLOW: Allow unverified users to login with limited access
     # Don't block login - frontend will handle feature restrictions
     
