@@ -244,7 +244,7 @@ async def generate_task1_visual(
     topic: str = Query("education", description="Topic for the visual"),
     band_level: str = Query("5.5-6.5", description="Difficulty level")
 ):
-    """Generate a Writing Task 1 visual (SVG)."""
+    """Generate a Writing Task 1 visual (SVG) with realistic IELTS-authentic data."""
     from services.chart_generator import chart_generator, data_generator
     
     try:
@@ -258,45 +258,18 @@ async def generate_task1_visual(
             data = data_generator.generate_pie_chart_data(topic, band_level)
             svg = chart_generator.generate_pie_chart(**data)
         elif visual_type == "table":
-            svg = chart_generator.generate_table(
-                title=f"{topic.title()} Statistics",
-                headers=["Category", "2020", "2021", "2022", "2023"],
-                rows=[
-                    ["Group A", "45%", "48%", "52%", "55%"],
-                    ["Group B", "30%", "28%", "25%", "22%"],
-                    ["Group C", "25%", "24%", "23%", "23%"],
-                ]
-            )
-            data = {"type": "table", "topic": topic}
+            data = data_generator.generate_table_data(topic, band_level)
+            svg = chart_generator.generate_table(**data)
         elif visual_type == "process":
-            svg = chart_generator.generate_process_diagram(
-                title="Manufacturing Process",
-                steps=[
-                    {"label": "Step 1", "description": "Raw materials collected"},
-                    {"label": "Step 2", "description": "Materials processed"},
-                    {"label": "Step 3", "description": "Quality check"},
-                    {"label": "Step 4", "description": "Packaging"},
-                    {"label": "Step 5", "description": "Distribution"},
-                ]
-            )
-            data = {"type": "process", "topic": topic}
+            data = data_generator.generate_process_data(topic, band_level)
+            svg = chart_generator.generate_process_diagram(**data)
         elif visual_type == "map":
+            data = data_generator.generate_map_data(topic, band_level)
             svg = chart_generator.generate_map_comparison(
-                title="Town Center Development",
-                before_elements=[
-                    {"type": "building", "x": 50, "y": 50, "label": "School"},
-                    {"type": "area", "x": 150, "y": 80, "width": 100, "height": 60, "label": "Park", "fill": "#86efac"},
-                    {"type": "road", "x1": 20, "y1": 200, "x2": 350, "y2": 200},
-                ],
-                after_elements=[
-                    {"type": "building", "x": 50, "y": 50, "label": "School"},
-                    {"type": "building", "x": 150, "y": 80, "label": "Mall"},
-                    {"type": "area", "x": 280, "y": 80, "width": 60, "height": 40, "label": "Park", "fill": "#86efac"},
-                    {"type": "road", "x1": 20, "y1": 200, "x2": 350, "y2": 200},
-                    {"type": "circle", "x": 200, "y": 250, "radius": 25, "label": "Roundabout", "fill": "#d1d5db"},
-                ]
+                title=data["title"],
+                before_elements=data["before"],
+                after_elements=data["after"]
             )
-            data = {"type": "map", "topic": topic}
         else:
             raise HTTPException(status_code=400, detail=f"Unknown visual type: {visual_type}")
         
