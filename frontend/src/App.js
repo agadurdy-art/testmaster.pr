@@ -36,6 +36,8 @@ import LevelDetail from './pages/LevelDetail';
 import UnitDetail from './pages/UnitDetail';
 import LessonView from './pages/LessonView';
 import { ThemeProvider } from './contexts/ThemeContext';
+import QuestionBank from './pages/QuestionBank';
+import WritingTask1Practice from './pages/WritingTask1Practice';
 
 
 function EmergentBadgeWrapper() {
