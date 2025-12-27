@@ -1183,7 +1183,7 @@ export default function AdvancedMasteryCourse({ user }) {
     };
     
     // Check if audio exists for this module (only first 5 modules have audio)
-    const hasAudio = moduleNum >= 1 && moduleNum <= 5;
+    const hasAudio = moduleNum >= 1 && moduleNum <= 20;
     
     if (!listening) {
       return (
