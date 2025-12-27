@@ -1238,15 +1238,17 @@ export default function AdvancedMasteryCourse({ user }) {
             <div className="flex items-center gap-4 mb-3">
               <Button 
                 onClick={handlePlayPause}
-                className="bg-purple-600 hover:bg-purple-700"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-medium"
                 size="sm"
               >
-                {isPlayingListening ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                {isPlayingListening ? <Pause className="w-4 h-4 mr-1" /> : <Play className="w-4 h-4 mr-1" />}
+                {isPlayingListening ? 'Pause' : 'Play'}
               </Button>
               <Button 
                 onClick={handleRestart}
                 variant="outline"
                 size="sm"
+                className="border-purple-300 text-purple-700 hover:bg-purple-50"
               >
                 <RotateCcw className="w-4 h-4" />
               </Button>
