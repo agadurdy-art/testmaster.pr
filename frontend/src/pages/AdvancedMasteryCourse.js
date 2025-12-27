@@ -332,6 +332,7 @@ export default function AdvancedMasteryCourse({ user }) {
     const sections = [
       { id: 'vocabulary', icon: BookOpen, label: 'Vocabulary' },
       { id: 'grammar', icon: Brain, label: 'Grammar' },
+      { id: 'listening', icon: Headphones, label: 'Listening' },
       { id: 'reading', icon: Target, label: 'Reading' },
       { id: 'speaking', icon: Mic, label: 'Speaking' },
       { id: 'writing', icon: PenTool, label: 'Writing' },
