@@ -918,6 +918,375 @@ class AuthenticTaskGenerator:
             return f"{subject} ({years[0]}-{years[-1]})"
         
         return f"Data Overview ({years[0]}-{years[-1]})"
+    
+    # ============ BAR CHART GENERATOR ============
+    @classmethod
+    def generate_bar_chart_task(cls, topic: str = None, band_level: str = "5.5-6.5") -> Dict[str, Any]:
+        """Generate a complete, authentic Bar Chart task."""
+        
+        # Select category
+        if topic and topic in cls.BAR_CHART_TEMPLATES:
+            category = topic
+        else:
+            category = random.choice(list(cls.BAR_CHART_TEMPLATES.keys()))
+        
+        template_config = random.choice(cls.BAR_CHART_TEMPLATES[category])
+        
+        # Determine complexity
+        if band_level == "4.0-5.0":
+            num_categories = 4
+            num_groups = 1
+        elif band_level == "5.5-6.5":
+            num_categories = 5
+            num_groups = 2
+        else:
+            num_categories = 6
+            num_groups = 2
+        
+        # Generate years
+        year = random.randint(2015, 2023)
+        year1 = year - 10
+        year2 = year
+        
+        # Get location
+        location_type = template_config.get("location_type", "cities")
+        if location_type == "cities":
+            location = random.choice(cls.LOCATIONS["cities"])
+        elif location_type == "countries":
+            location = random.choice(cls.LOCATIONS["countries"])
+        else:
+            location = random.choice(cls.LOCATIONS["regions"])
+        
+        # Generate task description
+        task_description = template_config["template"].format(
+            city=location,
+            country=location,
+            region=location,
+            year=year,
+            year1=year1,
+            year2=year2
+        )
+        task_description += "\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words."
+        
+        # Generate categories
+        if template_config.get("categories"):
+            categories_list = random.choice(template_config["categories"])
+            categories = categories_list[:num_categories]
+        else:
+            categories = random.sample(cls.LOCATIONS["countries"], num_categories)
+        
+        # Generate data
+        value_range = template_config.get("value_range", (10, 100))
+        datasets = []
+        
+        if num_groups == 1:
+            values = [round(random.uniform(*value_range), 1) for _ in categories]
+            datasets.append({
+                "label": str(year),
+                "values": values
+            })
+        else:
+            for yr in [year1, year2]:
+                values = [round(random.uniform(*value_range), 1) for _ in categories]
+                datasets.append({
+                    "label": str(yr),
+                    "values": values
+                })
+        
+        return {
+            "task_description": task_description,
+            "title": f"Data for {location} ({year1}-{year2})" if num_groups > 1 else f"Data for {location} ({year})",
+            "x_label": "Category",
+            "y_label": template_config.get("y_label", "Value"),
+            "categories": categories,
+            "datasets": datasets,
+            "band_calibration": {
+                "target_band": band_level,
+                "complexity": "simple" if band_level == "4.0-5.0" else "intermediate" if band_level == "5.5-6.5" else "complex",
+                "num_categories": num_categories,
+                "num_groups": num_groups
+            },
+            "metadata": {
+                "chart_type": "bar_chart",
+                "category": category,
+                "subject_type": template_config["subject_type"]
+            }
+        }
+    
+    # ============ PIE CHART GENERATOR ============
+    @classmethod
+    def generate_pie_chart_task(cls, topic: str = None, band_level: str = "5.5-6.5") -> Dict[str, Any]:
+        """Generate a complete, authentic Pie Chart task."""
+        
+        if topic and topic in cls.PIE_CHART_TEMPLATES:
+            category = topic
+        else:
+            category = random.choice(list(cls.PIE_CHART_TEMPLATES.keys()))
+        
+        template_config = random.choice(cls.PIE_CHART_TEMPLATES[category])
+        
+        # Complexity based on band
+        if band_level == "4.0-5.0":
+            num_segments = 4
+            has_comparison = False
+        elif band_level == "5.5-6.5":
+            num_segments = 5
+            has_comparison = template_config.get("has_comparison", False)
+        else:
+            num_segments = 6
+            has_comparison = True
+        
+        year = random.randint(2015, 2023)
+        year1 = year - 10
+        year2 = year
+        
+        location_type = template_config.get("location_type", "cities")
+        location = random.choice(cls.LOCATIONS[location_type])
+        
+        task_description = template_config["template"].format(
+            city=location,
+            country=location,
+            year=year,
+            year1=year1,
+            year2=year2
+        )
+        task_description += "\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words."
+        
+        # Generate segments
+        if template_config.get("categories"):
+            categories_list = random.choice(template_config["categories"])
+            segments = categories_list[:num_segments]
+        else:
+            segments = ["Category A", "Category B", "Category C", "Category D", "Category E", "Category F"][:num_segments]
+        
+        # Generate percentages that sum to 100
+        def generate_percentages(n):
+            values = [random.randint(5, 40) for _ in range(n)]
+            total = sum(values)
+            return [round(v * 100 / total, 1) for v in values]
+        
+        datasets = []
+        if has_comparison:
+            datasets.append({
+                "label": str(year1),
+                "values": generate_percentages(num_segments)
+            })
+            datasets.append({
+                "label": str(year2),
+                "values": generate_percentages(num_segments)
+            })
+        else:
+            datasets.append({
+                "label": str(year),
+                "values": generate_percentages(num_segments)
+            })
+        
+        return {
+            "task_description": task_description,
+            "title": f"Distribution in {location}" + (f" ({year1} vs {year2})" if has_comparison else f" ({year})"),
+            "segments": segments,
+            "datasets": datasets,
+            "has_comparison": has_comparison,
+            "band_calibration": {
+                "target_band": band_level,
+                "complexity": "simple" if band_level == "4.0-5.0" else "intermediate" if band_level == "5.5-6.5" else "complex",
+                "num_segments": num_segments
+            },
+            "metadata": {
+                "chart_type": "pie_chart",
+                "category": category,
+                "subject_type": template_config["subject_type"]
+            }
+        }
+    
+    # ============ TABLE GENERATOR ============
+    @classmethod
+    def generate_table_task(cls, topic: str = None, band_level: str = "5.5-6.5") -> Dict[str, Any]:
+        """Generate a complete, authentic Table task."""
+        
+        if topic and topic in cls.TABLE_TEMPLATES:
+            category = topic
+        else:
+            category = random.choice(list(cls.TABLE_TEMPLATES.keys()))
+        
+        template_config = random.choice(cls.TABLE_TEMPLATES[category])
+        
+        # Complexity
+        if band_level == "4.0-5.0":
+            num_rows = 4
+        elif band_level == "5.5-6.5":
+            num_rows = 5
+        else:
+            num_rows = 6
+        
+        year = random.randint(2018, 2023)
+        year1 = year - 2
+        year2 = year - 1
+        year3 = year
+        
+        location_type = template_config.get("location_type", "cities")
+        location = random.choice(cls.LOCATIONS[location_type])
+        
+        task_description = template_config["template"].format(
+            city=location,
+            country=location,
+            year=year,
+            year1=year1,
+            year2=year2,
+            year3=year3
+        )
+        task_description += "\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words."
+        
+        columns = template_config.get("columns", ["Category", "Value 1", "Value 2", "Value 3"])
+        row_type = template_config.get("row_type", "categories")
+        
+        # Generate row labels
+        if row_type == "countries":
+            row_labels = random.sample(cls.LOCATIONS["countries"], num_rows)
+        elif row_type == "cities":
+            row_labels = random.sample(cls.LOCATIONS["cities"], num_rows)
+        elif row_type == "courses":
+            row_labels = random.sample(["Business", "Engineering", "Medicine", "Law", "Arts", "Science", "IT", "Education"], num_rows)
+        else:
+            row_labels = [f"Item {i+1}" for i in range(num_rows)]
+        
+        # Generate data
+        rows = []
+        for label in row_labels:
+            row_data = [label]
+            for col in columns[1:]:  # Skip first column (label)
+                if "%" in col:
+                    row_data.append(round(random.uniform(5, 95), 1))
+                elif "million" in col.lower():
+                    row_data.append(round(random.uniform(1, 50), 1))
+                elif "$" in col:
+                    row_data.append(round(random.uniform(100, 50000), 0))
+                else:
+                    row_data.append(round(random.uniform(10, 1000), 0))
+            rows.append(row_data)
+        
+        return {
+            "task_description": task_description,
+            "title": f"Data for {location} ({year})",
+            "columns": columns,
+            "rows": rows,
+            "band_calibration": {
+                "target_band": band_level,
+                "complexity": "simple" if band_level == "4.0-5.0" else "intermediate" if band_level == "5.5-6.5" else "complex",
+                "num_rows": num_rows,
+                "num_columns": len(columns)
+            },
+            "metadata": {
+                "chart_type": "table",
+                "category": category,
+                "subject_type": template_config["subject_type"]
+            }
+        }
+    
+    # ============ PROCESS DIAGRAM GENERATOR ============
+    @classmethod
+    def generate_process_task(cls, topic: str = None, band_level: str = "5.5-6.5") -> Dict[str, Any]:
+        """Generate a complete, authentic Process Diagram task."""
+        
+        if topic and topic in cls.PROCESS_TEMPLATES:
+            category = topic
+        else:
+            category = random.choice(list(cls.PROCESS_TEMPLATES.keys()))
+        
+        template_config = random.choice(cls.PROCESS_TEMPLATES[category])
+        
+        # Complexity based on band
+        if band_level == "4.0-5.0":
+            num_stages = 6
+        elif band_level == "5.5-6.5":
+            num_stages = 8
+        else:
+            num_stages = 10
+        
+        location = random.choice(cls.LOCATIONS["countries"])
+        
+        task_description = template_config["template"].format(country=location)
+        task_description += "\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words."
+        
+        # Get stages
+        stages = template_config.get("stages", [])[:num_stages]
+        
+        return {
+            "task_description": task_description,
+            "title": template_config["subject_type"].replace("_", " ").title(),
+            "stages": stages,
+            "is_cyclical": template_config.get("is_cyclical", False),
+            "has_branching": template_config.get("has_branching", False),
+            "band_calibration": {
+                "target_band": band_level,
+                "complexity": "simple" if band_level == "4.0-5.0" else "intermediate" if band_level == "5.5-6.5" else "complex",
+                "num_stages": len(stages)
+            },
+            "metadata": {
+                "chart_type": "process",
+                "category": category,
+                "subject_type": template_config["subject_type"]
+            }
+        }
+    
+    # ============ MAP GENERATOR ============
+    @classmethod
+    def generate_map_task(cls, topic: str = None, band_level: str = "5.5-6.5") -> Dict[str, Any]:
+        """Generate a complete, authentic Map Comparison task."""
+        
+        if topic and topic in cls.MAP_TEMPLATES:
+            category = topic
+        else:
+            category = random.choice(list(cls.MAP_TEMPLATES.keys()))
+        
+        template_config = random.choice(cls.MAP_TEMPLATES[category])
+        
+        # Complexity based on band
+        if band_level == "4.0-5.0":
+            num_features_before = 4
+            num_features_after = 5
+        elif band_level == "5.5-6.5":
+            num_features_before = 5
+            num_features_after = 6
+        else:
+            num_features_before = 5
+            num_features_after = 7
+        
+        year1 = random.randint(1990, 2005)
+        year2 = year1 + random.randint(15, 25)
+        
+        location_type = template_config.get("location_type", "countries")
+        location = random.choice(cls.LOCATIONS[location_type])
+        
+        task_description = template_config["template"].format(
+            city=location,
+            country=location,
+            year1=year1,
+            year2=year2
+        )
+        task_description += "\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words."
+        
+        features_before = template_config.get("features_before", [])[:num_features_before]
+        features_after = template_config.get("features_after", [])[:num_features_after]
+        
+        return {
+            "task_description": task_description,
+            "title": f"Development in {location} ({year1}-{year2})",
+            "year_before": year1,
+            "year_after": year2,
+            "features_before": features_before,
+            "features_after": features_after,
+            "band_calibration": {
+                "target_band": band_level,
+                "complexity": "simple" if band_level == "4.0-5.0" else "intermediate" if band_level == "5.5-6.5" else "complex",
+                "time_span": f"{year2 - year1} years"
+            },
+            "metadata": {
+                "chart_type": "map",
+                "category": category,
+                "subject_type": template_config["subject_type"]
+            }
+        }
 
 
 # Create singleton instance
