@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -7,30 +7,56 @@ import { Textarea } from '../components/ui/textarea';
 import { 
   ArrowLeft, PenTool, Clock, RefreshCw, Send, 
   BarChart2, PieChart, LineChart, Table2, 
-  GitBranch, Map, Mail, Lightbulb, CheckCircle,
-  ChevronDown, ChevronUp, Eye, EyeOff
+  GitBranch, Map, Lightbulb, CheckCircle,
+  ChevronDown, ChevronUp, Eye, EyeOff, ZoomIn, ZoomOut,
+  BookOpen, MessageSquare, Layers, Award, AlertCircle,
+  ToggleLeft, ToggleRight
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
+/**
+ * ULTRA MASTER PROMPT - Writing Task 1 Practice
+ * =============================================
+ * UX RULES (NON-NEGOTIABLE):
+ * - Desktop: Left panel (40-45%) Visual | Right panel (55-60%) Task + Writing
+ * - Mobile: Toggle mode between "View Visual" and "Write Answer"
+ * - Visual auto-scales, no forced zoom
+ * - Writing box scrolls independently
+ * - Model answer hidden during writing (controlled reveal)
+ */
+
 export default function WritingTask1Practice() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const topic = searchParams.get('topic') || 'education';
+  const topic = searchParams.get('topic') || 'participation';
   const bandLevel = searchParams.get('band') || '5.5-6.5';
 
+  // Core state
   const [visualType, setVisualType] = useState('line_graph');
   const [svgContent, setSvgContent] = useState('');
+  const [taskData, setTaskData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userResponse, setUserResponse] = useState('');
   const [wordCount, setWordCount] = useState(0);
-  const [showTips, setShowTips] = useState(true);
-  const [showModelAnswer, setShowModelAnswer] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(20 * 60); // 20 minutes
+  
+  // Timer state
+  const [timeRemaining, setTimeRemaining] = useState(20 * 60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  
+  // UI state
+  const [showTips, setShowTips] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(100);
+  const [mobileView, setMobileView] = useState('visual'); // 'visual' or 'write'
+  
+  // Evaluation state
   const [evaluation, setEvaluation] = useState(null);
   const [evaluating, setEvaluating] = useState(false);
+  
+  // Model Answer state (controlled reveal)
+  const [modelAnswerStep, setModelAnswerStep] = useState(0); // 0=hidden, 1=band, 2=reasoning, 3=full
+  const [modelAnswer, setModelAnswer] = useState(null);
 
   const visualTypes = [
     { id: 'line_graph', name: 'Line Graph', icon: LineChart },
@@ -41,54 +67,64 @@ export default function WritingTask1Practice() {
     { id: 'map', name: 'Map', icon: Map },
   ];
 
-  const tips = {
+  // Academic tips by visual type
+  const academicTips = {
     line_graph: [
-      'Describe the overall trend first (increase, decrease, fluctuate)',
-      'Mention specific data points for key changes',
-      'Use trend vocabulary: rose, fell, peaked, declined, remained stable',
-      'Compare different lines if multiple are present',
+      'Identify the overall trend first - is it generally upward, downward, or mixed?',
+      'Note significant changes: sharp rises, sudden drops, or periods of stability',
+      'Compare different lines at key points (start, end, crossover points)',
+      'Use precise academic vocabulary: "rose steadily", "fluctuated", "peaked at"',
+      'Don\'t describe every data point - select the most significant features'
     ],
     bar_chart: [
-      'Compare categories and highlight the highest/lowest values',
-      'Group similar data together in your description',
-      'Use comparison language: more than, less than, twice as much',
-      'Mention any significant differences between groups',
+      'Compare the highest and lowest values across categories',
+      'Look for patterns or groupings in the data',
+      'Note any significant differences between time periods (if multiple bars)',
+      'Use comparison language: "considerably higher", "nearly double", "roughly equal"',
+      'Group similar data together in your description'
     ],
     pie_chart: [
-      'Start with the largest segment',
-      'Group smaller segments together if appropriate',
-      'Use fraction/percentage language: a quarter, nearly half, the majority',
-      'Compare segments to each other',
+      'Start with the largest segment - it\'s the most important',
+      'Group smaller segments if they represent similar proportions',
+      'Use fraction/percentage language: "just under a quarter", "approximately half"',
+      'Compare segments to each other, not just to the whole',
+      'Note if any segment dominates or if distribution is even'
     ],
     table: [
-      'Identify the key trends or patterns across rows/columns',
-      'Highlight the highest and lowest figures',
-      'Make meaningful comparisons between data points',
-      'Dont try to describe every single number',
+      'Identify the key patterns across rows AND columns',
+      'Highlight the highest and lowest figures with context',
+      'Look for trends: increasing, decreasing, or stable patterns',
+      'Don\'t try to describe every number - be selective',
+      'Make meaningful comparisons between categories'
     ],
     process: [
-      'Use passive voice: "The materials are collected..."',
-      'Describe stages in order using sequencing words',
-      'Use: firstly, then, next, following this, finally',
-      'Mention the number of stages at the beginning',
+      'Use passive voice throughout: "The materials are collected..."',
+      'Describe stages in logical order with sequencing words',
+      'Note the number of stages in your overview',
+      'Highlight any cyclical elements or branching points',
+      'Use verbs: "is processed", "are transported", "is converted"'
     ],
     map: [
-      'Describe changes chronologically or by area',
-      'Use location language: in the north, to the east of',
-      'Highlight significant changes or developments',
-      'Compare before/after clearly',
+      'Describe changes chronologically OR by geographical area',
+      'Use location language: "to the north of", "adjacent to", "in the centre"',
+      'Focus on the most significant developments',
+      'Compare the two time periods clearly',
+      'Note what was added, removed, or modified'
     ],
   };
 
+  // Generate visual on mount and when params change
   useEffect(() => {
     generateVisual();
   }, [visualType, topic, bandLevel]);
 
+  // Word count calculation
   useEffect(() => {
     const words = userResponse.trim().split(/\s+/).filter(w => w.length > 0);
     setWordCount(words.length);
   }, [userResponse]);
 
+  // Timer logic
   useEffect(() => {
     let interval;
     if (isTimerRunning && timeRemaining > 0) {
@@ -101,19 +137,57 @@ export default function WritingTask1Practice() {
 
   const generateVisual = async () => {
     setLoading(true);
+    setTaskData(null);
+    setModelAnswer(null);
+    setModelAnswerStep(0);
+    setEvaluation(null);
+    
     try {
       const response = await fetch(
-        `${API_URL}/api/question-bank/writing/task1/generate-visual?visual_type=${visualType}&topic=${topic}&band_level=${bandLevel}`
+        `${API_URL}/api/question-bank/writing/task1/generate-authentic?visual_type=${visualType}&topic=${topic}&band_level=${bandLevel}`
       );
       const data = await response.json();
+      
       if (data.svg) {
         setSvgContent(data.svg);
+        setTaskData(data);
+        
+        // Generate model answer in background
+        if (data.task_id) {
+          fetchModelAnswer(data.task_id);
+        }
       }
     } catch (error) {
       console.error('Error generating visual:', error);
-      toast.error('Failed to generate visual');
+      toast.error('Görsel oluşturulamadı');
+      
+      // Fallback to old endpoint
+      try {
+        const fallbackResponse = await fetch(
+          `${API_URL}/api/question-bank/writing/task1/generate-visual?visual_type=${visualType}&topic=${topic}&band_level=${bandLevel}`
+        );
+        const fallbackData = await fallbackResponse.json();
+        if (fallbackData.svg) {
+          setSvgContent(fallbackData.svg);
+          setTaskData(fallbackData);
+        }
+      } catch (fallbackError) {
+        console.error('Fallback also failed:', fallbackError);
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchModelAnswer = async (taskId) => {
+    try {
+      const response = await fetch(`${API_URL}/api/question-bank/writing/task1/model-answer/${taskId}`);
+      const data = await response.json();
+      if (data.success) {
+        setModelAnswer(data.model_answer);
+      }
+    } catch (error) {
+      console.error('Error fetching model answer:', error);
     }
   };
 
@@ -125,11 +199,12 @@ export default function WritingTask1Practice() {
 
   const submitForEvaluation = async () => {
     if (wordCount < 100) {
-      toast.error('Please write at least 100 words');
+      toast.error('Lütfen en az 100 kelime yazın');
       return;
     }
     
     setEvaluating(true);
+    setIsTimerRunning(false);
     toast.info('AI değerlendirmesi yapılıyor...');
     
     try {
@@ -141,26 +216,16 @@ export default function WritingTask1Practice() {
           task_type: 'task1',
           visual_type: visualType,
           topic: topic,
-          band_level: bandLevel
+          band_level: bandLevel,
+          task_description: taskData?.task_description || ''
         })
       });
       
       const data = await response.json();
       
       if (data.success) {
-        setEvaluation({
-          overall_band: data.evaluation.overall_band,
-          task_achievement: data.evaluation.task_achievement,
-          coherence_cohesion: data.evaluation.coherence_cohesion,
-          lexical_resource: data.evaluation.lexical_resource,
-          grammatical_range: data.evaluation.grammatical_range,
-          strengths: data.evaluation.strengths || [],
-          weaknesses: data.evaluation.weaknesses || [],
-          suggestions: data.evaluation.improvement_suggestions || [],
-          vocabulary_to_use: data.evaluation.vocabulary_to_use || [],
-          grammar_corrections: data.evaluation.grammar_corrections || [],
-          examiner_comment: data.evaluation.examiner_comment || ''
-        });
+        setEvaluation(data.evaluation);
+        setModelAnswerStep(1); // Show band result first
         toast.success('Değerlendirme tamamlandı!');
       } else {
         toast.error(data.error || 'Değerlendirme başarısız');
@@ -173,317 +238,456 @@ export default function WritingTask1Practice() {
     }
   };
 
+  const handleZoom = (delta) => {
+    setZoomLevel(prev => Math.min(150, Math.max(50, prev + delta)));
+  };
+
+  // Mobile toggle handler
+  const toggleMobileView = () => {
+    setMobileView(prev => prev === 'visual' ? 'write' : 'visual');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-6 px-6">
-        <div className="max-w-7xl mx-auto">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/question-bank')}
-            className="text-white/80 hover:text-white hover:bg-white/10 mb-2"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" /> Soru Bankasına Dön
-          </Button>
-          
+      {/* Header - Fixed */}
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-4 md:px-6 sticky top-0 z-40">
+        <div className="max-w-[1600px] mx-auto">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                <PenTool className="w-6 h-6" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold">Writing Task 1</h1>
-                <p className="text-white/80">Academic - Visual Description</p>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate('/question-bank')}
+                className="text-white/80 hover:text-white hover:bg-white/10"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </Button>
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                  <PenTool className="w-5 h-5" />
+                </div>
+                <div className="hidden sm:block">
+                  <h1 className="text-lg font-bold">Writing Task 1</h1>
+                  <p className="text-white/80 text-xs">Academic - Visual Description</p>
+                </div>
               </div>
             </div>
             
             {/* Timer */}
-            <div className="flex items-center gap-4">
-              <div className={`px-4 py-2 rounded-lg ${timeRemaining < 300 ? 'bg-red-500/20' : 'bg-white/20'}`}>
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className={`px-3 py-1.5 rounded-lg text-sm md:text-base ${
+                timeRemaining < 300 ? 'bg-red-500/30' : 'bg-white/20'
+              }`}>
                 <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5" />
-                  <span className="text-xl font-mono font-bold">{formatTime(timeRemaining)}</span>
+                  <Clock className="w-4 h-4" />
+                  <span className="font-mono font-bold">{formatTime(timeRemaining)}</span>
                 </div>
               </div>
               <Button
                 variant="outline"
+                size="sm"
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                 onClick={() => setIsTimerRunning(!isTimerRunning)}
               >
-                {isTimerRunning ? 'Pause' : 'Start'} Timer
+                {isTimerRunning ? 'Durdur' : 'Başlat'}
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Panel - Visual */}
-          <div className="space-y-4">
-            {/* Visual Type Selector */}
-            <Card className="p-4">
-              <h3 className="font-semibold text-gray-900 mb-3">Görsel Tipi</h3>
-              <div className="flex flex-wrap gap-2">
-                {visualTypes.map(type => {
-                  const Icon = type.icon;
-                  return (
-                    <Button
-                      key={type.id}
-                      variant={visualType === type.id ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setVisualType(type.id)}
-                      className={visualType === type.id ? 'bg-green-600 hover:bg-green-700' : ''}
-                    >
-                      <Icon className="w-4 h-4 mr-1" /> {type.name}
-                    </Button>
-                  );
-                })}
-              </div>
-            </Card>
+      {/* Mobile Toggle - Only visible on mobile */}
+      <div className="lg:hidden sticky top-[72px] z-30 bg-white border-b shadow-sm">
+        <div className="flex">
+          <button
+            onClick={() => setMobileView('visual')}
+            className={`flex-1 py-3 px-4 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
+              mobileView === 'visual' 
+                ? 'bg-green-50 text-green-700 border-b-2 border-green-600' 
+                : 'text-gray-500 hover:bg-gray-50'
+            }`}
+          >
+            <Eye className="w-4 h-4" /> Görseli Gör
+          </button>
+          <button
+            onClick={() => setMobileView('write')}
+            className={`flex-1 py-3 px-4 text-sm font-medium flex items-center justify-center gap-2 transition-colors ${
+              mobileView === 'write' 
+                ? 'bg-green-50 text-green-700 border-b-2 border-green-600' 
+                : 'text-gray-500 hover:bg-gray-50'
+            }`}
+          >
+            <PenTool className="w-4 h-4" /> Cevap Yaz
+          </button>
+        </div>
+      </div>
 
-            {/* Visual Display */}
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Task 1 Visual</h3>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={generateVisual}
-                  disabled={loading}
-                >
-                  <RefreshCw className={`w-4 h-4 mr-1 ${loading ? 'animate-spin' : ''}`} />
-                  Yeni Görsel
-                </Button>
+      {/* Main Content - Side by Side Layout */}
+      <div className="max-w-[1600px] mx-auto">
+        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-120px)]">
+          
+          {/* LEFT PANEL - Visual (40-45%) */}
+          <div className={`lg:w-[45%] lg:border-r border-gray-200 lg:sticky lg:top-[72px] lg:h-[calc(100vh-72px)] lg:overflow-y-auto ${
+            mobileView === 'visual' ? 'block' : 'hidden lg:block'
+          }`}>
+            <div className="p-4 md:p-6 space-y-4">
+              {/* Visual Type Selector */}
+              <div className="bg-white rounded-xl p-4 shadow-sm border">
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Görsel Tipi</h3>
+                <div className="flex flex-wrap gap-2">
+                  {visualTypes.map(type => {
+                    const Icon = type.icon;
+                    return (
+                      <Button
+                        key={type.id}
+                        variant={visualType === type.id ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setVisualType(type.id)}
+                        className={`text-xs ${visualType === type.id ? 'bg-green-600 hover:bg-green-700' : ''}`}
+                      >
+                        <Icon className="w-3.5 h-3.5 mr-1" /> {type.name}
+                      </Button>
+                    );
+                  })}
+                </div>
               </div>
-              
-              <div className="bg-white border rounded-lg p-4 min-h-[300px] flex items-center justify-center">
-                {loading ? (
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-2"></div>
-                    <p className="text-gray-500 text-sm">Generating visual...</p>
+
+              {/* Visual Display */}
+              <div className="bg-white rounded-xl p-4 shadow-sm border">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-gray-900 text-sm">Task 1 Visual</h3>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleZoom(-10)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <ZoomOut className="w-4 h-4" />
+                    </Button>
+                    <span className="text-xs text-gray-500 w-10 text-center">{zoomLevel}%</span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleZoom(10)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <ZoomIn className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={generateVisual}
+                      disabled={loading}
+                      className="ml-2"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 mr-1 ${loading ? 'animate-spin' : ''}`} />
+                      Yeni
+                    </Button>
                   </div>
-                ) : svgContent ? (
-                  <div 
-                    className="w-full"
-                    dangerouslySetInnerHTML={{ __html: svgContent }}
-                  />
-                ) : (
-                  <p className="text-gray-400">No visual generated</p>
+                </div>
+                
+                <div 
+                  className="bg-gray-50 border rounded-lg p-4 overflow-auto"
+                  style={{ maxHeight: 'calc(100vh - 400px)' }}
+                >
+                  {loading ? (
+                    <div className="text-center py-12">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-2"></div>
+                      <p className="text-gray-500 text-sm">Görsel oluşturuluyor...</p>
+                    </div>
+                  ) : svgContent ? (
+                    <div 
+                      className="transition-transform duration-200"
+                      style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}
+                      dangerouslySetInnerHTML={{ __html: svgContent }}
+                    />
+                  ) : (
+                    <p className="text-gray-400 text-center py-12">Görsel oluşturulmadı</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Tips Section - Collapsible */}
+              <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+                <button
+                  className="w-full p-4 flex items-center justify-between text-left"
+                  onClick={() => setShowTips(!showTips)}
+                >
+                  <span className="flex items-center gap-2 font-semibold text-gray-900 text-sm">
+                    <Lightbulb className="w-4 h-4 text-amber-500" /> Academic Writing Tips
+                  </span>
+                  {showTips ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+                
+                {showTips && (
+                  <div className="px-4 pb-4 border-t">
+                    <ul className="mt-3 space-y-2">
+                      {academicTips[visualType]?.map((tip, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-xs text-gray-600">
+                          <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
+                          <span>{tip}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
-
-              {/* Task Instructions */}
-              <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-700">
-                  <strong>Task:</strong> The {visualType.replace('_', ' ')} above shows information about {topic}. 
-                  Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
-                </p>
-                <p className="text-sm text-gray-500 mt-2">
-                  <em>Write at least 150 words.</em>
-                </p>
-              </div>
-            </Card>
-
-            {/* Tips */}
-            <Card className="p-4">
-              <Button
-                variant="ghost"
-                className="w-full flex items-center justify-between"
-                onClick={() => setShowTips(!showTips)}
-              >
-                <span className="flex items-center gap-2 font-semibold text-gray-900">
-                  <Lightbulb className="w-5 h-5 text-amber-500" /> Writing Tips
-                </span>
-                {showTips ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </Button>
-              
-              {showTips && (
-                <ul className="mt-3 space-y-2">
-                  {tips[visualType]?.map((tip, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                      {tip}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </Card>
+            </div>
           </div>
 
-          {/* Right Panel - Writing */}
-          <div className="space-y-4">
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-gray-900">Your Response</h3>
-                <div className={`text-sm font-medium ${wordCount >= 150 ? 'text-green-600' : 'text-amber-600'}`}>
-                  {wordCount} words {wordCount < 150 && `(${150 - wordCount} more needed)`}
-                </div>
-              </div>
+          {/* RIGHT PANEL - Task + Writing Area (55-60%) */}
+          <div className={`lg:w-[55%] ${
+            mobileView === 'write' ? 'block' : 'hidden lg:block'
+          }`}>
+            <div className="p-4 md:p-6 space-y-4">
               
-              <Textarea
-                value={userResponse}
-                onChange={(e) => setUserResponse(e.target.value)}
-                placeholder="Write your Task 1 response here. Start with an overview of the main features, then describe the key data points..."
-                className="min-h-[400px] text-base leading-relaxed"
-              />
-
-              <div className="mt-4 flex gap-3">
-                <Button
-                  onClick={submitForEvaluation}
-                  disabled={evaluating || wordCount < 100}
-                  className="flex-1 bg-green-600 hover:bg-green-700"
-                >
-                  {evaluating ? (
-                    <>
-                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Evaluating...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 mr-2" /> Submit for Evaluation
-                    </>
-                  )}
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowModelAnswer(!showModelAnswer)}
-                >
-                  {showModelAnswer ? <EyeOff className="w-4 h-4 mr-1" /> : <Eye className="w-4 h-4 mr-1" />}
-                  Model Answer
-                </Button>
-              </div>
-            </Card>
-
-            {/* Evaluation Results */}
-            {evaluation && (
-              <Card className="p-6 border-2 border-green-200 bg-green-50/50">
-                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" /> Evaluation Results
-                </h3>
-                
-                <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-green-600 mb-1">
-                    Band {evaluation.overall_band}
+              {/* Task Description - AUTHENTIC */}
+              <div className="bg-white rounded-xl p-4 md:p-5 shadow-sm border border-green-200">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <BookOpen className="w-4 h-4 text-green-700" />
                   </div>
-                  <p className="text-sm text-gray-500">Overall Band Score</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  {[
-                    { name: 'Task Achievement', data: evaluation.task_achievement },
-                    { name: 'Coherence & Cohesion', data: evaluation.coherence_cohesion },
-                    { name: 'Lexical Resource', data: evaluation.lexical_resource },
-                    { name: 'Grammar', data: evaluation.grammatical_range },
-                  ].map(criterion => (
-                    <div key={criterion.name} className="bg-white p-3 rounded-lg">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-gray-600">{criterion.name}</span>
-                        <Badge variant="outline">{criterion.data.score}</Badge>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900 mb-2">Task</h3>
+                    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                      {taskData?.task_description || 
+                        `The ${visualType.replace('_', ' ')} above shows information about ${topic}. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.`
+                      }
+                    </p>
+                    {taskData?.band_calibration && (
+                      <div className="mt-3 flex items-center gap-2">
+                        <Badge variant="outline" className="text-xs">
+                          Hedef Band: {taskData.band_calibration.target_band}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          Karmaşıklık: {taskData.band_calibration.complexity}
+                        </Badge>
                       </div>
-                      <p className="text-xs text-gray-500">{criterion.data.feedback}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">İyileştirme Önerileri</h4>
-                  <ul className="space-y-2">
-                    {evaluation.suggestions?.map((sug, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
-                        <span className="text-amber-500">•</span> {sug}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Strengths & Weaknesses */}
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  {evaluation.strengths?.length > 0 && (
-                    <div className="bg-green-50 p-3 rounded-lg">
-                      <h4 className="font-semibold text-green-800 mb-2 text-sm">✅ Güçlü Yönler</h4>
-                      <ul className="space-y-1">
-                        {evaluation.strengths.map((s, idx) => (
-                          <li key={idx} className="text-xs text-green-700">• {s}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {evaluation.weaknesses?.length > 0 && (
-                    <div className="bg-red-50 p-3 rounded-lg">
-                      <h4 className="font-semibold text-red-800 mb-2 text-sm">⚠️ Geliştirilecek Alanlar</h4>
-                      <ul className="space-y-1">
-                        {evaluation.weaknesses.map((w, idx) => (
-                          <li key={idx} className="text-xs text-red-700">• {w}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-
-                {/* Vocabulary Suggestions */}
-                {evaluation.vocabulary_to_use?.length > 0 && (
-                  <div className="mt-4 p-3 bg-purple-50 rounded-lg">
-                    <h4 className="font-semibold text-purple-800 mb-2 text-sm">📚 Kullanılabilecek Kelimeler</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {evaluation.vocabulary_to_use.map((word, idx) => (
-                        <span key={idx} className="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs">
-                          {word}
-                        </span>
-                      ))}
-                    </div>
+                    )}
                   </div>
-                )}
+                </div>
+              </div>
 
-                {/* Grammar Corrections */}
-                {evaluation.grammar_corrections?.length > 0 && (
-                  <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                    <h4 className="font-semibold text-blue-800 mb-2 text-sm">✏️ Dilbilgisi Düzeltmeleri</h4>
-                    <div className="space-y-2">
-                      {evaluation.grammar_corrections.map((corr, idx) => (
-                        <div key={idx} className="text-xs">
-                          <span className="text-red-600 line-through">{corr.original}</span>
-                          {' → '}
-                          <span className="text-green-600 font-medium">{corr.corrected}</span>
-                          {corr.explanation && (
-                            <p className="text-gray-500 mt-1 italic">{corr.explanation}</p>
-                          )}
+              {/* Writing Area */}
+              <div className="bg-white rounded-xl p-4 md:p-5 shadow-sm border">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-gray-900 text-sm">Your Response</h3>
+                  <div className={`text-sm font-medium ${
+                    wordCount >= 150 ? 'text-green-600' : wordCount >= 100 ? 'text-amber-600' : 'text-red-500'
+                  }`}>
+                    {wordCount} kelime
+                    {wordCount < 150 && (
+                      <span className="text-gray-400 ml-1">
+                        ({150 - wordCount} daha gerekli)
+                      </span>
+                    )}
+                  </div>
+                </div>
+                
+                <Textarea
+                  value={userResponse}
+                  onChange={(e) => setUserResponse(e.target.value)}
+                  placeholder="Start with an overview of the main features. Then describe the key data points and make comparisons where relevant..."
+                  className="min-h-[300px] md:min-h-[350px] text-sm leading-relaxed resize-none"
+                />
+
+                <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                  <Button
+                    onClick={submitForEvaluation}
+                    disabled={evaluating || wordCount < 100}
+                    className="flex-1 bg-green-600 hover:bg-green-700"
+                  >
+                    {evaluating ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Değerlendiriliyor...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" /> Değerlendir
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+
+              {/* Evaluation Results - Step-based reveal */}
+              {evaluation && (
+                <div className="space-y-4">
+                  {/* Step 1: Band Result */}
+                  <Card className="p-5 border-2 border-green-200 bg-green-50/50">
+                    <div className="text-center mb-4">
+                      <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-2">
+                        <Award className="w-8 h-8 text-green-600" />
+                      </div>
+                      <div className="text-4xl font-bold text-green-600">
+                        Band {evaluation.overall_band}
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">Genel Band Puanı</p>
+                    </div>
+
+                    {/* Criteria Breakdown - Collapsible */}
+                    <details className="mt-4">
+                      <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
+                        Kriter Detayları
+                      </summary>
+                      <div className="grid grid-cols-2 gap-3 mt-3">
+                        {[
+                          { name: 'Task Achievement', key: 'task_achievement' },
+                          { name: 'Coherence & Cohesion', key: 'coherence_cohesion' },
+                          { name: 'Lexical Resource', key: 'lexical_resource' },
+                          { name: 'Grammar', key: 'grammatical_range' },
+                        ].map(criterion => (
+                          <div key={criterion.key} className="bg-white p-3 rounded-lg">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="text-xs text-gray-600">{criterion.name}</span>
+                              <Badge variant="outline" className="text-xs">
+                                {evaluation[criterion.key]?.score || '-'}
+                              </Badge>
+                            </div>
+                            <p className="text-xs text-gray-500 line-clamp-2">
+                              {evaluation[criterion.key]?.feedback}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  </Card>
+
+                  {/* Step 2: Academic Reasoning Feedback */}
+                  {modelAnswerStep >= 1 && (
+                    <Card className="p-5 border">
+                      <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <MessageSquare className="w-5 h-5 text-blue-600" /> Akademik Geri Bildirim
+                      </h3>
+                      
+                      {/* Strengths */}
+                      {evaluation.strengths?.length > 0 && (
+                        <div className="mb-4">
+                          <h4 className="text-sm font-semibold text-green-700 mb-2">✅ Güçlü Yönler</h4>
+                          <ul className="space-y-1">
+                            {evaluation.strengths.map((s, idx) => (
+                              <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
+                                <CheckCircle className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
+                                {s}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                      )}
 
-                {/* Examiner Comment */}
-                {evaluation.examiner_comment && (
-                  <div className="mt-4 p-4 bg-gray-100 rounded-lg border-l-4 border-green-500">
-                    <h4 className="font-semibold text-gray-800 mb-1 text-sm">💬 Sınav Görevlisi Yorumu</h4>
-                    <p className="text-sm text-gray-700">{evaluation.examiner_comment}</p>
-                  </div>
-                )}
-              </Card>
-            )}
+                      {/* Areas for Improvement */}
+                      {evaluation.weaknesses?.length > 0 && (
+                        <div className="mb-4">
+                          <h4 className="text-sm font-semibold text-amber-700 mb-2">⚠️ Geliştirilecek Alanlar</h4>
+                          <ul className="space-y-1">
+                            {evaluation.weaknesses.map((w, idx) => (
+                              <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
+                                <AlertCircle className="w-3.5 h-3.5 text-amber-500 mt-0.5 flex-shrink-0" />
+                                {w}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
 
-            {/* Model Answer */}
-            {showModelAnswer && (
-              <Card className="p-6 border-2 border-blue-200 bg-blue-50/50">
-                <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                  <Eye className="w-5 h-5 text-blue-600" /> Band 9 Model Answer
-                </h3>
-                <p className="text-sm text-gray-700 leading-relaxed">
-                  The {visualType.replace('_', ' ')} illustrates data regarding {topic} over a specific period. 
-                  Overall, it is evident that there are significant variations in the figures presented, 
-                  with some notable trends emerging throughout the timeframe.
-                  <br/><br/>
-                  Looking at the details, [specific data analysis would go here based on the actual visual generated]. 
-                  The most striking feature is [key observation]. In contrast, [comparison point] shows a different pattern.
-                  <br/><br/>
-                  In summary, while [main trend 1], [main trend 2] demonstrates [concluding observation].
-                </p>
-                <p className="text-xs text-gray-500 mt-3 italic">
-                  Note: This is a template model answer. Actual model answers are generated based on the specific visual data.
-                </p>
-              </Card>
-            )}
+                      {/* Improvement Suggestions */}
+                      {evaluation.suggestions?.length > 0 && (
+                        <div className="p-3 bg-blue-50 rounded-lg">
+                          <h4 className="text-sm font-semibold text-blue-700 mb-2">💡 İyileştirme Önerileri</h4>
+                          <ul className="space-y-1">
+                            {evaluation.suggestions.map((sug, idx) => (
+                              <li key={idx} className="text-xs text-gray-600">• {sug}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      {/* Expand to see more */}
+                      <Button
+                        variant="outline"
+                        className="w-full mt-4"
+                        onClick={() => setModelAnswerStep(prev => prev < 3 ? prev + 1 : prev)}
+                      >
+                        {modelAnswerStep < 3 ? 'Model Cevabı Gör' : 'Model Cevap Gösteriliyor'}
+                      </Button>
+                    </Card>
+                  )}
+
+                  {/* Step 3: Model Answer (Controlled Reveal) */}
+                  {modelAnswerStep >= 3 && modelAnswer && (
+                    <Card className="p-5 border-2 border-blue-200 bg-blue-50/30">
+                      <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <Layers className="w-5 h-5 text-blue-600" /> Model Cevap
+                      </h3>
+                      
+                      {/* Tab buttons for different band samples */}
+                      <div className="flex gap-2 mb-4">
+                        <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 9 Örnek</Badge>
+                        <Badge variant="outline" className="cursor-pointer">Band 6 Örnek</Badge>
+                        <Badge variant="outline" className="cursor-pointer">Akademik Notlar</Badge>
+                      </div>
+
+                      {/* Model Answer Text */}
+                      <div className="bg-white p-4 rounded-lg border">
+                        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                          {modelAnswer?.layer_a_examiner_model?.full_text || 
+                           modelAnswer?.text ||
+                           'Model cevap yüklenirken...'}
+                        </p>
+                        <div className="mt-3 pt-3 border-t flex items-center justify-between">
+                          <span className="text-xs text-gray-500">
+                            Kelime Sayısı: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
+                          </span>
+                          <Badge className="bg-green-100 text-green-700">
+                            Tahmini Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.5'}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      {/* Academic Reasoning Notes */}
+                      {modelAnswer?.layer_b_reasoning_notes && (
+                        <details className="mt-4">
+                          <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
+                            📚 Akademik Gerekçelendirme Notları
+                          </summary>
+                          <div className="mt-3 space-y-3">
+                            {Object.entries(modelAnswer.layer_b_reasoning_notes).map(([key, value]) => (
+                              <div key={key} className="p-3 bg-white rounded-lg border">
+                                <h5 className="text-xs font-semibold text-gray-800 mb-1">
+                                  {value.question}
+                                </h5>
+                                <p className="text-xs text-gray-600">
+                                  {value.explanation}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </details>
+                      )}
+
+                      {/* Alternative Expressions */}
+                      {modelAnswer?.layer_c_alternatives && (
+                        <details className="mt-4">
+                          <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
+                            🔄 Alternatif İfadeler
+                          </summary>
+                          <div className="mt-3 space-y-2">
+                            <div className="flex flex-wrap gap-2">
+                              {modelAnswer.layer_c_alternatives.overview_alternatives?.slice(0, 4).map((alt, idx) => (
+                                <Badge key={idx} variant="outline" className="text-xs">
+                                  {alt}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </details>
+                      )}
+                    </Card>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
