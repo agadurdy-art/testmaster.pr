@@ -238,13 +238,130 @@ async def submit_test(test_id: str, attempt_id: str, answers: Dict[str, Any]):
 
 # ============ WRITING TASK 1 VISUAL ENDPOINTS ============
 
+# Store generated tasks temporarily for model answer retrieval
+_task_cache = {}
+
+@router.get("/writing/task1/generate-authentic")
+async def generate_task1_authentic(
+    visual_type: str = Query(..., description="Type of visual (line_graph, bar_chart, pie_chart, table, process, map)"),
+    topic: str = Query("participation", description="Topic category for the task"),
+    band_level: str = Query("5.5-6.5", description="Target band level")
+):
+    """
+    Generate ULTRA MASTER PROMPT compliant Writing Task 1.
+    
+    Returns:
+    - Authentic IELTS task description with specific location, time, subject
+    - SVG visual generated from structured dataset
+    - Analysis hints for model answer generation
+    - Band calibration metadata
+    """
+    from services.chart_generator import chart_generator
+    from services.authentic_task_generator import authentic_task_generator
+    from services.model_answer_generator import model_answer_generator
+    
+    try:
+        # Generate authentic task using new system (currently Line Graph only)
+        if visual_type == "line_graph":
+            task_data = authentic_task_generator.generate_line_graph_task(topic, band_level)
+            
+            # Generate SVG from task data
+            svg = chart_generator.generate_line_graph(
+                title=task_data["title"],
+                x_label=task_data["x_label"],
+                y_label=task_data["y_label"],
+                x_values=task_data["x_values"],
+                datasets=task_data["datasets"]
+            )
+            
+            # Generate task ID for caching
+            task_id = str(uuid.uuid4())
+            
+            # Cache task data for model answer generation
+            _task_cache[task_id] = {
+                "task_data": task_data,
+                "model_answer": model_answer_generator.generate_model_answer_structure(task_data)
+            }
+            
+            return {
+                "success": True,
+                "task_id": task_id,
+                "visual_type": visual_type,
+                "topic": topic,
+                "band_level": band_level,
+                "svg": svg,
+                "task_description": task_data["task_description"],
+                "analysis_hints": task_data["analysis_hints"],
+                "band_calibration": task_data["band_calibration"],
+                "metadata": task_data["metadata"]
+            }
+        else:
+            # Fallback to old system for other visual types
+            from services.chart_generator import data_generator
+            
+            if visual_type == "bar_chart":
+                data = data_generator.generate_bar_chart_data(topic, band_level)
+                svg = chart_generator.generate_bar_chart(**data)
+            elif visual_type == "pie_chart":
+                data = data_generator.generate_pie_chart_data(topic, band_level)
+                svg = chart_generator.generate_pie_chart(**data)
+            elif visual_type == "table":
+                data = data_generator.generate_table_data(topic, band_level)
+                svg = chart_generator.generate_table(**data)
+            elif visual_type == "process":
+                data = data_generator.generate_process_data(topic, band_level)
+                svg = chart_generator.generate_process_diagram(**data)
+            elif visual_type == "map":
+                data = data_generator.generate_map_data(topic, band_level)
+                svg = chart_generator.generate_map_comparison(
+                    title=data["title"],
+                    before_elements=data["before"],
+                    after_elements=data["after"]
+                )
+            else:
+                raise HTTPException(status_code=400, detail=f"Unknown visual type: {visual_type}")
+            
+            return {
+                "success": True,
+                "visual_type": visual_type,
+                "topic": topic,
+                "band_level": band_level,
+                "svg": svg,
+                "task_description": f"The {visual_type.replace('_', ' ')} above shows information about {topic}. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+                "data": data
+            }
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/writing/task1/model-answer/{task_id}")
+async def get_model_answer(task_id: str):
+    """
+    Retrieve the three-layer model answer for a generated task.
+    
+    Returns:
+    - Layer A: Examiner-style Band 8.5-9 model answer
+    - Layer B: Academic reasoning notes (teaching layer)
+    - Layer C: Alternative academic expressions
+    """
+    if task_id not in _task_cache:
+        raise HTTPException(status_code=404, detail="Task not found. Generate a new task.")
+    
+    cached = _task_cache[task_id]
+    
+    return {
+        "success": True,
+        "task_id": task_id,
+        "model_answer": cached["model_answer"]
+    }
+
 @router.get("/writing/task1/generate-visual")
 async def generate_task1_visual(
     visual_type: str = Query(..., description="Type of visual (line_graph, bar_chart, pie_chart, table, process, map)"),
     topic: str = Query("education", description="Topic for the visual"),
     band_level: str = Query("5.5-6.5", description="Difficulty level")
 ):
-    """Generate a Writing Task 1 visual (SVG) with realistic IELTS-authentic data."""
+    """Generate a Writing Task 1 visual (SVG) with realistic IELTS-authentic data. [LEGACY]"""
     from services.chart_generator import chart_generator, data_generator
     
     try:
