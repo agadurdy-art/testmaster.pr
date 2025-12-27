@@ -386,15 +386,80 @@ export default function WritingTask1Practice() {
                 </div>
 
                 <div className="bg-white p-4 rounded-lg">
-                  <h4 className="font-semibold text-gray-900 mb-2">Improvement Suggestions</h4>
+                  <h4 className="font-semibold text-gray-900 mb-2">İyileştirme Önerileri</h4>
                   <ul className="space-y-2">
-                    {evaluation.suggestions.map((sug, idx) => (
+                    {evaluation.suggestions?.map((sug, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
                         <span className="text-amber-500">•</span> {sug}
                       </li>
                     ))}
                   </ul>
                 </div>
+
+                {/* Strengths & Weaknesses */}
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  {evaluation.strengths?.length > 0 && (
+                    <div className="bg-green-50 p-3 rounded-lg">
+                      <h4 className="font-semibold text-green-800 mb-2 text-sm">✅ Güçlü Yönler</h4>
+                      <ul className="space-y-1">
+                        {evaluation.strengths.map((s, idx) => (
+                          <li key={idx} className="text-xs text-green-700">• {s}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {evaluation.weaknesses?.length > 0 && (
+                    <div className="bg-red-50 p-3 rounded-lg">
+                      <h4 className="font-semibold text-red-800 mb-2 text-sm">⚠️ Geliştirilecek Alanlar</h4>
+                      <ul className="space-y-1">
+                        {evaluation.weaknesses.map((w, idx) => (
+                          <li key={idx} className="text-xs text-red-700">• {w}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                {/* Vocabulary Suggestions */}
+                {evaluation.vocabulary_to_use?.length > 0 && (
+                  <div className="mt-4 p-3 bg-purple-50 rounded-lg">
+                    <h4 className="font-semibold text-purple-800 mb-2 text-sm">📚 Kullanılabilecek Kelimeler</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {evaluation.vocabulary_to_use.map((word, idx) => (
+                        <span key={idx} className="px-2 py-1 bg-purple-100 text-purple-700 rounded text-xs">
+                          {word}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Grammar Corrections */}
+                {evaluation.grammar_corrections?.length > 0 && (
+                  <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                    <h4 className="font-semibold text-blue-800 mb-2 text-sm">✏️ Dilbilgisi Düzeltmeleri</h4>
+                    <div className="space-y-2">
+                      {evaluation.grammar_corrections.map((corr, idx) => (
+                        <div key={idx} className="text-xs">
+                          <span className="text-red-600 line-through">{corr.original}</span>
+                          {' → '}
+                          <span className="text-green-600 font-medium">{corr.corrected}</span>
+                          {corr.explanation && (
+                            <p className="text-gray-500 mt-1 italic">{corr.explanation}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Examiner Comment */}
+                {evaluation.examiner_comment && (
+                  <div className="mt-4 p-4 bg-gray-100 rounded-lg border-l-4 border-green-500">
+                    <h4 className="font-semibold text-gray-800 mb-1 text-sm">💬 Sınav Görevlisi Yorumu</h4>
+                    <p className="text-sm text-gray-700">{evaluation.examiner_comment}</p>
+                  </div>
+                )}
               </Card>
             )}
 
