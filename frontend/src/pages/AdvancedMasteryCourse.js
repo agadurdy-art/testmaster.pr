@@ -1149,7 +1149,7 @@ export default function AdvancedMasteryCourse({ user }) {
   const renderListening = () => {
     const listening = selectedModule?.listening;
     const moduleNum = selectedModule?.module_number;
-    const audioPath = `/audio/listening/listening_${moduleNum}.mp3`;
+    const audioPath = `/audio/advanced_mastery/module_${moduleNum}_listening.mp3`;
     
     const handlePlayPause = () => {
       if (listeningAudioRef.current) {
