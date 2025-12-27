@@ -7,7 +7,7 @@ import { Input } from '../components/ui/input';
 import { 
   BookOpen, ChevronLeft, ChevronRight, Home, Trophy, Star, Mic, 
   PenTool, HelpCircle, GraduationCap, Target, Sparkles, Volume2,
-  Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap
+  Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap, AlertCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
