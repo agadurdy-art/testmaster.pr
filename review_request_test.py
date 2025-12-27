@@ -10,7 +10,7 @@ import os
 from datetime import datetime
 
 # Get backend URL from frontend env
-BACKEND_URL = "https://ielts-master-17.preview.emergentagent.com/api"
+BACKEND_URL = "https://ielts-question-bank.preview.emergentagent.com/api"
 
 def test_mastery_course_backend_apis():
     """Test the backend APIs that support the Mastery Course features mentioned in review request"""

@@ -1,159 +1,181 @@
 <analysis>**original_problem_statement:**
-The session began with a critical deployment failure where the application was inaccessible (502 Bad Gateway), blocking all progress. The primary user goals were to fix this recurring deployment instability and to complete the Advanced Mastery Listening feature. Throughout the session, the user also reported that new content, specifically Mastery Course quizzes and the Advanced Mastery Listening audio, were not appearing on the deployed version, revealing a systemic data synchronization issue. The agent's tasks evolved to not only implement the features but also to create a robust, automated deployment and data-seeding process to prevent future failures.
+The user's initial goal was to add a Listening section to the Mastery Course to bring it to parity with the Advanced Mastery Course. After the agent successfully completed this, the user provided a series of very detailed MASTER INSTRUCTION documents outlining their next major feature request: a comprehensive, AI-powered IELTS Soru Bankası (Question Bank). The scope includes all four IELTS skills (Reading, Listening, Writing, Speaking), must follow strict IELTS authenticity rules, and has a detailed architecture for visual generation (Writing Task 1), audio production (Listening), and AI evaluation. A sub-request during this process was to make the initial data for the Writing Task 1 visual charts more realistic and less generic.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-The application is a stable, fully-functional IELTS learning platform. The critical deployment and data synchronization issues have been resolved by implementing an automatic, forced re-seeding of the database on every server startup. All course content is now sourced directly from  files.
-
-The Advanced Mastery course now features a complete Listening section for all 20 modules, with corresponding audio files and a functional frontend player. The Mastery Course has 12-question quizzes for all 17 of its modules. Both features are confirmed to be working in the production environment.
+The application is a stable IELTS learning platform.
+1.  **Mastery Course Listening**: The Mastery Course now has a fully implemented and tested Listening section for all 17 of its modules, complete with audio files and frontend UI.
+2.  **IELTS Question Bank (Foundation)**: The foundational architecture for the IELTS Soru Bankası has been built. This includes:
+    *   **Backend**: New database models (), API routes (), and a service for generating realistic SVG charts for Writing Task 1 ().
+    *   **Frontend**: New pages for the Question Bank overview (), Writing Task 1 Practice (), and a placeholder for Writing Task 2 (). These are integrated into the dashboard and main app routing.
+    *   **Realistic Visuals**: The Writing Task 1 charts now generate with realistic data, including real-world topics, country names, and plausible data points, per the user's feedback.
 
 **Last working item**:
-- **Last item agent was working**: The agent just completed the full implementation of the Advanced Mastery Listening feature for all 20 modules. The final fix involved correcting a frontend logic bug in  where the audio player was only displayed for modules 1-5. The agent updated the condition to show the player for all 20 modules, verified all audio files were present, and tested the change locally. The user was then informed that the fix was ready for deployment.
-- **Status**: USER VERIFICATION PENDING
-- **Agent Testing Done**: Y
-- **Which testing method agent to use?**: Manual testing by the user on the deployed application is the next step. If any issues are found, the frontend testing agent can be used for verification.
-- **User Testing Done**: N (User replied islem tamam which means operation complete, implying they have deployed, but they have not yet explicitly confirmed that the fix works on their end.)
+*   **Last item agent was working**: Improving the data realism for the Writing Task 1 charts. The agent refactored the data generation logic in  to replace generic placeholders like Category A with realistic topics, country names, and plausible data ranges.
+*   **Status**: USER VERIFICATION PENDING
+*   **Agent Testing Done**: Y (Agent verified new data via API calls and visually confirmed the updated charts on the frontend with screenshots).
+*   **Which testing method agent to use?**: Manual testing by user.
+*   **User Testing Done**: Y (User saw the screenshots of the realistic charts and implicitly approved).
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Verify Speaking Model Answers Across All Modules (P2)**
--   **Issue 2: Linting Errors (P3)**
+*   **Issue 1: Verify Speaking Model Answers Across All Modules (P2)**
+*   **Issue 2: General Linting Errors (P3)**
+*   **Issue 3: Unused  file (P3)**
 
 **Issues Detail**:
--   **Issue 1: Verify Speaking Model Answers Across All Modules**
-    -   **Attempted fixes**: None. This is a carry-over task from a previous fork.
-    -   **Next debug checklist**: Manually or with a script, navigate to the Speaking section of every module in the Mastery and Advanced Mastery courses and ensure the Model Answer content is present and correct.
-    -   **Why fix this issue and what will be achieved with the fix?**: Ensures course content is complete and meets quality standards.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Frontend
-    -   **Blocked on other issue**: None.
--   **Issue 2: Linting Errors**
-    -   **Attempted fixes**: None in this session.
-    -   **Next debug checklist**: Run  in the  directory and resolve any remaining warnings manually.
-    -   **Why fix this issue and what will be achieved with the fix?**: Improves code quality and maintainability.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Frontend
-    -   **Blocked on other issue**: None.
+*   **Issue 1: Verify Speaking Model Answers Across All Modules**
+    *   **Attempted fixes**: None. This is a carry-over task.
+    *   **Next debug checklist**: Manually or with a script, navigate to the Speaking section of every module in the Mastery and Advanced Mastery courses and ensure the Model Answer content is present and correct by checking  and .
+    *   **Why fix this issue and what will be achieved with the fix?**: Ensures all course content is complete and high-quality.
+    *   **Status**: NOT STARTED
+    *   **Is recurring issue?**: Y
+    *   **Should Test frontend/backend/both after fix?**: Frontend
+    *   **Blocked on other issue**: None.
+*   **Issue 2: General Linting Errors**
+    *   **Attempted fixes**: The agent fixed errors introduced during the session, but warnings in new files and pre-existing errors remain.
+    *   **Next debug checklist**: Run  in . Address warnings in  and  (related to  dependency arrays).
+    *   **Why fix this issue and what will be achieved with the fix?**: Improves code quality and maintainability.
+    *   **Status**: NOT STARTED
+    *   **Is recurring issue?**: Y
+    *   **Should Test frontend/backend/both after fix?**: None
+    *   **Blocked on other issue**: None.
+*   **Issue 3: Unused  file**
+    *   **Attempted fixes**: None.
+    *   **Next debug checklist**: Confirm the file  is not imported or used anywhere, then delete it.
+    *   **Why fix this issue and what will be achieved with the fix?**: Code hygiene, removal of dead code.
+    *   **Status**: NOT STARTED
+    *   **Is recurring issue?**: Y
+    *   **Should Test frontend/backend/both after fix?**: Frontend (minor regression check).
+    *   **Blocked on other issue**: None.
 
 **In progress Task List**:
-- None.
+*   **Task 1: Build IELTS Soru Bankası (P0)**
+    *   **Where to resume**: The foundational structure is complete. The next step is to implement Phase 1 of the user's , which involves building out the AI evaluation system for Writing Task 1, populating the bank with initial high-quality questions for all skills, and building the UI for the other practice modes (Reading, Listening, Speaking).
+    *   **What will be achieved with this?**: A fully functional, scalable question bank that aligns with the user's detailed vision.
+    *   **Status**: IN PROGRESS
+    *   **Should Test frontend/backend/both after fix?**: Both
+    *   **Blocked on something**: None.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   (P1) **Build an IELTS Soru Bankası (Question Bank):** This is the user's next major requested feature.
-    *   (P2) **Implement User-Approved UX Improvements:** The user previously selected an option that includes Interactive Transcripts, Personalized AI Feedback, and Gamification.
-    *   (P3) **Add Listening section to Mastery Course**: To bring it to parity with the Advanced Mastery course.
+    *   (P0) **Soru Bankası - Phase 1 Implementation**: Per the , begin building the AI evaluation for Writing and create the UI and backend logic for the Reading, Listening, and Speaking sections.
+    *   (P1) **Soru Bankası - Listening Audio Pipeline**: Implement the detailed audio generation pipeline using ElevenLabs v3 Dialogue Mode as specified in the user's instructions.
+    *   (P2) **Implement User-Approved UX Improvements**: Interactive Transcripts, Personalized AI Feedback, and Gamification.
+    *   (P3) **Add Listening section to Mastery Course**: This was completed.
 *   **Future Tasks:**
-    *   (P4) YLE (Starters, Movers, Flyers) course content enrichment.
-    *   (P5) Integrate Alchemy Pay payment gateway.
-    *   (P6) Refactor large course components (, ).
-    *   (P7) Address pending issues with PayPal webhooks.
+    *   YLE (Starters, Movers, Flyers) course content enrichment.
+    *   Integrate Alchemy Pay payment gateway.
+    *   Refactor large course components (, ).
+    *   Address pending issues with PayPal webhooks.
 
 **Completed work in this session**
-- **Resolved Deployment & Data Sync Issues:**
-  - Investigated and fixed initial 502/404 errors on the production deployment.
-  - Diagnosed and solved the core problem of content not updating on deployment by implementing an **automatic force-reseed** of the database on every server startup. This was done by adding a call to  within the  function in , eliminating the need for manual  commands.
-- **Completed Advanced Mastery Listening Feature (All 20 Modules):**
-  - Generated correct, high-quality audio files for all 20 modules using ElevenLabs.
-  - Organized audio files into a new, structured directory: .
-  - Permanently integrated all listening content (transcripts, questions, vocab) into the  file.
-  - Implemented and debugged the  function and audio player logic in , ensuring it works for all 20 modules.
-- **Verified Mastery Course Quizzes:**
-  - Confirmed that quizzes for all 17 Mastery modules are present in the seed data and render correctly in production, resolving the user's report of missing content.
+- **Added Listening Section to Mastery Course**:
+  - Generated 17 audio files for all Mastery modules using .
+  - Created and integrated listening content (transcripts, questions) into .
+  - Implemented the full listening section UI and audio player in .
+- **Built Foundation for IELTS Question Bank**:
+  - Created modular backend architecture with new folders: , , .
+  - Implemented Pydantic models for the question bank in .
+  - Built API endpoints for skills, topics, and visual generation in .
+  - Created a robust, data-driven SVG chart generator for Writing Task 1 in  with realistic data.
+  - Developed frontend pages: , , and .
+  - Added a modal in  for users to choose between Writing Task 1 and Task 2.
+  - Integrated the new pages into  and added a link to the .
+- **Improved Writing Task 1 Visuals**:
+  - Refactored  to use realistic data sets (countries, topics, values) instead of generic placeholders, based on user feedback.
 
 **Earlier issues found/mentioned but not fixed**
--   **Issue 1: Verify Speaking Model Answers**
-    -   **Debug checklist**: Check the  section content for every module in  and .
-    -   **Why to solve this issue and what will be achieved with this?**: To ensure all course content is complete.
-    -   **Should Test frontend/backend/both after fix**: Frontend.
-    -   **Is recurring issue?**: Y
--   **Issue 2: Unused  file**
-    -   **Debug checklist**: The file  was created in a previous session but is not used. It should be deleted.
-    -   **Why to solve this issue and what will be achieved with this?**: Code cleanup and removal of dead code.
-    -   **Should Test frontend/backend/both after fix**: Frontend (regression check).
-    -   **Is recurring issue?**: Y
+- **Issue 1: Verify Speaking Model Answers**: Detailed in the All Pending/In progress Issue list section.
+- **Issue 2: Unused  file**: Detailed in the All Pending/In progress Issue list section.
 
 **Known issue recurrence from previous fork**
--   **Issue recurrence in previous fork**: Deployment/Data Sync Issues, Linting Errors.
--   **Recurrence count**: 3+ for data sync, 6+ for linting.
--   **Status**: RESOLVED (Data Sync), NOT STARTED (Linting).
--   **Note**: The data sync issue was the primary blocker in this session. The fix, an automatic  reseed on server startup, is a significant improvement and should prevent this specific recurrence.
+- **Issue recurrence in previous fork**: Linting Errors.
+- **Recurrence count**: 7+
+- **Status**: NOT STARTED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Automated DB Seeding on Startup**: The most critical fix. The FastAPI  decorator in  now triggers a full, forced database synchronization, ensuring content is always up-to-date after any deployment or restart.
-- **State-Driven UI Rendering**: The frontend uses a  boolean, derived from the module number, to conditionally render the audio player or a coming soon message in .
-- **Idempotent Content Scripting**: Scripts were created to programmatically add listening content to the main seed file () and generate corresponding audio files, ensuring a repeatable and consistent process.
+- **Modular Backend Architecture**: The agent began structuring the backend into , , and  directories, moving logic out of the main  file for better organization and scalability.
+- **Data-Driven SVG Generation**: The backend generates dynamic, IELTS-compliant SVG charts for Writing Task 1 based on structured, realistic datasets. This avoids using image generation models and ensures authenticity.
+- **Comprehensive Feature Planning**: The agent successfully ingested and planned around three large MASTER INSTRUCTION documents from the user, setting a clear path for a major new feature.
+- **Conditional UI and State Management**: The agent implemented a modal in React () to guide the user's choice between Writing Task 1 and Task 2, managed with .
 
 **key DB schema**
--   **advanced_mastery_modules**: The  key is now fully populated for all 20 modules with fields like , , , , and .
--   **mastery_course_modules**: The  key is confirmed to be populated with a  array of 12 items for all 17 modules.
+- **question_bank.py**: Defines Pydantic models for the entire Question Bank ecosystem.
+  - , , , ,  models with fields like , , , , , , .
+  - Schemas for  including , , , and .
 
 **changes in tech stack**
 - None.
 
 **All files of reference**
--   : Contains the new, critical auto-sync logic on startup.
--   : The single source of truth for all Advanced Mastery content, now including listening.
--   : The frontend implementation for the listening feature.
--   : Directory containing all the new audio files.
+- : Contains all new API endpoints for the Soru Bankası.
+- : The logic for generating realistic Writing Task 1 SVG visuals.
+- : The database schema for the new feature.
+- : The main UI for the Soru Bankası.
+- : The interactive practice page for Writing Task 1.
+- : Contains the newly added Listening section.
+- : Source of truth for Mastery Course, now with listening data.
+- The user's three MASTER INSTRUCTION messages (chat messages 105, 108, 114) are the primary reference for all future development on the Soru Bankası.
 
 **Areas that need refactoring**:
--   The course page components (, ) remain large and would benefit from being broken down into smaller, more manageable sub-components.
--   The unused file  should be deleted.
+- The new file  is over 1000 lines long and contains both data generation and SVG rendering logic. It could be split into separate modules for clarity.
+-  and  have linting warnings that should be fixed.
 
 **key api endpoints**
--   : The manual reseed endpoint. While it still works, it has been superseded by the automatic sync on server startup.
+- : Returns available skills.
+- : Returns available topics.
+- : Generates a new Writing Task 1 visual and its associated data.
+- : Gets prompts for Writing Task 2.
+- : (Defined but not fully implemented) Endpoint to handle AI evaluation of user's writing.
 
 **Critical Info for New Agent**
--   **User Language**: You MUST communicate in Turkish.
--   **Automatic Data Sync**: The most persistent problem (data not updating on deploy) has been solved. A function in  now **automatically and forcibly re-seeds the entire database on every server startup**. You do not need to build any new sync scripts or run manual  commands. Trust that a fresh deploy will have the latest data from the  files.
--   **Source of Truth**: All course content is defined in the Python seed files (). To make any permanent data changes, you **must** edit these files.
--   **Next Task**: The Advanced Mastery Listening feature is complete. The user has acknowledged this. Your first action should be to ask the user which of the Upcoming Tasks they would like to start next (e.g., Soru Bankası).
+- **User Language**: You MUST communicate in Turkish.
+- **Adhere to MASTER INSTRUCTIONS**: The user has provided three extremely detailed documents in the chat history (Messages 105, 108, 114) for the IELTS Soru Bankası. These are the non-negotiable source of truth. All future development on this feature MUST strictly follow these protocols for visual generation, audio quality, and overall architecture.
+- **Soru Bankası is the Top Priority**: This is the user's current and primary focus. Continue building it out according to the plan. Start with implementing the AI evaluation for Writing Task 1.
+- **SPA Routing Quirk**: Be aware that when testing, direct navigation to a new, protected route (e.g., ) might redirect to the dashboard or login page. The reliable way to test new pages is to log in and click the corresponding links within the application UI, as a real user would.
 
 **documents and test reports created in this job**
--   
--   
--   
--   
--    was updated to reflect successful testing of the listening feature.
+- 
+- 
+- 
+- Multiple  files were created by the frontend testing agent during UI debugging.
 
 **Last 10 User Messages and any pending HUMAN messages**
-10.  (Give me the command to run on the terminal so we can deploy) - User requested a manual fix for data sync. (Resolved by automation)
-9.   (What about the quizzes in the mastery course?) - User reported quizzes were missing on production. (Resolved)
-8.   - User agreed with the agent's plan to automate the database sync.
-7.   - User approved the plan to generate audio for Advanced Mastery modules 6-20. (Completed)
-6.   (In the last deployment, the quizzes in Mastery are still not there) - User reported missing quizzes again. (Resolved)
-5.   - User reported the audio player wasn't showing for modules 6-20. (Resolved)
-4.   (Deployment is NOT WORKING. Same problem after every single update) - User expressed extreme frustration with the data sync issue. (Resolved)
-3.   (ARE WE GOING TO BURN CREDITS FOR EVERY DEPLOYMENT?) - User frustration over the manual, error-prone deployment process. (Resolved by automation)
-2.   (Operation complete) - User confirmed the last step was done, likely deploying the final fix.
-1.   - User's most recent problem report, showing audio player missing for modules beyond 5. (Resolved)
+10.  (Okay, continue) - User approved the agent's plan to continue building the Soru Bankası. (Complete)
+9.   (In the Writing Task 1 section, the charts are not clear enough... I want more realistic info) - User feedback requesting better data for visuals. (Complete)
+8.   (The same ElevenLabs key will be used. It will be the same key for all stages.) - User clarifying API key usage. (Acknowledged)
+7.  User provides  for the full Question Bank system. (Acknowledged)
+6.  User provides  for Writing Task 1 Visual Generation. (Acknowledged)
+5.   (This is also a very comprehensive and professional instruction! Now I see the full picture.) - User is happy with the agent's understanding. (Acknowledged)
+4.  User provides  for the Listening Audio Pipeline. (Acknowledged)
+3.   (How will you generate the visuals for writing?) - User asking for the plan on Writing Task 1 visuals. (Answered)
+2.   (How will the question bank be?) - User asking for the plan for the next major feature. (Answered)
+1.   - This message is from the *previous* fork's history, but was mistakenly included in the current chat. It was already resolved.
 
 **Project Health Check:**
--   **Broken**: None. The application is stable and all reported issues have been resolved.
--   **Mocked/Incomplete**: The YLE (Starters, Movers, Flyers) course content remains placeholder.
--   **Needs Refactoring**:  and  are large components that should be broken up.
+- **Broken**: None. The application is stable.
+- **Mocked/Incomplete**: The IELTS Soru Bankası is in an early but functional state. Most of the logic for skills other than Writing Task 1, as well as the AI evaluation, is yet to be built.
+- **Needs Refactoring**:  is very large.
 
 **3rd Party Integrations**
--   **ElevenLabs**: Used for generating all high-quality listening audio. Requires User API Key.
--   **Resend**: Used for all transactional emails. Requires User API Key.
--   **OpenAI GPT-4o**: Used via  with the  for all course content generation.
--   **Google Auth, PayPal**: Existing integrations from previous sessions.
+- **ElevenLabs**: Used for generating audio for the Mastery Course. Will be used extensively for the Soru Bankası Listening section. Requires User API Key.
+- **OpenAI GPT-4o**: Used via  with the . Will be the core of the AI evaluation system for Writing and Speaking.
+- **Resend**: Existing integration for emails.
+- **Google Auth, PayPal**: Existing integrations.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES. The frontend testing agent was used to validate the new Listening feature.
--   **Troubleshoot agent used after agent stuck in loop**: NO.
--   **Test files created**: None.
--   **Known regressions**: None. All reported issues were fixed.
+- **Testing agent used after significant changes**: YES. The frontend testing agent was used to diagnose and verify the new Question Bank UI pages.
+- **Troubleshoot agent used after agent stuck in loop**: NO.
+- **Test files created**: Yes, temporary test files were created by the testing agent.
+- **Known regressions**: None.
 
 **Credentials to test flow:**
 *   **Admin**:  / 
 *   **User**:  / 
 
 **What agent forgot to execute**
--   The agent did not address the pending tasks from the previous fork: verifying all Speaking model answers, fixing linting errors, and deleting the unused  file.</analysis>
+- The agent did not address the lower-priority pending tasks from the previous fork: verifying Speaking model answers, fixing old linting errors, and deleting the unused  file. This was a reasonable trade-off to prioritize the user's major new feature request.</analysis>
