@@ -130,25 +130,47 @@ export default function WritingTask1Practice() {
     }
     
     setEvaluating(true);
-    toast.info('Evaluating your response...');
+    toast.info('AI değerlendirmesi yapılıyor...');
     
-    // TODO: Implement actual AI evaluation
-    setTimeout(() => {
-      setEvaluation({
-        overall_band: 6.5,
-        task_achievement: { score: 6, feedback: 'You covered the main features but could add more specific data.' },
-        coherence_cohesion: { score: 7, feedback: 'Good paragraph structure and use of cohesive devices.' },
-        lexical_resource: { score: 6, feedback: 'Adequate vocabulary, but some repetition noted.' },
-        grammatical_range: { score: 7, feedback: 'Good variety of sentence structures with minor errors.' },
-        suggestions: [
-          'Include more specific numbers and percentages',
-          'Use more sophisticated vocabulary for describing trends',
-          'Add a clearer overview statement at the beginning'
-        ]
+    try {
+      const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          response: userResponse,
+          task_type: 'task1',
+          visual_type: visualType,
+          topic: topic,
+          band_level: bandLevel
+        })
       });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setEvaluation({
+          overall_band: data.evaluation.overall_band,
+          task_achievement: data.evaluation.task_achievement,
+          coherence_cohesion: data.evaluation.coherence_cohesion,
+          lexical_resource: data.evaluation.lexical_resource,
+          grammatical_range: data.evaluation.grammatical_range,
+          strengths: data.evaluation.strengths || [],
+          weaknesses: data.evaluation.weaknesses || [],
+          suggestions: data.evaluation.improvement_suggestions || [],
+          vocabulary_to_use: data.evaluation.vocabulary_to_use || [],
+          grammar_corrections: data.evaluation.grammar_corrections || [],
+          examiner_comment: data.evaluation.examiner_comment || ''
+        });
+        toast.success('Değerlendirme tamamlandı!');
+      } else {
+        toast.error(data.error || 'Değerlendirme başarısız');
+      }
+    } catch (error) {
+      console.error('Evaluation error:', error);
+      toast.error('Değerlendirme sırasında hata oluştu');
+    } finally {
       setEvaluating(false);
-      toast.success('Evaluation complete!');
-    }, 2000);
+    }
   };
 
   return (
