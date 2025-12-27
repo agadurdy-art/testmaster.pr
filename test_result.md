@@ -1,9 +1,36 @@
-# Test Results - IELTS Question Bank Feature
+# Test Results - IELTS Question Bank Feature (ULTRA MASTER PROMPT)
 
 ## Test Summary
 **Date:** 2025-12-27  
 **Tester:** Testing Agent  
-**Feature:** IELTS Question Bank Writing Features  
+**Feature:** IELTS Question Bank Writing Task 1 - ULTRA UX Implementation
+
+## Current Implementation Status
+- ✅ Backend: Authentic Task Generator created (`/app/backend/services/authentic_task_generator.py`)
+- ✅ Backend: Model Answer Generator created (`/app/backend/services/model_answer_generator.py`)
+- ✅ Backend: New API endpoint `/api/question-bank/writing/task1/generate-authentic`
+- ✅ Backend: Model Answer endpoint `/api/question-bank/writing/task1/model-answer/{task_id}`
+- ✅ Frontend: New Side-by-Side UX in `WritingTask1Practice.js`
+- ✅ API tested and working with authentic task descriptions
+
+## Key Features Implemented
+1. **Authentic Task Descriptions**: Specific location, time period, subject (e.g., "The line graph shows the number of visitors to three different museums in Sydney, Australia between 2010 and 2017")
+2. **Side-by-Side Layout**: Left panel (45%) for visual, Right panel (55%) for task + writing
+3. **Mobile Toggle**: Separate "Görseli Gör" and "Cevap Yaz" modes
+4. **Three-Layer Model Answer**:
+   - Layer A: Examiner-style Band 8.5-9 answer
+   - Layer B: Academic reasoning notes
+   - Layer C: Alternative expressions
+5. **Template Smell Detector**: Validates model answers aren't too formulaic
+6. **Task Authenticity Linter**: Validates tasks have required elements
+
+## Test Required
+1. Login flow to access Writing Task 1
+2. Visual generation with authentic task description
+3. Side-by-side UX on desktop
+4. Mobile toggle functionality
+5. AI evaluation flow
+6. Model answer reveal system  
 
 ## Test Status: ❌ CRITICAL ROUTING ISSUES FOUND
 
