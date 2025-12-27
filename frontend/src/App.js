@@ -39,6 +39,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import QuestionBank from './pages/QuestionBank';
 import WritingTask1Practice from './pages/WritingTask1Practice';
 import WritingTask2Practice from './pages/WritingTask2Practice';
+import GeneralTask1Practice from './pages/GeneralTask1Practice';
 
 
 function EmergentBadgeWrapper() {
