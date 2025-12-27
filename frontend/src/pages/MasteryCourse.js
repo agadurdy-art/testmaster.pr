@@ -78,6 +78,11 @@ export default function MasteryCourse({ user }) {
   const [writingResponse, setWritingResponse] = useState('');
   const [writingFeedback, setWritingFeedback] = useState(null);
   const [evaluatingWriting, setEvaluatingWriting] = useState(false);
+  
+  // Listening states
+  const [showTranscript, setShowTranscript] = useState(false);
+  const [listeningAnswers, setListeningAnswers] = useState({});
+  const [showListeningResults, setShowListeningResults] = useState(false);
 
   useEffect(() => {
     fetchModules();
