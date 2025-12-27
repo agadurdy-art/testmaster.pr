@@ -56,6 +56,12 @@ export default function AdvancedMasteryCourse({ user }) {
   const [quizAnswers, setQuizAnswers] = useState({});
   const [quizResults, setQuizResults] = useState(null);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  
+  // Listening state
+  const [isPlayingListening, setIsPlayingListening] = useState(false);
+  const [listeningProgress, setListeningProgress] = useState(0);
+  const [showTranscript, setShowTranscript] = useState(false);
+  const listeningAudioRef = useRef(null);
 
   useEffect(() => { 
     loadModules(); 
