@@ -250,6 +250,8 @@ async def generate_task1_authentic(
     """
     Generate ULTRA MASTER PROMPT compliant Writing Task 1.
     
+    ALL chart types now use the authentic task generator system.
+    
     Returns:
     - Authentic IELTS task description with specific location, time, subject
     - SVG visual generated from structured dataset
@@ -261,11 +263,12 @@ async def generate_task1_authentic(
     from services.model_answer_generator import model_answer_generator
     
     try:
-        # Generate authentic task using new system (currently Line Graph only)
+        task_data = None
+        svg = None
+        
+        # ============ LINE GRAPH ============
         if visual_type == "line_graph":
             task_data = authentic_task_generator.generate_line_graph_task(topic, band_level)
-            
-            # Generate SVG from task data
             svg = chart_generator.generate_line_graph(
                 title=task_data["title"],
                 x_label=task_data["x_label"],
@@ -273,65 +276,93 @@ async def generate_task1_authentic(
                 x_values=task_data["x_values"],
                 datasets=task_data["datasets"]
             )
-            
-            # Generate task ID for caching
-            task_id = str(uuid.uuid4())
-            
-            # Cache task data for model answer generation
-            _task_cache[task_id] = {
-                "task_data": task_data,
-                "model_answer": model_answer_generator.generate_model_answer_structure(task_data)
-            }
-            
-            return {
-                "success": True,
-                "task_id": task_id,
-                "visual_type": visual_type,
-                "topic": topic,
-                "band_level": band_level,
-                "svg": svg,
-                "task_description": task_data["task_description"],
-                "analysis_hints": task_data["analysis_hints"],
-                "band_calibration": task_data["band_calibration"],
-                "metadata": task_data["metadata"]
-            }
-        else:
-            # Fallback to old system for other visual types
-            from services.chart_generator import data_generator
-            
-            if visual_type == "bar_chart":
-                data = data_generator.generate_bar_chart_data(topic, band_level)
-                svg = chart_generator.generate_bar_chart(**data)
-            elif visual_type == "pie_chart":
-                data = data_generator.generate_pie_chart_data(topic, band_level)
-                svg = chart_generator.generate_pie_chart(**data)
-            elif visual_type == "table":
-                data = data_generator.generate_table_data(topic, band_level)
-                svg = chart_generator.generate_table(**data)
-            elif visual_type == "process":
-                data = data_generator.generate_process_data(topic, band_level)
-                svg = chart_generator.generate_process_diagram(**data)
-            elif visual_type == "map":
-                data = data_generator.generate_map_data(topic, band_level)
-                svg = chart_generator.generate_map_comparison(
-                    title=data["title"],
-                    before_elements=data["before"],
-                    after_elements=data["after"]
+        
+        # ============ BAR CHART ============
+        elif visual_type == "bar_chart":
+            task_data = authentic_task_generator.generate_bar_chart_task(topic, band_level)
+            svg = chart_generator.generate_bar_chart(
+                title=task_data["title"],
+                x_label=task_data.get("x_label", "Category"),
+                y_label=task_data["y_label"],
+                categories=task_data["categories"],
+                datasets=task_data["datasets"]
+            )
+        
+        # ============ PIE CHART ============
+        elif visual_type == "pie_chart":
+            task_data = authentic_task_generator.generate_pie_chart_task(topic, band_level)
+            # For pie charts with comparison, generate two charts
+            if task_data.get("has_comparison") and len(task_data["datasets"]) > 1:
+                svg = chart_generator.generate_pie_chart_comparison(
+                    title=task_data["title"],
+                    segments=task_data["segments"],
+                    dataset1=task_data["datasets"][0],
+                    dataset2=task_data["datasets"][1]
                 )
             else:
-                raise HTTPException(status_code=400, detail=f"Unknown visual type: {visual_type}")
-            
-            return {
-                "success": True,
-                "visual_type": visual_type,
-                "topic": topic,
-                "band_level": band_level,
-                "svg": svg,
-                "task_description": f"The {visual_type.replace('_', ' ')} above shows information about {topic}. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
-                "data": data
-            }
+                svg = chart_generator.generate_pie_chart(
+                    title=task_data["title"],
+                    segments=task_data["segments"],
+                    values=task_data["datasets"][0]["values"],
+                    year=task_data["datasets"][0]["label"]
+                )
+        
+        # ============ TABLE ============
+        elif visual_type == "table":
+            task_data = authentic_task_generator.generate_table_task(topic, band_level)
+            svg = chart_generator.generate_table(
+                title=task_data["title"],
+                columns=task_data["columns"],
+                rows=task_data["rows"]
+            )
+        
+        # ============ PROCESS ============
+        elif visual_type == "process":
+            task_data = authentic_task_generator.generate_process_task(topic, band_level)
+            svg = chart_generator.generate_process_diagram(
+                title=task_data["title"],
+                stages=task_data["stages"],
+                is_cyclical=task_data.get("is_cyclical", False)
+            )
+        
+        # ============ MAP ============
+        elif visual_type == "map":
+            task_data = authentic_task_generator.generate_map_task(topic, band_level)
+            svg = chart_generator.generate_map_comparison(
+                title=task_data["title"],
+                before_elements=task_data["features_before"],
+                after_elements=task_data["features_after"],
+                year_before=task_data.get("year_before"),
+                year_after=task_data.get("year_after")
+            )
+        
+        else:
+            raise HTTPException(status_code=400, detail=f"Unknown visual type: {visual_type}")
+        
+        # Generate task ID for caching
+        task_id = str(uuid.uuid4())
+        
+        # Cache task data for model answer generation
+        _task_cache[task_id] = {
+            "task_data": task_data,
+            "model_answer": model_answer_generator.generate_model_answer_structure(task_data) if visual_type == "line_graph" else None
+        }
+        
+        return {
+            "success": True,
+            "task_id": task_id,
+            "visual_type": visual_type,
+            "topic": topic,
+            "band_level": band_level,
+            "svg": svg,
+            "task_description": task_data["task_description"],
+            "band_calibration": task_data.get("band_calibration", {}),
+            "metadata": task_data.get("metadata", {})
+        }
             
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/writing/task1/model-answer/{task_id}")
