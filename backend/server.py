@@ -2502,7 +2502,7 @@ async def admin_seed_beginner(admin_email: str = None):
 
 
 @api_router.post("/admin/seed-all-courses")
-async def admin_seed_all_courses(admin_email: str = None):
+async def admin_seed_all_courses(admin_email: str = None, force: bool = False):
     """Seed all course data to database at once"""
     if not admin_email or not is_admin_email(admin_email):
         raise HTTPException(status_code=403, detail="Admin access required")
@@ -2512,7 +2512,8 @@ async def admin_seed_all_courses(admin_email: str = None):
     # Seed Advanced Mastery
     try:
         from seed_advanced_mastery import ADVANCED_MODULES
-        await db.advanced_mastery_modules.delete_many({})
+        if force:
+            await db.advanced_mastery_modules.delete_many({})
         for module in ADVANCED_MODULES:
             await db.advanced_mastery_modules.update_one(
                 {"id": module["id"]}, {"$set": module}, upsert=True
@@ -2524,7 +2525,8 @@ async def admin_seed_all_courses(admin_email: str = None):
     # Seed Mastery
     try:
         from seed_mastery_course import MASTERY_MODULES
-        await db.mastery_course_modules.delete_many({})
+        if force:
+            await db.mastery_course_modules.delete_many({})
         for module in MASTERY_MODULES:
             await db.mastery_course_modules.update_one(
                 {"id": module["id"]}, {"$set": module}, upsert=True
@@ -2536,7 +2538,8 @@ async def admin_seed_all_courses(admin_email: str = None):
     # Seed Beginner
     try:
         from seed_beginner_english import BEGINNER_LESSONS
-        await db.beginner_english_lessons.delete_many({})
+        if force:
+            await db.beginner_english_lessons.delete_many({})
         for lesson in BEGINNER_LESSONS:
             await db.beginner_english_lessons.update_one(
                 {"id": lesson["id"]}, {"$set": lesson}, upsert=True
@@ -2548,6 +2551,7 @@ async def admin_seed_all_courses(admin_email: str = None):
     return {
         "status": "success",
         "message": "All courses seeded",
+        "forced": force,
         "results": results
     }
 
