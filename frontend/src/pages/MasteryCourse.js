@@ -90,6 +90,9 @@ export default function MasteryCourse({ user }) {
   const [readingAnswers, setReadingAnswers] = useState({});
   const [showReadingResults, setShowReadingResults] = useState(false);
   
+  // Module-Specific Language Booster
+  const [languageBooster, setLanguageBooster] = useState(null);
+  
   // Listening states
   const [showTranscript, setShowTranscript] = useState(false);
   const [listeningAnswers, setListeningAnswers] = useState({});
