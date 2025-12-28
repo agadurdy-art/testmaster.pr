@@ -89,6 +89,7 @@ export default function MasteryCourse({ user }) {
 
   useEffect(() => {
     fetchModules();
+    fetchGeneralLessons();
     
     // Cleanup audio when component unmounts or page changes
     return () => {
@@ -114,6 +115,27 @@ export default function MasteryCourse({ user }) {
       toast.error('Failed to load course modules');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Fetch General Training lessons for Writing
+  const fetchGeneralLessons = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/courses/mastery/general`);
+      if (!response.ok) return;
+      const data = await response.json();
+      if (data.success && data.lessons) {
+        // Filter only writing-related lessons
+        const writingLessons = data.lessons.filter(l => 
+          l.writing || l.topic?.toLowerCase().includes('letter') || l.topic?.toLowerCase().includes('formal')
+        );
+        setGeneralLessons(writingLessons);
+        if (writingLessons.length > 0) {
+          setSelectedGeneralLesson(writingLessons[0]);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching general lessons:', error);
     }
   };
 
