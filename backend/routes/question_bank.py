@@ -367,10 +367,16 @@ async def generate_task1_authentic(
         # Generate task ID for caching
         task_id = str(uuid.uuid4())
         
-        # Cache task data for model answer generation
+        # Cache task data and generate model answer for ALL visual types
+        model_answer = None
+        try:
+            model_answer = model_answer_generator.generate_model_answer_structure(task_data)
+        except Exception as ma_error:
+            print(f"Warning: Could not generate model answer: {ma_error}")
+        
         _task_cache[task_id] = {
             "task_data": task_data,
-            "model_answer": model_answer_generator.generate_model_answer_structure(task_data) if visual_type == "line_graph" else None
+            "model_answer": model_answer
         }
         
         return {
