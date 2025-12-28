@@ -1,157 +1,147 @@
 <analysis>**original_problem_statement:**
-The user's initial goal was to fix bugs and improve their IELTS Question Bank application. This evolved into several large-scale feature implementations, including a Dual-Track system to separate Academic and General Training content, and a Module-Specific Language Booster to provide contextual General Training lessons.
+The user's initial goal was a 3-phase pedagogical plan to fix inconsistencies in the General Training track of their IELTS application. This has been successfully completed.
 
-Most recently, the user provided a comprehensive 3-phase pedagogical plan to address a core architectural flaw: the General Training track was inconsistent and not properly scaffolded across the different course levels (Beginner, Mastery, Advanced).
+The work evolved through several phases:
+- **Phase 1 (COMPLETE):** Implemented global, foundational General Writing & Reading lessons for the .
+- **Phase 2 (COMPLETE):** Implemented strategic, module-specific General Writing lessons for the .
+- **Phase 3 (COMPLETE in this session):** Implemented strategic, module-specific General Reading practices for the .
+- **Phase 4 (COMPLETE in this session):** Implemented a Track-Specific AI Evaluation system to provide different feedback for Academic and General Training submissions for both Writing and Reading. This included a new, dedicated frontend UI component for displaying evaluation results.
+- **Model Answer Quality Sprint (COMPLETE in this session):** Formalized the quality standards for model answers by creating a new backend service and API endpoint.
 
-The current objective is to complete this 3-phase plan:
--   **Phase 1 (COMPLETE):** Implement global, foundational General Writing & Reading lessons for the .
--   **Phase 2 (COMPLETE):** Implement strategic, module-specific General Writing lessons for all 20 modules in the .
--   **Phase 3 (IN PROGRESS):** Implement strategic, module-specific General Reading practices for all 20 modules in the .
-
-A secondary, now completed, objective was to translate the entire UI from Turkish to English.
+Following the completion of all Writing-related features, the user has declared a **FEATURE FREEZE** on the Writing Question Bank. The next strategic goal is to expand the **Reading Question Bank**.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-The application is a full-stack project (React/FastAPI/MongoDB). The UI is now fully in English.
+The application is a full-stack project (React/FastAPI/MongoDB). The core pedagogical structure for the Writing skill is complete, tested, and user-approved across all three course levels (Beginner, Mastery, Advanced).
 
-The user's pedagogical plan has been partially implemented:
-1.  **Beginner Course:** Now correctly serves global, foundational General Training lessons for both Writing and Reading, fetched from a dedicated backend data structure (). The UI () was refactored to use this global content instead of the module-specific system.
-2.  **Mastery Course:** Correctly serves module-specific General Training content using the Language Booster system for all 17 of its modules. This is considered the correct implementation for this level.
-3.  **Advanced Course:** Now correctly serves strategic, module-specific General Training content for the Writing section. A new backend data structure () and API endpoint were created for all 20 advanced modules, and the UI () was updated to use it.
-
-The agent was in the process of creating the backend content for the final part of the plan: Advanced General Reading.
+- **Phase 3 Complete:** The  now serves strategic, module-specific General Reading content from a new data structure () via a new API endpoint. The frontend () has been updated to fetch and render this content when the General Training track is selected.
+- **Phase 4 Complete:** A new backend service () and new API endpoints provide distinct AI evaluation for Academic vs. General Training writing and reading. A new frontend component () displays this detailed feedback in an examiner report style. This has been integrated into .
+- **Auth Issue Resolved:** An apparent session persistence issue was investigated and proven to be an artifact of the testing tools (screenshot/Playwright). The application's authentication flow using  was manually verified and shown to be working correctly for a real user session.
+- **Writing Feature Freeze:** The user has officially approved all work on the Writing feature and declared it frozen. No new development should occur on this feature, only critical bug fixes.
 
 **Last working item**:
-*   **Last item agent was working**: The agent was attempting to add a new, large data structure, , to the file . This is the first step of implementing **Phase 3** of the user's pedagogical plan (adding Advanced General Reading content).
-*   **Status**: BLOCKED
-*   **Reasoning**: The agent's last tool call () failed with a validation error, preventing the addition of the required backend content. The agent needs to correct and re-run this tool call to proceed.
-*   **Agent Testing Done**: N
-*   **Which testing method agent to use?**: both
-*   **User Testing Done**: N
+- **Last item agent was working**: The agent received the user's FEATURE FREEZE confirmation for the Writing Soru Bankası (Question Bank) and proposed the next steps: beginning the expansion of the **Reading Question Bank** for both Academic and General tracks.
+- **Status**: NOT STARTED
+- **Agent Testing Done**: N/A
+- **Which testing method agent to use?**: both
+- **User Testing Done**: N/A
 
 **All Pending/In progress Issue list**:
-*   **Issue 1: Failed to add Advanced Reading content to backend (P0)**
-    *   **Description**: The last  tool call to insert the  dictionary into  failed due to a tool-side validation error (likely a missing argument). This is blocking all progress on the current task.
-    *   **Attempted fixes**: None. The failure just occurred.
-    *   **Next debug checklist**:
-        1.  Review the last failed tool call () and identify the missing or incorrect argument.
-        2.  Re-execute the  call with the correct parameters to insert the  data structure immediately after the  structure in .
-    *   **Why fix this issue and what will be achieved with the fix?**: Fixing this will unblock the implementation of Phase 3, allowing the agent to create the necessary backend content for Advanced General Reading.
-    *   **Status**: BLOCKED
-    *   **Is recurring issue?**: N
-    *   **Should Test frontend/backend/both after fix?**: Backend (initially, to verify the content is added).
-    *   **Blocked on other issue**: No. This is the primary blocker.
+- **Issue 1: Linting Warnings (P3)**
+    - **Description**: Several frontend files have  warnings that were noted by the linter but not fixed as they are non-blocking.
+    - **Status**: NOT STARTED
+- **Issue 2: Unused  file (P3)**
+    - **Description**: This file was identified in a previous fork but has not been investigated or removed.
+    - **Status**: NOT STARTED
+- **Issue 3: Speaking Model Answers Verification (P3)**
+    - **Description**: The need to verify the quality and accuracy of speaking model answers remains an outstanding low-priority task.
+    - **Status**: NOT STARTED
 
 **In progress Task List**:
-*   **Task 1: Implement Advanced General Reading (Phase 3) (P0)**
-    *   **Description**: As per the user's plan, the agent needs to add complex, real-life reading texts for each of the 20 Advanced course modules.
-    *   **Where to resume**: The agent must first resolve the failed tool call (Issue 1) to add the backend data to .
-    *   **Next Steps after unblocking**:
-        1.  Create a new API endpoint in  (e.g., ) to serve the newly added data.
-        2.  Update :
-            *   Add a new state variable (e.g., ).
-            *   Modify the data fetching function to call the new endpoint upon module selection.
-            *   Update the  function to display this new content when the General Training track is active.
-    *   **What will be achieved with this?**: This will complete the user's entire 3-phase pedagogical vision, making the General Training track coherent and appropriately scaffolded across all three course levels.
-    *   **Status**: IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?**: both
-    *   **Blocked on something**: Issue 1: Failed to add Advanced Reading content to backend.
+None.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   (P1) **Track-Specific AI Evaluation**: Implement separate, more detailed AI evaluation rubrics for General Training vs. Academic writing.
-    *   (P2) **Enhance AI Evaluation Detail**: Integrate  for feedback aligned with official band descriptors.
-    *   (P2) **Enhance Task & Model Answer Quality**: Integrate the placeholder services (, ).
+    *   **(P0) Expand Reading Question Bank:** The immediate next priority. This involves adding dedicated Academic and General Training reading passages and questions, ensuring module awareness and difficulty progression across course levels.
+    *   **(P1) Expand Listening Question Bank:** As per user's strategic direction after Reading is complete.
+    *   **(P2) Expand Speaking Question Bank:** As per user's strategic direction after Listening is complete.
 
 *   **Future Tasks:**
-    *   Implement Question Bank for Reading, Listening, and Speaking skills.
-    *   Add YLE (Starters, Movers, Flyers) course content.
-    -   Integrate Alchemy Pay payment gateway.
+    *   Implement YLE (Starters, Movers, Flyers) course content.
+    *   Integrate Alchemy Pay payment gateway.
     *   Refactor large course components (, , ) to reduce code duplication.
 
 **Completed work in this session**
--   **Pedagogical Restructure (Phase 1 & 2 Complete)**:
-    -   **Beginner Course Fixed**: Reworked the course to serve global Foundation General Writing & Reading lessons, correctly reflecting its pedagogical role.
-    -   **Advanced General Writing Implemented**: Created and integrated strategic, module-specific General Writing content for all 20 Advanced modules, fulfilling Phase 2 of the user's plan.
--   **Module-Specific Content Expanded**: Added unique Language Booster content for all 12 remaining Mastery course modules, ensuring all 17 modules have custom content.
--   **Full UI Translation (Turkish to English)**: Completed the user's request to make English the primary UI language across the entire application, including , practice pages, and filter components.
--   **Authentication System Verified**: Investigated a user report of login/signup failure and confirmed through backend and frontend testing that the authentication system was working correctly. The user acknowledged the resolution.
+- **Phase 3: Advanced General Reading (DONE)**: Successfully added the  data structure to , created the corresponding API endpoint in , and updated the  page to fetch and display the content.
+- **Phase 4: Track-Specific AI Evaluation (DONE)**:
+    - Created a new backend service  with separate evaluation rubrics for Academic and General Training tracks.
+    - Added new backend API endpoints in  to handle track-specific evaluation for both writing and reading.
+    - Created a new frontend component  to display detailed, examiner-report style feedback.
+    - Integrated the new component and API calls into .
+- **Auth Persistence Verification (DONE)**: Investigated a session persistence issue reported by testing tools, and conclusively proved via targeted screenshot tests that the application's -based auth works correctly in a normal user flow.
+- **Model Answer Quality Sprint (DONE)**: Created  and a supporting API endpoint to formalize and serve quality standards for model answers.
 
 **Earlier issues found/mentioned but not fixed**
-*   **Issue 1: Linting Warnings**: Several files (, , etc.) have  warnings that were noted by the linter but not fixed.
-*   **Issue 2: Unused  file**: This file, mentioned in the previous handoff, has not been investigated or removed.
-*   **Issue 3: Speaking Model Answers Verification**: The need to verify speaking model answers, mentioned in the previous handoff, has not been addressed.
+- The same issues listed in **All Pending/In progress Issue list** remain: linting warnings, an unused JS file, and the need to verify speaking model answers. These have been consistently de-prioritized in favor of major feature development.
 
 **Known issue recurrence from previous fork**
-*   **Issue recurrence in previous fork**: Linting Errors.
-*   **Recurrence count**: 10+
-*   **Status**: NOT STARTED
+- **Issue recurrence in previous fork**: Linting Errors.
+- **Recurrence count**: 10+
+- **Status**: NOT STARTED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Pedagogical Scaffolding**: The main theme. The General Training track's content and purpose now intentionally change based on the course level: Foundational (Beginner), Module-Specific (Mastery), and Strategic/Scenario-Based (Advanced).
--   **Conditional Content Architecture**: The frontend uses different logic based on the course.  fetches global lessons, while  and  fetch module-specific content from different API endpoints.
--   **Backend Content Expansion**: The  file now acts as a comprehensive content database, housing distinct data structures for each course level's specific needs.
+- **Feature Freeze**: A user-declared directive to halt all new development on the Writing Question Bank feature, limiting future work to critical bug fixes only.
+- **Track-Specific Evaluation**: The core concept of Phase 4, where the AI provides different, contextually appropriate feedback based on whether the user is on the Academic or General Training track.
+- **Deterministic UI Rendering**: A principle dictated by the user for the  component, ensuring the UI renders exactly what the backend API provides without adding any of its own logic, interpretation, or placeholder text.
+- **Test Tool Artifact**: The authentication issue was identified as a problem with the testing environment's inability to persist session data across navigations, rather than a bug in the application code.
 
 **key DB schema**
--   No database schema changes were made. All new course content is stored as hardcoded dictionaries in .
+- No database schema changes were made. All course content continues to be stored as hardcoded dictionaries in Python files, primarily .
 
 **All files of reference**
--   : The single source of truth for all course content.
--   : Defines the API endpoints to access the course content.
--   : Reference implementation for global, non-module-specific content.
--   : Reference implementation for module-specific Language Boosters.
--   : Reference implementation for module-specific Strategic Writing and the target for the upcoming Strategic Reading.
+- : Source of all course content. Heavily expanded.
+- : Location of all course-related API endpoints.
+- : New service for all AI evaluation logic.
+- : The primary frontend page where new features were integrated.
+- : The new, reusable component for displaying all AI feedback.
+- : Updated multiple times to run backend and frontend tests.
 
 **Areas that need refactoring**:
--   The  file is now extremely large (over 2700 lines) and difficult to manage. The course content should be broken out into separate, more manageable files (e.g., JSON or dedicated Python modules per course/feature).
--   The three course pages (, , ) still contain significant duplicated code that could be extracted into reusable components or custom hooks.
+- The  file is now critically oversized (over 5500 lines) and urgently needs to be broken down into smaller, more manageable JSON or Python files to improve maintainability.
+- The course pages (, , ) still contain significant duplicated code for layout and state management.
 
 **key api endpoints**
--   : Serves foundational lessons for the Beginner course.
--   : Serves module-specific lessons for the Mastery course.
--   : **NEW**. Serves module-specific strategic writing content for the Advanced course.
+- : **NEW**. Evaluates a writing submission with track-specific logic.
+- : **NEW**. Evaluates a reading submission with track-specific logic.
+- : **NEW**. Returns the quality standards for model answers.
+- : **NEW**. Serves module-specific strategic reading content for the Advanced course.
 
 **Critical Info for New Agent**
--   **Your immediate priority is to complete Phase 3 of the user's plan: Implement Advanced General Reading.**
--   You are currently **blocked**. Your first action must be to fix the failed  tool call to add the  data structure into .
--   After unblocking, follow the established pattern: create the backend API endpoint, then update the  frontend to fetch and display the new reading content.
--   The user is highly strategic and has approved a clear, multi-phase plan. Adhere to it strictly.
--   **You must communicate with the user in Turkish**, but all code, comments, and UI text you write must be in English.
+- **WRITING FEATURE IS FROZEN**: Your most important constraint is that the user has declared FEATURE FREEZE on the entire Writing Question Bank. Do not add, modify, or extend any part of the writing feature unless the user explicitly reports a critical bug.
+- **IMMEDIATE PRIORITY IS READING**: Your first task is to begin expanding the **Reading Question Bank** for both Academic and General tracks, as per the user's latest instruction.
+- **AUTH IS NOT A BUG**: The session persistence issue is a known limitation of the testing tools. The application's auth flow is confirmed to be working for users. Do not spend time trying to fix it unless the user reports a new, specific problem.
+- **FOLLOW THE ESTABLISHED PATTERN**: When adding new content, follow the pattern established in this session:
+    1.  Add content to a backend data structure (likely in a new, separate file to avoid bloating  further).
+    2.  Create a backend API endpoint to serve the content.
+    3.  Update the relevant frontend page to fetch and display the content.
+- **USE THE NEW EVALUATION UI**: Any new reading tasks that require evaluation should be hooked into the existing  component.
 
 **documents and test reports created in this job**
--    was updated to run frontend tests for the Module-Specific Language Booster feature.
+- : Was updated multiple times to define and execute backend and frontend tests for the Advanced Reading and Track-Specific Evaluation features.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **user**: (Confirms login issue is resolved).
-2.  **agent**: Great, acknowledging the fix.
-3.  **user**: health/education tamam ama tiger konularda ozgun icerik yok şimdilik. (health/education is okay, but for now, other topics don't have unique content). - *This prompted the expansion of Mastery Course content.*
-4.  **agent**: Presents a summary of completed work and asks what's next.
-5.  **user**: (Provides an extremely detailed, 3-phase pedagogical plan to fix Beginner and Advanced courses, defining the role of General Training at each level). - *This became the new primary goal.*
-6.  **agent**: Shows a deep understanding of the new plan and asks for confirmation to proceed.
-7.  **user**: advanced general writing de 20 model olsun chunk 20 modulumuz var (let there be 20 models for advanced general writing, we have 20 modules). - *Clarifies scope for Phase 2.*
-8.  **agent**: Acknowledges the 20-module scope and starts Phase 1.
-9.  **user**: dogrulandi. devam edebilirsin (verified. you can continue). - *This was the user's approval after the agent completed and presented Phase 2 (Advanced General Writing).*
-10. **agent**: Acknowledges the verification and states they are starting Phase 3 (Advanced General Reading).
+1.  **User:** Approves Phase 4 backend work and provides a detailed ULTRA MASTER IMPLEMENTATION PROMPT for the Frontend Evaluation UI.
+2.  **Agent:** Acknowledges the prompt and begins UI implementation.
+3.  **User:** Formally accepts the completed Frontend UI, confirming **Phase 4 is PRODUCTION-READY**. Re-diagnoses the auth issue as a separate technical debt task.
+4.  **Agent:** Acknowledges Phase 4 acceptance and begins to investigate the auth fix.
+5.  **Agent:** (After testing) Proves the auth flow works correctly and the issue was a test tool artifact.
+6.  **Agent:** Successfully performs an end-to-end test via screenshots, showing a user logging in and getting a new AI evaluation result.
+7.  **User:** Asks the agent to start the model answer quality sprint.
+8.  **Agent:** Completes the sprint by creating a new service and API for quality standards.
+9.  **User:** Provides a FORMAL CLOSING CHECKLIST for the entire Writing feature, declaring it **FEATURE FREEZE** and stating that the next logical step is to expand the Reading/Listening/Speaking question banks.
+10. **Agent:** Acknowledges the feature freeze on Writing and asks for confirmation to begin expanding the **Reading Question Bank**.
 
 **Project Health Check:**
--   **Broken**: The Advanced General Reading feature is non-existent, leaving the pedagogical structure incomplete as per the user's master plan. The last agent action failed, blocking progress.
--   **Mocked**: No mocked components.
+- **Broken**: Nothing is functionally broken.
+- **Mocked**: No mocked components. The system is live.
+- **Incomplete**: The Reading, Listening, and Speaking Question Banks are either non-existent or minimal, which is the next area of focus.
 
 **3rd Party Integrations**
 -   OpenAI GPT-4o: Used via  for AI evaluation features.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES. The frontend testing agent was used to verify the Module-Specific Language Booster integration and also to test the Beginner Course foundation lessons.
--   **Troubleshoot agent used after agent stuck in loop**: NO.
--   **Test files created**: None.
--   **Known regressions**: None.
+- **Testing agent used after significant changes**: YES. Both backend and frontend testing agents were used to validate the new evaluation APIs and UI component.
+- **Troubleshoot agent used after agent stuck in loop**: NO.
+- **Test files created**: None. Test definitions were added to .
+- **Known regressions**: None.
 
 **Credentials to test flow:**
-*   **User**:  / 
+- **Primary User**:  / 
+- **New Tester Account**:  /  (Note: The agent created this user with a password it defined, so this should be the working credential).
 
 **What agent forgot to execute**
--   The agent correctly prioritized the user's major pedagogical refactoring plan over lower-priority items from the previous handoff, such as fixing non-critical linting warnings, removing the potentially unused  file, and verifying speaking model answers. These tasks remain outstanding.</analysis>
+- The agent correctly and repeatedly de-prioritized low-priority technical debt (linting warnings, unused files) in favor of the user's high-priority, strategic feature requests. These tasks remain outstanding but were not forgotten.</analysis>
