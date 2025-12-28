@@ -4,6 +4,7 @@ import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
+import { Badge } from '../components/ui/badge';
 import { 
   BookOpen, Volume2, Mic, Square, ChevronLeft, ChevronRight, 
   CheckCircle, XCircle, ArrowLeft, Loader2, GraduationCap,
