@@ -181,7 +181,27 @@ class ModelAnswerGenerator:
         
         Input: Task data from AuthenticTaskGenerator
         Output: Three-layer model answer package
+        
+        Supports: line_graph, bar_chart, pie_chart, table, process, map
         """
+        
+        # Detect visual type from task_data
+        visual_type = task_data.get("visual_type", "line_graph")
+        
+        # Check for visual-specific fields
+        if "stages" in task_data:
+            visual_type = "process"
+        elif "features_before" in task_data or "features_after" in task_data:
+            visual_type = "map"
+        elif "segments" in task_data:
+            visual_type = "pie_chart"
+        elif "columns" in task_data and "rows" in task_data:
+            visual_type = "table"
+        elif "datasets" in task_data:
+            if task_data.get("chart_type") == "bar":
+                visual_type = "bar_chart"
+            else:
+                visual_type = "line_graph"
         
         datasets = task_data.get("datasets", [])
         years = task_data.get("x_values", [])
@@ -190,7 +210,7 @@ class ModelAnswerGenerator:
         band_calibration = task_data.get("band_calibration", {})
         
         # Build Layer A: Examiner-Style Model Answer
-        layer_a = cls._generate_examiner_model(task_data)
+        layer_a = cls._generate_examiner_model(task_data, visual_type)
         
         # Build Layer B: Academic Reasoning Notes
         layer_b = cls._generate_reasoning_notes(task_data, layer_a)
