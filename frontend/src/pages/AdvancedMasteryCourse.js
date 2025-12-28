@@ -221,6 +221,19 @@ export default function AdvancedMasteryCourse({ user }) {
         console.error('Error fetching strategic writing:', e);
       }
       
+      // Fetch strategic reading content for Advanced
+      try {
+        const strategicReadingResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-reading/${strategicModuleId}`);
+        if (strategicReadingResponse.ok) {
+          const strategicReadingData = await strategicReadingResponse.json();
+          if (strategicReadingData.success) {
+            setStrategicReading(strategicReadingData.strategic_reading);
+          }
+        }
+      } catch (e) {
+        console.error('Error fetching strategic reading:', e);
+      }
+      
       // Also fetch language booster as fallback
       const topicToBooster = {
         'technology': 'technology',
