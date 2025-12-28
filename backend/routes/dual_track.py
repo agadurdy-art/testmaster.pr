@@ -546,3 +546,109 @@ async def get_track_lesson_detail(course_level: str, track: str, lesson_id: str)
         "success": True,
         "lesson": lesson
     }
+
+
+# ============ NEW READING QUESTION BANK ENDPOINTS ============
+
+@router.get("/reading/academic/advanced")
+async def get_academic_reading_advanced():
+    """
+    Get all Advanced Academic Reading modules from the new content structure.
+    Returns module summaries for Academic track (Band 7.0-9.0).
+    """
+    from content.reading.academic.reading_academic_advanced import get_all_academic_reading_modules
+    
+    modules = get_all_academic_reading_modules()
+    return {
+        "success": True,
+        "track": "academic",
+        "level": "advanced",
+        "band_target": "7.0-9.0",
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/academic/advanced/{module_id}")
+async def get_academic_reading_module(module_id: str):
+    """
+    Get specific Academic Reading module content.
+    Returns full reading passage, questions, vocabulary, and tips.
+    """
+    from content.reading.academic.reading_academic_advanced import get_academic_reading_by_module
+    
+    module = get_academic_reading_by_module(module_id)
+    
+    if not module:
+        from content.reading.academic.reading_academic_advanced import get_all_academic_reading_modules
+        available = [m["module_id"] for m in get_all_academic_reading_modules()]
+        return {
+            "success": False,
+            "error": f"Module '{module_id}' not found",
+            "available_modules": available
+        }
+    
+    return {
+        "success": True,
+        "track": "academic",
+        "module": module
+    }
+
+
+@router.get("/reading/general/advanced")
+async def get_general_reading_advanced():
+    """
+    Get all Advanced General Training Reading modules from the new content structure.
+    Returns module summaries for General Training track (Band 7.0-9.0).
+    """
+    from content.reading.general.reading_general_advanced import get_all_general_reading_modules
+    
+    modules = get_all_general_reading_modules()
+    return {
+        "success": True,
+        "track": "general",
+        "level": "advanced",
+        "band_target": "7.0-9.0",
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/general/advanced/{module_id}")
+async def get_general_reading_module(module_id: str):
+    """
+    Get specific General Training Reading module content.
+    Returns full reading passage (policy/contract), questions, vocabulary, and tips.
+    """
+    from content.reading.general.reading_general_advanced import get_general_reading_by_module
+    
+    module = get_general_reading_by_module(module_id)
+    
+    if not module:
+        from content.reading.general.reading_general_advanced import get_all_general_reading_modules
+        available = [m["module_id"] for m in get_all_general_reading_modules()]
+        return {
+            "success": False,
+            "error": f"Module '{module_id}' not found",
+            "available_modules": available
+        }
+    
+    return {
+        "success": True,
+        "track": "general",
+        "module": module
+    }
+
+
+@router.get("/reading/skills")
+async def get_reading_skill_categories_new():
+    """
+    Get all reading skill categories with descriptions.
+    Used for skill-based feedback in reading evaluations.
+    """
+    from content.reading.academic.reading_academic_advanced import get_reading_skill_categories
+    
+    return {
+        "success": True,
+        "skills": get_reading_skill_categories()
+    }
