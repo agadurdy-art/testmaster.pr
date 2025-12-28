@@ -535,11 +535,11 @@ export default function QuestionBank() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-gray-900">Task 1 - Academic</h3>
-                    <p className="text-sm text-gray-500">Grafik, tablo, süreç veya harita açıklaması</p>
+                    <p className="text-sm text-gray-500">Graph, table, process or map description</p>
                     <div className="flex gap-2 mt-2 flex-wrap">
-                      <Badge className="bg-green-100 text-green-700">150+ kelime</Badge>
-                      <Badge className="bg-gray-100 text-gray-600">20 dakika</Badge>
-                      {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Konu Odaklı</Badge>}
+                      <Badge className="bg-green-100 text-green-700">150+ words</Badge>
+                      <Badge className="bg-gray-100 text-gray-600">20 minutes</Badge>
+                      {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Topic Focused</Badge>}
                     </div>
                   </div>
                 </div>
@@ -563,9 +563,9 @@ export default function QuestionBank() {
                     <h3 className="font-bold text-gray-900">Task 2 - Essay</h3>
                     <p className="text-sm text-gray-500">Opinion, Discussion, Problem-Solution essay</p>
                     <div className="flex gap-2 mt-2 flex-wrap">
-                      <Badge className="bg-blue-100 text-blue-700">250+ kelime</Badge>
-                      <Badge className="bg-gray-100 text-gray-600">40 dakika</Badge>
-                      {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Konu Odaklı</Badge>}
+                      <Badge className="bg-blue-100 text-blue-700">250+ words</Badge>
+                      <Badge className="bg-gray-100 text-gray-600">40 minutes</Badge>
+                      {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Topic Focused</Badge>}
                     </div>
                   </div>
                 </div>
