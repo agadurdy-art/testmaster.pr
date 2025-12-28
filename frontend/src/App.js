@@ -41,6 +41,8 @@ import WritingTask1Practice from './pages/WritingTask1Practice';
 import WritingTask2Practice from './pages/WritingTask2Practice';
 import GeneralTask1Practice from './pages/GeneralTask1Practice';
 import GeneralTask2Practice from './pages/GeneralTask2Practice';
+import ReadingPracticeAcademic from './pages/ReadingPracticeAcademic';
+import ReadingPracticeGeneral from './pages/ReadingPracticeGeneral';
 
 
 function EmergentBadgeWrapper() {
