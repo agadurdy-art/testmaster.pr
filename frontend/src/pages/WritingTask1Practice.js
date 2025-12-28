@@ -482,10 +482,10 @@ export default function WritingTask1Practice() {
                   <div className={`text-sm font-medium ${
                     wordCount >= 150 ? 'text-green-600' : wordCount >= 100 ? 'text-amber-600' : 'text-red-500'
                   }`}>
-                    {wordCount} kelime
+                    {wordCount} words
                     {wordCount < 150 && (
                       <span className="text-gray-400 ml-1">
-                        ({150 - wordCount} daha gerekli)
+                        ({150 - wordCount} more needed)
                       </span>
                     )}
                   </div>
@@ -506,11 +506,11 @@ export default function WritingTask1Practice() {
                   >
                     {evaluating ? (
                       <>
-                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Değerlendiriliyor...
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> Evaluating...
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4 mr-2" /> Değerlendir
+                        <Send className="w-4 h-4 mr-2" /> Evaluate
                       </>
                     )}
                   </Button>
