@@ -67,7 +67,8 @@ export default function AdvancedMasteryCourse({ user }) {
   const listeningAudioRef = useRef(null);
 
   useEffect(() => { 
-    loadModules(); 
+    loadModules();
+    fetchGeneralLessons();
     
     // Cleanup audio when component unmounts
     return () => {
