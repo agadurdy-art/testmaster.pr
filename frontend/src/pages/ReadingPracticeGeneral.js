@@ -339,22 +339,27 @@ export default function ReadingPracticeGeneral({ user }) {
                     </div>
                   </div>
 
-                  {/* Course Recommendation */}
+                  {/* Module-specific Course Recommendation */}
                   <div className="mb-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
                     <p className="text-sm font-medium text-amber-800 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4" /> Improve Your Skills
+                      <Lightbulb className="w-4 h-4" /> İlgili Dersi İncele
                     </p>
                     <p className="text-xs text-amber-600 mt-1">
-                      Practice reading similar documents in our Advanced Mastery Course for targeted skill development.
+                      <strong>{moduleContent?.module_title?.split(':')[0]}</strong> modülünde benzer belgeler okuyarak becerilerinizi geliştirin.
                     </p>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="mt-2 text-amber-700 border-amber-300"
-                      onClick={() => navigate('/advanced-mastery')}
-                    >
-                      Go to Course <ChevronRight className="w-3 h-3 ml-1" />
-                    </Button>
+                    <div className="flex gap-2 mt-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-amber-700 border-amber-300"
+                        onClick={() => navigate('/advanced-mastery')}
+                      >
+                        Advanced Mastery → Reading <ChevronRight className="w-3 h-3 ml-1" />
+                      </Button>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2 italic">
+                      💡 Derste "General Training" toggle'ını seçerek profesyonel belge okuma pratiği yapabilirsiniz.
+                    </p>
                   </div>
 
                   <div className="flex gap-2">
