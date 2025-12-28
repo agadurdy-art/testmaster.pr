@@ -477,6 +477,32 @@ export default function GeneralTask2Practice() {
                         </div>
                       )}
                     </div>
+                    
+                    {/* Recommended Lessons - General Training Track */}
+                    {evaluation.recommended_lessons?.length > 0 && (
+                      <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                        <h4 className="font-semibold text-indigo-800 mb-2 text-xs flex items-center gap-1">
+                          📚 Önerilen Dersler (General Training)
+                        </h4>
+                        <ul className="space-y-2">
+                          {evaluation.recommended_lessons.map((lesson, idx) => (
+                            <li 
+                              key={idx} 
+                              className="text-xs bg-white p-2 rounded border border-indigo-100 cursor-pointer hover:border-indigo-300 transition-colors"
+                              onClick={() => navigate(`/courses/mastery/general/${lesson.lesson_id}`)}
+                            >
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium text-indigo-700">{lesson.title}</span>
+                                <Badge className="bg-indigo-100 text-indigo-600 text-xs">
+                                  {lesson.stage?.charAt(0).toUpperCase() + lesson.stage?.slice(1)}
+                                </Badge>
+                              </div>
+                              <p className="text-gray-500 mt-1">{lesson.reason}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </Card>
                 )}
 
