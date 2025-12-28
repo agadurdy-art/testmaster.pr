@@ -278,6 +278,139 @@ async def get_track_recommendations(
     }
 
 
+# ============ TRACK-SPECIFIC AI EVALUATION ENDPOINTS ============
+
+@router.post("/evaluate/writing")
+async def evaluate_writing_track_specific(
+    response: str = Body(...),
+    task_type: str = Body(...),  # "task1" or "task2"
+    track: str = Body("academic"),  # "academic" or "general"
+    context: str = Body(None)  # For general task1: "formal", "semi_formal", "informal"
+):
+    """
+    Evaluate writing with track-specific rubrics.
+    
+    - Academic: Focuses on formal register, data interpretation, academic vocabulary
+    - General: Focuses on appropriate tone/register, practical communication
+    """
+    from services.track_specific_evaluator import track_evaluator, IELTSTrack
+    
+    try:
+        track_enum = IELTSTrack.ACADEMIC if track == "academic" else IELTSTrack.GENERAL
+        
+        evaluation = await track_evaluator.evaluate_writing(
+            response=response,
+            task_type=task_type,
+            track=track_enum,
+            context=context
+        )
+        
+        return {
+            "success": True,
+            "evaluation": evaluation
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+
+@router.post("/evaluate/reading")
+async def evaluate_reading_track_specific(
+    answers: list = Body(...),  # List of {"answer": "user's answer"}
+    questions: list = Body(...),  # List of {"answer": "correct", "type": "multiple_choice"}
+    track: str = Body("general"),  # "academic" or "general"
+    document_type: str = Body(None)  # For general: "policy_document", "contract_agreement", etc.
+):
+    """
+    Evaluate reading comprehension with skill-based analysis.
+    
+    Returns:
+    - Score and estimated band
+    - Skill-by-skill performance breakdown
+    - Specific feedback for each skill area
+    - Document-type specific tips (General Training)
+    """
+    from services.track_specific_evaluator import track_evaluator, IELTSTrack
+    
+    try:
+        track_enum = IELTSTrack.ACADEMIC if track == "academic" else IELTSTrack.GENERAL
+        
+        evaluation = track_evaluator.evaluate_reading_passage(
+            answers=answers,
+            questions=questions,
+            track=track_enum,
+            document_type=document_type
+        )
+        
+        return {
+            "success": True,
+            "evaluation": evaluation
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+
+@router.get("/evaluation/rubrics/{track}")
+async def get_evaluation_rubrics(track: str):
+    """
+    Get the evaluation rubrics for a specific track.
+    Useful for showing users what criteria they'll be evaluated on.
+    """
+    from services.track_specific_evaluator import track_evaluator
+    
+    if track == "academic":
+        return {
+            "success": True,
+            "track": "academic",
+            "writing_rubrics": track_evaluator.ACADEMIC_WRITING_RUBRICS,
+            "focus_areas": [
+                "Formal academic register",
+                "Data interpretation accuracy",
+                "Academic vocabulary",
+                "Objective analysis",
+                "Hedging language"
+            ]
+        }
+    elif track == "general":
+        return {
+            "success": True,
+            "track": "general",
+            "writing_rubrics": track_evaluator.GENERAL_WRITING_RUBRICS,
+            "reading_skills": track_evaluator.READING_EVALUATION_CRITERIA,
+            "document_types": track_evaluator.GT_DOCUMENT_EVALUATION,
+            "focus_areas": [
+                "Appropriate register (formal/semi-formal/informal)",
+                "Practical communication effectiveness",
+                "Purpose achievement",
+                "Real-world document comprehension"
+            ]
+        }
+    else:
+        return {
+            "success": False,
+            "error": "Invalid track. Use 'academic' or 'general'."
+        }
+
+
+@router.get("/evaluation/reading-skills")
+async def get_reading_skill_categories():
+    """
+    Get all reading skill categories with descriptions.
+    Helps users understand what skills are being tested.
+    """
+    from services.track_specific_evaluator import track_evaluator
+    
+    return {
+        "success": True,
+        "skills": track_evaluator.READING_EVALUATION_CRITERIA
+    }
+
+
 # ============ DYNAMIC ROUTES (course level based) ============
 
 @router.get("/{course_level}")
