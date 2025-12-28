@@ -989,7 +989,7 @@ export default function BeginnerCourse({ user }) {
 
   // Render Writing Section
   const renderWriting = () => {
-    if (!selectedLesson?.writing) return <Card className="p-6"><Loader2 className="w-6 h-6 animate-spin mx-auto" /></Card>;
+    if (!selectedLesson?.writing && writingTrack === 'academic') return <Card className="p-6"><Loader2 className="w-6 h-6 animate-spin mx-auto" /></Card>;
     
     return (
       <Card className="p-6 bg-white border-0 shadow-lg">
@@ -998,35 +998,194 @@ export default function BeginnerCourse({ user }) {
           Writing Practice
         </h3>
         
-        <div className="bg-orange-50 rounded-xl p-5 mb-6">
-          <p className="text-sm text-orange-600 font-medium mb-2">Task:</p>
-          <p className="text-xl text-gray-900 font-medium">{selectedLesson.writing.task}</p>
+        {/* Track Toggle - Academic vs General Training */}
+        <div className="mb-6 p-4 bg-gray-50 rounded-xl">
+          <p className="text-sm font-medium text-gray-600 mb-3">IELTS Track Seçin:</p>
+          <div className="flex gap-2">
+            <Button
+              variant={writingTrack === 'academic' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => { setWritingTrack('academic'); setWritingResponse(''); setWritingFeedback(null); }}
+              className={writingTrack === 'academic' ? 'bg-blue-600 hover:bg-blue-700' : ''}
+            >
+              <BookOpen className="w-4 h-4 mr-1" /> Academic IELTS
+            </Button>
+            <Button
+              variant={writingTrack === 'general' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => { setWritingTrack('general'); setWritingResponse(''); setWritingFeedback(null); }}
+              className={writingTrack === 'general' ? 'bg-purple-600 hover:bg-purple-700' : ''}
+            >
+              <FileText className="w-4 h-4 mr-1" /> General Training
+            </Button>
+          </div>
+          <p className="text-xs text-gray-500 mt-2">
+            {writingTrack === 'academic' 
+              ? '📝 Academic: Basic essay and paragraph writing'
+              : '✉️ General: Letter writing basics (Formal, Informal, Semi-formal)'}
+          </p>
         </div>
-      
-      <div className="mb-6">
-        <Textarea
-          value={writingResponse}
-          onChange={(e) => setWritingResponse(e.target.value)}
-          placeholder="Write your answer here..."
-          className="min-h-[150px]"
-        />
-        <p className="text-sm text-gray-500 mt-2">Words: {writingResponse.trim().split(/\s+/).filter(w => w).length}</p>
         
-        <Button 
-          onClick={evaluateWriting} 
-          disabled={!writingResponse.trim() || evaluatingWriting}
-          className="mt-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white"
-        >
-          {evaluatingWriting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-          Get Feedback
-        </Button>
-      </div>
-      
-      {/* Model Answer */}
-      <div className="bg-green-50 rounded-xl p-4 mb-4">
-        <p className="text-sm text-green-600 font-medium mb-2">Model Answer:</p>
-        <p className="text-gray-800 italic">&ldquo;{selectedLesson.writing.model_answer}&rdquo;</p>
-      </div>
+        {/* Academic Writing Content */}
+        {writingTrack === 'academic' && selectedLesson?.writing && (
+          <>
+            <div className="bg-orange-50 rounded-xl p-5 mb-6">
+              <p className="text-sm text-orange-600 font-medium mb-2">ACADEMIC WRITING TASK:</p>
+              <p className="text-xl text-gray-900 font-medium">{selectedLesson.writing.task}</p>
+            </div>
+          
+            <div className="mb-6">
+              <Textarea
+                value={writingResponse}
+                onChange={(e) => setWritingResponse(e.target.value)}
+                placeholder="Write your answer here..."
+                className="min-h-[150px]"
+              />
+              <p className="text-sm text-gray-500 mt-2">Words: {writingResponse.trim().split(/\s+/).filter(w => w).length}</p>
+              
+              <Button 
+                onClick={evaluateWriting} 
+                disabled={!writingResponse.trim() || evaluatingWriting}
+                className="mt-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white"
+              >
+                {evaluatingWriting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
+                Get Feedback
+              </Button>
+            </div>
+            
+            {/* Model Answer */}
+            <details className="cursor-pointer mb-4">
+              <summary className="font-bold text-green-700">📝 Model Answer</summary>
+              <div className="mt-2 p-4 bg-green-50 rounded-lg">
+                <p className="text-gray-800 italic">&ldquo;{selectedLesson.writing.model_answer}&rdquo;</p>
+              </div>
+            </details>
+          </>
+        )}
+        
+        {/* General Training Writing Content */}
+        {writingTrack === 'general' && (
+          <>
+            {generalLessons.length > 0 ? (
+              <>
+                {/* Lesson Selector */}
+                <div className="mb-4">
+                  <p className="text-sm font-medium text-gray-600 mb-2">Ders Seçin:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {generalLessons.map((lesson, idx) => (
+                      <Button
+                        key={idx}
+                        variant={selectedGeneralLesson?.id === lesson.id ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => { setSelectedGeneralLesson(lesson); setWritingResponse(''); setWritingFeedback(null); }}
+                        className={selectedGeneralLesson?.id === lesson.id ? 'bg-purple-600' : ''}
+                      >
+                        {lesson.topic}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                
+                {selectedGeneralLesson && (
+                  <>
+                    <div className="bg-purple-50 rounded-xl p-5 mb-6">
+                      <p className="text-xs text-purple-600 font-semibold mb-2">GENERAL TRAINING - {selectedGeneralLesson.title}</p>
+                      <p className="text-sm text-gray-600 mb-3">{selectedGeneralLesson.writing?.title}</p>
+                      
+                      {/* Key Concepts */}
+                      {selectedGeneralLesson.writing?.key_concepts && (
+                        <div className="mb-4 p-3 bg-white rounded-lg">
+                          <p className="text-xs font-semibold text-purple-700 mb-2">Temel Kavramlar:</p>
+                          <ul className="text-sm text-gray-700 space-y-1">
+                            {selectedGeneralLesson.writing.key_concepts.map((concept, i) => (
+                              <li key={i}>• {concept}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      
+                      <p className="text-lg text-gray-900 font-medium">{selectedGeneralLesson.writing?.example_task}</p>
+                    </div>
+                    
+                    <div className="mb-6">
+                      <Textarea 
+                        value={writingResponse} 
+                        onChange={(e) => setWritingResponse(e.target.value)} 
+                        placeholder="Write your letter here (aim for 150+ words)..." 
+                        className="min-h-[150px]" 
+                      />
+                      <p className="text-sm text-gray-500 mt-2">Words: {writingResponse.trim().split(/\s+/).filter(w => w).length}</p>
+                      <Button 
+                        onClick={evaluateWriting} 
+                        disabled={!writingResponse.trim() || evaluatingWriting} 
+                        className="mt-4 bg-gradient-to-r from-purple-500 to-pink-600"
+                      >
+                        {evaluatingWriting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null} Get Feedback
+                      </Button>
+                    </div>
+                    
+                    {/* Model Answers - Band 6 & Band 8 */}
+                    {selectedGeneralLesson.writing?.model_answer && (
+                      <div className="space-y-3 mb-4">
+                        <details className="cursor-pointer">
+                          <summary className="font-bold text-amber-700">📝 Model Letter (Band 6)</summary>
+                          <div className="mt-2 p-4 bg-amber-50 rounded-lg">
+                            <p className="text-gray-700 whitespace-pre-line font-mono text-sm">
+                              {selectedGeneralLesson.writing.model_answer.band_6}
+                            </p>
+                          </div>
+                        </details>
+                        
+                        <details className="cursor-pointer">
+                          <summary className="font-bold text-green-700">🏆 Model Letter (Band 8)</summary>
+                          <div className="mt-2 p-4 bg-green-50 rounded-lg">
+                            <p className="text-gray-700 whitespace-pre-line font-mono text-sm">
+                              {selectedGeneralLesson.writing.model_answer.band_8}
+                            </p>
+                          </div>
+                        </details>
+                      </div>
+                    )}
+                    
+                    {/* Formal/Informal Phrases */}
+                    {(selectedGeneralLesson.writing?.formal_phrases || selectedGeneralLesson.writing?.informal_phrases) && (
+                      <details className="cursor-pointer mb-4">
+                        <summary className="font-bold text-blue-700">💡 Useful Phrases</summary>
+                        <div className="mt-2 p-4 bg-blue-50 rounded-lg space-y-3">
+                          {selectedGeneralLesson.writing.formal_phrases?.opening_reason && (
+                            <div>
+                              <p className="text-xs font-semibold text-blue-600 mb-1">Opening:</p>
+                              <ul className="text-sm text-gray-700 space-y-1">
+                                {selectedGeneralLesson.writing.formal_phrases.opening_reason.slice(0, 3).map((phrase, i) => (
+                                  <li key={i}>• {phrase}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                          {selectedGeneralLesson.writing.informal_phrases?.opening && (
+                            <div>
+                              <p className="text-xs font-semibold text-blue-600 mb-1">Opening (Informal):</p>
+                              <ul className="text-sm text-gray-700 space-y-1">
+                                {selectedGeneralLesson.writing.informal_phrases.opening.slice(0, 3).map((phrase, i) => (
+                                  <li key={i}>• {phrase}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </details>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-8 bg-gray-50 rounded-xl">
+                <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                <p className="text-gray-500">General Training dersleri yükleniyor...</p>
+              </div>
+            )}
+          </>
+        )}
       
       {/* Feedback */}
       {writingFeedback && (
