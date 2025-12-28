@@ -1473,45 +1473,97 @@ export default function MasteryCourse({ user }) {
       {/* General Training Writing Content */}
       {writingTrack === 'general' && (
         <>
-          {generalLessons.length > 0 ? (
+          {languageBooster ? (
             <>
-              {/* Lesson Selector */}
-              <div className="mb-4">
-                <p className="text-sm font-medium text-gray-600 mb-2">Ders Seçin:</p>
-                <div className="flex flex-wrap gap-2">
-                  {generalLessons.map((lesson, idx) => (
-                    <Button
-                      key={idx}
-                      variant={selectedGeneralLesson?.id === lesson.id ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => { setSelectedGeneralLesson(lesson); setWritingResponse(''); setWritingFeedback(null); }}
-                      className={selectedGeneralLesson?.id === lesson.id ? 'bg-purple-600' : ''}
-                    >
-                      {lesson.topic}
-                    </Button>
-                  ))}
+              {/* Module-Specific Language Booster Content */}
+              <div className="bg-purple-50 rounded-xl p-5 mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-purple-600 text-white">{languageBooster.module.toUpperCase()}</Badge>
+                  <span className="text-xs text-purple-600 font-semibold">GENERAL TRAINING - Module-Specific</span>
                 </div>
-              </div>
-              
-              {selectedGeneralLesson && (
-                <>
-                  <div className="bg-purple-50 rounded-xl p-5 mb-6">
-                    <p className="text-xs text-purple-600 font-semibold mb-2">GENERAL TRAINING - {selectedGeneralLesson.title}</p>
-                    <p className="text-sm text-gray-600 mb-3">{selectedGeneralLesson.writing?.title}</p>
-                    
-                    {/* Key Concepts */}
-                    {selectedGeneralLesson.writing?.key_concepts && (
-                      <div className="mb-4 p-3 bg-white rounded-lg">
-                        <p className="text-xs font-semibold text-purple-700 mb-2">Temel Kavramlar:</p>
+                <p className="text-sm text-gray-600 mb-4">{languageBooster.learning_outcome}</p>
+                
+                {/* Key Vocabulary */}
+                <details className="mb-4 cursor-pointer">
+                  <summary className="font-bold text-purple-700 flex items-center gap-2">
+                    📘 Key Vocabulary ({languageBooster.key_vocabulary?.length || 0} words)
+                  </summary>
+                  <div className="mt-2 p-3 bg-white rounded-lg max-h-48 overflow-y-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {languageBooster.key_vocabulary?.map((vocab, i) => (
+                        <div key={i} className="p-2 bg-gray-50 rounded text-sm">
+                          <span className="font-medium text-purple-700">{vocab.word}</span>
+                          <span className="text-gray-500"> - {vocab.meaning}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </details>
+                
+                {/* Functional Phrases */}
+                <details className="mb-4 cursor-pointer">
+                  <summary className="font-bold text-blue-700 flex items-center gap-2">
+                    🧩 Functional Phrases
+                  </summary>
+                  <div className="mt-2 p-3 bg-white rounded-lg space-y-3">
+                    {languageBooster.functional_phrases?.requests && (
+                      <div>
+                        <p className="text-xs font-semibold text-blue-600 mb-1">For Requests:</p>
                         <ul className="text-sm text-gray-700 space-y-1">
-                          {selectedGeneralLesson.writing.key_concepts.map((concept, i) => (
-                            <li key={i}>• {concept}</li>
+                          {languageBooster.functional_phrases.requests.map((phrase, i) => (
+                            <li key={i} className="italic">• {phrase}</li>
                           ))}
                         </ul>
                       </div>
                     )}
-                    
-                    <p className="text-lg text-gray-900 font-medium">{selectedGeneralLesson.writing?.example_task}</p>
+                    {languageBooster.functional_phrases?.complaints && (
+                      <div>
+                        <p className="text-xs font-semibold text-red-600 mb-1">For Complaints:</p>
+                        <ul className="text-sm text-gray-700 space-y-1">
+                          {languageBooster.functional_phrases.complaints.map((phrase, i) => (
+                            <li key={i} className="italic">• {phrase}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {languageBooster.functional_phrases?.explanations && (
+                      <div>
+                        <p className="text-xs font-semibold text-green-600 mb-1">For Explanations:</p>
+                        <ul className="text-sm text-gray-700 space-y-1">
+                          {languageBooster.functional_phrases.explanations.map((phrase, i) => (
+                            <li key={i} className="italic">• {phrase}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                </details>
+                
+                {/* Common Mistakes */}
+                {languageBooster.common_mistakes && (
+                  <details className="mb-4 cursor-pointer">
+                    <summary className="font-bold text-red-700 flex items-center gap-2">
+                      ⚠️ Common Mistakes
+                    </summary>
+                    <div className="mt-2 p-3 bg-white rounded-lg space-y-2">
+                      {languageBooster.common_mistakes.map((mistake, i) => (
+                        <div key={i} className="p-2 bg-gray-50 rounded text-sm">
+                          <p className="text-red-600 line-through">{mistake.wrong}</p>
+                          <p className="text-green-600 font-medium">✓ {mistake.correct}</p>
+                          <p className="text-gray-500 text-xs italic">{mistake.explanation}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
+                )}
+              </div>
+              
+              {/* Writing Task from Language Booster */}
+              {languageBooster.writing_task && (
+                <>
+                  <div className="bg-orange-50 rounded-xl p-5 mb-6">
+                    <p className="text-xs text-orange-600 font-semibold mb-2">WRITING TASK - {languageBooster.writing_task.title}</p>
+                    <p className="text-gray-900 whitespace-pre-line">{languageBooster.writing_task.prompt}</p>
                   </div>
                   
                   <div className="mb-6">
@@ -1531,14 +1583,14 @@ export default function MasteryCourse({ user }) {
                     </Button>
                   </div>
                   
-                  {/* Model Answers - Band 6 & Band 8 */}
-                  {selectedGeneralLesson.writing?.model_answer && (
+                  {/* Model Answers */}
+                  {languageBooster.writing_task.model_answer && (
                     <div className="space-y-3 mb-4">
                       <details className="cursor-pointer">
                         <summary className="font-bold text-amber-700">📝 Model Letter (Band 6)</summary>
                         <div className="mt-2 p-4 bg-amber-50 rounded-lg">
                           <p className="text-gray-700 whitespace-pre-line font-mono text-sm">
-                            {selectedGeneralLesson.writing.model_answer.band_6}
+                            {languageBooster.writing_task.model_answer.band_6}
                           </p>
                         </div>
                       </details>
@@ -1547,38 +1599,21 @@ export default function MasteryCourse({ user }) {
                         <summary className="font-bold text-green-700">🏆 Model Letter (Band 8)</summary>
                         <div className="mt-2 p-4 bg-green-50 rounded-lg">
                           <p className="text-gray-700 whitespace-pre-line font-mono text-sm">
-                            {selectedGeneralLesson.writing.model_answer.band_8}
+                            {languageBooster.writing_task.model_answer.band_8}
                           </p>
                         </div>
                       </details>
                     </div>
                   )}
-                  
-                  {/* Formal Phrases (if available) */}
-                  {selectedGeneralLesson.writing?.formal_phrases && (
-                    <details className="cursor-pointer mb-4">
-                      <summary className="font-bold text-blue-700">💡 Useful Phrases</summary>
-                      <div className="mt-2 p-4 bg-blue-50 rounded-lg space-y-3">
-                        {selectedGeneralLesson.writing.formal_phrases.opening_reason && (
-                          <div>
-                            <p className="text-xs font-semibold text-blue-600 mb-1">Opening:</p>
-                            <ul className="text-sm text-gray-700 space-y-1">
-                              {selectedGeneralLesson.writing.formal_phrases.opening_reason.slice(0, 3).map((phrase, i) => (
-                                <li key={i}>• {phrase}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        {selectedGeneralLesson.writing.formal_phrases.requests && (
-                          <div>
-                            <p className="text-xs font-semibold text-blue-600 mb-1">Requests:</p>
-                            <ul className="text-sm text-gray-700 space-y-1">
-                              {selectedGeneralLesson.writing.formal_phrases.requests.slice(0, 3).map((phrase, i) => (
-                                <li key={i}>• {phrase}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                </>
+              )}
+            </>
+          ) : (
+            <div className="text-center py-8 bg-gray-50 rounded-xl">
+              <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500">Module-specific content loading...</p>
+            </div>
+          )}}
                         {selectedGeneralLesson.writing.formal_phrases.closing && (
                           <div>
                             <p className="text-xs font-semibold text-blue-600 mb-1">Closing:</p>
