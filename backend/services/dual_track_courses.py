@@ -2416,6 +2416,296 @@ class DualTrackCourseManager:
                     "band_8": "Dear Research Team,\n\nI am writing to express my interest in participating in the CARDIO-PREDICT study (reference HP-2024-0156) following my discussion with Dr. Ahmed at the Cardiology Department.\n\nHaving read the participant information sheet, I am broadly supportive of the research objectives and believe my health profile may be suitable. However, I would appreciate clarification on several points before proceeding.\n\nFirstly, regarding the experimental medication: the information sheet mentions 'potential cardiovascular effects' as a known risk. Could you provide more specific information about the nature and frequency of such effects observed in previous phases?\n\nSecondly, I understand that participation involves five hospital visits over twelve months. Would there be flexibility in appointment scheduling for participants with work commitments?\n\nThirdly, concerning data handling: I note that anonymised data may be shared with international research partners. Could you clarify which organisations might receive this data and under what regulatory frameworks?\n\nFinally, I would like to understand the process should I wish to withdraw mid-study. Specifically, would any data collected before withdrawal be retained?\n\nI remain genuinely interested in contributing to this research and would welcome an opportunity to discuss these points in person.\n\nYours sincerely,\nJennifer Brooks"
                 }
             }
+        },
+        "public_transport": {
+            "module_id": "public_transport",
+            "module_title": "Public Transport and Sustainable Infrastructure",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Transport infrastructure advocacy and policy engagement",
+            "learning_outcome": "Write persuasive letters advocating for transport improvements with evidence-based arguments.",
+            "writing_scenario": {
+                "title": "Public Transport Improvement Proposal",
+                "context": "Your community lacks adequate public transport and you want to advocate for improvements.",
+                "prompt": "Write a letter to the regional transport authority.\n\nIn your letter:\n- Describe the current transport deficiencies\n- Present evidence of community impact\n- Propose specific improvements\n- Offer to facilitate community input",
+                "strategic_elements": {
+                    "tone": "Collaborative and solution-focused",
+                    "purpose": "Secure commitment to improvements while building partnership",
+                    "argument": "Combine resident testimony with economic/environmental benefits"
+                },
+                "key_phrases": [
+                    "I am writing on behalf of residents to highlight...",
+                    "Our community survey demonstrates that...",
+                    "The economic implications include...",
+                    "We propose the following improvements...",
+                    "We are prepared to facilitate community engagement..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Director of Strategic Planning,\n\nI am writing on behalf of the Oakfield Residents Association to address the urgent need for improved public transport connectivity in our area.\n\nThe closure of bus routes 47 and 52 in 2021 has left 3,400 households without direct public transport access to the town centre. Our community survey of 800 residents revealed that 67% now rely on private vehicles for journeys that were previously made by bus, while 23% of non-drivers report significant hardship accessing essential services.\n\nThe economic and environmental implications are substantial. Local businesses report an average 15% decline in footfall since the route closures, and the council's own air quality data shows increased particulate levels along the B3042—now the primary alternative route.\n\nWe propose the following: (1) reinstatement of hourly service to the town centre via a revised route 47; (2) integration with the planned cycle infrastructure on Mill Lane; and (3) a demand-responsive service for elderly residents.\n\nThe Residents Association has secured commitments from local employers to subsidise bus passes, potentially making the route commercially viable.\n\nWe are prepared to facilitate community engagement sessions and gather data to support the business case. I would welcome the opportunity to present our proposal in detail.\n\nYours sincerely,\nMichael Patterson\nChair, Oakfield Residents Association"
+                }
+            }
+        },
+        "work_employment": {
+            "module_id": "work_employment",
+            "module_title": "Work, Employment, and the Evolving Labor Market",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Employment dispute resolution and workplace rights",
+            "learning_outcome": "Write effective formal correspondence regarding workplace issues and employment rights.",
+            "writing_scenario": {
+                "title": "Flexible Working Request",
+                "context": "You need to request a change to your working arrangements and must make a formal case.",
+                "prompt": "Write a formal flexible working request to your employer.\n\nIn your letter:\n- Specify the change you are requesting\n- Explain the reasons for your request\n- Address potential business concerns\n- Propose solutions to maintain productivity",
+                "strategic_elements": {
+                    "tone": "Professional and reasonable, demonstrating business awareness",
+                    "purpose": "Secure approval by addressing concerns proactively",
+                    "argument": "Frame personal needs within business benefit terms"
+                },
+                "key_phrases": [
+                    "I am writing to make a statutory flexible working request...",
+                    "The change I am proposing would involve...",
+                    "I believe this arrangement would benefit the business by...",
+                    "I have considered the following potential concerns...",
+                    "I propose the following measures to maintain productivity..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Ms. Harrison,\n\nI am writing to make a statutory flexible working request under Section 80F of the Employment Rights Act 1996.\n\nI am requesting to change my working pattern from 9am-5pm office-based to a hybrid arrangement: three days office-based (Tuesday, Wednesday, Thursday) and two days working from home (Monday, Friday). This arrangement would commence from 1st February and continue indefinitely.\n\nThe primary reason for this request relates to my recent appointment as primary carer for my elderly mother following her diagnosis with early-stage dementia. The proposed arrangement would enable me to manage medical appointments and care coordination while maintaining my professional commitments.\n\nI have carefully considered potential impacts on my role. Regarding team collaboration, I note that our critical project meetings already occur on Tuesdays and Wednesdays, which I would attend in person. For client interactions, I propose maintaining full availability via video conference and committing to attend the office for any client visits with 48 hours' notice.\n\nTo maintain productivity, I suggest: (1) installing company-approved VPN access; (2) weekly 1:1 calls with you to review priorities; and (3) a three-month review period to assess the arrangement's effectiveness.\n\nI am committed to ensuring this change supports rather than hinders my performance. I am happy to discuss this proposal and consider alternative arrangements.\n\nYours sincerely,\nRebecca Thompson"
+                }
+            }
+        },
+        "social_demographics": {
+            "module_id": "social_demographics",
+            "module_title": "Social Issues: Demographics and Generational Equity",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Social policy advocacy and citizen engagement",
+            "learning_outcome": "Write compelling advocacy letters on social issues requiring balanced representation of diverse perspectives.",
+            "writing_scenario": {
+                "title": "Intergenerational Housing Policy Letter",
+                "context": "You want to advocate for housing policies that benefit both older and younger generations.",
+                "prompt": "Write a letter to your Member of Parliament about housing policy.\n\nIn your letter:\n- Describe the housing challenges in your area\n- Present perspectives from different generations\n- Propose policies that could help both groups\n- Request specific parliamentary action",
+                "strategic_elements": {
+                    "tone": "Diplomatic and inclusive, avoiding generational blame",
+                    "purpose": "Build cross-generational coalition for change",
+                    "argument": "Present as common challenge requiring collective solutions"
+                },
+                "key_phrases": [
+                    "I am writing to you as a constituent concerned about...",
+                    "This issue affects residents across all age groups...",
+                    "Both older residents and young families have expressed...",
+                    "I would propose policies that address...",
+                    "I would welcome the opportunity to discuss..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Ms. Thompson MP,\n\nI am writing as a constituent to express concern about the housing situation in Westford, which affects residents across all generations.\n\nAt our recent community forum, I was struck by how housing challenges connect rather than divide us. Young families shared their struggles to afford homes near aging parents who need support. Meanwhile, older residents spoke of being unable to downsize because suitable smaller properties are equally unaffordable.\n\nThe statistics reflect these concerns: average house prices in Westford have risen 45% in five years, while social housing waiting lists have doubled. At the same time, 340 three-bedroom council properties are occupied by single pensioners who would welcome smaller accommodation if it were available.\n\nI would propose a package addressing multiple needs: (1) incentivised downsizing schemes allowing elderly residents to move to purpose-built flats while freeing family homes; (2) community land trust development on council-owned sites; and (3) improved planning enforcement against second-home conversions.\n\nThese approaches would help young families access housing while enabling older residents to remain in supportive communities—addressing what appears to be generational conflict as the shared challenge it actually is.\n\nI would welcome the opportunity to discuss these proposals and share testimonies from community members.\n\nYours sincerely,\nDr. James Wilson"
+                }
+            }
+        },
+        "education_philosophy": {
+            "module_id": "education_philosophy",
+            "module_title": "Education and Pedagogical Philosophy",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Educational governance and parental advocacy",
+            "learning_outcome": "Write effective correspondence to educational institutions regarding policy concerns.",
+            "writing_scenario": {
+                "title": "School Policy Feedback Letter",
+                "context": "Your school has introduced a policy you have concerns about.",
+                "prompt": "Write a letter to your school's governing body about a policy concern.\n\nIn your letter:\n- Acknowledge the policy's intentions\n- Present your specific concerns\n- Offer alternative suggestions\n- Request dialogue on the matter",
+                "strategic_elements": {
+                    "tone": "Respectful and constructive, parent as partner not adversary",
+                    "purpose": "Influence policy while maintaining collaborative relationship",
+                    "argument": "Frame concerns as helping achieve the school's own goals"
+                },
+                "key_phrases": [
+                    "I am writing as a parent to offer feedback on...",
+                    "I understand the rationale behind this policy...",
+                    "My concern is that in practice...",
+                    "I would suggest the following modifications...",
+                    "I believe we share the goal of..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Chair of Governors,\n\nI am writing as a parent to offer constructive feedback on the new mobile phone policy introduced this term.\n\nI understand and support the rationale behind restricting phone use during lessons—research clearly demonstrates the impact of device distractions on learning. I also appreciate the consultation process that preceded this decision.\n\nHowever, I have concerns about the policy's application to before-school and break times. My daughter, Emma (Year 9), uses her phone to coordinate with me regarding her after-school care arrangements, which vary daily due to my shift work. Under the current policy, she cannot check messages even during breaks, leading to significant anxiety about collection arrangements.\n\nSeveral other working parents have expressed similar concerns. We are not seeking unlimited phone access, but rather a balanced approach that acknowledges legitimate family communication needs.\n\nI would suggest: (1) permitting supervised phone checks at morning break in a designated area; (2) allowing students to check phones after the final bell before leaving school; or (3) implementing a messaging system via the school office for urgent family communications.\n\nI believe we share the goal of an education environment that supports both academic focus and practical family coordination. I would welcome the opportunity to discuss this at the next parent forum.\n\nYours sincerely,\nSarah Mitchell"
+                }
+            }
+        },
+        "globalisation_homogenisation": {
+            "module_id": "globalisation_homogenisation",
+            "module_title": "Globalisation, Cultural Identity, and Homogenisation",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Cultural heritage protection and community identity",
+            "learning_outcome": "Write persuasive letters advocating for cultural preservation in the face of development pressures.",
+            "writing_scenario": {
+                "title": "Heritage Protection Campaign Letter",
+                "context": "A development threatens a site of cultural significance to your community.",
+                "prompt": "Write a letter to the Heritage Protection Agency.\n\nIn your letter:\n- Describe the site's cultural significance\n- Explain the threat it faces\n- Present evidence of community attachment\n- Request formal protection status",
+                "strategic_elements": {
+                    "tone": "Passionate but evidence-based, appealing to official criteria",
+                    "purpose": "Secure protection by meeting heritage designation requirements",
+                    "argument": "Connect local significance to broader heritage values"
+                },
+                "key_phrases": [
+                    "I am writing to request consideration for heritage protection of...",
+                    "The cultural significance of this site encompasses...",
+                    "Our community has gathered evidence demonstrating...",
+                    "The proposed development would irreversibly...",
+                    "We believe this site meets the criteria for..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Heritage Protection Officer,\n\nI am writing on behalf of the Riverside Heritage Group to request consideration for heritage protection of the Old Mill building and surrounding watermeadows on Mill Lane.\n\nThe cultural significance of this site encompasses multiple dimensions. The mill building, constructed in 1823, represents one of only three surviving examples of steam-powered grain mills in the region. Beyond its architectural merit, the site holds profound community significance—oral histories gathered from 47 long-term residents reveal that the annual Mill Fair, held continuously since 1856, remains a focal point of local identity.\n\nThe site now faces imminent threat from Planning Application 2024/PLN/00892, which proposes demolition of the mill and development of 120 residential units. While we recognise housing needs, we believe this particular site warrants protection rather than destruction.\n\nOur research documents: (1) the mill's inclusion in Pevsner's Architectural Guide as a 'notable survivor'; (2) archaeological evidence of medieval predecessor structures; and (3) the watermeadow system's value as a habitat corridor. We have petitions with 1,200 signatures supporting preservation.\n\nWe believe this site meets criteria for listing under both architectural and historic community significance. We request a formal assessment before any planning decision proceeds.\n\nYours faithfully,\nDr. Patricia Edwards\nChair, Riverside Heritage Group"
+                }
+            }
+        },
+        "environment_ecological": {
+            "module_id": "environment_ecological",
+            "module_title": "The Environment: Ecological Integrity and Sustainable Mitigation",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Environmental complaint and corporate accountability",
+            "learning_outcome": "Write effective complaints about environmental issues requiring technical understanding and regulatory awareness.",
+            "writing_scenario": {
+                "title": "Environmental Pollution Complaint",
+                "context": "You have observed environmental damage caused by a local business.",
+                "prompt": "Write a complaint to the Environment Agency.\n\nIn your letter:\n- Describe the environmental issue you have observed\n- Provide evidence and documentation\n- Explain the ecological impact\n- Request investigation and enforcement",
+                "strategic_elements": {
+                    "tone": "Factual and precise, avoiding emotional language",
+                    "purpose": "Trigger formal investigation through credible reporting",
+                    "argument": "Present observations systematically with supporting evidence"
+                },
+                "key_phrases": [
+                    "I wish to report what I believe to be a pollution incident...",
+                    "I have documented the following observations...",
+                    "The ecological impact has been evident in...",
+                    "I have attached photographic evidence dated...",
+                    "I request that this matter be formally investigated..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Environment Agency Incident Team,\n\nI wish to report what I believe to be ongoing industrial discharge into the River Millbrook from premises operated by Westfield Chemical Processing Ltd (grid reference: TQ 456 789).\n\nI have documented the following observations over a four-week period. On 3rd, 10th, 17th, and 24th March, I observed discoloured water—ranging from milky white to pale yellow—being discharged from an outfall pipe on the company's boundary fence directly into the river. Discharge appeared to occur between 6am and 7am on each occasion. I have photographic and video evidence with timestamps.\n\nThe ecological impact has been evident in the 500-metre stretch downstream. I have observed: significant reduction in invertebrate life on river stones; absence of the usual heron population; and a visible decline in aquatic vegetation. Additionally, local residents have reported an unusual chemical odour on multiple occasions.\n\nI understand that Westfield Chemical Processing holds an environmental permit, but I question whether the discharge I have documented falls within permitted parameters.\n\nI attach: (1) photographs with dates and grid references; (2) a log of my observations; and (3) a map showing the discharge point and affected area.\n\nI request formal investigation and would be willing to provide access to my property for monitoring equipment if helpful.\n\nYours faithfully,\nRobert Mitchell"
+                }
+            }
+        },
+        "crime_reintegration": {
+            "module_id": "crime_reintegration",
+            "module_title": "Crime, Justice, and Social Reintegration",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Rehabilitation advocacy and second-chance employment",
+            "learning_outcome": "Write persuasive letters supporting rehabilitation programmes and second-chance employment.",
+            "writing_scenario": {
+                "title": "Rehabilitation Programme Support Letter",
+                "context": "You want to advocate for a local rehabilitation programme facing funding cuts.",
+                "prompt": "Write a letter to your local council about a rehabilitation programme.\n\nIn your letter:\n- Describe the programme and its purpose\n- Present evidence of its effectiveness\n- Explain the consequences of closure\n- Request continued support",
+                "strategic_elements": {
+                    "tone": "Balanced and evidence-focused, addressing scepticism",
+                    "purpose": "Secure funding by demonstrating value for money",
+                    "argument": "Frame rehabilitation as practical benefit, not just compassion"
+                },
+                "key_phrases": [
+                    "I am writing to urge the council to continue support for...",
+                    "The evidence demonstrates that this programme...",
+                    "The cost-benefit analysis shows...",
+                    "Without this programme, the likely outcome is...",
+                    "I would welcome the opportunity to present..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Councillor Davies,\n\nI am writing to urge the council to continue funding for the Pathways Employment Programme, which I understand is under review due to budget constraints.\n\nAs a local business owner who has employed three programme participants over four years, I can speak to its practical value. The programme provides intensive employment preparation for individuals with criminal convictions, addressing the reality that stable employment reduces reoffending by up to 50%.\n\nThe evidence from Pathways' seven-year operation demonstrates clear effectiveness: 68% of participants remain in employment after two years, compared to 23% for the general ex-offender population. Of 340 participants, only 11% have reoffended—substantially below the national average of 48%.\n\nThe cost-benefit analysis is compelling. The programme costs approximately £450,000 annually but saves an estimated £2.1 million in reduced prison costs, court time, and benefits payments. Each successful participant represents approximately £37,000 in annual savings.\n\nWithout this programme, the likely outcome is increased reoffending, with consequent costs to victims, the justice system, and ultimately council budgets. The short-term saving would generate long-term expense.\n\nI would welcome the opportunity to present employer and participant testimonies at the relevant committee meeting.\n\nYours sincerely,\nMark Henderson\nManaging Director, Henderson Construction"
+                }
+            }
+        },
+        "public_health_allocation": {
+            "module_id": "public_health_allocation",
+            "module_title": "Public Health and Medical Resource Allocation",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Healthcare access advocacy and patient rights",
+            "learning_outcome": "Write effective letters regarding healthcare access and treatment decisions.",
+            "writing_scenario": {
+                "title": "Treatment Access Appeal",
+                "context": "You have been denied access to a treatment you believe should be available.",
+                "prompt": "Write a letter appealing a healthcare funding decision.\n\nIn your letter:\n- State the treatment being requested\n- Present medical evidence supporting your case\n- Reference relevant guidelines and policies\n- Request formal reconsideration",
+                "strategic_elements": {
+                    "tone": "Factual and measured, avoiding emotional manipulation",
+                    "purpose": "Secure reconsideration through procedural argument",
+                    "argument": "Focus on clinical evidence and policy compliance"
+                },
+                "key_phrases": [
+                    "I am writing to appeal the decision to decline funding for...",
+                    "The clinical evidence supporting this treatment includes...",
+                    "NICE guidelines TA-XXX state that...",
+                    "I believe my case meets the exceptional circumstances criteria because...",
+                    "I request that this decision be formally reconsidered..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Individual Funding Request Panel,\n\nI am writing to appeal the decision of 15th October to decline funding for Pembrolizumab treatment for my condition (reference: IFR-2024-0567).\n\nI understand that this treatment falls outside standard commissioning criteria. However, I believe my case meets the exceptional circumstances threshold for the following reasons.\n\nThe clinical evidence supporting this treatment in my specific situation includes: (1) documented failure of three previous lines of therapy; (2) positive PD-L1 expression (score 95%), placing me in the cohort most likely to benefit; and (3) otherwise good performance status (ECOG 1) suggesting I could tolerate treatment.\n\nNICE guidelines TA-531 acknowledge that patients with high PD-L1 expression may benefit from immunotherapy even outside currently commissioned indications. My oncologist, Dr. Sarah Chen, has provided a supporting statement confirming that standard options are exhausted and that she considers this treatment clinically appropriate.\n\nThe decision letter cites 'insufficient evidence of benefit.' I respectfully suggest this assessment did not fully consider the clinical papers I previously submitted (Chen et al., 2023; Morrison et al., 2024), which report response rates of 42% in patients with my profile.\n\nI request formal reconsideration of this decision and would welcome the opportunity to attend the panel in person.\n\nYours faithfully,\nElizabeth Morgan"
+                }
+            }
+        },
+        "media_journalism": {
+            "module_id": "media_journalism",
+            "module_title": "The Media Landscape: Journalism, Social Media, and the Public Interest",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Digital rights and online reputation management",
+            "learning_outcome": "Write effective correspondence regarding online content removal and digital rights.",
+            "writing_scenario": {
+                "title": "Right to Be Forgotten Request",
+                "context": "Outdated online content is affecting your reputation and you wish to have it removed.",
+                "prompt": "Write a letter to a website requesting content removal.\n\nIn your letter:\n- Identify the content and its location\n- Explain why removal is justified\n- Reference relevant data protection rights\n- Request specific action",
+                "strategic_elements": {
+                    "tone": "Professional and legally informed, not threatening",
+                    "purpose": "Secure removal by demonstrating clear legal grounds",
+                    "argument": "Balance rights assertion with reasonable expectations"
+                },
+                "key_phrases": [
+                    "I am writing to request the removal of content located at...",
+                    "Under Article 17 of the UK GDPR...",
+                    "The information is no longer relevant because...",
+                    "The continued availability of this content causes...",
+                    "I request that this content be removed within..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Data Protection Officer,\n\nI am writing to request the removal of content located at [website URL] under my rights established by Article 17 of the UK GDPR ('right to erasure').\n\nThe content in question is a 2015 news article reporting on criminal charges against me that were subsequently dismissed. While the original reporting was factually accurate at the time, the outcome—complete dismissal of all charges with no prosecution—was never reported. The article therefore presents a misleading picture to anyone searching my name.\n\nI believe removal is justified under the following grounds: (1) the personal data is no longer necessary for the original journalistic purpose, the case having concluded nine years ago; (2) the data is inaccurate through omission; and (3) the legitimate interests I have in removal outweigh any public interest in retention.\n\nThe continued availability of this content has caused demonstrable harm. I have been declined two employment positions in the past year where background searches revealed this article. Prospective employers have confirmed this was a factor in their decisions.\n\nI understand that journalistic archives may claim exemption, but I submit that a nine-year-old article about charges that were dismissed no longer serves a legitimate public interest.\n\nI request that this content be removed within 30 days, or that you provide written reasons for any refusal.\n\nYours faithfully,\nDavid Morrison"
+                }
+            }
+        },
+        "tourism_heritage": {
+            "module_id": "tourism_heritage",
+            "module_title": "Tourism, Cultural Heritage, and Global Mobility",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Travel complaint escalation and consumer protection",
+            "learning_outcome": "Write sophisticated travel complaint letters requiring understanding of consumer rights and package travel regulations.",
+            "writing_scenario": {
+                "title": "Package Holiday Complaint",
+                "context": "Your holiday was significantly different from what was advertised.",
+                "prompt": "Write a formal complaint to a travel company.\n\nIn your letter:\n- Describe how the holiday differed from the booking\n- Reference consumer protection regulations\n- Quantify your losses and request compensation\n- Indicate next steps if not resolved",
+                "strategic_elements": {
+                    "tone": "Assertive and well-documented, demonstrating regulatory knowledge",
+                    "purpose": "Secure fair compensation by establishing clear legal grounds",
+                    "argument": "Systematically document failures against contractual promises"
+                },
+                "key_phrases": [
+                    "I am writing to make a formal complaint under the Package Travel Regulations 2018...",
+                    "The holiday as delivered differed materially from what was advertised...",
+                    "Under Regulation 15, I am entitled to...",
+                    "I have documented the following discrepancies...",
+                    "Should this matter not be resolved, I will refer it to ABTA..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Customer Relations Manager,\n\nI am writing to make a formal complaint under the Package Travel and Linked Travel Arrangements Regulations 2018 regarding booking reference SUN-789456 (departure 12th August, Santorini).\n\nThe holiday as delivered differed materially from what was advertised and contracted. Specifically: (1) we were accommodated at Hotel Artemis, a three-star property, rather than the booked four-star Hotel Olympia—your representative confirmed no rooms were available at the booked hotel; (2) the 'sea view' room promised featured a partial view of a construction site; (3) the advertised transfers failed to materialise on arrival, requiring a €45 taxi.\n\nUnder Regulation 15, where there is a lack of conformity affecting the performance of a package, the organiser must remedy this without undue cost to the traveller. Your representative's offer of a €50 food voucher was wholly inadequate.\n\nI have documented these failures with photographs, your representative's written acknowledgment, and a statement from fellow guests in similar circumstances.\n\nI calculate fair compensation as: (1) price differential between hotels booked and delivered: £340; (2) transfer costs: £40; (3) compensation for diminished enjoyment: £200. Total: £580.\n\nI request response within 14 days. Should this not be resolved satisfactorily, I will refer the matter to ABTA arbitration and the Competitions and Markets Authority.\n\nYours faithfully,\nRobert Chen"
+                }
+            }
         }
     }
     
