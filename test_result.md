@@ -376,7 +376,106 @@ The ULTRA MASTER PROMPT backend implementation is fully functional with:
 
 **Recommendation for Main Agent:** Backend implementation is complete and ready. The minor issue with writing evaluation success flag does not affect the core ULTRA MASTER PROMPT functionality.
 
-## FINAL TESTING RESULTS - December 28, 2025 (Testing Agent)
+## DUAL-TRACK TEST SENARYOLARI - December 28, 2025
+
+### Test Senaryosu 1 - Track Ayrımı (Frontend + Backend)
+**Band:** 5.5-6.5
+**Track:** General
+**Skill:** Writing Task 1
+**Task:** Letter Writing (Semi-formal - Landlord complaint)
+**Expected Feedback Output:**
+> "Mastery Course → General Track → Semi-formal Communication: Neighbour & Community Letters"
+**Test Steps:**
+1. Login: test@ielts.com / admin123
+2. Navigate to /question-bank
+3. Click Writing card
+4. Select "General Training" section
+5. Select "Task 1 - Letter Writing"
+6. Write a semi-formal letter about heating problem
+7. Submit for evaluation
+**Expected Result:**
+- Feedback contains General Training track lessons
+- NO Academic writing lessons recommended
+**Status:** READY FOR TESTING
+
+---
+
+### Test Senaryosu 2 - Feedback Doğru Derse Yönlendiriyor mu?
+**Band:** 5.5-6.5
+**Track:** General
+**Skill:** Writing Task 1 - Letter
+**Task:** Formal complaint letter
+**Weaknesses:** tone, vocabulary
+**Expected Feedback Output:**
+> "Mastery Course → General Track → Formal Complaints & Explanations"
+> "Beginner Course → General Track → Formal Letters"
+**Verification:**
+- ❌ Academic Writing dersi önerirse → BUG
+- ✅ General Track dersleri önerirse → PASS
+**Status:** READY FOR TESTING
+
+---
+
+### Test Senaryosu 3 - Band + Track + Topic Uyumu
+**Band:** 5.5-6.5
+**Track:** General
+**Topic:** (Not applicable - General Training is topic-independent)
+**Expected Behavior:**
+- Sistem Advanced topic göstermemeli
+- Academic-only lesson önermemeli
+- General Track Beginner + Mastery dersleri önerilmeli
+**Verification API:**
+```
+GET /api/courses/track-recommendations/general?band_level=5.5-6.5&weaknesses=tone,vocabulary
+```
+**Expected Response:** 
+- Beginner + Mastery level General lessons only
+- NO Advanced level lessons for Band 5.5-6.5
+**Status:** READY FOR TESTING
+
+---
+
+### Test Senaryosu 4 - Task Üretimi (Lesson-Anchored + Scenario-Expanded)
+**Band:** 5.5-6.5
+**Track:** General
+**Lesson Anchor:** Semi-formal Letters
+**Expected:**
+- Farklı senaryolar (landlord, neighbour, employer)
+- Aynı objective (semi-formal tone, polite requests)
+- Band uygun (5.5-6.5 level vocabulary)
+**Verification:**
+- Multiple letter prompts with different scenarios
+- All linked to same learning objective
+**Status:** READY FOR TESTING
+
+---
+
+## API Endpoints for Testing
+
+| Endpoint | Purpose |
+|----------|---------|
+| `GET /api/courses/tracks` | Get track information |
+| `GET /api/courses/mastery/general` | Get General Track lessons for Mastery |
+| `GET /api/courses/track-recommendations/general?band_level=5.5-6.5&weaknesses=tone` | Get recommendations |
+| `POST /api/question-bank/writing/evaluate` with `track: "general"` | Evaluate with General Track |
+
+---
+
+## TEST CREDENTIALS
+- **Email:** test@ielts.com
+- **Password:** admin123
+
+---
+
+## IMPLEMENTATION STATUS
+✅ Backend API - Complete
+✅ Dual-Track Service - Complete
+✅ General Training Lessons (13 lessons) - Complete
+✅ Track-specific Recommendations - Complete
+✅ Frontend Evaluation Integration - Complete
+⏳ Full UI Testing - Pending
+
+---
 
 ### ✅ ULTRA MASTER PROMPT FRONTEND IMPLEMENTATION - FULLY TESTED AND WORKING
 
