@@ -1,53 +1,48 @@
 # Test Results - IELTS Question Bank Feature (ULTRA MASTER PROMPT)
 
 ## Test Summary
-**Date:** 2025-12-27  
+**Date:** 2025-12-28  
 **Tester:** Testing Agent  
-**Feature:** IELTS Question Bank Writing Task 1 - ULTRA UX Implementation
+**Feature:** ULTRA MASTER PROMPT - Course-Driven Question Bank Implementation
 
-## COMPLETED - VERIFIED VIA SCREENSHOTS ✅
+## NEW IMPLEMENTATION TO TEST ✅
 
-### 1. Side-by-Side UX Layout ✅
-- Left Panel (45%): Visual display with chart type selector
-- Right Panel (55%): Task description + Writing area + Submit button
-- Clean, professional design with proper spacing
+### 1. Lesson Registry Backend Service
+- **File:** `/app/backend/services/lesson_registry.py`
+- **File:** `/app/backend/routes/lesson_registry.py`
+- Test endpoints:
+  - `GET /api/lesson-registry/topics` - Get all topics
+  - `GET /api/lesson-registry/topics?band_level=4.0-5.0` - Get topics by band
+  - `GET /api/lesson-registry/recommendations/for-evaluation?band_score=5.5&weaknesses=vocabulary,grammar`
+  - `GET /api/lesson-registry/band-gating-info` - Get gating rules
 
-### 2. Authentic Task Descriptions ✅
-Example generated:
-> "The line graph shows the number of visitors to three different museums in Mumbai, India between 2013 and 2020."
+### 2. Band-Based Topic Gating (Frontend)
+- **File:** `/app/frontend/src/pages/QuestionBank.js`
+- Test scenarios:
+  - No band selected: Show all 47 topics
+  - Band 4.0-5.0 selected: Show 14 topics (Beginner only)
+  - Band 5.5-6.5 selected: Show ~27 topics (Beginner + Mastery)
+  - Band 7.0-9.0 selected: Show all 47 topics
 
-Contains:
-- ✅ Specific location (Mumbai, India)
-- ✅ Clear time period (2013-2020)  
-- ✅ Specific subject (museum visitors)
-- ✅ Standard IELTS instructions
-
-### 3. Band Calibration ✅
-- Target Band displayed (5.5-6.5)
-- Complexity indicator (intermediate)
-
-### 4. Chart Quality ✅
-- Multiple trend lines with different colors
-- Clear axis labels
-- Proper title with date range
-
-### 5. Word Count Tracker ✅
-- Real-time word count
-- Minimum word requirement indicator
-
-## Files Created/Modified
-- /app/backend/services/authentic_task_generator.py (NEW)
-- /app/backend/services/model_answer_generator.py (NEW)
-- /app/backend/routes/question_bank.py (MODIFIED)
-- /app/frontend/src/pages/WritingTask1Practice.js (REWRITTEN)
-- /app/frontend/src/App.js (MODIFIED - added demo route)
-
-## API Endpoints Working
-- GET /api/question-bank/writing/task1/generate-authentic ✅
-- GET /api/question-bank/writing/task1/model-answer/{task_id} ✅
+### 3. Recommended Lessons in AI Evaluation
+- **File:** `/app/backend/routes/question_bank.py`
+- **Files:** `/app/frontend/src/pages/WritingTask1Practice.js`, `WritingTask2Practice.js`
+- Test: After evaluation, should show "Önerilen Dersler" section with course recommendations
 
 ## Test Credentials
 - Email: test@ielts.com
+- Password: admin123
+
+## Testing Flow
+1. Login with test credentials
+2. Navigate to `/question-bank`
+3. Test topic gating by selecting different bands
+4. Navigate to Writing practice
+5. Submit a response and verify recommended lessons appear
+
+## Incorporate User Feedback
+- User's primary language is Turkish - UI should be in Turkish
+- Topic gating must dynamically update when band is selected
 - Password: admin123
 
 ## Demo URL (No Login Required)
