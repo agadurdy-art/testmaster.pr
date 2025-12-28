@@ -134,9 +134,56 @@ export default function AdvancedMasteryCourse({ user }) {
         setQuizAnswers({});
         setQuizResults(null);
         setQuizSubmitted(false);
+        // Fetch module-specific language booster
+        fetchModuleLanguageBooster(data.title || module.title);
       }
     } catch (e) {
       toast.error('Failed to load module');
+    }
+  };
+
+  // Fetch Module-Specific Language Booster
+  const fetchModuleLanguageBooster = async (moduleTitle) => {
+    try {
+      const topicToBooster = {
+        'technology': 'work',
+        'environment': 'health',
+        'climate': 'health',
+        'globalisation': 'work',
+        'globalization': 'work',
+        'economics': 'work',
+        'health': 'health',
+        'education': 'education',
+        'society': 'education',
+        'culture': 'travel',
+        'science': 'education',
+        'politics': 'work',
+        'business': 'work',
+        'urbanization': 'housing',
+        'housing': 'housing',
+        'travel': 'travel',
+        'migration': 'travel',
+      };
+      
+      const normalizedTitle = moduleTitle?.toLowerCase() || '';
+      let boosterModule = 'education'; // default
+      
+      for (const [key, value] of Object.entries(topicToBooster)) {
+        if (normalizedTitle.includes(key)) {
+          boosterModule = value;
+          break;
+        }
+      }
+      
+      const response = await fetch(`${API_URL}/api/courses/language-booster/${boosterModule}`);
+      if (!response.ok) return;
+      
+      const data = await response.json();
+      if (data.success) {
+        setLanguageBooster(data.language_booster);
+      }
+    } catch (error) {
+      console.error('Error fetching language booster:', error);
     }
   };
 
