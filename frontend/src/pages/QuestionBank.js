@@ -192,10 +192,10 @@ export default function QuestionBank() {
         {/* Tab Navigation */}
         <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
           {[
-            { id: 'overview', label: 'Genel Bakış', icon: BarChart3 },
-            { id: 'practice', label: 'Pratik Yap', icon: Target },
-            { id: 'tests', label: 'Tam Testler', icon: Clock },
-            { id: 'progress', label: 'İlerleme', icon: TrendingUp }
+            { id: 'overview', label: 'Overview', icon: BarChart3 },
+            { id: 'practice', label: 'Practice', icon: Target },
+            { id: 'tests', label: 'Full Tests', icon: Clock },
+            { id: 'progress', label: 'Progress', icon: TrendingUp }
           ].map(tab => {
             const Icon = tab.icon;
             return (
