@@ -282,6 +282,7 @@ In conclusion, while both early and late school entry have their merits, I would
     # ============ GENERAL TRAINING TASK 1 - LETTER WRITING ============
     LETTER_PROMPTS = {
         "formal": [
+            # COMPLAINT LETTERS
             {
                 "prompt": "You recently bought a piece of electronic equipment from an online store. However, when you received it, you found that it was faulty.\n\nWrite a letter to the manager of the store. In your letter:\n- describe the item you bought\n- explain the problem with the item\n- say what action you would like the store to take",
                 "topic": "complaint",
@@ -307,6 +308,43 @@ In conclusion, while both early and late school entry have their merits, I would
                 ]
             },
             {
+                "prompt": "You recently travelled by train and left a bag on the train. You need to get your bag back.\n\nWrite a letter to the railway company. In your letter:\n- describe the journey you made\n- explain what the bag looks like and what it contains\n- say what you would like the company to do",
+                "topic": "lost_property",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Provide train details (date, time, route)",
+                    "Describe bag appearance and contents",
+                    "Request return procedure"
+                ]
+            },
+            {
+                "prompt": "You recently stayed at a hotel and were not satisfied with the quality of the room.\n\nWrite a letter to the hotel manager. In your letter:\n- give details of your stay\n- explain why you were dissatisfied with the room\n- suggest what the hotel should do to compensate you",
+                "topic": "complaint",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Provide booking details",
+                    "List specific complaints about the room",
+                    "Request compensation (refund, discount, voucher)"
+                ]
+            },
+            {
+                "prompt": "You ordered some goods online but they have not arrived on time.\n\nWrite a letter to the company. In your letter:\n- describe what you ordered and when\n- explain the problem with the delivery\n- say what you expect the company to do",
+                "topic": "complaint",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Order details and date",
+                    "Expected vs actual delivery",
+                    "Request resolution"
+                ]
+            },
+            # JOB APPLICATION LETTERS
+            {
                 "prompt": "You want to apply for a job at a local company.\n\nWrite a letter to the Human Resources Manager. In your letter:\n- say which position you are applying for\n- explain why you are suitable for the job\n- ask for information about the interview process",
                 "topic": "job_application",
                 "letter_type": "formal",
@@ -317,9 +355,84 @@ In conclusion, while both early and late school entry have their merits, I would
                     "Highlight relevant qualifications and experience",
                     "Request interview details"
                 ]
+            },
+            {
+                "prompt": "You have seen an advertisement for a part-time job at a local museum. You are interested in applying.\n\nWrite a letter to the museum director. In your letter:\n- give some information about yourself\n- explain why you would be suitable for the job\n- say when you could start work",
+                "topic": "job_application",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Personal background and education",
+                    "Relevant skills and interest in museums",
+                    "Availability"
+                ]
+            },
+            # REQUEST LETTERS
+            {
+                "prompt": "You are planning to visit a city you have never been to before. You need some information about the place.\n\nWrite a letter to the tourist information office. In your letter:\n- say when you plan to visit and for how long\n- ask about places you can visit\n- ask about accommodation options",
+                "topic": "information_request",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Travel dates and duration",
+                    "Attractions of interest",
+                    "Budget and accommodation preferences"
+                ]
+            },
+            {
+                "prompt": "You want to join a local gym and would like some information about membership.\n\nWrite a letter to the gym manager. In your letter:\n- explain why you want to join\n- ask about facilities and classes available\n- enquire about membership fees and opening hours",
+                "topic": "information_request",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Reason for wanting to join",
+                    "Specific facilities of interest",
+                    "Practical details (cost, hours)"
+                ]
+            },
+            {
+                "prompt": "You would like to attend a short training course at a college in an English-speaking country.\n\nWrite a letter to the college principal. In your letter:\n- give some information about yourself\n- explain which course you are interested in\n- ask about fees and accommodation",
+                "topic": "course_enquiry",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Educational background",
+                    "Course name and reason for interest",
+                    "Financial and practical questions"
+                ]
+            },
+            # SUGGESTION LETTERS
+            {
+                "prompt": "You live in a town where there is a problem with traffic congestion.\n\nWrite a letter to the local council. In your letter:\n- describe the traffic problem in your area\n- explain how this affects your daily life\n- suggest some solutions to the problem",
+                "topic": "suggestion",
+                "letter_type": "formal",
+                "addressee": "Dear Sir or Madam,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Specific traffic issues",
+                    "Personal impact",
+                    "Constructive solutions"
+                ]
+            },
+            {
+                "prompt": "Your local library is considering closing due to lack of funding.\n\nWrite a letter to the local newspaper. In your letter:\n- explain why the library is important to you\n- describe how the closure would affect the community\n- suggest ways to keep the library open",
+                "topic": "suggestion",
+                "letter_type": "formal",
+                "addressee": "Dear Editor,",
+                "closing": "Yours faithfully,",
+                "key_points": [
+                    "Personal value of library",
+                    "Community impact",
+                    "Alternative funding ideas"
+                ]
             }
         ],
         "semi_formal": [
+            # NEIGHBOUR/LANDLORD LETTERS
             {
                 "prompt": "Your neighbour has been making a lot of noise recently, which has been disturbing you.\n\nWrite a letter to your neighbour. In your letter:\n- explain how the noise has affected you\n- suggest some ways to resolve the problem\n- warn of possible consequences if the situation continues",
                 "topic": "neighbour_issue",
@@ -333,6 +446,31 @@ In conclusion, while both early and late school entry have their merits, I would
                 ]
             },
             {
+                "prompt": "You rent an apartment from a private landlord. There is a problem with the heating system that needs fixing.\n\nWrite a letter to your landlord. In your letter:\n- describe the problem with the heating\n- explain how this is affecting you\n- say what you would like the landlord to do",
+                "topic": "landlord_issue",
+                "letter_type": "semi-formal",
+                "addressee": "Dear Mr/Mrs [Name],",
+                "closing": "Yours sincerely,",
+                "key_points": [
+                    "Details of heating problem",
+                    "Impact on daily life",
+                    "Request for repair"
+                ]
+            },
+            {
+                "prompt": "You live in rented accommodation. There has been a water leak in your kitchen and some of your possessions have been damaged.\n\nWrite a letter to your landlord. In your letter:\n- explain what has happened\n- describe the damage to your possessions\n- ask for compensation",
+                "topic": "landlord_issue",
+                "letter_type": "semi-formal",
+                "addressee": "Dear Mr/Mrs [Name],",
+                "closing": "Yours sincerely,",
+                "key_points": [
+                    "Details of the leak",
+                    "List of damaged items",
+                    "Compensation request"
+                ]
+            },
+            # CLUB/ORGANIZATION LETTERS
+            {
                 "prompt": "You have been a member of a local sports club for several years. The club has recently announced significant changes that you disagree with.\n\nWrite a letter to the club committee. In your letter:\n- explain which changes you are concerned about\n- describe why you disagree with them\n- suggest alternative solutions",
                 "topic": "complaint",
                 "letter_type": "semi-formal",
@@ -343,9 +481,59 @@ In conclusion, while both early and late school entry have their merits, I would
                     "Give reasons for disagreement",
                     "Offer constructive alternatives"
                 ]
+            },
+            {
+                "prompt": "You are a member of a book club. The club is looking for new members and you have been asked to help.\n\nWrite a letter to a local newspaper. In your letter:\n- describe what kind of club it is\n- explain what activities the club offers\n- say how interested people can join",
+                "topic": "promotion",
+                "letter_type": "semi-formal",
+                "addressee": "Dear Editor,",
+                "closing": "Yours sincerely,",
+                "key_points": [
+                    "Club description",
+                    "Activities and benefits",
+                    "Joining information"
+                ]
+            },
+            {
+                "prompt": "You work for an international company. Your manager has asked you to organize a team-building event.\n\nWrite a letter to your colleagues. In your letter:\n- explain what the event is and why it is being organized\n- give details of the activities planned\n- ask colleagues to confirm their attendance",
+                "topic": "work_event",
+                "letter_type": "semi-formal",
+                "addressee": "Dear Colleagues,",
+                "closing": "Best regards,",
+                "key_points": [
+                    "Event purpose",
+                    "Activity details (date, time, location)",
+                    "RSVP request"
+                ]
+            },
+            # TEACHER/SCHOOL LETTERS
+            {
+                "prompt": "Your child has been given a lot of homework recently and you are concerned about the amount.\n\nWrite a letter to your child's teacher. In your letter:\n- describe the situation\n- explain why you are worried\n- suggest a possible solution",
+                "topic": "education",
+                "letter_type": "semi-formal",
+                "addressee": "Dear Mr/Mrs [Teacher],",
+                "closing": "Yours sincerely,",
+                "key_points": [
+                    "Amount of homework",
+                    "Impact on child",
+                    "Suggested solution"
+                ]
+            },
+            {
+                "prompt": "Your child is doing a school project and needs to interview someone about their job.\n\nWrite a letter to a family friend who you think would be suitable. In your letter:\n- explain what the project is about\n- say why you think they would be good to interview\n- suggest a time and place for the interview",
+                "topic": "request",
+                "letter_type": "semi-formal",
+                "addressee": "Dear [Name],",
+                "closing": "Yours sincerely,",
+                "key_points": [
+                    "Project description",
+                    "Why they are suitable",
+                    "Practical arrangements"
+                ]
             }
         ],
         "informal": [
+            # INVITATION LETTERS
             {
                 "prompt": "A friend from another country is coming to visit you. You want to tell them about your plans for their stay.\n\nWrite a letter to your friend. In your letter:\n- say how you feel about their visit\n- describe what you plan to do during their stay\n- ask what they would like to do",
                 "topic": "invitation",
@@ -359,6 +547,31 @@ In conclusion, while both early and late school entry have their merits, I would
                 ]
             },
             {
+                "prompt": "You are organizing a surprise birthday party for a close friend.\n\nWrite a letter to another friend inviting them to the party. In your letter:\n- explain who the party is for and why it is a surprise\n- give details of the party (when, where, etc.)\n- ask them to bring something specific",
+                "topic": "invitation",
+                "letter_type": "informal",
+                "addressee": "Hi [Name],",
+                "closing": "See you there! / Can't wait!",
+                "key_points": [
+                    "Party details (surprise element)",
+                    "Date, time, location",
+                    "What to bring"
+                ]
+            },
+            {
+                "prompt": "You are getting married soon and want to invite an old friend who lives far away.\n\nWrite a letter to your friend. In your letter:\n- share your news about the wedding\n- give details of the wedding celebration\n- offer to help with their travel arrangements",
+                "topic": "invitation",
+                "letter_type": "informal",
+                "addressee": "Dearest [Name],",
+                "closing": "With love, / Looking forward to seeing you,",
+                "key_points": [
+                    "Share the exciting news",
+                    "Wedding details",
+                    "Travel assistance offer"
+                ]
+            },
+            # THANK YOU LETTERS
+            {
                 "prompt": "You recently had a birthday party and a friend gave you a very special gift.\n\nWrite a letter to your friend. In your letter:\n- thank them for the gift\n- explain why you like it so much\n- invite them to meet you soon",
                 "topic": "thank_you",
                 "letter_type": "informal",
@@ -371,6 +584,19 @@ In conclusion, while both early and late school entry have their merits, I would
                 ]
             },
             {
+                "prompt": "You recently stayed at a friend's house while visiting their city.\n\nWrite a letter to your friend. In your letter:\n- thank them for their hospitality\n- mention some things you particularly enjoyed\n- invite them to visit you in return",
+                "topic": "thank_you",
+                "letter_type": "informal",
+                "addressee": "Dear [Name],",
+                "closing": "Take care, / Miss you already,",
+                "key_points": [
+                    "Thank for hospitality",
+                    "Highlight memorable moments",
+                    "Return invitation"
+                ]
+            },
+            # NEWS/UPDATE LETTERS
+            {
                 "prompt": "You have recently moved to a new city and want to tell your friend about your new life.\n\nWrite a letter to your friend. In your letter:\n- describe your new home\n- tell them about your new job or studies\n- invite them to visit you",
                 "topic": "personal_update",
                 "letter_type": "informal",
@@ -380,6 +606,80 @@ In conclusion, while both early and late school entry have their merits, I would
                     "Describe the new location and home",
                     "Share news about work/studies",
                     "Extend an invitation"
+                ]
+            },
+            {
+                "prompt": "You have recently started a new hobby and want to tell a friend about it.\n\nWrite a letter to your friend. In your letter:\n- describe what your new hobby is\n- explain how you got started with this hobby\n- suggest doing this activity together",
+                "topic": "personal_update",
+                "letter_type": "informal",
+                "addressee": "Hey [Name],",
+                "closing": "Talk soon, / Can't wait to hear from you,",
+                "key_points": [
+                    "Describe the hobby",
+                    "How you started",
+                    "Invitation to join"
+                ]
+            },
+            {
+                "prompt": "You have just passed an important exam or achieved something significant.\n\nWrite a letter to a friend telling them about it. In your letter:\n- explain what you achieved\n- describe how you prepared for it\n- say what you plan to do next",
+                "topic": "personal_update",
+                "letter_type": "informal",
+                "addressee": "Dear [Name],",
+                "closing": "Speak soon, / Your excited friend,",
+                "key_points": [
+                    "Share the achievement",
+                    "Preparation journey",
+                    "Future plans"
+                ]
+            },
+            # ADVICE LETTERS
+            {
+                "prompt": "A friend has asked you for advice about learning English.\n\nWrite a letter to your friend. In your letter:\n- give some advice about how to learn English effectively\n- recommend some useful resources\n- offer to help them practice",
+                "topic": "advice",
+                "letter_type": "informal",
+                "addressee": "Dear [Name],",
+                "closing": "Good luck! / I'm here if you need me,",
+                "key_points": [
+                    "Learning tips",
+                    "Resource recommendations",
+                    "Offer of help"
+                ]
+            },
+            {
+                "prompt": "A friend is planning to visit your country for the first time and has asked for your advice.\n\nWrite a letter to your friend. In your letter:\n- suggest the best time to visit\n- recommend places they should see\n- give advice about what to bring",
+                "topic": "advice",
+                "letter_type": "informal",
+                "addressee": "Hi [Name],",
+                "closing": "Safe travels! / Can't wait to see you,",
+                "key_points": [
+                    "Best season/time",
+                    "Must-see attractions",
+                    "Packing advice"
+                ]
+            },
+            # APOLOGY LETTERS
+            {
+                "prompt": "You borrowed something from a friend and accidentally broke it.\n\nWrite a letter to your friend. In your letter:\n- apologize for what happened\n- explain how it happened\n- offer to replace or repair the item",
+                "topic": "apology",
+                "letter_type": "informal",
+                "addressee": "Dear [Name],",
+                "closing": "I'm so sorry, / Hope you can forgive me,",
+                "key_points": [
+                    "Sincere apology",
+                    "Explanation",
+                    "Offer to make amends"
+                ]
+            },
+            {
+                "prompt": "You promised to attend a friend's important event but were unable to go.\n\nWrite a letter to your friend. In your letter:\n- apologize for not attending\n- explain why you couldn't be there\n- suggest meeting up soon to make up for it",
+                "topic": "apology",
+                "letter_type": "informal",
+                "addressee": "Dear [Name],",
+                "closing": "I'm really sorry, / Please forgive me,",
+                "key_points": [
+                    "Apology for absence",
+                    "Reason (valid excuse)",
+                    "Make-up plan"
                 ]
             }
         ]
