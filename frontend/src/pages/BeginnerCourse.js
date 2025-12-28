@@ -76,6 +76,9 @@ export default function BeginnerCourse({ user }) {
   const [writingResponse, setWritingResponse] = useState('');
   const [writingFeedback, setWritingFeedback] = useState(null);
   const [evaluatingWriting, setEvaluatingWriting] = useState(false);
+  const [writingTrack, setWritingTrack] = useState('academic'); // Dual-Track support
+  const [generalLessons, setGeneralLessons] = useState([]);
+  const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
   
   // Listening states
   const [listeningAnswers, setListeningAnswers] = useState({});
