@@ -11,7 +11,7 @@ from typing import Optional, List
 router = APIRouter(prefix="/api/courses", tags=["Dual-Track Courses"])
 
 
-# ============ STATIC ROUTES FIRST (to avoid path conflicts) ============
+# ============ STATIC ROUTES FIRST (to avoid path conflicts with dynamic routes) ============
 
 @router.get("/tracks")
 async def get_track_info():
@@ -42,7 +42,93 @@ async def get_track_info():
     }
 
 
-# ============ COURSE WITH TRACKS ============
+@router.get("/general-summary")
+async def get_general_track_summary():
+    """Get summary of all General Training content across courses."""
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    return {
+        "success": True,
+        "general_track_overview": {
+            "beginner": {
+                "band_target": "4.0-5.0",
+                "lesson_count": len(DualTrackCourseManager.BEGINNER_GENERAL_LESSONS),
+                "topics": [
+                    "Letter Basics & Structure",
+                    "Formal Letter Writing",
+                    "Informal Letters to Friends & Family",
+                    "Semi-formal Letters",
+                    "Reading Everyday Texts"
+                ]
+            },
+            "mastery": {
+                "band_target": "5.5-6.5",
+                "lesson_count": len(DualTrackCourseManager.MASTERY_GENERAL_LESSONS),
+                "topics": [
+                    "Advanced Formal Complaints",
+                    "Neighbour & Community Letters",
+                    "Softening Language & Diplomacy",
+                    "Requests & Apology Letters",
+                    "Workplace Documents"
+                ]
+            },
+            "advanced": {
+                "band_target": "7.0-9.0",
+                "lesson_count": len(DualTrackCourseManager.ADVANCED_GENERAL_LESSONS),
+                "topics": [
+                    "Band 8-9 Letter Techniques",
+                    "Nuanced Tone Control",
+                    "Persuasive & Diplomatic Writing",
+                    "Legal & Civic Texts"
+                ]
+            }
+        },
+        "total_general_lessons": (
+            len(DualTrackCourseManager.BEGINNER_GENERAL_LESSONS) +
+            len(DualTrackCourseManager.MASTERY_GENERAL_LESSONS) +
+            len(DualTrackCourseManager.ADVANCED_GENERAL_LESSONS)
+        )
+    }
+
+
+@router.get("/track-recommendations/{track}")
+async def get_track_recommendations(
+    track: str,
+    band_level: str = Query(..., description="Target band level"),
+    weaknesses: str = Query(..., description="Comma-separated weaknesses")
+):
+    """
+    Get lesson recommendations for a specific track.
+    
+    For General Training students practicing letter writing.
+    """
+    from server import db
+    from services.dual_track_courses import get_dual_track_manager
+    
+    valid_tracks = ["academic", "general"]
+    if track not in valid_tracks:
+        raise HTTPException(status_code=400, detail=f"Invalid track")
+    
+    weakness_list = [w.strip() for w in weaknesses.split(",") if w.strip()]
+    
+    manager = get_dual_track_manager(db)
+    recommendations = await manager.get_recommended_lessons_by_track(
+        track=track,
+        weaknesses=weakness_list,
+        band_level=band_level
+    )
+    
+    return {
+        "success": True,
+        "track": track,
+        "band_level": band_level,
+        "weaknesses": weakness_list,
+        "recommended_lessons": recommendations,
+        "total": len(recommendations)
+    }
+
+
+# ============ DYNAMIC ROUTES (course level based) ============
 
 @router.get("/{course_level}")
 async def get_course_with_tracks(course_level: str):
@@ -123,94 +209,4 @@ async def get_track_lesson_detail(
     return {
         "success": True,
         "lesson": lesson
-    }
-
-
-# ============ RECOMMENDATIONS BY TRACK (static path before dynamic) ============
-
-@router.get("/track-recommendations/{track}")
-async def get_track_recommendations(
-    track: str,
-    band_level: str = Query(..., description="Target band level"),
-    weaknesses: str = Query(..., description="Comma-separated weaknesses")
-):
-    """
-    Get lesson recommendations for a specific track.
-    
-    For General Training students practicing letter writing.
-    """
-    from server import db
-    from services.dual_track_courses import get_dual_track_manager
-    
-    valid_tracks = ["academic", "general"]
-    if track not in valid_tracks:
-        raise HTTPException(status_code=400, detail=f"Invalid track")
-    
-    weakness_list = [w.strip() for w in weaknesses.split(",") if w.strip()]
-    
-    manager = get_dual_track_manager(db)
-    recommendations = await manager.get_recommended_lessons_by_track(
-        track=track,
-        weaknesses=weakness_list,
-        band_level=band_level
-    )
-    
-    return {
-        "success": True,
-        "track": track,
-        "band_level": band_level,
-        "weaknesses": weakness_list,
-        "recommended_lessons": recommendations,
-        "total": len(recommendations)
-    }
-
-
-# ============ GENERAL TRACK SUMMARY (static path) ============
-
-@router.get("/general-summary")
-async def get_general_track_summary():
-    """Get summary of all General Training content across courses."""
-    from services.dual_track_courses import DualTrackCourseManager
-    
-    return {
-        "success": True,
-        "general_track_overview": {
-            "beginner": {
-                "band_target": "4.0-5.0",
-                "lesson_count": len(DualTrackCourseManager.BEGINNER_GENERAL_LESSONS),
-                "topics": [
-                    "Letter Basics & Structure",
-                    "Formal Letter Writing",
-                    "Informal Letters to Friends & Family",
-                    "Semi-formal Letters",
-                    "Reading Everyday Texts"
-                ]
-            },
-            "mastery": {
-                "band_target": "5.5-6.5",
-                "lesson_count": len(DualTrackCourseManager.MASTERY_GENERAL_LESSONS),
-                "topics": [
-                    "Advanced Formal Complaints",
-                    "Neighbour & Community Letters",
-                    "Softening Language & Diplomacy",
-                    "Requests & Apology Letters",
-                    "Workplace Documents"
-                ]
-            },
-            "advanced": {
-                "band_target": "7.0-9.0",
-                "lesson_count": len(DualTrackCourseManager.ADVANCED_GENERAL_LESSONS),
-                "topics": [
-                    "Band 8-9 Letter Techniques",
-                    "Nuanced Tone Control",
-                    "Persuasive & Diplomatic Writing",
-                    "Legal & Civic Texts"
-                ]
-            }
-        },
-        "total_general_lessons": (
-            len(DualTrackCourseManager.BEGINNER_GENERAL_LESSONS) +
-            len(DualTrackCourseManager.MASTERY_GENERAL_LESSONS) +
-            len(DualTrackCourseManager.ADVANCED_GENERAL_LESSONS)
-        )
     }
