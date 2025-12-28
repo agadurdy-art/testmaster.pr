@@ -96,6 +96,27 @@ export default function AdvancedMasteryCourse({ user }) {
     }
   };
 
+  // Fetch General Training lessons for Writing
+  const fetchGeneralLessons = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/courses/advanced/general`);
+      if (!response.ok) return;
+      const data = await response.json();
+      if (data.success && data.lessons) {
+        // Filter writing-related lessons
+        const writingLessons = data.lessons.filter(l => 
+          l.writing || l.topic?.toLowerCase().includes('letter') || l.topic?.toLowerCase().includes('tone')
+        );
+        setGeneralLessons(writingLessons);
+        if (writingLessons.length > 0) {
+          setSelectedGeneralLesson(writingLessons[0]);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching general lessons:', error);
+    }
+  };
+
   const selectModule = async (module) => {
     try {
       const res = await fetch(`${API_URL}/api/advanced-mastery/modules/${module.id}`);
