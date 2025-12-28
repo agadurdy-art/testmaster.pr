@@ -991,173 +991,288 @@ export default function AdvancedMasteryCourse({ user }) {
   const renderWriting = () => (
     <Card className="p-6 bg-white border-0 shadow-lg">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-        <PenTool className="w-5 h-5 text-orange-600" /> Writing {selectedModule.writing?.task_type}
+        <PenTool className="w-5 h-5 text-orange-600" /> Advanced Writing
       </h3>
 
-      <div className="space-y-6">
-        {/* Task Prompt */}
-        <div className="p-4 bg-orange-50 rounded-xl">
-          <h4 className="font-semibold text-orange-800 mb-2">Task Prompt</h4>
-          <p className="text-gray-700">{selectedModule.writing?.question || selectedModule.writing?.prompt}</p>
+      {/* Track Toggle - Academic vs General Training */}
+      <div className="mb-6 p-4 bg-gray-50 rounded-xl">
+        <p className="text-sm font-medium text-gray-600 mb-3">IELTS Track Seçin:</p>
+        <div className="flex gap-2">
+          <Button
+            variant={writingTrack === 'academic' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => { setWritingTrack('academic'); setWritingResponse(''); setWritingFeedback(null); }}
+            className={writingTrack === 'academic' ? 'bg-blue-600 hover:bg-blue-700' : ''}
+          >
+            <BookOpen className="w-4 h-4 mr-1" /> Academic IELTS
+          </Button>
+          <Button
+            variant={writingTrack === 'general' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => { setWritingTrack('general'); setWritingResponse(''); setWritingFeedback(null); }}
+            className={writingTrack === 'general' ? 'bg-purple-600 hover:bg-purple-700' : ''}
+          >
+            <Target className="w-4 h-4 mr-1" /> General Training
+          </Button>
         </div>
-
-        {/* Tips */}
-        {selectedModule.writing?.tips && selectedModule.writing.tips.length > 0 && (
-          <div className="p-4 bg-yellow-50 rounded-xl">
-            <h4 className="font-semibold text-yellow-800 mb-2">💡 Writing Tips</h4>
-            <ul className="space-y-1">
-              {selectedModule.writing.tips.map((tip, i) => (
-                <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
-                  {tip}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Useful Phrases */}
-        {selectedModule.writing?.useful_phrases && selectedModule.writing.useful_phrases.length > 0 && (
-          <div className="p-4 bg-blue-50 rounded-xl">
-            <h4 className="font-semibold text-blue-800 mb-2">📝 Useful Phrases</h4>
-            <div className="flex flex-wrap gap-2">
-              {selectedModule.writing.useful_phrases.map((phrase, i) => (
-                <span key={i} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">{phrase}</span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Model Essay */}
-        {(selectedModule.writing?.model_essay || selectedModule.writing?.band75_excerpt) && (
-          <details className="p-4 bg-gray-50 rounded-xl">
-            <summary className="font-semibold text-gray-800 cursor-pointer hover:text-orange-600">View Band 7.5+ Model Essay</summary>
-            <div className="mt-3 p-4 bg-white rounded-lg border border-gray-200">
-              <p className="text-gray-600 leading-relaxed whitespace-pre-line">
-                {selectedModule.writing?.model_essay || selectedModule.writing?.band75_excerpt}
-              </p>
-            </div>
-            
-            {/* Examiner Analysis */}
-            {selectedModule.writing?.examiner_analysis && (
-              <div className="mt-4 p-3 bg-white rounded-lg space-y-2">
-                <h5 className="font-medium text-gray-800">Examiner Analysis:</h5>
-                {Object.entries(selectedModule.writing.examiner_analysis).map(([key, value]) => (
-                  <p key={key} className="text-sm text-gray-600">
-                    <span className="font-medium capitalize">{key.replace('_', ' ')}:</span> {value}
-                  </p>
-                ))}
-              </div>
-            )}
-          </details>
-        )}
-
-        {/* Writing Input */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Your Essay (minimum 250 words)
-          </label>
-          <Textarea
-            value={writingResponse}
-            onChange={(e) => setWritingResponse(e.target.value)}
-            placeholder="Write your essay here..."
-            rows={12}
-            className="w-full"
-          />
-          <p className="text-sm text-gray-500 mt-1">
-            Word count: {writingResponse.trim().split(/\s+/).filter(w => w).length}
-          </p>
-        </div>
-
-        <Button 
-          onClick={evaluateWriting} 
-          disabled={writingLoading}
-          className="w-full bg-gradient-to-r from-orange-500 to-red-600"
-        >
-          {writingLoading ? 'Evaluating...' : 'Get AI Evaluation'}
-        </Button>
-
-        {/* Feedback Display */}
-        {writingFeedback && (
-          <div className={`p-5 rounded-xl ${writingFeedback.band_score >= 7 ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className={`px-4 py-2 rounded-xl font-bold text-lg ${writingFeedback.band_score >= 7 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                Band {writingFeedback.band_score}
-              </div>
-            </div>
-
-            {/* Criteria Scores */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              {writingFeedback.task_achievement && (
-                <div className="p-3 bg-white rounded-lg">
-                  <p className="text-sm font-medium text-blue-600">Task Achievement: {typeof writingFeedback.task_achievement === 'object' ? writingFeedback.task_achievement.score : writingFeedback.task_achievement}</p>
-                  {typeof writingFeedback.task_achievement === 'object' && <p className="text-xs text-gray-600">{writingFeedback.task_achievement.feedback}</p>}
-                </div>
-              )}
-              {(writingFeedback.coherence_cohesion || writingFeedback.coherence) && (
-                <div className="p-3 bg-white rounded-lg">
-                  <p className="text-sm font-medium text-purple-600">Coherence: {typeof (writingFeedback.coherence_cohesion || writingFeedback.coherence) === 'object' ? (writingFeedback.coherence_cohesion || writingFeedback.coherence).score : (writingFeedback.coherence_cohesion || writingFeedback.coherence)}</p>
-                  {typeof (writingFeedback.coherence_cohesion || writingFeedback.coherence) === 'object' && <p className="text-xs text-gray-600">{(writingFeedback.coherence_cohesion || writingFeedback.coherence).feedback}</p>}
-                </div>
-              )}
-              {writingFeedback.lexical_resource && (
-                <div className="p-3 bg-white rounded-lg">
-                  <p className="text-sm font-medium text-green-600">Vocabulary: {writingFeedback.lexical_resource.score}</p>
-                  <p className="text-xs text-gray-600">{writingFeedback.lexical_resource.feedback}</p>
-                </div>
-              )}
-              {writingFeedback.grammatical_range && (
-                <div className="p-3 bg-white rounded-lg">
-                  <p className="text-sm font-medium text-amber-600">Grammar: {writingFeedback.grammatical_range.score}</p>
-                  <p className="text-xs text-gray-600">{writingFeedback.grammatical_range.feedback}</p>
-                </div>
-              )}
-            </div>
-
-            <p className="text-gray-700 mb-3">{writingFeedback.overall_feedback}</p>
-
-            {writingFeedback.strengths && (
-              <div className="mt-3 p-3 bg-green-100 rounded-lg">
-                <p className="text-sm font-medium text-green-800 mb-1">✅ Strengths:</p>
-                <ul className="text-sm text-gray-700 list-disc list-inside">
-                  {writingFeedback.strengths.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
-              </div>
-            )}
-
-            {writingFeedback.areas_to_improve && (
-              <div className="mt-3 p-3 bg-amber-100 rounded-lg">
-                <p className="text-sm font-medium text-amber-800 mb-1">📈 Areas to Improve:</p>
-                <ul className="text-sm text-gray-700 list-disc list-inside">
-                  {writingFeedback.areas_to_improve.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
-              </div>
-            )}
-
-            {writingFeedback.grammar_upgrade_examples?.length > 0 && (
-              <div className="mt-3 p-3 bg-purple-50 rounded-lg">
-                <p className="text-sm font-medium text-purple-800 mb-2">✨ Grammar Upgrades:</p>
-                {writingFeedback.grammar_upgrade_examples.map((ex, i) => (
-                  <div key={i} className="text-sm mb-2">
-                    <p className="text-red-600 line-through">{ex.original}</p>
-                    <p className="text-green-600">→ {ex.upgraded}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Module Analogy - for deeper understanding */}
-        {selectedModule.analogy && (
-          <div className="mt-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
-            <h4 className="font-semibold text-indigo-800 mb-2 flex items-center gap-2">
-              💡 Band Level Analogy
-            </h4>
-            <p className="text-gray-700 text-sm">{selectedModule.analogy}</p>
-          </div>
-        )}
+        <p className="text-xs text-gray-500 mt-2">
+          {writingTrack === 'academic' 
+            ? '📝 Academic: Band 7-9 Advanced Essay Techniques'
+            : '✉️ General: Band 7-9 Letter Writing Mastery & Nuanced Tone Control'}
+        </p>
       </div>
+
+      {/* Academic Writing Content */}
+      {writingTrack === 'academic' && (
+        <div className="space-y-6">
+          {/* Task Prompt */}
+          <div className="p-4 bg-orange-50 rounded-xl">
+            <h4 className="font-semibold text-orange-800 mb-2">ACADEMIC TASK</h4>
+            <p className="text-gray-700">{selectedModule.writing?.question || selectedModule.writing?.prompt}</p>
+          </div>
+
+          {/* Tips */}
+          {selectedModule.writing?.tips && selectedModule.writing.tips.length > 0 && (
+            <div className="p-4 bg-yellow-50 rounded-xl">
+              <h4 className="font-semibold text-yellow-800 mb-2">💡 Writing Tips</h4>
+              <ul className="space-y-1">
+                {selectedModule.writing.tips.map((tip, i) => (
+                  <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                    {tip}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Useful Phrases */}
+          {selectedModule.writing?.useful_phrases && selectedModule.writing.useful_phrases.length > 0 && (
+            <div className="p-4 bg-blue-50 rounded-xl">
+              <h4 className="font-semibold text-blue-800 mb-2">📝 Useful Phrases</h4>
+              <div className="flex flex-wrap gap-2">
+                {selectedModule.writing.useful_phrases.map((phrase, i) => (
+                  <span key={i} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">{phrase}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Model Essay */}
+          {(selectedModule.writing?.model_essay || selectedModule.writing?.band75_excerpt) && (
+            <details className="p-4 bg-gray-50 rounded-xl">
+              <summary className="font-semibold text-gray-800 cursor-pointer hover:text-orange-600">View Band 7.5+ Model Essay</summary>
+              <div className="mt-3 p-4 bg-white rounded-lg border border-gray-200">
+                <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                  {selectedModule.writing?.model_essay || selectedModule.writing?.band75_excerpt}
+                </p>
+              </div>
+            </details>
+          )}
+
+          {/* Writing Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Your Essay (minimum 250 words)
+            </label>
+            <Textarea
+              value={writingResponse}
+              onChange={(e) => setWritingResponse(e.target.value)}
+              placeholder="Write your essay here..."
+              rows={12}
+              className="w-full"
+            />
+            <p className="text-sm text-gray-500 mt-1">
+              Word count: {writingResponse.trim().split(/\s+/).filter(w => w).length}
+            </p>
+          </div>
+
+          <Button 
+            onClick={evaluateWriting} 
+            disabled={writingLoading}
+            className="w-full bg-gradient-to-r from-orange-500 to-red-600"
+          >
+            {writingLoading ? 'Evaluating...' : 'Get AI Evaluation'}
+          </Button>
+        </div>
+      )}
+
+      {/* General Training Writing Content */}
+      {writingTrack === 'general' && (
+        <div className="space-y-6">
+          {generalLessons.length > 0 ? (
+            <>
+              {/* Lesson Selector */}
+              <div>
+                <p className="text-sm font-medium text-gray-600 mb-2">Ders Seçin (Band 7-9 Techniques):</p>
+                <div className="flex flex-wrap gap-2">
+                  {generalLessons.map((lesson, idx) => (
+                    <Button
+                      key={idx}
+                      variant={selectedGeneralLesson?.id === lesson.id ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => { setSelectedGeneralLesson(lesson); setWritingResponse(''); setWritingFeedback(null); }}
+                      className={selectedGeneralLesson?.id === lesson.id ? 'bg-purple-600' : ''}
+                    >
+                      {lesson.topic}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              
+              {selectedGeneralLesson && (
+                <>
+                  <div className="bg-purple-50 rounded-xl p-5">
+                    <p className="text-xs text-purple-600 font-semibold mb-2">GENERAL TRAINING ADVANCED - {selectedGeneralLesson.title}</p>
+                    <p className="text-sm text-gray-600 mb-3">{selectedGeneralLesson.writing?.title}</p>
+                    
+                    {/* Band 9 Characteristics */}
+                    {selectedGeneralLesson.writing?.band_9_characteristics && (
+                      <div className="mb-4 p-3 bg-white rounded-lg">
+                        <p className="text-xs font-semibold text-purple-700 mb-2">🏆 Band 9 Characteristics:</p>
+                        <ul className="text-sm text-gray-700 space-y-1">
+                          {selectedGeneralLesson.writing.band_9_characteristics.map((char, i) => (
+                            <li key={i}>• {char}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Advanced Techniques */}
+                    {selectedGeneralLesson.writing?.advanced_techniques && (
+                      <div className="mb-4 p-3 bg-white rounded-lg">
+                        <p className="text-xs font-semibold text-purple-700 mb-2">✨ Advanced Techniques:</p>
+                        {selectedGeneralLesson.writing.advanced_techniques.varied_openings && (
+                          <div className="mb-2">
+                            <p className="text-xs font-medium text-gray-600">Varied Openings:</p>
+                            <ul className="text-sm text-gray-700">
+                              {selectedGeneralLesson.writing.advanced_techniques.varied_openings.slice(0, 3).map((phrase, i) => (
+                                <li key={i} className="italic">• "{phrase}"</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        {selectedGeneralLesson.writing.advanced_techniques.sophisticated_transitions && (
+                          <div>
+                            <p className="text-xs font-medium text-gray-600">Sophisticated Transitions:</p>
+                            <ul className="text-sm text-gray-700">
+                              {selectedGeneralLesson.writing.advanced_techniques.sophisticated_transitions.slice(0, 3).map((phrase, i) => (
+                                <li key={i} className="italic">• "{phrase}"</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Tone Spectrum */}
+                    {selectedGeneralLesson.writing?.tone_spectrum && (
+                      <div className="mb-4 p-3 bg-white rounded-lg">
+                        <p className="text-xs font-semibold text-purple-700 mb-2">🎭 Tone Mastery:</p>
+                        {Object.entries(selectedGeneralLesson.writing.tone_spectrum).slice(0, 2).map(([key, tones]) => (
+                          <div key={key} className="mb-2">
+                            <p className="text-xs font-medium text-gray-600 capitalize">{key.replace('_', ' ')}:</p>
+                            <div className="text-sm text-gray-700">
+                              {Object.entries(tones).map(([level, example]) => (
+                                <p key={level} className="text-xs"><span className="font-medium">{level}:</span> "{example}"</p>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Writing Input */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Your Letter (Band 7-9 Target, 150+ words)
+                    </label>
+                    <Textarea 
+                      value={writingResponse} 
+                      onChange={(e) => setWritingResponse(e.target.value)} 
+                      placeholder="Write your letter here using advanced techniques..." 
+                      rows={10}
+                      className="w-full"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">Words: {writingResponse.trim().split(/\s+/).filter(w => w).length}</p>
+                  </div>
+
+                  <Button 
+                    onClick={evaluateWriting} 
+                    disabled={writingLoading} 
+                    className="w-full bg-gradient-to-r from-purple-500 to-pink-600"
+                  >
+                    {writingLoading ? 'Evaluating...' : 'Get AI Evaluation'}
+                  </Button>
+                </>
+              )}
+            </>
+          ) : (
+            <div className="text-center py-8 bg-gray-50 rounded-xl">
+              <Target className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500">General Training dersleri yükleniyor...</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Feedback Display - Shared */}
+      {writingFeedback && (
+        <div className={`mt-6 p-5 rounded-xl ${writingFeedback.band_score >= 7 ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`px-4 py-2 rounded-xl font-bold text-lg ${writingFeedback.band_score >= 7 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+              Band {writingFeedback.band_score}
+            </div>
+            <span className="text-sm text-gray-500">Track: {writingTrack === 'academic' ? 'Academic' : 'General Training'}</span>
+          </div>
+
+          {/* Criteria Scores */}
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            {writingFeedback.task_achievement && (
+              <div className="p-3 bg-white rounded-lg">
+                <p className="text-sm font-medium text-blue-600">Task Achievement: {typeof writingFeedback.task_achievement === 'object' ? writingFeedback.task_achievement.score : writingFeedback.task_achievement}</p>
+                {typeof writingFeedback.task_achievement === 'object' && <p className="text-xs text-gray-600">{writingFeedback.task_achievement.feedback}</p>}
+              </div>
+            )}
+            {(writingFeedback.coherence_cohesion || writingFeedback.coherence) && (
+              <div className="p-3 bg-white rounded-lg">
+                <p className="text-sm font-medium text-purple-600">Coherence: {typeof (writingFeedback.coherence_cohesion || writingFeedback.coherence) === 'object' ? (writingFeedback.coherence_cohesion || writingFeedback.coherence).score : (writingFeedback.coherence_cohesion || writingFeedback.coherence)}</p>
+              </div>
+            )}
+            {writingFeedback.lexical_resource && (
+              <div className="p-3 bg-white rounded-lg">
+                <p className="text-sm font-medium text-green-600">Vocabulary: {writingFeedback.lexical_resource.score}</p>
+              </div>
+            )}
+            {writingFeedback.grammatical_range && (
+              <div className="p-3 bg-white rounded-lg">
+                <p className="text-sm font-medium text-amber-600">Grammar: {writingFeedback.grammatical_range.score}</p>
+              </div>
+            )}
+          </div>
+
+          <p className="text-gray-700 mb-3">{writingFeedback.overall_feedback}</p>
+
+          {writingFeedback.strengths && (
+            <div className="mt-3 p-3 bg-green-100 rounded-lg">
+              <p className="text-sm font-medium text-green-800 mb-1">✅ Strengths:</p>
+              <ul className="text-sm text-gray-700 list-disc list-inside">
+                {writingFeedback.strengths.map((s, i) => <li key={i}>{s}</li>)}
+              </ul>
+            </div>
+          )}
+
+          {writingFeedback.areas_to_improve && (
+            <div className="mt-3 p-3 bg-amber-100 rounded-lg">
+              <p className="text-sm font-medium text-amber-800 mb-1">📈 Areas to Improve:</p>
+              <ul className="text-sm text-gray-700 list-disc list-inside">
+                {writingFeedback.areas_to_improve.map((s, i) => <li key={i}>{s}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="mt-6 flex justify-between">
         <Button variant="outline" onClick={() => setCurrentSection('speaking')}>
