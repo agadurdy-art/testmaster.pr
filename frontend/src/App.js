@@ -114,14 +114,20 @@ function MobileNavWrapper({ user }) {
 }
 function AppWithSessionHandler() {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem('user');
+      }
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -156,6 +162,15 @@ function AppWithSessionHandler() {
     setUser(null);
     localStorage.removeItem('user');
   };
+
+  // Show loading state while checking localStorage
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
 
   return (
     <>
