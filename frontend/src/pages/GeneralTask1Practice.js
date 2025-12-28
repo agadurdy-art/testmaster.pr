@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
@@ -27,6 +27,9 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function GeneralTask1Practice() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const urlTopic = searchParams.get('topic');
+  const urlBand = searchParams.get('band') || '5.5-6.5';
   
   const [prompts, setPrompts] = useState([]);
   const [selectedPrompt, setSelectedPrompt] = useState(null);
