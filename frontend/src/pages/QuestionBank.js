@@ -191,9 +191,88 @@ export default function QuestionBank() {
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <div className="space-y-8">
-            {/* Skills Grid */}
+            {/* STEP 1: Filter Selection (Band & Topics at TOP) */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 border border-indigo-100">
+              <div className="flex items-center gap-2 mb-4">
+                <Filter className="w-5 h-5 text-indigo-600" />
+                <h2 className="text-lg font-bold text-gray-900">1. Önce Filtre Seçin</h2>
+                <span className="text-sm text-gray-500">(İsteğe bağlı)</span>
+              </div>
+              
+              {/* Band Levels - Horizontal */}
+              <div className="mb-4">
+                <p className="text-sm font-medium text-gray-700 mb-2">Band Seviyesi:</p>
+                <div className="flex flex-wrap gap-2">
+                  {bandLevels.map(band => (
+                    <Button
+                      key={band.id}
+                      variant={selectedBand === band.id ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setSelectedBand(selectedBand === band.id ? null : band.id)}
+                      className={selectedBand === band.id ? 'bg-indigo-600 hover:bg-indigo-700' : ''}
+                      style={{ borderColor: band.color }}
+                    >
+                      <div 
+                        className="w-2 h-2 rounded-full mr-2"
+                        style={{ backgroundColor: band.color }}
+                      ></div>
+                      {band.name}
+                      {selectedBand === band.id && <CheckCircle className="w-3 h-3 ml-2" />}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Topics - Horizontal Scroll */}
+              <div>
+                <p className="text-sm font-medium text-gray-700 mb-2">Konu:</p>
+                <div className="flex flex-wrap gap-2 max-h-24 overflow-y-auto">
+                  {topics.map(topic => (
+                    <Badge
+                      key={topic.id}
+                      variant={selectedTopic === topic.id ? 'default' : 'outline'}
+                      className={`cursor-pointer py-1.5 px-3 text-sm ${
+                        selectedTopic === topic.id 
+                          ? 'bg-indigo-600 hover:bg-indigo-700' 
+                          : 'hover:bg-gray-100'
+                      }`}
+                      onClick={() => setSelectedTopic(selectedTopic === topic.id ? null : topic.id)}
+                    >
+                      <span className="mr-1">{topic.icon}</span> {topic.name}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Active Filters Summary */}
+              {(selectedBand || selectedTopic) && (
+                <div className="mt-4 pt-4 border-t flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm text-indigo-700">
+                    <CheckCircle className="w-4 h-4" />
+                    <span>
+                      {selectedBand && bandLevels.find(b => b.id === selectedBand)?.name}
+                      {selectedBand && selectedTopic && ' • '}
+                      {selectedTopic && topics.find(t => t.id === selectedTopic)?.name}
+                    </span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="w-4 h-4 mr-1" /> Temizle
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {/* STEP 2: Skills Grid */}
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Beceri Alanları</h2>
+              <div className="flex items-center gap-2 mb-4">
+                <Target className="w-5 h-5 text-indigo-600" />
+                <h2 className="text-lg font-bold text-gray-900">2. Beceri Seçin ve Başlayın</h2>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {skills.map(skill => {
                   const Icon = skillIcons[skill.id] || BookOpen;
@@ -217,62 +296,29 @@ export default function QuestionBank() {
                       </div>
                       <h3 className="font-bold text-gray-900 mb-1">{skill.name}</h3>
                       <p className="text-sm text-gray-500 mb-3">{skill.description}</p>
+                      
+                      {/* Show selected filters on card */}
+                      {(selectedBand || selectedTopic) && (
+                        <div className="mb-2 flex flex-wrap gap-1">
+                          {selectedBand && (
+                            <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded">
+                              {bandLevels.find(b => b.id === selectedBand)?.name}
+                            </span>
+                          )}
+                          {selectedTopic && (
+                            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">
+                              {topics.find(t => t.id === selectedTopic)?.icon}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                      
                       <div className="flex items-center text-indigo-600 text-sm font-medium">
                         Başla <ChevronRight className="w-4 h-4 ml-1" />
                       </div>
                     </Card>
                   );
                 })}
-              </div>
-            </div>
-
-            {/* Band Levels */}
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Band Seviyeleri</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {bandLevels.map(band => (
-                  <Card
-                    key={band.id}
-                    className="p-5 cursor-pointer hover:shadow-lg transition-all border-2 hover:border-indigo-300"
-                    style={{ borderColor: selectedBand === band.id ? band.color : 'transparent' }}
-                    onClick={() => setSelectedBand(selectedBand === band.id ? null : band.id)}
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <div 
-                        className="w-4 h-4 rounded-full"
-                        style={{ backgroundColor: band.color }}
-                      ></div>
-                      <h3 className="font-bold text-gray-900">{band.name}</h3>
-                    </div>
-                    <p className="text-sm text-gray-500">{band.description}</p>
-                    {selectedBand === band.id && (
-                      <div className="mt-2 flex items-center text-green-600 text-sm">
-                        <CheckCircle className="w-4 h-4 mr-1" /> Seçildi
-                      </div>
-                    )}
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            {/* Topics Grid */}
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Konular</h2>
-              <div className="flex flex-wrap gap-2">
-                {topics.map(topic => (
-                  <Badge
-                    key={topic.id}
-                    variant={selectedTopic === topic.id ? 'default' : 'outline'}
-                    className={`cursor-pointer py-2 px-4 text-sm ${
-                      selectedTopic === topic.id 
-                        ? 'bg-indigo-600 hover:bg-indigo-700' 
-                        : 'hover:bg-gray-100'
-                    }`}
-                    onClick={() => setSelectedTopic(selectedTopic === topic.id ? null : topic.id)}
-                  >
-                    <span className="mr-1">{topic.icon}</span> {topic.name}
-                  </Badge>
-                ))}
               </div>
             </div>
           </div>
