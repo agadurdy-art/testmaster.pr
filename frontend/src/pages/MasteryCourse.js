@@ -162,6 +162,54 @@ export default function MasteryCourse({ user }) {
     }
   };
 
+  // Fetch Module-Specific Language Booster based on module topic
+  const fetchModuleLanguageBooster = async (moduleTopic) => {
+    try {
+      // Map module topics to booster modules
+      const topicToBooster = {
+        'education': 'education',
+        'health': 'health',
+        'work': 'work',
+        'employment': 'work',
+        'travel': 'travel',
+        'tourism': 'travel',
+        'housing': 'housing',
+        'accommodation': 'housing',
+        'environment': 'education', // fallback
+        'technology': 'work', // fallback
+        'society': 'education', // fallback
+        'culture': 'travel', // fallback
+      };
+      
+      const normalizedTopic = moduleTopic.toLowerCase();
+      let boosterModule = null;
+      
+      // Find matching booster
+      for (const [key, value] of Object.entries(topicToBooster)) {
+        if (normalizedTopic.includes(key)) {
+          boosterModule = value;
+          break;
+        }
+      }
+      
+      if (!boosterModule) {
+        // Default to education if no match
+        boosterModule = 'education';
+      }
+      
+      const response = await fetch(`${API_URL}/api/courses/language-booster/${boosterModule}`);
+      if (!response.ok) return;
+      
+      const data = await response.json();
+      if (data.success) {
+        setLanguageBooster(data.language_booster);
+        console.log(`Loaded ${boosterModule} language booster for ${moduleTopic}`);
+      }
+    } catch (error) {
+      console.error('Error fetching language booster:', error);
+    }
+  };
+
   const selectModule = (module) => {
     setSelectedModule(module);
     setView('module-detail');
