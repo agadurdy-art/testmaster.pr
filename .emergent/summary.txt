@@ -1,68 +1,74 @@
 <analysis>**original_problem_statement:**
-The user's initial goal was to add a Listening section to the Mastery Course to bring it to parity with the Advanced Mastery Course. After the agent successfully completed this, the user provided a series of very detailed MASTER INSTRUCTION documents outlining their next major feature request: a comprehensive, AI-powered IELTS Soru Bankası (Question Bank). The scope includes all four IELTS skills (Reading, Listening, Writing, Speaking), must follow strict IELTS authenticity rules, and has a detailed architecture for visual generation (Writing Task 1), audio production (Listening), and AI evaluation. A sub-request during this process was to make the initial data for the Writing Task 1 visual charts more realistic and less generic.
+The user provided a comprehensive ULTRA MASTER PROMPT to completely overhaul the IELTS Question Bank. The vision is to create a high-end academic preparation system, not a generic practice website.
+
+Key requirements from the prompt and subsequent user feedback include:
+1.  **Task Authenticity**: All tasks (especially Writing and Reading) must be realistic, with specific contexts (location, time period, subject), mimicking real IELTS exams.
+2.  **UX & Visual Presentation**: Implement a side-by-side layout for Writing Task 1 on desktop (visual on the left, writing area on the right). Avoid oversized visuals and focus on a clean, academic interface.
+3.  **Model Answers**: Provide a three-layer model answer system: a high-band sample, academic reasoning notes (why it's good), and alternative expressions. For Task 2 and General Training, provide distinct Band 6 and Band 8.5 samples.
+4.  **General Training Content**: Add support for General Training Writing Task 1 (letter writing).
+5.  **Filtering & Relevancy**: When a user selects a category (topic) and band level on the main Question Bank page, the subsequent practice screen must show a relevant question.
+
+The user's last message expressed frustration that the category/band filtering was not working and the General Writing option was not visible.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-The application is a stable IELTS learning platform.
-1.  **Mastery Course Listening**: The Mastery Course now has a fully implemented and tested Listening section for all 17 of its modules, complete with audio files and frontend UI.
-2.  **IELTS Question Bank (Foundation)**: The foundational architecture for the IELTS Soru Bankası has been built. This includes:
-    *   **Backend**: New database models (), API routes (), and a service for generating realistic SVG charts for Writing Task 1 ().
-    *   **Frontend**: New pages for the Question Bank overview (), Writing Task 1 Practice (), and a placeholder for Writing Task 2 (). These are integrated into the dashboard and main app routing.
-    *   **Realistic Visuals**: The Writing Task 1 charts now generate with realistic data, including real-world topics, country names, and plausible data points, per the user's feedback.
+The application features a significantly enhanced IELTS Soru Bankası (Question Bank) aligned with the user's ULTRA MASTER PROMPT.
+-   **Writing Task 1 (Academic)**: Features a new side-by-side UX. It dynamically generates authentic, IELTS-compliant tasks for all 6 visual types (Line, Bar, Pie, Table, Process, Map) with realistic data and context.
+-   **Writing Task 2 (Academic)**: Provides authentic prompts and features a tabbed interface to show separate Band 6.0 and Band 8.5 model answers.
+-   **Writing Task 1 (General Training)**: A new page for letter writing (formal, semi-formal, informal) is implemented, also with Band 6.0 and Band 8.5 model answers.
+-   **AI Evaluation**: A GPT-4o powered evaluation system for Writing Task 1 is integrated. It provides an overall band score, detailed feedback on four criteria (TA, CC, LR, GRA), and a qualitative summary of strengths and weaknesses.
+-   **Authentication**: A persistent login issue was resolved by identifying and fixing a database name mismatch ( vs ) and correcting password hashing logic. A test user () has been created in the correct database.
 
 **Last working item**:
-*   **Last item agent was working**: Improving the data realism for the Writing Task 1 charts. The agent refactored the data generation logic in  to replace generic placeholders like Category A with realistic topics, country names, and plausible data ranges.
-*   **Status**: USER VERIFICATION PENDING
-*   **Agent Testing Done**: Y (Agent verified new data via API calls and visually confirmed the updated charts on the frontend with screenshots).
-*   **Which testing method agent to use?**: Manual testing by user.
-*   **User Testing Done**: Y (User saw the screenshots of the realistic charts and implicitly approved).
+*   **Last item agent was working**: Fixing the broken UI flow and filtering from the main  page. The user reported that selecting a topic and band level had no effect on the questions presented on the practice pages, and the General Writing option was missing. The agent identified that the modal needed to be updated to include the General Training option and that the selected  and  parameters were not being passed to the practice page routes.
+*   **Status**: IN PROGRESS
+*   **Agent Testing Done**: N
+*   **Which testing method agent to use?**: Frontend testing agent
+*   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-*   **Issue 1: Verify Speaking Model Answers Across All Modules (P2)**
-*   **Issue 2: General Linting Errors (P3)**
-*   **Issue 3: Unused  file (P3)**
+*   **Issue 1: Filtering and Navigation from Question Bank Page (P0)**
+*   **Issue 2: Verify Speaking Model Answers Across All Modules (P3)**
+*   **Issue 3: General Linting Errors (P3)**
+*   **Issue 4: Unused  file (P3)**
 
 **Issues Detail**:
-*   **Issue 1: Verify Speaking Model Answers Across All Modules**
-    *   **Attempted fixes**: None. This is a carry-over task.
-    *   **Next debug checklist**: Manually or with a script, navigate to the Speaking section of every module in the Mastery and Advanced Mastery courses and ensure the Model Answer content is present and correct by checking  and .
-    *   **Why fix this issue and what will be achieved with the fix?**: Ensures all course content is complete and high-quality.
-    *   **Status**: NOT STARTED
-    *   **Is recurring issue?**: Y
-    *   **Should Test frontend/backend/both after fix?**: Frontend
+*   **Issue 1: Filtering and Navigation from Question Bank Page**
+    *   **Attempted fixes**: The agent identified that  was not passing the selected  and  as URL parameters to the practice pages. It also noted the General Training option was missing from the skill selection modal. The agent started editing  and  to handle URL parameters but was interrupted before completing and testing the fix.
+    *   **Next debug checklist**:
+        1.  Modify : Update the  handler for the Writing skill card to show a modal that includes Academic Task 1, Academic Task 2, and General Training Task 1.
+        2.  Modify : Ensure that when a user clicks Start Practice from the modal, the selected  and  are appended as query parameters to the navigation URL (e.g., ).
+        3.  Modify , , and : Ensure the  hook that fetches questions reads the  and  from the URL search parameters and includes them in the API request.
+        4.  Verify the backend API endpoints for all writing tasks correctly filter based on  and  parameters.
+    *   **Why fix this issue and what will be achieved with the fix?**: This is a critical usability issue that breaks the user's intended workflow. Fixing it will make the Question Bank functional and intuitive, fulfilling a key user requirement.
+    *   **Status**: IN PROGRESS
+    *   **Is recurring issue?**: N
+    *   **Should Test frontend/backend/both after fix?**: Both
     *   **Blocked on other issue**: None.
-*   **Issue 2: General Linting Errors**
-    *   **Attempted fixes**: The agent fixed errors introduced during the session, but warnings in new files and pre-existing errors remain.
-    *   **Next debug checklist**: Run  in . Address warnings in  and  (related to  dependency arrays).
-    *   **Why fix this issue and what will be achieved with the fix?**: Improves code quality and maintainability.
+*   **Issue 2: Verify Speaking Model Answers Across All Modules**
     *   **Status**: NOT STARTED
-    *   **Is recurring issue?**: Y
-    *   **Should Test frontend/backend/both after fix?**: None
-    *   **Blocked on other issue**: None.
-*   **Issue 3: Unused  file**
-    *   **Attempted fixes**: None.
-    *   **Next debug checklist**: Confirm the file  is not imported or used anywhere, then delete it.
-    *   **Why fix this issue and what will be achieved with the fix?**: Code hygiene, removal of dead code.
+    *   **Details**: See previous handover summary.
+*   **Issue 3: General Linting Errors**
     *   **Status**: NOT STARTED
-    *   **Is recurring issue?**: Y
-    *   **Should Test frontend/backend/both after fix?**: Frontend (minor regression check).
-    *   **Blocked on other issue**: None.
+    *   **Details**: See previous handover summary.
+*   **Issue 4: Unused  file**
+    *   **Status**: NOT STARTED
+    *   **Details**: See previous handover summary.
 
 **In progress Task List**:
-*   **Task 1: Build IELTS Soru Bankası (P0)**
-    *   **Where to resume**: The foundational structure is complete. The next step is to implement Phase 1 of the user's , which involves building out the AI evaluation system for Writing Task 1, populating the bank with initial high-quality questions for all skills, and building the UI for the other practice modes (Reading, Listening, Speaking).
-    *   **What will be achieved with this?**: A fully functional, scalable question bank that aligns with the user's detailed vision.
+*   **Task 1: Implement ULTRA MASTER PROMPT (P0)**
+    *   **Where to resume**: The core generation logic and UI for all Writing tasks are complete. The immediate next step is to fix the filtering and navigation flow as described in Issue 1. After that, the  routes should be removed and the new pages should be integrated into the main application's protected routing.
+    *   **What will be achieved with this?**: A fully functional, academically robust IELTS Writing Question Bank that matches the user's vision.
     *   **Status**: IN PROGRESS
     *   **Should Test frontend/backend/both after fix?**: Both
-    *   **Blocked on something**: None.
+    *   **Blocked on something**: Issue 1.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   (P0) **Soru Bankası - Phase 1 Implementation**: Per the , begin building the AI evaluation for Writing and create the UI and backend logic for the Reading, Listening, and Speaking sections.
-    *   (P1) **Soru Bankası - Listening Audio Pipeline**: Implement the detailed audio generation pipeline using ElevenLabs v3 Dialogue Mode as specified in the user's instructions.
-    *   (P2) **Implement User-Approved UX Improvements**: Interactive Transcripts, Personalized AI Feedback, and Gamification.
-    *   (P3) **Add Listening section to Mastery Course**: This was completed.
+    *   (P1) **Integrate New UX with Protected Routes**: Remove the temporary  routes and fix the main application routing so that users can access the new practice pages after logging in.
+    *   (P2) **Implement Reading/Listening/Speaking UX**: Apply the  wireframe logic to the other skills' practice screens (e.g., side-by-side passage/questions for Reading).
+    *   (P2) **Implement 3-Layer Model Answer UI**: The backend generates multi-layer answers, but the frontend currently only shows the final sample. The UI needs to be updated to present the Academic Reasoning Notes and Alternative Expressions as described in the prompt.
 *   **Future Tasks:**
     *   YLE (Starters, Movers, Flyers) course content enrichment.
     *   Integrate Alchemy Pay payment gateway.
@@ -70,20 +76,17 @@ The application is a stable IELTS learning platform.
     *   Address pending issues with PayPal webhooks.
 
 **Completed work in this session**
-- **Added Listening Section to Mastery Course**:
-  - Generated 17 audio files for all Mastery modules using .
-  - Created and integrated listening content (transcripts, questions) into .
-  - Implemented the full listening section UI and audio player in .
-- **Built Foundation for IELTS Question Bank**:
-  - Created modular backend architecture with new folders: , , .
-  - Implemented Pydantic models for the question bank in .
-  - Built API endpoints for skills, topics, and visual generation in .
-  - Created a robust, data-driven SVG chart generator for Writing Task 1 in  with realistic data.
-  - Developed frontend pages: , , and .
-  - Added a modal in  for users to choose between Writing Task 1 and Task 2.
-  - Integrated the new pages into  and added a link to the .
-- **Improved Writing Task 1 Visuals**:
-  - Refactored  to use realistic data sets (countries, topics, values) instead of generic placeholders, based on user feedback.
+- **Implemented ULTRA MASTER PROMPT for Writing**:
+  -   **New Side-by-Side UX**: Created a new  page with a two-panel layout (visual on the left, writing on the right).
+  -   **Authentic Task Generation**: Created  to generate realistic, IELTS-compliant tasks for all 6 Writing Task 1 types (Line, Bar, Pie, Table, Process, Map).
+  -   **General Training & Task 2**: Created  for letter writing and  for Task 2 prompts.
+  -   **Band-Specific Model Answers**: Updated  and  to show distinct Band 6.0 and Band 8.5 model answers.
+- **Integrated AI Evaluation**:
+  -   Enhanced the  endpoint to use GPT-4o for detailed, criteria-based feedback.
+  -   Integrated the evaluation results into the  frontend, displaying the overall band, criteria scores, and qualitative feedback.
+- **Fixed Critical Authentication Bug**:
+  -   Diagnosed and resolved a login failure by identifying a mismatch in database names used by the application () versus the test script ().
+  -   Created a new, verified test user in the correct database to enable successful frontend testing.
 
 **Earlier issues found/mentioned but not fixed**
 - **Issue 1: Verify Speaking Model Answers**: Detailed in the All Pending/In progress Issue list section.
@@ -91,91 +94,85 @@ The application is a stable IELTS learning platform.
 
 **Known issue recurrence from previous fork**
 - **Issue recurrence in previous fork**: Linting Errors.
-- **Recurrence count**: 7+
+- **Recurrence count**: 8+
 - **Status**: NOT STARTED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Modular Backend Architecture**: The agent began structuring the backend into , , and  directories, moving logic out of the main  file for better organization and scalability.
-- **Data-Driven SVG Generation**: The backend generates dynamic, IELTS-compliant SVG charts for Writing Task 1 based on structured, realistic datasets. This avoids using image generation models and ensures authenticity.
-- **Comprehensive Feature Planning**: The agent successfully ingested and planned around three large MASTER INSTRUCTION documents from the user, setting a clear path for a major new feature.
-- **Conditional UI and State Management**: The agent implemented a modal in React () to guide the user's choice between Writing Task 1 and Task 2, managed with .
+-   **ULTRA MASTER PROMPT**: A user-provided, vision-defining document that dictates all new development for the Question Bank, focusing on academic authenticity and UX.
+-   **Authentic Task Templating**: A system in  that combines templates with dynamic, realistic data (locations, topics, timeframes) to create unique, IELTS-compliant questions.
+-   **Deterministic SVG Generation**: Using  to create data-accurate visuals for Writing Task 1, avoiding non-deterministic AI image models.
+-   **LLM-Powered Evaluation**: Using  and GPT-4o to provide structured, criteria-based feedback on student writing, acting as an AI tutor.
 
 **key DB schema**
-- **question_bank.py**: Defines Pydantic models for the entire Question Bank ecosystem.
-  - , , , ,  models with fields like , , , , , , .
-  - Schemas for  including , , , and .
+-   No changes to the database schema were made in this session.
 
 **changes in tech stack**
-- None.
+-   None.
 
 **All files of reference**
-- : Contains all new API endpoints for the Soru Bankası.
-- : The logic for generating realistic Writing Task 1 SVG visuals.
-- : The database schema for the new feature.
-- : The main UI for the Soru Bankası.
-- : The interactive practice page for Writing Task 1.
-- : Contains the newly added Listening section.
-- : Source of truth for Mastery Course, now with listening data.
-- The user's three MASTER INSTRUCTION messages (chat messages 105, 108, 114) are the primary reference for all future development on the Soru Bankası.
+-   : The central hub for the feature; currently the source of the main bug.
+-   : The rewritten page with the new side-by-side UX.
+-   : The rewritten page with Band 6/8.5 model answers.
+-   : The new page for letter writing.
+-   : Core logic for generating all Task 1 prompts.
+-   : Core logic for generating Task 2 prompts and answers.
+-   : The API router that connects the frontend to the new backend services.
 
 **Areas that need refactoring**:
-- The new file  is over 1000 lines long and contains both data generation and SVG rendering logic. It could be split into separate modules for clarity.
--  and  have linting warnings that should be fixed.
+-   **Routing**: The agent created temporary, unprotected  routes in  to test the new UI. This is a workaround for issues with the  component. The entire routing logic for new pages needs to be properly integrated.
+-   ****: This component's logic for handling skill, topic, and band selection before navigating is complex and currently broken. It needs to be refactored for clarity and correctness.
 
 **key api endpoints**
-- : Returns available skills.
-- : Returns available topics.
-- : Generates a new Writing Task 1 visual and its associated data.
-- : Gets prompts for Writing Task 2.
-- : (Defined but not fully implemented) Endpoint to handle AI evaluation of user's writing.
+-   : **(New)** Generates a complete, authentic Task 1 prompt for a specified visual type (, , etc.), optionally filtered by  and .
+-   : **(New)** Generates a Task 2 prompt with Band 6 and 8.5 model answers, optionally filtered by  and .
+-   : **(New)** Generates a General Training Task 1 letter-writing prompt with model answers, filtered by .
+-   : **(Enhanced)** Now accepts the full  and provides much more detailed, criteria-based feedback using GPT-4o.
 
 **Critical Info for New Agent**
-- **User Language**: You MUST communicate in Turkish.
-- **Adhere to MASTER INSTRUCTIONS**: The user has provided three extremely detailed documents in the chat history (Messages 105, 108, 114) for the IELTS Soru Bankası. These are the non-negotiable source of truth. All future development on this feature MUST strictly follow these protocols for visual generation, audio quality, and overall architecture.
-- **Soru Bankası is the Top Priority**: This is the user's current and primary focus. Continue building it out according to the plan. Start with implementing the AI evaluation for Writing Task 1.
-- **SPA Routing Quirk**: Be aware that when testing, direct navigation to a new, protected route (e.g., ) might redirect to the dashboard or login page. The reliable way to test new pages is to log in and click the corresponding links within the application UI, as a real user would.
+-   **TOP PRIORITY IS THE BUG FIX**: The user's last message was clear: fix the filtering and navigation from the  page first. Do not proceed to other tasks until this is resolved and verified.
+-   **ULTRA MASTER PROMPT is Law**: All development MUST adhere to the user's ULTRA MASTER PROMPT. It is the single source of truth for features, UX, and academic standards.
+-   **Test User**: Use the credentials  /  for testing. This user was created in the correct database ().
+-   **Routing Workaround**: Be aware that the new pages currently exist on unprotected  routes. After fixing the primary bug, a key task is to integrate these pages properly behind the application's authentication.
 
 **documents and test reports created in this job**
-- 
-- 
-- 
-- Multiple  files were created by the frontend testing agent during UI debugging.
+-   
+-   
+-   
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-10.  (Okay, continue) - User approved the agent's plan to continue building the Soru Bankası. (Complete)
-9.   (In the Writing Task 1 section, the charts are not clear enough... I want more realistic info) - User feedback requesting better data for visuals. (Complete)
-8.   (The same ElevenLabs key will be used. It will be the same key for all stages.) - User clarifying API key usage. (Acknowledged)
-7.  User provides  for the full Question Bank system. (Acknowledged)
-6.  User provides  for Writing Task 1 Visual Generation. (Acknowledged)
-5.   (This is also a very comprehensive and professional instruction! Now I see the full picture.) - User is happy with the agent's understanding. (Acknowledged)
-4.  User provides  for the Listening Audio Pipeline. (Acknowledged)
-3.   (How will you generate the visuals for writing?) - User asking for the plan on Writing Task 1 visuals. (Answered)
-2.   (How will the question bank be?) - User asking for the plan for the next major feature. (Answered)
-1.   - This message is from the *previous* fork's history, but was mistakenly included in the current chat. It was already resolved.
+10.  (User wants agent to start working on the AI evaluation system). (Complete)
+9.  User provides feedback that General Writing is missing and Task 2 needs model answers. (Complete)
+8.   (Will the updates be deployed when I deploy?). (Answered)
+7.   (User confirms to proceed with implementing other chart types). (Complete)
+6.  User asks to proceed with implementation after seeing the successful demo. (Acknowledged)
+5.  User gives a final, comprehensive approval of the agent's plan, confirming priorities and the starting chart type (Line Graph). (Acknowledged)
+4.  User provides two highly detailed ULTRA MASTER PROMPT documents for both the core academic vision and the UX wireframes. This is the most critical input. (Acknowledged)
+3.  User provides initial feedback on the existing Writing Task 1, stating the tasks aren't specific enough and the UX is poor. This prompted the ULTRA MASTER PROMPT. (Complete)
+2.   (Finish the task first, then we'll do a fork session. Otherwise the work gets lost). **(PENDING - This is the user's final instruction, indicating the current bug-fixing task is incomplete and must be finished first).**
+1.  User complains that General Writing is missing, and category/band filtering is not working. **(PENDING - This is the bug the agent is currently working on).**
 
 **Project Health Check:**
-- **Broken**: None. The application is stable.
-- **Mocked/Incomplete**: The IELTS Soru Bankası is in an early but functional state. Most of the logic for skills other than Writing Task 1, as well as the AI evaluation, is yet to be built.
-- **Needs Refactoring**:  is very large.
+-   **Broken**: The navigation and filtering flow from the main  page to the practice pages is broken. This is the highest priority issue.
+-   **Mocked/Incomplete**: The protected routing for the new pages is not implemented; they are currently on temporary  routes. The 3-layer model answer UI is not yet built on the frontend.
+-   **Needs Refactoring**:  needs to be cleaned up to remove the demo routes.  needs a refactor to correctly handle state and navigation.
 
 **3rd Party Integrations**
-- **ElevenLabs**: Used for generating audio for the Mastery Course. Will be used extensively for the Soru Bankası Listening section. Requires User API Key.
-- **OpenAI GPT-4o**: Used via  with the . Will be the core of the AI evaluation system for Writing and Speaking.
-- **Resend**: Existing integration for emails.
-- **Google Auth, PayPal**: Existing integrations.
+-   **OpenAI GPT-4o**: Used via  with the  for the AI evaluation feature.
+-   **ElevenLabs**: Exists in the project, but was not used in this session.
+-   **Resend, Google Auth, PayPal**: Existing integrations.
 
 **Testing status**
-- **Testing agent used after significant changes**: YES. The frontend testing agent was used to diagnose and verify the new Question Bank UI pages.
-- **Troubleshoot agent used after agent stuck in loop**: NO.
-- **Test files created**: Yes, temporary test files were created by the testing agent.
-- **Known regressions**: None.
+-   **Testing agent used after significant changes**: NO. Agent attempted to use it but ran into authentication issues, which were then debugged and resolved manually. Subsequent testing was done via screenshots.
+-   **Troubleshoot agent used after agent stuck in loop**: NO.
+-   **Test files created**: None.
+-   **Known regressions**: The navigation from the  skill selection modal is broken.
 
 **Credentials to test flow:**
-*   **Admin**:  / 
 *   **User**:  / 
 
 **What agent forgot to execute**
-- The agent did not address the lower-priority pending tasks from the previous fork: verifying Speaking model answers, fixing old linting errors, and deleting the unused  file. This was a reasonable trade-off to prioritize the user's major new feature request.</analysis>
+The agent was in the middle of fixing the critical bug reported by the user (filtering and navigation from ) when the user requested to fork. The fix is incomplete and must be the first action for the next agent.</analysis>
