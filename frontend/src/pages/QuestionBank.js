@@ -219,12 +219,12 @@ export default function QuestionBank() {
               <div className="flex items-center gap-2 mb-4">
                 <Filter className="w-5 h-5 text-indigo-600" />
                 <h2 className="text-lg font-bold text-gray-900">1. First, Select Filters</h2>
-                <span className="text-sm text-gray-500">(İsteğe bağlı)</span>
+                <span className="text-sm text-gray-500">(Optional)</span>
               </div>
               
               {/* Band Levels - Horizontal */}
               <div className="mb-4">
-                <p className="text-sm font-medium text-gray-700 mb-2">Band Seviyesi:</p>
+                <p className="text-sm font-medium text-gray-700 mb-2">Band Level:</p>
                 <div className="flex flex-wrap gap-2">
                   {bandLevels.map(band => (
                     <Button
@@ -251,9 +251,9 @@ export default function QuestionBank() {
                 </div>
                 {selectedBand && (
                   <p className="text-xs text-indigo-600 mt-2">
-                    📚 {selectedBand === '4.0-5.0' ? 'Beginner Course konuları' : 
-                        selectedBand === '5.5-6.5' ? 'Beginner + Mastery Course konuları' : 
-                        'Tüm kurs konuları'} gösteriliyor ({topics.length} konu)
+                    📚 {selectedBand === '4.0-5.0' ? 'Beginner Course topics' : 
+                        selectedBand === '5.5-6.5' ? 'Beginner + Mastery Course topics' : 
+                        'All course topics'} showing ({topics.length} topics)
                   </p>
                 )}
               </div>
