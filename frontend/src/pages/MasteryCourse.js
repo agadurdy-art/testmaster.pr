@@ -1124,7 +1124,7 @@ export default function MasteryCourse({ user }) {
                         </div>
                         {showReadingResults && !isCorrect && (
                           <p className="mt-1 text-xs text-green-600 bg-green-50 p-2 rounded">
-                            Doğru cevap: {q.a}
+                            Correct answer: {q.a}
                           </p>
                         )}
                       </div>
