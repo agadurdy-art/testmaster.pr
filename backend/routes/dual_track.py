@@ -165,9 +165,9 @@ async def get_track_recommendations(
     }
 
 
-# ============ GENERAL TRACK SUMMARY ============
+# ============ GENERAL TRACK SUMMARY (static path) ============
 
-@router.get("/general/summary")
+@router.get("/general-summary")
 async def get_general_track_summary():
     """Get summary of all General Training content across courses."""
     from services.dual_track_courses import DualTrackCourseManager
