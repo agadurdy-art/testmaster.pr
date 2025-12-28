@@ -476,7 +476,7 @@ export default function QuestionBank() {
       {/* Writing Task Selection Modal */}
       {showWritingModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <Card className="w-full max-w-lg p-6 relative">
+          <Card className="w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto">
             <Button
               variant="ghost"
               size="sm"
@@ -491,30 +491,33 @@ export default function QuestionBank() {
             </h2>
             <p className="text-gray-500 mb-4">Hangi görevi pratik yapmak istiyorsunuz?</p>
             
-            {/* Active Filters Info */}
-            {(selectedTopic || selectedBand) && (
-              <div className="mb-4 p-3 bg-indigo-50 rounded-lg">
-                <p className="text-xs text-indigo-600 font-medium mb-1">Seçili Filtreler:</p>
-                <div className="flex gap-2">
-                  {selectedTopic && (
-                    <Badge variant="secondary" className="text-xs">
-                      Konu: {topics.find(t => t.id === selectedTopic)?.name || selectedTopic}
-                    </Badge>
-                  )}
-                  {selectedBand && (
-                    <Badge variant="secondary" className="text-xs">
-                      Band: {bandLevels.find(b => b.id === selectedBand)?.name || selectedBand}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            )}
-            
             <div className="space-y-3">
-              {/* Academic Section */}
+              {/* ====== ACADEMIC WRITING SECTION ====== */}
               <div className="mb-2">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Academic IELTS</p>
+                <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <BookOpen className="w-4 h-4" /> Academic IELTS
+                </p>
+                <p className="text-xs text-gray-500 mb-3">Kurs konularıyla ilişkili • Topic ve Band seçimi aktif</p>
               </div>
+              
+              {/* Active Filters for Academic - Only show for Academic */}
+              {(selectedTopic || selectedBand) && (
+                <div className="mb-3 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                  <p className="text-xs text-indigo-600 font-medium mb-1">Academic Writing Filtreleri:</p>
+                  <div className="flex gap-2 flex-wrap">
+                    {selectedBand && (
+                      <Badge className="bg-indigo-100 text-indigo-700 text-xs">
+                        Band: {bandLevels.find(b => b.id === selectedBand)?.name || selectedBand}
+                      </Badge>
+                    )}
+                    {selectedTopic && (
+                      <Badge className="bg-purple-100 text-purple-700 text-xs">
+                        Konu: {topics.find(t => t.id === selectedTopic)?.name || selectedTopic}
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              )}
               
               <Card 
                 className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-green-300"
@@ -533,9 +536,10 @@ export default function QuestionBank() {
                   <div className="flex-1">
                     <h3 className="font-bold text-gray-900">Task 1 - Academic</h3>
                     <p className="text-sm text-gray-500">Grafik, tablo, süreç veya harita açıklaması</p>
-                    <div className="flex gap-2 mt-2">
+                    <div className="flex gap-2 mt-2 flex-wrap">
                       <Badge className="bg-green-100 text-green-700">150+ kelime</Badge>
                       <Badge className="bg-gray-100 text-gray-600">20 dakika</Badge>
+                      {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Konu Odaklı</Badge>}
                     </div>
                   </div>
                 </div>
@@ -558,27 +562,36 @@ export default function QuestionBank() {
                   <div className="flex-1">
                     <h3 className="font-bold text-gray-900">Task 2 - Essay</h3>
                     <p className="text-sm text-gray-500">Opinion, Discussion, Problem-Solution essay</p>
-                    <div className="flex gap-2 mt-2">
+                    <div className="flex gap-2 mt-2 flex-wrap">
                       <Badge className="bg-blue-100 text-blue-700">250+ kelime</Badge>
                       <Badge className="bg-gray-100 text-gray-600">40 dakika</Badge>
+                      {selectedTopic && <Badge className="bg-indigo-100 text-indigo-600">Konu Odaklı</Badge>}
                     </div>
                   </div>
                 </div>
               </Card>
               
-              {/* General Training Section */}
-              <div className="mt-4 mb-2 pt-4 border-t">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">General Training IELTS</p>
+              {/* ====== GENERAL TRAINING SECTION ====== */}
+              <div className="mt-6 mb-2 pt-4 border-t border-gray-200">
+                <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <FileText className="w-4 h-4" /> General Training IELTS
+                </p>
+                <p className="text-xs text-gray-500 mb-3">Mektup yazma pratiği • Kurs konularından bağımsız</p>
+              </div>
+              
+              {/* Note: No topic/band filters for General Training */}
+              <div className="mb-3 p-3 bg-purple-50 rounded-lg border border-purple-100">
+                <p className="text-xs text-purple-600">
+                  ℹ️ General Training mektup yazma, kurs konularından bağımsızdır. 32 farklı mektup senaryosu (Formal, Semi-formal, Informal) içerir.
+                </p>
               </div>
               
               <Card 
                 className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-purple-300"
                 onClick={() => {
                   setShowWritingModal(false);
-                  const params = new URLSearchParams();
-                  if (selectedTopic) params.set('topic', selectedTopic);
-                  if (selectedBand) params.set('band', selectedBand);
-                  navigate(`/question-bank/writing/general/task1${params.toString() ? '?' + params.toString() : ''}`);
+                  // No topic/band params for General Training
+                  navigate('/question-bank/writing/general/task1');
                 }}
               >
                 <div className="flex items-start gap-3">
@@ -588,9 +601,10 @@ export default function QuestionBank() {
                   <div className="flex-1">
                     <h3 className="font-bold text-gray-900">Task 1 - Letter Writing</h3>
                     <p className="text-sm text-gray-500">Formal, Semi-formal, Informal mektup yazma</p>
-                    <div className="flex gap-2 mt-2">
+                    <div className="flex gap-2 mt-2 flex-wrap">
                       <Badge className="bg-purple-100 text-purple-700">150+ kelime</Badge>
                       <Badge className="bg-gray-100 text-gray-600">20 dakika</Badge>
+                      <Badge className="bg-amber-100 text-amber-700">32 senaryo</Badge>
                     </div>
                   </div>
                 </div>
