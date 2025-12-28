@@ -1614,28 +1614,6 @@ export default function MasteryCourse({ user }) {
               <p className="text-gray-500">Module-specific content loading...</p>
             </div>
           )}}
-                        {selectedGeneralLesson.writing.formal_phrases.closing && (
-                          <div>
-                            <p className="text-xs font-semibold text-blue-600 mb-1">Closing:</p>
-                            <ul className="text-sm text-gray-700 space-y-1">
-                              {selectedGeneralLesson.writing.formal_phrases.closing.slice(0, 3).map((phrase, i) => (
-                                <li key={i}>• {phrase}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-                    </details>
-                  )}
-                </>
-              )}
-            </>
-          ) : (
-            <div className="text-center py-8 bg-gray-50 rounded-xl">
-              <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">General Training dersleri yükleniyor...</p>
-            </div>
-          )}
         </>
       )}
       
