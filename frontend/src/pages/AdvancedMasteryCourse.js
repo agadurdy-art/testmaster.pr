@@ -251,6 +251,19 @@ export default function AdvancedMasteryCourse({ user }) {
         }
       }
       
+      // Fetch General Training Reading content - NEW API
+      try {
+        const generalReadingResponse = await fetch(`${API_URL}/api/courses/reading/general/advanced/${strategicModuleId}`);
+        if (generalReadingResponse.ok) {
+          const generalData = await generalReadingResponse.json();
+          if (generalData.success && generalData.module) {
+            setGeneralReading(generalData.module);
+          }
+        }
+      } catch (e) {
+        console.error('Error fetching general reading:', e);
+      }
+      
       // Also fetch language booster as fallback
       const topicToBooster = {
         'technology': 'technology',
