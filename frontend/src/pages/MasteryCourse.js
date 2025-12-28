@@ -1137,7 +1137,7 @@ export default function MasteryCourse({ user }) {
                 onClick={() => setShowReadingResults(true)}
                 className="w-full bg-gradient-to-r from-purple-500 to-pink-600"
               >
-                Cevapları Kontrol Et
+                Check Answers
               </Button>
               
               {/* Key Vocabulary Preview */}
