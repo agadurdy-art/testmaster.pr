@@ -926,34 +926,61 @@ export default function AdvancedMasteryCourse({ user }) {
     </Card>
   );
 
-  // Render reading section
+  // Render reading section with Dual-Track Support
   const renderReading = () => (
     <Card className="p-6 bg-white border-0 shadow-lg">
       <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
         <Target className="w-5 h-5 text-blue-600" /> Advanced Reading
       </h3>
 
-      {/* Academic Reading Content */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h4 className="font-semibold text-gray-900 flex items-center gap-2">
-            {selectedModule.reading?.title}
-          </h4>
-          <span className="text-sm text-gray-500">
-            ~{selectedModule.reading?.passage?.split(' ').length || 0} words
-          </span>
+      {/* Track Toggle - Academic vs General Training */}
+      <div className="mb-6 p-4 bg-gray-50 rounded-xl">
+        <p className="text-sm font-medium text-gray-600 mb-3">IELTS Track Seçin:</p>
+        <div className="flex gap-2">
+          <Button
+            variant={readingTrack === 'academic' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setReadingTrack('academic')}
+            className={readingTrack === 'academic' ? 'bg-blue-600 hover:bg-blue-700' : ''}
+          >
+            <BookOpen className="w-4 h-4 mr-1" /> Academic IELTS
+          </Button>
+          <Button
+            variant={readingTrack === 'general' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setReadingTrack('general')}
+            className={readingTrack === 'general' ? 'bg-purple-600 hover:bg-purple-700' : ''}
+          >
+            <Target className="w-4 h-4 mr-1" /> General Training
+          </Button>
         </div>
+        <p className="text-xs text-gray-500 mt-2">
+          {readingTrack === 'academic' 
+            ? '📚 Academic: Complex texts from books, journals, and academic sources'
+            : '📋 General: Real-life professional documents, policies, and official notices'}
+        </p>
+      </div>
+
+      {/* Academic Reading Content */}
+      {readingTrack === 'academic' && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+              {strategicReading?.reading_scenario?.title || selectedModule.reading?.title}
+            </h4>
+            <Badge className="bg-blue-100 text-blue-700">Academic</Badge>
+          </div>
 
           {/* Reading passage with Side-by-Side */}
           <SideBySideReader
-            passage={selectedModule.reading?.passage || selectedModule.reading?.text || ''}
+            passage={strategicReading?.reading_scenario?.passage || selectedModule.reading?.passage || selectedModule.reading?.text || ''}
             passageTitle="Academic Reading Passage"
             defaultRatio={70}
           >
             {/* Practice Questions */}
             <div className="space-y-4">
               <h4 className="font-bold text-gray-900 text-sm">Comprehension Questions</h4>
-              {selectedModule.reading?.questions?.map((q, idx) => (
+              {(strategicReading?.reading_scenario?.questions || selectedModule.reading?.questions)?.map((q, idx) => (
                 <div key={idx} className="p-3 bg-gray-50 rounded-lg">
                   <p className="font-medium text-gray-900 mb-2 text-sm">
                     {idx + 1}. {q.question}
