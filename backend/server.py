@@ -319,6 +319,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load lesson registry routes: {e}")
 
+# Import dual-track course routes
+try:
+    from routes.dual_track import router as dual_track_router
+    app.include_router(dual_track_router)
+    print("✅ Dual-Track routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load dual-track routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
