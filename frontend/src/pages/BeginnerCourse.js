@@ -82,6 +82,11 @@ export default function BeginnerCourse({ user }) {
   const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
   const [languageBooster, setLanguageBooster] = useState(null); // Module-Specific Language Booster
   
+  // Reading Track states (Beginner uses GLOBAL General Reading)
+  const [readingTrack, setReadingTrack] = useState('academic');
+  const [generalReadingLessons, setGeneralReadingLessons] = useState([]);
+  const [selectedReadingLesson, setSelectedReadingLesson] = useState(null);
+  
   // Listening states
   const [listeningAnswers, setListeningAnswers] = useState({});
   const [listeningSubmitted, setListeningSubmitted] = useState(false);
