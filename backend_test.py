@@ -3225,6 +3225,9 @@ if __name__ == "__main__":
     print("🚀 Starting Backend API Testing for IELTS Ace Application")
     print("="*80)
     
+    # Test ULTRA MASTER PROMPT Implementation (CURRENT REVIEW REQUEST)
+    ultra_master_success = test_ultra_master_prompt_implementation()
+    
     # Test IELTS Ace Learning Platform with Admin Access (CURRENT REVIEW REQUEST)
     admin_access_success = test_ielts_ace_learning_platform_admin_access()
     
@@ -3258,9 +3261,10 @@ if __name__ == "__main__":
     # Test Writing Practice Evaluation API (existing functionality)
     writing_success = test_writing_practice_evaluation()
     
-    overall_success = admin_access_success and listening_writing_success and pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
+    overall_success = ultra_master_success and admin_access_success and listening_writing_success and pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
+    print(f"   ULTRA MASTER PROMPT Implementation (CURRENT REVIEW): {'✅ PASSED' if ultra_master_success else '❌ FAILED'}")
     print(f"   IELTS Ace Learning Platform Admin Access (CURRENT REVIEW): {'✅ PASSED' if admin_access_success else '❌ FAILED'}")
     print(f"   Listening & Writing Modules (CURRENT REVIEW): {'✅ PASSED' if listening_writing_success else '❌ FAILED'}")
     print(f"   3-Layer Pronunciation Evaluation (REVIEW REQUEST): {'✅ PASSED' if pronunciation_success else '❌ FAILED'}")
