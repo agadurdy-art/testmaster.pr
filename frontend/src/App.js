@@ -295,6 +295,10 @@ function AppWithSessionHandler() {
           element={<GeneralTask1Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
         />
         <Route 
+          path="/demo/general-task2" 
+          element={<GeneralTask2Practice user={{id: 'demo', name: 'Demo User', email: 'demo@test.com'}} />} 
+        />
+        <Route 
           path="/question-bank/writing/task1" 
           element={user ? <WritingTask1Practice user={user} /> : <Navigate to="/" />} 
         />
@@ -305,6 +309,10 @@ function AppWithSessionHandler() {
         <Route 
           path="/question-bank/writing/general/task1" 
           element={user ? <GeneralTask1Practice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/writing/general/task2" 
+          element={user ? <GeneralTask2Practice user={user} /> : <Navigate to="/" />} 
         />
         <Route 
           path="/question-bank" 
