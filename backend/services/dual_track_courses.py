@@ -484,6 +484,211 @@ class DualTrackCourseManager:
                     "Recognising important deadlines and dates"
                 ]
             }
+        },
+        # ============ MASTERY GENERAL READING LESSONS (NEW) ============
+        {
+            "id": "gt-mastery-reading-1",
+            "module_number": 106,
+            "track": "general",
+            "topic": "Notices & Announcements",
+            "title": "Reading Public Notices & Announcements",
+            "level": "mastery",
+            "band_target": "5.5-6.5",
+            "skill": "reading",
+            "learning_goals": [
+                "Quickly locate specific information in notices",
+                "Understand implied meanings and conditions",
+                "Identify target audience and purpose",
+                "Recognise warning and restriction language"
+            ],
+            "reading": {
+                "title": "Public Notices & Announcements",
+                "text_types": ["Community notices", "Library/gym announcements", "Building management notices", "Event announcements"],
+                "key_skills": [
+                    "Scanning for specific details (times, dates, costs)",
+                    "Understanding conditional language (if/unless/provided that)",
+                    "Recognising formal notice conventions"
+                ],
+                "practice_texts": [
+                    {
+                        "id": "notice-1",
+                        "type": "Building Management Notice",
+                        "content": "ATTENTION ALL RESIDENTS\n\nWater Supply Interruption\n\nDue to essential maintenance work, the water supply to all apartments will be temporarily interrupted on Saturday, 15th March from 9:00 AM to 3:00 PM.\n\nPlease ensure you store sufficient water for drinking and essential needs before this time.\n\nEmergency water will be available in the lobby from 8:30 AM.\n\nWe apologise for any inconvenience caused.\n\nBuilding Management\nContact: maintenance@residences.co.uk",
+                        "questions": [
+                            {"q": "How long will the water be off?", "a": "6 hours (9 AM to 3 PM)", "skill": "time calculation"},
+                            {"q": "Where can residents get emergency water?", "a": "In the lobby", "skill": "locating specific info"},
+                            {"q": "What should residents do before 9 AM?", "a": "Store sufficient water", "skill": "understanding instructions"}
+                        ]
+                    },
+                    {
+                        "id": "notice-2",
+                        "type": "Library Announcement",
+                        "content": "CENTRAL LIBRARY - NEW SERVICES\n\nWe are pleased to announce extended opening hours starting from 1st April:\n\nMonday-Thursday: 8:00 AM - 9:00 PM\nFriday-Saturday: 9:00 AM - 6:00 PM\nSunday: 10:00 AM - 4:00 PM\n\nNEW: Study Room Booking\nMembers can now book private study rooms online. Bookings must be made at least 24 hours in advance. Maximum booking: 3 hours per day.\n\nNote: Study rooms are not available on Sundays.\n\nFor bookings, visit: library.gov.uk/bookings",
+                        "questions": [
+                            {"q": "What is the latest closing time during the week?", "a": "9:00 PM (Monday-Thursday)", "skill": "comparing information"},
+                            {"q": "Can you book a study room for Sunday?", "a": "No, not available on Sundays", "skill": "understanding restrictions"},
+                            {"q": "How far in advance must you book?", "a": "At least 24 hours", "skill": "identifying conditions"}
+                        ]
+                    }
+                ],
+                "tips": [
+                    "Read the heading first to understand the main topic",
+                    "Look for dates, times, and conditions",
+                    "Pay attention to words like 'must', 'should', 'not available'",
+                    "Notice contact information for follow-up"
+                ],
+                "model_answer_approach": {
+                    "band_6": "At Band 6, you can locate most specific information but may miss implied meanings or conditions.",
+                    "band_7": "At Band 7, you understand both explicit and implicit information, including exceptions and conditions."
+                }
+            }
+        },
+        {
+            "id": "gt-mastery-reading-2",
+            "module_number": 107,
+            "track": "general",
+            "topic": "Email Communication",
+            "title": "Reading Workplace & Official Emails",
+            "level": "mastery",
+            "band_target": "5.5-6.5",
+            "skill": "reading",
+            "learning_goals": [
+                "Identify the purpose and tone of formal emails",
+                "Extract action items and deadlines",
+                "Understand professional email conventions",
+                "Recognise levels of urgency and politeness"
+            ],
+            "reading": {
+                "title": "Email Communication",
+                "text_types": ["Workplace emails", "Official correspondence", "Customer service emails", "Appointment confirmations"],
+                "key_skills": [
+                    "Identifying main purpose (request, inform, confirm)",
+                    "Recognising tone (formal, semi-formal, urgent)",
+                    "Finding action required by recipient",
+                    "Understanding attached document references"
+                ],
+                "practice_texts": [
+                    {
+                        "id": "email-1",
+                        "type": "Workplace Email",
+                        "content": "Subject: Team Meeting - Agenda Changes\n\nDear Team,\n\nI hope this email finds you well.\n\nI am writing to inform you that the agenda for our weekly meeting on Thursday has been updated. Due to the upcoming project deadline, we will now focus primarily on the client presentation.\n\nPlease ensure you have reviewed the attached draft presentation before the meeting. If you have any slides to add, please send them to me by Wednesday 5 PM.\n\nThe meeting will now start at 2:30 PM instead of 2:00 PM to allow Sarah to join us after her client call.\n\nPlease confirm your attendance by replying to this email.\n\nBest regards,\nMichael Chen\nProject Manager",
+                        "questions": [
+                            {"q": "What is the main topic of the meeting?", "a": "Client presentation", "skill": "identifying main purpose"},
+                            {"q": "What has changed about the meeting time?", "a": "Changed from 2:00 PM to 2:30 PM", "skill": "identifying changes"},
+                            {"q": "What do team members need to do before Wednesday 5 PM?", "a": "Send any additional slides", "skill": "identifying deadlines"},
+                            {"q": "Why was the meeting time changed?", "a": "To allow Sarah to join after her client call", "skill": "understanding reasons"}
+                        ]
+                    },
+                    {
+                        "id": "email-2",
+                        "type": "Official Correspondence",
+                        "content": "Subject: Your Application Reference: APP-2024-0892\n\nDear Ms Thompson,\n\nThank you for your recent application for a parking permit.\n\nWe have reviewed your application and require additional documentation before we can proceed:\n\n1. Proof of residence (utility bill dated within the last 3 months)\n2. Vehicle registration document\n3. Valid driving licence (both sides)\n\nPlease submit these documents within 14 days of this email. You can upload them through our online portal or bring them to our office during opening hours (Mon-Fri, 9 AM - 5 PM).\n\nFailure to provide the required documents within the specified timeframe may result in your application being cancelled.\n\nIf you have any questions, please contact us at permits@council.gov.uk or call 0800 123 4567.\n\nYours sincerely,\nParking Services Team\nCity Council",
+                        "questions": [
+                            {"q": "What is the application reference number?", "a": "APP-2024-0892", "skill": "locating specific info"},
+                            {"q": "How many documents are required?", "a": "Three", "skill": "counting items"},
+                            {"q": "What happens if documents aren't submitted in time?", "a": "Application may be cancelled", "skill": "understanding consequences"},
+                            {"q": "How old can the utility bill be?", "a": "Within the last 3 months", "skill": "identifying conditions"}
+                        ]
+                    }
+                ],
+                "tips": [
+                    "Check the subject line for the main topic",
+                    "Look for action verbs: 'please ensure', 'kindly submit', 'you must'",
+                    "Note any deadlines mentioned",
+                    "Identify what the sender expects you to do"
+                ]
+            }
+        },
+        {
+            "id": "gt-mastery-reading-3",
+            "module_number": 108,
+            "track": "general",
+            "topic": "Workplace Documents",
+            "title": "Reading Policies & Procedures",
+            "level": "mastery",
+            "band_target": "5.5-6.5",
+            "skill": "reading",
+            "learning_goals": [
+                "Navigate workplace policy documents",
+                "Understand employee rights and responsibilities",
+                "Follow procedural instructions accurately",
+                "Identify key compliance requirements"
+            ],
+            "reading": {
+                "title": "Workplace Policies & Procedures",
+                "text_types": ["Employee handbooks", "Health & safety policies", "Leave policies", "Code of conduct"],
+                "key_skills": [
+                    "Understanding hierarchical document structure",
+                    "Identifying mandatory vs optional requirements",
+                    "Following step-by-step procedures",
+                    "Recognising exceptions and special cases"
+                ],
+                "practice_texts": [
+                    {
+                        "id": "policy-1",
+                        "type": "Annual Leave Policy",
+                        "content": "ANNUAL LEAVE POLICY\n\n1. Entitlement\nAll full-time employees are entitled to 25 days of paid annual leave per year, plus public holidays. Part-time employees receive a pro-rata entitlement.\n\n2. Booking Leave\n- Leave requests must be submitted at least 2 weeks in advance for periods of 1-3 days\n- For leave of 4 days or more, 4 weeks' notice is required\n- Requests are subject to manager approval and operational requirements\n\n3. Restrictions\n- No more than 2 consecutive weeks may be taken without director approval\n- Leave cannot be carried over to the next year, except in exceptional circumstances approved by HR\n- December 15-31 is a restricted period; only essential leave will be approved\n\n4. Emergency Leave\nIn case of family emergency, employees may request immediate leave. This will be deducted from annual allowance or taken as unpaid leave if entitlement is exhausted.",
+                        "questions": [
+                            {"q": "How many days' notice is needed for a 5-day holiday?", "a": "4 weeks", "skill": "applying rules"},
+                            {"q": "Can unused leave be carried to next year?", "a": "Only in exceptional circumstances approved by HR", "skill": "understanding exceptions"},
+                            {"q": "What is the restricted period for leave?", "a": "December 15-31", "skill": "locating specific info"},
+                            {"q": "How much leave do full-time employees get?", "a": "25 days plus public holidays", "skill": "locating entitlements"}
+                        ]
+                    }
+                ],
+                "tips": [
+                    "Look for section headings to navigate quickly",
+                    "Note words like 'must', 'may', 'cannot', 'except'",
+                    "Pay attention to numbers and timeframes",
+                    "Identify who approves different types of requests"
+                ]
+            }
+        },
+        {
+            "id": "gt-mastery-reading-4",
+            "module_number": 109,
+            "track": "general",
+            "topic": "Forms & Applications",
+            "title": "Understanding Forms & Instructions",
+            "level": "mastery",
+            "band_target": "5.5-6.5",
+            "skill": "reading",
+            "learning_goals": [
+                "Read and understand form instructions accurately",
+                "Identify required vs optional fields",
+                "Understand eligibility criteria",
+                "Follow application procedures correctly"
+            ],
+            "reading": {
+                "title": "Forms & Application Documents",
+                "text_types": ["Application forms", "Registration documents", "Claim forms", "Booking forms"],
+                "key_skills": [
+                    "Understanding field labels and requirements",
+                    "Recognising mandatory fields (*required)",
+                    "Following conditional instructions (if applicable)",
+                    "Understanding supporting document requirements"
+                ],
+                "practice_texts": [
+                    {
+                        "id": "form-1",
+                        "type": "Gym Membership Application",
+                        "content": "FITNESS FIRST - MEMBERSHIP APPLICATION\n\nMembership Options:\n□ Standard (£45/month) - Gym access Mon-Fri 6am-5pm\n□ Premium (£65/month) - Full access, all hours, includes classes\n□ Student (£30/month) - Valid student ID required, off-peak only\n\nPersonal Details: (* = required)\n*Full Name: _______________\n*Date of Birth: _______________\n*Email: _______________\nPhone: _______________\n*Emergency Contact: _______________\n\nHealth Declaration:\nDo you have any medical conditions we should be aware of? Y/N\nIf YES, please provide details: _______________\n\nPayment:\n□ Monthly Direct Debit (first month + £20 joining fee)\n□ Annual Payment (10% discount, no joining fee)\n\nTerms:\n- 30-day cancellation notice required\n- Membership is non-transferable\n- Photo ID required on first visit\n\nSignature: _______________ Date: _______________",
+                        "questions": [
+                            {"q": "Which membership includes fitness classes?", "a": "Premium", "skill": "comparing options"},
+                            {"q": "What is required for student membership?", "a": "Valid student ID", "skill": "identifying requirements"},
+                            {"q": "Which payment method has no joining fee?", "a": "Annual payment", "skill": "comparing conditions"},
+                            {"q": "Is phone number required?", "a": "No, it's optional (no asterisk)", "skill": "understanding form conventions"},
+                            {"q": "What must you bring on your first visit?", "a": "Photo ID", "skill": "identifying requirements"}
+                        ]
+                    }
+                ],
+                "tips": [
+                    "Look for asterisks (*) indicating required fields",
+                    "Read ALL options before choosing",
+                    "Check eligibility requirements for each option",
+                    "Note what documents you need to provide"
+                ]
+            }
         }
     ]
     
