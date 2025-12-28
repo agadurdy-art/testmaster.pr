@@ -1097,7 +1097,7 @@ export default function MasteryCourse({ user }) {
                 
                 {/* Questions */}
                 <div className="space-y-3">
-                  <h5 className="font-semibold text-gray-800 text-sm">Sorular:</h5>
+                  <h5 className="font-semibold text-gray-800 text-sm">Questions:</h5>
                   {languageBooster.reading_task.questions?.map((q, qIdx) => {
                     const questionKey = `booster-${qIdx}`;
                     const userAnswer = readingAnswers[questionKey] || '';
