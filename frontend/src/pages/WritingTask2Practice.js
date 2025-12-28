@@ -517,6 +517,50 @@ export default function WritingTask2Practice() {
                         </ul>
                       </div>
                     )}
+                    {/* ULTRA MASTER PROMPT: Recommended Lessons */}
+                    {recommendedLessons.length > 0 && (
+                      <div className="bg-purple-50 p-3 rounded-lg border border-purple-200 col-span-2">
+                        <h4 className="font-semibold text-purple-800 mb-2 text-xs flex items-center gap-2">
+                          📚 Önerilen Dersler
+                          <Badge className="bg-purple-100 text-purple-600 text-xs">Kurs Odaklı</Badge>
+                        </h4>
+                        <p className="text-xs text-purple-600 mb-2">
+                          Zayıf noktalarınızı geliştirmek için bu dersleri çalışın:
+                        </p>
+                        <div className="space-y-2">
+                          {recommendedLessons.map((lesson, idx) => (
+                            <div 
+                              key={idx}
+                              className="p-2 bg-white rounded-lg border border-purple-100 cursor-pointer hover:border-purple-300 transition-colors"
+                              onClick={() => {
+                                const routes = {
+                                  beginner: '/beginner-english',
+                                  mastery: '/mastery-course',
+                                  advanced: '/advanced-mastery'
+                                };
+                                navigate(routes[lesson.stage] || '/dashboard');
+                              }}
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex-1">
+                                  <p className="text-sm font-medium text-gray-800">{lesson.title}</p>
+                                  <p className="text-xs text-gray-500">{lesson.reason}</p>
+                                </div>
+                                <Badge 
+                                  className={`text-xs ${
+                                    lesson.stage === 'beginner' ? 'bg-green-100 text-green-700' :
+                                    lesson.stage === 'mastery' ? 'bg-blue-100 text-blue-700' :
+                                    'bg-amber-100 text-amber-700'
+                                  }`}
+                                >
+                                  {lesson.band_level}
+                                </Badge>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Card>
               )}
