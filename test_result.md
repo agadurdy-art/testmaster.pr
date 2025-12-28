@@ -1,5 +1,53 @@
 # Test Results - IELTS Question Bank Feature (ULTRA MASTER PROMPT)
 
+## NEW TEST REQUIRED - December 28, 2025
+
+### Phase 3: Advanced General Reading Implementation
+
+**Testing Priority:** HIGH
+**Feature:** Strategic, module-specific General Training Reading content for Advanced Course
+
+### Backend Implementation Completed:
+- **New Data Structure:** `ADVANCED_MODULE_STRATEGIC_READING` added to `dual_track_courses.py`
+- **New API Endpoint:** `GET /api/courses/advanced-strategic-reading/{module}` 
+- **New Summary API:** `GET /api/courses/advanced-strategic-reading-summary`
+- **Content:** 17 modules with complex, real-life professional documents (policies, contracts, guidelines)
+
+### Frontend Implementation Completed:
+- **File Modified:** `/app/frontend/src/pages/AdvancedMasteryCourse.js`
+- **New State:** `strategicReading`, `readingTrack`
+- **Reading Section:** Now has Academic/General Training toggle (like Writing section)
+- **Strategic Reading UI:** Professional document display with comprehension questions
+
+### Test Credentials:
+- **Email:** test@ielts.com
+- **Password:** admin123
+
+### Test Flow for Advanced General Reading:
+1. Login with test credentials
+2. Navigate to `/advanced-mastery`
+3. Click on any module (e.g., "The Digital Frontier")
+4. Click on "Reading" tab
+5. **VERIFY:** Toggle visible - "Academic IELTS" and "General Training" buttons
+6. Click "General Training" button
+7. **VERIFY:** Strategic Reading content appears with:
+   - Module title and strategic focus
+   - Document type badge
+   - Professional document passage (policy, contract, etc.)
+   - Comprehension questions (multiple choice, T/F/NG, short answer)
+   - Show Answer functionality
+
+### Backend API Tests:
+```bash
+# Test Strategic Reading Summary
+curl https://[URL]/api/courses/advanced-strategic-reading-summary
+
+# Test Specific Module
+curl https://[URL]/api/courses/advanced-strategic-reading/digital_frontier
+```
+
+---
+
 ## Test Summary
 **Date:** 2025-12-28  
 **Tester:** Testing Agent  
