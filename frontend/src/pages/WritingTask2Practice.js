@@ -183,6 +183,10 @@ export default function WritingTask2Practice() {
           grammar_corrections: data.evaluation.grammar_corrections || [],
           examiner_comment: data.evaluation.examiner_comment || ''
         });
+        // Store recommended lessons from ULTRA MASTER PROMPT
+        if (data.recommended_lessons && data.recommended_lessons.length > 0) {
+          setRecommendedLessons(data.recommended_lessons);
+        }
         toast.success('Değerlendirme tamamlandı!');
       } else {
         toast.error(data.error || 'Değerlendirme başarısız');
@@ -199,6 +203,7 @@ export default function WritingTask2Practice() {
     setSelectedPrompt(prompt);
     setUserResponse('');
     setEvaluation(null);
+    setRecommendedLessons([]);
     setShowModelAnswer(false);
     setModelAnswers(null);
     
