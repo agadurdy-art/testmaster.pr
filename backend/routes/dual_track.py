@@ -121,11 +121,69 @@ async def get_general_track_summary():
             }
         },
         "module_boosters": list(DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS.keys()),
+        "advanced_strategic_modules": list(DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_WRITING.keys()),
         "total_general_lessons": (
             len(DualTrackCourseManager.BEGINNER_GENERAL_LESSONS) +
             len(DualTrackCourseManager.MASTERY_GENERAL_LESSONS) +
             len(DualTrackCourseManager.ADVANCED_GENERAL_LESSONS)
         )
+    }
+
+
+@router.get("/advanced-strategic-writing/{module}")
+async def get_advanced_strategic_writing(module: str):
+    """
+    Get Module-Specific Strategic Writing for Advanced General Training.
+    
+    Each module has a focused, professional writing scenario with:
+    - Strategic focus (tone, purpose, argument)
+    - Real-world context
+    - Band 8 model answer
+    
+    Example: /api/courses/advanced-strategic-writing/digital_frontier
+    """
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    module_lower = module.lower().replace('-', '_').replace(' ', '_')
+    
+    # Check if module has strategic writing content
+    if module_lower not in DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_WRITING:
+        available_modules = list(DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_WRITING.keys())
+        return {
+            "success": False,
+            "error": f"No strategic writing content for '{module}'",
+            "available_modules": available_modules,
+            "suggestion": "Check available modules for advanced strategic writing"
+        }
+    
+    strategic_content = DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_WRITING[module_lower]
+    
+    return {
+        "success": True,
+        "module": module_lower,
+        "strategic_writing": strategic_content
+    }
+
+
+@router.get("/advanced-strategic-writing-summary")
+async def get_advanced_strategic_writing_summary():
+    """Get summary of all Advanced Strategic Writing modules."""
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    summary = []
+    for module_id, content in DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_WRITING.items():
+        summary.append({
+            "module_id": module_id,
+            "module_title": content.get("module_title"),
+            "strategic_focus": content.get("strategic_focus"),
+            "band_target": content.get("band_target"),
+            "scenario_title": content.get("writing_scenario", {}).get("title")
+        })
+    
+    return {
+        "success": True,
+        "total": len(summary),
+        "modules": summary
     }
 
 
