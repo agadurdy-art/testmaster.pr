@@ -324,6 +324,8 @@ export default function QuestionBank() {
                       onClick={() => {
                         if (skill.id === 'writing') {
                           setShowWritingModal(true);
+                        } else if (skill.id === 'reading') {
+                          setShowReadingModal(true);
                         } else {
                           setSelectedSkill(skill.id);
                           setActiveTab('practice');
