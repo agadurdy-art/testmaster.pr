@@ -1276,7 +1276,7 @@ export default function AdvancedMasteryCourse({ user }) {
                       <div className="mt-2 p-4 bg-white rounded-lg border border-purple-100 space-y-2">
                         {strategicWriting.writing_scenario.key_phrases.map((phrase, i) => (
                           <p key={i} className="text-sm text-gray-700 italic pl-4 border-l-2 border-purple-300">
-                            "{phrase}"
+                            &ldquo;{phrase}&rdquo;
                           </p>
                         ))}
                       </div>
