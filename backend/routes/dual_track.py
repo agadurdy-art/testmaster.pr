@@ -4,7 +4,7 @@ Dual-Track Course API Routes
 Provides endpoints for Academic and General Training track management.
 """
 
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Query, HTTPException, Body
 from typing import Optional, List
 
 
