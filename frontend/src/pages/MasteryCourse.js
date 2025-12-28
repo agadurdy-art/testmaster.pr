@@ -166,6 +166,9 @@ export default function MasteryCourse({ user }) {
     setSelectedModule(module);
     setView('module-detail');
     setCurrentSection('vocabulary');
+    
+    // Fetch module-specific language booster
+    fetchModuleLanguageBooster(module.topic);
     setQuizAnswers({});
     setQuizSubmitted(false);
     setSpeakingResponse('');
