@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
+import { WritingEvaluationResult, ReadingEvaluationResult } from '../components/EvaluationResult';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
