@@ -138,6 +138,8 @@ export default function AdvancedMasteryCourse({ user }) {
         setQuizAnswers({});
         setQuizResults(null);
         setQuizSubmitted(false);
+        setStrategicReading(null);
+        setReadingTrack('academic');
         // Fetch module-specific language booster
         fetchModuleLanguageBooster(data.title || module.title);
       }
@@ -146,7 +148,7 @@ export default function AdvancedMasteryCourse({ user }) {
     }
   };
 
-  // Fetch Module-Specific Language Booster AND Strategic Writing for Advanced
+  // Fetch Module-Specific Language Booster AND Strategic Writing/Reading for Advanced
   const fetchModuleLanguageBooster = async (moduleTitle) => {
     try {
       // Map module titles to strategic writing module IDs
