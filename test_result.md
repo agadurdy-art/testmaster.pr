@@ -598,6 +598,76 @@ The ULTRA MASTER PROMPT frontend implementation is working excellently with all 
 
 **Status:** READY FOR PRODUCTION
 
+## MASTERY COURSE WRITING SECTION TESTING - December 28, 2025 (Testing Agent)
+
+### ✅ ACADEMIC/GENERAL TRAINING TOGGLE TESTING COMPLETED SUCCESSFULLY
+
+**Testing Agent:** Frontend Testing Agent  
+**Test Date:** December 28, 2025  
+**Test Credentials:** test@ielts.com / admin123  
+**Frontend URL:** http://localhost:3000
+
+#### Test Results Summary: ALL REQUIREMENTS MET ✅
+
+### 1. ✅ Login and Authentication
+- **Test Credentials:** test@ielts.com / admin123
+- **Result:** Authentication successful after setting localStorage
+- **Status:** Working correctly
+
+### 2. ✅ Mastery Course Navigation
+- **URL:** http://localhost:3000/mastery-course
+- **Result:** Page loads correctly showing all 17 modules
+- **Modules Visible:** Education, Health, Technology, Environment, Work, Family, Travel, Money, Culture, Media, Food, Housing, Transportation, Crime, Science, Hobbies, Sports
+- **Status:** Working correctly
+
+### 3. ✅ Education Module Selection
+- **Module:** Module 1 - Education
+- **Result:** Successfully clicked and loaded module detail page
+- **Learning Goals Visible:** Master academic vocabulary, use passive voice, analyze reading texts, construct Band 6 essays
+- **Status:** Working correctly
+
+### 4. ✅ Writing Section Navigation
+- **Navigation:** Successfully clicked Writing tab in module sections
+- **Sections Available:** Vocabulary, Grammar, Listening, Reading, Speaking, Writing, Quiz
+- **Writing Tab:** Highlighted and active
+- **Status:** Working correctly
+
+### 5. ✅ ACADEMIC/GENERAL TRAINING TOGGLE - PERFECT IMPLEMENTATION
+- **Toggle Location:** Clearly visible in Writing section with "IELTS Track Seçin:" label
+- **Academic IELTS Button:** ✅ Present and functional
+- **General Training Button:** ✅ Present and functional
+- **Status:** Working perfectly
+
+#### Academic IELTS Track Features ✅
+- **Task Type:** Task 2: Academic Essay - Opinion, Discussion, Problem-Solution
+- **Essay Question:** "Some people think that all university students should study whatever they like. Others believe they should only study subjects that are useful for the future, such as science. Discuss both views and give your opinion."
+- **Writing Area:** Large textarea with placeholder "Write your essay here (aim for 250+ words)..."
+- **Word Count:** Real-time word counter (Words: 0)
+- **Features:** Model essay available, evaluation button
+
+#### General Training Track Features ✅
+- **Task Type:** Task 1: Letter Writing - Formal, Semi-formal, Informal
+- **Lesson Selector:** Multiple lesson options available:
+  - "Advanced Formal Letters" (selected by default)
+  - "Semi-formal Communication"
+  - "Politeness Strategies"
+  - "Request & Apology Letters"
+- **Letter Task:** "You have had a problem with your internet service for two weeks. Write a formal letter of complaint."
+- **Key Concepts:** Visible with bullet points for formal complaint structure
+- **Writing Area:** Textarea for letter writing
+- **Model Letters:** Band 6 and Band 8 model letters available (expandable sections)
+
+### 6. ✅ Track Switching Functionality
+- **Academic → General:** Seamless transition, content changes appropriately
+- **General → Academic:** Seamless transition, content changes appropriately
+- **Content Persistence:** Each track maintains its own content and state
+- **Status:** Working perfectly
+
+### 7. ✅ Turkish Language Interface
+- **Interface Language:** Turkish elements present ("IELTS Track Seçin", "Ders Seçin", "Temel Kavramlar")
+- **Mixed Language:** Appropriate mix of Turkish UI and English content
+- **Status:** Working correctly
+
 ## BACKEND TESTING RESULTS - December 28, 2025 (Testing Agent)
 
 ### ✅ COMPLETE ULTRA MASTER PROMPT BACKEND TESTING - COMPREHENSIVE RESULTS
