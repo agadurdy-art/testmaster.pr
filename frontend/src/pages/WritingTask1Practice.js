@@ -662,7 +662,7 @@ export default function WritingTask1Practice() {
                       <Button
                         variant="outline"
                         className="w-full mt-4"
-                        onClick={() => setModelAnswerStep(prev => prev < 3 ? prev + 1 : prev)}
+                        onClick={() => setModelAnswerStep(3)}
                       >
                         {modelAnswerStep < 3 ? 'Model Cevabı Gör' : 'Model Cevap Gösteriliyor'}
                       </Button>
