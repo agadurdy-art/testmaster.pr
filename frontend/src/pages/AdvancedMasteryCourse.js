@@ -144,51 +144,103 @@ export default function AdvancedMasteryCourse({ user }) {
     }
   };
 
-  // Fetch Module-Specific Language Booster
+  // Fetch Module-Specific Language Booster AND Strategic Writing for Advanced
   const fetchModuleLanguageBooster = async (moduleTitle) => {
     try {
-      const topicToBooster = {
-        'technology': 'technology',
-        'environment': 'environment',
-        'climate': 'environment',
-        'globalisation': 'work',
-        'globalization': 'work',
-        'economics': 'finance',
-        'health': 'health',
-        'education': 'education',
-        'society': 'family',
-        'family': 'family',
-        'culture': 'culture',
-        'tradition': 'culture',
-        'science': 'science',
-        'research': 'science',
-        'politics': 'crime',
-        'business': 'work',
-        'urbanization': 'housing',
-        'housing': 'housing',
-        'travel': 'travel',
-        'tourism': 'travel',
-        'migration': 'travel',
-        'media': 'media',
-        'advertising': 'media',
-        'food': 'food',
-        'nutrition': 'food',
-        'transport': 'transport',
-        'transportation': 'transport',
-        'crime': 'crime',
-        'law': 'crime',
-        'sports': 'sports',
-        'competition': 'sports',
-        'hobby': 'leisure',
-        'hobbies': 'leisure',
-        'leisure': 'leisure',
-        'money': 'finance',
-        'finance': 'finance',
+      // Map module titles to strategic writing module IDs
+      const titleToStrategicModule = {
+        'digital frontier': 'digital_frontier',
+        'digital': 'digital_frontier',
+        'technology': 'digital_frontier',
+        'green imperative': 'green_imperative',
+        'environment': 'green_imperative',
+        'ecological': 'environment_ecological',
+        'educational paradigm': 'educational_paradigm',
+        'education': 'educational_paradigm',
+        'pedagogical': 'education_philosophy',
+        'globalisation': 'globalisation_cultural',
+        'globalization': 'globalisation_cultural',
+        'cultural identity': 'globalisation_cultural',
+        'homogenisation': 'globalisation_homogenisation',
+        'health': 'health_public_policy',
+        'public policy': 'health_public_policy',
+        'medical resource': 'public_health_allocation',
+        'crime': 'crime_justice',
+        'justice': 'crime_justice',
+        'penal': 'crime_justice',
+        'reintegration': 'crime_reintegration',
+        'media': 'media_integrity',
+        'information': 'media_integrity',
+        'journalism': 'media_journalism',
+        'economy': 'economy_wealth',
+        'wealth': 'economy_wealth',
+        'government': 'economy_wealth',
+        'urbanisation': 'urbanisation',
+        'urbanization': 'urbanisation',
+        'modern society': 'urbanisation',
+        'science': 'science_bioethics',
+        'bioethics': 'science_bioethics',
+        'biomedical': 'science_bioethics',
+        'transport': 'public_transport',
+        'sustainable infrastructure': 'public_transport',
+        'work': 'work_employment',
+        'employment': 'work_employment',
+        'labor': 'work_employment',
+        'labour': 'work_employment',
+        'social': 'social_demographics',
+        'demographics': 'social_demographics',
+        'generational': 'social_demographics',
+        'tourism': 'tourism_heritage',
+        'heritage': 'tourism_heritage',
+        'mobility': 'tourism_heritage',
       };
       
       const normalizedTitle = moduleTitle?.toLowerCase() || '';
-      let boosterModule = 'education'; // default
+      let strategicModuleId = 'digital_frontier'; // default
       
+      // Find matching strategic module
+      for (const [key, value] of Object.entries(titleToStrategicModule)) {
+        if (normalizedTitle.includes(key)) {
+          strategicModuleId = value;
+          break;
+        }
+      }
+      
+      // Fetch strategic writing content for Advanced
+      try {
+        const strategicResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-writing/${strategicModuleId}`);
+        if (strategicResponse.ok) {
+          const strategicData = await strategicResponse.json();
+          if (strategicData.success) {
+            setStrategicWriting(strategicData.strategic_writing);
+          }
+        }
+      } catch (e) {
+        console.error('Error fetching strategic writing:', e);
+      }
+      
+      // Also fetch language booster as fallback
+      const topicToBooster = {
+        'technology': 'technology',
+        'environment': 'environment',
+        'health': 'health',
+        'education': 'education',
+        'culture': 'culture',
+        'science': 'science',
+        'media': 'media',
+        'transport': 'transport',
+        'crime': 'crime',
+        'work': 'work',
+        'travel': 'travel',
+        'housing': 'housing',
+        'finance': 'finance',
+        'family': 'family',
+        'food': 'food',
+        'sports': 'sports',
+        'leisure': 'leisure',
+      };
+      
+      let boosterModule = 'education';
       for (const [key, value] of Object.entries(topicToBooster)) {
         if (normalizedTitle.includes(key)) {
           boosterModule = value;
