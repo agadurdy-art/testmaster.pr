@@ -411,6 +411,78 @@ async def get_reading_skill_categories():
     }
 
 
+@router.get("/model-answer/quality-guide")
+async def get_model_answer_quality_guide():
+    """
+    Get the model answer quality standards and guidelines.
+    Useful for understanding what makes a Band 9 vs Band 7 response.
+    """
+    from services.model_answer_quality import (
+        WRITING_QUALITY_STANDARDS,
+        SPEAKING_QUALITY_STANDARDS,
+        GENERAL_TRAINING_LETTER_STANDARDS,
+        TEMPLATE_PHRASES_TO_AVOID,
+        NATURAL_ALTERNATIVES
+    )
+    
+    return {
+        "success": True,
+        "writing_standards": WRITING_QUALITY_STANDARDS,
+        "speaking_standards": SPEAKING_QUALITY_STANDARDS,
+        "letter_standards": GENERAL_TRAINING_LETTER_STANDARDS,
+        "avoid": TEMPLATE_PHRASES_TO_AVOID,
+        "prefer": NATURAL_ALTERNATIVES
+    }
+
+
+@router.get("/model-answer/examples/{skill}/{band}")
+async def get_model_answer_example(skill: str, band: str):
+    """
+    Get example model answers for specific skill and band level.
+    
+    skill: writing_academic, writing_general, speaking_part2, speaking_part3
+    band: band_7, band_8, band_9
+    """
+    from services.model_answer_quality import ENHANCED_WRITING_MODELS, ENHANCED_SPEAKING_MODELS
+    
+    examples = {
+        "writing_academic": {
+            "band_9": ENHANCED_WRITING_MODELS.get("academic_task2", {}),
+            "band_8": None  # Add as needed
+        },
+        "writing_general_formal": {
+            "band_9": ENHANCED_WRITING_MODELS.get("general_task1_formal_complaint", {}),
+        },
+        "writing_general_informal": {
+            "band_9": ENHANCED_WRITING_MODELS.get("general_task1_informal", {}),
+        },
+        "speaking_part2": {
+            "band_9": ENHANCED_SPEAKING_MODELS.get("part2", {}),
+        },
+        "speaking_part3": {
+            "band_9": ENHANCED_SPEAKING_MODELS.get("part3", {}),
+        }
+    }
+    
+    skill_examples = examples.get(skill, {})
+    band_example = skill_examples.get(band)
+    
+    if not band_example:
+        return {
+            "success": False,
+            "error": f"No example found for {skill} at {band}",
+            "available_skills": list(examples.keys()),
+            "available_bands": ["band_7", "band_8", "band_9"]
+        }
+    
+    return {
+        "success": True,
+        "skill": skill,
+        "band": band,
+        "example": band_example
+    }
+
+
 # ============ DYNAMIC ROUTES (course level based) ============
 
 @router.get("/{course_level}")
