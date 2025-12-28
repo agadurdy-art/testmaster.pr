@@ -226,6 +226,10 @@ export default function WritingTask1Practice() {
       
       if (data.success) {
         setEvaluation(data.evaluation);
+        // Store recommended lessons from ULTRA MASTER PROMPT
+        if (data.recommended_lessons && data.recommended_lessons.length > 0) {
+          setRecommendedLessons(data.recommended_lessons);
+        }
         setModelAnswerStep(1); // Show band result first
         toast.success('Değerlendirme tamamlandı!');
       } else {
