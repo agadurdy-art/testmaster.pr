@@ -48,6 +48,61 @@ async def get_general_track_summary():
     from services.dual_track_courses import DualTrackCourseManager
     
     return {
+
+
+@router.get("/language-booster/{module}")
+async def get_module_language_booster(module: str):
+    """
+    Get Module-Specific Language Booster for General Training.
+    
+    This provides vocabulary and functional phrases specific to a module topic.
+    Example: /api/courses/language-booster/education
+    """
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    module_lower = module.lower()
+    
+    # Check if module has a language booster
+    if module_lower not in DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS:
+        # Return generic content for modules without specific boosters
+        available_modules = list(DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS.keys())
+        return {
+            "success": False,
+            "error": f"No specific language booster for '{module}'",
+            "available_modules": available_modules,
+            "suggestion": "Use a generic language booster or check available modules"
+        }
+    
+    booster = DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS[module_lower]
+    
+    return {
+        "success": True,
+        "module": module_lower,
+        "language_booster": booster
+    }
+
+
+@router.get("/language-boosters")
+async def list_all_language_boosters():
+    """List all available Module-Specific Language Boosters."""
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    boosters_summary = []
+    for module, booster in DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS.items():
+        boosters_summary.append({
+            "module": module,
+            "lesson_id": booster["lesson_id"],
+            "band_range": booster["band_range"],
+            "vocabulary_count": len(booster["key_vocabulary"]),
+            "has_writing_task": "writing_task" in booster,
+            "has_reading_task": "reading_task" in booster
+        })
+    
+    return {
+        "success": True,
+        "total": len(boosters_summary),
+        "boosters": boosters_summary
+    }
         "success": True,
         "general_track_overview": {
             "beginner": {
