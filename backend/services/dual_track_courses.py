@@ -2123,6 +2123,302 @@ class DualTrackCourseManager:
         }
     }
     
+    # ============ ADVANCED MODULE-SPECIFIC STRATEGIC WRITING ============
+    # Each module has a focused General Training writing scenario
+    # Focus: Tone + Purpose + Argument (not grammar)
+    ADVANCED_MODULE_STRATEGIC_WRITING = {
+        "digital_frontier": {
+            "module_id": "digital_frontier",
+            "module_title": "The Digital Frontier",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Formal complaint escalation and consumer rights",
+            "learning_outcome": "Write sophisticated complaints about digital services requiring nuanced argumentation and professional escalation techniques.",
+            "writing_scenario": {
+                "title": "Digital Service Complaint Escalation",
+                "context": "You have been experiencing persistent problems with a major tech company's service. Your initial complaints have been ignored.",
+                "prompt": "Write a letter to the CEO of a technology company.\n\nIn your letter:\n- Summarize your previous attempts to resolve the issue\n- Explain the broader impact on your work/life\n- Propose a fair resolution\n- Indicate consequences of inaction",
+                "strategic_elements": {
+                    "tone": "Firm but professional, assertive without being aggressive",
+                    "purpose": "Escalate while maintaining credibility for further action",
+                    "argument": "Build logical case with documented evidence references"
+                },
+                "key_phrases": [
+                    "Despite multiple attempts to resolve this matter through conventional channels...",
+                    "I have thoroughly documented each interaction...",
+                    "The cumulative impact of this ongoing issue has been...",
+                    "I trust you will appreciate the gravity of this situation...",
+                    "I remain committed to resolving this amicably, however..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Mr. Chen,\n\nI am writing to you directly following the failure of your customer service department to adequately address a critical issue that has now persisted for over eight weeks.\n\nSince March 15th, I have contacted your support team on no fewer than seven occasions regarding persistent data synchronisation failures in your CloudPro business suite. Each interaction has been documented (reference numbers: CS-2847 through CS-2853), yet the responses have ranged from generic troubleshooting suggestions to promises of escalation that never materialised.\n\nThe implications extend far beyond mere inconvenience. As a freelance consultant, I rely heavily on your platform for client project management. The recurring failures have resulted in missed deadlines, compromised client relationships, and an estimated loss of approximately £4,500 in project value.\n\nI propose the following resolution: full refund of subscription fees for the affected period (£350), compensation equivalent to one year's subscription for the documented losses, and a formal assurance that the technical issue will be prioritised for resolution.\n\nShould this matter not be addressed within fourteen days, I shall have no alternative but to pursue formal complaint procedures through the relevant regulatory bodies and share my documented experience on professional networks.\n\nI trust you will recognise the urgency of this matter and respond accordingly.\n\nYours sincerely,\nJames Morrison"
+                }
+            }
+        },
+        "green_imperative": {
+            "module_id": "green_imperative",
+            "module_title": "The Green Imperative",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Community advocacy and environmental proposal writing",
+            "learning_outcome": "Write persuasive letters proposing environmental initiatives to local authorities with strategic stakeholder consideration.",
+            "writing_scenario": {
+                "title": "Environmental Initiative Proposal",
+                "context": "You want to propose a significant environmental project to your local council that requires community buy-in.",
+                "prompt": "Write a letter to your local council proposing an environmental initiative.\n\nIn your letter:\n- Present your proposal with clear benefits\n- Address potential objections proactively\n- Offer to contribute to implementation\n- Request a meeting to discuss further",
+                "strategic_elements": {
+                    "tone": "Enthusiastic but practical, visionary yet grounded",
+                    "purpose": "Secure support by addressing concerns before they're raised",
+                    "argument": "Balance idealism with pragmatism and cost-awareness"
+                },
+                "key_phrases": [
+                    "I write to propose an initiative that I believe could significantly benefit...",
+                    "While I acknowledge the financial considerations involved...",
+                    "Research from comparable communities suggests...",
+                    "I would be delighted to volunteer my time to...",
+                    "I am confident that with community support..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Councillor Roberts,\n\nI am writing to propose the establishment of a community composting scheme in the Riverside Ward, an initiative that I believe could deliver substantial environmental and social benefits while proving financially viable.\n\nThe proposal involves converting the unused section of Memorial Park into a community composting facility, enabling residents to process organic waste locally. Based on successful models in Eastbourne and Brighton, such schemes typically divert 2-3 tonnes of waste annually from landfill while producing valuable compost for community gardens.\n\nI anticipate concerns regarding cost and maintenance. To address these, I have assembled a group of thirty committed residents willing to manage operations voluntarily. Additionally, I have secured provisional interest from Green Solutions Ltd, who would provide initial equipment and training at reduced cost in exchange for being recognised as a sustainability partner.\n\nRegarding potential objections about aesthetics or odour, modern composting systems using enclosed bins and appropriate carbon-nitrogen ratios produce no offensive smells when managed correctly. I can provide specifications from the suppliers.\n\nI would welcome the opportunity to present this proposal in greater detail at an appropriate committee meeting. I am committed to making this initiative a model for community-led environmental action.\n\nYours sincerely,\nDr. Sarah Mitchell"
+                }
+            }
+        },
+        "educational_paradigm": {
+            "module_id": "educational_paradigm",
+            "module_title": "The Educational Paradigm",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Academic advocacy and institutional appeals",
+            "learning_outcome": "Write sophisticated appeals to educational institutions requiring diplomatic argument and evidence-based reasoning.",
+            "writing_scenario": {
+                "title": "Academic Policy Appeal",
+                "context": "You disagree with a decision made by an educational institution and wish to appeal through formal channels.",
+                "prompt": "Write a letter appealing an academic decision.\n\nIn your letter:\n- State the decision you are appealing\n- Present your grounds for appeal with evidence\n- Acknowledge any procedural requirements\n- Request specific reconsideration",
+                "strategic_elements": {
+                    "tone": "Respectful but firm, acknowledging authority while asserting rights",
+                    "purpose": "Overturn decision while maintaining future relationship",
+                    "argument": "Focus on procedure and fairness rather than emotion"
+                },
+                "key_phrases": [
+                    "I am writing to formally appeal the decision of...",
+                    "While I respect the committee's authority, I believe there are grounds for reconsideration...",
+                    "The evidence I wish to present for your consideration includes...",
+                    "I would request that my case be reviewed in light of...",
+                    "I remain committed to meeting all academic standards..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Professor Whitmore,\n\nI am writing to formally appeal the Academic Standards Committee's decision of 14th November to deny my application for extenuating circumstances consideration regarding my final year dissertation.\n\nWhile I fully respect the Committee's role in maintaining academic integrity, I believe relevant evidence was not adequately considered in reaching this decision. Specifically, I submitted medical documentation from Dr. Sarah Chen at University Health Services confirming diagnosis of a significant condition in September. However, the Committee's response indicated this was received after the deadline, when in fact I can demonstrate electronic submission via the portal at 23:47 on 30th September—three minutes before the midnight deadline.\n\nFurthermore, I understand from the Student Support Office that the Committee may not have received the supplementary statement from my Personal Tutor, Dr. James Harrison, who can attest to the impact on my research schedule.\n\nI request that my case be reconsidered with these documents properly included in my file. I am prepared to present my case in person if required, and I can provide additional supporting evidence from my GP if this would assist.\n\nI remain fully committed to completing my degree to the highest standard and trust the Committee will give this appeal fair consideration.\n\nYours sincerely,\nEmily Chang"
+                }
+            }
+        },
+        "globalisation_cultural": {
+            "module_id": "globalisation_cultural",
+            "module_title": "Globalisation and Cultural Identity",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Cross-cultural business communication and international relations",
+            "learning_outcome": "Write culturally sensitive business correspondence that bridges different communication styles and expectations.",
+            "writing_scenario": {
+                "title": "International Business Partnership Proposal",
+                "context": "You are proposing a business collaboration with a company from a different cultural background.",
+                "prompt": "Write a letter proposing a business partnership with an international company.\n\nIn your letter:\n- Introduce yourself and your organisation\n- Explain the mutual benefits of collaboration\n- Address potential cultural considerations\n- Propose next steps for discussion",
+                "strategic_elements": {
+                    "tone": "Formal and respectful, acknowledging cultural differences",
+                    "purpose": "Build trust and open dialogue for future collaboration",
+                    "argument": "Emphasise mutual benefit and long-term relationship"
+                },
+                "key_phrases": [
+                    "I have the pleasure of writing to introduce...",
+                    "We have long admired your organisation's approach to...",
+                    "I believe there may be significant mutual benefit in exploring...",
+                    "We are committed to building relationships founded on respect and trust...",
+                    "I would be honoured to arrange a meeting at your convenience..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Mr. Tanaka,\n\nI have the pleasure of introducing myself as the International Partnerships Director at Greenfield Sustainable Foods, a British company specialising in organic product development.\n\nI am writing following your presentation at the Tokyo International Food Exhibition, where I was deeply impressed by your company's commitment to quality and your innovative approach to traditional food preservation methods. Having researched Yamamoto Foods' distinguished 75-year history, I believe there may be significant opportunity for collaboration that would benefit both our organisations.\n\nSpecifically, I envision a partnership whereby our organic certification expertise and European distribution network could complement your exceptional product development capabilities. This could open European markets to your artisan products while providing our customers with authentic, traditionally crafted foods.\n\nI recognise that building meaningful business relationships requires time and mutual understanding, and I am committed to proceeding at whatever pace feels appropriate. I would welcome the opportunity to visit Osaka to learn more about your operations and share details of our organisation in person.\n\nI have enclosed our company profile and recent annual report for your consideration. I would be honoured to receive your thoughts on whether such a partnership might align with your strategic objectives.\n\nWith respectful regards,\nRobert Harrison\nInternational Partnerships Director"
+                }
+            }
+        },
+        "health_public_policy": {
+            "module_id": "health_public_policy",
+            "module_title": "Health and Public Policy",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Healthcare advocacy and institutional negotiation",
+            "learning_outcome": "Write compelling healthcare-related correspondence that combines empathy with strategic argumentation.",
+            "writing_scenario": {
+                "title": "Healthcare Access Advocacy Letter",
+                "context": "You are writing to a health authority to advocate for improved services in your area.",
+                "prompt": "Write a letter to the regional health authority.\n\nIn your letter:\n- Describe the current service gap\n- Present evidence of community impact\n- Propose practical solutions\n- Offer community collaboration",
+                "strategic_elements": {
+                    "tone": "Empathetic but evidence-based, collaborative not confrontational",
+                    "purpose": "Secure change through partnership rather than pressure",
+                    "argument": "Combine emotional appeal with practical proposals"
+                },
+                "key_phrases": [
+                    "I am writing on behalf of the residents of...",
+                    "The human impact of this service gap is significant...",
+                    "We have gathered evidence through community consultation showing...",
+                    "I would like to propose a collaborative approach...",
+                    "Our community is prepared to support implementation through..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Dr. Williams,\n\nI am writing on behalf of the Westbrook Community Health Action Group to address the growing gap in mental health services for young people in our area.\n\nSince the closure of the Westbrook Youth Mental Health clinic in 2022, young people requiring support have faced a 34-mile round trip to the nearest alternative service. Our community survey of 450 families revealed that 62% have experienced delayed access to care as a result, with several families reporting serious deterioration in their children's conditions during waiting periods.\n\nThe human cost extends beyond statistics. The Smith family, who have given permission to share their story, waited seven months for an initial assessment for their 14-year-old daughter, during which time she was hospitalised twice. Such cases, while extreme, illustrate the urgent need for intervention.\n\nWe propose a partnership to establish a fortnightly outreach clinic at the Westbrook Community Centre. Our group has already secured the venue at no cost, and local GPs have offered to provide supervision. We estimate this would reduce pressure on centralised services while serving approximately 200 young people within the catchment area.\n\nI would welcome the opportunity to present our proposal in detail and discuss how community resources might complement NHS provision.\n\nYours sincerely,\nDr. Margaret Stone\nChair, Westbrook Community Health Action Group"
+                }
+            }
+        },
+        "crime_justice": {
+            "module_id": "crime_justice",
+            "module_title": "Crime, Justice, and the Penal System",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Formal legal correspondence and victim advocacy",
+            "learning_outcome": "Write formal correspondence related to legal matters requiring precise language and appropriate advocacy tone.",
+            "writing_scenario": {
+                "title": "Victim Support and Legal Process Letter",
+                "context": "You are writing to support a friend or family member who has been a victim of crime through the legal process.",
+                "prompt": "Write a character reference letter for a court case.\n\nIn your letter:\n- Explain your relationship with the person\n- Provide specific examples of their character\n- Address any relevant circumstances\n- Make a respectful appeal to the court",
+                "strategic_elements": {
+                    "tone": "Formal and respectful, sincere without being sycophantic",
+                    "purpose": "Provide credible insight while maintaining court decorum",
+                    "argument": "Use specific examples rather than general praise"
+                },
+                "key_phrases": [
+                    "I am writing this letter in support of...",
+                    "I have known [name] for [period] in my capacity as...",
+                    "I can speak directly to [his/her] character based on...",
+                    "I respectfully submit that the court consider...",
+                    "I am prepared to provide further testimony if required..."
+                ],
+                "model_answer": {
+                    "band_8": "To the Presiding Judge,\n\nI am writing to provide a character reference for Thomas Wright in relation to case CR-2024-0847. I am a Senior Social Worker with fifteen years' experience, and I have known Mr. Wright professionally for the past four years through my work with vulnerable adults.\n\nDuring this time, I have observed Mr. Wright consistently demonstrate exceptional compassion and reliability. When his elderly neighbour, Mrs. Patterson, suffered a stroke in 2022, Mr. Wright organised a rota of neighbours to ensure she received daily visits during her recovery. He personally handled her shopping and prescription collections for eight months without ever seeking recognition.\n\nI am aware of the circumstances that have brought Mr. Wright before the court. Without commenting on matters that are for the court to decide, I can confirm that he has been open with me about his struggles during the period in question. What I have witnessed since is a genuine commitment to addressing those issues, including his voluntary attendance at the support group I facilitate.\n\nI respectfully submit that the Mr. Wright I know is fundamentally a person of good character who has made significant positive contributions to our community. I am confident he will continue to do so given appropriate support.\n\nI remain available to provide further information if the court requires.\n\nRespectfully submitted,\nMargaret Evans\nBSW, MSW\nSenior Social Worker"
+                }
+            }
+        },
+        "media_integrity": {
+            "module_id": "media_integrity",
+            "module_title": "Media and Information Integrity",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Media complaints and press standards accountability",
+            "learning_outcome": "Write effective complaints to media organisations about inaccurate reporting or ethical breaches.",
+            "writing_scenario": {
+                "title": "Press Standards Complaint",
+                "context": "You have been personally affected by inaccurate or unfair media reporting and wish to seek correction.",
+                "prompt": "Write a complaint to a newspaper's editor about inaccurate reporting.\n\nIn your letter:\n- Identify the specific inaccuracies\n- Explain the impact on you or your organisation\n- Reference relevant press standards\n- Request specific remedial action",
+                "strategic_elements": {
+                    "tone": "Professional and measured, avoiding emotional language",
+                    "purpose": "Secure correction while maintaining credibility",
+                    "argument": "Focus on factual inaccuracies and professional standards"
+                },
+                "key_phrases": [
+                    "I am writing regarding the article published on...",
+                    "The following statements are factually incorrect...",
+                    "Under IPSO guidelines regarding accuracy...",
+                    "The publication of this inaccurate information has resulted in...",
+                    "I request that you publish a correction and..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Editor,\n\nI am writing regarding the article 'Local Business Owner Under Investigation' published in your newspaper on 15th October (page 7), which contains several significant factual inaccuracies concerning my company, Greenwood Catering Services.\n\nFirstly, the article states that Environmental Health has 'launched an investigation' into our premises. This is incorrect. An Environmental Health officer conducted a routine scheduled inspection on 10th October—our fourth such inspection this year—resulting in our sixth consecutive 5-star food hygiene rating.\n\nSecondly, the article quotes 'an anonymous source' claiming several staff members reported concerns about food storage. I can confirm that no such reports have been made to any regulatory body, and I have statements from all seven staff members categorically denying having spoken to your newspaper.\n\nThe publication of this article, prominently positioned and accompanied by a photograph of our premises, has resulted in immediate and measurable damage. We have received four cancellations of advance bookings worth approximately £3,200, and our social media accounts have been subjected to hostile comments citing your article.\n\nUnder IPSO Editors' Code Clause 1 (Accuracy), newspapers must take care not to publish inaccurate, misleading or distorted information. I believe this standard has been breached.\n\nI request that you: (1) publish a correction of equivalent prominence within seven days, and (2) provide details of the 'source' cited, to enable us to consider further action.\n\nYours faithfully,\nMark Greenwood\nManaging Director, Greenwood Catering Services"
+                }
+            }
+        },
+        "economy_wealth": {
+            "module_id": "economy_wealth",
+            "module_title": "Government, Economy, and Wealth Disparity",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Financial advocacy and consumer protection correspondence",
+            "learning_outcome": "Write sophisticated financial complaint letters requiring understanding of consumer rights and regulatory frameworks.",
+            "writing_scenario": {
+                "title": "Financial Misconduct Complaint",
+                "context": "You have identified potentially unfair practices by a financial institution.",
+                "prompt": "Write a formal complaint to a financial services company.\n\nIn your letter:\n- Detail the specific practices you believe are unfair\n- Reference relevant regulations\n- Explain the financial impact\n- Request investigation and compensation",
+                "strategic_elements": {
+                    "tone": "Assertive and well-informed, demonstrating regulatory knowledge",
+                    "purpose": "Secure resolution while establishing grounds for escalation",
+                    "argument": "Frame personal experience within regulatory framework"
+                },
+                "key_phrases": [
+                    "I am writing to make a formal complaint under the FCA complaint handling procedures...",
+                    "I believe this practice contravenes...",
+                    "The financial impact has been quantified as...",
+                    "Under the Consumer Rights Act 2015...",
+                    "Should this matter not be resolved within eight weeks..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Complaints Department,\n\nI am writing to make a formal complaint under Financial Conduct Authority complaint handling procedures regarding the systematic overcharging of fees on my Premium Current Account (account number ending 4872).\n\nOver the past eighteen months, I have been charged thirty-seven separate 'monthly premium fees' of £15.95 despite repeatedly requesting downgrade to a standard account. Each request—made on 14th March 2023, 2nd July 2023, and 15th November 2023—was acknowledged but never actioned. I have retained copies of all correspondence.\n\nI believe this practice contravenes Principle 6 of the FCA's Principles for Business, which requires firms to treat customers fairly. Additionally, under the Consumer Rights Act 2015, I should not be charged for services I have explicitly rejected.\n\nThe financial impact totals £590.15 in fees I should not have incurred. Furthermore, I have spent approximately eight hours attempting to resolve this matter, representing significant personal inconvenience.\n\nI request: (1) immediate refund of all premium fees charged since my first downgrade request (£590.15); (2) compensation of £150 for time and distress; and (3) written confirmation that my account has been converted.\n\nShould this matter not be satisfactorily resolved within your eight-week handling period, I intend to refer it to the Financial Ombudsman Service.\n\nYours faithfully,\nElizabeth Morgan"
+                }
+            }
+        },
+        "urbanisation": {
+            "module_id": "urbanisation",
+            "module_title": "Urbanisation and Modern Society",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Urban planning objections and community representation",
+            "learning_outcome": "Write effective objection letters to planning proposals requiring balanced argument and community advocacy.",
+            "writing_scenario": {
+                "title": "Planning Application Objection",
+                "context": "A development proposal threatens your community's character or amenities.",
+                "prompt": "Write a letter objecting to a planning application.\n\nIn your letter:\n- Identify the specific planning concerns\n- Present evidence-based objections\n- Propose alternative approaches\n- Request appropriate consideration",
+                "strategic_elements": {
+                    "tone": "Constructive rather than purely oppositional",
+                    "purpose": "Influence decision while appearing reasonable",
+                    "argument": "Focus on planning policy, not personal preference"
+                },
+                "key_phrases": [
+                    "I am writing to object to planning application reference...",
+                    "This development would be contrary to Policy XX of the Local Plan...",
+                    "The cumulative impact on the area would include...",
+                    "I would suggest the following modifications...",
+                    "I trust the committee will give these concerns appropriate weight..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Planning Committee,\n\nI am writing to object to planning application 2024/PLN/00547 for the construction of 85 residential units on the former Millbrook industrial site.\n\nWhile I support the principle of developing this brownfield site, I have significant concerns regarding the current proposal's compatibility with the Local Development Plan.\n\nFirstly, the proposed density of 85 units significantly exceeds Policy H2's guidance of 30-40 units per hectare for this zone. At the proposed density, the development would place unsustainable pressure on local infrastructure, particularly Millbrook Primary School, which is already at 98% capacity.\n\nSecondly, the transport assessment fails to adequately address the impact on the B4051 junction, which already exceeds capacity during peak hours. The proposal for only 0.7 parking spaces per unit will inevitably result in overspill parking on surrounding residential streets.\n\nThirdly, the design fails to respect the character of the adjacent conservation area, with building heights of four storeys where three is the established maximum.\n\nI would suggest the following modifications be considered: reducing the development to 55 units with a maximum height of three storeys, incorporating a Section 106 contribution to school expansion, and requiring one parking space per unit.\n\nI trust the committee will give these concerns appropriate weight in their deliberations.\n\nYours faithfully,\nDavid Morrison"
+                }
+            }
+        },
+        "science_bioethics": {
+            "module_id": "science_bioethics",
+            "module_title": "Science and Biomedical Ethics",
+            "track": "general",
+            "level": "advanced",
+            "band_target": "7.0-9.0",
+            "strategic_focus": "Medical research participation and informed consent correspondence",
+            "learning_outcome": "Write informed correspondence regarding medical research participation with appropriate questioning and rights awareness.",
+            "writing_scenario": {
+                "title": "Clinical Trial Inquiry Letter",
+                "context": "You are considering participating in medical research and need clarification on important aspects.",
+                "prompt": "Write a letter to a research institution about a clinical trial.\n\nIn your letter:\n- Express your interest in participation\n- Request specific information about risks and procedures\n- Ask about your rights as a participant\n- Seek clarification on data handling",
+                "strategic_elements": {
+                    "tone": "Informed and thoughtful, demonstrating awareness of research ethics",
+                    "purpose": "Gather information while demonstrating suitable participant qualities",
+                    "argument": "Balance enthusiasm with appropriate caution"
+                },
+                "key_phrases": [
+                    "I am writing to express my interest in participating in...",
+                    "I would appreciate clarification on the following aspects...",
+                    "I understand that participation is voluntary and I may withdraw...",
+                    "Could you please explain how my data will be...",
+                    "I would be grateful for an opportunity to discuss..."
+                ],
+                "model_answer": {
+                    "band_8": "Dear Research Team,\n\nI am writing to express my interest in participating in the CARDIO-PREDICT study (reference HP-2024-0156) following my discussion with Dr. Ahmed at the Cardiology Department.\n\nHaving read the participant information sheet, I am broadly supportive of the research objectives and believe my health profile may be suitable. However, I would appreciate clarification on several points before proceeding.\n\nFirstly, regarding the experimental medication: the information sheet mentions 'potential cardiovascular effects' as a known risk. Could you provide more specific information about the nature and frequency of such effects observed in previous phases?\n\nSecondly, I understand that participation involves five hospital visits over twelve months. Would there be flexibility in appointment scheduling for participants with work commitments?\n\nThirdly, concerning data handling: I note that anonymised data may be shared with international research partners. Could you clarify which organisations might receive this data and under what regulatory frameworks?\n\nFinally, I would like to understand the process should I wish to withdraw mid-study. Specifically, would any data collected before withdrawal be retained?\n\nI remain genuinely interested in contributing to this research and would welcome an opportunity to discuss these points in person.\n\nYours sincerely,\nJennifer Brooks"
+                }
+            }
+        }
+    }
+    
     def __init__(self, db: AsyncIOMotorDatabase):
         self.db = db
     
