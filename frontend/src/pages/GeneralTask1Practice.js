@@ -134,12 +134,12 @@ export default function GeneralTask1Practice() {
 
   const submitForEvaluation = async () => {
     if (wordCount < 100) {
-      toast.error('En az 100 kelime yazmalısınız');
+      toast.error('Please write at least 100 words');
       return;
     }
     
     setEvaluating(true);
-    toast.info('AI değerlendirmesi yapılıyor...');
+    toast.info('AI evaluation in progress...');
     
     try {
       const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
@@ -169,13 +169,13 @@ export default function GeneralTask1Practice() {
           suggestions: data.evaluation.improvement_suggestions || [],
           recommended_lessons: data.recommended_lessons || []  // Dual-Track lesson recommendations
         });
-        toast.success('Değerlendirme tamamlandı!');
+        toast.success('Evaluation complete!');
       } else {
-        toast.error(data.error || 'Değerlendirme başarısız');
+        toast.error(data.error || 'Evaluation failed');
       }
     } catch (error) {
       console.error('Evaluation error:', error);
-      toast.error('Değerlendirme sırasında hata oluştu');
+      toast.error('Error during evaluation');
     } finally {
       setEvaluating(false);
     }
