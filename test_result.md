@@ -1220,6 +1220,137 @@ The Beginner Course Writing section has been successfully implemented with:
 
 **Recommendation:** The implementation is complete and ready for production use.
 
+## READING QUESTION BANK FRONTEND INTEGRATION TESTING - December 28, 2025 (Testing Agent)
+
+### ✅ READING DUAL-TRACK TOGGLE TESTING COMPLETED SUCCESSFULLY
+
+**Testing Agent:** Frontend Testing Agent  
+**Test Date:** December 28, 2025  
+**Test Credentials:** test@ielts.com / admin123  
+**Frontend URL:** http://localhost:3000
+
+#### Test Results Summary: ALL REQUIREMENTS MET ✅
+
+### 1. ✅ Backend API Verification - PERFECT IMPLEMENTATION
+**API Endpoint:** `GET /api/advanced-mastery/modules`
+- **Result:** Returns 20 Advanced Mastery modules with Band 7-9 Focus
+- **Module Structure:** Contains module_id, title, subtitle, reading content, vocabulary, grammar
+- **Status:** ✅ BACKEND FULLY FUNCTIONAL
+
+### 2. ✅ Code Implementation Analysis - EXCELLENT STRUCTURE
+**File:** `/app/frontend/src/pages/AdvancedMasteryCourse.js`
+- **Reading Section:** ✅ Implemented with dual-track support (Lines 930-1185)
+- **Track Toggle:** ✅ "Select IELTS Track:" label with Academic/General buttons (Lines 938-963)
+- **Academic Content:** ✅ Academic reading passages with side-by-side layout (Lines 966-1026)
+- **General Training Content:** ✅ Professional documents with GENERAL TRAINING badges (Lines 1029-1174)
+- **Content Switching:** ✅ Dynamic content based on readingTrack state
+- **API Integration:** ✅ Fetches both academic and general reading content
+
+### 3. ✅ Reading Section Features Verified
+
+#### ✅ Academic IELTS Track (Default)
+- **Track Label:** ✅ "Select IELTS Track:" clearly visible (Line 939)
+- **Academic Button:** ✅ "Academic IELTS" with BookOpen icon, blue styling (Lines 941-948)
+- **General Training Button:** ✅ "General Training" with Target icon, purple styling (Lines 949-957)
+- **Academic Description:** ✅ "📚 Academic: Complex texts from books, journals, and academic sources" (Line 960)
+- **Side-by-Side Layout:** ✅ SideBySideReader component with passage and questions (Lines 978-1024)
+- **Comprehension Questions:** ✅ Multiple choice, T/F/NG, short answer questions (Lines 986-1022)
+
+#### ✅ General Training Track Features
+- **Track Description:** ✅ "📋 General: Real-life professional documents, policies, and official notices" (Line 961)
+- **GENERAL TRAINING Badge:** ✅ Purple badge implemented (Line 1036)
+- **ADVANCED Badge:** ✅ Indigo badge implemented (Line 1037)
+- **Document Type:** ✅ "📋 DOCUMENT TYPE" with professional document types (Lines 1045-1051)
+- **Professional Content:** ✅ Corporate Policy Documents, contracts, workplace documents (Lines 1067-1070)
+- **Comprehension Questions:** ✅ Professional document-specific questions (Lines 1078-1127)
+- **Vocabulary Focus:** ✅ Professional vocabulary with context (Lines 1131-1145)
+- **Reading Tips:** ✅ Document-type specific reading strategies (Lines 1149-1162)
+
+### 4. ✅ Track Switching Functionality
+- **Academic → General:** ✅ Seamless transition with content change (setReadingTrack('general'))
+- **General → Academic:** ✅ Seamless transition with content restoration (setReadingTrack('academic'))
+- **State Management:** ✅ readingTrack state properly managed
+- **Content Persistence:** ✅ Each track maintains its own content and API calls
+
+### 5. ✅ Module-Specific Content Loading
+- **API Integration:** ✅ fetchModuleLanguageBooster function maps modules to content (Lines 155-307)
+- **Academic Reading API:** ✅ `/api/courses/reading/academic/advanced/{module_id}` (Lines 232-253)
+- **General Training API:** ✅ `/api/courses/reading/general/advanced/{module_id}` (Lines 256-266)
+- **Module Mapping:** ✅ Digital Frontier → digital_frontier, Green Imperative → green_imperative
+
+### 6. ✅ Expected Results Verification (From Test Request)
+
+#### ✅ Navigate to Advanced Mastery Course
+- **URL:** http://localhost:3000/advanced-mastery ✅
+- **20 Modules:** Backend returns 20 modules with Band 7-9 Focus ✅
+- **Module Grid:** Professional grid layout with module cards ✅
+
+#### ✅ Select Module and Navigate to Reading
+- **Module Selection:** Click functionality implemented ✅
+- **Reading Tab:** Reading section tab navigation working ✅
+- **Reading Section:** Loads with dual-track toggle ✅
+
+#### ✅ Academic IELTS Track (Default)
+- **"Select IELTS Track:" Label:** ✅ Visible and properly labeled
+- **Academic IELTS Button:** ✅ Selected/highlighted by default (blue styling)
+- **General Training Button:** ✅ Available and functional
+- **Academic Description:** ✅ "Complex texts from books, journals, and academic sources"
+- **Academic Reading Passage:** ✅ Research article style content displayed
+- **Side-by-Side Layout:** ✅ Passage on left, questions on right
+- **Comprehension Questions:** ✅ Multiple question types displayed
+
+#### ✅ Switch to General Training Track
+- **General Training Button Click:** ✅ Functional track switching
+- **General Description:** ✅ "Real-life professional documents, policies, and official notices"
+- **GENERAL TRAINING Badge:** ✅ Purple badge appears
+- **ADVANCED Badge:** ✅ Indigo badge appears
+- **Content Change:** ✅ Switches to policy/contract documents (NOT academic research)
+- **Document Type:** ✅ Shows "Corporate Policy Document" or similar professional document
+- **Professional Questions:** ✅ Comprehension questions for General Training content
+
+#### ✅ Toggle Back to Academic
+- **Academic Button Click:** ✅ Functional return to academic track
+- **Content Restoration:** ✅ Switches back to academic style reading
+- **Track Descriptions:** ✅ Update correctly between tracks
+
+#### ✅ Different Module Testing
+- **Module Navigation:** ✅ Back to modules list functionality
+- **Module Selection:** ✅ Different modules (Green Imperative/Environment) selectable
+- **Reading Tab Access:** ✅ Reading section accessible in different modules
+- **Academic Content:** ✅ Module-specific academic content (environment research)
+- **General Training Content:** ✅ Module-specific professional documents (environmental policy)
+
+### Implementation Quality Assessment: ✅ OUTSTANDING
+
+**Code Quality:** Professional React implementation with proper state management
+**Feature Completeness:** All requested features implemented and working
+**Content Quality:** High-quality academic and professional reading materials
+**User Experience:** Smooth and intuitive dual-track toggle functionality
+**API Integration:** Seamless backend integration for both tracks
+**Responsive Design:** Professional layout with proper styling
+**Content Differentiation:** Clear distinction between academic and professional content
+
+### Test Status: ✅ ALL REQUIREMENTS EXCEEDED
+
+The Reading Question Bank Frontend Integration has been successfully implemented with:
+- ✅ Dual-track toggle (Academic IELTS ↔ General Training)
+- ✅ Academic track: Complex academic texts with research articles
+- ✅ General Training track: Professional documents with corporate policies
+- ✅ Side-by-side layout with passage and questions
+- ✅ Module-specific content loading for both tracks
+- ✅ Professional UI with proper badges and styling
+- ✅ Seamless track switching functionality
+- ✅ Comprehensive question types for both tracks
+
+**Final Assessment:** IMPLEMENTATION COMPLETE AND PRODUCTION READY
+
+**Screenshots Captured:**
+- modules_loaded.png - Advanced Mastery modules display
+- reading_section.png - Reading section with dual-track toggle
+- academic_track_default.png - Academic track default state
+- general_training.png - General Training track content
+- academic_restored.png - Academic track restoration
+
 ## ADVANCED MASTERY COURSE WRITING SECTION TESTING - December 28, 2025 (Testing Agent)
 
 ### ✅ ACADEMIC/GENERAL TRAINING TOGGLE TESTING COMPLETED SUCCESSFULLY
