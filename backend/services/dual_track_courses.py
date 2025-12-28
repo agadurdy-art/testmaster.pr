@@ -294,6 +294,84 @@ class DualTrackCourseManager:
                 "Pay attention to numbers, dates, and times",
                 "Read instructions carefully - order matters"
             ]
+        },
+        {
+            "id": "gt-beginner-6",
+            "lesson_number": 106,
+            "track": "general",
+            "topic": "Reading Emails & Messages",
+            "title": "Understanding Personal & Work Emails",
+            "level": "beginner",
+            "band_target": "4.0-5.0",
+            "learning_goals": [
+                "Understand informal email language",
+                "Identify the purpose of an email",
+                "Extract key information from messages"
+            ],
+            "reading": {
+                "title": "Reading Emails & Messages",
+                "text_types": [
+                    "Personal emails from friends",
+                    "Work emails from colleagues",
+                    "Appointment confirmations",
+                    "Online order confirmations"
+                ],
+                "practice_text": {
+                    "type": "email",
+                    "content": "From: sarah.jones@email.com\nTo: mike.brown@email.com\nSubject: Birthday Party - Saturday!\n\nHi Mike,\n\nJust a quick reminder about Emma's birthday party this Saturday.\n\nTime: 3pm - 7pm\nPlace: The Garden Café, 15 Park Road\nDress code: Casual\n\nWe're doing a surprise cake at 5pm, so please try to arrive before then! Parking is available behind the café.\n\nLet me know if you can make it!\n\nBest,\nSarah\n\nP.S. Emma thinks we're just having coffee, so don't say anything!"
+                },
+                "questions": [
+                    {"question": "What time is the party?", "answer": "3pm - 7pm"},
+                    {"question": "Why should Mike arrive before 5pm?", "answer": "Because they're doing a surprise cake at 5pm"},
+                    {"question": "What doesn't Emma know?", "answer": "That it's a surprise party (she thinks they're just having coffee)"},
+                    {"question": "Where can guests park?", "answer": "Behind the café"}
+                ]
+            },
+            "tips": [
+                "Read the subject line first - it tells you what the email is about",
+                "Look at who sent the email and to whom",
+                "Pay attention to dates, times, and locations",
+                "P.S. (postscript) often contains important extra information"
+            ]
+        },
+        {
+            "id": "gt-beginner-7",
+            "lesson_number": 107,
+            "track": "general",
+            "topic": "Reading Instructions",
+            "title": "Following Simple Instructions",
+            "level": "beginner",
+            "band_target": "4.0-5.0",
+            "learning_goals": [
+                "Follow step-by-step instructions",
+                "Understand warning and safety notices",
+                "Read product instructions"
+            ],
+            "reading": {
+                "title": "Reading Instructions & Directions",
+                "text_types": [
+                    "Product instructions",
+                    "Recipe directions",
+                    "Assembly instructions",
+                    "Safety warnings"
+                ],
+                "practice_text": {
+                    "type": "instructions",
+                    "content": "MICROWAVE RICE - COOKING INSTRUCTIONS\n\n1. Remove plastic lid and peel back film corner 2cm.\n2. Place pouch in microwave.\n3. Heat on HIGH for 2 minutes.\n4. Let stand for 1 minute.\n5. Peel back film completely and fluff rice with a fork.\n6. Serve immediately.\n\n⚠️ CAUTION: Contents will be hot. Take care when opening.\n\n📝 TIP: For best results, add a splash of water before heating.\n\nStorage: Keep in a cool, dry place. Once opened, consume immediately.\nBest before: See date on pack."
+                },
+                "questions": [
+                    {"question": "How long should you heat the rice?", "answer": "2 minutes"},
+                    {"question": "What should you do before putting the pouch in the microwave?", "answer": "Remove plastic lid and peel back film corner 2cm"},
+                    {"question": "Why should you be careful when opening?", "answer": "Because the contents will be hot"},
+                    {"question": "What tip is given for better results?", "answer": "Add a splash of water before heating"}
+                ]
+            },
+            "tips": [
+                "Instructions usually need to be followed in order",
+                "Warning symbols (⚠️) indicate important safety information",
+                "Look for numbered steps - they tell you the sequence",
+                "Tips are helpful suggestions, not required steps"
+            ]
         }
     ]
     
