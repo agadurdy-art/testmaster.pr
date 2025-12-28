@@ -11,7 +11,7 @@ from typing import Optional, List
 router = APIRouter(prefix="/api/courses", tags=["Dual-Track Courses"])
 
 
-# ============ TRACK INFO ============
+# ============ STATIC ROUTES FIRST (to avoid path conflicts) ============
 
 @router.get("/tracks")
 async def get_track_info():
