@@ -982,3 +982,169 @@ async def get_general_task1_prompt(prompt_id: str):
             "band_8_5": model_band85
         }
     }
+
+
+
+# ============ GENERAL TRAINING TASK 2 (ESSAY) ============
+
+# General Training Task 2 essay topics (different from Academic)
+GENERAL_TASK2_PROMPTS = [
+    # Opinion Essays
+    {
+        "id": "gen_op_1",
+        "type": "opinion",
+        "topic": "work_life",
+        "prompt": "Many people believe that working from home is the best way to achieve work-life balance.\n\nTo what extent do you agree or disagree with this statement?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.",
+        "key_points": ["Discuss benefits and drawbacks of remote work", "Consider personal experience", "Give clear opinion"]
+    },
+    {
+        "id": "gen_op_2",
+        "type": "opinion",
+        "topic": "social_media",
+        "prompt": "Some people think social media has made it easier to stay in touch with friends and family.\n\nTo what extent do you agree or disagree?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience.",
+        "key_points": ["Discuss impact of social media on relationships", "Give personal examples", "Present balanced view"]
+    },
+    {
+        "id": "gen_op_3",
+        "type": "opinion",
+        "topic": "education",
+        "prompt": "Some people believe that children should start learning a foreign language at primary school. Others think they should wait until secondary school.\n\nDiscuss both views and give your opinion.",
+        "key_points": ["Arguments for early learning", "Arguments for later start", "Personal opinion"]
+    },
+    {
+        "id": "gen_op_4",
+        "type": "opinion",
+        "topic": "health",
+        "prompt": "Some people think that regular exercise is the most important factor for a healthy lifestyle. Others believe diet is more important.\n\nDiscuss both views and give your opinion.",
+        "key_points": ["Importance of exercise", "Importance of diet", "Balanced conclusion"]
+    },
+    # Discussion Essays
+    {
+        "id": "gen_disc_1",
+        "type": "discussion",
+        "topic": "technology",
+        "prompt": "Many people prefer to shop online rather than in traditional stores.\n\nWhat are the advantages and disadvantages of online shopping?",
+        "key_points": ["Convenience factors", "Drawbacks like delivery issues", "Impact on local businesses"]
+    },
+    {
+        "id": "gen_disc_2",
+        "type": "discussion",
+        "topic": "travel",
+        "prompt": "Some people prefer to travel in a group with a tour guide. Others prefer to travel independently.\n\nDiscuss both approaches and state your preference.",
+        "key_points": ["Benefits of guided tours", "Benefits of independent travel", "Personal preference"]
+    },
+    {
+        "id": "gen_disc_3",
+        "type": "discussion",
+        "topic": "environment",
+        "prompt": "Many cities are encouraging people to use bicycles instead of cars.\n\nWhat are the advantages and disadvantages of this trend?",
+        "key_points": ["Environmental benefits", "Health benefits", "Practical challenges"]
+    },
+    {
+        "id": "gen_disc_4",
+        "type": "discussion",
+        "topic": "lifestyle",
+        "prompt": "In many countries, people are choosing to live alone rather than with family members.\n\nDo you think this is a positive or negative development?",
+        "key_points": ["Personal freedom aspects", "Social implications", "Economic factors"]
+    },
+    # Problem-Solution Essays
+    {
+        "id": "gen_prob_1",
+        "type": "problem_solution",
+        "topic": "community",
+        "prompt": "In many cities, there is a shortage of affordable housing.\n\nWhat problems does this cause? What solutions can you suggest?",
+        "key_points": ["Impact on families", "Economic effects", "Government solutions"]
+    },
+    {
+        "id": "gen_prob_2",
+        "type": "problem_solution",
+        "topic": "health",
+        "prompt": "Many people today suffer from stress and anxiety in their daily lives.\n\nWhat are the main causes of this problem? What measures can be taken to address it?",
+        "key_points": ["Work-related stress", "Lifestyle factors", "Practical solutions"]
+    },
+    {
+        "id": "gen_prob_3",
+        "type": "problem_solution",
+        "topic": "environment",
+        "prompt": "Plastic waste is a growing problem in many countries.\n\nWhat problems does this cause, and how can these problems be solved?",
+        "key_points": ["Environmental damage", "Impact on wildlife", "Recycling and alternatives"]
+    },
+    {
+        "id": "gen_prob_4",
+        "type": "problem_solution",
+        "topic": "traffic",
+        "prompt": "Traffic congestion is becoming a serious problem in many cities.\n\nWhat are the causes of this problem? What solutions would you suggest?",
+        "key_points": ["Population growth", "Car ownership", "Public transport solutions"]
+    },
+    # Two-Part Questions
+    {
+        "id": "gen_two_1",
+        "type": "two_part",
+        "topic": "success",
+        "prompt": "Some people believe that success in life comes from hard work. Others think that luck plays a more important role.\n\nWhat do you think is more important for success? What other factors contribute to a person's success?",
+        "key_points": ["Role of hard work", "Role of luck", "Other contributing factors"]
+    },
+    {
+        "id": "gen_two_2",
+        "type": "two_part",
+        "topic": "learning",
+        "prompt": "Learning new skills is important for professional development.\n\nWhat skills are most useful in today's workplace? How can people best develop these skills?",
+        "key_points": ["In-demand skills", "Methods of learning", "Practical advice"]
+    },
+    {
+        "id": "gen_two_3",
+        "type": "two_part",
+        "topic": "food",
+        "prompt": "Fast food is becoming increasingly popular in many countries.\n\nWhy is this happening? Do you think this is a positive or negative development?",
+        "key_points": ["Reasons for popularity", "Health implications", "Cultural impact"]
+    },
+    {
+        "id": "gen_two_4",
+        "type": "two_part",
+        "topic": "entertainment",
+        "prompt": "More and more people are spending their free time watching TV or using their phones.\n\nWhy is this happening? Is this a positive or negative trend?",
+        "key_points": ["Technology accessibility", "Impact on social life", "Effects on health"]
+    }
+]
+
+@router.get("/writing/general/task2/prompts")
+async def get_general_task2_prompts(
+    essay_type: Optional[str] = Query(None, description="Essay type: opinion, discussion, problem_solution, two_part")
+):
+    """Get General Training Writing Task 2 prompts (essays)."""
+    prompts = GENERAL_TASK2_PROMPTS
+    
+    if essay_type:
+        prompts = [p for p in prompts if p["type"] == essay_type]
+    
+    return {
+        "prompts": prompts,
+        "total": len(prompts),
+        "essay_types": ["opinion", "discussion", "problem_solution", "two_part"]
+    }
+
+@router.get("/writing/general/task2/prompt/{prompt_id}")
+async def get_general_task2_prompt(prompt_id: str):
+    """Get a specific General Training Task 2 prompt with model answers."""
+    from services.writing_task2_generator import writing_task2_generator
+    
+    prompt = None
+    for p in GENERAL_TASK2_PROMPTS:
+        if p["id"] == prompt_id:
+            prompt = p
+            break
+    
+    if not prompt:
+        raise HTTPException(status_code=404, detail="Prompt not found")
+    
+    # Generate model answers
+    model_band6 = writing_task2_generator.get_model_answer(prompt["type"], prompt["topic"], 6.0)
+    model_band85 = writing_task2_generator.get_model_answer(prompt["type"], prompt["topic"], 8.5)
+    
+    return {
+        **prompt,
+        "model_answers": {
+            "band_6": model_band6,
+            "band_8_5": model_band85
+        }
+    }
