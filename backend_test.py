@@ -4354,7 +4354,7 @@ if __name__ == "__main__":
     # Test New Reading Question Bank API endpoints (CURRENT REVIEW REQUEST)
     new_reading_api_success = test_new_reading_question_bank_api()
     
-    overall_success = reading_question_bank_success and ultra_master_success and admin_access_success and listening_writing_success and pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success and advanced_reading_success and new_reading_api_success
+    overall_success = mastery_reading_success and ultra_master_success and admin_access_success and listening_writing_success and pronunciation_success and learning_platform_success and auth_success and comprehensive_test_success and partial_credit_success and listening_fix_success and phase_2_4_success and advanced_mastery_success and writing_success and advanced_reading_success and new_reading_api_success
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
     print(f"   Reading Question Bank Implementation (CURRENT REVIEW): {'✅ PASSED' if reading_question_bank_success else '❌ FAILED'}")
