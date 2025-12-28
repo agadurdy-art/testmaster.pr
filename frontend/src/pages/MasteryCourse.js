@@ -176,11 +176,31 @@ export default function MasteryCourse({ user }) {
         'travel': 'travel',
         'tourism': 'travel',
         'housing': 'housing',
+        'urbanization': 'housing',
         'accommodation': 'housing',
-        'environment': 'education', // fallback
-        'technology': 'work', // fallback
-        'society': 'education', // fallback
-        'culture': 'travel', // fallback
+        'environment': 'environment',
+        'technology': 'technology',
+        'society': 'family',
+        'family': 'family',
+        'culture': 'culture',
+        'tradition': 'culture',
+        'media': 'media',
+        'advertising': 'media',
+        'food': 'food',
+        'nutrition': 'food',
+        'transport': 'transport',
+        'transportation': 'transport',
+        'crime': 'crime',
+        'law': 'crime',
+        'science': 'science',
+        'research': 'science',
+        'hobby': 'leisure',
+        'hobbies': 'leisure',
+        'leisure': 'leisure',
+        'sports': 'sports',
+        'competition': 'sports',
+        'money': 'finance',
+        'finance': 'finance',
       };
       
       const normalizedTopic = moduleTopic?.toLowerCase() || '';
