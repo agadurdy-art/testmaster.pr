@@ -4309,8 +4309,8 @@ if __name__ == "__main__":
     print("🚀 Starting Backend API Testing for IELTS Ace Application")
     print("="*80)
     
-    # Test Reading Question Bank Implementation (CURRENT REVIEW REQUEST)
-    reading_question_bank_success = test_reading_question_bank_implementation()
+    # Test Mastery Reading Question Bank Implementation (CURRENT REVIEW REQUEST)
+    mastery_reading_success = test_mastery_reading_question_bank_implementation()
     
     # Test ULTRA MASTER PROMPT Implementation (CURRENT REVIEW REQUEST)
     ultra_master_success = test_ultra_master_prompt_implementation()
