@@ -3582,6 +3582,7 @@ if __name__ == "__main__":
     print(f"   Advanced Mastery Course Tests: {'✅ PASSED' if advanced_mastery_success else '❌ FAILED'}")
     print(f"   Writing Practice Tests: {'✅ PASSED' if writing_success else '❌ FAILED'}")
     print(f"   Advanced General Reading (Phase 3) - NEW: {'✅ PASSED' if advanced_reading_success else '❌ FAILED'}")
+    print(f"   New Reading Question Bank API (CURRENT REVIEW): {'✅ PASSED' if new_reading_api_success else '❌ FAILED'}")
     print(f"   Overall: {'✅ ALL TESTS PASSED' if overall_success else '❌ SOME TESTS FAILED'}")
     print(f"{'='*80}")
     
