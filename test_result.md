@@ -3,31 +3,31 @@
 ## Test Summary
 **Date:** 2025-12-28  
 **Tester:** Testing Agent  
-**Feature:** ULTRA MASTER PROMPT - Course-Driven Question Bank Implementation
+**Feature:** Module-Specific Language Booster Integration & English UI Translation
 
 ## NEW IMPLEMENTATION TO TEST ✅
 
-### 1. Lesson Registry Backend Service
-- **File:** `/app/backend/services/lesson_registry.py`
-- **File:** `/app/backend/routes/lesson_registry.py`
-- Test endpoints:
-  - `GET /api/lesson-registry/topics` - Get all topics
-  - `GET /api/lesson-registry/topics?band_level=4.0-5.0` - Get topics by band
-  - `GET /api/lesson-registry/recommendations/for-evaluation?band_score=5.5&weaknesses=vocabulary,grammar`
-  - `GET /api/lesson-registry/band-gating-info` - Get gating rules
+### 1. Module-Specific Language Booster (Priority P0)
+- **Backend API:** `/api/courses/language-booster/{module_topic}`
+- Available modules: health, education, work, travel, housing
+- **Frontend Files:**
+  - `/app/frontend/src/pages/MasteryCourse.js` - Language Booster integrated
+  - `/app/frontend/src/pages/BeginnerCourse.js` - Language Booster integrated
+  - `/app/frontend/src/pages/AdvancedMasteryCourse.js` - Language Booster integrated
 
-### 2. Band-Based Topic Gating (Frontend)
-- **File:** `/app/frontend/src/pages/QuestionBank.js`
-- Test scenarios:
-  - No band selected: Show all 47 topics
-  - Band 4.0-5.0 selected: Show 14 topics (Beginner only)
-  - Band 5.5-6.5 selected: Show ~27 topics (Beginner + Mastery)
-  - Band 7.0-9.0 selected: Show all 47 topics
+### Test Scenarios for Language Booster:
+1. Login with test credentials
+2. Navigate to any course (Beginner, Mastery, or Advanced)
+3. Select a module (e.g., Health, Education)
+4. Click on "Writing" section
+5. Toggle to "General Training" 
+6. **VERIFY:** Content should show module-specific vocabulary, phrases, writing task
+   - Health module should show health-related letter writing
+   - Education module should show education-related letter writing
 
-### 3. Recommended Lessons in AI Evaluation
-- **File:** `/app/backend/routes/question_bank.py`
-- **Files:** `/app/frontend/src/pages/WritingTask1Practice.js`, `WritingTask2Practice.js`
-- Test: After evaluation, should show "Önerilen Dersler" section with course recommendations
+### 2. UI Language - English Primary
+- All UI should be in English (not Turkish)
+- Turkish/Vietnamese only as secondary language options
 
 ## Test Credentials
 - Email: test@ielts.com
@@ -35,14 +35,16 @@
 
 ## Testing Flow
 1. Login with test credentials
-2. Navigate to `/question-bank`
-3. Test topic gating by selecting different bands
-4. Navigate to Writing practice
-5. Submit a response and verify recommended lessons appear
+2. Navigate to `/mastery-course`
+3. Click on "Health" module
+4. Click on "Writing" tab
+5. Click "General Training" toggle
+6. Verify Language Booster content appears with Health-specific content
+7. Repeat for Education module and verify different content
 
 ## Incorporate User Feedback
-- User's primary language is Turkish - UI should be in Turkish
-- Topic gating must dynamically update when band is selected
+- User wants English as primary language
+- General Training content MUST be module-specific (not global)
 - Password: admin123
 
 ## Demo URL (No Login Required)
