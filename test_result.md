@@ -2,48 +2,61 @@
 
 ## NEW TEST REQUIRED - December 28, 2025
 
-### Phase 3: Advanced General Reading Implementation
+### Phase 4: Track-Specific AI Evaluation
 
 **Testing Priority:** HIGH
-**Feature:** Strategic, module-specific General Training Reading content for Advanced Course
+**Feature:** Track-Specific Evaluation for Academic vs General Training IELTS
 
 ### Backend Implementation Completed:
-- **New Data Structure:** `ADVANCED_MODULE_STRATEGIC_READING` added to `dual_track_courses.py`
-- **New API Endpoint:** `GET /api/courses/advanced-strategic-reading/{module}` 
-- **New Summary API:** `GET /api/courses/advanced-strategic-reading-summary`
-- **Content:** 17 modules with complex, real-life professional documents (policies, contracts, guidelines)
+- **New Service:** `/app/backend/services/track_specific_evaluator.py`
+- **New API Endpoints:**
+  - `POST /api/courses/evaluate/writing` - Writing evaluation with track-specific rubrics
+  - `POST /api/courses/evaluate/reading` - Reading evaluation with skill analysis
+  - `GET /api/courses/evaluation/rubrics/{track}` - Get evaluation rubrics
+  - `GET /api/courses/evaluation/reading-skills` - Get reading skill categories
 
-### Frontend Implementation Completed:
-- **File Modified:** `/app/frontend/src/pages/AdvancedMasteryCourse.js`
-- **New State:** `strategicReading`, `readingTrack`
-- **Reading Section:** Now has Academic/General Training toggle (like Writing section)
-- **Strategic Reading UI:** Professional document display with comprehension questions
+### Key Features:
+1. **Academic vs General Writing Rubrics:**
+   - Academic: Formal register, data interpretation, hedging language
+   - General: Appropriate tone, register consistency, purpose achievement
+
+2. **Reading Skill Categories:**
+   - Inference & Implication
+   - Writer's Intention & Purpose
+   - Conditions & Exceptions
+   - Factual Detail Retrieval
+   - Main Idea & Global Understanding
+
+3. **General Training Document Types:**
+   - Policy documents
+   - Contracts & agreements
+   - Official notices
+   - Instruction manuals
+   - Information leaflets
 
 ### Test Credentials:
-- **Email:** test@ielts.com
-- **Password:** admin123
-
-### Test Flow for Advanced General Reading:
-1. Login with test credentials
-2. Navigate to `/advanced-mastery`
-3. Click on any module (e.g., "The Digital Frontier")
-4. Click on "Reading" tab
-5. **VERIFY:** Toggle visible - "Academic IELTS" and "General Training" buttons
-6. Click "General Training" button
-7. **VERIFY:** Strategic Reading content appears with:
-   - Module title and strategic focus
-   - Document type badge
-   - Professional document passage (policy, contract, etc.)
-   - Comprehension questions (multiple choice, T/F/NG, short answer)
-   - Show Answer functionality
+- **Email:** tester@ielts.com
+- **Password:** tester123
 
 ### Backend API Tests:
-```bash
-# Test Strategic Reading Summary
-curl https://[URL]/api/courses/advanced-strategic-reading-summary
 
-# Test Specific Module
-curl https://[URL]/api/courses/advanced-strategic-reading/digital_frontier
+```bash
+# Test Rubrics Endpoint
+curl https://[URL]/api/courses/evaluation/rubrics/academic
+curl https://[URL]/api/courses/evaluation/rubrics/general
+
+# Test Reading Skills
+curl https://[URL]/api/courses/evaluation/reading-skills
+
+# Test Writing Evaluation (General Formal Letter)
+curl -X POST https://[URL]/api/courses/evaluate/writing \
+  -H "Content-Type: application/json" \
+  -d '{"response": "Dear Sir...", "task_type": "task1", "track": "general", "context": "formal"}'
+
+# Test Reading Evaluation
+curl -X POST https://[URL]/api/courses/evaluate/reading \
+  -H "Content-Type: application/json" \
+  -d '{"answers": [...], "questions": [...], "track": "general", "document_type": "policy_document"}'
 ```
 
 ## ✅ BACKEND TESTING COMPLETED - December 28, 2025
