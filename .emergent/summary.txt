@@ -1,147 +1,145 @@
 <analysis>**original_problem_statement:**
-The user's initial goal was a 3-phase pedagogical plan to fix inconsistencies in the General Training track of their IELTS application. This has been successfully completed.
+The user has declared a FEATURE FREEZE on the completed Writing Question Bank. The new primary objective is to build out the **Reading Question Bank** with a strict separation between Academic and General Training tracks.
 
-The work evolved through several phases:
-- **Phase 1 (COMPLETE):** Implemented global, foundational General Writing & Reading lessons for the .
-- **Phase 2 (COMPLETE):** Implemented strategic, module-specific General Writing lessons for the .
-- **Phase 3 (COMPLETE in this session):** Implemented strategic, module-specific General Reading practices for the .
-- **Phase 4 (COMPLETE in this session):** Implemented a Track-Specific AI Evaluation system to provide different feedback for Academic and General Training submissions for both Writing and Reading. This included a new, dedicated frontend UI component for displaying evaluation results.
-- **Model Answer Quality Sprint (COMPLETE in this session):** Formalized the quality standards for model answers by creating a new backend service and API endpoint.
+The user has provided a detailed ULTRA MASTER PROMPT outlining the pedagogical and structural requirements for the new Reading Question Bank. Key requirements include:
+-   **Track Enforcement**: Strict separation of Academic (research articles, reports) and General (emails, policies, contracts) content.
+-   **Pedagogical Structure**: Content must be module-specific for  and  levels, while  remains global.
+-   **Skill-Based Learning**: Every reading task must be tagged with specific reading skills (e.g., Main Idea, Factual Detail, Inference).
+-   **Structured Feedback**: Feedback for incorrect answers must explain which reading skill failed and recommend a specific lesson.
+-   **Content Structure**: Each task must be a JSON-like object containing metadata for track, module, band range, and required lessons.
 
-Following the completion of all Writing-related features, the user has declared a **FEATURE FREEZE** on the Writing Question Bank. The next strategic goal is to expand the **Reading Question Bank**.
+The implementation will begin with the  level, creating separate content files for Academic and General tracks.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-The application is a full-stack project (React/FastAPI/MongoDB). The core pedagogical structure for the Writing skill is complete, tested, and user-approved across all three course levels (Beginner, Mastery, Advanced).
+The application is a full-stack project (React/FastAPI/MongoDB). The Writing feature is complete, tested, and frozen. The agent has just initiated the Reading Question Bank expansion by creating a new, approved directory structure to house the content, moving away from the monolithic  file.
 
-- **Phase 3 Complete:** The  now serves strategic, module-specific General Reading content from a new data structure () via a new API endpoint. The frontend () has been updated to fetch and render this content when the General Training track is selected.
-- **Phase 4 Complete:** A new backend service () and new API endpoints provide distinct AI evaluation for Academic vs. General Training writing and reading. A new frontend component () displays this detailed feedback in an examiner report style. This has been integrated into .
-- **Auth Issue Resolved:** An apparent session persistence issue was investigated and proven to be an artifact of the testing tools (screenshot/Playwright). The application's authentication flow using  was manually verified and shown to be working correctly for a real user session.
-- **Writing Feature Freeze:** The user has officially approved all work on the Writing feature and declared it frozen. No new development should occur on this feature, only critical bug fixes.
+The new structure is:
+
+Initial empty files for the  course level have been created within this structure.
 
 **Last working item**:
-- **Last item agent was working**: The agent received the user's FEATURE FREEZE confirmation for the Writing Soru Bankası (Question Bank) and proposed the next steps: beginning the expansion of the **Reading Question Bank** for both Academic and General tracks.
-- **Status**: NOT STARTED
-- **Agent Testing Done**: N/A
-- **Which testing method agent to use?**: both
-- **User Testing Done**: N/A
+-   **Last item agent was working**: The agent was starting the implementation of the Reading Question Bank. After receiving user approval for a new file structure, it created the necessary directories and the first two content files ( and ). The agent's last stated intention was to create the backend API endpoints to serve this new content.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: both
+-   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-- **Issue 1: Linting Warnings (P3)**
-    - **Description**: Several frontend files have  warnings that were noted by the linter but not fixed as they are non-blocking.
-    - **Status**: NOT STARTED
-- **Issue 2: Unused  file (P3)**
-    - **Description**: This file was identified in a previous fork but has not been investigated or removed.
-    - **Status**: NOT STARTED
-- **Issue 3: Speaking Model Answers Verification (P3)**
-    - **Description**: The need to verify the quality and accuracy of speaking model answers remains an outstanding low-priority task.
-    - **Status**: NOT STARTED
+-   **Issue 1: Linting Warnings (P3)**
+    -   **Description**: Several frontend files have  warnings that are non-blocking.
+    -   **Status**: NOT STARTED
+-   **Issue 2: Unused  file (P3)**
+    -   **Description**: An unused file that needs investigation and potential removal.
+    -   **Status**: NOT STARTED
+-   **Issue 3: Speaking Model Answers Verification (P3)**
+    -   **Description**: The quality and accuracy of speaking model answers need to be verified.
+    -   **Status**: NOT STARTED
 
 **In progress Task List**:
-None.
+-   **Task 1: Implement Reading Question Bank (P0)**
+    -   **Description**: Build out the new Reading Question Bank, starting with the  level, following the user's detailed ULTRA MASTER PROMPT.
+    -   **Where to resume**:
+        1.  Populate the newly created files ( and ) with track-specific reading passages and questions, adhering to the user's defined structure (skill mapping, band range, etc.).
+        2.  Create new API endpoints in  to fetch this content from the new files.
+        3.  Update the frontend () to call these new endpoints and display the reading content.
+    -   **What will be achieved with this?**: The first version of the track-aware Reading Question Bank will be live for the , establishing the pattern for all future reading content.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on something**: No.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P0) Expand Reading Question Bank:** The immediate next priority. This involves adding dedicated Academic and General Training reading passages and questions, ensuring module awareness and difficulty progression across course levels.
-    *   **(P1) Expand Listening Question Bank:** As per user's strategic direction after Reading is complete.
-    *   **(P2) Expand Speaking Question Bank:** As per user's strategic direction after Listening is complete.
+    *   **(P1) Implement Mastery Reading Question Bank:** Create and integrate reading content for the  (Academic & General).
+    *   **(P2) Implement Beginner Reading Content:** Add global reading content for the .
+    *   **(P3) Expand Listening Question Bank:** Begin development of the Listening feature after Reading is complete.
+    *   **(P4) Expand Speaking Question Bank:** Begin development of the Speaking feature after Listening is complete.
 
 *   **Future Tasks:**
     *   Implement YLE (Starters, Movers, Flyers) course content.
     *   Integrate Alchemy Pay payment gateway.
-    *   Refactor large course components (, , ) to reduce code duplication.
+    *   Refactor large course components (, ) to reduce code duplication.
 
 **Completed work in this session**
-- **Phase 3: Advanced General Reading (DONE)**: Successfully added the  data structure to , created the corresponding API endpoint in , and updated the  page to fetch and display the content.
-- **Phase 4: Track-Specific AI Evaluation (DONE)**:
-    - Created a new backend service  with separate evaluation rubrics for Academic and General Training tracks.
-    - Added new backend API endpoints in  to handle track-specific evaluation for both writing and reading.
-    - Created a new frontend component  to display detailed, examiner-report style feedback.
-    - Integrated the new component and API calls into .
-- **Auth Persistence Verification (DONE)**: Investigated a session persistence issue reported by testing tools, and conclusively proved via targeted screenshot tests that the application's -based auth works correctly in a normal user flow.
-- **Model Answer Quality Sprint (DONE)**: Created  and a supporting API endpoint to formalize and serve quality standards for model answers.
+-   **Reading QB Planning (DONE):** Received, understood, and planned the implementation for the user's ULTRA MASTER PROMPT for the Reading Question Bank.
+-   **Content Refactoring Decision (DONE):** Proposed a new, scalable file structure for course content to avoid further bloating . This was approved by the user.
+-   **Directory & File Creation (DONE):** Created the new directory structure () and the initial placeholder files for the Advanced course content.
 
 **Earlier issues found/mentioned but not fixed**
-- The same issues listed in **All Pending/In progress Issue list** remain: linting warnings, an unused JS file, and the need to verify speaking model answers. These have been consistently de-prioritized in favor of major feature development.
+-   The same issues listed in **All Pending/In progress Issue list** remain: linting warnings, an unused JS file, and the need to verify speaking model answers.
 
 **Known issue recurrence from previous fork**
-- **Issue recurrence in previous fork**: Linting Errors.
-- **Recurrence count**: 10+
-- **Status**: NOT STARTED
+-   **Issue recurrence in previous fork**: Linting Errors.
+-   **Recurrence count**: 10+
+-   **Status**: NOT STARTED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Feature Freeze**: A user-declared directive to halt all new development on the Writing Question Bank feature, limiting future work to critical bug fixes only.
-- **Track-Specific Evaluation**: The core concept of Phase 4, where the AI provides different, contextually appropriate feedback based on whether the user is on the Academic or General Training track.
-- **Deterministic UI Rendering**: A principle dictated by the user for the  component, ensuring the UI renders exactly what the backend API provides without adding any of its own logic, interpretation, or placeholder text.
-- **Test Tool Artifact**: The authentication issue was identified as a problem with the testing environment's inability to persist session data across navigations, rather than a bug in the application code.
+-   **Content Refactoring**: A key decision to move all new course content out of the monolithic  into a new, organized  directory for better maintainability.
+-   **Track-Aware Content Architecture**: The core principle of the new Reading feature. Content is strictly separated by track (Academic/General) and pedagogical level, as defined by the user.
+-   **Skill-Based Metadata**: A requirement from the user that all reading tasks must include metadata mapping them to specific reading skills (e.g., , ), which will be used for targeted feedback.
 
 **key DB schema**
-- No database schema changes were made. All course content continues to be stored as hardcoded dictionaries in Python files, primarily .
+-   No database schema changes. All course content continues to be stored as structured data in Python files.
+
+**changes in tech stack**
+-   None.
 
 **All files of reference**
-- : Source of all course content. Heavily expanded.
-- : Location of all course-related API endpoints.
-- : New service for all AI evaluation logic.
-- : The primary frontend page where new features were integrated.
-- : The new, reusable component for displaying all AI feedback.
-- : Updated multiple times to run backend and frontend tests.
+-   : (New) To be populated with content.
+-   : (New) To be populated with content.
+-   : To be modified with new API endpoints.
+-   : To be modified to consume new APIs.
+-   : For reference on existing data structures, but **not** for modification.
 
 **Areas that need refactoring**:
-- The  file is now critically oversized (over 5500 lines) and urgently needs to be broken down into smaller, more manageable JSON or Python files to improve maintainability.
-- The course pages (, , ) still contain significant duplicated code for layout and state management.
+-   The decision to use a new content directory () is the first step in addressing the technical debt of the oversized  file.
+-   The frontend course pages (, , ) still have significant code duplication that should be addressed in the future.
 
 **key api endpoints**
-- : **NEW**. Evaluates a writing submission with track-specific logic.
-- : **NEW**. Evaluates a reading submission with track-specific logic.
-- : **NEW**. Returns the quality standards for model answers.
-- : **NEW**. Serves module-specific strategic reading content for the Advanced course.
+-   None created yet. New endpoints for fetching Advanced Academic/General reading content are the next step.
 
 **Critical Info for New Agent**
-- **WRITING FEATURE IS FROZEN**: Your most important constraint is that the user has declared FEATURE FREEZE on the entire Writing Question Bank. Do not add, modify, or extend any part of the writing feature unless the user explicitly reports a critical bug.
-- **IMMEDIATE PRIORITY IS READING**: Your first task is to begin expanding the **Reading Question Bank** for both Academic and General tracks, as per the user's latest instruction.
-- **AUTH IS NOT A BUG**: The session persistence issue is a known limitation of the testing tools. The application's auth flow is confirmed to be working for users. Do not spend time trying to fix it unless the user reports a new, specific problem.
-- **FOLLOW THE ESTABLISHED PATTERN**: When adding new content, follow the pattern established in this session:
-    1.  Add content to a backend data structure (likely in a new, separate file to avoid bloating  further).
-    2.  Create a backend API endpoint to serve the content.
-    3.  Update the relevant frontend page to fetch and display the content.
-- **USE THE NEW EVALUATION UI**: Any new reading tasks that require evaluation should be hooked into the existing  component.
+-   **WRITING FEATURE IS FROZEN**: Do not add, modify, or extend any part of the writing feature. The user has explicitly forbidden it.
+-   **IMMEDIATE PRIORITY IS READING**: Your first task is to continue building the **Reading Question Bank**, starting with the  level.
+-   **FOLLOW THE NEW CONTENT STRUCTURE**: All new reading content **must** be created in the new  directory, not in the old  file.
+-   **ADHERE TO THE ULTRA MASTER PROMPT**: The user provided a very specific and detailed prompt for creating the reading content. It dictates the structure, metadata, text types, and skill mapping. This is non-negotiable.
+-   **IMPLEMENTATION ORDER**: The approved order is 1. , 2. , 3. .
 
 **documents and test reports created in this job**
-- : Was updated multiple times to define and execute backend and frontend tests for the Advanced Reading and Track-Specific Evaluation features.
+-   None.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User:** Approves Phase 4 backend work and provides a detailed ULTRA MASTER IMPLEMENTATION PROMPT for the Frontend Evaluation UI.
-2.  **Agent:** Acknowledges the prompt and begins UI implementation.
-3.  **User:** Formally accepts the completed Frontend UI, confirming **Phase 4 is PRODUCTION-READY**. Re-diagnoses the auth issue as a separate technical debt task.
-4.  **Agent:** Acknowledges Phase 4 acceptance and begins to investigate the auth fix.
-5.  **Agent:** (After testing) Proves the auth flow works correctly and the issue was a test tool artifact.
-6.  **Agent:** Successfully performs an end-to-end test via screenshots, showing a user logging in and getting a new AI evaluation result.
-7.  **User:** Asks the agent to start the model answer quality sprint.
-8.  **Agent:** Completes the sprint by creating a new service and API for quality standards.
-9.  **User:** Provides a FORMAL CLOSING CHECKLIST for the entire Writing feature, declaring it **FEATURE FREEZE** and stating that the next logical step is to expand the Reading/Listening/Speaking question banks.
-10. **Agent:** Acknowledges the feature freeze on Writing and asks for confirmation to begin expanding the **Reading Question Bank**.
+1.  **User**: Confirms the start of the Reading Question Bank phase and provides an ULTRA MASTER PROMPT with detailed specifications.
+2.  **Agent**: Acknowledges the detailed instructions and begins analysis.
+3.  **Agent**: (Internal) Views the oversized  file.
+4.  **Agent**: Proposes a new, refactored file structure for content () and a plan to start with , asking for user confirmation.
+5.  **User**: Enthusiastically approves the new file structure and the plan to start with the  level. Gives formal go-ahead.
+6.  **Agent**: Acknowledges the formal approval and states the implementation plan.
+7.  **Agent**: Creates the new directory structure for the reading content.
+8.  **Agent**: Creates the initial placeholder Python files for Advanced Academic and General reading content.
+9.  **Agent**: States that the next step is to create the backend API endpoints.
 
 **Project Health Check:**
-- **Broken**: Nothing is functionally broken.
-- **Mocked**: No mocked components. The system is live.
-- **Incomplete**: The Reading, Listening, and Speaking Question Banks are either non-existent or minimal, which is the next area of focus.
+-   **Broken**: None.
+-   **Mocked**: None.
+-   **Incomplete**: The Reading Question Bank feature has just been started and is the primary incomplete component.
 
 **3rd Party Integrations**
 -   OpenAI GPT-4o: Used via  for AI evaluation features.
 
 **Testing status**
-- **Testing agent used after significant changes**: YES. Both backend and frontend testing agents were used to validate the new evaluation APIs and UI component.
-- **Troubleshoot agent used after agent stuck in loop**: NO.
-- **Test files created**: None. Test definitions were added to .
-- **Known regressions**: None.
+-   **Testing agent used after significant changes**: NO (Not yet applicable in this session).
+-   **Troubleshoot agent used after agent stuck in loop**: NO.
+-   **Test files created**: None.
+-   **Known regressions**: None.
 
 **Credentials to test flow:**
-- **Primary User**:  / 
-- **New Tester Account**:  /  (Note: The agent created this user with a password it defined, so this should be the working credential).
+-   **Primary User**:  / 
+-   **New Tester Account**:  / 
 
 **What agent forgot to execute**
-- The agent correctly and repeatedly de-prioritized low-priority technical debt (linting warnings, unused files) in favor of the user's high-priority, strategic feature requests. These tasks remain outstanding but were not forgotten.</analysis>
+-   Nothing. The agent has correctly followed the user's explicit instructions and priorities. Low-priority technical debt has been consciously de-prioritized, not forgotten.</analysis>

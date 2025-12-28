@@ -10,7 +10,7 @@ import os
 from datetime import datetime
 
 # Get backend URL from frontend env
-BACKEND_URL = "https://ielts-reading-bank.preview.emergentagent.com/api"
+BACKEND_URL = "https://ielts-mastery-7.preview.emergentagent.com/api"
 
 def test_user_creation():
     """Test creating a user via POST /api/users"""
