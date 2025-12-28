@@ -1218,111 +1218,81 @@ export default function AdvancedMasteryCourse({ user }) {
         </div>
       )}
 
-      {/* General Training Writing Content */}
+      {/* General Training Writing Content - STRATEGIC + MODULE-SPECIFIC for Advanced */}
       {writingTrack === 'general' && (
         <div className="space-y-6">
-          {languageBooster ? (
+          {strategicWriting ? (
             <>
-              {/* Module-Specific Language Booster Content */}
-              <div className="bg-purple-50 rounded-xl p-5">
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge className="bg-purple-600 text-white">{languageBooster.module?.toUpperCase()}</Badge>
-                  <span className="text-xs text-purple-600 font-semibold">GENERAL TRAINING - Module-Specific (Advanced)</span>
+              {/* Strategic Writing Header */}
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-5 border border-purple-200">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  <Badge className="bg-purple-600 text-white">ADVANCED</Badge>
+                  <Badge className="bg-pink-600 text-white">STRATEGIC</Badge>
+                  <span className="text-xs text-purple-600 font-semibold">{strategicWriting.module_title}</span>
                 </div>
-                <p className="text-sm text-gray-600 mb-4">{languageBooster.learning_outcome}</p>
                 
-                {/* Key Vocabulary */}
-                <details className="mb-4 cursor-pointer">
-                  <summary className="font-bold text-purple-700 flex items-center gap-2">
-                    📘 Key Vocabulary ({languageBooster.key_vocabulary?.length || 0} words)
-                  </summary>
-                  <div className="mt-2 p-3 bg-white rounded-lg max-h-48 overflow-y-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {languageBooster.key_vocabulary?.map((vocab, i) => (
-                        <div key={i} className="p-2 bg-gray-50 rounded text-sm">
-                          <span className="font-medium text-purple-700">{vocab.word}</span>
-                          <span className="text-gray-500"> - {vocab.meaning}</span>
-                        </div>
-                      ))}
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{strategicWriting.strategic_focus}</h3>
+                <p className="text-sm text-gray-600 mb-4">{strategicWriting.learning_outcome}</p>
+                
+                {/* Strategic Elements */}
+                {strategicWriting.writing_scenario?.strategic_elements && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                    <div className="p-3 bg-white rounded-lg border border-purple-100">
+                      <p className="text-xs font-bold text-purple-700 mb-1">🎭 TONE</p>
+                      <p className="text-sm text-gray-700">{strategicWriting.writing_scenario.strategic_elements.tone}</p>
+                    </div>
+                    <div className="p-3 bg-white rounded-lg border border-blue-100">
+                      <p className="text-xs font-bold text-blue-700 mb-1">🎯 PURPOSE</p>
+                      <p className="text-sm text-gray-700">{strategicWriting.writing_scenario.strategic_elements.purpose}</p>
+                    </div>
+                    <div className="p-3 bg-white rounded-lg border border-green-100">
+                      <p className="text-xs font-bold text-green-700 mb-1">💡 ARGUMENT</p>
+                      <p className="text-sm text-gray-700">{strategicWriting.writing_scenario.strategic_elements.argument}</p>
                     </div>
                   </div>
-                </details>
-                
-                {/* Functional Phrases */}
-                <details className="mb-4 cursor-pointer">
-                  <summary className="font-bold text-blue-700 flex items-center gap-2">
-                    🧩 Functional Phrases
-                  </summary>
-                  <div className="mt-2 p-3 bg-white rounded-lg space-y-3">
-                    {languageBooster.functional_phrases?.requests && (
-                      <div>
-                        <p className="text-xs font-semibold text-blue-600 mb-1">For Requests:</p>
-                        <ul className="text-sm text-gray-700 space-y-1">
-                          {languageBooster.functional_phrases.requests.map((phrase, i) => (
-                            <li key={i} className="italic">• {phrase}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {languageBooster.functional_phrases?.complaints && (
-                      <div>
-                        <p className="text-xs font-semibold text-red-600 mb-1">For Complaints:</p>
-                        <ul className="text-sm text-gray-700 space-y-1">
-                          {languageBooster.functional_phrases.complaints.map((phrase, i) => (
-                            <li key={i} className="italic">• {phrase}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {languageBooster.functional_phrases?.explanations && (
-                      <div>
-                        <p className="text-xs font-semibold text-green-600 mb-1">For Explanations:</p>
-                        <ul className="text-sm text-gray-700 space-y-1">
-                          {languageBooster.functional_phrases.explanations.map((phrase, i) => (
-                            <li key={i} className="italic">• {phrase}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </details>
-                
-                {/* Common Mistakes */}
-                {languageBooster.common_mistakes && (
-                  <details className="mb-4 cursor-pointer">
-                    <summary className="font-bold text-red-700 flex items-center gap-2">
-                      ⚠️ Common Mistakes
-                    </summary>
-                    <div className="mt-2 p-3 bg-white rounded-lg space-y-2">
-                      {languageBooster.common_mistakes.map((mistake, i) => (
-                        <div key={i} className="p-2 bg-gray-50 rounded text-sm">
-                          <p className="text-red-600 line-through">{mistake.wrong}</p>
-                          <p className="text-green-600 font-medium">✓ {mistake.correct}</p>
-                          <p className="text-gray-500 text-xs italic">{mistake.explanation}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </details>
                 )}
               </div>
               
-              {/* Writing Task from Language Booster */}
-              {languageBooster.writing_task && (
+              {/* Writing Scenario & Task */}
+              {strategicWriting.writing_scenario && (
                 <>
-                  <div className="bg-orange-50 rounded-xl p-5">
-                    <p className="text-xs text-orange-600 font-semibold mb-2">WRITING TASK - {languageBooster.writing_task.title}</p>
-                    <p className="text-gray-900 whitespace-pre-line">{languageBooster.writing_task.prompt}</p>
+                  <div className="bg-orange-50 rounded-xl p-5 border border-orange-200">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Badge className="bg-orange-600 text-white">{strategicWriting.band_target}</Badge>
+                      <span className="text-sm font-semibold text-orange-700">{strategicWriting.writing_scenario.title}</span>
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 italic mb-4">{strategicWriting.writing_scenario.context}</p>
+                    
+                    <p className="text-gray-900 whitespace-pre-line">{strategicWriting.writing_scenario.prompt}</p>
                   </div>
                   
+                  {/* Key Phrases */}
+                  {strategicWriting.writing_scenario.key_phrases && (
+                    <details className="cursor-pointer">
+                      <summary className="font-bold text-purple-700 flex items-center gap-2">
+                        🔑 Key Strategic Phrases
+                      </summary>
+                      <div className="mt-2 p-4 bg-white rounded-lg border border-purple-100 space-y-2">
+                        {strategicWriting.writing_scenario.key_phrases.map((phrase, i) => (
+                          <p key={i} className="text-sm text-gray-700 italic pl-4 border-l-2 border-purple-300">
+                            "{phrase}"
+                          </p>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+                  
+                  {/* Writing Area */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Your Letter (Band 7-9 Target, 150+ words)
+                      Your Response (Band 7-9 Target, 150+ words)
                     </label>
                     <Textarea 
                       value={writingResponse} 
                       onChange={(e) => setWritingResponse(e.target.value)} 
-                      placeholder="Write your letter here (aim for 150+ words)..." 
-                      rows={10}
+                      placeholder="Write your strategic response here..." 
+                      rows={12}
                       className="w-full"
                     />
                     <p className="text-sm text-gray-500 mt-1">Words: {writingResponse.trim().split(/\s+/).filter(w => w).length}</p>
@@ -1336,23 +1306,16 @@ export default function AdvancedMasteryCourse({ user }) {
                     {writingLoading ? 'Evaluating...' : 'Get AI Evaluation'}
                   </Button>
                   
-                  {/* Model Answers */}
-                  {languageBooster.writing_task.model_answer && (
+                  {/* Band 8 Model Answer */}
+                  {strategicWriting.writing_scenario.model_answer && (
                     <div className="space-y-3">
                       <details className="cursor-pointer">
-                        <summary className="font-bold text-amber-700">📝 Model Letter (Band 6)</summary>
-                        <div className="mt-2 p-4 bg-amber-50 rounded-lg">
+                        <summary className="font-bold text-green-700 flex items-center gap-2">
+                          🏆 Band 8 Model Answer
+                        </summary>
+                        <div className="mt-2 p-4 bg-green-50 rounded-lg border border-green-200">
                           <p className="text-gray-700 whitespace-pre-line font-mono text-sm">
-                            {languageBooster.writing_task.model_answer.band_6}
-                          </p>
-                        </div>
-                      </details>
-                      
-                      <details className="cursor-pointer">
-                        <summary className="font-bold text-green-700">🏆 Model Letter (Band 8)</summary>
-                        <div className="mt-2 p-4 bg-green-50 rounded-lg">
-                          <p className="text-gray-700 whitespace-pre-line font-mono text-sm">
-                            {languageBooster.writing_task.model_answer.band_8}
+                            {strategicWriting.writing_scenario.model_answer.band_8}
                           </p>
                         </div>
                       </details>
@@ -1364,7 +1327,7 @@ export default function AdvancedMasteryCourse({ user }) {
           ) : (
             <div className="text-center py-8 bg-gray-50 rounded-xl">
               <Target className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">Module-specific content loading...</p>
+              <p className="text-gray-500">Loading strategic writing content...</p>
             </div>
           )}
         </div>
