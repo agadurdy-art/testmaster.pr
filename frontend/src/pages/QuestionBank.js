@@ -231,7 +231,12 @@ export default function QuestionBank() {
                       key={band.id}
                       variant={selectedBand === band.id ? 'default' : 'outline'}
                       size="sm"
-                      onClick={() => setSelectedBand(selectedBand === band.id ? null : band.id)}
+                      onClick={() => {
+                        const newBand = selectedBand === band.id ? null : band.id;
+                        setSelectedBand(newBand);
+                        // Clear topic when band changes (it might not be available)
+                        setSelectedTopic(null);
+                      }}
                       className={selectedBand === band.id ? 'bg-indigo-600 hover:bg-indigo-700' : ''}
                       style={{ borderColor: band.color }}
                     >
@@ -244,12 +249,19 @@ export default function QuestionBank() {
                     </Button>
                   ))}
                 </div>
+                {selectedBand && (
+                  <p className="text-xs text-indigo-600 mt-2">
+                    📚 {selectedBand === '4.0-5.0' ? 'Beginner Course konuları' : 
+                        selectedBand === '5.5-6.5' ? 'Beginner + Mastery Course konuları' : 
+                        'Tüm kurs konuları'} gösteriliyor ({topics.length} konu)
+                  </p>
+                )}
               </div>
 
-              {/* Topics - Horizontal Scroll */}
+              {/* Topics - Horizontal Scroll with Stage Info */}
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">Konu:</p>
-                <div className="flex flex-wrap gap-2 max-h-24 overflow-y-auto">
+                <p className="text-sm font-medium text-gray-700 mb-2">Konu ({topics.length}):</p>
+                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
                   {topics.map(topic => (
                     <Badge
                       key={topic.id}
@@ -260,8 +272,12 @@ export default function QuestionBank() {
                           : 'hover:bg-gray-100'
                       }`}
                       onClick={() => setSelectedTopic(selectedTopic === topic.id ? null : topic.id)}
+                      title={topic.stages ? `Kurslar: ${topic.stages.join(', ')}` : ''}
                     >
                       <span className="mr-1">{topic.icon}</span> {topic.name}
+                      {topic.stages && topic.stages.length > 1 && (
+                        <span className="ml-1 text-xs opacity-70">+{topic.stages.length - 1}</span>
+                      )}
                     </Badge>
                   ))}
                 </div>
