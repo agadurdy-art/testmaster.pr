@@ -675,7 +675,7 @@ The ULTRA MASTER PROMPT frontend implementation is working excellently with all 
 **Testing Agent:** Backend Testing Agent  
 **Test Date:** December 28, 2025  
 **Test Credentials:** test@ielts.com / admin123  
-**Backend URL:** https://ielts-mastery-6.preview.emergentagent.com/api
+**Backend URL:** https://dual-track-ielts.preview.emergentagent.com/api
 
 #### Backend API Test Results Summary: 9/11 Tests PASSED ✅
 
