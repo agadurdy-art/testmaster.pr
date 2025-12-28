@@ -160,8 +160,8 @@ export default function QuestionBank() {
               <Layers className="w-8 h-8" />
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold">IELTS Soru Bankası</h1>
-              <p className="text-white/80 text-lg">Cambridge IELTS uyumlu, AI destekli soru bankası</p>
+              <h1 className="text-3xl md:text-4xl font-bold">IELTS Question Bank</h1>
+              <p className="text-white/80 text-lg">Cambridge IELTS compatible, AI-powered question bank</p>
             </div>
           </div>
 
