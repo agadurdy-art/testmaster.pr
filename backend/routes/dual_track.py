@@ -589,6 +589,218 @@ async def get_reading_skill_categories_new():
     }
 
 
+# ============ MASTERY READING QUESTION BANK ENDPOINTS ============
+
+@router.get("/reading/question-types")
+async def get_reading_question_types():
+    """
+    Get all IELTS Reading question types with descriptions.
+    Used for question-type based filtering in Question Bank.
+    """
+    from content.reading.mastery.reading_mastery_academic import get_reading_question_types
+    
+    return {
+        "success": True,
+        "question_types": get_reading_question_types()
+    }
+
+
+@router.get("/reading/topics")
+async def get_reading_topics():
+    """
+    Get all reading topics for filtering.
+    """
+    from content.reading.mastery.reading_mastery_academic import get_reading_topics
+    
+    return {
+        "success": True,
+        "topics": get_reading_topics()
+    }
+
+
+@router.get("/reading/band-levels")
+async def get_reading_band_levels():
+    """
+    Get available band levels for Mastery Reading.
+    """
+    from content.reading.mastery.reading_mastery_academic import get_mastery_band_levels
+    
+    return {
+        "success": True,
+        "band_levels": get_mastery_band_levels()
+    }
+
+
+@router.get("/reading/mastery/academic")
+async def get_mastery_academic_reading():
+    """
+    Get all Mastery Academic Reading modules.
+    Supports filtering by topic, question_type, and band.
+    """
+    from content.reading.mastery.reading_mastery_academic import get_all_mastery_reading_modules
+    
+    modules = get_all_mastery_reading_modules()
+    return {
+        "success": True,
+        "track": "academic",
+        "level": "mastery",
+        "band_target": "6.0-7.0",
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/mastery/academic/{module_id}")
+async def get_mastery_academic_module(module_id: str):
+    """
+    Get specific Mastery Academic Reading module.
+    """
+    from content.reading.mastery.reading_mastery_academic import get_mastery_reading_by_id
+    
+    module = get_mastery_reading_by_id(module_id)
+    
+    if not module:
+        from content.reading.mastery.reading_mastery_academic import get_all_mastery_reading_modules
+        available = [m["module_id"] for m in get_all_mastery_reading_modules()]
+        return {
+            "success": False,
+            "error": f"Module '{module_id}' not found",
+            "available_modules": available
+        }
+    
+    return {
+        "success": True,
+        "track": "academic",
+        "level": "mastery",
+        "module": module
+    }
+
+
+@router.get("/reading/mastery/academic/filter/topic/{topic}")
+async def get_mastery_academic_by_topic(topic: str):
+    """
+    Get Mastery Academic Reading modules filtered by topic.
+    """
+    from content.reading.mastery.reading_mastery_academic import get_mastery_reading_by_topic
+    
+    modules = get_mastery_reading_by_topic(topic)
+    return {
+        "success": True,
+        "track": "academic",
+        "topic": topic,
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/mastery/academic/filter/question-type/{question_type}")
+async def get_mastery_academic_by_question_type(question_type: str):
+    """
+    Get Mastery Academic Reading modules filtered by question type.
+    """
+    from content.reading.mastery.reading_mastery_academic import get_mastery_reading_by_question_type
+    
+    modules = get_mastery_reading_by_question_type(question_type)
+    return {
+        "success": True,
+        "track": "academic",
+        "question_type": question_type,
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/mastery/general")
+async def get_mastery_general_reading():
+    """
+    Get all Mastery General Training Reading modules.
+    """
+    from content.reading.mastery.reading_mastery_general import get_all_mastery_general_modules
+    
+    modules = get_all_mastery_general_modules()
+    return {
+        "success": True,
+        "track": "general",
+        "level": "mastery",
+        "band_target": "6.0-7.0",
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/mastery/general/{module_id}")
+async def get_mastery_general_module(module_id: str):
+    """
+    Get specific Mastery General Training Reading module.
+    """
+    from content.reading.mastery.reading_mastery_general import get_mastery_general_by_id
+    
+    module = get_mastery_general_by_id(module_id)
+    
+    if not module:
+        from content.reading.mastery.reading_mastery_general import get_all_mastery_general_modules
+        available = [m["module_id"] for m in get_all_mastery_general_modules()]
+        return {
+            "success": False,
+            "error": f"Module '{module_id}' not found",
+            "available_modules": available
+        }
+    
+    return {
+        "success": True,
+        "track": "general",
+        "level": "mastery",
+        "module": module
+    }
+
+
+@router.get("/reading/mastery/general/filter/topic/{topic}")
+async def get_mastery_general_by_topic(topic: str):
+    """
+    Get Mastery General Reading modules filtered by topic.
+    """
+    from content.reading.mastery.reading_mastery_general import get_mastery_general_by_topic
+    
+    modules = get_mastery_general_by_topic(topic)
+    return {
+        "success": True,
+        "track": "general",
+        "topic": topic,
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/mastery/general/filter/question-type/{question_type}")
+async def get_mastery_general_by_question_type(question_type: str):
+    """
+    Get Mastery General Reading modules filtered by question type.
+    """
+    from content.reading.mastery.reading_mastery_general import get_mastery_general_by_question_type
+    
+    modules = get_mastery_general_by_question_type(question_type)
+    return {
+        "success": True,
+        "track": "general",
+        "question_type": question_type,
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/reading/document-types")
+async def get_gt_document_types():
+    """
+    Get all General Training document types.
+    """
+    from content.reading.mastery.reading_mastery_general import get_gt_document_types as get_doc_types
+    
+    return {
+        "success": True,
+        "document_types": get_doc_types()
+    }
+
+
 # ============ DYNAMIC ROUTES (course level based) ============
 
 @router.get("/{course_level}")
