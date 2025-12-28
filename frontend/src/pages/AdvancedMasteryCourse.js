@@ -226,17 +226,42 @@ export default function AdvancedMasteryCourse({ user }) {
         console.error('Error fetching strategic writing:', e);
       }
       
-      // Fetch strategic reading content for Advanced
+      // Fetch Academic strategic reading content for Advanced
       try {
-        const strategicReadingResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-reading/${strategicModuleId}`);
-        if (strategicReadingResponse.ok) {
-          const strategicReadingData = await strategicReadingResponse.json();
-          if (strategicReadingData.success) {
-            setStrategicReading(strategicReadingData.strategic_reading);
+        const academicReadingResponse = await fetch(`${API_URL}/api/courses/reading/academic/advanced/${strategicModuleId}`);
+        if (academicReadingResponse.ok) {
+          const academicData = await academicReadingResponse.json();
+          if (academicData.success && academicData.module) {
+            setStrategicReading(academicData.module);
           }
         }
       } catch (e) {
-        console.error('Error fetching strategic reading:', e);
+        console.error('Error fetching academic reading:', e);
+        // Fallback to old API
+        try {
+          const strategicReadingResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-reading/${strategicModuleId}`);
+          if (strategicReadingResponse.ok) {
+            const strategicReadingData = await strategicReadingResponse.json();
+            if (strategicReadingData.success) {
+              setStrategicReading(strategicReadingData.strategic_reading);
+            }
+          }
+        } catch (fallbackError) {
+          console.error('Fallback strategic reading also failed:', fallbackError);
+        }
+      }
+      
+      // Fetch General Training Reading content for Advanced
+      try {
+        const generalReadingResponse = await fetch(`${API_URL}/api/courses/reading/general/advanced/${strategicModuleId}`);
+        if (generalReadingResponse.ok) {
+          const generalData = await generalReadingResponse.json();
+          if (generalData.success && generalData.module) {
+            setGeneralReading(generalData.module);
+          }
+        }
+      } catch (e) {
+        console.error('Error fetching general reading:', e);
       }
       
       // Also fetch language booster as fallback
