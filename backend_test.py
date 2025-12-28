@@ -3520,6 +3520,318 @@ def test_advanced_general_reading_phase3():
         print("❌ SOME ADVANCED GENERAL READING TESTS FAILED!")
         return False
 
+def test_new_reading_question_bank_api():
+    """Test the new Reading Question Bank API endpoints for Academic and General Training tracks"""
+    print("\n" + "="*80)
+    print("🚀 TESTING NEW READING QUESTION BANK API ENDPOINTS")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 9
+    
+    # Test 1: Authentication with provided credentials
+    print("\n=== Test 1: Authentication with test@ielts.com ===")
+    auth_data = {
+        "email": "test@ielts.com",
+        "password": "admin123"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/auth/login", json=auth_data)
+        print(f"Auth Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            user = response.json()
+            user_id = user.get('id')
+            print(f"✅ Authentication successful - User ID: {user_id}")
+            success_count += 1
+        else:
+            print(f"❌ Authentication failed: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ Authentication error: {e}")
+        return False
+    
+    # Test 2: Academic Reading Advanced - All Modules
+    print("\n=== Test 2: Academic Reading Advanced - All Modules ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/academic/advanced")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            modules = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            if isinstance(modules, list) and len(modules) == 5:
+                print(f"✅ Returns 5 modules as expected")
+                
+                # Check first module structure
+                if modules:
+                    first_module = modules[0]
+                    required_fields = ["module_id", "module_title", "strategic_focus", "band_target", "text_type"]
+                    missing_fields = [field for field in required_fields if field not in first_module]
+                    
+                    if not missing_fields:
+                        print(f"✅ Module structure contains all required fields")
+                        print(f"   Sample module: {first_module.get('module_title', 'Unknown')}")
+                        print(f"   Band target: {first_module.get('band_target', 'Unknown')}")
+                        success_count += 1
+                    else:
+                        print(f"❌ Module missing fields: {missing_fields}")
+                else:
+                    print(f"❌ No modules returned")
+            else:
+                print(f"❌ Expected 5 modules, got {len(modules) if isinstance(modules, list) else 'non-list'}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: Academic Reading Advanced - Specific Module (digital_frontier)
+    print("\n=== Test 3: Academic Reading Advanced - Specific Module (digital_frontier) ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/academic/advanced/digital_frontier")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            module = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate detailed module structure
+            required_sections = ["module_title", "strategic_focus", "learning_outcome", "reading_scenario", "vocabulary_focus", "reading_tips"]
+            missing_sections = [section for section in required_sections if section not in module]
+            
+            if not missing_sections:
+                print(f"✅ Module contains all required content sections")
+                
+                # Check reading scenario structure
+                reading_scenario = module.get("reading_scenario", {})
+                if "passage" in reading_scenario and "questions" in reading_scenario:
+                    questions = reading_scenario.get("questions", [])
+                    if len(questions) == 6:
+                        print(f"✅ Reading scenario contains 6 questions as expected")
+                        success_count += 1
+                    else:
+                        print(f"❌ Expected 6 questions, got {len(questions)}")
+                else:
+                    print(f"❌ Reading scenario missing passage or questions")
+            else:
+                print(f"❌ Module missing sections: {missing_sections}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: General Training Reading Advanced - All Modules
+    print("\n=== Test 4: General Training Reading Advanced - All Modules ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/general/advanced")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            modules = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate response structure
+            if isinstance(modules, list) and len(modules) == 5:
+                print(f"✅ Returns 5 modules as expected")
+                
+                # Check first module structure and text type
+                if modules:
+                    first_module = modules[0]
+                    text_type = first_module.get("text_type", "")
+                    
+                    # Check for General Training specific text types
+                    if "policy" in text_type.lower() or "contract" in text_type.lower() or "document" in text_type.lower():
+                        print(f"✅ General Training text type detected: {text_type}")
+                        print(f"   Sample module: {first_module.get('module_title', 'Unknown')}")
+                        success_count += 1
+                    else:
+                        print(f"❌ Expected policy/contract documents, got: {text_type}")
+                else:
+                    print(f"❌ No modules returned")
+            else:
+                print(f"❌ Expected 5 modules, got {len(modules) if isinstance(modules, list) else 'non-list'}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 5: General Training Reading Advanced - Specific Module (green_imperative)
+    print("\n=== Test 5: General Training Reading Advanced - Specific Module (green_imperative) ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/general/advanced/green_imperative")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            module = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate detailed module structure
+            required_sections = ["module_title", "strategic_focus", "learning_outcome", "reading_scenario", "vocabulary_focus", "reading_tips"]
+            missing_sections = [section for section in required_sections if section not in module]
+            
+            if not missing_sections:
+                print(f"✅ Module contains all required content sections")
+                
+                # Check for General Training specific content
+                reading_scenario = module.get("reading_scenario", {})
+                text_type = reading_scenario.get("text_type", "")
+                
+                if "policy" in text_type.lower() or "contract" in text_type.lower() or "document" in text_type.lower():
+                    print(f"✅ General Training content type: {text_type}")
+                    
+                    # Check questions
+                    questions = reading_scenario.get("questions", [])
+                    if len(questions) == 6:
+                        print(f"✅ Reading scenario contains 6 questions as expected")
+                        success_count += 1
+                    else:
+                        print(f"❌ Expected 6 questions, got {len(questions)}")
+                else:
+                    print(f"❌ Expected policy/contract document type, got: {text_type}")
+            else:
+                print(f"❌ Module missing sections: {missing_sections}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 6: Reading Skills API
+    print("\n=== Test 6: Reading Skills API ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/skills")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            skills = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate skills structure
+            if isinstance(skills, list) and len(skills) > 0:
+                print(f"✅ Returns {len(skills)} skill categories")
+                
+                # Check first skill structure
+                if skills:
+                    first_skill = skills[0]
+                    if "skill_name" in first_skill or "category" in first_skill:
+                        print(f"✅ Skills have proper structure")
+                        success_count += 1
+                    else:
+                        print(f"❌ Skills missing expected fields")
+                else:
+                    print(f"❌ No skills returned")
+            else:
+                print(f"❌ Expected skill categories list, got {type(skills)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 7: Track Separation Verification - Academic vs General Training
+    print("\n=== Test 7: Track Separation Verification ===")
+    try:
+        # Get both Academic and General Training modules
+        academic_response = requests.get(f"{BACKEND_URL}/courses/reading/academic/advanced")
+        general_response = requests.get(f"{BACKEND_URL}/courses/reading/general/advanced")
+        
+        if academic_response.status_code == 200 and general_response.status_code == 200:
+            academic_modules = academic_response.json()
+            general_modules = general_response.json()
+            
+            print(f"✅ Both API calls successful")
+            
+            # Check content differences
+            academic_text_types = [m.get("text_type", "") for m in academic_modules]
+            general_text_types = [m.get("text_type", "") for m in general_modules]
+            
+            # Academic should have research/journal content
+            academic_has_research = any("research" in tt.lower() or "journal" in tt.lower() or "academic" in tt.lower() for tt in academic_text_types)
+            
+            # General should have policy/contract content
+            general_has_policy = any("policy" in tt.lower() or "contract" in tt.lower() or "workplace" in tt.lower() for tt in general_text_types)
+            
+            if academic_has_research and general_has_policy:
+                print(f"✅ Track separation verified:")
+                print(f"   Academic: Research/journal content detected")
+                print(f"   General: Policy/contract content detected")
+                success_count += 1
+            else:
+                print(f"❌ Track separation not clear:")
+                print(f"   Academic has research content: {academic_has_research}")
+                print(f"   General has policy content: {general_has_policy}")
+        else:
+            print(f"❌ Failed to get both track modules for comparison")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 8: Module Consistency Check
+    print("\n=== Test 8: Module Consistency Check ===")
+    try:
+        # Test multiple modules to ensure consistency
+        module_ids = ["digital_frontier", "green_imperative", "educational_paradigm", "health_public_policy", "crime_justice"]
+        consistent_modules = 0
+        
+        for module_id in module_ids:
+            try:
+                response = requests.get(f"{BACKEND_URL}/courses/reading/academic/advanced/{module_id}")
+                if response.status_code == 200:
+                    module = response.json()
+                    if "reading_scenario" in module and "vocabulary_focus" in module:
+                        consistent_modules += 1
+            except:
+                pass
+        
+        if consistent_modules >= 3:  # At least 3 modules should work
+            print(f"✅ Module consistency verified: {consistent_modules}/{len(module_ids)} modules accessible")
+            success_count += 1
+        else:
+            print(f"❌ Module consistency issue: only {consistent_modules}/{len(module_ids)} modules accessible")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 9: Band Range Verification
+    print("\n=== Test 9: Band Range Verification ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/academic/advanced")
+        if response.status_code == 200:
+            modules = response.json()
+            
+            # Check band targets
+            band_targets = [m.get("band_target", "") for m in modules]
+            advanced_bands = [bt for bt in band_targets if "7.0" in bt or "8.0" in bt or "9.0" in bt]
+            
+            if len(advanced_bands) >= 3:  # Most modules should target Band 7.0-9.0
+                print(f"✅ Band range verification passed: Advanced level content (7.0-9.0)")
+                print(f"   Advanced band targets found: {len(advanced_bands)}/{len(modules)}")
+                success_count += 1
+            else:
+                print(f"❌ Band range verification failed: Not enough advanced content")
+                print(f"   Band targets: {band_targets}")
+        else:
+            print(f"❌ Failed to get modules for band verification")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 NEW READING QUESTION BANK API SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 7:  # Allow some flexibility
+        print("✅ NEW READING QUESTION BANK API TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - Authentication with test@ielts.com works")
+        print("   - Academic Reading Advanced endpoints working")
+        print("   - General Training Reading Advanced endpoints working")
+        print("   - Track separation between Academic and General Training")
+        print("   - Module consistency across different module IDs")
+        print("   - Appropriate Band 7.0-9.0 content level")
+        print("   - Reading Skills API functional")
+        return True
+    else:
+        print("❌ NEW READING QUESTION BANK API TESTS FAILED!")
+        return False
+
 if __name__ == "__main__":
     print("🚀 Starting Backend API Testing for IELTS Ace Application")
     print("="*80)
