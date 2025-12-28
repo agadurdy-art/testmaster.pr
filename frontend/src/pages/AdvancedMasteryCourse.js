@@ -226,7 +226,7 @@ export default function AdvancedMasteryCourse({ user }) {
         console.error('Error fetching strategic writing:', e);
       }
       
-      // Fetch Academic strategic reading content for Advanced
+      // Fetch Academic strategic reading content for Advanced (NEW API)
       try {
         const academicReadingResponse = await fetch(`${API_URL}/api/courses/reading/academic/advanced/${strategicModuleId}`);
         if (academicReadingResponse.ok) {
@@ -237,21 +237,10 @@ export default function AdvancedMasteryCourse({ user }) {
         }
       } catch (e) {
         console.error('Error fetching academic reading:', e);
-        // Fallback to old API
-        try {
-          const strategicReadingResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-reading/${strategicModuleId}`);
-          if (strategicReadingResponse.ok) {
-            const strategicReadingData = await strategicReadingResponse.json();
-            if (strategicReadingData.success) {
-              setStrategicReading(strategicReadingData.strategic_reading);
-            }
-          }
-        } catch (fallbackError) {
-          console.error('Fallback strategic reading also failed:', fallbackError);
-        }
       }
       
       // Fetch General Training Reading content for Advanced
+      // First try new API, then fallback to old strategic reading API
       try {
         const generalReadingResponse = await fetch(`${API_URL}/api/courses/reading/general/advanced/${strategicModuleId}`);
         if (generalReadingResponse.ok) {
@@ -261,7 +250,19 @@ export default function AdvancedMasteryCourse({ user }) {
           }
         }
       } catch (e) {
-        console.error('Error fetching general reading:', e);
+        console.error('Error fetching general reading from new API:', e);
+        // Fallback to old strategic reading API (which has GT content)
+        try {
+          const oldApiResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-reading/${strategicModuleId}`);
+          if (oldApiResponse.ok) {
+            const oldData = await oldApiResponse.json();
+            if (oldData.success && oldData.strategic_reading) {
+              setGeneralReading(oldData.strategic_reading);
+            }
+          }
+        } catch (fallbackError) {
+          console.error('Fallback general reading also failed:', fallbackError);
+        }
       }
       
       // Also fetch language booster as fallback
