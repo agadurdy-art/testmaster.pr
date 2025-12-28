@@ -79,6 +79,7 @@ export default function BeginnerCourse({ user }) {
   const [writingTrack, setWritingTrack] = useState('academic'); // Dual-Track support
   const [generalLessons, setGeneralLessons] = useState([]);
   const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
+  const [languageBooster, setLanguageBooster] = useState(null); // Module-Specific Language Booster
   
   // Listening states
   const [listeningAnswers, setListeningAnswers] = useState({});
