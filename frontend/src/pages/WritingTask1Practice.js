@@ -701,50 +701,51 @@ export default function WritingTask1Practice() {
                               </Badge>
                             </div>
                           </div>
-                          </span>
-                          <Badge className="bg-green-100 text-green-700">
-                            Tahmini Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.5'}
-                          </Badge>
-                        </div>
-                      </div>
 
-                      {/* Academic Reasoning Notes */}
-                      {modelAnswer?.layer_b_reasoning_notes && (
-                        <details className="mt-4">
-                          <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                            📚 Akademik Gerekçelendirme Notları
-                          </summary>
-                          <div className="mt-3 space-y-3">
-                            {Object.entries(modelAnswer.layer_b_reasoning_notes).map(([key, value]) => (
-                              <div key={key} className="p-3 bg-white rounded-lg border">
-                                <h5 className="text-xs font-semibold text-gray-800 mb-1">
-                                  {value.question}
-                                </h5>
-                                <p className="text-xs text-gray-600">
-                                  {value.explanation}
-                                </p>
+                          {/* Academic Reasoning Notes */}
+                          {modelAnswer?.layer_b_reasoning_notes && (
+                            <details className="mt-4">
+                              <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
+                                📚 Akademik Gerekçelendirme Notları
+                              </summary>
+                              <div className="mt-3 space-y-3">
+                                {Object.entries(modelAnswer.layer_b_reasoning_notes).map(([key, value]) => (
+                                  <div key={key} className="p-3 bg-white rounded-lg border">
+                                    <h5 className="text-xs font-semibold text-gray-800 mb-1">
+                                      {value.question}
+                                    </h5>
+                                    <p className="text-xs text-gray-600">
+                                      {value.explanation}
+                                    </p>
+                                  </div>
+                                ))}
                               </div>
-                            ))}
-                          </div>
-                        </details>
-                      )}
+                            </details>
+                          )}
 
-                      {/* Alternative Expressions */}
-                      {modelAnswer?.layer_c_alternatives && (
-                        <details className="mt-4">
-                          <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                            🔄 Alternatif İfadeler
-                          </summary>
-                          <div className="mt-3 space-y-2">
-                            <div className="flex flex-wrap gap-2">
-                              {modelAnswer.layer_c_alternatives.overview_alternatives?.slice(0, 4).map((alt, idx) => (
-                                <Badge key={idx} variant="outline" className="text-xs">
-                                  {alt}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        </details>
+                          {/* Alternative Expressions */}
+                          {modelAnswer?.layer_c_alternatives && (
+                            <details className="mt-4">
+                              <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
+                                🔄 Alternatif İfadeler
+                              </summary>
+                              <div className="mt-3 space-y-2">
+                                <div className="flex flex-wrap gap-2">
+                                  {modelAnswer.layer_c_alternatives.overview_alternatives?.slice(0, 4).map((alt, idx) => (
+                                    <Badge key={idx} variant="outline" className="text-xs">
+                                      {alt}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              </div>
+                            </details>
+                          )}
+                        </>
+                      ) : (
+                        <div className="text-center py-6">
+                          <p className="text-sm text-gray-500">Model cevap yükleniyor...</p>
+                          <p className="text-xs text-gray-400 mt-2">Lütfen bekleyin, yapay zeka model cevap hazırlıyor.</p>
+                        </div>
                       )}
                     </Card>
                   )}
