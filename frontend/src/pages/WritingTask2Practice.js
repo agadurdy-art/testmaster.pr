@@ -28,6 +28,8 @@ export default function WritingTask2Practice() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const examType = searchParams.get('type') || 'academic'; // academic or general
+  const urlTopic = searchParams.get('topic');
+  const urlBand = searchParams.get('band') || '5.5-6.5';
   
   const [prompts, setPrompts] = useState([]);
   const [selectedPrompt, setSelectedPrompt] = useState(null);
@@ -41,7 +43,8 @@ export default function WritingTask2Practice() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
   const [evaluating, setEvaluating] = useState(false);
-  const [selectedType, setSelectedType] = useState('all');
+  const [selectedType, setSelectedType] = useState(urlTopic || 'all');
+  const [targetBand, setTargetBand] = useState(urlBand);
   const [modelAnswers, setModelAnswers] = useState(null);
 
   const essayTypes = [
