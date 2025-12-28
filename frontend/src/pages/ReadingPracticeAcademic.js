@@ -335,6 +335,25 @@ export default function ReadingPracticeAcademic({ user }) {
                       <p className="text-xs text-gray-500">Est. Band</p>
                     </div>
                   </div>
+
+                  {/* Module-specific Course Recommendation */}
+                  <div className="mb-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                    <p className="text-sm font-medium text-amber-800 flex items-center gap-2">
+                      <Lightbulb className="w-4 h-4" /> İlgili Dersi İncele
+                    </p>
+                    <p className="text-xs text-amber-600 mt-1">
+                      <strong>{moduleContent?.module_title?.split(':')[0]}</strong> modülünde akademik metinler okuyarak becerilerinizi geliştirin.
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="mt-2 text-amber-700 border-amber-300"
+                      onClick={() => navigate('/advanced-mastery')}
+                    >
+                      Advanced Mastery → Reading <ChevronRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </div>
+
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={() => selectModule(selectedModule)} className="flex-1">
                       <RotateCcw className="w-4 h-4 mr-1" /> Try Again
