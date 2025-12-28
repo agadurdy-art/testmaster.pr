@@ -260,7 +260,7 @@ export default function QuestionBank() {
 
               {/* Topics - Horizontal Scroll with Stage Info */}
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">Konu ({topics.length}):</p>
+                <p className="text-sm font-medium text-gray-700 mb-2">Topic ({topics.length}):</p>
                 <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
                   {topics.map(topic => (
                     <Badge
@@ -272,7 +272,7 @@ export default function QuestionBank() {
                           : 'hover:bg-gray-100'
                       }`}
                       onClick={() => setSelectedTopic(selectedTopic === topic.id ? null : topic.id)}
-                      title={topic.stages ? `Kurslar: ${topic.stages.join(', ')}` : ''}
+                      title={topic.stages ? `Courses: ${topic.stages.join(', ')}` : ''}
                     >
                       <span className="mr-1">{topic.icon}</span> {topic.name}
                       {topic.stages && topic.stages.length > 1 && (
@@ -300,7 +300,7 @@ export default function QuestionBank() {
                     onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
                     className="text-gray-500 hover:text-gray-700"
                   >
-                    <X className="w-4 h-4 mr-1" /> Temizle
+                    <X className="w-4 h-4 mr-1" /> Clear
                   </Button>
                 </div>
               )}
