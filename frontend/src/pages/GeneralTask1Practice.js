@@ -149,8 +149,9 @@ export default function GeneralTask1Practice() {
           response: userResponse,
           task_type: 'task1',
           topic: selectedPrompt?.topic,
-          band_level: '5.5-6.5',
-          task_description: selectedPrompt?.prompt || ''
+          band_level: urlBand || '5.5-6.5',
+          task_description: selectedPrompt?.prompt || '',
+          track: 'general'  // Dual-Track: General Training
         })
       });
       
@@ -166,6 +167,7 @@ export default function GeneralTask1Practice() {
           strengths: data.evaluation.strengths || [],
           weaknesses: data.evaluation.weaknesses || [],
           suggestions: data.evaluation.improvement_suggestions || [],
+          recommended_lessons: data.recommended_lessons || []  // Dual-Track lesson recommendations
         });
         toast.success('Değerlendirme tamamlandı!');
       } else {
