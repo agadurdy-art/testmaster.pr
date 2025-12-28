@@ -3361,6 +3361,165 @@ def test_ielts_ace_learning_platform_admin_access():
         print("❌ IELTS ACE LEARNING PLATFORM ADMIN ACCESS TESTS FAILED!")
         return False
 
+def test_advanced_general_reading_phase3():
+    """Test the new Advanced General Reading (Phase 3) implementation for IELTS application"""
+    print("\n" + "="*80)
+    print("🚀 TESTING ADVANCED GENERAL READING (PHASE 3) IMPLEMENTATION")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 4
+    
+    # Test 1: Authentication with provided credentials
+    print("\n=== Test 1: Authentication with test@ielts.com ===")
+    auth_data = {
+        "email": "test@ielts.com",
+        "password": "admin123"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/auth/login", json=auth_data)
+        print(f"Auth Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            user = response.json()
+            user_id = user.get('id')
+            print(f"✅ Authentication successful - User ID: {user_id}")
+            success_count += 1
+        else:
+            print(f"❌ Authentication failed: {response.status_code} - {response.text}")
+    except Exception as e:
+        print(f"❌ Authentication error: {e}")
+    
+    # Test 2: Strategic Reading Summary API
+    print("\n=== Test 2: GET /api/courses/advanced-strategic-reading-summary ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/advanced-strategic-reading-summary")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            modules = result.get("modules", [])
+            total = result.get("total", 0)
+            
+            print(f"✅ API call successful")
+            print(f"   Total modules: {total}")
+            
+            # Verify we have modules with strategic reading content
+            if total > 0 and modules:
+                print(f"✅ Returns list of modules with strategic reading content")
+                
+                # Check first module structure
+                first_module = modules[0]
+                required_fields = ["module_id", "module_title", "strategic_focus", "band_target", "text_type"]
+                missing_fields = [field for field in required_fields if field not in first_module]
+                
+                if not missing_fields:
+                    print(f"✅ Module structure contains all required fields")
+                    success_count += 1
+                else:
+                    print(f"❌ Module missing fields: {missing_fields}")
+            else:
+                print(f"❌ No modules returned")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: Specific Module Reading API - Digital Frontier
+    print("\n=== Test 3: GET /api/courses/advanced-strategic-reading/digital_frontier ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/advanced-strategic-reading/digital_frontier")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            strategic_reading = result.get("strategic_reading", {})
+            
+            print(f"✅ API call successful")
+            
+            # Verify required structure
+            required_fields = ["module_title", "strategic_focus", "reading_scenario"]
+            missing_fields = [field for field in required_fields if field not in strategic_reading]
+            
+            if not missing_fields:
+                print(f"✅ Strategic reading contains all required fields")
+                
+                # Check reading scenario structure
+                reading_scenario = strategic_reading.get("reading_scenario", {})
+                scenario_fields = ["text_type", "passage", "questions"]
+                missing_scenario_fields = [field for field in scenario_fields if field not in reading_scenario]
+                
+                if not missing_scenario_fields:
+                    print(f"✅ Reading scenario contains all required fields")
+                    
+                    # Verify questions count
+                    questions = reading_scenario.get("questions", [])
+                    if len(questions) == 6:
+                        print(f"✅ Reading scenario has 6 questions as expected")
+                        success_count += 1
+                    else:
+                        print(f"❌ Expected 6 questions, got {len(questions)}")
+                else:
+                    print(f"❌ Reading scenario missing fields: {missing_scenario_fields}")
+            else:
+                print(f"❌ Strategic reading missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: Multiple Modules Test
+    print("\n=== Test 4: Testing Multiple Modules ===")
+    modules_to_test = [
+        "health_public_policy",
+        "crime_justice", 
+        "tourism_heritage"
+    ]
+    
+    modules_success = 0
+    for module in modules_to_test:
+        try:
+            response = requests.get(f"{BACKEND_URL}/courses/advanced-strategic-reading/{module}")
+            print(f"   {module}: Status {response.status_code}")
+            
+            if response.status_code == 200:
+                result = response.json()
+                strategic_reading = result.get("strategic_reading", {})
+                
+                # Basic validation
+                if "module_title" in strategic_reading and "reading_scenario" in strategic_reading:
+                    modules_success += 1
+                    print(f"   ✅ {module} module structure valid")
+                else:
+                    print(f"   ❌ {module} module structure invalid")
+            else:
+                print(f"   ❌ {module} failed with status {response.status_code}")
+        except Exception as e:
+            print(f"   ❌ {module} error: {e}")
+    
+    if modules_success == len(modules_to_test):
+        print(f"✅ All {len(modules_to_test)} additional modules working correctly")
+        success_count += 1
+    else:
+        print(f"❌ Only {modules_success}/{len(modules_to_test)} additional modules working")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 ADVANCED GENERAL READING (PHASE 3) SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count == total_tests:
+        print("✅ ALL ADVANCED GENERAL READING TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - Authentication with test@ielts.com / admin123 works")
+        print("   - Strategic Reading Summary API returns list of modules")
+        print("   - Digital Frontier module returns complete reading scenario")
+        print("   - Reading scenario has 6 comprehension questions")
+        print("   - Multiple modules (health, crime, tourism) are accessible")
+        return True
+    else:
+        print("❌ SOME ADVANCED GENERAL READING TESTS FAILED!")
+        return False
+
 if __name__ == "__main__":
     print("🚀 Starting Backend API Testing for IELTS Ace Application")
     print("="*80)
