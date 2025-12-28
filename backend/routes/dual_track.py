@@ -126,9 +126,9 @@ async def get_track_lesson_detail(
     }
 
 
-# ============ RECOMMENDATIONS BY TRACK ============
+# ============ RECOMMENDATIONS BY TRACK (static path before dynamic) ============
 
-@router.get("/recommendations/{track}")
+@router.get("/track-recommendations/{track}")
 async def get_track_recommendations(
     track: str,
     band_level: str = Query(..., description="Target band level"),
