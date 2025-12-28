@@ -7,7 +7,8 @@ import {
   BookOpen, Headphones, PenTool, Mic, BookMarked,
   Target, Clock, Shuffle, Brain, TrendingUp,
   ChevronRight, Play, Filter, BarChart3, 
-  CheckCircle, ArrowLeft, Layers, Zap, X, FileText, Edit3
+  CheckCircle, ArrowLeft, Layers, Zap, X, FileText, Edit3,
+  HelpCircle, Award
 } from 'lucide-react';
 import { toast } from 'sonner';
 
