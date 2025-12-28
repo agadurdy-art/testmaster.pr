@@ -22,6 +22,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
  * - Band 6 and Band 8.5 model answers
  * - Three-layer evaluation system
  * - Side-by-side prompt and writing area
+ * - Course-driven lesson recommendations
  */
 
 export default function WritingTask2Practice() {
@@ -46,6 +47,7 @@ export default function WritingTask2Practice() {
   const [selectedType, setSelectedType] = useState(urlTopic || 'all');
   const [targetBand, setTargetBand] = useState(urlBand);
   const [modelAnswers, setModelAnswers] = useState(null);
+  const [recommendedLessons, setRecommendedLessons] = useState([]);
 
   const essayTypes = [
     { id: 'all', name: 'Tümü', icon: BookOpen },
