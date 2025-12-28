@@ -53,6 +53,7 @@ export default function WritingTask1Practice() {
   // Evaluation state
   const [evaluation, setEvaluation] = useState(null);
   const [evaluating, setEvaluating] = useState(false);
+  const [recommendedLessons, setRecommendedLessons] = useState([]);
   
   // Model Answer state (controlled reveal)
   const [modelAnswerStep, setModelAnswerStep] = useState(0); // 0=hidden, 1=band, 2=reasoning, 3=full
