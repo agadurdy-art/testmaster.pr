@@ -824,14 +824,15 @@ Return ONLY this JSON (no other text):
                         band_level=request.band_level
                     )
                     
-                    # Format for frontend
+                    # Format for frontend - TRACK-SPECIFIC (CRITICAL: Never suggest Academic lessons for General track)
                     recommended_lessons = [
                         {
                             "lesson_id": r["lesson_id"],
+                            "lesson_anchor_id": f"gt-{r['level']}-{r['lesson_id']}",  # Track-specific anchor
                             "title": r["title"],
                             "stage": r["level"],  # Using 'level' from dual-track
                             "band_level": r.get("band_target", request.band_level),
-                            "track": "general",
+                            "track": "general",  # HARD-ENFORCE: Always "general" for General track
                             "reason": f"Addresses: {', '.join(r.get('addresses_weaknesses', []))}"
                         }
                         for r in recommendations[:3]
