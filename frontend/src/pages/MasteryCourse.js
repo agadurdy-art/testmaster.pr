@@ -82,6 +82,13 @@ export default function MasteryCourse({ user }) {
   const [generalLessons, setGeneralLessons] = useState([]);
   const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
   
+  // Reading states (Dual-Track)
+  const [readingTrack, setReadingTrack] = useState('academic');
+  const [generalReadingLessons, setGeneralReadingLessons] = useState([]);
+  const [selectedReadingLesson, setSelectedReadingLesson] = useState(null);
+  const [readingAnswers, setReadingAnswers] = useState({});
+  const [showReadingResults, setShowReadingResults] = useState(false);
+  
   // Listening states
   const [showTranscript, setShowTranscript] = useState(false);
   const [listeningAnswers, setListeningAnswers] = useState({});
