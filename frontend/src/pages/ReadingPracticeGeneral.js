@@ -358,7 +358,7 @@ export default function ReadingPracticeGeneral({ user }) {
                       </Button>
                     </div>
                     <p className="text-xs text-gray-500 mt-2 italic">
-                      💡 Derste "General Training" toggle'ını seçerek profesyonel belge okuma pratiği yapabilirsiniz.
+                      💡 Derste &quot;General Training&quot; toggle&apos;ını seçerek profesyonel belge okuma pratiği yapabilirsiniz.
                     </p>
                   </div>
 
