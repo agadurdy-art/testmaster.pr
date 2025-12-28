@@ -11,7 +11,7 @@ from typing import Optional, List
 router = APIRouter(prefix="/api/courses", tags=["Dual-Track Courses"])
 
 
-# ============ STATIC ROUTES FIRST (to avoid path conflicts with dynamic routes) ============
+# ============ STATIC ROUTES FIRST (to avoid path conflicts) ============
 
 @router.get("/tracks")
 async def get_track_info():
@@ -42,46 +42,6 @@ async def get_track_info():
     }
 
 
-@router.get("/general-summary")
-async def get_general_track_summary():
-    """Get summary of all General Training content across courses."""
-    from services.dual_track_courses import DualTrackCourseManager
-    
-    return {
-
-
-@router.get("/language-booster/{module}")
-async def get_module_language_booster(module: str):
-    """
-    Get Module-Specific Language Booster for General Training.
-    
-    This provides vocabulary and functional phrases specific to a module topic.
-    Example: /api/courses/language-booster/education
-    """
-    from services.dual_track_courses import DualTrackCourseManager
-    
-    module_lower = module.lower()
-    
-    # Check if module has a language booster
-    if module_lower not in DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS:
-        # Return generic content for modules without specific boosters
-        available_modules = list(DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS.keys())
-        return {
-            "success": False,
-            "error": f"No specific language booster for '{module}'",
-            "available_modules": available_modules,
-            "suggestion": "Use a generic language booster or check available modules"
-        }
-    
-    booster = DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS[module_lower]
-    
-    return {
-        "success": True,
-        "module": module_lower,
-        "language_booster": booster
-    }
-
-
 @router.get("/language-boosters")
 async def list_all_language_boosters():
     """List all available Module-Specific Language Boosters."""
@@ -103,41 +63,64 @@ async def list_all_language_boosters():
         "total": len(boosters_summary),
         "boosters": boosters_summary
     }
+
+
+@router.get("/language-booster/{module}")
+async def get_module_language_booster(module: str):
+    """
+    Get Module-Specific Language Booster for General Training.
+    
+    This provides vocabulary and functional phrases specific to a module topic.
+    Example: /api/courses/language-booster/education
+    """
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    module_lower = module.lower()
+    
+    # Check if module has a language booster
+    if module_lower not in DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS:
+        available_modules = list(DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS.keys())
+        return {
+            "success": False,
+            "error": f"No specific language booster for '{module}'",
+            "available_modules": available_modules,
+            "suggestion": "Use a generic language booster or check available modules"
+        }
+    
+    booster = DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS[module_lower]
+    
+    return {
+        "success": True,
+        "module": module_lower,
+        "language_booster": booster
+    }
+
+
+@router.get("/general-summary")
+async def get_general_track_summary():
+    """Get summary of all General Training content across courses."""
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    return {
         "success": True,
         "general_track_overview": {
             "beginner": {
                 "band_target": "4.0-5.0",
                 "lesson_count": len(DualTrackCourseManager.BEGINNER_GENERAL_LESSONS),
-                "topics": [
-                    "Letter Basics & Structure",
-                    "Formal Letter Writing",
-                    "Informal Letters to Friends & Family",
-                    "Semi-formal Letters",
-                    "Reading Everyday Texts"
-                ]
+                "topics": ["Letter Basics", "Formal Letters", "Informal Letters", "Semi-formal Letters"]
             },
             "mastery": {
                 "band_target": "5.5-6.5",
                 "lesson_count": len(DualTrackCourseManager.MASTERY_GENERAL_LESSONS),
-                "topics": [
-                    "Advanced Formal Complaints",
-                    "Neighbour & Community Letters",
-                    "Softening Language & Diplomacy",
-                    "Requests & Apology Letters",
-                    "Workplace Documents"
-                ]
+                "topics": ["Advanced Complaints", "Community Letters", "Workplace Documents"]
             },
             "advanced": {
                 "band_target": "7.0-9.0",
                 "lesson_count": len(DualTrackCourseManager.ADVANCED_GENERAL_LESSONS),
-                "topics": [
-                    "Band 8-9 Letter Techniques",
-                    "Nuanced Tone Control",
-                    "Persuasive & Diplomatic Writing",
-                    "Legal & Civic Texts"
-                ]
+                "topics": ["Band 8-9 Techniques", "Nuanced Tone", "Persuasive Writing"]
             }
         },
+        "module_boosters": list(DualTrackCourseManager.MODULE_LANGUAGE_BOOSTERS.keys()),
         "total_general_lessons": (
             len(DualTrackCourseManager.BEGINNER_GENERAL_LESSONS) +
             len(DualTrackCourseManager.MASTERY_GENERAL_LESSONS) +
@@ -152,11 +135,7 @@ async def get_track_recommendations(
     band_level: str = Query(..., description="Target band level"),
     weaknesses: str = Query(..., description="Comma-separated weaknesses")
 ):
-    """
-    Get lesson recommendations for a specific track.
-    
-    For General Training students practicing letter writing.
-    """
+    """Get lesson recommendations for a specific track."""
     from server import db
     from services.dual_track_courses import get_dual_track_manager
     
@@ -187,20 +166,13 @@ async def get_track_recommendations(
 
 @router.get("/{course_level}")
 async def get_course_with_tracks(course_level: str):
-    """
-    Get course structure with both Academic and General tracks.
-    
-    course_level: beginner, mastery, or advanced
-    """
+    """Get course structure with both Academic and General tracks."""
     from server import db
     from services.dual_track_courses import get_dual_track_manager
     
     valid_levels = ["beginner", "mastery", "advanced"]
     if course_level not in valid_levels:
-        raise HTTPException(
-            status_code=400, 
-            detail=f"Invalid course level. Use: {', '.join(valid_levels)}"
-        )
+        raise HTTPException(status_code=400, detail="Invalid course level")
     
     manager = get_dual_track_manager(db)
     course_data = await manager.get_course_with_tracks(course_level)
@@ -212,16 +184,8 @@ async def get_course_with_tracks(course_level: str):
 
 
 @router.get("/{course_level}/{track}")
-async def get_track_lessons(
-    course_level: str,
-    track: str
-):
-    """
-    Get lessons for a specific track within a course.
-    
-    course_level: beginner, mastery, or advanced
-    track: academic or general
-    """
+async def get_track_lessons(course_level: str, track: str):
+    """Get lessons for a specific track within a course."""
     from server import db
     from services.dual_track_courses import get_dual_track_manager
     
@@ -231,7 +195,7 @@ async def get_track_lessons(
     if course_level not in valid_levels:
         raise HTTPException(status_code=400, detail="Invalid course level")
     if track not in valid_tracks:
-        raise HTTPException(status_code=400, detail="Invalid track. Use: academic or general")
+        raise HTTPException(status_code=400, detail="Invalid track")
     
     manager = get_dual_track_manager(db)
     lessons = await manager.get_lessons_by_track(course_level, track)
@@ -246,11 +210,7 @@ async def get_track_lessons(
 
 
 @router.get("/{course_level}/{track}/lesson/{lesson_id}")
-async def get_track_lesson_detail(
-    course_level: str,
-    track: str,
-    lesson_id: str
-):
+async def get_track_lesson_detail(course_level: str, track: str, lesson_id: str):
     """Get detailed lesson content."""
     from server import db
     from services.dual_track_courses import get_dual_track_manager
