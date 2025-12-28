@@ -317,15 +317,15 @@ export default function GeneralTask2Practice() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Kendi deneyimlerinizden örnekler verin</span>
+                    <span>Give examples from your own experience</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Sonuç paragrafında görüşünüzü netleştirin</span>
+                    <span>Clarify your opinion in the conclusion paragraph</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                    <span>Bağlaçları çeşitli kullanın (however, moreover, therefore)</span>
+                    <span>Use varied linking words (however, moreover, therefore)</span>
                   </li>
                 </ul>
               </Card>
@@ -343,7 +343,7 @@ export default function GeneralTask2Practice() {
                       {selectedPrompt.type.replace('_', ' ').toUpperCase()}
                     </Badge>
                     <Badge className="bg-gray-100 text-gray-600">
-                      40 dakika • 250+ kelime
+                      40 minutes • 250+ words
                     </Badge>
                   </div>
                   
@@ -355,7 +355,7 @@ export default function GeneralTask2Practice() {
                   
                   {selectedPrompt.key_points && (
                     <div className="mt-4 pt-4 border-t">
-                      <p className="text-xs font-semibold text-gray-500 mb-2">ÖNEMLİ NOKTALAR:</p>
+                      <p className="text-xs font-semibold text-gray-500 mb-2">KEY POINTS:</p>
                       <ul className="space-y-1">
                         {selectedPrompt.key_points.map((point, idx) => (
                           <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
@@ -372,13 +372,13 @@ export default function GeneralTask2Practice() {
                 <Card className="p-5">
                   <div className="flex items-center justify-between mb-3">
                     <h3 className="font-bold text-gray-900 flex items-center gap-2">
-                      <Edit3 className="w-4 h-4 text-purple-600" /> Yanıtınız
+                      <Edit3 className="w-4 h-4 text-purple-600" /> Your Response
                     </h3>
                     <div className={`text-sm font-medium ${
                       wordCount >= 250 ? 'text-green-600' : 
                       wordCount >= 200 ? 'text-amber-600' : 'text-gray-500'
                     }`}>
-                      {wordCount} kelime {wordCount < 250 && `(${250 - wordCount} daha gerekli)`}
+                      {wordCount} words {wordCount < 250 && `(${250 - wordCount} more needed)`}
                     </div>
                   </div>
                   
@@ -386,7 +386,7 @@ export default function GeneralTask2Practice() {
                     value={userResponse}
                     onChange={(e) => setUserResponse(e.target.value)}
                     className="w-full h-64 p-4 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 resize-none text-sm"
-                    placeholder="Essay'inizi buraya yazın..."
+                    placeholder="Write your essay here..."
                   />
                   
                   <div className="flex gap-3 mt-4">
@@ -398,11 +398,11 @@ export default function GeneralTask2Practice() {
                       {evaluating ? (
                         <>
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                          Değerlendiriliyor...
+                          Evaluating...
                         </>
                       ) : (
                         <>
-                          <Send className="w-4 h-4 mr-2" /> Değerlendir
+                          <Send className="w-4 h-4 mr-2" /> Evaluate
                         </>
                       )}
                     </Button>
