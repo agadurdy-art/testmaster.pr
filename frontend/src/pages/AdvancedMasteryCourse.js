@@ -1025,47 +1025,47 @@ export default function AdvancedMasteryCourse({ user }) {
         </div>
       )}
 
-      {/* General Training Reading Content - STRATEGIC + MODULE-SPECIFIC for Advanced */}
+      {/* General Training Reading Content - NEW API from /content/reading/general/ */}
       {readingTrack === 'general' && (
         <div className="space-y-6">
-          {strategicReading ? (
+          {generalReading ? (
             <>
-              {/* Strategic Reading Header */}
-              <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl p-5 border border-indigo-200">
+              {/* General Training Reading Header */}
+              <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-5 border border-purple-200">
                 <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  <Badge className="bg-purple-600 text-white">GENERAL TRAINING</Badge>
                   <Badge className="bg-indigo-600 text-white">ADVANCED</Badge>
-                  <Badge className="bg-blue-600 text-white">STRATEGIC</Badge>
-                  <span className="text-xs text-indigo-600 font-semibold">{strategicReading.module_title}</span>
+                  <span className="text-xs text-purple-600 font-semibold">{generalReading.module_title}</span>
                 </div>
                 
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{strategicReading.strategic_focus}</h3>
-                <p className="text-sm text-gray-600 mb-4">{strategicReading.learning_outcome}</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">{generalReading.strategic_focus}</h3>
+                <p className="text-sm text-gray-600 mb-4">{generalReading.learning_outcome}</p>
                 
                 {/* Document Type Info */}
-                {strategicReading.reading_scenario && (
-                  <div className="p-3 bg-white rounded-lg border border-indigo-100">
-                    <p className="text-xs font-bold text-indigo-700 mb-1">📄 DOCUMENT TYPE</p>
-                    <p className="text-sm text-gray-700">{strategicReading.reading_scenario.text_type}</p>
-                    <p className="text-xs text-gray-500 mt-1 italic">{strategicReading.reading_scenario.context}</p>
+                {generalReading.reading_scenario && (
+                  <div className="p-3 bg-white rounded-lg border border-purple-100">
+                    <p className="text-xs font-bold text-purple-700 mb-1">📋 DOCUMENT TYPE</p>
+                    <p className="text-sm text-gray-700">{generalReading.reading_scenario.text_type}</p>
+                    <p className="text-xs text-gray-500 mt-1 italic">{generalReading.reading_scenario.context}</p>
                   </div>
                 )}
               </div>
               
               {/* Reading Scenario & Passage */}
-              {strategicReading.reading_scenario && (
+              {generalReading.reading_scenario && (
                 <>
                   <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-                    <div className="p-4 bg-gradient-to-r from-indigo-600 to-blue-600 text-white rounded-t-xl">
+                    <div className="p-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-t-xl">
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className="bg-white/20 text-white">{strategicReading.band_target}</Badge>
-                        <span className="text-sm font-semibold">{strategicReading.reading_scenario.title}</span>
+                        <Badge className="bg-white/20 text-white">{generalReading.band_target}</Badge>
+                        <span className="text-sm font-semibold">{generalReading.reading_scenario.title}</span>
                       </div>
                     </div>
                     
-                    {/* The Passage */}
+                    {/* The Passage - Professional Document */}
                     <div className="p-6 max-h-[500px] overflow-y-auto">
                       <pre className="whitespace-pre-wrap font-sans text-sm text-gray-700 leading-relaxed">
-                        {strategicReading.reading_scenario.passage}
+                        {generalReading.reading_scenario.passage}
                       </pre>
                     </div>
                   </div>
@@ -1073,22 +1073,28 @@ export default function AdvancedMasteryCourse({ user }) {
                   {/* Comprehension Questions */}
                   <div className="space-y-4">
                     <h4 className="font-bold text-gray-900 flex items-center gap-2">
-                      <HelpCircle className="w-4 h-4 text-indigo-600" /> Comprehension Questions
+                      <HelpCircle className="w-4 h-4 text-purple-600" /> Comprehension Questions
                     </h4>
-                    {strategicReading.reading_scenario.questions?.map((q, idx) => (
+                    {generalReading.reading_scenario.questions?.map((q, idx) => (
                       <div key={idx} className="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                        <p className="font-medium text-gray-900 mb-3">
-                          {idx + 1}. {q.question}
-                          {q.type === 'true_false_ng' && <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded ml-2">T/F/NG</span>}
-                          {q.type === 'multiple_choice' && <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded ml-2">Multiple Choice</span>}
-                          {q.type === 'short_answer' && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded ml-2">Short Answer</span>}
-                        </p>
+                        <div className="flex items-start justify-between mb-3">
+                          <p className="font-medium text-gray-900">
+                            {idx + 1}. {q.question}
+                          </p>
+                          {q.skill_tested && (
+                            <div className="flex flex-wrap gap-1">
+                              {q.skill_tested.map((skill, si) => (
+                                <span key={si} className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">{skill}</span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                         
-                        {q.type === 'multiple_choice' && q.options ? (
+                        {q.options ? (
                           <div className="space-y-2 ml-4">
                             {q.options.map((opt, i) => (
-                              <label key={i} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:text-indigo-600">
-                                <input type="radio" name={`strategic_reading_q_${idx}`} value={opt} className="accent-indigo-600" />
+                              <label key={i} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer hover:text-purple-600">
+                                <input type="radio" name={`general_reading_q_${idx}`} value={opt} className="accent-purple-600" />
                                 {opt}
                               </label>
                             ))}
@@ -1096,8 +1102,8 @@ export default function AdvancedMasteryCourse({ user }) {
                         ) : q.type === 'true_false_ng' ? (
                           <div className="flex gap-4 ml-4">
                             {['True', 'False', 'Not Given'].map(opt => (
-                              <label key={opt} className="flex items-center gap-2 text-sm cursor-pointer hover:text-indigo-600">
-                                <input type="radio" name={`strategic_reading_q_${idx}`} value={opt} className="accent-indigo-600" />
+                              <label key={opt} className="flex items-center gap-2 text-sm cursor-pointer hover:text-purple-600">
+                                <input type="radio" name={`general_reading_q_${idx}`} value={opt} className="accent-purple-600" />
                                 {opt}
                               </label>
                             ))}
@@ -1106,12 +1112,12 @@ export default function AdvancedMasteryCourse({ user }) {
                           <input 
                             type="text" 
                             placeholder="Type your answer..." 
-                            className="w-full p-3 border border-gray-200 rounded-lg text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" 
+                            className="w-full p-3 border border-gray-200 rounded-lg text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500" 
                           />
                         )}
                         
                         <details className="mt-3">
-                          <summary className="text-sm text-indigo-600 cursor-pointer font-medium hover:underline">Show Answer</summary>
+                          <summary className="text-sm text-purple-600 cursor-pointer font-medium hover:underline">Show Answer</summary>
                           <div className="mt-2 p-3 bg-green-50 rounded-lg border border-green-200">
                             <p className="text-green-700 font-semibold text-sm">✓ {q.answer}</p>
                             {q.explanation && <p className="text-gray-600 mt-2 text-sm">{q.explanation}</p>}
@@ -1120,13 +1126,48 @@ export default function AdvancedMasteryCourse({ user }) {
                       </div>
                     ))}
                   </div>
+                  
+                  {/* Vocabulary Focus */}
+                  {generalReading.reading_scenario.vocabulary_focus && (
+                    <div className="p-4 bg-purple-50 rounded-xl border border-purple-200">
+                      <h4 className="font-bold text-purple-800 mb-3 flex items-center gap-2">
+                        <BookOpen className="w-4 h-4" /> Key Vocabulary
+                      </h4>
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {generalReading.reading_scenario.vocabulary_focus.map((v, vi) => (
+                          <div key={vi} className="p-3 bg-white rounded-lg border border-purple-100">
+                            <p className="font-semibold text-purple-700">{v.term}</p>
+                            <p className="text-sm text-gray-600">{v.meaning}</p>
+                            <p className="text-xs text-gray-500 italic mt-1">Context: {v.context}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Reading Tips */}
+                  {generalReading.reading_scenario.reading_tips && (
+                    <div className="p-4 bg-amber-50 rounded-xl border border-amber-200">
+                      <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                        <Lightbulb className="w-4 h-4" /> Reading Tips for This Document Type
+                      </h4>
+                      <ul className="space-y-1">
+                        {generalReading.reading_scenario.reading_tips.map((tip, ti) => (
+                          <li key={ti} className="text-sm text-gray-700 flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                            {tip}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </>
               )}
             </>
           ) : (
             <div className="text-center py-8 bg-gray-50 rounded-xl">
               <Target className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">Loading strategic reading content...</p>
+              <p className="text-gray-500">Loading General Training reading content...</p>
             </div>
           )}
         </div>
