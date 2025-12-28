@@ -1574,7 +1574,7 @@ export default function MasteryCourse({ user }) {
               <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
               <p className="text-gray-500">Module-specific content loading...</p>
             </div>
-          )}}
+          )}
         </>
       )}
       
