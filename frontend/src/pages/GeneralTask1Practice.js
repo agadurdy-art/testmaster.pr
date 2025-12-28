@@ -310,7 +310,7 @@ export default function GeneralTask1Practice() {
 
               {/* Prompt Selection */}
               <Card className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Soru Seçin</h3>
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Select Question</h3>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
                   {prompts.map(prompt => (
                     <div
@@ -500,7 +500,7 @@ export default function GeneralTask1Practice() {
                   <div className="grid grid-cols-2 gap-3">
                     {evaluation.strengths?.length > 0 && (
                       <div className="bg-green-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-green-800 mb-2 text-xs">✅ Güçlü Yönler</h4>
+                        <h4 className="font-semibold text-green-800 mb-2 text-xs">✅ Strengths</h4>
                         <ul className="space-y-1">
                           {evaluation.strengths.slice(0, 3).map((s, idx) => (
                             <li key={idx} className="text-xs text-green-700">• {s}</li>
@@ -510,7 +510,7 @@ export default function GeneralTask1Practice() {
                     )}
                     {evaluation.weaknesses?.length > 0 && (
                       <div className="bg-amber-50 p-3 rounded-lg">
-                        <h4 className="font-semibold text-amber-800 mb-2 text-xs">⚠️ Geliştirilecek</h4>
+                        <h4 className="font-semibold text-amber-800 mb-2 text-xs">⚠️ Areas to Improve</h4>
                         <ul className="space-y-1">
                           {evaluation.weaknesses.slice(0, 3).map((w, idx) => (
                             <li key={idx} className="text-xs text-amber-700">• {w}</li>
@@ -524,7 +524,7 @@ export default function GeneralTask1Practice() {
                   {evaluation.recommended_lessons?.length > 0 && (
                     <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
                       <h4 className="font-semibold text-indigo-800 mb-2 text-xs flex items-center gap-1">
-                        📚 Önerilen Dersler (General Training)
+                        📚 Recommended Lessons (General Training)
                       </h4>
                       <ul className="space-y-2">
                         {evaluation.recommended_lessons.map((lesson, idx) => (

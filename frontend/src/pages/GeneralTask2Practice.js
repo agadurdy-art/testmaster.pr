@@ -86,7 +86,7 @@ export default function GeneralTask2Practice() {
       }
     } catch (error) {
       console.error('Error loading prompts:', error);
-      toast.error('Sorular yüklenemedi');
+      toast.error('Failed to load questions');
     } finally {
       setLoading(false);
     }
@@ -265,7 +265,7 @@ export default function GeneralTask2Practice() {
             
             {/* Prompt List */}
             <Card className="p-4">
-              <h3 className="font-bold text-gray-900 mb-3">Soru Seçin</h3>
+              <h3 className="font-bold text-gray-900 mb-3">Select Question</h3>
               <div className="space-y-2 max-h-[300px] overflow-y-auto">
                 {prompts.map(prompt => (
                   <div
@@ -411,7 +411,7 @@ export default function GeneralTask2Practice() {
                       onClick={() => setShowModelAnswer(!showModelAnswer)}
                       disabled={!modelAnswers}
                     >
-                      <Eye className="w-4 h-4 mr-2" /> Model Cevap
+                      <Eye className="w-4 h-4 mr-2" /> Model Answer
                     </Button>
                   </div>
                 </Card>
@@ -458,7 +458,7 @@ export default function GeneralTask2Practice() {
                     <div className="grid grid-cols-2 gap-3">
                       {evaluation.strengths?.length > 0 && (
                         <div className="bg-green-50 p-3 rounded-lg">
-                          <h4 className="font-semibold text-green-800 mb-2 text-xs">✅ Güçlü Yönler</h4>
+                          <h4 className="font-semibold text-green-800 mb-2 text-xs">✅ Strengths</h4>
                           <ul className="space-y-1">
                             {evaluation.strengths.slice(0, 3).map((s, idx) => (
                               <li key={idx} className="text-xs text-green-700">• {s}</li>
@@ -468,7 +468,7 @@ export default function GeneralTask2Practice() {
                       )}
                       {evaluation.weaknesses?.length > 0 && (
                         <div className="bg-amber-50 p-3 rounded-lg">
-                          <h4 className="font-semibold text-amber-800 mb-2 text-xs">⚠️ Geliştirilecek</h4>
+                          <h4 className="font-semibold text-amber-800 mb-2 text-xs">⚠️ Areas to Improve</h4>
                           <ul className="space-y-1">
                             {evaluation.weaknesses.slice(0, 3).map((w, idx) => (
                               <li key={idx} className="text-xs text-amber-700">• {w}</li>
@@ -482,7 +482,7 @@ export default function GeneralTask2Practice() {
                     {evaluation.recommended_lessons?.length > 0 && (
                       <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
                         <h4 className="font-semibold text-indigo-800 mb-2 text-xs flex items-center gap-1">
-                          📚 Önerilen Dersler (General Training)
+                          📚 Recommended Lessons (General Training)
                         </h4>
                         <ul className="space-y-2">
                           {evaluation.recommended_lessons.map((lesson, idx) => (
@@ -510,7 +510,7 @@ export default function GeneralTask2Practice() {
                 {showModelAnswer && modelAnswers && (
                   <Card className="p-5 border-2 border-purple-200 bg-purple-50/30">
                     <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                      <Layers className="w-5 h-5 text-purple-600" /> Model Cevaplar
+                      <Layers className="w-5 h-5 text-purple-600" /> Model Answerlar
                     </h3>
                     
                     <div className="flex gap-2 mb-4">
