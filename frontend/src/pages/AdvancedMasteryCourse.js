@@ -54,6 +54,7 @@ export default function AdvancedMasteryCourse({ user }) {
   const [writingTrack, setWritingTrack] = useState('academic'); // Dual-Track support
   const [generalLessons, setGeneralLessons] = useState([]);
   const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
+  const [languageBooster, setLanguageBooster] = useState(null); // Module-Specific Language Booster
   
   // Quiz state
   const [quizAnswers, setQuizAnswers] = useState({});
