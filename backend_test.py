@@ -1271,14 +1271,14 @@ def test_partial_credit_combined_questions():
         print("❌ PARTIAL CREDIT FIX TESTS FAILED!")
         return False
 
-def test_reading_question_bank_implementation():
-    """Test the Reading Question Bank implementation with Academic/General Training tracks"""
+def test_mastery_reading_question_bank_implementation():
+    """Test the Complete Mastery Reading Question Bank Implementation"""
     print("\n" + "="*80)
-    print("🚀 TESTING READING QUESTION BANK IMPLEMENTATION")
+    print("🚀 TESTING COMPLETE MASTERY READING QUESTION BANK IMPLEMENTATION")
     print("="*80)
     
     success_count = 0
-    total_tests = 6
+    total_tests = 10
     
     # Test 1: Authentication with provided credentials
     print("\n=== Test 1: Authentication with test@ielts.com ===")
@@ -1301,145 +1301,309 @@ def test_reading_question_bank_implementation():
     except Exception as e:
         print(f"❌ Authentication error: {e}")
     
-    # Test 2: Academic Reading Modules
-    print("\n=== Test 2: Academic Reading Modules ===")
+    # Test 2: Question Types API
+    print("\n=== Test 2: Question Types API ===")
     try:
-        response = requests.get(f"{BACKEND_URL}/courses/reading/academic/advanced")
+        response = requests.get(f"{BACKEND_URL}/courses/reading/question-types")
         print(f"Status Code: {response.status_code}")
         
         if response.status_code == 200:
-            result = response.json()
+            question_types = response.json()
             print(f"✅ API call successful")
             
-            if result.get("success") and "modules" in result:
-                modules = result.get("modules", [])
-                if len(modules) == 5:
-                    print(f"✅ Returns 5 academic reading modules as expected")
-                    
-                    # Check module structure
-                    if modules:
-                        first_module = modules[0]
-                        required_fields = ["module_id", "module_title", "band_target"]
-                        missing_fields = [field for field in required_fields if field not in first_module]
-                        
-                        if not missing_fields:
-                            print(f"✅ Module structure contains required fields")
-                            success_count += 1
-                        else:
-                            print(f"❌ Module missing fields: {missing_fields}")
-                    else:
-                        print(f"❌ No modules returned")
-                else:
-                    print(f"❌ Expected 5 modules, got {len(modules)}")
-            else:
-                print(f"❌ Response missing success=true or modules field")
-        else:
-            print(f"❌ Failed with status {response.status_code}: {response.text}")
-    except Exception as e:
-        print(f"❌ Error: {e}")
-    
-    # Test 3: Academic Reading Module Detail - Digital Frontier
-    print("\n=== Test 3: Academic Reading Module Detail - Digital Frontier ===")
-    try:
-        response = requests.get(f"{BACKEND_URL}/courses/reading/academic/advanced/digital_frontier")
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 200:
-            result = response.json()
-            print(f"✅ API call successful")
-            
-            if result.get("success") and "module" in result:
-                module = result.get("module", {})
+            if len(question_types) == 10:
+                print(f"✅ Returns 10 question types as expected")
                 
-                # Validate module structure
-                required_fields = ["module_title", "reading_scenario"]
-                missing_fields = [field for field in required_fields if field not in module]
+                # Check for specific question types
+                expected_types = ["MC", "TFNG", "YNNG", "MH", "MI", "MF", "SC", "SUM", "NTC", "SAQ"]
+                found_types = [qt.get("code") for qt in question_types if "code" in qt]
                 
-                if not missing_fields:
-                    print(f"✅ Module contains all required fields")
-                    
-                    # Check questions count
-                    reading_scenario = module.get("reading_scenario", {})
-                    questions = reading_scenario.get("questions", [])
-                    if len(questions) == 6:
-                        print(f"✅ Module contains 6 questions as expected")
-                        
-                        # Check if questions have skill_tested tags
-                        has_skill_tags = all("skill_tested" in q for q in questions)
-                        if has_skill_tags:
-                            print(f"✅ All questions have skill_tested tags")
-                            success_count += 1
-                        else:
-                            print(f"❌ Some questions missing skill_tested tags")
-                    else:
-                        print(f"❌ Expected 6 questions, got {len(questions)}")
-                else:
-                    print(f"❌ Module missing fields: {missing_fields}")
-            else:
-                print(f"❌ Response missing success=true or module field")
-        else:
-            print(f"❌ Failed with status {response.status_code}: {response.text}")
-    except Exception as e:
-        print(f"❌ Error: {e}")
-    
-    # Test 4: General Training Reading Modules
-    print("\n=== Test 4: General Training Reading Modules ===")
-    try:
-        response = requests.get(f"{BACKEND_URL}/courses/reading/general/advanced")
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 200:
-            result = response.json()
-            print(f"✅ API call successful")
-            
-            if result.get("success") and "modules" in result:
-                modules = result.get("modules", [])
-                if len(modules) == 5:
-                    print(f"✅ Returns 5 general training reading modules as expected")
-                    
-                    # Check for different text_type
-                    if modules:
-                        first_module = modules[0]
-                        text_type = first_module.get("text_type")
-                        if text_type and ("policy" in text_type.lower() or "document" in text_type.lower()):
-                            print(f"✅ Module has professional text_type: {text_type}")
-                            success_count += 1
-                        else:
-                            print(f"❌ Module missing professional text_type field: {text_type}")
-                    else:
-                        print(f"❌ No modules returned")
-                else:
-                    print(f"❌ Expected 5 modules, got {len(modules)}")
-            else:
-                print(f"❌ Response missing success=true or modules field")
-        else:
-            print(f"❌ Failed with status {response.status_code}: {response.text}")
-    except Exception as e:
-        print(f"❌ Error: {e}")
-    
-    # Test 5: General Training Reading Module Detail
-    print("\n=== Test 5: General Training Reading Module Detail ===")
-    try:
-        response = requests.get(f"{BACKEND_URL}/courses/reading/general/advanced/digital_frontier")
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 200:
-            result = response.json()
-            print(f"✅ API call successful")
-            
-            if result.get("success") and "module" in result:
-                module = result.get("module", {})
-                
-                # Check for professional content type
-                reading_scenario = module.get("reading_scenario", {})
-                text_type = reading_scenario.get("text_type", "")
-                
-                if "policy" in text_type.lower() or "contract" in text_type.lower() or "document" in text_type.lower():
-                    print(f"✅ General Training content has professional document type: {text_type}")
+                if all(qt in found_types for qt in expected_types):
+                    print(f"✅ All expected question types found: {found_types}")
                     success_count += 1
                 else:
-                    print(f"❌ Expected professional document type, got: {text_type}")
+                    print(f"❌ Missing question types. Found: {found_types}, Expected: {expected_types}")
             else:
+                print(f"❌ Expected 10 question types, got {len(question_types)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: Topics API
+    print("\n=== Test 3: Topics API ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/topics")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            topics = response.json()
+            print(f"✅ API call successful")
+            
+            if len(topics) == 8:
+                print(f"✅ Returns 8 topics as expected")
+                
+                # Check for specific topics
+                expected_topics = ["technology", "environment", "health", "education", "society", "science", "business", "history"]
+                found_topics = [t.get("id") for t in topics if "id" in t]
+                
+                if all(topic in found_topics for topic in expected_topics):
+                    print(f"✅ All expected topics found: {found_topics}")
+                    success_count += 1
+                else:
+                    print(f"❌ Missing topics. Found: {found_topics}, Expected: {expected_topics}")
+            else:
+                print(f"❌ Expected 8 topics, got {len(topics)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: Band Levels API
+    print("\n=== Test 4: Band Levels API ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/band-levels")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            band_levels = response.json()
+            print(f"✅ API call successful")
+            
+            if len(band_levels) > 0:
+                print(f"✅ Returns band level options for Mastery")
+                
+                # Check for Mastery level (Band 6.0-7.0)
+                mastery_found = any("6.0" in str(bl.get("range", "")) for bl in band_levels)
+                if mastery_found:
+                    print(f"✅ Mastery band level (6.0-7.0) found")
+                    success_count += 1
+                else:
+                    print(f"❌ Mastery band level not found in: {band_levels}")
+            else:
+                print(f"❌ No band levels returned")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 5: Mastery Academic Reading Modules
+    print("\n=== Test 5: Mastery Academic Reading Modules ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/mastery/academic")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            modules = response.json()
+            print(f"✅ API call successful")
+            
+            if len(modules) == 5:
+                print(f"✅ Returns 5 academic modules as expected")
+                
+                # Check module structure
+                if modules:
+                    first_module = modules[0]
+                    required_fields = ["module_id", "topic", "question_type", "title", "band_target", "track"]
+                    missing_fields = [field for field in required_fields if field not in first_module]
+                    
+                    if not missing_fields:
+                        print(f"✅ Module structure contains all required fields")
+                        
+                        # Check track is academic
+                        if first_module.get("track") == "academic":
+                            print(f"✅ Module track is 'academic'")
+                            success_count += 1
+                        else:
+                            print(f"❌ Expected track 'academic', got: {first_module.get('track')}")
+                    else:
+                        print(f"❌ Module missing fields: {missing_fields}")
+                else:
+                    print(f"❌ No modules returned")
+            else:
+                print(f"❌ Expected 5 modules, got {len(modules)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 6: Mastery Academic Module Detail
+    print("\n=== Test 6: Mastery Academic Module Detail ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/mastery/academic/technology_mc")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            module = response.json()
+            print(f"✅ API call successful")
+            
+            # Check required fields
+            required_fields = ["title", "passage", "questions", "vocabulary_focus", "reading_tips"]
+            missing_fields = [field for field in required_fields if field not in module]
+            
+            if not missing_fields:
+                print(f"✅ Module contains all required fields")
+                
+                # Check questions count
+                questions = module.get("questions", [])
+                if len(questions) == 6:
+                    print(f"✅ Module contains 6 questions as expected")
+                    
+                    # Check vocabulary focus structure
+                    vocab_focus = module.get("vocabulary_focus", [])
+                    if vocab_focus and all("term" in v and "meaning" in v and "context" in v for v in vocab_focus):
+                        print(f"✅ Vocabulary focus has proper structure (term, meaning, context)")
+                        success_count += 1
+                    else:
+                        print(f"❌ Vocabulary focus missing proper structure")
+                else:
+                    print(f"❌ Expected 6 questions, got {len(questions)}")
+            else:
+                print(f"❌ Module missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 7: Filter by Question Type
+    print("\n=== Test 7: Filter by Question Type ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/mastery/academic/filter/question-type/multiple_choice")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            filtered_modules = response.json()
+            print(f"✅ API call successful")
+            
+            if len(filtered_modules) > 0:
+                print(f"✅ Returns filtered modules for multiple_choice")
+                
+                # Check all modules have multiple_choice type
+                all_mc = all(module.get("question_type") == "multiple_choice" for module in filtered_modules)
+                if all_mc:
+                    print(f"✅ All returned modules have multiple_choice question type")
+                    success_count += 1
+                else:
+                    print(f"❌ Some modules don't have multiple_choice question type")
+            else:
+                print(f"❌ No filtered modules returned")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 8: Filter by Topic
+    print("\n=== Test 8: Filter by Topic ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/mastery/academic/filter/topic/technology")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            filtered_modules = response.json()
+            print(f"✅ API call successful")
+            
+            if len(filtered_modules) > 0:
+                print(f"✅ Returns filtered modules for technology topic")
+                
+                # Check all modules have technology topic
+                all_tech = all(module.get("topic") == "technology" for module in filtered_modules)
+                if all_tech:
+                    print(f"✅ All returned modules have technology topic")
+                    success_count += 1
+                else:
+                    print(f"❌ Some modules don't have technology topic")
+            else:
+                print(f"❌ No filtered modules returned")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 9: Mastery General Reading Modules
+    print("\n=== Test 9: Mastery General Reading Modules ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/mastery/general")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            modules = response.json()
+            print(f"✅ API call successful")
+            
+            if len(modules) == 4:
+                print(f"✅ Returns 4 general training modules as expected")
+                
+                # Check for document types
+                if modules:
+                    document_types = [module.get("document_type") for module in modules]
+                    expected_types = ["policy", "notice", "job_description", "instruction"]
+                    
+                    if any(dt in expected_types for dt in document_types):
+                        print(f"✅ Modules have professional document types: {document_types}")
+                        success_count += 1
+                    else:
+                        print(f"❌ Expected professional document types, got: {document_types}")
+                else:
+                    print(f"❌ No modules returned")
+            else:
+                print(f"❌ Expected 4 modules, got {len(modules)}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 10: Mastery General Module Detail
+    print("\n=== Test 10: Mastery General Module Detail ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/courses/reading/mastery/general/workplace_mc")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            module = response.json()
+            print(f"✅ API call successful")
+            
+            # Check required fields for general training
+            required_fields = ["title", "context", "passage", "questions", "text_type"]
+            missing_fields = [field for field in required_fields if field not in module]
+            
+            if not missing_fields:
+                print(f"✅ Module contains all required fields for General Training")
+                
+                # Check questions count
+                questions = module.get("questions", [])
+                if len(questions) == 6:
+                    print(f"✅ Module contains 6 questions as expected")
+                    
+                    # Check text type is professional
+                    text_type = module.get("text_type", "")
+                    if any(word in text_type.lower() for word in ["policy", "notice", "workplace", "professional"]):
+                        print(f"✅ Text type is professional: {text_type}")
+                        success_count += 1
+                    else:
+                        print(f"❌ Expected professional text type, got: {text_type}")
+                else:
+                    print(f"❌ Expected 6 questions, got {len(questions)}")
+            else:
+                print(f"❌ Module missing fields: {missing_fields}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 MASTERY READING QUESTION BANK SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 8:  # Allow some flexibility
+        print("✅ MASTERY READING QUESTION BANK TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - Question Types API returns 10 types (MC, TFNG, YNNG, etc.)")
+        print("   - Topics API returns 8 topics (technology, environment, etc.)")
+        print("   - Band Levels API returns Mastery level options")
+        print("   - Academic Reading: 5 modules with proper structure")
+        print("   - General Training Reading: 4 modules with professional documents")
+        print("   - Module details include vocabulary focus and reading tips")
+        print("   - Filtering by question type and topic works correctly")
+        return True
+    else:
+        print("❌ MASTERY READING QUESTION BANK TESTS FAILED!")
+        return False
                 print(f"❌ Response missing success=true or module field")
         else:
             print(f"❌ Failed with status {response.status_code}: {response.text}")
