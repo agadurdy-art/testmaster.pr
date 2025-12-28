@@ -51,6 +51,9 @@ export default function AdvancedMasteryCourse({ user }) {
   const [writingResponse, setWritingResponse] = useState('');
   const [writingFeedback, setWritingFeedback] = useState(null);
   const [writingLoading, setWritingLoading] = useState(false);
+  const [writingTrack, setWritingTrack] = useState('academic'); // Dual-Track support
+  const [generalLessons, setGeneralLessons] = useState([]);
+  const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
   
   // Quiz state
   const [quizAnswers, setQuizAnswers] = useState({});
