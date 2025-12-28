@@ -56,6 +56,7 @@ export default function AdvancedMasteryCourse({ user }) {
   const [generalLessons, setGeneralLessons] = useState([]);
   const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
   const [languageBooster, setLanguageBooster] = useState(null); // Module-Specific Language Booster
+  const [strategicWriting, setStrategicWriting] = useState(null); // Module-Specific Strategic Writing
   
   // Quiz state
   const [quizAnswers, setQuizAnswers] = useState({});
