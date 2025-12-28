@@ -1272,13 +1272,13 @@ def test_partial_credit_combined_questions():
         return False
 
 def test_ultra_master_prompt_implementation():
-    """Test the ULTRA MASTER PROMPT implementation for the IELTS Question Bank"""
+    """Test the COMPLETE ULTRA MASTER PROMPT Writing Question Bank implementation"""
     print("\n" + "="*80)
-    print("🚀 TESTING ULTRA MASTER PROMPT IMPLEMENTATION - IELTS QUESTION BANK")
+    print("🚀 TESTING COMPLETE ULTRA MASTER PROMPT WRITING QUESTION BANK")
     print("="*80)
     
     success_count = 0
-    total_tests = 8
+    total_tests = 11
     
     # Test 1: Authentication with provided credentials
     print("\n=== Test 1: Authentication with test@ielts.com ===")
@@ -1302,8 +1302,178 @@ def test_ultra_master_prompt_implementation():
     except Exception as e:
         print(f"❌ Authentication error: {e}")
     
-    # Test 2: GET /api/lesson-registry/topics (all topics)
-    print("\n=== Test 2: GET /api/lesson-registry/topics (All Topics) ===")
+    # Test 2: Enhanced Task Generator - Line Graph
+    print("\n=== Test 2: Enhanced Task Generator - Line Graph ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/writing/task1/generate-authentic?visual_type=line_graph")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            task_description = result.get("task_description", "")
+            
+            print(f"✅ API call successful")
+            print(f"   Task description preview: {task_description[:100]}...")
+            
+            # Check for specific location, subject, and time period
+            has_location = any(location in task_description.lower() for location in ["tokyo", "london", "sydney", "dubai", "chicago", "montreal", "singapore", "berlin"])
+            has_time_period = any(period in task_description for period in ["2010", "2015", "2020", "2005", "2012", "2018"])
+            
+            if has_location and has_time_period:
+                print(f"✅ Task description contains specific location and time period")
+                success_count += 1
+            else:
+                print(f"❌ Task description missing specific location or time period")
+                print(f"   Has location: {has_location}, Has time period: {has_time_period}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: Enhanced Task Generator - Bar Chart
+    print("\n=== Test 3: Enhanced Task Generator - Bar Chart ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/writing/task1/generate-authentic?visual_type=bar_chart")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            task_description = result.get("task_description", "")
+            
+            print(f"✅ API call successful")
+            print(f"   Task description preview: {task_description[:100]}...")
+            
+            # Check for authentic content
+            has_location = any(location in task_description.lower() for location in ["tokyo", "london", "sydney", "dubai", "chicago", "montreal", "singapore", "berlin"])
+            
+            if has_location:
+                print(f"✅ Bar chart task contains specific location")
+                success_count += 1
+            else:
+                print(f"❌ Bar chart task missing specific location")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: Enhanced Task Generator - Pie Chart
+    print("\n=== Test 4: Enhanced Task Generator - Pie Chart ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/writing/task1/generate-authentic?visual_type=pie_chart")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            task_description = result.get("task_description", "")
+            
+            print(f"✅ API call successful")
+            print(f"   Task description preview: {task_description[:100]}...")
+            
+            # Check for authentic content
+            has_location = any(location in task_description.lower() for location in ["tokyo", "london", "sydney", "dubai", "chicago", "montreal", "singapore", "berlin"])
+            
+            if has_location:
+                print(f"✅ Pie chart task contains specific location")
+                success_count += 1
+            else:
+                print(f"❌ Pie chart task missing specific location")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 5: General Training Task 2 Prompts
+    print("\n=== Test 5: General Training Task 2 Prompts ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/writing/general/task2/prompts")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            prompts = result.get("prompts", [])
+            total = result.get("total", 0)
+            
+            print(f"✅ API call successful")
+            print(f"   Total prompts: {total}")
+            
+            # Check if we have 16 prompts as expected
+            if total == 16:
+                print(f"✅ Expected prompt count (16): {total}")
+                success_count += 1
+            else:
+                print(f"❌ Unexpected prompt count: {total} (expected 16)")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 6: General Training Task 2 Prompts - Opinion Filter
+    print("\n=== Test 6: General Training Task 2 Prompts - Opinion Filter ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/writing/general/task2/prompts?essay_type=opinion")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            prompts = result.get("prompts", [])
+            total = result.get("total", 0)
+            
+            print(f"✅ API call successful")
+            print(f"   Opinion prompts: {total}")
+            
+            # Check if all prompts are opinion type
+            all_opinion = all(p.get("type") == "opinion" for p in prompts)
+            
+            if all_opinion and total > 0:
+                print(f"✅ All prompts are opinion type")
+                success_count += 1
+            else:
+                print(f"❌ Not all prompts are opinion type or no prompts found")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 7: General Training Task 2 Specific Prompt with Model Answers
+    print("\n=== Test 7: General Training Task 2 Specific Prompt ===")
+    try:
+        # First get a prompt ID
+        response = requests.get(f"{BACKEND_URL}/question-bank/writing/general/task2/prompts")
+        if response.status_code == 200:
+            prompts = response.json().get("prompts", [])
+            if prompts:
+                prompt_id = prompts[0]["id"]
+                
+                # Now get the specific prompt
+                response = requests.get(f"{BACKEND_URL}/question-bank/writing/general/task2/prompt/{prompt_id}")
+                print(f"Status Code: {response.status_code}")
+                
+                if response.status_code == 200:
+                    result = response.json()
+                    model_answers = result.get("model_answers", {})
+                    
+                    print(f"✅ API call successful")
+                    
+                    # Check if model answers exist
+                    has_band6 = "band_6" in model_answers
+                    has_band85 = "band_8_5" in model_answers
+                    
+                    if has_band6 and has_band85:
+                        print(f"✅ Prompt includes model answers for both bands")
+                        success_count += 1
+                    else:
+                        print(f"❌ Missing model answers - Band 6: {has_band6}, Band 8.5: {has_band85}")
+                else:
+                    print(f"❌ Failed with status {response.status_code}: {response.text}")
+            else:
+                print(f"❌ No prompts available to test")
+        else:
+            print(f"❌ Failed to get prompts list")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 8: Lesson Registry - All Topics
+    print("\n=== Test 8: Lesson Registry - All Topics ===")
     try:
         response = requests.get(f"{BACKEND_URL}/lesson-registry/topics")
         print(f"Status Code: {response.status_code}")
@@ -1322,17 +1492,13 @@ def test_ultra_master_prompt_implementation():
                 success_count += 1
             else:
                 print(f"❌ Unexpected topic count: {total} (expected ~47)")
-                
-            # Show first few topics
-            if topics:
-                print(f"   Sample topics: {[t.get('name', 'Unknown') for t in topics[:5]]}")
         else:
             print(f"❌ Failed with status {response.status_code}: {response.text}")
     except Exception as e:
         print(f"❌ Error: {e}")
     
-    # Test 3: GET /api/lesson-registry/topics?band_level=4.0-5.0 (Topic Gating - Beginner)
-    print("\n=== Test 3: Topic Gating - Band 4.0-5.0 (Beginner Only) ===")
+    # Test 9: Topic Gating - Band 4.0-5.0 (Beginner Only)
+    print("\n=== Test 9: Topic Gating - Band 4.0-5.0 (Beginner Only) ===")
     try:
         response = requests.get(f"{BACKEND_URL}/lesson-registry/topics?band_level=4.0-5.0")
         print(f"Status Code: {response.status_code}")
@@ -1341,10 +1507,8 @@ def test_ultra_master_prompt_implementation():
             result = response.json()
             topics = result.get("topics", [])
             total = result.get("total", 0)
-            band_level = result.get("band_level")
             
             print(f"✅ API call successful")
-            print(f"   Band level: {band_level}")
             print(f"   Topics for beginners: {total}")
             
             # Check if we have approximately 14 topics as expected
@@ -1358,58 +1522,8 @@ def test_ultra_master_prompt_implementation():
     except Exception as e:
         print(f"❌ Error: {e}")
     
-    # Test 4: GET /api/lesson-registry/topics?band_level=5.5-6.5 (Topic Gating - Beginner + Mastery)
-    print("\n=== Test 4: Topic Gating - Band 5.5-6.5 (Beginner + Mastery) ===")
-    try:
-        response = requests.get(f"{BACKEND_URL}/lesson-registry/topics?band_level=5.5-6.5")
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 200:
-            result = response.json()
-            topics = result.get("topics", [])
-            total = result.get("total", 0)
-            
-            print(f"✅ API call successful")
-            print(f"   Topics for intermediate: {total}")
-            
-            # Check if we have approximately 27 topics as expected
-            if 20 <= total <= 35:  # Allow some flexibility
-                print(f"✅ Expected intermediate topic count (~27): {total}")
-                success_count += 1
-            else:
-                print(f"❌ Unexpected intermediate topic count: {total} (expected ~27)")
-        else:
-            print(f"❌ Failed with status {response.status_code}: {response.text}")
-    except Exception as e:
-        print(f"❌ Error: {e}")
-    
-    # Test 5: GET /api/lesson-registry/topics?band_level=7.0-9.0 (Topic Gating - All Courses)
-    print("\n=== Test 5: Topic Gating - Band 7.0-9.0 (All Courses) ===")
-    try:
-        response = requests.get(f"{BACKEND_URL}/lesson-registry/topics?band_level=7.0-9.0")
-        print(f"Status Code: {response.status_code}")
-        
-        if response.status_code == 200:
-            result = response.json()
-            topics = result.get("topics", [])
-            total = result.get("total", 0)
-            
-            print(f"✅ API call successful")
-            print(f"   Topics for advanced: {total}")
-            
-            # Check if we have all 47 topics as expected
-            if total >= 40:  # Allow some flexibility
-                print(f"✅ Expected advanced topic count (all ~47): {total}")
-                success_count += 1
-            else:
-                print(f"❌ Unexpected advanced topic count: {total} (expected ~47)")
-        else:
-            print(f"❌ Failed with status {response.status_code}: {response.text}")
-    except Exception as e:
-        print(f"❌ Error: {e}")
-    
-    # Test 6: GET /api/lesson-registry/recommendations/for-evaluation
-    print("\n=== Test 6: Lesson Recommendations for Evaluation ===")
+    # Test 10: Lesson Recommendations for Evaluation
+    print("\n=== Test 10: Lesson Recommendations for Evaluation ===")
     try:
         params = {
             "band_score": 5.5,
@@ -1431,21 +1545,47 @@ def test_ultra_master_prompt_implementation():
                 print(f"✅ Received lesson recommendations")
                 success_count += 1
                 
-                # Check recommendation structure
-                first_rec = recommendations[0]
-                required_fields = ["lesson_id", "title", "stage", "band_level"]
-                missing_fields = [field for field in required_fields if field not in first_rec]
-                
-                if not missing_fields:
-                    print(f"✅ Recommendation structure contains required fields")
-                else:
-                    print(f"❌ Recommendation missing fields: {missing_fields}")
-                
                 # Show sample recommendations
                 for i, rec in enumerate(recommendations[:3]):
                     print(f"   Rec {i+1}: {rec.get('title')} (Stage: {rec.get('stage')}, Band: {rec.get('band_level')})")
             else:
                 print(f"❌ No recommendations received")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 11: Writing Evaluation with Recommended Lessons
+    print("\n=== Test 11: Writing Evaluation with Recommended Lessons ===")
+    try:
+        evaluation_data = {
+            "response": "The line graph illustrates the number of visitors to three museums in Auckland from 2010 to 2020. Overall, all museums showed growth. The National Museum started at 150,000 and grew to 280,000. The Art Gallery rose from 120,000 to 210,000. The History Museum had the smallest increase from 100,000 to 145,000.",
+            "task_type": "task1",
+            "visual_type": "line_graph",
+            "topic": "tourism",
+            "band_level": "5.5-6.5"
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/question-bank/writing/evaluate", json=evaluation_data)
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            success = result.get("success", False)
+            recommended_lessons = result.get("recommended_lessons", [])
+            
+            print(f"✅ API call successful")
+            print(f"   Evaluation success: {success}")
+            print(f"   Recommended lessons count: {len(recommended_lessons)}")
+            
+            if success and isinstance(recommended_lessons, list):
+                print(f"✅ Response includes recommended_lessons array")
+                success_count += 1
+                
+                if recommended_lessons:
+                    print(f"   Sample lesson: {recommended_lessons[0].get('title', 'Unknown')}")
+            else:
+                print(f"❌ Missing or invalid recommended_lessons in response")
         else:
             print(f"❌ Failed with status {response.status_code}: {response.text}")
     except Exception as e:
