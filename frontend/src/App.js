@@ -328,6 +328,18 @@ function AppWithSessionHandler() {
           element={user ? <ReadingPracticeGeneral user={user} /> : <Navigate to="/" />} 
         />
         <Route 
+          path="/question-bank/reading/mastery/academic" 
+          element={user ? <ReadingPracticeMasteryAcademic user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/mastery/general" 
+          element={user ? <ReadingPracticeMasteryGeneral user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/question-bank/reading/practice" 
+          element={user ? <ReadingPracticeByType user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
           path="/question-bank" 
           element={user ? <QuestionBank user={user} /> : <Navigate to="/" />} 
         />
