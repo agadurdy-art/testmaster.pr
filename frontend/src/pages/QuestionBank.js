@@ -310,7 +310,7 @@ export default function QuestionBank() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Target className="w-5 h-5 text-indigo-600" />
-                <h2 className="text-lg font-bold text-gray-900">2. Beceri Seçin ve Başlayın</h2>
+                <h2 className="text-lg font-bold text-gray-900">2. Select Skill and Start</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {skills.map(skill => {
