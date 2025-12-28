@@ -502,6 +502,7 @@ class WritingEvaluationRequest(BaseModel):
     topic: Optional[str] = None
     band_level: str = "5.5-6.5"
     task_description: Optional[str] = None  # The original task prompt
+    track: str = "academic"  # "academic" or "general" for Dual-Track support
 
 @router.post("/writing/evaluate")
 async def evaluate_writing(request: WritingEvaluationRequest):
