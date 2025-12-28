@@ -608,6 +608,55 @@ export default function WritingTask1Practice() {
                         </div>
                       )}
 
+                      {/* ULTRA MASTER PROMPT: Recommended Lessons */}
+                      {recommendedLessons.length > 0 && (
+                        <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
+                          <h4 className="text-sm font-semibold text-purple-700 mb-2 flex items-center gap-2">
+                            📚 Önerilen Dersler
+                            <Badge className="bg-purple-100 text-purple-600 text-xs">Kurs Odaklı</Badge>
+                          </h4>
+                          <p className="text-xs text-purple-600 mb-2">
+                            Zayıf noktalarınızı geliştirmek için bu dersleri çalışın:
+                          </p>
+                          <div className="space-y-2">
+                            {recommendedLessons.map((lesson, idx) => (
+                              <div 
+                                key={idx}
+                                className="p-2 bg-white rounded-lg border border-purple-100 cursor-pointer hover:border-purple-300 transition-colors"
+                                onClick={() => {
+                                  // Navigate to the appropriate course based on stage
+                                  const routes = {
+                                    beginner: '/beginner-english',
+                                    mastery: '/mastery-course',
+                                    advanced: '/advanced-mastery'
+                                  };
+                                  const route = routes[lesson.stage] || '/dashboard';
+                                  navigate(route);
+                                }}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div className="flex-1">
+                                    <p className="text-sm font-medium text-gray-800">{lesson.title}</p>
+                                    <p className="text-xs text-gray-500">{lesson.reason}</p>
+                                  </div>
+                                  <div className="text-right">
+                                    <Badge 
+                                      className={`text-xs ${
+                                        lesson.stage === 'beginner' ? 'bg-green-100 text-green-700' :
+                                        lesson.stage === 'mastery' ? 'bg-blue-100 text-blue-700' :
+                                        'bg-amber-100 text-amber-700'
+                                      }`}
+                                    >
+                                      {lesson.band_level}
+                                    </Badge>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                       {/* Expand to see more */}
                       <Button
                         variant="outline"
