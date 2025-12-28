@@ -849,14 +849,15 @@ Return ONLY this JSON (no other text):
                         skill="writing"
                     )
                     
-                    # Format for frontend
+                    # Format for frontend - TRACK-SPECIFIC (CRITICAL: Never suggest General lessons for Academic track)
                     recommended_lessons = [
                         {
                             "lesson_id": r["lesson_id"],
+                            "lesson_anchor_id": f"ac-{r['stage']}-{r['lesson_id']}",  # Track-specific anchor
                             "title": r["title"],
                             "stage": r["stage"],
                             "band_level": r["band_level"],
-                            "track": "academic",
+                            "track": "academic",  # HARD-ENFORCE: Always "academic" for Academic track
                             "reason": f"Addresses: {', '.join(r['addresses_weaknesses'])}"
                         }
                         for r in recommendations[:3]
