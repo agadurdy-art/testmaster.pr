@@ -1517,57 +1517,30 @@ export default function AdvancedMasteryCourse({ user }) {
         </div>
       )}
 
-      {/* Feedback Display - Shared */}
+      {/* Track-Specific Feedback Display - NEW Evaluation UI */}
       {writingFeedback && (
-        <div className={`mt-6 p-5 rounded-xl ${writingFeedback.band_score >= 7 ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className={`px-4 py-2 rounded-xl font-bold text-lg ${writingFeedback.band_score >= 7 ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-              Band {writingFeedback.band_score}
-            </div>
-            <span className="text-sm text-gray-500">Track: {writingTrack === 'academic' ? 'Academic' : 'General Training'}</span>
-          </div>
-
-          {/* Criteria Scores */}
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            {writingFeedback.task_achievement && (
-              <div className="p-3 bg-white rounded-lg">
-                <p className="text-sm font-medium text-blue-600">Task Achievement: {typeof writingFeedback.task_achievement === 'object' ? writingFeedback.task_achievement.score : writingFeedback.task_achievement}</p>
-                {typeof writingFeedback.task_achievement === 'object' && <p className="text-xs text-gray-600">{writingFeedback.task_achievement.feedback}</p>}
-              </div>
-            )}
-            {(writingFeedback.coherence_cohesion || writingFeedback.coherence) && (
-              <div className="p-3 bg-white rounded-lg">
-                <p className="text-sm font-medium text-purple-600">Coherence: {typeof (writingFeedback.coherence_cohesion || writingFeedback.coherence) === 'object' ? (writingFeedback.coherence_cohesion || writingFeedback.coherence).score : (writingFeedback.coherence_cohesion || writingFeedback.coherence)}</p>
-              </div>
-            )}
-            {writingFeedback.lexical_resource && (
-              <div className="p-3 bg-white rounded-lg">
-                <p className="text-sm font-medium text-green-600">Vocabulary: {writingFeedback.lexical_resource.score}</p>
-              </div>
-            )}
-            {writingFeedback.grammatical_range && (
-              <div className="p-3 bg-white rounded-lg">
-                <p className="text-sm font-medium text-amber-600">Grammar: {writingFeedback.grammatical_range.score}</p>
-              </div>
-            )}
-          </div>
-
-          <p className="text-gray-700 mb-3">{writingFeedback.overall_feedback}</p>
-
-          {writingFeedback.strengths && (
-            <div className="mt-3 p-3 bg-green-100 rounded-lg">
-              <p className="text-sm font-medium text-green-800 mb-1">✅ Strengths:</p>
-              <ul className="text-sm text-gray-700 list-disc list-inside">
-                {writingFeedback.strengths.map((s, i) => <li key={i}>{s}</li>)}
-              </ul>
-            </div>
-          )}
-
-          {writingFeedback.areas_to_improve && (
-            <div className="mt-3 p-3 bg-amber-100 rounded-lg">
-              <p className="text-sm font-medium text-amber-800 mb-1">📈 Areas to Improve:</p>
-              <ul className="text-sm text-gray-700 list-disc list-inside">
-                {writingFeedback.areas_to_improve.map((s, i) => <li key={i}>{s}</li>)}
+        <div className="mt-6">
+          <WritingEvaluationResult 
+            evaluation={writingFeedback}
+            expectedTrack={writingTrack}
+            onLessonClick={(lesson) => {
+              if (lesson.path) {
+                navigate(lesson.path);
+              }
+            }}
+          />
+          
+          {/* Improvement Suggestions */}
+          {writingFeedback.improvement_suggestions && writingFeedback.improvement_suggestions.length > 0 && (
+            <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <p className="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">Improvement Tips</p>
+              <ul className="space-y-2">
+                {writingFeedback.improvement_suggestions.map((tip, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                    <Lightbulb className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           )}
