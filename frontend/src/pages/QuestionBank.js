@@ -600,11 +600,11 @@ export default function QuestionBank() {
                   </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-gray-900">Task 1 - Letter Writing</h3>
-                    <p className="text-sm text-gray-500">Formal, Semi-formal, Informal mektup yazma</p>
+                    <p className="text-sm text-gray-500">Formal, Semi-formal, Informal letter writing</p>
                     <div className="flex gap-2 mt-2 flex-wrap">
-                      <Badge className="bg-purple-100 text-purple-700">150+ kelime</Badge>
-                      <Badge className="bg-gray-100 text-gray-600">20 dakika</Badge>
-                      <Badge className="bg-amber-100 text-amber-700">32 senaryo</Badge>
+                      <Badge className="bg-purple-100 text-purple-700">150+ words</Badge>
+                      <Badge className="bg-gray-100 text-gray-600">20 minutes</Badge>
+                      <Badge className="bg-amber-100 text-amber-700">32 scenarios</Badge>
                     </div>
                   </div>
                 </div>
@@ -626,9 +626,9 @@ export default function QuestionBank() {
                     <h3 className="font-bold text-gray-900">Task 2 - Essay (General)</h3>
                     <p className="text-sm text-gray-500">Opinion, Discussion, Problem-Solution essays</p>
                     <div className="flex gap-2 mt-2 flex-wrap">
-                      <Badge className="bg-pink-100 text-pink-700">250+ kelime</Badge>
-                      <Badge className="bg-gray-100 text-gray-600">40 dakika</Badge>
-                      <Badge className="bg-amber-100 text-amber-700">16 senaryo</Badge>
+                      <Badge className="bg-pink-100 text-pink-700">250+ words</Badge>
+                      <Badge className="bg-gray-100 text-gray-600">40 minutes</Badge>
+                      <Badge className="bg-amber-100 text-amber-700">16 scenarios</Badge>
                     </div>
                   </div>
                 </div>
