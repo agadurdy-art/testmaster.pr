@@ -311,6 +311,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load question bank routes: {e}")
 
+# Import lesson registry routes (ULTRA MASTER PROMPT)
+try:
+    from routes.lesson_registry import router as lesson_registry_router
+    app.include_router(lesson_registry_router)
+    print("✅ Lesson Registry routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load lesson registry routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
