@@ -982,7 +982,7 @@ export default function MasteryCourse({ user }) {
     <div className="space-y-4">
       {/* Track Toggle - Academic vs General Training */}
       <div className="p-4 bg-gray-50 rounded-xl">
-        <p className="text-sm font-medium text-gray-600 mb-3">IELTS Track Seçin:</p>
+        <p className="text-sm font-medium text-gray-600 mb-3">Select IELTS Track:</p>
         <div className="flex gap-2">
           <Button
             variant={readingTrack === 'academic' ? 'default' : 'outline'}
@@ -1390,7 +1390,7 @@ export default function MasteryCourse({ user }) {
       
       {/* Track Toggle - Academic vs General Training */}
       <div className="mb-6 p-4 bg-gray-50 rounded-xl">
-        <p className="text-sm font-medium text-gray-600 mb-3">IELTS Track Seçin:</p>
+        <p className="text-sm font-medium text-gray-600 mb-3">Select IELTS Track:</p>
         <div className="flex gap-2">
           <Button
             variant={writingTrack === 'academic' ? 'default' : 'outline'}
