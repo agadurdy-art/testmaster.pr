@@ -585,6 +585,157 @@ Write more naturally, as a native academic writer would. Focus on the specific d
                 "error": str(e),
                 "fallback_used": True
             }
+    
+    # ============ VISUAL TYPE SPECIFIC MODEL GENERATORS ============
+    
+    @classmethod
+    def _generate_process_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate model answer for process diagrams."""
+        title = task_data.get("title", "The process diagram")
+        stages = task_data.get("stages", [])
+        
+        intro = f"The diagram illustrates the process of {title.lower().replace('the process of ', '').replace('process:', '')}. There are {len(stages)} main stages involved in this procedure."
+        
+        body_sentences = []
+        sequence_words = ["Initially", "Following this", "Subsequently", "After that", "Next", "Then", "Finally"]
+        
+        for idx, stage in enumerate(stages[:len(sequence_words)]):
+            stage_name = stage.get("name", stage.get("description", f"Stage {idx+1}"))
+            seq_word = sequence_words[min(idx, len(sequence_words)-1)]
+            body_sentences.append(f"{seq_word}, {stage_name.lower()}.")
+        
+        full_text = f"{intro}\n\n{' '.join(body_sentences)}"
+        
+        return {
+            "full_text": full_text,
+            "structure": {"introduction": intro, "body": ' '.join(body_sentences)},
+            "estimated_band": "8.0",
+            "word_count": len(full_text.split())
+        }
+    
+    @classmethod
+    def _generate_map_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate model answer for map comparisons."""
+        title = task_data.get("title", "The maps")
+        before = task_data.get("features_before", [])
+        after = task_data.get("features_after", [])
+        time_before = task_data.get("time_before", "the past")
+        time_after = task_data.get("time_after", "the present")
+        
+        intro = f"The two maps compare the changes that have taken place in the area between {time_before} and {time_after}. Overall, the area has undergone significant development and transformation."
+        
+        body1 = f"In {time_before}, the area contained {', '.join(before[:3])}."
+        body2 = f"By {time_after}, substantial changes had occurred. The area now features {', '.join(after[:3])}."
+        
+        conclusion = "These changes indicate a shift from a more rural/traditional setting to a more developed/modern environment."
+        
+        full_text = f"{intro}\n\n{body1} {body2}\n\n{conclusion}"
+        
+        return {
+            "full_text": full_text,
+            "structure": {"introduction": intro, "body": f"{body1} {body2}", "conclusion": conclusion},
+            "estimated_band": "8.0",
+            "word_count": len(full_text.split())
+        }
+    
+    @classmethod
+    def _generate_pie_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate model answer for pie charts."""
+        title = task_data.get("title", "The pie chart")
+        segments = task_data.get("segments", [])
+        datasets = task_data.get("datasets", [])
+        
+        values = datasets[0].get("values", []) if datasets else []
+        
+        intro = f"The pie chart provides information about the distribution of {title.lower().replace('the pie chart shows ', '')}."
+        
+        if segments and values:
+            # Sort by value to find largest and smallest
+            combined = list(zip(segments, values))
+            combined.sort(key=lambda x: x[1], reverse=True)
+            
+            overview = f"Overall, {combined[0][0]} accounts for the largest proportion at {combined[0][1]}%, while {combined[-1][0]} represents the smallest share."
+            
+            body_sentences = []
+            for seg, val in combined[:4]:
+                body_sentences.append(f"{seg} comprises {val}% of the total.")
+        else:
+            overview = "The chart reveals notable differences between the categories."
+            body_sentences = ["The segments show varying proportions."]
+        
+        full_text = f"{intro} {overview}\n\n{' '.join(body_sentences)}"
+        
+        return {
+            "full_text": full_text,
+            "structure": {"introduction": f"{intro} {overview}", "body": ' '.join(body_sentences)},
+            "estimated_band": "8.0",
+            "word_count": len(full_text.split())
+        }
+    
+    @classmethod
+    def _generate_table_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate model answer for tables."""
+        title = task_data.get("title", "The table")
+        columns = task_data.get("columns", [])
+        rows = task_data.get("rows", [])
+        
+        intro = f"The table presents data regarding {title.lower().replace('table showing ', '')}."
+        
+        overview = "Overall, there are notable variations across the different categories presented."
+        
+        body_sentences = []
+        if rows:
+            body_sentences.append(f"Looking at the data, {rows[0][0] if rows[0] else 'the first category'} shows significant figures.")
+            if len(rows) > 1:
+                body_sentences.append(f"In comparison, {rows[-1][0] if rows[-1] else 'the last category'} presents different values.")
+        
+        full_text = f"{intro} {overview}\n\n{' '.join(body_sentences)}"
+        
+        return {
+            "full_text": full_text,
+            "structure": {"introduction": f"{intro} {overview}", "body": ' '.join(body_sentences)},
+            "estimated_band": "7.5",
+            "word_count": len(full_text.split())
+        }
+    
+    @classmethod
+    def _generate_bar_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate model answer for bar charts."""
+        title = task_data.get("title", "The bar chart")
+        categories = task_data.get("categories", [])
+        datasets = task_data.get("datasets", [])
+        y_label = task_data.get("y_label", "values")
+        
+        intro = f"The bar chart illustrates {title.lower().replace('the bar chart shows ', '')}."
+        
+        # Find highest and lowest
+        if datasets and datasets[0].get("values"):
+            values = datasets[0]["values"]
+            if categories and len(categories) == len(values):
+                max_idx = values.index(max(values))
+                min_idx = values.index(min(values))
+                overview = f"Overall, {categories[max_idx]} recorded the highest {y_label.lower()} at {max(values)}, while {categories[min_idx]} had the lowest at {min(values)}."
+            else:
+                overview = f"Overall, there is considerable variation in {y_label.lower()} across the categories."
+        else:
+            overview = "The chart reveals significant differences between the categories."
+        
+        body_sentences = []
+        if datasets:
+            for ds in datasets[:2]:
+                label = ds.get("label", "Category")
+                values = ds.get("values", [])
+                if values:
+                    body_sentences.append(f"The {label} category shows values ranging from {min(values)} to {max(values)}.")
+        
+        full_text = f"{intro} {overview}\n\n{' '.join(body_sentences)}"
+        
+        return {
+            "full_text": full_text,
+            "structure": {"introduction": f"{intro} {overview}", "body": ' '.join(body_sentences)},
+            "estimated_band": "8.0",
+            "word_count": len(full_text.split())
+        }
 
 
 # Create singleton instance
