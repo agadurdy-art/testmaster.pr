@@ -123,6 +123,27 @@ export default function BeginnerCourse({ user }) {
     }
   };
 
+  // Fetch General Training lessons for Writing
+  const fetchGeneralLessons = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/courses/beginner/general`);
+      if (!response.ok) return;
+      const data = await response.json();
+      if (data.success && data.lessons) {
+        // Filter writing-related lessons
+        const writingLessons = data.lessons.filter(l => 
+          l.writing || l.topic?.toLowerCase().includes('letter') || l.topic?.toLowerCase().includes('formal')
+        );
+        setGeneralLessons(writingLessons);
+        if (writingLessons.length > 0) {
+          setSelectedGeneralLesson(writingLessons[0]);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching general lessons:', error);
+    }
+  };
+
   const selectLesson = (lesson) => {
     setSelectedLesson(lesson);
     setView('lesson-detail');
