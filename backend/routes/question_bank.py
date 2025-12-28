@@ -760,11 +760,76 @@ Return ONLY this JSON (no other text):
             if key not in evaluation:
                 evaluation[key] = default_value
         
+        # ============ LESSON RECOMMENDATIONS (ULTRA MASTER PROMPT) ============
+        # Fetch recommended lessons based on weaknesses
+        recommended_lessons = []
+        try:
+            from services.lesson_registry import LessonRegistry
+            from server import db as main_db
+            
+            registry = LessonRegistry(main_db)
+            
+            # Extract weaknesses from evaluation
+            weaknesses = evaluation.get("weaknesses", [])
+            weakness_keywords = []
+            
+            # Map feedback to weakness categories
+            for criteria in ["task_achievement", "coherence_cohesion", "lexical_resource", "grammatical_range"]:
+                if criteria in evaluation:
+                    score = evaluation[criteria].get("score", 0)
+                    if isinstance(score, (int, float)) and score < 6:
+                        if "task" in criteria:
+                            weakness_keywords.append("task_achievement")
+                        elif "coherence" in criteria:
+                            weakness_keywords.append("coherence")
+                        elif "lexical" in criteria:
+                            weakness_keywords.append("vocabulary")
+                        elif "grammar" in criteria:
+                            weakness_keywords.append("grammar")
+            
+            # Add specific weaknesses from the list
+            for weakness in weaknesses:
+                weakness_lower = weakness.lower()
+                if "vocabulary" in weakness_lower or "lexical" in weakness_lower:
+                    weakness_keywords.append("vocabulary")
+                elif "grammar" in weakness_lower:
+                    weakness_keywords.append("grammar")
+                elif "coherence" in weakness_lower or "cohesion" in weakness_lower:
+                    weakness_keywords.append("coherence")
+                elif "task" in weakness_lower:
+                    weakness_keywords.append("task_achievement")
+            
+            # Remove duplicates
+            weakness_keywords = list(set(weakness_keywords))
+            
+            if weakness_keywords:
+                overall_band = evaluation.get("overall_band", 5.5)
+                recommendations = await registry.get_recommended_lessons(
+                    weaknesses=weakness_keywords,
+                    current_band=float(overall_band),
+                    skill="writing"
+                )
+                
+                # Format for frontend
+                recommended_lessons = [
+                    {
+                        "lesson_id": r["lesson_id"],
+                        "title": r["title"],
+                        "stage": r["stage"],
+                        "band_level": r["band_level"],
+                        "reason": f"Addresses: {', '.join(r['addresses_weaknesses'])}"
+                    }
+                    for r in recommendations[:3]
+                ]
+        except Exception as rec_error:
+            print(f"Warning: Could not fetch lesson recommendations: {rec_error}")
+        
         return {
             "success": True,
             "word_count": word_count,
             "task_type": request.task_type,
-            "evaluation": evaluation
+            "evaluation": evaluation,
+            "recommended_lessons": recommended_lessons
         }
         
     except json.JSONDecodeError as e:
