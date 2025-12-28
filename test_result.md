@@ -677,7 +677,7 @@ The ULTRA MASTER PROMPT frontend implementation is working excellently with all 
 **Testing Agent:** Backend Testing Agent  
 **Test Date:** December 28, 2025  
 **Test Credentials:** test@ielts.com / admin123  
-**Backend URL:** https://dual-track-ielts.preview.emergentagent.com/api
+**Backend URL:** https://dual-track-ielts-1.preview.emergentagent.com/api
 
 #### Backend API Test Results Summary: 9/11 Tests PASSED ✅
 
@@ -1212,7 +1212,7 @@ The NEW Module-Specific Language Booster system has been successfully implemente
 **Testing Agent:** Frontend Testing Agent  
 **Test Date:** December 28, 2025  
 **Test Credentials:** test@ielts.com / admin123  
-**Frontend URL:** https://dual-track-ielts.preview.emergentagent.com
+**Frontend URL:** https://dual-track-ielts-1.preview.emergentagent.com
 
 #### Test Results Summary: ALL CRITICAL REQUIREMENTS MET ✅
 
@@ -1354,7 +1354,7 @@ The Module-Specific Language Booster system has been successfully verified with:
 **Testing Agent:** Frontend Testing Agent  
 **Test Date:** December 28, 2025  
 **Test Credentials:** test@ielts.com / admin123  
-**Frontend URL:** https://dual-track-ielts.preview.emergentagent.com
+**Frontend URL:** https://dual-track-ielts-1.preview.emergentagent.com
 
 #### Test Results Summary: BACKEND VERIFIED ✅ | FRONTEND BLOCKED ❌
 
