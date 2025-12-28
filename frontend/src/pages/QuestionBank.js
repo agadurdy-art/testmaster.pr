@@ -30,31 +30,54 @@ export default function QuestionBank() {
     loadData();
   }, []);
 
+  // Reload topics when band changes (Topic Gating)
+  useEffect(() => {
+    loadTopicsForBand(selectedBand);
+  }, [selectedBand]);
+
   const loadData = async () => {
     try {
-      const [skillsRes, topicsRes, bandsRes, statsRes] = await Promise.all([
+      const [skillsRes, bandsRes, statsRes] = await Promise.all([
         fetch(`${API_URL}/api/question-bank/skills`),
-        fetch(`${API_URL}/api/question-bank/topics`),
         fetch(`${API_URL}/api/question-bank/band-levels`),
         fetch(`${API_URL}/api/question-bank/stats`)
       ]);
 
-      const [skillsData, topicsData, bandsData, statsData] = await Promise.all([
+      const [skillsData, bandsData, statsData] = await Promise.all([
         skillsRes.json(),
-        topicsRes.json(),
         bandsRes.json(),
         statsRes.json()
       ]);
 
       setSkills(skillsData.skills || []);
-      setTopics(topicsData.topics || []);
       setBandLevels(bandsData.band_levels || []);
       setStats(statsData);
+      
+      // Load all topics initially (from Lesson Registry)
+      await loadTopicsForBand(null);
     } catch (error) {
       console.error('Error loading data:', error);
       toast.error('Failed to load question bank data');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Load topics from Lesson Registry with band filtering
+  const loadTopicsForBand = async (bandLevel) => {
+    try {
+      const url = bandLevel 
+        ? `${API_URL}/api/lesson-registry/topics?band_level=${bandLevel}`
+        : `${API_URL}/api/lesson-registry/topics`;
+      
+      const res = await fetch(url);
+      const data = await res.json();
+      
+      if (data.success) {
+        setTopics(data.topics || []);
+      }
+    } catch (error) {
+      console.error('Error loading topics:', error);
     }
   };
 
