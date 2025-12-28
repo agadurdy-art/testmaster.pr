@@ -594,7 +594,7 @@ export default function GeneralTask1Practice() {
                       {/* Characteristics */}
                       {modelAnswers[selectedBand].characteristics && (
                         <div className="p-3 bg-gray-50 rounded-lg">
-                          <h4 className="font-semibold text-gray-800 mb-2 text-xs">📋 Bu Band'ın Özellikleri</h4>
+                          <h4 className="font-semibold text-gray-800 mb-2 text-xs">📋 Band Characteristics</h4>
                           <ul className="space-y-1">
                             {modelAnswers[selectedBand].characteristics.map((char, idx) => (
                               <li key={idx} className="text-xs text-gray-600 flex items-start gap-1">
