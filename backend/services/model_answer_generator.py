@@ -233,9 +233,26 @@ class ModelAnswerGenerator:
         }
     
     @classmethod
-    def _generate_examiner_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate Layer A: Examiner-Style Model Answer."""
+    def _generate_examiner_model(cls, task_data: Dict[str, Any], visual_type: str = "line_graph") -> Dict[str, Any]:
+        """Generate Layer A: Examiner-Style Model Answer for all visual types."""
         
+        if visual_type == "process":
+            return cls._generate_process_model(task_data)
+        elif visual_type == "map":
+            return cls._generate_map_model(task_data)
+        elif visual_type == "pie_chart":
+            return cls._generate_pie_model(task_data)
+        elif visual_type == "table":
+            return cls._generate_table_model(task_data)
+        elif visual_type == "bar_chart":
+            return cls._generate_bar_model(task_data)
+        else:
+            # Default: Line graph
+            return cls._generate_line_graph_model(task_data)
+    
+    @classmethod
+    def _generate_line_graph_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate model answer for line graphs."""
         datasets = task_data.get("datasets", [])
         years = task_data.get("x_values", [])
         title = task_data.get("title", "")
