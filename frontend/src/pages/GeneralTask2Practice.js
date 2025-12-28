@@ -117,13 +117,13 @@ export default function GeneralTask2Practice() {
 
   const handleEvaluate = async () => {
     if (wordCount < 200) {
-      toast.error('Minimum 250 kelime gerekli. Şu an: ' + wordCount);
+      toast.error('Minimum 250 words required. Current: ' + wordCount);
       return;
     }
     
     setEvaluating(true);
     setIsTimerRunning(false);
-    toast.info('AI değerlendirmesi yapılıyor...');
+    toast.info('AI evaluation in progress...');
     
     try {
       const response = await fetch(`${API_URL}/api/question-bank/writing/evaluate`, {
@@ -154,13 +154,13 @@ export default function GeneralTask2Practice() {
           examiner_comment: data.evaluation.examiner_comment || '',
           recommended_lessons: data.recommended_lessons || []  // Dual-Track lesson recommendations
         });
-        toast.success('Değerlendirme tamamlandı!');
+        toast.success('Evaluation complete!');
       } else {
-        toast.error(data.error || 'Değerlendirme başarısız');
+        toast.error(data.error || 'Evaluation failed');
       }
     } catch (error) {
       console.error('Evaluation error:', error);
-      toast.error('Değerlendirme sırasında hata oluştu');
+      toast.error('Error during evaluation');
     } finally {
       setEvaluating(false);
     }
