@@ -165,6 +165,8 @@ export default function MasteryCourse({ user }) {
   // Fetch Module-Specific Language Booster based on module topic
   const fetchModuleLanguageBooster = async (moduleTopic) => {
     try {
+      console.log('Fetching language booster for topic:', moduleTopic);
+      
       // Map module topics to booster modules
       const topicToBooster = {
         'education': 'education',
@@ -181,7 +183,7 @@ export default function MasteryCourse({ user }) {
         'culture': 'travel', // fallback
       };
       
-      const normalizedTopic = moduleTopic.toLowerCase();
+      const normalizedTopic = moduleTopic?.toLowerCase() || '';
       let boosterModule = null;
       
       // Find matching booster
@@ -195,12 +197,21 @@ export default function MasteryCourse({ user }) {
       if (!boosterModule) {
         // Default to education if no match
         boosterModule = 'education';
+        console.log('No match found, using default:', boosterModule);
       }
       
+      console.log('Fetching booster module:', boosterModule);
       const response = await fetch(`${API_URL}/api/courses/language-booster/${boosterModule}`);
-      if (!response.ok) return;
+      console.log('Response status:', response.status);
+      
+      if (!response.ok) {
+        console.error('Failed to fetch language booster');
+        return;
+      }
       
       const data = await response.json();
+      console.log('Language booster data:', data.success, data.language_booster?.module);
+      
       if (data.success) {
         setLanguageBooster(data.language_booster);
         console.log(`Loaded ${boosterModule} language booster for ${moduleTopic}`);
