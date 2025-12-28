@@ -872,7 +872,7 @@ Return ONLY this JSON (no other text):
             "recommended_lessons": recommended_lessons
         }
         
-    except json.JSONDecodeError as e:
+    except json.JSONDecodeError:
         # Return a fallback evaluation instead of error
         return {
             "success": True,

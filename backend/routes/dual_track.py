@@ -107,7 +107,7 @@ async def get_track_recommendations(
     
     valid_tracks = ["academic", "general"]
     if track not in valid_tracks:
-        raise HTTPException(status_code=400, detail=f"Invalid track")
+        raise HTTPException(status_code=400, detail="Invalid track")
     
     weakness_list = [w.strip() for w in weaknesses.split(",") if w.strip()]
     
@@ -174,9 +174,9 @@ async def get_track_lessons(
     valid_tracks = ["academic", "general"]
     
     if course_level not in valid_levels:
-        raise HTTPException(status_code=400, detail=f"Invalid course level")
+        raise HTTPException(status_code=400, detail="Invalid course level")
     if track not in valid_tracks:
-        raise HTTPException(status_code=400, detail=f"Invalid track. Use: academic or general")
+        raise HTTPException(status_code=400, detail="Invalid track. Use: academic or general")
     
     manager = get_dual_track_manager(db)
     lessons = await manager.get_lessons_by_track(course_level, track)
