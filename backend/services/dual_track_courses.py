@@ -855,6 +855,416 @@ class DualTrackCourseManager:
         }
     ]
     
+    # ============ MODULE-SPECIFIC LANGUAGE BOOSTERS ============
+    # Each module gets its own vocabulary + functional phrases for General Training
+    MODULE_LANGUAGE_BOOSTERS = {
+        "education": {
+            "lesson_id": "G_EDUCATION_LANG_01",
+            "lesson_type": "Module-Specific Language Booster",
+            "track": "general",
+            "module": "Education",
+            "band_range": "5.5-6.5",
+            "learning_outcome": "After this lesson, you will be able to understand and use key vocabulary related to education, write clear General Training letters about courses and schools, and understand everyday texts like course brochures and registration forms.",
+            "key_vocabulary": [
+                {"word": "enrolment", "meaning": "Signing up for a course", "typical_use": "The enrolment deadline is next Friday."},
+                {"word": "tuition fees", "meaning": "Money paid for courses", "typical_use": "The tuition fees include all materials."},
+                {"word": "syllabus", "meaning": "Course content plan", "typical_use": "Please check the syllabus for assignment dates."},
+                {"word": "certificate", "meaning": "Document proving completion", "typical_use": "You will receive a certificate after the course."},
+                {"word": "attendance", "meaning": "Being present in class", "typical_use": "Regular attendance is required."},
+                {"word": "assessment", "meaning": "Test or evaluation", "typical_use": "There will be continuous assessment throughout."},
+                {"word": "deadline", "meaning": "Final date to submit", "typical_use": "The deadline for applications is March 15th."},
+                {"word": "registration", "meaning": "Official sign-up process", "typical_use": "Registration opens on Monday."},
+                {"word": "semester", "meaning": "Half of academic year", "typical_use": "The course runs for one semester."},
+                {"word": "qualification", "meaning": "Degree or certificate earned", "typical_use": "What qualifications do I need?"},
+                {"word": "prerequisite", "meaning": "Required before starting", "typical_use": "English B2 is a prerequisite."},
+                {"word": "timetable", "meaning": "Schedule of classes", "typical_use": "The timetable will be sent by email."},
+                {"word": "coursework", "meaning": "Assignments during course", "typical_use": "Coursework counts for 40% of the grade."},
+                {"word": "withdraw", "meaning": "Leave a course", "typical_use": "You may withdraw within 14 days."},
+                {"word": "placement test", "meaning": "Test to determine level", "typical_use": "All students take a placement test."}
+            ],
+            "functional_phrases": {
+                "requests": [
+                    "I would like to enquire about...",
+                    "Could you please send me information about...?",
+                    "I am writing to request details of..."
+                ],
+                "complaints": [
+                    "I am writing to express my dissatisfaction with...",
+                    "I was disappointed to find that...",
+                    "I would like to bring to your attention..."
+                ],
+                "explanations": [
+                    "The reason I am writing is that...",
+                    "I am contacting you because...",
+                    "Due to circumstances beyond my control..."
+                ],
+                "closing": [
+                    "I look forward to hearing from you.",
+                    "Please let me know at your earliest convenience.",
+                    "I would appreciate a prompt response."
+                ]
+            },
+            "example_sentences": [
+                "I am writing to enquire about the English language courses available at your institution.",
+                "Could you please send me details of the tuition fees and the enrolment process?",
+                "I was disappointed to find that the course syllabus had changed without prior notice.",
+                "Due to illness, I was unable to meet the assignment deadline.",
+                "I would like to request an extension for my coursework submission."
+            ],
+            "common_mistakes": [
+                {"wrong": "I want know about courses", "correct": "I would like to know about courses", "explanation": "Use polite forms in formal letters"},
+                {"wrong": "Please send me informations", "correct": "Please send me information", "explanation": "'Information' is uncountable"},
+                {"wrong": "I am interesting in your course", "correct": "I am interested in your course", "explanation": "Use -ed for feelings about things"},
+                {"wrong": "I will grateful if you reply", "correct": "I would be grateful if you could reply", "explanation": "Use conditional for polite requests"}
+            ],
+            "supports_tasks": ["GT_Writing_Task1_Letter", "GT_Reading_Notice", "GT_Reading_Form"],
+            "writing_task": {
+                "title": "Letter to Language School",
+                "prompt": "You want to study English at a language school abroad. Write a letter to the school. In your letter:\n- explain why you want to study there\n- ask about courses and fees\n- enquire about accommodation options",
+                "model_answer": {
+                    "band_6": "Dear Sir or Madam,\n\nI am writing to enquire about English courses at your school. I found your website and I am very interested.\n\nI want to study at your school because it has a good reputation. I need to improve my English for my job. I would like to know what courses you have and how much they cost.\n\nAlso, can you tell me about accommodation? I need somewhere to stay during my studies.\n\nPlease send me more information. I look forward to hearing from you.\n\nYours faithfully,\nMaria Garcia",
+                    "band_8": "Dear Sir or Madam,\n\nI am writing to enquire about the intensive English programmes offered at your institution, which I came across while researching reputable language schools.\n\nHaving recently been promoted to a position requiring frequent international communication, I am keen to enhance my business English skills at a well-established school such as yours. I would be grateful if you could provide details of course durations, fee structures, and any upcoming start dates.\n\nAdditionally, I would appreciate information regarding accommodation options for international students. Ideally, I am looking for a homestay arrangement that would allow me to practise English outside the classroom.\n\nI look forward to receiving your prospectus at your earliest convenience.\n\nYours faithfully,\nMaria Garcia"
+                }
+            },
+            "reading_task": {
+                "title": "Course Registration Notice",
+                "type": "Notice",
+                "content": "WESTFIELD LANGUAGE CENTRE\n\nSummer Intensive English Programme 2024\n\nRegistration Now Open!\n\nCourse Dates: July 1 - August 23 (8 weeks)\nLevels: Elementary to Advanced\nClass Size: Maximum 12 students\n\nFees:\n- Full programme (8 weeks): £2,400\n- 4-week option: £1,350\n- Registration fee: £75 (non-refundable)\n\nIncludes: All course materials, certificate, weekly excursions\n\nAccommodation:\n- Homestay (half-board): £180/week\n- Student residence: £150/week (self-catering)\n\nHow to Apply:\n1. Complete online application form\n2. Take online placement test\n3. Pay registration fee to secure your place\n\nEarly Bird Discount: 10% off if you register before May 1st\n\nContact: admissions@westfieldlc.ac.uk | +44 20 1234 5678",
+                "questions": [
+                    {"q": "How long is the full programme?", "a": "8 weeks", "skill": "locating specific info"},
+                    {"q": "What is the maximum number of students per class?", "a": "12", "skill": "locating specific info"},
+                    {"q": "Which accommodation option includes meals?", "a": "Homestay (half-board)", "skill": "understanding options"},
+                    {"q": "How can you get 10% off?", "a": "Register before May 1st", "skill": "identifying conditions"},
+                    {"q": "Is the registration fee refundable?", "a": "No, it is non-refundable", "skill": "understanding terms"}
+                ]
+            }
+        },
+        "health": {
+            "lesson_id": "G_HEALTH_LANG_01",
+            "lesson_type": "Module-Specific Language Booster",
+            "track": "general",
+            "module": "Health",
+            "band_range": "5.5-6.5",
+            "learning_outcome": "After this lesson, you will be able to understand and use key vocabulary related to health services, write clear letters about medical appointments and complaints, and understand health-related notices and forms.",
+            "key_vocabulary": [
+                {"word": "appointment", "meaning": "Scheduled meeting with doctor", "typical_use": "I would like to book an appointment."},
+                {"word": "prescription", "meaning": "Doctor's medicine order", "typical_use": "The doctor gave me a prescription."},
+                {"word": "symptoms", "meaning": "Signs of illness", "typical_use": "What symptoms do you have?"},
+                {"word": "treatment", "meaning": "Medical care given", "typical_use": "The treatment was very effective."},
+                {"word": "diagnosis", "meaning": "Identifying an illness", "typical_use": "I am waiting for my diagnosis."},
+                {"word": "consultation", "meaning": "Meeting with specialist", "typical_use": "I need a consultation with a specialist."},
+                {"word": "referral", "meaning": "Being sent to another doctor", "typical_use": "My GP gave me a referral."},
+                {"word": "waiting list", "meaning": "Queue for treatment", "typical_use": "There is a long waiting list."},
+                {"word": "medical records", "meaning": "Health history documents", "typical_use": "Please send my medical records."},
+                {"word": "insurance", "meaning": "Health coverage plan", "typical_use": "Does your insurance cover this?"},
+                {"word": "side effects", "meaning": "Unwanted medicine effects", "typical_use": "Are there any side effects?"},
+                {"word": "dosage", "meaning": "Amount of medicine", "typical_use": "What is the correct dosage?"},
+                {"word": "check-up", "meaning": "Routine health exam", "typical_use": "I need my annual check-up."},
+                {"word": "emergency", "meaning": "Urgent medical situation", "typical_use": "Go to emergency immediately."},
+                {"word": "discharge", "meaning": "Release from hospital", "typical_use": "When will I be discharged?"}
+            ],
+            "functional_phrases": {
+                "requests": [
+                    "I would like to make an appointment with...",
+                    "Could you please arrange a consultation...?",
+                    "I am writing to request a referral to..."
+                ],
+                "complaints": [
+                    "I wish to complain about the standard of care...",
+                    "I am extremely concerned about...",
+                    "I was very disappointed with the service..."
+                ],
+                "explanations": [
+                    "I have been experiencing symptoms such as...",
+                    "My condition has not improved despite...",
+                    "The reason for my letter is that..."
+                ],
+                "closing": [
+                    "I would appreciate your urgent attention to this matter.",
+                    "Please contact me to arrange a suitable time.",
+                    "I expect a response within 14 days."
+                ]
+            },
+            "example_sentences": [
+                "I am writing to complain about the long waiting time at the clinic last Tuesday.",
+                "Could you please send me a copy of my medical records for insurance purposes?",
+                "I have been experiencing severe headaches for the past two weeks.",
+                "I would like to request a referral to a specialist as my symptoms have not improved.",
+                "I am extremely concerned about the side effects of the medication prescribed."
+            ],
+            "common_mistakes": [
+                {"wrong": "I have appointment", "correct": "I have an appointment", "explanation": "Use article 'an' before vowel sounds"},
+                {"wrong": "The doctor give me prescription", "correct": "The doctor gave me a prescription", "explanation": "Use past tense and article"},
+                {"wrong": "I am waiting since 2 hours", "correct": "I have been waiting for 2 hours", "explanation": "Use present perfect continuous for duration"},
+                {"wrong": "My healthy is not good", "correct": "My health is not good", "explanation": "'Health' is the noun, 'healthy' is adjective"}
+            ],
+            "supports_tasks": ["GT_Writing_Task1_Letter", "GT_Reading_Notice", "GT_Reading_Form"],
+            "writing_task": {
+                "title": "Complaint to Health Centre",
+                "prompt": "You recently visited a health centre and were unhappy with the service. Write a letter to the manager. In your letter:\n- describe your visit and what happened\n- explain why you are unhappy\n- say what action you would like them to take",
+                "model_answer": {
+                    "band_6": "Dear Sir or Madam,\n\nI am writing to complain about my visit to your health centre on 15th March.\n\nI had an appointment at 10am but I had to wait for two hours. The reception staff were not helpful and did not explain the delay. When I finally saw the doctor, the consultation was very short.\n\nI am unhappy because I took time off work for this appointment. Also, I did not get enough time to discuss my problems with the doctor.\n\nI would like an apology and a new appointment with more time.\n\nYours faithfully,\nJohn Smith",
+                    "band_8": "Dear Sir or Madam,\n\nI am writing to express my deep dissatisfaction with the level of service I received during my visit to your health centre on 15th March.\n\nDespite having a confirmed appointment for 10am, I was not seen until nearly midday. When I enquired about the delay at reception, the staff appeared dismissive and offered no explanation whatsoever. Furthermore, the subsequent consultation with Dr. Patel lasted barely five minutes, during which I felt rushed and unable to adequately describe my symptoms.\n\nAs someone who had to take unpaid leave to attend this appointment, I find this standard of care wholly unacceptable. The lack of communication regarding the delay, coupled with the cursory consultation, has left me feeling that my time and health concerns were not valued.\n\nI would appreciate a written apology and, more importantly, a full consultation with sufficient time to properly address my medical concerns.\n\nYours faithfully,\nJohn Smith"
+                }
+            },
+            "reading_task": {
+                "title": "Clinic Information Notice",
+                "type": "Notice",
+                "content": "RIVERSIDE MEDICAL CENTRE\n\nPatient Information\n\nOpening Hours:\nMonday - Friday: 8:00 AM - 6:30 PM\nSaturday: 9:00 AM - 12:00 PM\nSunday & Bank Holidays: Closed\n\nAppointments:\n- Routine appointments: Book online or call 0845 123 4567\n- Same-day urgent appointments: Call from 8:00 AM\n- Home visits: Available for housebound patients only\n\nPrescriptions:\n- Allow 48 hours for repeat prescriptions\n- Collect from reception or nominated pharmacy\n- Electronic prescriptions available\n\nTest Results:\n- Call after 2:00 PM\n- Results will only be given to the patient\n- Some results may require a follow-up appointment\n\nOut of Hours:\nFor medical emergencies: Call 999\nFor urgent non-emergency: Call NHS 111\n\nPlease arrive 10 minutes before your appointment.\nIf you cannot attend, please cancel at least 24 hours in advance.",
+                "questions": [
+                    {"q": "When is the centre open on Saturday?", "a": "9:00 AM - 12:00 PM", "skill": "locating specific info"},
+                    {"q": "How long does a repeat prescription take?", "a": "48 hours", "skill": "locating specific info"},
+                    {"q": "What time should you call for test results?", "a": "After 2:00 PM", "skill": "understanding instructions"},
+                    {"q": "Who qualifies for home visits?", "a": "Housebound patients only", "skill": "identifying conditions"},
+                    {"q": "How much notice should you give to cancel?", "a": "At least 24 hours", "skill": "understanding requirements"}
+                ]
+            }
+        },
+        "work": {
+            "lesson_id": "G_WORK_LANG_01",
+            "lesson_type": "Module-Specific Language Booster",
+            "track": "general",
+            "module": "Work",
+            "band_range": "5.5-6.5",
+            "learning_outcome": "After this lesson, you will be able to understand and use key vocabulary related to employment, write professional letters about jobs and workplace issues, and understand job adverts and company policies.",
+            "key_vocabulary": [
+                {"word": "application", "meaning": "Formal job request", "typical_use": "Please submit your application by Friday."},
+                {"word": "vacancy", "meaning": "Available job position", "typical_use": "There is a vacancy in the sales team."},
+                {"word": "salary", "meaning": "Regular payment for work", "typical_use": "The salary is £35,000 per year."},
+                {"word": "benefits", "meaning": "Extra work advantages", "typical_use": "Benefits include health insurance."},
+                {"word": "contract", "meaning": "Work agreement document", "typical_use": "Please sign the contract."},
+                {"word": "probation", "meaning": "Trial work period", "typical_use": "There is a 3-month probation period."},
+                {"word": "promotion", "meaning": "Moving to higher position", "typical_use": "She got a promotion to manager."},
+                {"word": "resignation", "meaning": "Leaving a job formally", "typical_use": "I am writing to submit my resignation."},
+                {"word": "notice period", "meaning": "Time before leaving job", "typical_use": "The notice period is one month."},
+                {"word": "reference", "meaning": "Job recommendation letter", "typical_use": "Could you provide a reference?"},
+                {"word": "interview", "meaning": "Job meeting/discussion", "typical_use": "I have an interview next week."},
+                {"word": "qualifications", "meaning": "Skills and certificates", "typical_use": "What qualifications do you have?"},
+                {"word": "overtime", "meaning": "Extra work hours", "typical_use": "Overtime is paid at 1.5x rate."},
+                {"word": "shift", "meaning": "Work time period", "typical_use": "I work the night shift."},
+                {"word": "redundancy", "meaning": "Job loss due to cuts", "typical_use": "Staff face redundancy."}
+            ],
+            "functional_phrases": {
+                "requests": [
+                    "I am writing to apply for the position of...",
+                    "I would be grateful if you could consider my application...",
+                    "Could you please confirm the details of...?"
+                ],
+                "complaints": [
+                    "I am writing to raise a concern about...",
+                    "I wish to formally report...",
+                    "I feel I must bring to your attention..."
+                ],
+                "explanations": [
+                    "I am writing to inform you that...",
+                    "Please be advised that...",
+                    "Further to our conversation..."
+                ],
+                "closing": [
+                    "I am available for interview at your convenience.",
+                    "Please do not hesitate to contact me.",
+                    "I look forward to the opportunity to discuss this further."
+                ]
+            },
+            "example_sentences": [
+                "I am writing to apply for the position of Marketing Assistant advertised on your website.",
+                "I would be grateful if you could consider me for any future vacancies in your company.",
+                "I wish to formally report an issue with workplace safety equipment.",
+                "Please be advised that I am submitting my resignation, effective from 1st April.",
+                "I am available for interview at your convenience and can start immediately."
+            ],
+            "common_mistakes": [
+                {"wrong": "I am interesting in this job", "correct": "I am interested in this job", "explanation": "Use -ed for feelings"},
+                {"wrong": "I have 5 years experiences", "correct": "I have 5 years' experience", "explanation": "'Experience' is uncountable in this context"},
+                {"wrong": "Please find my CV attached below", "correct": "Please find my CV attached", "explanation": "CV is attached to email, not below"},
+                {"wrong": "I am looking forward to hear from you", "correct": "I am looking forward to hearing from you", "explanation": "Use -ing after 'to' in this phrase"}
+            ],
+            "supports_tasks": ["GT_Writing_Task1_Letter", "GT_Reading_Notice", "GT_Reading_Form"],
+            "writing_task": {
+                "title": "Job Application Letter",
+                "prompt": "You saw an advertisement for a job that you are interested in. Write a letter to the company. In your letter:\n- explain which job you are applying for and where you saw it\n- describe your relevant experience and skills\n- say when you are available for interview",
+                "model_answer": {
+                    "band_6": "Dear Sir or Madam,\n\nI am writing to apply for the job of receptionist which I saw on the Indeed website yesterday.\n\nI have worked as a receptionist for two years at a hotel. I have good communication skills and I can use computers well. I speak English and Spanish fluently.\n\nI am available for interview any day next week. I can start work immediately.\n\nPlease find my CV attached. I look forward to hearing from you.\n\nYours faithfully,\nCarlos Martinez",
+                    "band_8": "Dear Hiring Manager,\n\nI am writing to express my keen interest in the Receptionist position advertised on Indeed on 15th March. I believe my professional background and interpersonal skills make me an excellent candidate for this role.\n\nOver the past two years, I have been working as a Front Desk Receptionist at the Grand Plaza Hotel, where I have developed strong expertise in customer service, appointment scheduling, and administrative duties. I am proficient in Microsoft Office and various booking systems, and I am fluent in both English and Spanish, which has proven invaluable when assisting international guests.\n\nI would welcome the opportunity to discuss how my skills could benefit your organisation. I am available for interview throughout next week and could commence employment with two weeks' notice to my current employer.\n\nPlease find my CV attached for your consideration. I look forward to hearing from you at your earliest convenience.\n\nYours faithfully,\nCarlos Martinez"
+                }
+            },
+            "reading_task": {
+                "title": "Job Advertisement",
+                "type": "Job Advert",
+                "content": "CUSTOMER SERVICE REPRESENTATIVE\nBrightStar Communications\n\nLocation: Manchester City Centre\nSalary: £24,000 - £28,000 (depending on experience)\nContract: Full-time, Permanent\n\nAbout the Role:\nWe are seeking a motivated Customer Service Representative to join our growing team. You will be the first point of contact for our customers, handling enquiries via phone, email, and live chat.\n\nRequirements:\n- Minimum 1 year customer service experience\n- Excellent communication skills\n- Proficient in MS Office\n- Ability to work shifts (including some weekends)\n\nDesirable:\n- Experience in telecommunications\n- Additional languages\n\nBenefits:\n- 25 days annual leave + bank holidays\n- Company pension scheme\n- Staff discount on products\n- Free parking\n\nHow to Apply:\nSend CV and cover letter to careers@brightstar.co.uk\nClosing date: 30th April 2024\n\nBrightStar is an equal opportunities employer.",
+                "questions": [
+                    {"q": "What is the minimum salary offered?", "a": "£24,000", "skill": "locating specific info"},
+                    {"q": "How much customer service experience is required?", "a": "Minimum 1 year", "skill": "identifying requirements"},
+                    {"q": "Are weekend shifts required?", "a": "Yes, some weekends", "skill": "understanding conditions"},
+                    {"q": "What should you include with your CV?", "a": "Cover letter", "skill": "understanding instructions"},
+                    {"q": "How many days of annual leave are offered?", "a": "25 days + bank holidays", "skill": "locating benefits"}
+                ]
+            }
+        },
+        "travel": {
+            "lesson_id": "G_TRAVEL_LANG_01",
+            "lesson_type": "Module-Specific Language Booster",
+            "track": "general",
+            "module": "Travel",
+            "band_range": "5.5-6.5",
+            "learning_outcome": "After this lesson, you will be able to understand and use key vocabulary related to travel and tourism, write letters about bookings and complaints, and understand travel notices and booking information.",
+            "key_vocabulary": [
+                {"word": "reservation", "meaning": "Advance booking", "typical_use": "I have a reservation for two nights."},
+                {"word": "accommodation", "meaning": "Place to stay", "typical_use": "The accommodation was excellent."},
+                {"word": "itinerary", "meaning": "Travel plan/schedule", "typical_use": "Please find the itinerary attached."},
+                {"word": "departure", "meaning": "Leaving time/place", "typical_use": "Departure is at 6am."},
+                {"word": "arrival", "meaning": "Coming time/place", "typical_use": "Arrival time is 10pm."},
+                {"word": "cancellation", "meaning": "Stopping a booking", "typical_use": "What is the cancellation policy?"},
+                {"word": "refund", "meaning": "Money returned", "typical_use": "I would like to request a refund."},
+                {"word": "transfer", "meaning": "Transport between places", "typical_use": "Airport transfer is included."},
+                {"word": "amenities", "meaning": "Hotel facilities", "typical_use": "Amenities include a pool and gym."},
+                {"word": "excursion", "meaning": "Organized trip", "typical_use": "The excursion to the castle was fantastic."},
+                {"word": "delay", "meaning": "Late timing", "typical_use": "There was a 2-hour delay."},
+                {"word": "compensation", "meaning": "Payment for problems", "typical_use": "I expect compensation for the inconvenience."},
+                {"word": "brochure", "meaning": "Information booklet", "typical_use": "Please send me your brochure."},
+                {"word": "all-inclusive", "meaning": "Everything included in price", "typical_use": "We booked an all-inclusive resort."},
+                {"word": "check-in/out", "meaning": "Arriving/leaving hotel", "typical_use": "Check-in is from 2pm."}
+            ],
+            "functional_phrases": {
+                "requests": [
+                    "I would like to book...",
+                    "Could you please confirm my reservation for...?",
+                    "I am writing to enquire about availability..."
+                ],
+                "complaints": [
+                    "I am writing to express my disappointment with...",
+                    "The service/accommodation did not meet expectations...",
+                    "I am seeking compensation for..."
+                ],
+                "explanations": [
+                    "Unfortunately, due to..., I need to cancel...",
+                    "The problem arose when...",
+                    "I was assured that... however..."
+                ],
+                "closing": [
+                    "I would appreciate a response within 14 days.",
+                    "Please confirm the booking at your earliest convenience.",
+                    "I trust you will resolve this matter promptly."
+                ]
+            },
+            "example_sentences": [
+                "I would like to book a double room for three nights from 15th to 18th July.",
+                "Could you please confirm whether airport transfer is included in the package?",
+                "I am writing to express my disappointment with the accommodation during my recent stay.",
+                "The room did not match the description in your brochure – it was much smaller.",
+                "I am seeking compensation for the inconvenience caused by the flight delay."
+            ],
+            "common_mistakes": [
+                {"wrong": "I want book a room", "correct": "I would like to book a room", "explanation": "Use polite form for requests"},
+                {"wrong": "The hotel have a pool", "correct": "The hotel has a pool", "explanation": "Use 'has' for singular subjects"},
+                {"wrong": "I am arrived yesterday", "correct": "I arrived yesterday", "explanation": "'Arrive' doesn't use 'be' auxiliary"},
+                {"wrong": "Please confirm me the booking", "correct": "Please confirm the booking with me", "explanation": "Different preposition structure"}
+            ],
+            "supports_tasks": ["GT_Writing_Task1_Letter", "GT_Reading_Notice", "GT_Reading_Brochure"],
+            "writing_task": {
+                "title": "Hotel Complaint Letter",
+                "prompt": "You recently stayed at a hotel and were not satisfied. Write a letter to the hotel manager. In your letter:\n- give details of your booking and when you stayed\n- describe the problems you experienced\n- explain what you expect the hotel to do",
+                "model_answer": {
+                    "band_6": "Dear Sir or Madam,\n\nI am writing to complain about my stay at your hotel from 5th to 8th March. My booking reference was HT12345.\n\nThere were several problems. First, the room was not clean when we arrived. Second, the air conditioning did not work. Third, the breakfast was cold both mornings.\n\nI expect you to give me a partial refund for the problems. The room cost £120 per night and the service was not acceptable.\n\nI look forward to hearing from you soon.\n\nYours faithfully,\nSarah Jones",
+                    "band_8": "Dear Sir or Madam,\n\nI am writing to express my considerable disappointment with my recent stay at the Grandview Hotel from 5th to 8th March (booking reference: HT12345).\n\nRegrettably, the experience fell far short of the standards advertised. Upon arrival, we discovered the room had not been properly cleaned, with used towels still in the bathroom. Despite reporting this to reception, it took over three hours for housekeeping to address the issue. Furthermore, the air conditioning unit was malfunctioning throughout our stay, making the room uncomfortably warm. To compound matters, the breakfast buffet – a key selling point mentioned in your brochure – served lukewarm food on both mornings.\n\nGiven that we paid £120 per night, I believe these issues warrant compensation. I would expect, at minimum, a partial refund equivalent to one night's stay, along with a written assurance that these maintenance issues will be rectified.\n\nI trust you will treat this matter with the urgency it deserves and respond within 14 days.\n\nYours faithfully,\nSarah Jones"
+                }
+            },
+            "reading_task": {
+                "title": "Hotel Booking Confirmation",
+                "type": "Email/Confirmation",
+                "content": "Subject: Booking Confirmation - Grand Plaza Hotel\n\nDear Mr Thompson,\n\nThank you for your reservation. Please find your booking details below:\n\nBooking Reference: GP-78542\nGuest Name: James Thompson\nRoom Type: Deluxe Double with Sea View\nCheck-in: Saturday, 15th June 2024 (from 3:00 PM)\nCheck-out: Tuesday, 18th June 2024 (by 11:00 AM)\nNumber of Nights: 3\n\nRoom Rate: £145 per night\nTotal: £435 (breakfast included)\n\nYour reservation includes:\n✓ Daily buffet breakfast (7:00-10:00 AM)\n✓ Free WiFi\n✓ Access to gym and pool\n✓ Free parking\n\nPayment: A deposit of £145 has been charged to your card ending 4521.\nBalance due: £290 (payable at check-out)\n\nCancellation Policy:\n- Free cancellation up to 48 hours before check-in\n- Within 48 hours: First night charged\n- No-show: Full amount charged\n\nNeed to modify your booking? Call +44 1234 567890 or reply to this email.\n\nWe look forward to welcoming you!\n\nBest regards,\nReservations Team\nGrand Plaza Hotel",
+                "questions": [
+                    {"q": "What time can Mr Thompson check in?", "a": "From 3:00 PM", "skill": "locating specific info"},
+                    {"q": "How much has already been paid?", "a": "£145 (deposit)", "skill": "understanding payment"},
+                    {"q": "What happens if he cancels 24 hours before arrival?", "a": "First night charged", "skill": "understanding policy"},
+                    {"q": "What time does breakfast finish?", "a": "10:00 AM", "skill": "locating specific info"},
+                    {"q": "What is NOT included in the rate?", "a": "Balance of £290 (due at check-out)", "skill": "identifying what's excluded"}
+                ]
+            }
+        },
+        "housing": {
+            "lesson_id": "G_HOUSING_LANG_01",
+            "lesson_type": "Module-Specific Language Booster",
+            "track": "general",
+            "module": "Housing",
+            "band_range": "5.5-6.5",
+            "learning_outcome": "After this lesson, you will be able to understand and use key vocabulary related to housing and accommodation, write letters to landlords and neighbours, and understand rental agreements and building notices.",
+            "key_vocabulary": [
+                {"word": "tenant", "meaning": "Person who rents property", "typical_use": "The tenant must pay rent monthly."},
+                {"word": "landlord", "meaning": "Property owner who rents", "typical_use": "Contact the landlord for repairs."},
+                {"word": "lease/tenancy", "meaning": "Rental agreement", "typical_use": "The lease is for 12 months."},
+                {"word": "deposit", "meaning": "Security money paid", "typical_use": "The deposit is one month's rent."},
+                {"word": "utilities", "meaning": "Gas, electricity, water", "typical_use": "Utilities are not included in rent."},
+                {"word": "maintenance", "meaning": "Repairs and upkeep", "typical_use": "Maintenance is the landlord's responsibility."},
+                {"word": "furnished", "meaning": "With furniture included", "typical_use": "The flat is fully furnished."},
+                {"word": "unfurnished", "meaning": "Without furniture", "typical_use": "We prefer an unfurnished property."},
+                {"word": "notice", "meaning": "Warning of leaving", "typical_use": "Give one month's notice to leave."},
+                {"word": "eviction", "meaning": "Forced removal", "typical_use": "Eviction is a last resort."},
+                {"word": "inventory", "meaning": "List of items in property", "typical_use": "Sign the inventory at check-in."},
+                {"word": "letting agent", "meaning": "Rental agency", "typical_use": "Contact the letting agent for viewings."},
+                {"word": "neighbour", "meaning": "Person living nearby", "typical_use": "My neighbour is very friendly."},
+                {"word": "communal areas", "meaning": "Shared spaces", "typical_use": "Keep communal areas clean."},
+                {"word": "renovation", "meaning": "Major repairs/updates", "typical_use": "The building is under renovation."}
+            ],
+            "functional_phrases": {
+                "requests": [
+                    "I am writing to request that you...",
+                    "I would appreciate it if you could...",
+                    "Could you please arrange for..."
+                ],
+                "complaints": [
+                    "I am writing to bring to your attention...",
+                    "I must ask you to address the issue of...",
+                    "Despite my previous requests, the problem of... continues"
+                ],
+                "explanations": [
+                    "The problem first arose when...",
+                    "This has been ongoing since...",
+                    "As stated in my tenancy agreement..."
+                ],
+                "closing": [
+                    "I would appreciate a prompt response.",
+                    "Please arrange for repairs within 7 days.",
+                    "I hope we can resolve this matter amicably."
+                ]
+            },
+            "example_sentences": [
+                "I am writing to request urgent repairs to the heating system in my apartment.",
+                "Despite my previous requests, the leak in the bathroom has not been fixed.",
+                "Could you please arrange for a plumber to visit at your earliest convenience?",
+                "As stated in my tenancy agreement, maintenance is the landlord's responsibility.",
+                "I would appreciate it if you could reduce the noise levels after 10pm."
+            ],
+            "common_mistakes": [
+                {"wrong": "My flat has a problem with the heat", "correct": "My flat has a problem with the heating", "explanation": "'Heating' for the system, 'heat' for temperature"},
+                {"wrong": "I am living here since 2020", "correct": "I have been living here since 2020", "explanation": "Use present perfect continuous with 'since'"},
+                {"wrong": "Please repair it fastly", "correct": "Please repair it quickly/as soon as possible", "explanation": "'Fastly' is not a word"},
+                {"wrong": "The rent is too much expensive", "correct": "The rent is too expensive", "explanation": "Don't use 'much' with adjectives"}
+            ],
+            "supports_tasks": ["GT_Writing_Task1_Letter", "GT_Reading_Notice", "GT_Reading_Contract"],
+            "writing_task": {
+                "title": "Letter to Landlord",
+                "prompt": "There is a problem with the property you are renting. Write a letter to your landlord. In your letter:\n- describe the problem\n- explain how it is affecting you\n- say what action you would like the landlord to take",
+                "model_answer": {
+                    "band_6": "Dear Mr Johnson,\n\nI am writing to tell you about a problem in my flat at 24 Oak Street.\n\nThe heating system is not working properly. The radiators are cold and the flat is very uncomfortable, especially at night. I have tried to fix it myself but I cannot.\n\nThis problem is affecting my health because the flat is too cold. I cannot sleep well and I have caught a cold.\n\nPlease send someone to fix the heating as soon as possible. I am free most afternoons this week.\n\nYours sincerely,\nMaria Garcia",
+                    "band_8": "Dear Mr Johnson,\n\nI am writing to bring to your attention an urgent issue with the central heating system at 24 Oak Street, Flat 3B, which I have been renting since September.\n\nOver the past week, the radiators throughout the apartment have been failing to heat up adequately, despite the thermostat being set correctly. As a result, the indoor temperature has dropped to an uncomfortable level, particularly during the evening hours. I have attempted to bleed the radiators myself, but this has not resolved the issue.\n\nThis situation is significantly affecting my quality of life. Not only am I unable to feel comfortable in my own home, but I have also developed a persistent cold which I attribute to the low temperatures. Additionally, I am concerned about potential damp issues that may arise from the lack of heating.\n\nI would greatly appreciate it if you could arrange for a qualified heating engineer to inspect and repair the system as a matter of urgency. I am available on weekday afternoons and can adjust my schedule to accommodate a visit.\n\nI trust this matter will be resolved promptly, as heating is an essential service covered under our tenancy agreement.\n\nYours sincerely,\nMaria Garcia"
+                }
+            },
+            "reading_task": {
+                "title": "Building Notice",
+                "type": "Notice",
+                "content": "NOTICE TO ALL RESIDENTS\nMaple Court Apartments\n\nImportant: Planned Maintenance Work\n\nDear Residents,\n\nPlease be advised that essential maintenance work will be carried out in the building during the following period:\n\nDates: Monday 18th - Friday 22nd March\nHours: 9:00 AM - 5:00 PM daily\n\nWork includes:\n- External window cleaning (all floors)\n- Fire alarm system testing (Tuesday only, 10:00-11:00 AM)\n- Lift maintenance (Wednesday - lift out of service 2:00-4:00 PM)\n- Car park resurfacing (Thursday-Friday - no parking available)\n\nImportant Notes:\n- Please keep windows closed during external cleaning\n- The fire alarm test is routine - no evacuation required\n- Alternative parking is available at the public car park on Bridge Street (free for residents with permit - collect from office)\n\nWe apologise for any inconvenience. For queries, contact the Building Manager:\nTel: 0800 123 456 | Email: manager@maplecourt.co.uk\n\nMaple Court Management",
+                "questions": [
+                    {"q": "How many days will the maintenance last?", "a": "5 days (Monday to Friday)", "skill": "calculating duration"},
+                    {"q": "When will the lift be out of service?", "a": "Wednesday 2:00-4:00 PM", "skill": "locating specific info"},
+                    {"q": "What should residents do during window cleaning?", "a": "Keep windows closed", "skill": "understanding instructions"},
+                    {"q": "Where can residents park on Thursday?", "a": "Public car park on Bridge Street", "skill": "finding alternatives"},
+                    {"q": "Do residents need to evacuate during the fire alarm test?", "a": "No, no evacuation required", "skill": "understanding procedures"}
+                ]
+            }
+        }
+    }
+    
     def __init__(self, db: AsyncIOMotorDatabase):
         self.db = db
     
