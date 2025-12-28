@@ -187,6 +187,64 @@ async def get_advanced_strategic_writing_summary():
     }
 
 
+@router.get("/advanced-strategic-reading/{module}")
+async def get_advanced_strategic_reading(module: str):
+    """
+    Get Module-Specific Strategic Reading for Advanced General Training.
+    
+    Each module has a complex, real-life reading scenario with:
+    - Professional/official document types
+    - Authentic text formats (policies, contracts, guidelines)
+    - IELTS-style comprehension questions
+    
+    Example: /api/courses/advanced-strategic-reading/digital_frontier
+    """
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    module_lower = module.lower().replace('-', '_').replace(' ', '_')
+    
+    # Check if module has strategic reading content
+    if module_lower not in DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_READING:
+        available_modules = list(DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_READING.keys())
+        return {
+            "success": False,
+            "error": f"No strategic reading content for '{module}'",
+            "available_modules": available_modules,
+            "suggestion": "Check available modules for advanced strategic reading"
+        }
+    
+    strategic_content = DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_READING[module_lower]
+    
+    return {
+        "success": True,
+        "module": module_lower,
+        "strategic_reading": strategic_content
+    }
+
+
+@router.get("/advanced-strategic-reading-summary")
+async def get_advanced_strategic_reading_summary():
+    """Get summary of all Advanced Strategic Reading modules."""
+    from services.dual_track_courses import DualTrackCourseManager
+    
+    summary = []
+    for module_id, content in DualTrackCourseManager.ADVANCED_MODULE_STRATEGIC_READING.items():
+        summary.append({
+            "module_id": module_id,
+            "module_title": content.get("module_title"),
+            "strategic_focus": content.get("strategic_focus"),
+            "band_target": content.get("band_target"),
+            "text_type": content.get("reading_scenario", {}).get("text_type"),
+            "scenario_title": content.get("reading_scenario", {}).get("title")
+        })
+    
+    return {
+        "success": True,
+        "total": len(summary),
+        "modules": summary
+    }
+
+
 @router.get("/track-recommendations/{track}")
 async def get_track_recommendations(
     track: str,
