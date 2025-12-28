@@ -609,6 +609,30 @@ export default function QuestionBank() {
                   </div>
                 </div>
               </Card>
+              
+              {/* General Training Task 2 - Essay */}
+              <Card 
+                className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-pink-300"
+                onClick={() => {
+                  setShowWritingModal(false);
+                  navigate('/question-bank/writing/general/task2');
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Edit3 className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900">Task 2 - Essay (General)</h3>
+                    <p className="text-sm text-gray-500">Opinion, Discussion, Problem-Solution essays</p>
+                    <div className="flex gap-2 mt-2 flex-wrap">
+                      <Badge className="bg-pink-100 text-pink-700">250+ kelime</Badge>
+                      <Badge className="bg-gray-100 text-gray-600">40 dakika</Badge>
+                      <Badge className="bg-amber-100 text-amber-700">16 senaryo</Badge>
+                    </div>
+                  </div>
+                </div>
+              </Card>
             </div>
           </Card>
         </div>
