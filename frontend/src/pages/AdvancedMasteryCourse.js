@@ -996,7 +996,7 @@ export default function AdvancedMasteryCourse({ user }) {
 
       {/* Track Toggle - Academic vs General Training */}
       <div className="mb-6 p-4 bg-gray-50 rounded-xl">
-        <p className="text-sm font-medium text-gray-600 mb-3">IELTS Track Seçin:</p>
+        <p className="text-sm font-medium text-gray-600 mb-3">Select IELTS Track:</p>
         <div className="flex gap-2">
           <Button
             variant={writingTrack === 'academic' ? 'default' : 'outline'}
@@ -1104,7 +1104,7 @@ export default function AdvancedMasteryCourse({ user }) {
             <>
               {/* Lesson Selector */}
               <div>
-                <p className="text-sm font-medium text-gray-600 mb-2">Ders Seçin (Band 7-9 Techniques):</p>
+                <p className="text-sm font-medium text-gray-600 mb-2">Select Lesson (Band 7-9 Techniques):</p>
                 <div className="flex flex-wrap gap-2">
                   {generalLessons.map((lesson, idx) => (
                     <Button
@@ -1211,7 +1211,7 @@ export default function AdvancedMasteryCourse({ user }) {
           ) : (
             <div className="text-center py-8 bg-gray-50 rounded-xl">
               <Target className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">General Training dersleri yükleniyor...</p>
+              <p className="text-gray-500">Loading General Training lessons...</p>
             </div>
           )}
         </div>
