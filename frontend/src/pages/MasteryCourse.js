@@ -125,20 +125,31 @@ export default function MasteryCourse({ user }) {
     }
   };
 
-  // Fetch General Training lessons for Writing
+  // Fetch General Training lessons for Writing AND Reading
   const fetchGeneralLessons = async () => {
     try {
       const response = await fetch(`${API_URL}/api/courses/mastery/general`);
       if (!response.ok) return;
       const data = await response.json();
       if (data.success && data.lessons) {
-        // Filter only writing-related lessons
+        // Filter writing-related lessons
         const writingLessons = data.lessons.filter(l => 
           l.writing || l.topic?.toLowerCase().includes('letter') || l.topic?.toLowerCase().includes('formal')
         );
         setGeneralLessons(writingLessons);
         if (writingLessons.length > 0) {
           setSelectedGeneralLesson(writingLessons[0]);
+        }
+        
+        // Filter reading-related lessons
+        const readingLessons = data.lessons.filter(l => 
+          l.reading || l.skill === 'reading' || l.topic?.toLowerCase().includes('reading') || 
+          l.topic?.toLowerCase().includes('notice') || l.topic?.toLowerCase().includes('email') ||
+          l.topic?.toLowerCase().includes('form') || l.topic?.toLowerCase().includes('workplace')
+        );
+        setGeneralReadingLessons(readingLessons);
+        if (readingLessons.length > 0) {
+          setSelectedReadingLesson(readingLessons[0]);
         }
       }
     } catch (error) {
