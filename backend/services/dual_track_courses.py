@@ -464,6 +464,7 @@ class DualTrackCourseManager:
             "title": "Workplace & Official Documents",
             "level": "mastery",
             "band_target": "5.5-6.5",
+            "skill": "reading",
             "learning_goals": [
                 "Understand workplace policies and procedures",
                 "Read and interpret contracts and agreements",
@@ -482,6 +483,25 @@ class DualTrackCourseManager:
                     "Understanding rights and responsibilities",
                     "Following multi-step procedures",
                     "Recognising important deadlines and dates"
+                ],
+                "practice_texts": [
+                    {
+                        "id": "workplace-doc-1",
+                        "type": "Health & Safety Notice",
+                        "content": "FIRE SAFETY PROCEDURES\n\nIn the event of a fire:\n\n1. If you discover a fire, activate the nearest fire alarm\n2. Do NOT attempt to fight the fire unless trained\n3. Leave the building by the nearest exit\n4. Do NOT use lifts/elevators\n5. Proceed to the assembly point (Car Park B)\n6. Report to your Fire Warden\n\nFire Wardens: Floor 1 - Sarah Chen, Floor 2 - Marcus Williams\n\nFire drills are conducted quarterly. All staff must participate.\n\nEmergency Contact: 999 or Internal: 5555",
+                        "questions": [
+                            {"q": "Where is the assembly point?", "a": "Car Park B", "skill": "locating specific info"},
+                            {"q": "Who is the Fire Warden for Floor 2?", "a": "Marcus Williams", "skill": "locating specific info"},
+                            {"q": "How often are fire drills conducted?", "a": "Quarterly", "skill": "understanding frequency"},
+                            {"q": "What should you NOT use during a fire?", "a": "Lifts/elevators", "skill": "identifying restrictions"}
+                        ]
+                    }
+                ],
+                "tips": [
+                    "Look for numbered lists - they often show procedures",
+                    "Pay attention to words in CAPITALS - they're usually important",
+                    "Note contact information and responsible persons",
+                    "Identify what you must do vs what you must NOT do"
                 ]
             }
         },
