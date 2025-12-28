@@ -767,15 +767,10 @@ Return ONLY this JSON (no other text):
             if key not in evaluation:
                 evaluation[key] = default_value
         
-        # ============ LESSON RECOMMENDATIONS (ULTRA MASTER PROMPT) ============
-        # Fetch recommended lessons based on weaknesses
+        # ============ LESSON RECOMMENDATIONS (ULTRA MASTER PROMPT + DUAL-TRACK) ============
+        # Fetch recommended lessons based on weaknesses AND track
         recommended_lessons = []
         try:
-            from services.lesson_registry import LessonRegistry
-            from server import db as main_db
-            
-            registry = LessonRegistry(main_db)
-            
             # Extract weaknesses from evaluation
             weaknesses = evaluation.get("weaknesses", [])
             weakness_keywords = []
@@ -805,29 +800,66 @@ Return ONLY this JSON (no other text):
                     weakness_keywords.append("coherence")
                 elif "task" in weakness_lower:
                     weakness_keywords.append("task_achievement")
+                # General Training specific weaknesses
+                elif "tone" in weakness_lower or "formal" in weakness_lower or "polite" in weakness_lower:
+                    weakness_keywords.append("tone")
+                elif "letter" in weakness_lower or "format" in weakness_lower:
+                    weakness_keywords.append("letter_format")
             
             # Remove duplicates
             weakness_keywords = list(set(weakness_keywords))
             
             if weakness_keywords:
                 overall_band = evaluation.get("overall_band", 5.5)
-                recommendations = await registry.get_recommended_lessons(
-                    weaknesses=weakness_keywords,
-                    current_band=float(overall_band),
-                    skill="writing"
-                )
                 
-                # Format for frontend
-                recommended_lessons = [
-                    {
-                        "lesson_id": r["lesson_id"],
-                        "title": r["title"],
-                        "stage": r["stage"],
-                        "band_level": r["band_level"],
-                        "reason": f"Addresses: {', '.join(r['addresses_weaknesses'])}"
-                    }
-                    for r in recommendations[:3]
-                ]
+                # Use track-specific recommendations for General Training
+                if request.track == "general":
+                    from services.dual_track_courses import get_dual_track_manager
+                    from server import db as main_db
+                    
+                    manager = get_dual_track_manager(main_db)
+                    recommendations = await manager.get_recommended_lessons_by_track(
+                        track="general",
+                        weaknesses=weakness_keywords,
+                        band_level=request.band_level
+                    )
+                    
+                    # Format for frontend
+                    recommended_lessons = [
+                        {
+                            "lesson_id": r["lesson_id"],
+                            "title": r["title"],
+                            "stage": r["level"],  # Using 'level' from dual-track
+                            "band_level": r.get("band_target", request.band_level),
+                            "track": "general",
+                            "reason": f"Addresses: {', '.join(r.get('addresses_weaknesses', []))}"
+                        }
+                        for r in recommendations[:3]
+                    ]
+                else:
+                    # Academic track - use existing lesson registry
+                    from services.lesson_registry import LessonRegistry
+                    from server import db as main_db
+                    
+                    registry = LessonRegistry(main_db)
+                    recommendations = await registry.get_recommended_lessons(
+                        weaknesses=weakness_keywords,
+                        current_band=float(overall_band),
+                        skill="writing"
+                    )
+                    
+                    # Format for frontend
+                    recommended_lessons = [
+                        {
+                            "lesson_id": r["lesson_id"],
+                            "title": r["title"],
+                            "stage": r["stage"],
+                            "band_level": r["band_level"],
+                            "track": "academic",
+                            "reason": f"Addresses: {', '.join(r['addresses_weaknesses'])}"
+                        }
+                        for r in recommendations[:3]
+                    ]
         except Exception as rec_error:
             print(f"Warning: Could not fetch lesson recommendations: {rec_error}")
         
@@ -835,6 +867,7 @@ Return ONLY this JSON (no other text):
             "success": True,
             "word_count": word_count,
             "task_type": request.task_type,
+            "track": request.track,
             "evaluation": evaluation,
             "recommended_lessons": recommended_lessons
         }
