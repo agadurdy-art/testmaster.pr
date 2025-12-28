@@ -211,3 +211,42 @@ http://localhost:3000/demo/writing-task1
    - Word count tracking
    - Timer functionality
    - Mobile responsive design
+
+## Testing Instructions for Testing Agent (December 28, 2025)
+
+### Test Credentials:
+- **Email**: test@ielts.com
+- **Password**: admin123
+
+### Critical Flows to Test:
+
+1. **QuestionBank Page UX (PRIORITY 1)**
+   - Navigate to `/question-bank` after login
+   - Verify NEW UX: Band & Topic filters should be at TOP in a white card
+   - User should select filters FIRST, then click skill cards
+   - When Writing card is clicked, modal should show 3 options:
+     - Academic Task 1
+     - Academic Task 2 (Essay)
+     - General Training Task 1 (Letter Writing)
+
+2. **Filter to Practice Flow (PRIORITY 2)**
+   - Select a Band (e.g., Band 5.5-6.5)
+   - Select a Topic (e.g., Education)
+   - Click Writing card
+   - In modal, click Task 1
+   - Verify URL contains: `?topic=education&band=5.5-6.5`
+   - Verify Practice page loads with selected filters
+
+3. **Writing Task 1 Demo (No Auth Needed)**
+   - URL: `http://localhost:3000/demo/writing-task1`
+   - Verify side-by-side layout
+   - Test all 6 visual types (Line, Bar, Pie, Table, Process, Map)
+   - Verify authentic task descriptions with specific location/time
+
+4. **Writing Task 2 Demo (No Auth Needed)**
+   - URL: `http://localhost:3000/demo/writing-task2`
+   - Verify Band 6 and Band 8.5 model answers
+
+5. **General Training Demo (No Auth Needed)**
+   - URL: `http://localhost:3000/demo/general-task1`
+   - Verify letter writing options (Formal, Semi-formal, Informal)
