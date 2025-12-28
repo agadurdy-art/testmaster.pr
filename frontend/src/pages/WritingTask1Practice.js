@@ -142,6 +142,7 @@ export default function WritingTask1Practice() {
     setModelAnswer(null);
     setModelAnswerStep(0);
     setEvaluation(null);
+    setRecommendedLessons([]);
     
     try {
       const response = await fetch(
