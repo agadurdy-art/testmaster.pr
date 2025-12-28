@@ -132,21 +132,22 @@ export default function MasteryCourse({ user }) {
       if (!response.ok) return;
       const data = await response.json();
       if (data.success && data.lessons) {
-        // Filter writing-related lessons
+        console.log('All lessons:', data.lessons.map(l => ({ id: l.id, topic: l.topic, skill: l.skill, hasReading: !!l.reading, hasWriting: !!l.writing })));
+        
+        // Filter writing-related lessons (must have writing content)
         const writingLessons = data.lessons.filter(l => 
-          l.writing || l.topic?.toLowerCase().includes('letter') || l.topic?.toLowerCase().includes('formal')
+          l.writing && !l.skill?.includes('reading')
         );
         setGeneralLessons(writingLessons);
         if (writingLessons.length > 0) {
           setSelectedGeneralLesson(writingLessons[0]);
         }
         
-        // Filter reading-related lessons
+        // Filter reading-related lessons (must have reading content OR skill='reading')
         const readingLessons = data.lessons.filter(l => 
-          l.reading || l.skill === 'reading' || l.topic?.toLowerCase().includes('reading') || 
-          l.topic?.toLowerCase().includes('notice') || l.topic?.toLowerCase().includes('email') ||
-          l.topic?.toLowerCase().includes('form') || l.topic?.toLowerCase().includes('workplace')
+          l.reading || l.skill === 'reading'
         );
+        console.log('Reading lessons:', readingLessons.map(l => l.topic));
         setGeneralReadingLessons(readingLessons);
         if (readingLessons.length > 0) {
           setSelectedReadingLesson(readingLessons[0]);
