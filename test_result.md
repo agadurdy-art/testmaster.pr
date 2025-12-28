@@ -40,6 +40,27 @@
 
 ### Backend API Tests:
 
+**TESTING COMPLETED - December 28, 2025**
+
+✅ **ALL TRACK-SPECIFIC AI EVALUATION TESTS PASSED (8/8)**
+
+**Test Results:**
+1. ✅ Authentication with test@ielts.com successful
+2. ✅ GET /api/courses/evaluation/rubrics/academic - Returns academic track rubrics with task1/task2 structures and focus_areas
+3. ✅ GET /api/courses/evaluation/rubrics/general - Returns general training rubrics with reading_skills and document_types
+4. ✅ GET /api/courses/evaluation/reading-skills - Returns 5 skill categories with proper structure
+5. ✅ POST /api/courses/evaluate/writing (Academic Task 1) - Returns overall_band, criteria_scores, track_specific_feedback
+6. ✅ POST /api/courses/evaluate/writing (General Task 1) - Returns track-specific feedback about register/tone
+7. ✅ POST /api/courses/evaluate/reading - Returns skill analysis, estimated_band, document_type_feedback
+8. ✅ Error handling for invalid track works gracefully
+
+**Key Features Verified:**
+- Academic and General Training rubrics accessible
+- Reading skills categories properly structured (5 skills: inference, intention, condition_exception, factual_detail, main_idea)
+- Writing evaluation works for both tracks with track-specific feedback
+- Reading evaluation includes skill analysis and document-type feedback for General Training
+- Track-specific feedback generated appropriately for different contexts
+
 ```bash
 # Test Rubrics Endpoint
 curl https://[URL]/api/courses/evaluation/rubrics/academic
