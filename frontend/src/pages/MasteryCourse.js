@@ -78,6 +78,9 @@ export default function MasteryCourse({ user }) {
   const [writingResponse, setWritingResponse] = useState('');
   const [writingFeedback, setWritingFeedback] = useState(null);
   const [evaluatingWriting, setEvaluatingWriting] = useState(false);
+  const [writingTrack, setWritingTrack] = useState('academic'); // 'academic' or 'general'
+  const [generalLessons, setGeneralLessons] = useState([]);
+  const [selectedGeneralLesson, setSelectedGeneralLesson] = useState(null);
   
   // Listening states
   const [showTranscript, setShowTranscript] = useState(false);
