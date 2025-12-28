@@ -90,6 +90,7 @@ export default function BeginnerCourse({ user }) {
   // Fetch lessons on mount
   useEffect(() => {
     fetchLessons();
+    fetchGeneralLessons();
     
     // Cleanup audio when component unmounts
     return () => {
