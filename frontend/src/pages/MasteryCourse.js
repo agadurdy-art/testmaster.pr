@@ -1056,48 +1056,99 @@ export default function MasteryCourse({ user }) {
         </>
       )}
       
-      {/* General Training Reading Content */}
+      {/* General Training Reading Content - Module-Specific */}
       {readingTrack === 'general' && (
         <Card className="p-6 bg-white border-0 shadow-lg">
-          {generalReadingLessons.length > 0 ? (
+          {languageBooster?.reading_task ? (
             <>
-              {/* Lesson Selector */}
-              <div className="mb-4">
-                <p className="text-sm font-medium text-gray-600 mb-2">Ders Seçin:</p>
-                <div className="flex flex-wrap gap-2">
-                  {generalReadingLessons.map((lesson, idx) => (
-                    <Button
-                      key={idx}
-                      variant={selectedReadingLesson?.id === lesson.id ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => { setSelectedReadingLesson(lesson); setReadingAnswers({}); setShowReadingResults(false); }}
-                      className={selectedReadingLesson?.id === lesson.id ? 'bg-purple-600' : ''}
-                    >
-                      {lesson.topic}
-                    </Button>
-                  ))}
+              {/* Module-Specific Reading Content */}
+              <div className="bg-purple-50 rounded-xl p-5 mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-purple-600 text-white">{languageBooster.module.toUpperCase()}</Badge>
+                  <span className="text-xs text-purple-600 font-semibold">GENERAL TRAINING READING - Module-Specific</span>
+                </div>
+                
+                {/* Learning Outcome */}
+                <p className="text-sm text-gray-600 mb-4">{languageBooster.learning_outcome}</p>
+              </div>
+              
+              {/* Reading Task */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-xl">
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className="bg-blue-100 text-blue-700">{languageBooster.reading_task.type}</Badge>
+                  <h4 className="font-semibold text-gray-800">{languageBooster.reading_task.title}</h4>
+                </div>
+                
+                {/* The actual text content */}
+                <div className="bg-white p-4 rounded-lg border border-gray-200 mb-4 font-mono text-sm whitespace-pre-line">
+                  {languageBooster.reading_task.content}
+                </div>
+                
+                {/* Questions */}
+                <div className="space-y-3">
+                  <h5 className="font-semibold text-gray-800 text-sm">Sorular:</h5>
+                  {languageBooster.reading_task.questions?.map((q, qIdx) => {
+                    const questionKey = `booster-${qIdx}`;
+                    const userAnswer = readingAnswers[questionKey] || '';
+                    const isCorrect = userAnswer.toLowerCase().trim() === q.a.toLowerCase().trim();
+                    
+                    return (
+                      <div key={qIdx} className="p-3 bg-white rounded-lg border border-gray-100">
+                        <p className="font-medium text-gray-900 mb-2 text-sm">
+                          {qIdx + 1}. {q.q}
+                          <span className="text-xs text-gray-400 ml-2">({q.skill})</span>
+                        </p>
+                        <div className="flex gap-2 items-center">
+                          <Input 
+                            placeholder="Cevabınız..." 
+                            className="text-sm h-8 flex-1"
+                            value={userAnswer}
+                            onChange={(e) => setReadingAnswers(prev => ({...prev, [questionKey]: e.target.value}))}
+                          />
+                          {showReadingResults && (
+                            <span className={`text-lg ${isCorrect ? 'text-green-500' : 'text-red-500'}`}>
+                              {isCorrect ? '✓' : '✗'}
+                            </span>
+                          )}
+                        </div>
+                        {showReadingResults && !isCorrect && (
+                          <p className="mt-1 text-xs text-green-600 bg-green-50 p-2 rounded">
+                            Doğru cevap: {q.a}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               
-              {selectedReadingLesson && selectedReadingLesson.reading && (
-                <>
-                  <div className="bg-purple-50 rounded-xl p-5 mb-6">
-                    <p className="text-xs text-purple-600 font-semibold mb-2">GENERAL TRAINING READING - {selectedReadingLesson.title}</p>
-                    
-                    {/* Learning Goals */}
-                    {selectedReadingLesson.learning_goals && (
-                      <div className="mb-4 p-3 bg-white rounded-lg">
-                        <p className="text-xs font-semibold text-purple-700 mb-2">🎯 Öğrenme Hedefleri:</p>
-                        <ul className="text-sm text-gray-700 space-y-1">
-                          {selectedReadingLesson.learning_goals.map((goal, i) => (
-                            <li key={i}>• {goal}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {/* Text Types */}
-                    {selectedReadingLesson.reading.text_types && (
+              <Button 
+                onClick={() => setShowReadingResults(true)}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-600"
+              >
+                Cevapları Kontrol Et
+              </Button>
+              
+              {/* Key Vocabulary Preview */}
+              <details className="mt-4 cursor-pointer">
+                <summary className="font-bold text-blue-700">📘 Related Vocabulary ({languageBooster.key_vocabulary?.length || 0} words)</summary>
+                <div className="mt-2 p-3 bg-blue-50 rounded-lg max-h-40 overflow-y-auto">
+                  <div className="flex flex-wrap gap-2">
+                    {languageBooster.key_vocabulary?.slice(0, 10).map((vocab, i) => (
+                      <span key={i} className="px-2 py-1 bg-white rounded-full text-xs text-blue-700 border border-blue-200">
+                        {vocab.word}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </details>
+            </>
+          ) : (
+            <div className="text-center py-8 bg-gray-50 rounded-xl">
+              <FileText className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500">Module-specific reading content loading...</p>
+            </div>
+          )}
                       <div className="mb-4">
                         <p className="text-xs font-semibold text-purple-700 mb-1">Metin Türleri:</p>
                         <div className="flex flex-wrap gap-1">
