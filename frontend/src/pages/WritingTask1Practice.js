@@ -613,11 +613,11 @@ export default function WritingTask1Practice() {
                       {recommendedLessons.length > 0 && (
                         <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
                           <h4 className="text-sm font-semibold text-purple-700 mb-2 flex items-center gap-2">
-                            📚 Önerilen Dersler
-                            <Badge className="bg-purple-100 text-purple-600 text-xs">Kurs Odaklı</Badge>
+                            📚 Recommended Lessons
+                            <Badge className="bg-purple-100 text-purple-600 text-xs">Course Focused</Badge>
                           </h4>
                           <p className="text-xs text-purple-600 mb-2">
-                            Zayıf noktalarınızı geliştirmek için bu dersleri çalışın:
+                            Study these lessons to improve your weak areas:
                           </p>
                           <div className="space-y-2">
                             {recommendedLessons.map((lesson, idx) => (
