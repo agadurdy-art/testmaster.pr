@@ -171,18 +171,29 @@ export default function BeginnerCourse({ user }) {
   const fetchModuleLanguageBooster = async (lessonTitle) => {
     try {
       const topicToBooster = {
-        'family': 'housing',
-        'food': 'health',
+        'family': 'family',
+        'food': 'food',
         'daily': 'work',
         'routine': 'work',
         'home': 'housing',
-        'hobbies': 'travel',
+        'hobbies': 'leisure',
+        'leisure': 'leisure',
         'health': 'health',
         'education': 'education',
         'work': 'work',
         'travel': 'travel',
-        'shopping': 'travel',
-        'weather': 'travel',
+        'shopping': 'finance',
+        'weather': 'environment',
+        'environment': 'environment',
+        'technology': 'technology',
+        'culture': 'culture',
+        'sports': 'sports',
+        'media': 'media',
+        'transport': 'transport',
+        'crime': 'crime',
+        'science': 'science',
+        'money': 'finance',
+        'finance': 'finance',
       };
       
       const normalizedTitle = lessonTitle?.toLowerCase() || '';
