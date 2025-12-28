@@ -367,24 +367,46 @@ export default function AdvancedMasteryCourse({ user }) {
     }
     setWritingLoading(true);
     try {
-      const writing = selectedModule.writing;
-      const res = await fetch(`${API_URL}/api/advanced-mastery/evaluate-writing`, {
+      // Use track-specific evaluation API
+      const res = await fetch(`${API_URL}/api/courses/evaluate/writing`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          task: writing?.prompt || '',
-          model_essay: writing?.band75_excerpt || '',
-          user_response: writingResponse,
-          module_title: selectedModule.title,
-          examiner_analysis: writing?.examiner_analysis
+          response: writingResponse,
+          task_type: 'task2',
+          track: writingTrack,
+          context: writingTrack === 'general' ? 'formal' : null
         })
       });
       if (res.ok) {
-        const feedback = await res.json();
-        setWritingFeedback(feedback);
-        toast.success('Essay evaluated!');
+        const data = await res.json();
+        if (data.success && data.evaluation) {
+          // Transform evaluation to component-expected format
+          const evaluation = data.evaluation;
+          setWritingFeedback({
+            skill: 'writing',
+            track: evaluation.track,
+            overall_band: evaluation.overall_band,
+            criteria: evaluation.criteria_scores ? {
+              task_response: evaluation.criteria_scores.task_achievement?.score || evaluation.criteria_scores.task_achievement,
+              coherence: evaluation.criteria_scores.coherence_cohesion?.score || evaluation.criteria_scores.coherence_cohesion,
+              lexical_resource: evaluation.criteria_scores.lexical_resource?.score || evaluation.criteria_scores.lexical_resource,
+              grammar: evaluation.criteria_scores.grammatical_range?.score || evaluation.criteria_scores.grammatical_range
+            } : {},
+            strengths: evaluation.track_specific_feedback?.filter(f => f.includes('Good') || f.includes('Appropriate')) || [],
+            weaknesses: evaluation.track_specific_feedback?.filter(f => !f.includes('Good') && !f.includes('Appropriate')) || [],
+            mistakes: [],
+            corrections: [],
+            recommended_lessons: [],
+            improvement_suggestions: evaluation.improvement_suggestions || []
+          });
+          toast.success('Essay evaluated!');
+        } else {
+          toast.error('Evaluation failed');
+        }
       }
     } catch (e) {
+      console.error('Evaluation error:', e);
       toast.error('Evaluation failed');
     } finally {
       setWritingLoading(false);
