@@ -224,17 +224,30 @@ export default function AdvancedMasteryCourse({ user }) {
         console.error('Error fetching strategic writing:', e);
       }
       
-      // Fetch strategic reading content for Advanced
+      // Fetch strategic reading content for Advanced - NEW API from /content/reading/
       try {
-        const strategicReadingResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-reading/${strategicModuleId}`);
-        if (strategicReadingResponse.ok) {
-          const strategicReadingData = await strategicReadingResponse.json();
-          if (strategicReadingData.success) {
-            setStrategicReading(strategicReadingData.strategic_reading);
+        // Try new Academic Reading API first
+        const academicReadingResponse = await fetch(`${API_URL}/api/courses/reading/academic/advanced/${strategicModuleId}`);
+        if (academicReadingResponse.ok) {
+          const academicData = await academicReadingResponse.json();
+          if (academicData.success && academicData.module) {
+            setStrategicReading(academicData.module);
           }
         }
       } catch (e) {
-        console.error('Error fetching strategic reading:', e);
+        console.error('Error fetching academic reading:', e);
+        // Fallback to old API if new one fails
+        try {
+          const strategicReadingResponse = await fetch(`${API_URL}/api/courses/advanced-strategic-reading/${strategicModuleId}`);
+          if (strategicReadingResponse.ok) {
+            const strategicReadingData = await strategicReadingResponse.json();
+            if (strategicReadingData.success) {
+              setStrategicReading(strategicReadingData.strategic_reading);
+            }
+          }
+        } catch (fallbackError) {
+          console.error('Fallback strategic reading also failed:', fallbackError);
+        }
       }
       
       // Also fetch language booster as fallback
