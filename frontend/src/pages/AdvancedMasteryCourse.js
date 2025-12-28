@@ -141,6 +141,7 @@ export default function AdvancedMasteryCourse({ user }) {
         setQuizResults(null);
         setQuizSubmitted(false);
         setStrategicReading(null);
+        setGeneralReading(null);
         setReadingTrack('academic');
         // Fetch module-specific language booster
         fetchModuleLanguageBooster(data.title || module.title);
