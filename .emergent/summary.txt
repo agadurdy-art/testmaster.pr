@@ -1,74 +1,71 @@
 <analysis>**original_problem_statement:**
-The user provided a comprehensive ULTRA MASTER PROMPT to completely overhaul the IELTS Question Bank. The vision is to create a high-end academic preparation system, not a generic practice website.
+The user's initial goal was to fix a critical bug in the IELTS Question Bank where topic and band filtering was not working, and the General Training option was missing.
 
-Key requirements from the prompt and subsequent user feedback include:
-1.  **Task Authenticity**: All tasks (especially Writing and Reading) must be realistic, with specific contexts (location, time period, subject), mimicking real IELTS exams.
-2.  **UX & Visual Presentation**: Implement a side-by-side layout for Writing Task 1 on desktop (visual on the left, writing area on the right). Avoid oversized visuals and focus on a clean, academic interface.
-3.  **Model Answers**: Provide a three-layer model answer system: a high-band sample, academic reasoning notes (why it's good), and alternative expressions. For Task 2 and General Training, provide distinct Band 6 and Band 8.5 samples.
-4.  **General Training Content**: Add support for General Training Writing Task 1 (letter writing).
-5.  **Filtering & Relevancy**: When a user selects a category (topic) and band level on the main Question Bank page, the subsequent practice screen must show a relevant question.
+After the agent started working, the user provided a new, comprehensive ULTRA MASTER PROMPT detailing a major architectural change. The new vision requires the Question Bank to be entirely driven by the existing course structure (, , ).
 
-The user's last message expressed frustration that the category/band filtering was not working and the General Writing option was not visible.
+Key requirements of the new system:
+1.  **Topic Gating**: The topics available in the Question Bank's filter must be dynamically derived from the lessons within the courses that correspond to the user's selected band level.
+    *   Band 4.0–5.0 shows topics from  only.
+    *   Band 5.5–6.5 shows topics from  + .
+    *   Band 7.0–9.0 shows topics from all three courses.
+2.  **Lesson-Anchored Tasks**: All generated or selected practice tasks must be anchored to a specific lesson ID and its learning objectives. The task scenario can be new and varied, but the core skill being practiced must come from a lesson.
+3.  **Course-Driven Recommendations**: The AI evaluation feedback (for Writing, Speaking, etc.) MUST include a new  section. These recommendations should point to specific lessons in the existing course structure to help the user improve on their identified weaknesses.
+4.  **Lesson Registry**: The agent is instructed to implement a Lesson Registry on the backend to parse the course files and provide an API for querying lessons and topics by stage, skill, etc. This registry will be the single source of truth for the Question Bank.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-The application features a significantly enhanced IELTS Soru Bankası (Question Bank) aligned with the user's ULTRA MASTER PROMPT.
--   **Writing Task 1 (Academic)**: Features a new side-by-side UX. It dynamically generates authentic, IELTS-compliant tasks for all 6 visual types (Line, Bar, Pie, Table, Process, Map) with realistic data and context.
--   **Writing Task 2 (Academic)**: Provides authentic prompts and features a tabbed interface to show separate Band 6.0 and Band 8.5 model answers.
--   **Writing Task 1 (General Training)**: A new page for letter writing (formal, semi-formal, informal) is implemented, also with Band 6.0 and Band 8.5 model answers.
--   **AI Evaluation**: A GPT-4o powered evaluation system for Writing Task 1 is integrated. It provides an overall band score, detailed feedback on four criteria (TA, CC, LR, GRA), and a qualitative summary of strengths and weaknesses.
--   **Authentication**: A persistent login issue was resolved by identifying and fixing a database name mismatch ( vs ) and correcting password hashing logic. A test user () has been created in the correct database.
+The application now has a fully functional IELTS Question Bank front-end flow. The agent has successfully fixed the critical bugs and implemented the user's requested UX improvements.
+- The filtering and navigation from the main  page is now working correctly.
+- The UX has been updated to have topic and band selection at the top of the page, as requested by the user.
+- A critical application-wide routing issue, which caused users to be redirected to the dashboard instead of the intended page after login, has been fixed by introducing a  state in .
+- The General Training Task 1 option is now correctly displayed in the skill selection modal and navigates to the correct practice page with the selected filters.
+- The practice pages (, , ) correctly read and use the  and  URL parameters to fetch relevant questions.
 
 **Last working item**:
-*   **Last item agent was working**: Fixing the broken UI flow and filtering from the main  page. The user reported that selecting a topic and band level had no effect on the questions presented on the practice pages, and the General Writing option was missing. The agent identified that the modal needed to be updated to include the General Training option and that the selected  and  parameters were not being passed to the practice page routes.
-*   **Status**: IN PROGRESS
-*   **Agent Testing Done**: N
-*   **Which testing method agent to use?**: Frontend testing agent
+*   **Last item agent was working**: The agent had just completed a full cycle of debugging and implementation, successfully fixing all reported issues with the Question Bank's filtering, UX, and navigation. The agent verified the complete user flow with screenshots and was about to present the finished work to the user for final verification.
+*   **Status**: USER VERIFICATION PENDING
+*   **Agent Testing Done**: Y
+*   **Which testing method agent to use?**: NA (Waiting for user to test and confirm the fix)
 *   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-*   **Issue 1: Filtering and Navigation from Question Bank Page (P0)**
-*   **Issue 2: Verify Speaking Model Answers Across All Modules (P3)**
-*   **Issue 3: General Linting Errors (P3)**
-*   **Issue 4: Unused  file (P3)**
+*   **Issue 1: Verify Speaking Model Answers Across All Modules (P3)**
+*   **Issue 2: General Linting Errors (P3)**
+*   **Issue 3: Unused  file (P3)**
 
 **Issues Detail**:
-*   **Issue 1: Filtering and Navigation from Question Bank Page**
-    *   **Attempted fixes**: The agent identified that  was not passing the selected  and  as URL parameters to the practice pages. It also noted the General Training option was missing from the skill selection modal. The agent started editing  and  to handle URL parameters but was interrupted before completing and testing the fix.
-    *   **Next debug checklist**:
-        1.  Modify : Update the  handler for the Writing skill card to show a modal that includes Academic Task 1, Academic Task 2, and General Training Task 1.
-        2.  Modify : Ensure that when a user clicks Start Practice from the modal, the selected  and  are appended as query parameters to the navigation URL (e.g., ).
-        3.  Modify , , and : Ensure the  hook that fetches questions reads the  and  from the URL search parameters and includes them in the API request.
-        4.  Verify the backend API endpoints for all writing tasks correctly filter based on  and  parameters.
-    *   **Why fix this issue and what will be achieved with the fix?**: This is a critical usability issue that breaks the user's intended workflow. Fixing it will make the Question Bank functional and intuitive, fulfilling a key user requirement.
-    *   **Status**: IN PROGRESS
-    *   **Is recurring issue?**: N
-    *   **Should Test frontend/backend/both after fix?**: Both
-    *   **Blocked on other issue**: None.
-*   **Issue 2: Verify Speaking Model Answers Across All Modules**
+*   **Issue 1: Verify Speaking Model Answers Across All Modules**
     *   **Status**: NOT STARTED
-    *   **Details**: See previous handover summary.
-*   **Issue 3: General Linting Errors**
+    *   **Details**: Per previous handover summary, requires verification.
+*   **Issue 2: General Linting Errors**
     *   **Status**: NOT STARTED
-    *   **Details**: See previous handover summary.
-*   **Issue 4: Unused  file**
+    *   **Details**: Recurring issue noted in the previous handover.
+*   **Issue 3: Unused  file**
     *   **Status**: NOT STARTED
-    *   **Details**: See previous handover summary.
+    *   **Details**: Per previous handover summary, this file should be checked for usage and potentially removed.
 
 **In progress Task List**:
-*   **Task 1: Implement ULTRA MASTER PROMPT (P0)**
-    *   **Where to resume**: The core generation logic and UI for all Writing tasks are complete. The immediate next step is to fix the filtering and navigation flow as described in Issue 1. After that, the  routes should be removed and the new pages should be integrated into the main application's protected routing.
-    *   **What will be achieved with this?**: A fully functional, academically robust IELTS Writing Question Bank that matches the user's vision.
-    *   **Status**: IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?**: Both
-    *   **Blocked on something**: Issue 1.
+None. The previous task was completed and is pending user verification.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   (P1) **Integrate New UX with Protected Routes**: Remove the temporary  routes and fix the main application routing so that users can access the new practice pages after logging in.
-    *   (P2) **Implement Reading/Listening/Speaking UX**: Apply the  wireframe logic to the other skills' practice screens (e.g., side-by-side passage/questions for Reading).
-    *   (P2) **Implement 3-Layer Model Answer UI**: The backend generates multi-layer answers, but the frontend currently only shows the final sample. The UI needs to be updated to present the Academic Reasoning Notes and Alternative Expressions as described in the prompt.
+    *   (P0) **Implement ULTRA MASTER PROMPT: Course-Driven Question Bank**: This is the new highest priority task.
+        *   **Phase 1: Backend Lesson Registry**: Create a service in the backend to parse the course files (, , etc.) and expose endpoints to:
+            *   List topics based on course stages ().
+            *   Find lessons by topic or skill objective.
+            *   This will be the single source of truth, replacing the hardcoded topic list.
+        *   **Phase 2: Frontend Integration**:
+            *   Update  to fetch topics from the new Lesson Registry endpoint.
+            *   Implement the topic gating logic: when a user selects a band, the topic list should dynamically update to show only topics from the allowed course stages.
+        *   **Phase 3: Update Task Generation**:
+            *   Modify the backend task generation services (, etc.) to be lesson-anchored. They must accept a  and generate tasks that align with that lesson's objectives.
+        *   **Phase 4: Enhance AI Evaluation**:
+            *   Update the  endpoint to include the new mandatory  array in its JSON response, based on the user's weaknesses.
+    *   (P1) **Integrate New UX with Protected Routes**: Remove the temporary  routes and fix the main application routing. *(Partially done, but demo routes still exist).*
+    *   (P2) **Implement Reading/Listening/Speaking UX**: Apply the  wireframe logic to other skills.
+    *   (P2) **Implement 3-Layer Model Answer UI**: Build the frontend UI to display Academic Reasoning Notes and Alternative Expressions.
+
 *   **Future Tasks:**
     *   YLE (Starters, Movers, Flyers) course content enrichment.
     *   Integrate Alchemy Pay payment gateway.
@@ -76,21 +73,19 @@ The application features a significantly enhanced IELTS Soru Bankası (Question 
     *   Address pending issues with PayPal webhooks.
 
 **Completed work in this session**
-- **Implemented ULTRA MASTER PROMPT for Writing**:
-  -   **New Side-by-Side UX**: Created a new  page with a two-panel layout (visual on the left, writing on the right).
-  -   **Authentic Task Generation**: Created  to generate realistic, IELTS-compliant tasks for all 6 Writing Task 1 types (Line, Bar, Pie, Table, Process, Map).
-  -   **General Training & Task 2**: Created  for letter writing and  for Task 2 prompts.
-  -   **Band-Specific Model Answers**: Updated  and  to show distinct Band 6.0 and Band 8.5 model answers.
-- **Integrated AI Evaluation**:
-  -   Enhanced the  endpoint to use GPT-4o for detailed, criteria-based feedback.
-  -   Integrated the evaluation results into the  frontend, displaying the overall band, criteria scores, and qualitative feedback.
-- **Fixed Critical Authentication Bug**:
-  -   Diagnosed and resolved a login failure by identifying a mismatch in database names used by the application () versus the test script ().
-  -   Created a new, verified test user in the correct database to enable successful frontend testing.
+- **Fixed Critical Question Bank Flow**:
+  - Resolved the broken filtering and navigation logic in .
+  - Ensured selected  and  are correctly passed as URL parameters to practice pages.
+- **Improved Question Bank UX**:
+  - Refactored the UI in  to move the Topic and Band filters to the top of the page, enabling a filter-then-select workflow as requested by the user.
+- **Fixed Application-Wide Routing**:
+  - Resolved a major routing bug in  by implementing a  state to wait for user authentication state from  before rendering protected routes. This stops incorrect redirects to the login page.
+- **Enabled General Training Task**:
+  - Verified the General Training Task 1 option is available in the Writing skill modal.
+  - Added URL parameter handling to .
 
 **Earlier issues found/mentioned but not fixed**
-- **Issue 1: Verify Speaking Model Answers**: Detailed in the All Pending/In progress Issue list section.
-- **Issue 2: Unused  file**: Detailed in the All Pending/In progress Issue list section.
+- Same as All Pending/In progress Issue list.
 
 **Known issue recurrence from previous fork**
 - **Issue recurrence in previous fork**: Linting Errors.
@@ -101,10 +96,9 @@ The application features a significantly enhanced IELTS Soru Bankası (Question 
 
 
 **Key Technical Concepts**
--   **ULTRA MASTER PROMPT**: A user-provided, vision-defining document that dictates all new development for the Question Bank, focusing on academic authenticity and UX.
--   **Authentic Task Templating**: A system in  that combines templates with dynamic, realistic data (locations, topics, timeframes) to create unique, IELTS-compliant questions.
--   **Deterministic SVG Generation**: Using  to create data-accurate visuals for Writing Task 1, avoiding non-deterministic AI image models.
--   **LLM-Powered Evaluation**: Using  and GPT-4o to provide structured, criteria-based feedback on student writing, acting as an AI tutor.
+-   **ULTRA MASTER PROMPT**: The user's vision for a fully integrated, academically robust learning system.
+-   **Async Auth State Handling**: The use of a  state in the root  component to prevent race conditions between  hydration and React Router's initial render, ensuring protected routes work correctly on page load.
+-   **Component-Driven UX**: Modifying the primary  component to change the user interaction flow based on direct user feedback.
 
 **key DB schema**
 -   No changes to the database schema were made in this session.
@@ -113,66 +107,52 @@ The application features a significantly enhanced IELTS Soru Bankası (Question 
 -   None.
 
 **All files of reference**
--   : The central hub for the feature; currently the source of the main bug.
--   : The rewritten page with the new side-by-side UX.
--   : The rewritten page with Band 6/8.5 model answers.
--   : The new page for letter writing.
--   : Core logic for generating all Task 1 prompts.
--   : Core logic for generating Task 2 prompts and answers.
--   : The API router that connects the frontend to the new backend services.
+-   : The central component that was fixed and refactored.
+-   : The root component where the critical routing fix was implemented.
+-   : The file updated to support filtering.
+-   , , : These will be the source of truth for the upcoming Lesson Registry task.
 
 **Areas that need refactoring**:
--   **Routing**: The agent created temporary, unprotected  routes in  to test the new UI. This is a workaround for issues with the  component. The entire routing logic for new pages needs to be properly integrated.
--   ****: This component's logic for handling skill, topic, and band selection before navigating is complex and currently broken. It needs to be refactored for clarity and correctness.
+-   **Routing**: The temporary  routes in  should be removed and the new pages fully integrated into the protected routing structure.
 
 **key api endpoints**
--   : **(New)** Generates a complete, authentic Task 1 prompt for a specified visual type (, , etc.), optionally filtered by  and .
--   : **(New)** Generates a Task 2 prompt with Band 6 and 8.5 model answers, optionally filtered by  and .
--   : **(New)** Generates a General Training Task 1 letter-writing prompt with model answers, filtered by .
--   : **(Enhanced)** Now accepts the full  and provides much more detailed, criteria-based feedback using GPT-4o.
+-   No new endpoints were created. Existing endpoints were leveraged by the fixed frontend flow.
 
 **Critical Info for New Agent**
--   **TOP PRIORITY IS THE BUG FIX**: The user's last message was clear: fix the filtering and navigation from the  page first. Do not proceed to other tasks until this is resolved and verified.
--   **ULTRA MASTER PROMPT is Law**: All development MUST adhere to the user's ULTRA MASTER PROMPT. It is the single source of truth for features, UX, and academic standards.
--   **Test User**: Use the credentials  /  for testing. This user was created in the correct database ().
--   **Routing Workaround**: Be aware that the new pages currently exist on unprotected  routes. After fixing the primary bug, a key task is to integrate these pages properly behind the application's authentication.
+-   **PRIORITY #1: Get User Confirmation.** Your first action should be to use the  tool to present the summary of the completed bug fixes to the user. The user's last instruction was  (finish the task first). DO NOT start the new ULTRA MASTER PROMPT implementation until the user has verified and approved the recent fixes.
+-   **The Next Big Thing is the ULTRA MASTER PROMPT**. Once the user confirms the fix, the next task is the large-scale architectural change to a course-driven question bank. Refer to the user's detailed prompts (messages 63, 66) as the source of truth for this implementation. Start with the Lesson Registry on the backend.
+-   **Test User**:  / .
 
 **documents and test reports created in this job**
--   
--   
--   
--   
+-  was updated to reflect the successful testing of the fixed features.
 
 **Last 10 User Messages and any pending HUMAN messages**
-10.  (User wants agent to start working on the AI evaluation system). (Complete)
-9.  User provides feedback that General Writing is missing and Task 2 needs model answers. (Complete)
-8.   (Will the updates be deployed when I deploy?). (Answered)
-7.   (User confirms to proceed with implementing other chart types). (Complete)
-6.  User asks to proceed with implementation after seeing the successful demo. (Acknowledged)
-5.  User gives a final, comprehensive approval of the agent's plan, confirming priorities and the starting chart type (Line Graph). (Acknowledged)
-4.  User provides two highly detailed ULTRA MASTER PROMPT documents for both the core academic vision and the UX wireframes. This is the most critical input. (Acknowledged)
-3.  User provides initial feedback on the existing Writing Task 1, stating the tasks aren't specific enough and the UX is poor. This prompted the ULTRA MASTER PROMPT. (Complete)
-2.   (Finish the task first, then we'll do a fork session. Otherwise the work gets lost). **(PENDING - This is the user's final instruction, indicating the current bug-fixing task is incomplete and must be finished first).**
-1.  User complains that General Writing is missing, and category/band filtering is not working. **(PENDING - This is the bug the agent is currently working on).**
+- **10 (user):** Provides an extremely detailed ULTRA MASTER PROMPT for a new system: Band-Based Topic Gating and Course/Lesson Recommendations. (Status: Acknowledged, planning started)
+- **9 (assistant):** Summarizes the fixes and states it will finish the task. (Status: Interrupted by user)
+- **8 (assistant):** Provides a final screenshot showing the entire fixed flow is working perfectly, from filtering to navigating to the practice page with correct parameters. (Status: Complete)
+- **7 (assistant):** Shows the Writing selection modal is working correctly with all options and selected filters. (Status: Complete)
+- **6 (assistant):** Shows the new filter selection UX is working correctly on the Question Bank page. (Status: Complete)
+- **5 (assistant):** Shows the Question Bank page is now loading correctly after fixing the routing issue in . (Status: Complete)
+- **4 (user):** Provides a second, even more detailed ULTRA MASTER PROMPT clarifying that topics must be derived from existing course files, not a separate table, and provides an implementation instruction to create a Lesson Registry. (Status: Acknowledged)
+- **3 (assistant):** Acknowledges the new prompt and proposes a plan to start working on it. (Status: Sent to user)
+- **2 (user):**  (Finish the task first, then there will be a fork session). **(PENDING - This is the most important instruction. The agent must finalize the previous work before starting the new prompt).**
+- **1 (user):**  (Yes, it would be better if the topic and band selection were at the top...). (Status: Complete, this UX change was implemented).
 
 **Project Health Check:**
--   **Broken**: The navigation and filtering flow from the main  page to the practice pages is broken. This is the highest priority issue.
--   **Mocked/Incomplete**: The protected routing for the new pages is not implemented; they are currently on temporary  routes. The 3-layer model answer UI is not yet built on the frontend.
--   **Needs Refactoring**:  needs to be cleaned up to remove the demo routes.  needs a refactor to correctly handle state and navigation.
+-   **Fixed**: The primary user-facing bug regarding Question Bank filtering and navigation has been resolved. The application-wide routing issue is also fixed.
+-   **Needs Refactoring**: Demo routes in  should be removed.
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o**: Used via  with the  for the AI evaluation feature.
--   **ElevenLabs**: Exists in the project, but was not used in this session.
--   **Resend, Google Auth, PayPal**: Existing integrations.
+-   **OpenAI GPT-4o**: Used via  for AI evaluation. The upcoming task will require modifying its output.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO. Agent attempted to use it but ran into authentication issues, which were then debugged and resolved manually. Subsequent testing was done via screenshots.
+-   **Testing agent used after significant changes**: YES, the agent used the frontend testing agent to diagnose the routing issue.
 -   **Troubleshoot agent used after agent stuck in loop**: NO.
 -   **Test files created**: None.
--   **Known regressions**: The navigation from the  skill selection modal is broken.
+-   **Known regressions**: None. The previous regression was fixed.
 
 **Credentials to test flow:**
 *   **User**:  / 
 
 **What agent forgot to execute**
-The agent was in the middle of fixing the critical bug reported by the user (filtering and navigation from ) when the user requested to fork. The fix is incomplete and must be the first action for the next agent.</analysis>
+The agent was interrupted just before executing the  tool to present the completed work to the user. The user's last message explicitly instructed the agent to finish the current task. The next agent's immediate action should be to follow this instruction.</analysis>

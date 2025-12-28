@@ -2,7 +2,7 @@
 
 ## Quick Access to Content Import Tool
 
-**URL:** https://ieltsprep-master.preview.emergentagent.com/admin/content
+**URL:** https://lesson-registry.preview.emergentagent.com/admin/content
 
 This web-based tool allows you to easily paste your Cambridge IELTS 19 test content.
 
@@ -14,7 +14,7 @@ This web-based tool allows you to easily paste your Cambridge IELTS 19 test cont
 
 1. **Open your Cambridge IELTS 19 book to Test 1 - Reading**
 
-2. **Go to:** https://ieltsprep-master.preview.emergentagent.com/admin/content
+2. **Go to:** https://lesson-registry.preview.emergentagent.com/admin/content
 
 3. **Select "Reading" tab**
 
@@ -153,7 +153,7 @@ I cannot automatically extract copyrighted Cambridge IELTS test content from you
 
 **Platform Ready:** ✅ All features working
 **Content Needed:** Your Cambridge IELTS 19 tests
-**Import Tool:** https://ieltsprep-master.preview.emergentagent.com/admin/content
+**Import Tool:** https://lesson-registry.preview.emergentagent.com/admin/content
 **Time Required:** ~30 minutes per test to copy and paste content
 
 Once you add your test content, students will be able to:
