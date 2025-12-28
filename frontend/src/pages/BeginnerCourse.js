@@ -161,6 +161,49 @@ export default function BeginnerCourse({ user }) {
     setListeningSubmitted(false);
     setListeningScore(0);
     setShowTranscript(false);
+    
+    // Fetch module-specific language booster
+    fetchModuleLanguageBooster(lesson.title || lesson.topic);
+  };
+
+  // Fetch Module-Specific Language Booster
+  const fetchModuleLanguageBooster = async (lessonTitle) => {
+    try {
+      const topicToBooster = {
+        'family': 'housing',
+        'food': 'health',
+        'daily': 'work',
+        'routine': 'work',
+        'home': 'housing',
+        'hobbies': 'travel',
+        'health': 'health',
+        'education': 'education',
+        'work': 'work',
+        'travel': 'travel',
+        'shopping': 'travel',
+        'weather': 'travel',
+      };
+      
+      const normalizedTitle = lessonTitle?.toLowerCase() || '';
+      let boosterModule = 'education'; // default
+      
+      for (const [key, value] of Object.entries(topicToBooster)) {
+        if (normalizedTitle.includes(key)) {
+          boosterModule = value;
+          break;
+        }
+      }
+      
+      const response = await fetch(`${API_URL}/api/courses/language-booster/${boosterModule}`);
+      if (!response.ok) return;
+      
+      const data = await response.json();
+      if (data.success) {
+        setLanguageBooster(data.language_booster);
+      }
+    } catch (error) {
+      console.error('Error fetching language booster:', error);
+    }
   };
 
   // Text-to-Speech
