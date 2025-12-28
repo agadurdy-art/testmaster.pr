@@ -3578,6 +3578,7 @@ if __name__ == "__main__":
     print(f"   Phase 2-4 Features: {'✅ PASSED' if phase_2_4_success else '❌ FAILED'}")
     print(f"   Advanced Mastery Course Tests: {'✅ PASSED' if advanced_mastery_success else '❌ FAILED'}")
     print(f"   Writing Practice Tests: {'✅ PASSED' if writing_success else '❌ FAILED'}")
+    print(f"   Advanced General Reading (Phase 3) - NEW: {'✅ PASSED' if advanced_reading_success else '❌ FAILED'}")
     print(f"   Overall: {'✅ ALL TESTS PASSED' if overall_success else '❌ SOME TESTS FAILED'}")
     print(f"{'='*80}")
     
