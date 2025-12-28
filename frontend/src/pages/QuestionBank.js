@@ -674,7 +674,38 @@ export default function QuestionBank() {
                 </div>
               )}
 
-              <p className="text-sm text-gray-500 mb-6">IELTS Reading türünü seçin:</p>
+              <p className="text-sm text-gray-500 mb-6">IELTS Reading türünü veya soru tipini seçin:</p>
+
+              {/* Question Type Based Practice - NEW */}
+              <div className="mb-6 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+                <h4 className="text-sm font-bold text-amber-700 mb-3 flex items-center gap-2">
+                  <HelpCircle className="w-4 h-4" /> SORU TİPİNE GÖRE PRATİK
+                </h4>
+                <p className="text-xs text-amber-600 mb-3">Belirli bir soru tipinde uzmanlaşmak için seçin</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { id: 'multiple_choice', name: 'Multiple Choice', icon: '🔘' },
+                    { id: 'true_false_ng', name: 'True/False/NG', icon: '✓✗' },
+                    { id: 'matching_headings', name: 'Matching Headings', icon: '📑' },
+                    { id: 'sentence_completion', name: 'Sentence Completion', icon: '✏️' },
+                    { id: 'summary_completion', name: 'Summary Completion', icon: '📝' },
+                    { id: 'matching_information', name: 'Matching Info', icon: '🔗' }
+                  ].map(qtype => (
+                    <Button
+                      key={qtype.id}
+                      variant="outline"
+                      size="sm"
+                      className="justify-start text-xs hover:bg-amber-100 hover:border-amber-300"
+                      onClick={() => {
+                        setShowReadingModal(false);
+                        navigate(`/question-bank/reading/practice?type=${qtype.id}`);
+                      }}
+                    >
+                      <span className="mr-1">{qtype.icon}</span> {qtype.name}
+                    </Button>
+                  ))}
+                </div>
+              </div>
 
               {/* Academic Reading Section */}
               <div className="mb-4">
@@ -700,9 +731,9 @@ export default function QuestionBank() {
                       <h3 className="font-bold text-gray-900">Academic Reading</h3>
                       <p className="text-sm text-gray-500">Research articles, journals, academic texts</p>
                       <div className="flex gap-2 mt-2 flex-wrap">
-                        <Badge className="bg-blue-100 text-blue-700">3 passages</Badge>
-                        <Badge className="bg-gray-100 text-gray-600">60 minutes</Badge>
-                        <Badge className="bg-indigo-100 text-indigo-700">40 questions</Badge>
+                        <Badge className="bg-blue-100 text-blue-700">Band 7-9</Badge>
+                        <Badge className="bg-gray-100 text-gray-600">5 Modül</Badge>
+                        <Badge className="bg-indigo-100 text-indigo-700">Advanced</Badge>
                       </div>
                     </div>
                   </div>
@@ -710,7 +741,7 @@ export default function QuestionBank() {
               </div>
 
               {/* General Training Reading Section */}
-              <div>
+              <div className="mb-4">
                 <h4 className="text-sm font-bold text-purple-700 mb-3 flex items-center gap-2">
                   <Target className="w-4 h-4" /> GENERAL TRAINING IELTS
                 </h4>
@@ -733,13 +764,56 @@ export default function QuestionBank() {
                       <h3 className="font-bold text-gray-900">General Training Reading</h3>
                       <p className="text-sm text-gray-500">Policy documents, contracts, workplace notices</p>
                       <div className="flex gap-2 mt-2 flex-wrap">
-                        <Badge className="bg-purple-100 text-purple-700">3 sections</Badge>
-                        <Badge className="bg-gray-100 text-gray-600">60 minutes</Badge>
-                        <Badge className="bg-pink-100 text-pink-700">40 questions</Badge>
+                        <Badge className="bg-purple-100 text-purple-700">Band 7-9</Badge>
+                        <Badge className="bg-gray-100 text-gray-600">5 Modül</Badge>
+                        <Badge className="bg-pink-100 text-pink-700">Advanced</Badge>
                       </div>
                     </div>
                   </div>
                 </Card>
+              </div>
+
+              {/* Mastery Level Section - NEW */}
+              <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
+                <h4 className="text-sm font-bold text-green-700 mb-3 flex items-center gap-2">
+                  <Award className="w-4 h-4" /> MASTERY SEVİYE (Band 6-7)
+                </h4>
+                <div className="grid grid-cols-2 gap-3">
+                  <Card 
+                    className="p-3 cursor-pointer hover:shadow-md transition-all border hover:border-green-300"
+                    onClick={() => {
+                      setShowReadingModal(false);
+                      const params = new URLSearchParams();
+                      if (selectedTopic) params.append('topic', selectedTopic);
+                      navigate(`/question-bank/reading/mastery/academic${params.toString() ? '?' + params.toString() : ''}`);
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-green-600" />
+                      <div>
+                        <p className="font-medium text-sm text-gray-900">Academic</p>
+                        <p className="text-xs text-gray-500">5 Modül</p>
+                      </div>
+                    </div>
+                  </Card>
+                  <Card 
+                    className="p-3 cursor-pointer hover:shadow-md transition-all border hover:border-green-300"
+                    onClick={() => {
+                      setShowReadingModal(false);
+                      const params = new URLSearchParams();
+                      if (selectedTopic) params.append('topic', selectedTopic);
+                      navigate(`/question-bank/reading/mastery/general${params.toString() ? '?' + params.toString() : ''}`);
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-green-600" />
+                      <div>
+                        <p className="font-medium text-sm text-gray-900">General</p>
+                        <p className="text-xs text-gray-500">4 Modül</p>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
               </div>
 
             </div>
