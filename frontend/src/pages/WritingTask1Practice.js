@@ -743,8 +743,8 @@ export default function WritingTask1Practice() {
                         </>
                       ) : (
                         <div className="text-center py-6">
-                          <p className="text-sm text-gray-500">Model cevap yükleniyor...</p>
-                          <p className="text-xs text-gray-400 mt-2">Lütfen bekleyin, yapay zeka model cevap hazırlıyor.</p>
+                          <p className="text-sm text-gray-500">Loading model answer...</p>
+                          <p className="text-xs text-gray-400 mt-2">Please wait, AI is preparing the model answer.</p>
                         </div>
                       )}
                     </Card>
