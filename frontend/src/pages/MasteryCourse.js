@@ -1111,7 +1111,7 @@ export default function MasteryCourse({ user }) {
                         </p>
                         <div className="flex gap-2 items-center">
                           <Input 
-                            placeholder="Cevabınız..." 
+                            placeholder="Your answer..." 
                             className="text-sm h-8 flex-1"
                             value={userAnswer}
                             onChange={(e) => setReadingAnswers(prev => ({...prev, [questionKey]: e.target.value}))}
