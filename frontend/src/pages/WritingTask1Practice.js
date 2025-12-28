@@ -670,29 +670,37 @@ export default function WritingTask1Practice() {
                   )}
 
                   {/* Step 3: Model Answer (Controlled Reveal) */}
-                  {modelAnswerStep >= 3 && modelAnswer && (
+                  {modelAnswerStep >= 3 && (
                     <Card className="p-5 border-2 border-blue-200 bg-blue-50/30">
                       <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
                         <Layers className="w-5 h-5 text-blue-600" /> Model Cevap
                       </h3>
                       
-                      {/* Tab buttons for different band samples */}
-                      <div className="flex gap-2 mb-4">
-                        <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 9 Örnek</Badge>
-                        <Badge variant="outline" className="cursor-pointer">Band 6 Örnek</Badge>
-                        <Badge variant="outline" className="cursor-pointer">Akademik Notlar</Badge>
-                      </div>
+                      {modelAnswer ? (
+                        <>
+                          {/* Tab buttons for different band samples */}
+                          <div className="flex gap-2 mb-4">
+                            <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 9 Örnek</Badge>
+                            <Badge variant="outline" className="cursor-pointer">Band 6 Örnek</Badge>
+                            <Badge variant="outline" className="cursor-pointer">Akademik Notlar</Badge>
+                          </div>
 
-                      {/* Model Answer Text */}
-                      <div className="bg-white p-4 rounded-lg border">
-                        <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                          {modelAnswer?.layer_a_examiner_model?.full_text || 
-                           modelAnswer?.text ||
-                           'Model cevap yüklenirken...'}
-                        </p>
-                        <div className="mt-3 pt-3 border-t flex items-center justify-between">
-                          <span className="text-xs text-gray-500">
-                            Kelime Sayısı: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
+                          {/* Model Answer Text */}
+                          <div className="bg-white p-4 rounded-lg border">
+                            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                              {modelAnswer?.layer_a_examiner_model?.full_text || 
+                               modelAnswer?.text ||
+                               'Model cevap yüklenirken...'}
+                            </p>
+                            <div className="mt-3 pt-3 border-t flex items-center justify-between">
+                              <span className="text-xs text-gray-500">
+                                Kelime Sayısı: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
+                              </span>
+                              <Badge className="bg-green-100 text-green-700">
+                                Tahmini Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.5'}
+                              </Badge>
+                            </div>
+                          </div>
                           </span>
                           <Badge className="bg-green-100 text-green-700">
                             Tahmini Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.5'}
