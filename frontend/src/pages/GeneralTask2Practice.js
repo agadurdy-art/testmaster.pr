@@ -534,12 +534,12 @@ export default function GeneralTask2Practice() {
                     
                     <div className="bg-white p-4 rounded-lg border">
                       <p className="text-sm text-gray-700 whitespace-pre-line leading-relaxed">
-                        {modelAnswers[selectedBand]?.essay || modelAnswers[selectedBand]?.text || 'Model cevap yüklenemedi.'}
+                        {modelAnswers[selectedBand]?.essay || modelAnswers[selectedBand]?.text || 'Model answer not available.'}
                       </p>
                       
                       <div className="mt-3 pt-3 border-t flex items-center justify-between">
                         <span className="text-xs text-gray-500">
-                          {modelAnswers[selectedBand]?.word_count || '-'} kelime
+                          {modelAnswers[selectedBand]?.word_count || '-'} words
                         </span>
                         <Badge className={selectedBand === 'band_8_5' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}>
                           {selectedBand === 'band_8_5' ? 'Band 8.5' : 'Band 6.0'}
@@ -552,7 +552,7 @@ export default function GeneralTask2Practice() {
             ) : (
               <Card className="p-8 text-center">
                 <Edit3 className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">Sol taraftan bir essay sorusu seçin</p>
+                <p className="text-gray-500">Select an essay question from the left</p>
               </Card>
             )}
           </div>
