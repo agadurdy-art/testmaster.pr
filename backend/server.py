@@ -288,6 +288,14 @@ Your task:
 app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
+# Mount static files for audio
+static_audio_path = ROOT_DIR / "static" / "audio"
+if static_audio_path.exists():
+    app.mount("/static/audio", StaticFiles(directory=str(static_audio_path)), name="audio")
+    print("✅ Static audio files mounted at /static/audio")
+else:
+    print("⚠️  Static audio directory not found")
+
 # Import learning platform routes
 try:
     from learning_platform_routes import router as learning_platform_router
