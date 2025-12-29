@@ -180,7 +180,7 @@ export default function QuestionBank() {
               <div className="text-white/70 text-sm">Total Questions</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">{stats?.full_tests || 0}</div>
+              <div className="text-2xl font-bold">{fullTests.length || stats?.full_tests || 0}</div>
               <div className="text-white/70 text-sm">Full Tests</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4">
