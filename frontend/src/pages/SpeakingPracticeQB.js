@@ -357,7 +357,8 @@ export default function SpeakingPracticeQB({ user }) {
         if (data.error === 'Insufficient credits for premium evaluation') {
           toast.error(`Need ${data.credits_needed} credit. You have ${data.current_credits}.`);
         } else {
-        toast.error(data.error || 'Evaluation failed');
+          toast.error(data.error || 'Evaluation failed');
+        }
       }
     } catch (error) {
       console.error('Submit error:', error);
