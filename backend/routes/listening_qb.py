@@ -459,7 +459,7 @@ async def get_listening_set(
 ):
     """
     Get a specific listening set with questions (no answers until submit).
-    Optionally generates audio using ElevenLabs.
+    Optionally generates IELTS-quality audio using ElevenLabs.
     """
     from content.listening.listening_sets import get_listening_set_by_id
     
@@ -483,12 +483,13 @@ async def get_listening_set(
             q_copy["match_options"] = q.get("options", [])
         questions_without_answers.append(q_copy)
     
-    # Generate audio if requested
+    # Generate IELTS-quality audio if requested
     audio_url = None
     if include_audio:
         audio_url = await generate_audio_for_transcript(
             listening_set["transcript"],
-            listening_set.get("speakers", [])
+            listening_set.get("speakers", []),
+            listening_set.get("part", "part1")  # Pass part for speed adjustment
         )
     
     return {
