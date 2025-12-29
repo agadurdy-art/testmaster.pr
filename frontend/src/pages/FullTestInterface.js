@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/badge';
 import { Textarea } from '../components/ui/textarea';
 import { 
   Clock, AlertCircle, ChevronRight, Volume2, VolumeX,
-  Loader2, CheckCircle, Play, Pause, ArrowRight, Send, 
+  Loader2, CheckCircle, Play, Pause, ArrowRight, ArrowLeft, Send, 
   Mic, MicOff, Square, SkipForward, Eye, EyeOff
 } from 'lucide-react';
 import { toast } from 'sonner';
