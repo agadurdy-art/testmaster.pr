@@ -328,6 +328,8 @@ export default function QuestionBank() {
                           setShowWritingModal(true);
                         } else if (skill.id === 'reading') {
                           setShowReadingModal(true);
+                        } else if (skill.id === 'listening') {
+                          setShowListeningModal(true);
                         } else {
                           setSelectedSkill(skill.id);
                           setActiveTab('practice');
