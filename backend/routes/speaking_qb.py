@@ -656,20 +656,16 @@ Provide a detailed evaluation in the following JSON format:
 Be fair, objective, and follow Cambridge IELTS standards strictly. Do not be overly generous or harsh.
 """
         
-        chat = OpenAIChat(api_key=EMERGENT_LLM_KEY)
-        request = OpenAIChatRequest(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": "You are an IELTS speaking examiner. Respond only with valid JSON."},
-                {"role": "user", "content": evaluation_prompt}
-            ],
-            temperature=0.3
+        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        
+        chat = LlmChat(api_key=EMERGENT_LLM_KEY)
+        response = await chat.send_message(
+            message=UserMessage(content=f"You are an IELTS speaking examiner. Respond only with valid JSON.\n\n{evaluation_prompt}"),
+            model="gpt-4o"
         )
         
-        response = await chat.process(request)
-        
         # Parse JSON from response
-        response_text = response.choices[0].message.content
+        response_text = response.content
         # Extract JSON if wrapped in markdown
         if "```json" in response_text:
             response_text = response_text.split("```json")[1].split("```")[0]
