@@ -3111,3 +3111,34 @@ The Listening Question Bank implementation is complete and functional:
 7. Next → Progress through Part 1-2-3
 8. Complete → Results shown with band scores
 
+
+---
+
+## SPEAKING EVALUATION TIERS - December 29, 2025
+
+### Implementation Complete ✅
+
+**Two-Tier Evaluation System:**
+
+| Tier | Model | Cost | Features |
+|------|-------|------|----------|
+| **Free** | Whisper + GPT-4o | 0 tokens | Basic band estimate, strengths/weaknesses, general feedback |
+| **Premium** | Azure Pronunciation Assessment + GPT-4o | 1 token | Word-level accuracy, phoneme analysis, prosody scores, detailed pronunciation feedback |
+
+### Backend Changes:
+- `/api/speaking/evaluation-tiers` - Returns available tiers
+- `/api/speaking/submit` - Updated with `evaluation_tier` parameter
+- Azure Speech SDK integration with Pronunciation Assessment
+- Dual evaluation functions: `evaluate_speaking_free()` and `evaluate_speaking_premium()`
+
+### Frontend Changes:
+- Tier selection modal after test completion
+- Results display updated for premium features (Azure scores, problem words, pronunciation issues)
+- Free tier shows upgrade prompt
+
+### Test Endpoints:
+1. `GET /api/speaking/evaluation-tiers` - Check available tiers
+2. `POST /api/speaking/submit` with `evaluation_tier: "free"` or `"premium"`
+
+### Required: FFmpeg installed for audio conversion (webm -> wav)
+
