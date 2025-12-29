@@ -335,6 +335,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load listening QB routes: {e}")
 
+# Import speaking question bank routes
+try:
+    from routes.speaking_qb import router as speaking_qb_router
+    app.include_router(speaking_qb_router)
+    print("✅ Speaking QB routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load speaking QB routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
