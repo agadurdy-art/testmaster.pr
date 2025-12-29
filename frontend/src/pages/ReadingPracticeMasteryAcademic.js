@@ -424,7 +424,7 @@ export default function ReadingPracticeMasteryAcademic({ user }) {
               {moduleContent.reading_tips && (
                 <Card className="p-4 bg-blue-50 border-blue-200">
                   <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
-                    <Target className="w-4 h-4" /> Bu Soru Tipi İçin İpuçları
+                    <Target className="w-4 h-4" /> Tips for This Question Type
                   </h4>
                   <ul className="space-y-1">
                     {moduleContent.reading_tips.map((tip, ti) => (
