@@ -1186,22 +1186,15 @@ async def submit_speaking_test(
 
 
 @router.post("/submit-legacy")
-async def submit_speaking_test(
+async def submit_speaking_test_legacy(
     set_id: str = Body(...),
     track: str = Body(...),
     band_range: str = Body(...),
     answers: List[Dict[str, Any]] = Body(...)
 ):
     """
-    Submit completed speaking test for evaluation.
-    
-    Expected answers format:
-    [
-        {"part": "1", "question_id": "p1q1", "transcript": "...", "question": "..."},
-        {"part": "2", "question_id": "part2", "transcript": "..."},
-        {"part": "3", "question_id": "p3q1", "transcript": "...", "question": "..."},
-        ...
-    ]
+    Legacy submit endpoint for backward compatibility.
+    Uses the old GPT-4o only evaluation.
     """
     from content.speaking.speaking_sets import get_speaking_set_by_id
     
@@ -1210,7 +1203,7 @@ async def submit_speaking_test(
     if not speaking_set:
         raise HTTPException(status_code=404, detail=f"Speaking set '{set_id}' not found")
     
-    # Evaluate the test
+    # Evaluate the test using old method
     evaluation = await evaluate_speaking_test(
         transcripts=answers,
         set_data=speaking_set,
