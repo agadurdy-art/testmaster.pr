@@ -361,6 +361,19 @@ function AppWithSessionHandler() {
           path="/question-bank" 
           element={user ? <QuestionBank user={user} /> : <Navigate to="/" />} 
         />
+        {/* Full Test Mode Routes */}
+        <Route 
+          path="/full-test" 
+          element={user ? <FullTestMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/full-test/take/:testId" 
+          element={user ? <FullTestInterface user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/full-test/results/:sessionId" 
+          element={user ? <FullTestResults user={user} /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
