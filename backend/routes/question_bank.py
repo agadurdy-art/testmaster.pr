@@ -1200,31 +1200,32 @@ async def get_reading_practice_questions(
         from content.reading.mastery.reading_mastery_academic import MASTERY_ACADEMIC_READING
         mastery_modules = MASTERY_ACADEMIC_READING
     except ImportError:
-        mastery_modules = []
+        mastery_modules = {}
     
     questions = []
     
-    # Extract questions from mastery modules
-    for module in mastery_modules:
-        for passage in module.get("passages", []):
-            # Filter by topic if specified
-            if topic and module.get("topic", "").lower() != topic.lower():
-                continue
-            
-            for q in passage.get("questions", []):
-                question_data = {
-                    "id": q.get("id", str(uuid.uuid4())),
-                    "type": q.get("type", "multiple-choice"),
-                    "text": q.get("question", q.get("text", "")),
-                    "passage": passage.get("text", "")[:500] + "...",  # Truncate for preview
-                    "options": q.get("options", []),
-                    "correct": q.get("answer", q.get("correct", "")),
-                    "explanation": q.get("explanation", ""),
-                    "difficulty": q.get("difficulty", "medium"),
-                    "topic": module.get("topic", "general"),
-                    "module_title": module.get("title", "")
-                }
-                questions.append(question_data)
+    # Extract questions from mastery modules (dict structure)
+    for module_key, module in mastery_modules.items():
+        # Filter by topic if specified
+        if topic and module.get("topic", "").lower() != topic.lower():
+            continue
+        
+        passage_text = module.get("passage", "")
+        
+        for q in module.get("questions", []):
+            question_data = {
+                "id": q.get("id", str(uuid.uuid4())),
+                "type": module.get("question_type", q.get("type", "multiple-choice")),
+                "text": q.get("question", q.get("text", "")),
+                "passage": passage_text[:500] + "..." if len(passage_text) > 500 else passage_text,
+                "options": q.get("options", []),
+                "correct": q.get("answer", q.get("correct", "")),
+                "explanation": q.get("explanation", ""),
+                "difficulty": q.get("difficulty", "medium"),
+                "topic": module.get("topic", "general"),
+                "module_title": module.get("title", "")
+            }
+            questions.append(question_data)
     
     # Apply limit
     if len(questions) > limit:
