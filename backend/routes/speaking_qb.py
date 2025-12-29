@@ -665,15 +665,19 @@ Be fair, objective, and follow Cambridge IELTS standards strictly. Do not be ove
 """
         
         from emergentintegrations.llm.openai import LlmChat, UserMessage
+        import uuid
         
-        chat = LlmChat(api_key=EMERGENT_LLM_KEY)
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=str(uuid.uuid4()),
+            system_message="You are an IELTS speaking examiner. Respond only with valid JSON."
+        )
         response = await chat.send_message(
-            message=UserMessage(content=f"You are an IELTS speaking examiner. Respond only with valid JSON.\n\n{evaluation_prompt}"),
-            model="gpt-4o"
+            user_message=UserMessage(text=evaluation_prompt)
         )
         
         # Parse JSON from response
-        response_text = response.content
+        response_text = response
         # Extract JSON if wrapped in markdown
         if "```json" in response_text:
             response_text = response_text.split("```json")[1].split("```")[0]
