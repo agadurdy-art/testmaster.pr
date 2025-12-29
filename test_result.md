@@ -2557,3 +2557,55 @@ The New Reading Question Bank API implementation is working excellently with:
 3. **LOW PRIORITY:** Consider adding more specific error messages for better debugging
 
 **Final Assessment:** NEW READING QUESTION BANK API IS COMPLETE AND PRODUCTION READY - Only minor route ordering fix needed for Reading Skills endpoint.
+## MASTERY READING QB BUG FIXES - December 2025
+
+### Changes Made:
+
+#### 1. ReadingPracticeMasteryAcademic.js - Turkish to English Translation
+- toast.success message: "Cevaplar gönderildi!" → "Answers submitted!"
+- Loading text: "Mastery Academic Reading yükleniyor..." → "Loading Mastery Academic Reading..."
+- Subtitle: "Soru Tipine Göre Pratik" → "Practice by Question Type"
+- Filter label: "Filtrele:" → "Filter:"
+- Select options: "Tüm Konular", "Tüm Soru Tipleri" → "All Topics", "All Question Types"
+- Module selector: "Modül Seçin" → "Select Module"
+- Heading placeholder: "Başlık seçin..." → "Select heading..."
+- Answer placeholder: "Cevabınızı yazın..." → "Type your answer..."
+- Result messages: "Doğru!" / "Yanlış" → "Correct!" / "Incorrect"
+- Correct answer label: "Doğru cevap:" → "Correct answer:"
+- Submit button: "Cevapları Gönder" → "Submit Answers"
+- "Go to Mastery Course" button already present ✅
+
+#### 2. ReadingPracticeMasteryGeneral.js - Turkish to English Translation + Go to Course Button
+- Same translations as Academic file
+- Result stats: "Başarı" → "Accuracy", "Tahmini Band" → "Est. Band"
+- Vocabulary header: "Profesyonel Terimler" → "Professional Terms"
+- Tips header: "Belge Okuma İpuçları" → "Document Reading Tips"
+- Buttons: "Tekrar Dene" → "Try Again", "Daha Fazla Pratik" → "More Practice"
+- **ADDED:** "Go to Mastery Course" button with course recommendation section
+
+### Testing Instructions:
+
+**Test Credentials:** test@ielts.com / admin123
+
+**Test Flow 1 - Mastery Academic Reading:**
+1. Login with test credentials
+2. Navigate to /question-bank
+3. Click Reading skill card
+4. Select "Mastery Academic" option
+5. Verify all UI text is in English
+6. Answer questions and submit
+7. Verify "Go to Mastery Course" button appears in results section
+
+**Test Flow 2 - Mastery General Training Reading:**
+1. Login with test credentials
+2. Navigate to /question-bank
+3. Click Reading skill card
+4. Select "Mastery General" option
+5. Verify all UI text is in English
+6. Answer questions and submit
+7. Verify "Go to Mastery Course" button appears in results section (NEW)
+
+### Expected Results:
+- All UI text should be in English
+- "Go to Mastery Course" button should appear after submitting answers
+- Button should navigate to /mastery-course when clicked
