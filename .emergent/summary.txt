@@ -1,76 +1,84 @@
 <analysis>**original_problem_statement:**
-The user has declared a FEATURE FREEZE on the completed Writing Question Bank. The new primary objective is to build out the **Reading Question Bank** with a strict separation between Academic and General Training tracks.
+The user's primary objective is to build a comprehensive **Reading Question Bank**, entirely separate from the existing course structure. This new feature must mirror the functionality of the existing Writing Question Bank.
 
-The user has provided a detailed ULTRA MASTER PROMPT outlining the pedagogical and structural requirements for the new Reading Question Bank. Key requirements include:
--   **Track Enforcement**: Strict separation of Academic (research articles, reports) and General (emails, policies, contracts) content.
--   **Pedagogical Structure**: Content must be module-specific for  and  levels, while  remains global.
--   **Skill-Based Learning**: Every reading task must be tagged with specific reading skills (e.g., Main Idea, Factual Detail, Inference).
--   **Structured Feedback**: Feedback for incorrect answers must explain which reading skill failed and recommend a specific lesson.
--   **Content Structure**: Each task must be a JSON-like object containing metadata for track, module, band range, and required lessons.
-
-The implementation will begin with the  level, creating separate content files for Academic and General tracks.
+The core requirements evolved over the session:
+1.  **Initial Goal:** Implement an Advanced level Reading Question Bank with strict separation between Academic and General Training tracks.
+2.  **User Correction 1:** The agent initially integrated this content into the course pages (). The user corrected this, establishing a critical rule: **Courses are for teaching, the Question Bank is for testing.** The implementation must be moved to the  page.
+3.  **User Correction 2:** After the agent removed the dual-track toggle from the course page, the user clarified that this in-course, module-specific practice toggle was also desired and should be restored.
+4.  **New Feature:** After the Advanced QB was complete, the user requested a **Mastery Level Reading Question Bank** and, critically, a new practice mode to filter questions by **Question Type** (e.g., Multiple Choice, Matching Headings).
+5.  **Final Bug Reports:** The user identified that the in-course General Reading content was not loading and that the new Mastery practice pages were missing lesson recommendation links and had hardcoded Turkish text.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-The application is a full-stack project (React/FastAPI/MongoDB). The Writing feature is complete, tested, and frozen. The agent has just initiated the Reading Question Bank expansion by creating a new, approved directory structure to house the content, moving away from the monolithic  file.
+The application now features a fully functional, multi-faceted Reading Question Bank accessible from the  page. This includes:
+-   A modal to select the practice type:
+    -   Practice by **Question Type** (e.g., 'Multiple Choice', 'Matching Headings').
+    -   Practice by **Course Level (Advanced)** for both Academic and General tracks.
+    -   Practice by **Course Level (Mastery)** for both Academic and General tracks.
+-   Dedicated frontend pages for each practice mode (, , etc.).
+-   Backend APIs to serve all the new content from a structured directory: .
 
-The new structure is:
-
-Initial empty files for the  course level have been created within this structure.
+Additionally, the  page now correctly includes a restored dual-track (Academic/General) toggle for its own module-specific reading practice sections, pulling content from the correct APIs.
 
 **Last working item**:
--   **Last item agent was working**: The agent was starting the implementation of the Reading Question Bank. After receiving user approval for a new file structure, it created the necessary directories and the first two content files ( and ). The agent's last stated intention was to create the backend API endpoints to serve this new content.
+-   **Last item agent was working**: The agent was addressing two bugs reported by the user in the newly created Mastery Reading practice pages:
+    1.  Adding a Go to Course button for lesson recommendations after a user gets feedback.
+    2.  Translating hardcoded Turkish text (Tekrar Dene) to English.
 -   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: both
+-   **Which testing method agent to use?**: frontend testing agent
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Linting Warnings (P3)**
-    -   **Description**: Several frontend files have  warnings that are non-blocking.
+-   **Issue 1: Finalize Mastery QB Fixes (P0)**
+    -   **Description**: Complete the work of adding the Go to Course button and translating hardcoded Turkish text on the Mastery Reading practice pages.
+    -   **Attempted fixes**: The agent executed  commands to implement these changes, but the session ended before testing and verification.
+    -   **Next debug checklist**:
+        1.  Verify the changes in  and .
+        2.  Run  to check for any new errors.
+        3.  Use the  tool or  to confirm the Go to Course button appears after feedback and all UI text is in English.
+    -   **Why fix this issue and what will be achieved with the fix?**: This will fix the user-reported bugs and make the Mastery QB pages consistent with the rest of the application's UX.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on other issue**: None
+
+-   **Issue 2: Frontend Linting Warnings (P3)**
+    -   **Description**: Several frontend files, including newly created ones, have non-blocking  warnings.
     -   **Status**: NOT STARTED
--   **Issue 2: Unused  file (P3)**
+
+-   **Issue 3: Unused  file (P3)**
     -   **Description**: An unused file that needs investigation and potential removal.
-    -   **Status**: NOT STARTED
--   **Issue 3: Speaking Model Answers Verification (P3)**
-    -   **Description**: The quality and accuracy of speaking model answers need to be verified.
     -   **Status**: NOT STARTED
 
 **In progress Task List**:
--   **Task 1: Implement Reading Question Bank (P0)**
-    -   **Description**: Build out the new Reading Question Bank, starting with the  level, following the user's detailed ULTRA MASTER PROMPT.
-    -   **Where to resume**:
-        1.  Populate the newly created files ( and ) with track-specific reading passages and questions, adhering to the user's defined structure (skill mapping, band range, etc.).
-        2.  Create new API endpoints in  to fetch this content from the new files.
-        3.  Update the frontend () to call these new endpoints and display the reading content.
-    -   **What will be achieved with this?**: The first version of the track-aware Reading Question Bank will be live for the , establishing the pattern for all future reading content.
-    -   **Status**: IN PROGRESS
-    -   **Should Test frontend/backend/both after fix?**: both
-    -   **Blocked on something**: No.
+-   None. The current work is a bug fix.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P1) Implement Mastery Reading Question Bank:** Create and integrate reading content for the  (Academic & General).
-    *   **(P2) Implement Beginner Reading Content:** Add global reading content for the .
-    *   **(P3) Expand Listening Question Bank:** Begin development of the Listening feature after Reading is complete.
-    *   **(P4) Expand Speaking Question Bank:** Begin development of the Speaking feature after Listening is complete.
+    *   **(P1) Implement Mastery Reading Question Bank: Course Recommendation**: The Go to Course button is being added, but the logic should specifically link to a *Mastery* course lesson, which may not exist yet. This needs clarification.
+    *   **(P2) Expand Listening Question Bank:** Begin development of the Listening feature.
+    *   **(P3) Expand Speaking Question Bank:** Begin development of the Speaking feature.
 
 *   **Future Tasks:**
     *   Implement YLE (Starters, Movers, Flyers) course content.
-    *   Integrate Alchemy Pay payment gateway.
-    *   Refactor large course components (, ) to reduce code duplication.
+    -   Refactor large course components (, ) to reduce code duplication.
 
 **Completed work in this session**
--   **Reading QB Planning (DONE):** Received, understood, and planned the implementation for the user's ULTRA MASTER PROMPT for the Reading Question Bank.
--   **Content Refactoring Decision (DONE):** Proposed a new, scalable file structure for course content to avoid further bloating . This was approved by the user.
--   **Directory & File Creation (DONE):** Created the new directory structure () and the initial placeholder files for the Advanced course content.
+-   **Reading QB Architecture Shift (DONE)**: Corrected a major architectural mistake by moving the Reading Question Bank implementation from the course pages to the dedicated  page.
+-   **Advanced Reading QB (DONE)**: Implemented the full  level Question Bank for both Academic and General tracks.
+-   **In-Course Dual-Track Toggle (DONE)**: Re-implemented and correctly wired the dual-track reading toggle within the  page.
+-   **Mastery & Question Type QB (DONE)**: Created the backend content and APIs, and the frontend pages/modals for the  level Question Bank and the Practice by Question Type feature.
+-   **Bug Fix: API Route Ordering (DONE)**: Fixed a bug where dynamic FastAPI routes were hijacking static routes by reordering them in .
+-   **Bug Fix: Content Mapping (DONE)**: Fixed a bug where General Training content failed to load due to an incorrect module ID mapping in .
+-   **Bug Fix: Lesson Recommendation Link (DONE)**: Added module-specific Go to Course links on the Advanced practice pages.
 
 **Earlier issues found/mentioned but not fixed**
--   The same issues listed in **All Pending/In progress Issue list** remain: linting warnings, an unused JS file, and the need to verify speaking model answers.
+-   The same as **All Pending/In progress Issue list**.
 
 **Known issue recurrence from previous fork**
--   **Issue recurrence in previous fork**: Linting Errors.
+-   **Issue recurrence in previous fork**: Linting Errors ().
 -   **Recurrence count**: 10+
 -   **Status**: NOT STARTED
 
@@ -78,68 +86,75 @@ Initial empty files for the  course level have been created within this structur
 
 
 **Key Technical Concepts**
--   **Content Refactoring**: A key decision to move all new course content out of the monolithic  into a new, organized  directory for better maintainability.
--   **Track-Aware Content Architecture**: The core principle of the new Reading feature. Content is strictly separated by track (Academic/General) and pedagogical level, as defined by the user.
--   **Skill-Based Metadata**: A requirement from the user that all reading tasks must include metadata mapping them to specific reading skills (e.g., , ), which will be used for targeted feedback.
+-   **Architectural Separation**: The most critical concept enforced by the user is the strict separation between  pages (for teaching) and the  (for testing and evaluation).
+-   **Hybrid API Strategy**: The application now uses a mix of APIs for reading content:
+    -   **In-Course General Reading**: Uses the legacy API () which pulls from .
+    -   **All Other Reading Content**: Uses new, purpose-built APIs that pull from the new  directory structure.
+-   **Feature-Rich Filtering**: The Question Bank now supports filtering by level, track (Academic/General), topic/module, and question type.
 
 **key DB schema**
--   No database schema changes. All course content continues to be stored as structured data in Python files.
+-   No database schema changes. All content is stored in Python files.
 
 **changes in tech stack**
 -   None.
 
 **All files of reference**
--   : (New) To be populated with content.
--   : (New) To be populated with content.
--   : To be modified with new API endpoints.
--   : To be modified to consume new APIs.
--   : For reference on existing data structures, but **not** for modification.
+-   : Contains the main entry point modal for all reading practice.
+-   : Contains the in-course dual-track toggle.
+-   : Contains all backend API endpoints for reading content.
+-   : File being actively fixed.
+-   : File being actively fixed.
+-   : The parent directory for all new reading content.
 
 **Areas that need refactoring**:
--   The decision to use a new content directory () is the first step in addressing the technical debt of the oversized  file.
--   The frontend course pages (, , ) still have significant code duplication that should be addressed in the future.
+-   The mapping logic in  () is brittle. It maps multiple course titles to a single content module () as a fallback, which can cause content to not match the module title. This should be made more robust.
 
 **key api endpoints**
--   None created yet. New endpoints for fetching Advanced Academic/General reading content are the next step.
+-   
+-   
+-   
+-   
+-   
+-   
+-    (Legacy, but used for in-course GT)
 
 **Critical Info for New Agent**
--   **WRITING FEATURE IS FROZEN**: Do not add, modify, or extend any part of the writing feature. The user has explicitly forbidden it.
--   **IMMEDIATE PRIORITY IS READING**: Your first task is to continue building the **Reading Question Bank**, starting with the  level.
--   **FOLLOW THE NEW CONTENT STRUCTURE**: All new reading content **must** be created in the new  directory, not in the old  file.
--   **ADHERE TO THE ULTRA MASTER PROMPT**: The user provided a very specific and detailed prompt for creating the reading content. It dictates the structure, metadata, text types, and skill mapping. This is non-negotiable.
--   **IMPLEMENTATION ORDER**: The approved order is 1. , 2. , 3. .
+-   **DO NOT MODIFY COURSE PAGES**: The user has frozen development on course pages. Do not add new features to them. Your primary focus is the Question Bank. The only exception was restoring the dual-track toggle, which is now complete.
+-   **UNDERSTAND THE CONTENT SOURCES**: Be aware of which API serves which content. The in-course General Training reading is a special case that uses a legacy API. All other reading content comes from new APIs.
+-   **FOLLOW THE ARCHITECTURE**: Maintain the strict separation between course content and question bank content. All new question bank development must happen within the  flow.
 
 **documents and test reports created in this job**
--   None.
+-    (Updated multiple times for testing different features).
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: Confirms the start of the Reading Question Bank phase and provides an ULTRA MASTER PROMPT with detailed specifications.
-2.  **Agent**: Acknowledges the detailed instructions and begins analysis.
-3.  **Agent**: (Internal) Views the oversized  file.
-4.  **Agent**: Proposes a new, refactored file structure for content () and a plan to start with , asking for user confirmation.
-5.  **User**: Enthusiastically approves the new file structure and the plan to start with the  level. Gives formal go-ahead.
-6.  **Agent**: Acknowledges the formal approval and states the implementation plan.
-7.  **Agent**: Creates the new directory structure for the reading content.
-8.  **Agent**: Creates the initial placeholder Python files for Advanced Academic and General reading content.
-9.  **Agent**: States that the next step is to create the backend API endpoints.
+1.  **User**: Asks to create the Mastery Reading Question Bank with band, topic, and question type filters. (DONE)
+2.  **Agent**: Implements the Mastery QB. (DONE)
+3.  **Agent**: Summarizes the Mastery QB implementation and asks for verification. (DONE)
+4.  **User**: Reports a bug: the in-course General Reading is stuck on a loading screen. (BUG)
+5.  **Agent**: Debugs and fixes the content mapping issue causing the loading bug. (FIXED)
+6.  **Agent**: Confirms the fix and summarizes the work. (DONE)
+7.  **User**: Reports two new bugs: (1) Mastery reading pages are missing the Go to course lesson recommendation. (2) Hardcoded Turkish text is visible in the UI. (NEW BUGS)
+8.  **Agent**: Acknowledges the two new bugs and starts working on them. (IN PROGRESS)
+9.  **Agent**: Identifies the specific files and code to be changed. (IN PROGRESS)
+10. **Agent**: Executes  commands to fix the issues. (IN PROGRESS - NOT VERIFIED)
 
 **Project Health Check:**
 -   **Broken**: None.
 -   **Mocked**: None.
--   **Incomplete**: The Reading Question Bank feature has just been started and is the primary incomplete component.
+-   **Incomplete**: The bug fixes for the Mastery QB pages are in progress.
 
 **3rd Party Integrations**
 -   OpenAI GPT-4o: Used via  for AI evaluation features.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO (Not yet applicable in this session).
--   **Troubleshoot agent used after agent stuck in loop**: NO.
+-   **Testing agent used after significant changes**: YES
+-   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: None.
 -   **Known regressions**: None.
 
 **Credentials to test flow:**
 -   **Primary User**:  / 
--   **New Tester Account**:  / 
 
 **What agent forgot to execute**
--   Nothing. The agent has correctly followed the user's explicit instructions and priorities. Low-priority technical debt has been consciously de-prioritized, not forgotten.</analysis>
+-   The agent did not forget but had a significant initial misunderstanding of the user's architectural requirements (Course vs. Question Bank), which led to major rework.
+-   The agent did not verify its final bug fixes before the session ended.</analysis>
