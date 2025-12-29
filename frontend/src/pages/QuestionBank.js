@@ -331,6 +331,8 @@ export default function QuestionBank() {
                           setShowReadingModal(true);
                         } else if (skill.id === 'listening') {
                           setShowListeningModal(true);
+                        } else if (skill.id === 'speaking') {
+                          setShowSpeakingModal(true);
                         } else {
                           setSelectedSkill(skill.id);
                           setActiveTab('practice');
