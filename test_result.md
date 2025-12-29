@@ -3378,3 +3378,67 @@ The Listening Question Bank implementation is complete and functional:
 2. Premium tier with credits - should work and deduct 1 credit
 3. Premium tier without credits - should show error message
 
+
+## FULL TEST MODE IMPLEMENTATION - December 29, 2025
+
+### Testing Instructions for Testing Agent:
+
+**Test Credentials:**
+- Email: test@ielts.com  
+- Password: admin123
+
+### Critical Flows to Test:
+
+1. **Full Test Mode Landing Page** (`/full-test`)
+   - Academic and General Training toggle buttons
+   - Test card showing "IELTS-Style Academic Full Test - Set A"
+   - All 4 sections displayed (Listening, Reading, Writing, Speaking)
+   - Duration badge (2 hours 45 minutes)
+   - Click on test card should open modal
+
+2. **Test Modal**
+   - Test Structure showing all 4 sections with timing:
+     - Listening: 40 minutes, 40 questions
+     - Reading: 60 minutes, 40 questions  
+     - Writing: 60 minutes, 2 tasks
+     - Speaking: 11-14 minutes, 3 parts
+   - Test Rules visible
+   - "Full Test" and "Section by Section" mode options
+   - "Start Full Test" button
+
+3. **Listening Section** (`/full-test/take/academic_set_a_01`)
+   - Start page with Section Rules
+   - Timer (40:00 countdown)
+   - Part 1-4 with audio
+   - Audio controls (NO seeking/rewinding)
+   - Questions with proper numbering (1-40)
+   - Answer inputs (text and multiple choice)
+
+4. **Audio Files Check**
+   - API: GET `/api/full-test/audio/status/academic_set_a_01`
+   - Should show 4 listening files and 16 speaking files
+
+5. **Reading Section**
+   - 3 passages with questions
+   - Timer (60:00)
+   - Question types: matching headings, T/F/NG, sentence completion
+   - Passage navigation
+
+6. **Writing Section**
+   - Task 1 and Task 2 tabs
+   - Word count tracking
+   - Timer (60:00)
+
+7. **Speaking Section**
+   - Part 1-3 flow
+   - Question audio playback
+   - Recording controls
+   - Timer for each question
+
+### Expected Results:
+- All sections should load with correct data
+- Audio should play for listening (no seeking)
+- Timer should count down
+- Questions should be answerable
+- Section submission should work
+
