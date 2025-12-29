@@ -327,6 +327,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load dual-track routes: {e}")
 
+# Import listening question bank routes
+try:
+    from routes.listening_qb import router as listening_qb_router
+    app.include_router(listening_qb_router)
+    print("✅ Listening QB routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load listening QB routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
