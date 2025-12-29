@@ -1042,7 +1042,150 @@ async def transcribe_user_audio(
     }
 
 
+@router.get("/evaluation-tiers")
+async def get_evaluation_tiers():
+    """Get available evaluation tiers and their features."""
+    return {
+        "success": True,
+        "tiers": EVALUATION_TIERS,
+        "token_info": {
+            "1_credit": "5 tokens",
+            "premium_cost": "1 token per evaluation"
+        }
+    }
+
+
 @router.post("/submit")
+async def submit_speaking_test(
+    set_id: str = Body(...),
+    track: str = Body(...),
+    band_range: str = Body(...),
+    answers: List[Dict[str, Any]] = Body(...),
+    evaluation_tier: str = Body("free"),
+    user_id: Optional[str] = Body(None)
+):
+    """
+    Submit completed speaking test for evaluation.
+    
+    Args:
+        set_id: Speaking set ID
+        track: academic or general
+        band_range: Target band range
+        answers: List of answers with transcripts
+        evaluation_tier: "free" or "premium"
+        user_id: User ID for token deduction (premium only)
+    
+    Expected answers format:
+    [
+        {"part": "1", "question_id": "p1q1", "transcript": "...", "question": "...", "audio_data": "base64..."},
+        {"part": "2", "question_id": "part2", "transcript": "...", "audio_data": "base64..."},
+        {"part": "3", "question_id": "p3q1", "transcript": "...", "question": "...", "audio_data": "base64..."},
+        ...
+    ]
+    """
+    from content.speaking.speaking_sets import get_speaking_set_by_id
+    
+    speaking_set = get_speaking_set_by_id(set_id)
+    
+    if not speaking_set:
+        raise HTTPException(status_code=404, detail=f"Speaking set '{set_id}' not found")
+    
+    # Validate evaluation tier
+    if evaluation_tier not in ["free", "premium"]:
+        evaluation_tier = "free"
+    
+    # FREE TIER: Basic evaluation with Whisper + GPT-4o
+    if evaluation_tier == "free":
+        evaluation = await evaluate_speaking_free(
+            transcripts=answers,
+            set_data=speaking_set,
+            track=track,
+            band_range=band_range
+        )
+        return {
+            "success": True,
+            **evaluation
+        }
+    
+    # PREMIUM TIER: Azure Pronunciation Assessment + GPT-4o
+    if evaluation_tier == "premium":
+        # TODO: Check user tokens and deduct if available
+        # For now, allow premium without token check for testing
+        
+        # Process each answer with Azure Pronunciation Assessment
+        azure_results = []
+        
+        for answer in answers:
+            # Get reference text (question text)
+            reference_text = answer.get("question", "")
+            if not reference_text:
+                # Try to get from set data
+                part = answer.get("part", "1")
+                q_id = answer.get("question_id", "")
+                
+                if part == "1":
+                    for q in speaking_set.get("part1", {}).get("questions", []):
+                        if q["id"] == q_id:
+                            reference_text = q["text"]
+                            break
+                elif part == "2":
+                    reference_text = speaking_set.get("part2", {}).get("cue_card", {}).get("topic", "")
+                elif part == "3":
+                    for q in speaking_set.get("part3", {}).get("questions", []):
+                        if q["id"] == q_id:
+                            reference_text = q["text"]
+                            break
+            
+            # If audio_data is provided (base64), use Azure assessment
+            audio_data_b64 = answer.get("audio_data")
+            if audio_data_b64 and reference_text:
+                try:
+                    audio_bytes = base64.b64decode(audio_data_b64)
+                    azure_result = await azure_pronunciation_assessment(
+                        audio_data=audio_bytes,
+                        reference_text=answer.get("transcript", reference_text),  # Use transcript as reference
+                        language="en-US"
+                    )
+                    azure_results.append(azure_result)
+                except Exception as e:
+                    print(f"Azure assessment error for {answer.get('question_id')}: {e}")
+                    azure_results.append({"success": False, "error": str(e)})
+            else:
+                # No audio data, create placeholder
+                azure_results.append({
+                    "success": False,
+                    "error": "No audio data provided"
+                })
+        
+        # Evaluate with premium features
+        evaluation = await evaluate_speaking_premium(
+            transcripts=answers,
+            azure_results=azure_results,
+            set_data=speaking_set,
+            track=track,
+            band_range=band_range
+        )
+        
+        return {
+            "success": True,
+            **evaluation
+        }
+    
+    # Fallback to old evaluation (should not reach here)
+    evaluation = await evaluate_speaking_test(
+        transcripts=answers,
+        set_data=speaking_set,
+        track=track,
+        band_range=band_range
+    )
+    
+    return {
+        "success": True,
+        **evaluation
+    }
+
+
+@router.post("/submit-legacy")
 async def submit_speaking_test(
     set_id: str = Body(...),
     track: str = Body(...),
