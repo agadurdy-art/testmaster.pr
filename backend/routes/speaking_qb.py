@@ -432,7 +432,7 @@ async def evaluate_speaking_premium(
         return {"error": "Evaluation service not configured"}
     
     try:
-        from emergentintegrations.llm.openai import OpenAIChat, OpenAIChatRequest
+        from emergentintegrations.llm.openai import LlmChat, UserMessage
         
         # Aggregate Azure scores
         total_pron_score = 0
@@ -596,7 +596,7 @@ async def evaluate_speaking_test(
         return {"error": "Evaluation service not configured"}
     
     try:
-        from emergentintegrations.llm.openai import OpenAIChat, OpenAIChatRequest
+        from emergentintegrations.llm.openai import LlmChat, UserMessage
         
         # Organize transcripts by part
         part1_answers = [t for t in transcripts if t.get("part") == "1"]
