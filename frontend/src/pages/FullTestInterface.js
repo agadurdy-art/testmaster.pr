@@ -121,13 +121,25 @@ export default function FullTestInterface({ user }) {
   const audioChunksRef = useRef([]);
   const questionAudioRef = useRef(null);
 
-  // Section order
+  // Section order - for full test mode
   const sectionOrder = ['listening', 'reading', 'writing', 'speaking'];
+  
+  // Check if single section mode
+  const isSingleSectionMode = ['listening', 'reading', 'writing', 'speaking'].includes(mode);
+  const activeSections = isSingleSectionMode ? [mode] : sectionOrder;
 
   // ============ LOAD TEST DATA ============
   useEffect(() => {
     loadTestData();
   }, [testId]);
+
+  // Set initial section based on mode
+  useEffect(() => {
+    if (isSingleSectionMode) {
+      setCurrentSection(mode);
+      setCurrentSectionIndex(0);
+    }
+  }, [mode, isSingleSectionMode]);
 
   const loadTestData = async () => {
     try {
@@ -135,7 +147,10 @@ export default function FullTestInterface({ user }) {
       const data = await res.json();
       if (data.success) {
         setTestData(data.test);
-        setTimeRemaining(SECTION_CONFIG[currentSection].totalTime);
+        // Set time based on mode
+        const initialSection = isSingleSectionMode ? mode : 'listening';
+        setCurrentSection(initialSection);
+        setTimeRemaining(SECTION_CONFIG[initialSection].totalTime);
       } else {
         toast.error('Failed to load test');
         navigate('/full-test');
