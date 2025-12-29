@@ -27,6 +27,7 @@ export default function QuestionBank() {
   const [loading, setLoading] = useState(true);
   const [showWritingModal, setShowWritingModal] = useState(false);
   const [showReadingModal, setShowReadingModal] = useState(false);
+  const [showListeningModal, setShowListeningModal] = useState(false);
 
   useEffect(() => {
     loadData();
