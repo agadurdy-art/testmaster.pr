@@ -981,27 +981,29 @@ export default function FullTestInterface({ user }) {
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <h1 className="text-lg font-semibold text-slate-900">
-              IELTS-Style Full Test
+              {isSingleSectionMode ? `${currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} Practice` : 'IELTS-Style Full Test'}
             </h1>
             <Badge variant="outline" className="capitalize">
               {currentSection}
             </Badge>
           </div>
 
-          {/* Section Progress */}
-          <div className="flex items-center gap-1">
-            {sectionOrder.map((section, idx) => (
-              <div
-                key={section}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium
-                  ${completedSections.includes(section) ? 'bg-green-500 text-white' : 
-                    idx === currentSectionIndex ? 'bg-slate-900 text-white' : 
-                    'bg-slate-200 text-slate-500'}`}
-              >
-                {completedSections.includes(section) ? '✓' : idx + 1}
-              </div>
-            ))}
-          </div>
+          {/* Section Progress - only show for full test */}
+          {!isSingleSectionMode && (
+            <div className="flex items-center gap-1">
+              {activeSections.map((section, idx) => (
+                <div
+                  key={section}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium
+                    ${completedSections.includes(section) ? 'bg-green-500 text-white' : 
+                      idx === currentSectionIndex ? 'bg-slate-900 text-white' : 
+                      'bg-slate-200 text-slate-500'}`}
+                >
+                  {completedSections.includes(section) ? '✓' : idx + 1}
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Timer */}
           {timerActive && (
