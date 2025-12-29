@@ -476,11 +476,22 @@ export default function FullTestInterface({ user }) {
     const listening = testData?.sections?.listening;
     const currentPartData = listening?.parts?.[listeningPart - 1];
     
+    // Handle play button click
+    const handlePlayAudio = () => {
+      if (audioRef.current) {
+        if (audioPlaying) {
+          audioRef.current.pause();
+        } else {
+          audioRef.current.play();
+        }
+      }
+    };
+    
     return (
       <div className="space-y-6">
         {/* Audio Player - NO SEEKING */}
         <Card className="p-4 bg-slate-900 text-white">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${audioPlaying ? 'bg-green-500 animate-pulse' : 'bg-slate-700'}`}>
                 {audioPlaying ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
@@ -490,9 +501,36 @@ export default function FullTestInterface({ user }) {
                 <p className="text-sm text-slate-400">{currentPartData?.context}</p>
               </div>
             </div>
-            <Badge className={audioPlaying ? 'bg-green-500' : 'bg-slate-600'}>
-              {audioPlaying ? 'Playing' : audioEnded ? 'Ended' : 'Paused'}
+            <Badge className={audioPlaying ? 'bg-green-500' : audioEnded ? 'bg-amber-500' : 'bg-slate-600'}>
+              {audioPlaying ? 'Playing' : audioEnded ? 'Ended' : 'Ready'}
             </Badge>
+          </div>
+          
+          {/* Play/Pause Button */}
+          <div className="flex items-center justify-center gap-4 py-4">
+            <Button
+              size="lg"
+              onClick={handlePlayAudio}
+              disabled={audioEnded}
+              className={`${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'} text-white px-8`}
+            >
+              {audioPlaying ? (
+                <>
+                  <Pause className="w-5 h-5 mr-2" />
+                  Pause Audio
+                </>
+              ) : audioEnded ? (
+                <>
+                  <CheckCircle className="w-5 h-5 mr-2" />
+                  Audio Completed
+                </>
+              ) : (
+                <>
+                  <Play className="w-5 h-5 mr-2" />
+                  Play Audio
+                </>
+              )}
+            </Button>
           </div>
           
           {/* Hidden audio element - NO CONTROLS for seeking prevention */}
@@ -506,7 +544,7 @@ export default function FullTestInterface({ user }) {
           />
           
           <p className="text-xs text-slate-500 mt-2 text-center">
-            Audio plays once only. No rewinding allowed.
+            ⚠️ Audio plays once only. No rewinding allowed.
           </p>
         </Card>
 
