@@ -252,10 +252,39 @@ def create_silence(duration_ms: int, sample_rate: int = 44100) -> bytes:
     return b""
 
 
+def get_cached_audio_path(set_id: str) -> Path:
+    """Get the path for cached audio file."""
+    return AUDIO_CACHE_DIR / f"{set_id}.mp3"
+
+
+def is_audio_cached(set_id: str) -> bool:
+    """Check if audio is already cached."""
+    cache_path = get_cached_audio_path(set_id)
+    return cache_path.exists() and cache_path.stat().st_size > 1000
+
+
+def save_audio_to_cache(set_id: str, audio_data: bytes) -> str:
+    """Save audio data to cache and return the URL path."""
+    cache_path = get_cached_audio_path(set_id)
+    with open(cache_path, 'wb') as f:
+        f.write(audio_data)
+    print(f"✅ Audio cached: {cache_path} ({len(audio_data)} bytes)")
+    return f"/api/listening/audio/{set_id}"
+
+
+def get_cached_audio_url(set_id: str) -> Optional[str]:
+    """Get URL for cached audio if it exists."""
+    if is_audio_cached(set_id):
+        return f"/api/listening/audio/{set_id}"
+    return None
+
+
 async def generate_ielts_audio(
+    set_id: str,
     transcript: str, 
     speakers: List[Dict],
-    part: str = "part1"
+    part: str = "part1",
+    force_regenerate: bool = False
 ) -> Optional[str]:
     """
     Generate IELTS-quality audio with multiple speakers and natural pauses.
