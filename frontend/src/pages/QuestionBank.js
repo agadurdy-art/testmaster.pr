@@ -465,12 +465,71 @@ export default function QuestionBank() {
         {/* Tests Tab */}
         {activeTab === 'tests' && (
           <div className="space-y-6">
-            <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
-              <Clock className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Tam IELTS Testleri</h3>
-              <p className="text-gray-500 mb-6">Gerçek sınav koşullarında tam test deneyimi</p>
-              <Badge className="bg-amber-100 text-amber-700">Yakında Geliyor</Badge>
-            </div>
+            {fullTests.length > 0 ? (
+              <>
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-gray-900">IELTS Full Tests</h2>
+                  <Badge className="bg-green-100 text-green-700">{fullTests.length} Test Available</Badge>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-4">
+                  {fullTests.map((test) => (
+                    <Card key={test.test_id} className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-blue-300"
+                      onClick={() => navigate('/full-test')}>
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <h3 className="font-bold text-lg text-gray-900">{test.title}</h3>
+                          <p className="text-sm text-gray-500 mt-1">{test.description}</p>
+                        </div>
+                        <Badge className="bg-blue-100 text-blue-700 capitalize">{test.test_type}</Badge>
+                      </div>
+                      
+                      <div className="grid grid-cols-4 gap-2 mb-4">
+                        <div className="text-center p-2 bg-blue-50 rounded">
+                          <Headphones className="w-4 h-4 mx-auto text-blue-600 mb-1" />
+                          <span className="text-xs text-gray-600">Listening</span>
+                        </div>
+                        <div className="text-center p-2 bg-green-50 rounded">
+                          <BookOpen className="w-4 h-4 mx-auto text-green-600 mb-1" />
+                          <span className="text-xs text-gray-600">Reading</span>
+                        </div>
+                        <div className="text-center p-2 bg-purple-50 rounded">
+                          <PenTool className="w-4 h-4 mx-auto text-purple-600 mb-1" />
+                          <span className="text-xs text-gray-600">Writing</span>
+                        </div>
+                        <div className="text-center p-2 bg-orange-50 rounded">
+                          <Mic className="w-4 h-4 mx-auto text-orange-600 mb-1" />
+                          <span className="text-xs text-gray-600">Speaking</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <Clock className="w-4 h-4" />
+                          <span>{test.estimated_time}</span>
+                        </div>
+                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                          <PlayCircle className="w-4 h-4 mr-1" /> Start Test
+                        </Button>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+                
+                <div className="text-center p-4 bg-amber-50 rounded-lg border border-amber-200">
+                  <p className="text-sm text-amber-700">
+                    <strong>Tip:</strong> Complete all 4 sections in one sitting for the most realistic IELTS experience.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+                <Clock className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Full IELTS Tests</h3>
+                <p className="text-gray-500 mb-6">Complete test experience under real exam conditions</p>
+                <Badge className="bg-amber-100 text-amber-700">Coming Soon</Badge>
+              </div>
+            )}
           </div>
         )}
 
