@@ -345,7 +345,7 @@ async def evaluate_speaking_free(
         return {"error": "Evaluation service not configured"}
     
     try:
-        from emergentintegrations.llm.openai import OpenAIChat, OpenAIChatRequest
+        from emergentintegrations.llm.openai import LlmChat, UserMessage
         
         # Calculate basic metrics
         total_words = sum(len(t.get("transcript", "").split()) for t in transcripts)
@@ -376,17 +376,11 @@ Provide a brief evaluation in JSON format:
 
 Be fair and realistic. This is a basic evaluation without detailed pronunciation analysis."""
         
-        chat = OpenAIChat(api_key=EMERGENT_LLM_KEY)
-        request = OpenAIChatRequest(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": "You are an IELTS examiner. Respond only with valid JSON."},
-                {"role": "user", "content": evaluation_prompt}
-            ],
-            temperature=0.3
+        chat = LlmChat(api_key=EMERGENT_LLM_KEY)
+        response = await chat.send_message(
+            message=UserMessage(content=f"You are an IELTS examiner. Respond only with valid JSON.\n\n{evaluation_prompt}"),
+            model="gpt-4o"
         )
-        
-        response = await chat.process(request)
         response_text = response.choices[0].message.content
         
         # Parse JSON
