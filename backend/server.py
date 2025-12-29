@@ -343,6 +343,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load speaking QB routes: {e}")
 
+# Import full test mode routes
+try:
+    from routes.full_test import router as full_test_router
+    app.include_router(full_test_router)
+    print("✅ Full Test Mode routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load full test routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
