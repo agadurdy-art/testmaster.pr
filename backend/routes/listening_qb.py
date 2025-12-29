@@ -543,10 +543,11 @@ async def get_listening_set(
             q_copy["match_options"] = q.get("options", [])
         questions_without_answers.append(q_copy)
     
-    # Generate IELTS-quality audio if requested
+    # Generate IELTS-quality audio if requested (uses cache)
     audio_url = None
     if include_audio:
         audio_url = await generate_audio_for_transcript(
+            set_id,  # Pass set_id for caching
             listening_set["transcript"],
             listening_set.get("speakers", []),
             listening_set.get("part", "part1")  # Pass part for speed adjustment
@@ -567,6 +568,7 @@ async def get_listening_set(
             "questions": questions_without_answers,
             "audio_url": audio_url,
             "has_audio": audio_url is not None,
+            "audio_cached": is_audio_cached(set_id),  # Tell frontend if audio is cached
             # Include transcript for "show transcript" feature (after submit or for lower bands)
             "transcript": listening_set["transcript"]
         }
