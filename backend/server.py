@@ -351,6 +351,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load full test routes: {e}")
 
+# Import full test audio routes
+try:
+    from routes.full_test_audio import router as full_test_audio_router
+    app.include_router(full_test_audio_router)
+    print("✅ Full Test Audio routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load full test audio routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
