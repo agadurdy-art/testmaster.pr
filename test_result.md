@@ -2690,3 +2690,92 @@ The New Reading Question Bank API implementation is working excellently with:
 - All UI text should be in English
 - "Go to Mastery Course" button should appear after submitting answers
 - Button should navigate to /mastery-course when clicked
+
+## LISTENING QUESTION BANK IMPLEMENTATION - December 2025
+
+### Implementation Summary:
+
+#### Backend Files Created:
+1. `/app/backend/content/listening/listening_sets.py` - 12 listening sets across 3 band levels
+   - Band 4.0-5.0: 4 sets (Part 1-2, easier conversations)
+   - Band 5.5-6.5: 4 sets (Part 2-3, discussions)
+   - Band 7.0-9.0: 4 sets (Part 3-4, academic lectures)
+
+2. `/app/backend/routes/listening_qb.py` - API endpoints
+   - GET /api/listening/modules - List all modules with filters
+   - GET /api/listening/set/{set_id} - Get specific set with questions (no answers)
+   - POST /api/listening/evaluate - Evaluate answers and return results
+   - GET /api/listening/question-types - Get question type info
+   - GET /api/listening/band-levels - Get band levels
+   - GET /api/listening/topics - Get available topics
+
+#### Frontend Files:
+1. `/app/frontend/src/pages/ListeningPractice.js` - Main listening practice page
+   - Audio player with play/pause, seek, skip controls
+   - Transcript toggle (visible after submit or for Band 4.0-5.0)
+   - Question rendering for: multiple choice, form completion, matching
+   - Submit and evaluation with results display
+   - Course lesson recommendations
+   - "Go to Course" buttons
+
+2. `QuestionBank.js` - Added Listening modal with:
+   - Band-based practice options
+   - Question type filtering
+   - Topic selection
+
+3. `App.js` - Added route /question-bank/listening
+
+### Question Types Supported:
+- Multiple Choice (MC)
+- Form/Note Completion (FC)
+- Sentence Completion (SC)
+- Matching (MT)
+
+### IELTS Parts Covered:
+- Part 1: Social conversations (booking, enquiry)
+- Part 2: Social monologues (tour guide, announcements)
+- Part 3: Educational discussions (2-3 speakers)
+- Part 4: Academic lectures
+
+### Features:
+- ElevenLabs TTS integration for audio generation
+- Transcript fallback when audio unavailable
+- 30-minute timer
+- Band-based filtering
+- Topic filtering
+- Skill-based weakness identification
+- Lesson recommendations based on weaknesses
+
+### Testing Instructions:
+
+**Test Credentials:** test@ielts.com / admin123
+
+**Test Flow 1 - Question Bank Modal:**
+1. Login with test credentials
+2. Navigate to /question-bank
+3. Click Listening skill card
+4. Verify modal opens with:
+   - Band level options (4.0-5.0, 5.5-6.5, 7.0-9.0)
+   - Question type filter buttons
+   - "View All Listening Practice" button
+
+**Test Flow 2 - Listening Practice Page:**
+1. From modal, click Band 5.5-6.5
+2. Verify ListeningPractice page loads at /question-bank/listening?band=5.5-6.5
+3. Verify filters (Band, Topic) are visible
+4. Verify module selector shows 4 modules for Band 5.5-6.5
+5. Verify audio player is displayed
+6. Answer questions and click Submit
+7. Verify results show: score, estimated band, weak skills, lesson recommendations
+8. Verify "Go to Course" buttons work
+
+**Test Flow 3 - Transcript Feature:**
+1. Select a Band 4.0-5.0 listening set
+2. Verify "Show Transcript" button is visible (for lower bands)
+3. Click to show/hide transcript
+
+### API Testing:
+- GET /api/listening/modules - Returns 12 modules total
+- GET /api/listening/modules?band=5.5-6.5 - Returns 4 modules
+- GET /api/listening/set/ls_b45_001 - Returns Hotel Reservation set
+- POST /api/listening/evaluate - Returns evaluation results
