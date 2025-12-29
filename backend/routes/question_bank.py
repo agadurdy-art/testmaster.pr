@@ -1197,14 +1197,15 @@ async def get_reading_practice_questions(
 ):
     """Get reading practice questions from mastery content."""
     try:
-        from content.reading.mastery.reading_mastery_academic import MASTERY_READING_MODULES
+        from content.reading.mastery.reading_mastery_academic import MASTERY_ACADEMIC_READING
+        mastery_modules = MASTERY_ACADEMIC_READING
     except ImportError:
-        MASTERY_READING_MODULES = []
+        mastery_modules = []
     
     questions = []
     
     # Extract questions from mastery modules
-    for module in MASTERY_READING_MODULES:
+    for module in mastery_modules:
         for passage in module.get("passages", []):
             # Filter by topic if specified
             if topic and module.get("topic", "").lower() != topic.lower():
