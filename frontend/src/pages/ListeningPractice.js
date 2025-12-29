@@ -114,24 +114,41 @@ export default function ListeningPractice({ user }) {
         setAudioProgress(0);
         setLoading(false);
         
-        // Then load audio asynchronously in background
-        setLoadingAudio(true);
-        try {
-          const audioRes = await fetch(`${API_URL}/api/listening/set/${setId}?include_audio=true`);
-          const audioData = await audioRes.json();
-          if (audioData.success && audioData.set.audio_url) {
-            setModuleContent(prev => ({
-              ...prev,
-              audio_url: audioData.set.audio_url,
-              has_audio: true
-            }));
-          } else {
-            setAudioError(true);
-          }
-        } catch {
-          setAudioError(true);
-        } finally {
+        // Check if audio is already cached (instant load)
+        if (data.set.audio_cached) {
+          // Audio is cached - just use the URL directly
+          const audioUrl = `${API_URL}/api/listening/audio/${setId}`;
+          setModuleContent(prev => ({
+            ...prev,
+            audio_url: audioUrl,
+            has_audio: true
+          }));
           setLoadingAudio(false);
+        } else {
+          // Audio not cached - generate in background
+          setLoadingAudio(true);
+          try {
+            const audioRes = await fetch(`${API_URL}/api/listening/set/${setId}?include_audio=true`);
+            const audioData = await audioRes.json();
+            if (audioData.success && audioData.set.audio_url) {
+              // Convert relative URL to full URL
+              const fullAudioUrl = audioData.set.audio_url.startsWith('/api') 
+                ? `${API_URL}${audioData.set.audio_url}`
+                : audioData.set.audio_url;
+              setModuleContent(prev => ({
+                ...prev,
+                audio_url: fullAudioUrl,
+                has_audio: true,
+                audio_cached: true
+              }));
+            } else {
+              setAudioError(true);
+            }
+          } catch {
+            setAudioError(true);
+          } finally {
+            setLoadingAudio(false);
+          }
         }
       }
     } catch (error) {
