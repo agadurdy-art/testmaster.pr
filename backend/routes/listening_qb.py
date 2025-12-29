@@ -350,8 +350,8 @@ async def generate_ielts_audio(
         # Simple concatenation for MP3 - works well for speech
         combined_audio = b"".join(all_audio_chunks)
         
-        audio_b64 = base64.b64encode(combined_audio).decode()
-        return f"data:audio/mpeg;base64,{audio_b64}"
+        # Save to cache and return URL
+        return save_audio_to_cache(set_id, combined_audio)
         
     except Exception as e:
         print(f"Error generating IELTS audio: {str(e)}")
@@ -361,12 +361,29 @@ async def generate_ielts_audio(
 
 
 # Legacy function for backward compatibility
-async def generate_audio_for_transcript(transcript: str, speakers: List[Dict], part: str = "part1") -> Optional[str]:
+async def generate_audio_for_transcript(set_id: str, transcript: str, speakers: List[Dict], part: str = "part1") -> Optional[str]:
     """
     Generate audio using IELTS-quality settings.
     This is the main entry point for audio generation.
     """
-    return await generate_ielts_audio(transcript, speakers, part)
+    return await generate_ielts_audio(set_id, transcript, speakers, part)
+
+
+# ============ AUDIO SERVING ENDPOINT ============
+
+@router.get("/audio/{set_id}")
+async def serve_cached_audio(set_id: str):
+    """Serve cached audio file."""
+    cache_path = get_cached_audio_path(set_id)
+    
+    if not cache_path.exists():
+        raise HTTPException(status_code=404, detail=f"Audio for set '{set_id}' not found")
+    
+    return FileResponse(
+        path=cache_path,
+        media_type="audio/mpeg",
+        filename=f"{set_id}.mp3"
+    )
 
 
 # ============ STATIC ENDPOINTS ============
