@@ -54,6 +54,7 @@ export default function SpeakingPracticeQB({ user }) {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
+  const audioBlobsRef = useRef({}); // Store audio blobs for premium evaluation
   
   useEffect(() => {
     loadModules();
