@@ -1,81 +1,77 @@
 <analysis>**original_problem_statement:**
-The user's primary objective is to build a comprehensive **Reading Question Bank**, entirely separate from the existing course structure. This new feature must mirror the functionality of the existing Writing Question Bank.
+The user's primary objective is to build a comprehensive Question Bank feature, separate from the existing course structure. The project has progressed through several phases:
 
-The core requirements evolved over the session:
-1.  **Initial Goal:** Implement an Advanced level Reading Question Bank with strict separation between Academic and General Training tracks.
-2.  **User Correction 1:** The agent initially integrated this content into the course pages (). The user corrected this, establishing a critical rule: **Courses are for teaching, the Question Bank is for testing.** The implementation must be moved to the  page.
-3.  **User Correction 2:** After the agent removed the dual-track toggle from the course page, the user clarified that this in-course, module-specific practice toggle was also desired and should be restored.
-4.  **New Feature:** After the Advanced QB was complete, the user requested a **Mastery Level Reading Question Bank** and, critically, a new practice mode to filter questions by **Question Type** (e.g., Multiple Choice, Matching Headings).
-5.  **Final Bug Reports:** The user identified that the in-course General Reading content was not loading and that the new Mastery practice pages were missing lesson recommendation links and had hardcoded Turkish text.
+1.  **Reading Question Bank (Completed):** A full-featured Reading QB was built for Advanced and Mastery levels, including filtering by question type.
+2.  **Listening Question Bank (Completed):** A complete Listening QB was implemented, following a detailed user prompt. This involved creating backend APIs, a frontend practice page, integrating ElevenLabs for high-quality, multi-speaker audio, and implementing a robust audio caching system to ensure fast load times.
+3.  **Speaking Question Bank (In Progress):** The current task is to implement the Speaking Question Bank. The user has provided a highly detailed specification for an audio-driven experience with pre-generated examiner questions, per-question user recording, strict timers, and a complex evaluation flow using Azure STT (or Whisper) and a custom evaluator. The implementation must handle different UI/UX based on band level and follow a strict state machine for recording to prevent bugs.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-The application now features a fully functional, multi-faceted Reading Question Bank accessible from the  page. This includes:
--   A modal to select the practice type:
-    -   Practice by **Question Type** (e.g., 'Multiple Choice', 'Matching Headings').
-    -   Practice by **Course Level (Advanced)** for both Academic and General tracks.
-    -   Practice by **Course Level (Mastery)** for both Academic and General tracks.
--   Dedicated frontend pages for each practice mode (, , etc.).
--   Backend APIs to serve all the new content from a structured directory: .
-
-Additionally, the  page now correctly includes a restored dual-track (Academic/General) toggle for its own module-specific reading practice sections, pulling content from the correct APIs.
+-   A fully completed **Reading Question Bank**.
+-   A fully completed **Listening Question Bank**.
+    -   Backend APIs are live ().
+    -   Frontend modal in  and a dedicated practice page at .
+    -   A sophisticated, multi-speaker audio generation system using ElevenLabs to produce IELTS-quality audio.
+    -   A critical audio caching mechanism is in place. All 12 listening audio sets (~20MB) are pre-generated and stored in . These files are committed to the Git repository to ensure they persist across deployments, providing instant load times for users.
+-   **Speaking Question Bank (Backend Ready):**
+    -   Backend content structure is defined in  (18 sets).
+    -   Backend API routes are created in  and integrated into .
+    -   All 204 examiner question audio files (~9.6MB) have been pre-generated using ElevenLabs and are cached in  and committed to the repository.
 
 **Last working item**:
--   **Last item agent was working**: The agent was addressing two bugs reported by the user in the newly created Mastery Reading practice pages:
-    1.  Adding a Go to Course button for lesson recommendations after a user gets feedback.
-    2.  Translating hardcoded Turkish text (Tekrar Dene) to English.
+-   **Last item agent was working**: The agent was starting the frontend implementation for the **Speaking Question Bank**. It correctly identified that an existing file, , was part of a different (dashboard) feature. The agent's last thought was to create a *new, separate file* for the Question Bank's speaking practice page to avoid conflicts.
 -   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
 -   **Which testing method agent to use?**: frontend testing agent
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Finalize Mastery QB Fixes (P0)**
-    -   **Description**: Complete the work of adding the Go to Course button and translating hardcoded Turkish text on the Mastery Reading practice pages.
-    -   **Attempted fixes**: The agent executed  commands to implement these changes, but the session ended before testing and verification.
-    -   **Next debug checklist**:
-        1.  Verify the changes in  and .
-        2.  Run  to check for any new errors.
-        3.  Use the  tool or  to confirm the Go to Course button appears after feedback and all UI text is in English.
-    -   **Why fix this issue and what will be achieved with the fix?**: This will fix the user-reported bugs and make the Mastery QB pages consistent with the rest of the application's UX.
-    -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on other issue**: None
-
--   **Issue 2: Frontend Linting Warnings (P3)**
-    -   **Description**: Several frontend files, including newly created ones, have non-blocking  warnings.
+-   **Issue 1: Frontend Linting Warnings (P3)**
+    -   **Description**: Several frontend files have non-blocking  warnings.
     -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
 
--   **Issue 3: Unused  file (P3)**
+-   **Issue 2: Unused  file (P3)**
     -   **Description**: An unused file that needs investigation and potential removal.
     -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: N
 
 **In progress Task List**:
--   None. The current work is a bug fix.
+-   **Task 1: Implement Speaking Question Bank Frontend (P0)**
+    -   **Description**: Build the frontend for the Speaking Question Bank as per the user's detailed specification.
+    -   **Where to resume**:
+        1.  Create a new file for the Speaking Question Bank practice page (e.g., ) to avoid conflicts with the existing .
+        2.  Implement the UI/UX flow: Part 1 -> Part 2 -> Part 3 sequence.
+        3.  Integrate the audio recording functionality with a robust state machine () to prevent audio bleed bugs.
+        4.  Implement strict timers for each part as specified.
+        5.  Connect to the already-created backend APIs for fetching question sets and submitting answers for evaluation.
+        6.  Implement the UI logic to show/hide question text based on the selected band level.
+    -   **What will be achieved with this?**: A complete, end-to-end Speaking Question Bank feature.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on something**: None
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P1) Implement Mastery Reading Question Bank: Course Recommendation**: The Go to Course button is being added, but the logic should specifically link to a *Mastery* course lesson, which may not exist yet. This needs clarification.
-    *   **(P2) Expand Listening Question Bank:** Begin development of the Listening feature.
-    *   **(P3) Expand Speaking Question Bank:** Begin development of the Speaking feature.
-
+    *   **(P1) Speaking QB Evaluation:** Implement the full evaluation flow, including sending recorded audio to a Speech-to-Text service (Whisper), and then passing the transcript to the GPT-4o evaluator to generate detailed feedback.
 *   **Future Tasks:**
+    *   Refactor large course components (, ).
     *   Implement YLE (Starters, Movers, Flyers) course content.
-    -   Refactor large course components (, ) to reduce code duplication.
 
 **Completed work in this session**
--   **Reading QB Architecture Shift (DONE)**: Corrected a major architectural mistake by moving the Reading Question Bank implementation from the course pages to the dedicated  page.
--   **Advanced Reading QB (DONE)**: Implemented the full  level Question Bank for both Academic and General tracks.
--   **In-Course Dual-Track Toggle (DONE)**: Re-implemented and correctly wired the dual-track reading toggle within the  page.
--   **Mastery & Question Type QB (DONE)**: Created the backend content and APIs, and the frontend pages/modals for the  level Question Bank and the Practice by Question Type feature.
--   **Bug Fix: API Route Ordering (DONE)**: Fixed a bug where dynamic FastAPI routes were hijacking static routes by reordering them in .
--   **Bug Fix: Content Mapping (DONE)**: Fixed a bug where General Training content failed to load due to an incorrect module ID mapping in .
--   **Bug Fix: Lesson Recommendation Link (DONE)**: Added module-specific Go to Course links on the Advanced practice pages.
+-   **Bug Fixes for Mastery Reading QB (DONE)**: Translated all hardcoded Turkish text to English and added the Go to Course button on Mastery practice pages. Verified with the frontend testing agent.
+-   **Listening Question Bank (P0) Implementation (DONE)**:
+    -   Created backend APIs and frontend pages for the Listening QB.
+    -   Integrated ElevenLabs for high-quality, multi-speaker audio generation, adhering to strict IELTS standards.
+    -   **Implemented a critical audio caching system**: Pre-generated all audio files and committed them to the repository, reducing load times from ~30 seconds to under 0.1 seconds.
+    -   Resolved a blocking user login issue by correctly hashing and storing the test user's password in the database.
+-   **Speaking Question Bank Backend & Audio (DONE)**:
+    -   Created the backend content structure and API routes.
+    -   Pre-generated and cached all 204 examiner question audio files.
 
 **Earlier issues found/mentioned but not fixed**
--   The same as **All Pending/In progress Issue list**.
+-   Same as **All Pending/In progress Issue list**.
 
 **Known issue recurrence from previous fork**
 -   **Issue recurrence in previous fork**: Linting Errors ().
@@ -86,68 +82,66 @@ Additionally, the  page now correctly includes a restored dual-track (Academic/G
 
 
 **Key Technical Concepts**
--   **Architectural Separation**: The most critical concept enforced by the user is the strict separation between  pages (for teaching) and the  (for testing and evaluation).
--   **Hybrid API Strategy**: The application now uses a mix of APIs for reading content:
-    -   **In-Course General Reading**: Uses the legacy API () which pulls from .
-    -   **All Other Reading Content**: Uses new, purpose-built APIs that pull from the new  directory structure.
--   **Feature-Rich Filtering**: The Question Bank now supports filtering by level, track (Academic/General), topic/module, and question type.
+-   **Audio Caching**: To handle slow, expensive API calls to ElevenLabs, a caching layer was implemented. Audio files are generated once and stored locally in . These files are **committed to the Git repository** to ensure they persist across deployments. This is a critical architectural decision.
+-   **Multi-Voice Audio Synthesis**: The ElevenLabs integration was rewritten to generate IELTS-quality audio using different voices for different speakers within a single audio track, following detailed user specifications.
+-   **Asynchronous Frontend Loading**: For the listening page, the UI loads instantly while the audio is fetched/generated in the background, improving perceived performance.
+-   **Ephemeral Filesystem Solution**: The agent correctly identified that the container's filesystem is temporary and solved the audio persistence problem by committing the generated files to the Git repository.
 
 **key DB schema**
--   No database schema changes. All content is stored in Python files.
+-   No database schema changes. All content continues to be stored in Python files.
 
 **changes in tech stack**
 -   None.
 
 **All files of reference**
--   : Contains the main entry point modal for all reading practice.
--   : Contains the in-course dual-track toggle.
--   : Contains all backend API endpoints for reading content.
--   : File being actively fixed.
--   : File being actively fixed.
--   : The parent directory for all new reading content.
+-   **/app/backend/routes/speaking_qb.py**: Backend API routes for the Speaking QB.
+-   **/app/backend/content/speaking/speaking_sets.py**: Content and structure for all speaking tests.
+-   **/app/backend/static/audio/speaking/**: Directory containing the 204 pre-generated examiner audio files.
+-   **/app/frontend/src/pages/QuestionBank.js**: Needs to be updated with the Speaking QB modal.
+-   **/app/frontend/src/App.js**: Will need a new route for the Speaking QB practice page.
 
 **Areas that need refactoring**:
--   The mapping logic in  () is brittle. It maps multiple course titles to a single content module () as a fallback, which can cause content to not match the module title. This should be made more robust.
+-   The existing  is for a different feature. The new Speaking QB implementation should use a new, distinctly named file to avoid confusion and future refactoring needs.
 
 **key api endpoints**
--   
--   
--   
--   
--   
--   
--    (Legacy, but used for in-course GT)
+-   : Returns a listening set.
+-   : Serves cached listening audio files.
+-   : Returns a speaking test set.
+-   : Serves cached speaking question audio files.
 
 **Critical Info for New Agent**
--   **DO NOT MODIFY COURSE PAGES**: The user has frozen development on course pages. Do not add new features to them. Your primary focus is the Question Bank. The only exception was restoring the dual-track toggle, which is now complete.
--   **UNDERSTAND THE CONTENT SOURCES**: Be aware of which API serves which content. The in-course General Training reading is a special case that uses a legacy API. All other reading content comes from new APIs.
--   **FOLLOW THE ARCHITECTURE**: Maintain the strict separation between course content and question bank content. All new question bank development must happen within the  flow.
+-   **Create a new frontend file for the Speaking QB**. Do not modify the existing . A good name would be .
+-   **The audio caching system is fundamental**. All audio for listening and speaking questions is pre-generated and stored in the repository. The backend serves these static files directly. Do not implement on-the-fly generation.
+-   **Follow the user's detailed prompts exactly**. The user provides comprehensive and non-negotiable requirements for features. The Speaking QB implementation must adhere to the specified timers, recording state machine, and UI logic.
+-   The user login issue was debugged and fixed. The test credentials  /  should now work correctly for UI testing.
 
 **documents and test reports created in this job**
--    (Updated multiple times for testing different features).
+-    (Updated for Listening QB testing).
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: Asks to create the Mastery Reading Question Bank with band, topic, and question type filters. (DONE)
-2.  **Agent**: Implements the Mastery QB. (DONE)
-3.  **Agent**: Summarizes the Mastery QB implementation and asks for verification. (DONE)
-4.  **User**: Reports a bug: the in-course General Reading is stuck on a loading screen. (BUG)
-5.  **Agent**: Debugs and fixes the content mapping issue causing the loading bug. (FIXED)
-6.  **Agent**: Confirms the fix and summarizes the work. (DONE)
-7.  **User**: Reports two new bugs: (1) Mastery reading pages are missing the Go to course lesson recommendation. (2) Hardcoded Turkish text is visible in the UI. (NEW BUGS)
-8.  **Agent**: Acknowledges the two new bugs and starts working on them. (IN PROGRESS)
-9.  **Agent**: Identifies the specific files and code to be changed. (IN PROGRESS)
-10. **Agent**: Executes  commands to fix the issues. (IN PROGRESS - NOT VERIFIED)
+1.  **User**: Provides an extremely detailed prompt for implementing the Speaking Question Bank, including UI flow, timing rules, recording logic, and evaluation schema.
+2.  **User**: Adds more requirements: an accessibility toggle to show question text, and Mentor Notes for feedback.
+3.  **Agent**: Asks clarifying questions about STT quality, evaluation approach, and implementation details.
+4.  **User**: Answers the agent's questions, approving the use of Whisper+GPT-4o for evaluation and other suggestions.
+5.  **Agent**: Acknowledges and begins implementation, starting with the backend.
+6.  **Agent**: Creates backend content and API files for the Speaking QB.
+7.  **Agent**: Pre-generates and caches all 204 examiner audio question files.
+8.  **Agent**: States it will now create the frontend page.
+9.  **Agent**: Encounters a  error for .
+10. **User**: complete the task first then we will do fork session - Acknowledging the file conflict and instructing the agent to finish the current feature before the session ends.
 
 **Project Health Check:**
--   **Broken**: None.
--   **Mocked**: None.
--   **Incomplete**: The bug fixes for the Mastery QB pages are in progress.
+-   **Broken**: None
+-   **Mocked**: None
+-   **Incomplete**: The Speaking Question Bank frontend and evaluation logic.
 
 **3rd Party Integrations**
--   OpenAI GPT-4o: Used via  for AI evaluation features.
+-   **OpenAI GPT-4o**: Used for AI evaluation features. Uses Emergent LLM Key.
+-   **ElevenLabs v3**: Used for generating all high-quality audio for Listening and Speaking questions. Requires a User API Key (which has been provided and added to ).
+-   **OpenAI Whisper**: Planned for Speech-to-Text transcription in the Speaking QB. Uses Emergent LLM Key.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES
+-   **Testing agent used after significant changes**: YES (for Reading QB fixes).
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: None.
 -   **Known regressions**: None.
@@ -156,5 +150,4 @@ Additionally, the  page now correctly includes a restored dual-track (Academic/G
 -   **Primary User**:  / 
 
 **What agent forgot to execute**
--   The agent did not forget but had a significant initial misunderstanding of the user's architectural requirements (Course vs. Question Bank), which led to major rework.
--   The agent did not verify its final bug fixes before the session ended.</analysis>
+-   The agent has not forgotten anything. It correctly identified the file conflict with  and was about to proceed with creating a new file before the session ended.</analysis>
