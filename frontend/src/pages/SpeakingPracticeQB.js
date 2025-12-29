@@ -49,12 +49,30 @@ export default function SpeakingPracticeQB({ user }) {
   
   const [filterTrack, setFilterTrack] = useState(initialTrack);
   const [filterBand, setFilterBand] = useState(initialBand || '');
+  const [userCredits, setUserCredits] = useState(0);
   
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const timerRef = useRef(null);
   const audioBlobsRef = useRef({}); // Store audio blobs for premium evaluation
+  
+  // Fetch user credits on mount
+  useEffect(() => {
+    const fetchUserCredits = async () => {
+      if (!user?.id) return;
+      try {
+        const res = await fetch(`${API_URL}/api/users/${user.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setUserCredits(data.examCredits || 0);
+        }
+      } catch (error) {
+        console.error('Error fetching user credits:', error);
+      }
+    };
+    fetchUserCredits();
+  }, [user?.id]);
   
   useEffect(() => {
     loadModules();
