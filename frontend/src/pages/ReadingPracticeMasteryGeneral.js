@@ -128,7 +128,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
     setResults({ correct, total: questions.length, percentage, estimatedBand, questionResults });
     setSubmitted(true);
     setTimerActive(false);
-    toast.success('Cevaplar gönderildi!');
+    toast.success('Answers submitted!');
   };
 
   const filteredModules = modules.filter(m => {
@@ -142,7 +142,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Mastery General Training yükleniyor...</p>
+          <p className="text-gray-600">Loading Mastery General Training...</p>
         </div>
       </div>
     );
@@ -162,7 +162,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
                 <h1 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                   <FileText className="w-5 h-5 text-purple-600" /> Mastery General Training
                 </h1>
-                <p className="text-sm text-gray-500">Band 6.0-7.0 | Profesyonel Belgeler</p>
+                <p className="text-sm text-gray-500">Band 6.0-7.0 | Professional Documents</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -184,14 +184,14 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
         <div className="mb-6 flex flex-wrap gap-3 items-center">
           <div className="flex items-center gap-2">
             <Filter className="w-4 h-4 text-gray-500" />
-            <span className="text-sm text-gray-600">Filtrele:</span>
+            <span className="text-sm text-gray-600">Filter:</span>
           </div>
           <select 
             className="px-3 py-2 border rounded-lg text-sm"
             value={filterTopic}
             onChange={(e) => setFilterTopic(e.target.value)}
           >
-            <option value="">Tüm Konular</option>
+            <option value="">All Topics</option>
             {Object.entries(topics).map(([key, topic]) => (
               <option key={key} value={key}>{topic.icon} {topic.name}</option>
             ))}
@@ -201,7 +201,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
           >
-            <option value="">Tüm Soru Tipleri</option>
+            <option value="">All Question Types</option>
             {Object.entries(questionTypes).map(([key, type]) => (
               <option key={key} value={key}>{type.name}</option>
             ))}
@@ -210,7 +210,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
 
         {/* Module Selector */}
         <div className="mb-6">
-          <p className="text-sm font-medium text-gray-600 mb-3">Belge Türü Seçin ({filteredModules.length} modül):</p>
+          <p className="text-sm font-medium text-gray-600 mb-3">Select Document Type ({filteredModules.length} modules):</p>
           <div className="flex gap-2 flex-wrap">
             {filteredModules.map((module) => (
               <Button
@@ -313,7 +313,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
                       onChange={(e) => handleAnswerChange(idx, e.target.value)}
                       disabled={submitted}
                     >
-                      <option value="">Pozisyon seçin...</option>
+                      <option value="">Select position...</option>
                       <option value="A">Position A</option>
                       <option value="B">Position B</option>
                       <option value="C">Position C</option>
@@ -323,7 +323,7 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
                   ) : (
                     <input 
                       type="text" 
-                      placeholder="Cevabınızı yazın..."
+                      placeholder="Type your answer..."
                       value={answers[idx] || ''}
                       onChange={(e) => handleAnswerChange(idx, e.target.value)}
                       disabled={submitted}
@@ -340,11 +340,11 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
                           <AlertCircle className="w-4 h-4 text-red-600" />
                         )}
                         <span className={`font-medium text-sm ${results.questionResults[idx].isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-                          {results.questionResults[idx].isCorrect ? 'Doğru!' : 'Yanlış'}
+                          {results.questionResults[idx].isCorrect ? 'Correct!' : 'Incorrect'}
                         </span>
                       </div>
                       {!results.questionResults[idx].isCorrect && (
-                        <p className="text-sm text-gray-700"><strong>Doğru cevap:</strong> {results.questionResults[idx].correctAnswer}</p>
+                        <p className="text-sm text-gray-700"><strong>Correct answer:</strong> {results.questionResults[idx].correctAnswer}</p>
                       )}
                       {q.explanation && <p className="text-sm text-gray-600 mt-1">{q.explanation}</p>}
                     </div>
@@ -358,17 +358,17 @@ export default function ReadingPracticeMasteryGeneral({ user }) {
                   className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-6"
                   disabled={Object.keys(answers).length === 0}
                 >
-                  <CheckCircle className="w-5 h-5 mr-2" /> Cevapları Gönder
+                  <CheckCircle className="w-5 h-5 mr-2" /> Submit Answers
                 </Button>
               ) : (
                 <Card className="p-6 bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200">
                   <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Award className="w-6 h-6 text-purple-600" /> Sonuçlarınız
+                    <Award className="w-6 h-6 text-purple-600" /> Your Results
                   </h3>
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-purple-600">{results?.correct}/{results?.total}</p>
-                      <p className="text-xs text-gray-500">Doğru</p>
+                      <p className="text-xs text-gray-500">Correct</p>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-blue-600">{results?.percentage.toFixed(0)}%</p>
