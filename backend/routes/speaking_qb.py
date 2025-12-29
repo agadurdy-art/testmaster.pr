@@ -1204,6 +1204,10 @@ async def submit_speaking_test(
             band_range=band_range
         )
         
+        # Add remaining credits info if available
+        if remaining_credits is not None:
+            evaluation["remaining_credits"] = remaining_credits
+        
         return {
             "success": True,
             **evaluation
