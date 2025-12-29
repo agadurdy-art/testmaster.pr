@@ -218,10 +218,16 @@ export default function FullTestInterface({ user }) {
       if (data.success) {
         setCompletedSections([...completedSections, currentSection]);
         
+        // In single section mode, complete immediately
+        if (isSingleSectionMode) {
+          completeTest();
+          return;
+        }
+        
         // Move to next section or complete test
         const nextIndex = currentSectionIndex + 1;
-        if (nextIndex < sectionOrder.length) {
-          const nextSection = sectionOrder[nextIndex];
+        if (nextIndex < activeSections.length) {
+          const nextSection = activeSections[nextIndex];
           setCurrentSection(nextSection);
           setCurrentSectionIndex(nextIndex);
           setTimeRemaining(SECTION_CONFIG[nextSection].totalTime);
@@ -249,8 +255,9 @@ export default function FullTestInterface({ user }) {
         body: JSON.stringify({
           session_id: sessionId,
           test_id: testId,
+          mode: mode,
           all_answers: sectionAnswers,
-          section_times: sectionOrder.reduce((acc, section, idx) => {
+          section_times: activeSections.reduce((acc, section, idx) => {
             acc[section] = completedSections.includes(section) 
               ? SECTION_CONFIG[section].totalTime 
               : (idx === currentSectionIndex ? SECTION_CONFIG[section].totalTime - timeRemaining : 0);
