@@ -346,8 +346,17 @@ export default function SpeakingPracticeQB({ user }) {
         setResults(data);
         // Clear stored audio blobs after submission
         audioBlobsRef.current = {};
+        
+        // Update user credits if premium
+        if (tier === 'premium' && data.remaining_credits !== undefined) {
+          setUserCredits(data.remaining_credits);
+        }
+        
         toast.success(tier === 'premium' ? '⭐ Premium evaluation complete!' : '✅ Basic evaluation complete!');
       } else {
+        if (data.error === 'Insufficient credits for premium evaluation') {
+          toast.error(`Need ${data.credits_needed} credit. You have ${data.current_credits}.`);
+        } else {
         toast.error(data.error || 'Evaluation failed');
       }
     } catch (error) {
