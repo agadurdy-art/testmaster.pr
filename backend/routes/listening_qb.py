@@ -493,7 +493,7 @@ async def get_listening_modules(
     if part:
         sets = [s for s in sets if s.get("part") == part]
     
-    # Create summary
+    # Create summary with cache status
     modules = [{
         "set_id": s["set_id"],
         "title": s["title"],
@@ -502,12 +502,14 @@ async def get_listening_modules(
         "topic": s["topic"],
         "question_types": s["question_types"],
         "duration_seconds": s["duration_seconds"],
-        "question_count": len(s["questions"])
+        "question_count": len(s["questions"]),
+        "audio_cached": is_audio_cached(s["set_id"])  # Show which sets have cached audio
     } for s in sets]
     
     return {
         "success": True,
         "total": len(modules),
+        "cached_count": sum(1 for m in modules if m["audio_cached"]),
         "modules": modules
     }
 
