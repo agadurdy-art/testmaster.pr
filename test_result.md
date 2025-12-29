@@ -2930,3 +2930,61 @@ The Listening Question Bank implementation is complete and functional:
 - **Navigation:** ✅ Proper URL parameters and routing
 
 ---
+---
+
+## SPEAKING QUESTION BANK IMPLEMENTATION - December 29, 2025
+
+### Implementation Status: ✅ COMPLETE
+
+**Components Implemented:**
+1. **SpeakingPracticeQB.js** - New frontend page for Speaking QB (separate from dashboard SpeakingPractice.js)
+2. **Speaking Modal in QuestionBank.js** - Modal for selecting Speaking practice options
+3. **App.js Route** - New route `/question-bank/speaking` added
+
+### Features Implemented:
+
+#### Frontend (SpeakingPracticeQB.js):
+- ✅ State machine for recording: IDLE → PROMPT_PLAYING → RECORDING → PROCESSING → READY_NEXT → COMPLETED
+- ✅ Part 1-2-3 flow with proper progression
+- ✅ Timer for each part (Part 1: 25s, Part 2: 120s prep+speaking, Part 3: 75s)
+- ✅ Audio playback for examiner questions
+- ✅ Recording functionality with MediaRecorder API
+- ✅ Transcription via Whisper API
+- ✅ Evaluation submission and results display
+- ✅ Band-based text visibility (Band 4-5 shows text, higher bands audio-only)
+- ✅ Part 2 Cue Card display with bullets
+- ✅ Results with band scores, criteria breakdown, mentor notes
+
+#### Speaking Modal in QuestionBank.js:
+- ✅ Academic Speaking option
+- ✅ General Training Speaking option
+- ✅ Band level quick selection (4-5, 5.5-6.5, 7-9)
+- ✅ Filter preservation from main page
+- ✅ Info box explaining Speaking test format
+
+### Backend (Already completed in previous session):
+- ✅ 18 Speaking sets (9 Academic + 9 General)
+- ✅ 204 pre-generated examiner audio files (9.63 MB)
+- ✅ 100% audio cache coverage
+- ✅ Transcription endpoint
+- ✅ Evaluation endpoint with GPT-4o
+
+### Test Credentials:
+- **Email**: test@ielts.com
+- **Password**: admin123
+
+### Routes to Test:
+1. `/question-bank` - Click Speaking card to open modal
+2. `/question-bank/speaking` - Speaking practice page with module selection
+3. `/question-bank/speaking?track=academic&band=4.0-5.0` - Filtered view
+
+### Critical Test Scenarios:
+1. Click Speaking card → Modal opens
+2. Select Academic/General → Navigate to practice page
+3. Select a module → Test interface loads with question
+4. Start → Audio plays (examiner question)
+5. Record → User speaks
+6. Stop → Transcription happens
+7. Next → Progress through Part 1-2-3
+8. Complete → Results shown with band scores
+
