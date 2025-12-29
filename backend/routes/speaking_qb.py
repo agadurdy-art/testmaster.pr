@@ -1,0 +1,770 @@
+"""
+Speaking Question Bank API Routes
+==================================
+Provides endpoints for Speaking practice in the Question Bank.
+Features:
+- IELTS-style speaking tests (Part 1, 2, 3)
+- Two tracks: Academic and General
+- Audio question playback (pre-generated)
+- User answer recording + transcription
+- AI evaluation following Cambridge IELTS criteria
+"""
+
+from fastapi import APIRouter, Query, HTTPException, Body, UploadFile, File, Form
+from fastapi.responses import FileResponse
+from typing import Optional, List, Dict, Any
+import os
+import base64
+import uuid
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from elevenlabs import ElevenLabs, VoiceSettings
+
+router = APIRouter(prefix="/api/speaking", tags=["Speaking Question Bank"])
+
+# API Keys
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
+EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
+
+# Audio cache directory
+AUDIO_CACHE_DIR = Path("/app/backend/static/audio/speaking")
+AUDIO_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+# User recordings directory
+RECORDINGS_DIR = Path("/app/backend/static/recordings")
+RECORDINGS_DIR.mkdir(parents=True, exist_ok=True)
+
+# Voice profiles for examiner (IELTS-neutral tone)
+EXAMINER_VOICES = {
+    "british_female_2": {
+        "voice_id": "ThT5KcBeYPX3keUQqHPh",  # Dorothy - mature, professional
+        "stability": 0.85,
+        "similarity_boost": 0.70,
+        "style": 0.0,  # Zero style = neutral
+    },
+    "british_male_2": {
+        "voice_id": "VR6AewLTigWG4xSOukaG",  # Arnold - authoritative
+        "stability": 0.85,
+        "similarity_boost": 0.70,
+        "style": 0.0,
+    },
+}
+
+
+def get_cached_audio_path(question_id: str, set_id: str) -> Path:
+    """Get path for cached question audio."""
+    return AUDIO_CACHE_DIR / f"{set_id}_{question_id}.mp3"
+
+
+def is_audio_cached(question_id: str, set_id: str) -> bool:
+    """Check if question audio is cached."""
+    path = get_cached_audio_path(question_id, set_id)
+    return path.exists() and path.stat().st_size > 100
+
+
+async def generate_examiner_audio(text: str, voice_key: str, question_id: str, set_id: str) -> Optional[str]:
+    """Generate IELTS examiner-style audio for a question."""
+    # Check cache first
+    if is_audio_cached(question_id, set_id):
+        return f"/api/speaking/audio/{set_id}/{question_id}"
+    
+    if not ELEVENLABS_API_KEY:
+        return None
+    
+    try:
+        client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+        voice_profile = EXAMINER_VOICES.get(voice_key, EXAMINER_VOICES["british_female_2"])
+        
+        voice_settings = VoiceSettings(
+            stability=voice_profile["stability"],
+            similarity_boost=voice_profile["similarity_boost"],
+            style=voice_profile["style"],
+            use_speaker_boost=False
+        )
+        
+        audio_generator = client.text_to_speech.convert(
+            text=text,
+            voice_id=voice_profile["voice_id"],
+            model_id="eleven_multilingual_v2",
+            voice_settings=voice_settings
+        )
+        
+        audio_data = b""
+        for chunk in audio_generator:
+            audio_data += chunk
+        
+        # Save to cache
+        cache_path = get_cached_audio_path(question_id, set_id)
+        with open(cache_path, 'wb') as f:
+            f.write(audio_data)
+        
+        print(f"✅ Speaking audio cached: {cache_path.name}")
+        return f"/api/speaking/audio/{set_id}/{question_id}"
+        
+    except Exception as e:
+        print(f"Error generating speaking audio: {str(e)}")
+        return None
+
+
+async def transcribe_audio(audio_data: bytes, language: str = "en") -> Optional[str]:
+    """Transcribe audio using OpenAI Whisper via emergentintegrations."""
+    if not EMERGENT_LLM_KEY:
+        print("EMERGENT_LLM_KEY not configured")
+        return None
+    
+    try:
+        from emergentintegrations.llm.openai import OpenAISpeechToText
+        
+        stt = OpenAISpeechToText(api_key=EMERGENT_LLM_KEY)
+        
+        # Save audio temporarily
+        temp_path = RECORDINGS_DIR / f"temp_{uuid.uuid4()}.webm"
+        with open(temp_path, 'wb') as f:
+            f.write(audio_data)
+        
+        # Transcribe
+        with open(temp_path, 'rb') as audio_file:
+            response = await stt.transcribe(
+                file=audio_file,
+                model="whisper-1",
+                language=language,
+                response_format="json"
+            )
+        
+        # Cleanup
+        temp_path.unlink(missing_ok=True)
+        
+        return response.text
+        
+    except Exception as e:
+        print(f"Error transcribing audio: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return None
+
+
+async def evaluate_speaking_test(
+    transcripts: List[Dict[str, Any]],
+    set_data: Dict[str, Any],
+    track: str,
+    band_range: str
+) -> Dict[str, Any]:
+    """
+    Evaluate speaking test using GPT-4o with Cambridge IELTS criteria.
+    Hybrid approach: Rule-based scoring + GPT analysis.
+    """
+    if not EMERGENT_LLM_KEY:
+        return {"error": "Evaluation service not configured"}
+    
+    try:
+        from emergentintegrations.llm.openai import OpenAIChat, OpenAIChatRequest
+        
+        # Organize transcripts by part
+        part1_answers = [t for t in transcripts if t.get("part") == "1"]
+        part2_answer = next((t for t in transcripts if t.get("part") == "2"), None)
+        part3_answers = [t for t in transcripts if t.get("part") == "3"]
+        
+        # Build evaluation prompt
+        evaluation_prompt = f"""You are an experienced IELTS speaking examiner. Evaluate the following speaking test responses using the official IELTS speaking assessment criteria.
+
+## Test Information
+- Track: {track.upper()}
+- Target Band Range: {band_range}
+- Topic: {set_data.get('title', 'General')}
+
+## Assessment Criteria (Weight equally at 25% each)
+1. Fluency and Coherence: Flow of speech, logical organization, use of cohesive devices
+2. Lexical Resource: Vocabulary range, precision, idiomatic expressions
+3. Grammatical Range and Accuracy: Variety of structures, accuracy
+4. Pronunciation: Clear speech, natural rhythm, stress patterns
+
+## Part 1 Responses (Introduction & Interview)
+Questions asked: {len(part1_answers)}
+{chr(10).join([f"Q: {a.get('question', 'N/A')}{chr(10)}A: {a.get('transcript', '[No response]')}" for a in part1_answers])}
+
+## Part 2 Response (Long Turn)
+Topic: {set_data.get('part2', {}).get('cue_card', {}).get('topic', 'N/A')}
+Response: {part2_answer.get('transcript', '[No response]') if part2_answer else '[No response]'}
+
+## Part 3 Responses (Discussion)
+Questions asked: {len(part3_answers)}
+{chr(10).join([f"Q: {a.get('question', 'N/A')}{chr(10)}A: {a.get('transcript', '[No response]')}" for a in part3_answers])}
+
+## Evaluation Task
+Provide a detailed evaluation in the following JSON format:
+{{
+    "overall_band": <float between 4.0-9.0>,
+    "criteria": {{
+        "fluency_coherence": <integer 4-9>,
+        "lexical_resource": <integer 4-9>,
+        "grammatical_range": <integer 4-9>,
+        "pronunciation": <integer 4-9>
+    }},
+    "strengths": ["<strength 1>", "<strength 2>", "<strength 3>"],
+    "weaknesses": ["<weakness 1>", "<weakness 2>"],
+    "mistakes": [
+        {{"snippet": "<problematic phrase>", "issue": "<what's wrong>", "fix": "<suggested correction>"}}
+    ],
+    "per_part_summary": {{
+        "part1": "<brief assessment of Part 1 performance>",
+        "part2": "<brief assessment of Part 2 performance>",
+        "part3": "<brief assessment of Part 3 performance>"
+    }},
+    "mentor_notes": "<2-3 sentences of mentor-style insight, calm and professional, focused on patterns not single mistakes>",
+    "try_this_next": ["<practical strategy 1>", "<practical strategy 2>"]
+}}
+
+Be fair, objective, and follow Cambridge IELTS standards strictly. Do not be overly generous or harsh.
+"""
+        
+        chat = OpenAIChat(api_key=EMERGENT_LLM_KEY)
+        request = OpenAIChatRequest(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are an IELTS speaking examiner. Respond only with valid JSON."},
+                {"role": "user", "content": evaluation_prompt}
+            ],
+            temperature=0.3
+        )
+        
+        response = await chat.process(request)
+        
+        # Parse JSON from response
+        response_text = response.choices[0].message.content
+        # Extract JSON if wrapped in markdown
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0]
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0]
+        
+        evaluation = json.loads(response_text.strip())
+        
+        # Add metadata
+        evaluation["skill"] = "speaking"
+        evaluation["track"] = track
+        evaluation["band_range"] = band_range
+        evaluation["set_id"] = set_data.get("set_id")
+        evaluation["evaluated_at"] = datetime.now(timezone.utc).isoformat()
+        
+        # Generate lesson recommendations
+        evaluation["recommended_lessons"] = generate_speaking_recommendations(
+            track, 
+            band_range, 
+            evaluation.get("weaknesses", []),
+            set_data.get("topic")
+        )
+        
+        return evaluation
+        
+    except Exception as e:
+        print(f"Error evaluating speaking: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return {
+            "error": str(e),
+            "overall_band": 5.0,
+            "criteria": {
+                "fluency_coherence": 5,
+                "lexical_resource": 5,
+                "grammatical_range": 5,
+                "pronunciation": 5
+            },
+            "strengths": ["Unable to fully evaluate"],
+            "weaknesses": ["Evaluation service encountered an error"],
+            "mistakes": [],
+            "mentor_notes": "We couldn't complete the full evaluation. Please try again.",
+            "try_this_next": []
+        }
+
+
+def generate_speaking_recommendations(
+    track: str,
+    band_range: str,
+    weaknesses: List[str],
+    topic: str
+) -> List[Dict[str, Any]]:
+    """Generate lesson recommendations based on evaluation."""
+    recommendations = []
+    
+    # Map band ranges to course stages
+    band_to_stage = {
+        "4.0-5.0": "beginner",
+        "5.5-6.5": "mastery",
+        "7.0-9.0": "advanced"
+    }
+    stage = band_to_stage.get(band_range, "mastery")
+    
+    # Weakness-based recommendations
+    weakness_lessons = {
+        "fluency": {"title": "Speaking Fluency Strategies", "desc": "Practice smooth delivery"},
+        "coherence": {"title": "Organizing Your Response", "desc": "Structure ideas logically"},
+        "vocabulary": {"title": "Academic Vocabulary Building", "desc": "Expand word choice"},
+        "lexical": {"title": "Lexical Resource Enhancement", "desc": "Use precise vocabulary"},
+        "grammar": {"title": "Grammar for Speaking", "desc": "Complex structures practice"},
+        "pronunciation": {"title": "Pronunciation Practice", "desc": "Clear articulation"},
+        "hesitation": {"title": "Reducing Hesitation", "desc": "Speak with confidence"},
+        "ideas": {"title": "Idea Development", "desc": "Expand your answers"}
+    }
+    
+    for weakness in weaknesses[:3]:
+        weakness_lower = weakness.lower()
+        for key, lesson in weakness_lessons.items():
+            if key in weakness_lower:
+                recommendations.append({
+                    "lesson_id": f"{stage}_speaking_{key}",
+                    "title": lesson["title"],
+                    "description": lesson["desc"],
+                    "track": track,
+                    "stage": stage,
+                    "relevance": "weakness",
+                    "url": f"/{stage}-course?section=speaking"
+                })
+                break
+    
+    # Topic-based recommendation
+    if topic:
+        recommendations.append({
+            "lesson_id": f"{stage}_{topic}_speaking",
+            "title": f"{topic.replace('_', ' ').title()} - Speaking Practice",
+            "track": track,
+            "stage": stage,
+            "relevance": "topic",
+            "url": f"/{stage}-course?module={topic}&section=speaking"
+        })
+    
+    return recommendations[:5]
+
+
+# ============ API ENDPOINTS ============
+
+@router.get("/audio/{set_id}/{question_id}")
+async def serve_question_audio(set_id: str, question_id: str):
+    """Serve cached question audio."""
+    cache_path = get_cached_audio_path(question_id, set_id)
+    
+    if not cache_path.exists():
+        raise HTTPException(status_code=404, detail=f"Audio not found")
+    
+    return FileResponse(path=cache_path, media_type="audio/mpeg")
+
+
+@router.get("/parts")
+async def get_speaking_parts():
+    """Get IELTS speaking parts information."""
+    from content.speaking.speaking_sets import get_speaking_parts_info
+    return {"success": True, "parts": get_speaking_parts_info()}
+
+
+@router.get("/criteria")
+async def get_assessment_criteria():
+    """Get IELTS speaking assessment criteria."""
+    from content.speaking.speaking_sets import get_assessment_criteria
+    return {"success": True, "criteria": get_assessment_criteria()}
+
+
+@router.get("/band-levels")
+async def get_band_levels():
+    """Get available band levels."""
+    return {
+        "success": True,
+        "band_levels": [
+            {"id": "4.0-5.0", "name": "Band 4.0-5.0", "description": "Foundation", "show_text": True},
+            {"id": "5.5-6.5", "name": "Band 5.5-6.5", "description": "Intermediate", "show_text": False},
+            {"id": "7.0-9.0", "name": "Band 7.0-9.0", "description": "Advanced", "show_text": False}
+        ]
+    }
+
+
+@router.get("/tracks")
+async def get_speaking_tracks():
+    """Get available speaking tracks."""
+    return {
+        "success": True,
+        "tracks": [
+            {"id": "academic", "name": "Academic Speaking", "description": "Academic contexts and topics"},
+            {"id": "general", "name": "General Training", "description": "Everyday topics and situations"}
+        ]
+    }
+
+
+@router.get("/topics")
+async def get_speaking_topics(track: Optional[str] = Query(None)):
+    """Get available speaking topics."""
+    from content.speaking.speaking_sets import get_speaking_topics
+    topics = get_speaking_topics(track)
+    return {"success": True, "topics": topics}
+
+
+@router.get("/modules")
+async def get_speaking_modules(
+    track: Optional[str] = Query(None),
+    band: Optional[str] = Query(None),
+    topic: Optional[str] = Query(None)
+):
+    """Get available speaking modules/sets."""
+    from content.speaking.speaking_sets import get_speaking_sets_filtered
+    
+    sets = get_speaking_sets_filtered(track=track, band_range=band, topic=topic)
+    
+    # Check audio cache status for each set
+    modules = []
+    for s in sets:
+        # Count cached questions
+        cached_count = 0
+        total_questions = 0
+        
+        for q in s.get("part1", {}).get("questions", []):
+            total_questions += 1
+            if is_audio_cached(q["id"], s["set_id"]):
+                cached_count += 1
+        
+        total_questions += 1  # Part 2 intro
+        if is_audio_cached("part2_intro", s["set_id"]):
+            cached_count += 1
+            
+        for q in s.get("part3", {}).get("questions", []):
+            total_questions += 1
+            if is_audio_cached(q["id"], s["set_id"]):
+                cached_count += 1
+        
+        modules.append({
+            "set_id": s["set_id"],
+            "title": s["title"],
+            "track": s["track"],
+            "band_range": s["band_range"],
+            "topic": s["topic"],
+            "show_text": s.get("show_text", False),
+            "audio_cached": cached_count,
+            "total_questions": total_questions
+        })
+    
+    return {
+        "success": True,
+        "total": len(modules),
+        "modules": modules
+    }
+
+
+@router.get("/set/{set_id}")
+async def get_speaking_set(
+    set_id: str,
+    include_audio: bool = Query(True),
+    mode: str = Query("test", description="test or practice")
+):
+    """Get a speaking set with questions and optional audio URLs."""
+    from content.speaking.speaking_sets import get_speaking_set_by_id, SPEAKING_PARTS
+    
+    speaking_set = get_speaking_set_by_id(set_id)
+    
+    if not speaking_set:
+        raise HTTPException(status_code=404, detail=f"Speaking set '{set_id}' not found")
+    
+    examiner_voice = speaking_set.get("examiner_voice", "british_female_2")
+    
+    # Process Part 1
+    part1_questions = []
+    for q in speaking_set.get("part1", {}).get("questions", []):
+        q_data = {
+            "id": q["id"],
+            "target_time": q.get("target_time", 15),
+            "max_time": 25  # Hard cap for Part 1
+        }
+        
+        # Only include text for Band 4-5 or if mode is practice
+        if speaking_set.get("show_text", False) or mode == "practice":
+            q_data["text"] = q["text"]
+        
+        # Generate/get audio URL
+        if include_audio:
+            audio_url = await generate_examiner_audio(q["text"], examiner_voice, q["id"], set_id)
+            q_data["audio_url"] = audio_url
+            q_data["audio_cached"] = is_audio_cached(q["id"], set_id)
+        
+        part1_questions.append(q_data)
+    
+    # Part 1 intro
+    part1_intro = speaking_set.get("part1", {}).get("intro", "")
+    if include_audio and part1_intro:
+        part1_intro_audio = await generate_examiner_audio(part1_intro, examiner_voice, "part1_intro", set_id)
+    else:
+        part1_intro_audio = None
+    
+    # Process Part 2
+    part2_data = speaking_set.get("part2", {})
+    cue_card = part2_data.get("cue_card", {})
+    
+    # Part 2 always shows cue card text
+    part2 = {
+        "cue_card": cue_card,
+        "follow_up": part2_data.get("follow_up", ""),
+        "prep_time": SPEAKING_PARTS["part2"]["prep_time"],
+        "speaking_time_max": SPEAKING_PARTS["part2"]["speaking_time_max"]
+    }
+    
+    if include_audio:
+        # Generate audio for Part 2 prompt
+        part2_prompt = f"Now I'm going to give you a topic. You have one minute to prepare, and then you should speak for one to two minutes. {cue_card.get('topic', '')}"
+        part2["audio_url"] = await generate_examiner_audio(part2_prompt, examiner_voice, "part2_intro", set_id)
+        
+        # Generate audio for follow-up
+        if part2_data.get("follow_up"):
+            part2["follow_up_audio_url"] = await generate_examiner_audio(
+                part2_data["follow_up"], examiner_voice, "part2_followup", set_id
+            )
+    
+    # Process Part 3
+    part3_questions = []
+    for q in speaking_set.get("part3", {}).get("questions", []):
+        q_data = {
+            "id": q["id"],
+            "target_time": q.get("target_time", 45),
+            "max_time": 75  # Hard cap for Part 3
+        }
+        
+        if speaking_set.get("show_text", False) or mode == "practice":
+            q_data["text"] = q["text"]
+        
+        if include_audio:
+            audio_url = await generate_examiner_audio(q["text"], examiner_voice, q["id"], set_id)
+            q_data["audio_url"] = audio_url
+            q_data["audio_cached"] = is_audio_cached(q["id"], set_id)
+        
+        part3_questions.append(q_data)
+    
+    # Part 3 intro
+    part3_intro = speaking_set.get("part3", {}).get("intro", "")
+    if include_audio and part3_intro:
+        part3_intro_audio = await generate_examiner_audio(part3_intro, examiner_voice, "part3_intro", set_id)
+    else:
+        part3_intro_audio = None
+    
+    return {
+        "success": True,
+        "set": {
+            "set_id": set_id,
+            "title": speaking_set["title"],
+            "track": speaking_set["track"],
+            "band_range": speaking_set["band_range"],
+            "topic": speaking_set["topic"],
+            "show_text": speaking_set.get("show_text", False),
+            "mode": mode,
+            "examiner_voice": examiner_voice,
+            "part1": {
+                "name": SPEAKING_PARTS["part1"]["name"],
+                "intro": part1_intro,
+                "intro_audio_url": part1_intro_audio,
+                "questions": part1_questions,
+                "answer_time_max": SPEAKING_PARTS["part1"]["answer_time_max"]
+            },
+            "part2": part2,
+            "part3": {
+                "name": SPEAKING_PARTS["part3"]["name"],
+                "intro": part3_intro,
+                "intro_audio_url": part3_intro_audio,
+                "questions": part3_questions,
+                "answer_time_max": SPEAKING_PARTS["part3"]["answer_time_max"]
+            }
+        }
+    }
+
+
+@router.post("/transcribe")
+async def transcribe_user_audio(
+    audio: UploadFile = File(...),
+    question_id: str = Form(...),
+    part: str = Form(...)
+):
+    """Transcribe a single user audio recording."""
+    audio_data = await audio.read()
+    
+    if len(audio_data) < 100:
+        raise HTTPException(status_code=400, detail="Audio file too small or empty")
+    
+    transcript = await transcribe_audio(audio_data)
+    
+    if transcript is None:
+        raise HTTPException(status_code=500, detail="Transcription failed")
+    
+    return {
+        "success": True,
+        "question_id": question_id,
+        "part": part,
+        "transcript": transcript
+    }
+
+
+@router.post("/submit")
+async def submit_speaking_test(
+    set_id: str = Body(...),
+    track: str = Body(...),
+    band_range: str = Body(...),
+    answers: List[Dict[str, Any]] = Body(...)
+):
+    """
+    Submit completed speaking test for evaluation.
+    
+    Expected answers format:
+    [
+        {"part": "1", "question_id": "p1q1", "transcript": "...", "question": "..."},
+        {"part": "2", "question_id": "part2", "transcript": "..."},
+        {"part": "3", "question_id": "p3q1", "transcript": "...", "question": "..."},
+        ...
+    ]
+    """
+    from content.speaking.speaking_sets import get_speaking_set_by_id
+    
+    speaking_set = get_speaking_set_by_id(set_id)
+    
+    if not speaking_set:
+        raise HTTPException(status_code=404, detail=f"Speaking set '{set_id}' not found")
+    
+    # Evaluate the test
+    evaluation = await evaluate_speaking_test(
+        transcripts=answers,
+        set_data=speaking_set,
+        track=track,
+        band_range=band_range
+    )
+    
+    return {
+        "success": True,
+        **evaluation
+    }
+
+
+@router.post("/generate-all-audio")
+async def generate_all_speaking_audio(
+    force: bool = Query(False, description="Force regenerate even if cached")
+):
+    """Pre-generate audio for all speaking questions."""
+    from content.speaking.speaking_sets import get_all_speaking_sets
+    
+    all_sets = get_all_speaking_sets()
+    results = []
+    generated_count = 0
+    cached_count = 0
+    
+    for s in all_sets:
+        set_id = s["set_id"]
+        examiner_voice = s.get("examiner_voice", "british_female_2")
+        set_results = {"set_id": set_id, "questions": []}
+        
+        # Part 1 intro
+        intro = s.get("part1", {}).get("intro", "")
+        if intro:
+            if not force and is_audio_cached("part1_intro", set_id):
+                cached_count += 1
+                set_results["questions"].append({"id": "part1_intro", "status": "cached"})
+            else:
+                await generate_examiner_audio(intro, examiner_voice, "part1_intro", set_id)
+                generated_count += 1
+                set_results["questions"].append({"id": "part1_intro", "status": "generated"})
+        
+        # Part 1 questions
+        for q in s.get("part1", {}).get("questions", []):
+            if not force and is_audio_cached(q["id"], set_id):
+                cached_count += 1
+                set_results["questions"].append({"id": q["id"], "status": "cached"})
+            else:
+                await generate_examiner_audio(q["text"], examiner_voice, q["id"], set_id)
+                generated_count += 1
+                set_results["questions"].append({"id": q["id"], "status": "generated"})
+        
+        # Part 2
+        cue_card = s.get("part2", {}).get("cue_card", {})
+        part2_prompt = f"Now I'm going to give you a topic. You have one minute to prepare, and then you should speak for one to two minutes. {cue_card.get('topic', '')}"
+        if not force and is_audio_cached("part2_intro", set_id):
+            cached_count += 1
+        else:
+            await generate_examiner_audio(part2_prompt, examiner_voice, "part2_intro", set_id)
+            generated_count += 1
+        
+        follow_up = s.get("part2", {}).get("follow_up", "")
+        if follow_up:
+            if not force and is_audio_cached("part2_followup", set_id):
+                cached_count += 1
+            else:
+                await generate_examiner_audio(follow_up, examiner_voice, "part2_followup", set_id)
+                generated_count += 1
+        
+        # Part 3 intro
+        intro3 = s.get("part3", {}).get("intro", "")
+        if intro3:
+            if not force and is_audio_cached("part3_intro", set_id):
+                cached_count += 1
+            else:
+                await generate_examiner_audio(intro3, examiner_voice, "part3_intro", set_id)
+                generated_count += 1
+        
+        # Part 3 questions
+        for q in s.get("part3", {}).get("questions", []):
+            if not force and is_audio_cached(q["id"], set_id):
+                cached_count += 1
+            else:
+                await generate_examiner_audio(q["text"], examiner_voice, q["id"], set_id)
+                generated_count += 1
+        
+        results.append(set_results)
+    
+    return {
+        "success": True,
+        "total_sets": len(all_sets),
+        "generated": generated_count,
+        "cached": cached_count,
+        "results": results
+    }
+
+
+@router.get("/cache-status")
+async def get_cache_status():
+    """Get speaking audio cache status."""
+    from content.speaking.speaking_sets import get_all_speaking_sets
+    
+    all_sets = get_all_speaking_sets()
+    total_questions = 0
+    cached_questions = 0
+    
+    for s in all_sets:
+        set_id = s["set_id"]
+        
+        # Count Part 1
+        if s.get("part1", {}).get("intro"):
+            total_questions += 1
+            if is_audio_cached("part1_intro", set_id):
+                cached_questions += 1
+        
+        for q in s.get("part1", {}).get("questions", []):
+            total_questions += 1
+            if is_audio_cached(q["id"], set_id):
+                cached_questions += 1
+        
+        # Part 2
+        total_questions += 2  # intro + follow-up
+        if is_audio_cached("part2_intro", set_id):
+            cached_questions += 1
+        if is_audio_cached("part2_followup", set_id):
+            cached_questions += 1
+        
+        # Part 3
+        if s.get("part3", {}).get("intro"):
+            total_questions += 1
+            if is_audio_cached("part3_intro", set_id):
+                cached_questions += 1
+        
+        for q in s.get("part3", {}).get("questions", []):
+            total_questions += 1
+            if is_audio_cached(q["id"], set_id):
+                cached_questions += 1
+    
+    # Get cache directory size
+    total_size = sum(f.stat().st_size for f in AUDIO_CACHE_DIR.glob("*.mp3") if f.is_file())
+    
+    return {
+        "success": True,
+        "total_sets": len(all_sets),
+        "total_questions": total_questions,
+        "cached_questions": cached_questions,
+        "cache_percentage": round((cached_questions / total_questions) * 100, 1) if total_questions > 0 else 0,
+        "cache_size_mb": round(total_size / (1024 * 1024), 2)
+    }
