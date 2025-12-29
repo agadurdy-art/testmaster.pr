@@ -542,12 +542,78 @@ export default function SpeakingPracticeQB({ user }) {
 
         {results && (
           <Card className="p-6 bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2"><Award className="w-6 h-6 text-indigo-600" /> Results</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <Award className="w-6 h-6 text-indigo-600" /> Results
+              </h2>
+              {results.tier && (
+                <Badge className={results.tier === 'premium' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'}>
+                  {results.tier === 'premium' ? '⭐ Premium' : '🎯 Basic'}
+                </Badge>
+              )}
+            </div>
             
             <div className="text-center mb-6">
               <p className="text-5xl font-bold text-indigo-600">{results.overall_band}</p>
               <p className="text-gray-500">Overall Band</p>
             </div>
+            
+            {/* Premium: Azure Pronunciation Scores */}
+            {results.pronunciation_analysis?.azure_scores && (
+              <div className="mb-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <h4 className="font-semibold text-purple-800 mb-3 flex items-center gap-2">
+                  <Mic className="w-4 h-4" /> Pronunciation Analysis (Azure)
+                </h4>
+                <div className="grid grid-cols-5 gap-2 text-center">
+                  {Object.entries(results.pronunciation_analysis.azure_scores).map(([k, v]) => (
+                    <div key={k} className="bg-white p-2 rounded">
+                      <p className="text-lg font-bold text-purple-700">{v}</p>
+                      <p className="text-xs text-gray-500 capitalize">{k}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Premium: Pronunciation Issues */}
+            {results.pronunciation_analysis?.main_issues?.length > 0 && (
+              <div className="mb-6 p-4 bg-red-50 rounded-lg border border-red-200">
+                <h4 className="font-semibold text-red-800 mb-2">⚠️ Pronunciation Issues</h4>
+                <ul className="text-sm text-red-700 space-y-1">
+                  {results.pronunciation_analysis.main_issues.map((issue, i) => (
+                    <li key={i}>• {issue}</li>
+                  ))}
+                </ul>
+                {results.pronunciation_analysis.swallowed_sounds?.length > 0 && (
+                  <p className="mt-2 text-xs text-red-600">
+                    <strong>Swallowed sounds:</strong> {results.pronunciation_analysis.swallowed_sounds.join(', ')}
+                  </p>
+                )}
+                {results.pronunciation_analysis.missing_endings?.length > 0 && (
+                  <p className="text-xs text-red-600">
+                    <strong>Missing endings:</strong> {results.pronunciation_analysis.missing_endings.join(', ')}
+                  </p>
+                )}
+              </div>
+            )}
+            
+            {/* Premium: Word-level Results */}
+            {results.word_level_results?.length > 0 && (
+              <div className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                <h4 className="font-semibold text-orange-800 mb-2">🔤 Problem Words</h4>
+                <div className="flex flex-wrap gap-2">
+                  {results.word_level_results.slice(0, 10).map((word, i) => (
+                    <span key={i} className="px-2 py-1 bg-white rounded text-sm border border-orange-200">
+                      <span className="font-medium">{word.word}</span>
+                      <span className="text-orange-600 ml-1">({word.accuracy_score}%)</span>
+                      {word.error_type !== 'None' && (
+                        <span className="text-xs text-red-500 ml-1">[{word.error_type}]</span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             
             <div className="grid grid-cols-2 gap-4 mb-6">
               {results.criteria && Object.entries(results.criteria).map(([k, v]) => (
@@ -557,6 +623,26 @@ export default function SpeakingPracticeQB({ user }) {
                 </div>
               ))}
             </div>
+            
+            {/* Free tier metrics */}
+            {results.metrics && (
+              <div className="mb-6 p-3 bg-gray-50 rounded-lg">
+                <div className="grid grid-cols-3 gap-4 text-center text-sm">
+                  <div>
+                    <p className="text-xl font-bold text-gray-700">{results.metrics.total_words}</p>
+                    <p className="text-xs text-gray-500">Words Spoken</p>
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-gray-700">{results.metrics.words_per_minute}</p>
+                    <p className="text-xs text-gray-500">Words/Min</p>
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-gray-700">{Math.round(results.metrics.total_duration)}s</p>
+                    <p className="text-xs text-gray-500">Duration</p>
+                  </div>
+                </div>
+              </div>
+            )}
             
             {results.per_part_summary && (
               <div className="mb-6 space-y-2">
@@ -587,10 +673,25 @@ export default function SpeakingPracticeQB({ user }) {
               </div>
             )}
             
+            {/* Premium: Practice Focus */}
+            {results.practice_focus?.length > 0 && (
+              <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-200 mb-6">
+                <h4 className="font-semibold text-indigo-800 mb-2 flex items-center gap-2">🎯 Practice Focus</h4>
+                <ul className="text-sm text-indigo-700 space-y-1">{results.practice_focus.map((p, i) => <li key={i}>• {p}</li>)}</ul>
+              </div>
+            )}
+            
             {results.try_this_next?.length > 0 && (
               <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
                 <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2"><Lightbulb className="w-4 h-4" /> Try This Next</h4>
                 <ul className="text-sm text-blue-700 space-y-1">{results.try_this_next.map((t, i) => <li key={i}>• {t}</li>)}</ul>
+              </div>
+            )}
+            
+            {/* Free tier upgrade prompt */}
+            {results.upgrade_prompt && (
+              <div className="bg-gradient-to-r from-purple-100 to-indigo-100 p-4 rounded-lg border border-purple-200 mb-6">
+                <p className="text-sm text-purple-700">{results.upgrade_prompt}</p>
               </div>
             )}
             
