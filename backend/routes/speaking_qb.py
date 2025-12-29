@@ -534,13 +534,17 @@ Focus especially on pronunciation issues like:
 - Intonation patterns"""
         
         from emergentintegrations.llm.openai import LlmChat, UserMessage
+        import uuid
         
-        chat = LlmChat(api_key=EMERGENT_LLM_KEY)
-        response = await chat.send_message(
-            message=UserMessage(content=f"You are an expert IELTS examiner with phonetics expertise. Respond only with valid JSON.\n\n{evaluation_prompt}"),
-            model="gpt-4o"
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=str(uuid.uuid4()),
+            system_message="You are an expert IELTS examiner with phonetics expertise. Respond only with valid JSON."
         )
-        response_text = response.content
+        response = await chat.send_message(
+            user_message=UserMessage(text=evaluation_prompt)
+        )
+        response_text = response
         
         # Parse JSON
         if "```json" in response_text:
