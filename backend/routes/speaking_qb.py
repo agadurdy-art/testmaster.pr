@@ -26,6 +26,26 @@ router = APIRouter(prefix="/api/speaking", tags=["Speaking Question Bank"])
 # API Keys
 ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
 EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
+AZURE_SPEECH_KEY = os.environ.get("AZURE_SPEECH_KEY")
+AZURE_SPEECH_REGION = os.environ.get("AZURE_SPEECH_REGION", "southeastasia")
+
+# Evaluation tiers
+EVALUATION_TIERS = {
+    "free": {
+        "name": "Basic Evaluation",
+        "cost_tokens": 0,
+        "model": "whisper",
+        "features": ["transcription", "basic_band_estimate", "general_feedback"]
+    },
+    "premium": {
+        "name": "Premium Evaluation", 
+        "cost_tokens": 1,
+        "model": "azure_pronunciation",
+        "features": ["transcription", "word_level_accuracy", "phoneme_analysis", 
+                    "pronunciation_score", "fluency_score", "completeness_score",
+                    "prosody_score", "detailed_feedback", "mentor_notes"]
+    }
+}
 
 # Audio cache directory
 AUDIO_CACHE_DIR = Path("/app/backend/static/audio/speaking")
