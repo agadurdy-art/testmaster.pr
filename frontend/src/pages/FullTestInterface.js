@@ -498,7 +498,7 @@ export default function FullTestInterface({ user }) {
           {/* Hidden audio element - NO CONTROLS for seeking prevention */}
           <audio
             ref={audioRef}
-            src={`${API_URL}/static/audio/full_tests/${testId}/listening/listening_part${listeningPart}.mp3`}
+            src={`${API_URL}/api/full-test/audio/stream/${testId}/listening/${listeningPart}`}
             onEnded={handleAudioEnded}
             onPlay={() => setAudioPlaying(true)}
             onPause={() => setAudioPlaying(false)}
