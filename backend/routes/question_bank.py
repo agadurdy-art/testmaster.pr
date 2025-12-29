@@ -1184,3 +1184,62 @@ async def get_general_task2_prompt(prompt_id: str):
             "band_8_5": model_band85
         }
     }
+
+
+# ============ READING PRACTICE ENDPOINT ============
+
+@router.get("/reading/practice")
+async def get_reading_practice_questions(
+    mode: str = Query("random", description="Practice mode: random, timed, smart"),
+    topic: Optional[str] = Query(None),
+    band: Optional[str] = Query(None),
+    limit: int = Query(10, ge=1, le=30)
+):
+    """Get reading practice questions from mastery content."""
+    try:
+        from content.reading.mastery.reading_mastery_academic import MASTERY_READING_MODULES
+    except ImportError:
+        MASTERY_READING_MODULES = []
+    
+    questions = []
+    
+    # Extract questions from mastery modules
+    for module in MASTERY_READING_MODULES:
+        for passage in module.get("passages", []):
+            # Filter by topic if specified
+            if topic and module.get("topic", "").lower() != topic.lower():
+                continue
+            
+            for q in passage.get("questions", []):
+                question_data = {
+                    "id": q.get("id", str(uuid.uuid4())),
+                    "type": q.get("type", "multiple-choice"),
+                    "text": q.get("question", q.get("text", "")),
+                    "passage": passage.get("text", "")[:500] + "...",  # Truncate for preview
+                    "options": q.get("options", []),
+                    "correct": q.get("answer", q.get("correct", "")),
+                    "explanation": q.get("explanation", ""),
+                    "difficulty": q.get("difficulty", "medium"),
+                    "topic": module.get("topic", "general"),
+                    "module_title": module.get("title", "")
+                }
+                questions.append(question_data)
+    
+    # Apply limit
+    if len(questions) > limit:
+        if mode == "random":
+            questions = random.sample(questions, limit)
+        else:
+            questions = questions[:limit]
+    
+    # Sort for smart mode (harder first)
+    if mode == "smart":
+        difficulty_order = {"hard": 0, "medium": 1, "easy": 2}
+        questions.sort(key=lambda x: difficulty_order.get(x.get("difficulty", "medium"), 1))
+    
+    return {
+        "success": True,
+        "mode": mode,
+        "questions": questions,
+        "total": len(questions)
+    }
