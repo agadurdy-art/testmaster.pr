@@ -381,7 +381,7 @@ Be fair and realistic. This is a basic evaluation without detailed pronunciation
             message=UserMessage(content=f"You are an IELTS examiner. Respond only with valid JSON.\n\n{evaluation_prompt}"),
             model="gpt-4o"
         )
-        response_text = response.choices[0].message.content
+        response_text = response.content
         
         # Parse JSON
         if "```json" in response_text:
