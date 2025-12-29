@@ -260,14 +260,24 @@ export default function SpeakingPracticeQB({ user }) {
         setRecordingState(STATES.IDLE);
       } else {
         setRecordingState(STATES.COMPLETED);
-        submitTest();
+        // Show tier selection modal instead of auto-submit
+        setShowTierModal(true);
       }
     }
   };
 
-  const submitTest = async () => {
+  const submitTest = async (tier = 'free') => {
     try {
       setLoading(true);
+      setShowTierModal(false);
+      
+      // Prepare answers with audio data for premium tier
+      const preparedAnswers = answers.map(answer => ({
+        ...answer,
+        // For premium, we'd need to include audio_data (base64)
+        // This would require storing audio blobs during recording
+      }));
+      
       const res = await fetch(`${API_URL}/api/speaking/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -275,14 +285,16 @@ export default function SpeakingPracticeQB({ user }) {
           set_id: selectedModule,
           track: filterTrack,
           band_range: filterBand || moduleContent?.band_range,
-          answers: answers
+          answers: preparedAnswers,
+          evaluation_tier: tier,
+          user_id: user?.id
         })
       });
       
       const data = await res.json();
       if (data.success) {
         setResults(data);
-        toast.success('Test evaluated!');
+        toast.success(tier === 'premium' ? 'Premium evaluation complete!' : 'Basic evaluation complete!');
       } else {
         toast.error('Evaluation failed');
       }
