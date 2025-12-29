@@ -2,22 +2,28 @@
 Listening Question Bank API Routes
 ==================================
 Provides endpoints for Listening practice in the Question Bank.
-IELTS-Quality Audio Generation with ElevenLabs
+IELTS-Quality Audio Generation with ElevenLabs + Caching
 """
 
 from fastapi import APIRouter, Query, HTTPException, Body
+from fastapi.responses import FileResponse
 from typing import Optional, List, Dict, Any
 import os
 import base64
 import asyncio
 import re
 import io
+from pathlib import Path
 from elevenlabs import ElevenLabs, VoiceSettings
 
 router = APIRouter(prefix="/api/listening", tags=["Listening Question Bank"])
 
 # ElevenLabs client
 ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY")
+
+# Audio cache directory
+AUDIO_CACHE_DIR = Path("/app/backend/static/audio/listening")
+AUDIO_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
 # ============ IELTS-QUALITY VOICE CONFIGURATION ============
 # These voices are selected for neutral, professional, exam-appropriate tone
