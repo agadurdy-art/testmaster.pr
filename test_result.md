@@ -3213,3 +3213,42 @@ The Listening Question Bank implementation is complete and functional:
 
 ### Required: FFmpeg installed for audio conversion (webm -> wav)
 
+
+---
+
+## PREMIUM AUDIO & CREDITS UPDATE - December 29, 2025
+
+### New Features Implemented:
+
+**1. Audio Blob Storage for Premium**
+- Audio recordings now stored in `audioBlobsRef` during test
+- Converted to base64 and sent with premium submission
+- Azure Pronunciation Assessment can now analyze real audio
+
+**2. Credit/Token System Integration**
+- User credits fetched from database on page load
+- Credits displayed in tier selection modal
+- 1 credit deducted for premium evaluation
+- "Insufficient credits" error handling
+- Remaining credits shown in results
+
+**3. UI Enhancements**
+- Credits badge in tier modal
+- Premium card disabled/grayed when no credits
+- Warning message "You need at least 1 credit"
+- Remaining credits badge in results
+
+### API Flow:
+1. User completes test → Modal shows with credit count
+2. If "Premium" selected & credits > 0 → Audio converted to base64 → Sent to backend
+3. Backend checks credits → Deducts 1 → Azure + GPT-4o analysis → Returns result
+4. Frontend updates credit display
+
+### Test Credentials:
+- Email: test@ielts.com / admin123
+
+### Test Scenarios:
+1. Basic (FREE) tier evaluation - should work without credits
+2. Premium tier with credits - should work and deduct 1 credit
+3. Premium tier without credits - should show error message
+
