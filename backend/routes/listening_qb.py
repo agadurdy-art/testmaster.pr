@@ -577,6 +577,97 @@ async def get_listening_set(
     }
 
 
+@router.post("/generate-all-audio")
+async def generate_all_audio(
+    force: bool = Query(False, description="Force regenerate even if cached")
+):
+    """
+    Pre-generate audio for all listening sets.
+    This should be called once to populate the cache.
+    """
+    from content.listening.listening_sets import get_all_listening_sets
+    
+    all_sets = get_all_listening_sets()
+    results = []
+    
+    for s in all_sets:
+        set_id = s["set_id"]
+        
+        if not force and is_audio_cached(set_id):
+            results.append({
+                "set_id": set_id,
+                "status": "already_cached",
+                "title": s["title"]
+            })
+            continue
+        
+        try:
+            audio_url = await generate_ielts_audio(
+                set_id,
+                s["transcript"],
+                s.get("speakers", []),
+                s.get("part", "part1"),
+                force_regenerate=force
+            )
+            
+            results.append({
+                "set_id": set_id,
+                "status": "generated" if audio_url else "failed",
+                "title": s["title"],
+                "audio_url": audio_url
+            })
+        except Exception as e:
+            results.append({
+                "set_id": set_id,
+                "status": "error",
+                "title": s["title"],
+                "error": str(e)
+            })
+    
+    return {
+        "success": True,
+        "total": len(all_sets),
+        "generated": sum(1 for r in results if r["status"] == "generated"),
+        "cached": sum(1 for r in results if r["status"] == "already_cached"),
+        "failed": sum(1 for r in results if r["status"] in ["failed", "error"]),
+        "results": results
+    }
+
+
+@router.get("/cache-status")
+async def get_cache_status():
+    """Get status of audio cache."""
+    from content.listening.listening_sets import get_all_listening_sets
+    
+    all_sets = get_all_listening_sets()
+    cached_sets = []
+    uncached_sets = []
+    
+    for s in all_sets:
+        set_id = s["set_id"]
+        if is_audio_cached(set_id):
+            cache_path = get_cached_audio_path(set_id)
+            cached_sets.append({
+                "set_id": set_id,
+                "title": s["title"],
+                "size_kb": round(cache_path.stat().st_size / 1024, 1)
+            })
+        else:
+            uncached_sets.append({
+                "set_id": set_id,
+                "title": s["title"]
+            })
+    
+    return {
+        "success": True,
+        "total": len(all_sets),
+        "cached": len(cached_sets),
+        "uncached": len(uncached_sets),
+        "cached_sets": cached_sets,
+        "uncached_sets": uncached_sets
+    }
+
+
 @router.post("/evaluate")
 async def evaluate_listening_answers(
     set_id: str = Body(...),
