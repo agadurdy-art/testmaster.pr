@@ -826,7 +826,7 @@ export default function FullTestInterface({ user }) {
               
               <audio
                 ref={questionAudioRef}
-                src={`${API_URL}/static/audio/full_tests/${testId}/speaking/speaking_p${speakingPart}_${currentQ.id}.mp3`}
+                src={`${API_URL}/api/full-test/audio/stream/${testId}/speaking/speaking_p${speakingPart}_${currentQ.id}`}
                 onEnded={() => setSpeakingState('IDLE')}
                 style={{ display: 'none' }}
               />
