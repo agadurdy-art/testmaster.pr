@@ -538,7 +538,15 @@ export default function SpeakingPracticeQB({ user }) {
               <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
                 <Award className="w-5 h-5 text-indigo-600" /> Test Completed! 🎉
               </h2>
-              <p className="text-gray-500 mb-6">Choose your evaluation type:</p>
+              <p className="text-gray-500 mb-4">Choose your evaluation type:</p>
+              
+              {/* User Credits Display */}
+              <div className="mb-4 p-3 bg-gray-50 rounded-lg flex items-center justify-between">
+                <span className="text-sm text-gray-600">Your Credits:</span>
+                <Badge className={userCredits > 0 ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-500'}>
+                  {userCredits} credit{userCredits !== 1 ? 's' : ''}
+                </Badge>
+              </div>
               
               <div className="space-y-4">
                 {/* Free Tier */}
@@ -568,8 +576,8 @@ export default function SpeakingPracticeQB({ user }) {
 
                 {/* Premium Tier */}
                 <Card 
-                  className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-purple-400 bg-gradient-to-r from-purple-50 to-indigo-50"
-                  onClick={() => submitTest('premium')}
+                  className={`p-4 cursor-pointer hover:shadow-md transition-all border-2 bg-gradient-to-r from-purple-50 to-indigo-50 ${userCredits > 0 ? 'hover:border-purple-400' : 'opacity-75'}`}
+                  onClick={() => userCredits > 0 ? submitTest('premium') : toast.error('You need at least 1 credit for premium evaluation')}
                 >
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0">
