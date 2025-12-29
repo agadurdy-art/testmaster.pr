@@ -272,17 +272,42 @@ export default function SpeakingPracticeQB({ user }) {
     }
   };
 
+  // Convert blob to base64
+  const blobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result.split(',')[1]; // Remove data:audio/webm;base64, prefix
+        resolve(base64);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
   const submitTest = async (tier = 'free') => {
     try {
       setLoading(true);
       setShowTierModal(false);
       
       // Prepare answers with audio data for premium tier
-      const preparedAnswers = answers.map(answer => ({
-        ...answer,
-        // For premium, we'd need to include audio_data (base64)
-        // This would require storing audio blobs during recording
-      }));
+      let preparedAnswers = [...answers];
+      
+      if (tier === 'premium') {
+        // Add audio_data (base64) for each answer if available
+        toast.info('Preparing audio for Azure analysis...');
+        preparedAnswers = await Promise.all(answers.map(async (answer) => {
+          const audioBlob = audioBlobsRef.current[answer.question_id];
+          if (audioBlob) {
+            const audioBase64 = await blobToBase64(audioBlob);
+            return {
+              ...answer,
+              audio_data: audioBase64
+            };
+          }
+          return answer;
+        }));
+      }
       
       const res = await fetch(`${API_URL}/api/speaking/submit`, {
         method: 'POST',
@@ -300,9 +325,11 @@ export default function SpeakingPracticeQB({ user }) {
       const data = await res.json();
       if (data.success) {
         setResults(data);
-        toast.success(tier === 'premium' ? 'Premium evaluation complete!' : 'Basic evaluation complete!');
+        // Clear stored audio blobs after submission
+        audioBlobsRef.current = {};
+        toast.success(tier === 'premium' ? '⭐ Premium evaluation complete!' : '✅ Basic evaluation complete!');
       } else {
-        toast.error('Evaluation failed');
+        toast.error(data.error || 'Evaluation failed');
       }
     } catch (error) {
       console.error('Submit error:', error);
