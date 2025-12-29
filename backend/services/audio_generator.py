@@ -29,38 +29,38 @@ logger = logging.getLogger(__name__)
 VOICE_PROFILES = {
     # British voices for Academic tests
     "british_male_professional": {
-        "voice_id": "pNInz6obpgDQGcFmaJgB",  # Adam - British, professional
-        "name": "Adam",
+        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George - British, warm storyteller
+        "name": "George",
         "accent": "British",
         "settings": VoiceSettings(stability=0.75, similarity_boost=0.75, style=0.0, use_speaker_boost=True)
     },
     "british_female_professional": {
-        "voice_id": "EXAVITQu4vr4xnSDxMaL",  # Sarah - British, professional
-        "name": "Sarah",
+        "voice_id": "Xb7hH8MSUJpSbSDYk0k2",  # Alice - British, clear educator
+        "name": "Alice",
         "accent": "British",
         "settings": VoiceSettings(stability=0.75, similarity_boost=0.75, style=0.0, use_speaker_boost=True)
     },
     "british_male_academic": {
-        "voice_id": "VR6AewLTigWG4xSOukaG",  # Arnold - mature, academic
-        "name": "Arnold",
+        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George - British professional
+        "name": "George",
         "accent": "British",
         "settings": VoiceSettings(stability=0.80, similarity_boost=0.70, style=0.0, use_speaker_boost=True)
     },
     "british_female_young": {
-        "voice_id": "21m00Tcm4TlvDq8ikWAM",  # Rachel - young professional
-        "name": "Rachel",
+        "voice_id": "EXAVITQu4vr4xnSDxMaL",  # Sarah - mature, reassuring
+        "name": "Sarah",
         "accent": "British",
         "settings": VoiceSettings(stability=0.70, similarity_boost=0.75, style=0.1, use_speaker_boost=True)
     },
     "british_male_young": {
-        "voice_id": "IKne3meq5aSn9XLyUdCD",  # Charlie - young male
+        "voice_id": "IKne3meq5aSn9XLyUdCD",  # Charlie - Australian but young
         "name": "Charlie",
-        "accent": "British",
+        "accent": "Australian",
         "settings": VoiceSettings(stability=0.70, similarity_boost=0.75, style=0.1, use_speaker_boost=True)
     },
     # Examiner voice for Speaking section
     "examiner": {
-        "voice_id": "pNInz6obpgDQGcFmaJgB",  # Adam - neutral, professional
+        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George - British, neutral, professional
         "name": "Examiner",
         "accent": "British",
         "settings": VoiceSettings(stability=0.85, similarity_boost=0.70, style=0.0, use_speaker_boost=True)
