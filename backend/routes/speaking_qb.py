@@ -1082,6 +1082,8 @@ async def submit_speaking_test(
     ]
     """
     from content.speaking.speaking_sets import get_speaking_set_by_id
+    from motor.motor_asyncio import AsyncIOMotorClient
+    import os
     
     speaking_set = get_speaking_set_by_id(set_id)
     
@@ -1107,8 +1109,46 @@ async def submit_speaking_test(
     
     # PREMIUM TIER: Azure Pronunciation Assessment + GPT-4o
     if evaluation_tier == "premium":
-        # TODO: Check user tokens and deduct if available
-        # For now, allow premium without token check for testing
+        # Check user tokens and deduct if available
+        remaining_credits = None
+        
+        if user_id:
+            try:
+                mongo_url = os.environ.get("MONGO_URL", "mongodb://localhost:27017")
+                db_name = os.environ.get("DB_NAME", "ielts_database")
+                client = AsyncIOMotorClient(mongo_url)
+                db = client[db_name]
+                
+                # Try to deduct 1 credit from user
+                result = await db.users.find_one_and_update(
+                    {"id": user_id, "examCredits": {"$gt": 0}},
+                    {"$inc": {"examCredits": -1}},
+                    return_document=True,
+                    projection={"_id": 0, "examCredits": 1}
+                )
+                
+                if result:
+                    remaining_credits = result.get("examCredits", 0)
+                    print(f"Premium evaluation: User {user_id} charged 1 credit. Remaining: {remaining_credits}")
+                else:
+                    # User has no credits - check if they exist
+                    user = await db.users.find_one({"id": user_id}, {"_id": 0, "examCredits": 1})
+                    if user:
+                        return {
+                            "success": False,
+                            "error": "Insufficient credits for premium evaluation",
+                            "tier": "premium",
+                            "credits_needed": 1,
+                            "current_credits": user.get("examCredits", 0),
+                            "message": "Please purchase credits or use the free evaluation option."
+                        }
+                    else:
+                        print(f"User {user_id} not found, allowing premium evaluation anyway")
+                
+                client.close()
+            except Exception as e:
+                print(f"Token check error: {e}")
+                # Continue without token check on error
         
         # Process each answer with Azure Pronunciation Assessment
         azure_results = []
