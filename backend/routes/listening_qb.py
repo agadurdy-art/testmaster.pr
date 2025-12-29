@@ -288,8 +288,16 @@ async def generate_ielts_audio(
 ) -> Optional[str]:
     """
     Generate IELTS-quality audio with multiple speakers and natural pauses.
-    Returns base64 encoded audio data.
+    Uses caching to avoid regenerating audio each time.
+    Returns URL to cached audio file.
     """
+    # Check cache first (unless force regenerate)
+    if not force_regenerate:
+        cached_url = get_cached_audio_url(set_id)
+        if cached_url:
+            print(f"✅ Using cached audio for {set_id}")
+            return cached_url
+    
     if not ELEVENLABS_API_KEY:
         print("ElevenLabs API key not configured")
         return None
@@ -304,7 +312,7 @@ async def generate_ielts_audio(
             print("No turns parsed from transcript")
             return None
         
-        print(f"Generating IELTS audio for {len(turns)} turns, part={part}")
+        print(f"🎙️ Generating IELTS audio for {set_id}: {len(turns)} turns, part={part}")
         
         # For monologue (Part 2, Part 4), generate as single audio
         if len(speakers) <= 1 or part in ["part2", "part4"]:
@@ -317,8 +325,8 @@ async def generate_ielts_audio(
             
             audio_data = await generate_audio_for_turn(client, clean_text, voice_profile, part)
             
-            audio_b64 = base64.b64encode(audio_data).decode()
-            return f"data:audio/mpeg;base64,{audio_b64}"
+            # Save to cache and return URL
+            return save_audio_to_cache(set_id, audio_data)
         
         # Multi-speaker: Generate each turn separately
         all_audio_chunks = []
