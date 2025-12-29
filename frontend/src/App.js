@@ -341,6 +341,10 @@ function AppWithSessionHandler() {
           element={user ? <ReadingPracticeByType user={user} /> : <Navigate to="/" />} 
         />
         <Route 
+          path="/question-bank/listening" 
+          element={user ? <ListeningPractice user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
           path="/question-bank" 
           element={user ? <QuestionBank user={user} /> : <Navigate to="/" />} 
         />
