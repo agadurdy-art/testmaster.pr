@@ -40,6 +40,7 @@ export default function SpeakingPracticeQB({ user }) {
   const [answers, setAnswers] = useState([]);
   const [results, setResults] = useState(null);
   const [showText, setShowText] = useState(false);
+  const [showTierModal, setShowTierModal] = useState(false);
   
   const [timeLeft, setTimeLeft] = useState(0);
   const [prepTime, setPrepTime] = useState(60);
