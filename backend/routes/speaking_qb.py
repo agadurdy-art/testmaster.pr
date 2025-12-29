@@ -346,6 +346,7 @@ async def evaluate_speaking_free(
     
     try:
         from emergentintegrations.llm.openai import LlmChat, UserMessage
+        import uuid
         
         # Calculate basic metrics
         total_words = sum(len(t.get("transcript", "").split()) for t in transcripts)
@@ -376,12 +377,15 @@ Provide a brief evaluation in JSON format:
 
 Be fair and realistic. This is a basic evaluation without detailed pronunciation analysis."""
         
-        chat = LlmChat(api_key=EMERGENT_LLM_KEY)
-        response = await chat.send_message(
-            message=UserMessage(content=f"You are an IELTS examiner. Respond only with valid JSON.\n\n{evaluation_prompt}"),
-            model="gpt-4o"
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=str(uuid.uuid4()),
+            system_message="You are an IELTS examiner. Respond only with valid JSON."
         )
-        response_text = response.content
+        response = await chat.send_message(
+            user_message=UserMessage(text=evaluation_prompt)
+        )
+        response_text = response
         
         # Parse JSON
         if "```json" in response_text:
