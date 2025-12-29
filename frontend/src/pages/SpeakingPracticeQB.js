@@ -596,6 +596,9 @@ export default function SpeakingPracticeQB({ user }) {
                         <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-purple-500" /> Fluency & prosody scores</li>
                         <li className="flex items-center gap-1"><CheckCircle className="w-3 h-3 text-purple-500" /> Mentor notes & practice focus</li>
                       </ul>
+                      {userCredits === 0 && (
+                        <p className="text-xs text-red-500 mt-2">⚠️ You need at least 1 credit</p>
+                      )}
                     </div>
                     <ChevronRight className="w-5 h-5 text-gray-400 mt-4" />
                   </div>
@@ -615,11 +618,18 @@ export default function SpeakingPracticeQB({ user }) {
               <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                 <Award className="w-6 h-6 text-indigo-600" /> Results
               </h2>
-              {results.tier && (
-                <Badge className={results.tier === 'premium' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'}>
-                  {results.tier === 'premium' ? '⭐ Premium' : '🎯 Basic'}
-                </Badge>
-              )}
+              <div className="flex items-center gap-2">
+                {results.remaining_credits !== undefined && (
+                  <Badge className="bg-gray-100 text-gray-600 text-xs">
+                    {results.remaining_credits} credit{results.remaining_credits !== 1 ? 's' : ''} left
+                  </Badge>
+                )}
+                {results.tier && (
+                  <Badge className={results.tier === 'premium' ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'}>
+                    {results.tier === 'premium' ? '⭐ Premium' : '🎯 Basic'}
+                  </Badge>
+                )}
+              </div>
             </div>
             
             <div className="text-center mb-6">
