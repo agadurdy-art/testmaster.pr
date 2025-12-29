@@ -5,8 +5,10 @@ Endpoints for generating and serving audio files for Full Test Mode.
 """
 
 from fastapi import APIRouter, HTTPException, BackgroundTasks
+from fastapi.responses import FileResponse, StreamingResponse
 from typing import Dict, Optional
 import os
+from pathlib import Path
 
 router = APIRouter(prefix="/api/full-test/audio", tags=["Full Test Audio"])
 
@@ -24,6 +26,49 @@ try:
 except ImportError:
     ACADEMIC_SET_A = None
     ACADEMIC_SET_A_READING = None
+
+AUDIO_BASE_PATH = Path("/app/backend/static/audio/full_tests")
+
+
+@router.get("/stream/{test_id}/listening/{part_number}")
+async def stream_listening_audio(test_id: str, part_number: int):
+    """
+    Stream listening audio for a specific part.
+    This endpoint serves the audio file directly.
+    """
+    audio_path = AUDIO_BASE_PATH / test_id / "listening" / f"listening_part{part_number}.mp3"
+    
+    if not audio_path.exists():
+        raise HTTPException(status_code=404, detail=f"Audio file not found for part {part_number}")
+    
+    return FileResponse(
+        path=str(audio_path),
+        media_type="audio/mpeg",
+        filename=f"listening_part{part_number}.mp3"
+    )
+
+
+@router.get("/stream/{test_id}/speaking/{question_id}")
+async def stream_speaking_audio(test_id: str, question_id: str):
+    """
+    Stream speaking question audio.
+    """
+    # Search for the audio file
+    speaking_path = AUDIO_BASE_PATH / test_id / "speaking"
+    
+    if not speaking_path.exists():
+        raise HTTPException(status_code=404, detail="Speaking audio directory not found")
+    
+    # Find matching file
+    for file in speaking_path.iterdir():
+        if question_id in file.name:
+            return FileResponse(
+                path=str(file),
+                media_type="audio/mpeg",
+                filename=file.name
+            )
+    
+    raise HTTPException(status_code=404, detail=f"Audio file not found for question {question_id}")
 
 
 @router.get("/status/{test_id}")
