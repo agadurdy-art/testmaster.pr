@@ -1,34 +1,33 @@
 <analysis>**original_problem_statement:**
-The user's primary objective is to build a comprehensive Question Bank feature, separate from the existing course structure. The project has progressed through several phases:
+The user's primary, high-priority objective is to build a comprehensive, IELTS-style Full Test Mode. This feature must serve as the **master data source** for all question content in the application.
 
-1.  **Reading Question Bank (Completed):** A full-featured Reading QB was built for Advanced and Mastery levels, including filtering by question type.
-2.  **Listening Question Bank (Completed):** A complete Listening QB was implemented, following a detailed user prompt. This involved creating backend APIs, a frontend practice page, integrating ElevenLabs for high-quality, multi-speaker audio, and implementing a robust audio caching system to ensure fast load times.
-3.  **Speaking Question Bank (In Progress):** The current task is to implement the Speaking Question Bank. The user has provided a highly detailed specification for an audio-driven experience with pre-generated examiner questions, per-question user recording, strict timers, and a complex evaluation flow using Azure STT (or Whisper) and a custom evaluator. The implementation must handle different UI/UX based on band level and follow a strict state machine for recording to prevent bugs.
+**PRODUCT REQUIREMENTS (as defined by the user):**
+1.  **Original Content**: All test content (passages, questions, audio) must be 100% original and copyright-safe, only mimicking the format, timing, and difficulty of real IELTS exams. It must **not** copy or paraphrase Cambridge IELTS books.
+2.  **Two Test Types**: Support both IELTS-Style Academic Full Test and IELTS-Style General Training Full Test.
+3.  **Complete Sections**: Each test must include all four skills (Listening, Reading, Writing, Speaking) with strict, exam-like timing and rules (e.g., no rewinding audio).
+4.  **Scalable Backend**: The backend data model must be final and scalable, storing each test set with its type, sections, and difficulty profile. The file structure for this has been initiated.
+5.  **Master Data Source**: The Question Bank and other practice features will later be refactored to derive their content from this new Full Test Mode, making it the single source of truth.
+6.  **Serious UX**: The frontend UI must be professional, exam-grade, with clear timers and no gamification. All UI text must be in **English**.
+7.  **Post-Test Evaluation**: Detailed feedback (band scores, mentor notes, corrections) is to be provided only *after* the entire test is completed.
 
-**User's preferred language**: Turkish
+**User's preferred language**: Turkish (but has instructed that all new development, especially the Full Test Mode, must be in English).
 
 **what currently exists?**
--   A fully completed **Reading Question Bank**.
--   A fully completed **Listening Question Bank**.
-    -   Backend APIs are live ().
-    -   Frontend modal in  and a dedicated practice page at .
-    -   A sophisticated, multi-speaker audio generation system using ElevenLabs to produce IELTS-quality audio.
-    -   A critical audio caching mechanism is in place. All 12 listening audio sets (~20MB) are pre-generated and stored in . These files are committed to the Git repository to ensure they persist across deployments, providing instant load times for users.
--   **Speaking Question Bank (Backend Ready):**
-    -   Backend content structure is defined in  (18 sets).
-    -   Backend API routes are created in  and integrated into .
-    -   All 204 examiner question audio files (~9.6MB) have been pre-generated using ElevenLabs and are cached in  and committed to the repository.
+- A fully functional **Speaking Question Bank** with a dual-tier (Free/Premium) evaluation system. The free tier uses Whisper, and the premium tier uses Azure Speech Pronunciation Assessment, tied to a user credit system (). The audio submission for premium analysis is working.
+- Completed Reading and Listening Question Banks with pre-generated, cached audio files committed to the repository.
+- A partially implemented Practice Mode for reading questions (now on hold).
+- The basic file and route structure for the new **Full Test Mode** has been created by the previous agent. This includes placeholder content files, API routes, and frontend pages (, , ).
 
 **Last working item**:
--   **Last item agent was working**: The agent was starting the frontend implementation for the **Speaking Question Bank**. It correctly identified that an existing file, , was part of a different (dashboard) feature. The agent's last thought was to create a *new, separate file* for the Question Bank's speaking practice page to avoid conflicts.
+-   **Last item agent was working**: The agent had just finished creating the initial file structure for the **Full Test Mode**. It created the backend content files, API routes, and the basic frontend pages (, , ) and their corresponding routes in . The last action was a screenshot test confirming the main landing page () loads correctly.
 -   **Status**: IN PROGRESS
--   **Agent Testing Done**: N
--   **Which testing method agent to use?**: frontend testing agent
+-   **Agent Testing Done**: N (Only a basic page load screenshot was taken).
+-   **Which testing method agent to use?**: both (Frontend and Backend testing agents will be required after implementation of each section).
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
 -   **Issue 1: Frontend Linting Warnings (P3)**
-    -   **Description**: Several frontend files have non-blocking  warnings.
+    -   **Description**: Non-blocking  warnings exist in several established frontend files.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
 
@@ -38,40 +37,37 @@ The user's primary objective is to build a comprehensive Question Bank feature, 
     -   **Is recurring issue?**: N
 
 **In progress Task List**:
--   **Task 1: Implement Speaking Question Bank Frontend (P0)**
-    -   **Description**: Build the frontend for the Speaking Question Bank as per the user's detailed specification.
-    -   **Where to resume**:
-        1.  Create a new file for the Speaking Question Bank practice page (e.g., ) to avoid conflicts with the existing .
-        2.  Implement the UI/UX flow: Part 1 -> Part 2 -> Part 3 sequence.
-        3.  Integrate the audio recording functionality with a robust state machine () to prevent audio bleed bugs.
-        4.  Implement strict timers for each part as specified.
-        5.  Connect to the already-created backend APIs for fetching question sets and submitting answers for evaluation.
-        6.  Implement the UI logic to show/hide question text based on the selected band level.
-    -   **What will be achieved with this?**: A complete, end-to-end Speaking Question Bank feature.
+-   **Task 1: Implement Full Test Mode (P0)**
+    -   **Description**: Build the end-to-end Full Test Mode feature according to the user's strict and detailed specifications. This is the new foundational feature for the application.
+    -   **Where to resume**: The basic file structure is in place. The next step is to start populating the content and implementing the logic.
+        1.  **Backend Content**: Populate  and its related files with 100% original, IELTS-format content for all four sections (Listening, Reading, Writing, Speaking).
+        2.  **Audio Generation**: Generate and cache the necessary audio files for the Listening and Speaking sections of Set A.
+        3.  **Backend API**: Implement the logic in  to serve test sections, manage state (e.g., current section, time), and lock completed sections.
+        4.  **Frontend Interface**: Build the UI in  to render each test section with strict timers and navigation controls as per IELTS rules.
+        5.  **Frontend Submission & Results**: Implement the test submission flow and build the detailed results page in .
+    -   **What will be achieved with this?**: A production-ready, scalable Full Test Mode that will serve as the master data source for all content.
     -   **Status**: IN PROGRESS
     -   **Should Test frontend/backend/both after fix?**: both
     -   **Blocked on something**: None
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P1) Speaking QB Evaluation:** Implement the full evaluation flow, including sending recorded audio to a Speech-to-Text service (Whisper), and then passing the transcript to the GPT-4o evaluator to generate detailed feedback.
+    *   **(P1) Derive Question Bank from Full Test Mode**: Once the Full Test Mode is complete, refactor the existing Question Bank to pull its content from the new  master data source.
+    *   **(P2) Enhance Listening Shorts Mode**: Implement the user's idea for a more engaging, shorts-style listening practice feature with real audio.
 *   **Future Tasks:**
-    *   Refactor large course components (, ).
     *   Implement YLE (Starters, Movers, Flyers) course content.
+    -   Implement Full Tests for the dashboard's Practice Tests section, which is currently a separate feature.
+    *   Refactor large legacy components (, ).
 
 **Completed work in this session**
--   **Bug Fixes for Mastery Reading QB (DONE)**: Translated all hardcoded Turkish text to English and added the Go to Course button on Mastery practice pages. Verified with the frontend testing agent.
--   **Listening Question Bank (P0) Implementation (DONE)**:
-    -   Created backend APIs and frontend pages for the Listening QB.
-    -   Integrated ElevenLabs for high-quality, multi-speaker audio generation, adhering to strict IELTS standards.
-    -   **Implemented a critical audio caching system**: Pre-generated all audio files and committed them to the repository, reducing load times from ~30 seconds to under 0.1 seconds.
-    -   Resolved a blocking user login issue by correctly hashing and storing the test user's password in the database.
--   **Speaking Question Bank Backend & Audio (DONE)**:
-    -   Created the backend content structure and API routes.
-    -   Pre-generated and cached all 204 examiner question audio files.
+-   **Speaking QB Evaluation - Dual Tier (DONE)**: Implemented a Free (Whisper) and Premium (Azure Pronunciation Assessment) evaluation system for the Speaking QB, complete with a user credit () system for premium access.
+-   **Audio Blob Submission (DONE)**: The frontend now captures and sends the user's recorded audio as a base64 string, allowing the backend to perform detailed analysis with Azure.
+-   **Speaking QB Frontend Integration (DONE)**: The Speaking QB page was successfully integrated into the application flow via a modal in the Question Bank.
+-   **Practice Mode (Partial Implementation - ON HOLD)**: Created a page and backend endpoint for a Practice Mode, which has now been deprioritized by the user in favor of the Full Test Mode.
+-   **Audio Cache Verification (DONE)**: Confirmed that all 216 pre-generated audio files for the Listening and Speaking question banks (~31 MB) are correctly committed to the Git repository, ensuring they persist across deployments.
 
 **Earlier issues found/mentioned but not fixed**
--   Same as **All Pending/In progress Issue list**.
+-   None other than those listed in the pending issue list.
 
 **Known issue recurrence from previous fork**
 -   **Issue recurrence in previous fork**: Linting Errors ().
@@ -82,66 +78,66 @@ The user's primary objective is to build a comprehensive Question Bank feature, 
 
 
 **Key Technical Concepts**
--   **Audio Caching**: To handle slow, expensive API calls to ElevenLabs, a caching layer was implemented. Audio files are generated once and stored locally in . These files are **committed to the Git repository** to ensure they persist across deployments. This is a critical architectural decision.
--   **Multi-Voice Audio Synthesis**: The ElevenLabs integration was rewritten to generate IELTS-quality audio using different voices for different speakers within a single audio track, following detailed user specifications.
--   **Asynchronous Frontend Loading**: For the listening page, the UI loads instantly while the audio is fetched/generated in the background, improving perceived performance.
--   **Ephemeral Filesystem Solution**: The agent correctly identified that the container's filesystem is temporary and solved the audio persistence problem by committing the generated files to the Git repository.
+-   **Master Data Source Architecture**: A major architectural shift where the Full Test Mode will become the single source of truth for all test content, ensuring consistency.
+-   **Dual-Tier API Service**: Implementation of a free (Whisper) vs. premium (Azure) service model for speaking evaluation, controlled by a user credit system. This pattern could be reused.
+-   **Pronunciation Assessment**: Successful integration of the Azure Speech SDK for detailed, phoneme-level feedback on user audio.
+-   ** Library**: Corrected usage of the library by replacing deprecated  with , which requires  and  parameters.
 
 **key DB schema**
--   No database schema changes. All content continues to be stored in Python files.
+-   **users**: The  field is actively used to manage access to the premium speaking evaluation.
 
 **changes in tech stack**
--   None.
+-   **Azure Speech SDK**:  was installed and is used for the premium speaking evaluation tier.
 
 **All files of reference**
--   **/app/backend/routes/speaking_qb.py**: Backend API routes for the Speaking QB.
--   **/app/backend/content/speaking/speaking_sets.py**: Content and structure for all speaking tests.
--   **/app/backend/static/audio/speaking/**: Directory containing the 204 pre-generated examiner audio files.
--   **/app/frontend/src/pages/QuestionBank.js**: Needs to be updated with the Speaking QB modal.
--   **/app/frontend/src/App.js**: Will need a new route for the Speaking QB practice page.
+-   **/app/backend/content/full_tests/**: The new master directory for all test content. All new work should focus here.
+-   **/app/backend/routes/full_test.py**: The API router for the Full Test Mode.
+-   **/app/frontend/src/pages/FullTestInterface.js**: The core UI component for the test-taking experience.
+-   User's detailed prompt for Full Test Mode (in message history) is the primary specification document.
 
 **Areas that need refactoring**:
--   The existing  is for a different feature. The new Speaking QB implementation should use a new, distinctly named file to avoid confusion and future refactoring needs.
+-   After the Full Test Mode is complete, the existing Question Bank content files and APIs must be refactored to derive their data from the  content, eliminating data duplication.
 
 **key api endpoints**
--   : Returns a listening set.
--   : Serves cached listening audio files.
--   : Returns a speaking test set.
--   : Serves cached speaking question audio files.
+-   **/api/speaking/submit**: (MODIFIED) Now accepts  and  (base64). It deducts  for premium requests.
+-   **/api/full-test/list**: (NEW) Lists available full tests. (Currently returns placeholder data).
+-   **/api/full-test/get-set/{test_id}**: (NEW) Retrieves the structure for a specific full test. (Currently returns placeholder data).
 
 **Critical Info for New Agent**
--   **Create a new frontend file for the Speaking QB**. Do not modify the existing . A good name would be .
--   **The audio caching system is fundamental**. All audio for listening and speaking questions is pre-generated and stored in the repository. The backend serves these static files directly. Do not implement on-the-fly generation.
--   **Follow the user's detailed prompts exactly**. The user provides comprehensive and non-negotiable requirements for features. The Speaking QB implementation must adhere to the specified timers, recording state machine, and UI logic.
--   The user login issue was debugged and fixed. The test credentials  /  should now work correctly for UI testing.
+-   **PIVOT TO FULL TEST MODE**: The user has made a significant strategic pivot. The **Full Test Mode is now the single most important (P0) task**. The previously started Practice Mode is on hold.
+-   **STRICT ADHERENCE TO PROMPT**: You must build the Full Test Mode exactly as specified in the user's detailed prompt. This includes the data structure, copyright rules (100% original content), and the exam-grade serious UI. No architectural rewrites will be permitted later.
+-   **ENGLISH ONLY**: The user explicitly stated that all new UI and content for the Full Test Mode must be in English.
+-   **MASTER DATA SOURCE**: Remember that you are building the foundational content repository for the entire application. Design for scalability and consistency.
 
 **documents and test reports created in this job**
--    (Updated for Listening QB testing).
+-   : Documentation for the new test structure.
+-   : Updated several times for testing the Speaking QB evaluation.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: Provides an extremely detailed prompt for implementing the Speaking Question Bank, including UI flow, timing rules, recording logic, and evaluation schema.
-2.  **User**: Adds more requirements: an accessibility toggle to show question text, and Mentor Notes for feedback.
-3.  **Agent**: Asks clarifying questions about STT quality, evaluation approach, and implementation details.
-4.  **User**: Answers the agent's questions, approving the use of Whisper+GPT-4o for evaluation and other suggestions.
-5.  **Agent**: Acknowledges and begins implementation, starting with the backend.
-6.  **Agent**: Creates backend content and API files for the Speaking QB.
-7.  **Agent**: Pre-generates and caches all 204 examiner audio question files.
-8.  **Agent**: States it will now create the frontend page.
-9.  **Agent**: Encounters a  error for .
-10. **User**: complete the task first then we will do fork session - Acknowledging the file conflict and instructing the agent to finish the current feature before the session ends.
+1.  **User**: Asks for a tiered (free/premium) speaking evaluation.
+2.  **User**: Clarifies free = Whisper AI, premium = Azure for detailed pronunciation feedback.
+3.  **User**: Provides Azure keys and asks the system to remember them.
+4.  **User**: Approves the agent's plan to implement the tiered system.
+5.  **User**: After the feature is done, confirms tamam (ok) and asks for the rest (practice mode) to be put on hold.
+6.  **User**: Gives feedback on the listening practice, finding it too simple (just transcript). Suggests an engaging, shorts-style experience.
+7.  **User**: **(CRITICAL PIVOT)** Submits a long, detailed prompt to build a Full Test Mode as the new master feature and top priority. This is the new source of truth for the project.
+8.  **Agent**: Acknowledges the new priority and begins architectural planning.
+9.  **Agent**: Provides a  summary outlining the work done on the Speaking Evaluation and the start of the Practice Mode.
+10. **Agent**: After creating the initial files for Full Test Mode, provides another  summary. The user has not responded to this latest summary. **No pending user messages.**
 
 **Project Health Check:**
 -   **Broken**: None
--   **Mocked**: None
--   **Incomplete**: The Speaking Question Bank frontend and evaluation logic.
+-   **Mocked**: The new  endpoints return static placeholder data.
+-   **Incomplete**: The entire Full Test Mode feature.
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o**: Used for AI evaluation features. Uses Emergent LLM Key.
--   **ElevenLabs v3**: Used for generating all high-quality audio for Listening and Speaking questions. Requires a User API Key (which has been provided and added to ).
--   **OpenAI Whisper**: Planned for Speech-to-Text transcription in the Speaking QB. Uses Emergent LLM Key.
+-   **OpenAI GPT-4o**: Used for AI evaluation logic. (Uses Emergent LLM Key).
+-   **ElevenLabs**: Used for pre-generating all audio content. (Requires User API Key).
+-   **OpenAI Whisper**: Used for the 'free' tier of speech-to-text. (Uses Emergent LLM Key).
+-   **Azure Speech Service**: **(NEW)** Used for the 'premium' tier speech-to-text and detailed Pronunciation Assessment. (Requires User API Key).
 
 **Testing status**
--   **Testing agent used after significant changes**: YES (for Reading QB fixes).
+-   **Testing agent used after significant changes**: YES (for the dual-tier speaking evaluation).
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: None.
 -   **Known regressions**: None.
@@ -150,4 +146,4 @@ The user's primary objective is to build a comprehensive Question Bank feature, 
 -   **Primary User**:  / 
 
 **What agent forgot to execute**
--   The agent has not forgotten anything. It correctly identified the file conflict with  and was about to proceed with creating a new file before the session ended.</analysis>
+-   The agent correctly followed the user's priority pivot. Nothing was forgotten. The next step is to continue the implementation of the Full Test Mode as planned.</analysis>
