@@ -529,18 +529,14 @@ Focus especially on pronunciation issues like:
 - Word stress errors
 - Intonation patterns"""
         
-        chat = OpenAIChat(api_key=EMERGENT_LLM_KEY)
-        request = OpenAIChatRequest(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": "You are an expert IELTS examiner with phonetics expertise. Respond only with valid JSON."},
-                {"role": "user", "content": evaluation_prompt}
-            ],
-            temperature=0.3
-        )
+        from emergentintegrations.llm.openai import LlmChat, UserMessage
         
-        response = await chat.process(request)
-        response_text = response.choices[0].message.content
+        chat = LlmChat(api_key=EMERGENT_LLM_KEY)
+        response = await chat.send_message(
+            message=UserMessage(content=f"You are an expert IELTS examiner with phonetics expertise. Respond only with valid JSON.\n\n{evaluation_prompt}"),
+            model="gpt-4o"
+        )
+        response_text = response.content
         
         # Parse JSON
         if "```json" in response_text:
