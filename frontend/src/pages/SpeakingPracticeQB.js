@@ -99,6 +99,7 @@ export default function SpeakingPracticeQB({ user }) {
         setRecordingState(STATES.IDLE);
         setAnswers([]);
         setResults(null);
+        audioBlobsRef.current = {}; // Clear stored audio blobs
         setShowText(data.set.show_text || mode === 'practice');
         setTimeLeft(data.set.part1?.answer_time_max || 25);
       }
