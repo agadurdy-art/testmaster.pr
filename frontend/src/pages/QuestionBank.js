@@ -8,7 +8,7 @@ import {
   Target, Clock, Shuffle, Brain, TrendingUp,
   ChevronRight, Play, Filter, BarChart3, 
   CheckCircle, ArrowLeft, Layers, Zap, X, FileText, Edit3,
-  HelpCircle, Award
+  HelpCircle, Award, PlayCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -29,6 +29,7 @@ export default function QuestionBank() {
   const [showReadingModal, setShowReadingModal] = useState(false);
   const [showListeningModal, setShowListeningModal] = useState(false);
   const [showSpeakingModal, setShowSpeakingModal] = useState(false);
+  const [fullTests, setFullTests] = useState([]);
 
   useEffect(() => {
     loadData();
