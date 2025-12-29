@@ -42,21 +42,24 @@ export default function QuestionBank() {
 
   const loadData = async () => {
     try {
-      const [skillsRes, bandsRes, statsRes] = await Promise.all([
+      const [skillsRes, bandsRes, statsRes, testsRes] = await Promise.all([
         fetch(`${API_URL}/api/question-bank/skills`),
         fetch(`${API_URL}/api/question-bank/band-levels`),
-        fetch(`${API_URL}/api/question-bank/stats`)
+        fetch(`${API_URL}/api/question-bank/stats`),
+        fetch(`${API_URL}/api/full-test/sets`)
       ]);
 
-      const [skillsData, bandsData, statsData] = await Promise.all([
+      const [skillsData, bandsData, statsData, testsData] = await Promise.all([
         skillsRes.json(),
         bandsRes.json(),
-        statsRes.json()
+        statsRes.json(),
+        testsRes.json()
       ]);
 
       setSkills(skillsData.skills || []);
       setBandLevels(bandsData.band_levels || []);
       setStats(statsData);
+      setFullTests(testsData.academic_sets || []);
       
       // Load all topics initially (from Lesson Registry)
       await loadTopicsForBand(null);
