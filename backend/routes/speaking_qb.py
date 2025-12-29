@@ -164,6 +164,434 @@ async def transcribe_audio(audio_data: bytes, language: str = "en") -> Optional[
         return None
 
 
+async def azure_pronunciation_assessment(
+    audio_data: bytes,
+    reference_text: str,
+    language: str = "en-US"
+) -> Dict[str, Any]:
+    """
+    Perform detailed pronunciation assessment using Azure Speech Services.
+    Provides word-level accuracy, phoneme analysis, and prosody scores.
+    
+    Features:
+    - Word-level accuracy scores
+    - Phoneme-level analysis (detecting swallowed sounds, missing final consonants)
+    - Fluency and prosody analysis
+    - Detailed mispronunciation feedback
+    """
+    if not AZURE_SPEECH_KEY:
+        print("AZURE_SPEECH_KEY not configured")
+        return {"error": "Azure Speech not configured"}
+    
+    try:
+        import azure.cognitiveservices.speech as speechsdk
+        import subprocess
+        
+        # Save audio temporarily
+        temp_input = RECORDINGS_DIR / f"temp_{uuid.uuid4()}.webm"
+        temp_wav = RECORDINGS_DIR / f"temp_{uuid.uuid4()}.wav"
+        
+        with open(temp_input, 'wb') as f:
+            f.write(audio_data)
+        
+        # Convert webm to WAV (16kHz, mono, 16-bit) using ffmpeg
+        try:
+            subprocess.run([
+                'ffmpeg', '-y', '-i', str(temp_input),
+                '-acodec', 'pcm_s16le', '-ac', '1', '-ar', '16000',
+                str(temp_wav)
+            ], capture_output=True, check=True)
+        except Exception as e:
+            print(f"FFmpeg conversion failed: {e}")
+            # Try alternative: use pydub
+            try:
+                from pydub import AudioSegment
+                audio = AudioSegment.from_file(str(temp_input))
+                audio = audio.set_channels(1).set_frame_rate(16000)
+                audio.export(str(temp_wav), format="wav")
+            except Exception as e2:
+                print(f"Pydub conversion also failed: {e2}")
+                temp_input.unlink(missing_ok=True)
+                return {"error": f"Audio conversion failed: {str(e)}"}
+        
+        # Configure Azure Speech
+        speech_config = speechsdk.SpeechConfig(
+            subscription=AZURE_SPEECH_KEY,
+            region=AZURE_SPEECH_REGION
+        )
+        
+        # Configure audio input from file
+        audio_config = speechsdk.AudioConfig(filename=str(temp_wav))
+        
+        # Create speech recognizer
+        speech_recognizer = speechsdk.SpeechRecognizer(
+            speech_config=speech_config,
+            audio_config=audio_config
+        )
+        
+        # Configure pronunciation assessment
+        pronunciation_config = speechsdk.PronunciationAssessmentConfig(
+            reference_text=reference_text,
+            grading_system=speechsdk.PronunciationAssessmentGradingSystem.HundredMark,
+            granularity=speechsdk.PronunciationAssessmentGranularity.Phoneme,
+            enable_miscue=True
+        )
+        
+        # Enable prosody assessment for fluency and naturalness analysis
+        pronunciation_config.enable_prosody_assessment()
+        
+        # Apply pronunciation assessment configuration to recognizer
+        pronunciation_config.apply_to(speech_recognizer)
+        
+        # Perform speech recognition with pronunciation assessment
+        result = speech_recognizer.recognize_once()
+        
+        # Cleanup temp files
+        temp_input.unlink(missing_ok=True)
+        temp_wav.unlink(missing_ok=True)
+        
+        # Extract and parse results
+        if result.reason == speechsdk.ResultReason.RecognizedSpeech:
+            # Get JSON response containing detailed pronunciation assessment
+            json_result = result.properties.get(
+                speechsdk.PropertyId.SpeechServiceResponse_JsonResult
+            )
+            
+            if json_result:
+                assessment_data = json.loads(json_result)
+                
+                # Extract NBest results (pronunciation assessment is in NBest[0])
+                nbest = assessment_data.get("NBest", [{}])
+                if nbest:
+                    pron_assessment = nbest[0].get("PronunciationAssessment", {})
+                    words = nbest[0].get("Words", [])
+                    
+                    # Process word-level results
+                    word_results = []
+                    for word in words:
+                        word_pron = word.get("PronunciationAssessment", {})
+                        phonemes = word.get("Phonemes", [])
+                        
+                        # Find problematic phonemes
+                        problem_phonemes = []
+                        for phoneme in phonemes:
+                            phoneme_score = phoneme.get("PronunciationAssessment", {}).get("AccuracyScore", 100)
+                            if phoneme_score < 60:
+                                problem_phonemes.append({
+                                    "phoneme": phoneme.get("Phoneme", ""),
+                                    "score": phoneme_score
+                                })
+                        
+                        word_results.append({
+                            "word": word.get("Word", ""),
+                            "accuracy_score": word_pron.get("AccuracyScore", 0),
+                            "error_type": word_pron.get("ErrorType", "None"),
+                            "problem_phonemes": problem_phonemes
+                        })
+                    
+                    return {
+                        "success": True,
+                        "recognized_text": nbest[0].get("Display", result.text),
+                        "pronunciation_score": pron_assessment.get("PronScore", 0),
+                        "accuracy_score": pron_assessment.get("AccuracyScore", 0),
+                        "fluency_score": pron_assessment.get("FluencyScore", 0),
+                        "completeness_score": pron_assessment.get("CompletenessScore", 0),
+                        "prosody_score": pron_assessment.get("ProsodyScore", 0),
+                        "word_results": word_results,
+                        "raw_data": assessment_data
+                    }
+            
+            return {
+                "success": True,
+                "recognized_text": result.text,
+                "note": "Basic recognition only, detailed assessment unavailable"
+            }
+        
+        elif result.reason == speechsdk.ResultReason.NoMatch:
+            return {
+                "success": False,
+                "error": "No speech detected in audio",
+                "reason": "NoMatch"
+            }
+        
+        elif result.reason == speechsdk.ResultReason.Canceled:
+            cancellation = result.cancellation_details
+            return {
+                "success": False,
+                "error": f"Speech recognition canceled: {cancellation.reason}",
+                "details": str(cancellation.error_details)
+            }
+        
+        return {"success": False, "error": "Unknown error"}
+        
+    except Exception as e:
+        print(f"Azure pronunciation assessment error: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return {"error": str(e)}
+
+
+async def evaluate_speaking_free(
+    transcripts: List[Dict[str, Any]],
+    set_data: Dict[str, Any],
+    track: str,
+    band_range: str
+) -> Dict[str, Any]:
+    """
+    FREE tier evaluation using Whisper transcription + GPT-4o basic analysis.
+    Provides general feedback without detailed pronunciation analysis.
+    """
+    if not EMERGENT_LLM_KEY:
+        return {"error": "Evaluation service not configured"}
+    
+    try:
+        from emergentintegrations.llm.openai import OpenAIChat, OpenAIChatRequest
+        
+        # Calculate basic metrics
+        total_words = sum(len(t.get("transcript", "").split()) for t in transcripts)
+        total_duration = sum(t.get("duration", 0) for t in transcripts)
+        words_per_minute = (total_words / total_duration * 60) if total_duration > 0 else 0
+        
+        # Build simple evaluation prompt
+        evaluation_prompt = f"""You are an IELTS speaking examiner. Provide a BRIEF evaluation of this speaking test.
+
+## Test Info
+- Track: {track.upper()}
+- Target Band: {band_range}
+- Words spoken: {total_words}
+- Speaking rate: {words_per_minute:.0f} words/minute
+
+## Transcripts
+{chr(10).join([f"Part {t.get('part')}: {t.get('transcript', '[No response]')}" for t in transcripts])}
+
+## Task
+Provide a brief evaluation in JSON format:
+{{
+    "estimated_band": <float 4.0-9.0>,
+    "summary": "<2-3 sentence overall assessment>",
+    "strengths": ["<strength 1>", "<strength 2>"],
+    "areas_to_improve": ["<area 1>", "<area 2>"],
+    "tip": "<one practical tip for improvement>"
+}}
+
+Be fair and realistic. This is a basic evaluation without detailed pronunciation analysis."""
+        
+        chat = OpenAIChat(api_key=EMERGENT_LLM_KEY)
+        request = OpenAIChatRequest(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are an IELTS examiner. Respond only with valid JSON."},
+                {"role": "user", "content": evaluation_prompt}
+            ],
+            temperature=0.3
+        )
+        
+        response = await chat.process(request)
+        response_text = response.choices[0].message.content
+        
+        # Parse JSON
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0]
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0]
+        
+        evaluation = json.loads(response_text.strip())
+        
+        return {
+            "success": True,
+            "tier": "free",
+            "tier_name": "Basic Evaluation",
+            "overall_band": evaluation.get("estimated_band", 5.0),
+            "summary": evaluation.get("summary", ""),
+            "strengths": evaluation.get("strengths", []),
+            "weaknesses": evaluation.get("areas_to_improve", []),
+            "tip": evaluation.get("tip", ""),
+            "metrics": {
+                "total_words": total_words,
+                "words_per_minute": round(words_per_minute, 1),
+                "total_duration": total_duration
+            },
+            "upgrade_prompt": "🔓 Upgrade to Premium for detailed pronunciation analysis, word-level accuracy, and phoneme feedback!"
+        }
+        
+    except Exception as e:
+        print(f"Free evaluation error: {str(e)}")
+        return {
+            "success": False,
+            "error": str(e),
+            "tier": "free"
+        }
+
+
+async def evaluate_speaking_premium(
+    transcripts: List[Dict[str, Any]],
+    azure_results: List[Dict[str, Any]],
+    set_data: Dict[str, Any],
+    track: str,
+    band_range: str
+) -> Dict[str, Any]:
+    """
+    PREMIUM tier evaluation using Azure Pronunciation Assessment + GPT-4o detailed analysis.
+    Provides word-level accuracy, phoneme analysis, and comprehensive feedback.
+    """
+    if not EMERGENT_LLM_KEY:
+        return {"error": "Evaluation service not configured"}
+    
+    try:
+        from emergentintegrations.llm.openai import OpenAIChat, OpenAIChatRequest
+        
+        # Aggregate Azure scores
+        total_pron_score = 0
+        total_accuracy = 0
+        total_fluency = 0
+        total_completeness = 0
+        total_prosody = 0
+        valid_count = 0
+        
+        all_word_results = []
+        problem_words = []
+        
+        for azure_result in azure_results:
+            if azure_result.get("success"):
+                total_pron_score += azure_result.get("pronunciation_score", 0)
+                total_accuracy += azure_result.get("accuracy_score", 0)
+                total_fluency += azure_result.get("fluency_score", 0)
+                total_completeness += azure_result.get("completeness_score", 0)
+                total_prosody += azure_result.get("prosody_score", 0)
+                valid_count += 1
+                
+                for word in azure_result.get("word_results", []):
+                    all_word_results.append(word)
+                    if word.get("accuracy_score", 100) < 70 or word.get("error_type") != "None":
+                        problem_words.append(word)
+        
+        # Calculate averages
+        avg_pron = total_pron_score / valid_count if valid_count > 0 else 0
+        avg_accuracy = total_accuracy / valid_count if valid_count > 0 else 0
+        avg_fluency = total_fluency / valid_count if valid_count > 0 else 0
+        avg_completeness = total_completeness / valid_count if valid_count > 0 else 0
+        avg_prosody = total_prosody / valid_count if valid_count > 0 else 0
+        
+        # Map pronunciation score to IELTS band (rough mapping)
+        def pron_to_band(score):
+            if score >= 90: return 8.5
+            if score >= 80: return 7.5
+            if score >= 70: return 6.5
+            if score >= 60: return 5.5
+            if score >= 50: return 5.0
+            return 4.5
+        
+        estimated_band = pron_to_band(avg_pron)
+        
+        # Build detailed evaluation prompt
+        problem_words_text = "\n".join([
+            f"- '{w['word']}': {w['accuracy_score']:.0f}% accuracy, Error: {w.get('error_type', 'None')}, "
+            f"Problem sounds: {', '.join([p['phoneme'] for p in w.get('problem_phonemes', [])])}"
+            for w in problem_words[:10]  # Limit to 10
+        ])
+        
+        evaluation_prompt = f"""You are an expert IELTS speaking examiner with phonetics knowledge. Analyze this detailed pronunciation assessment.
+
+## Azure Pronunciation Scores (Average)
+- Overall Pronunciation: {avg_pron:.1f}/100
+- Accuracy: {avg_accuracy:.1f}/100
+- Fluency: {avg_fluency:.1f}/100
+- Completeness: {avg_completeness:.1f}/100
+- Prosody (rhythm/intonation): {avg_prosody:.1f}/100
+
+## Problem Words Detected
+{problem_words_text if problem_words else "No significant pronunciation issues detected."}
+
+## Transcripts
+{chr(10).join([f"Part {t.get('part')}: {t.get('transcript', '[No response]')}" for t in transcripts])}
+
+## Task
+Provide a comprehensive evaluation in JSON format:
+{{
+    "overall_band": <float 4.0-9.0>,
+    "criteria": {{
+        "fluency_coherence": <int 4-9>,
+        "lexical_resource": <int 4-9>,
+        "grammatical_range": <int 4-9>,
+        "pronunciation": <int 4-9>
+    }},
+    "pronunciation_analysis": {{
+        "score": {avg_pron:.1f},
+        "main_issues": ["<issue 1>", "<issue 2>"],
+        "swallowed_sounds": ["<list any detected>"],
+        "missing_endings": ["<list words with missing final sounds>"],
+        "stress_issues": ["<words with wrong stress>"]
+    }},
+    "strengths": ["<strength 1>", "<strength 2>", "<strength 3>"],
+    "weaknesses": ["<weakness 1>", "<weakness 2>"],
+    "mentor_notes": "<2-3 sentences of mentor-style guidance, calm and professional>",
+    "practice_focus": ["<specific sound to practice>", "<specific word pattern>"],
+    "try_this_next": ["<practical exercise 1>", "<practical exercise 2>"]
+}}
+
+Focus especially on pronunciation issues like:
+- Swallowed sounds (not pronouncing all phonemes)
+- Missing final consonants (common for non-native speakers)
+- Word stress errors
+- Intonation patterns"""
+        
+        chat = OpenAIChat(api_key=EMERGENT_LLM_KEY)
+        request = OpenAIChatRequest(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": "You are an expert IELTS examiner with phonetics expertise. Respond only with valid JSON."},
+                {"role": "user", "content": evaluation_prompt}
+            ],
+            temperature=0.3
+        )
+        
+        response = await chat.process(request)
+        response_text = response.choices[0].message.content
+        
+        # Parse JSON
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0]
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0]
+        
+        evaluation = json.loads(response_text.strip())
+        
+        return {
+            "success": True,
+            "tier": "premium",
+            "tier_name": "Premium Evaluation",
+            "tokens_used": 1,
+            "overall_band": evaluation.get("overall_band", estimated_band),
+            "criteria": evaluation.get("criteria", {}),
+            "pronunciation_analysis": {
+                **evaluation.get("pronunciation_analysis", {}),
+                "azure_scores": {
+                    "pronunciation": round(avg_pron, 1),
+                    "accuracy": round(avg_accuracy, 1),
+                    "fluency": round(avg_fluency, 1),
+                    "completeness": round(avg_completeness, 1),
+                    "prosody": round(avg_prosody, 1)
+                }
+            },
+            "word_level_results": problem_words[:15],  # Top 15 problem words
+            "strengths": evaluation.get("strengths", []),
+            "weaknesses": evaluation.get("weaknesses", []),
+            "mentor_notes": evaluation.get("mentor_notes", ""),
+            "practice_focus": evaluation.get("practice_focus", []),
+            "try_this_next": evaluation.get("try_this_next", [])
+        }
+        
+    except Exception as e:
+        print(f"Premium evaluation error: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return {
+            "success": False,
+            "error": str(e),
+            "tier": "premium"
+        }
+
+
 async def evaluate_speaking_test(
     transcripts: List[Dict[str, Any]],
     set_data: Dict[str, Any],
