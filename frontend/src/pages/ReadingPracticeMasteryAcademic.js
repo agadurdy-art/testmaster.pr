@@ -359,28 +359,47 @@ export default function ReadingPracticeMasteryAcademic({ user }) {
               ) : (
                 <Card className="p-6 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
                   <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Award className="w-6 h-6 text-green-600" /> Sonuçlarınız
+                    <Award className="w-6 h-6 text-green-600" /> Your Results
                   </h3>
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-green-600">{results?.correct}/{results?.total}</p>
-                      <p className="text-xs text-gray-500">Doğru</p>
+                      <p className="text-xs text-gray-500">Correct</p>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-blue-600">{results?.percentage.toFixed(0)}%</p>
-                      <p className="text-xs text-gray-500">Başarı</p>
+                      <p className="text-xs text-gray-500">Accuracy</p>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-indigo-600">{results?.estimatedBand}</p>
-                      <p className="text-xs text-gray-500">Tahmini Band</p>
+                      <p className="text-xs text-gray-500">Est. Band</p>
                     </div>
                   </div>
+
+                  {/* Course Recommendation */}
+                  <div className="mb-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                    <p className="text-sm font-medium text-amber-800 flex items-center gap-2">
+                      <Lightbulb className="w-4 h-4" /> Improve Your Skills
+                    </p>
+                    <p className="text-xs text-amber-600 mt-1">
+                      Practice similar reading passages in our <strong>Mastery Course</strong> for targeted skill development.
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="mt-2 text-amber-700 border-amber-300"
+                      onClick={() => navigate('/mastery-course')}
+                    >
+                      Go to Mastery Course <ChevronRight className="w-3 h-3 ml-1" />
+                    </Button>
+                  </div>
+
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={() => selectModule(selectedModule)} className="flex-1">
-                      <RotateCcw className="w-4 h-4 mr-1" /> Tekrar Dene
+                      <RotateCcw className="w-4 h-4 mr-1" /> Try Again
                     </Button>
                     <Button onClick={() => navigate('/question-bank')} className="flex-1 bg-green-600">
-                      Daha Fazla Pratik <ChevronRight className="w-4 h-4 ml-1" />
+                      More Practice <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   </div>
                 </Card>
@@ -389,7 +408,7 @@ export default function ReadingPracticeMasteryAcademic({ user }) {
               {moduleContent.vocabulary_focus && (
                 <Card className="p-4 bg-amber-50 border-amber-200">
                   <h4 className="font-bold text-amber-800 mb-3 flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4" /> Anahtar Kelimeler
+                    <Lightbulb className="w-4 h-4" /> Key Vocabulary
                   </h4>
                   <div className="grid gap-2">
                     {moduleContent.vocabulary_focus.map((v, vi) => (
