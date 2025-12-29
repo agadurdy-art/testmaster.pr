@@ -49,6 +49,9 @@ import ReadingPracticeByType from './pages/ReadingPracticeByType';
 import ListeningPractice from './pages/ListeningPractice';
 import SpeakingPracticeQB from './pages/SpeakingPracticeQB';
 import PracticeMode from './pages/PracticeMode';
+import FullTestMode from './pages/FullTestMode';
+import FullTestInterface from './pages/FullTestInterface';
+import FullTestResults from './pages/FullTestResults';
 
 
 function EmergentBadgeWrapper() {
