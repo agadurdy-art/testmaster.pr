@@ -264,26 +264,55 @@ export default function FullTestMode({ user }) {
 
                 {/* Mode Selection */}
                 <div>
-                  <h3 className="font-medium text-slate-900 mb-3">Choose Test Mode</h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      onClick={() => startTest(selectedTest.test_id, 'full')}
-                      className="p-4 border-2 border-slate-200 rounded-lg hover:border-slate-900 hover:bg-slate-50 transition-all text-left"
-                    >
-                      <div className="font-medium text-slate-900 mb-1">Full Test</div>
-                      <div className="text-sm text-slate-500">
-                        Complete all sections in one sitting (~3 hours)
+                  <h3 className="font-medium text-slate-900 mb-3">Choose How to Start</h3>
+                  
+                  {/* Full Test Option */}
+                  <button
+                    onClick={() => startTest(selectedTest.test_id, 'full')}
+                    className="w-full p-4 mb-3 border-2 border-slate-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                        <Play className="w-5 h-5 text-green-600" />
                       </div>
-                    </button>
-                    <button
-                      onClick={() => startTest(selectedTest.test_id, 'section')}
-                      className="p-4 border-2 border-slate-200 rounded-lg hover:border-slate-900 hover:bg-slate-50 transition-all text-left"
-                    >
-                      <div className="font-medium text-slate-900 mb-1">Section by Section</div>
-                      <div className="text-sm text-slate-500">
-                        Complete sections separately, save progress
+                      <div>
+                        <div className="font-medium text-slate-900">Full Test (All Sections)</div>
+                        <div className="text-sm text-slate-500">
+                          Complete Listening → Reading → Writing → Speaking (~3 hours)
+                        </div>
                       </div>
-                    </button>
+                    </div>
+                  </button>
+                  
+                  {/* Individual Section Selection */}
+                  <div className="border-2 border-slate-200 rounded-lg p-4">
+                    <div className="font-medium text-slate-900 mb-3">Or Start a Single Section:</div>
+                    <div className="grid grid-cols-2 gap-3">
+                      {selectedTest.sections_available.map((section) => {
+                        const Icon = SECTION_ICONS[section];
+                        const colors = {
+                          listening: 'bg-blue-50 border-blue-200 hover:border-blue-500 text-blue-700',
+                          reading: 'bg-green-50 border-green-200 hover:border-green-500 text-green-700',
+                          writing: 'bg-purple-50 border-purple-200 hover:border-purple-500 text-purple-700',
+                          speaking: 'bg-orange-50 border-orange-200 hover:border-orange-500 text-orange-700'
+                        };
+                        return (
+                          <button
+                            key={section}
+                            onClick={() => startTest(selectedTest.test_id, section)}
+                            className={`p-3 border-2 rounded-lg transition-all text-left ${colors[section]}`}
+                          >
+                            <div className="flex items-center gap-2 mb-1">
+                              <Icon className="w-4 h-4" />
+                              <span className="font-medium capitalize">{section}</span>
+                            </div>
+                            <div className="text-xs opacity-80">
+                              {SECTION_TIMES[section]} • {SECTION_QUESTIONS[section]}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -291,12 +320,6 @@ export default function FullTestMode({ user }) {
               <div className="p-6 border-t bg-slate-50 flex justify-end gap-3">
                 <Button variant="outline" onClick={() => setSelectedTest(null)}>
                   Cancel
-                </Button>
-                <Button 
-                  className="bg-slate-900 hover:bg-slate-800"
-                  onClick={() => startTest(selectedTest.test_id, 'full')}
-                >
-                  <Play className="w-4 h-4 mr-2" /> Start Full Test
                 </Button>
               </div>
             </Card>
