@@ -621,16 +621,56 @@ export default function FullTestInterface({ user }) {
         </div>
 
         {/* Part Navigation */}
-        <div className="flex justify-between items-center pt-4 border-t">
-          <span className="text-sm text-slate-500">
-            Part {listeningPart} of 4
-          </span>
-          {listeningPart === 4 && (
-            <Button onClick={() => setShowConfirmSubmit(true)}>
-              Submit Listening <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          )}
-        </div>
+        <Card className="p-4 bg-slate-50 sticky bottom-0">
+          <div className="flex items-center justify-between">
+            {/* Part Selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-slate-600 font-medium">Part:</span>
+              {[1, 2, 3, 4].map((part) => (
+                <Button
+                  key={part}
+                  variant={listeningPart === part ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setListeningPart(part)}
+                  className={listeningPart === part ? 'bg-slate-900' : ''}
+                >
+                  {part}
+                </Button>
+              ))}
+            </div>
+            
+            {/* Navigation Buttons */}
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setListeningPart(prev => Math.max(1, prev - 1))}
+                disabled={listeningPart === 1}
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" /> Previous
+              </Button>
+              
+              {listeningPart < 4 ? (
+                <Button
+                  onClick={() => setListeningPart(prev => Math.min(4, prev + 1))}
+                  className="bg-slate-900 hover:bg-slate-800"
+                >
+                  Next Part <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+              ) : (
+                <Button 
+                  onClick={() => setShowConfirmSubmit(true)}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  Submit Listening <CheckCircle className="w-4 h-4 ml-1" />
+                </Button>
+              )}
+            </div>
+          </div>
+          
+          <div className="mt-2 text-center text-xs text-slate-500">
+            Part {listeningPart} of 4 • Questions {(listeningPart - 1) * 10 + 1}-{listeningPart * 10}
+          </div>
+        </Card>
       </div>
     );
   };
