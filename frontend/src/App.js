@@ -47,6 +47,7 @@ import ReadingPracticeMasteryAcademic from './pages/ReadingPracticeMasteryAcadem
 import ReadingPracticeMasteryGeneral from './pages/ReadingPracticeMasteryGeneral';
 import ReadingPracticeByType from './pages/ReadingPracticeByType';
 import ListeningPractice from './pages/ListeningPractice';
+import SpeakingPracticeQB from './pages/SpeakingPracticeQB';
 
 
 function EmergentBadgeWrapper() {
