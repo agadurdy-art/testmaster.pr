@@ -209,11 +209,15 @@ export default function SpeakingPracticeQB({ user }) {
       
       const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
       const question = getCurrentQuestion();
-      const transcript = await transcribeAudio(audioBlob, question?.id || `part${currentPart}`, String(currentPart));
+      const questionId = question?.id || `part${currentPart}`;
+      const transcript = await transcribeAudio(audioBlob, questionId, String(currentPart));
+      
+      // Store audio blob for premium evaluation
+      audioBlobsRef.current[questionId] = audioBlob;
       
       const answer = {
         part: String(currentPart),
-        question_id: question?.id || `part${currentPart}`,
+        question_id: questionId,
         question: currentPart === 2 ? moduleContent.part2?.cue_card?.topic : question?.text,
         transcript: transcript || '[No speech detected]',
         duration: speakingTime
