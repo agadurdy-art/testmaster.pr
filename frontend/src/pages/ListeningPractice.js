@@ -95,10 +95,10 @@ export default function ListeningPractice({ user }) {
   const selectModule = async (setId) => {
     try {
       setLoading(true);
-      setLoadingAudio(true);
       setAudioError(false);
       
-      const res = await fetch(`${API_URL}/api/listening/set/${setId}?include_audio=true`);
+      // First load WITHOUT audio for fast response
+      const res = await fetch(`${API_URL}/api/listening/set/${setId}?include_audio=false`);
       const data = await res.json();
       
       if (data.success) {
@@ -112,18 +112,32 @@ export default function ListeningPractice({ user }) {
         setShowTranscript(false);
         setIsPlaying(false);
         setAudioProgress(0);
+        setLoading(false);
         
-        // Check if audio is available
-        if (!data.set.has_audio) {
+        // Then load audio asynchronously in background
+        setLoadingAudio(true);
+        try {
+          const audioRes = await fetch(`${API_URL}/api/listening/set/${setId}?include_audio=true`);
+          const audioData = await audioRes.json();
+          if (audioData.success && audioData.set.audio_url) {
+            setModuleContent(prev => ({
+              ...prev,
+              audio_url: audioData.set.audio_url,
+              has_audio: true
+            }));
+          } else {
+            setAudioError(true);
+          }
+        } catch {
           setAudioError(true);
+        } finally {
+          setLoadingAudio(false);
         }
       }
     } catch (error) {
       console.error('Error loading module:', error);
       toast.error('Failed to load listening set');
-    } finally {
       setLoading(false);
-      setLoadingAudio(false);
     }
   };
 
