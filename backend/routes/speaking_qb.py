@@ -792,7 +792,7 @@ async def serve_question_audio(set_id: str, question_id: str):
     cache_path = get_cached_audio_path(question_id, set_id)
     
     if not cache_path.exists():
-        raise HTTPException(status_code=404, detail=f"Audio not found")
+        raise HTTPException(status_code=404, detail="Audio not found")
     
     return FileResponse(path=cache_path, media_type="audio/mpeg")
 
