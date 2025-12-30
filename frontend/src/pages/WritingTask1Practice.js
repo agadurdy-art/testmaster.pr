@@ -564,13 +564,13 @@ export default function WritingTask1Practice() {
                   {modelAnswerStep >= 1 && (
                     <Card className="p-5 border">
                       <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <MessageSquare className="w-5 h-5 text-blue-600" /> Akademik Geri Bildirim
+                        <MessageSquare className="w-5 h-5 text-blue-600" /> Academic Feedback
                       </h3>
                       
                       {/* Strengths */}
                       {evaluation.strengths?.length > 0 && (
                         <div className="mb-4">
-                          <h4 className="text-sm font-semibold text-green-700 mb-2">✅ Güçlü Yönler</h4>
+                          <h4 className="text-sm font-semibold text-green-700 mb-2">✅ Strengths</h4>
                           <ul className="space-y-1">
                             {evaluation.strengths.map((s, idx) => (
                               <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
@@ -585,7 +585,7 @@ export default function WritingTask1Practice() {
                       {/* Areas for Improvement */}
                       {evaluation.weaknesses?.length > 0 && (
                         <div className="mb-4">
-                          <h4 className="text-sm font-semibold text-amber-700 mb-2">⚠️ Geliştirilecek Alanlar</h4>
+                          <h4 className="text-sm font-semibold text-amber-700 mb-2">⚠️ Areas for Improvement</h4>
                           <ul className="space-y-1">
                             {evaluation.weaknesses.map((w, idx) => (
                               <li key={idx} className="text-xs text-gray-600 flex items-start gap-2">
@@ -600,7 +600,7 @@ export default function WritingTask1Practice() {
                       {/* Improvement Suggestions */}
                       {evaluation.suggestions?.length > 0 && (
                         <div className="p-3 bg-blue-50 rounded-lg">
-                          <h4 className="text-sm font-semibold text-blue-700 mb-2">💡 İyileştirme Önerileri</h4>
+                          <h4 className="text-sm font-semibold text-blue-700 mb-2">💡 Improvement Suggestions</h4>
                           <ul className="space-y-1">
                             {evaluation.suggestions.map((sug, idx) => (
                               <li key={idx} className="text-xs text-gray-600">• {sug}</li>
