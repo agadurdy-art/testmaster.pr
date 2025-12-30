@@ -135,7 +135,7 @@ export default function QuestionBank() {
     
     setStartingTest(true);
     try {
-      const res = await fetch(`${API_URL}/api/full-test/start-session`, {
+      const res = await fetch(`${API_URL}/api/full-test/start`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
