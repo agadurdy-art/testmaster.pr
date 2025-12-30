@@ -350,23 +350,6 @@ class AudioGeneratorService:
         output = io.BytesIO()
         combined.export(output, format="mp3", bitrate="128k")
         return output.getvalue()
-            
-            # Generate audio for this segment
-            segment_audio_data = await self._generate_audio(text, voice)
-            
-            # Convert to AudioSegment
-            segment_audio = AudioSegment.from_mp3(io.BytesIO(segment_audio_data))
-            
-            # Add pause before segment (except first)
-            if i > 0:
-                combined += silence_between_turns
-            
-            combined += segment_audio
-        
-        # Export to bytes
-        buffer = io.BytesIO()
-        combined.export(buffer, format="mp3", bitrate="128k")
-        return buffer.getvalue()
     
     async def generate_speaking_question_audio(
         self,
