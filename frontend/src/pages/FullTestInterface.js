@@ -685,7 +685,7 @@ export default function FullTestInterface({ user }) {
                             {h.text.substring(0, 30)}...
                           </span>
                           {relatedNote && (
-                            <span className="text-slate-600 italic">"{relatedNote.note}"</span>
+                            <span className="text-slate-600 italic">&quot;{relatedNote.note}&quot;</span>
                           )}
                           <button 
                             onClick={() => removeHighlight(h.id)}
@@ -788,7 +788,7 @@ export default function FullTestInterface({ user }) {
                         {h.text.substring(0, 30)}...
                       </span>
                       {relatedNote && (
-                        <span className="text-slate-600 italic">"{relatedNote.note}"</span>
+                        <span className="text-slate-600 italic">&quot;{relatedNote.note}&quot;</span>
                       )}
                       <button 
                         onClick={() => removeHighlight(h.id)}
