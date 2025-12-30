@@ -358,10 +358,10 @@ export default function GeneralTask1Practice() {
 
                   {/* Letter Format Guide */}
                   <div className="p-3 bg-purple-50 rounded-lg mb-3">
-                    <h4 className="font-semibold text-purple-800 mb-2 text-xs">📝 Mektup Formatı</h4>
+                    <h4 className="font-semibold text-purple-800 mb-2 text-xs">📝 Letter Format</h4>
                     <div className="text-xs text-purple-700 space-y-1">
-                      <p><strong>Başlangıç:</strong> {selectedPrompt.addressee}</p>
-                      <p><strong>Bitiş:</strong> {selectedPrompt.closing}</p>
+                      <p><strong>Opening:</strong> {selectedPrompt.addressee}</p>
+                      <p><strong>Closing:</strong> {selectedPrompt.closing}</p>
                     </div>
                   </div>
 
@@ -369,7 +369,7 @@ export default function GeneralTask1Practice() {
                   {selectedPrompt.key_points?.length > 0 && (
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-2 text-xs flex items-center gap-1">
-                        <Lightbulb className="w-3.5 h-3.5 text-amber-500" /> Ele Alınması Gerekenler
+                        <Lightbulb className="w-3.5 h-3.5 text-amber-500" /> Points to Address
                       </h4>
                       <ul className="space-y-1">
                         {selectedPrompt.key_points.map((point, idx) => (
@@ -392,7 +392,7 @@ export default function GeneralTask1Practice() {
                     onClick={() => setShowTips(!showTips)}
                   >
                     <span className="flex items-center gap-2 font-semibold text-gray-900 text-sm">
-                      <Lightbulb className="w-4 h-4 text-amber-500" /> Mektup Yazma İpuçları
+                      <Lightbulb className="w-4 h-4 text-amber-500" /> Letter Writing Tips
                     </span>
                     {showTips ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
