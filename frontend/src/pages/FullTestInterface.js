@@ -468,28 +468,47 @@ export default function FullTestInterface({ user }) {
         <div className="max-w-4xl mx-auto p-6">
           {/* Part Header */}
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-slate-900">Part {listeningPart}</h2>
-            <p className="text-slate-600">Listen and answer questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-1">Part {listeningPart}</h2>
+            <p className="text-slate-600 text-lg">Listen and answer questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}</p>
           </div>
 
-          {/* Audio Player */}
-          <div className="mb-6 p-4 bg-slate-100 rounded-lg">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={handlePlayAudio}
-                disabled={audioEnded}
-                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all
-                  ${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'}
-                  ${audioEnded ? 'bg-slate-400 cursor-not-allowed' : ''}
-                  text-white`}
-              >
-                {audioPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-              </button>
-              <div>
-                <p className="font-medium text-slate-900">
-                  {audioPlaying ? 'Playing...' : audioEnded ? 'Audio Completed' : 'Click to Play Audio'}
-                </p>
-                <p className="text-sm text-slate-500">Audio plays once only</p>
+          {/* Audio Player with Volume Control */}
+          <div className="mb-6 p-4 bg-gradient-to-r from-slate-100 to-slate-50 rounded-lg border border-slate-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={handlePlayAudio}
+                  disabled={audioEnded}
+                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg
+                    ${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'}
+                    ${audioEnded ? 'bg-slate-400 cursor-not-allowed' : ''}
+                    text-white`}
+                >
+                  {audioPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
+                </button>
+                <div>
+                  <p className="font-semibold text-slate-900 text-lg">
+                    {audioPlaying ? 'Playing...' : audioEnded ? 'Audio Completed' : 'Click to Play Audio'}
+                  </p>
+                  <p className="text-sm text-slate-500">Audio plays once only</p>
+                </div>
+              </div>
+              
+              {/* Volume Control */}
+              <div className="flex items-center gap-2">
+                <Volume2 className="w-5 h-5 text-slate-500" />
+                <input 
+                  type="range" 
+                  min="0" 
+                  max="100" 
+                  defaultValue="80"
+                  onChange={(e) => {
+                    if (audioRef.current) {
+                      audioRef.current.volume = e.target.value / 100;
+                    }
+                  }}
+                  className="w-24 h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer"
+                />
               </div>
             </div>
             <audio
@@ -498,6 +517,61 @@ export default function FullTestInterface({ user }) {
               onEnded={handleAudioEnded}
               onPlay={() => setAudioPlaying(true)}
               onPause={() => setAudioPlaying(false)}
+              style={{ display: 'none' }}
+            />
+          </div>
+
+          {/* Questions Section - IELTS Note Completion Style */}
+          <div className="bg-white border-2 border-slate-200 rounded-lg">
+            <div className="p-4 bg-slate-50 border-b border-slate-200">
+              <h3 className="font-bold text-lg text-slate-900">
+                Questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}
+              </h3>
+              <p className="text-slate-600 mt-1">
+                Complete the notes. Write <strong>ONE WORD ONLY</strong> in each gap.
+              </p>
+            </div>
+            
+            <div className="p-6">
+              {/* Section Title */}
+              <h4 className="font-bold text-xl text-slate-800 mb-6 pb-3 border-b border-slate-200">
+                {currentPartData?.title}
+              </h4>
+              
+              {/* Questions in note completion format */}
+              <div className="space-y-4">
+                {currentPartData?.questions?.map((q, idx) => {
+                  const qNum = (listeningPart - 1) * 10 + idx + 1;
+                  const questionParts = q.question?.split('______') || [q.question];
+                  
+                  return (
+                    <div key={q.id} className="flex items-start gap-2 py-2 text-slate-700 text-lg leading-relaxed">
+                      <span className="text-slate-400 min-w-[20px]">•</span>
+                      <div className="flex-1 flex flex-wrap items-center gap-1">
+                        <span>{questionParts[0]}</span>
+                        <div className="relative inline-block">
+                          <input
+                            type="text"
+                            value={sectionAnswers.listening[q.id] || ''}
+                            onChange={(e) => updateAnswer('listening', q.id, e.target.value)}
+                            className="w-36 px-3 py-2 border-2 border-blue-400 rounded-md text-center font-medium 
+                                     bg-blue-50 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 focus:outline-none
+                                     placeholder:text-blue-300 placeholder:font-bold"
+                            placeholder={String(qNum)}
+                          />
+                        </div>
+                        {questionParts[1] && <span>{questionParts[1]}</span>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
               style={{ display: 'none' }}
             />
           </div>
