@@ -35,34 +35,68 @@ ACADEMIC_SET_C = {
                     "context": "A student guide showing a new student around the campus",
                     "speakers": ["Guide", "Student"],
                     "question_types": ["map_labelling", "form_completion"],
+                    
+                    # Visual Map Data - Frontend will render this
+                    "visual": {
+                        "type": "map",
+                        "title": "Westbrook University Campus Map",
+                        "description": "Map showing campus buildings. Label the buildings marked A-H.",
+                        "orientation": "North at top",
+                        "elements": [
+                            # Fixed/Given elements (already labeled)
+                            {"id": "entrance", "label": "Main Entrance", "position": {"x": 50, "y": 95}, "type": "gate", "given": True},
+                            {"id": "lawn", "label": "Central Lawn", "position": {"x": 50, "y": 50}, "type": "area", "given": True},
+                            {"id": "path_main", "label": "Main Path", "position": {"x": 50, "y": 70}, "type": "path", "given": True},
+                            
+                            # Buildings to be labeled by student (A-H)
+                            {"id": "A", "label": "?", "position": {"x": 50, "y": 60}, "type": "building", "shape": "rectangle", "given": False},
+                            {"id": "B", "label": "?", "position": {"x": 20, "y": 50}, "type": "building", "shape": "rectangle", "note": "glass structure", "given": False},
+                            {"id": "C", "label": "?", "position": {"x": 50, "y": 30}, "type": "building", "shape": "rectangle", "given": False},
+                            {"id": "D", "label": "?", "position": {"x": 70, "y": 30}, "type": "building", "shape": "rectangle", "given": False},
+                            {"id": "E", "label": "?", "position": {"x": 80, "y": 50}, "type": "building", "shape": "tower", "given": False},
+                            {"id": "F", "label": "?", "position": {"x": 85, "y": 40}, "type": "building", "shape": "dome", "given": False},
+                            {"id": "G", "label": "?", "position": {"x": 90, "y": 20}, "type": "building", "shape": "rectangle", "given": False}
+                        ],
+                        "compass": {"position": {"x": 90, "y": 90}},
+                        "answer_key": {
+                            "A": "Administration Building",
+                            "B": "Science Complex", 
+                            "C": "Main Library",
+                            "D": "Student Union",
+                            "E": "Engineering Faculty",
+                            "F": "Planetarium",
+                            "G": "Sports Centre"
+                        }
+                    },
+                    
                     "audio_script": """
 Guide: Welcome to Westbrook University. I'm James, and I'll be showing you around the main campus today. Do you have the campus map I emailed you?
 Student: Yes, I printed it out. I'm Sarah, by the way. This place is huge!
 Guide: It can be overwhelming at first. Let's start from where we're standing now - that's the Main Entrance, which is at the bottom of your map, facing south.
 Student: Got it. So we're looking north into the campus?
-Guide: Exactly. Now, directly ahead of you, you can see a large brick building. That's the Administration Building, marked as number one on your map. All student registrations and ID cards are handled there.
+Guide: Exactly. Now, directly ahead of you, you can see a large brick building. That's the Administration Building, marked as letter A on your map. All student registrations and ID cards are handled there.
 Student: Is that where I go for my student visa paperwork?
-Guide: Yes, the International Office is on the second floor. Now, if you look to your left - that's the west side - you'll see a modern glass structure. That's our Science Complex, which should be number two on your map.
+Guide: Yes, the International Office is on the second floor. Now, if you look to your left - that's the west side - you'll see a modern glass structure. That's our Science Complex, which should be letter B on your map.
 Student: The one with the solar panels on the roof?
-Guide: That's right. It houses Biology, Chemistry, and Physics departments. Moving clockwise, the building directly north of where we're standing - past the central lawn - is the Main Library. It's open twenty-four hours during exam periods.
+Guide: That's right. It houses Biology, Chemistry, and Physics departments. Moving clockwise, the building directly north of where we're standing - past the central lawn - is the Main Library, that's letter C. It's open twenty-four hours during exam periods.
 Student: That's useful to know. What about the building to the right of it?
-Guide: That's the Student Union, number four. It has cafeterias, common rooms, and the student services desk. Now, on the east side of campus - that's your right - there's a tall tower building. That's the Engineering Faculty.
+Guide: That's the Student Union, letter D. It has cafeterias, common rooms, and the student services desk. Now, on the east side of campus - that's your right - there's a tall tower building. That's the Engineering Faculty, letter E.
 Student: I can see it. Must be about eight floors?
-Guide: Ten actually. Behind it, you'll notice a domed building - that's the Planetarium, part of our Astronomy department. It's open to the public on Friday evenings.
+Guide: Ten actually. Behind it, you'll notice a domed building marked F - that's the Planetarium, part of our Astronomy department. It's open to the public on Friday evenings.
 Student: Amazing! What about sports facilities?
-Guide: Good question. The Sports Centre is at the northeast corner of campus, behind the Engineering tower. It has an Olympic-sized pool, gym, and indoor courts. The outdoor playing fields are beyond that, but they're not on this map.
+Guide: Good question. The Sports Centre is letter G, at the northeast corner of campus, behind the Engineering tower. It has an Olympic-sized pool, gym, and indoor courts. The outdoor playing fields are beyond that, but they're not on this map.
                     """,
                     "questions": [
-                        {"id": "L1Q1", "type": "map_labelling", "question": "Building 1 - Administration Building: Location on map", "answer": "centre/south of lawn"},
-                        {"id": "L1Q2", "type": "map_labelling", "question": "Building 2 - Science Complex: Direction from entrance", "answer": "west/left"},
+                        {"id": "L1Q1", "type": "map_labelling", "question": "Write the correct letter A-G: Administration Building", "answer": "A"},
+                        {"id": "L1Q2", "type": "map_labelling", "question": "Write the correct letter A-G: Science Complex", "answer": "B"},
                         {"id": "L1Q3", "type": "form_completion", "question": "The Science Complex has ______ panels on the roof", "answer": "solar"},
-                        {"id": "L1Q4", "type": "map_labelling", "question": "Building 3 - Main Library: Location on map", "answer": "north/directly north"},
+                        {"id": "L1Q4", "type": "map_labelling", "question": "Write the correct letter A-G: Main Library", "answer": "C"},
                         {"id": "L1Q5", "type": "form_completion", "question": "Library hours during exams: ______ hours", "answer": "24/twenty-four"},
-                        {"id": "L1Q6", "type": "map_labelling", "question": "Building 4 - Student Union: Position relative to library", "answer": "right/east"},
-                        {"id": "L1Q7", "type": "map_labelling", "question": "Building 5 - Engineering Faculty: Direction from entrance", "answer": "east/right"},
+                        {"id": "L1Q6", "type": "map_labelling", "question": "Write the correct letter A-G: Student Union", "answer": "D"},
+                        {"id": "L1Q7", "type": "map_labelling", "question": "Write the correct letter A-G: Engineering Faculty", "answer": "E"},
                         {"id": "L1Q8", "type": "form_completion", "question": "Engineering tower number of floors: ______", "answer": "10/ten"},
                         {"id": "L1Q9", "type": "form_completion", "question": "Planetarium public opening day: ______", "answer": "Friday/Fridays"},
-                        {"id": "L1Q10", "type": "map_labelling", "question": "Sports Centre location: ______ corner of campus", "answer": "northeast"}
+                        {"id": "L1Q10", "type": "map_labelling", "question": "Write the correct letter A-G: Sports Centre", "answer": "G"}
                     ]
                 },
                 
