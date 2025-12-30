@@ -364,7 +364,10 @@ export default function FullTestInterface({ user }) {
         >
           <HelpCircle className="w-4 h-4" /> Help
         </button>
-        <button className="px-3 py-1 bg-slate-600 hover:bg-slate-500 rounded text-sm flex items-center gap-1">
+        <button 
+          onClick={() => setScreenHidden(true)}
+          className="px-3 py-1 bg-slate-600 hover:bg-slate-500 rounded text-sm flex items-center gap-1"
+        >
           <EyeOff className="w-4 h-4" /> Hide
         </button>
       </div>
