@@ -1086,11 +1086,21 @@ export default function FullTestInterface({ user }) {
       <div className="flex-1 bg-gradient-to-b from-slate-50 to-slate-100">
         {/* Header bar with battery/volume indicators */}
         <div className="bg-slate-800 text-white px-4 py-2 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-xs">ID</span>
+          <div className="flex items-center gap-4">
+            {/* Back to Question Bank button */}
+            <button 
+              onClick={() => navigate('/question-bank')}
+              className="flex items-center gap-1 text-sm text-slate-300 hover:text-white transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Question Bank
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center">
+                <span className="text-white font-bold text-xs">ID</span>
+              </div>
+              <span className="text-sm text-slate-300">XXXX.XXXXXXX - 123456</span>
             </div>
-            <span className="text-sm text-slate-300">XXXX.XXXXXXX - 123456</span>
           </div>
           <div className="flex items-center gap-2">
             <Volume2 className="w-4 h-4 text-slate-400" />
