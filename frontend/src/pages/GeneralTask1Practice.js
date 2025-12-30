@@ -267,7 +267,7 @@ export default function GeneralTask1Practice() {
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                 onClick={() => setIsTimerRunning(!isTimerRunning)}
               >
-                {isTimerRunning ? 'Durdur' : 'Başlat'}
+                {isTimerRunning ? 'Pause' : 'Start'}
               </Button>
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function GeneralTask1Practice() {
               
               {/* Letter Type Filter */}
               <Card className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Mektup Tipi</h3>
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Letter Type</h3>
                 <div className="flex flex-wrap gap-2">
                   {letterTypes.map(type => {
                     const Icon = type.icon;
