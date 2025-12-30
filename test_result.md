@@ -44,6 +44,36 @@ backend:
         agent: "testing"
         comment: "✅ PASSED - Audio Status API working correctly. Successfully tested both general_set_a_01 and academic_set_a_01. Returns proper file counts: General Training (4 listening, 11 speaking), Academic (5 listening, 16 speaking). Includes file lists and proper JSON structure."
 
+  - task: "Set B Full Test Content"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/full_test.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Set B content added for IELTS Full Test Mode. Includes academic_set_b_01 and general_set_b_01 with complete listening, reading, writing, and speaking sections."
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED - Set B Full Test Content working correctly. Test List API returns 2 academic tests (Set A & B) and 2 general tests (Set A & B). Academic Set B contains all required sections with proper structure: listening (4 parts, 40 questions), reading (3 passages), writing, and speaking. Test session start works for both academic_set_b_01 and general_set_b_01. Minor: Reading section shows 0 questions in metadata but structure is correct."
+
+  - task: "Question Bank Stats API"
+    implemented: true
+    working: true
+    file: "/app/backend/routes/question_bank.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Question Bank Stats API implemented to count questions from Full Test content including Set B. Should show increased total questions count."
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED - Question Bank Stats API working correctly. Returns total_questions: 270, reading: 80 questions, listening: 80 questions. Shows proper skill breakdown including Set B content. All skill overviews (listening, reading, writing, speaking) return correct structure with proper question counts and metadata."
+
 frontend:
   - task: "Question Bank Modal UI"
     implemented: true
