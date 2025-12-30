@@ -353,5 +353,10 @@ In next week's lecture, we'll examine sleep disorders and their treatments. Plea
 }
 
 
+# Import and merge reading content
+from content.full_tests.academic.set_a_reading import ACADEMIC_SET_A_READING
+ACADEMIC_SET_A["sections"]["reading"] = ACADEMIC_SET_A_READING
+
+
 def get_academic_set_a():
     return ACADEMIC_SET_A
