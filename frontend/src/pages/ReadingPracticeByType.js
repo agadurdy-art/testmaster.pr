@@ -409,28 +409,28 @@ export default function ReadingPracticeByType({ user }) {
               ) : (
                 <Card className="p-6 bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
                   <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Award className="w-6 h-6 text-amber-600" /> Sonuçlarınız
+                    <Award className="w-6 h-6 text-amber-600" /> Your Results
                   </h3>
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-amber-600">{results?.correct}/{results?.total}</p>
-                      <p className="text-xs text-gray-500">Doğru</p>
+                      <p className="text-xs text-gray-500">Correct</p>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-blue-600">{results?.percentage.toFixed(0)}%</p>
-                      <p className="text-xs text-gray-500">Başarı</p>
+                      <p className="text-xs text-gray-500">Score</p>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg">
                       <p className="text-2xl font-bold text-indigo-600">{results?.estimatedBand}</p>
-                      <p className="text-xs text-gray-500">Tahmini Band</p>
+                      <p className="text-xs text-gray-500">Estimated Band</p>
                     </div>
                   </div>
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={() => selectModule(selectedModule)} className="flex-1">
-                      <RotateCcw className="w-4 h-4 mr-1" /> Tekrar Dene
+                      <RotateCcw className="w-4 h-4 mr-1" /> Try Again
                     </Button>
                     <Button onClick={() => navigate('/question-bank')} className="flex-1 bg-amber-600">
-                      Daha Fazla Pratik <ChevronRight className="w-4 h-4 ml-1" />
+                      More Practice <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   </div>
                 </Card>
