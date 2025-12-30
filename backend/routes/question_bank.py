@@ -229,15 +229,32 @@ def get_questions_from_full_test(skill: str, count: int = 10):
     
     elif skill == "speaking":
         for part in ACADEMIC_SET_A["sections"]["speaking"]["parts"]:
-            for q in part["questions"]:
+            part_num = part["part_number"]
+            
+            if part_num == 2:
+                # Part 2 has cue_card and follow_up instead of questions
                 questions.append({
-                    "id": q["id"],
-                    "question": q["question"],
-                    "follow_ups": q.get("follow_ups", []),
-                    "part": part["part_number"],
+                    "id": f"S2_cue",
+                    "question": part.get("cue_card", {}).get("topic", ""),
+                    "bullet_points": part.get("cue_card", {}).get("bullet_points", []),
+                    "follow_ups": part.get("follow_up", []),
+                    "part": part_num,
+                    "type": "cue_card",
                     "skill": "speaking",
                     "source": "academic_set_a"
                 })
+            else:
+                # Part 1 and Part 3 have questions array
+                for q in part.get("questions", []):
+                    questions.append({
+                        "id": q.get("id", f"S{part_num}Q"),
+                        "question": q.get("question", ""),
+                        "follow_ups": q.get("follow_ups", []),
+                        "part": part_num,
+                        "type": "discussion",
+                        "skill": "speaking",
+                        "source": "academic_set_a"
+                    })
     
     # Shuffle and limit
     random.shuffle(questions)
