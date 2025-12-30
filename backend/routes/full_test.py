@@ -83,42 +83,26 @@ def get_all_test_sets() -> Dict[str, Any]:
     }
     
     # Academic sets
-    if ACADEMIC_SET_A:
-        sets["academic"].append({
-            "test_id": ACADEMIC_SET_A["test_id"],
-            "title": ACADEMIC_SET_A["title"],
-            "description": ACADEMIC_SET_A["description"],
-            "estimated_time": ACADEMIC_SET_A["estimated_time"],
-            "sections_available": list(ACADEMIC_SET_A["sections"].keys())
-        })
-    
-    if ACADEMIC_SET_B:
-        sets["academic"].append({
-            "test_id": ACADEMIC_SET_B["test_id"],
-            "title": ACADEMIC_SET_B["title"],
-            "description": ACADEMIC_SET_B["description"],
-            "estimated_time": ACADEMIC_SET_B["estimated_time"],
-            "sections_available": list(ACADEMIC_SET_B["sections"].keys())
-        })
+    for test_data in [ACADEMIC_SET_A, ACADEMIC_SET_B, ACADEMIC_SET_C]:
+        if test_data:
+            sets["academic"].append({
+                "test_id": test_data["test_id"],
+                "title": test_data["title"],
+                "description": test_data["description"],
+                "estimated_time": test_data["estimated_time"],
+                "sections_available": list(test_data["sections"].keys())
+            })
     
     # General Training sets
-    if GENERAL_SET_A:
-        sets["general"].append({
-            "test_id": GENERAL_SET_A["test_id"],
-            "title": GENERAL_SET_A["title"],
-            "description": GENERAL_SET_A["description"],
-            "estimated_time": GENERAL_SET_A["estimated_time"],
-            "sections_available": list(GENERAL_SET_A["sections"].keys())
-        })
-    
-    if GENERAL_SET_B:
-        sets["general"].append({
-            "test_id": GENERAL_SET_B["test_id"],
-            "title": GENERAL_SET_B["title"],
-            "description": GENERAL_SET_B["description"],
-            "estimated_time": GENERAL_SET_B["estimated_time"],
-            "sections_available": list(GENERAL_SET_B["sections"].keys())
-        })
+    for test_data in [GENERAL_SET_A, GENERAL_SET_B, GENERAL_SET_C]:
+        if test_data:
+            sets["general"].append({
+                "test_id": test_data["test_id"],
+                "title": test_data["title"],
+                "description": test_data["description"],
+                "estimated_time": test_data["estimated_time"],
+                "sections_available": list(test_data["sections"].keys())
+            })
     
     return sets
 
