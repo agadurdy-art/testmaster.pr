@@ -194,7 +194,7 @@ export default function GeneralTask2Practice() {
             className="text-white/80 hover:text-white hover:bg-white/10 mb-4"
             onClick={() => navigate('/question-bank')}
           >
-            <ArrowLeft className="w-4 h-4 mr-2" /> Soru Bankası
+            <ArrowLeft className="w-4 h-4 mr-2" /> Question Bank
           </Button>
           
           <div className="flex items-center justify-between">
