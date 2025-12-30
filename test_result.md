@@ -104,3 +104,7 @@ agent_communication:
     message: "IELTS Full Test Mode functionality implemented. Backend APIs for test session management, audio generation, and audio status checking are ready for testing. Frontend modal UI is complete and working."
   - agent: "testing"
     message: "✅ ALL BACKEND TESTS PASSED - Full Test Mode APIs are working correctly. Test Session API creates sessions for both Academic and General Training tests. Audio Generation API successfully generates audio files and returns valid URLs. Audio Status API returns accurate file counts. All endpoints respond with proper JSON structure and 200 status codes. Audio files are confirmed to exist on filesystem."
+  - agent: "main"
+    message: "Set B content added for IELTS Full Test Mode. Includes academic_set_b_01 and general_set_b_01 with complete test structure. Question Bank APIs updated to include Set B content in statistics and practice endpoints."
+  - agent: "testing"
+    message: "✅ SET B CONTENT VERIFICATION COMPLETE - All Set B tests passed successfully. Test List API returns 2 academic and 2 general tests including Set B. Individual test data API works for academic_set_b_01 with proper section structure. Test session start works for both Set B tests. Question Bank Stats API shows increased question counts reflecting Set B content. All practice endpoints return Set B questions correctly."
