@@ -77,6 +77,15 @@ def get_all_test_sets() -> Dict[str, Any]:
             "sections_available": list(ACADEMIC_SET_A["sections"].keys())
         })
     
+    if ACADEMIC_SET_B:
+        sets["academic"].append({
+            "test_id": ACADEMIC_SET_B["test_id"],
+            "title": ACADEMIC_SET_B["title"],
+            "description": ACADEMIC_SET_B["description"],
+            "estimated_time": ACADEMIC_SET_B["estimated_time"],
+            "sections_available": list(ACADEMIC_SET_B["sections"].keys())
+        })
+    
     # General Training sets
     if GENERAL_SET_A:
         sets["general"].append({
@@ -85,6 +94,15 @@ def get_all_test_sets() -> Dict[str, Any]:
             "description": GENERAL_SET_A["description"],
             "estimated_time": GENERAL_SET_A["estimated_time"],
             "sections_available": list(GENERAL_SET_A["sections"].keys())
+        })
+    
+    if GENERAL_SET_B:
+        sets["general"].append({
+            "test_id": GENERAL_SET_B["test_id"],
+            "title": GENERAL_SET_B["title"],
+            "description": GENERAL_SET_B["description"],
+            "estimated_time": GENERAL_SET_B["estimated_time"],
+            "sections_available": list(GENERAL_SET_B["sections"].keys())
         })
     
     return sets
