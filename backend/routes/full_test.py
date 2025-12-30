@@ -115,8 +115,15 @@ def get_test_by_id(test_id: str) -> Optional[Dict[str, Any]]:
         # Merge reading content
         test["sections"]["reading"] = ACADEMIC_SET_A_READING
         return test
+    elif test_id == "academic_set_b_01":
+        if ACADEMIC_SET_B and ACADEMIC_SET_B_READING:
+            test = ACADEMIC_SET_B.copy()
+            test["sections"]["reading"] = ACADEMIC_SET_B_READING
+            return test
     elif test_id == "general_set_a_01":
         return GENERAL_SET_A
+    elif test_id == "general_set_b_01":
+        return GENERAL_SET_B
     return None
 
 
