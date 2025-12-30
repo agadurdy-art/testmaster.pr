@@ -106,7 +106,6 @@ LISTENING_SPEAKER_MAP = {
 GENERAL_LISTENING_SPEAKER_MAP = {
     "part_1": {
         "Staff": "british_female_professional",
-        "New Member": "british_male_young",
         "Member": "british_male_young"
     },
     "part_2": {
