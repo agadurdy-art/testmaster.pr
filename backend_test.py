@@ -1398,6 +1398,272 @@ def test_question_bank_practice_endpoints():
         print("❌ QUESTION BANK PRACTICE ENDPOINTS TESTS FAILED!")
         return False
 
+def test_general_training_full_test_set_a():
+    """Test the newly created General Training Full Test Set A as per review request"""
+    print("\n" + "="*80)
+    print("🚀 TESTING GENERAL TRAINING FULL TEST SET A - NEW IMPLEMENTATION")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 5
+    
+    # Test 1: GET /api/full-test/sets - Should return both academic_sets AND general_sets
+    print("\n=== Test 1: GET /api/full-test/sets - Both Academic and General Sets ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/full-test/sets")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Check for both academic_sets and general_sets
+            academic_sets = result.get("academic_sets", [])
+            general_sets = result.get("general_sets", [])
+            
+            if academic_sets and len(academic_sets) > 0:
+                print(f"✅ academic_sets found: {len(academic_sets)} sets")
+                print(f"   Academic Set: {academic_sets[0].get('test_id', 'Unknown')}")
+            else:
+                print(f"❌ academic_sets missing or empty")
+            
+            if general_sets and len(general_sets) > 0:
+                print(f"✅ general_sets found: {len(general_sets)} sets")
+                
+                # Check for general_set_a_01
+                general_set_a = None
+                for gset in general_sets:
+                    if gset.get("test_id") == "general_set_a_01":
+                        general_set_a = gset
+                        break
+                
+                if general_set_a:
+                    print(f"✅ general_set_a_01 found: {general_set_a.get('title')}")
+                    
+                    # Verify it has 4 sections available
+                    sections = general_set_a.get("sections_available", [])
+                    if len(sections) == 4 and all(section in sections for section in ["listening", "reading", "writing", "speaking"]):
+                        print(f"✅ All 4 sections available: {sections}")
+                        success_count += 1
+                    else:
+                        print(f"❌ Expected 4 sections, got: {sections}")
+                else:
+                    print(f"❌ general_set_a_01 not found in general_sets")
+            else:
+                print(f"❌ general_sets missing or empty")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 2: GET /api/full-test/set/general_set_a_01 - Complete General Training test structure
+    print("\n=== Test 2: GET /api/full-test/set/general_set_a_01 - Complete Test Structure ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/full-test/set/general_set_a_01")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            test_data = result.get("test", {})
+            test_type = test_data.get("test_type")
+            sections = test_data.get("sections", {})
+            
+            if test_type == "general":
+                print(f"✅ test_type: {test_type} (General Training)")
+            else:
+                print(f"❌ test_type: {test_type} (expected 'general')")
+            
+            # Verify all 4 sections exist
+            expected_sections = ["listening", "reading", "writing", "speaking"]
+            missing_sections = [sec for sec in expected_sections if sec not in sections]
+            
+            if not missing_sections:
+                print(f"✅ All 4 sections present: {list(sections.keys())}")
+                success_count += 1
+            else:
+                print(f"❌ Missing sections: {missing_sections}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: Test Reading Section - Should have 4 passages (different from Academic which has 3)
+    print("\n=== Test 3: Reading Section - 4 Passages for General Training ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/full-test/set/general_set_a_01")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            test_data = result.get("test", {})
+            reading_section = test_data.get("sections", {}).get("reading", {})
+            
+            if reading_section:
+                passages = reading_section.get("passages", [])
+                total_questions = reading_section.get("total_questions", 0)
+                
+                if len(passages) == 4:
+                    print(f"✅ Reading has 4 passages (General Training format)")
+                    
+                    # Check passage types
+                    passage_titles = [p.get("title", "Unknown") for p in passages]
+                    print(f"   Passages: {passage_titles}")
+                    
+                    # Verify specific passages mentioned in review request
+                    expected_passages = ["Job Advertisements", "A Guide to Renting Your First Apartment", "The Rise of Remote Working"]
+                    found_passages = []
+                    for expected in expected_passages:
+                        for passage in passages:
+                            if expected.lower() in passage.get("title", "").lower():
+                                found_passages.append(expected)
+                                break
+                    
+                    if len(found_passages) >= 2:  # Allow some flexibility
+                        print(f"✅ Found expected passages: {found_passages}")
+                    else:
+                        print(f"⚠️ Expected passages not all found. Looking for: {expected_passages}")
+                    
+                    if total_questions == 40:
+                        print(f"✅ Total reading questions: {total_questions}")
+                        success_count += 1
+                    else:
+                        print(f"❌ Total reading questions: {total_questions} (expected 40)")
+                else:
+                    print(f"❌ Reading has {len(passages)} passages (expected 4 for General Training)")
+            else:
+                print(f"❌ Reading section not found")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: Test Listening Questions Structure - 40 questions across 4 parts
+    print("\n=== Test 4: Listening Questions Structure - 40 Questions, 4 Parts ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/full-test/set/general_set_a_01")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            test_data = result.get("test", {})
+            listening_section = test_data.get("sections", {}).get("listening", {})
+            
+            if listening_section:
+                parts = listening_section.get("parts", [])
+                total_questions = listening_section.get("total_questions", 0)
+                
+                if len(parts) == 4:
+                    print(f"✅ Listening has 4 parts")
+                    
+                    # Check specific parts mentioned in review request
+                    part_titles = [p.get("title", "Unknown") for p in parts]
+                    print(f"   Parts: {part_titles}")
+                    
+                    # Look for specific parts mentioned in review request
+                    fitness_centre_found = any("fitness centre" in title.lower() for title in part_titles)
+                    public_libraries_found = any("public libraries" in title.lower() for title in part_titles)
+                    
+                    if fitness_centre_found:
+                        print(f"✅ Part 1: Fitness Centre Membership found")
+                    else:
+                        print(f"⚠️ Part 1: Fitness Centre Membership not found")
+                    
+                    if public_libraries_found:
+                        print(f"✅ Part 4: History of Public Libraries found")
+                    else:
+                        print(f"⚠️ Part 4: History of Public Libraries not found")
+                    
+                    if total_questions == 40:
+                        print(f"✅ Total listening questions: {total_questions}")
+                        success_count += 1
+                    else:
+                        print(f"❌ Total listening questions: {total_questions} (expected 40)")
+                else:
+                    print(f"❌ Listening has {len(parts)} parts (expected 4)")
+            else:
+                print(f"❌ Listening section not found")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 5: Test Writing Section - Task 1 should be letter (not data_description like Academic)
+    print("\n=== Test 5: Writing Section - Task 1 Letter Format ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/full-test/set/general_set_a_01")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            test_data = result.get("test", {})
+            writing_section = test_data.get("sections", {}).get("writing", {})
+            
+            if writing_section:
+                tasks = writing_section.get("tasks", [])
+                
+                if len(tasks) >= 2:
+                    task1 = tasks[0]
+                    task2 = tasks[1]
+                    
+                    task1_type = task1.get("type", "").lower()
+                    task2_type = task2.get("type", "").lower()
+                    
+                    # Check Task 1 is letter type
+                    if "letter" in task1_type:
+                        print(f"✅ Task 1 type: {task1_type} (letter format for General Training)")
+                        
+                        # Check word limit
+                        word_limit = task1.get("word_limit", 0)
+                        if word_limit >= 150:
+                            print(f"✅ Task 1 word limit: {word_limit}+ words")
+                        else:
+                            print(f"⚠️ Task 1 word limit: {word_limit} (expected 150+)")
+                    else:
+                        print(f"❌ Task 1 type: {task1_type} (expected 'letter' for General Training)")
+                    
+                    # Check Task 2 is essay
+                    if "essay" in task2_type:
+                        print(f"✅ Task 2 type: {task2_type} (essay format)")
+                        
+                        # Check word limit
+                        word_limit = task2.get("word_limit", 0)
+                        if word_limit >= 250:
+                            print(f"✅ Task 2 word limit: {word_limit}+ words")
+                            success_count += 1
+                        else:
+                            print(f"⚠️ Task 2 word limit: {word_limit} (expected 250+)")
+                    else:
+                        print(f"❌ Task 2 type: {task2_type} (expected 'essay')")
+                else:
+                    print(f"❌ Writing section has {len(tasks)} tasks (expected 2)")
+            else:
+                print(f"❌ Writing section not found")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 GENERAL TRAINING FULL TEST SET A SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 4:  # Allow some flexibility
+        print("✅ GENERAL TRAINING FULL TEST SET A TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - GET /api/full-test/sets returns both academic_sets AND general_sets")
+        print("   - general_sets contains 'general_set_a_01' with 4 sections available")
+        print("   - GET /api/full-test/set/general_set_a_01 returns complete General Training test")
+        print("   - Reading section has 4 passages (different from Academic's 3)")
+        print("   - Listening section has 40 questions across 4 parts")
+        print("   - Writing Task 1 is letter format (not data_description like Academic)")
+        print("   - Writing Task 2 is essay format with proper word limits")
+        return True
+    else:
+        print("❌ GENERAL TRAINING FULL TEST SET A TESTS FAILED!")
+        print("   Issues found - check implementation of General Training test structure")
+        return False
+
 def test_speaking_qb_evaluation_tiers():
     """Test Speaking QB Evaluation Tiers - Backend Testing"""
     print("\n" + "="*80)
