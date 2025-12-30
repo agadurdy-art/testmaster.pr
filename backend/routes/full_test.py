@@ -262,7 +262,8 @@ async def complete_test(
     session_id: str = Body(...),
     test_id: str = Body(...),
     all_answers: Dict[str, Dict[str, Any]] = Body(...),
-    section_times: Dict[str, int] = Body(...)
+    section_times: Dict[str, int] = Body(default={}),
+    mode: str = Body(default="full")
 ):
     """
     Complete test and generate full evaluation.
@@ -285,6 +286,7 @@ async def complete_test(
         "success": True,
         "session_id": session_id,
         "test_id": test_id,
+        "mode": mode,
         "completed_at": datetime.now(timezone.utc).isoformat(),
         "results": results
     }
