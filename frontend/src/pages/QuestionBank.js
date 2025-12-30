@@ -474,7 +474,7 @@ export default function QuestionBank() {
               <>
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-bold text-gray-900">IELTS Full Tests</h2>
-                  <Badge className="bg-green-100 text-green-700">{fullTests.length} Test Available</Badge>
+                  <Badge className="bg-green-100 text-green-700">{fullTests.length} {fullTests.length === 1 ? 'Test' : 'Tests'} Available</Badge>
                 </div>
                 
                 <div className="grid md:grid-cols-2 gap-4">
