@@ -1093,29 +1093,41 @@ export default function FullTestInterface({ user }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-100">
-      {renderHeader()}
-      
-      {!timerActive && !completedSections.includes(currentSection) ? (
-        renderSectionStart()
+    <div className={`min-h-screen flex flex-col 
+      ${colorTheme === 'yellow-on-black' ? 'bg-black text-yellow-300' : 
+        colorTheme === 'blue-on-white' ? 'bg-white text-blue-900' : 
+        colorTheme === 'blue-on-cream' ? 'bg-amber-50 text-blue-900' : 'bg-slate-100'}
+      ${textSize === 'large' ? 'text-lg' : textSize === 'extra-large' ? 'text-xl' : 'text-base'}
+    `}>
+      {/* Show instructions page before starting */}
+      {!timerActive && !completedSections.includes(currentSection) && showInstructions ? (
+        renderInstructionsPage()
       ) : (
         <>
-          {currentSection === 'listening' && renderListeningSection()}
-          {currentSection === 'reading' && renderReadingSection()}
-          {currentSection === 'writing' && renderWritingSection()}
-          {currentSection === 'speaking' && renderSpeakingSection()}
+          {renderHeader()}
+          
+          {!timerActive && !completedSections.includes(currentSection) ? (
+            renderSectionStart()
+          ) : (
+            <>
+              {currentSection === 'listening' && renderListeningSection()}
+              {currentSection === 'reading' && renderReadingSection()}
+              {currentSection === 'writing' && renderWritingSection()}
+              {currentSection === 'speaking' && renderSpeakingSection()}
+            </>
+          )}
+          
+          {timerActive && (currentSection === 'listening' || currentSection === 'reading') && renderNavigationBar()}
+          
+          {/* Submit button for writing/speaking */}
+          {timerActive && (currentSection === 'writing' || currentSection === 'speaking') && (
+            <div className="bg-slate-100 border-t p-4 flex justify-end">
+              <Button onClick={() => setShowConfirmSubmit(true)} className="bg-green-600 hover:bg-green-700">
+                Submit {currentSection} <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          )}
         </>
-      )}
-      
-      {timerActive && (currentSection === 'listening' || currentSection === 'reading') && renderNavigationBar()}
-      
-      {/* Submit button for writing/speaking */}
-      {timerActive && (currentSection === 'writing' || currentSection === 'speaking') && (
-        <div className="bg-slate-100 border-t p-4 flex justify-end">
-          <Button onClick={() => setShowConfirmSubmit(true)} className="bg-green-600 hover:bg-green-700">
-            Submit {currentSection} <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
       )}
 
       {/* Submit Confirmation Modal */}
