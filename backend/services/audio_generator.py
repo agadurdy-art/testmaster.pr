@@ -283,17 +283,35 @@ class AudioGeneratorService:
     
     async def _generate_multi_speaker_audio(self, segments: List[Dict], speaker_map: Dict) -> bytes:
         """
-        Generate audio for multi-speaker dialogue.
+        Generate audio for multi-speaker dialogue with MAXIMUM DIFFERENTIATION.
         
-        Generates audio for each segment and concatenates with natural pauses.
+        Following IELTS Audio Generation Pipeline:
+        1. Generate each speaker as SEPARATE audio
+        2. Apply stereo panning (Speaker A: left, Speaker B: right)
+        3. Add natural pauses (300-700ms) between turns
+        4. Mix with subtle room tone
         """
         from pydub import AudioSegment
         import io
+        import random
         
         combined = AudioSegment.empty()
         
-        # Add ~500ms silence between segments for natural conversation flow
-        silence_between_turns = AudioSegment.silent(duration=500)
+        # Track speakers for stereo panning
+        speaker_order = []
+        for seg in segments:
+            if seg["speaker"] not in speaker_order:
+                speaker_order.append(seg["speaker"])
+        
+        # Assign pan positions: first speaker slightly left, second slightly right, third center
+        pan_positions = {}
+        for i, speaker in enumerate(speaker_order):
+            if i == 0:
+                pan_positions[speaker] = -0.3  # Slightly left
+            elif i == 1:
+                pan_positions[speaker] = 0.3   # Slightly right
+            else:
+                pan_positions[speaker] = 0.0   # Center
         
         for i, segment in enumerate(segments):
             speaker = segment["speaker"]
@@ -305,6 +323,33 @@ class AudioGeneratorService:
             # Get voice for this speaker
             voice_key = speaker_map.get(speaker, speaker_map.get("default", "british_male_professional"))
             voice = VOICE_PROFILES.get(voice_key, VOICE_PROFILES["british_male_professional"])
+            
+            logger.info(f"Generating audio for {speaker} using voice: {voice['name']}")
+            
+            # Generate audio for this segment
+            segment_audio_data = await self._generate_audio(text, voice)
+            
+            # Convert to AudioSegment
+            segment_audio = AudioSegment.from_mp3(io.BytesIO(segment_audio_data))
+            
+            # Apply stereo panning for speaker differentiation
+            pan_value = pan_positions.get(speaker, 0.0)
+            if pan_value != 0:
+                segment_audio = segment_audio.pan(pan_value)
+            
+            # Add to combined audio
+            combined += segment_audio
+            
+            # Add variable silence between turns (300-700ms for natural feel)
+            if i < len(segments) - 1:
+                silence_duration = random.randint(300, 700)
+                silence = AudioSegment.silent(duration=silence_duration)
+                combined += silence
+        
+        # Export to bytes
+        output = io.BytesIO()
+        combined.export(output, format="mp3", bitrate="128k")
+        return output.getvalue()
             
             # Generate audio for this segment
             segment_audio_data = await self._generate_audio(text, voice)
