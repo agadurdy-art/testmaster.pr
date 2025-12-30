@@ -1084,6 +1084,145 @@ export default function QuestionBank() {
         </div>
       )}
 
+      {/* Full Test Selection Modal */}
+      {showTestModal && selectedTest && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white">
+            <div className="p-6 border-b">
+              <div className="flex justify-between items-start">
+                <div>
+                  <Badge className={`mb-2 ${selectedTest.test_type === 'academic' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}`}>
+                    {selectedTest.test_type === 'academic' ? 'Academic' : 'General Training'}
+                  </Badge>
+                  <h2 className="text-xl font-semibold text-slate-900">{selectedTest.title}</h2>
+                  <p className="text-sm text-slate-500 mt-1">{selectedTest.description}</p>
+                </div>
+                <Button variant="ghost" size="sm" onClick={closeTestModal}>
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Test Structure */}
+              <div>
+                <h3 className="font-medium text-slate-900 mb-3">Test Structure</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {['listening', 'reading', 'writing', 'speaking'].map((section) => {
+                    const colors = SECTION_COLORS[section];
+                    const Icon = section === 'listening' ? Headphones : 
+                                 section === 'reading' ? BookOpen :
+                                 section === 'writing' ? PenTool : Mic;
+                    return (
+                      <div key={section} className={`p-3 rounded-lg ${colors.light}`}>
+                        <div className="flex items-center gap-2 mb-1">
+                          <Icon className={`w-4 h-4 ${colors.text}`} />
+                          <span className="font-medium capitalize text-slate-900">{section}</span>
+                        </div>
+                        <div className="text-xs text-slate-600">
+                          {SECTION_TIMES[section]} • {SECTION_QUESTIONS[section]}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Test Rules */}
+              <div>
+                <h3 className="font-medium text-slate-900 mb-3">Test Rules</h3>
+                <ul className="space-y-2 text-sm text-slate-600">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    You must complete each section within the time limit
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    Once a section is submitted, you cannot return to it
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                    Results will only be shown after completing all sections
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                    Ensure you have a stable internet connection
+                  </li>
+                </ul>
+              </div>
+
+              {/* Mode Selection */}
+              <div>
+                <h3 className="font-medium text-slate-900 mb-3">Choose How to Start</h3>
+                
+                {/* Full Test Option */}
+                <button
+                  onClick={() => startFullTest('full')}
+                  disabled={startingTest}
+                  className="w-full p-4 mb-3 border-2 border-slate-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-all text-left disabled:opacity-50"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                      {startingTest ? (
+                        <Loader2 className="w-5 h-5 text-green-600 animate-spin" />
+                      ) : (
+                        <Play className="w-5 h-5 text-green-600" />
+                      )}
+                    </div>
+                    <div>
+                      <div className="font-medium text-slate-900">Full Test (All Sections)</div>
+                      <div className="text-sm text-slate-500">
+                        Complete Listening → Reading → Writing → Speaking (~3 hours)
+                      </div>
+                    </div>
+                  </div>
+                </button>
+                
+                {/* Individual Section Selection */}
+                <div className="border-2 border-slate-200 rounded-lg p-4">
+                  <div className="font-medium text-slate-900 mb-3">Or Start a Single Section:</div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {['listening', 'reading', 'writing', 'speaking'].map((section) => {
+                      const Icon = section === 'listening' ? Headphones : 
+                                   section === 'reading' ? BookOpen :
+                                   section === 'writing' ? PenTool : Mic;
+                      const colors = {
+                        listening: 'bg-blue-50 border-blue-200 hover:border-blue-500 text-blue-700',
+                        reading: 'bg-green-50 border-green-200 hover:border-green-500 text-green-700',
+                        writing: 'bg-purple-50 border-purple-200 hover:border-purple-500 text-purple-700',
+                        speaking: 'bg-orange-50 border-orange-200 hover:border-orange-500 text-orange-700'
+                      };
+                      return (
+                        <button
+                          key={section}
+                          onClick={() => startFullTest(section)}
+                          disabled={startingTest}
+                          className={`p-3 border-2 rounded-lg transition-all text-left disabled:opacity-50 ${colors[section]}`}
+                        >
+                          <div className="flex items-center gap-2 mb-1">
+                            <Icon className="w-4 h-4" />
+                            <span className="font-medium capitalize">{section}</span>
+                          </div>
+                          <div className="text-xs opacity-80">
+                            {SECTION_TIMES[section]} • {SECTION_QUESTIONS[section]}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-6 border-t bg-slate-50 flex justify-end gap-3">
+              <Button variant="outline" onClick={closeTestModal}>
+                Cancel
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
       {/* Speaking Practice Modal */}
       {showSpeakingModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
