@@ -5543,14 +5543,14 @@ if __name__ == "__main__":
     print("🚀 Starting Backend API Testing for IELTS Ace Application")
     print("="*80)
     
-    # Test Full Test Mode implementation (CURRENT REVIEW REQUEST)
-    full_test_success = test_full_test_mode()
+    # Test General Training Full Test Set A (CURRENT REVIEW REQUEST)
+    general_training_success = test_general_training_full_test_set_a()
     
     # Summary
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
-    print(f"   Full Test Mode Implementation (CURRENT REVIEW): {'✅ PASSED' if full_test_success else '❌ FAILED'}")
-    print(f"   Overall: {'✅ ALL TESTS PASSED' if full_test_success else '❌ SOME TESTS FAILED'}")
+    print(f"   General Training Full Test Set A (CURRENT REVIEW): {'✅ PASSED' if general_training_success else '❌ FAILED'}")
+    print(f"   Overall: {'✅ ALL TESTS PASSED' if general_training_success else '❌ SOME TESTS FAILED'}")
     print(f"{'='*80}")
     
-    exit(0 if full_test_success else 1)
+    exit(0 if general_training_success else 1)
