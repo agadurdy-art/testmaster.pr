@@ -129,6 +129,44 @@ export default function QuestionBank() {
     grammar_vocab: BookMarked
   };
 
+  // Start Full Test
+  const startFullTest = async (mode) => {
+    if (!selectedTest) return;
+    
+    setStartingTest(true);
+    try {
+      const res = await fetch(`${API_URL}/api/full-test/start-session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          test_id: selectedTest.test_id,
+          mode: mode
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        navigate(`/full-test/take/${selectedTest.test_id}?session=${data.session.session_id}&mode=${mode}`);
+      }
+    } catch (error) {
+      console.error('Error starting test:', error);
+      toast.error('Failed to start test session');
+    } finally {
+      setStartingTest(false);
+    }
+  };
+
+  // Open test modal
+  const openTestModal = (test) => {
+    setSelectedTest(test);
+    setShowTestModal(true);
+  };
+
+  // Close test modal
+  const closeTestModal = () => {
+    setSelectedTest(null);
+    setShowTestModal(false);
+  };
+
   const skillColors = {
     reading: 'from-blue-500 to-blue-600',
     listening: 'from-purple-500 to-purple-600',
