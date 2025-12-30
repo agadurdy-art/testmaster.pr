@@ -57,6 +57,21 @@ except ImportError:
     GENERAL_SET_B = None
     print("Warning: Could not import General Training Set B")
 
+# Import Set C content
+try:
+    from content.full_tests.academic.set_c import ACADEMIC_SET_C
+    from content.full_tests.academic.set_c_reading import ACADEMIC_SET_C_READING
+except ImportError:
+    ACADEMIC_SET_C = None
+    ACADEMIC_SET_C_READING = None
+    print("Warning: Could not import Academic Set C")
+
+try:
+    from content.full_tests.general.set_c import GENERAL_SET_C
+except ImportError:
+    GENERAL_SET_C = None
+    print("Warning: Could not import General Training Set C")
+
 
 # ============ TEST REGISTRY ============
 
