@@ -647,7 +647,10 @@ export default function FullTestInterface({ user }) {
           </div>
 
           {/* Questions Section - IELTS Note Completion Style */}
-          <div className="bg-white border-2 border-slate-200 rounded-lg">
+          <div 
+            className="bg-white border-2 border-slate-200 rounded-lg"
+            onContextMenu={handleTextSelection}
+          >
             <div className="p-4 bg-slate-50 border-b border-slate-200">
               <h3 className="font-bold text-lg text-slate-900">
                 Questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}
@@ -658,22 +661,63 @@ export default function FullTestInterface({ user }) {
             </div>
             
             <div className="p-6">
+              {/* Highlights & Notes Panel for Listening */}
+              {(highlights.filter(h => h.section === 'listening').length > 0) && (
+                <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-amber-800">Your Highlights & Notes</span>
+                    <button 
+                      onClick={() => {
+                        setHighlights(prev => prev.filter(h => h.section !== 'listening'));
+                        setNotes(prev => prev.filter(n => n.section !== 'listening'));
+                      }}
+                      className="text-xs text-amber-600 hover:text-amber-800"
+                    >
+                      Clear All
+                    </button>
+                  </div>
+                  <div className="space-y-1 max-h-24 overflow-auto">
+                    {highlights.filter(h => h.section === 'listening').map(h => {
+                      const relatedNote = notes.find(n => n.id === h.id);
+                      return (
+                        <div key={h.id} className="flex items-start gap-2 text-xs">
+                          <span className={`px-1 rounded ${relatedNote ? 'bg-blue-200' : 'bg-yellow-200'}`}>
+                            {h.text.substring(0, 30)}...
+                          </span>
+                          {relatedNote && (
+                            <span className="text-slate-600 italic">"{relatedNote.note}"</span>
+                          )}
+                          <button 
+                            onClick={() => removeHighlight(h.id)}
+                            className="text-red-500 hover:text-red-700 ml-auto"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+              
               {/* Section Title */}
               <h4 className="font-bold text-xl text-slate-800 mb-6 pb-3 border-b border-slate-200">
                 {currentPartData?.title}
               </h4>
               
               {/* Questions in note completion format */}
-              <div className="space-y-4">
+              <div className="space-y-4 select-text">
                 {currentPartData?.questions?.map((q, idx) => {
                   const qNum = (listeningPart - 1) * 10 + idx + 1;
                   const questionParts = q.question?.split('______') || [q.question];
+                  const highlightedPart0 = renderTextWithHighlights(questionParts[0], 'listening');
+                  const highlightedPart1 = questionParts[1] ? renderTextWithHighlights(questionParts[1], 'listening') : null;
                   
                   return (
                     <div key={q.id} className="flex items-start gap-2 py-2 text-slate-700 text-lg leading-relaxed">
                       <span className="text-slate-400 min-w-[20px]">•</span>
                       <div className="flex-1 flex flex-wrap items-center gap-1">
-                        <span>{questionParts[0]}</span>
+                        <span dangerouslySetInnerHTML={{ __html: highlightedPart0 }} />
                         <div className="relative inline-block">
                           <input
                             type="text"
@@ -685,11 +729,16 @@ export default function FullTestInterface({ user }) {
                             placeholder={String(qNum)}
                           />
                         </div>
-                        {questionParts[1] && <span>{questionParts[1]}</span>}
+                        {highlightedPart1 && <span dangerouslySetInnerHTML={{ __html: highlightedPart1 }} />}
                       </div>
                     </div>
                   );
                 })}
+              </div>
+              
+              {/* Tip for highlighting */}
+              <div className="mt-4 p-2 bg-slate-100 rounded text-xs text-slate-500">
+                💡 Tip: Select text and right-click to highlight or add notes
               </div>
             </div>
           </div>
