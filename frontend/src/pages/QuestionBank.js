@@ -8,11 +8,33 @@ import {
   Target, Clock, Shuffle, Brain, TrendingUp,
   ChevronRight, Play, Filter, BarChart3, 
   CheckCircle, ArrowLeft, Layers, Zap, X, FileText, Edit3,
-  HelpCircle, Award, PlayCircle
+  HelpCircle, Award, PlayCircle, AlertCircle, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+
+// Section times and questions for Full Test modal
+const SECTION_TIMES = {
+  listening: '40 minutes',
+  reading: '60 minutes',
+  writing: '60 minutes',
+  speaking: '11-14 minutes'
+};
+
+const SECTION_QUESTIONS = {
+  listening: '40 questions',
+  reading: '40 questions',
+  writing: '2 tasks',
+  speaking: '3 parts'
+};
+
+const SECTION_COLORS = {
+  listening: { bg: 'bg-blue-500', light: 'bg-blue-50', text: 'text-blue-600' },
+  reading: { bg: 'bg-green-500', light: 'bg-green-50', text: 'text-green-600' },
+  writing: { bg: 'bg-purple-500', light: 'bg-purple-50', text: 'text-purple-600' },
+  speaking: { bg: 'bg-orange-500', light: 'bg-orange-50', text: 'text-orange-600' }
+};
 
 export default function QuestionBank() {
   const navigate = useNavigate();
@@ -30,6 +52,11 @@ export default function QuestionBank() {
   const [showListeningModal, setShowListeningModal] = useState(false);
   const [showSpeakingModal, setShowSpeakingModal] = useState(false);
   const [fullTests, setFullTests] = useState([]);
+  
+  // Full Test Modal State
+  const [selectedTest, setSelectedTest] = useState(null);
+  const [showTestModal, setShowTestModal] = useState(false);
+  const [startingTest, setStartingTest] = useState(false);
 
   useEffect(() => {
     loadData();
