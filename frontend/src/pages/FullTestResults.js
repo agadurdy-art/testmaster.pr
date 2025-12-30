@@ -369,15 +369,15 @@ export default function FullTestResults() {
 
         {/* Action Buttons */}
         <div className="flex justify-center gap-4 mt-8">
-          <Button variant="outline" onClick={() => navigate('/full-test')}>
+          <Button variant="outline" onClick={() => navigate('/question-bank')}>
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Tests
+            Back to Question Bank
           </Button>
           <Button 
             className="bg-slate-900 hover:bg-slate-800"
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate('/full-test')}
           >
-            Go to Dashboard
+            Take Another Test
           </Button>
         </div>
       </main>
