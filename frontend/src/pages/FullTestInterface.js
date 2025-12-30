@@ -689,7 +689,7 @@ export default function FullTestInterface({ user }) {
           <div className="prose prose-sm max-w-none">
             {passage?.text?.split('\n\n').map((para, idx) => (
               <p key={idx} className="text-slate-700 mb-3">
-                {para.startsWith(/^[A-Z]$/) ? (
+                {/^[A-Z]\s/.test(para) ? (
                   <><strong>{para.charAt(0)}</strong>{para.slice(1)}</>
                 ) : para}
               </p>
