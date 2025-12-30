@@ -706,20 +706,74 @@ export default function FullTestInterface({ user }) {
     return (
       <div className="flex-1 flex overflow-hidden">
         {/* Left Pane - Passage */}
-        <div className="w-1/2 border-r border-slate-300 overflow-auto bg-white p-6">
+        <div 
+          className="w-1/2 border-r border-slate-300 overflow-auto bg-white p-6"
+          onContextMenu={handleTextSelection}
+        >
           <h2 className="text-xl font-bold text-slate-900 mb-2">Part {currentPassage + 1}</h2>
           <p className="text-slate-600 mb-4">Read the text below and answer the questions.</p>
           
           <h3 className="text-lg font-bold text-slate-800 mb-4">{passage?.title}</h3>
           
-          <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed">
-            {passage?.text?.split('\n\n').map((para, idx) => (
-              <p key={idx} className="mb-4">
-                {/^[A-Z]\s/.test(para) ? (
-                  <><strong className="text-slate-900">{para.charAt(0)}</strong>{para.slice(1)}</>
-                ) : para}
-              </p>
-            ))}
+          {/* Highlights & Notes Panel */}
+          {(highlights.filter(h => h.section === 'reading').length > 0 || notes.filter(n => n.section === 'reading').length > 0) && (
+            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-amber-800">Your Highlights & Notes</span>
+                <button 
+                  onClick={() => {
+                    setHighlights(prev => prev.filter(h => h.section !== 'reading'));
+                    setNotes(prev => prev.filter(n => n.section !== 'reading'));
+                  }}
+                  className="text-xs text-amber-600 hover:text-amber-800"
+                >
+                  Clear All
+                </button>
+              </div>
+              <div className="space-y-1 max-h-32 overflow-auto">
+                {highlights.filter(h => h.section === 'reading').map(h => {
+                  const relatedNote = notes.find(n => n.id === h.id);
+                  return (
+                    <div key={h.id} className="flex items-start gap-2 text-xs">
+                      <span className={`px-1 rounded ${relatedNote ? 'bg-blue-200' : 'bg-yellow-200'}`}>
+                        {h.text.substring(0, 30)}...
+                      </span>
+                      {relatedNote && (
+                        <span className="text-slate-600 italic">"{relatedNote.note}"</span>
+                      )}
+                      <button 
+                        onClick={() => removeHighlight(h.id)}
+                        className="text-red-500 hover:text-red-700 ml-auto"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          
+          <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed select-text">
+            {passage?.text?.split('\n\n').map((para, idx) => {
+              const highlightedPara = renderTextWithHighlights(para, 'reading');
+              return (
+                <p 
+                  key={idx} 
+                  className="mb-4"
+                  dangerouslySetInnerHTML={{ 
+                    __html: /^[A-Z]\s/.test(highlightedPara) 
+                      ? `<strong class="text-slate-900">${highlightedPara.charAt(0)}</strong>${highlightedPara.slice(1)}`
+                      : highlightedPara 
+                  }}
+                />
+              );
+            })}
+          </div>
+          
+          {/* Tip for highlighting */}
+          <div className="mt-4 p-2 bg-slate-100 rounded text-xs text-slate-500">
+            💡 Tip: Select text and right-click to highlight or add notes
           </div>
         </div>
 
