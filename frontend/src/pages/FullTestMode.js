@@ -217,28 +217,6 @@ export default function FullTestMode({ user }) {
               </div>
               
               <div className="p-6 space-y-6">
-                {/* Test Structure */}
-                <div>
-                  <h3 className="font-medium text-slate-900 mb-3">Test Structure</h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {selectedTest.sections_available.map((section) => {
-                      const Icon = SECTION_ICONS[section];
-                      return (
-                        <div key={section} className="p-3 bg-slate-50 rounded-lg">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Icon className="w-4 h-4 text-slate-600" />
-                            <span className="font-medium text-slate-900 capitalize">{section}</span>
-                          </div>
-                          <div className="text-sm text-slate-500">
-                            <div>{SECTION_TIMES[section]}</div>
-                            <div>{SECTION_QUESTIONS[section]}</div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 {/* Test Rules */}
                 <div>
                   <h3 className="font-medium text-slate-900 mb-3">Test Rules</h3>
