@@ -413,11 +413,17 @@ async def get_skill_overview(skill_name: str):
     elif skill_name == "speaking":
         parts = []
         for part in section_data.get("parts", []):
+            # Part 2 has cue_card instead of questions
+            if part["part_number"] == 2:
+                question_count = 1 + len(part.get("follow_up", []))  # cue_card + follow_ups
+            else:
+                question_count = len(part.get("questions", []))
+            
             parts.append({
                 "part_number": part["part_number"],
                 "title": part["title"],
-                "duration": part.get("duration", "4-5 minutes"),
-                "question_count": len(part["questions"])
+                "duration": part.get("time") or f"{part.get('prep_time', 0)}s prep + {part.get('speak_time', 0)}s speak",
+                "question_count": question_count
             })
         return {
             "skill": skill_name,
