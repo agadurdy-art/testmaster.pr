@@ -142,7 +142,8 @@ class AudioGeneratorService:
         part_number: int,
         audio_script: str,
         speakers: List[str],
-        context: str
+        context: str,
+        test_type: str = "academic"
     ) -> Dict:
         """
         Generate audio for a listening section part.
@@ -154,7 +155,12 @@ class AudioGeneratorService:
             return {"error": "ElevenLabs client not configured", "cached": False}
         
         part_key = f"part_{part_number}"
-        speaker_map = LISTENING_SPEAKER_MAP.get(part_key, {})
+        
+        # Select speaker map based on test type
+        if test_type == "general":
+            speaker_map = GENERAL_LISTENING_SPEAKER_MAP.get(part_key, {})
+        else:
+            speaker_map = LISTENING_SPEAKER_MAP.get(part_key, {})
         
         # Check cache
         content_hash = self._get_content_hash(audio_script)
