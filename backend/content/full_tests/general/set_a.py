@@ -33,7 +33,7 @@ GENERAL_SET_A = {
                     "part_number": 1,
                     "title": "Fitness Centre Membership",
                     "context": "A phone conversation between a new member and gym staff",
-                    "speakers": ["Staff", "New Member"],
+                    "speakers": ["Staff", "Member"],
                     "audio_script": """
 Staff: Good afternoon, Riverside Fitness Centre. How can I help you?
 Member: Hi, I'd like to enquire about membership options, please.
