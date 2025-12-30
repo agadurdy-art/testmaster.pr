@@ -35,6 +35,13 @@ except ImportError:
     ACADEMIC_SET_A_READING = None
     print("Warning: Could not import Academic Set A")
 
+# Import General Training test sets
+try:
+    from content.full_tests.general.set_a import GENERAL_SET_A, get_general_set_a
+except ImportError:
+    GENERAL_SET_A = None
+    print("Warning: Could not import General Training Set A")
+
 
 # ============ TEST REGISTRY ============
 
@@ -55,8 +62,15 @@ def get_all_test_sets() -> Dict[str, Any]:
             "sections_available": list(ACADEMIC_SET_A["sections"].keys())
         })
     
-    # General sets would be added here
-    # sets["general"].append({...})
+    # General Training sets
+    if GENERAL_SET_A:
+        sets["general"].append({
+            "test_id": GENERAL_SET_A["test_id"],
+            "title": GENERAL_SET_A["title"],
+            "description": GENERAL_SET_A["description"],
+            "estimated_time": GENERAL_SET_A["estimated_time"],
+            "sections_available": list(GENERAL_SET_A["sections"].keys())
+        })
     
     return sets
 
@@ -68,6 +82,8 @@ def get_test_by_id(test_id: str) -> Optional[Dict[str, Any]]:
         # Merge reading content
         test["sections"]["reading"] = ACADEMIC_SET_A_READING
         return test
+    elif test_id == "general_set_a_01":
+        return GENERAL_SET_A
     return None
 
 
