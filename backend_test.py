@@ -5759,17 +5759,17 @@ def test_full_test_mode():
         return False
 
 if __name__ == "__main__":
-    print("🚀 Starting Backend API Testing for IELTS Ace Application")
+    print("🚀 Starting Backend API Testing for IELTS Full Test Mode")
     print("="*80)
     
-    # Test General Training Full Test Set A (CURRENT REVIEW REQUEST)
-    general_training_success = test_general_training_full_test_set_a()
+    # Test Full Test Mode APIs (CURRENT REVIEW REQUEST)
+    full_test_api_success = test_full_test_mode_apis()
     
     # Summary
     print(f"\n{'='*80}")
     print(f"🎯 FINAL RESULT:")
-    print(f"   General Training Full Test Set A (CURRENT REVIEW): {'✅ PASSED' if general_training_success else '❌ FAILED'}")
-    print(f"   Overall: {'✅ ALL TESTS PASSED' if general_training_success else '❌ SOME TESTS FAILED'}")
+    print(f"   Full Test Mode APIs (CURRENT REVIEW): {'✅ PASSED' if full_test_api_success else '❌ FAILED'}")
+    print(f"   Overall: {'✅ ALL TESTS PASSED' if full_test_api_success else '❌ SOME TESTS FAILED'}")
     print(f"{'='*80}")
     
-    exit(0 if general_training_success else 1)
+    exit(0 if full_test_api_success else 1)
