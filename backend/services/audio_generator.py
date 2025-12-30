@@ -363,6 +363,7 @@ class AudioGeneratorService:
         Returns status of each part's audio generation.
         """
         test_id = test_data["test_id"]
+        test_type = test_data.get("test_type", "academic")
         listening = test_data.get("sections", {}).get("listening", {})
         
         results = {}
@@ -378,7 +379,8 @@ class AudioGeneratorService:
                 part_number=part_num,
                 audio_script=script,
                 speakers=speakers,
-                context=context
+                context=context,
+                test_type=test_type
             )
             
             results[f"part_{part_num}"] = result
