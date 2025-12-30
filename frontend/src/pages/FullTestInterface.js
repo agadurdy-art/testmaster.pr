@@ -53,6 +53,16 @@ export default function FullTestInterface({ user }) {
   const [reviewedQuestions, setReviewedQuestions] = useState({});
   const [showSettings, setShowSettings] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [screenHidden, setScreenHidden] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
+  
+  // Settings state
+  const [textSize, setTextSize] = useState('standard');
+  const [colorTheme, setColorTheme] = useState('standard');
+  const [screenResolution, setScreenResolution] = useState('1280x1024');
+  
+  // Help modal tab
+  const [helpTab, setHelpTab] = useState('information');
 
   // Listening specific
   const [listeningPart, setListeningPart] = useState(1);
