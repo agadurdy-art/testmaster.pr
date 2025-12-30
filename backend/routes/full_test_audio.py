@@ -36,16 +36,21 @@ async def stream_listening_audio(test_id: str, part_number: int):
     Stream listening audio for a specific part.
     This endpoint serves the audio file directly.
     """
-    audio_path = AUDIO_BASE_PATH / test_id / "listening" / f"listening_part{part_number}.mp3"
+    listening_path = AUDIO_BASE_PATH / test_id / "listening"
     
-    if not audio_path.exists():
-        raise HTTPException(status_code=404, detail=f"Audio file not found for part {part_number}")
+    if not listening_path.exists():
+        raise HTTPException(status_code=404, detail=f"Listening audio directory not found for {test_id}")
     
-    return FileResponse(
-        path=str(audio_path),
-        media_type="audio/mpeg",
-        filename=f"listening_part{part_number}.mp3"
-    )
+    # Search for file matching the part number (files have hash suffix)
+    for file in listening_path.iterdir():
+        if file.name.startswith(f"listening_part{part_number}_") and file.suffix == ".mp3":
+            return FileResponse(
+                path=str(file),
+                media_type="audio/mpeg",
+                filename=f"listening_part{part_number}.mp3"
+            )
+    
+    raise HTTPException(status_code=404, detail=f"Audio file not found for part {part_number}")
 
 
 @router.get("/stream/{test_id}/speaking/{question_id}")
