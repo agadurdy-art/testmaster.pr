@@ -176,7 +176,7 @@ export default function ReadingPracticeByType({ user }) {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Soru tipine göre pratik yükleniyor...</p>
+          <p className="text-gray-600">Loading practice by question type...</p>
         </div>
       </div>
     );
@@ -194,9 +194,9 @@ export default function ReadingPracticeByType({ user }) {
               </Button>
               <div>
                 <h1 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-amber-600" /> Soru Tipine Göre Pratik
+                  <HelpCircle className="w-5 h-5 text-amber-600" /> Practice by Question Type
                 </h1>
-                <p className="text-sm text-gray-500">{currentTypeName} | {filteredModules.length} modül</p>
+                <p className="text-sm text-gray-500">{currentTypeName} | {filteredModules.length} modules</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -218,7 +218,7 @@ export default function ReadingPracticeByType({ user }) {
           <div className="flex flex-wrap gap-4 items-center">
             <div className="flex items-center gap-2">
               <Filter className="w-4 h-4 text-gray-500" />
-              <span className="text-sm font-medium text-gray-600">Soru Tipi:</span>
+              <span className="text-sm font-medium text-gray-600">Question Type:</span>
             </div>
             <div className="flex gap-2 flex-wrap">
               <Button
@@ -227,7 +227,7 @@ export default function ReadingPracticeByType({ user }) {
                 onClick={() => setSelectedType('')}
                 className={selectedType === '' ? 'bg-amber-600' : ''}
               >
-                Tümü
+                All
               </Button>
               {Object.entries(questionTypes).map(([key, type]) => (
                 <Button
