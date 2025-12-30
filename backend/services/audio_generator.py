@@ -69,6 +69,7 @@ VOICE_PROFILES = {
 
 # Speaker assignments for different listening parts
 LISTENING_SPEAKER_MAP = {
+    # Academic Set A speakers
     "part_1": {
         "Customer": "british_female_young",
         "Receptionist": "british_female_professional"
@@ -87,6 +88,28 @@ LISTENING_SPEAKER_MAP = {
     },
     "part_4": {
         "Professor": "british_male_academic",
+        "default": "british_male_academic"
+    }
+}
+
+# Speaker assignments for General Training test
+GENERAL_LISTENING_SPEAKER_MAP = {
+    "part_1": {
+        "Staff": "british_female_professional",
+        "New Member": "british_male_young",
+        "Member": "british_male_young"
+    },
+    "part_2": {
+        "Centre Manager": "british_female_professional",
+        "Patricia": "british_female_professional",
+        "default": "british_female_professional"
+    },
+    "part_3": {
+        "Sarah": "british_female_young",
+        "Michael": "british_male_young"
+    },
+    "part_4": {
+        "Lecturer": "british_male_academic",
         "default": "british_male_academic"
     }
 }
