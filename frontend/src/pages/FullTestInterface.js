@@ -64,6 +64,14 @@ export default function FullTestInterface({ user }) {
   // Help modal tab
   const [helpTab, setHelpTab] = useState('information');
 
+  // Highlighting & Notes state
+  const [highlights, setHighlights] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0, text: '', range: null });
+  const [showNoteModal, setShowNoteModal] = useState(false);
+  const [currentNote, setCurrentNote] = useState({ text: '', note: '' });
+  const [editingNoteId, setEditingNoteId] = useState(null);
+
   // Listening specific
   const [listeningPart, setListeningPart] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(1);
