@@ -59,7 +59,12 @@ export default function QuestionBank() {
       setSkills(skillsData.skills || []);
       setBandLevels(bandsData.band_levels || []);
       setStats(statsData);
-      setFullTests(testsData.academic_sets || []);
+      // Merge academic and general tests
+      const allTests = [
+        ...(testsData.academic_sets || []).map(t => ({ ...t, test_type: 'academic' })),
+        ...(testsData.general_sets || []).map(t => ({ ...t, test_type: 'general' }))
+      ];
+      setFullTests(allTests);
       
       // Load all topics initially (from Lesson Registry)
       await loadTopicsForBand(null);
