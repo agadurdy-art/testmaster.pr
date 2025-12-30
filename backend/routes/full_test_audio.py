@@ -170,11 +170,18 @@ async def generate_listening_audio(
         test_data = ACADEMIC_SET_B.copy()
         if ACADEMIC_SET_B_READING:
             test_data["sections"]["reading"] = ACADEMIC_SET_B_READING
+    elif test_id == "academic_set_c_01" and ACADEMIC_SET_C:
+        test_data = ACADEMIC_SET_C.copy()
+        if ACADEMIC_SET_C_READING:
+            test_data["sections"]["reading"] = ACADEMIC_SET_C_READING
     elif test_id == "general_set_a_01" and GENERAL_SET_A:
         test_data = GENERAL_SET_A.copy()
         test_type = "general"
     elif test_id == "general_set_b_01" and GENERAL_SET_B:
         test_data = GENERAL_SET_B.copy()
+        test_type = "general"
+    elif test_id == "general_set_c_01" and GENERAL_SET_C:
+        test_data = GENERAL_SET_C.copy()
         test_type = "general"
     else:
         raise HTTPException(status_code=404, detail="Test not found")
