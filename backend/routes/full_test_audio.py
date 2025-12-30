@@ -27,6 +27,11 @@ except ImportError:
     ACADEMIC_SET_A = None
     ACADEMIC_SET_A_READING = None
 
+try:
+    from content.full_tests.general.set_a import GENERAL_SET_A
+except ImportError:
+    GENERAL_SET_A = None
+
 AUDIO_BASE_PATH = Path("/app/backend/static/audio/full_tests")
 
 
