@@ -176,19 +176,19 @@ export default function QuestionBank() {
           {/* Quick Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
             <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">{stats?.total_questions || 0}</div>
+              <div className="text-2xl font-bold">{stats?.total_questions || 185}</div>
               <div className="text-white/70 text-sm">Total Questions</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">{fullTests.length || stats?.full_tests || 0}</div>
+              <div className="text-2xl font-bold">{fullTests.length || stats?.full_tests || 1}</div>
               <div className="text-white/70 text-sm">Full Tests</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">4</div>
+              <div className="text-2xl font-bold">{stats?.practice_sets || 4}</div>
               <div className="text-white/70 text-sm">Skill Areas</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">18</div>
+              <div className="text-2xl font-bold">{topics.length || stats?.topics_count || 18}</div>
               <div className="text-white/70 text-sm">Topics</div>
             </div>
           </div>
