@@ -123,57 +123,65 @@ async def get_question_bank_stats(db=None):
     # Import full test content to count questions
     try:
         from content.full_tests.academic.set_a import ACADEMIC_SET_A
+        from content.full_tests.general.set_a import GENERAL_SET_A
         
-        # Count questions from Full Test Set A
+        # Count questions from Full Test Set A (Academic)
         listening_questions = ACADEMIC_SET_A["sections"]["listening"]["total_questions"]
         reading_questions = ACADEMIC_SET_A["sections"]["reading"]["total_questions"]
         writing_tasks = len(ACADEMIC_SET_A["sections"]["writing"]["tasks"])
         speaking_parts = len(ACADEMIC_SET_A["sections"]["speaking"]["parts"])
         
-        total_from_full_test = listening_questions + reading_questions + writing_tasks + speaking_parts
+        # Count questions from General Training Set A
+        gt_listening = GENERAL_SET_A["sections"]["listening"]["total_questions"]
+        gt_reading = GENERAL_SET_A["sections"]["reading"]["total_questions"]
+        gt_writing = len(GENERAL_SET_A["sections"]["writing"]["tasks"])
+        gt_speaking = len(GENERAL_SET_A["sections"]["speaking"]["parts"])
+        
+        total_academic = listening_questions + reading_questions + writing_tasks + speaking_parts
+        total_general = gt_listening + gt_reading + gt_writing + gt_speaking
         
         # Speaking QB questions (from the Speaking Question Bank)
         speaking_qb_count = 100  # Approximate - based on topics * questions per topic
         
-        total_questions = total_from_full_test + speaking_qb_count
+        total_questions = total_academic + total_general + speaking_qb_count
         
         return {
             "total_questions": total_questions,
             "by_skill": {
-                "reading": reading_questions,
-                "listening": listening_questions,
-                "writing": writing_tasks,
-                "speaking": speaking_parts + speaking_qb_count,
+                "reading": reading_questions + gt_reading,
+                "listening": listening_questions + gt_listening,
+                "writing": writing_tasks + gt_writing,
+                "speaking": speaking_parts + gt_speaking + speaking_qb_count,
                 "grammar_vocab": 0
             },
             "by_band": {
-                "4.0-5.0": 40,
-                "5.5-6.5": 45,
-                "7.0-9.0": total_questions - 85
+                "4.0-5.0": 50,
+                "5.5-6.5": 60,
+                "7.0-9.0": total_questions - 110
             },
             "by_topic": {},
-            "full_tests": 1,  # Academic Set A
+            "full_tests": 2,  # Academic Set A + General Training Set A
             "practice_sets": 4,  # Listening, Reading, Writing, Speaking
             "topics_count": 18
         }
     except Exception as e:
         print(f"Error calculating stats: {e}")
         return {
-            "total_questions": 185,
+            "total_questions": 270,
             "by_skill": {
-                "reading": 40,
-                "listening": 40,
-                "writing": 2,
-                "speaking": 103,
+                "reading": 80,
+                "listening": 80,
+                "writing": 4,
+                "speaking": 106,
                 "grammar_vocab": 0
             },
             "by_band": {
-                "4.0-5.0": 40,
-                "5.5-6.5": 45,
-                "7.0-9.0": 100
+                "4.0-5.0": 50,
+                "5.5-6.5": 60,
+                "7.0-9.0": 160
             },
             "by_topic": {},
-            "full_tests": 1,
+            "full_tests": 2,
             "practice_sets": 4,
             "topics_count": 18
         }
