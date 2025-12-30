@@ -622,19 +622,19 @@ export default function FullTestInterface({ user }) {
               <div className="flex items-center gap-4">
                 <button
                   onClick={handlePlayAudio}
-                  disabled={audioEnded}
+                  disabled={audioEndedParts[listeningPart]}
                   className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg
                     ${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'}
-                    ${audioEnded ? 'bg-slate-400 cursor-not-allowed' : ''}
+                    ${audioEndedParts[listeningPart] ? 'bg-slate-400 cursor-not-allowed' : ''}
                     text-white`}
                 >
                   {audioPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
                 </button>
                 <div>
                   <p className="font-semibold text-slate-900 text-lg">
-                    {audioPlaying ? 'Playing...' : audioEnded ? 'Audio Completed' : 'Click to Play Audio'}
+                    {audioPlaying ? 'Playing...' : audioEndedParts[listeningPart] ? 'Audio Completed' : 'Click to Play Audio'}
                   </p>
-                  <p className="text-sm text-slate-500">Audio plays once only</p>
+                  <p className="text-sm text-slate-500">Audio plays once only - Part {listeningPart}</p>
                 </div>
               </div>
               
@@ -657,6 +657,7 @@ export default function FullTestInterface({ user }) {
             </div>
             <audio
               ref={audioRef}
+              key={listeningPart} // Force new audio element when part changes
               src={`${API_URL}/api/full-test/audio/stream/${testId}/listening/${listeningPart}`}
               onEnded={handleAudioEnded}
               onPlay={() => setAudioPlaying(true)}
