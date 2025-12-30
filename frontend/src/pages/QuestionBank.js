@@ -480,7 +480,7 @@ export default function QuestionBank() {
                 <div className="grid md:grid-cols-2 gap-4">
                   {fullTests.map((test) => (
                     <Card key={test.test_id} className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-blue-300"
-                      onClick={() => navigate('/full-test')}>
+                      onClick={() => navigate(`/full-test?autoSelect=${test.test_id}`)}>
                       <div className="flex items-start justify-between mb-4">
                         <div>
                           <h3 className="font-bold text-lg text-gray-900">{test.title}</h3>
