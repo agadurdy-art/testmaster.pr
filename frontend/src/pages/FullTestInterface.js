@@ -1,74 +1,30 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Textarea } from '../components/ui/textarea';
 import { 
-  Clock, AlertCircle, ChevronRight, Volume2, VolumeX,
-  Loader2, CheckCircle, Play, Pause, ArrowRight, ArrowLeft, Send, 
-  Mic, MicOff, Square, SkipForward, Eye, EyeOff, Headphones
+  Clock, AlertCircle, Volume2, VolumeX, Settings, HelpCircle, EyeOff,
+  Loader2, CheckCircle, Play, Pause, ArrowRight, ArrowLeft, 
+  Mic, Square, SkipForward, Headphones, ChevronRight
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// ============ TEST CONFIGURATION ============
+// ============ REAL IELTS-STYLE TEST CONFIGURATION ============
 const SECTION_CONFIG = {
-  listening: {
-    totalTime: 40 * 60, // 40 minutes
-    questions: 40,
-    parts: 4,
-    icon: Volume2,
-    color: 'blue',
-    rules: [
-      'Audio plays ONCE only',
-      'No rewinding or seeking allowed',
-      'Answer questions as you listen',
-      'Transfer answers before time ends'
-    ]
-  },
-  reading: {
-    totalTime: 60 * 60, // 60 minutes
-    questions: 40,
-    passages: 3,
-    icon: null,
-    color: 'green',
-    rules: [
-      'You have 60 minutes for all passages',
-      'Suggested time: 20 minutes per passage',
-      'All answers must be submitted before time ends'
-    ]
-  },
-  writing: {
-    totalTime: 60 * 60, // 60 minutes
-    tasks: 2,
-    icon: null,
-    color: 'purple',
-    rules: [
-      'Task 1: 20 minutes, minimum 150 words',
-      'Task 2: 40 minutes, minimum 250 words',
-      'Task 2 counts twice as much as Task 1'
-    ]
-  },
-  speaking: {
-    totalTime: 14 * 60, // 14 minutes max
-    parts: 3,
-    icon: Mic,
-    color: 'orange',
-    rules: [
-      'Part 1: Answer questions about familiar topics (4-5 min)',
-      'Part 2: Speak on a topic for 2 minutes with 1 min prep',
-      'Part 3: Discussion on abstract topics (4-5 min)'
-    ]
-  }
+  listening: { totalTime: 40 * 60, questions: 40, parts: 4 },
+  reading: { totalTime: 60 * 60, questions: 40, parts: 3 },
+  writing: { totalTime: 60 * 60, tasks: 2 },
+  speaking: { totalTime: 14 * 60, parts: 3 }
 };
 
-// ============ SPEAKING TIMING ============
 const SPEAKING_TIMING = {
-  part1: { questionTime: 25, questions: 9 }, // 25s per question, hard cap
-  part2: { prepTime: 60, speakTime: 120 }, // 60s prep, 120s speak
-  part3: { questionTime: 75, questions: 5 } // 75s per question, hard cap
+  part1: { questionTime: 25, questions: 9 },
+  part2: { prepTime: 60, speakTime: 120 },
+  part3: { questionTime: 75, questions: 5 }
 };
 
 export default function FullTestInterface({ user }) {
@@ -85,7 +41,6 @@ export default function FullTestInterface({ user }) {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [timerActive, setTimerActive] = useState(false);
-  const [answers, setAnswers] = useState({});
   const [sectionAnswers, setSectionAnswers] = useState({
     listening: {},
     reading: {},
@@ -95,9 +50,13 @@ export default function FullTestInterface({ user }) {
   const [completedSections, setCompletedSections] = useState([]);
   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [reviewedQuestions, setReviewedQuestions] = useState({});
+  const [showSettings, setShowSettings] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
   // Listening specific
   const [listeningPart, setListeningPart] = useState(1);
+  const [currentQuestion, setCurrentQuestion] = useState(1);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [audioEnded, setAudioEnded] = useState(false);
   const audioRef = useRef(null);
@@ -112,19 +71,14 @@ export default function FullTestInterface({ user }) {
   // Speaking specific
   const [speakingPart, setSpeakingPart] = useState(1);
   const [speakingQuestion, setSpeakingQuestion] = useState(0);
-  const [speakingState, setSpeakingState] = useState('IDLE'); // IDLE, PROMPT_PLAYING, RECORDING, PROCESSING, READY_NEXT
-  const [prepTimeRemaining, setPrepTimeRemaining] = useState(0);
+  const [speakingState, setSpeakingState] = useState('IDLE');
   const [questionTimeRemaining, setQuestionTimeRemaining] = useState(0);
-  const [showQuestionText, setShowQuestionText] = useState(true);
   const [recordings, setRecordings] = useState({});
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const questionAudioRef = useRef(null);
 
-  // Section order - for full test mode
   const sectionOrder = ['listening', 'reading', 'writing', 'speaking'];
-  
-  // Check if single section mode
   const isSingleSectionMode = ['listening', 'reading', 'writing', 'speaking'].includes(mode);
   const activeSections = isSingleSectionMode ? [mode] : sectionOrder;
 
@@ -133,7 +87,6 @@ export default function FullTestInterface({ user }) {
     loadTestData();
   }, [testId]);
 
-  // Set initial section based on mode
   useEffect(() => {
     if (isSingleSectionMode) {
       setCurrentSection(mode);
@@ -147,7 +100,6 @@ export default function FullTestInterface({ user }) {
       const data = await res.json();
       if (data.success) {
         setTestData(data.test);
-        // Set time based on mode
         const initialSection = isSingleSectionMode ? mode : 'listening';
         setCurrentSection(initialSection);
         setTimeRemaining(SECTION_CONFIG[initialSection].totalTime);
@@ -183,12 +135,18 @@ export default function FullTestInterface({ user }) {
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
+    return `${mins} minutes left`;
+  };
+
+  const formatTimeShort = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const handleSectionTimeUp = () => {
     setTimerActive(false);
-    toast.warning(`Time's up! ${currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} section ended.`);
+    toast.warning(`Time's up!`);
     submitCurrentSection();
   };
 
@@ -196,7 +154,7 @@ export default function FullTestInterface({ user }) {
   const startSection = () => {
     setTimerActive(true);
     if (currentSection === 'listening') {
-      playListeningAudio();
+      // Auto-play audio after starting
     }
   };
 
@@ -217,14 +175,10 @@ export default function FullTestInterface({ user }) {
       const data = await res.json();
       if (data.success) {
         setCompletedSections([...completedSections, currentSection]);
-        
-        // In single section mode, complete immediately
         if (isSingleSectionMode) {
           completeTest();
           return;
         }
-        
-        // Move to next section or complete test
         const nextIndex = currentSectionIndex + 1;
         if (nextIndex < activeSections.length) {
           const nextSection = activeSections[nextIndex];
@@ -232,15 +186,13 @@ export default function FullTestInterface({ user }) {
           setCurrentSectionIndex(nextIndex);
           setTimeRemaining(SECTION_CONFIG[nextSection].totalTime);
           setTimerActive(false);
-          toast.success(`${currentSection} completed. Starting ${nextSection}.`);
+          toast.success(`${currentSection} completed.`);
         } else {
-          // All sections complete
           completeTest();
         }
       }
     } catch (error) {
       console.error('Error submitting section:', error);
-      toast.error('Error submitting section');
     } finally {
       setSubmitting(false);
       setShowConfirmSubmit(false);
@@ -256,134 +208,80 @@ export default function FullTestInterface({ user }) {
           session_id: sessionId,
           test_id: testId,
           mode: mode,
-          all_answers: sectionAnswers,
-          section_times: activeSections.reduce((acc, section, idx) => {
-            acc[section] = completedSections.includes(section) 
-              ? SECTION_CONFIG[section].totalTime 
-              : (idx === currentSectionIndex ? SECTION_CONFIG[section].totalTime - timeRemaining : 0);
-            return acc;
-          }, {})
+          all_answers: sectionAnswers
         })
       });
-
       const data = await res.json();
       if (data.success) {
         navigate(`/full-test/results/${sessionId}`, { state: { results: data.results } });
       }
     } catch (error) {
       console.error('Error completing test:', error);
-      toast.error('Error completing test');
     }
   };
 
-  // ============ LISTENING HANDLERS ============
-  const playListeningAudio = () => {
+  // ============ QUESTION HANDLERS ============
+  const updateAnswer = (section, questionId, value) => {
+    setSectionAnswers(prev => ({
+      ...prev,
+      [section]: { ...prev[section], [questionId]: value }
+    }));
+  };
+
+  const toggleReview = (questionId) => {
+    setReviewedQuestions(prev => ({
+      ...prev,
+      [questionId]: !prev[questionId]
+    }));
+  };
+
+  const handlePlayAudio = () => {
     if (audioRef.current) {
-      audioRef.current.play();
-      setAudioPlaying(true);
+      if (audioPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
     }
   };
 
   const handleAudioEnded = () => {
     setAudioPlaying(false);
     setAudioEnded(true);
-    
     if (listeningPart < 4) {
-      setListeningPart(prev => prev + 1);
-      setAudioEnded(false);
-      // Small delay before playing next part
       setTimeout(() => {
-        if (audioRef.current) {
-          audioRef.current.play();
-          setAudioPlaying(true);
-        }
+        setListeningPart(prev => prev + 1);
+        setAudioEnded(false);
       }, 2000);
     }
   };
 
-  const updateListeningAnswer = (questionId, value) => {
-    setSectionAnswers(prev => ({
-      ...prev,
-      listening: {
-        ...prev.listening,
-        [questionId]: value
-      }
-    }));
-  };
-
-  // ============ READING HANDLERS ============
-  const updateReadingAnswer = (questionId, value) => {
-    setSectionAnswers(prev => ({
-      ...prev,
-      reading: {
-        ...prev.reading,
-        [questionId]: value
-      }
-    }));
-  };
-
-  // ============ WRITING HANDLERS ============
-  const updateWritingResponse = (task, text) => {
-    setSectionAnswers(prev => ({
-      ...prev,
-      writing: {
-        ...prev.writing,
-        [`task${task}`]: text
-      }
-    }));
-    setWordCount(prev => ({
-      ...prev,
-      [`task${task}`]: text.trim().split(/\s+/).filter(Boolean).length
-    }));
-  };
-
-  // ============ SPEAKING HANDLERS ============
+  // Speaking handlers
   const startSpeakingRecording = async () => {
     try {
-      // Release any previous stream
       if (mediaRecorderRef.current) {
         mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
       }
-      
-      // Create new MediaRecorder instance for isolation
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-      
-      // Clear previous chunks
       audioChunksRef.current = [];
       
       mediaRecorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-        }
+        if (event.data.size > 0) audioChunksRef.current.push(event.data);
       };
       
       mediaRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         const answerId = `${speakingPart}_${speakingQuestion}`;
-        
-        // Store recording with unique ID
         setRecordings(prev => ({
           ...prev,
-          [answerId]: {
-            blob: audioBlob,
-            url: URL.createObjectURL(audioBlob),
-            timestamp: Date.now()
-          }
+          [answerId]: { blob: audioBlob, url: URL.createObjectURL(audioBlob) }
         }));
-        
-        // Update section answers
         setSectionAnswers(prev => ({
           ...prev,
-          speaking: {
-            ...prev.speaking,
-            [answerId]: { audioBlob, timestamp: Date.now() }
-          }
+          speaking: { ...prev.speaking, [answerId]: { audioBlob } }
         }));
-        
-        // Release stream
         stream.getTracks().forEach(track => track.stop());
-        
         setSpeakingState('READY_NEXT');
       };
       
@@ -391,15 +289,11 @@ export default function FullTestInterface({ user }) {
       mediaRecorder.start();
       setSpeakingState('RECORDING');
       
-      // Set up auto-stop timer based on part
       const maxTime = speakingPart === 1 ? SPEAKING_TIMING.part1.questionTime :
                      speakingPart === 2 ? SPEAKING_TIMING.part2.speakTime :
                      SPEAKING_TIMING.part3.questionTime;
-      
       setQuestionTimeRemaining(maxTime);
-      
     } catch (error) {
-      console.error('Error starting recording:', error);
       toast.error('Could not access microphone');
     }
   };
@@ -408,23 +302,6 @@ export default function FullTestInterface({ user }) {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
       mediaRecorderRef.current.stop();
       setSpeakingState('PROCESSING');
-    }
-  };
-
-  const moveToNextSpeakingQuestion = () => {
-    const currentPart = testData?.sections?.speaking?.parts?.[speakingPart - 1];
-    const questions = currentPart?.questions || [];
-    
-    if (speakingQuestion < questions.length - 1) {
-      setSpeakingQuestion(prev => prev + 1);
-      setSpeakingState('IDLE');
-    } else if (speakingPart < 3) {
-      setSpeakingPart(prev => prev + 1);
-      setSpeakingQuestion(0);
-      setSpeakingState('IDLE');
-    } else {
-      // Speaking section complete
-      setShowConfirmSubmit(true);
     }
   };
 
@@ -445,362 +322,331 @@ export default function FullTestInterface({ user }) {
     return () => clearInterval(interval);
   }, [speakingState, questionTimeRemaining]);
 
-  // ============ RENDER FUNCTIONS ============
-
-  const renderSectionStart = () => {
-    const config = SECTION_CONFIG[currentSection];
-    return (
-      <div className="max-w-2xl mx-auto text-center py-12">
-        <Badge className="mb-4 bg-slate-100 text-slate-700">
-          Section {currentSectionIndex + 1} of {sectionOrder.length}
-        </Badge>
-        
-        <h2 className="text-3xl font-bold text-slate-900 mb-4 capitalize">
-          {currentSection}
-        </h2>
-        
-        <div className="text-slate-600 mb-8">
-          <p className="text-lg mb-2">
-            Time: {formatTime(config.totalTime)} | 
-            {config.questions && ` ${config.questions} questions`}
-            {config.tasks && ` ${config.tasks} tasks`}
-          </p>
+  // ============ RENDER IELTS-STYLE HEADER ============
+  const renderHeader = () => (
+    <header className="bg-gradient-to-r from-slate-800 to-slate-700 text-white px-4 py-2 flex items-center justify-between">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold text-xs">IELTS</span>
+          </div>
+          <span className="text-sm text-slate-300">Computer-Delivered Test</span>
         </div>
-
-        <Card className="p-6 mb-8 text-left bg-amber-50 border-amber-200">
-          <h3 className="font-semibold text-amber-900 mb-3 flex items-center gap-2">
-            <AlertCircle className="w-5 h-5" />
-            Section Rules
-          </h3>
-          <ul className="space-y-2">
-            {config.rules.map((rule, idx) => (
-              <li key={idx} className="flex items-start gap-2 text-sm text-amber-800">
-                <CheckCircle className="w-4 h-4 mt-0.5 text-amber-600" />
-                {rule}
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        <Button 
-          size="lg" 
-          className="bg-slate-900 hover:bg-slate-800"
-          onClick={startSection}
+      </div>
+      
+      <div className="flex items-center gap-4">
+        {/* Timer */}
+        <div className="flex items-center gap-2 bg-slate-600/50 px-3 py-1 rounded">
+          <Clock className="w-4 h-4" />
+          <span className="font-medium">{formatTime(timeRemaining)}</span>
+        </div>
+        
+        {/* Control Buttons */}
+        <button 
+          onClick={() => setShowSettings(true)}
+          className="px-3 py-1 bg-slate-600 hover:bg-slate-500 rounded text-sm flex items-center gap-1"
         >
-          <Play className="w-5 h-5 mr-2" />
-          Start {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
-        </Button>
+          <Settings className="w-4 h-4" /> Settings
+        </button>
+        <button 
+          onClick={() => setShowHelp(true)}
+          className="px-3 py-1 bg-slate-600 hover:bg-slate-500 rounded text-sm flex items-center gap-1"
+        >
+          <HelpCircle className="w-4 h-4" /> Help
+        </button>
+        <button className="px-3 py-1 bg-slate-600 hover:bg-slate-500 rounded text-sm flex items-center gap-1">
+          <EyeOff className="w-4 h-4" /> Hide
+        </button>
+      </div>
+    </header>
+  );
+
+  // ============ RENDER IELTS-STYLE NAVIGATION BAR ============
+  const renderNavigationBar = () => {
+    const getQuestionNumbers = () => {
+      if (currentSection === 'listening') {
+        return {
+          parts: [
+            { label: 'Part 1', questions: Array.from({length: 10}, (_, i) => i + 1) },
+            { label: 'Part 2', questions: Array.from({length: 10}, (_, i) => i + 11) },
+            { label: 'Part 3', questions: Array.from({length: 10}, (_, i) => i + 21) },
+            { label: 'Part 4', questions: Array.from({length: 10}, (_, i) => i + 31) }
+          ]
+        };
+      } else if (currentSection === 'reading') {
+        return {
+          parts: [
+            { label: 'Part 1', questions: Array.from({length: 13}, (_, i) => i + 1) },
+            { label: 'Part 2', questions: Array.from({length: 13}, (_, i) => i + 14) },
+            { label: 'Part 3', questions: Array.from({length: 14}, (_, i) => i + 27) }
+          ]
+        };
+      }
+      return { parts: [] };
+    };
+
+    const navData = getQuestionNumbers();
+    
+    return (
+      <div className="bg-slate-100 border-t-2 border-slate-300 px-4 py-2">
+        <div className="flex items-center gap-2 overflow-x-auto">
+          {/* Review checkbox */}
+          <label className="flex items-center gap-1 text-sm text-slate-600 mr-2">
+            <input 
+              type="checkbox" 
+              checked={reviewedQuestions[currentQuestion] || false}
+              onChange={() => toggleReview(currentQuestion)}
+              className="w-4 h-4"
+            />
+            Review
+          </label>
+          
+          {navData.parts.map((part, partIdx) => (
+            <div key={part.label} className="flex items-center gap-1">
+              <span className="text-xs font-medium text-slate-700 bg-slate-300 px-2 py-1 rounded">
+                {part.label}
+              </span>
+              {part.questions.map(qNum => {
+                const isAnswered = currentSection === 'listening' 
+                  ? !!sectionAnswers.listening[`L${Math.ceil(qNum/10)}Q${qNum}`]
+                  : !!sectionAnswers.reading[`R${partIdx+1}Q${qNum}`];
+                const isCurrent = currentQuestion === qNum;
+                const isReviewed = reviewedQuestions[qNum];
+                
+                return (
+                  <button
+                    key={qNum}
+                    onClick={() => {
+                      setCurrentQuestion(qNum);
+                      if (currentSection === 'listening') {
+                        setListeningPart(Math.ceil(qNum / 10));
+                      } else if (currentSection === 'reading') {
+                        setCurrentPassage(partIdx);
+                      }
+                    }}
+                    className={`w-7 h-7 text-xs font-medium rounded transition-all
+                      ${isCurrent ? 'bg-blue-500 text-white' : 
+                        isAnswered ? 'bg-slate-700 text-white' : 
+                        'bg-slate-200 text-slate-700 hover:bg-slate-300'}
+                      ${isReviewed ? 'ring-2 ring-yellow-400' : ''}
+                    `}
+                  >
+                    {qNum}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+          
+          {/* Next/Previous arrows */}
+          <div className="ml-auto flex items-center gap-2">
+            <button 
+              onClick={() => setCurrentQuestion(prev => Math.max(1, prev - 1))}
+              className="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center hover:bg-slate-600"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button 
+              onClick={() => setCurrentQuestion(prev => Math.min(40, prev + 1))}
+              className="w-8 h-8 bg-slate-700 text-white rounded-full flex items-center justify-center hover:bg-slate-600"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </div>
     );
   };
 
+  // ============ RENDER LISTENING SECTION (IELTS STYLE) ============
   const renderListeningSection = () => {
     const listening = testData?.sections?.listening;
     const currentPartData = listening?.parts?.[listeningPart - 1];
     
-    // Handle play button click
-    const handlePlayAudio = () => {
-      if (audioRef.current) {
-        if (audioPlaying) {
-          audioRef.current.pause();
-        } else {
-          audioRef.current.play();
-        }
-      }
-    };
-    
     return (
-      <div className="space-y-6">
-        {/* Audio Player - NO SEEKING */}
-        <Card className="p-4 bg-slate-900 text-white">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${audioPlaying ? 'bg-green-500 animate-pulse' : 'bg-slate-700'}`}>
-                {audioPlaying ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
-              </div>
-              <div>
-                <p className="font-medium">Part {listeningPart}: {currentPartData?.title}</p>
-                <p className="text-sm text-slate-400">{currentPartData?.context}</p>
-              </div>
-            </div>
-            <Badge className={audioPlaying ? 'bg-green-500' : audioEnded ? 'bg-amber-500' : 'bg-slate-600'}>
-              {audioPlaying ? 'Playing' : audioEnded ? 'Ended' : 'Ready'}
-            </Badge>
+      <div className="flex-1 overflow-auto bg-white">
+        <div className="max-w-4xl mx-auto p-6">
+          {/* Part Header */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-slate-900">Part {listeningPart}</h2>
+            <p className="text-slate-600">Listen and answer questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}</p>
           </div>
-          
-          {/* Play/Pause Button */}
-          <div className="flex items-center justify-center gap-4 py-4">
-            <Button
-              size="lg"
-              onClick={handlePlayAudio}
-              disabled={audioEnded}
-              className={`${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'} text-white px-8`}
-            >
-              {audioPlaying ? (
-                <>
-                  <Pause className="w-5 h-5 mr-2" />
-                  Pause Audio
-                </>
-              ) : audioEnded ? (
-                <>
-                  <CheckCircle className="w-5 h-5 mr-2" />
-                  Audio Completed
-                </>
-              ) : (
-                <>
-                  <Play className="w-5 h-5 mr-2" />
-                  Play Audio
-                </>
-              )}
-            </Button>
-          </div>
-          
-          {/* Hidden audio element - NO CONTROLS for seeking prevention */}
-          <audio
-            ref={audioRef}
-            src={`${API_URL}/api/full-test/audio/stream/${testId}/listening/${listeningPart}`}
-            onEnded={handleAudioEnded}
-            onPlay={() => setAudioPlaying(true)}
-            onPause={() => setAudioPlaying(false)}
-            style={{ display: 'none' }}
-          />
-          
-          <p className="text-xs text-slate-500 mt-2 text-center">
-            ⚠️ Audio plays once only. No rewinding allowed.
-          </p>
-        </Card>
 
-        {/* Questions */}
-        <div className="space-y-4">
-          {currentPartData?.questions?.map((q, idx) => {
-            // Calculate absolute question number based on part
-            const partOffset = (listeningPart - 1) * 10;
-            const questionNum = partOffset + idx + 1;
-            return (
-            <Card key={q.id} className="p-4">
-              <div className="flex gap-3">
-                <span className="font-bold text-slate-900 min-w-[32px]">
-                  {questionNum}.
-                </span>
-                <div className="flex-1">
-                  <p className="text-slate-700 mb-2">{q.question}</p>
-                  {q.instruction && (
-                    <p className="text-xs text-slate-500 mb-2 italic">{q.instruction}</p>
-                  )}
-                  
-                  {q.type === 'multiple_choice' ? (
-                    <div className="space-y-2">
-                      {q.options?.map((opt, optIdx) => (
-                        <label key={optIdx} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            name={q.id}
-                            value={opt.charAt(0)}
-                            checked={sectionAnswers.listening[q.id] === opt.charAt(0)}
-                            onChange={(e) => updateListeningAnswer(q.id, e.target.value)}
-                            className="w-4 h-4"
-                          />
-                          <span className="text-sm">{opt}</span>
-                        </label>
-                      ))}
-                    </div>
-                  ) : (
-                    <input
-                      type="text"
-                      className="w-full p-2 border rounded text-sm"
-                      placeholder="Your answer..."
-                      value={sectionAnswers.listening[q.id] || ''}
-                      onChange={(e) => updateListeningAnswer(q.id, e.target.value)}
-                    />
-                  )}
-                </div>
-              </div>
-            </Card>
-          );
-          })}
-        </div>
-
-        {/* Part Navigation */}
-        <Card className="p-4 bg-slate-50 sticky bottom-0">
-          <div className="flex items-center justify-between">
-            {/* Part Selector */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-600 font-medium">Part:</span>
-              {[1, 2, 3, 4].map((part) => (
-                <Button
-                  key={part}
-                  variant={listeningPart === part ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setListeningPart(part)}
-                  className={listeningPart === part ? 'bg-slate-900' : ''}
-                >
-                  {part}
-                </Button>
-              ))}
-            </div>
-            
-            {/* Navigation Buttons */}
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setListeningPart(prev => Math.max(1, prev - 1))}
-                disabled={listeningPart === 1}
+          {/* Audio Player */}
+          <div className="mb-6 p-4 bg-slate-100 rounded-lg">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={handlePlayAudio}
+                disabled={audioEnded}
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all
+                  ${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'}
+                  ${audioEnded ? 'bg-slate-400 cursor-not-allowed' : ''}
+                  text-white`}
               >
-                <ArrowLeft className="w-4 h-4 mr-1" /> Previous
-              </Button>
+                {audioPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+              </button>
+              <div>
+                <p className="font-medium text-slate-900">
+                  {audioPlaying ? 'Playing...' : audioEnded ? 'Audio Completed' : 'Click to Play Audio'}
+                </p>
+                <p className="text-sm text-slate-500">Audio plays once only</p>
+              </div>
+            </div>
+            <audio
+              ref={audioRef}
+              src={`${API_URL}/api/full-test/audio/stream/${testId}/listening/${listeningPart}`}
+              onEnded={handleAudioEnded}
+              onPlay={() => setAudioPlaying(true)}
+              onPause={() => setAudioPlaying(false)}
+              style={{ display: 'none' }}
+            />
+          </div>
+
+          {/* Questions Section */}
+          <div className="bg-slate-50 p-6 rounded-lg">
+            <h3 className="font-bold text-lg text-slate-900 mb-2">
+              Questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}
+            </h3>
+            <p className="text-sm text-slate-600 mb-4">
+              Complete the notes. Write <strong>ONE WORD ONLY</strong> in each gap.
+            </p>
+            
+            <div className="bg-white p-4 rounded border">
+              <h4 className="font-semibold text-slate-800 mb-4">{currentPartData?.title}</h4>
               
-              {listeningPart < 4 ? (
-                <Button
-                  onClick={() => setListeningPart(prev => Math.min(4, prev + 1))}
-                  className="bg-slate-900 hover:bg-slate-800"
-                >
-                  Next Part <ArrowRight className="w-4 h-4 ml-1" />
-                </Button>
-              ) : (
-                <Button 
-                  onClick={() => setShowConfirmSubmit(true)}
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  Submit Listening <CheckCircle className="w-4 h-4 ml-1" />
-                </Button>
-              )}
+              {/* Inline form completion style like real IELTS */}
+              <div className="space-y-3">
+                {currentPartData?.questions?.map((q, idx) => {
+                  const qNum = (listeningPart - 1) * 10 + idx + 1;
+                  return (
+                    <div key={q.id} className="flex items-start gap-2 text-slate-700">
+                      <span className="text-slate-500">•</span>
+                      <div className="flex-1">
+                        <span>{q.question?.split('______')[0]}</span>
+                        <input
+                          type="text"
+                          value={sectionAnswers.listening[q.id] || ''}
+                          onChange={(e) => updateAnswer('listening', q.id, e.target.value)}
+                          className="mx-1 px-2 py-1 w-32 border-2 border-blue-300 rounded text-center font-medium bg-blue-50 focus:border-blue-500 focus:outline-none"
+                          placeholder={String(qNum)}
+                        />
+                        <span>{q.question?.split('______')[1]}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-          
-          <div className="mt-2 text-center text-xs text-slate-500">
-            Part {listeningPart} of 4 • Questions {(listeningPart - 1) * 10 + 1}-{listeningPart * 10}
-          </div>
-        </Card>
+        </div>
       </div>
     );
   };
 
+  // ============ RENDER READING SECTION (IELTS STYLE - SPLIT SCREEN) ============
   const renderReadingSection = () => {
     const reading = testData?.sections?.reading;
     const passage = reading?.passages?.[currentPassage];
     
     return (
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Passage */}
-        <Card className="p-6 max-h-[calc(100vh-300px)] overflow-y-auto">
-          <h3 className="font-bold text-lg text-slate-900 mb-2">
-            Passage {currentPassage + 1}: {passage?.title}
-          </h3>
-          <div className="prose prose-sm max-w-none">
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left Pane - Passage */}
+        <div className="w-1/2 border-r border-slate-300 overflow-auto bg-white p-6">
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Part {currentPassage + 1}</h2>
+          <p className="text-slate-600 mb-4">Read the text below and answer the questions.</p>
+          
+          <h3 className="text-lg font-bold text-slate-800 mb-4">{passage?.title}</h3>
+          
+          <div className="prose prose-sm max-w-none text-slate-700 leading-relaxed">
             {passage?.text?.split('\n\n').map((para, idx) => (
-              <p key={idx} className="text-slate-700 mb-3">
+              <p key={idx} className="mb-4">
                 {/^[A-Z]\s/.test(para) ? (
-                  <><strong>{para.charAt(0)}</strong>{para.slice(1)}</>
+                  <><strong className="text-slate-900">{para.charAt(0)}</strong>{para.slice(1)}</>
                 ) : para}
               </p>
             ))}
           </div>
-        </Card>
-
-        {/* Questions */}
-        <div className="space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
-          {passage?.questions?.map((q, idx) => {
-            // Extract question number - get digits after 'Q' (e.g., R3Q27 → 27)
-            const qNumMatch = q.id.match(/Q(\d+)/);
-            const questionNum = qNumMatch ? qNumMatch[1] : idx + 1;
-            return (
-            <Card key={q.id} className="p-4">
-              <div className="flex gap-3">
-                <span className="font-bold text-slate-900 min-w-[32px]">
-                  {questionNum}.
-                </span>
-                <div className="flex-1">
-                  <p className="text-slate-700 mb-2">{q.question}</p>
-                  {q.instruction && (
-                    <p className="text-xs text-slate-500 mb-2 italic">{q.instruction}</p>
-                  )}
-                  
-                  {q.type === 'multiple_choice' || q.type === 'true_false_ng' || q.type === 'yes_no_ng' ? (
-                    <div className="space-y-2">
-                      {(q.options || (q.type === 'true_false_ng' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : ['YES', 'NO', 'NOT GIVEN'])).map((opt, optIdx) => (
-                        <label key={optIdx} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="radio"
-                            name={q.id}
-                            value={typeof opt === 'string' && opt.includes(')') ? opt.charAt(0) : opt}
-                            checked={sectionAnswers.reading[q.id] === (typeof opt === 'string' && opt.includes(')') ? opt.charAt(0) : opt)}
-                            onChange={(e) => updateReadingAnswer(q.id, e.target.value)}
-                            className="w-4 h-4"
-                          />
-                          <span className="text-sm">{opt}</span>
-                        </label>
-                      ))}
-                    </div>
-                  ) : q.type === 'matching_headings' || q.type === 'matching_info' || q.type === 'matching_features' ? (
-                    <select
-                      className="w-full p-2 border rounded text-sm"
-                      value={sectionAnswers.reading[q.id] || ''}
-                      onChange={(e) => updateReadingAnswer(q.id, e.target.value)}
-                    >
-                      <option value="">Select...</option>
-                      {(q.options || q.paragraph_options || q.feature_options)?.map((opt, optIdx) => (
-                        <option key={optIdx} value={typeof opt === 'string' ? (opt.match(/^[ivx]+\)|^[A-C]\)/)?.[0]?.replace(')', '') || opt) : opt}>
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <input
-                      type="text"
-                      className="w-full p-2 border rounded text-sm"
-                      placeholder="Your answer..."
-                      value={sectionAnswers.reading[q.id] || ''}
-                      onChange={(e) => updateReadingAnswer(q.id, e.target.value)}
-                    />
-                  )}
-                </div>
-              </div>
-            </Card>
-            );
-          })}
         </div>
 
-        {/* Passage Navigation */}
-        <div className="lg:col-span-2 flex justify-between items-center pt-4 border-t">
-          <div className="flex gap-2">
-            {reading?.passages?.map((_, idx) => (
-              <Button
-                key={idx}
-                variant={currentPassage === idx ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setCurrentPassage(idx)}
-              >
-                Passage {idx + 1}
-              </Button>
-            ))}
+        {/* Right Pane - Questions */}
+        <div className="w-1/2 overflow-auto bg-slate-50 p-6">
+          <div className="space-y-6">
+            {passage?.questions?.map((q, idx) => {
+              const qNumMatch = q.id.match(/Q(\d+)/);
+              const questionNum = qNumMatch ? qNumMatch[1] : idx + 1;
+              
+              return (
+                <div key={q.id} className="bg-white p-4 rounded-lg border border-slate-200">
+                  <div className="flex gap-3">
+                    <span className="font-bold text-slate-900 min-w-[32px]">{questionNum}.</span>
+                    <div className="flex-1">
+                      <p className="text-slate-700 mb-3">{q.question}</p>
+                      
+                      {q.type === 'true_false_ng' || q.type === 'yes_no_ng' ? (
+                        <div className="space-y-2">
+                          {(q.type === 'true_false_ng' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : ['YES', 'NO', 'NOT GIVEN']).map((opt) => (
+                            <label key={opt} className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="radio"
+                                name={q.id}
+                                value={opt}
+                                checked={sectionAnswers.reading[q.id] === opt}
+                                onChange={(e) => updateAnswer('reading', q.id, e.target.value)}
+                                className="w-4 h-4 text-blue-500"
+                              />
+                              <span className="text-sm">{opt}</span>
+                            </label>
+                          ))}
+                        </div>
+                      ) : q.type === 'multiple_choice' ? (
+                        <div className="space-y-2">
+                          {q.options?.map((opt, optIdx) => (
+                            <label key={optIdx} className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="radio"
+                                name={q.id}
+                                value={opt.charAt(0)}
+                                checked={sectionAnswers.reading[q.id] === opt.charAt(0)}
+                                onChange={(e) => updateAnswer('reading', q.id, e.target.value)}
+                                className="w-4 h-4 text-blue-500"
+                              />
+                              <span className="text-sm">{opt}</span>
+                            </label>
+                          ))}
+                        </div>
+                      ) : (
+                        <input
+                          type="text"
+                          value={sectionAnswers.reading[q.id] || ''}
+                          onChange={(e) => updateAnswer('reading', q.id, e.target.value)}
+                          className="w-full px-3 py-2 border-2 border-blue-300 rounded focus:border-blue-500 focus:outline-none"
+                          placeholder="Type your answer..."
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          {currentPassage === 2 && (
-            <Button onClick={() => setShowConfirmSubmit(true)}>
-              Submit Reading <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          )}
         </div>
       </div>
     );
   };
 
+  // ============ RENDER WRITING SECTION ============
   const renderWritingSection = () => {
     const writing = testData?.sections?.writing;
     const task = writing?.tasks?.[writingTask - 1];
     
-    // Render bar chart for Task 1
     const renderBarChart = (visualData) => {
       if (!visualData || visualData.type !== 'bar_chart') return null;
-      
       const { categories, data, title } = visualData;
-      const colors = ['#3B82F6', '#10B981', '#F59E0B']; // Blue, Green, Amber
-      const maxValue = 100;
+      const colors = ['#3B82F6', '#10B981', '#F59E0B'];
       
       return (
         <div className="mt-4 p-4 bg-white border rounded-lg">
           <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>
-          
-          {/* Legend */}
           <div className="flex justify-center gap-6 mb-4">
             {data.map((item, idx) => (
               <div key={item.sector} className="flex items-center gap-2">
@@ -809,179 +655,108 @@ export default function FullTestInterface({ user }) {
               </div>
             ))}
           </div>
-          
-          {/* Chart */}
           <div className="space-y-3">
             {categories.map((category, catIdx) => (
               <div key={category} className="flex items-center gap-3">
                 <div className="w-28 text-sm text-slate-600 text-right">{category}</div>
                 <div className="flex-1 flex gap-1">
                   {data.map((item, idx) => (
-                    <div 
-                      key={item.sector}
-                      className="h-6 rounded transition-all"
-                      style={{ 
-                        width: `${item.values[catIdx]}%`,
-                        backgroundColor: colors[idx],
-                        minWidth: item.values[catIdx] > 0 ? '20px' : '0'
-                      }}
-                      title={`${item.sector}: ${item.values[catIdx]}%`}
-                    >
-                      {item.values[catIdx] > 10 && (
-                        <span className="text-xs text-white px-1">{item.values[catIdx]}%</span>
-                      )}
+                    <div key={item.sector} className="h-6 rounded" style={{ width: `${item.values[catIdx]}%`, backgroundColor: colors[idx], minWidth: item.values[catIdx] > 0 ? '20px' : '0' }}>
+                      {item.values[catIdx] > 10 && <span className="text-xs text-white px-1">{item.values[catIdx]}%</span>}
                     </div>
                   ))}
                 </div>
               </div>
             ))}
           </div>
-          
-          {/* Data Table */}
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-slate-100">
-                  <th className="border p-2 text-left">Region</th>
-                  {data.map(item => (
-                    <th key={item.sector} className="border p-2 text-center">{item.sector}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {categories.map((category, idx) => (
-                  <tr key={category}>
-                    <td className="border p-2 font-medium">{category}</td>
-                    {data.map(item => (
-                      <td key={item.sector} className="border p-2 text-center">{item.values[idx]}%</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       );
     };
     
     return (
-      <div className="space-y-6">
-        {/* Task Tabs */}
-        <div className="flex gap-2">
-          <Button
-            variant={writingTask === 1 ? 'default' : 'outline'}
-            onClick={() => setWritingTask(1)}
-          >
-            Task 1 (20 min)
-          </Button>
-          <Button
-            variant={writingTask === 2 ? 'default' : 'outline'}
-            onClick={() => setWritingTask(2)}
-          >
-            Task 2 (40 min)
-          </Button>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Task Prompt */}
-          <Card className="p-6 max-h-[calc(100vh-280px)] overflow-y-auto">
-            <h3 className="font-bold text-lg text-slate-900 mb-4">
-              Task {writingTask}
-            </h3>
-            <div className="prose prose-sm max-w-none">
-              <p className="text-slate-700 whitespace-pre-wrap">{task?.prompt}</p>
-            </div>
-            
-            {task?.visual_data && renderBarChart(task.visual_data)}
-            
-            <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-blue-700">
-              <strong>Word limit:</strong> Minimum {task?.word_limit?.min} words, 
-              recommended {task?.word_limit?.recommended} words
-            </div>
-          </Card>
-
-          {/* Writing Area */}
-          <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-slate-600">Your Response</span>
-              <Badge variant={wordCount[`task${writingTask}`] >= (task?.word_limit?.min || 150) ? 'success' : 'secondary'}>
-                {wordCount[`task${writingTask}`]} words
-              </Badge>
-            </div>
-            <Textarea
-              className="min-h-[400px] text-sm"
-              placeholder="Write your response here..."
-              value={sectionAnswers.writing[`task${writingTask}`]}
-              onChange={(e) => updateWritingResponse(writingTask, e.target.value)}
-            />
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left - Task */}
+        <div className="w-1/2 border-r border-slate-300 overflow-auto bg-white p-6">
+          <div className="flex gap-2 mb-4">
+            <button onClick={() => setWritingTask(1)} className={`px-4 py-2 rounded ${writingTask === 1 ? 'bg-slate-900 text-white' : 'bg-slate-200'}`}>
+              Task 1 (20 min)
+            </button>
+            <button onClick={() => setWritingTask(2)} className={`px-4 py-2 rounded ${writingTask === 2 ? 'bg-slate-900 text-white' : 'bg-slate-200'}`}>
+              Task 2 (40 min)
+            </button>
+          </div>
+          
+          <h2 className="text-xl font-bold mb-4">Task {writingTask}</h2>
+          <p className="text-slate-700 whitespace-pre-wrap mb-4">{task?.prompt}</p>
+          {task?.visual_data && renderBarChart(task.visual_data)}
+          
+          <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-blue-700">
+            <strong>Word limit:</strong> Minimum {task?.word_limit?.min} words
           </div>
         </div>
-
-        <div className="flex justify-end pt-4 border-t">
-          <Button onClick={() => setShowConfirmSubmit(true)}>
-            Submit Writing <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
+        
+        {/* Right - Writing Area */}
+        <div className="w-1/2 overflow-auto bg-slate-50 p-6">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm text-slate-600">Your Response</span>
+            <Badge className={wordCount[`task${writingTask}`] >= (task?.word_limit?.min || 150) ? 'bg-green-500' : 'bg-slate-400'}>
+              {wordCount[`task${writingTask}`]} words
+            </Badge>
+          </div>
+          <Textarea
+            className="min-h-[500px] text-sm bg-white"
+            placeholder="Write your response here..."
+            value={sectionAnswers.writing[`task${writingTask}`]}
+            onChange={(e) => {
+              const text = e.target.value;
+              setSectionAnswers(prev => ({
+                ...prev,
+                writing: { ...prev.writing, [`task${writingTask}`]: text }
+              }));
+              setWordCount(prev => ({
+                ...prev,
+                [`task${writingTask}`]: text.trim().split(/\s+/).filter(Boolean).length
+              }));
+            }}
+          />
         </div>
       </div>
     );
   };
 
+  // ============ RENDER SPEAKING SECTION ============
   const renderSpeakingSection = () => {
     const speaking = testData?.sections?.speaking;
     const currentPartData = speaking?.parts?.[speakingPart - 1];
     const currentQ = currentPartData?.questions?.[speakingQuestion];
     
     return (
-      <div className="max-w-3xl mx-auto space-y-6">
-        {/* Part Info */}
-        <Card className="p-4 bg-slate-900 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">Part {speakingPart}: {currentPartData?.title}</p>
-              <p className="text-sm text-slate-400">{currentPartData?.description}</p>
-            </div>
-            <Badge className="bg-slate-700">
-              {speakingPart === 1 && `Question ${speakingQuestion + 1} of ${currentPartData?.questions?.length || 0}`}
-              {speakingPart === 2 && 'Individual Long Turn'}
-              {speakingPart === 3 && `Question ${speakingQuestion + 1} of ${currentPartData?.questions?.length || 0}`}
-            </Badge>
-          </div>
-        </Card>
+      <div className="flex-1 overflow-auto bg-white">
+        <div className="max-w-3xl mx-auto p-6">
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Part {speakingPart}</h2>
+          <p className="text-slate-600 mb-6">{currentPartData?.description}</p>
 
-        {/* Question Display */}
-        <Card className="p-6">
-          {/* Part 2 Cue Card - Always visible (this is the only text shown in real IELTS) */}
           {speakingPart === 2 && currentPartData?.cue_card && (
-            <div className="p-4 bg-amber-50 border-2 border-amber-200 rounded-lg mb-6">
-              <h4 className="font-bold text-amber-900 mb-2">Cue Card</h4>
-              <p className="text-slate-800 font-medium mb-3">{currentPartData.cue_card.topic}</p>
+            <Card className="p-6 bg-amber-50 border-2 border-amber-300 mb-6">
+              <h3 className="font-bold text-amber-900 mb-3">Cue Card</h3>
+              <p className="text-lg text-slate-800 mb-3">{currentPartData.cue_card.topic}</p>
               <p className="text-sm text-slate-600 mb-2">You should say:</p>
               <ul className="list-disc list-inside space-y-1">
                 {currentPartData.cue_card.points?.map((point, idx) => (
-                  <li key={idx} className="text-sm text-slate-700">{point}</li>
+                  <li key={idx} className="text-slate-700">{point}</li>
                 ))}
               </ul>
-            </div>
+            </Card>
           )}
 
-          {/* Parts 1 & 3: Audio-only questions (like real IELTS exam) */}
-          {(speakingPart === 1 || speakingPart === 3) && currentQ && (
-            <div className="text-center py-8">
-              <div className="mb-6">
-                <div className="w-20 h-20 mx-auto rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                  <Headphones className="w-10 h-10 text-blue-600" />
-                </div>
-                <p className="text-lg text-slate-700 mb-2">Listen to the examiner's question</p>
-                <p className="text-sm text-slate-500">
-                  {speakingPart === 1 
-                    ? "Answer in 20-30 seconds" 
-                    : "Give a detailed response (up to 75 seconds)"}
-                </p>
-              </div>
-              
-              {/* Play question audio button */}
+          {(speakingPart === 1 || speakingPart === 3) && (
+            <Card className="p-8 text-center bg-slate-50">
+              <Headphones className="w-16 h-16 mx-auto text-blue-500 mb-4" />
+              <p className="text-lg text-slate-700 mb-2">Listen to the examiner's question</p>
+              <p className="text-sm text-slate-500 mb-6">
+                Question {speakingQuestion + 1} of {currentPartData?.questions?.length}
+              </p>
               <Button
-                size="lg"
                 onClick={() => {
                   if (questionAudioRef.current) {
                     questionAudioRef.current.play();
@@ -989,88 +764,106 @@ export default function FullTestInterface({ user }) {
                   }
                 }}
                 disabled={speakingState !== 'IDLE'}
-                className="bg-blue-600 hover:bg-blue-700 px-8"
+                className="bg-blue-500 hover:bg-blue-600"
               >
                 <Volume2 className="w-5 h-5 mr-2" />
-                {speakingState === 'PROMPT_PLAYING' ? 'Playing...' : 'Play Question'}
+                Play Question
               </Button>
-              
               <audio
                 ref={questionAudioRef}
-                src={`${API_URL}/api/full-test/audio/stream/${testId}/speaking/speaking_p${speakingPart}_${currentQ.id}`}
+                src={currentQ ? `${API_URL}/api/full-test/audio/stream/${testId}/speaking/speaking_p${speakingPart}_${currentQ.id}` : ''}
                 onEnded={() => setSpeakingState('IDLE')}
                 style={{ display: 'none' }}
               />
-            </div>
+            </Card>
           )}
-        </Card>
 
-        {/* Recording Controls */}
-        <Card className="p-6">
-          <div className="text-center space-y-4">
-            {/* Timer */}
+          <Card className="p-6 mt-6">
             {speakingState === 'RECORDING' && (
-              <div className="text-3xl font-mono font-bold text-red-600">
-                {formatTime(questionTimeRemaining)}
+              <div className="text-3xl font-mono font-bold text-red-600 text-center mb-4">
+                {formatTimeShort(questionTimeRemaining)}
               </div>
             )}
-
-            {/* State Indicator */}
-            <div className="flex justify-center items-center gap-2">
-              {speakingState === 'IDLE' && <Badge>Ready</Badge>}
-              {speakingState === 'PROMPT_PLAYING' && <Badge className="bg-blue-500">Listening...</Badge>}
-              {speakingState === 'RECORDING' && <Badge className="bg-red-500 animate-pulse">Recording</Badge>}
-              {speakingState === 'PROCESSING' && <Badge className="bg-amber-500">Processing...</Badge>}
-              {speakingState === 'READY_NEXT' && <Badge className="bg-green-500">Recorded</Badge>}
-            </div>
-
-            {/* Control Buttons */}
             <div className="flex justify-center gap-4">
               {speakingState === 'IDLE' && (
-                <Button
-                  size="lg"
-                  className="bg-red-500 hover:bg-red-600"
-                  onClick={startSpeakingRecording}
-                >
-                  <Mic className="w-5 h-5 mr-2" />
-                  Start Recording
+                <Button onClick={startSpeakingRecording} className="bg-red-500 hover:bg-red-600">
+                  <Mic className="w-5 h-5 mr-2" /> Start Recording
                 </Button>
               )}
-
               {speakingState === 'RECORDING' && (
-                <Button
-                  size="lg"
-                  variant="destructive"
-                  onClick={stopSpeakingRecording}
-                >
-                  <Square className="w-5 h-5 mr-2" />
-                  Stop Recording
+                <Button onClick={stopSpeakingRecording} variant="destructive">
+                  <Square className="w-5 h-5 mr-2" /> Stop
                 </Button>
               )}
-
               {speakingState === 'READY_NEXT' && (
-                <Button
-                  size="lg"
-                  className="bg-slate-900 hover:bg-slate-800"
-                  onClick={moveToNextSpeakingQuestion}
-                >
-                  <SkipForward className="w-5 h-5 mr-2" />
-                  Next Question
+                <Button onClick={() => {
+                  const questions = currentPartData?.questions || [];
+                  if (speakingQuestion < questions.length - 1) {
+                    setSpeakingQuestion(prev => prev + 1);
+                    setSpeakingState('IDLE');
+                  } else if (speakingPart < 3) {
+                    setSpeakingPart(prev => prev + 1);
+                    setSpeakingQuestion(0);
+                    setSpeakingState('IDLE');
+                  } else {
+                    setShowConfirmSubmit(true);
+                  }
+                }}>
+                  <SkipForward className="w-5 h-5 mr-2" /> Next
                 </Button>
               )}
             </div>
+          </Card>
+        </div>
+      </div>
+    );
+  };
 
-            {/* Playback of recording */}
-            {recordings[`${speakingPart}_${speakingQuestion}`] && (
-              <div className="mt-4">
-                <audio
-                  controls
-                  src={recordings[`${speakingPart}_${speakingQuestion}`].url}
-                  className="mx-auto"
-                />
-              </div>
-            )}
+  // ============ RENDER SECTION START ============
+  const renderSectionStart = () => {
+    const config = SECTION_CONFIG[currentSection];
+    return (
+      <div className="flex-1 flex items-center justify-center bg-slate-100">
+        <Card className="max-w-lg p-8 text-center">
+          <h2 className="text-2xl font-bold text-slate-900 mb-2 capitalize">{currentSection}</h2>
+          <p className="text-slate-600 mb-6">Time: {config.totalTime / 60} minutes</p>
+          
+          <div className="text-left bg-amber-50 p-4 rounded-lg mb-6">
+            <h3 className="font-semibold text-amber-900 mb-2 flex items-center gap-2">
+              <AlertCircle className="w-5 h-5" /> Instructions
+            </h3>
+            <ul className="text-sm text-amber-800 space-y-1">
+              {currentSection === 'listening' && (
+                <>
+                  <li>• Audio plays ONCE only - no rewinding</li>
+                  <li>• Answer questions as you listen</li>
+                  <li>• Transfer answers before time ends</li>
+                </>
+              )}
+              {currentSection === 'reading' && (
+                <>
+                  <li>• You have 60 minutes for all passages</li>
+                  <li>• Suggested: 20 minutes per passage</li>
+                </>
+              )}
+              {currentSection === 'writing' && (
+                <>
+                  <li>• Task 1: minimum 150 words</li>
+                  <li>• Task 2: minimum 250 words</li>
+                </>
+              )}
+              {currentSection === 'speaking' && (
+                <>
+                  <li>• Listen to questions via audio</li>
+                  <li>• Record your answers</li>
+                </>
+              )}
+            </ul>
           </div>
+          
+          <Button onClick={startSection} size="lg" className="bg-slate-900 hover:bg-slate-800">
+            <Play className="w-5 h-5 mr-2" /> Start {currentSection}
+          </Button>
         </Card>
       </div>
     );
@@ -1079,91 +872,96 @@ export default function FullTestInterface({ user }) {
   // ============ MAIN RENDER ============
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-slate-600" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Fixed Header with Timer */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <h1 className="text-lg font-semibold text-slate-900">
-              {isSingleSectionMode ? `${currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} Practice` : 'IELTS-Style Full Test'}
-            </h1>
-            <Badge variant="outline" className="capitalize">
-              {currentSection}
-            </Badge>
-          </div>
-
-          {/* Section Progress - only show for full test */}
-          {!isSingleSectionMode && (
-            <div className="flex items-center gap-1">
-              {activeSections.map((section, idx) => (
-                <div
-                  key={section}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium
-                    ${completedSections.includes(section) ? 'bg-green-500 text-white' : 
-                      idx === currentSectionIndex ? 'bg-slate-900 text-white' : 
-                      'bg-slate-200 text-slate-500'}`}
-                >
-                  {completedSections.includes(section) ? '✓' : idx + 1}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Timer */}
-          {timerActive && (
-            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-lg
-              ${timeRemaining < 300 ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-900'}`}>
-              <Clock className="w-5 h-5" />
-              {formatTime(timeRemaining)}
-            </div>
-          )}
+    <div className="min-h-screen flex flex-col bg-slate-100">
+      {renderHeader()}
+      
+      {!timerActive && !completedSections.includes(currentSection) ? (
+        renderSectionStart()
+      ) : (
+        <>
+          {currentSection === 'listening' && renderListeningSection()}
+          {currentSection === 'reading' && renderReadingSection()}
+          {currentSection === 'writing' && renderWritingSection()}
+          {currentSection === 'speaking' && renderSpeakingSection()}
+        </>
+      )}
+      
+      {timerActive && (currentSection === 'listening' || currentSection === 'reading') && renderNavigationBar()}
+      
+      {/* Submit button for writing/speaking */}
+      {timerActive && (currentSection === 'writing' || currentSection === 'speaking') && (
+        <div className="bg-slate-100 border-t p-4 flex justify-end">
+          <Button onClick={() => setShowConfirmSubmit(true)} className="bg-green-600 hover:bg-green-700">
+            Submit {currentSection} <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        {!timerActive && !completedSections.includes(currentSection) ? (
-          renderSectionStart()
-        ) : (
-          <>
-            {currentSection === 'listening' && renderListeningSection()}
-            {currentSection === 'reading' && renderReadingSection()}
-            {currentSection === 'writing' && renderWritingSection()}
-            {currentSection === 'speaking' && renderSpeakingSection()}
-          </>
-        )}
-      </main>
+      )}
 
       {/* Submit Confirmation Modal */}
       {showConfirmSubmit && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-md bg-white p-6">
-            <h3 className="text-lg font-semibold text-slate-900 mb-4">
-              Submit {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}?
-            </h3>
-            <p className="text-slate-600 mb-6">
-              Once submitted, you cannot return to this section. 
-              Make sure you have reviewed all your answers.
-            </p>
+            <h3 className="text-lg font-semibold text-slate-900 mb-4">Submit {currentSection}?</h3>
+            <p className="text-slate-600 mb-6">You cannot return to this section after submitting.</p>
             <div className="flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setShowConfirmSubmit(false)}>
-                Review Answers
+              <Button variant="outline" onClick={() => setShowConfirmSubmit(false)}>Cancel</Button>
+              <Button onClick={submitCurrentSection} disabled={submitting} className="bg-slate-900">
+                {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Submit'}
               </Button>
-              <Button 
-                className="bg-slate-900 hover:bg-slate-800"
-                onClick={submitCurrentSection}
-                disabled={submitting}
-              >
-                {submitting ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
-                Submit
-              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md bg-white">
+            <div className="bg-slate-700 text-white px-4 py-2 flex justify-between items-center">
+              <span className="font-medium">Settings</span>
+              <button onClick={() => setShowSettings(false)} className="text-white hover:text-red-300">✕</button>
+            </div>
+            <div className="p-6">
+              <p className="text-slate-600 mb-4">Adjust settings to make the test easier to read.</p>
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium mb-2">Text Size</h4>
+                  <div className="space-y-1">
+                    <label className="flex items-center gap-2"><input type="radio" name="textSize" defaultChecked /> Standard</label>
+                    <label className="flex items-center gap-2"><input type="radio" name="textSize" /> Large</label>
+                  </div>
+                </div>
+              </div>
+              <Button onClick={() => setShowSettings(false)} className="mt-4 w-full">OK</Button>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Help Modal */}
+      {showHelp && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-lg bg-white">
+            <div className="bg-slate-700 text-white px-4 py-2 flex justify-between items-center">
+              <span className="font-medium">Help</span>
+              <button onClick={() => setShowHelp(false)} className="text-white hover:text-red-300">✕</button>
+            </div>
+            <div className="p-6">
+              <h4 className="font-medium mb-2">How to answer questions</h4>
+              <ul className="text-sm text-slate-600 space-y-2">
+                <li>• Click on the answer you think is correct</li>
+                <li>• Type your answer in the input boxes</li>
+                <li>• Use the navigation bar to move between questions</li>
+                <li>• Check "Review" to mark questions for later</li>
+              </ul>
+              <Button onClick={() => setShowHelp(false)} className="mt-4 w-full">OK</Button>
             </div>
           </Card>
         </div>
