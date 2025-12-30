@@ -420,7 +420,7 @@ export default function GeneralTask2Practice() {
                 {evaluation && (
                   <Card className="p-5 border-2 border-green-200 bg-green-50/30">
                     <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                      <Target className="w-5 h-5 text-green-600" /> Değerlendirme Sonucu
+                      <Target className="w-5 h-5 text-green-600" /> Evaluation Results
                     </h3>
                     
                     {/* Overall Band */}
