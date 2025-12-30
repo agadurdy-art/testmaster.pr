@@ -45,6 +45,20 @@ try:
 except ImportError:
     GENERAL_SET_B = None
 
+# Import Set C content
+try:
+    from content.full_tests.academic.set_c import ACADEMIC_SET_C
+    from content.full_tests.academic.set_c_reading import ACADEMIC_SET_C_READING
+except ImportError:
+    ACADEMIC_SET_C = None
+    ACADEMIC_SET_C_READING = None
+
+try:
+    from content.full_tests.general.set_c import GENERAL_SET_C
+except ImportError:
+    GENERAL_SET_C = None
+    GENERAL_SET_B = None
+
 AUDIO_BASE_PATH = Path("/app/backend/static/audio/full_tests")
 
 
