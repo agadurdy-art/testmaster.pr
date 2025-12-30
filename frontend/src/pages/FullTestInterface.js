@@ -76,7 +76,7 @@ export default function FullTestInterface({ user }) {
   const [listeningPart, setListeningPart] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [audioPlaying, setAudioPlaying] = useState(false);
-  const [audioEnded, setAudioEnded] = useState(false);
+  const [audioEndedParts, setAudioEndedParts] = useState({}); // Track per-part audio status
   const audioRef = useRef(null);
 
   // Reading specific
