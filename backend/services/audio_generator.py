@@ -403,18 +403,24 @@ class AudioGeneratorService:
             # Part 1 & 3: Generate audio for each question
             if part_num in [1, 3]:
                 for q in part.get("questions", []):
+                    # Handle both "text" and "question" keys
+                    question_text = q.get("text") or q.get("question", "")
+                    question_id = q.get("id", f"q{part_num}")
+                    
                     result = await self.generate_speaking_question_audio(
                         test_id=test_id,
                         part_number=part_num,
-                        question_id=q["id"],
-                        question_text=q["text"]
+                        question_id=question_id,
+                        question_text=question_text
                     )
                     part_results.append(result)
             
             # Part 2: Generate cue card reading + follow-up
             elif part_num == 2:
                 cue_card = part.get("cue_card", {})
-                cue_text = f"{cue_card.get('topic', '')} {'. '.join(cue_card.get('points', []))}"
+                topic = cue_card.get("topic", "")
+                bullet_points = cue_card.get("bullet_points") or cue_card.get("points", [])
+                cue_text = f"{topic}. {'. '.join(bullet_points)}"
                 
                 result = await self.generate_speaking_question_audio(
                     test_id=test_id,
@@ -424,12 +430,17 @@ class AudioGeneratorService:
                 )
                 part_results.append(result)
                 
-                if part.get("follow_up"):
+                # Handle follow_up as list or string
+                follow_ups = part.get("follow_up", [])
+                if isinstance(follow_ups, str):
+                    follow_ups = [follow_ups]
+                
+                for i, fu in enumerate(follow_ups):
                     result = await self.generate_speaking_question_audio(
                         test_id=test_id,
                         part_number=part_num,
-                        question_id="follow_up",
-                        question_text=part["follow_up"]
+                        question_id=f"follow_up_{i+1}",
+                        question_text=fu
                     )
                     part_results.append(result)
             
