@@ -45,6 +45,26 @@ export default function FullTestMode({ user }) {
     loadTestSets();
   }, []);
 
+  // Auto-select test if coming from Question Bank with autoSelect parameter
+  useEffect(() => {
+    const autoSelectId = searchParams.get('autoSelect');
+    if (autoSelectId && !loading) {
+      // Find the test in either academic or general sets
+      const academicTest = testSets.academic.find(t => t.test_id === autoSelectId);
+      const generalTest = testSets.general.find(t => t.test_id === autoSelectId);
+      
+      if (academicTest) {
+        setSelectedType('academic');
+        setSelectedTest(academicTest);
+        setShowInstructions(true);
+      } else if (generalTest) {
+        setSelectedType('general');
+        setSelectedTest(generalTest);
+        setShowInstructions(true);
+      }
+    }
+  }, [searchParams, testSets, loading]);
+
   const loadTestSets = async () => {
     try {
       const res = await fetch(`${API_URL}/api/full-test/sets`);
