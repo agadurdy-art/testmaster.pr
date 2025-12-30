@@ -572,50 +572,6 @@ export default function FullTestInterface({ user }) {
       </div>
     );
   };
-              style={{ display: 'none' }}
-            />
-          </div>
-
-          {/* Questions Section */}
-          <div className="bg-slate-50 p-6 rounded-lg">
-            <h3 className="font-bold text-lg text-slate-900 mb-2">
-              Questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}
-            </h3>
-            <p className="text-sm text-slate-600 mb-4">
-              Complete the notes. Write <strong>ONE WORD ONLY</strong> in each gap.
-            </p>
-            
-            <div className="bg-white p-4 rounded border">
-              <h4 className="font-semibold text-slate-800 mb-4">{currentPartData?.title}</h4>
-              
-              {/* Inline form completion style like real IELTS */}
-              <div className="space-y-3">
-                {currentPartData?.questions?.map((q, idx) => {
-                  const qNum = (listeningPart - 1) * 10 + idx + 1;
-                  return (
-                    <div key={q.id} className="flex items-start gap-2 text-slate-700">
-                      <span className="text-slate-500">•</span>
-                      <div className="flex-1">
-                        <span>{q.question?.split('______')[0]}</span>
-                        <input
-                          type="text"
-                          value={sectionAnswers.listening[q.id] || ''}
-                          onChange={(e) => updateAnswer('listening', q.id, e.target.value)}
-                          className="mx-1 px-2 py-1 w-32 border-2 border-blue-300 rounded text-center font-medium bg-blue-50 focus:border-blue-500 focus:outline-none"
-                          placeholder={String(qNum)}
-                        />
-                        <span>{q.question?.split('______')[1]}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   // ============ RENDER READING SECTION (IELTS STYLE - SPLIT SCREEN) ============
   const renderReadingSection = () => {
