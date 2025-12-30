@@ -783,6 +783,82 @@ export default function FullTestInterface({ user }) {
     const writing = testData?.sections?.writing;
     const task = writing?.tasks?.[writingTask - 1];
     
+    // Render bar chart for Task 1
+    const renderBarChart = (visualData) => {
+      if (!visualData || visualData.type !== 'bar_chart') return null;
+      
+      const { categories, data, title } = visualData;
+      const colors = ['#3B82F6', '#10B981', '#F59E0B']; // Blue, Green, Amber
+      const maxValue = 100;
+      
+      return (
+        <div className="mt-4 p-4 bg-white border rounded-lg">
+          <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>
+          
+          {/* Legend */}
+          <div className="flex justify-center gap-6 mb-4">
+            {data.map((item, idx) => (
+              <div key={item.sector} className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded" style={{ backgroundColor: colors[idx] }}></div>
+                <span className="text-sm text-slate-600">{item.sector}</span>
+              </div>
+            ))}
+          </div>
+          
+          {/* Chart */}
+          <div className="space-y-3">
+            {categories.map((category, catIdx) => (
+              <div key={category} className="flex items-center gap-3">
+                <div className="w-28 text-sm text-slate-600 text-right">{category}</div>
+                <div className="flex-1 flex gap-1">
+                  {data.map((item, idx) => (
+                    <div 
+                      key={item.sector}
+                      className="h-6 rounded transition-all"
+                      style={{ 
+                        width: `${item.values[catIdx]}%`,
+                        backgroundColor: colors[idx],
+                        minWidth: item.values[catIdx] > 0 ? '20px' : '0'
+                      }}
+                      title={`${item.sector}: ${item.values[catIdx]}%`}
+                    >
+                      {item.values[catIdx] > 10 && (
+                        <span className="text-xs text-white px-1">{item.values[catIdx]}%</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Data Table */}
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-100">
+                  <th className="border p-2 text-left">Region</th>
+                  {data.map(item => (
+                    <th key={item.sector} className="border p-2 text-center">{item.sector}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {categories.map((category, idx) => (
+                  <tr key={category}>
+                    <td className="border p-2 font-medium">{category}</td>
+                    {data.map(item => (
+                      <td key={item.sector} className="border p-2 text-center">{item.values[idx]}%</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    };
+    
     return (
       <div className="space-y-6">
         {/* Task Tabs */}
@@ -803,7 +879,7 @@ export default function FullTestInterface({ user }) {
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Task Prompt */}
-          <Card className="p-6">
+          <Card className="p-6 max-h-[calc(100vh-280px)] overflow-y-auto">
             <h3 className="font-bold text-lg text-slate-900 mb-4">
               Task {writingTask}
             </h3>
@@ -811,12 +887,7 @@ export default function FullTestInterface({ user }) {
               <p className="text-slate-700 whitespace-pre-wrap">{task?.prompt}</p>
             </div>
             
-            {task?.visual_data && (
-              <div className="mt-4 p-4 bg-slate-50 rounded">
-                <p className="text-sm text-slate-600 mb-2">Visual: {task.visual_data.title}</p>
-                {/* Render visual based on type */}
-              </div>
-            )}
+            {task?.visual_data && renderBarChart(task.visual_data)}
             
             <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-blue-700">
               <strong>Word limit:</strong> Minimum {task?.word_limit?.min} words, 
