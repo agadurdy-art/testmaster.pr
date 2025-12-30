@@ -97,8 +97,8 @@ export default function FullTestResults() {
       <header className="bg-white border-b border-slate-200">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/full-test')}>
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back to Tests
+            <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
+              <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
             </Button>
           </div>
           <Badge variant="outline">Test Results</Badge>
