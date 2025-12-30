@@ -24,46 +24,56 @@ from elevenlabs import ElevenLabs, VoiceSettings
 
 logger = logging.getLogger(__name__)
 
-# ElevenLabs Voice IDs (Pre-selected for IELTS exam realism)
-# Using professional, neutral voices - no overly enthusiastic tones
+# ElevenLabs Voice Profiles with MAXIMUM DIFFERENTIATION
+# Following IELTS Audio Generation Pipeline - Each speaker MUST be clearly distinct
 VOICE_PROFILES = {
-    # British voices for Academic tests
-    "british_male_professional": {
-        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George - British, warm storyteller
-        "name": "George",
-        "accent": "British",
-        "settings": VoiceSettings(stability=0.75, similarity_boost=0.75, style=0.0, use_speaker_boost=True)
-    },
+    # Female Professional (40s, warm, slower pace)
     "british_female_professional": {
-        "voice_id": "Xb7hH8MSUJpSbSDYk0k2",  # Alice - British, clear educator
+        "voice_id": "21m00Tcm4TlvDq8ikWAM",  # Rachel - Deep, professional female
         "name": "Alice",
         "accent": "British",
-        "settings": VoiceSettings(stability=0.75, similarity_boost=0.75, style=0.0, use_speaker_boost=True)
+        "age_group": "40s",
+        "settings": VoiceSettings(stability=0.85, similarity_boost=0.65, style=0.0, use_speaker_boost=True)
     },
+    # Male Academic (50s, authoritative, lecture-style)
     "british_male_academic": {
-        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George - British professional
+        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George - British, neutral, authoritative
         "name": "George",
         "accent": "British",
-        "settings": VoiceSettings(stability=0.80, similarity_boost=0.70, style=0.0, use_speaker_boost=True)
+        "age_group": "50s",
+        "settings": VoiceSettings(stability=0.90, similarity_boost=0.60, style=0.0, use_speaker_boost=True)
     },
+    # Female Young (20s, brighter, faster pace)
     "british_female_young": {
-        "voice_id": "EXAVITQu4vr4xnSDxMaL",  # Sarah - mature, reassuring
+        "voice_id": "EXAVITQu4vr4xnSDxMaL",  # Sarah - Younger, warmer
         "name": "Sarah",
         "accent": "British",
-        "settings": VoiceSettings(stability=0.70, similarity_boost=0.75, style=0.1, use_speaker_boost=True)
+        "age_group": "20s",
+        "settings": VoiceSettings(stability=0.65, similarity_boost=0.80, style=0.15, use_speaker_boost=True)
     },
+    # Male Young (20s, energetic, slightly faster)
     "british_male_young": {
-        "voice_id": "IKne3meq5aSn9XLyUdCD",  # Charlie - Australian but young
+        "voice_id": "IKne3meq5aSn9XLyUdCD",  # Charlie - Young male
         "name": "Charlie",
-        "accent": "Australian",
-        "settings": VoiceSettings(stability=0.70, similarity_boost=0.75, style=0.1, use_speaker_boost=True)
+        "accent": "Australian-British",
+        "age_group": "20s",
+        "settings": VoiceSettings(stability=0.60, similarity_boost=0.85, style=0.20, use_speaker_boost=True)
     },
-    # Examiner voice for Speaking section
+    # Male Professional (35s, clear, service-oriented)
+    "british_male_professional": {
+        "voice_id": "pNInz6obpgDQGcFmaJgB",  # Adam - Deep male voice
+        "name": "Adam",
+        "accent": "British",
+        "age_group": "35",
+        "settings": VoiceSettings(stability=0.80, similarity_boost=0.70, style=0.05, use_speaker_boost=True)
+    },
+    # Examiner voice for Speaking section (neutral, clear)
     "examiner": {
-        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George - British, neutral, professional
+        "voice_id": "JBFqnCBsd6RMkjVDRZzb",  # George
         "name": "Examiner",
         "accent": "British",
-        "settings": VoiceSettings(stability=0.85, similarity_boost=0.70, style=0.0, use_speaker_boost=True)
+        "age_group": "40s",
+        "settings": VoiceSettings(stability=0.90, similarity_boost=0.65, style=0.0, use_speaker_boost=True)
     }
 }
 
