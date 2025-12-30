@@ -756,7 +756,8 @@ export default function FullTestInterface({ user }) {
                 </div>
               </div>
             </Card>
-          ))}
+            );
+          })}
         </div>
 
         {/* Passage Navigation */}
