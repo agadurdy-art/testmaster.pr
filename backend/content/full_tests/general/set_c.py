@@ -35,35 +35,86 @@ GENERAL_SET_C = {
                     "context": "A customer asking for directions at a shopping centre information desk",
                     "speakers": ["Staff", "Customer"],
                     "question_types": ["map_labelling", "form_completion"],
+                    
+                    # Visual Map Data - Multi-floor shopping centre
+                    "visual": {
+                        "type": "floor_plan",
+                        "title": "Riverside Shopping Centre - Floor Plans",
+                        "floors": [
+                            {
+                                "level": "Ground Floor",
+                                "elements": [
+                                    {"id": "entrance_main", "label": "Main Entrance", "position": {"x": 50, "y": 90}, "type": "entrance", "given": True},
+                                    {"id": "entrance_south", "label": "South Entrance", "position": {"x": 80, "y": 90}, "type": "entrance", "given": True},
+                                    {"id": "info_desk", "label": "Information Desk (You are here)", "position": {"x": 50, "y": 85}, "type": "desk", "given": True},
+                                    {"id": "fountain", "label": "Fountain", "position": {"x": 50, "y": 60}, "type": "feature", "given": True},
+                                    {"id": "escalator", "label": "Escalator", "position": {"x": 45, "y": 80}, "type": "escalator", "given": True},
+                                    {"id": "A", "label": "?", "position": {"x": 40, "y": 50}, "type": "shop", "given": False},
+                                    {"id": "B", "label": "Bookshop", "position": {"x": 35, "y": 50}, "type": "shop", "given": True},
+                                    {"id": "C", "label": "?", "position": {"x": 45, "y": 50}, "type": "shop", "given": False},
+                                    {"id": "D", "label": "?", "position": {"x": 75, "y": 80}, "type": "shop", "given": False},
+                                    {"id": "E", "label": "Hendersons", "position": {"x": 20, "y": 40}, "type": "department_store", "given": True},
+                                    {"id": "F", "label": "?", "position": {"x": 10, "y": 40}, "type": "desk", "given": False}
+                                ]
+                            },
+                            {
+                                "level": "First Floor",
+                                "elements": [
+                                    {"id": "food_court", "label": "Food Court", "position": {"x": 60, "y": 50}, "type": "area", "given": True},
+                                    {"id": "G", "label": "?", "position": {"x": 30, "y": 50}, "type": "shop", "given": False},
+                                    {"id": "H", "label": "Travel Agent", "position": {"x": 70, "y": 30}, "type": "shop", "given": True},
+                                    {"id": "I", "label": "?", "position": {"x": 75, "y": 30}, "type": "cafe", "given": False}
+                                ]
+                            },
+                            {
+                                "level": "Second Floor",
+                                "elements": [
+                                    {"id": "lift", "label": "Lift", "position": {"x": 90, "y": 50}, "type": "lift", "given": True},
+                                    {"id": "J", "label": "?", "position": {"x": 85, "y": 45}, "type": "area", "given": False},
+                                    {"id": "K", "label": "Café", "position": {"x": 80, "y": 45}, "type": "cafe", "given": True}
+                                ]
+                            }
+                        ],
+                        "answer_key": {
+                            "A": "MediCare Plus (Pharmacy)",
+                            "C": "Optician",
+                            "D": "Costa Coffee",
+                            "F": "Customer Services",
+                            "G": "TechFix",
+                            "I": "Bean & Brew",
+                            "J": "Play Zone"
+                        }
+                    },
+                    
                     "audio_script": """
 Staff: Good morning, welcome to Riverside Shopping Centre. How can I help you?
 Customer: Hi, I'm new to the area and this place is huge. Could you help me find a few shops?
 Staff: Of course. Let me give you a map. You're currently here at the Information Desk, which is right by the main entrance on the ground floor.
 Customer: Great. First, I need to find a pharmacy.
-Staff: The pharmacy is called MediCare Plus. If you're facing into the centre from where we are, go straight ahead past the fountain. It's on your left, between the bookshop and the optician.
+Staff: The pharmacy is called MediCare Plus, that's marked as letter A on your map. If you're facing into the centre from where we are, go straight ahead past the fountain. It's on your left, between the bookshop and the optician which is letter C.
 Customer: Got it. What about a phone repair shop?
-Staff: TechFix is on the first floor. Take the escalator up - it's right behind you - and turn left. TechFix is the third shop along, opposite the food court.
+Staff: TechFix is letter G on the first floor. Take the escalator up - it's right behind you - and turn left. TechFix is the third shop along, opposite the food court.
 Customer: Perfect. I also need to find the children's play area. I'm bringing my kids here tomorrow.
-Staff: The play zone is on the second floor, in the east wing. Take the lift at the far end of the building and it's immediately on your right when you exit.
+Staff: The play zone is letter J on the second floor, in the east wing. Take the lift at the far end of the building and it's immediately on your right when you exit.
 Customer: Is there a charge for that?
 Staff: It's free for children under eight, and five pounds for older children. Parents can wait in the café next door.
 Customer: Speaking of cafés, where can I get a good coffee?
-Staff: There's a Costa on the ground floor, near the south entrance. Or if you prefer independent places, there's a lovely café called Bean & Brew on the first floor, next to the travel agent.
+Staff: There's a Costa, letter D on the ground floor, near the south entrance. Or if you prefer independent places, there's a lovely café called Bean & Brew, that's letter I on the first floor, next to the travel agent.
 Customer: One more thing - where's the customer service desk? I need to return something.
-Staff: Customer Services is on the ground floor, but it's at the opposite end from here, past the department store. Look for the big Hendersons sign and it's just beyond that.
+Staff: Customer Services is letter F on the ground floor, but it's at the opposite end from here, past the department store. Look for the big Hendersons sign and it's just beyond that.
 Customer: What time does it close?
 Staff: Six thirty on weekdays, eight on Saturdays, and five on Sundays. We're open now until nine, but some services close earlier.
                     """,
                     "questions": [
-                        {"id": "L1Q1", "type": "map_labelling", "question": "MediCare Plus pharmacy location: past the ______ on the left", "answer": "fountain"},
-                        {"id": "L1Q2", "type": "map_labelling", "question": "Pharmacy is between the bookshop and the ______", "answer": "optician"},
+                        {"id": "L1Q1", "type": "map_labelling", "question": "Write the correct letter: MediCare Plus pharmacy", "answer": "A"},
+                        {"id": "L1Q2", "type": "map_labelling", "question": "Write the correct letter: Optician", "answer": "C"},
                         {"id": "L1Q3", "type": "map_labelling", "question": "TechFix floor: ______ floor", "answer": "first/1st"},
-                        {"id": "L1Q4", "type": "map_labelling", "question": "TechFix position: opposite the ______", "answer": "food court"},
-                        {"id": "L1Q5", "type": "map_labelling", "question": "Play zone floor: ______ floor", "answer": "second/2nd"},
+                        {"id": "L1Q4", "type": "map_labelling", "question": "Write the correct letter: TechFix", "answer": "G"},
+                        {"id": "L1Q5", "type": "map_labelling", "question": "Write the correct letter: Play Zone", "answer": "J"},
                         {"id": "L1Q6", "type": "form_completion", "question": "Play zone cost for older children: £______", "answer": "5/five"},
-                        {"id": "L1Q7", "type": "map_labelling", "question": "Costa Coffee near the ______ entrance", "answer": "south"},
-                        {"id": "L1Q8", "type": "map_labelling", "question": "Bean & Brew is next to the ______", "answer": "travel agent"},
-                        {"id": "L1Q9", "type": "map_labelling", "question": "Customer Services is past ______ (store name)", "answer": "Hendersons"},
+                        {"id": "L1Q7", "type": "map_labelling", "question": "Write the correct letter: Costa Coffee", "answer": "D"},
+                        {"id": "L1Q8", "type": "map_labelling", "question": "Write the correct letter: Bean & Brew café", "answer": "I"},
+                        {"id": "L1Q9", "type": "map_labelling", "question": "Write the correct letter: Customer Services", "answer": "F"},
                         {"id": "L1Q10", "type": "form_completion", "question": "Customer Services Sunday closing time: ______ PM", "answer": "5/five"}
                     ]
                 },
