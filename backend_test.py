@@ -1616,6 +1616,8 @@ def test_general_training_full_test_set_a():
                         
                         # Check word limit
                         word_limit = task1.get("word_limit", 0)
+                        if isinstance(word_limit, dict):
+                            word_limit = word_limit.get("minimum", 0)
                         if word_limit >= 150:
                             print(f"✅ Task 1 word limit: {word_limit}+ words")
                         else:
@@ -1629,6 +1631,8 @@ def test_general_training_full_test_set_a():
                         
                         # Check word limit
                         word_limit = task2.get("word_limit", 0)
+                        if isinstance(word_limit, dict):
+                            word_limit = word_limit.get("minimum", 0)
                         if word_limit >= 250:
                             print(f"✅ Task 2 word limit: {word_limit}+ words")
                             success_count += 1
