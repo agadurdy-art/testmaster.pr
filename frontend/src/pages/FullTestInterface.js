@@ -795,7 +795,7 @@ export default function FullTestInterface({ user }) {
           {(speakingPart === 1 || speakingPart === 3) && (
             <Card className="p-8 text-center bg-slate-50">
               <Headphones className="w-16 h-16 mx-auto text-blue-500 mb-4" />
-              <p className="text-lg text-slate-700 mb-2">Listen to the examiner's question</p>
+              <p className="text-lg text-slate-700 mb-2">Listen to the examiner&apos;s question</p>
               <p className="text-sm text-slate-500 mb-6">
                 Question {speakingQuestion + 1} of {currentPartData?.questions?.length}
               </p>
@@ -1013,7 +1013,7 @@ export default function FullTestInterface({ user }) {
           {/* Warning Message */}
           <div className="flex items-center justify-center gap-2 text-blue-600 mb-6">
             <AlertCircle className="w-5 h-5" />
-            <span>Do not click 'Start test' until you are told to do so.</span>
+            <span>Do not click &apos;Start test&apos; until you are told to do so.</span>
           </div>
           
           {/* Start Button */}
@@ -1368,7 +1368,7 @@ export default function FullTestInterface({ user }) {
                   {/* Example Question Display */}
                   <div className="border border-slate-300 rounded-lg overflow-hidden mb-4">
                     <div className="bg-blue-500 text-white px-4 py-2 font-medium">
-                      1 &nbsp; Marie Curie's husband was a joint winner of both Marie's Nobel Prizes.
+                      1 &nbsp; Marie Curie&apos;s husband was a joint winner of both Marie&apos;s Nobel Prizes.
                     </div>
                     <div className="p-4 space-y-2">
                       <label className="flex items-center gap-2 cursor-pointer">
@@ -1388,7 +1388,7 @@ export default function FullTestInterface({ user }) {
                       2 &nbsp; Marie became interested in science when she was a child.
                     </div>
                     <div className="px-4 py-2 bg-slate-50 border-t text-slate-600">
-                      3 &nbsp; Marie's family in Poland had financial problems.
+                      3 &nbsp; Marie&apos;s family in Poland had financial problems.
                     </div>
                   </div>
                   
