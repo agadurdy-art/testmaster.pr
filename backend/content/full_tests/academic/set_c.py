@@ -237,6 +237,38 @@ The future of writing remains open. Voice recognition and artificial intelligenc
                     "time_recommended": 20,
                     "word_minimum": 150,
                     "prompt": "The bar chart shows the percentage of people who cycled to work in five European cities in 2010 and 2020. The table shows the average distance cycled per person per week in the same cities.",
+                    # Structured Chart Data for Frontend Rendering
+                    "visual_data": {
+                        "type": "combined",
+                        "charts": [
+                            {
+                                "chart_type": "bar",
+                                "title": "Percentage of People Cycling to Work",
+                                "x_axis": "City",
+                                "y_axis": "Percentage (%)",
+                                "legend": ["2010", "2020"],
+                                "data": [
+                                    {"city": "Amsterdam", "2010": 35, "2020": 48},
+                                    {"city": "Copenhagen", "2010": 30, "2020": 42},
+                                    {"city": "Berlin", "2010": 12, "2020": 19},
+                                    {"city": "Paris", "2010": 5, "2020": 14},
+                                    {"city": "London", "2010": 3, "2020": 8}
+                                ]
+                            },
+                            {
+                                "chart_type": "table",
+                                "title": "Average Distance Cycled (km/person/week)",
+                                "headers": ["City", "2010", "2020"],
+                                "data": [
+                                    ["Amsterdam", 22, 28],
+                                    ["Copenhagen", 18, 24],
+                                    ["Berlin", 8, 12],
+                                    ["Paris", 3, 7],
+                                    ["London", 2, 5]
+                                ]
+                            }
+                        ]
+                    },
                     "visual_description": """
 BAR CHART - Cycling to Work (%)
                     2010    2020
