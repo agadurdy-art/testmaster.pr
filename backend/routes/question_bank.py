@@ -180,6 +180,70 @@ async def get_question_bank_stats(db=None):
 
 # ============ PRACTICE MODE ENDPOINTS ============
 
+def get_questions_from_full_test(skill: str, count: int = 10):
+    """Extract questions from Full Test content for practice mode."""
+    import random
+    from content.full_tests.academic.set_a import ACADEMIC_SET_A
+    
+    questions = []
+    
+    if skill == "listening":
+        for part in ACADEMIC_SET_A["sections"]["listening"]["parts"]:
+            for q in part["questions"]:
+                questions.append({
+                    "id": q["id"],
+                    "type": q["type"],
+                    "question": q["question"],
+                    "instruction": q.get("instruction", ""),
+                    "part": part["part_number"],
+                    "context": part["title"],
+                    "skill": "listening",
+                    "source": "academic_set_a"
+                })
+    
+    elif skill == "reading":
+        for passage in ACADEMIC_SET_A["sections"]["reading"]["passages"]:
+            for q in passage["questions"]:
+                questions.append({
+                    "id": q["id"],
+                    "type": q["type"],
+                    "question": q["question"],
+                    "options": q.get("options", []),
+                    "passage_number": passage["passage_number"],
+                    "passage_title": passage["title"],
+                    "skill": "reading",
+                    "source": "academic_set_a"
+                })
+    
+    elif skill == "writing":
+        for task in ACADEMIC_SET_A["sections"]["writing"]["tasks"]:
+            questions.append({
+                "id": f"W{task['task_number']}",
+                "type": task["type"],
+                "prompt": task["prompt"],
+                "word_limit": task["word_limit"],
+                "task_number": task["task_number"],
+                "skill": "writing",
+                "source": "academic_set_a"
+            })
+    
+    elif skill == "speaking":
+        for part in ACADEMIC_SET_A["sections"]["speaking"]["parts"]:
+            for q in part["questions"]:
+                questions.append({
+                    "id": q["id"],
+                    "question": q["question"],
+                    "follow_ups": q.get("follow_ups", []),
+                    "part": part["part_number"],
+                    "skill": "speaking",
+                    "source": "academic_set_a"
+                })
+    
+    # Shuffle and limit
+    random.shuffle(questions)
+    return questions[:count]
+
+
 @router.get("/practice/random")
 async def get_random_practice(
     skill: str = Query(..., description="Skill to practice"),
@@ -189,17 +253,32 @@ async def get_random_practice(
     count: int = Query(10, ge=1, le=50, description="Number of questions")
 ):
     """Get random practice questions based on filters."""
-    # TODO: Implement actual question retrieval
-    return {
-        "skill": skill,
-        "filters": {
-            "topic": topic,
-            "band_level": band_level,
-            "question_type": question_type
-        },
-        "count": count,
-        "questions": []  # Will be populated from DB
-    }
+    try:
+        questions = get_questions_from_full_test(skill, count)
+        
+        # Filter by question type if specified
+        if question_type:
+            questions = [q for q in questions if q.get("type") == question_type]
+        
+        return {
+            "success": True,
+            "skill": skill,
+            "filters": {
+                "topic": topic,
+                "band_level": band_level,
+                "question_type": question_type
+            },
+            "count": len(questions),
+            "questions": questions,
+            "source": "full_test_academic_set_a"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "questions": []
+        }
+
 
 @router.get("/practice/timed")
 async def get_timed_practice(
@@ -215,25 +294,49 @@ async def get_timed_practice(
         "speaking": 15
     }
     
+    # Get appropriate number of questions based on duration
+    question_counts = {
+        "reading": 40,
+        "listening": 40,
+        "writing": 2,
+        "speaking": 15
+    }
+    
+    questions = get_questions_from_full_test(skill, question_counts.get(skill, 10))
+    
     return {
+        "success": True,
         "skill": skill,
         "duration": duration,
         "recommended_duration": timings.get(skill, 30),
-        "questions": [],  # Will be populated from DB
-        "is_timed": True
+        "questions": questions,
+        "question_count": len(questions),
+        "is_timed": True,
+        "source": "full_test_academic_set_a"
     }
+
 
 @router.get("/practice/smart")
 async def get_smart_practice(
     user_id: str = Query(..., description="User ID for personalization")
 ):
     """Get AI-recommended practice based on user's weak areas."""
-    # TODO: Implement smart practice logic
+    # For now, return a balanced mix of questions from all skills
+    recommendations = []
+    
+    for skill in ["listening", "reading", "writing", "speaking"]:
+        questions = get_questions_from_full_test(skill, 5)
+        for q in questions:
+            q["recommended_reason"] = f"Practice your {skill} skills"
+        recommendations.extend(questions)
+    
     return {
+        "success": True,
         "user_id": user_id,
-        "recommendations": [],
-        "weak_areas": [],
-        "suggested_focus": None
+        "recommendations": recommendations,
+        "weak_areas": ["listening", "writing"],  # Placeholder - would be from user data
+        "suggested_focus": "Focus on listening comprehension and writing task achievement",
+        "source": "full_test_academic_set_a"
     }
 
 # ============ FULL TEST ENDPOINTS ============
