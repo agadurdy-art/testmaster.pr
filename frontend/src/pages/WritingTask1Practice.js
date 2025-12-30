@@ -295,7 +295,7 @@ export default function WritingTask1Practice() {
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                 onClick={() => setIsTimerRunning(!isTimerRunning)}
               >
-                {isTimerRunning ? 'Durdur' : 'Başlat'}
+                {isTimerRunning ? 'Pause' : 'Start'}
               </Button>
             </div>
           </div>
@@ -313,7 +313,7 @@ export default function WritingTask1Practice() {
                 : 'text-gray-500 hover:bg-gray-50'
             }`}
           >
-            <Eye className="w-4 h-4" /> Görseli Gör
+            <Eye className="w-4 h-4" /> View Visual
           </button>
           <button
             onClick={() => setMobileView('write')}
@@ -323,7 +323,7 @@ export default function WritingTask1Practice() {
                 : 'text-gray-500 hover:bg-gray-50'
             }`}
           >
-            <PenTool className="w-4 h-4" /> Cevap Yaz
+            <PenTool className="w-4 h-4" /> Write Answer
           </button>
         </div>
       </div>
@@ -339,7 +339,7 @@ export default function WritingTask1Practice() {
             <div className="p-4 md:p-6 space-y-4">
               {/* Visual Type Selector */}
               <div className="bg-white rounded-xl p-4 shadow-sm border">
-                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Görsel Tipi</h3>
+                <h3 className="font-semibold text-gray-900 mb-3 text-sm">Visual Type</h3>
                 <div className="flex flex-wrap gap-2">
                   {visualTypes.map(type => {
                     const Icon = type.icon;
