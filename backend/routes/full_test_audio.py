@@ -132,12 +132,18 @@ async def generate_listening_audio(
     if not audio_generator:
         raise HTTPException(status_code=503, detail="Audio generator service not available")
     
-    if test_id != "academic_set_a_01" or not ACADEMIC_SET_A:
-        raise HTTPException(status_code=404, detail="Test not found")
+    # Get the appropriate test data
+    test_data = None
+    test_type = "academic"
     
-    # Merge test data
-    test_data = ACADEMIC_SET_A.copy()
-    test_data["sections"]["reading"] = ACADEMIC_SET_A_READING
+    if test_id == "academic_set_a_01" and ACADEMIC_SET_A:
+        test_data = ACADEMIC_SET_A.copy()
+        test_data["sections"]["reading"] = ACADEMIC_SET_A_READING
+    elif test_id == "general_set_a_01" and GENERAL_SET_A:
+        test_data = GENERAL_SET_A.copy()
+        test_type = "general"
+    else:
+        raise HTTPException(status_code=404, detail="Test not found")
     
     if part:
         # Generate specific part
@@ -152,7 +158,8 @@ async def generate_listening_audio(
             part_number=part,
             audio_script=target_part.get("audio_script", ""),
             speakers=target_part.get("speakers", ["Narrator"]),
-            context=target_part.get("context", "")
+            context=target_part.get("context", ""),
+            test_type=test_type
         )
         
         return {
@@ -162,7 +169,8 @@ async def generate_listening_audio(
             "result": result
         }
     else:
-        # Generate all parts
+        # Generate all parts - add test_type to test_data
+        test_data["test_type"] = test_type
         results = await audio_generator.generate_all_listening_audio(test_data)
         
         return {
