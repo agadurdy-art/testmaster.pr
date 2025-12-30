@@ -6020,17 +6020,54 @@ def test_full_test_mode():
         return False
 
 if __name__ == "__main__":
-    print("🚀 Starting Backend API Testing for IELTS Full Test Mode")
-    print("="*80)
+    print("🚀 Starting IELTS Ace Backend API Tests - SET B CONTENT VERIFICATION")
+    print("=" * 80)
     
-    # Test Full Test Mode APIs (CURRENT REVIEW REQUEST)
-    full_test_api_success = test_full_test_mode_apis()
+    # Test authentication first
+    user_id = test_authentication()
+    if not user_id:
+        print("❌ Authentication failed - stopping tests")
+        exit(1)
     
-    # Summary
-    print(f"\n{'='*80}")
-    print(f"🎯 FINAL RESULT:")
-    print(f"   Full Test Mode APIs (CURRENT REVIEW): {'✅ PASSED' if full_test_api_success else '❌ FAILED'}")
-    print(f"   Overall: {'✅ ALL TESTS PASSED' if full_test_api_success else '❌ SOME TESTS FAILED'}")
-    print(f"{'='*80}")
+    # Run Set B specific tests as per review request
+    all_passed = True
     
-    exit(0 if full_test_api_success else 1)
+    # Test 1: Set B Full Test Mode Content
+    set_b_passed = test_set_b_full_test_mode()
+    all_passed = all_passed and set_b_passed
+    
+    # Test 2: Question Bank Stats with Set B
+    qb_stats_passed = test_question_bank_stats_with_set_b()
+    all_passed = all_passed and qb_stats_passed
+    
+    # Test 3: Question Bank Full Test Endpoints (updated for Set B)
+    qb_full_test_passed = test_question_bank_full_test_endpoints()
+    all_passed = all_passed and qb_full_test_passed
+    
+    # Test 4: Question Bank Practice Endpoints
+    qb_practice_passed = test_question_bank_practice_endpoints()
+    all_passed = all_passed and qb_practice_passed
+    
+    # Test 5: Full Test Mode APIs (existing tests)
+    full_test_passed = test_full_test_mode_apis()
+    all_passed = all_passed and full_test_passed
+    
+    # Final summary
+    print("\n" + "=" * 80)
+    print("🏁 FINAL TEST SUMMARY - SET B CONTENT VERIFICATION")
+    print("=" * 80)
+    
+    if all_passed:
+        print("✅ ALL SET B TESTS PASSED! Backend Set B content is working correctly.")
+    else:
+        print("❌ SOME SET B TESTS FAILED! Check the output above for details.")
+    
+    print(f"Set B Full Test Mode Content: {'✅' if set_b_passed else '❌'}")
+    print(f"Question Bank Stats (Set B): {'✅' if qb_stats_passed else '❌'}")
+    print(f"Question Bank Full Test Endpoints: {'✅' if qb_full_test_passed else '❌'}")
+    print(f"Question Bank Practice Endpoints: {'✅' if qb_practice_passed else '❌'}")
+    print(f"Full Test Mode APIs: {'✅' if full_test_passed else '❌'}")
+    
+    print("\n🎯 Set B content testing complete!")
+    
+    exit(0 if all_passed else 1)
