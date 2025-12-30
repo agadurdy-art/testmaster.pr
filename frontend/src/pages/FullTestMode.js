@@ -96,8 +96,8 @@ export default function FullTestMode({ user }) {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/dashboard')}>
-              <ArrowLeft className="w-4 h-4 mr-2" /> Back
+            <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
+              <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
             </Button>
             <div className="border-l pl-4">
               <h1 className="text-xl font-semibold text-slate-900">IELTS Full Test Mode</h1>
