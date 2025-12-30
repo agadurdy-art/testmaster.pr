@@ -111,7 +111,6 @@ def get_test_by_id(test_id: str) -> Optional[Dict[str, Any]]:
     """Get a specific test by ID."""
     if test_id == "academic_set_a_01":
         test = ACADEMIC_SET_A.copy()
-        # Merge reading content
         test["sections"]["reading"] = ACADEMIC_SET_A_READING
         return test
     elif test_id == "academic_set_b_01":
@@ -119,10 +118,17 @@ def get_test_by_id(test_id: str) -> Optional[Dict[str, Any]]:
             test = ACADEMIC_SET_B.copy()
             test["sections"]["reading"] = ACADEMIC_SET_B_READING
             return test
+    elif test_id == "academic_set_c_01":
+        if ACADEMIC_SET_C and ACADEMIC_SET_C_READING:
+            test = ACADEMIC_SET_C.copy()
+            test["sections"]["reading"] = ACADEMIC_SET_C_READING
+            return test
     elif test_id == "general_set_a_01":
         return GENERAL_SET_A
     elif test_id == "general_set_b_01":
         return GENERAL_SET_B
+    elif test_id == "general_set_c_01":
+        return GENERAL_SET_C
     return None
 
 
