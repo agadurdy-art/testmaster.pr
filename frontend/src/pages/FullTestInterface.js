@@ -7,7 +7,7 @@ import { Textarea } from '../components/ui/textarea';
 import { 
   Clock, AlertCircle, ChevronRight, Volume2, VolumeX,
   Loader2, CheckCircle, Play, Pause, ArrowRight, ArrowLeft, Send, 
-  Mic, MicOff, Square, SkipForward, Eye, EyeOff
+  Mic, MicOff, Square, SkipForward, Eye, EyeOff, Headphones
 } from 'lucide-react';
 import { toast } from 'sonner';
 
