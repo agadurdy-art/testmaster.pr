@@ -812,8 +812,8 @@ def test_authentication():
     print("\n=== Testing Authentication ===")
     
     auth_data = {
-        "email": "test_content@example.com",
-        "password": "testpass123"
+        "email": "test@ielts.com",
+        "password": "admin123"
     }
     
     try:
