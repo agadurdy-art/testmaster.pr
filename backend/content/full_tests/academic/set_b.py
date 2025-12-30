@@ -192,6 +192,20 @@ For your assignment, I'd like you to research one specific marine ecosystem and 
                     "time_recommended": 20,
                     "word_minimum": 150,
                     "prompt": "The graph below shows the percentage of households with internet access in four different countries between 2005 and 2020.",
+                    # Structured Chart Data for Frontend Rendering
+                    "visual_data": {
+                        "type": "line_graph",
+                        "title": "Percentage of Households with Internet Access (2005-2020)",
+                        "x_axis": "Year",
+                        "y_axis": "Percentage (%)",
+                        "x_labels": [2005, 2008, 2011, 2014, 2017, 2020],
+                        "datasets": [
+                            {"country": "Japan", "color": "#e53935", "data": [65, 72, 79, 83, 88, 92]},
+                            {"country": "Germany", "color": "#1e88e5", "data": [58, 68, 75, 81, 86, 89]},
+                            {"country": "Brazil", "color": "#43a047", "data": [21, 32, 42, 53, 62, 71]},
+                            {"country": "Nigeria", "color": "#fb8c00", "data": [4, 10, 18, 26, 34, 42]}
+                        ]
+                    },
                     "visual_description": "Line graph showing internet access trends for Japan, Germany, Brazil, and Nigeria from 2005-2020. Japan starts at 65% and reaches 92%. Germany goes from 58% to 89%. Brazil rises from 21% to 71%. Nigeria grows from 4% to 42%.",
                     "requirements": [
                         "Summarise the information by selecting and reporting the main features",
