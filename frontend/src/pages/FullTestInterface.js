@@ -219,6 +219,13 @@ export default function FullTestInterface({ user }) {
 
   const completeTest = async () => {
     try {
+      // Calculate section times (total time - remaining time for each section)
+      const sectionTimes = {};
+      activeSections.forEach(section => {
+        const totalTime = SECTION_CONFIG[section]?.totalTime || 0;
+        sectionTimes[section] = totalTime; // Default to full time if section was completed
+      });
+      
       const res = await fetch(`${API_URL}/api/full-test/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -226,15 +233,19 @@ export default function FullTestInterface({ user }) {
           session_id: sessionId,
           test_id: testId,
           mode: mode,
-          all_answers: sectionAnswers
+          all_answers: sectionAnswers,
+          section_times: sectionTimes
         })
       });
       const data = await res.json();
       if (data.success) {
         navigate(`/full-test/results/${sessionId}`, { state: { results: data.results } });
+      } else {
+        toast.error('Error completing test. Please try again.');
       }
     } catch (error) {
       console.error('Error completing test:', error);
+      toast.error('Error completing test. Please try again.');
     }
   };
 
