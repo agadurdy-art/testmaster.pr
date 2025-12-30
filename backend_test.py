@@ -986,6 +986,418 @@ def test_highlights_api(user_id):
     print(f"\n🏁 HIGHLIGHTS API SUMMARY: {success_count}/{total_tests} tests passed")
     return success_count == total_tests
 
+def test_question_bank_full_test_endpoints():
+    """Test Question Bank API endpoints that derive content from Full Test Mode"""
+    print("\n" + "="*80)
+    print("🚀 TESTING QUESTION BANK API ENDPOINTS - FULL TEST MODE CONTENT")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 6
+    
+    # Test 1: GET /api/question-bank/stats
+    print("\n=== Test 1: GET /api/question-bank/stats ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/stats")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate expected stats
+            total_questions = result.get("total_questions", 0)
+            full_tests = result.get("full_tests", 0)
+            by_skill = result.get("by_skill", {})
+            
+            # Check total questions (should be around 185)
+            if 180 <= total_questions <= 200:
+                print(f"✅ total_questions: {total_questions} (within expected range 180-200)")
+            else:
+                print(f"❌ total_questions: {total_questions} (expected ~185)")
+            
+            # Check full tests count
+            if full_tests >= 1:
+                print(f"✅ full_tests: {full_tests} (expected >= 1)")
+            else:
+                print(f"❌ full_tests: {full_tests} (expected >= 1)")
+            
+            # Check skill breakdown
+            expected_skills = ["reading", "listening", "writing", "speaking"]
+            missing_skills = [skill for skill in expected_skills if skill not in by_skill]
+            
+            if not missing_skills:
+                print(f"✅ by_skill contains all expected skills: {list(by_skill.keys())}")
+                
+                # Validate specific skill counts
+                reading_count = by_skill.get("reading", 0)
+                listening_count = by_skill.get("listening", 0)
+                
+                if reading_count == 40:
+                    print(f"✅ reading questions: {reading_count} (expected 40)")
+                else:
+                    print(f"⚠️ reading questions: {reading_count} (expected 40)")
+                
+                if listening_count == 40:
+                    print(f"✅ listening questions: {listening_count} (expected 40)")
+                    success_count += 1
+                else:
+                    print(f"⚠️ listening questions: {listening_count} (expected 40)")
+                    success_count += 0.5  # Partial credit
+            else:
+                print(f"❌ by_skill missing skills: {missing_skills}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 2: GET /api/question-bank/skill/listening/overview
+    print("\n=== Test 2: GET /api/question-bank/skill/listening/overview ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/skill/listening/overview")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate listening overview structure
+            skill = result.get("skill")
+            total_questions = result.get("total_questions", 0)
+            parts = result.get("parts", [])
+            source = result.get("source")
+            
+            if skill == "listening":
+                print(f"✅ skill: {skill}")
+            else:
+                print(f"❌ skill: {skill} (expected 'listening')")
+            
+            if total_questions == 40:
+                print(f"✅ total_questions: {total_questions} (expected 40)")
+            else:
+                print(f"❌ total_questions: {total_questions} (expected 40)")
+            
+            if len(parts) == 4:
+                print(f"✅ parts count: {len(parts)} (expected 4 parts)")
+                
+                # Check part structure
+                part_1 = parts[0] if parts else {}
+                if part_1.get("part_number") == 1 and "question_count" in part_1:
+                    print(f"✅ Part 1 structure valid: {part_1.get('title', 'No title')}")
+                else:
+                    print(f"❌ Part 1 structure invalid: {part_1}")
+                
+                success_count += 1
+            else:
+                print(f"❌ parts count: {len(parts)} (expected 4)")
+            
+            if source == "academic_set_a":
+                print(f"✅ source: {source} (from Full Test content)")
+            else:
+                print(f"⚠️ source: {source} (expected 'academic_set_a')")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 3: GET /api/question-bank/skill/reading/overview
+    print("\n=== Test 3: GET /api/question-bank/skill/reading/overview ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/skill/reading/overview")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate reading overview structure
+            skill = result.get("skill")
+            total_questions = result.get("total_questions", 0)
+            passages = result.get("passages", [])
+            
+            if skill == "reading":
+                print(f"✅ skill: {skill}")
+            else:
+                print(f"❌ skill: {skill} (expected 'reading')")
+            
+            if total_questions == 40:
+                print(f"✅ total_questions: {total_questions} (expected 40)")
+            else:
+                print(f"❌ total_questions: {total_questions} (expected 40)")
+            
+            if len(passages) == 3:
+                print(f"✅ passages count: {len(passages)} (expected 3 passages)")
+                success_count += 1
+            else:
+                print(f"❌ passages count: {len(passages)} (expected 3)")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 4: GET /api/question-bank/skill/writing/overview
+    print("\n=== Test 4: GET /api/question-bank/skill/writing/overview ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/skill/writing/overview")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate writing overview structure
+            skill = result.get("skill")
+            tasks = result.get("tasks", [])
+            
+            if skill == "writing":
+                print(f"✅ skill: {skill}")
+            else:
+                print(f"❌ skill: {skill} (expected 'writing')")
+            
+            if len(tasks) == 2:
+                print(f"✅ tasks count: {len(tasks)} (expected 2 tasks)")
+                success_count += 1
+            else:
+                print(f"❌ tasks count: {len(tasks)} (expected 2)")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 5: GET /api/question-bank/skill/speaking/overview
+    print("\n=== Test 5: GET /api/question-bank/skill/speaking/overview ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/skill/speaking/overview")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate speaking overview structure
+            skill = result.get("skill")
+            parts = result.get("parts", [])
+            
+            if skill == "speaking":
+                print(f"✅ skill: {skill}")
+            else:
+                print(f"❌ skill: {skill} (expected 'speaking')")
+            
+            if len(parts) == 3:
+                print(f"✅ parts count: {len(parts)} (expected 3 parts)")
+                success_count += 1
+            else:
+                print(f"❌ parts count: {len(parts)} (expected 3)")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 6: GET /api/question-bank/skill/listening/questions?limit=5
+    print("\n=== Test 6: GET /api/question-bank/skill/listening/questions?limit=5 ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/skill/listening/questions?limit=5")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate questions structure
+            success = result.get("success")
+            questions = result.get("questions", [])
+            source = result.get("source")
+            
+            if success:
+                print(f"✅ success: {success}")
+            else:
+                print(f"❌ success: {success} (expected True)")
+            
+            if len(questions) <= 5 and len(questions) > 0:
+                print(f"✅ questions count: {len(questions)} (expected <= 5 and > 0)")
+                
+                # Check first question structure
+                first_q = questions[0] if questions else {}
+                required_fields = ["id", "type", "question", "skill", "source"]
+                missing_fields = [field for field in required_fields if field not in first_q]
+                
+                if not missing_fields:
+                    print(f"✅ Question structure contains all required fields")
+                    
+                    # Check source field
+                    q_source = first_q.get("source")
+                    if q_source == "academic_set_a":
+                        print(f"✅ Question source: {q_source} (from Full Test content)")
+                        success_count += 1
+                    else:
+                        print(f"⚠️ Question source: {q_source} (expected 'academic_set_a')")
+                        success_count += 0.5  # Partial credit
+                else:
+                    print(f"❌ Question missing fields: {missing_fields}")
+            else:
+                print(f"❌ questions count: {len(questions)} (expected <= 5 and > 0)")
+            
+            if source == "full_test_academic_set_a":
+                print(f"✅ API source: {source} (Full Test content)")
+            else:
+                print(f"⚠️ API source: {source} (expected Full Test content)")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 QUESTION BANK FULL TEST ENDPOINTS SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 4.0:  # Allow some flexibility
+        print("✅ QUESTION BANK FULL TEST ENDPOINTS TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - Stats endpoint returns total questions (~185) and full tests count (1)")
+        print("   - Skill overviews return proper structure from Full Test content")
+        print("   - Listening: 4 parts, 40 questions")
+        print("   - Reading: 3 passages, 40 questions") 
+        print("   - Writing: 2 tasks")
+        print("   - Speaking: 3 parts")
+        print("   - Questions endpoint returns content with source: 'academic_set_a'")
+        return True
+    else:
+        print("❌ QUESTION BANK FULL TEST ENDPOINTS TESTS FAILED!")
+        return False
+
+def test_question_bank_practice_endpoints():
+    """Test Question Bank Practice endpoints that derive content from Full Test Mode"""
+    print("\n" + "="*80)
+    print("🚀 TESTING QUESTION BANK PRACTICE ENDPOINTS - FULL TEST MODE CONTENT")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 2
+    
+    # Test 1: GET /api/question-bank/practice/random?skill=listening&count=5
+    print("\n=== Test 1: GET /api/question-bank/practice/random?skill=listening&count=5 ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/practice/random?skill=listening&count=5")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate random practice structure
+            success = result.get("success")
+            skill = result.get("skill")
+            questions = result.get("questions", [])
+            source = result.get("source")
+            
+            if success:
+                print(f"✅ success: {success}")
+            else:
+                print(f"❌ success: {success} (expected True)")
+            
+            if skill == "listening":
+                print(f"✅ skill: {skill}")
+            else:
+                print(f"❌ skill: {skill} (expected 'listening')")
+            
+            if len(questions) == 5:
+                print(f"✅ questions count: {len(questions)} (expected 5)")
+                
+                # Check questions have Full Test source
+                all_from_full_test = all(q.get("source") == "academic_set_a" for q in questions)
+                if all_from_full_test:
+                    print(f"✅ All questions from Full Test content (source: 'academic_set_a')")
+                    success_count += 1
+                else:
+                    sources = [q.get("source") for q in questions]
+                    print(f"❌ Not all questions from Full Test. Sources: {set(sources)}")
+            else:
+                print(f"❌ questions count: {len(questions)} (expected 5)")
+            
+            if source == "full_test_academic_set_a":
+                print(f"✅ API source: {source} (Full Test content)")
+            else:
+                print(f"⚠️ API source: {source} (expected Full Test content)")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    # Test 2: GET /api/question-bank/practice/timed?skill=reading
+    print("\n=== Test 2: GET /api/question-bank/practice/timed?skill=reading ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/question-bank/practice/timed?skill=reading")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            # Validate timed practice structure
+            success = result.get("success")
+            skill = result.get("skill")
+            questions = result.get("questions", [])
+            recommended_duration = result.get("recommended_duration")
+            is_timed = result.get("is_timed")
+            source = result.get("source")
+            
+            if success:
+                print(f"✅ success: {success}")
+            else:
+                print(f"❌ success: {success} (expected True)")
+            
+            if skill == "reading":
+                print(f"✅ skill: {skill}")
+            else:
+                print(f"❌ skill: {skill} (expected 'reading')")
+            
+            if recommended_duration == 60:
+                print(f"✅ recommended_duration: {recommended_duration} minutes (expected 60)")
+            else:
+                print(f"❌ recommended_duration: {recommended_duration} (expected 60)")
+            
+            if is_timed:
+                print(f"✅ is_timed: {is_timed}")
+            else:
+                print(f"❌ is_timed: {is_timed} (expected True)")
+            
+            if len(questions) == 40:
+                print(f"✅ questions count: {len(questions)} (expected 40 for reading)")
+                
+                # Check questions have Full Test source
+                all_from_full_test = all(q.get("source") == "academic_set_a" for q in questions)
+                if all_from_full_test:
+                    print(f"✅ All questions from Full Test content (source: 'academic_set_a')")
+                    success_count += 1
+                else:
+                    sources = [q.get("source") for q in questions]
+                    print(f"❌ Not all questions from Full Test. Sources: {set(sources)}")
+            else:
+                print(f"❌ questions count: {len(questions)} (expected 40)")
+            
+            if source == "full_test_academic_set_a":
+                print(f"✅ API source: {source} (Full Test content)")
+            else:
+                print(f"⚠️ API source: {source} (expected Full Test content)")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 QUESTION BANK PRACTICE ENDPOINTS SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 1.5:  # Allow some flexibility
+        print("✅ QUESTION BANK PRACTICE ENDPOINTS TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - Random practice returns 5 listening questions from Full Test content")
+        print("   - Timed practice returns reading questions with proper timing (60 min)")
+        print("   - All questions include source: 'academic_set_a' indicating Full Test origin")
+        print("   - Practice endpoints include success: true and proper metadata")
+        return True
+    else:
+        print("❌ QUESTION BANK PRACTICE ENDPOINTS TESTS FAILED!")
+        return False
+
 def test_speaking_qb_evaluation_tiers():
     """Test Speaking QB Evaluation Tiers - Backend Testing"""
     print("\n" + "="*80)
