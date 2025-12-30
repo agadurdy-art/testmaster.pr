@@ -339,6 +339,131 @@ async def get_smart_practice(
         "source": "full_test_academic_set_a"
     }
 
+
+@router.get("/skill/{skill_name}/overview")
+async def get_skill_overview(skill_name: str):
+    """Get detailed overview of a skill including questions from Full Test."""
+    from content.full_tests.academic.set_a import ACADEMIC_SET_A
+    
+    valid_skills = ["listening", "reading", "writing", "speaking"]
+    if skill_name not in valid_skills:
+        raise HTTPException(status_code=400, detail=f"Invalid skill: {skill_name}")
+    
+    section_data = ACADEMIC_SET_A["sections"].get(skill_name, {})
+    
+    if skill_name == "listening":
+        parts = []
+        for part in section_data.get("parts", []):
+            parts.append({
+                "part_number": part["part_number"],
+                "title": part["title"],
+                "context": part["context"],
+                "question_count": len(part["questions"]),
+                "question_types": list(set(q["type"] for q in part["questions"]))
+            })
+        return {
+            "skill": skill_name,
+            "total_questions": section_data.get("total_questions", 40),
+            "total_time": section_data.get("total_time", 2400),
+            "time_display": "40 minutes",
+            "parts": parts,
+            "instructions": section_data.get("instructions", ""),
+            "question_types": ["form_completion", "multiple_choice", "matching", "note_completion"],
+            "source": "academic_set_a"
+        }
+    
+    elif skill_name == "reading":
+        passages = []
+        for passage in section_data.get("passages", []):
+            passages.append({
+                "passage_number": passage["passage_number"],
+                "title": passage["title"],
+                "question_count": len(passage["questions"]),
+                "question_types": list(set(q["type"] for q in passage["questions"]))
+            })
+        return {
+            "skill": skill_name,
+            "total_questions": section_data.get("total_questions", 40),
+            "total_time": 3600,  # 60 minutes
+            "time_display": "60 minutes",
+            "passages": passages,
+            "question_types": ["true_false_ng", "yes_no_ng", "matching_headings", "fill_blank", "multiple_choice"],
+            "source": "academic_set_a"
+        }
+    
+    elif skill_name == "writing":
+        tasks = []
+        for task in section_data.get("tasks", []):
+            tasks.append({
+                "task_number": task["task_number"],
+                "type": task["type"],
+                "word_limit": task["word_limit"],
+                "time_suggested": task.get("time_suggested", 20 if task["task_number"] == 1 else 40)
+            })
+        return {
+            "skill": skill_name,
+            "total_tasks": len(tasks),
+            "total_time": 3600,  # 60 minutes
+            "time_display": "60 minutes",
+            "tasks": tasks,
+            "task_types": ["data_description", "essay"],
+            "source": "academic_set_a"
+        }
+    
+    elif skill_name == "speaking":
+        parts = []
+        for part in section_data.get("parts", []):
+            parts.append({
+                "part_number": part["part_number"],
+                "title": part["title"],
+                "duration": part.get("duration", "4-5 minutes"),
+                "question_count": len(part["questions"])
+            })
+        return {
+            "skill": skill_name,
+            "total_parts": len(parts),
+            "total_time": 900,  # 11-14 minutes
+            "time_display": "11-14 minutes",
+            "parts": parts,
+            "source": "academic_set_a"
+        }
+
+
+@router.get("/skill/{skill_name}/questions")
+async def get_skill_questions(
+    skill_name: str,
+    part: Optional[int] = Query(None, description="Filter by part number"),
+    question_type: Optional[str] = Query(None, description="Filter by question type"),
+    limit: int = Query(20, ge=1, le=100, description="Number of questions to return")
+):
+    """Get questions for a specific skill from Full Test content."""
+    valid_skills = ["listening", "reading", "writing", "speaking"]
+    if skill_name not in valid_skills:
+        raise HTTPException(status_code=400, detail=f"Invalid skill: {skill_name}")
+    
+    questions = get_questions_from_full_test(skill_name, limit * 2)  # Get more to allow filtering
+    
+    # Filter by part if specified
+    if part is not None:
+        questions = [q for q in questions if q.get("part") == part or q.get("passage_number") == part or q.get("task_number") == part]
+    
+    # Filter by question type if specified
+    if question_type:
+        questions = [q for q in questions if q.get("type") == question_type]
+    
+    return {
+        "success": True,
+        "skill": skill_name,
+        "filters": {
+            "part": part,
+            "question_type": question_type
+        },
+        "count": len(questions[:limit]),
+        "questions": questions[:limit],
+        "source": "full_test_academic_set_a"
+    }
+
+
 # ============ FULL TEST ENDPOINTS ============
 
 @router.get("/tests")
