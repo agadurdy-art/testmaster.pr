@@ -367,7 +367,7 @@ export default function QuestionBank() {
                       )}
                       
                       <div className="flex items-center text-indigo-600 text-sm font-medium">
-                        Başla <ChevronRight className="w-4 h-4 ml-1" />
+                        Start <ChevronRight className="w-4 h-4 ml-1" />
                       </div>
                     </Card>
                   );
@@ -428,7 +428,7 @@ export default function QuestionBank() {
                       <h3 className="text-lg font-bold text-gray-900 mb-2">{mode.name}</h3>
                       <p className="text-sm text-gray-500 mb-4">{mode.description}</p>
                       <Button className={`w-full bg-gradient-to-r ${mode.color} border-0`}>
-                        <Play className="w-4 h-4 mr-2" /> Başla
+                        <Play className="w-4 h-4 mr-2" /> Start
                       </Button>
                     </Card>
                   );
