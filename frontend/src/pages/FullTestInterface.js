@@ -945,20 +945,7 @@ export default function FullTestInterface({ user }) {
 
         {/* Question Display */}
         <Card className="p-6">
-          {/* Toggle for showing question text (band 5.5+) */}
-          <div className="flex justify-end mb-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowQuestionText(!showQuestionText)}
-              className="text-slate-500"
-            >
-              {showQuestionText ? <Eye className="w-4 h-4 mr-2" /> : <EyeOff className="w-4 h-4 mr-2" />}
-              {showQuestionText ? 'Hide Text' : 'Show Text'}
-            </Button>
-          </div>
-
-          {/* Part 2 Cue Card - Always visible */}
+          {/* Part 2 Cue Card - Always visible (this is the only text shown in real IELTS) */}
           {speakingPart === 2 && currentPartData?.cue_card && (
             <div className="p-4 bg-amber-50 border-2 border-amber-200 rounded-lg mb-6">
               <h4 className="font-bold text-amber-900 mb-2">Cue Card</h4>
@@ -972,16 +959,24 @@ export default function FullTestInterface({ user }) {
             </div>
           )}
 
-          {/* Question (Parts 1 & 3) */}
+          {/* Parts 1 & 3: Audio-only questions (like real IELTS exam) */}
           {(speakingPart === 1 || speakingPart === 3) && currentQ && (
-            <div className="text-center">
-              {showQuestionText && (
-                <p className="text-xl text-slate-800 mb-4">{currentQ.text}</p>
-              )}
+            <div className="text-center py-8">
+              <div className="mb-6">
+                <div className="w-20 h-20 mx-auto rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                  <Headphones className="w-10 h-10 text-blue-600" />
+                </div>
+                <p className="text-lg text-slate-700 mb-2">Listen to the examiner's question</p>
+                <p className="text-sm text-slate-500">
+                  {speakingPart === 1 
+                    ? "Answer in 20-30 seconds" 
+                    : "Give a detailed response (up to 75 seconds)"}
+                </p>
+              </div>
               
               {/* Play question audio button */}
               <Button
-                variant="outline"
+                size="lg"
                 onClick={() => {
                   if (questionAudioRef.current) {
                     questionAudioRef.current.play();
@@ -989,10 +984,10 @@ export default function FullTestInterface({ user }) {
                   }
                 }}
                 disabled={speakingState !== 'IDLE'}
-                className="mb-6"
+                className="bg-blue-600 hover:bg-blue-700 px-8"
               >
-                <Volume2 className="w-4 h-4 mr-2" />
-                Play Question
+                <Volume2 className="w-5 h-5 mr-2" />
+                {speakingState === 'PROMPT_PLAYING' ? 'Playing...' : 'Play Question'}
               </Button>
               
               <audio
