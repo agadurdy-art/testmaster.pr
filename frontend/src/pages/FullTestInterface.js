@@ -699,11 +699,15 @@ export default function FullTestInterface({ user }) {
 
         {/* Questions */}
         <div className="space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
-          {passage?.questions?.map((q, idx) => (
+          {passage?.questions?.map((q, idx) => {
+            // Extract question number - get digits after 'Q' (e.g., R3Q27 → 27)
+            const qNumMatch = q.id.match(/Q(\d+)/);
+            const questionNum = qNumMatch ? qNumMatch[1] : idx + 1;
+            return (
             <Card key={q.id} className="p-4">
               <div className="flex gap-3">
                 <span className="font-bold text-slate-900 min-w-[32px]">
-                  {q.id.replace(/[^\d]/g, '') || idx + 1}.
+                  {questionNum}.
                 </span>
                 <div className="flex-1">
                   <p className="text-slate-700 mb-2">{q.question}</p>
