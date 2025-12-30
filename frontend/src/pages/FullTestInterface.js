@@ -380,11 +380,11 @@ export default function FullTestInterface({ user }) {
 
   const handleAudioEnded = () => {
     setAudioPlaying(false);
-    setAudioEnded(true);
+    // Mark this specific part as ended
+    setAudioEndedParts(prev => ({ ...prev, [listeningPart]: true }));
     if (listeningPart < 4) {
       setTimeout(() => {
         setListeningPart(prev => prev + 1);
-        setAudioEnded(false);
       }, 2000);
     }
   };
