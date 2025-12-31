@@ -84,9 +84,9 @@ Receptionist: Excellent choice. Do you have any special requests?
 Guest: Yes, I'd prefer a room on a higher floor if possible, away from the lift.
 Receptionist: I'll make a note - high floor, quiet location. Now, let me tell you about our facilities. Looking at the ground floor plan, when you come in through the main entrance, reception is straight ahead.
 Guest: Yes, I see it on the map.
-Receptionist: To your left, marked as letter A, is our restaurant. It's open for breakfast from seven to ten, and dinner from six to nine thirty. Letter B on your right is our fitness centre with gym equipment.
+Receptionist: To your left is our restaurant. It's open for breakfast from seven to ten, and dinner from six to nine thirty. On your right is our fitness centre with gym equipment.
 Guest: What about the pool I saw on your website?
-Receptionist: The swimming pool is at letter C, at the back of the building. It's heated and open from six AM to ten PM.
+Receptionist: The swimming pool is at the back of the building. It's heated and open from six AM to ten PM.
 Guest: Wonderful. Can I pay when I arrive?
 Receptionist: Of course. We'll just need a credit card to guarantee the booking.
                     """,
