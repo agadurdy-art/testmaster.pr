@@ -25,14 +25,43 @@ export default function MapLabelling({
     const loadMapImage = async () => {
       setLoading(true);
       
+      // First check if visual has a direct image_url
+      if (visual?.image_url) {
+        const imageName = visual.image_url.replace('.png', '');
+        const url = `${API_URL}/api/visuals/image/${imageName}`;
+        try {
+          const res = await fetch(url);
+          if (res.ok && res.headers.get('content-type')?.includes('image')) {
+            setMapImageUrl(url);
+            setLoading(false);
+            return;
+          }
+        } catch (e) {
+          console.log('Direct image_url not available');
+        }
+      }
+      
       // Check if there's a saved PNG for this test
       if (testId) {
-        const possibleNames = [
+        // Parse testId to get set info (e.g., academic_set_c_01 -> set_c)
+        const setMatch = testId.match(/(academic|general)_set_([a-z])_/i);
+        const possibleNames = [];
+        
+        if (setMatch) {
+          const [, type, setLetter] = setMatch;
+          possibleNames.push(
+            `${type}_set_${setLetter}_campus`,
+            `${type}_set_${setLetter}_shopping`,
+            `${type}_set_${setLetter}_map`
+          );
+        }
+        
+        possibleNames.push(
           `academic_${testId}_campus`,
           `general_${testId}_campus`,
           `${testId}_map`,
           `campus_map_${testId}`
-        ];
+        );
         
         for (const name of possibleNames) {
           try {
@@ -64,7 +93,7 @@ export default function MapLabelling({
     };
 
     loadMapImage();
-  }, [testId]);
+  }, [testId, visual]);
 
   // Filter only map labelling questions
   const mapQuestions = questions?.filter(q => q.type === 'map_labelling') || [];
