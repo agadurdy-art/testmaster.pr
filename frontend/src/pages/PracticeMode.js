@@ -100,42 +100,44 @@ export default function PracticeMode({ user }) {
       let params = new URLSearchParams();
       
       if (topic) params.set('topic', topic);
-      if (band) params.set('band', band);
-      params.set('mode', mode);
-      params.set('limit', mode === 'timed' ? '10' : '20');
+      if (band) params.set('band_level', band);
+      params.set('count', mode === 'timed' ? '40' : '20');
 
-      switch (skill) {
-        case 'reading':
-          endpoint = `/api/reading/question-bank/practice?${params.toString()}`;
+      // Use question-bank practice endpoints that pull from Full Tests
+      switch (mode) {
+        case 'timed':
+          endpoint = `/api/question-bank/practice/timed?skill=${skill}&${params.toString()}`;
           break;
-        case 'listening':
-          endpoint = `/api/listening/question-bank/practice?${params.toString()}`;
+        case 'smart':
+          endpoint = `/api/question-bank/practice/smart?user_id=${user?.id || 'anonymous'}&skill=${skill}`;
           break;
-        case 'speaking':
-          // For speaking, redirect to speaking practice
-          navigate(`/question-bank/speaking?${params.toString()}`);
-          return;
-        case 'writing':
-          // For writing, show prompt selection
-          endpoint = `/api/writing/prompts?${params.toString()}`;
-          break;
+        case 'random':
         default:
-          endpoint = `/api/reading/question-bank/practice?${params.toString()}`;
+          endpoint = `/api/question-bank/practice/random?skill=${skill}&${params.toString()}`;
+          break;
+      }
+
+      // Special handling for speaking and writing
+      if (skill === 'speaking') {
+        navigate(`/question-bank/speaking?${params.toString()}`);
+        return;
+      }
+      
+      if (skill === 'writing') {
+        navigate(`/writing-practice/task1?${params.toString()}`);
+        return;
       }
 
       const res = await fetch(`${API_URL}${endpoint}`);
       const data = await res.json();
       
-      if (data.success && data.questions) {
-        // Shuffle for random mode
+      if (data.success && data.questions && data.questions.length > 0) {
         let loadedQuestions = data.questions;
-        if (mode === 'random') {
-          loadedQuestions = shuffleArray([...data.questions]);
-        }
         
-        // For smart mode, prioritize based on difficulty or user history
-        if (mode === 'smart') {
-          loadedQuestions = prioritizeQuestions(loadedQuestions);
+        // For smart mode, already sorted by backend
+        // For random mode, shuffle
+        if (mode === 'random') {
+          loadedQuestions = shuffleArray([...loadedQuestions]);
         }
         
         setQuestions(loadedQuestions);
@@ -147,7 +149,7 @@ export default function PracticeMode({ user }) {
           setTimeLeft(timeLimit);
         }
       } else {
-        // If no practice endpoint, create sample questions
+        // Fallback to sample questions if no data from backend
         const sampleQuestions = generateSampleQuestions(skill, mode);
         setQuestions(sampleQuestions);
         if (mode === 'timed') {
