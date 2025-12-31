@@ -195,6 +195,7 @@ For your assignment, I'd like you to research one specific marine ecosystem and 
                     # Structured Chart Data for Frontend Rendering
                     "visual_data": {
                         "type": "line_graph",
+                        "image_url": "academic_set_b_linegraph.png",
                         "title": "Percentage of Households with Internet Access (2005-2020)",
                         "x_axis": "Year",
                         "y_axis": "Percentage (%)",
