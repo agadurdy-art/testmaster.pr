@@ -1259,7 +1259,7 @@ export default function FullTestInterface({ user }) {
           
           <h2 className="text-xl font-bold mb-4">Task {writingTask}</h2>
           <p className="text-slate-700 whitespace-pre-wrap mb-4">{task?.prompt}</p>
-          {task?.visual_data && renderBarChart(task.visual_data)}
+          {task?.visual_data && renderVisual(task.visual_data)}
           
           <div className="mt-4 p-3 bg-blue-50 rounded text-sm text-blue-700">
             <strong>Word limit:</strong> Minimum {task?.word_limit?.min} words
