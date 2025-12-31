@@ -296,6 +296,16 @@ if static_audio_path.exists():
 else:
     print("⚠️  Static audio directory not found")
 
+# Mount static files for visuals (maps, diagrams, charts)
+static_visuals_path = ROOT_DIR / "static" / "visuals"
+if static_visuals_path.exists():
+    app.mount("/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals")
+    print("✅ Static visual files mounted at /static/visuals")
+else:
+    os.makedirs(static_visuals_path, exist_ok=True)
+    app.mount("/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals")
+    print("✅ Static visual files directory created and mounted")
+
 # Import learning platform routes
 try:
     from learning_platform_routes import router as learning_platform_router
