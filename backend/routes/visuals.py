@@ -106,6 +106,33 @@ async def list_visuals():
     except Exception as e:
         return {"success": False, "visuals": [], "error": str(e)}
 
+@router.get("/image/{name}")
+async def get_visual_image(name: str):
+    """
+    Serve a visual PNG image through the API (for ingress compatibility)
+    """
+    from fastapi.responses import FileResponse
+    
+    try:
+        safe_name = "".join(c for c in name if c.isalnum() or c in ('_', '-')).lower()
+        # Remove .png extension if present
+        if safe_name.endswith('png'):
+            safe_name = safe_name[:-3]
+        if safe_name.endswith('.'):
+            safe_name = safe_name[:-1]
+            
+        png_path = os.path.join(VISUALS_DIR, f"{safe_name}.png")
+        
+        if not os.path.exists(png_path):
+            raise HTTPException(status_code=404, detail=f"Image not found: {safe_name}.png")
+        
+        return FileResponse(png_path, media_type="image/png")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/get/{name}")
 async def get_visual(name: str):
     """
