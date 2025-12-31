@@ -272,6 +272,14 @@ export default function MapLabelling({ visual, questions, answers, onAnswerChang
   // Filter only map labelling questions
   const mapQuestions = questions?.filter(q => q.type === 'map_labelling') || [];
   
+  // Check if this is a campus map (academic set C)
+  const isCampusMap = visual.title?.toLowerCase().includes('campus') || 
+                      visual.title?.toLowerCase().includes('university');
+  
+  // Check if this is a shopping centre / floor plan
+  const isShoppingCentre = visual.title?.toLowerCase().includes('shopping') ||
+                           visual.type === 'floor_plan';
+  
   return (
     <div className="space-y-6">
       {/* Map Visual */}
@@ -283,22 +291,12 @@ export default function MapLabelling({ visual, questions, answers, onAnswerChang
           </p>
         </div>
         
-        {/* Title */}
-        <div className="p-4 text-center border-b">
-          <h3 className="text-xl font-bold text-slate-900">{visual.title}</h3>
-          {visual.description && (
-            <p className="text-sm text-slate-600 mt-1">{visual.description}</p>
-          )}
-        </div>
-        
-        {/* Map */}
+        {/* Map Rendering */}
         <div className="p-4">
-          {isMultiFloor ? (
-            <div className="space-y-4">
-              {visual.floors.map((floor, idx) => (
-                <FloorMap key={idx} floor={floor} />
-              ))}
-            </div>
+          {isCampusMap ? (
+            <CampusMap title={visual.title} />
+          ) : isMultiFloor || isShoppingCentre ? (
+            <FloorPlanMap visual={visual} title={visual.title} />
           ) : isCombined ? (
             <div className="space-y-4">
               {visual.elements?.map((el, idx) => {
@@ -334,7 +332,7 @@ export default function MapLabelling({ visual, questions, answers, onAnswerChang
               })}
             </div>
           ) : (
-            <EstateMap visual={visual} />
+            <TownMap visual={visual} title={visual.title} />
           )}
         </div>
       </div>
