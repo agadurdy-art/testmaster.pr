@@ -74,17 +74,17 @@ Guide: Welcome to Westbrook University. I'm James, and I'll be showing you aroun
 Student: Yes, I printed it out. I'm Sarah, by the way. This place is huge!
 Guide: It can be overwhelming at first. Let's start from where we're standing now - that's the Main Entrance, which is at the bottom of your map, facing south.
 Student: Got it. So we're looking north into the campus?
-Guide: Exactly. Now, directly ahead of you, you can see a large brick building. That's the Administration Building, marked as letter A on your map. All student registrations and ID cards are handled there.
+Guide: Exactly. Now, directly ahead of you, you can see a large brick building. That's the Administration Building. All student registrations and ID cards are handled there.
 Student: Is that where I go for my student visa paperwork?
-Guide: Yes, the International Office is on the second floor. Now, if you look to your left - that's the west side - you'll see a modern glass structure. That's our Science Complex, which should be letter B on your map.
+Guide: Yes, the International Office is on the second floor. Now, if you look to your left - that's the west side - you'll see a modern glass structure. That's our Science Complex.
 Student: The one with the solar panels on the roof?
-Guide: That's right. It houses Biology, Chemistry, and Physics departments. Moving clockwise, the building directly north of where we're standing - past the central lawn - is the Main Library, that's letter C. It's open twenty-four hours during exam periods.
+Guide: That's right. It houses Biology, Chemistry, and Physics departments. Moving clockwise, the building directly north of where we're standing - past the central lawn - is the Main Library. It's open twenty-four hours during exam periods.
 Student: That's useful to know. What about the building to the right of it?
-Guide: That's the Student Union, letter D. It has cafeterias, common rooms, and the student services desk. Now, on the east side of campus - that's your right - there's a tall tower building. That's the Engineering Faculty, letter E.
+Guide: That's the Student Union. It has cafeterias, common rooms, and the student services desk. Now, on the east side of campus - that's your right - there's a tall tower building. That's the Engineering Faculty.
 Student: I can see it. Must be about eight floors?
-Guide: Ten actually. Behind it, you'll notice a domed building marked F - that's the Planetarium, part of our Astronomy department. It's open to the public on Friday evenings.
+Guide: Ten actually. Behind it, you'll notice a domed building - that's the Planetarium, part of our Astronomy department. It's open to the public on Friday evenings.
 Student: Amazing! What about sports facilities?
-Guide: Good question. The Sports Centre is letter G, at the northeast corner of campus, behind the Engineering tower. It has an Olympic-sized pool, gym, and indoor courts. The outdoor playing fields are beyond that, but they're not on this map.
+Guide: Good question. The Sports Centre is at the northeast corner of campus, behind the Engineering tower. It has an Olympic-sized pool, gym, and indoor courts. The outdoor playing fields are beyond that, but they're not on this map.
                     """,
                     "questions": [
                         {"id": "L1Q1", "type": "map_labelling", "question": "Write the correct letter A-G: Administration Building", "answer": "A"},
