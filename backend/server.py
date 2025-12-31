@@ -368,6 +368,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load full test audio routes: {e}")
 
+# Import visual generator routes
+try:
+    from routes.visuals import router as visuals_router
+    app.include_router(visuals_router)
+    print("✅ Visual Generator routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load visual generator routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
