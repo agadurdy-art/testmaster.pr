@@ -210,6 +210,7 @@ Practical implications abound. Spaced practice - distributing study over time - 
                     
                     "visual_data": {
                         "type": "pie_chart_comparison",
+                        "image_url": "academic_set_e_piechart.png",
                         "title": "Reasons for University Choice",
                         "charts": [
                             {
