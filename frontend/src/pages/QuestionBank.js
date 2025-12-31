@@ -539,51 +539,127 @@ export default function QuestionBank() {
               <>
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-bold text-gray-900">IELTS Full Tests</h2>
-                  <Badge className="bg-green-100 text-green-700">{fullTests.length} {fullTests.length === 1 ? 'Test' : 'Tests'} Available</Badge>
+                  <Badge className="bg-green-100 text-green-700">{fullTests.length} Tests Available</Badge>
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-4">
-                  {fullTests.map((test) => (
-                    <Card key={test.test_id} className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-blue-300"
-                      onClick={() => openTestModal(test)}>
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="font-bold text-lg text-gray-900">{test.title}</h3>
-                          <p className="text-sm text-gray-500 mt-1">{test.description}</p>
+                {/* Academic Tests Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                      <BookOpen className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg text-gray-900">Academic Tests</h3>
+                      <p className="text-sm text-gray-500">For university/higher education admissions</p>
+                    </div>
+                    <Badge className="ml-auto bg-blue-100 text-blue-700">
+                      {fullTests.filter(t => t.test_type === 'academic').length} Sets
+                    </Badge>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4 pl-13">
+                    {fullTests.filter(t => t.test_type === 'academic').map((test) => (
+                      <Card key={test.test_id} className="p-5 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-blue-300"
+                        onClick={() => openTestModal(test)}>
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h4 className="font-bold text-gray-900">{test.title}</h4>
+                            <p className="text-xs text-gray-500 mt-1 line-clamp-2">{test.description}</p>
+                          </div>
+                          <Badge className="bg-blue-50 text-blue-700 text-xs">Academic</Badge>
                         </div>
-                        <Badge className="bg-blue-100 text-blue-700 capitalize">{test.test_type}</Badge>
-                      </div>
-                      
-                      <div className="grid grid-cols-4 gap-2 mb-4">
-                        <div className="text-center p-2 bg-blue-50 rounded">
-                          <Headphones className="w-4 h-4 mx-auto text-blue-600 mb-1" />
-                          <span className="text-xs text-gray-600">Listening</span>
+                        
+                        <div className="grid grid-cols-4 gap-1 mb-3">
+                          <div className="text-center p-1.5 bg-blue-50 rounded">
+                            <Headphones className="w-3 h-3 mx-auto text-blue-600" />
+                            <span className="text-[10px] text-gray-600">Listening</span>
+                          </div>
+                          <div className="text-center p-1.5 bg-green-50 rounded">
+                            <BookOpen className="w-3 h-3 mx-auto text-green-600" />
+                            <span className="text-[10px] text-gray-600">Reading</span>
+                          </div>
+                          <div className="text-center p-1.5 bg-purple-50 rounded">
+                            <PenTool className="w-3 h-3 mx-auto text-purple-600" />
+                            <span className="text-[10px] text-gray-600">Writing</span>
+                          </div>
+                          <div className="text-center p-1.5 bg-orange-50 rounded">
+                            <Mic className="w-3 h-3 mx-auto text-orange-600" />
+                            <span className="text-[10px] text-gray-600">Speaking</span>
+                          </div>
                         </div>
-                        <div className="text-center p-2 bg-green-50 rounded">
-                          <BookOpen className="w-4 h-4 mx-auto text-green-600 mb-1" />
-                          <span className="text-xs text-gray-600">Reading</span>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-xs text-gray-500">
+                            <Clock className="w-3 h-3" />
+                            <span>{test.estimated_time}</span>
+                          </div>
+                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700 h-8 text-xs">
+                            <PlayCircle className="w-3 h-3 mr-1" /> Start
+                          </Button>
                         </div>
-                        <div className="text-center p-2 bg-purple-50 rounded">
-                          <PenTool className="w-4 h-4 mx-auto text-purple-600 mb-1" />
-                          <span className="text-xs text-gray-600">Writing</span>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* General Training Tests Section */}
+                <div className="space-y-4 pt-4 border-t">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                      <Award className="w-5 h-5 text-purple-600" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-lg text-gray-900">General Training Tests</h3>
+                      <p className="text-sm text-gray-500">For work experience, immigration, secondary education</p>
+                    </div>
+                    <Badge className="ml-auto bg-purple-100 text-purple-700">
+                      {fullTests.filter(t => t.test_type === 'general').length} Sets
+                    </Badge>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4 pl-13">
+                    {fullTests.filter(t => t.test_type === 'general').map((test) => (
+                      <Card key={test.test_id} className="p-5 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-purple-300"
+                        onClick={() => openTestModal(test)}>
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h4 className="font-bold text-gray-900">{test.title}</h4>
+                            <p className="text-xs text-gray-500 mt-1 line-clamp-2">{test.description}</p>
+                          </div>
+                          <Badge className="bg-purple-50 text-purple-700 text-xs">General</Badge>
                         </div>
-                        <div className="text-center p-2 bg-orange-50 rounded">
-                          <Mic className="w-4 h-4 mx-auto text-orange-600 mb-1" />
-                          <span className="text-xs text-gray-600">Speaking</span>
+                        
+                        <div className="grid grid-cols-4 gap-1 mb-3">
+                          <div className="text-center p-1.5 bg-blue-50 rounded">
+                            <Headphones className="w-3 h-3 mx-auto text-blue-600" />
+                            <span className="text-[10px] text-gray-600">Listening</span>
+                          </div>
+                          <div className="text-center p-1.5 bg-green-50 rounded">
+                            <BookOpen className="w-3 h-3 mx-auto text-green-600" />
+                            <span className="text-[10px] text-gray-600">Reading</span>
+                          </div>
+                          <div className="text-center p-1.5 bg-purple-50 rounded">
+                            <PenTool className="w-3 h-3 mx-auto text-purple-600" />
+                            <span className="text-[10px] text-gray-600">Writing</span>
+                          </div>
+                          <div className="text-center p-1.5 bg-orange-50 rounded">
+                            <Mic className="w-3 h-3 mx-auto text-orange-600" />
+                            <span className="text-[10px] text-gray-600">Speaking</span>
+                          </div>
                         </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <Clock className="w-4 h-4" />
-                          <span>{test.estimated_time}</span>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-xs text-gray-500">
+                            <Clock className="w-3 h-3" />
+                            <span>{test.estimated_time}</span>
+                          </div>
+                          <Button size="sm" className="bg-purple-600 hover:bg-purple-700 h-8 text-xs">
+                            <PlayCircle className="w-3 h-3 mr-1" /> Start
+                          </Button>
                         </div>
-                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                          <PlayCircle className="w-4 h-4 mr-1" /> Start Test
-                        </Button>
-                      </div>
-                    </Card>
-                  ))}
+                      </Card>
+                    ))}
+                  </div>
                 </div>
                 
                 <div className="text-center p-4 bg-amber-50 rounded-lg border border-amber-200">
