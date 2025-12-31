@@ -6176,7 +6176,7 @@ def test_full_test_mode():
         return False
 
 if __name__ == "__main__":
-    print("🚀 Starting IELTS Ace Backend API Tests - SET B CONTENT VERIFICATION")
+    print("🚀 Starting IELTS Ace Backend API Tests - VISUAL INTEGRATION TESTING")
     print("=" * 80)
     
     # Test authentication first
@@ -6185,38 +6185,27 @@ if __name__ == "__main__":
         print("❌ Authentication failed - stopping tests")
         exit(1)
     
-    # Run Set B specific tests as per review request
+    # Run Visual Integration tests as per review request
     all_passed = True
     
-    # Test 1: Set B Full Test Mode Content
-    set_b_passed = test_set_b_full_test_mode()
-    all_passed = all_passed and set_b_passed
-    
-    # Test 2: Question Bank Stats with Set B
-    qb_stats_passed = test_question_bank_stats_with_set_b()
-    all_passed = all_passed and qb_stats_passed
-    
-    # Test 3: Question Bank Full Test Endpoints (updated for Set B)
-    qb_full_test_passed = test_question_bank_full_test_endpoints()
-    all_passed = all_passed and qb_full_test_passed
-    
-    # Test 4: Question Bank Practice Endpoints
-    qb_practice_passed = test_question_bank_practice_endpoints()
-    all_passed = all_passed and qb_practice_passed
-    
-    # Test 5: Full Test Mode APIs (existing tests)
-    full_test_passed = test_full_test_mode_apis()
-    all_passed = all_passed and full_test_passed
+    # Test 1: IELTS Visual Integration System
+    visual_integration_passed = test_ielts_visual_integration()
+    all_passed = all_passed and visual_integration_passed
     
     # Final summary
     print("\n" + "=" * 80)
-    print("🏁 FINAL TEST SUMMARY - SET B CONTENT VERIFICATION")
+    print("🏁 FINAL TEST SUMMARY - VISUAL INTEGRATION TESTING")
     print("=" * 80)
     
     if all_passed:
-        print("✅ ALL SET B TESTS PASSED! Backend Set B content is working correctly.")
+        print("✅ ALL VISUAL INTEGRATION TESTS PASSED! Backend visual system is working correctly.")
+        print("   Key components verified:")
+        print("   - Visual Image API serves all 6 PNG images correctly")
+        print("   - Full Test API returns visual_data with image_url")
+        print("   - Visual integration works for Writing and Listening sections")
+        print("   - Set E is properly registered in full test router")
     else:
-        print("❌ SOME SET B TESTS FAILED! Check the output above for details.")
+        print("❌ SOME VISUAL INTEGRATION TESTS FAILED! Check the output above for details.")
     
     print(f"Set B Full Test Mode Content: {'✅' if set_b_passed else '❌'}")
     print(f"Question Bank Stats (Set B): {'✅' if qb_stats_passed else '❌'}")
