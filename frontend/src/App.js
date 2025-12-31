@@ -52,6 +52,7 @@ import PracticeMode from './pages/PracticeMode';
 import FullTestMode from './pages/FullTestMode';
 import FullTestInterface from './pages/FullTestInterface';
 import FullTestResults from './pages/FullTestResults';
+import VisualGenerator from './pages/VisualGenerator';
 
 
 function EmergentBadgeWrapper() {
