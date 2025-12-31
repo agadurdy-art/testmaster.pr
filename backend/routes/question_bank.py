@@ -122,45 +122,117 @@ async def get_question_bank_stats(db=None):
     """Get overall question bank statistics."""
     # Import full test content to count questions
     try:
-        from content.full_tests.academic.set_a import ACADEMIC_SET_A
-        from content.full_tests.general.set_a import GENERAL_SET_A
+        # Count all Academic sets
+        academic_count = 0
+        academic_sets = 0
+        try:
+            from content.full_tests.academic.set_a import ACADEMIC_SET_A
+            academic_count += ACADEMIC_SET_A["sections"]["listening"]["total_questions"]
+            academic_count += ACADEMIC_SET_A["sections"]["reading"]["total_questions"]
+            academic_count += len(ACADEMIC_SET_A["sections"]["writing"]["tasks"])
+            academic_count += len(ACADEMIC_SET_A["sections"]["speaking"]["parts"])
+            academic_sets += 1
+        except: pass
         
-        # Count questions from Full Test Set A (Academic)
-        listening_questions = ACADEMIC_SET_A["sections"]["listening"]["total_questions"]
-        reading_questions = ACADEMIC_SET_A["sections"]["reading"]["total_questions"]
-        writing_tasks = len(ACADEMIC_SET_A["sections"]["writing"]["tasks"])
-        speaking_parts = len(ACADEMIC_SET_A["sections"]["speaking"]["parts"])
+        try:
+            from content.full_tests.academic.set_b import ACADEMIC_SET_B
+            academic_count += ACADEMIC_SET_B["sections"]["listening"]["total_questions"]
+            academic_count += ACADEMIC_SET_B["sections"]["reading"]["total_questions"]
+            academic_count += len(ACADEMIC_SET_B["sections"]["writing"]["tasks"])
+            academic_count += len(ACADEMIC_SET_B["sections"]["speaking"]["parts"])
+            academic_sets += 1
+        except: pass
         
-        # Count questions from General Training Set A
-        gt_listening = GENERAL_SET_A["sections"]["listening"]["total_questions"]
-        gt_reading = GENERAL_SET_A["sections"]["reading"]["total_questions"]
-        gt_writing = len(GENERAL_SET_A["sections"]["writing"]["tasks"])
-        gt_speaking = len(GENERAL_SET_A["sections"]["speaking"]["parts"])
+        try:
+            from content.full_tests.academic.set_c import ACADEMIC_SET_C
+            academic_count += ACADEMIC_SET_C["sections"]["listening"]["total_questions"]
+            academic_count += ACADEMIC_SET_C["sections"]["reading"]["total_questions"]
+            academic_count += len(ACADEMIC_SET_C["sections"]["writing"]["tasks"])
+            academic_count += len(ACADEMIC_SET_C["sections"]["speaking"]["parts"])
+            academic_sets += 1
+        except: pass
         
-        total_academic = listening_questions + reading_questions + writing_tasks + speaking_parts
-        total_general = gt_listening + gt_reading + gt_writing + gt_speaking
+        try:
+            from content.full_tests.academic.set_d import ACADEMIC_SET_D
+            academic_count += ACADEMIC_SET_D["sections"]["listening"]["total_questions"]
+            academic_count += ACADEMIC_SET_D["sections"]["reading"]["total_questions"]
+            academic_count += len(ACADEMIC_SET_D["sections"]["writing"]["tasks"])
+            academic_count += len(ACADEMIC_SET_D["sections"]["speaking"]["parts"])
+            academic_sets += 1
+        except: pass
+        
+        # Count all General sets
+        general_count = 0
+        general_sets = 0
+        try:
+            from content.full_tests.general.set_a import GENERAL_SET_A
+            general_count += GENERAL_SET_A["sections"]["listening"]["total_questions"]
+            general_count += GENERAL_SET_A["sections"]["reading"]["total_questions"]
+            general_count += len(GENERAL_SET_A["sections"]["writing"]["tasks"])
+            general_count += len(GENERAL_SET_A["sections"]["speaking"]["parts"])
+            general_sets += 1
+        except: pass
+        
+        try:
+            from content.full_tests.general.set_b import GENERAL_SET_B
+            general_count += GENERAL_SET_B["sections"]["listening"]["total_questions"]
+            general_count += GENERAL_SET_B["sections"]["reading"]["total_questions"]
+            general_count += len(GENERAL_SET_B["sections"]["writing"]["tasks"])
+            general_count += len(GENERAL_SET_B["sections"]["speaking"]["parts"])
+            general_sets += 1
+        except: pass
+        
+        try:
+            from content.full_tests.general.set_c import GENERAL_SET_C
+            general_count += GENERAL_SET_C["sections"]["listening"]["total_questions"]
+            general_count += GENERAL_SET_C["sections"]["reading"]["total_questions"]
+            general_count += len(GENERAL_SET_C["sections"]["writing"]["tasks"])
+            general_count += len(GENERAL_SET_C["sections"]["speaking"]["parts"])
+            general_sets += 1
+        except: pass
+        
+        try:
+            from content.full_tests.general.set_d import GENERAL_SET_D
+            general_count += GENERAL_SET_D["sections"]["listening"]["total_questions"]
+            general_count += GENERAL_SET_D["sections"]["reading"]["total_questions"]
+            general_count += len(GENERAL_SET_D["sections"]["writing"]["tasks"])
+            general_count += len(GENERAL_SET_D["sections"]["speaking"]["parts"])
+            general_sets += 1
+        except: pass
         
         # Speaking QB questions (from the Speaking Question Bank)
         speaking_qb_count = 100  # Approximate - based on topics * questions per topic
         
-        total_questions = total_academic + total_general + speaking_qb_count
+        total_questions = academic_count + general_count + speaking_qb_count
+        total_sets = academic_sets + general_sets
+        
+        # Listening: 40 questions per set
+        # Reading: 40 questions per set
+        # Writing: 2 tasks per set
+        # Speaking: 3 parts per set
+        listening_total = total_sets * 40
+        reading_total = total_sets * 40
+        writing_total = total_sets * 2
+        speaking_total = total_sets * 3 + speaking_qb_count
         
         return {
             "total_questions": total_questions,
             "by_skill": {
-                "reading": reading_questions + gt_reading,
-                "listening": listening_questions + gt_listening,
-                "writing": writing_tasks + gt_writing,
-                "speaking": speaking_parts + gt_speaking + speaking_qb_count,
+                "reading": reading_total,
+                "listening": listening_total,
+                "writing": writing_total,
+                "speaking": speaking_total,
                 "grammar_vocab": 0
             },
             "by_band": {
-                "4.0-5.0": 50,
-                "5.5-6.5": 60,
-                "7.0-9.0": total_questions - 110
+                "4.0-5.0": int(total_questions * 0.25),
+                "5.5-6.5": int(total_questions * 0.35),
+                "7.0-9.0": int(total_questions * 0.40)
             },
             "by_topic": {},
-            "full_tests": 2,  # Academic Set A + General Training Set A
+            "full_tests": total_sets,
+            "academic_tests": academic_sets,
+            "general_tests": general_sets,
             "practice_sets": 4,  # Listening, Reading, Writing, Speaking
             "topics_count": 18
         }
