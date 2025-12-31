@@ -368,11 +368,11 @@ async def get_random_practice(
     topic: Optional[str] = Query(None, description="Filter by topic"),
     band_level: Optional[str] = Query(None, description="Filter by band level"),
     question_type: Optional[str] = Query(None, description="Filter by question type"),
-    count: int = Query(10, ge=1, le=50, description="Number of questions")
+    count: int = Query(20, ge=1, le=50, description="Number of questions")
 ):
-    """Get random practice questions based on filters."""
+    """Get random practice questions from all Full Test sets."""
     try:
-        questions = get_questions_from_full_test(skill, count)
+        questions = get_questions_from_full_tests(skill, count)
         
         # Filter by question type if specified
         if question_type:
@@ -388,7 +388,7 @@ async def get_random_practice(
             },
             "count": len(questions),
             "questions": questions,
-            "source": "full_test_academic_set_a"
+            "source": "all_full_tests"
         }
     except Exception as e:
         return {
