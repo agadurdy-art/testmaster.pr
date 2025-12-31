@@ -39,6 +39,7 @@ ACADEMIC_SET_C = {
                     # Visual Map Data - Frontend will render this
                     "visual": {
                         "type": "map",
+                        "image_url": "academic_set_c_campus.png",
                         "title": "Westbrook University Campus Map",
                         "description": "Map showing campus buildings. Label the buildings marked A-H.",
                         "orientation": "North at top",
