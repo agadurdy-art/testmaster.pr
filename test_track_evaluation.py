@@ -7,7 +7,7 @@ import requests
 import json
 
 # Get backend URL from frontend env
-BACKEND_URL = "https://full-test-prep.preview.emergentagent.com/api"
+BACKEND_URL = "https://ielts-vgen-hub.preview.emergentagent.com/api"
 
 def test_track_specific_ai_evaluation():
     """Test the new Track-Specific AI Evaluation (Phase 4) backend implementation"""
