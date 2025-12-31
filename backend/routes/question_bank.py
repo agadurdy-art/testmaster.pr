@@ -403,7 +403,7 @@ async def get_timed_practice(
     skill: str = Query(..., description="Skill to practice"),
     duration: int = Query(60, description="Duration in minutes")
 ):
-    """Get a timed practice set."""
+    """Get a timed practice set from all Full Test sets."""
     # IELTS standard timings
     timings = {
         "reading": 60,
@@ -420,7 +420,7 @@ async def get_timed_practice(
         "speaking": 15
     }
     
-    questions = get_questions_from_full_test(skill, question_counts.get(skill, 10))
+    questions = get_questions_from_full_tests(skill, question_counts.get(skill, 10))
     
     return {
         "success": True,
@@ -430,7 +430,7 @@ async def get_timed_practice(
         "questions": questions,
         "question_count": len(questions),
         "is_timed": True,
-        "source": "full_test_academic_set_a"
+        "source": "all_full_tests"
     }
 
 
@@ -443,7 +443,7 @@ async def get_smart_practice(
     recommendations = []
     
     for skill in ["listening", "reading", "writing", "speaking"]:
-        questions = get_questions_from_full_test(skill, 5)
+        questions = get_questions_from_full_tests(skill, 5)
         for q in questions:
             q["recommended_reason"] = f"Practice your {skill} skills"
         recommendations.extend(questions)
