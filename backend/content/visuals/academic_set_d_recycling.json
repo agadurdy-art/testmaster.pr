@@ -1,0 +1,38 @@
+{
+  "type": "technical_diagram",
+  "width": 900,
+  "height": 550,
+  "title": "Plastic Bottle Recycling Process",
+  "subtitle": "Stages in the recycling of plastic bottles",
+  "showLabels": true,
+  
+  "containers": [
+    {"id": "1", "type": "hopper", "x": 50, "y": 100, "width": 80, "height": 80, "label": "Collection"},
+    {"id": "2", "type": "tank", "x": 180, "y": 90, "width": 80, "height": 100, "label": "Sorting"},
+    {"id": "3", "type": "cylinder", "x": 310, "y": 100, "width": 100, "height": 70, "label": "Shredding"},
+    {"id": "4", "type": "tank", "x": 460, "y": 90, "width": 80, "height": 100, "label": "Washing"},
+    {"id": "5", "type": "chamber", "x": 590, "y": 100, "width": 80, "height": 80, "label": "Drying"},
+    {"id": "6", "type": "grinder", "x": 720, "y": 100, "width": 80, "height": 80, "label": "Melting"}
+  ],
+  
+  "pipes": [
+    {"from": [130, 140], "to": [180, 140], "type": "solid", "flow": true},
+    {"from": [260, 140], "to": [310, 140], "type": "solid", "flow": true},
+    {"from": [410, 140], "to": [460, 140], "type": "solid", "flow": true},
+    {"from": [540, 140], "to": [590, 140], "type": "solid", "flow": true},
+    {"from": [670, 140], "to": [720, 140], "type": "solid", "flow": true}
+  ],
+  
+  "outputBins": [
+    {"x": 720, "y": 250, "width": 80, "height": 60, "label": "Pellets"}
+  ],
+  
+  "arrows": [
+    {"from": [760, 180], "to": [760, 250], "label": "output"}
+  ],
+  
+  "annotations": [
+    {"x": 50, "y": 70, "text": "Used bottles collected"},
+    {"x": 720, "y": 330, "text": "Ready for manufacturing"}
+  ]
+}

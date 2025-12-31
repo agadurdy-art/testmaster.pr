@@ -1,0 +1,21 @@
+{
+  "type": "bar_chart",
+  "width": 800,
+  "height": 500,
+  "title": "Water Usage by Purpose in Six Regions",
+  "subtitle": "Percentage of total water consumption",
+  "showGrid": true,
+  "showLegend": true,
+  
+  "categories": ["North America", "South America", "Europe", "Africa", "Central Asia", "Southeast Asia"],
+  
+  "series": [
+    {"name": "Agriculture", "color": "#22c55e", "values": [39, 71, 33, 84, 88, 81]},
+    {"name": "Industry", "color": "#3b82f6", "values": [46, 10, 54, 5, 5, 12]},
+    {"name": "Domestic", "color": "#f59e0b", "values": [15, 19, 13, 11, 7, 7]}
+  ],
+  
+  "xLabel": "Region",
+  "yLabel": "Percentage (%)",
+  "yMax": 100
+}
