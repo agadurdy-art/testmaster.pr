@@ -91,17 +91,17 @@ Staff: Good morning, welcome to Riverside Shopping Centre. How can I help you?
 Customer: Hi, I'm new to the area and this place is huge. Could you help me find a few shops?
 Staff: Of course. Let me give you a map. You're currently here at the Information Desk, which is right by the main entrance on the ground floor.
 Customer: Great. First, I need to find a pharmacy.
-Staff: The pharmacy is called MediCare Plus, that's marked as letter A on your map. If you're facing into the centre from where we are, go straight ahead past the fountain. It's on your left, between the bookshop and the optician which is letter C.
+Staff: The pharmacy is called MediCare Plus. If you're facing into the centre from where we are, go straight ahead past the fountain. It's on your left, between the bookshop and the optician.
 Customer: Got it. What about a phone repair shop?
-Staff: TechFix is letter G on the first floor. Take the escalator up - it's right behind you - and turn left. TechFix is the third shop along, opposite the food court.
+Staff: TechFix is on the first floor. Take the escalator up - it's right behind you - and turn left. TechFix is the third shop along, opposite the food court.
 Customer: Perfect. I also need to find the children's play area. I'm bringing my kids here tomorrow.
-Staff: The play zone is letter J on the second floor, in the east wing. Take the lift at the far end of the building and it's immediately on your right when you exit.
+Staff: The play zone is on the second floor, in the east wing. Take the lift at the far end of the building and it's immediately on your right when you exit.
 Customer: Is there a charge for that?
 Staff: It's free for children under eight, and five pounds for older children. Parents can wait in the café next door.
 Customer: Speaking of cafés, where can I get a good coffee?
-Staff: There's a Costa, letter D on the ground floor, near the south entrance. Or if you prefer independent places, there's a lovely café called Bean & Brew, that's letter I on the first floor, next to the travel agent.
+Staff: There's a Costa on the ground floor, near the south entrance. Or if you prefer independent places, there's a lovely café called Bean & Brew on the first floor, next to the travel agent.
 Customer: One more thing - where's the customer service desk? I need to return something.
-Staff: Customer Services is letter F on the ground floor, but it's at the opposite end from here, past the department store. Look for the big Hendersons sign and it's just beyond that.
+Staff: Customer Services is on the ground floor, but it's at the opposite end from here, past the department store. Look for the big Hendersons sign and it's just beyond that.
 Customer: What time does it close?
 Staff: Six thirty on weekdays, eight on Saturdays, and five on Sundays. We're open now until nine, but some services close earlier.
                     """,
