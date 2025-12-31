@@ -37,8 +37,8 @@ export default function MapLabelling({
         for (const name of possibleNames) {
           try {
             const url = `${API_URL}/api/visuals/image/${name}`;
-            const res = await fetch(url, { method: 'HEAD' });
-            if (res.ok) {
+            const res = await fetch(url);
+            if (res.ok && res.headers.get('content-type')?.includes('image')) {
               setMapImageUrl(url);
               setLoading(false);
               return;
@@ -52,8 +52,8 @@ export default function MapLabelling({
       // Fallback: check for generic campus map (Set C)
       try {
         const url = `${API_URL}/api/visuals/image/academic_set_c_campus`;
-        const res = await fetch(url, { method: 'HEAD' });
-        if (res.ok) {
+        const res = await fetch(url);
+        if (res.ok && res.headers.get('content-type')?.includes('image')) {
           setMapImageUrl(url);
         }
       } catch (e) {
