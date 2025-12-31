@@ -1,0 +1,62 @@
+{
+  "name": "academic_set_b_linegraph",
+  "type": "line_graph",
+  "created_at": "2025-12-31T22:49:03.277887",
+  "png_file": "academic_set_b_linegraph.png",
+  "data": {
+    "type": "line_graph",
+    "width": 800,
+    "height": 500,
+    "title": "Global Temperature Anomaly (1980-2020)",
+    "subtitle": "Deviation from 1951-1980 average (\u00b0C)",
+    "showGrid": true,
+    "showPoints": true,
+    "xLabels": [
+      "1980",
+      "1985",
+      "1990",
+      "1995",
+      "2000",
+      "2005",
+      "2010",
+      "2015",
+      "2020"
+    ],
+    "series": [
+      {
+        "name": "Land",
+        "color": "#ef4444",
+        "values": [
+          0.26,
+          0.12,
+          0.45,
+          0.45,
+          0.42,
+          0.69,
+          0.72,
+          0.9,
+          1.02
+        ]
+      },
+      {
+        "name": "Ocean",
+        "color": "#3b82f6",
+        "values": [
+          0.18,
+          0.08,
+          0.32,
+          0.28,
+          0.32,
+          0.48,
+          0.54,
+          0.65,
+          0.78
+        ]
+      }
+    ],
+    "xLabel": "Year",
+    "yLabel": "Temperature Anomaly (\u00b0C)",
+    "yMin": -0.2,
+    "yMax": 1.2
+  }
+}
