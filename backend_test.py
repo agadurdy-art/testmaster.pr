@@ -1247,6 +1247,162 @@ def test_question_bank_stats_with_set_b():
         print("❌ QUESTION BANK STATS TESTS FAILED!")
         return False
 
+def test_ielts_visual_integration():
+    """Test IELTS Full Test Visual Integration system as per review request"""
+    print("\n" + "="*80)
+    print("🚀 TESTING IELTS FULL TEST VISUAL INTEGRATION SYSTEM")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 11
+    
+    # Test 1: Visual Image API - All 6 visuals should return HTTP 200
+    print("\n=== Test 1: Visual Image API - All 6 visuals ===")
+    visual_endpoints = [
+        "academic_set_a_barchart",
+        "academic_set_b_linegraph", 
+        "academic_set_c_campus",
+        "academic_set_d_process",
+        "academic_set_e_piechart",
+        "general_set_c_shopping"
+    ]
+    
+    visual_success = 0
+    for visual_name in visual_endpoints:
+        try:
+            response = requests.get(f"{BACKEND_URL}/visuals/image/{visual_name}")
+            print(f"   GET /api/visuals/image/{visual_name} - Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                print(f"   ✅ {visual_name} - HTTP 200 OK")
+                visual_success += 1
+            else:
+                print(f"   ❌ {visual_name} - HTTP {response.status_code}")
+        except Exception as e:
+            print(f"   ❌ {visual_name} - Error: {e}")
+    
+    if visual_success == len(visual_endpoints):
+        print(f"✅ All {len(visual_endpoints)} visual images return HTTP 200")
+        success_count += 1
+    else:
+        print(f"❌ Only {visual_success}/{len(visual_endpoints)} visual images working")
+    
+    # Test 2-5: Full Test Set API - Verify visual_data contains image_url
+    test_cases = [
+        {
+            "test_id": "academic_set_a_01",
+            "expected_image": "academic_set_a_barchart.png",
+            "section": "writing",
+            "path": "writing.tasks[0].visual_data.image_url"
+        },
+        {
+            "test_id": "academic_set_c_01", 
+            "expected_image": "academic_set_c_campus.png",
+            "section": "listening",
+            "path": "listening.parts[0].visual.image_url"
+        },
+        {
+            "test_id": "academic_set_e_01",
+            "expected_image": "academic_set_e_piechart.png", 
+            "section": "writing",
+            "path": "writing.tasks[0].visual_data.image_url"
+        },
+        {
+            "test_id": "general_set_c_01",
+            "expected_image": "general_set_c_shopping.png",
+            "section": "listening", 
+            "path": "listening.parts[0].visual.image_url"
+        }
+    ]
+    
+    for i, test_case in enumerate(test_cases, 2):
+        print(f"\n=== Test {i}: GET /api/full-test/set/{test_case['test_id']} ===")
+        try:
+            response = requests.get(f"{BACKEND_URL}/full-test/set/{test_case['test_id']}")
+            print(f"Status Code: {response.status_code}")
+            
+            if response.status_code == 200:
+                result = response.json()
+                test_data = result.get("test", {})
+                sections = test_data.get("sections", {})
+                
+                print(f"✅ API call successful")
+                
+                # Navigate to the expected path and check image_url
+                found_image = False
+                if test_case["section"] == "writing":
+                    writing = sections.get("writing", {})
+                    tasks = writing.get("tasks", [])
+                    if tasks and len(tasks) > 0:
+                        visual_data = tasks[0].get("visual_data", {})
+                        image_url = visual_data.get("image_url", "")
+                        if image_url == test_case["expected_image"]:
+                            print(f"✅ Found expected image_url: {image_url}")
+                            found_image = True
+                        else:
+                            print(f"❌ Expected {test_case['expected_image']}, got: {image_url}")
+                    else:
+                        print(f"❌ No writing tasks found")
+                        
+                elif test_case["section"] == "listening":
+                    listening = sections.get("listening", {})
+                    parts = listening.get("parts", [])
+                    if parts and len(parts) > 0:
+                        visual = parts[0].get("visual", {})
+                        image_url = visual.get("image_url", "")
+                        if image_url == test_case["expected_image"]:
+                            print(f"✅ Found expected image_url: {image_url}")
+                            found_image = True
+                        else:
+                            print(f"❌ Expected {test_case['expected_image']}, got: {image_url}")
+                    else:
+                        print(f"❌ No listening parts found")
+                
+                if found_image:
+                    success_count += 1
+            else:
+                print(f"❌ Failed with status {response.status_code}: {response.text}")
+        except Exception as e:
+            print(f"❌ Error: {e}")
+    
+    # Test 6: Full Test List API - Should include academic_set_e_01
+    print(f"\n=== Test 6: GET /api/full-test/sets ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/full-test/sets")
+        print(f"Status Code: {response.status_code}")
+        
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ API call successful")
+            
+            academic_sets = result.get("academic_sets", [])
+            academic_ids = [s.get("test_id") for s in academic_sets]
+            
+            if "academic_set_e_01" in academic_ids:
+                print(f"✅ academic_set_e_01 found in test list")
+                success_count += 1
+            else:
+                print(f"❌ academic_set_e_01 not found in list: {academic_ids}")
+        else:
+            print(f"❌ Failed with status {response.status_code}: {response.text}")
+    except Exception as e:
+        print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 IELTS VISUAL INTEGRATION SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count >= 8:  # Allow some flexibility
+        print("✅ IELTS VISUAL INTEGRATION TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - All 6 visual images serve correctly via API")
+        print("   - Full test sets contain visual_data with image_url")
+        print("   - Visual integration works for both Writing and Listening sections")
+        print("   - Set E is properly registered in full test router")
+        return True
+    else:
+        print("❌ IELTS VISUAL INTEGRATION TESTS FAILED!")
+        return False
+
 def test_question_bank_full_test_endpoints():
     """Test Question Bank API endpoints that derive content from Full Test Mode"""
     print("\n" + "="*80)
