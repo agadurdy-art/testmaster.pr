@@ -10,6 +10,8 @@ import {
   Mic, Square, SkipForward, Headphones, ChevronRight
 } from 'lucide-react';
 import { toast } from 'sonner';
+import MapLabelling from '../components/listening/MapLabelling';
+import OpinionMatching, { MatchingFeatures } from '../components/listening/OpinionMatching';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
