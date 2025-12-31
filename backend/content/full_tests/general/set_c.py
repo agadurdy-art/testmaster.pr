@@ -39,6 +39,7 @@ GENERAL_SET_C = {
                     # Visual Map Data - Multi-floor shopping centre
                     "visual": {
                         "type": "floor_plan",
+                        "image_url": "general_set_c_shopping.png",
                         "title": "Riverside Shopping Centre - Floor Plans",
                         "floors": [
                             {
