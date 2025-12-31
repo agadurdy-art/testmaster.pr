@@ -150,6 +150,9 @@ def get_test_by_id(test_id: str) -> Optional[Dict[str, Any]]:
             test = ACADEMIC_SET_D.copy()
             test["sections"]["reading"] = ACADEMIC_SET_D_READING
             return test
+    elif test_id == "academic_set_e_01":
+        if ACADEMIC_SET_E:
+            return ACADEMIC_SET_E
     elif test_id == "general_set_a_01":
         return GENERAL_SET_A
     elif test_id == "general_set_b_01":
