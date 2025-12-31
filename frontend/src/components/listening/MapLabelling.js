@@ -1,4 +1,5 @@
 import React from 'react';
+import CampusMap, { FloorPlanMap, TownMap } from './CampusMap';
 
 /**
  * IELTS Map Labelling Component
