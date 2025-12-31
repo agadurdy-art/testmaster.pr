@@ -6207,12 +6207,6 @@ if __name__ == "__main__":
     else:
         print("❌ SOME VISUAL INTEGRATION TESTS FAILED! Check the output above for details.")
     
-    print(f"Set B Full Test Mode Content: {'✅' if set_b_passed else '❌'}")
-    print(f"Question Bank Stats (Set B): {'✅' if qb_stats_passed else '❌'}")
-    print(f"Question Bank Full Test Endpoints: {'✅' if qb_full_test_passed else '❌'}")
-    print(f"Question Bank Practice Endpoints: {'✅' if qb_practice_passed else '❌'}")
-    print(f"Full Test Mode APIs: {'✅' if full_test_passed else '❌'}")
-    
-    print("\n🎯 Set B content testing complete!")
+    print("\n🎯 Visual integration testing complete!")
     
     exit(0 if all_passed else 1)
