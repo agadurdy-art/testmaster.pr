@@ -87,6 +87,13 @@ except ImportError:
     GENERAL_SET_D = None
     print("Warning: Could not import General Training Set D")
 
+# Import Set E content
+try:
+    from content.full_tests.academic.set_e import ACADEMIC_SET_E
+except ImportError:
+    ACADEMIC_SET_E = None
+    print("Warning: Could not import Academic Set E")
+
 
 # ============ TEST REGISTRY ============
 
