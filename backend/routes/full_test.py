@@ -105,7 +105,7 @@ def get_all_test_sets() -> Dict[str, Any]:
     }
     
     # Academic sets
-    for test_data in [ACADEMIC_SET_A, ACADEMIC_SET_B, ACADEMIC_SET_C, ACADEMIC_SET_D]:
+    for test_data in [ACADEMIC_SET_A, ACADEMIC_SET_B, ACADEMIC_SET_C, ACADEMIC_SET_D, ACADEMIC_SET_E]:
         if test_data:
             sets["academic"].append({
                 "test_id": test_data["test_id"],
