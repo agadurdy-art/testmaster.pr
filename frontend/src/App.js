@@ -375,6 +375,11 @@ function AppWithSessionHandler() {
           path="/full-test/results/:sessionId" 
           element={user ? <FullTestResults user={user} /> : <Navigate to="/" />} 
         />
+        {/* Admin Tools */}
+        <Route 
+          path="/admin/visual-generator" 
+          element={user ? <VisualGenerator /> : <Navigate to="/" />} 
+        />
       </Routes>
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
