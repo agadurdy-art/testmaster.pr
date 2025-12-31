@@ -261,6 +261,7 @@ In next week's lecture, we'll examine sleep disorders and their treatments. Plea
                     "prompt": "The charts below show the percentage of water used for different purposes in six areas of the world.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "visual_data": {
                         "type": "bar_chart",
+                        "image_url": "academic_set_a_barchart.png",
                         "title": "Water Usage by Sector (%)",
                         "categories": ["North America", "South America", "Europe", "Africa", "Central Asia", "Southeast Asia"],
                         "data": [
