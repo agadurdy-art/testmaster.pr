@@ -604,6 +604,189 @@ export default function FullTestInterface({ user }) {
     );
   };
 
+  // ============ HELPER: RENDER LISTENING QUESTIONS BASED ON TYPE ============
+  const renderListeningQuestions = (partData) => {
+    if (!partData) return null;
+    
+    const questionStartNum = (listeningPart - 1) * 10 + 1;
+    const hasMapLabelling = partData.question_types?.includes('map_labelling') || 
+                            partData.questions?.some(q => q.type === 'map_labelling');
+    const hasMatching = partData.question_types?.includes('matching') ||
+                        partData.questions?.some(q => q.type === 'matching' || q.type === 'opinion_matching');
+    
+    // Check for visual data
+    const visual = partData.visual || partData.visual_data;
+    
+    // If has map labelling questions with visual
+    if (hasMapLabelling && visual) {
+      return (
+        <div className="space-y-6">
+          {/* Map Component */}
+          <MapLabelling
+            visual={visual}
+            questions={partData.questions}
+            answers={sectionAnswers.listening}
+            onAnswerChange={(qId, value) => updateAnswer('listening', qId, value)}
+            questionStartNum={questionStartNum}
+          />
+          
+          {/* Non-map questions */}
+          {partData.questions?.filter(q => q.type !== 'map_labelling').length > 0 && (
+            <div className="bg-white border-2 border-slate-200 rounded-lg">
+              <div className="p-4 bg-slate-50 border-b border-slate-200">
+                <h3 className="font-bold text-lg text-slate-900">
+                  Other Questions
+                </h3>
+                <p className="text-slate-600 mt-1">
+                  Complete the notes. Write <strong>ONE WORD ONLY</strong> in each gap.
+                </p>
+              </div>
+              <div className="p-6 space-y-4">
+                {partData.questions?.filter(q => q.type !== 'map_labelling').map((q, idx) => {
+                  const qNum = questionStartNum + partData.questions.indexOf(q);
+                  const questionParts = q.question?.split('______') || [q.question];
+                  
+                  return (
+                    <div key={q.id} className="flex items-start gap-2 py-2 text-slate-700 text-lg leading-relaxed">
+                      <span className="text-slate-400 min-w-[20px]">•</span>
+                      <div className="flex-1 flex flex-wrap items-center gap-1">
+                        <span>{questionParts[0]}</span>
+                        <input
+                          type="text"
+                          value={sectionAnswers.listening[q.id] || ''}
+                          onChange={(e) => updateAnswer('listening', q.id, e.target.value)}
+                          className="w-36 px-3 py-2 border-2 border-blue-400 rounded-md text-center font-medium 
+                                   bg-blue-50 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 focus:outline-none
+                                   placeholder:text-blue-300 placeholder:font-bold"
+                          placeholder={String(qNum)}
+                        />
+                        {questionParts[1] && <span>{questionParts[1]}</span>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+    
+    // If has matching/opinion questions with options box
+    if (hasMatching && partData.matching_options) {
+      const matchingQuestions = partData.questions?.filter(q => 
+        q.type === 'matching' || q.type === 'opinion_matching'
+      ) || [];
+      const otherQuestions = partData.questions?.filter(q => 
+        q.type !== 'matching' && q.type !== 'opinion_matching'
+      ) || [];
+      
+      return (
+        <div className="space-y-6">
+          {/* Section Title */}
+          <h4 className="font-bold text-xl text-slate-800 pb-3 border-b border-slate-200">
+            {partData.title}
+          </h4>
+          
+          {/* Opinion/Matching Box */}
+          <OpinionMatching
+            title={partData.matching_title || "Options"}
+            options={partData.matching_options}
+            questions={matchingQuestions}
+            answers={sectionAnswers.listening}
+            onAnswerChange={(qId, value) => updateAnswer('listening', qId, value)}
+            questionStartNum={questionStartNum}
+          />
+          
+          {/* Other questions if any */}
+          {otherQuestions.length > 0 && renderDefaultQuestions(otherQuestions, questionStartNum + matchingQuestions.length)}
+        </div>
+      );
+    }
+    
+    // Default: Note completion style
+    return (
+      <div 
+        className="bg-white border-2 border-slate-200 rounded-lg"
+        onContextMenu={handleTextSelection}
+      >
+        <div className="p-4 bg-slate-50 border-b border-slate-200">
+          <h3 className="font-bold text-lg text-slate-900">
+            Questions {questionStartNum} - {questionStartNum + (partData.questions?.length || 10) - 1}
+          </h3>
+          <p className="text-slate-600 mt-1">
+            Complete the notes. Write <strong>ONE WORD ONLY</strong> in each gap.
+          </p>
+        </div>
+        
+        <div className="p-6">
+          {/* Section Title */}
+          <h4 className="font-bold text-xl text-slate-800 mb-6 pb-3 border-b border-slate-200">
+            {partData.title}
+          </h4>
+          
+          {/* Questions in note completion format */}
+          <div className="space-y-4 select-text">
+            {partData.questions?.map((q, idx) => {
+              const qNum = questionStartNum + idx;
+              const questionParts = q.question?.split('______') || [q.question];
+              
+              return (
+                <div key={q.id} className="flex items-start gap-2 py-2 text-slate-700 text-lg leading-relaxed">
+                  <span className="text-slate-400 min-w-[20px]">•</span>
+                  <div className="flex-1 flex flex-wrap items-center gap-1">
+                    <span>{questionParts[0]}</span>
+                    <input
+                      type="text"
+                      value={sectionAnswers.listening[q.id] || ''}
+                      onChange={(e) => updateAnswer('listening', q.id, e.target.value)}
+                      className="w-36 px-3 py-2 border-2 border-blue-400 rounded-md text-center font-medium 
+                               bg-blue-50 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 focus:outline-none
+                               placeholder:text-blue-300 placeholder:font-bold"
+                      placeholder={String(qNum)}
+                    />
+                    {questionParts[1] && <span>{questionParts[1]}</span>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Tip for highlighting */}
+          <div className="mt-4 p-2 bg-slate-100 rounded text-xs text-slate-500">
+            💡 Tip: Select text and right-click to highlight or add notes
+          </div>
+        </div>
+      </div>
+    );
+  };
+  
+  // Helper for rendering default questions
+  const renderDefaultQuestions = (questions, startNum) => (
+    <div className="bg-white border-2 border-slate-200 rounded-lg p-6 space-y-4">
+      {questions.map((q, idx) => {
+        const qNum = startNum + idx;
+        const questionParts = q.question?.split('______') || [q.question];
+        return (
+          <div key={q.id} className="flex items-start gap-2 py-2 text-slate-700 text-lg">
+            <span className="text-slate-400 min-w-[20px]">•</span>
+            <div className="flex-1 flex flex-wrap items-center gap-1">
+              <span>{questionParts[0]}</span>
+              <input
+                type="text"
+                value={sectionAnswers.listening[q.id] || ''}
+                onChange={(e) => updateAnswer('listening', q.id, e.target.value)}
+                className="w-36 px-3 py-2 border-2 border-blue-400 rounded-md text-center font-medium bg-blue-50"
+                placeholder={String(qNum)}
+              />
+              {questionParts[1] && <span>{questionParts[1]}</span>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+
   // ============ RENDER LISTENING SECTION (IELTS STYLE) ============
   const renderListeningSection = () => {
     const listening = testData?.sections?.listening;
