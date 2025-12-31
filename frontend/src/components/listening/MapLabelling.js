@@ -21,7 +21,7 @@ export default function MapLabelling({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Try to load saved PNG from backend
+    // Try to load saved PNG from backend via API
     const loadMapImage = async () => {
       setLoading(true);
       
@@ -36,7 +36,7 @@ export default function MapLabelling({
         
         for (const name of possibleNames) {
           try {
-            const url = `${API_URL}/static/visuals/${name}.png`;
+            const url = `${API_URL}/api/visuals/image/${name}`;
             const res = await fetch(url, { method: 'HEAD' });
             if (res.ok) {
               setMapImageUrl(url);
@@ -49,9 +49,9 @@ export default function MapLabelling({
         }
       }
       
-      // Fallback: check for generic campus map
+      // Fallback: check for generic campus map (Set C)
       try {
-        const url = `${API_URL}/static/visuals/academic_set_c_campus.png`;
+        const url = `${API_URL}/api/visuals/image/academic_set_c_campus`;
         const res = await fetch(url, { method: 'HEAD' });
         if (res.ok) {
           setMapImageUrl(url);
