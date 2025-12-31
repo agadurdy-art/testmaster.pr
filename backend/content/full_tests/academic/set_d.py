@@ -260,6 +260,7 @@ Next week, we'll examine how these principles apply to addiction and behaviour c
                     
                     "visual_data": {
                         "type": "process",
+                        "image_url": "academic_set_d_process.png",
                         "title": "Plastic Bottle Recycling Process",
                         "stages": [
                             {"number": 1, "name": "Collection", "description": "Bottles collected from recycling bins"},
