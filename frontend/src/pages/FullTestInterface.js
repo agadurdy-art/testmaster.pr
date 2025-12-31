@@ -1008,38 +1008,240 @@ export default function FullTestInterface({ user }) {
     const writing = testData?.sections?.writing;
     const task = writing?.tasks?.[writingTask - 1];
     
-    const renderBarChart = (visualData) => {
-      if (!visualData || visualData.type !== 'bar_chart') return null;
-      const { categories, data, title } = visualData;
-      const colors = ['#3B82F6', '#10B981', '#F59E0B'];
+    // Comprehensive visual renderer for all chart types
+    const renderVisual = (visualData) => {
+      if (!visualData) return null;
       
-      return (
-        <div className="mt-4 p-4 bg-white border rounded-lg">
-          <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>
-          <div className="flex justify-center gap-6 mb-4">
-            {data.map((item, idx) => (
-              <div key={item.sector} className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded" style={{ backgroundColor: colors[idx] }}></div>
-                <span className="text-sm text-slate-600">{item.sector}</span>
-              </div>
-            ))}
+      // If image URL is provided, render the PNG directly
+      if (visualData.image_url) {
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg">
+            <img 
+              src={`${API_URL}/api/visuals/image/${visualData.image_url.replace('.png', '')}`}
+              alt={visualData.title || 'Visual'}
+              className="w-full max-w-2xl mx-auto rounded"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                console.error('Failed to load visual:', visualData.image_url);
+              }}
+            />
+            {visualData.title && (
+              <p className="text-center text-sm text-slate-600 mt-2">{visualData.title}</p>
+            )}
           </div>
-          <div className="space-y-3">
-            {categories.map((category, catIdx) => (
-              <div key={category} className="flex items-center gap-3">
-                <div className="w-28 text-sm text-slate-600 text-right">{category}</div>
-                <div className="flex-1 flex gap-1">
-                  {data.map((item, idx) => (
-                    <div key={item.sector} className="h-6 rounded" style={{ width: `${item.values[catIdx]}%`, backgroundColor: colors[idx], minWidth: item.values[catIdx] > 0 ? '20px' : '0' }}>
-                      {item.values[catIdx] > 10 && <span className="text-xs text-white px-1">{item.values[catIdx]}%</span>}
-                    </div>
-                  ))}
+        );
+      }
+      
+      // Bar Chart
+      if (visualData.type === 'bar_chart') {
+        const { categories, data, title } = visualData;
+        const colors = ['#3B82F6', '#10B981', '#F59E0B'];
+        
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg">
+            <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>
+            <div className="flex justify-center gap-6 mb-4">
+              {data.map((item, idx) => (
+                <div key={item.sector} className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded" style={{ backgroundColor: colors[idx] }}></div>
+                  <span className="text-sm text-slate-600">{item.sector}</span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="space-y-3">
+              {categories.map((category, catIdx) => (
+                <div key={category} className="flex items-center gap-3">
+                  <div className="w-28 text-sm text-slate-600 text-right">{category}</div>
+                  <div className="flex-1 flex gap-1">
+                    {data.map((item, idx) => (
+                      <div key={item.sector} className="h-6 rounded" style={{ width: `${item.values[catIdx]}%`, backgroundColor: colors[idx], minWidth: item.values[catIdx] > 0 ? '20px' : '0' }}>
+                        {item.values[catIdx] > 10 && <span className="text-xs text-white px-1">{item.values[catIdx]}%</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
+      
+      // Line Graph
+      if (visualData.type === 'line_graph') {
+        const { title, datasets, x_labels } = visualData;
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg">
+            <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>
+            <div className="flex justify-center gap-4 mb-4 flex-wrap">
+              {datasets?.map((ds) => (
+                <div key={ds.country} className="flex items-center gap-2">
+                  <div className="w-4 h-1" style={{ backgroundColor: ds.color }}></div>
+                  <span className="text-sm text-slate-600">{ds.country}</span>
+                </div>
+              ))}
+            </div>
+            <div className="relative h-64 border-l border-b border-slate-300 ml-8">
+              {/* Y-axis labels */}
+              <div className="absolute -left-8 top-0 h-full flex flex-col justify-between text-xs text-slate-500">
+                <span>100%</span><span>75%</span><span>50%</span><span>25%</span><span>0%</span>
+              </div>
+              {/* Data lines visualization */}
+              <div className="absolute inset-0 flex items-end justify-around px-2 pb-6">
+                {x_labels?.map((year, idx) => (
+                  <div key={year} className="flex flex-col items-center">
+                    {datasets?.map((ds) => (
+                      <div 
+                        key={ds.country}
+                        className="w-2 h-2 rounded-full mb-1"
+                        style={{ 
+                          backgroundColor: ds.color,
+                          marginBottom: `${ds.data[idx] * 2}px`
+                        }}
+                        title={`${ds.country}: ${ds.data[idx]}%`}
+                      />
+                    ))}
+                    <span className="text-xs text-slate-500 mt-2">{year}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {visualData.visual_description && (
+              <p className="text-xs text-slate-500 mt-3 whitespace-pre-wrap">{visualData.visual_description}</p>
+            )}
+          </div>
+        );
+      }
+      
+      // Process Diagram
+      if (visualData.type === 'process') {
+        const { title, stages } = visualData;
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg">
+            <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>
+            <div className="flex flex-wrap justify-center gap-2">
+              {stages?.map((stage, idx) => (
+                <div key={stage.number} className="flex items-center">
+                  <div className="bg-blue-100 border border-blue-300 rounded-lg p-3 text-center min-w-[120px]">
+                    <div className="text-xs text-blue-600 font-medium">Stage {stage.number}</div>
+                    <div className="text-sm font-semibold text-slate-800">{stage.name}</div>
+                    <div className="text-xs text-slate-500 mt-1">{stage.description}</div>
+                  </div>
+                  {idx < stages.length - 1 && (
+                    <ArrowRight className="w-5 h-5 text-slate-400 mx-1" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+      
+      // Pie Chart Comparison
+      if (visualData.type === 'pie_chart_comparison') {
+        const { title, charts } = visualData;
+        const pieColors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg">
+            <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>
+            <div className="grid grid-cols-2 gap-6">
+              {charts?.map((chart) => (
+                <div key={chart.year} className="text-center">
+                  <h5 className="font-medium text-slate-700 mb-3">{chart.year}</h5>
+                  <div className="space-y-2">
+                    {chart.data?.map((item, idx) => (
+                      <div key={item.reason} className="flex items-center gap-2">
+                        <div 
+                          className="h-4 rounded"
+                          style={{ 
+                            width: `${item.percentage * 2}px`, 
+                            backgroundColor: pieColors[idx % pieColors.length] 
+                          }}
+                        />
+                        <span className="text-xs text-slate-600">{item.reason}: {item.percentage}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+      
+      // Combined charts (bar + table)
+      if (visualData.type === 'combined') {
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg space-y-4">
+            {visualData.charts?.map((chart, idx) => {
+              if (chart.chart_type === 'bar') {
+                return (
+                  <div key={idx}>
+                    <h4 className="font-semibold text-center text-slate-900 mb-3">{chart.title}</h4>
+                    <div className="space-y-2">
+                      {chart.data?.map((row) => (
+                        <div key={row.city} className="flex items-center gap-3">
+                          <div className="w-24 text-sm text-slate-600 text-right">{row.city}</div>
+                          <div className="flex gap-1 flex-1">
+                            <div className="h-5 bg-blue-400 rounded" style={{ width: `${row['2010'] * 2}%` }}>
+                              <span className="text-xs text-white px-1">{row['2010']}%</span>
+                            </div>
+                            <div className="h-5 bg-green-400 rounded" style={{ width: `${row['2020'] * 2}%` }}>
+                              <span className="text-xs text-white px-1">{row['2020']}%</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-center gap-4 mt-2 text-xs">
+                      <span className="flex items-center gap-1"><div className="w-3 h-3 bg-blue-400 rounded"></div> 2010</span>
+                      <span className="flex items-center gap-1"><div className="w-3 h-3 bg-green-400 rounded"></div> 2020</span>
+                    </div>
+                  </div>
+                );
+              }
+              if (chart.chart_type === 'table') {
+                return (
+                  <div key={idx}>
+                    <h4 className="font-semibold text-center text-slate-900 mb-3">{chart.title}</h4>
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          {chart.headers?.map((h) => (
+                            <th key={h} className="text-left py-2 px-3 text-slate-600">{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {chart.data?.map((row, rIdx) => (
+                          <tr key={rIdx} className="border-b">
+                            {row.map((cell, cIdx) => (
+                              <td key={cIdx} className="py-2 px-3">{cell}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              }
+              return null;
+            })}
+          </div>
+        );
+      }
+      
+      // Fallback: show visual_description if available
+      if (visualData.visual_description) {
+        return (
+          <div className="mt-4 p-4 bg-slate-100 border rounded-lg">
+            <pre className="text-xs text-slate-700 whitespace-pre-wrap font-mono">
+              {visualData.visual_description}
+            </pre>
+          </div>
+        );
+      }
+      
+      return null;
     };
     
     return (
