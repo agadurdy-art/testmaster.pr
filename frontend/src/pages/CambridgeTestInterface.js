@@ -1176,12 +1176,18 @@ export default function CambridgeTestInterface() {
 
   // Generate TTS for current question
   const playQuestionAudio = async (questionText, isFirst = false) => {
+    const playCount = questionPlayCounts[speakingQuestionIndex] || 0;
+    if (playCount >= 2) {
+      toast.error('Maximum 2 plays reached for this question');
+      return;
+    }
+    
+    setSpeakingState(SPEAKING_STATES.LOADING_AUDIO);
+    
     try {
-      setIsTTSPlaying(true);
-      
       // Add transition phrase if not first question
       let textToSpeak = questionText;
-      if (!isFirst) {
+      if (!isFirst && playCount === 0) {
         const transitions = [
           "Now, let me ask you... ",
           "Moving on... ",
@@ -1199,19 +1205,28 @@ export default function CambridgeTestInterface() {
       
       const data = await res.json();
       if (data.audio_url) {
+        // Increment play count
+        setQuestionPlayCounts(prev => ({
+          ...prev,
+          [speakingQuestionIndex]: playCount + 1
+        }));
+        
         setTtsAudioUrl(`${API_URL}${data.audio_url}`);
+        setSpeakingState(SPEAKING_STATES.PLAYING_PROMPT);
+      } else {
+        throw new Error('No audio URL returned');
       }
     } catch (error) {
       console.error('TTS Error:', error);
       toast.error('Could not play question audio');
-      setIsTTSPlaying(false);
+      setSpeakingState(SPEAKING_STATES.IDLE);
     }
   };
 
-  // Handle TTS audio ended
+  // Handle TTS audio ended - now ready to record
   const handleTTSEnded = () => {
-    setIsTTSPlaying(false);
-    setShowNextQuestion(true);
+    setSpeakingState(SPEAKING_STATES.READY_TO_RECORD);
+    setTtsAudioUrl(null); // Clear URL to prevent re-play
   };
 
   // Move to next question in Part 1/3
