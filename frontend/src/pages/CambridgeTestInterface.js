@@ -65,6 +65,8 @@ export default function CambridgeTestInterface() {
   const [showNextQuestion, setShowNextQuestion] = useState(false);
   const [part2PrepTime, setPart2PrepTime] = useState(60);
   const [isPreparing, setIsPreparing] = useState(false);
+  const [questionPlayCounts, setQuestionPlayCounts] = useState({});  // Track how many times each question played
+  const [questionRecordings, setQuestionRecordings] = useState({});  // Store recordings per question
   const ttsAudioRef = useRef(null);
 
   useEffect(() => {
