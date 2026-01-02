@@ -94,6 +94,13 @@ except ImportError:
     ACADEMIC_SET_E = None
     print("Warning: Could not import Academic Set E")
 
+# Import Cambridge IELTS content
+try:
+    from content.cambridge_tests.ielts17.test1 import IELTS17_TEST1
+except ImportError:
+    IELTS17_TEST1 = None
+    print("Warning: Could not import Cambridge IELTS 17 Test 1")
+
 
 # ============ TEST REGISTRY ============
 
