@@ -58,6 +58,15 @@ export default function CambridgeTestInterface() {
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
+  // Speaking state for TTS and questions
+  const [speakingQuestionIndex, setSpeakingQuestionIndex] = useState(0);
+  const [isTTSPlaying, setIsTTSPlaying] = useState(false);
+  const [ttsAudioUrl, setTtsAudioUrl] = useState(null);
+  const [showNextQuestion, setShowNextQuestion] = useState(false);
+  const [part2PrepTime, setPart2PrepTime] = useState(60);
+  const [isPreparing, setIsPreparing] = useState(false);
+  const ttsAudioRef = useRef(null);
+
   useEffect(() => {
     loadTest();
   }, [bookId, testId]);
