@@ -1655,12 +1655,14 @@ export default function CambridgeTestInterface() {
                   variant="outline" 
                   className="flex-1"
                   onClick={() => setShowSubmitModal(false)}
+                  data-testid="cancel-submit"
                 >
                   Cancel
                 </Button>
                 <Button 
                   className="flex-1 bg-red-600 hover:bg-red-700"
                   onClick={handleSubmitSection}
+                  data-testid="confirm-submit"
                 >
                   Submit
                 </Button>
