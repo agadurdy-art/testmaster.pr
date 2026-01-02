@@ -43,10 +43,11 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 - **Writing Tasks - Cambridge rubric format**
   - Task 1: "You should spend 20 minutes..." + italic rubric + visuals
   - Task 2: "Write about the following topic:" + italic rubric + "Give reasons..."
-- **Speaking Part 1 & 3 - Audio-only questions**
+- **Speaking Part 1 & 3 - Audio-only questions with State Machine**
   - Questions HIDDEN - only topic shown
   - "Listen to Question" (2 plays max via ElevenLabs TTS)
-  - "Record Answer" per question
+  - "Record Answer" per question - **BUG FIXED**: No longer replays audio
+  - State machine: IDLE → LOADING_AUDIO → PLAYING_PROMPT → READY_TO_RECORD → RECORDING → RECORDED
 - **Listening audio** - Working via `/api/audio/cambridge/` endpoint
 - **Test Results Page** - Full evaluation with:
   - Overall Band score
@@ -56,9 +57,9 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
   - "Get AI Feedback" for Writing
 
 ### In Progress
-- Answer keys (need to extract from PDF)
-- Writing AI evaluation via GPT-4o
-- Speaking full-test evaluation
+- Answer keys (need to extract from PDF - placeholders currently)
+- Writing AI evaluation endpoint for Cambridge tests
+- Speaking full-test evaluation integration
 
 ### Pending
 - IELTS 16, 18, 19 integration
@@ -78,3 +79,8 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 ## Credentials
 - Test account: test@ielts.com / admin123
+
+## Last Updated: Jan 2, 2025
+- Fixed Speaking UI bug: Record button no longer replays question audio
+- Added missing React imports (CheckCircle, RefreshCw)
+- Added missing state variables for evaluation features
