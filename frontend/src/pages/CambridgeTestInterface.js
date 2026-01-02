@@ -753,7 +753,8 @@ export default function CambridgeTestInterface() {
       formData.append('question', questionText);
       formData.append('part', String(currentPart + 1));
       formData.append('question_index', String(questionIndex));
-      formData.append('evaluation_type', 'free'); // or 'premium' for Azure
+      // Send user plan for premium evaluation (Azure pronunciation analysis)
+      formData.append('user_plan', user?.plan || 'free');
 
       const evalResponse = await fetch(`${API_URL}/api/cambridge/speaking/evaluate`, {
         method: 'POST',
