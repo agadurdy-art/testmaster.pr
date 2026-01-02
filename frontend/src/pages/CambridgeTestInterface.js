@@ -1394,13 +1394,63 @@ export default function CambridgeTestInterface() {
                   
                   {/* Show recorded audio for this question */}
                   {questionRecordings[speakingQuestionIndex] && (
-                    <div className="mt-4 text-center">
-                      <p className="text-sm text-green-400 mb-2">✓ Answer recorded</p>
+                    <div className="mt-4 text-center space-y-3">
+                      <p className="text-sm text-green-400">✓ Answer recorded</p>
                       <audio 
                         src={questionRecordings[speakingQuestionIndex]} 
                         controls 
                         className="mx-auto"
                       />
+                      
+                      {/* Evaluate Button */}
+                      <Button
+                        onClick={() => evaluateSpeakingResponse(speakingQuestionIndex, questions[speakingQuestionIndex])}
+                        disabled={isEvaluating}
+                        className="bg-blue-600 hover:bg-blue-700"
+                      >
+                        {isEvaluating ? (
+                          <>Evaluating...</>
+                        ) : questionEvaluations[speakingQuestionIndex] ? (
+                          <>View Feedback (Band {questionEvaluations[speakingQuestionIndex].overall_band})</>
+                        ) : (
+                          <>Get AI Feedback</>
+                        )}
+                      </Button>
+                      
+                      {/* Show evaluation result inline */}
+                      {questionEvaluations[speakingQuestionIndex] && (
+                        <div className="mt-4 p-4 bg-slate-700 rounded-lg text-left">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-medium text-white">Estimated Band:</span>
+                            <Badge className="bg-orange-500 text-white text-lg px-3">
+                              {questionEvaluations[speakingQuestionIndex].overall_band}
+                            </Badge>
+                          </div>
+                          <p className="text-sm text-gray-300 mb-2">
+                            {questionEvaluations[speakingQuestionIndex].feedback}
+                          </p>
+                          {questionEvaluations[speakingQuestionIndex].strengths?.length > 0 && (
+                            <div className="mt-2">
+                              <p className="text-xs text-green-400 font-medium">Strengths:</p>
+                              <ul className="text-xs text-gray-400 list-disc ml-4">
+                                {questionEvaluations[speakingQuestionIndex].strengths.map((s, i) => (
+                                  <li key={i}>{s}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                          {questionEvaluations[speakingQuestionIndex].improvements?.length > 0 && (
+                            <div className="mt-2">
+                              <p className="text-xs text-amber-400 font-medium">To Improve:</p>
+                              <ul className="text-xs text-gray-400 list-disc ml-4">
+                                {questionEvaluations[speakingQuestionIndex].improvements.map((s, i) => (
+                                  <li key={i}>{s}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
