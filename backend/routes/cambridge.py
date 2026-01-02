@@ -593,7 +593,9 @@ def compare_answers(user_ans, correct_ans) -> bool:
     if not user_ans or not correct_ans:
         return False
     
-    normalize = lambda s: str(s).lower().strip().replace(".", "").replace(",", "")
+    def normalize(s):
+        return str(s).lower().strip().replace(".", "").replace(",", "")
+    
     user_normalized = normalize(user_ans)
     
     if isinstance(correct_ans, list):
@@ -607,17 +609,28 @@ def compare_answers(user_ans, correct_ans) -> bool:
 
 def calculate_band_from_percentage(percentage: float) -> float:
     """Convert percentage to IELTS band score"""
-    if percentage >= 90: return 9.0
-    elif percentage >= 82: return 8.5
-    elif percentage >= 75: return 8.0
-    elif percentage >= 68: return 7.5
-    elif percentage >= 60: return 7.0
-    elif percentage >= 52: return 6.5
-    elif percentage >= 45: return 6.0
-    elif percentage >= 38: return 5.5
-    elif percentage >= 30: return 5.0
-    elif percentage >= 22: return 4.5
-    else: return 4.0
+    if percentage >= 90:
+        return 9.0
+    elif percentage >= 82:
+        return 8.5
+    elif percentage >= 75:
+        return 8.0
+    elif percentage >= 68:
+        return 7.5
+    elif percentage >= 60:
+        return 7.0
+    elif percentage >= 52:
+        return 6.5
+    elif percentage >= 45:
+        return 6.0
+    elif percentage >= 38:
+        return 5.5
+    elif percentage >= 30:
+        return 5.0
+    elif percentage >= 22:
+        return 4.5
+    else:
+        return 4.0
 
 
 def get_skill_tip(section: str, qtype: str, accuracy: float) -> str:
