@@ -386,6 +386,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load visual generator routes: {e}")
 
+# Cambridge IELTS tests routes
+try:
+    from routes.cambridge import router as cambridge_router
+    app.include_router(cambridge_router)
+    print("✅ Cambridge IELTS routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Cambridge routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
