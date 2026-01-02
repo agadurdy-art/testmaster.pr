@@ -249,6 +249,63 @@ export default function CambridgeTestInterface() {
     }
   };
 
+  // Recording functions for individual Speaking questions
+  const startRecordingForQuestion = async (questionIndex) => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      chunksRef.current = [];
+      
+      mediaRecorder.ondataavailable = (e) => {
+        chunksRef.current.push(e.data);
+      };
+      
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+        const url = URL.createObjectURL(blob);
+        setQuestionRecordings(prev => ({
+          ...prev,
+          [questionIndex]: url
+        }));
+        // Also save to server
+        saveRecordingToServer(blob, questionIndex);
+      };
+      
+      mediaRecorder.start();
+      setIsRecording(true);
+    } catch (error) {
+      toast.error('Could not access microphone');
+    }
+  };
+
+  const stopRecordingForQuestion = (questionIndex) => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const saveRecordingToServer = async (blob, questionIndex) => {
+    try {
+      const formData = new FormData();
+      formData.append('audio', blob, `question_${questionIndex}.webm`);
+      formData.append('user_id', 'test_user'); // In real app, use actual user ID
+      formData.append('test_id', `${bookId}_${testId}`);
+      formData.append('section', currentSection);
+      formData.append('part', String(currentPart + 1));
+      formData.append('question_index', String(questionIndex));
+      
+      await fetch(`${API_URL}/api/recordings/save`, {
+        method: 'POST',
+        body: formData
+      });
+      toast.success('Recording saved');
+    } catch (error) {
+      console.error('Failed to save recording:', error);
+    }
+  };
+
   const sections = [
     { id: 'listening', label: 'Listening', icon: Headphones, color: 'blue', time: '40 min' },
     { id: 'reading', label: 'Reading', icon: BookOpen, color: 'green', time: '60 min' },
