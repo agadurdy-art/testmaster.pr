@@ -2207,6 +2207,205 @@ export default function CambridgeTestInterface() {
       
       {/* Review Panel */}
       {renderReviewPanel()}
+      
+      {/* Settings Modal */}
+      {showSettingsModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-md bg-slate-800 text-white rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-slate-700">
+              <h3 className="font-bold text-lg">Settings</h3>
+              <Button variant="ghost" size="sm" onClick={() => setShowSettingsModal(false)} className="text-white hover:bg-slate-700">
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="p-4 space-y-6">
+              <p className="text-sm text-slate-300">
+                If you wish, you can change these settings to make the test easier to read.
+              </p>
+              
+              {/* Text Size */}
+              <div>
+                <label className="text-sm font-medium text-slate-300 mb-2 block">Text size</label>
+                <div className="flex gap-2">
+                  {['standard', 'large', 'extra-large'].map(size => (
+                    <button
+                      key={size}
+                      onClick={() => setTextSize(size)}
+                      className={`flex-1 py-2 px-3 rounded text-sm capitalize ${
+                        textSize === size 
+                          ? 'bg-blue-600 text-white' 
+                          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      {size.replace('-', ' ')}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Colours */}
+              <div>
+                <label className="text-sm font-medium text-slate-300 mb-2 block">Colours</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { id: 'standard', label: 'Standard', bg: 'bg-white', text: 'text-black' },
+                    { id: 'yellow-black', label: 'Yellow on black', bg: 'bg-black', text: 'text-yellow-400' },
+                    { id: 'blue-white', label: 'Blue on white', bg: 'bg-white', text: 'text-blue-700' },
+                    { id: 'blue-cream', label: 'Blue on cream', bg: 'bg-amber-50', text: 'text-blue-700' }
+                  ].map(theme => (
+                    <button
+                      key={theme.id}
+                      onClick={() => setColorTheme(theme.id)}
+                      className={`py-2 px-3 rounded text-sm border-2 ${theme.bg} ${theme.text} ${
+                        colorTheme === theme.id ? 'border-blue-500' : 'border-transparent'
+                      }`}
+                    >
+                      {theme.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="p-4 border-t border-slate-700">
+              <Button 
+                className="w-full bg-blue-600 hover:bg-blue-700"
+                onClick={() => setShowSettingsModal(false)}
+              >
+                OK
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+      
+      {/* Help Modal */}
+      {showHelpModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-lg bg-slate-800 text-white rounded-lg overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-slate-700">
+              <h3 className="font-bold text-lg">Help</h3>
+              <Button variant="ghost" size="sm" onClick={() => setShowHelpModal(false)} className="text-white hover:bg-slate-700">
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            {/* Help Tabs */}
+            <div className="flex border-b border-slate-700">
+              {[
+                { id: 'information', label: 'Information' },
+                { id: 'test-help', label: 'Test help' },
+                { id: 'task-help', label: 'Task help' }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setHelpTab(tab.id)}
+                  className={`flex-1 py-3 px-4 text-sm font-medium ${
+                    helpTab === tab.id 
+                      ? 'bg-slate-700 text-white border-b-2 border-blue-500' 
+                      : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            
+            <div className="p-4 min-h-[250px]">
+              {/* Information Tab */}
+              {helpTab === 'information' && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-white">Question Types</h4>
+                  <div className="space-y-3 text-sm text-slate-300">
+                    <div className="p-3 bg-slate-700 rounded">
+                      <p className="font-medium text-white mb-1">Multiple Choice</p>
+                      <p>Click on the answer option you think is correct.</p>
+                    </div>
+                    <div className="p-3 bg-slate-700 rounded">
+                      <p className="font-medium text-white mb-1">True/False/Not Given</p>
+                      <p>Select TRUE if the statement matches the passage, FALSE if it contradicts, or NOT GIVEN if there is no information.</p>
+                    </div>
+                    <div className="p-3 bg-slate-700 rounded">
+                      <p className="font-medium text-white mb-1">Gap Fill</p>
+                      <p>Type your answer in the text box. Follow the word limit instructions.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Test Help Tab */}
+              {helpTab === 'test-help' && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-white">Highlighting</h4>
+                  <div className="space-y-3 text-sm text-slate-300">
+                    <p>To highlight text in the passage:</p>
+                    <ol className="list-decimal list-inside space-y-2 ml-2">
+                      <li>Select the text you want to highlight using the mouse</li>
+                      <li>Right-click over the selected text</li>
+                      <li>Choose &ldquo;Highlight Yellow&rdquo; or &ldquo;Highlight Blue&rdquo;</li>
+                    </ol>
+                    <div className="p-3 bg-slate-700 rounded mt-4">
+                      <p className="font-medium text-white mb-2">Adding Notes</p>
+                      <p>You can also add notes to highlighted text by selecting &ldquo;Add Note&rdquo; from the context menu.</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Task Help Tab */}
+              {helpTab === 'task-help' && (
+                <div className="space-y-4">
+                  <h4 className="font-medium text-blue-400">
+                    {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} Section
+                  </h4>
+                  <ul className="space-y-2 text-sm text-slate-300">
+                    {currentSection === 'listening' && (
+                      <>
+                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> The audio will play automatically for each part</li>
+                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> You can only hear each recording once</li>
+                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> Write your answers while you listen</li>
+                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> Use the volume slider to adjust the audio level</li>
+                      </>
+                    )}
+                    {currentSection === 'reading' && (
+                      <>
+                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Read the passage carefully before answering</li>
+                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Use highlighting to mark key information</li>
+                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Pay attention to word limits for gap-fill questions</li>
+                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Click &ldquo;Hide&rdquo; to focus on the passage only</li>
+                      </>
+                    )}
+                    {currentSection === 'writing' && (
+                      <>
+                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Task 1: Write at least 150 words in 20 minutes</li>
+                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Task 2: Write at least 250 words in 40 minutes</li>
+                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Use the word count indicator to track progress</li>
+                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Plan your answer before writing</li>
+                      </>
+                    )}
+                    {currentSection === 'speaking' && (
+                      <>
+                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> Listen to each question carefully before recording</li>
+                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> You can listen to each question up to 2 times</li>
+                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> Speak clearly and at a natural pace</li>
+                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> For Part 2, use the 1-minute preparation time</li>
+                      </>
+                    )}
+                  </ul>
+                </div>
+              )}
+            </div>
+            
+            <div className="p-4 border-t border-slate-700">
+              <Button 
+                className="w-full bg-blue-600 hover:bg-blue-700"
+                onClick={() => setShowHelpModal(false)}
+              >
+                OK
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
