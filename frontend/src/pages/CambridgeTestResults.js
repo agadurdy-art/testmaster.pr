@@ -559,7 +559,7 @@ export default function CambridgeTestResults() {
                   {/* Examiner Comment */}
                   {task.feedback?.examiner_comment && (
                     <div className="mb-4 p-4 bg-white rounded-xl">
-                      <h5 className="font-semibold text-gray-900 mb-2">Teacher's Feedback</h5>
+                      <h5 className="font-semibold text-gray-900 mb-2">Teacher&apos;s Feedback</h5>
                       <p className="text-gray-700 leading-relaxed">{task.feedback.examiner_comment}</p>
                     </div>
                   )}
