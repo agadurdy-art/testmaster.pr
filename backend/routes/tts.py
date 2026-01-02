@@ -61,7 +61,7 @@ async def generate_tts(request: TTSRequest):
         cache_path = get_cache_path(request.text, request.voice_id)
         if cache_path.exists():
             return TTSResponse(
-                audio_url=f"/static/audio/tts_cache/{cache_path.name}",
+                audio_url=f"/api/audio/tts/{cache_path.name}",
                 cached=True
             )
         
