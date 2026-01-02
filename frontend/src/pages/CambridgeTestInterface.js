@@ -2223,31 +2223,32 @@ export default function CambridgeTestInterface() {
         {currentSection === 'speaking' && renderSpeakingSection()}
       </div>
 
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-20">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="text-sm text-gray-500">
-            Answered: <span className="font-medium text-gray-700">
-              {getAnsweredCount(currentSection)}
-            </span> / {getTotalQuestions(currentSection)} questions
-          </div>
-          <div className="flex items-center gap-3">
-            <Button 
-              variant="outline"
-              onClick={() => setShowReviewPanel(true)}
-              className="flex items-center gap-2"
-            >
-              <ListChecks className="w-4 h-4" />
-              Review
-            </Button>
+      {/* IELTS-Style Question Navigation Bar */}
+      {renderNavigationBar()}
+      
+      {/* Writing/Speaking Bottom Bar (when nav bar not shown) */}
+      {(currentSection === 'writing' || currentSection === 'speaking') && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-20">
+          <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div className="text-sm text-gray-500">
+              {currentSection === 'writing' ? (
+                <>Word count: <span className="font-medium text-gray-700">
+                  {(answers[`writing_task${currentPart + 1}`] || '').split(/\s+/).filter(Boolean).length}
+                </span> / {currentPart === 0 ? 150 : 250} minimum</>
+              ) : (
+                <>Part {currentPart + 1} of 3</>
+              )}
+            </div>
             <Button 
               onClick={() => setShowSubmitModal(true)}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-green-600 hover:bg-green-700"
             >
               Submit {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
               <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           </div>
+        </div>
+      )}
         </div>
       </div>
 
