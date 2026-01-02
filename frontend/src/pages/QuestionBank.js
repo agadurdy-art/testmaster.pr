@@ -1443,6 +1443,160 @@ export default function QuestionBank() {
           </Card>
         </div>
       )}
+
+      {/* Cambridge Test Selection Modal */}
+      {showCambridgeTestModal && selectedCambridgeTest && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="absolute top-4 right-4"
+              onClick={() => {
+                setShowCambridgeTestModal(false);
+                setSelectedCambridgeTest(null);
+              }}
+            >
+              <X className="w-4 h-4" />
+            </Button>
+            
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <BookMarked className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-900">{selectedCambridgeTest.title}</h2>
+              <p className="text-gray-500">How would you like to practice?</p>
+            </div>
+            
+            <div className="space-y-4">
+              {/* Full Test Mode */}
+              <Card 
+                className="p-4 cursor-pointer hover:shadow-lg transition-all border-2 hover:border-red-300 bg-gradient-to-r from-red-50 to-orange-50"
+                onClick={() => {
+                  setShowCambridgeTestModal(false);
+                  navigate(`/cambridge-test/${selectedCambridgeTest.book}/${selectedCambridgeTest.test}`);
+                }}
+                data-testid="select-full-test"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-gray-900 text-lg">Full Test Mode</h3>
+                    <p className="text-sm text-gray-600 mb-3">Complete all 4 sections in order - just like the real exam</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="flex items-center gap-2 text-xs text-gray-500 bg-white rounded-lg px-2 py-1">
+                        <Headphones className="w-3 h-3 text-blue-500" /> Listening (40 min)
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-500 bg-white rounded-lg px-2 py-1">
+                        <BookOpen className="w-3 h-3 text-green-500" /> Reading (60 min)
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-500 bg-white rounded-lg px-2 py-1">
+                        <PenTool className="w-3 h-3 text-purple-500" /> Writing (60 min)
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-500 bg-white rounded-lg px-2 py-1">
+                        <Mic className="w-3 h-3 text-orange-500" /> Speaking (14 min)
+                      </div>
+                    </div>
+                    <Badge className="mt-3 bg-red-100 text-red-700">~2 hours 45 minutes</Badge>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                </div>
+              </Card>
+
+              <div className="flex items-center gap-4 my-2">
+                <div className="flex-1 h-px bg-gray-200"></div>
+                <span className="text-sm text-gray-400">or practice individual skills</span>
+                <div className="flex-1 h-px bg-gray-200"></div>
+              </div>
+
+              {/* Skill Selection */}
+              <div className="grid grid-cols-2 gap-3">
+                {/* Listening */}
+                <Card 
+                  className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-blue-300"
+                  onClick={() => {
+                    setShowCambridgeTestModal(false);
+                    navigate(`/cambridge-test/${selectedCambridgeTest.book}/${selectedCambridgeTest.test}?skill=listening`);
+                  }}
+                  data-testid="select-listening-skill"
+                >
+                  <div className="flex flex-col items-center text-center gap-2">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <Headphones className="w-6 h-6 text-white" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900">Listening</h4>
+                    <p className="text-xs text-gray-500">40 questions</p>
+                    <Badge className="bg-blue-100 text-blue-700 text-xs">40 min</Badge>
+                  </div>
+                </Card>
+
+                {/* Reading */}
+                <Card 
+                  className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-green-300"
+                  onClick={() => {
+                    setShowCambridgeTestModal(false);
+                    navigate(`/cambridge-test/${selectedCambridgeTest.book}/${selectedCambridgeTest.test}?skill=reading`);
+                  }}
+                  data-testid="select-reading-skill"
+                >
+                  <div className="flex flex-col items-center text-center gap-2">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                      <BookOpen className="w-6 h-6 text-white" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900">Reading</h4>
+                    <p className="text-xs text-gray-500">40 questions</p>
+                    <Badge className="bg-green-100 text-green-700 text-xs">60 min</Badge>
+                  </div>
+                </Card>
+
+                {/* Writing */}
+                <Card 
+                  className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-purple-300"
+                  onClick={() => {
+                    setShowCambridgeTestModal(false);
+                    navigate(`/cambridge-test/${selectedCambridgeTest.book}/${selectedCambridgeTest.test}?skill=writing`);
+                  }}
+                  data-testid="select-writing-skill"
+                >
+                  <div className="flex flex-col items-center text-center gap-2">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                      <PenTool className="w-6 h-6 text-white" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900">Writing</h4>
+                    <p className="text-xs text-gray-500">2 tasks</p>
+                    <Badge className="bg-purple-100 text-purple-700 text-xs">60 min</Badge>
+                  </div>
+                </Card>
+
+                {/* Speaking */}
+                <Card 
+                  className="p-4 cursor-pointer hover:shadow-md transition-all border-2 hover:border-orange-300"
+                  onClick={() => {
+                    setShowCambridgeTestModal(false);
+                    navigate(`/cambridge-test/${selectedCambridgeTest.book}/${selectedCambridgeTest.test}?skill=speaking`);
+                  }}
+                  data-testid="select-speaking-skill"
+                >
+                  <div className="flex flex-col items-center text-center gap-2">
+                    <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
+                      <Mic className="w-6 h-6 text-white" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900">Speaking</h4>
+                    <p className="text-xs text-gray-500">3 parts</p>
+                    <Badge className="bg-orange-100 text-orange-700 text-xs">14 min</Badge>
+                  </div>
+                </Card>
+              </div>
+
+              <p className="text-xs text-center text-gray-400 mt-4">
+                Tip: Skill practice mode lets you focus on one section at a time
+              </p>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
