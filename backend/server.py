@@ -402,6 +402,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load TTS routes: {e}")
 
+# User recordings routes
+try:
+    from routes.recordings import router as recordings_router
+    app.include_router(recordings_router)
+    print("✅ Recordings routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Recordings routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
