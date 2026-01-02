@@ -5,8 +5,8 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { 
   CheckCircle, XCircle, ArrowLeft, BookOpen, Headphones, PenTool, Mic,
-  TrendingUp, Award, Target, Clock, BarChart3, ChevronRight, Lightbulb,
-  BookMarked, GraduationCap, RefreshCw
+  TrendingUp, Award, Target, BarChart3, ChevronDown, ChevronUp, Lightbulb,
+  BookMarked, GraduationCap, RefreshCw, MapPin, Eye, FileText, Home
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -21,19 +21,18 @@ export default function CambridgeTestResults() {
   const [evaluating, setEvaluating] = useState(false);
   const [results, setResults] = useState(null);
   const [answerKey, setAnswerKey] = useState(null);
-  const [recommendations, setRecommendations] = useState([]);
+  const [expandedSection, setExpandedSection] = useState(null);
+  const [writingViewTab, setWritingViewTab] = useState('feedback');
   
   // Get data from navigation state
   const { answers = {}, testData = {}, mode = 'full', skill = null } = location.state || {};
 
   useEffect(() => {
     if (!location.state) {
-      // No state - redirect back
       toast.error('No test data found');
       navigate('/question-bank');
       return;
     }
-    
     calculateResults();
   }, []);
 
@@ -41,7 +40,6 @@ export default function CambridgeTestResults() {
     setLoading(true);
     
     try {
-      // Fetch answer key from backend
       const res = await fetch(`${API_URL}/api/cambridge/answers/${bookId}/${testId}`);
       const data = await res.json();
       
@@ -49,7 +47,6 @@ export default function CambridgeTestResults() {
         setAnswerKey(data.answers);
       }
       
-      // Calculate scores based on answers
       const calculatedResults = {
         listening: calculateSectionScore('listening', answers, data.answers?.listening),
         reading: calculateSectionScore('reading', answers, data.answers?.reading),
@@ -58,16 +55,12 @@ export default function CambridgeTestResults() {
         overall: null
       };
       
-      // Calculate overall band (only for L & R initially)
       const scores = [calculatedResults.listening.band, calculatedResults.reading.band].filter(s => s);
       if (scores.length > 0) {
         calculatedResults.overall = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 2) / 2;
       }
       
       setResults(calculatedResults);
-      
-      // Generate recommendations
-      generateRecommendations(calculatedResults);
       
     } catch (error) {
       console.error('Error calculating results:', error);
@@ -79,7 +72,7 @@ export default function CambridgeTestResults() {
 
   const calculateSectionScore = (section, userAnswers, correctAnswers) => {
     if (!correctAnswers) {
-      return { correct: 0, total: 0, band: 5.0, details: [] };
+      return { correct: 0, total: 0, band: 5.0, percentage: 0, details: [] };
     }
     
     let correct = 0;
@@ -93,14 +86,13 @@ export default function CambridgeTestResults() {
       if (isCorrect) correct++;
       
       details.push({
-        question: key,
-        userAnswer: userAns || '-',
-        correctAnswer: correctAns,
-        isCorrect
+        question_id: key,
+        user_answer: userAns || '-',
+        correct_answer: correctAns,
+        is_correct: isCorrect
       });
     });
     
-    // Convert raw score to band (simplified)
     const percentage = total > 0 ? (correct / total) * 100 : 0;
     let band = 5.0;
     if (percentage >= 90) band = 9.0;
@@ -120,66 +112,19 @@ export default function CambridgeTestResults() {
 
   const compareAnswers = (userAns, correctAns) => {
     if (!userAns || !correctAns) return false;
-    
     const normalize = (str) => String(str).toLowerCase().trim().replace(/[.,!?]/g, '');
-    
-    // Handle array answers (multiple correct options)
     if (Array.isArray(correctAns)) {
       return correctAns.some(ans => normalize(ans) === normalize(userAns));
     }
-    
-    // Handle answers with alternatives (e.g., "answer1/answer2")
-    if (correctAns.includes('/')) {
+    if (String(correctAns).includes('/')) {
       return correctAns.split('/').some(ans => normalize(ans) === normalize(userAns));
     }
-    
     return normalize(userAns) === normalize(correctAns);
   };
 
-  const generateRecommendations = (results) => {
-    const recs = [];
-    
-    // Based on Listening performance
-    if (results.listening.band < 6.5) {
-      recs.push({
-        icon: Headphones,
-        title: 'Improve Listening Skills',
-        description: 'Practice with more listening exercises to improve comprehension',
-        link: '/question-bank?tab=listening',
-        priority: 'high'
-      });
-    }
-    
-    // Based on Reading performance
-    if (results.reading.band < 6.5) {
-      recs.push({
-        icon: BookOpen,
-        title: 'Reading Practice Needed',
-        description: 'Work on reading speed and comprehension strategies',
-        link: '/question-bank?tab=reading',
-        priority: 'high'
-      });
-    }
-    
-    // General recommendations
-    recs.push({
-      icon: GraduationCap,
-      title: 'IELTS Mastery Course',
-      description: 'Complete our structured course for comprehensive preparation',
-      link: '/mastery',
-      priority: 'medium'
-    });
-    
-    recs.push({
-      icon: Target,
-      title: 'Practice More Tests',
-      description: 'Try another full test to track your progress',
-      link: '/question-bank?tab=fullTests',
-      priority: 'low'
-    });
-    
-    setRecommendations(recs);
-  };
+  const getBandColorClass = (score) => score >= 7 ? 'text-green-600' : score >= 6 ? 'text-blue-600' : score >= 5 ? 'text-yellow-600' : 'text-red-600';
+  const getBandBgClass = (score) => score >= 7 ? 'bg-green-500' : score >= 6 ? 'bg-blue-500' : score >= 5 ? 'bg-yellow-500' : 'bg-red-500';
+  const getBandLightBg = (score) => score >= 7 ? 'bg-green-100 text-green-700' : score >= 6 ? 'bg-blue-100 text-blue-700' : score >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
 
   const evaluateWriting = async () => {
     setEvaluating(true);
@@ -188,7 +133,6 @@ export default function CambridgeTestResults() {
     try {
       const tasks = [];
       
-      // Evaluate Task 1 if available
       const task1Response = answers['writing_task1'] || '';
       if (task1Response.trim()) {
         const res1 = await fetch(`${API_URL}/api/cambridge/evaluate/writing`, {
@@ -201,7 +145,6 @@ export default function CambridgeTestResults() {
             response: task1Response
           })
         });
-        
         const data1 = await res1.json();
         if (data1.success) {
           tasks.push({
@@ -211,12 +154,12 @@ export default function CambridgeTestResults() {
             overallBand: data1.overall_band,
             criteria: data1.criteria,
             feedback: data1.feedback,
-            referenceSamples: data1.reference_samples
+            referenceSamples: data1.reference_samples,
+            userResponse: task1Response
           });
         }
       }
       
-      // Evaluate Task 2 if available
       const task2Response = answers['writing_task2'] || '';
       if (task2Response.trim()) {
         const res2 = await fetch(`${API_URL}/api/cambridge/evaluate/writing`, {
@@ -229,7 +172,6 @@ export default function CambridgeTestResults() {
             response: task2Response
           })
         });
-        
         const data2 = await res2.json();
         if (data2.success) {
           tasks.push({
@@ -239,16 +181,15 @@ export default function CambridgeTestResults() {
             overallBand: data2.overall_band,
             criteria: data2.criteria,
             feedback: data2.feedback,
-            referenceSamples: data2.reference_samples
+            referenceSamples: data2.reference_samples,
+            userResponse: task2Response
           });
         }
       }
       
-      // Calculate overall writing band (Task 2 weighted more)
       let overallWritingBand = null;
       if (tasks.length > 0) {
         if (tasks.length === 2) {
-          // Task 2 counts double
           overallWritingBand = Math.round(((tasks[0].overallBand + tasks[1].overallBand * 2) / 3) * 2) / 2;
         } else {
           overallWritingBand = tasks[0].overallBand;
@@ -274,481 +215,477 @@ export default function CambridgeTestResults() {
     }
   };
 
-  const getBandColor = (band) => {
-    if (band >= 7.5) return 'text-green-600 bg-green-100';
-    if (band >= 6.5) return 'text-blue-600 bg-blue-100';
-    if (band >= 5.5) return 'text-yellow-600 bg-yellow-100';
-    return 'text-red-600 bg-red-100';
-  };
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <RefreshCw className="w-12 h-12 text-red-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Calculating your results...</p>
+          <RefreshCw className="w-16 h-16 text-red-600 animate-spin mx-auto mb-4" />
+          <p className="text-gray-500">Calculating your results...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 py-8">
-      <div className="max-w-5xl mx-auto px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto">
+        <Button variant="ghost" onClick={() => navigate('/question-bank')} className="mb-6 text-gray-600 hover:text-violet-600">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
+        </Button>
+
         {/* Header */}
-        <div className="mb-8">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/question-bank')}
-            className="mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
-          </Button>
-          
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center">
-              <Award className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Test Results</h1>
-              <p className="text-gray-500">{testData.title || `IELTS ${bookId.toUpperCase()} - ${testId}`}</p>
-            </div>
+        <div className="text-center mb-8">
+          <div className={`w-24 h-24 mx-auto mb-6 rounded-3xl ${getBandBgClass(results?.overall || 5)} flex items-center justify-center shadow-2xl`}>
+            <Award className="w-12 h-12 text-white" />
           </div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Test Complete!</h1>
+          <p className="text-xl text-gray-500">{testData.title || `Cambridge IELTS ${bookId?.toUpperCase()} - ${testId}`}</p>
         </div>
 
-        {/* Overall Score Card */}
-        {results?.overall && (
-          <Card className="p-6 mb-6 bg-gradient-to-br from-red-500 to-red-600 text-white">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-red-100 text-sm">Estimated Overall Band</p>
-                <p className="text-5xl font-bold">{results.overall}</p>
-                <p className="text-red-100 text-sm mt-1">Based on Listening & Reading</p>
+        {/* Main Score Card */}
+        <Card className="p-8 mb-6 bg-white border-0 shadow-lg rounded-2xl text-center">
+          <p className="text-gray-500 mb-2 text-lg">Your Estimated Band Score</p>
+          <p className={`text-8xl font-bold mb-8 ${getBandColorClass(results?.overall || 5)}`}>{results?.overall || '-'}</p>
+          
+          <div className="grid grid-cols-4 gap-4 pt-6 border-t border-gray-100">
+            <div>
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-blue-500 flex items-center justify-center shadow-lg">
+                <Headphones className="w-6 h-6 text-white" />
               </div>
-              <div className="text-right">
-                <BarChart3 className="w-16 h-16 text-red-200" />
-              </div>
+              <p className="text-2xl font-bold text-gray-900">{results?.listening?.band || '-'}</p>
+              <p className="text-sm text-gray-500">Listening</p>
             </div>
-          </Card>
-        )}
+            <div>
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-green-500 flex items-center justify-center shadow-lg">
+                <BookOpen className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-2xl font-bold text-gray-900">{results?.reading?.band || '-'}</p>
+              <p className="text-sm text-gray-500">Reading</p>
+            </div>
+            <div>
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-purple-500 flex items-center justify-center shadow-lg">
+                <PenTool className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-2xl font-bold text-gray-900">{results?.writing?.score || '-'}</p>
+              <p className="text-sm text-gray-500">Writing</p>
+            </div>
+            <div>
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-orange-500 flex items-center justify-center shadow-lg">
+                <Mic className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-2xl font-bold text-gray-900">{results?.speaking?.score || '-'}</p>
+              <p className="text-sm text-gray-500">Speaking</p>
+            </div>
+          </div>
+        </Card>
 
-        {/* Section Scores */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {/* Listening */}
-          <Card className="p-5">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <Headphones className="w-5 h-5 text-blue-600" />
+        {/* Listening Results - Detailed with Locate & Explain */}
+        {results?.listening?.details?.length > 0 && (
+          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+            <div 
+              className="flex items-center justify-between cursor-pointer"
+              onClick={() => setExpandedSection(expandedSection === 'listening' ? null : 'listening')}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                  <Headphones className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Listening Results</h3>
+                  <p className="text-sm text-gray-500">
+                    {results.listening.correct}/{results.listening.total} correct ({Math.round(results.listening.percentage)}%)
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Listening</h3>
-                <p className="text-sm text-gray-500">
-                  {results?.listening?.correct || 0}/{results?.listening?.total || 40} correct
-                </p>
-              </div>
-              <Badge className={`ml-auto text-lg px-3 py-1 ${getBandColor(results?.listening?.band || 5)}`}>
-                {results?.listening?.band || '-'}
-              </Badge>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-blue-600 h-2 rounded-full transition-all"
-                style={{ width: `${results?.listening?.percentage || 0}%` }}
-              />
-            </div>
-          </Card>
-
-          {/* Reading */}
-          <Card className="p-5">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-green-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Reading</h3>
-                <p className="text-sm text-gray-500">
-                  {results?.reading?.correct || 0}/{results?.reading?.total || 40} correct
-                </p>
-              </div>
-              <Badge className={`ml-auto text-lg px-3 py-1 ${getBandColor(results?.reading?.band || 5)}`}>
-                {results?.reading?.band || '-'}
-              </Badge>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-green-600 h-2 rounded-full transition-all"
-                style={{ width: `${results?.reading?.percentage || 0}%` }}
-              />
-            </div>
-          </Card>
-
-          {/* Writing */}
-          <Card className="p-5 md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <PenTool className="w-5 h-5 text-purple-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900">Writing</h3>
-                <p className="text-sm text-gray-500">
-                  {results?.writing?.evaluated ? 'AI Evaluated' : 'Click to get detailed AI feedback'}
-                </p>
-              </div>
-              {results?.writing?.evaluated ? (
-                <Badge className={`ml-auto text-lg px-3 py-1 ${getBandColor(results?.writing?.score || 5)}`}>
-                  {results?.writing?.score || '-'}
+              <div className="flex items-center gap-3">
+                <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results.listening.band)}`}>
+                  Band {results.listening.band}
                 </Badge>
-              ) : (
-                <Button 
-                  size="sm" 
-                  className="ml-auto bg-purple-600 hover:bg-purple-700"
-                  onClick={evaluateWriting}
-                  disabled={evaluating}
-                >
-                  {evaluating ? (
-                    <>
-                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                      Analyzing...
-                    </>
-                  ) : 'Get AI Feedback'}
-                </Button>
-              )}
+                {expandedSection === 'listening' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              </div>
             </div>
             
-            {/* Detailed Writing Feedback */}
-            {results?.writing?.evaluated && results?.writing?.tasks?.length > 0 && (
-              <div className="space-y-6 mt-4">
-                {results.writing.tasks.map((task, idx) => (
-                  <div key={idx} className="border rounded-lg p-4 bg-purple-50/50">
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="font-semibold text-purple-900">
-                        Task {task.taskNumber} Evaluation
-                      </h4>
-                      <Badge className={`${getBandColor(task.overallBand)}`}>
-                        Band {task.overallBand}
-                      </Badge>
-                    </div>
-                    
-                    {/* Word Count */}
-                    <p className="text-sm text-gray-600 mb-3">
-                      Word Count: {task.wordCount} / {task.minimumWords} minimum
-                      {task.wordCount < task.minimumWords && (
-                        <span className="text-red-600 ml-2">(Under minimum!)</span>
-                      )}
-                    </p>
-                    
-                    {/* Criteria Scores */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
-                      {task.criteria && Object.entries(task.criteria).map(([criterion, score]) => (
-                        <div key={criterion} className="text-center p-2 bg-white rounded border">
-                          <p className="text-xs text-gray-500 capitalize">
-                            {criterion.replace(/_/g, ' ')}
-                          </p>
-                          <p className={`font-bold ${score >= 6.5 ? 'text-green-600' : score >= 5 ? 'text-yellow-600' : 'text-red-600'}`}>
-                            {score}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* Examiner Comment */}
-                    {task.feedback?.examiner_comment && (
-                      <div className="bg-white rounded-lg p-3 border mb-3">
-                        <p className="text-sm font-medium text-gray-700 mb-1">Examiner&apos;s Comment:</p>
-                        <p className="text-sm text-gray-600 italic">{task.feedback.examiner_comment}</p>
-                      </div>
-                    )}
-                    
-                    {/* Strengths */}
-                    {task.feedback?.strengths?.length > 0 && (
-                      <div className="mb-3">
-                        <p className="text-sm font-medium text-green-700 mb-1">Strengths:</p>
-                        <ul className="text-sm text-gray-600 list-disc list-inside">
-                          {task.feedback.strengths.map((s, i) => <li key={i}>{s}</li>)}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {/* Areas for Improvement */}
-                    {task.feedback?.improvements?.length > 0 && (
-                      <div className="mb-3">
-                        <p className="text-sm font-medium text-orange-700 mb-1">Areas for Improvement:</p>
-                        <ul className="text-sm text-gray-600 list-disc list-inside">
-                          {task.feedback.improvements.map((s, i) => <li key={i}>{s}</li>)}
-                        </ul>
-                      </div>
-                    )}
-                    
-                    {/* Vocabulary Notes */}
-                    {task.feedback?.vocabulary_notes && (
-                      <div className="mb-3">
-                        <p className="text-sm font-medium text-blue-700 mb-1">Vocabulary Notes:</p>
-                        <p className="text-sm text-gray-600">{task.feedback.vocabulary_notes}</p>
-                      </div>
-                    )}
-                    
-                    {/* Grammar Notes */}
-                    {task.feedback?.grammar_notes && (
-                      <div className="mb-3">
-                        <p className="text-sm font-medium text-indigo-700 mb-1">Grammar Notes:</p>
-                        <p className="text-sm text-gray-600">{task.feedback.grammar_notes}</p>
-                      </div>
-                    )}
-                    
-                    {/* Reference Samples Toggle */}
-                    {task.referenceSamples && (task.referenceSamples.band_6 || task.referenceSamples.band_8) && (
-                      <details className="mt-3 border-t pt-3">
-                        <summary className="text-sm font-medium text-purple-700 cursor-pointer hover:text-purple-900">
-                          View Sample Answers (Band 6 and Band 8)
-                        </summary>
-                        <div className="mt-3 space-y-4">
-                          {task.referenceSamples.band_6 && (
-                            <div className="bg-yellow-50 p-3 rounded border border-yellow-200">
-                              <p className="text-sm font-medium text-yellow-800 mb-2">
-                                Band 6 Sample (Score: {task.referenceSamples.band_6.score})
-                              </p>
-                              <p className="text-xs text-gray-600 mb-2 whitespace-pre-wrap">{task.referenceSamples.band_6.response}</p>
-                              <p className="text-xs text-yellow-700 italic">{task.referenceSamples.band_6.examiner_comment}</p>
-                            </div>
-                          )}
-                          {task.referenceSamples.band_8 && (
-                            <div className="bg-green-50 p-3 rounded border border-green-200">
-                              <p className="text-sm font-medium text-green-800 mb-2">
-                                Band 8 Sample (Score: {task.referenceSamples.band_8.score})
-                              </p>
-                              <p className="text-xs text-gray-600 mb-2 whitespace-pre-wrap">{task.referenceSamples.band_8.response}</p>
-                              <p className="text-xs text-green-700 italic">{task.referenceSamples.band_8.examiner_comment}</p>
-                            </div>
+            {expandedSection === 'listening' && (
+              <div className="mt-6 space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                {results.listening.details.map((q, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`p-4 rounded-xl border-l-4 ${
+                      q.is_correct 
+                        ? 'bg-green-50 border-green-500' 
+                        : 'bg-red-50 border-red-500'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
+                            q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                          }`}>
+                            {q.question_id}
+                          </span>
+                          {q.is_correct ? (
+                            <CheckCircle className="w-5 h-5 text-green-600" />
+                          ) : (
+                            <XCircle className="w-5 h-5 text-red-600" />
                           )}
                         </div>
-                      </details>
-                    )}
+                        
+                        <div className="flex flex-wrap gap-4 text-sm mb-2">
+                          <div>
+                            <span className="text-gray-500">Your Answer: </span>
+                            <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
+                              {q.user_answer || 'No answer'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Correct Answer: </span>
+                            <span className="font-semibold text-green-700">
+                              {Array.isArray(q.correct_answer) ? q.correct_answer.join(' / ') : q.correct_answer}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        {/* Explanation */}
+                        {!q.is_correct && (
+                          <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                            <div className="flex items-start gap-2">
+                              <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
+                                <p className="text-sm text-gray-700 leading-relaxed">
+                                  The correct answer is "{Array.isArray(q.correct_answer) ? q.correct_answer[0] : q.correct_answer}". 
+                                  Listen carefully to the audio for keywords and context clues related to this question.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
             )}
           </Card>
+        )}
 
-          {/* Speaking */}
-          <Card className="p-5">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                <Mic className="w-5 h-5 text-orange-600" />
+        {/* Reading Results - Detailed with Locate & Explain */}
+        {results?.reading?.details?.length > 0 && (
+          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+            <div 
+              className="flex items-center justify-between cursor-pointer"
+              onClick={() => setExpandedSection(expandedSection === 'reading' ? null : 'reading')}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg">
+                  <BookOpen className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Reading Results</h3>
+                  <p className="text-sm text-gray-500">
+                    {results.reading.correct}/{results.reading.total} correct ({Math.round(results.reading.percentage)}%)
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results.reading.band)}`}>
+                  Band {results.reading.band}
+                </Badge>
+                {expandedSection === 'reading' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              </div>
+            </div>
+            
+            {expandedSection === 'reading' && (
+              <div className="mt-6 space-y-3 max-h-[500px] overflow-y-auto pr-2">
+                {results.reading.details.map((q, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`p-4 rounded-xl border-l-4 ${
+                      q.is_correct 
+                        ? 'bg-green-50 border-green-500' 
+                        : 'bg-red-50 border-red-500'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
+                            q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                          }`}>
+                            {q.question_id}
+                          </span>
+                          {q.is_correct ? (
+                            <CheckCircle className="w-5 h-5 text-green-600" />
+                          ) : (
+                            <XCircle className="w-5 h-5 text-red-600" />
+                          )}
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-4 text-sm mb-2">
+                          <div>
+                            <span className="text-gray-500">Your Answer: </span>
+                            <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
+                              {q.user_answer || 'No answer'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-gray-500">Correct Answer: </span>
+                            <span className="font-semibold text-green-700">
+                              {Array.isArray(q.correct_answer) ? q.correct_answer.join(' / ') : q.correct_answer}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        {/* Locate in Passage */}
+                        <div className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                          <div className="flex items-start gap-2">
+                            <MapPin className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-xs font-semibold text-yellow-700 mb-1">Located in Passage</p>
+                              <p className="text-sm text-gray-700 italic leading-relaxed">
+                                This answer can be found in Passage {Math.ceil(parseInt(q.question_id) / 13)}. 
+                                Look for keywords and synonyms related to the question.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Explanation */}
+                        <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                          <div className="flex items-start gap-2">
+                            <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
+                              <p className="text-sm text-gray-700 leading-relaxed">
+                                {getExplanationText(q.correct_answer)}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Skill Tip */}
+                        <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+                          <div className="flex items-start gap-2">
+                            <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                            <div>
+                              <p className="text-xs font-semibold text-purple-700 mb-1">Skill Tip</p>
+                              <p className="text-sm text-gray-700 leading-relaxed">
+                                {getSkillTip(q.correct_answer)}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+        )}
+
+        {/* Writing Evaluation Section */}
+        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-violet-500 flex items-center justify-center shadow-lg">
+                <PenTool className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Speaking</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Writing Evaluation</h3>
                 <p className="text-sm text-gray-500">
-                  {results?.speaking?.evaluated ? 'AI Evaluated' : 'Evaluate recordings'}
+                  {results?.writing?.evaluated ? 'AI Evaluated' : 'Click to get detailed AI feedback'}
                 </p>
               </div>
-              {results?.speaking?.evaluated ? (
-                <Badge className={`ml-auto text-lg px-3 py-1 ${getBandColor(results?.speaking?.score || 5)}`}>
-                  {results?.speaking?.score || '-'}
-                </Badge>
-              ) : (
-                <Badge className="ml-auto bg-gray-100 text-gray-500">
-                  Pending
-                </Badge>
-              )}
             </div>
-          </Card>
-        </div>
-
-        {/* Answer Details */}
-        <Card className="p-6 mb-6">
-          <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-            <Target className="w-5 h-5 text-gray-600" />
-            Answer Details
-          </h3>
+            {results?.writing?.evaluated ? (
+              <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results.writing.score || 5)}`}>
+                Band {results.writing.score}
+              </Badge>
+            ) : (
+              <Button 
+                className="bg-purple-600 hover:bg-purple-700"
+                onClick={evaluateWriting}
+                disabled={evaluating}
+              >
+                {evaluating ? <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> : <BarChart3 className="w-4 h-4 mr-2" />}
+                {evaluating ? 'Evaluating...' : 'Evaluate Writing'}
+              </Button>
+            )}
+          </div>
           
-          {/* Listening Answers - Expandable */}
-          {results?.listening?.details?.length > 0 && (
-            <div className="mb-6">
-              <h4 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
-                <Headphones className="w-4 h-4 text-blue-600" /> Listening Answers
-                <span className="text-sm text-gray-400">
-                  ({results.listening.correct}/{results.listening.total} correct)
-                </span>
-              </h4>
-              <div className="space-y-2">
-                {results.listening.details.map((item, idx) => (
-                  <details 
-                    key={idx}
-                    className={`rounded-lg border ${
-                      item.isCorrect 
-                        ? 'bg-green-50 border-green-200' 
-                        : 'bg-red-50 border-red-200'
-                    }`}
-                  >
-                    <summary className="p-3 cursor-pointer flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="font-medium text-sm">Q{item.question}</span>
-                        {item.isCorrect ? (
-                          <CheckCircle className="w-4 h-4 text-green-600" />
-                        ) : (
-                          <XCircle className="w-4 h-4 text-red-600" />
-                        )}
-                        <span className={`text-sm ${item.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-                          {item.userAnswer || '-'}
-                        </span>
-                        {!item.isCorrect && (
-                          <span className="text-sm text-gray-500">
-                            → {Array.isArray(item.correctAnswer) ? item.correctAnswer.join(' / ') : item.correctAnswer}
-                          </span>
-                        )}
+          {/* Writing Results - Task by Task */}
+          {results?.writing?.evaluated && results.writing.tasks.length > 0 && (
+            <div className="space-y-6">
+              {results.writing.tasks.map((task, idx) => (
+                <div key={idx} className={`p-5 rounded-xl ${task.taskNumber === 1 ? 'bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200' : 'bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-200'}`}>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-xl ${task.taskNumber === 1 ? 'bg-orange-500' : 'bg-violet-500'} flex items-center justify-center shadow-lg`}>
+                        {task.taskNumber === 1 ? <BarChart3 className="w-5 h-5 text-white" /> : <Lightbulb className="w-5 h-5 text-white" />}
                       </div>
-                      <ChevronRight className="w-4 h-4 text-gray-400" />
-                    </summary>
-                    <div className="px-3 pb-3 pt-1 border-t border-gray-200">
-                      {/* Explanation placeholder - would come from test data */}
-                      <div className="p-2 bg-blue-50 rounded text-sm">
-                        <p className="text-blue-700 font-medium text-xs mb-1">Explanation:</p>
-                        <p className="text-gray-600 text-xs">
-                          The correct answer is &ldquo;{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}&rdquo;. 
-                          Listen carefully to the audio for keywords and context clues.
-                        </p>
+                      <div>
+                        <h4 className="font-semibold text-gray-900">Task {task.taskNumber} - {task.taskNumber === 1 ? 'Report/Description' : 'Essay'}</h4>
+                        <p className="text-sm text-gray-500">{task.wordCount} words (min: {task.minimumWords})</p>
                       </div>
                     </div>
-                  </details>
-                ))}
-              </div>
-            </div>
-          )}
+                    <Badge className={`text-lg px-3 py-1 ${getBandLightBg(task.overallBand)}`}>
+                      Band {task.overallBand}
+                    </Badge>
+                  </div>
+                  
+                  {/* Criteria Scores */}
+                  <div className="grid md:grid-cols-2 gap-3 mb-4">
+                    {[
+                      { key: 'task_achievement', label: 'Task Achievement' },
+                      { key: 'coherence_cohesion', label: 'Coherence & Cohesion' },
+                      { key: 'lexical_resource', label: 'Lexical Resource' },
+                      { key: 'grammatical_range', label: 'Grammar' }
+                    ].map(crit => {
+                      const score = task.criteria?.[crit.key];
+                      if (!score) return null;
+                      return (
+                        <div key={crit.key} className="p-3 bg-white rounded-lg">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="font-medium text-gray-900">{crit.label}</span>
+                            <span className={`px-2 py-0.5 rounded text-sm font-bold ${getBandLightBg(score)}`}>Band {score}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Examiner Comment */}
+                  {task.feedback?.examiner_comment && (
+                    <div className="mb-4 p-4 bg-white rounded-xl">
+                      <h5 className="font-semibold text-gray-900 mb-2">Teacher's Feedback</h5>
+                      <p className="text-gray-700 leading-relaxed">{task.feedback.examiner_comment}</p>
+                    </div>
+                  )}
+                  
+                  {/* Strengths */}
+                  {task.feedback?.strengths?.length > 0 && (
+                    <div className="mb-3 p-3 bg-green-50 rounded-lg border border-green-100">
+                      <p className="text-sm font-semibold text-green-700 mb-2 flex items-center gap-1">
+                        <CheckCircle className="w-4 h-4" /> Strengths
+                      </p>
+                      <ul className="text-sm text-gray-600 list-disc list-inside">
+                        {task.feedback.strengths.map((s, i) => <li key={i}>{s}</li>)}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* Areas for Improvement */}
+                  {task.feedback?.improvements?.length > 0 && (
+                    <div className="mb-3 p-3 bg-amber-50 rounded-lg border border-amber-100">
+                      <p className="text-sm font-semibold text-amber-700 mb-2 flex items-center gap-1">
+                        <Target className="w-4 h-4" /> Areas to Improve
+                      </p>
+                      <ul className="text-sm text-gray-600 list-disc list-inside">
+                        {task.feedback.improvements.map((s, i) => <li key={i}>{s}</li>)}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* Vocabulary Notes */}
+                  {task.feedback?.vocabulary_notes && (
+                    <div className="mb-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                      <p className="text-sm font-semibold text-blue-700 mb-1">Vocabulary Notes</p>
+                      <p className="text-sm text-gray-600">{task.feedback.vocabulary_notes}</p>
+                    </div>
+                  )}
+                  
+                  {/* Grammar Notes */}
+                  {task.feedback?.grammar_notes && (
+                    <div className="mb-3 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                      <p className="text-sm font-semibold text-indigo-700 mb-1">Grammar Notes</p>
+                      <p className="text-sm text-gray-600">{task.feedback.grammar_notes}</p>
+                    </div>
+                  )}
 
-          {/* Reading Answers - Expandable with Locate & Explain */}
-          {results?.reading?.details?.length > 0 && (
-            <div>
-              <h4 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-green-600" /> Reading Answers
-                <span className="text-sm text-gray-400">
-                  ({results.reading.correct}/{results.reading.total} correct)
-                </span>
-              </h4>
-              <div className="space-y-2">
-                {results.reading.details.map((item, idx) => (
-                  <details 
-                    key={idx}
-                    className={`rounded-lg border ${
-                      item.isCorrect 
-                        ? 'bg-green-50 border-green-200' 
-                        : 'bg-red-50 border-red-200'
-                    }`}
-                  >
-                    <summary className="p-3 cursor-pointer flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="font-medium text-sm">Q{item.question}</span>
-                        {item.isCorrect ? (
-                          <CheckCircle className="w-4 h-4 text-green-600" />
-                        ) : (
-                          <XCircle className="w-4 h-4 text-red-600" />
-                        )}
-                        <span className={`text-sm ${item.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
-                          {Array.isArray(item.userAnswer) ? item.userAnswer.join(', ') : (item.userAnswer || '-')}
-                        </span>
-                        {!item.isCorrect && (
-                          <span className="text-sm text-gray-500">
-                            → {Array.isArray(item.correctAnswer) ? item.correctAnswer.join(' / ') : item.correctAnswer}
-                          </span>
-                        )}
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-gray-400" />
-                    </summary>
-                    <div className="px-3 pb-3 pt-1 border-t border-gray-200 space-y-2">
-                      {/* Locate in Passage */}
-                      <div className="p-2 bg-yellow-50 rounded border-l-4 border-yellow-400">
-                        <p className="text-yellow-700 font-medium text-xs mb-1 flex items-center gap-1">
-                          <Target className="w-3 h-3" /> Located in Passage:
-                        </p>
-                        <p className="text-gray-600 text-xs italic">
-                          ...The answer can be found in Passage {Math.ceil(parseInt(item.question) / 13)}. 
-                          Look for keywords related to the question...
-                        </p>
-                      </div>
-                      
-                      {/* Explanation */}
-                      <div className="p-2 bg-blue-50 rounded border-l-4 border-blue-400">
-                        <p className="text-blue-700 font-medium text-xs mb-1 flex items-center gap-1">
-                          <Lightbulb className="w-3 h-3" /> Explanation:
-                        </p>
-                        <p className="text-gray-600 text-xs">
-                          The correct answer is &ldquo;{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}&rdquo;. 
-                          {item.correctAnswer === 'TRUE' || item.correctAnswer === 'YES' 
-                            ? ' The statement agrees with the information in the passage.'
-                            : item.correctAnswer === 'FALSE' || item.correctAnswer === 'NO'
-                            ? ' The statement contradicts information in the passage.'
-                            : item.correctAnswer === 'NOT GIVEN'
-                            ? ' There is no information in the passage about this statement.'
-                            : ' This answer directly matches information provided in the text.'}
-                        </p>
-                      </div>
-                      
-                      {/* Skill Tip */}
-                      <div className="p-2 bg-purple-50 rounded border-l-4 border-purple-400">
-                        <p className="text-purple-700 font-medium text-xs mb-1 flex items-center gap-1">
-                          <GraduationCap className="w-3 h-3" /> Skill Tip:
-                        </p>
-                        <p className="text-gray-600 text-xs">
-                          {item.correctAnswer === 'TRUE' || item.correctAnswer === 'FALSE' || item.correctAnswer === 'NOT GIVEN'
-                            ? 'For True/False/Not Given questions, focus on exact wording. If the passage says something similar but not exactly the same, consider if it truly matches or contradicts.'
-                            : item.correctAnswer === 'YES' || item.correctAnswer === 'NO'
-                            ? 'Yes/No/Not Given questions test opinions and claims. Look for the writer\'s view, not just facts.'
-                            : 'Read the question carefully and scan for synonyms and paraphrases in the passage.'}
-                        </p>
-                      </div>
+                  {/* Tab Navigation for Original Text & Samples */}
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="flex gap-2 mb-4">
+                      <Button
+                        variant={writingViewTab === 'original' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setWritingViewTab('original')}
+                        className={writingViewTab === 'original' ? 'bg-cyan-500 text-white' : ''}
+                      >
+                        <Eye className="w-4 h-4 mr-1" /> Your Text
+                      </Button>
+                      <Button
+                        variant={writingViewTab === 'sample' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setWritingViewTab('sample')}
+                        className={writingViewTab === 'sample' ? 'bg-cyan-500 text-white' : ''}
+                      >
+                        <FileText className="w-4 h-4 mr-1" /> Sample Answers
+                      </Button>
                     </div>
-                  </details>
-                ))}
-              </div>
+                    
+                    {writingViewTab === 'original' && task.userResponse && (
+                      <div className="p-4 bg-gray-50 rounded-lg">
+                        <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{task.userResponse}</p>
+                      </div>
+                    )}
+                    
+                    {writingViewTab === 'sample' && task.referenceSamples && (
+                      <div className="space-y-4">
+                        {task.referenceSamples.band_6 && (
+                          <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                            <p className="font-medium text-yellow-800 mb-2">Band 6 Sample</p>
+                            <p className="text-sm text-gray-600 whitespace-pre-wrap mb-2">{task.referenceSamples.band_6.response}</p>
+                            <p className="text-xs text-yellow-700 italic">{task.referenceSamples.band_6.examiner_comment}</p>
+                          </div>
+                        )}
+                        {task.referenceSamples.band_8 && (
+                          <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <p className="font-medium text-green-800 mb-2">Band 8+ Sample</p>
+                            <p className="text-sm text-gray-600 whitespace-pre-wrap mb-2">{task.referenceSamples.band_8.response}</p>
+                            <p className="text-xs text-green-700 italic">{task.referenceSamples.band_8.examiner_comment}</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </Card>
 
-        {/* Recommendations */}
-        <Card className="p-6 mb-6">
-          <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-yellow-500" />
-            Recommended Next Steps
-          </h3>
-          <div className="space-y-3">
-            {recommendations.map((rec, idx) => {
-              const Icon = rec.icon;
-              return (
-                <div 
-                  key={idx}
-                  className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-all"
-                  onClick={() => navigate(rec.link)}
-                >
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                    rec.priority === 'high' ? 'bg-red-100' :
-                    rec.priority === 'medium' ? 'bg-yellow-100' : 'bg-blue-100'
-                  }`}>
-                    <Icon className={`w-5 h-5 ${
-                      rec.priority === 'high' ? 'text-red-600' :
-                      rec.priority === 'medium' ? 'text-yellow-600' : 'text-blue-600'
-                    }`} />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-gray-900">{rec.title}</h4>
-                    <p className="text-sm text-gray-500">{rec.description}</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </div>
-              );
-            })}
+        {/* Speaking Section Placeholder */}
+        <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
+              <Mic className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">Speaking Evaluation</h3>
+              <p className="text-sm text-gray-500">
+                {results?.speaking?.evaluated ? 'Evaluated' : 'Speaking responses will be evaluated upon submission'}
+              </p>
+            </div>
+            {results?.speaking?.evaluated ? (
+              <Badge className={`ml-auto text-lg px-3 py-1 ${getBandLightBg(results.speaking.score || 5)}`}>
+                Band {results.speaking.score}
+              </Badge>
+            ) : (
+              <Badge className="ml-auto bg-gray-100 text-gray-500">Pending</Badge>
+            )}
           </div>
         </Card>
 
         {/* Action Buttons */}
-        <div className="flex gap-4 justify-center">
-          <Button 
-            variant="outline"
-            onClick={() => navigate('/question-bank')}
-          >
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button onClick={() => navigate('/question-bank')} variant="outline" className="flex-1">
             <BookMarked className="w-4 h-4 mr-2" /> More Tests
           </Button>
           <Button 
-            className="bg-red-600 hover:bg-red-700"
-            onClick={() => navigate(`/cambridge-test/${bookId}/${testId}`)}
+            onClick={() => navigate(`/cambridge-test/${bookId}/${testId}`)} 
+            className="flex-1 bg-gradient-to-r from-red-500 to-red-600 text-white border-0 shadow-lg"
           >
             <RefreshCw className="w-4 h-4 mr-2" /> Retake Test
           </Button>
@@ -756,4 +693,30 @@ export default function CambridgeTestResults() {
       </div>
     </div>
   );
+}
+
+// Helper functions for explanations
+function getExplanationText(answer) {
+  const ans = Array.isArray(answer) ? answer[0] : answer;
+  if (ans === 'TRUE' || ans === 'YES') {
+    return `The correct answer is "${ans}". The statement agrees with the information in the passage.`;
+  }
+  if (ans === 'FALSE' || ans === 'NO') {
+    return `The correct answer is "${ans}". The statement contradicts information in the passage.`;
+  }
+  if (ans === 'NOT GIVEN') {
+    return `The correct answer is "NOT GIVEN". There is no information in the passage about this statement.`;
+  }
+  return `The correct answer is "${ans}". This answer directly matches information provided in the text.`;
+}
+
+function getSkillTip(answer) {
+  const ans = Array.isArray(answer) ? answer[0] : answer;
+  if (ans === 'TRUE' || ans === 'FALSE' || ans === 'NOT GIVEN') {
+    return 'For True/False/Not Given questions, focus on exact wording. If the passage says something similar but not exactly the same, consider if it truly matches or contradicts.';
+  }
+  if (ans === 'YES' || ans === 'NO') {
+    return "Yes/No/Not Given questions test opinions and claims. Look for the writer's view, not just facts.";
+  }
+  return 'Read the question carefully and scan for synonyms and paraphrases in the passage.';
 }
