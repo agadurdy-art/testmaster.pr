@@ -910,6 +910,21 @@ export default function CambridgeTestInterface() {
             </div>
           )}
 
+          {/* Image Visual from PDF */}
+          {currentTask.visual_data?.type === 'image' && (
+            <div className="mb-6">
+              <img 
+                src={`${API_URL}/api/visuals/image/${currentTask.visual_data.image_url.replace('.png', '')}`}
+                alt={currentTask.visual_data.title || 'Visual'}
+                className="w-full max-w-3xl mx-auto rounded-lg border shadow-sm"
+                onError={(e) => {
+                  console.error('Failed to load image:', currentTask.visual_data.image_url);
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Your Response</label>
             <textarea
