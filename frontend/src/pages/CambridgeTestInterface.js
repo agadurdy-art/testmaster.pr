@@ -1628,6 +1628,21 @@ export default function CambridgeTestInterface() {
             </div>
           )}
 
+          {/* Visual URL (Cambridge tests with static images) */}
+          {currentTask.visual_url && (
+            <div className="mb-6">
+              <img 
+                src={`${API_URL}${currentTask.visual_url}`}
+                alt={currentTask.title || 'Visual'}
+                className="w-full max-w-4xl mx-auto rounded-lg border shadow-sm bg-white"
+                onError={(e) => {
+                  console.error('Failed to load image:', currentTask.visual_url);
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
+
           {/* Single Image Visual (legacy support) */}
           {currentTask.visual_data?.type === 'image' && (
             <div className="mb-6">
