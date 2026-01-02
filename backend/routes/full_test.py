@@ -168,6 +168,9 @@ def get_test_by_id(test_id: str) -> Optional[Dict[str, Any]]:
         return GENERAL_SET_C
     elif test_id == "general_set_d_01":
         return GENERAL_SET_D
+    # Cambridge IELTS Tests
+    elif test_id == "ielts17_test1":
+        return IELTS17_TEST1
     return None
 
 
