@@ -140,6 +140,51 @@ async def get_cambridge_test_section(book_id: str, test_id: str, section: str):
     }
 
 
+@router.get("/answers/{book_id}/{test_id}")
+async def get_answer_key(book_id: str, test_id: str):
+    """Get answer key for a test"""
+    if book_id not in CAMBRIDGE_TESTS:
+        raise HTTPException(status_code=404, detail=f"Book '{book_id}' not found")
+    
+    book = CAMBRIDGE_TESTS[book_id]
+    
+    if test_id not in book["tests"]:
+        raise HTTPException(status_code=404, detail=f"Test '{test_id}' not found")
+    
+    test_data = book["tests"][test_id]
+    
+    if test_data is None:
+        raise HTTPException(status_code=404, detail=f"Test '{test_id}' is coming soon")
+    
+    # Extract answers from test content
+    answers = {
+        "listening": {},
+        "reading": {}
+    }
+    
+    # Listening answers
+    listening_data = test_data.get("sections", {}).get("listening", {})
+    for part in listening_data.get("parts", []):
+        for q_group in part.get("question_groups", []):
+            for q in q_group.get("questions", []):
+                q_num = q.get("question_number")
+                answer = q.get("answer") or q.get("correct_answer")
+                if q_num and answer:
+                    answers["listening"][str(q_num)] = answer
+    
+    # Reading answers
+    reading_data = test_data.get("sections", {}).get("reading", {})
+    for passage in reading_data.get("passages", []):
+        for q_group in passage.get("question_groups", []):
+            for q in q_group.get("questions", []):
+                q_num = q.get("question_number")
+                answer = q.get("answer") or q.get("correct_answer")
+                if q_num and answer:
+                    answers["reading"][str(q_num)] = answer
+    
+    return {"success": True, "answers": answers}
+
+
 @router.get("/audio/{book_id}/{test_id}/{part}")
 async def get_audio_path(book_id: str, test_id: str, part: int):
     """Get audio file path for a listening part"""
