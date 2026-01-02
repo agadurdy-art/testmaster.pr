@@ -1331,10 +1331,17 @@ export default function CambridgeTestInterface() {
           {/* Part 1 or Part 3 - Individual Question Interface */}
           {isPart1or3 && (
             <div className="space-y-6">
-              {/* Topic hint only */}
+              {/* Topic hint - Part 1 shows single topic, Part 3 shows themes */}
               {currentSpeakingPart.topic && (
                 <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
                   <span className="text-sm font-medium text-orange-700">Topic: {currentSpeakingPart.topic}</span>
+                </div>
+              )}
+              {currentSpeakingPart.topics && currentSpeakingPart.topics.length > 0 && (
+                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
+                  <span className="text-sm font-medium text-orange-700">
+                    Themes: {currentSpeakingPart.topics.map(t => t.theme).join(', ')}
+                  </span>
                 </div>
               )}
 
