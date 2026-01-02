@@ -656,26 +656,203 @@ export default function CambridgeTestResults() {
           )}
         </Card>
 
-        {/* Speaking Section Placeholder */}
+        {/* Speaking Evaluation Section */}
         <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
-              <Mic className="w-5 h-5 text-white" />
+          <div 
+            className="flex items-center justify-between cursor-pointer"
+            onClick={() => setExpandedSection(expandedSection === 'speaking' ? null : 'speaking')}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
+                <Mic className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">Speaking Evaluation</h3>
+                <p className="text-sm text-gray-500">
+                  {Object.keys(speakingEvaluations).length > 0 
+                    ? `${Object.keys(speakingEvaluations).length} responses evaluated` 
+                    : 'Speaking responses will be evaluated upon submission'}
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">Speaking Evaluation</h3>
-              <p className="text-sm text-gray-500">
-                {results?.speaking?.evaluated ? 'Evaluated' : 'Speaking responses will be evaluated upon submission'}
-              </p>
+            <div className="flex items-center gap-3">
+              {Object.keys(speakingEvaluations).length > 0 ? (
+                <>
+                  <Badge className={`text-lg px-3 py-1 ${getBandLightBg(
+                    Math.round(Object.values(speakingEvaluations).reduce((sum, e) => sum + (e.overall_band || 5), 0) / Object.keys(speakingEvaluations).length * 2) / 2
+                  )}`}>
+                    Band {Math.round(Object.values(speakingEvaluations).reduce((sum, e) => sum + (e.overall_band || 5), 0) / Object.keys(speakingEvaluations).length * 2) / 2}
+                  </Badge>
+                  {expandedSection === 'speaking' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                </>
+              ) : (
+                <Badge className="bg-gray-100 text-gray-500">Pending</Badge>
+              )}
             </div>
-            {results?.speaking?.evaluated ? (
-              <Badge className={`ml-auto text-lg px-3 py-1 ${getBandLightBg(results.speaking.score || 5)}`}>
-                Band {results.speaking.score}
-              </Badge>
-            ) : (
-              <Badge className="ml-auto bg-gray-100 text-gray-500">Pending</Badge>
-            )}
           </div>
+          
+          {/* Speaking Results - Expandable */}
+          {expandedSection === 'speaking' && Object.keys(speakingEvaluations).length > 0 && (
+            <div className="mt-6 space-y-4">
+              {Object.entries(speakingEvaluations).map(([questionIdx, evaluation]) => (
+                <div key={questionIdx} className="p-5 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200">
+                  {/* Response Header */}
+                  <div className="flex justify-between items-center mb-4 pb-3 border-b border-emerald-100">
+                    <span className="font-bold text-lg text-gray-900">Response {parseInt(questionIdx) + 1}</span>
+                    <div className="flex items-center gap-2">
+                      {evaluation.tier === 'premium' && (
+                        <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs">
+                          Premium Analysis
+                        </Badge>
+                      )}
+                      <Badge className={`text-lg px-3 py-1 ${getBandLightBg(evaluation.overall_band || 5)}`}>
+                        Band {evaluation.overall_band || 5}
+                      </Badge>
+                    </div>
+                  </div>
+                  
+                  {/* Criteria Scores */}
+                  {evaluation.criteria && (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                      {evaluation.criteria.fluency_coherence && (
+                        <div className="p-3 bg-blue-50 rounded-lg text-center">
+                          <div className="text-xs text-blue-600 font-medium">Fluency</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.fluency_coherence)}`}>
+                            {evaluation.criteria.fluency_coherence}
+                          </div>
+                        </div>
+                      )}
+                      {evaluation.criteria.lexical_resource && (
+                        <div className="p-3 bg-purple-50 rounded-lg text-center">
+                          <div className="text-xs text-purple-600 font-medium">Vocabulary</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.lexical_resource)}`}>
+                            {evaluation.criteria.lexical_resource}
+                          </div>
+                        </div>
+                      )}
+                      {evaluation.criteria.grammatical_range && (
+                        <div className="p-3 bg-green-50 rounded-lg text-center">
+                          <div className="text-xs text-green-600 font-medium">Grammar</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.grammatical_range)}`}>
+                            {evaluation.criteria.grammatical_range}
+                          </div>
+                        </div>
+                      )}
+                      {evaluation.criteria.pronunciation && (
+                        <div className="p-3 bg-amber-50 rounded-lg text-center">
+                          <div className="text-xs text-amber-600 font-medium">Pronunciation</div>
+                          <div className={`text-lg font-bold ${getBandColorClass(evaluation.criteria.pronunciation)}`}>
+                            {evaluation.criteria.pronunciation}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {/* Premium Azure Scores (if available) */}
+                  {evaluation.azure_scores && (
+                    <div className="mb-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200">
+                      <p className="text-xs font-bold text-amber-700 mb-3">Azure Pronunciation Analysis</p>
+                      <div className="grid grid-cols-5 gap-2">
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-amber-700">{Math.round(evaluation.azure_scores.pronunciation)}%</div>
+                          <div className="text-xs text-gray-500">Overall</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-blue-600">{Math.round(evaluation.azure_scores.accuracy)}%</div>
+                          <div className="text-xs text-gray-500">Accuracy</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-green-600">{Math.round(evaluation.azure_scores.fluency)}%</div>
+                          <div className="text-xs text-gray-500">Fluency</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-purple-600">{Math.round(evaluation.azure_scores.completeness)}%</div>
+                          <div className="text-xs text-gray-500">Completeness</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-lg font-bold text-pink-600">{Math.round(evaluation.azure_scores.prosody)}%</div>
+                          <div className="text-xs text-gray-500">Prosody</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Problem Words (Premium) */}
+                  {evaluation.word_level_results && evaluation.word_level_results.length > 0 && (
+                    <div className="mb-4 p-3 bg-red-50 rounded-lg border border-red-200">
+                      <p className="text-xs font-bold text-red-700 mb-2">Words to Practice</p>
+                      <div className="flex flex-wrap gap-2">
+                        {evaluation.word_level_results.slice(0, 10).map((word, i) => (
+                          <span key={i} className="px-2 py-1 bg-white rounded text-sm text-red-700 border border-red-200">
+                            {word.word} ({Math.round(word.accuracy_score)}%)
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Transcript */}
+                  {evaluation.transcript && (
+                    <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                      <p className="text-xs font-bold text-gray-700 mb-1">Your Response (Transcribed)</p>
+                      <p className="text-sm text-gray-600 italic">{evaluation.transcript}</p>
+                    </div>
+                  )}
+                  
+                  {/* Feedback */}
+                  {evaluation.feedback && (
+                    <div className="mb-3 p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
+                      <p className="text-xs font-bold text-emerald-700 mb-1">Teacher's Feedback</p>
+                      <p className="text-sm text-gray-700">{evaluation.feedback}</p>
+                    </div>
+                  )}
+                  
+                  {/* Mentor Notes (Premium) */}
+                  {evaluation.mentor_notes && (
+                    <div className="mb-3 p-3 bg-indigo-50 rounded-lg border-l-4 border-indigo-500">
+                      <p className="text-xs font-bold text-indigo-700 mb-1">Mentor Notes</p>
+                      <p className="text-sm text-gray-700">{evaluation.mentor_notes}</p>
+                    </div>
+                  )}
+                  
+                  {/* Strengths & Weaknesses */}
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {evaluation.strengths && evaluation.strengths.length > 0 && (
+                      <div className="p-3 bg-green-50 rounded-lg border border-green-100">
+                        <p className="text-xs font-bold text-green-700 mb-2 flex items-center gap-1">
+                          <CheckCircle className="w-3 h-3" /> Strengths
+                        </p>
+                        <ul className="text-sm text-gray-600 space-y-1">
+                          {evaluation.strengths.map((s, i) => <li key={i}>• {s}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {evaluation.weaknesses && evaluation.weaknesses.length > 0 && (
+                      <div className="p-3 bg-amber-50 rounded-lg border border-amber-100">
+                        <p className="text-xs font-bold text-amber-700 mb-2 flex items-center gap-1">
+                          <Target className="w-3 h-3" /> Areas to Improve
+                        </p>
+                        <ul className="text-sm text-gray-600 space-y-1">
+                          {evaluation.weaknesses.map((w, i) => <li key={i}>• {w}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Tip */}
+                  {evaluation.tip && (
+                    <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+                      <p className="text-xs font-bold text-purple-700 mb-1 flex items-center gap-1">
+                        <Lightbulb className="w-3 h-3" /> Improvement Tip
+                      </p>
+                      <p className="text-sm text-gray-700">{evaluation.tip}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </Card>
 
         {/* Action Buttons */}
