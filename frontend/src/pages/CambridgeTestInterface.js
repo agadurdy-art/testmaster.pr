@@ -1352,7 +1352,46 @@ export default function CambridgeTestInterface() {
               )}
             </div>
           ))}
-        </Card>
+        </div>
+        
+        {/* Context Menu for Highlighting */}
+        {contextMenu.show && (
+          <div 
+            className="fixed bg-white shadow-xl rounded-lg border p-2 z-50"
+            style={{ top: contextMenu.y, left: contextMenu.x }}
+          >
+            <div className="flex flex-col gap-1">
+              <button 
+                onClick={() => addHighlight('yellow')}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-yellow-100 rounded text-sm"
+              >
+                <Highlighter className="w-4 h-4 text-yellow-600" />
+                Highlight Yellow
+              </button>
+              <button 
+                onClick={() => addHighlight('blue')}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-blue-100 rounded text-sm"
+              >
+                <Highlighter className="w-4 h-4 text-blue-600" />
+                Highlight Blue
+              </button>
+              <button 
+                onClick={addNoteToHighlight}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded text-sm"
+              >
+                <StickyNote className="w-4 h-4 text-gray-600" />
+                Add Note
+              </button>
+              <button 
+                onClick={() => setContextMenu({ show: false, x: 0, y: 0, text: '', range: null })}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded text-sm text-gray-500"
+              >
+                <X className="w-4 h-4" />
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
