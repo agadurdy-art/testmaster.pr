@@ -24,7 +24,7 @@ IELTS17_TEST1 = {
                     "question_count": 10,
                     "context": "A conversation about a conservation group's activities",
                     "question_types": ["note_completion"],
-                    "audio_file": "/static/audio/cambridge/ielts17/test1_part1.mp3",
+                    "audio_file": "/api/audio/cambridge/ielts17/test1_part1.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
                     "visual": {
                         "type": "notes",
@@ -97,7 +97,7 @@ IELTS17_TEST1 = {
                     "question_count": 10,
                     "context": "Information about a boat trip",
                     "question_types": ["multiple_choice", "multiple_selection"],
-                    "audio_file": "/static/audio/cambridge/ielts17/test1_part2.mp3",
+                    "audio_file": "/api/audio/cambridge/ielts17/test1_part2.mp3",
                     "questions": [
                         {
                             "number": 11,
@@ -156,7 +156,7 @@ IELTS17_TEST1 = {
                     "question_count": 10,
                     "context": "Discussion between two veterinary science students about work experience",
                     "question_types": ["multiple_choice", "matching"],
-                    "audio_file": "/static/audio/cambridge/ielts17/test1_part3.mp3",
+                    "audio_file": "/api/audio/cambridge/ielts17/test1_part3.mp3",
                     "questions": [
                         {
                             "number": 21,
@@ -225,7 +225,7 @@ IELTS17_TEST1 = {
                     "question_count": 10,
                     "context": "A lecture about labyrinths",
                     "question_types": ["note_completion"],
-                    "audio_file": "/static/audio/cambridge/ielts17/test1_part4.mp3",
+                    "audio_file": "/api/audio/cambridge/ielts17/test1_part4.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "visual": {
                         "type": "notes",
