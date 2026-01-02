@@ -1348,31 +1348,55 @@ export default function CambridgeTestInterface() {
               {/* Current Question Card */}
               <Card className="p-6 bg-gradient-to-br from-slate-800 to-slate-900 text-white">
                 <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Headphones className="w-8 h-8 text-white" />
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${
+                    speakingState === SPEAKING_STATES.RECORDING ? 'bg-red-500 animate-pulse' :
+                    speakingState === SPEAKING_STATES.PLAYING_PROMPT ? 'bg-blue-500' :
+                    speakingState === SPEAKING_STATES.RECORDED ? 'bg-green-500' : 'bg-orange-500'
+                  }`}>
+                    {speakingState === SPEAKING_STATES.RECORDING ? (
+                      <Mic className="w-8 h-8 text-white" />
+                    ) : speakingState === SPEAKING_STATES.PLAYING_PROMPT ? (
+                      <Volume2 className="w-8 h-8 text-white" />
+                    ) : (
+                      <Headphones className="w-8 h-8 text-white" />
+                    )}
                   </div>
                   <h4 className="text-lg font-semibold">Question {speakingQuestionIndex + 1}</h4>
+                  
+                  {/* State indicator */}
+                  <p className="text-sm text-gray-400 mt-1">
+                    {speakingState === SPEAKING_STATES.IDLE && 'Click Listen to hear the question'}
+                    {speakingState === SPEAKING_STATES.LOADING_AUDIO && 'Loading audio...'}
+                    {speakingState === SPEAKING_STATES.PLAYING_PROMPT && 'Listen carefully...'}
+                    {speakingState === SPEAKING_STATES.READY_TO_RECORD && 'Ready to record - click Record Answer'}
+                    {speakingState === SPEAKING_STATES.RECORDING && `Recording... ${recordingTime}s`}
+                    {speakingState === SPEAKING_STATES.RECORDED && 'Answer recorded!'}
+                  </p>
                 </div>
 
-                {/* Listen Button - Max 2 times */}
-                <div className="flex flex-col items-center gap-4 mb-6">
-                  <div className="flex items-center gap-4">
+                {/* TTS Audio (hidden) */}
+                {ttsAudioUrl && (
+                  <audio
+                    ref={ttsAudioRef}
+                    src={ttsAudioUrl}
+                    autoPlay
+                    onEnded={handleTTSEnded}
+                    onPlay={() => setSpeakingState(SPEAKING_STATES.PLAYING_PROMPT)}
+                  />
+                )}
+
+                {/* Step 1: Listen Button */}
+                {(speakingState === SPEAKING_STATES.IDLE || speakingState === SPEAKING_STATES.LOADING_AUDIO || speakingState === SPEAKING_STATES.PLAYING_PROMPT) && (
+                  <div className="flex flex-col items-center gap-4 mb-6">
                     <Button
-                      onClick={() => {
-                        const playCount = questionPlayCounts[speakingQuestionIndex] || 0;
-                        if (playCount < 2) {
-                          playQuestionAudio(questions[speakingQuestionIndex], speakingQuestionIndex === 0);
-                          setQuestionPlayCounts(prev => ({
-                            ...prev,
-                            [speakingQuestionIndex]: playCount + 1
-                          }));
-                        }
-                      }}
-                      disabled={isTTSPlaying || (questionPlayCounts[speakingQuestionIndex] || 0) >= 2}
-                      className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 px-6"
+                      onClick={() => playQuestionAudio(questions[speakingQuestionIndex], speakingQuestionIndex === 0)}
+                      disabled={speakingState === SPEAKING_STATES.LOADING_AUDIO || speakingState === SPEAKING_STATES.PLAYING_PROMPT || (questionPlayCounts[speakingQuestionIndex] || 0) >= 2}
+                      className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 px-8"
                       size="lg"
                     >
-                      {isTTSPlaying ? (
+                      {speakingState === SPEAKING_STATES.LOADING_AUDIO ? (
+                        <>Loading...</>
+                      ) : speakingState === SPEAKING_STATES.PLAYING_PROMPT ? (
                         <>
                           <div className="flex gap-1 mr-2">
                             {[1,2,3].map(i => (
@@ -1383,7 +1407,7 @@ export default function CambridgeTestInterface() {
                         </>
                       ) : (
                         <>
-                          <Play className="w-5 h-5 mr-2" /> Listen to Question
+                          <Headphones className="w-5 h-5 mr-2" /> Listen to Question
                         </>
                       )}
                     </Button>
@@ -1391,27 +1415,15 @@ export default function CambridgeTestInterface() {
                       ({2 - (questionPlayCounts[speakingQuestionIndex] || 0)} plays left)
                     </span>
                   </div>
-                  
-                  {/* TTS Audio (hidden) */}
-                  {ttsAudioUrl && (
-                    <audio
-                      ref={ttsAudioRef}
-                      src={ttsAudioUrl}
-                      autoPlay
-                      onEnded={handleTTSEnded}
-                      onPlay={() => setIsTTSPlaying(true)}
-                    />
-                  )}
-                </div>
+                )}
 
-                {/* Recording Controls for THIS question */}
-                <div className="border-t border-gray-700 pt-6">
-                  <p className="text-center text-sm text-gray-400 mb-4">Record your answer for this question</p>
-                  <div className="flex justify-center gap-4">
-                    {!isRecording ? (
+                {/* Step 2: Record Button - Only after listening */}
+                {(speakingState === SPEAKING_STATES.READY_TO_RECORD || speakingState === SPEAKING_STATES.RECORDING) && (
+                  <div className="flex flex-col items-center gap-4 mb-6">
+                    {speakingState === SPEAKING_STATES.READY_TO_RECORD ? (
                       <Button 
                         onClick={() => startRecordingForQuestion(speakingQuestionIndex)}
-                        className="bg-red-600 hover:bg-red-700"
+                        className="bg-red-600 hover:bg-red-700 px-8"
                         size="lg"
                       >
                         <Mic className="w-5 h-5 mr-2" /> Record Answer
@@ -1421,25 +1433,52 @@ export default function CambridgeTestInterface() {
                         onClick={() => stopRecordingForQuestion(speakingQuestionIndex)}
                         variant="destructive"
                         size="lg"
-                        className="animate-pulse"
+                        className="animate-pulse px-8"
                       >
-                        <Pause className="w-5 h-5 mr-2" /> Stop Recording
+                        <Pause className="w-5 h-5 mr-2" /> Stop ({recordingTime}s)
+                      </Button>
+                    )}
+                    
+                    {/* Re-listen option */}
+                    {speakingState === SPEAKING_STATES.READY_TO_RECORD && (questionPlayCounts[speakingQuestionIndex] || 0) < 2 && (
+                      <Button
+                        variant="ghost"
+                        onClick={() => playQuestionAudio(questions[speakingQuestionIndex], false)}
+                        className="text-gray-400 hover:text-white"
+                        size="sm"
+                      >
+                        Listen again ({2 - (questionPlayCounts[speakingQuestionIndex] || 0)} left)
                       </Button>
                     )}
                   </div>
-                  
-                  {/* Show recorded audio for this question */}
-                  {questionRecordings[speakingQuestionIndex] && (
-                    <div className="mt-4 text-center">
-                      <p className="text-sm text-green-400 mb-2">✓ Answer recorded</p>
-                      <audio 
-                        src={questionRecordings[speakingQuestionIndex]} 
-                        controls 
-                        className="mx-auto"
-                      />
-                    </div>
-                  )}
-                </div>
+                )}
+
+                {/* Step 3: Recorded - Show playback */}
+                {speakingState === SPEAKING_STATES.RECORDED && questionRecordings[speakingQuestionIndex] && (
+                  <div className="flex flex-col items-center gap-4 mb-6">
+                    <p className="text-sm text-green-400 flex items-center gap-2">
+                      <CheckCircle className="w-4 h-4" /> Answer recorded
+                    </p>
+                    <audio 
+                      src={questionRecordings[speakingQuestionIndex]} 
+                      controls 
+                      className="mx-auto"
+                    />
+                    
+                    {/* Re-record option */}
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setSpeakingState(SPEAKING_STATES.READY_TO_RECORD);
+                        setRecordingTime(0);
+                      }}
+                      className="text-white border-gray-600 hover:bg-gray-700"
+                      size="sm"
+                    >
+                      <RefreshCw className="w-4 h-4 mr-1" /> Re-record
+                    </Button>
+                  </div>
+                )}
               </Card>
 
               {/* Navigation */}
