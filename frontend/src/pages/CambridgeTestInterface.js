@@ -850,66 +850,6 @@ export default function CambridgeTestInterface() {
             <p className="text-gray-700 whitespace-pre-line">{currentTask.prompt}</p>
           </div>
 
-          {/* Dual Map Visual for Task 1 */}
-          {currentTask.visual_data?.type === 'dual_map' && (
-            <div className="mb-6 p-4 bg-white border rounded-lg">
-              <h4 className="font-semibold text-center mb-4">{currentTask.visual_data.title}</h4>
-              <div className="grid grid-cols-2 gap-4">
-                {currentTask.visual_data.maps?.map((map, mapIdx) => (
-                  <div key={mapIdx} className="border rounded-lg p-3 bg-slate-50">
-                    <h5 className="font-medium text-center text-sm mb-3">{map.title}</h5>
-                    <div className="relative bg-white rounded border aspect-[4/3] overflow-hidden">
-                      {/* River */}
-                      <div className="absolute top-0 left-0 right-0 h-6 bg-blue-300 flex items-center justify-center">
-                        <span className="text-xs text-blue-800 font-medium">River</span>
-                      </div>
-                      {/* Farmland */}
-                      <div className="absolute top-6 left-0 right-0 h-10 bg-green-200 flex items-center justify-center border-b border-green-400">
-                        <span className="text-xs text-green-800">Farmland</span>
-                      </div>
-                      {/* Main area */}
-                      <div className="absolute top-16 bottom-6 left-0 right-0 bg-gray-100 p-2">
-                        {mapIdx === 0 ? (
-                          // Current - Factories
-                          <div className="h-full flex flex-wrap gap-1 items-center justify-center">
-                            {[1,2,3,4].map(i => (
-                              <div key={i} className="w-12 h-8 bg-red-300 border border-red-400 rounded flex items-center justify-center">
-                                <span className="text-[8px] text-red-800">Factory</span>
-                              </div>
-                            ))}
-                            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-gray-300 border-2 border-gray-500"></div>
-                          </div>
-                        ) : (
-                          // Planned - Housing + facilities
-                          <div className="h-full relative">
-                            <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-8 h-3 bg-gray-500 text-[6px] text-white text-center">Bridge</div>
-                            <div className="flex flex-wrap gap-1 items-start justify-center pt-2">
-                              <div className="w-10 h-6 bg-yellow-200 border border-yellow-400 rounded text-[7px] text-center">Housing</div>
-                              <div className="w-10 h-6 bg-yellow-200 border border-yellow-400 rounded text-[7px] text-center">Housing</div>
-                              <div className="w-10 h-6 bg-purple-200 border border-purple-400 rounded text-[7px] text-center">Shops</div>
-                            </div>
-                            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-300 border-2 border-gray-500"></div>
-                            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 flex gap-1">
-                              <div className="w-12 h-5 bg-red-200 border border-red-300 rounded text-[6px] text-center">Medical</div>
-                            </div>
-                            <div className="absolute right-1 top-1 flex flex-col gap-1">
-                              <div className="w-8 h-4 bg-blue-200 border border-blue-300 rounded text-[6px] text-center">School</div>
-                              <div className="w-8 h-4 bg-green-300 border border-green-400 rounded text-[6px] text-center">Play</div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      {/* Main Road */}
-                      <div className="absolute bottom-0 left-0 right-0 h-6 bg-gray-400 flex items-center justify-center">
-                        <span className="text-xs text-white font-medium">Main Road</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Image Visual from PDF */}
           {currentTask.visual_data?.type === 'image' && (
             <div className="mb-6">
