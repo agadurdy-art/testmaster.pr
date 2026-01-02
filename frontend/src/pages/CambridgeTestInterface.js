@@ -1073,20 +1073,6 @@ export default function CambridgeTestInterface() {
     setPart2PrepTime(60);
   };
 
-  // Part 2 prep timer effect
-  useEffect(() => {
-    let interval;
-    if (isPreparing && part2PrepTime > 0) {
-      interval = setInterval(() => {
-        setPart2PrepTime(prev => prev - 1);
-      }, 1000);
-    } else if (isPreparing && part2PrepTime === 0) {
-      setIsPreparing(false);
-      toast.info('Preparation time is over. Please start speaking.');
-    }
-    return () => clearInterval(interval);
-  }, [isPreparing, part2PrepTime]);
-
   // Render Speaking Section - Real IELTS style
   const renderSpeakingSection = () => {
     const parts = sectionData?.parts || [];
