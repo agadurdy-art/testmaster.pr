@@ -23,44 +23,56 @@ IELTS17_TEST2 = {
                     "question_range": "1-10",
                     "question_count": 10,
                     "context": "A conversation about volunteer opportunities in Southoe village",
-                    "question_types": ["note_completion", "table_completion"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part1.mp3",
-                    "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "question_groups": [
                         {
                             "question_type": "note_completion",
                             "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-                            "questions": [
-                                {"question_number": 1, "question_text": "Help with ___ books at the library", "answer": "collecting"},
-                                {"question_number": 2, "question_text": "At the library, also update ___", "answer": "records"},
-                                {"question_number": 3, "question_text": "The lunch club is held on ___ Street", "answer": "West"},
-                                {"question_number": 4, "question_text": "Help individuals with ___", "answer": "transport"},
-                                {"question_number": 5, "question_text": "Volunteers can teach ___", "answer": "art"},
-                                {"question_number": 6, "question_text": "Fundraising event location: ___", "answer": "hospital"},
-                                {"question_number": 7, "question_text": "Event in May will be in a ___", "answer": "garden"}
-                            ]
-                        },
-                        {
-                            "question_type": "table_completion",
-                            "instructions": "Complete the table below. Write ONE WORD AND/OR A NUMBER for each answer.",
-                            "questions": [
-                                {"question_number": 8, "question_text": "April event type: ___", "answer": "quiz"},
-                                {"question_number": 9, "question_text": "Help needed for selling ___", "answer": "tickets"},
-                                {"question_number": 10, "question_text": "Help needed to make a ___", "answer": "poster"}
+                            "note_sections": [
+                                {
+                                    "name": "Library",
+                                    "items": [
+                                        "Help with ___1___ books",
+                                        "Update ___2___"
+                                    ]
+                                },
+                                {
+                                    "name": "Lunch Club",
+                                    "items": [
+                                        "Held on ___3___ Street",
+                                        "Help individuals with ___4___"
+                                    ]
+                                },
+                                {
+                                    "name": "Classes",
+                                    "items": [
+                                        "Volunteers can teach ___5___"
+                                    ]
+                                },
+                                {
+                                    "name": "Fundraising Events",
+                                    "items": [
+                                        "Location: ___6___",
+                                        "May event in a ___7___",
+                                        "April event: ___8___",
+                                        "Selling ___9___",
+                                        "Making a ___10___"
+                                    ]
+                                }
                             ]
                         }
                     ],
                     "questions": [
-                        {"question_number": 1, "answer": "collecting"},
-                        {"question_number": 2, "answer": "records"},
-                        {"question_number": 3, "answer": "West"},
-                        {"question_number": 4, "answer": "transport"},
-                        {"question_number": 5, "answer": "art"},
-                        {"question_number": 6, "answer": "hospital"},
-                        {"question_number": 7, "answer": "garden"},
-                        {"question_number": 8, "answer": "quiz"},
-                        {"question_number": 9, "answer": "tickets"},
-                        {"question_number": 10, "answer": "poster"}
+                        {"number": 1, "type": "note_completion"},
+                        {"number": 2, "type": "note_completion"},
+                        {"number": 3, "type": "note_completion"},
+                        {"number": 4, "type": "note_completion"},
+                        {"number": 5, "type": "note_completion"},
+                        {"number": 6, "type": "note_completion"},
+                        {"number": 7, "type": "note_completion"},
+                        {"number": 8, "type": "note_completion"},
+                        {"number": 9, "type": "note_completion"},
+                        {"number": 10, "type": "note_completion"}
                     ]
                 },
                 {
@@ -69,44 +81,49 @@ IELTS17_TEST2 = {
                     "question_range": "11-20",
                     "question_count": 10,
                     "context": "A tour guide introducing Oniton Hall to visitors",
-                    "question_types": ["multiple_choice", "matching"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part2.mp3",
-                    "question_groups": [
+                    "questions": [
                         {
-                            "question_type": "multiple_choice",
-                            "instructions": "Choose the correct letter, A, B or C.",
-                            "questions": [
-                                {"question_number": 11, "question_text": "What change was made to Oniton Hall in the 19th century?", "options": ["A. The kitchen wing was changed", "B. The gardens were redesigned", "C. The stable block was converted"], "answer": "B"},
-                                {"question_number": 12, "question_text": "Sir Edward Downes built the house primarily because he wanted", "options": ["A. somewhere to display his art collection", "B. a quiet place to write his books", "C. a place to entertain guests"], "answer": "C"},
-                                {"question_number": 13, "question_text": "What can visitors learn about the servants who worked at Oniton Hall?", "options": ["A. how they spent their leisure time", "B. how their working conditions changed", "C. how they felt about their employer"], "answer": "C"},
-                                {"question_number": 14, "question_text": "What activity can children take part in at Oniton Hall?", "options": ["A. making costumes", "B. following a trail", "C. making a video"], "answer": "B"}
-                            ]
+                            "number": 11,
+                            "type": "multiple_choice",
+                            "question": "What change was made to Oniton Hall in the 19th century?",
+                            "options": ["A: The kitchen wing was changed", "B: The gardens were redesigned", "C: The stable block was converted"]
                         },
                         {
-                            "question_type": "matching",
-                            "instructions": "Choose SIX answers from the box and write the correct letter, A-H.",
-                            "box_options": ["A. exercise classes", "B. bird watching", "C. cycling", "D. fishing", "E. horse riding", "F. swimming", "G. walk in woods", "H. golf"],
-                            "questions": [
-                                {"question_number": 15, "question_text": "Farm shop area", "answer": "D"},
-                                {"question_number": 16, "question_text": "Lake", "answer": "C"},
-                                {"question_number": 17, "question_text": "Woods", "answer": "G"},
-                                {"question_number": 18, "question_text": "Gym", "answer": "A"},
-                                {"question_number": 19, "question_text": "Stables", "answer": "E"},
-                                {"question_number": 20, "question_text": "Pool", "answer": "F"}
+                            "number": 12,
+                            "type": "multiple_choice",
+                            "question": "Sir Edward Downes built the house primarily because he wanted",
+                            "options": ["A: somewhere to display his art collection", "B: a quiet place to write his books", "C: a place to entertain guests"]
+                        },
+                        {
+                            "number": 13,
+                            "type": "multiple_choice",
+                            "question": "What can visitors learn about the servants who worked at Oniton Hall?",
+                            "options": ["A: how they spent their leisure time", "B: how their working conditions changed", "C: how they felt about their employer"]
+                        },
+                        {
+                            "number": 14,
+                            "type": "multiple_choice",
+                            "question": "What activity can children take part in at Oniton Hall?",
+                            "options": ["A: making costumes", "B: following a trail", "C: making a video"]
+                        },
+                        {
+                            "number": "15-20",
+                            "type": "matching",
+                            "instruction": "What activity can visitors do at each of the following places? Choose SIX answers from the box.",
+                            "options_box": {
+                                "title": "Activities",
+                                "options": ["A: exercise classes", "B: bird watching", "C: cycling", "D: fishing", "E: horse riding", "F: swimming", "G: walk in woods", "H: golf"]
+                            },
+                            "items": [
+                                {"number": 15, "item": "Farm shop area"},
+                                {"number": 16, "item": "Lake"},
+                                {"number": 17, "item": "Woods"},
+                                {"number": 18, "item": "Gym"},
+                                {"number": 19, "item": "Stables"},
+                                {"number": 20, "item": "Pool"}
                             ]
                         }
-                    ],
-                    "questions": [
-                        {"question_number": 11, "answer": "B"},
-                        {"question_number": 12, "answer": "C"},
-                        {"question_number": 13, "answer": "C"},
-                        {"question_number": 14, "answer": "B"},
-                        {"question_number": 15, "answer": "D"},
-                        {"question_number": 16, "answer": "C"},
-                        {"question_number": 17, "answer": "G"},
-                        {"question_number": 18, "answer": "A"},
-                        {"question_number": 19, "answer": "E"},
-                        {"question_number": 20, "answer": "F"}
                     ]
                 },
                 {
@@ -115,44 +132,35 @@ IELTS17_TEST2 = {
                     "question_range": "21-30",
                     "question_count": 10,
                     "context": "A discussion between students about a production of Romeo and Juliet",
-                    "question_types": ["multiple_choice", "matching"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part3.mp3",
-                    "question_groups": [
+                    "questions": [
                         {
-                            "question_type": "multiple_choice",
-                            "instructions": "Choose TWO letters, A-E.",
-                            "questions": [
-                                {"question_number": 21, "question_text": "Which TWO things should reviews include?", "options": ["A. information about the plot", "B. advice for the director", "C. description of the actors", "D. comments on the costumes", "E. judgement on the overall production"], "answer": ["D", "E"]},
-                                {"question_number": 22, "question_text": "(Question 22 is paired with 21)", "answer": ["D", "E"]}
-                            ]
+                            "number": "21-22",
+                            "type": "multiple_selection",
+                            "instruction": "Choose TWO letters, A-E",
+                            "question": "Which TWO things should reviews include, according to Ed and Gemma?",
+                            "options": ["A: information about the plot", "B: advice for the director", "C: description of the actors", "D: comments on the costumes", "E: judgement on the overall production"],
+                            "answer_count": 2
                         },
                         {
-                            "question_type": "matching",
-                            "instructions": "What opinion does each student express about aspects of the production?",
-                            "box_options": ["A. They were not necessary", "B. They were effective", "C. They were inappropriate", "D. They were old-fashioned", "E. They needed more variety", "F. They were not well done", "G. They were not suitable"],
-                            "questions": [
-                                {"question_number": 23, "question_text": "The set", "answer": "D"},
-                                {"question_number": 24, "question_text": "The lighting", "answer": "C"},
-                                {"question_number": 25, "question_text": "The costumes", "answer": "A"},
-                                {"question_number": 26, "question_text": "The music", "answer": "E"},
-                                {"question_number": 27, "question_text": "The actors' delivery of their lines", "answer": "F"},
-                                {"question_number": 28, "question_text": "The relevance of Romeo and Juliet", "answer": "B"},
-                                {"question_number": 29, "question_text": "Watching in another language", "answer": "C"},
-                                {"question_number": 30, "question_text": "Shakespeare's international appeal", "answer": "C"}
+                            "number": "23-30",
+                            "type": "matching",
+                            "instruction": "What opinion does each student express about aspects of the production?",
+                            "options_box": {
+                                "title": "Opinions",
+                                "options": ["A: They weren't necessary", "B: They were effective", "C: They were inappropriate", "D: They were old-fashioned", "E: They needed more variety", "F: They weren't well done", "G: They weren't suitable"]
+                            },
+                            "items": [
+                                {"number": 23, "item": "The set"},
+                                {"number": 24, "item": "The lighting"},
+                                {"number": 25, "item": "The costumes"},
+                                {"number": 26, "item": "The music"},
+                                {"number": 27, "item": "The actors' delivery of their lines"},
+                                {"number": 28, "item": "The relevance of Romeo and Juliet"},
+                                {"number": 29, "item": "Watching in another language"},
+                                {"number": 30, "item": "Shakespeare's international appeal"}
                             ]
                         }
-                    ],
-                    "questions": [
-                        {"question_number": 21, "answer": ["D", "E"]},
-                        {"question_number": 22, "answer": ["D", "E"]},
-                        {"question_number": 23, "answer": "D"},
-                        {"question_number": 24, "answer": "C"},
-                        {"question_number": 25, "answer": "A"},
-                        {"question_number": 26, "answer": "E"},
-                        {"question_number": 27, "answer": "F"},
-                        {"question_number": 28, "answer": "B"},
-                        {"question_number": 29, "answer": "C"},
-                        {"question_number": 30, "answer": "C"}
                     ]
                 },
                 {
@@ -161,38 +169,56 @@ IELTS17_TEST2 = {
                     "question_range": "31-40",
                     "question_count": 10,
                     "context": "A lecture about how digital technology affects the Icelandic language",
-                    "question_types": ["note_completion"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part4.mp3",
-                    "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "question_groups": [
                         {
                             "question_type": "note_completion",
                             "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-                            "questions": [
-                                {"question_number": 31, "question_text": "Number of speakers worldwide: ___", "answer": "321,000"},
-                                {"question_number": 32, "question_text": "Growth of ___ has been rapid", "answer": "vocabulary"},
-                                {"question_number": 33, "question_text": "Young people learn English from ___ and videos", "answer": "podcast"},
-                                {"question_number": 34, "question_text": "Children use ___ to access English content", "answer": "smartphones"},
-                                {"question_number": 35, "question_text": "Some children become ___ in English and Icelandic", "answer": "bilingual"},
-                                {"question_number": 36, "question_text": "Use of English in the school ___", "answer": "playground"},
-                                {"question_number": 37, "question_text": "Children might learn word from a ___ before Icelandic word", "answer": "picture"},
-                                {"question_number": 38, "question_text": "Concerns about errors in ___", "answer": "grammar"},
-                                {"question_number": 39, "question_text": "Language is important for national ___", "answer": "identity"},
-                                {"question_number": 40, "question_text": "Goal is for people to remain ___ in Icelandic", "answer": "fluent"}
+                            "note_sections": [
+                                {
+                                    "name": "Icelandic Language Facts",
+                                    "items": [
+                                        "Number of speakers worldwide: ___31___",
+                                        "Growth of ___32___ has been rapid"
+                                    ]
+                                },
+                                {
+                                    "name": "Impact of Technology",
+                                    "items": [
+                                        "Young people learn English from ___33___ and videos",
+                                        "Children use ___34___ to access English content",
+                                        "Some children become ___35___ in English and Icelandic"
+                                    ]
+                                },
+                                {
+                                    "name": "Concerns",
+                                    "items": [
+                                        "Use of English in the school ___36___",
+                                        "Children learn English word from ___37___ before Icelandic",
+                                        "Errors in ___38___"
+                                    ]
+                                },
+                                {
+                                    "name": "Importance",
+                                    "items": [
+                                        "Language important for national ___39___",
+                                        "Goal: people remain ___40___ in Icelandic"
+                                    ]
+                                }
                             ]
                         }
                     ],
                     "questions": [
-                        {"question_number": 31, "answer": "321,000"},
-                        {"question_number": 32, "answer": "vocabulary"},
-                        {"question_number": 33, "answer": "podcast"},
-                        {"question_number": 34, "answer": "smartphones"},
-                        {"question_number": 35, "answer": "bilingual"},
-                        {"question_number": 36, "answer": "playground"},
-                        {"question_number": 37, "answer": "picture"},
-                        {"question_number": 38, "answer": "grammar"},
-                        {"question_number": 39, "answer": "identity"},
-                        {"question_number": 40, "answer": "fluent"}
+                        {"number": 31, "type": "note_completion"},
+                        {"number": 32, "type": "note_completion"},
+                        {"number": 33, "type": "note_completion"},
+                        {"number": 34, "type": "note_completion"},
+                        {"number": 35, "type": "note_completion"},
+                        {"number": 36, "type": "note_completion"},
+                        {"number": 37, "type": "note_completion"},
+                        {"number": 38, "type": "note_completion"},
+                        {"number": 39, "type": "note_completion"},
+                        {"number": 40, "type": "note_completion"}
                     ]
                 }
             ]
@@ -207,49 +233,21 @@ IELTS17_TEST2 = {
                     "question_range": "1-13",
                     "question_count": 13,
                     "topic": "Archaeology and ancient manuscripts",
-                    "question_groups": [
-                        {
-                            "question_type": "note_completion",
-                            "instructions": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.",
-                            "question_range": "1-5",
-                            "questions": [
-                                {"question_number": 1, "question_text": "The scrolls were preserved in jars made of ___", "answer": "rock"},
-                                {"question_number": 2, "question_text": "The scrolls were found in a ___", "answer": "cave"},
-                                {"question_number": 3, "question_text": "The jars were sealed with ___", "answer": "clay"},
-                                {"question_number": 4, "question_text": "The scrolls are believed to have been written by the ___", "answer": "Essenes"},
-                                {"question_number": 5, "question_text": "Most scrolls were written in ___", "answer": "Hebrew"}
-                            ]
-                        },
-                        {
-                            "question_type": "true_false_ng",
-                            "instructions": "Do the following statements agree with the information given in Reading Passage 1?",
-                            "question_range": "6-13",
-                            "questions": [
-                                {"question_number": 6, "question_text": "Statement about discovery", "answer": "NOT GIVEN"},
-                                {"question_number": 7, "question_text": "Statement about preservation", "answer": "FALSE"},
-                                {"question_number": 8, "question_text": "Statement about content", "answer": "TRUE"},
-                                {"question_number": 9, "question_text": "Statement about scholars", "answer": "TRUE"},
-                                {"question_number": 10, "question_text": "Statement about dating", "answer": "FALSE"},
-                                {"question_number": 11, "question_text": "Statement about location", "answer": "FALSE"},
-                                {"question_number": 12, "question_text": "Statement about significance", "answer": "TRUE"},
-                                {"question_number": 13, "question_text": "Statement about future research", "answer": "NOT GIVEN"}
-                            ]
-                        }
-                    ],
+                    "passage_text": "The Dead Sea Scrolls are ancient manuscripts that were discovered between 1947 and 1956 in caves near the Dead Sea. They include the oldest known biblical manuscripts and provide invaluable insights into Jewish religious texts and beliefs during the Second Temple period...",
                     "questions": [
-                        {"question_number": 1, "answer": "rock"},
-                        {"question_number": 2, "answer": "cave"},
-                        {"question_number": 3, "answer": "clay"},
-                        {"question_number": 4, "answer": "Essenes"},
-                        {"question_number": 5, "answer": "Hebrew"},
-                        {"question_number": 6, "answer": "NOT GIVEN"},
-                        {"question_number": 7, "answer": "FALSE"},
-                        {"question_number": 8, "answer": "TRUE"},
-                        {"question_number": 9, "answer": "TRUE"},
-                        {"question_number": 10, "answer": "FALSE"},
-                        {"question_number": 11, "answer": "FALSE"},
-                        {"question_number": 12, "answer": "TRUE"},
-                        {"question_number": 13, "answer": "NOT GIVEN"}
+                        {"number": 1, "type": "note_completion", "question": "The scrolls were preserved in jars made of ___"},
+                        {"number": 2, "type": "note_completion", "question": "The scrolls were found in a ___"},
+                        {"number": 3, "type": "note_completion", "question": "The jars were sealed with ___"},
+                        {"number": 4, "type": "note_completion", "question": "The scrolls are believed to have been written by the ___"},
+                        {"number": 5, "type": "note_completion", "question": "Most scrolls were written in ___"},
+                        {"number": 6, "type": "true_false_ng", "question": "The scrolls were discovered by archaeologists conducting a planned excavation.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
+                        {"number": 7, "type": "true_false_ng", "question": "All the scrolls have been successfully preserved.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
+                        {"number": 8, "type": "true_false_ng", "question": "The scrolls contain texts from the Hebrew Bible.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
+                        {"number": 9, "type": "true_false_ng", "question": "Scholars have completed their analysis of all the scrolls.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
+                        {"number": 10, "type": "true_false_ng", "question": "Carbon dating has confirmed the age of some scrolls.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
+                        {"number": 11, "type": "true_false_ng", "question": "The scrolls were all found in a single cave.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
+                        {"number": 12, "type": "true_false_ng", "question": "The scrolls have significantly impacted biblical scholarship.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
+                        {"number": 13, "type": "true_false_ng", "question": "New technology may reveal more text on damaged scrolls.", "options": ["TRUE", "FALSE", "NOT GIVEN"]}
                     ]
                 },
                 {
@@ -258,49 +256,21 @@ IELTS17_TEST2 = {
                     "question_range": "14-26",
                     "question_count": 13,
                     "topic": "Agriculture and genetic research",
-                    "question_groups": [
-                        {
-                            "question_type": "matching_information",
-                            "instructions": "Which section contains the following information?",
-                            "question_range": "14-18",
-                            "questions": [
-                                {"question_number": 14, "question_text": "Reference to reasons for choosing wild plants", "answer": "C"},
-                                {"question_number": 15, "question_text": "How the tomato spread globally", "answer": "B"},
-                                {"question_number": 16, "question_text": "The commercial tomato problems", "answer": "E"},
-                                {"question_number": 17, "question_text": "Comparison of wild and domestic", "answer": "A"},
-                                {"question_number": 18, "question_text": "The genetic technology used", "answer": "C"}
-                            ]
-                        },
-                        {
-                            "question_type": "summary_completion",
-                            "instructions": "Complete the summary below.",
-                            "question_range": "19-26",
-                            "questions": [
-                                {"question_number": 19, "question_text": "Gap 19", "answer": "B"},
-                                {"question_number": 20, "question_text": "Gap 20", "answer": "D"},
-                                {"question_number": 21, "question_text": "Gap 21", "answer": "A"},
-                                {"question_number": 22, "question_text": "Gap 22", "answer": "C"},
-                                {"question_number": 23, "question_text": "Gap 23", "answer": "A"},
-                                {"question_number": 24, "question_text": "Gap 24", "answer": "flavour"},
-                                {"question_number": 25, "question_text": "Gap 25", "answer": "size"},
-                                {"question_number": 26, "question_text": "Gap 26", "answer": "salt"}
-                            ]
-                        }
-                    ],
+                    "passage_text": "Scientists are using gene-editing technology to create a new type of tomato that combines the best traits of wild and domesticated varieties. The project aims to develop tomatoes with improved flavor, better disease resistance, and higher nutritional content...",
                     "questions": [
-                        {"question_number": 14, "answer": "C"},
-                        {"question_number": 15, "answer": "B"},
-                        {"question_number": 16, "answer": "E"},
-                        {"question_number": 17, "answer": "A"},
-                        {"question_number": 18, "answer": "C"},
-                        {"question_number": 19, "answer": "B"},
-                        {"question_number": 20, "answer": "D"},
-                        {"question_number": 21, "answer": "A"},
-                        {"question_number": 22, "answer": "C"},
-                        {"question_number": 23, "answer": "A"},
-                        {"question_number": 24, "answer": "flavour"},
-                        {"question_number": 25, "answer": "size"},
-                        {"question_number": 26, "answer": "salt"}
+                        {"number": 14, "type": "matching_information", "question": "Reference to reasons for choosing wild plants", "options": ["A", "B", "C", "D", "E", "F"]},
+                        {"number": 15, "type": "matching_information", "question": "How the tomato spread globally", "options": ["A", "B", "C", "D", "E", "F"]},
+                        {"number": 16, "type": "matching_information", "question": "The commercial tomato problems", "options": ["A", "B", "C", "D", "E", "F"]},
+                        {"number": 17, "type": "matching_information", "question": "Comparison of wild and domestic varieties", "options": ["A", "B", "C", "D", "E", "F"]},
+                        {"number": 18, "type": "matching_information", "question": "The genetic technology used", "options": ["A", "B", "C", "D", "E", "F"]},
+                        {"number": 19, "type": "summary_completion", "question": "Gap 19 - The wild tomato has better ___"},
+                        {"number": 20, "type": "summary_completion", "question": "Gap 20 - Can resist ___"},
+                        {"number": 21, "type": "summary_completion", "question": "Gap 21 - Has better ___"},
+                        {"number": 22, "type": "summary_completion", "question": "Gap 22 - Contains more ___"},
+                        {"number": 23, "type": "summary_completion", "question": "Gap 23 - Research aims to improve ___"},
+                        {"number": 24, "type": "note_completion", "question": "The edited tomatoes have better ___"},
+                        {"number": 25, "type": "note_completion", "question": "They are larger in ___"},
+                        {"number": 26, "type": "note_completion", "question": "They have reduced ___"}
                     ]
                 },
                 {
@@ -309,58 +279,22 @@ IELTS17_TEST2 = {
                     "question_range": "27-40",
                     "question_count": 14,
                     "topic": "Psychology and cognitive science",
-                    "question_groups": [
-                        {
-                            "question_type": "multiple_choice",
-                            "instructions": "Choose the correct letter, A, B, C or D.",
-                            "question_range": "27-31",
-                            "questions": [
-                                {"question_number": 27, "question_text": "Question about main argument", "answer": "D"},
-                                {"question_number": 28, "question_text": "Question about researcher claims", "answer": "A"},
-                                {"question_number": 29, "question_text": "Question about evidence", "answer": "A"},
-                                {"question_number": 30, "question_text": "Question about conclusion", "answer": "C"},
-                                {"question_number": 31, "question_text": "Question about implications", "answer": "A"}
-                            ]
-                        },
-                        {
-                            "question_type": "yes_no_ng",
-                            "instructions": "Do the following statements agree with the claims of the writer?",
-                            "question_range": "32-36",
-                            "questions": [
-                                {"question_number": 32, "question_text": "Statement about insight", "answer": "NO"},
-                                {"question_number": 33, "question_text": "Statement about evolution", "answer": "NOT GIVEN"},
-                                {"question_number": 34, "question_text": "Statement about research", "answer": "YES"},
-                                {"question_number": 35, "question_text": "Statement about conclusions", "answer": "NO"},
-                                {"question_number": 36, "question_text": "Statement about applications", "answer": "NOT GIVEN"}
-                            ]
-                        },
-                        {
-                            "question_type": "summary_completion",
-                            "instructions": "Complete the summary using the list of words, A-G.",
-                            "question_range": "37-40",
-                            "questions": [
-                                {"question_number": 37, "question_text": "First gap", "answer": "F"},
-                                {"question_number": 38, "question_text": "Second gap", "answer": "D"},
-                                {"question_number": 39, "question_text": "Third gap", "answer": "E"},
-                                {"question_number": 40, "question_text": "Fourth gap", "answer": "B"}
-                            ]
-                        }
-                    ],
+                    "passage_text": "The nature of creative insight and problem-solving has long fascinated researchers. Some argue that breakthrough ideas come through sudden 'eureka' moments, while others suggest that solutions emerge through a gradual evolutionary process of trial and error...",
                     "questions": [
-                        {"question_number": 27, "answer": "D"},
-                        {"question_number": 28, "answer": "A"},
-                        {"question_number": 29, "answer": "A"},
-                        {"question_number": 30, "answer": "C"},
-                        {"question_number": 31, "answer": "A"},
-                        {"question_number": 32, "answer": "NO"},
-                        {"question_number": 33, "answer": "NOT GIVEN"},
-                        {"question_number": 34, "answer": "YES"},
-                        {"question_number": 35, "answer": "NO"},
-                        {"question_number": 36, "answer": "NOT GIVEN"},
-                        {"question_number": 37, "answer": "F"},
-                        {"question_number": 38, "answer": "D"},
-                        {"question_number": 39, "answer": "E"},
-                        {"question_number": 40, "answer": "B"}
+                        {"number": 27, "type": "multiple_choice", "question": "The main purpose of the passage is to", "options": ["A: explain a new theory of creativity", "B: compare different research methods", "C: evaluate evidence for competing ideas", "D: describe the history of insight research"]},
+                        {"number": 28, "type": "multiple_choice", "question": "According to the passage, researchers claim that", "options": ["A: insight cannot be studied scientifically", "B: evolutionary processes explain all discoveries", "C: both insight and evolution play a role", "D: eureka moments are rare"]},
+                        {"number": 29, "type": "multiple_choice", "question": "The evidence presented suggests that", "options": ["A: sudden insight is more common than gradual discovery", "B: brain scanning has provided new understanding", "C: most scientists prefer evolutionary explanations", "D: creativity cannot be measured"]},
+                        {"number": 30, "type": "multiple_choice", "question": "The writer concludes that", "options": ["A: more research is needed", "B: insight is better understood now", "C: evolutionary theory is insufficient", "D: creative processes vary by individual"]},
+                        {"number": 31, "type": "multiple_choice", "question": "The implications of the research include", "options": ["A: new teaching methods for creativity", "B: better understanding of genius", "C: improved problem-solving techniques", "D: all of the above"]},
+                        {"number": 32, "type": "yes_no_ng", "question": "Insight always occurs suddenly without any prior thought.", "options": ["YES", "NO", "NOT GIVEN"]},
+                        {"number": 33, "type": "yes_no_ng", "question": "Evolutionary explanations have been completely disproven.", "options": ["YES", "NO", "NOT GIVEN"]},
+                        {"number": 34, "type": "yes_no_ng", "question": "Brain imaging has contributed to understanding creativity.", "options": ["YES", "NO", "NOT GIVEN"]},
+                        {"number": 35, "type": "yes_no_ng", "question": "All researchers now agree on the nature of insight.", "options": ["YES", "NO", "NOT GIVEN"]},
+                        {"number": 36, "type": "yes_no_ng", "question": "The research has practical applications in education.", "options": ["YES", "NO", "NOT GIVEN"]},
+                        {"number": 37, "type": "summary_completion", "question": "First gap in summary"},
+                        {"number": 38, "type": "summary_completion", "question": "Second gap in summary"},
+                        {"number": 39, "type": "summary_completion", "question": "Third gap in summary"},
+                        {"number": 40, "type": "summary_completion", "question": "Fourth gap in summary"}
                     ]
                 }
             ]
@@ -380,42 +314,20 @@ IELTS17_TEST2 = {
                     "visual_type": "table_and_pie_charts",
                     "visual_url": "/static/images/cambridge/ielts17/test2_writing_task1.png",
                     "visual_data": {
-                        "title": "Police Budget 2017-2018 (in £m)",
+                        "title": "Police Budget 2017-2018",
                         "table": {
-                            "headers": ["Sources", "2017", "2018"],
+                            "headers": ["Sources", "2017 (£m)", "2018 (£m)"],
                             "rows": [
-                                ["National Government", "175.5m", "177.8m"],
-                                ["Local Taxes", "91.2m", "102.3m"],
-                                ["Other sources (eg grants)", "38m", "38.5m"],
-                                ["Total", "304.7m", "318.6m"]
+                                ["National Government", "175.5", "177.8"],
+                                ["Local Taxes", "91.2", "102.3"],
+                                ["Other sources", "38", "38.5"],
+                                ["Total", "304.7", "318.6"]
                             ]
                         },
-                        "pie_charts": {
-                            "title": "How the money was spent",
-                            "charts": [
-                                {
-                                    "year": "2017",
-                                    "segments": [
-                                        {"category": "Salaries (officers and staff)", "percentage": 75, "color": "gray"},
-                                        {"category": "Technology", "percentage": 8, "color": "white"},
-                                        {"category": "Buildings and transport", "percentage": 17, "color": "black"}
-                                    ]
-                                },
-                                {
-                                    "year": "2018",
-                                    "segments": [
-                                        {"category": "Salaries (officers and staff)", "percentage": 69, "color": "gray"},
-                                        {"category": "Technology", "percentage": 14, "color": "white"},
-                                        {"category": "Buildings and transport", "percentage": 17, "color": "black"}
-                                    ]
-                                }
-                            ],
-                            "legend": [
-                                {"label": "Salaries (officers and staff)", "color": "gray"},
-                                {"label": "Technology", "color": "white"},
-                                {"label": "Buildings and transport", "color": "black"}
-                            ]
-                        }
+                        "pie_charts": [
+                            {"year": "2017", "segments": [{"label": "Salaries", "value": 75}, {"label": "Technology", "value": 8}, {"label": "Buildings & transport", "value": 17}]},
+                            {"year": "2018", "segments": [{"label": "Salaries", "value": 69}, {"label": "Technology", "value": 14}, {"label": "Buildings & transport", "value": 17}]}
+                        ]
                     }
                 },
                 {
@@ -438,12 +350,25 @@ IELTS17_TEST2 = {
                     "title": "Introduction and Interview",
                     "duration": "4-5 minutes",
                     "description": "The examiner will ask you about yourself and general topics",
-                    "topics": ["Reading", "Home", "Work or studies"],
-                    "sample_questions": [
-                        "Do you like reading?",
-                        "What kind of books do you read?",
-                        "Did you read a lot when you were a child?",
-                        "Do you think it is important for children to read?"
+                    "topics": [
+                        {
+                            "name": "Reading",
+                            "questions": [
+                                "Do you like reading?",
+                                "What kind of books do you read?",
+                                "Did you read a lot when you were a child?",
+                                "Do you think it is important for children to read?"
+                            ]
+                        },
+                        {
+                            "name": "Home",
+                            "questions": [
+                                "Do you live in a house or an apartment?",
+                                "What is your favourite room in your home?",
+                                "Would you like to move to a different home?",
+                                "What kind of home would you like to live in?"
+                            ]
+                        }
                     ]
                 },
                 {
@@ -461,19 +386,32 @@ IELTS17_TEST2 = {
                             "and explain why you would like to visit this city"
                         ]
                     },
+                    "questions": [
+                        "Describe a big city you would like to visit. You should say which city you would like to visit, how you would travel there, what you would do there, and explain why you would like to visit this city."
+                    ],
                     "follow_up_questions": ["Do you think you will visit this city in the future?"]
                 },
                 {
                     "part_number": 3,
                     "title": "Two-way Discussion",
                     "duration": "4-5 minutes",
-                    "topics": ["Visiting cities on holiday", "The growth of cities"],
-                    "sample_questions": [
-                        "What are the advantages of visiting cities on holiday rather than going to the countryside?",
-                        "Why do you think some cities are more popular tourist destinations than others?",
-                        "What problems can result from too many tourists visiting a city?",
-                        "Why do you think cities are growing so fast in many countries?",
-                        "What are some of the challenges cities face as they grow larger?"
+                    "topics": [
+                        {
+                            "name": "Visiting cities on holiday",
+                            "questions": [
+                                "What are the advantages of visiting cities on holiday rather than going to the countryside?",
+                                "Why do you think some cities are more popular tourist destinations than others?",
+                                "What problems can result from too many tourists visiting a city?"
+                            ]
+                        },
+                        {
+                            "name": "The growth of cities",
+                            "questions": [
+                                "Why do you think cities are growing so fast in many countries?",
+                                "What are some of the challenges cities face as they grow larger?",
+                                "Do you think cities will continue to grow in the future?"
+                            ]
+                        }
                     ]
                 }
             ]
