@@ -634,7 +634,7 @@ export default function QuestionBank() {
               </div>
             </div>
             
-            {/* AI-Generated Tests Section - Coming Soon */}
+            {/* AI-Generated Tests Section */}
             <div className="space-y-4 pt-6 border-t">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
@@ -644,12 +644,30 @@ export default function QuestionBank() {
                   <h2 className="font-bold text-xl text-gray-900">AI-Generated Tests</h2>
                   <p className="text-sm text-gray-500">Practice tests created by our AI engine</p>
                 </div>
-                <Badge className="ml-auto bg-amber-100 text-amber-700">Coming Soon</Badge>
               </div>
               
               <div className="grid md:grid-cols-2 gap-4">
-                {/* Set 1-6 Coming Soon */}
-                {[1, 2, 3, 4, 5, 6].map(num => (
+                {/* General Training - Active */}
+                <Card 
+                  className="p-4 bg-white border-2 border-purple-200 hover:border-purple-400 hover:shadow-lg transition-all cursor-pointer"
+                  onClick={() => navigate('/full-test?type=general')}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+                        <span className="font-bold text-purple-600">GT</span>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900">General Training</h4>
+                        <span className="text-xs text-gray-500">Full Test Available</span>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-purple-500" />
+                  </div>
+                </Card>
+                
+                {/* Academic Sets - Coming Soon */}
+                {[1, 2, 3, 4, 5].map(num => (
                   <Card key={num} className="p-4 bg-gray-50 border-2 border-dashed border-gray-200 opacity-60">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
@@ -657,8 +675,8 @@ export default function QuestionBank() {
                           <span className="font-bold text-gray-400">{num}</span>
                         </div>
                         <div>
-                          <h4 className="font-medium text-gray-400">Set {num}</h4>
-                          <span className="text-xs text-gray-400">Academic</span>
+                          <h4 className="font-medium text-gray-400">Academic Set {num}</h4>
+                          <span className="text-xs text-gray-400">Coming Soon</span>
                         </div>
                       </div>
                       <Clock className="w-5 h-5 text-gray-300" />
