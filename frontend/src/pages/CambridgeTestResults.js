@@ -604,7 +604,7 @@ export default function CambridgeTestResults() {
                       <div className="p-2 bg-blue-50 rounded text-sm">
                         <p className="text-blue-700 font-medium text-xs mb-1">Explanation:</p>
                         <p className="text-gray-600 text-xs">
-                          The correct answer is "{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}". 
+                          The correct answer is &ldquo;{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}&rdquo;. 
                           Listen carefully to the audio for keywords and context clues.
                         </p>
                       </div>
