@@ -211,6 +211,145 @@ async def get_sample_answers(book_id: str, test_id: str):
     return {"success": True, "samples": sample_answers}
 
 
+@router.post("/evaluate/writing")
+async def evaluate_cambridge_writing(
+    book_id: str = Body(...),
+    test_id: str = Body(...),
+    task_number: int = Body(...),  # 1 or 2
+    response: str = Body(...)
+):
+    """
+    Evaluate Cambridge Writing Task using detailed IELTS criteria.
+    Returns band scores with detailed feedback like official Cambridge sample answers.
+    """
+    if not EMERGENT_LLM_KEY:
+        raise HTTPException(status_code=500, detail="Evaluation service not configured")
+    
+    try:
+        from emergentintegrations.llm.openai import LlmChat, UserMessage
+        
+        # Get task details
+        book = CAMBRIDGE_TESTS.get(book_id, {})
+        test_data = book.get("tests", {}).get(test_id)
+        
+        if not test_data:
+            raise HTTPException(status_code=404, detail="Test not found")
+        
+        writing_section = test_data.get("sections", {}).get("writing", {})
+        tasks = writing_section.get("tasks", [])
+        task = next((t for t in tasks if t.get("task_number") == task_number), None)
+        
+        # Word count
+        word_count = len(response.split()) if response else 0
+        min_words = 150 if task_number == 1 else 250
+        
+        # Get sample answers for reference (if available)
+        sample_answers = test_data.get("sample_answers", {}).get("writing", {})
+        task_key = f"task{task_number}"
+        reference_samples = sample_answers.get(task_key, {})
+        
+        # Build evaluation prompt
+        task_type = "Task 1 (Report/Description)" if task_number == 1 else "Task 2 (Essay)"
+        
+        evaluation_prompt = f"""You are a senior IELTS examiner evaluating a Cambridge IELTS {task_type} response.
+
+## TASK DETAILS
+- Task Type: Academic Writing {task_type}
+- Minimum Words: {min_words}
+- Candidate's Word Count: {word_count}
+
+## CANDIDATE'S RESPONSE
+{response}
+
+## EVALUATION INSTRUCTIONS
+Evaluate using official IELTS Writing Band Descriptors:
+
+1. **Task Achievement/Response (TA/TR)**
+   - Task 1: Does it describe the key features? Is there an overview?
+   - Task 2: Does it address all parts? Is the position clear throughout?
+
+2. **Coherence and Cohesion (CC)**
+   - Is information logically organized?
+   - Are paragraphs well-structured?
+   - Are cohesive devices used effectively?
+
+3. **Lexical Resource (LR)**
+   - Is vocabulary range adequate?
+   - Are words used accurately?
+   - Are there spelling errors?
+
+4. **Grammatical Range and Accuracy (GRA)**
+   - Is there sentence variety?
+   - Are structures used accurately?
+   - Are there punctuation errors?
+
+## OUTPUT FORMAT (JSON only)
+{{
+    "overall_band": <float 1.0-9.0, to nearest 0.5>,
+    "task_achievement": <float 1.0-9.0>,
+    "coherence_cohesion": <float 1.0-9.0>,
+    "lexical_resource": <float 1.0-9.0>,
+    "grammatical_range": <float 1.0-9.0>,
+    "examiner_comment": "<Detailed 3-4 sentence feedback in Cambridge examiner style>",
+    "strengths": ["<strength 1>", "<strength 2>"],
+    "areas_for_improvement": ["<improvement 1>", "<improvement 2>", "<improvement 3>"],
+    "vocabulary_notes": "<Specific vocabulary feedback with examples from the text>",
+    "grammar_notes": "<Specific grammar feedback with examples from the text>",
+    "word_count_penalty": <true/false if under minimum>
+}}
+
+Provide honest, calibrated scoring. Be specific with examples from the candidate's text."""
+
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=str(uuid.uuid4()),
+            system_message="You are a Cambridge IELTS Writing examiner. Respond only with valid JSON."
+        )
+        
+        result = await chat.send_message(
+            user_message=UserMessage(text=evaluation_prompt)
+        )
+        
+        # Parse response
+        response_text = str(result)
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0]
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0]
+        
+        evaluation = json.loads(response_text.strip())
+        
+        return {
+            "success": True,
+            "task_number": task_number,
+            "word_count": word_count,
+            "minimum_words": min_words,
+            "evaluation": evaluation,
+            "overall_band": evaluation.get("overall_band", 5.0),
+            "criteria": {
+                "task_achievement": evaluation.get("task_achievement", 5.0),
+                "coherence_cohesion": evaluation.get("coherence_cohesion", 5.0),
+                "lexical_resource": evaluation.get("lexical_resource", 5.0),
+                "grammatical_range": evaluation.get("grammatical_range", 5.0)
+            },
+            "feedback": {
+                "examiner_comment": evaluation.get("examiner_comment", ""),
+                "strengths": evaluation.get("strengths", []),
+                "improvements": evaluation.get("areas_for_improvement", []),
+                "vocabulary_notes": evaluation.get("vocabulary_notes", ""),
+                "grammar_notes": evaluation.get("grammar_notes", "")
+            },
+            "reference_samples": reference_samples  # Include band 6 and band 8 samples
+        }
+        
+    except json.JSONDecodeError as e:
+        print(f"JSON parse error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to parse evaluation response")
+    except Exception as e:
+        print(f"Writing evaluation error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/audio/{book_id}/{test_id}/{part}")
 async def get_audio_path(book_id: str, test_id: str, part: int):
     """Get audio file path for a listening part"""
