@@ -1306,7 +1306,9 @@ export default function CambridgeTestInterface() {
               onClick={() => {
                 setCurrentPart(idx);
                 setSpeakingQuestionIndex(0);
-                setShowNextQuestion(false);
+                setSpeakingState(SPEAKING_STATES.IDLE);
+                setTtsAudioUrl(null);
+                setRecordingTime(0);
                 setIsPreparing(false);
               }}
               className={currentPart === idx ? 'bg-orange-600 hover:bg-orange-700' : ''}
