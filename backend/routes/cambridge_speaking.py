@@ -66,22 +66,31 @@ async def evaluate_with_gpt(audio_path: str, question: str, part: int) -> Dict[s
         from emergentintegrations.llm.openai import LlmChat, UserMessage
         import uuid
         
-        # Transcribe using Whisper (via OpenAI)
-        import openai
+        # Transcribe using Whisper via emergentintegrations
+        from openai import OpenAI
         
-        client = openai.OpenAI(api_key=EMERGENT_LLM_KEY)
+        # Create client with emergent key
+        client = OpenAI(
+            api_key=EMERGENT_LLM_KEY,
+            base_url="https://api.openai.com/v1"  # Use OpenAI endpoint with Emergent key
+        )
         
-        with open(audio_path, "rb") as audio_file:
-            transcription = client.audio.transcriptions.create(
-                model="whisper-1",
-                file=audio_file,
-                response_format="text"
-            )
+        try:
+            with open(audio_path, "rb") as audio_file:
+                transcription = client.audio.transcriptions.create(
+                    model="whisper-1",
+                    file=audio_file,
+                    response_format="text"
+                )
+            
+            transcript = transcription if isinstance(transcription, str) else transcription
+        except Exception as whisper_error:
+            print(f"Whisper transcription error: {whisper_error}")
+            transcript = "[Could not transcribe audio]"
         
-        transcript = transcription if isinstance(transcription, str) else transcription.text
-        word_count = len(transcript.split())
+        word_count = len(transcript.split()) if transcript else 0
         
-        # Evaluate with GPT-4o
+        # Evaluate with GPT-4o via emergentintegrations
         evaluation_prompt = f"""You are an IELTS speaking examiner. Evaluate this Part {part} response.
 
 ## Question
