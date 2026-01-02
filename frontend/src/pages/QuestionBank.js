@@ -52,6 +52,8 @@ export default function QuestionBank() {
   const [showListeningModal, setShowListeningModal] = useState(false);
   const [showSpeakingModal, setShowSpeakingModal] = useState(false);
   const [fullTests, setFullTests] = useState([]);
+  const [cambridgeBooks, setCambridgeBooks] = useState([]);
+  const [selectedCambridgeBook, setSelectedCambridgeBook] = useState(null);
   
   // Full Test Modal State
   const [selectedTest, setSelectedTest] = useState(null);
