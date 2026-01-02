@@ -6,7 +6,9 @@ import { Badge } from '../components/ui/badge';
 import { 
   ArrowLeft, Headphones, BookOpen, PenTool, Mic,
   Clock, Play, Pause, Volume2, Settings, HelpCircle, EyeOff,
-  ChevronRight, Timer, AlertTriangle, Target, CheckCircle, RefreshCw
+  ChevronRight, Timer, AlertTriangle, Target, CheckCircle, RefreshCw,
+  Highlighter, StickyNote, X, Edit3, Trash2, ChevronLeft, Send,
+  ListChecks, Eye, FileText, MessageSquare
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -20,9 +22,22 @@ const SECTION_TIMES = {
   speaking: 14 * 60 // 14 minutes
 };
 
+// Check if user has premium plan
+const isPremiumUser = (user) => {
+  if (!user) return false;
+  return user.plan === 'pro' || user.plan === 'booster' || (user.examCredits ?? 0) > 0;
+};
+
 export default function CambridgeTestInterface() {
   const { bookId, testId } = useParams();
   const navigate = useNavigate();
+  
+  // Get user from localStorage for premium check
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('user'));
+    } catch { return null; }
+  });
   
   // Get skill from URL query params (for skill-specific practice)
   const searchParams = new URLSearchParams(window.location.search);
@@ -35,6 +50,16 @@ export default function CambridgeTestInterface() {
   const [currentSection, setCurrentSection] = useState(skillParam || 'listening');
   const [currentPart, setCurrentPart] = useState(0);
   const [answers, setAnswers] = useState({});
+  
+  // Highlighter & Notes state (for Reading)
+  const [highlights, setHighlights] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const [contextMenu, setContextMenu] = useState({ show: false, x: 0, y: 0, text: '', range: null });
+  const [showNoteModal, setShowNoteModal] = useState(false);
+  const [currentNote, setCurrentNote] = useState({ id: null, text: '', note: '' });
+  
+  // Review panel state
+  const [showReviewPanel, setShowReviewPanel] = useState(false);
   
   // Audio state
   const [isPlaying, setIsPlaying] = useState(false);
