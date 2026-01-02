@@ -59,6 +59,10 @@ export default function QuestionBank() {
   const [selectedTest, setSelectedTest] = useState(null);
   const [showTestModal, setShowTestModal] = useState(false);
   const [startingTest, setStartingTest] = useState(false);
+  
+  // Cambridge Test Selection Modal State
+  const [showCambridgeTestModal, setShowCambridgeTestModal] = useState(false);
+  const [selectedCambridgeTest, setSelectedCambridgeTest] = useState(null);
 
   useEffect(() => {
     loadData();
