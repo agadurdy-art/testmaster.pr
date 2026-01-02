@@ -18,6 +18,12 @@ except ImportError:
     IELTS17_TEST1 = None
     print("Warning: Could not import IELTS 17 Test 1")
 
+try:
+    from content.cambridge_tests.ielts17.test2 import IELTS17_TEST2
+except ImportError:
+    IELTS17_TEST2 = None
+    print("Warning: Could not import IELTS 17 Test 2")
+
 # LLM Key for evaluation
 EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
 
