@@ -642,5 +642,123 @@ The tantalising question left is that of what it all meant. Would Charles II hav
                 }
             ]
         }
+    },
+    
+    # Answer Keys
+    "answer_keys": {
+        "listening": {
+            "1": "litter",
+            "2": "dogs",
+            "3": "insects",
+            "4": "butterflies",
+            "5": "wall",
+            "6": "island",
+            "7": "boots",
+            "8": "beginners",
+            "9": "spoons",
+            "10": ["35", "thirty five", "thirty-five"],
+            "11": "A",
+            "12": "C",
+            "13": "B",
+            "14": "B",
+            "15": ["A", "D"],  # Either order
+            "16": ["A", "D"],  # Either order
+            "17": ["B", "C"],  # Either order
+            "18": ["B", "C"],  # Either order
+            "19": ["D", "E"],  # Either order
+            "20": ["D", "E"],  # Either order
+            "21": "A",
+            "22": "B",
+            "23": "B",
+            "24": "A",
+            "25": "C",
+            "26": "C",
+            "27": "A",
+            "28": "E",
+            "29": "F",
+            "30": "C",
+            "31": "puzzle",
+            "32": "logic",
+            "33": "confusion",
+            "34": "meditation",
+            "35": "stone",
+            "36": "coins",
+            "37": "tree",
+            "38": "breathing",
+            "39": "paper",
+            "40": "anxiety"
+        },
+        "reading": {
+            "1": "population",
+            "2": "suburbs",
+            "3": "businessmen",
+            "4": "funding",
+            "5": "press",
+            "6": "soil",
+            "7": "FALSE",
+            "8": "NOT GIVEN",
+            "9": "TRUE",
+            "10": "TRUE",
+            "11": "FALSE",
+            "12": "FALSE",
+            "13": "NOT GIVEN",
+            "14": "A",
+            "15": "F",
+            "16": "E",
+            "17": "D",
+            "18": "fortress",
+            "19": "bullfights",
+            "20": "opera",
+            "21": "salt",
+            "22": "shops",
+            "23": ["C", "D"],  # Either order
+            "24": ["C", "D"],  # Either order
+            "25": ["B", "E"],  # Either order
+            "26": ["B", "E"],  # Either order
+            "27": "H",
+            "28": "J",
+            "29": "F",
+            "30": "B",
+            "31": "D",
+            "32": "NOT GIVEN",
+            "33": "NO",
+            "34": "NO",
+            "35": "YES",
+            "36": "B",
+            "37": "C",
+            "38": "A",
+            "39": "B",
+            "40": "D"
+        }
+    },
+    
+    # Sample Writing Answers for evaluation reference
+    "sample_answers": {
+        "writing": {
+            "task1": {
+                "band_6": {
+                    "score": 6.0,
+                    "response": "The two maps illustrates the norbiton area in the present days, as well as, the planned development. Overall, the norbiton industrial area is located at the east side of the town, with a river on the north, separating the farmland from the industrial area, which is located in the center of the map, represented by a few factory biuldings and roads, followed by the main road at the extreme south of the map. The planned development shows a substantially growth and modifications of the overall infrastructure of the area between the farmland and the main road. Firstly, the planned development of the norbiton area replaces what once were factories for housings. Moreover, the roads have been developed to acomodate all the new biuldings that have been planned for the area, which are, a school and a playground to the east side of the roundabout located in the center of the map, as well as shops and a medical center around the round about. Secondly, a bridge is planned for the north of the map to cross the river and provide acess to the housing that will be located in farmland.",
+                    "examiner_comment": "This response covers the key changes to be made to the industrial area, although more detail could be provided. There is an overview in the second paragraph and the response could be improved by adding a summary of the main changes. Ideas are arranged coherently, with some effective use of cohesive devices. There is some less common vocabulary but spelling is often inaccurate and word formation is incorrect. To achieve a higher score, the candidate would need to reduce the number of errors in vocabulary and sentence structure."
+                },
+                "band_8": {
+                    "score": 8.0,
+                    "response": "The two maps illustrate the current layout of Norbiton industrial area and plans for its future development. Overall, the area is set to undergo significant transformation, with the industrial zone being replaced by residential and community facilities. Currently, the industrial area occupies the centre of the map, bordered by farmland to the north (separated by a river), and the main road to the south. The existing infrastructure consists of several factory buildings connected by a network of roads. According to the planned development, the factories will be demolished to make way for housing estates. A new roundabout will be constructed at the centre, around which various facilities will be built: shops and a medical centre to the west, and a school with an adjacent playground to the east. Perhaps most notably, a bridge will span the river to connect the new residential area with the farmland to the north, where additional housing is planned. The road network will be reconfigured to accommodate these changes, creating a more integrated community space.",
+                    "examiner_comment": "This response provides a clear overview and covers all key features systematically. The information is well-organised with effective paragraphing. A wide range of vocabulary is used accurately with only rare minor errors. Grammar shows a wide range of structures used flexibly and accurately."
+                }
+            },
+            "task2": {
+                "band_6": {
+                    "score": 6.5,
+                    "response": "It is said that taking risks brings a lot of benefits. However, it also gives us some drawbacks. First of all, it is obvious that taking risks will cause a great loss if people do it and fail. In personal life, this loss might not be so harmful. However, it will be really harmfull in professional life, because people take a responsibility not only for themselves but also others such as colleagues, customers and their families. It will even damage the society from the economic point. On the other hand, we can receive huge benefits by taking risks. Firstly, we can learn how to prepare for one goal through this process. In order to achieve the aim, people will make all the efforts to think about it and try to find more efficient way. If they do this in the professional circumstances, they will recognise the responsibility and importance of cooperation. Also, it will be completely meaningful even though people can't achieve the goal after taking risks. They will learn the reason why they have failed and how to change it. The failure will enable them to improve their skills and to achieve their object next time. As I mentioned, it is true that taking risks give us both advantages and disadvantages. However, it can be argued that the benefits outweighed the drawbacks in that we can obtain advantages not only from the result but also from the process of taking risks.",
+                    "examiner_comment": "This response discusses the advantages and disadvantages of taking risks. It puts much greater emphasis on risks in professional life. As this response is below 250 words (it is only 242), more could be added to include risks in personal life along with some specific examples. There is a clear progression through the response and ideas are logically organised. Cohesive devices can be quite mechanical with examples at the start of most sentences but referencing is generally appropriate. Vocabulary is effective with some less common items. Occasional errors remain. Sentence structure is good, with frequent error-free sentences and a variety of complex structures."
+                },
+                "band_8": {
+                    "score": 8.0,
+                    "response": "Risk-taking is an inherent part of human progress, and while it can lead to failure, I firmly believe that the potential benefits far outweigh the drawbacks. This essay will explore why taking calculated risks is essential for both personal and professional development. Admittedly, taking risks can result in failure, financial loss, or damaged relationships. Those who invest in new business ventures may lose their savings, while individuals who change careers might find themselves starting from scratch. However, these potential negative outcomes should not deter us from taking chances. The most successful individuals throughout history have been those willing to step outside their comfort zones. Consider entrepreneurs like Steve Jobs or Elon Musk, whose willingness to take substantial risks led to revolutionary innovations. On a personal level, taking risks builds resilience and self-confidence. When we challenge ourselves, we develop problem-solving skills and learn valuable lessons, regardless of the outcome. Furthermore, the fear of taking risks often leads to stagnation and regret. Many people look back on their lives wishing they had pursued their dreams rather than playing it safe. The opportunity cost of not taking risks can be far greater than any potential loss from failure. In conclusion, while risk-taking certainly involves the possibility of failure, the personal growth, innovation, and opportunities it enables make it an essential component of a fulfilling life. The key lies in taking calculated risks while being prepared for various outcomes.",
+                    "examiner_comment": "This response presents a clear position throughout and addresses all parts of the task fully. Ideas are coherently organised with clear progression and effective paragraphing. A wide range of vocabulary is used fluently and flexibly with very natural and sophisticated control. A wide range of structures is used with full flexibility and accuracy."
+                }
+            }
+        }
     }
 }
