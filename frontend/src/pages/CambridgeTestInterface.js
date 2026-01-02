@@ -1203,8 +1203,6 @@ export default function CambridgeTestInterface() {
                   ))}
                 </div>
               )}
-                </div>
-              )}
 
               {/* Section Matching */}
               {q.type === 'section_matching' && (
