@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/badge';
 import { 
   ArrowLeft, Headphones, BookOpen, PenTool, Mic,
   Clock, Play, Pause, Volume2, Settings, HelpCircle, EyeOff,
-  ChevronRight, Timer, AlertTriangle, Target
+  ChevronRight, Timer, AlertTriangle, Target, CheckCircle, RefreshCw
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -79,6 +79,13 @@ export default function CambridgeTestInterface() {
   const [recordingTime, setRecordingTime] = useState(0);
   const recordingTimerRef = useRef(null);
   const ttsAudioRef = useRef(null);
+  
+  // Evaluation state
+  const [isEvaluating, setIsEvaluating] = useState(false);
+  const [questionEvaluations, setQuestionEvaluations] = useState({});
+  const [currentEvaluation, setCurrentEvaluation] = useState(null);
+  const [showEvaluationModal, setShowEvaluationModal] = useState(false);
+  const [showNextQuestion, setShowNextQuestion] = useState(false);
 
   useEffect(() => {
     loadTest();
