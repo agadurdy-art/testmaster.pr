@@ -1024,6 +1024,14 @@ export default function CambridgeTestInterface() {
     );
   };
 
+  // Get mode label for header
+  const getModeLabel = () => {
+    if (isSkillMode) {
+      return `${skillParam.charAt(0).toUpperCase() + skillParam.slice(1)} Practice`;
+    }
+    return 'Full Test';
+  };
+
   return (
     <div className="min-h-screen bg-slate-100">
       {/* Header */}
@@ -1037,7 +1045,10 @@ export default function CambridgeTestInterface() {
               <div className="h-8 w-px bg-gray-200" />
               <div>
                 <h1 className="font-bold text-lg text-gray-900">{testData.title}</h1>
-                <p className="text-xs text-gray-500">{testData.book} • {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}</p>
+                <p className="text-xs text-gray-500">
+                  {testData.book} • {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
+                  {isSkillMode && <span className="ml-2 text-indigo-600">(Skill Practice)</span>}
+                </p>
               </div>
             </div>
             
@@ -1049,9 +1060,11 @@ export default function CambridgeTestInterface() {
               <span className="font-mono font-bold text-lg">{formatTime(sectionTimeLeft)}</span>
             </div>
 
-            {/* Section Tabs */}
+            {/* Section Tabs - Show all in full test mode, only current in skill mode */}
             <div className="flex gap-1">
-              {sections.map(section => {
+              {sections
+                .filter(section => !isSkillMode || section.id === skillParam)
+                .map(section => {
                 const Icon = section.icon;
                 const isActive = currentSection === section.id;
                 const isCompleted = completedSections.includes(section.id);
@@ -1062,11 +1075,13 @@ export default function CambridgeTestInterface() {
                     size="sm"
                     data-testid={`section-tab-${section.id}`}
                     onClick={() => {
-                      setCurrentSection(section.id);
-                      setCurrentPart(0);
-                      setShowInstructions(true);
+                      if (!isSkillMode) {
+                        setCurrentSection(section.id);
+                        setCurrentPart(0);
+                        setShowInstructions(true);
+                      }
                     }}
-                    className={`${isActive ? `bg-${section.color}-600 hover:bg-${section.color}-700` : ''} ${isCompleted ? 'opacity-50' : ''}`}
+                    className={`${isActive ? `bg-${section.color}-600 hover:bg-${section.color}-700` : ''} ${isCompleted ? 'opacity-50' : ''} ${isSkillMode ? 'cursor-default' : ''}`}
                   >
                     <Icon className="w-4 h-4 mr-1" />
                     <span className="hidden md:inline">{section.label}</span>
