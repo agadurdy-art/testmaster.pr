@@ -1094,7 +1094,7 @@ export default function CambridgeTestInterface() {
             <Badge className="bg-gray-100 text-gray-700">{currentSpeakingPart.duration}</Badge>
           </div>
 
-          {/* Part 1 or Part 3 - Audio Only Interface */}
+          {/* Part 1 or Part 3 - Individual Question Interface */}
           {isPart1or3 && (
             <div className="space-y-6">
               {/* Topic hint only */}
@@ -1104,100 +1104,161 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
 
-              {/* Audio-only question interface */}
-              <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-8 text-center">
-                <div className="mb-6">
-                  <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                    <Headphones className="w-10 h-10 text-white" />
-                  </div>
-                  <p className="text-white text-lg font-medium">
-                    {isTTSPlaying ? 'Listen to the examiner...' : 'Click Play to hear the question'}
-                  </p>
-                  <p className="text-gray-400 text-sm mt-2">
-                    Question {speakingQuestionIndex + 1} of {questions.length}
-                  </p>
+              {/* Question Progress */}
+              <div className="flex items-center justify-between px-2">
+                <span className="text-sm text-gray-600">Question {speakingQuestionIndex + 1} of {questions.length}</span>
+                <div className="flex gap-1">
+                  {questions.map((_, idx) => (
+                    <div 
+                      key={idx} 
+                      className={`w-3 h-3 rounded-full ${
+                        idx < speakingQuestionIndex ? 'bg-green-500' : 
+                        idx === speakingQuestionIndex ? 'bg-orange-500' : 'bg-gray-300'
+                      }`}
+                    />
+                  ))}
                 </div>
-
-                {/* TTS Audio Player (hidden) */}
-                {ttsAudioUrl && (
-                  <audio
-                    ref={ttsAudioRef}
-                    src={ttsAudioUrl}
-                    autoPlay
-                    onEnded={handleTTSEnded}
-                    onPlay={() => setIsTTSPlaying(true)}
-                  />
-                )}
-
-                {/* Play Question Button */}
-                {!isTTSPlaying && !showNextQuestion && (
-                  <Button
-                    onClick={() => playQuestionAudio(questions[speakingQuestionIndex], speakingQuestionIndex === 0)}
-                    className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3"
-                    size="lg"
-                  >
-                    <Play className="w-5 h-5 mr-2" /> Play Question
-                  </Button>
-                )}
-
-                {/* Playing indicator */}
-                {isTTSPlaying && (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="flex gap-1">
-                      {[1,2,3,4,5].map(i => (
-                        <div key={i} className="w-1 bg-orange-500 rounded animate-pulse" style={{
-                          height: `${20 + Math.random() * 20}px`,
-                          animationDelay: `${i * 0.1}s`
-                        }} />
-                      ))}
-                    </div>
-                    <span className="text-orange-400 ml-2">Playing...</span>
-                  </div>
-                )}
-
-                {/* After question played - Record button */}
-                {showNextQuestion && (
-                  <div className="space-y-4">
-                    <p className="text-green-400 text-sm">Question played. Record your answer or move to next question.</p>
-                    
-                    <div className="flex gap-3 justify-center">
-                      {speakingQuestionIndex < questions.length - 1 && (
-                        <Button
-                          onClick={nextSpeakingQuestion}
-                          variant="outline"
-                          className="border-gray-600 text-gray-300 hover:bg-gray-700"
-                        >
-                          Next Question <ChevronRight className="w-4 h-4 ml-1" />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                )}
               </div>
 
-              {/* Recording Controls */}
-              <div className="p-6 bg-gray-50 rounded-lg">
-                <p className="text-center text-sm text-gray-600 mb-4">Record your response</p>
-                <div className="flex justify-center gap-4">
-                  {!isRecording ? (
-                    <Button 
-                      onClick={startRecording}
-                      className="bg-red-600 hover:bg-red-700"
+              {/* Current Question Card */}
+              <Card className="p-6 bg-gradient-to-br from-slate-800 to-slate-900 text-white">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Headphones className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="text-lg font-semibold">Question {speakingQuestionIndex + 1}</h4>
+                </div>
+
+                {/* Listen Button - Max 2 times */}
+                <div className="flex flex-col items-center gap-4 mb-6">
+                  <div className="flex items-center gap-4">
+                    <Button
+                      onClick={() => {
+                        const playCount = questionPlayCounts[speakingQuestionIndex] || 0;
+                        if (playCount < 2) {
+                          playQuestionAudio(questions[speakingQuestionIndex], speakingQuestionIndex === 0);
+                          setQuestionPlayCounts(prev => ({
+                            ...prev,
+                            [speakingQuestionIndex]: playCount + 1
+                          }));
+                        }
+                      }}
+                      disabled={isTTSPlaying || (questionPlayCounts[speakingQuestionIndex] || 0) >= 2}
+                      className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 px-6"
                       size="lg"
                     >
-                      <Mic className="w-5 h-5 mr-2" /> Start Recording
+                      {isTTSPlaying ? (
+                        <>
+                          <div className="flex gap-1 mr-2">
+                            {[1,2,3].map(i => (
+                              <div key={i} className="w-1 h-4 bg-white rounded animate-pulse" />
+                            ))}
+                          </div>
+                          Playing...
+                        </>
+                      ) : (
+                        <>
+                          <Play className="w-5 h-5 mr-2" /> Listen to Question
+                        </>
+                      )}
                     </Button>
-                  ) : (
-                    <Button 
-                      onClick={stopRecording}
-                      variant="destructive"
-                      size="lg"
-                      className="animate-pulse"
-                    >
-                      <Pause className="w-5 h-5 mr-2" /> Stop Recording
-                    </Button>
+                    <span className="text-sm text-gray-400">
+                      ({2 - (questionPlayCounts[speakingQuestionIndex] || 0)} plays left)
+                    </span>
+                  </div>
+                  
+                  {/* TTS Audio (hidden) */}
+                  {ttsAudioUrl && (
+                    <audio
+                      ref={ttsAudioRef}
+                      src={ttsAudioUrl}
+                      autoPlay
+                      onEnded={handleTTSEnded}
+                      onPlay={() => setIsTTSPlaying(true)}
+                    />
                   )}
                 </div>
+
+                {/* Recording Controls for THIS question */}
+                <div className="border-t border-gray-700 pt-6">
+                  <p className="text-center text-sm text-gray-400 mb-4">Record your answer for this question</p>
+                  <div className="flex justify-center gap-4">
+                    {!isRecording ? (
+                      <Button 
+                        onClick={() => startRecordingForQuestion(speakingQuestionIndex)}
+                        className="bg-red-600 hover:bg-red-700"
+                        size="lg"
+                      >
+                        <Mic className="w-5 h-5 mr-2" /> Record Answer
+                      </Button>
+                    ) : (
+                      <Button 
+                        onClick={() => stopRecordingForQuestion(speakingQuestionIndex)}
+                        variant="destructive"
+                        size="lg"
+                        className="animate-pulse"
+                      >
+                        <Pause className="w-5 h-5 mr-2" /> Stop Recording
+                      </Button>
+                    )}
+                  </div>
+                  
+                  {/* Show recorded audio for this question */}
+                  {questionRecordings[speakingQuestionIndex] && (
+                    <div className="mt-4 text-center">
+                      <p className="text-sm text-green-400 mb-2">✓ Answer recorded</p>
+                      <audio 
+                        src={questionRecordings[speakingQuestionIndex]} 
+                        controls 
+                        className="mx-auto"
+                      />
+                    </div>
+                  )}
+                </div>
+              </Card>
+
+              {/* Navigation */}
+              <div className="flex justify-between">
+                <Button
+                  onClick={() => {
+                    if (speakingQuestionIndex > 0) {
+                      setSpeakingQuestionIndex(speakingQuestionIndex - 1);
+                      setShowNextQuestion(false);
+                    }
+                  }}
+                  variant="outline"
+                  disabled={speakingQuestionIndex === 0}
+                >
+                  Previous Question
+                </Button>
+                
+                {speakingQuestionIndex < questions.length - 1 ? (
+                  <Button
+                    onClick={() => {
+                      setSpeakingQuestionIndex(speakingQuestionIndex + 1);
+                      setShowNextQuestion(false);
+                    }}
+                    className="bg-orange-600 hover:bg-orange-700"
+                  >
+                    Next Question <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      if (currentPart < parts.length - 1) {
+                        setCurrentPart(currentPart + 1);
+                        setSpeakingQuestionIndex(0);
+                      }
+                    }}
+                    className="bg-green-600 hover:bg-green-700"
+                    disabled={currentPart >= parts.length - 1}
+                  >
+                    {currentPart < parts.length - 1 ? 'Go to Next Part' : 'All Questions Done'}
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
                 
                 {recordedAudio[`part${currentPart + 1}`] && (
                   <div className="mt-4 text-center">
