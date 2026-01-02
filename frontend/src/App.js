@@ -53,6 +53,7 @@ import FullTestMode from './pages/FullTestMode';
 import FullTestInterface from './pages/FullTestInterface';
 import FullTestResults from './pages/FullTestResults';
 import VisualGenerator from './pages/VisualGenerator';
+import CambridgeTestInterface from './pages/CambridgeTestInterface';
 
 
 function EmergentBadgeWrapper() {
