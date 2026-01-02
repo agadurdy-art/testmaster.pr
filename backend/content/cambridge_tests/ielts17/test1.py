@@ -560,9 +560,17 @@ The tantalising question left is that of what it all meant. Would Charles II hav
                     "word_count": "at least 150 words",
                     "prompt": "The maps below show an industrial area in the town of Norbiton, and planned future development of the site.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "visual_data": {
-                        "type": "image",
-                        "image_url": "ielts17_test1_task1_visual.png",
-                        "title": "Norbiton Industrial Area Maps"
+                        "type": "side_by_side_images",
+                        "images": [
+                            {
+                                "image_url": "ielts17_writing_map_now.png",
+                                "title": "Norbiton industrial area now"
+                            },
+                            {
+                                "image_url": "ielts17_writing_map_future.png",
+                                "title": "Planned future development"
+                            }
+                        ]
                     }
                 },
                 {
