@@ -660,8 +660,8 @@ export default function CambridgeTestResults() {
                           <Target className="w-3 h-3" /> Located in Passage:
                         </p>
                         <p className="text-gray-600 text-xs italic">
-                          "...The answer can be found in Passage {Math.ceil(parseInt(item.question) / 13)}. 
-                          Look for keywords related to the question..."
+                          ...The answer can be found in Passage {Math.ceil(parseInt(item.question) / 13)}. 
+                          Look for keywords related to the question...
                         </p>
                       </div>
                       
@@ -671,7 +671,7 @@ export default function CambridgeTestResults() {
                           <Lightbulb className="w-3 h-3" /> Explanation:
                         </p>
                         <p className="text-gray-600 text-xs">
-                          The correct answer is "{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}". 
+                          The correct answer is &ldquo;{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}&rdquo;. 
                           {item.correctAnswer === 'TRUE' || item.correctAnswer === 'YES' 
                             ? ' The statement agrees with the information in the passage.'
                             : item.correctAnswer === 'FALSE' || item.correctAnswer === 'NO'
