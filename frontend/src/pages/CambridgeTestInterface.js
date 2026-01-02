@@ -888,7 +888,31 @@ export default function CambridgeTestInterface() {
             <p className="text-gray-700 whitespace-pre-line">{currentTask.prompt}</p>
           </div>
 
-          {/* Image Visual from PDF */}
+          {/* Side by Side Images for Map Comparison */}
+          {currentTask.visual_data?.type === 'side_by_side_images' && (
+            <div className="mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {currentTask.visual_data.images.map((img, idx) => (
+                  <div key={idx} className="bg-white rounded-lg border shadow-sm overflow-hidden">
+                    <div className="bg-gray-100 px-3 py-2 border-b">
+                      <h4 className="text-sm font-semibold text-gray-700 text-center">{img.title}</h4>
+                    </div>
+                    <img 
+                      src={`${API_URL}/api/visuals/image/${img.image_url.replace('.png', '')}`}
+                      alt={img.title}
+                      className="w-full h-auto"
+                      onError={(e) => {
+                        console.error('Failed to load image:', img.image_url);
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Single Image Visual (legacy support) */}
           {currentTask.visual_data?.type === 'image' && (
             <div className="mb-6">
               <img 
