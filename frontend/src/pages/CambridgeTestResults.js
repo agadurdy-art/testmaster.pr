@@ -354,7 +354,7 @@ export default function CambridgeTestResults() {
                               <div>
                                 <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
                                 <p className="text-sm text-gray-700 leading-relaxed">
-                                  The correct answer is "{Array.isArray(q.correct_answer) ? q.correct_answer[0] : q.correct_answer}". 
+                                  The correct answer is &ldquo;{Array.isArray(q.correct_answer) ? q.correct_answer[0] : q.correct_answer}&rdquo;. 
                                   Listen carefully to the audio for keywords and context clues related to this question.
                                 </p>
                               </div>
