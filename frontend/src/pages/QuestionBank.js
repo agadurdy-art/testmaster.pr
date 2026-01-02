@@ -71,18 +71,20 @@ export default function QuestionBank() {
 
   const loadData = async () => {
     try {
-      const [skillsRes, bandsRes, statsRes, testsRes] = await Promise.all([
+      const [skillsRes, bandsRes, statsRes, testsRes, cambridgeRes] = await Promise.all([
         fetch(`${API_URL}/api/question-bank/skills`),
         fetch(`${API_URL}/api/question-bank/band-levels`),
         fetch(`${API_URL}/api/question-bank/stats`),
-        fetch(`${API_URL}/api/full-test/sets`)
+        fetch(`${API_URL}/api/full-test/sets`),
+        fetch(`${API_URL}/api/cambridge/books`)
       ]);
 
-      const [skillsData, bandsData, statsData, testsData] = await Promise.all([
+      const [skillsData, bandsData, statsData, testsData, cambridgeData] = await Promise.all([
         skillsRes.json(),
         bandsRes.json(),
         statsRes.json(),
-        testsRes.json()
+        testsRes.json(),
+        cambridgeRes.ok ? cambridgeRes.json() : { books: [] }
       ]);
 
       setSkills(skillsData.skills || []);
@@ -94,6 +96,7 @@ export default function QuestionBank() {
         ...(testsData.general_sets || []).map(t => ({ ...t, test_type: 'general' }))
       ];
       setFullTests(allTests);
+      setCambridgeBooks(cambridgeData.books || []);
       
       // Load all topics initially (from Lesson Registry)
       await loadTopicsForBand(null);
