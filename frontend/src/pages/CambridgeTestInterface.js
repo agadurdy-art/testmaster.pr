@@ -58,19 +58,26 @@ export default function CambridgeTestInterface() {
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
+  // Speaking state machine
+  const SPEAKING_STATES = {
+    IDLE: 'IDLE',
+    LOADING_AUDIO: 'LOADING_AUDIO',
+    PLAYING_PROMPT: 'PLAYING_PROMPT',
+    READY_TO_RECORD: 'READY_TO_RECORD',
+    RECORDING: 'RECORDING',
+    RECORDED: 'RECORDED'
+  };
+  
   // Speaking state for TTS and questions
   const [speakingQuestionIndex, setSpeakingQuestionIndex] = useState(0);
-  const [isTTSPlaying, setIsTTSPlaying] = useState(false);
+  const [speakingState, setSpeakingState] = useState(SPEAKING_STATES.IDLE);
   const [ttsAudioUrl, setTtsAudioUrl] = useState(null);
-  const [showNextQuestion, setShowNextQuestion] = useState(false);
   const [part2PrepTime, setPart2PrepTime] = useState(60);
   const [isPreparing, setIsPreparing] = useState(false);
-  const [questionPlayCounts, setQuestionPlayCounts] = useState({});  // Track how many times each question played
+  const [questionPlayCounts, setQuestionPlayCounts] = useState({});  // Track plays per question
   const [questionRecordings, setQuestionRecordings] = useState({});  // Store recordings per question
-  const [questionEvaluations, setQuestionEvaluations] = useState({});  // Store evaluations per question
-  const [isEvaluating, setIsEvaluating] = useState(false);
-  const [showEvaluationModal, setShowEvaluationModal] = useState(false);
-  const [currentEvaluation, setCurrentEvaluation] = useState(null);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const recordingTimerRef = useRef(null);
   const ttsAudioRef = useRef(null);
 
   useEffect(() => {
