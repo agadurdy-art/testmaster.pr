@@ -579,7 +579,9 @@ The tantalising question left is that of what it all meant. Would Charles II hav
                     "type": "opinion_essay",
                     "time_recommended": "40 minutes",
                     "word_count": "at least 250 words",
-                    "prompt": "It is important for people to take risks, both in their professional lives and their personal lives.\n\nDo you think the advantages of taking risks outweigh the disadvantages?\n\nGive reasons for your answer and include any relevant examples from your own knowledge or experience."
+                    "prompt_before": "You should spend about 40 minutes on this task.\n\nWrite about the following topic:",
+                    "prompt_rubric": "It is important for people to take risks, both in their professional lives and their personal lives.\n\nDo you think the advantages of taking risks outweigh the disadvantages?",
+                    "prompt_after": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words."
                 }
             ]
         },
