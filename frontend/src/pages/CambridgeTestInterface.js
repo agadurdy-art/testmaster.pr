@@ -357,6 +357,54 @@ export default function CambridgeTestInterface() {
     }
   };
 
+  // Evaluate a speaking response
+  const evaluateSpeakingResponse = async (questionIndex, questionText) => {
+    const recordingUrl = questionRecordings[questionIndex];
+    if (!recordingUrl) {
+      toast.error('No recording found. Please record your answer first.');
+      return;
+    }
+
+    setIsEvaluating(true);
+
+    try {
+      // Fetch the blob from the object URL
+      const response = await fetch(recordingUrl);
+      const blob = await response.blob();
+      
+      const formData = new FormData();
+      formData.append('audio', blob, 'recording.webm');
+      formData.append('question', questionText);
+      formData.append('part', String(currentPart + 1));
+      formData.append('question_index', String(questionIndex));
+      formData.append('evaluation_type', 'free'); // or 'premium' for Azure
+
+      const evalResponse = await fetch(`${API_URL}/api/cambridge/speaking/evaluate`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await evalResponse.json();
+
+      if (result.success) {
+        setQuestionEvaluations(prev => ({
+          ...prev,
+          [questionIndex]: result
+        }));
+        setCurrentEvaluation(result);
+        setShowEvaluationModal(true);
+        toast.success('Evaluation complete!');
+      } else {
+        toast.error(result.error || 'Evaluation failed');
+      }
+    } catch (error) {
+      console.error('Evaluation error:', error);
+      toast.error('Could not evaluate response');
+    } finally {
+      setIsEvaluating(false);
+    }
+  };
+
   const sections = [
     { id: 'listening', label: 'Listening', icon: Headphones, color: 'blue', time: '40 min' },
     { id: 'reading', label: 'Reading', icon: BookOpen, color: 'green', time: '60 min' },
