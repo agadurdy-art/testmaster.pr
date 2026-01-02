@@ -156,7 +156,11 @@ async def get_answer_key(book_id: str, test_id: str):
     if test_data is None:
         raise HTTPException(status_code=404, detail=f"Test '{test_id}' is coming soon")
     
-    # Extract answers from test content
+    # Get answers directly from answer_keys if available
+    if "answer_keys" in test_data:
+        return {"success": True, "answers": test_data["answer_keys"]}
+    
+    # Fallback: Extract answers from test content
     answers = {
         "listening": {},
         "reading": {}
@@ -183,6 +187,22 @@ async def get_answer_key(book_id: str, test_id: str):
                     answers["reading"][str(q_num)] = answer
     
     return {"success": True, "answers": answers}
+
+
+@router.get("/sample-answers/{book_id}/{test_id}")
+async def get_sample_answers(book_id: str, test_id: str):
+    """Get sample writing answers for reference"""
+    if book_id not in CAMBRIDGE_TESTS:
+        raise HTTPException(status_code=404, detail=f"Book '{book_id}' not found")
+    
+    book = CAMBRIDGE_TESTS[book_id]
+    test_data = book["tests"].get(test_id)
+    
+    if test_data is None:
+        raise HTTPException(status_code=404, detail=f"Test '{test_id}' not found")
+    
+    sample_answers = test_data.get("sample_answers", {})
+    return {"success": True, "samples": sample_answers}
 
 
 @router.get("/audio/{book_id}/{test_id}/{part}")
