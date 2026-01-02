@@ -498,7 +498,7 @@ export default function CambridgeTestResults() {
                     {/* Reference Samples Toggle */}
                     {task.referenceSamples && (task.referenceSamples.band_6 || task.referenceSamples.band_8) && (
                       <details className="mt-3 border-t pt-3">
-                        <p className="text-sm font-medium text-purple-700 cursor-pointer hover:text-purple-900">
+                        <summary className="text-sm font-medium text-purple-700 cursor-pointer hover:text-purple-900">
                           View Sample Answers (Band 6 and Band 8)
                         </summary>
                         <div className="mt-3 space-y-4">
