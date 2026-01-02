@@ -1,10 +1,13 @@
 """
 Cambridge IELTS Tests Router
-Serves authentic Cambridge IELTS test content
+Serves authentic Cambridge IELTS test content with full evaluation
 """
 
-from fastapi import APIRouter, HTTPException
-from typing import Optional
+from fastapi import APIRouter, HTTPException, Body
+from typing import Optional, Dict, Any
+import os
+import json
+import uuid
 
 router = APIRouter(prefix="/api/cambridge", tags=["cambridge"])
 
@@ -14,6 +17,9 @@ try:
 except ImportError:
     IELTS17_TEST1 = None
     print("Warning: Could not import IELTS 17 Test 1")
+
+# LLM Key for evaluation
+EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
 
 
 # Available Cambridge tests registry
