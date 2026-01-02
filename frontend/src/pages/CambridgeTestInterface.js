@@ -1405,33 +1405,6 @@ export default function CambridgeTestInterface() {
                   )}
                 </div>
               </Card>
-                          </p>
-                          {questionEvaluations[speakingQuestionIndex].strengths?.length > 0 && (
-                            <div className="mt-2">
-                              <p className="text-xs text-green-400 font-medium">Strengths:</p>
-                              <ul className="text-xs text-gray-400 list-disc ml-4">
-                                {questionEvaluations[speakingQuestionIndex].strengths.map((s, i) => (
-                                  <li key={i}>{s}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                          {questionEvaluations[speakingQuestionIndex].improvements?.length > 0 && (
-                            <div className="mt-2">
-                              <p className="text-xs text-amber-400 font-medium">To Improve:</p>
-                              <ul className="text-xs text-gray-400 list-disc ml-4">
-                                {questionEvaluations[speakingQuestionIndex].improvements.map((s, i) => (
-                                  <li key={i}>{s}</li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </Card>
 
               {/* Navigation */}
               <div className="flex justify-between">
