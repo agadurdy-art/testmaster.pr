@@ -2088,6 +2088,56 @@ export default function CambridgeTestInterface() {
           </Card>
         </div>
       )}
+      
+      {/* Note Modal */}
+      {showNoteModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="max-w-lg w-full p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg flex items-center gap-2">
+                <StickyNote className="w-5 h-5 text-blue-600" />
+                Add Note
+              </h3>
+              <Button variant="ghost" size="sm" onClick={() => setShowNoteModal(false)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="mb-4">
+              <p className="text-sm text-gray-500 mb-2">Highlighted text:</p>
+              <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 text-sm">
+                "{currentNote.text}"
+              </div>
+            </div>
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700 mb-2 block">Your note:</label>
+              <textarea
+                value={currentNote.note}
+                onChange={(e) => setCurrentNote(prev => ({ ...prev, note: e.target.value }))}
+                placeholder="Write your note here..."
+                className="w-full p-3 border rounded-lg text-sm resize-none h-24 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+              />
+            </div>
+            <div className="flex gap-3">
+              <Button 
+                variant="outline" 
+                className="flex-1"
+                onClick={() => setShowNoteModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                className="flex-1 bg-blue-600 hover:bg-blue-700"
+                onClick={saveNote}
+              >
+                Save Note
+              </Button>
+            </div>
+          </Card>
+        </div>
+      )}
+      
+      {/* Review Panel */}
+      {renderReviewPanel()}
     </div>
   );
 }
