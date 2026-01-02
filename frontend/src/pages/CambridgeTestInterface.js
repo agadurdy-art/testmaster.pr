@@ -96,6 +96,20 @@ export default function CambridgeTestInterface() {
     return () => clearInterval(interval);
   }, [testStarted, showInstructions, sectionTimeLeft]);
 
+  // Part 2 prep timer effect
+  useEffect(() => {
+    let interval;
+    if (isPreparing && part2PrepTime > 0) {
+      interval = setInterval(() => {
+        setPart2PrepTime(prev => prev - 1);
+      }, 1000);
+    } else if (isPreparing && part2PrepTime === 0) {
+      setIsPreparing(false);
+      toast.info('Preparation time is over. Please start speaking.');
+    }
+    return () => clearInterval(interval);
+  }, [isPreparing, part2PrepTime]);
+
   const loadTest = async () => {
     try {
       const res = await fetch(`${API_URL}/api/cambridge/test/${bookId}/${testId}`);
