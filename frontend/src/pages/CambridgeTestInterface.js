@@ -1318,20 +1318,6 @@ export default function CambridgeTestInterface() {
               </div>
             </div>
           )}
-                
-                {recordedAudio[`part${currentPart + 1}`] && (
-                  <div className="mt-4 text-center">
-                    <p className="text-sm text-green-600 mb-2">Recording saved!</p>
-                    <audio 
-                      src={recordedAudio[`part${currentPart + 1}`]} 
-                      controls 
-                      className="mx-auto"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
 
           {/* Part 2 - Task Card (Visible) */}
           {isPart2 && currentSpeakingPart.task_card && (
