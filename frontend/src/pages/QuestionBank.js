@@ -576,7 +576,11 @@ export default function QuestionBank() {
                   {/* Test 1 - Available */}
                   <div 
                     className="p-4 bg-white rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-md transition-all cursor-pointer"
-                    onClick={() => navigate('/cambridge-test/ielts17/test1')}
+                    onClick={() => {
+                      setSelectedCambridgeTest({ book: 'ielts17', test: 'test1', title: 'IELTS 17 - Test 1' });
+                      setShowCambridgeTestModal(true);
+                    }}
+                    data-testid="cambridge-test-ielts17-test1"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-bold text-gray-900">Test 1</span>
