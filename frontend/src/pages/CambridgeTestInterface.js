@@ -126,6 +126,20 @@ export default function CambridgeTestInterface() {
   const handleSubmitSection = () => {
     setCompletedSections(prev => [...prev, currentSection]);
     
+    // In skill mode, go directly to results after submitting the single section
+    if (isSkillMode) {
+      navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
+        state: { 
+          answers, 
+          testData,
+          mode: 'skill',
+          skill: skillParam
+        } 
+      });
+      return;
+    }
+    
+    // Full test mode - continue to next section
     const sectionOrder = ['listening', 'reading', 'writing', 'speaking'];
     const currentIndex = sectionOrder.indexOf(currentSection);
     
@@ -139,7 +153,7 @@ export default function CambridgeTestInterface() {
     } else {
       // All sections completed - show results
       navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
-        state: { answers, testData } 
+        state: { answers, testData, mode: 'full' } 
       });
     }
   };
