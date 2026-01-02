@@ -252,37 +252,79 @@ export default function CambridgeTestInterface() {
   // Recording functions for individual Speaking questions
   const startRecordingForQuestion = async (questionIndex) => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
+      // Request microphone permission
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        }
+      });
+      
+      // Check for supported MIME types
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? 'audio/webm;codecs=opus'
+        : MediaRecorder.isTypeSupported('audio/webm')
+        ? 'audio/webm'
+        : 'audio/ogg';
+      
+      const mediaRecorder = new MediaRecorder(stream, { mimeType });
       mediaRecorderRef.current = mediaRecorder;
       chunksRef.current = [];
       
       mediaRecorder.ondataavailable = (e) => {
-        chunksRef.current.push(e.data);
+        if (e.data.size > 0) {
+          chunksRef.current.push(e.data);
+        }
       };
       
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
-        const url = URL.createObjectURL(blob);
-        setQuestionRecordings(prev => ({
-          ...prev,
-          [questionIndex]: url
-        }));
-        // Also save to server
-        saveRecordingToServer(blob, questionIndex);
+        // Stop all tracks to release microphone
+        stream.getTracks().forEach(track => track.stop());
+        
+        if (chunksRef.current.length > 0) {
+          const blob = new Blob(chunksRef.current, { type: mimeType });
+          const url = URL.createObjectURL(blob);
+          setQuestionRecordings(prev => ({
+            ...prev,
+            [questionIndex]: url
+          }));
+          // Save to server
+          saveRecordingToServer(blob, questionIndex);
+        }
       };
       
-      mediaRecorder.start();
+      mediaRecorder.onerror = (e) => {
+        console.error('MediaRecorder error:', e);
+        toast.error('Recording error occurred');
+      };
+      
+      // Start recording with timeslice for continuous data
+      mediaRecorder.start(1000);
       setIsRecording(true);
+      toast.success('Recording started');
     } catch (error) {
-      toast.error('Could not access microphone');
+      console.error('Recording error:', error);
+      if (error.name === 'NotAllowedError') {
+        toast.error('Microphone access denied. Please allow microphone access.');
+      } else if (error.name === 'NotFoundError') {
+        toast.error('No microphone found. Please connect a microphone.');
+      } else {
+        toast.error(`Could not start recording: ${error.message}`);
+      }
     }
   };
 
   const stopRecordingForQuestion = (questionIndex) => {
     if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
+      try {
+        mediaRecorderRef.current.stop();
+        setIsRecording(false);
+        toast.success('Recording stopped');
+      } catch (error) {
+        console.error('Stop recording error:', error);
+        setIsRecording(false);
+      }
     }
   };
 
@@ -296,11 +338,16 @@ export default function CambridgeTestInterface() {
       formData.append('part', String(currentPart + 1));
       formData.append('question_index', String(questionIndex));
       
-      await fetch(`${API_URL}/api/recordings/save`, {
+      const response = await fetch(`${API_URL}/api/recordings/save`, {
         method: 'POST',
         body: formData
       });
-      toast.success('Recording saved');
+      
+      if (response.ok) {
+        console.log('Recording saved to server');
+      } else {
+        console.error('Failed to save recording to server');
+      }
     } catch (error) {
       console.error('Failed to save recording:', error);
     }
