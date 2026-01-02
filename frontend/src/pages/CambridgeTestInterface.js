@@ -1263,26 +1263,6 @@ export default function CambridgeTestInterface() {
     setTtsAudioUrl(null); // Clear URL to prevent re-play
   };
 
-  // Move to next question in Part 1/3
-  const nextSpeakingQuestion = () => {
-    const parts = sectionData?.parts || [];
-    const currentSpeakingPart = parts[currentPart];
-    
-    let questions = [];
-    if (currentSpeakingPart?.questions) {
-      questions = currentSpeakingPart.questions;
-    } else if (currentSpeakingPart?.topics) {
-      // Flatten Part 3 topics into questions array
-      questions = currentSpeakingPart.topics.flatMap(t => t.questions || []);
-    }
-    
-    if (speakingQuestionIndex < questions.length - 1) {
-      setSpeakingQuestionIndex(speakingQuestionIndex + 1);
-      setShowNextQuestion(false);
-      playQuestionAudio(questions[speakingQuestionIndex + 1], false);
-    }
-  };
-
   // Start Part 2 preparation timer
   const startPart2Prep = () => {
     setIsPreparing(true);
