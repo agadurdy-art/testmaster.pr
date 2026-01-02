@@ -283,6 +283,45 @@ export default function CambridgeTestInterface() {
               </div>
             </div>
           ))}
+
+          {/* Matching Questions (Q27-30 style) */}
+          {currentPartData.questions?.filter(q => q.type === 'matching').map((q, qIdx) => (
+            <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
+              <p className="text-xs text-blue-600 mb-2">{q.instruction}</p>
+              
+              {/* Options Box */}
+              {q.options_box && (
+                <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                  <h5 className="font-semibold text-sm mb-2">{q.options_box.title}</h5>
+                  <div className="grid grid-cols-2 gap-1 text-sm">
+                    {q.options_box.options?.map((opt, oIdx) => (
+                      <div key={oIdx} className="text-gray-700">{opt}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Matching Items */}
+              <div className="space-y-3">
+                {q.items?.map((item, iIdx) => (
+                  <div key={iIdx} className="flex items-center gap-3 p-2 bg-gray-50 rounded">
+                    <span className="font-medium text-sm w-8">{item.number}.</span>
+                    <span className="flex-1 text-sm">{item.item}</span>
+                    <select
+                      value={answers[item.number] || ''}
+                      onChange={(e) => handleAnswerChange(item.number, e.target.value)}
+                      className="w-16 px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">-</option>
+                      {['A', 'B', 'C', 'D', 'E', 'F'].map(l => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </Card>
       </div>
     );
