@@ -310,9 +310,11 @@ export default function CambridgeTestInterface() {
         if (chunksRef.current.length > 0) {
           const blob = new Blob(chunksRef.current, { type: mimeType });
           const url = URL.createObjectURL(blob);
+          // Use part-based key to avoid conflicts between parts
+          const recordingKey = `part${currentPart}_q${questionIndex}`;
           setQuestionRecordings(prev => ({
             ...prev,
-            [questionIndex]: url
+            [recordingKey]: url
           }));
           // Save to server
           saveRecordingToServer(blob, questionIndex);
