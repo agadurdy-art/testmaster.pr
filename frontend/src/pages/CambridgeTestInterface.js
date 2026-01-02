@@ -262,6 +262,13 @@ export default function CambridgeTestInterface() {
 
   // Recording functions for individual Speaking questions
   const startRecordingForQuestion = async (questionIndex) => {
+    // Stop any playing audio first
+    if (ttsAudioRef.current) {
+      ttsAudioRef.current.pause();
+      ttsAudioRef.current.currentTime = 0;
+    }
+    setTtsAudioUrl(null);
+    
     try {
       // Request microphone permission
       const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -303,16 +310,32 @@ export default function CambridgeTestInterface() {
           // Save to server
           saveRecordingToServer(blob, questionIndex);
         }
+        
+        // Clear recording timer
+        if (recordingTimerRef.current) {
+          clearInterval(recordingTimerRef.current);
+        }
+        
+        setSpeakingState(SPEAKING_STATES.RECORDED);
       };
       
       mediaRecorder.onerror = (e) => {
         console.error('MediaRecorder error:', e);
         toast.error('Recording error occurred');
+        setSpeakingState(SPEAKING_STATES.READY_TO_RECORD);
       };
       
       // Start recording with timeslice for continuous data
       mediaRecorder.start(1000);
       setIsRecording(true);
+      setSpeakingState(SPEAKING_STATES.RECORDING);
+      setRecordingTime(0);
+      
+      // Start recording timer
+      recordingTimerRef.current = setInterval(() => {
+        setRecordingTime(prev => prev + 1);
+      }, 1000);
+      
       toast.success('Recording started');
     } catch (error) {
       console.error('Recording error:', error);
@@ -323,6 +346,7 @@ export default function CambridgeTestInterface() {
       } else {
         toast.error(`Could not start recording: ${error.message}`);
       }
+      setSpeakingState(SPEAKING_STATES.READY_TO_RECORD);
     }
   };
 
@@ -335,6 +359,7 @@ export default function CambridgeTestInterface() {
       } catch (error) {
         console.error('Stop recording error:', error);
         setIsRecording(false);
+        setSpeakingState(SPEAKING_STATES.RECORDED);
       }
     }
   };
@@ -343,7 +368,7 @@ export default function CambridgeTestInterface() {
     try {
       const formData = new FormData();
       formData.append('audio', blob, `question_${questionIndex}.webm`);
-      formData.append('user_id', 'test_user'); // In real app, use actual user ID
+      formData.append('user_id', 'test_user');
       formData.append('test_id', `${bookId}_${testId}`);
       formData.append('section', currentSection);
       formData.append('part', String(currentPart + 1));
@@ -361,6 +386,15 @@ export default function CambridgeTestInterface() {
       }
     } catch (error) {
       console.error('Failed to save recording:', error);
+    }
+  };
+
+  // Go to next question in Speaking
+  const goToNextSpeakingQuestion = (questions) => {
+    if (speakingQuestionIndex < questions.length - 1) {
+      setSpeakingQuestionIndex(speakingQuestionIndex + 1);
+      setSpeakingState(SPEAKING_STATES.IDLE);
+      setRecordingTime(0);
     }
   };
 
