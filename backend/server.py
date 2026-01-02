@@ -296,6 +296,16 @@ if static_audio_path.exists():
 else:
     print("⚠️  Static audio directory not found")
 
+# Mount static files for images (Cambridge test visuals)
+static_images_path = ROOT_DIR / "static" / "images"
+if static_images_path.exists():
+    app.mount("/static/images", StaticFiles(directory=str(static_images_path)), name="images")
+    print("✅ Static image files mounted at /static/images")
+else:
+    os.makedirs(static_images_path, exist_ok=True)
+    app.mount("/static/images", StaticFiles(directory=str(static_images_path)), name="images")
+    print("✅ Static images directory created and mounted")
+
 # Mount static files for visuals (maps, diagrams, charts)
 static_visuals_path = ROOT_DIR / "static" / "visuals"
 if static_visuals_path.exists():
