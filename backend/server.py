@@ -394,6 +394,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load Cambridge routes: {e}")
 
+# TTS routes for Speaking section
+try:
+    from routes.tts import router as tts_router
+    app.include_router(tts_router)
+    print("✅ TTS routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load TTS routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
