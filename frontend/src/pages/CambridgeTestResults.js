@@ -561,81 +561,142 @@ export default function CambridgeTestResults() {
             Answer Details
           </h3>
           
-          {/* Listening Answers */}
+          {/* Listening Answers - Expandable */}
           {results?.listening?.details?.length > 0 && (
             <div className="mb-6">
               <h4 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
                 <Headphones className="w-4 h-4 text-blue-600" /> Listening Answers
+                <span className="text-sm text-gray-400">
+                  ({results.listening.correct}/{results.listening.total} correct)
+                </span>
               </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div className="space-y-2">
                 {results.listening.details.map((item, idx) => (
-                  <div 
+                  <details 
                     key={idx}
-                    className={`p-2 rounded text-sm ${
+                    className={`rounded-lg border ${
                       item.isCorrect 
-                        ? 'bg-green-50 border border-green-200' 
-                        : 'bg-red-50 border border-red-200'
+                        ? 'bg-green-50 border-green-200' 
+                        : 'bg-red-50 border-red-200'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Q{item.question}</span>
-                      {item.isCorrect ? (
-                        <CheckCircle className="w-4 h-4 text-green-600" />
-                      ) : (
-                        <XCircle className="w-4 h-4 text-red-600" />
-                      )}
-                    </div>
-                    <div className="text-xs mt-1">
-                      <span className={item.isCorrect ? 'text-green-700' : 'text-red-700'}>
-                        Your: {item.userAnswer}
-                      </span>
-                      {!item.isCorrect && (
-                        <span className="text-gray-500 block">
-                          Correct: {item.correctAnswer}
+                    <summary className="p-3 cursor-pointer flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="font-medium text-sm">Q{item.question}</span>
+                        {item.isCorrect ? (
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-red-600" />
+                        )}
+                        <span className={`text-sm ${item.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+                          {item.userAnswer || '-'}
                         </span>
-                      )}
+                        {!item.isCorrect && (
+                          <span className="text-sm text-gray-500">
+                            → {Array.isArray(item.correctAnswer) ? item.correctAnswer.join(' / ') : item.correctAnswer}
+                          </span>
+                        )}
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    </summary>
+                    <div className="px-3 pb-3 pt-1 border-t border-gray-200">
+                      {/* Explanation placeholder - would come from test data */}
+                      <div className="p-2 bg-blue-50 rounded text-sm">
+                        <p className="text-blue-700 font-medium text-xs mb-1">Explanation:</p>
+                        <p className="text-gray-600 text-xs">
+                          The correct answer is "{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}". 
+                          Listen carefully to the audio for keywords and context clues.
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </details>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Reading Answers */}
+          {/* Reading Answers - Expandable with Locate & Explain */}
           {results?.reading?.details?.length > 0 && (
             <div>
               <h4 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-green-600" /> Reading Answers
+                <span className="text-sm text-gray-400">
+                  ({results.reading.correct}/{results.reading.total} correct)
+                </span>
               </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div className="space-y-2">
                 {results.reading.details.map((item, idx) => (
-                  <div 
+                  <details 
                     key={idx}
-                    className={`p-2 rounded text-sm ${
+                    className={`rounded-lg border ${
                       item.isCorrect 
-                        ? 'bg-green-50 border border-green-200' 
-                        : 'bg-red-50 border border-red-200'
+                        ? 'bg-green-50 border-green-200' 
+                        : 'bg-red-50 border-red-200'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Q{item.question}</span>
-                      {item.isCorrect ? (
-                        <CheckCircle className="w-4 h-4 text-green-600" />
-                      ) : (
-                        <XCircle className="w-4 h-4 text-red-600" />
-                      )}
-                    </div>
-                    <div className="text-xs mt-1">
-                      <span className={item.isCorrect ? 'text-green-700' : 'text-red-700'}>
-                        Your: {item.userAnswer}
-                      </span>
-                      {!item.isCorrect && (
-                        <span className="text-gray-500 block">
-                          Correct: {item.correctAnswer}
+                    <summary className="p-3 cursor-pointer flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="font-medium text-sm">Q{item.question}</span>
+                        {item.isCorrect ? (
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-red-600" />
+                        )}
+                        <span className={`text-sm ${item.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+                          {Array.isArray(item.userAnswer) ? item.userAnswer.join(', ') : (item.userAnswer || '-')}
                         </span>
-                      )}
+                        {!item.isCorrect && (
+                          <span className="text-sm text-gray-500">
+                            → {Array.isArray(item.correctAnswer) ? item.correctAnswer.join(' / ') : item.correctAnswer}
+                          </span>
+                        )}
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    </summary>
+                    <div className="px-3 pb-3 pt-1 border-t border-gray-200 space-y-2">
+                      {/* Locate in Passage */}
+                      <div className="p-2 bg-yellow-50 rounded border-l-4 border-yellow-400">
+                        <p className="text-yellow-700 font-medium text-xs mb-1 flex items-center gap-1">
+                          <Target className="w-3 h-3" /> Located in Passage:
+                        </p>
+                        <p className="text-gray-600 text-xs italic">
+                          "...The answer can be found in Passage {Math.ceil(parseInt(item.question) / 13)}. 
+                          Look for keywords related to the question..."
+                        </p>
+                      </div>
+                      
+                      {/* Explanation */}
+                      <div className="p-2 bg-blue-50 rounded border-l-4 border-blue-400">
+                        <p className="text-blue-700 font-medium text-xs mb-1 flex items-center gap-1">
+                          <Lightbulb className="w-3 h-3" /> Explanation:
+                        </p>
+                        <p className="text-gray-600 text-xs">
+                          The correct answer is "{Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer}". 
+                          {item.correctAnswer === 'TRUE' || item.correctAnswer === 'YES' 
+                            ? ' The statement agrees with the information in the passage.'
+                            : item.correctAnswer === 'FALSE' || item.correctAnswer === 'NO'
+                            ? ' The statement contradicts information in the passage.'
+                            : item.correctAnswer === 'NOT GIVEN'
+                            ? ' There is no information in the passage about this statement.'
+                            : ' This answer directly matches information provided in the text.'}
+                        </p>
+                      </div>
+                      
+                      {/* Skill Tip */}
+                      <div className="p-2 bg-purple-50 rounded border-l-4 border-purple-400">
+                        <p className="text-purple-700 font-medium text-xs mb-1 flex items-center gap-1">
+                          <GraduationCap className="w-3 h-3" /> Skill Tip:
+                        </p>
+                        <p className="text-gray-600 text-xs">
+                          {item.correctAnswer === 'TRUE' || item.correctAnswer === 'FALSE' || item.correctAnswer === 'NOT GIVEN'
+                            ? 'For True/False/Not Given questions, focus on exact wording. If the passage says something similar but not exactly the same, consider if it truly matches or contradicts.'
+                            : item.correctAnswer === 'YES' || item.correctAnswer === 'NO'
+                            ? 'Yes/No/Not Given questions test opinions and claims. Look for the writer\'s view, not just facts.'
+                            : 'Read the question carefully and scan for synonyms and paraphrases in the passage.'}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </details>
                 ))}
               </div>
             </div>
