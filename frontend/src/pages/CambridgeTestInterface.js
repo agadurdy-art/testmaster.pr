@@ -1047,12 +1047,11 @@ export default function CambridgeTestInterface() {
                     key={section.id}
                     variant={isActive ? 'default' : 'ghost'}
                     size="sm"
-                    disabled={!isCompleted && !isActive}
+                    data-testid={`section-tab-${section.id}`}
                     onClick={() => {
-                      if (isCompleted || isActive) {
-                        setCurrentSection(section.id);
-                        setCurrentPart(0);
-                      }
+                      setCurrentSection(section.id);
+                      setCurrentPart(0);
+                      setShowInstructions(true);
                     }}
                     className={`${isActive ? `bg-${section.color}-600 hover:bg-${section.color}-700` : ''} ${isCompleted ? 'opacity-50' : ''}`}
                   >
