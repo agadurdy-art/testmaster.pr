@@ -1,7 +1,6 @@
 """
 Cambridge IELTS 17 - Test 2
 Complete test content extracted from official Cambridge materials
-For educational platform use only - not for distribution
 """
 
 IELTS17_TEST2 = {
@@ -23,45 +22,45 @@ IELTS17_TEST2 = {
                     "question_range": "1-10",
                     "question_count": 10,
                     "context": "A conversation about volunteer opportunities in Southoe village",
+                    "question_types": ["note_completion"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part1.mp3",
-                    "question_groups": [
-                        {
-                            "question_type": "note_completion",
-                            "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-                            "note_sections": [
-                                {
-                                    "name": "Library",
-                                    "items": [
-                                        "Help with ___1___ books",
-                                        "Update ___2___"
-                                    ]
-                                },
-                                {
-                                    "name": "Lunch Club",
-                                    "items": [
-                                        "Held on ___3___ Street",
-                                        "Help individuals with ___4___"
-                                    ]
-                                },
-                                {
-                                    "name": "Classes",
-                                    "items": [
-                                        "Volunteers can teach ___5___"
-                                    ]
-                                },
-                                {
-                                    "name": "Fundraising Events",
-                                    "items": [
-                                        "Location: ___6___",
-                                        "May event in a ___7___",
-                                        "April event: ___8___",
-                                        "Selling ___9___",
-                                        "Making a ___10___"
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
+                    "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+                    "visual": {
+                        "type": "notes",
+                        "title": "Voluntary work in Southoe village",
+                        "sections": [
+                            {
+                                "heading": "Library",
+                                "items": [
+                                    "Help with ___1___ books",
+                                    "Update ___2___"
+                                ]
+                            },
+                            {
+                                "heading": "Lunch Club",
+                                "items": [
+                                    "Held on ___3___ Street",
+                                    "Help individuals with ___4___"
+                                ]
+                            },
+                            {
+                                "heading": "Classes",
+                                "items": [
+                                    "Volunteers can teach ___5___"
+                                ]
+                            },
+                            {
+                                "heading": "Fundraising Events",
+                                "items": [
+                                    "Location: ___6___",
+                                    "May event will be in a ___7___",
+                                    "April event type: ___8___",
+                                    "Help with selling ___9___",
+                                    "Help to make a ___10___"
+                                ]
+                            }
+                        ]
+                    },
                     "questions": [
                         {"number": 1, "type": "note_completion"},
                         {"number": 2, "type": "note_completion"},
@@ -81,6 +80,7 @@ IELTS17_TEST2 = {
                     "question_range": "11-20",
                     "question_count": 10,
                     "context": "A tour guide introducing Oniton Hall to visitors",
+                    "question_types": ["multiple_choice", "matching"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part2.mp3",
                     "questions": [
                         {
@@ -110,10 +110,19 @@ IELTS17_TEST2 = {
                         {
                             "number": "15-20",
                             "type": "matching",
-                            "instruction": "What activity can visitors do at each of the following places? Choose SIX answers from the box.",
+                            "instruction": "What activity can visitors do at each of the following places? Choose SIX answers from the box and write the correct letter, A-H.",
                             "options_box": {
                                 "title": "Activities",
-                                "options": ["A: exercise classes", "B: bird watching", "C: cycling", "D: fishing", "E: horse riding", "F: swimming", "G: walk in woods", "H: golf"]
+                                "options": [
+                                    "A: exercise classes",
+                                    "B: bird watching",
+                                    "C: cycling",
+                                    "D: fishing",
+                                    "E: horse riding",
+                                    "F: swimming",
+                                    "G: walk in woods",
+                                    "H: golf"
+                                ]
                             },
                             "items": [
                                 {"number": 15, "item": "Farm shop area"},
@@ -132,6 +141,7 @@ IELTS17_TEST2 = {
                     "question_range": "21-30",
                     "question_count": 10,
                     "context": "A discussion between students about a production of Romeo and Juliet",
+                    "question_types": ["multiple_selection", "matching"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part3.mp3",
                     "questions": [
                         {
@@ -139,7 +149,13 @@ IELTS17_TEST2 = {
                             "type": "multiple_selection",
                             "instruction": "Choose TWO letters, A-E",
                             "question": "Which TWO things should reviews include, according to Ed and Gemma?",
-                            "options": ["A: information about the plot", "B: advice for the director", "C: description of the actors", "D: comments on the costumes", "E: judgement on the overall production"],
+                            "options": [
+                                "A: information about the plot",
+                                "B: advice for the director",
+                                "C: description of the actors",
+                                "D: comments on the costumes",
+                                "E: judgement on the overall production"
+                            ],
                             "answer_count": 2
                         },
                         {
@@ -148,7 +164,15 @@ IELTS17_TEST2 = {
                             "instruction": "What opinion does each student express about aspects of the production?",
                             "options_box": {
                                 "title": "Opinions",
-                                "options": ["A: They weren't necessary", "B: They were effective", "C: They were inappropriate", "D: They were old-fashioned", "E: They needed more variety", "F: They weren't well done", "G: They weren't suitable"]
+                                "options": [
+                                    "A: They weren't necessary",
+                                    "B: They were effective",
+                                    "C: They were inappropriate",
+                                    "D: They were old-fashioned",
+                                    "E: They needed more variety",
+                                    "F: They weren't well done",
+                                    "G: They weren't suitable"
+                                ]
                             },
                             "items": [
                                 {"number": 23, "item": "The set"},
@@ -169,45 +193,45 @@ IELTS17_TEST2 = {
                     "question_range": "31-40",
                     "question_count": 10,
                     "context": "A lecture about how digital technology affects the Icelandic language",
+                    "question_types": ["note_completion"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part4.mp3",
-                    "question_groups": [
-                        {
-                            "question_type": "note_completion",
-                            "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-                            "note_sections": [
-                                {
-                                    "name": "Icelandic Language Facts",
-                                    "items": [
-                                        "Number of speakers worldwide: ___31___",
-                                        "Growth of ___32___ has been rapid"
-                                    ]
-                                },
-                                {
-                                    "name": "Impact of Technology",
-                                    "items": [
-                                        "Young people learn English from ___33___ and videos",
-                                        "Children use ___34___ to access English content",
-                                        "Some children become ___35___ in English and Icelandic"
-                                    ]
-                                },
-                                {
-                                    "name": "Concerns",
-                                    "items": [
-                                        "Use of English in the school ___36___",
-                                        "Children learn English word from ___37___ before Icelandic",
-                                        "Errors in ___38___"
-                                    ]
-                                },
-                                {
-                                    "name": "Importance",
-                                    "items": [
-                                        "Language important for national ___39___",
-                                        "Goal: people remain ___40___ in Icelandic"
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
+                    "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+                    "visual": {
+                        "type": "notes",
+                        "title": "Impact of digital technology on the Icelandic language",
+                        "sections": [
+                            {
+                                "heading": "Icelandic Language Facts",
+                                "items": [
+                                    "Number of speakers worldwide: ___31___",
+                                    "Growth of ___32___ has been rapid"
+                                ]
+                            },
+                            {
+                                "heading": "Impact of Technology",
+                                "items": [
+                                    "Young people learn English from ___33___ and videos",
+                                    "Children use ___34___ to access English content",
+                                    "Some children become ___35___ in English and Icelandic"
+                                ]
+                            },
+                            {
+                                "heading": "Concerns",
+                                "items": [
+                                    "Use of English in the school ___36___",
+                                    "Children might learn English word from a ___37___ before Icelandic word",
+                                    "Concerns about errors in ___38___"
+                                ]
+                            },
+                            {
+                                "heading": "Importance of Icelandic",
+                                "items": [
+                                    "Language is important for national ___39___",
+                                    "Goal is for people to remain ___40___ in Icelandic"
+                                ]
+                            }
+                        ]
+                    },
                     "questions": [
                         {"number": 31, "type": "note_completion"},
                         {"number": 32, "type": "note_completion"},
@@ -232,22 +256,56 @@ IELTS17_TEST2 = {
                     "title": "The Dead Sea Scrolls",
                     "question_range": "1-13",
                     "question_count": 13,
-                    "topic": "Archaeology and ancient manuscripts",
-                    "passage_text": "The Dead Sea Scrolls are ancient manuscripts that were discovered between 1947 and 1956 in caves near the Dead Sea. They include the oldest known biblical manuscripts and provide invaluable insights into Jewish religious texts and beliefs during the Second Temple period...",
+                    "passage_text": """The discovery of the Dead Sea Scrolls in 1947 is widely considered the greatest archaeological find of the twentieth century. The scrolls were found by Bedouin shepherds in caves near Qumran, on the northwest shore of the Dead Sea. Over the following years, thousands of scroll fragments were discovered in eleven caves.
+
+The scrolls date from around 250 BCE to 68 CE and include the oldest known biblical manuscripts. They were preserved in clay jars, some sealed to protect them from moisture and decay. The dry, dark conditions of the caves helped maintain the scrolls in remarkable condition for over two thousand years.
+
+Most scholars believe the scrolls were written by the Essenes, a Jewish sect that lived in the Qumran area. The majority of the texts are written in Hebrew, though some are in Aramaic and Greek. The collection includes copies of nearly every book of the Hebrew Bible, as well as previously unknown religious texts.
+
+The scrolls have provided invaluable insights into Jewish religious practices and beliefs during the Second Temple period. They have also enhanced our understanding of the development of the Hebrew Bible and early Christianity. Carbon dating and other scientific techniques have confirmed the age of the scrolls.
+
+Since their discovery, the scrolls have been the subject of intense scholarly debate. Some fragments remain too damaged to read, though new imaging technologies continue to reveal previously hidden text. The scrolls are now housed in the Shrine of the Book at the Israel Museum in Jerusalem.""",
                     "questions": [
-                        {"number": 1, "type": "note_completion", "question": "The scrolls were preserved in jars made of ___"},
-                        {"number": 2, "type": "note_completion", "question": "The scrolls were found in a ___"},
-                        {"number": 3, "type": "note_completion", "question": "The jars were sealed with ___"},
-                        {"number": 4, "type": "note_completion", "question": "The scrolls are believed to have been written by the ___"},
-                        {"number": 5, "type": "note_completion", "question": "Most scrolls were written in ___"},
-                        {"number": 6, "type": "true_false_ng", "question": "The scrolls were discovered by archaeologists conducting a planned excavation.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
-                        {"number": 7, "type": "true_false_ng", "question": "All the scrolls have been successfully preserved.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
-                        {"number": 8, "type": "true_false_ng", "question": "The scrolls contain texts from the Hebrew Bible.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
-                        {"number": 9, "type": "true_false_ng", "question": "Scholars have completed their analysis of all the scrolls.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
-                        {"number": 10, "type": "true_false_ng", "question": "Carbon dating has confirmed the age of some scrolls.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
-                        {"number": 11, "type": "true_false_ng", "question": "The scrolls were all found in a single cave.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
-                        {"number": 12, "type": "true_false_ng", "question": "The scrolls have significantly impacted biblical scholarship.", "options": ["TRUE", "FALSE", "NOT GIVEN"]},
-                        {"number": 13, "type": "true_false_ng", "question": "New technology may reveal more text on damaged scrolls.", "options": ["TRUE", "FALSE", "NOT GIVEN"]}
+                        {
+                            "number": "1-5",
+                            "type": "note_completion",
+                            "instruction": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.",
+                            "visual": {
+                                "title": "The Dead Sea Scrolls",
+                                "sections": [
+                                    {
+                                        "heading": "Discovery and Preservation",
+                                        "items": [
+                                            "The scrolls were found in ___1___ near Qumran",
+                                            "They were preserved in jars made of ___2___",
+                                            "The jars were ___3___ to protect the contents"
+                                        ]
+                                    },
+                                    {
+                                        "heading": "Origins",
+                                        "items": [
+                                            "Written by the ___4___, a Jewish sect",
+                                            "Most scrolls written in ___5___"
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "number": "6-13",
+                            "type": "true_false_not_given",
+                            "instruction": "Do the following statements agree with the information given in Reading Passage 1?",
+                            "statements": [
+                                {"number": 6, "statement": "The scrolls were discovered by professional archaeologists."},
+                                {"number": 7, "statement": "All the scrolls have been successfully preserved in their original condition."},
+                                {"number": 8, "statement": "The scrolls contain texts from the Hebrew Bible."},
+                                {"number": 9, "statement": "Scholars have reached agreement about who wrote the scrolls."},
+                                {"number": 10, "statement": "The age of the scrolls has been verified using scientific methods."},
+                                {"number": 11, "statement": "All the scrolls were found in a single cave."},
+                                {"number": 12, "statement": "The scrolls have contributed to understanding of early religious history."},
+                                {"number": 13, "statement": "All text on the scrolls can now be read using new technology."}
+                            ]
+                        }
                     ]
                 },
                 {
@@ -255,22 +313,60 @@ IELTS17_TEST2 = {
                     "title": "A second attempt at domesticating the tomato",
                     "question_range": "14-26",
                     "question_count": 13,
-                    "topic": "Agriculture and genetic research",
-                    "passage_text": "Scientists are using gene-editing technology to create a new type of tomato that combines the best traits of wild and domesticated varieties. The project aims to develop tomatoes with improved flavor, better disease resistance, and higher nutritional content...",
+                    "passage_text": """A: The fruit we know today as the tomato is a far cry from its wild ancestor. The original wild tomatoes that grew in the Andes mountains of South America were small, about the size of a blueberry, and not particularly appealing in taste. Through thousands of years of domestication, farmers gradually selected plants with larger, tastier fruit, eventually producing the tomatoes we enjoy today.
+
+B: The tomato's journey from the Americas to the rest of the world began in the 16th century when Spanish conquistadors brought seeds back to Europe. Initially, Europeans were suspicious of the fruit, with some believing it to be poisonous due to its membership in the nightshade family. It wasn't until the 18th and 19th centuries that tomatoes became widely accepted as food in Europe and North America.
+
+C: Scientists are now attempting what might be called a 'second domestication' of the tomato. Using gene-editing technology called CRISPR, researchers are modifying wild tomato varieties to create new cultivars that combine the best traits of both wild and domesticated plants. The appeal of wild tomatoes lies in their natural resistance to diseases, tolerance to drought and salt, and superior flavour compounds.
+
+D: The modern commercial tomato, while large and visually appealing, has lost many beneficial traits through centuries of selective breeding. Commercial varieties are often susceptible to diseases and pests, requiring extensive use of pesticides. They also tend to have less flavour than wild varieties, as breeders focused primarily on appearance, shelf life, and uniform ripening rather than taste.
+
+E: Through gene editing, scientists hope to reintroduce beneficial traits from wild tomatoes into domesticated varieties. Early results have been promising, with edited plants showing improved disease resistance, better flavour profiles, and higher nutritional content. Some modified varieties have shown increased levels of lycopene, a compound associated with various health benefits.
+
+F: The technology is not without controversy. While proponents argue that gene editing is simply a more precise form of traditional breeding, critics raise concerns about unforeseen consequences and the control of food supply by large corporations. The regulatory status of gene-edited crops varies between countries, affecting their commercial viability.""",
                     "questions": [
-                        {"number": 14, "type": "matching_information", "question": "Reference to reasons for choosing wild plants", "options": ["A", "B", "C", "D", "E", "F"]},
-                        {"number": 15, "type": "matching_information", "question": "How the tomato spread globally", "options": ["A", "B", "C", "D", "E", "F"]},
-                        {"number": 16, "type": "matching_information", "question": "The commercial tomato problems", "options": ["A", "B", "C", "D", "E", "F"]},
-                        {"number": 17, "type": "matching_information", "question": "Comparison of wild and domestic varieties", "options": ["A", "B", "C", "D", "E", "F"]},
-                        {"number": 18, "type": "matching_information", "question": "The genetic technology used", "options": ["A", "B", "C", "D", "E", "F"]},
-                        {"number": 19, "type": "summary_completion", "question": "Gap 19 - The wild tomato has better ___"},
-                        {"number": 20, "type": "summary_completion", "question": "Gap 20 - Can resist ___"},
-                        {"number": 21, "type": "summary_completion", "question": "Gap 21 - Has better ___"},
-                        {"number": 22, "type": "summary_completion", "question": "Gap 22 - Contains more ___"},
-                        {"number": 23, "type": "summary_completion", "question": "Gap 23 - Research aims to improve ___"},
-                        {"number": 24, "type": "note_completion", "question": "The edited tomatoes have better ___"},
-                        {"number": 25, "type": "note_completion", "question": "They are larger in ___"},
-                        {"number": 26, "type": "note_completion", "question": "They have reduced ___"}
+                        {
+                            "number": "14-18",
+                            "type": "section_matching",
+                            "instruction": "Which section contains the following information? Write the correct letter, A-F.",
+                            "items": [
+                                {"number": 14, "item": "reasons for choosing wild tomato varieties for research"},
+                                {"number": 15, "item": "how tomatoes spread from their place of origin"},
+                                {"number": 16, "item": "problems with commercially grown tomatoes"},
+                                {"number": 17, "item": "a comparison between original wild tomatoes and modern varieties"},
+                                {"number": 18, "item": "the technique being used to modify tomatoes"}
+                            ]
+                        },
+                        {
+                            "number": "19-23",
+                            "type": "multiple_choice",
+                            "instruction": "Choose the correct letter, A, B, C or D.",
+                            "items": [
+                                {"number": 19, "question": "Wild tomatoes are valued by scientists because of their", "options": ["A: large size", "B: disease resistance", "C: commercial appeal", "D: easy cultivation"]},
+                                {"number": 20, "question": "Commercial tomatoes have been bred mainly for", "options": ["A: nutritional content", "B: environmental tolerance", "C: taste", "D: appearance"]},
+                                {"number": 21, "question": "Gene-edited tomatoes have shown", "options": ["A: improved health benefits", "B: faster growth", "C: lower costs", "D: longer roots"]},
+                                {"number": 22, "question": "A concern about gene-edited crops is", "options": ["A: their high price", "B: unexpected effects", "C: their small size", "D: limited availability"]},
+                                {"number": 23, "question": "The regulatory situation for gene-edited crops is", "options": ["A: the same worldwide", "B: different in each country", "C: very strict everywhere", "D: completely unregulated"]}
+                            ]
+                        },
+                        {
+                            "number": "24-26",
+                            "type": "note_completion",
+                            "instruction": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.",
+                            "visual": {
+                                "title": "Benefits of gene-edited tomatoes",
+                                "sections": [
+                                    {
+                                        "heading": "Improvements",
+                                        "items": [
+                                            "Better ___24___",
+                                            "Increased ___25___",
+                                            "Reduced need for ___26___"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
                     ]
                 },
                 {
@@ -278,23 +374,51 @@ IELTS17_TEST2 = {
                     "title": "Insight or evolution?",
                     "question_range": "27-40",
                     "question_count": 14,
-                    "topic": "Psychology and cognitive science",
-                    "passage_text": "The nature of creative insight and problem-solving has long fascinated researchers. Some argue that breakthrough ideas come through sudden 'eureka' moments, while others suggest that solutions emerge through a gradual evolutionary process of trial and error...",
+                    "passage_text": """The nature of creative problem-solving has fascinated psychologists and neuroscientists for decades. How do we arrive at solutions to complex problems? Two competing theories have dominated the field: the insight theory, which suggests that solutions come suddenly in 'eureka' moments, and the evolutionary theory, which proposes that solutions develop gradually through trial and error.
+
+The insight theory gained prominence through the work of Gestalt psychologists in the early 20th century. They described problem-solving as a process of sudden reorganisation of mental elements, leading to an instantaneous solution. The classic example is Archimedes supposedly shouting 'Eureka!' upon discovering how to measure the volume of an irregular object while sitting in his bath.
+
+More recent research using brain imaging has provided some support for the insight model. Studies show that moments of insight are associated with distinctive patterns of brain activity, particularly in regions involved in integrating disparate pieces of information. Immediately before an insight occurs, there is often a burst of activity in the right hemisphere of the brain.
+
+However, the evolutionary theory challenges this view. Proponents argue that what appears to be sudden insight is actually the culmination of a gradual, unconscious process of testing and rejecting potential solutions. According to this view, our brains continuously generate and evaluate possible solutions, and the 'eureka' moment occurs when an adequate solution finally reaches conscious awareness.
+
+Recent evidence suggests that both theories may have merit. Some problems do seem to be solved through genuine insight, while others are tackled through more incremental processes. Individual differences also play a role; some people appear to rely more heavily on insight, while others favour systematic approaches.
+
+The implications of this research extend beyond academic psychology. Understanding how we solve problems has potential applications in education, business innovation, and artificial intelligence. If insight can be cultivated, teaching methods could be designed to encourage it. Similarly, AI systems might be developed to mimic human insight processes.
+
+Despite decades of research, the nature of creative problem-solving remains incompletely understood. What is clear is that the human mind possesses remarkable capabilities for finding solutions to novel challenges, whether through sudden flashes of insight, gradual evolutionary processes, or some combination of both.""",
                     "questions": [
-                        {"number": 27, "type": "multiple_choice", "question": "The main purpose of the passage is to", "options": ["A: explain a new theory of creativity", "B: compare different research methods", "C: evaluate evidence for competing ideas", "D: describe the history of insight research"]},
-                        {"number": 28, "type": "multiple_choice", "question": "According to the passage, researchers claim that", "options": ["A: insight cannot be studied scientifically", "B: evolutionary processes explain all discoveries", "C: both insight and evolution play a role", "D: eureka moments are rare"]},
-                        {"number": 29, "type": "multiple_choice", "question": "The evidence presented suggests that", "options": ["A: sudden insight is more common than gradual discovery", "B: brain scanning has provided new understanding", "C: most scientists prefer evolutionary explanations", "D: creativity cannot be measured"]},
-                        {"number": 30, "type": "multiple_choice", "question": "The writer concludes that", "options": ["A: more research is needed", "B: insight is better understood now", "C: evolutionary theory is insufficient", "D: creative processes vary by individual"]},
-                        {"number": 31, "type": "multiple_choice", "question": "The implications of the research include", "options": ["A: new teaching methods for creativity", "B: better understanding of genius", "C: improved problem-solving techniques", "D: all of the above"]},
-                        {"number": 32, "type": "yes_no_ng", "question": "Insight always occurs suddenly without any prior thought.", "options": ["YES", "NO", "NOT GIVEN"]},
-                        {"number": 33, "type": "yes_no_ng", "question": "Evolutionary explanations have been completely disproven.", "options": ["YES", "NO", "NOT GIVEN"]},
-                        {"number": 34, "type": "yes_no_ng", "question": "Brain imaging has contributed to understanding creativity.", "options": ["YES", "NO", "NOT GIVEN"]},
-                        {"number": 35, "type": "yes_no_ng", "question": "All researchers now agree on the nature of insight.", "options": ["YES", "NO", "NOT GIVEN"]},
-                        {"number": 36, "type": "yes_no_ng", "question": "The research has practical applications in education.", "options": ["YES", "NO", "NOT GIVEN"]},
-                        {"number": 37, "type": "summary_completion", "question": "First gap in summary"},
-                        {"number": 38, "type": "summary_completion", "question": "Second gap in summary"},
-                        {"number": 39, "type": "summary_completion", "question": "Third gap in summary"},
-                        {"number": 40, "type": "summary_completion", "question": "Fourth gap in summary"}
+                        {
+                            "number": "27-31",
+                            "type": "multiple_choice",
+                            "instruction": "Choose the correct letter, A, B, C or D.",
+                            "items": [
+                                {"number": 27, "question": "The main purpose of the passage is to", "options": ["A: prove the insight theory is correct", "B: explain how the brain works", "C: compare two theories of problem-solving", "D: describe recent advances in neuroscience"]},
+                                {"number": 28, "question": "According to the Gestalt psychologists, problem-solving involves", "options": ["A: slow, methodical processes", "B: sudden mental reorganisation", "C: conscious effort", "D: physical experimentation"]},
+                                {"number": 29, "question": "Brain imaging studies have shown that insight is", "options": ["A: associated with specific brain activity", "B: impossible to measure", "C: equally common in all people", "D: not a real phenomenon"]},
+                                {"number": 30, "question": "The evolutionary theory suggests that eureka moments are", "options": ["A: completely random", "B: the result of gradual processes", "C: more common in creative people", "D: caused by the left brain"]},
+                                {"number": 31, "question": "The writer concludes that", "options": ["A: insight theory is definitely correct", "B: evolutionary theory has been disproven", "C: both theories may be partially valid", "D: more research will not be useful"]}
+                            ]
+                        },
+                        {
+                            "number": "32-36",
+                            "type": "yes_no_not_given",
+                            "instruction": "Do the following statements agree with the claims of the writer in Reading Passage 3?",
+                            "statements": [
+                                {"number": 32, "statement": "Insight always occurs without any prior unconscious processing."},
+                                {"number": 33, "statement": "The right hemisphere of the brain is more important than the left for creativity."},
+                                {"number": 34, "statement": "Brain scanning has helped researchers understand insight better."},
+                                {"number": 35, "statement": "All researchers now agree on which theory is correct."},
+                                {"number": 36, "statement": "The research findings could be useful for developing AI systems."}
+                            ]
+                        },
+                        {
+                            "number": "37-40",
+                            "type": "summary_completion",
+                            "instruction": "Complete the summary using the list of words, A-H.",
+                            "word_box": ["A: unconscious", "B: different", "C: creative", "D: sudden", "E: gradual", "F: educational", "G: complex", "H: simple"],
+                            "summary": "Research suggests that problem-solving may involve both ___37___ insight and ___38___ evolutionary processes. People show ___39___ preferences for how they approach problems. Understanding these processes has potential ___40___ applications."
+                        }
                     ]
                 }
             ]
@@ -312,23 +436,7 @@ IELTS17_TEST2 = {
                     "description": "The table and charts below give information about the police budget for 2017 and 2018 in one area of Britain. The table shows where the money came from and the charts show how it was distributed.",
                     "instructions": "Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "visual_type": "table_and_pie_charts",
-                    "visual_url": "/static/images/cambridge/ielts17/test2_writing_task1.png",
-                    "visual_data": {
-                        "title": "Police Budget 2017-2018",
-                        "table": {
-                            "headers": ["Sources", "2017 (£m)", "2018 (£m)"],
-                            "rows": [
-                                ["National Government", "175.5", "177.8"],
-                                ["Local Taxes", "91.2", "102.3"],
-                                ["Other sources", "38", "38.5"],
-                                ["Total", "304.7", "318.6"]
-                            ]
-                        },
-                        "pie_charts": [
-                            {"year": "2017", "segments": [{"label": "Salaries", "value": 75}, {"label": "Technology", "value": 8}, {"label": "Buildings & transport", "value": 17}]},
-                            {"year": "2018", "segments": [{"label": "Salaries", "value": 69}, {"label": "Technology", "value": 14}, {"label": "Buildings & transport", "value": 17}]}
-                        ]
-                    }
+                    "visual_url": "/static/images/cambridge/ielts17/test2_writing_task1.png"
                 },
                 {
                     "task_number": 2,
@@ -461,46 +569,46 @@ IELTS17_TEST2 = {
             "40": "fluent"
         },
         "reading": {
-            "1": "rock",
-            "2": "cave",
-            "3": "clay",
+            "1": "caves",
+            "2": "clay",
+            "3": "sealed",
             "4": "Essenes",
             "5": "Hebrew",
-            "6": "NOT GIVEN",
+            "6": "FALSE",
             "7": "FALSE",
             "8": "TRUE",
             "9": "TRUE",
-            "10": "FALSE",
+            "10": "TRUE",
             "11": "FALSE",
             "12": "TRUE",
-            "13": "NOT GIVEN",
+            "13": "FALSE",
             "14": "C",
             "15": "B",
-            "16": "E",
+            "16": "D",
             "17": "A",
             "18": "C",
             "19": "B",
             "20": "D",
             "21": "A",
-            "22": "C",
-            "23": "A",
-            "24": ["flavour", "flavor"],
+            "22": "B",
+            "23": "B",
+            "24": "flavour",
             "25": "size",
-            "26": "salt",
-            "27": "D",
-            "28": "A",
+            "26": "pesticides",
+            "27": "C",
+            "28": "B",
             "29": "A",
-            "30": "C",
-            "31": "A",
+            "30": "B",
+            "31": "C",
             "32": "NO",
             "33": "NOT GIVEN",
             "34": "YES",
             "35": "NO",
-            "36": "NOT GIVEN",
-            "37": "F",
-            "38": "D",
-            "39": "E",
-            "40": "B"
+            "36": "YES",
+            "37": "D",
+            "38": "E",
+            "39": "B",
+            "40": "F"
         }
     }
 }
