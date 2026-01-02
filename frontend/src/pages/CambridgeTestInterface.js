@@ -1003,25 +1003,15 @@ export default function CambridgeTestInterface() {
     if (!currentPassage) return null;
 
     return (
-      <div className="grid lg:grid-cols-2 gap-4 h-[calc(100vh-200px)]">
-        {/* Passage */}
-        <Card className="p-6 overflow-y-auto">
-          <Badge className="bg-green-100 text-green-700 mb-3">Passage {currentPassage.passage_number}</Badge>
-          <h3 className="font-bold text-xl mb-2 text-gray-900">{currentPassage.title}</h3>
-          {currentPassage.subtitle && (
-            <p className="text-sm text-gray-500 italic mb-4">{currentPassage.subtitle}</p>
-          )}
-          <div className="prose prose-sm max-w-none">
-            {currentPassage.passage_text?.split('\n\n').map((para, idx) => (
-              <p key={idx} className="mb-4 text-gray-700 leading-relaxed text-sm">{para}</p>
-            ))}
-          </div>
-        </Card>
-
-        {/* Questions */}
-        <Card className="p-6 overflow-y-auto">
+      <div className="flex h-[calc(100vh-200px)] relative">
+        {/* Left Pane - Passage with Highlighter */}
+        <div 
+          className="w-1/2 border-r border-slate-300 overflow-auto bg-white p-6"
+          onContextMenu={handleTextSelection}
+        >
+          {/* Passage Navigation */}
           <div className="flex items-center justify-between mb-4">
-            <Badge className="bg-green-100 text-green-700">Questions {currentPassage.question_range}</Badge>
+            <Badge className="bg-green-100 text-green-700">Passage {currentPassage.passage_number}</Badge>
             <div className="flex gap-1">
               {passages.map((_, idx) => (
                 <Button
@@ -1035,6 +1025,100 @@ export default function CambridgeTestInterface() {
                 </Button>
               ))}
             </div>
+          </div>
+          
+          {/* Highlights & Notes Panel */}
+          {highlights.filter(h => h.section === 'reading').length > 0 && (
+            <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-amber-800 flex items-center gap-2">
+                  <Highlighter className="w-4 h-4" /> Your Highlights
+                </span>
+                <button 
+                  onClick={() => {
+                    setHighlights(prev => prev.filter(h => h.section !== 'reading'));
+                    setNotes(prev => prev.filter(n => n.section !== 'reading'));
+                  }}
+                  className="text-xs text-amber-600 hover:text-amber-800"
+                >
+                  Clear All
+                </button>
+              </div>
+              <div className="space-y-1 max-h-24 overflow-auto">
+                {highlights.filter(h => h.section === 'reading').map(h => {
+                  const relatedNote = notes.find(n => n.id === h.id);
+                  return (
+                    <div key={h.id} className="flex items-start gap-2 text-xs">
+                      <span className={`px-1 rounded flex-1 ${h.color === 'blue' ? 'bg-blue-200' : 'bg-yellow-200'}`}>
+                        "{h.text.substring(0, 50)}..."
+                      </span>
+                      {relatedNote && (
+                        <span className="text-gray-500 italic max-w-[100px] truncate">
+                          📝 {relatedNote.note}
+                        </span>
+                      )}
+                      <button onClick={() => deleteHighlight(h.id)} className="text-red-500 hover:text-red-700">
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <h3 className="text-lg font-bold text-slate-800 mb-4">{currentPassage.title}</h3>
+          {currentPassage.subtitle && (
+            <p className="text-sm text-gray-500 italic mb-4">{currentPassage.subtitle}</p>
+          )}
+          
+          {/* Passage Text - Selectable */}
+          <div className="prose prose-sm max-w-none select-text">
+            {currentPassage.passage_text?.split('\n\n').map((para, idx) => {
+              // Check if any highlights exist in this paragraph
+              const paraHighlights = highlights.filter(h => 
+                h.section === 'reading' && para.includes(h.text)
+              );
+              
+              let displayText = para;
+              paraHighlights.forEach(h => {
+                const color = h.color === 'blue' ? 'bg-blue-200' : 'bg-yellow-200';
+                displayText = displayText.replace(
+                  h.text,
+                  `<mark class="${color} px-0.5 rounded">${h.text}</mark>`
+                );
+              });
+              
+              return (
+                <p 
+                  key={idx} 
+                  className="mb-4 text-gray-700 leading-relaxed text-sm"
+                  dangerouslySetInnerHTML={{ __html: displayText }}
+                />
+              );
+            })}
+          </div>
+          
+          {/* Tip */}
+          <div className="mt-4 p-2 bg-slate-100 rounded text-xs text-slate-500 flex items-center gap-2">
+            <Highlighter className="w-4 h-4" />
+            Tip: Select text and right-click to highlight or add notes
+          </div>
+        </div>
+
+        {/* Right Pane - Questions */}
+        <div className="w-1/2 overflow-auto bg-slate-50 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <Badge className="bg-green-100 text-green-700">Questions {currentPassage.question_range}</Badge>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setShowReviewPanel(true)}
+              className="flex items-center gap-2"
+            >
+              <ListChecks className="w-4 h-4" />
+              Review ({getAnsweredCount('reading')}/40)
+            </Button>
           </div>
 
           {currentPassage.questions?.map((q, qIdx) => (
@@ -1117,6 +1201,8 @@ export default function CambridgeTestInterface() {
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
                 </div>
               )}
 
