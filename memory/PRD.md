@@ -17,16 +17,9 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 ```
 /app/frontend/src/pages/
 ├── CambridgeTestInterface.js  # Full IELTS Computer-Delivered interface
-│   - Dark header bar (IELTS logo + timer)
-│   - Settings Modal (text size, colors)
-│   - Help Modal (3 tabs: Information, Test help, Task help)
-│   - Hide button (for Reading/Writing)
-│   - Split Screen Reading
-│   - Text Highlighter + Notes
-│   - Review Panel
 ├── CambridgeTestResults.js    # Test results with deep AI evaluation
 ├── QuestionBank.js            # Test selection
-└── Login.js                   # Authentication
+└── Results.js                 # Reference for correct results UI
 ```
 
 ### Backend (FastAPI + MongoDB)
@@ -34,75 +27,74 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 /app/backend/
 ├── content/cambridge_tests/ielts17/test1.py
 ├── routes/
-│   ├── cambridge.py           # Cambridge test API
-│   ├── cambridge_speaking.py  # Speaking evaluation
-│   ├── audio.py               # Audio streaming
-│   ├── recordings.py          # User recordings
-│   └── tts.py                 # Text-to-Speech
-└── static/
-    ├── audio/cambridge/
-    └── visuals/
+│   ├── cambridge.py           # Cambridge test API + Writing evaluation
+│   ├── cambridge_speaking.py  # Speaking evaluation (Free + Premium)
+│   └── speaking_qb.py         # Core speaking evaluation protocols
+└── writing_evaluator.py       # Core writing evaluation protocols
 ```
 
-## Key Features Implemented (Jan 2, 2025)
+## Completed Features (January 2, 2025)
 
-### ✅ Real IELTS Computer-Delivered Interface
-- **Dark Header Bar**:
-  - IELTS logo + "Computer-Delivered Test"
-  - Timer: "XX minutes left"
-  - Settings button → Modal with text size & color themes
-  - Help button → 3-tab modal (Information, Test help, Task help)
-  - Hide button (Reading/Writing)
-- **Section Navigation Bar**:
-  - Exit Test button
-  - Section tabs (Listening/Reading/Writing/Speaking)
-  - "X / 40 answered" counter
+### ✅ P0: Cambridge Test Results Page - FIXED
+- **Listening Results**: Expandable section with Your Answer, Correct Answer, Explanation
+- **Reading Results**: Locate in Passage (yellow), Explanation (blue), Skill Tip (purple)
+- **Writing Evaluation**: 
+  - 4 criteria scores (Task Achievement, Coherence, Lexical, Grammar)
+  - Teacher's Feedback, Strengths, Areas to Improve
+  - Vocabulary Notes, Grammar Notes
+  - Your Text / Sample Answers tabs
+- **Overall Band Score**: Card with all 4 skills displayed
 
-### ✅ Settings Modal
-- Text size: Standard / Large / Extra Large
-- Colours: Standard / Yellow on black / Blue on white / Blue on cream
+### ✅ P1: Premium Speaking Evaluation (Azure Integration)
+- Frontend sends `user_plan` to speaking evaluation endpoint
+- Backend checks user plan (free/booster/pro)
+- Free tier: Whisper + GPT-4o evaluation
+- Premium tier (booster/pro): Azure pronunciation analysis with:
+  - Detailed Azure scores (Pronunciation, Accuracy, Fluency, Completeness, Prosody)
+  - Word-level problem detection
+  - Mentor notes and practice focus
+- Speaking evaluations passed to results page via navigation state
+- Results page displays premium badge and Azure scores when available
 
-### ✅ Help Modal (3 Tabs)
-- **Information**: Question types explained (Multiple Choice, T/F/NG, Gap Fill)
-- **Test help**: Highlighting instructions
-- **Task help**: Section-specific tips (dynamic based on current section)
+### ✅ Test Interface Features
+- Dark header bar with timer
+- Settings modal (text size, colors)
+- Help modal (3 tabs)
+- Split-screen Reading
+- Text Highlighter + Notes
+- Question navigation bar
 
-### ✅ Reading Section
-- Split screen: Passage (left) + Questions (right)
-- Text highlighter (Yellow/Blue)
-- Notes system
-- Context menu (right-click)
-- P1/P2/P3 passage navigation
-- Review panel
+## Pending Tasks
 
-### ✅ Writing Evaluation
-- 4 criteria scores
-- Examiner Comment
-- Band 6 & Band 8 reference samples
+### P2: Content Library Expansion
+- IELTS 16, 18, 19 content (waiting for user to provide PDFs/audio)
 
-### ✅ Results Page
-- Expandable answer cards
-- Locate in Passage
-- Explanation
-- Skill Tip
+### P3: Session Persistence Bug
+- Frontend localStorage session restoration issue
 
-### ⏳ Pending
-- Premium Speaking (Azure) with plan check
-- Audio files for Listening
-- IELTS 16, 18, 19 integration
+## Test Credentials (PERMANENT)
+```
+Email: test@ieltsace.com
+Password: TestPassword123!
+Plan: Pro (Premium features enabled)
+```
 
-## Test Credentials
-- Email: test@ielts.com
-- Password: admin123
+## API Endpoints
 
-## Session Updates (Jan 2, 2025)
-1. ✅ Dark IELTS header bar
-2. ✅ Settings modal (text size, colors)
-3. ✅ Help modal with 3 tabs
-4. ✅ Hide button for Reading/Writing
-5. ✅ Reading split screen + highlighter
-6. ✅ Notes system
-7. ✅ Review panel
-8. ✅ Results with Locate/Explain/Skill Tip
-9. ✅ Answer keys for IELTS 17 Test 1
-10. ✅ General Training unlocked in AI-Generated Tests
+### Cambridge Test API
+- `GET /api/cambridge/books` - List all Cambridge books
+- `GET /api/cambridge/test/{book_id}/{test_id}` - Get full test content
+- `GET /api/cambridge/answers/{book_id}/{test_id}` - Get answer key
+- `POST /api/cambridge/evaluate/writing` - Evaluate writing response
+
+### Cambridge Speaking API
+- `POST /api/cambridge/speaking/evaluate` - Evaluate speaking (free/premium based on user_plan)
+- `POST /api/cambridge/speaking/evaluate-full-test` - Evaluate complete speaking test
+
+## Key Files Reference
+- `/app/frontend/src/pages/CambridgeTestResults.js` - Results page (FIXED)
+- `/app/frontend/src/pages/CambridgeTestInterface.js` - Test interface
+- `/app/frontend/src/pages/Results.js` - Reference for correct UI implementation
+- `/app/backend/routes/cambridge.py` - Backend routes
+- `/app/backend/routes/cambridge_speaking.py` - Speaking evaluation
+- `/app/memory/TEST_CREDENTIALS.md` - Permanent test account info
