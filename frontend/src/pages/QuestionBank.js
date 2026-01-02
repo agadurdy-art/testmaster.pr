@@ -567,7 +567,7 @@ export default function QuestionBank() {
                     <p className="text-sm text-gray-500">Official Academic practice tests</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-2xl font-bold text-red-600">1</span>
+                    <span className="text-2xl font-bold text-red-600">2</span>
                     <span className="text-sm text-gray-500">/4 tests</span>
                   </div>
                 </div>
