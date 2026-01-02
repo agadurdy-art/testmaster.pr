@@ -1348,16 +1348,6 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
 
-              {/* Use part-based keys for tracking plays and recordings */}
-              {(() => {
-                const playKey = `part${currentPart}_q${speakingQuestionIndex}`;
-                const currentPlayCount = questionPlayCounts[playKey] || 0;
-                const playsLeft = 2 - currentPlayCount;
-                const hasRecording = !!questionRecordings[playKey];
-                
-                return (
-                  <>
-
               {/* Question Progress */}
               <div className="flex items-center justify-between px-2">
                 <span className="text-sm text-gray-600">Question {speakingQuestionIndex + 1} of {questions.length}</span>
