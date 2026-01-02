@@ -560,38 +560,9 @@ The tantalising question left is that of what it all meant. Would Charles II hav
                     "word_count": "at least 150 words",
                     "prompt": "The maps below show an industrial area in the town of Norbiton, and planned future development of the site.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "visual_data": {
-                        "type": "dual_map",
-                        "title": "Norbiton Industrial Area",
-                        "maps": [
-                            {
-                                "title": "Norbiton industrial area now",
-                                "elements": [
-                                    {"type": "river", "label": "River", "position": "north", "color": "#60A5FA"},
-                                    {"type": "area", "label": "Farmland", "position": "north_of_river", "color": "#86EFAC"},
-                                    {"type": "road", "label": "Main Road", "position": "south", "color": "#9CA3AF"},
-                                    {"type": "roundabout", "label": "Roundabout", "position": "center"},
-                                    {"type": "building", "label": "Factories", "position": "center", "count": 4, "color": "#FCA5A5"},
-                                    {"type": "road", "label": "to Town", "position": "west"}
-                                ]
-                            },
-                            {
-                                "title": "Planned future development",
-                                "elements": [
-                                    {"type": "river", "label": "River", "position": "north", "color": "#60A5FA"},
-                                    {"type": "area", "label": "Farmland", "position": "north_of_river", "color": "#86EFAC"},
-                                    {"type": "bridge", "label": "New Bridge", "position": "north_crossing"},
-                                    {"type": "building", "label": "Housing", "position": "center", "count": 6, "color": "#FDE68A"},
-                                    {"type": "building", "label": "Housing", "position": "north_of_river", "count": 3, "color": "#FDE68A"},
-                                    {"type": "facility", "label": "Shops", "position": "east_of_roundabout", "color": "#C4B5FD"},
-                                    {"type": "facility", "label": "Playground", "position": "east", "color": "#6EE7B7"},
-                                    {"type": "facility", "label": "School", "position": "far_east", "color": "#93C5FD"},
-                                    {"type": "facility", "label": "Medical Centre", "position": "south_of_roundabout", "color": "#FCA5A5"},
-                                    {"type": "roundabout", "label": "Roundabout", "position": "center"},
-                                    {"type": "road", "label": "Main Road", "position": "south", "color": "#9CA3AF"},
-                                    {"type": "road", "label": "to Town", "position": "west"}
-                                ]
-                            }
-                        ]
+                        "type": "image",
+                        "image_url": "ielts17_test1_task1_visual.png",
+                        "title": "Norbiton Industrial Area Maps"
                     }
                 },
                 {
