@@ -78,34 +78,16 @@ IELTS17_TEST1 = {
                         ]
                     },
                     "questions": [
-                        {"number": 1, "type": "note_completion", "answer": "litter"},
-                        {"number": 2, "type": "note_completion", "answer": "__(check audio)__"},
-                        {"number": 3, "type": "note_completion", "answer": "bees"},
-                        {"number": 4, "type": "note_completion", "answer": "
-
-
-"},
-                        {"number": 5, "type": "note_completion", "answer": "__(check audio)__"},
-                        {"number": 6, "type": "note_completion", "answer": "
-
-
-"},
-                        {"number": 7, "type": "note_completion", "answer": "
-
-
-"},
-                        {"number": 8, "type": "note_completion", "answer": "
-
-
-"},
-                        {"number": 9, "type": "note_completion", "answer": "
-
-
-"},
-                        {"number": 10, "type": "note_completion", "answer": "
-
-
-"}
+                        {"number": 1, "type": "note_completion", "answer": "TBD"},
+                        {"number": 2, "type": "note_completion", "answer": "TBD"},
+                        {"number": 3, "type": "note_completion", "answer": "TBD"},
+                        {"number": 4, "type": "note_completion", "answer": "TBD"},
+                        {"number": 5, "type": "note_completion", "answer": "TBD"},
+                        {"number": 6, "type": "note_completion", "answer": "TBD"},
+                        {"number": 7, "type": "note_completion", "answer": "TBD"},
+                        {"number": 8, "type": "note_completion", "answer": "TBD"},
+                        {"number": 9, "type": "note_completion", "answer": "TBD"},
+                        {"number": 10, "type": "note_completion", "answer": "TBD"}
                     ]
                 },
                 {
