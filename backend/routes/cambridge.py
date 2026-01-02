@@ -653,7 +653,7 @@ def get_skill_tip(section: str, qtype: str, accuracy: float) -> str:
         }
     }
     
-    default_tip = f"Practice more {qtype.replace('_', ' ')} questions to improve your accuracy."
+    default_tip = "Practice more " + qtype.replace('_', ' ') + " questions to improve your accuracy."
     section_tips = tips.get(section, {})
     
     if accuracy >= 0.7:
