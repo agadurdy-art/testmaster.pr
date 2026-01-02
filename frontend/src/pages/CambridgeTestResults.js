@@ -186,36 +186,88 @@ export default function CambridgeTestResults() {
     toast.info('Evaluating writing responses...');
     
     try {
-      const writingAnswers = {
-        task1: answers['writing_task1'] || '',
-        task2: answers['writing_task2'] || ''
-      };
+      const tasks = [];
       
-      const res = await fetch(`${API_URL}/api/cambridge/evaluate/writing`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          book_id: bookId,
-          test_id: testId,
-          answers: writingAnswers
-        })
-      });
-      
-      const data = await res.json();
-      
-      if (data.success) {
-        setResults(prev => ({
-          ...prev,
-          writing: {
-            score: data.overall_band,
-            evaluated: true,
-            tasks: data.tasks,
-            feedback: data.feedback
-          }
-        }));
-        toast.success('Writing evaluation complete!');
+      // Evaluate Task 1 if available
+      const task1Response = answers['writing_task1'] || '';
+      if (task1Response.trim()) {
+        const res1 = await fetch(`${API_URL}/api/cambridge/evaluate/writing`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            book_id: bookId,
+            test_id: testId,
+            task_number: 1,
+            response: task1Response
+          })
+        });
+        
+        const data1 = await res1.json();
+        if (data1.success) {
+          tasks.push({
+            taskNumber: 1,
+            wordCount: data1.word_count,
+            minimumWords: data1.minimum_words,
+            overallBand: data1.overall_band,
+            criteria: data1.criteria,
+            feedback: data1.feedback,
+            referenceSamples: data1.reference_samples
+          });
+        }
       }
+      
+      // Evaluate Task 2 if available
+      const task2Response = answers['writing_task2'] || '';
+      if (task2Response.trim()) {
+        const res2 = await fetch(`${API_URL}/api/cambridge/evaluate/writing`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            book_id: bookId,
+            test_id: testId,
+            task_number: 2,
+            response: task2Response
+          })
+        });
+        
+        const data2 = await res2.json();
+        if (data2.success) {
+          tasks.push({
+            taskNumber: 2,
+            wordCount: data2.word_count,
+            minimumWords: data2.minimum_words,
+            overallBand: data2.overall_band,
+            criteria: data2.criteria,
+            feedback: data2.feedback,
+            referenceSamples: data2.reference_samples
+          });
+        }
+      }
+      
+      // Calculate overall writing band (Task 2 weighted more)
+      let overallWritingBand = null;
+      if (tasks.length > 0) {
+        if (tasks.length === 2) {
+          // Task 2 counts double
+          overallWritingBand = Math.round(((tasks[0].overallBand + tasks[1].overallBand * 2) / 3) * 2) / 2;
+        } else {
+          overallWritingBand = tasks[0].overallBand;
+        }
+      }
+      
+      setResults(prev => ({
+        ...prev,
+        writing: {
+          score: overallWritingBand,
+          evaluated: true,
+          tasks: tasks
+        }
+      }));
+      
+      toast.success('Writing evaluation complete!');
+      
     } catch (error) {
+      console.error('Writing evaluation error:', error);
       toast.error('Could not evaluate writing');
     } finally {
       setEvaluating(false);
