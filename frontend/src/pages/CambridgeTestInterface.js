@@ -335,7 +335,7 @@ export default function CambridgeTestInterface() {
             <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-4">
               <p className="text-sm text-indigo-700 flex items-center gap-2">
                 <Target className="w-4 h-4" />
-                <span><strong>Skill Practice Mode:</strong> You are practicing only {currentSection}. After completing, you'll see your results for this section.</span>
+                <span><strong>Skill Practice Mode:</strong> You are practicing only {currentSection}. After completing, you will see your results for this section.</span>
               </p>
             </div>
           )}
