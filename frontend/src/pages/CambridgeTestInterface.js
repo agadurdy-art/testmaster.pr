@@ -1050,7 +1050,7 @@ export default function CambridgeTestInterface() {
                   return (
                     <div key={h.id} className="flex items-start gap-2 text-xs">
                       <span className={`px-1 rounded flex-1 ${h.color === 'blue' ? 'bg-blue-200' : 'bg-yellow-200'}`}>
-                        "{h.text.substring(0, 50)}..."
+                        &ldquo;{h.text.substring(0, 50)}...&rdquo;
                       </span>
                       {relatedNote && (
                         <span className="text-gray-500 italic max-w-[100px] truncate">
