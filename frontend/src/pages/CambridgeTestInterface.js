@@ -215,7 +215,8 @@ export default function CambridgeTestInterface() {
           answers, 
           testData,
           mode: 'skill',
-          skill: skillParam
+          skill: skillParam,
+          speakingEvaluations: questionEvaluations
         } 
       });
       return;
