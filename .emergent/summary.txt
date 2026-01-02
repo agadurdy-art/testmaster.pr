@@ -1,0 +1,214 @@
+<analysis>**original_problem_statement:**
+The user's initial goal was to enhance an IELTS practice application by creating a Visual Generator to produce graphics for test questions. However, the generated visuals were inaccurate and did not match the question prompts. This led to a major pivot in the project's direction.
+
+The new, primary objective is to discard the AI-generated content and instead build a comprehensive and authentic test bank using official Cambridge IELTS materials. The user has provided PDFs and audio files for IELTS books 16, 17, 18, and 19.
+
+**PRODUCT REQUIREMENTS:**
+1.  **Authentic Content**: All test content (questions, passages, visuals, audio) must be extracted directly from the provided Cambridge IELTS PDFs and audio files.
+2.  **Lock Old Content**: The previously created AI-generated tests (Sets A-F) must be disabled and marked as Coming Soon.
+3.  **Full Test Experience**: The new Cambridge tests must be integrated into a computer-delivered test interface that includes all previously developed features:
+    *   Per-section timers (Listening, Reading, Writing, Speaking).
+    *   Interactive question types (gap-fill, multiple choice, matching, etc.).
+    *   Audio player for listening sections.
+    *   Text area for writing tasks with word count.
+    *   Audio recording functionality for speaking tasks.
+    *   A full evaluation and results page upon test completion.
+4.  **Visual Integration**: For tasks requiring visuals (e.g., Writing Task 1 maps/charts), the exact image must be extracted from the PDF and displayed.
+5.  **UI Language**: All user-facing UI text must be in English.
+
+**User's preferred language**: Turkish. The next agent **MUST** respond to the user in **Turkish**.
+
+**what currently exists?**
+- The old AI-generated tests have been successfully locked and are displayed as Coming Soon in the Question Bank.
+- A new backend structure has been established to handle content from the Cambridge books.
+- The complete content (all 4 sections) for **IELTS 17, Test 1** has been extracted from the provided PDF and integrated. The corresponding audio files have also been linked.
+- A new, full-featured test interface, , has been created. It successfully merges the correct question rendering with all the required interactive features like timers, section navigation, and audio/recording controls.
+- The Question Bank UI has been redesigned to display the new Cambridge test structure, starting with IELTS 17.
+- A critical bug preventing matching-type questions from rendering has been fixed.
+- A routing issue that caused a blank screen when loading the test interface has been resolved.
+
+**Last working item**:
+-   **Last item agent was working**: The user insisted that the Writing Task 1 visual for IELTS 17 Test 1 must be the *exact* image from the PDF, not an AI-recreation. The agent located the page in the PDF, extracted it as an image, cropped it to the relevant map area, and updated the backend content file and frontend interface to use this new static PNG image.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: screenshot tool. The next agent must restart the services and then navigate to the Writing section of Cambridge IELTS 17, Test 1, to verify that the authentic, PDF-extracted map image is displayed correctly.
+-   **User Testing Done**: N
+
+**All Pending/In progress Issue list**:
+-   **Issue 1: Complete IELTS 17 Test 1 Content (P0)**
+-   **Issue 2: Frontend Session Persistence Bug (P1)**
+-   **Issue 3: Implement Test Evaluation Flow (P1)**
+-   **Issue 4: User Verification for Original Audio Bug (P2)**
+-   **Issue 5: Listening Part Navigation Bug (P2)**
+-   **Issue 6: Frontend Linting Warnings (P3)**
+
+**Issues Detail:**
+-   **Issue 1: Complete IELTS 17 Test 1 Content**
+    -   **Attempted fixes**: The agent extracted the content, but the user reported gaps.
+    -   **Next debug checklist**:
+        1.  Re-examine the extracted content in .
+        2.  Compare the content against the user's report that Reading Q18-35 are missing. The agent's logs show Q18-22 and Q27-40 are present, implying a gap for Q23-26.
+        3.  Extract and add any missing questions for the Reading section to .
+    -   **Why fix this issue and what will be achieved with the fix?**: This will make the first authentic test fully complete and usable, serving as the template for all future tests.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on other issue**: None.
+
+-   **Issue 2: Frontend Session Persistence Bug**
+    -   **Attempted fixes**: The agent created workarounds for testing using single, long Playwright scripts but did not fix the root cause.
+    -   **Next debug checklist**:
+        1.  Investigate how the auth token is stored (e.g., ) in the login function.
+        2.  Check the root component () to see how the session is restored on page load.
+        3.  The issue is likely that navigation to a new page causes a full reload that loses the client-side session state before it can be re-established.
+    -   **Why fix this issue and what will be achieved with the fix?**: It creates a poor user experience and makes manual and automated testing extremely difficult. Fixing it will stabilize the application.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on other issue**: None.
+
+-   **Issue 3: Implement Test Evaluation Flow**
+    -   **Attempted fixes**: None for the new Cambridge tests.
+    -   **Next debug checklist**:
+        1.  Review the old evaluation/results logic that was tied to .
+        2.  Create a results page that is navigated to after a user submits the final section of a Cambridge test.
+        3.  Implement backend logic to score the test against the answers in the content file.
+        4.  Integrate the AI evaluation for Writing and Speaking sections.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a core feature of the platform and the final step in the user's test-taking journey.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on other issue**: None.
+
+-   **Issue 4: User Verification for Original Audio Bug**
+    -   **Attempted fixes**: (From previous forks) Audio for General Training Set A, Part 1, was regenerated.
+    -   **Next debug checklist**: Remind the user to verify this fix.
+    -   **Status**: USER VERIFICATION PENDING
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: N/A
+    -   **Blocked on other issue**: None.
+
+-   **Issue 5: Listening Part Navigation Bug**
+    -   **Attempted fixes**: (From previous forks) State logic was implemented.
+    -   **Next debug checklist**: Needs manual E2E test to confirm a user can navigate between listening parts without playing audio and have the play buttons enabled correctly.
+    -   **Status**: TESTING PENDING
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on other issue**: None.
+
+-   **Issue 6: Frontend Linting Warnings**
+    -   **Attempted fixes**: None.
+    -   **Next debug checklist**: Run yarn run v1.22.22
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command. on the frontend and fix the  warnings.
+    -   **Status**: NOT STARTED
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on other issue**: None.
+
+**In progress Task List**:
+-   **Task 1: Test PDF-Extracted Visual Integration**
+    -   **Where to resume**: Restart both  and  services. Use the  to log in, navigate to the Question Bank, start IELTS 17 Test 1, and go to the Writing section.
+    -   **What will be achieved with this?**: Confirms that the authentic visual from the PDF is correctly displayed in Writing Task 1.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on something**: None.
+
+**Upcoming and Future Tasks**
+*   **Upcoming Tasks:**
+    *   **(P0) Integrate Remaining Cambridge Books**: Once Test 1 is perfect, proceed to extract and integrate all tests from IELTS 16, 18, and 19.
+*   **Future Tasks (from user backlog):**
+    *   Add shorts-style practice mode to the landing page.
+    *   Add a game element to course lessons.
+    *   Create YLE (Starters, Movers, Flyers) course content.
+    *   Refactor legacy components.
+    *   Conduct a final evaluation for public launch.
+
+**Completed work in this session**
+-   **Pivoted from AI-Generated Content to Authentic PDFs**: Abandoned the flawed AI tests and established a new workflow based on user-provided Cambridge IELTS books.
+-   **Locked Old Content**: Marked all previous AI-generated tests as Coming Soon in the UI.
+-   **Built Cambridge Test Foundation**: Extracted and integrated the full content (all 4 sections) for **IELTS 17, Test 1**, including linking provided audio files.
+-   **Revamped Test Interface**: Created and refined  to be a full-featured, computer-delivered test environment that correctly renders all authentic question formats and includes timers, section navigation, and audio/recording controls.
+-   **Updated Question Bank UI**: Redesigned the Full Tests tab to display the new hierarchy of Cambridge books.
+-   **Integrated Authentic PDF Visual**: Successfully extracted the exact map visual for Writing Task 1 from the PDF and integrated it into the test interface.
+-   **Fixed Critical Bugs**: Resolved issues with matching questions not rendering and a routing error that caused blank screens.
+
+**Earlier issues found/mentioned but not fixed**
+-   **Issue 1: Frontend Session Persistence Bug**: The agent repeatedly struggled with authentication during testing because navigating to a new page logs the user out. The root cause was not fixed.
+    -   **Debug checklist**: Check how the auth token is stored on login and restored on page loads. The session state is being lost on navigation.
+    -   **Why to solve this issue and what will be achieved with this?**: Fixing this is critical for a stable user experience and for enabling reliable automated testing.
+    -   **Should Test frontend/backend/both after fix**: frontend
+    -   **Is recurring issue?**: Y
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Content Pivot**: The project's core shifted from AI-generated content to extracting from user-provided, copyrighted PDFs for internal educational use, based on explicit user direction.
+-   **Component Merging**: The agent successfully combined the superior question-rendering logic of a new component () with the feature-rich state management (timers, section flow) of an old component () to create a single, powerful test interface.
+-   **PDF Content Extraction**: Utilized a chain of command-line tools (, , ) to pull text, locate specific pages by content, and crop visual assets directly from the source PDF.
+-   **Unified Test API**: The main test data endpoint () was updated to transparently serve both the new Cambridge tests and the old AI tests, simplifying frontend logic.
+
+**key DB schema**
+-   No database schema changes in this session.
+
+**changes in tech stack**
+-   None.
+
+**All files of reference**
+-   : The new, primary component for taking a full test.
+-   : The data source for IELTS 17, Test 1.
+-   : Contains the UI for selecting tests, now showing the Cambridge books.
+-   : Modified to serve the new Cambridge test data via the existing test endpoint.
+-   : The authentic visual extracted from the PDF.
+
+**key api endpoints**
+-   : The main endpoint to fetch all data for a specific test (e.g., ). This now serves the new Cambridge tests.
+-   : Lists all available tests for the Question Bank.
+-   : Serves static images, including the new Writing Task 1 visual.
+
+**Critical Info for New Agent**
+-   **The Core Task has Shifted**: The user has completely rejected the AI-generated content. The **only** priority is building out the test bank using the authentic Cambridge IELTS PDFs. Do not work on the old  content.
+-   **Use **: This is the correct, working interface for all tests. It has all the required features and renders questions correctly.
+-   **Copyright Acknowledged**: The user has repeatedly confirmed the content is for internal platform use only and has instructed the agent to extract it directly from the PDFs. Continue with this workflow.
+
+**documents and test reports created in this job**
+-   
+-   
+-   
+
+**Last 10 User Messages and any pending HUMAN messages**
+10. **User**: Complains that the feature-rich test interface () isn't displaying the questions correctly, while the simpler one () is.
+9.  **User**: Insists that the Writing Task 1 visual must be the *exact* image from the PDF, not a recreated one.
+8.  **User**: Reports several critical bugs and missing features in the new Cambridge test: missing Reading questions, no visual for the Writing task, and the absence of timer/evaluation features.
+7.  **User**: Points out that Listening Part 3 is missing questions (Q27-30) and requests a permanent fix for the authentication issue that hampers testing.
+6.  **User**: Provides the IELTS 17 PDF and audio files, giving clear instructions to lock all old AI-generated tests and start building the authentic test content from the provided files.
+5.  **User**: Confirms that IELTS books 16, 17, 18, and 19 will be the source material.
+4.  **User**: Clarifies the copyright context: the material will only be used as a question bank within the platform and will not be published or distributed.
+3.  **User**: Expresses frustration when the agent initially hesitates to extract content from the PDF due to copyright concerns, insisting the agent should do it.
+2.  **User**: Provides a detailed breakdown of all the inaccuracies in the AI-generated visuals and proposes the new direction: using authentic tests from PDFs.
+1.  **User**: Approves the agent's initial plan at the start of the session.
+
+**Project Health Check:**
+-   **Broken**:
+    -   Frontend session persistence. Navigating between pages often logs the user out.
+    -   The test evaluation flow (scoring, results page, AI feedback) is not yet connected to the new Cambridge tests.
+-   **Incomplete**:
+    -   **IELTS 17 Test 1**: The Reading section has reported content gaps.
+    -   **Cambridge Test Suite**: Only Test 1 of IELTS 17 is implemented. The other tests from book 17, and all tests from books 16, 18, and 19, are not started.
+
+**3rd Party Integrations**
+-   **ElevenLabs**: Used for TTS in the old AI-generated tests. May not be required for the new Cambridge tests as audio files are provided by the user.
+
+**Testing status**
+-   **Testing agent used after significant changes**: NO
+-   **Troubleshoot agent used after agent stuck in loop**: NO
+-   **Test files created**: None.
+-   **Known regressions**: None.
+
+**Credentials to test flow:**
+-   **Email**: 
+-   **Password**: 
+
+**What agent forgot to execute**
+-   The agent did not fix the root cause of the frontend session persistence issue, instead relying on complex workarounds for testing.
+-   The agent did not fully verify the extracted content for the Reading section against the source PDF, leading to the user reporting missing questions.</analysis>
