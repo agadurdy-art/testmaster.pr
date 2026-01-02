@@ -65,7 +65,7 @@ export default function CambridgeTestInterface() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [helpTab, setHelpTab] = useState('information');
-  const [hideQuestions, setHideQuestions] = useState(false);
+  const [screenHidden, setScreenHidden] = useState(false);
   
   // Display settings
   const [textSize, setTextSize] = useState('standard'); // standard, large, extra-large
