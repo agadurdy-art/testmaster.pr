@@ -1459,14 +1459,14 @@ export default function CambridgeTestInterface() {
                     )}
                     
                     {/* Re-listen option */}
-                    {speakingState === SPEAKING_STATES.READY_TO_RECORD && (questionPlayCounts[speakingQuestionIndex] || 0) < 2 && (
+                    {speakingState === SPEAKING_STATES.READY_TO_RECORD && (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0) < 2 && (
                       <Button
                         variant="ghost"
                         onClick={() => playQuestionAudio(questions[speakingQuestionIndex], false)}
                         className="text-gray-400 hover:text-white"
                         size="sm"
                       >
-                        Listen again ({2 - (questionPlayCounts[speakingQuestionIndex] || 0)} left)
+                        Listen again ({2 - (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0)} left)
                       </Button>
                     )}
                   </div>
