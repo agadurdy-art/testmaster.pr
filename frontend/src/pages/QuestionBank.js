@@ -540,147 +540,131 @@ export default function QuestionBank() {
         {/* Tests Tab */}
         {activeTab === 'tests' && (
           <div className="space-y-6">
-            {fullTests.length > 0 ? (
-              <>
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-gray-900">IELTS Full Tests</h2>
-                  <Badge className="bg-green-100 text-green-700">{fullTests.length} Tests Available</Badge>
+            {/* Cambridge IELTS Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center shadow-lg">
+                  <BookMarked className="w-6 h-6 text-white" />
                 </div>
-                
-                {/* Academic Tests Section */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                      <BookOpen className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg text-gray-900">Academic Tests</h3>
-                      <p className="text-sm text-gray-500">For university/higher education admissions</p>
-                    </div>
-                    <Badge className="ml-auto bg-blue-100 text-blue-700">
-                      {fullTests.filter(t => t.test_type === 'academic').length} Sets
-                    </Badge>
-                  </div>
-                  
-                  <div className="grid md:grid-cols-2 gap-4 pl-13">
-                    {fullTests.filter(t => t.test_type === 'academic').map((test) => (
-                      <Card key={test.test_id} className="p-5 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-blue-300"
-                        onClick={() => openTestModal(test)}>
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-bold text-gray-900">{test.title}</h4>
-                            <p className="text-xs text-gray-500 mt-1 line-clamp-2">{test.description}</p>
-                          </div>
-                          <Badge className="bg-blue-50 text-blue-700 text-xs">Academic</Badge>
-                        </div>
-                        
-                        <div className="grid grid-cols-4 gap-1 mb-3">
-                          <div className="text-center p-1.5 bg-blue-50 rounded">
-                            <Headphones className="w-3 h-3 mx-auto text-blue-600" />
-                            <span className="text-[10px] text-gray-600">Listening</span>
-                          </div>
-                          <div className="text-center p-1.5 bg-green-50 rounded">
-                            <BookOpen className="w-3 h-3 mx-auto text-green-600" />
-                            <span className="text-[10px] text-gray-600">Reading</span>
-                          </div>
-                          <div className="text-center p-1.5 bg-purple-50 rounded">
-                            <PenTool className="w-3 h-3 mx-auto text-purple-600" />
-                            <span className="text-[10px] text-gray-600">Writing</span>
-                          </div>
-                          <div className="text-center p-1.5 bg-orange-50 rounded">
-                            <Mic className="w-3 h-3 mx-auto text-orange-600" />
-                            <span className="text-[10px] text-gray-600">Speaking</span>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>{test.estimated_time}</span>
-                          </div>
-                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700 h-8 text-xs">
-                            <PlayCircle className="w-3 h-3 mr-1" /> Start
-                          </Button>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
+                <div>
+                  <h2 className="font-bold text-xl text-gray-900">Cambridge IELTS</h2>
+                  <p className="text-sm text-gray-500">Official Cambridge practice tests</p>
                 </div>
-                
-                {/* General Training Tests Section */}
-                <div className="space-y-4 pt-4 border-t">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                      <Award className="w-5 h-5 text-purple-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg text-gray-900">General Training Tests</h3>
-                      <p className="text-sm text-gray-500">For work experience, immigration, secondary education</p>
-                    </div>
-                    <Badge className="ml-auto bg-purple-100 text-purple-700">
-                      {fullTests.filter(t => t.test_type === 'general').length} Sets
-                    </Badge>
-                  </div>
-                  
-                  <div className="grid md:grid-cols-2 gap-4 pl-13">
-                    {fullTests.filter(t => t.test_type === 'general').map((test) => (
-                      <Card key={test.test_id} className="p-5 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-purple-300"
-                        onClick={() => openTestModal(test)}>
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <h4 className="font-bold text-gray-900">{test.title}</h4>
-                            <p className="text-xs text-gray-500 mt-1 line-clamp-2">{test.description}</p>
-                          </div>
-                          <Badge className="bg-purple-50 text-purple-700 text-xs">General</Badge>
-                        </div>
-                        
-                        <div className="grid grid-cols-4 gap-1 mb-3">
-                          <div className="text-center p-1.5 bg-blue-50 rounded">
-                            <Headphones className="w-3 h-3 mx-auto text-blue-600" />
-                            <span className="text-[10px] text-gray-600">Listening</span>
-                          </div>
-                          <div className="text-center p-1.5 bg-green-50 rounded">
-                            <BookOpen className="w-3 h-3 mx-auto text-green-600" />
-                            <span className="text-[10px] text-gray-600">Reading</span>
-                          </div>
-                          <div className="text-center p-1.5 bg-purple-50 rounded">
-                            <PenTool className="w-3 h-3 mx-auto text-purple-600" />
-                            <span className="text-[10px] text-gray-600">Writing</span>
-                          </div>
-                          <div className="text-center p-1.5 bg-orange-50 rounded">
-                            <Mic className="w-3 h-3 mx-auto text-orange-600" />
-                            <span className="text-[10px] text-gray-600">Speaking</span>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            <span>{test.estimated_time}</span>
-                          </div>
-                          <Button size="sm" className="bg-purple-600 hover:bg-purple-700 h-8 text-xs">
-                            <PlayCircle className="w-3 h-3 mr-1" /> Start
-                          </Button>
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="text-center p-4 bg-amber-50 rounded-lg border border-amber-200">
-                  <p className="text-sm text-amber-700">
-                    <strong>Tip:</strong> Complete all 4 sections in one sitting for the most realistic IELTS experience.
-                  </p>
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
-                <Clock className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Full IELTS Tests</h3>
-                <p className="text-gray-500 mb-6">Complete test experience under real exam conditions</p>
-                <Badge className="bg-amber-100 text-amber-700">Coming Soon</Badge>
               </div>
-            )}
+              
+              {/* IELTS 17 */}
+              <Card className="p-6 border-2 border-red-100 bg-gradient-to-br from-white to-red-50">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-bold text-lg text-gray-900">Cambridge IELTS 17</h3>
+                      <Badge className="bg-green-100 text-green-700 text-xs">Available</Badge>
+                    </div>
+                    <p className="text-sm text-gray-500">Official Academic practice tests</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-2xl font-bold text-red-600">1</span>
+                    <span className="text-sm text-gray-500">/4 tests</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  {/* Test 1 - Available */}
+                  <div 
+                    className="p-4 bg-white rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-md transition-all cursor-pointer"
+                    onClick={() => navigate('/cambridge-test/ielts17/test1')}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-bold text-gray-900">Test 1</span>
+                      <PlayCircle className="w-5 h-5 text-green-600" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1 text-xs text-gray-500">
+                        <Headphones className="w-3 h-3" /> Listening
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-gray-500">
+                        <BookOpen className="w-3 h-3" /> Reading
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-gray-500">
+                        <PenTool className="w-3 h-3" /> Writing
+                      </div>
+                      <div className="flex items-center gap-1 text-xs text-gray-500">
+                        <Mic className="w-3 h-3" /> Speaking
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Tests 2-4 - Coming Soon */}
+                  {[2, 3, 4].map(num => (
+                    <div key={num} className="p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 opacity-60">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium text-gray-400">Test {num}</span>
+                        <Clock className="w-4 h-4 text-gray-300" />
+                      </div>
+                      <div className="text-xs text-gray-400 mt-2">Coming Soon</div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              
+              {/* Coming Soon Books */}
+              <div className="grid md:grid-cols-3 gap-4">
+                {['IELTS 16', 'IELTS 18', 'IELTS 19'].map(book => (
+                  <Card key={book} className="p-5 bg-gray-50 border-2 border-dashed border-gray-200">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-lg bg-gray-200 flex items-center justify-center">
+                        <BookMarked className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-400">Cambridge {book}</h4>
+                        <Badge className="bg-amber-100 text-amber-600 text-xs mt-1">Coming Soon</Badge>
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-400">4 Academic Tests</div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+            
+            {/* AI-Generated Tests Section - Coming Soon */}
+            <div className="space-y-4 pt-6 border-t">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                  <Zap className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-xl text-gray-900">AI-Generated Tests</h2>
+                  <p className="text-sm text-gray-500">Practice tests created by our AI engine</p>
+                </div>
+                <Badge className="ml-auto bg-amber-100 text-amber-700">Coming Soon</Badge>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Set 1-6 Coming Soon */}
+                {[1, 2, 3, 4, 5, 6].map(num => (
+                  <Card key={num} className="p-4 bg-gray-50 border-2 border-dashed border-gray-200 opacity-60">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
+                          <span className="font-bold text-gray-400">{num}</span>
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-400">Set {num}</h4>
+                          <span className="text-xs text-gray-400">Academic</span>
+                        </div>
+                      </div>
+                      <Clock className="w-5 h-5 text-gray-300" />
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+            
+            <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="text-sm text-blue-700">
+                <strong>Note:</strong> Cambridge IELTS tests provide authentic exam practice. Complete all 4 sections for the most realistic experience.
+              </p>
+            </div>
           </div>
         )}
 
@@ -689,9 +673,9 @@ export default function QuestionBank() {
           <div className="space-y-6">
             <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
               <TrendingUp className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">İlerleme Analizi</h3>
-              <p className="text-gray-500 mb-6">Performansınızı takip edin ve zayıf noktalarınızı keşfedin</p>
-              <Badge className="bg-amber-100 text-amber-700">Yakında Geliyor</Badge>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Progress Analysis</h3>
+              <p className="text-gray-500 mb-6">Track your performance and discover weak areas</p>
+              <Badge className="bg-amber-100 text-amber-700">Coming Soon</Badge>
             </div>
           </div>
         )}
