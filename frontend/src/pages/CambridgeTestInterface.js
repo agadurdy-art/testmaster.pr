@@ -2332,202 +2332,375 @@ export default function CambridgeTestInterface() {
       {/* Review Panel */}
       {renderReviewPanel()}
       
-      {/* Settings Modal */}
+      {/* Settings Modal - IELTS Style (from FullTestInterface) */}
       {showSettingsModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <Card className="w-full max-w-md bg-slate-800 text-white rounded-lg overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-slate-700">
-              <h3 className="font-bold text-lg">Settings</h3>
-              <Button variant="ghost" size="sm" onClick={() => setShowSettingsModal(false)} className="text-white hover:bg-slate-700">
-                <X className="w-4 h-4" />
-              </Button>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="w-full max-w-2xl bg-white rounded-lg shadow-2xl overflow-hidden">
+            {/* Modal Header */}
+            <div className="bg-gradient-to-r from-slate-700 to-slate-600 text-white px-4 py-3 flex items-center gap-3">
+              <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center">
+                <Settings className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-semibold text-lg">Settings</span>
+              <button 
+                onClick={() => setShowSettingsModal(false)} 
+                className="ml-auto w-6 h-6 bg-red-500 hover:bg-red-600 rounded flex items-center justify-center text-white font-bold text-sm"
+              >
+                ✕
+              </button>
             </div>
-            <div className="p-4 space-y-6">
-              <p className="text-sm text-slate-300">
+            
+            {/* Modal Content */}
+            <div className="p-6 bg-slate-50">
+              <p className="text-slate-600 mb-6">
                 If you wish, you can change these settings to make the test easier to read.
               </p>
               
-              {/* Text Size */}
-              <div>
-                <label className="text-sm font-medium text-slate-300 mb-2 block">Text size</label>
-                <div className="flex gap-2">
-                  {['standard', 'large', 'extra-large'].map(size => (
-                    <button
-                      key={size}
-                      onClick={() => setTextSize(size)}
-                      className={`flex-1 py-2 px-3 rounded text-sm capitalize ${
-                        textSize === size 
-                          ? 'bg-blue-600 text-white' 
-                          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                      }`}
-                    >
-                      {size.replace('-', ' ')}
-                    </button>
-                  ))}
+              <div className="grid grid-cols-3 gap-8">
+                {/* Text Size */}
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-3">Text size</h4>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="textSize" 
+                        checked={textSize === 'standard'}
+                        onChange={() => setTextSize('standard')}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">Standard</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="textSize" 
+                        checked={textSize === 'large'}
+                        onChange={() => setTextSize('large')}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">Large</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="textSize" 
+                        checked={textSize === 'extra-large'}
+                        onChange={() => setTextSize('extra-large')}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">Extra large</span>
+                    </label>
+                  </div>
+                </div>
+                
+                {/* Colours */}
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-3">Colours</h4>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="colorTheme" 
+                        checked={colorTheme === 'standard'}
+                        onChange={() => setColorTheme('standard')}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">Standard</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="colorTheme" 
+                        checked={colorTheme === 'yellow-on-black'}
+                        onChange={() => setColorTheme('yellow-on-black')}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">Yellow on black</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="colorTheme" 
+                        checked={colorTheme === 'blue-on-white'}
+                        onChange={() => setColorTheme('blue-on-white')}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">Blue on white</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="colorTheme" 
+                        checked={colorTheme === 'blue-on-cream'}
+                        onChange={() => setColorTheme('blue-on-cream')}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">Blue on cream</span>
+                    </label>
+                  </div>
+                </div>
+                
+                {/* Screen Resolution */}
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-3">Screen Resolution</h4>
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="screenRes" 
+                        checked={false}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">800 x 600</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="screenRes" 
+                        checked={false}
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">1024 x 768</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="screenRes" 
+                        checked={true}
+                        readOnly
+                        className="w-4 h-4 text-blue-500"
+                      />
+                      <span className="text-slate-700">1280 x 1024</span>
+                    </label>
+                  </div>
                 </div>
               </div>
               
-              {/* Colours */}
-              <div>
-                <label className="text-sm font-medium text-slate-300 mb-2 block">Colours</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { id: 'standard', label: 'Standard', bg: 'bg-white', text: 'text-black' },
-                    { id: 'yellow-black', label: 'Yellow on black', bg: 'bg-black', text: 'text-yellow-400' },
-                    { id: 'blue-white', label: 'Blue on white', bg: 'bg-white', text: 'text-blue-700' },
-                    { id: 'blue-cream', label: 'Blue on cream', bg: 'bg-amber-50', text: 'text-blue-700' }
-                  ].map(theme => (
-                    <button
-                      key={theme.id}
-                      onClick={() => setColorTheme(theme.id)}
-                      className={`py-2 px-3 rounded text-sm border-2 ${theme.bg} ${theme.text} ${
-                        colorTheme === theme.id ? 'border-blue-500' : 'border-transparent'
-                      }`}
-                    >
-                      {theme.label}
-                    </button>
-                  ))}
-                </div>
+              {/* OK Button */}
+              <div className="flex justify-center mt-8">
+                <button 
+                  onClick={() => setShowSettingsModal(false)}
+                  className="px-12 py-2 bg-slate-200 hover:bg-slate-300 border border-slate-400 rounded text-slate-800 font-medium transition-colors"
+                >
+                  OK
+                </button>
               </div>
             </div>
-            <div className="p-4 border-t border-slate-700">
-              <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700"
-                onClick={() => setShowSettingsModal(false)}
-              >
-                OK
-              </Button>
-            </div>
-          </Card>
+          </div>
         </div>
       )}
       
-      {/* Help Modal */}
+      {/* Help Modal - IELTS Style with Tabs (from FullTestInterface) */}
       {showHelpModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <Card className="w-full max-w-lg bg-slate-800 text-white rounded-lg overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-slate-700">
-              <h3 className="font-bold text-lg">Help</h3>
-              <Button variant="ghost" size="sm" onClick={() => setShowHelpModal(false)} className="text-white hover:bg-slate-700">
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
-            
-            {/* Help Tabs */}
-            <div className="flex border-b border-slate-700">
-              {[
-                { id: 'information', label: 'Information' },
-                { id: 'test-help', label: 'Test help' },
-                { id: 'task-help', label: 'Task help' }
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setHelpTab(tab.id)}
-                  className={`flex-1 py-3 px-4 text-sm font-medium ${
-                    helpTab === tab.id 
-                      ? 'bg-slate-700 text-white border-b-2 border-blue-500' 
-                      : 'text-slate-400 hover:text-white hover:bg-slate-700'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            
-            <div className="p-4 min-h-[250px]">
-              {/* Information Tab */}
-              {helpTab === 'information' && (
-                <div className="space-y-4">
-                  <h4 className="font-medium text-white">Question Types</h4>
-                  <div className="space-y-3 text-sm text-slate-300">
-                    <div className="p-3 bg-slate-700 rounded">
-                      <p className="font-medium text-white mb-1">Multiple Choice</p>
-                      <p>Click on the answer option you think is correct.</p>
-                    </div>
-                    <div className="p-3 bg-slate-700 rounded">
-                      <p className="font-medium text-white mb-1">True/False/Not Given</p>
-                      <p>Select TRUE if the statement matches the passage, FALSE if it contradicts, or NOT GIVEN if there is no information.</p>
-                    </div>
-                    <div className="p-3 bg-slate-700 rounded">
-                      <p className="font-medium text-white mb-1">Gap Fill</p>
-                      <p>Type your answer in the text box. Follow the word limit instructions.</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {/* Test Help Tab */}
-              {helpTab === 'test-help' && (
-                <div className="space-y-4">
-                  <h4 className="font-medium text-white">Highlighting</h4>
-                  <div className="space-y-3 text-sm text-slate-300">
-                    <p>To highlight text in the passage:</p>
-                    <ol className="list-decimal list-inside space-y-2 ml-2">
-                      <li>Select the text you want to highlight using the mouse</li>
-                      <li>Right-click over the selected text</li>
-                      <li>Choose &ldquo;Highlight Yellow&rdquo; or &ldquo;Highlight Blue&rdquo;</li>
-                    </ol>
-                    <div className="p-3 bg-slate-700 rounded mt-4">
-                      <p className="font-medium text-white mb-2">Adding Notes</p>
-                      <p>You can also add notes to highlighted text by selecting &ldquo;Add Note&rdquo; from the context menu.</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              {/* Task Help Tab */}
-              {helpTab === 'task-help' && (
-                <div className="space-y-4">
-                  <h4 className="font-medium text-blue-400">
-                    {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} Section
-                  </h4>
-                  <ul className="space-y-2 text-sm text-slate-300">
-                    {currentSection === 'listening' && (
-                      <>
-                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> The audio will play automatically for each part</li>
-                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> You can only hear each recording once</li>
-                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> Write your answers while you listen</li>
-                        <li className="flex items-start gap-2"><span className="text-blue-400">•</span> Use the volume slider to adjust the audio level</li>
-                      </>
-                    )}
-                    {currentSection === 'reading' && (
-                      <>
-                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Read the passage carefully before answering</li>
-                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Use highlighting to mark key information</li>
-                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Pay attention to word limits for gap-fill questions</li>
-                        <li className="flex items-start gap-2"><span className="text-green-400">•</span> Click &ldquo;Hide&rdquo; to focus on the passage only</li>
-                      </>
-                    )}
-                    {currentSection === 'writing' && (
-                      <>
-                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Task 1: Write at least 150 words in 20 minutes</li>
-                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Task 2: Write at least 250 words in 40 minutes</li>
-                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Use the word count indicator to track progress</li>
-                        <li className="flex items-start gap-2"><span className="text-purple-400">•</span> Plan your answer before writing</li>
-                      </>
-                    )}
-                    {currentSection === 'speaking' && (
-                      <>
-                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> Listen to each question carefully before recording</li>
-                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> You can listen to each question up to 2 times</li>
-                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> Speak clearly and at a natural pace</li>
-                        <li className="flex items-start gap-2"><span className="text-orange-400">•</span> For Part 2, use the 1-minute preparation time</li>
-                      </>
-                    )}
-                  </ul>
-                </div>
-              )}
-            </div>
-            
-            <div className="p-4 border-t border-slate-700">
-              <Button 
-                className="w-full bg-blue-600 hover:bg-blue-700"
-                onClick={() => setShowHelpModal(false)}
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="w-full max-w-2xl bg-white rounded-lg shadow-2xl overflow-hidden">
+            {/* Modal Header */}
+            <div className="bg-gradient-to-r from-slate-700 to-slate-600 text-white px-4 py-3 flex items-center gap-3">
+              <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center">
+                <HelpCircle className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-semibold text-lg">Help</span>
+              <button 
+                onClick={() => setShowHelpModal(false)} 
+                className="ml-auto w-6 h-6 bg-red-500 hover:bg-red-600 rounded flex items-center justify-center text-white font-bold text-sm"
               >
-                OK
-              </Button>
+                ✕
+              </button>
             </div>
-          </Card>
+            
+            {/* Tabs */}
+            <div className="bg-slate-100 border-b border-slate-300">
+              <div className="flex">
+                <button 
+                  onClick={() => setHelpTab('information')}
+                  className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors
+                    ${helpTab === 'information' 
+                      ? 'bg-white border-blue-500 text-blue-600' 
+                      : 'border-transparent text-slate-600 hover:text-slate-800'}`}
+                >
+                  Information
+                </button>
+                <button 
+                  onClick={() => setHelpTab('test-help')}
+                  className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors
+                    ${helpTab === 'test-help' 
+                      ? 'bg-white border-blue-500 text-blue-600' 
+                      : 'border-transparent text-slate-600 hover:text-slate-800'}`}
+                >
+                  Test help
+                </button>
+                <button 
+                  onClick={() => setHelpTab('task-help')}
+                  className={`px-6 py-3 text-sm font-medium border-b-2 transition-colors
+                    ${helpTab === 'task-help' 
+                      ? 'bg-white border-blue-500 text-blue-600' 
+                      : 'border-transparent text-slate-600 hover:text-slate-800'}`}
+                >
+                  Task help
+                </button>
+              </div>
+            </div>
+            
+            {/* Tab Content */}
+            <div className="p-6 bg-white max-h-96 overflow-auto">
+              {helpTab === 'information' && (
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-4">Multiple choice questions</h4>
+                  <p className="text-slate-600 mb-4">Choose your question by clicking on it.</p>
+                  
+                  {/* Example Question Display */}
+                  <div className="border border-slate-300 rounded-lg overflow-hidden mb-4">
+                    <div className="bg-blue-500 text-white px-4 py-2 font-medium">
+                      1 &nbsp; Marie Curie&apos;s husband was a joint winner of both Marie&apos;s Nobel Prizes.
+                    </div>
+                    <div className="p-4 space-y-2">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="example" className="w-4 h-4" />
+                        <span className="text-slate-700">TRUE</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="example" className="w-4 h-4" />
+                        <span className="text-slate-700">FALSE</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="example" className="w-4 h-4" />
+                        <span className="text-slate-700">NOT GIVEN</span>
+                      </label>
+                    </div>
+                    <div className="px-4 py-2 bg-slate-50 border-t text-slate-600">
+                      2 &nbsp; Marie became interested in science when she was a child.
+                    </div>
+                    <div className="px-4 py-2 bg-slate-50 border-t text-slate-600">
+                      3 &nbsp; Marie&apos;s family in Poland had financial problems.
+                    </div>
+                  </div>
+                  
+                  <p className="text-slate-600 text-sm">Click on the answer you think is right.</p>
+                </div>
+              )}
+              
+              {helpTab === 'test-help' && (
+                <div>
+                  <div className="flex items-center gap-3 mb-6 p-3 bg-slate-100 rounded-lg">
+                    <div className="w-8 h-8 bg-slate-800 text-white flex items-center justify-center rounded font-bold">
+                      1
+                    </div>
+                    <p className="text-slate-700">The black highlighting shows that you have not answered the question</p>
+                  </div>
+                  
+                  <h4 className="font-semibold text-slate-900 mb-3">Highlighting</h4>
+                  <p className="text-slate-600 mb-3">To highlight something in the test:</p>
+                  
+                  <div className="bg-slate-50 p-4 rounded-lg mb-4">
+                    <p className="text-slate-700 mb-2"><strong>Select the text you want to highlight using the mouse.</strong></p>
+                    <p className="text-slate-700 mb-4">Right click over the text.</p>
+                    
+                    {/* Example Text Block */}
+                    <div className="bg-white p-3 border rounded text-slate-700 mb-4">
+                      <p>book we travel back in time and across the</p>
+                      <p>
+                        and been{' '}
+                        <span className="bg-yellow-200 px-1">in our the</span>
+                        <span className="text-slate-400">last two m</span>
+                      </p>
+                      <p>word in a w<span className="inline-flex gap-2 mx-1">
+                        <button className="text-xs bg-yellow-100 border border-yellow-300 px-2 py-0.5 rounded">✏️ Highlight</button>
+                        <button className="text-xs bg-blue-100 border border-blue-300 px-2 py-0.5 rounded">📝 Notes</button>
+                      </span>attempte</p>
+                      <p>objects com<span className="text-slate-400">e – messa</span></p>
+                      <p>rnments and interactions, about different m</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <button className="text-sm bg-yellow-100 border border-yellow-300 px-3 py-1 rounded">✏️ Highlight</button>
+                      <span className="text-slate-600">Click to highlight the text you have selected</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button className="text-sm bg-blue-100 border border-blue-300 px-3 py-1 rounded">📝 Notes</button>
+                      <span className="text-slate-600">Click to highlight the text you have selected and to add notes about what you have highlighted.</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {helpTab === 'task-help' && (
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-4">Task-specific Help</h4>
+                  
+                  {currentSection === 'listening' && (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-blue-50 rounded-lg">
+                        <h5 className="font-medium text-blue-900 mb-2">Listening Section</h5>
+                        <ul className="text-blue-800 text-sm space-y-1">
+                          <li>• The audio will play automatically for each part</li>
+                          <li>• You can only hear each recording once</li>
+                          <li>• Write your answers while you listen</li>
+                          <li>• Use the volume slider to adjust the audio level</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {currentSection === 'reading' && (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-green-50 rounded-lg">
+                        <h5 className="font-medium text-green-900 mb-2">Reading Section</h5>
+                        <ul className="text-green-800 text-sm space-y-1">
+                          <li>• Read the passage carefully before answering</li>
+                          <li>• Use highlighting to mark key information</li>
+                          <li>• Pay attention to word limits for gap-fill questions</li>
+                          <li>• Use the navigation bar to jump between questions</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {currentSection === 'writing' && (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-purple-50 rounded-lg">
+                        <h5 className="font-medium text-purple-900 mb-2">Writing Section</h5>
+                        <ul className="text-purple-800 text-sm space-y-1">
+                          <li>• Task 1: Write at least 150 words in 20 minutes</li>
+                          <li>• Task 2: Write at least 250 words in 40 minutes</li>
+                          <li>• Task 2 counts double in your final score</li>
+                          <li>• Use the word counter at the bottom of the screen</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {currentSection === 'speaking' && (
+                    <div className="space-y-4">
+                      <div className="p-4 bg-orange-50 rounded-lg">
+                        <h5 className="font-medium text-orange-900 mb-2">Speaking Section</h5>
+                        <ul className="text-orange-800 text-sm space-y-1">
+                          <li>• Listen to each question before answering</li>
+                          <li>• You can listen to each question up to 2 times</li>
+                          <li>• Click Record Answer when you are ready</li>
+                          <li>• For Part 2, use the 1-minute preparation time</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+            
+            {/* OK Button */}
+            <div className="p-4 border-t bg-slate-50">
+              <div className="flex justify-center">
+                <button 
+                  onClick={() => setShowHelpModal(false)}
+                  className="px-12 py-2 bg-slate-200 hover:bg-slate-300 border border-slate-400 rounded text-slate-800 font-medium transition-colors"
+                >
+                  OK
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
