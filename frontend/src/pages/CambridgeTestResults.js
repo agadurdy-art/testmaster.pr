@@ -803,7 +803,7 @@ export default function CambridgeTestResults() {
                   {/* Feedback */}
                   {evaluation.feedback && (
                     <div className="mb-3 p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
-                      <p className="text-xs font-bold text-emerald-700 mb-1">Teacher's Feedback</p>
+                      <p className="text-xs font-bold text-emerald-700 mb-1">Teacher&apos;s Feedback</p>
                       <p className="text-sm text-gray-700">{evaluation.feedback}</p>
                     </div>
                   )}
