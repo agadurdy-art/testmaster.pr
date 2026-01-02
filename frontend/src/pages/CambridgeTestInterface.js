@@ -61,6 +61,16 @@ export default function CambridgeTestInterface() {
   // Review panel state
   const [showReviewPanel, setShowReviewPanel] = useState(false);
   
+  // Settings & Help modals
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
+  const [helpTab, setHelpTab] = useState('information');
+  const [hideQuestions, setHideQuestions] = useState(false);
+  
+  // Display settings
+  const [textSize, setTextSize] = useState('standard'); // standard, large, extra-large
+  const [colorTheme, setColorTheme] = useState('standard'); // standard, yellow-black, blue-white, blue-cream
+  
   // Audio state
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
