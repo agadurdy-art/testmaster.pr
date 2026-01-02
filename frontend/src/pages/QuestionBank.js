@@ -572,7 +572,7 @@ export default function QuestionBank() {
                   {/* Test 1 - Available */}
                   <div 
                     className="p-4 bg-white rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-md transition-all cursor-pointer"
-                    onClick={() => navigate('/full-test/ielts17_test1/listening?mode=full')}
+                    onClick={() => navigate('/full-test/take/ielts17_test1')}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-bold text-gray-900">Test 1</span>
