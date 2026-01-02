@@ -1241,6 +1241,110 @@ export default function FullTestInterface({ user }) {
         );
       }
       
+      // Dual Map (for IELTS Writing Task 1 - map comparison)
+      if (visualData.type === 'dual_map') {
+        const { title, maps } = visualData;
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg">
+            {title && <h4 className="font-semibold text-center text-slate-900 mb-4">{title}</h4>}
+            <div className="grid grid-cols-2 gap-4">
+              {maps?.map((map, mapIdx) => (
+                <div key={mapIdx} className="border rounded-lg p-4 bg-slate-50">
+                  <h5 className="font-medium text-center text-slate-800 mb-3 text-sm">{map.title}</h5>
+                  <div className="relative bg-white rounded border aspect-[4/3] p-3">
+                    {/* River */}
+                    <div className="absolute top-2 left-0 right-0 h-6 bg-blue-200 flex items-center justify-center">
+                      <span className="text-xs text-blue-700 font-medium">River</span>
+                    </div>
+                    
+                    {/* Farmland */}
+                    <div className="absolute top-8 left-0 right-0 h-8 bg-green-100 flex items-center justify-center border-b border-green-300">
+                      <span className="text-xs text-green-700">Farmland</span>
+                    </div>
+                    
+                    {/* Main area */}
+                    <div className="absolute top-16 bottom-8 left-2 right-2">
+                      {/* Road to Town - left */}
+                      <div className="absolute left-0 top-1/2 w-8 h-4 bg-gray-300 flex items-center justify-center transform -translate-y-1/2">
+                        <span className="text-[8px] text-gray-600">Town</span>
+                      </div>
+                      
+                      {/* Roundabout - center */}
+                      <div className="absolute left-1/2 top-1/2 w-8 h-8 rounded-full bg-gray-200 border-2 border-gray-400 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                        <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                      </div>
+                      
+                      {/* Buildings/Facilities based on map type */}
+                      {mapIdx === 0 ? (
+                        // Current map - Factories
+                        <>
+                          <div className="absolute left-12 top-2 w-12 h-8 bg-red-200 border border-red-300 flex items-center justify-center">
+                            <span className="text-[8px]">Factory</span>
+                          </div>
+                          <div className="absolute right-12 top-2 w-12 h-8 bg-red-200 border border-red-300 flex items-center justify-center">
+                            <span className="text-[8px]">Factory</span>
+                          </div>
+                          <div className="absolute left-12 bottom-2 w-12 h-8 bg-red-200 border border-red-300 flex items-center justify-center">
+                            <span className="text-[8px]">Factory</span>
+                          </div>
+                          <div className="absolute right-12 bottom-2 w-12 h-8 bg-red-200 border border-red-300 flex items-center justify-center">
+                            <span className="text-[8px]">Factory</span>
+                          </div>
+                        </>
+                      ) : (
+                        // Planned development - Housing and facilities
+                        <>
+                          {/* Housing */}
+                          <div className="absolute left-10 top-1 w-10 h-6 bg-yellow-100 border border-yellow-300 flex items-center justify-center">
+                            <span className="text-[7px]">Housing</span>
+                          </div>
+                          <div className="absolute right-10 top-1 w-10 h-6 bg-yellow-100 border border-yellow-300 flex items-center justify-center">
+                            <span className="text-[7px]">Housing</span>
+                          </div>
+                          <div className="absolute left-10 bottom-1 w-10 h-6 bg-yellow-100 border border-yellow-300 flex items-center justify-center">
+                            <span className="text-[7px]">Housing</span>
+                          </div>
+                          
+                          {/* Medical Centre - south of roundabout */}
+                          <div className="absolute left-1/2 bottom-0 transform -translate-x-1/2 w-14 h-5 bg-red-100 border border-red-300 flex items-center justify-center">
+                            <span className="text-[6px]">Medical</span>
+                          </div>
+                          
+                          {/* Shops - east of roundabout */}
+                          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-6 bg-purple-100 border border-purple-300 flex items-center justify-center">
+                            <span className="text-[7px]">Shops</span>
+                          </div>
+                          
+                          {/* School - far east */}
+                          <div className="absolute right-0 top-2 w-8 h-5 bg-blue-100 border border-blue-300 flex items-center justify-center">
+                            <span className="text-[6px]">School</span>
+                          </div>
+                          
+                          {/* Playground */}
+                          <div className="absolute right-1 bottom-8 w-8 h-5 bg-green-200 border border-green-400 flex items-center justify-center">
+                            <span className="text-[6px]">Play</span>
+                          </div>
+                          
+                          {/* New Bridge */}
+                          <div className="absolute top-[-12px] left-1/2 transform -translate-x-1/2 w-6 h-3 bg-gray-400 flex items-center justify-center">
+                            <span className="text-[5px] text-white">Bridge</span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    
+                    {/* Main Road - bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 h-6 bg-gray-300 flex items-center justify-center">
+                      <span className="text-xs text-gray-600">Main Road</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+      
       return null;
     };
     
