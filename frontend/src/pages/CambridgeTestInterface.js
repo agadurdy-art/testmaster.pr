@@ -330,11 +330,22 @@ export default function CambridgeTestInterface() {
             )}
           </div>
           
+          {/* Skill Mode Indicator */}
+          {isSkillMode && (
+            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-4">
+              <p className="text-sm text-indigo-700 flex items-center gap-2">
+                <Target className="w-4 h-4" />
+                <span><strong>Skill Practice Mode:</strong> You are practicing only {currentSection}. After completing, you'll see your results for this section.</span>
+              </p>
+            </div>
+          )}
+          
           <Button 
             onClick={handleStartTest}
             className="w-full h-12 text-lg bg-red-600 hover:bg-red-700"
+            data-testid="start-section-btn"
           >
-            Start {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} Test
+            Start {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} {isSkillMode ? 'Practice' : 'Test'}
           </Button>
         </Card>
       </div>
