@@ -1409,7 +1409,7 @@ export default function CambridgeTestInterface() {
                   <div className="flex flex-col items-center gap-4 mb-6">
                     <Button
                       onClick={() => playQuestionAudio(questions[speakingQuestionIndex], speakingQuestionIndex === 0)}
-                      disabled={speakingState === SPEAKING_STATES.LOADING_AUDIO || speakingState === SPEAKING_STATES.PLAYING_PROMPT || (questionPlayCounts[speakingQuestionIndex] || 0) >= 2}
+                      disabled={speakingState === SPEAKING_STATES.LOADING_AUDIO || speakingState === SPEAKING_STATES.PLAYING_PROMPT || (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0) >= 2}
                       className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-600 px-8"
                       size="lg"
                     >
@@ -1431,7 +1431,7 @@ export default function CambridgeTestInterface() {
                       )}
                     </Button>
                     <span className="text-sm text-gray-400">
-                      ({2 - (questionPlayCounts[speakingQuestionIndex] || 0)} plays left)
+                      ({2 - (questionPlayCounts[`part${currentPart}_q${speakingQuestionIndex}`] || 0)} plays left)
                     </span>
                   </div>
                 )}
