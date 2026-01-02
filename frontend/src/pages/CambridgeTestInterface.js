@@ -1982,31 +1982,78 @@ export default function CambridgeTestInterface() {
     <div className="min-h-screen bg-slate-100">
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-20 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+        {/* IELTS Computer-Delivered Test Header - Dark Style */}
+        <div className="bg-slate-800 text-white px-4 py-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            {/* Left - Logo & Title */}
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')}>
-                <ArrowLeft className="w-4 h-4 mr-2" /> Exit
-              </Button>
-              <div className="h-8 w-px bg-gray-200" />
-              <div>
-                <h1 className="font-bold text-lg text-gray-900">{testData.title}</h1>
-                <p className="text-xs text-gray-500">
-                  {testData.book} • {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
-                  {isSkillMode && <span className="ml-2 text-indigo-600">(Skill Practice)</span>}
-                </p>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center font-bold text-sm">
+                  IELTS
+                </div>
+                <span className="font-medium text-sm hidden md:block">Computer-Delivered Test</span>
+              </div>
+              <div className="h-6 w-px bg-slate-600" />
+              <div className="text-sm">
+                <span className="text-slate-300">{testData.book}</span>
+                <span className="mx-2 text-slate-500">•</span>
+                <span className="text-white font-medium">{currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}</span>
               </div>
             </div>
             
-            {/* Timer */}
-            <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-              sectionTimeLeft < 300 ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
+            {/* Center - Timer */}
+            <div className={`flex items-center gap-2 px-4 py-1.5 rounded ${
+              sectionTimeLeft < 300 ? 'bg-red-600' : 'bg-slate-700'
             }`}>
-              <Timer className="w-5 h-5" />
-              <span className="font-mono font-bold text-lg">{formatTime(sectionTimeLeft)}</span>
+              <Clock className="w-4 h-4" />
+              <span className="font-mono font-bold">{Math.floor(sectionTimeLeft / 60)} minutes left</span>
             </div>
-
-            {/* Section Tabs - Show all in full test mode, only current in skill mode */}
+            
+            {/* Right - Action Buttons */}
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setShowSettingsModal(true)}
+                className="text-white hover:bg-slate-700"
+              >
+                <Settings className="w-4 h-4 mr-1" />
+                Settings
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setShowHelpModal(true)}
+                className="text-white hover:bg-slate-700"
+              >
+                <HelpCircle className="w-4 h-4 mr-1" />
+                Help
+              </Button>
+              {(currentSection === 'reading' || currentSection === 'writing') && (
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={() => setHideQuestions(!hideQuestions)}
+                  className="text-white hover:bg-slate-700"
+                >
+                  <EyeOff className="w-4 h-4 mr-1" />
+                  {hideQuestions ? 'Show' : 'Hide'}
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+        
+        {/* Section Navigation Bar */}
+        <div className="bg-white border-b px-4 py-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')} className="text-gray-600">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Exit Test
+              </Button>
+            </div>
+            
+            {/* Section Tabs */}
             <div className="flex gap-1">
               {sections
                 .filter(section => !isSkillMode || section.id === skillParam)
@@ -2034,6 +2081,10 @@ export default function CambridgeTestInterface() {
                   </Button>
                 );
               })}
+            </div>
+            
+            <div className="text-sm text-gray-500">
+              {getAnsweredCount(currentSection)} / {getTotalQuestions(currentSection)} answered
             </div>
           </div>
         </div>
