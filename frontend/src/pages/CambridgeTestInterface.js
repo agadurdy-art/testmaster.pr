@@ -1494,7 +1494,9 @@ export default function CambridgeTestInterface() {
                   onClick={() => {
                     if (speakingQuestionIndex > 0) {
                       setSpeakingQuestionIndex(speakingQuestionIndex - 1);
-                      setShowNextQuestion(false);
+                      setSpeakingState(SPEAKING_STATES.IDLE);
+                      setTtsAudioUrl(null);
+                      setRecordingTime(0);
                     }
                   }}
                   variant="outline"
@@ -1507,7 +1509,9 @@ export default function CambridgeTestInterface() {
                   <Button
                     onClick={() => {
                       setSpeakingQuestionIndex(speakingQuestionIndex + 1);
-                      setShowNextQuestion(false);
+                      setSpeakingState(SPEAKING_STATES.IDLE);
+                      setTtsAudioUrl(null);
+                      setRecordingTime(0);
                     }}
                     className="bg-orange-600 hover:bg-orange-700"
                   >
@@ -1519,6 +1523,9 @@ export default function CambridgeTestInterface() {
                       if (currentPart < parts.length - 1) {
                         setCurrentPart(currentPart + 1);
                         setSpeakingQuestionIndex(0);
+                        setSpeakingState(SPEAKING_STATES.IDLE);
+                        setTtsAudioUrl(null);
+                        setRecordingTime(0);
                       }
                     }}
                     className="bg-green-600 hover:bg-green-700"
