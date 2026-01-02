@@ -1608,7 +1608,7 @@ export default function CambridgeTestInterface() {
                   <div className="flex justify-center gap-4">
                     {!isRecording ? (
                       <Button 
-                        onClick={startRecording}
+                        onClick={() => startRecordingForQuestion('part2')}
                         className="bg-red-600 hover:bg-red-700"
                         size="lg"
                         disabled={isPreparing}
@@ -1617,21 +1617,21 @@ export default function CambridgeTestInterface() {
                       </Button>
                     ) : (
                       <Button 
-                        onClick={stopRecording}
+                        onClick={() => stopRecordingForQuestion('part2')}
                         variant="destructive"
                         size="lg"
                         className="animate-pulse"
                       >
-                        <Pause className="w-5 h-5 mr-2" /> Stop Recording
+                        <Pause className="w-5 h-5 mr-2" /> Stop Recording ({recordingTime}s)
                       </Button>
                     )}
                   </div>
                   
-                  {recordedAudio[`part${currentPart + 1}`] && (
+                  {questionRecordings['part1_qpart2'] && (
                     <div className="mt-4">
                       <p className="text-sm text-green-600 mb-2">Recording saved!</p>
                       <audio 
-                        src={recordedAudio[`part${currentPart + 1}`]} 
+                        src={questionRecordings['part1_qpart2']} 
                         controls 
                         className="mx-auto"
                       />
