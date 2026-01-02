@@ -2113,7 +2113,7 @@ export default function CambridgeTestInterface() {
             <div className="mb-4">
               <p className="text-sm text-gray-500 mb-2">Highlighted text:</p>
               <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 text-sm">
-                "{currentNote.text}"
+                &ldquo;{currentNote.text}&rdquo;
               </div>
             </div>
             <div className="mb-4">
