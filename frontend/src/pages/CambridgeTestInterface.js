@@ -24,10 +24,15 @@ export default function CambridgeTestInterface() {
   const { bookId, testId } = useParams();
   const navigate = useNavigate();
   
+  // Get skill from URL query params (for skill-specific practice)
+  const searchParams = new URLSearchParams(window.location.search);
+  const skillParam = searchParams.get('skill');
+  const isSkillMode = !!skillParam;
+  
   // Test state
   const [testData, setTestData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [currentSection, setCurrentSection] = useState('listening');
+  const [currentSection, setCurrentSection] = useState(skillParam || 'listening');
   const [currentPart, setCurrentPart] = useState(0);
   const [answers, setAnswers] = useState({});
   
@@ -38,8 +43,8 @@ export default function CambridgeTestInterface() {
   const [audioCurrentTime, setAudioCurrentTime] = useState(0);
   const audioRef = useRef(null);
   
-  // Timer state
-  const [sectionTimeLeft, setSectionTimeLeft] = useState(SECTION_TIMES.listening);
+  // Timer state - use skill-specific time if in skill mode
+  const [sectionTimeLeft, setSectionTimeLeft] = useState(SECTION_TIMES[skillParam] || SECTION_TIMES.listening);
   const [testStarted, setTestStarted] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
   
@@ -56,6 +61,14 @@ export default function CambridgeTestInterface() {
   useEffect(() => {
     loadTest();
   }, [bookId, testId]);
+
+  // Update current section if skill param changes
+  useEffect(() => {
+    if (skillParam) {
+      setCurrentSection(skillParam);
+      setSectionTimeLeft(SECTION_TIMES[skillParam] || SECTION_TIMES.listening);
+    }
+  }, [skillParam]);
 
   // Timer effect
   useEffect(() => {
