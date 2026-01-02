@@ -1470,13 +1470,13 @@ export default function CambridgeTestInterface() {
                 )}
 
                 {/* Step 3: Recorded - Show playback */}
-                {speakingState === SPEAKING_STATES.RECORDED && questionRecordings[speakingQuestionIndex] && (
+                {speakingState === SPEAKING_STATES.RECORDED && questionRecordings[`part${currentPart}_q${speakingQuestionIndex}`] && (
                   <div className="flex flex-col items-center gap-4 mb-6">
                     <p className="text-sm text-green-400 flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" /> Answer recorded
                     </p>
                     <audio 
-                      src={questionRecordings[speakingQuestionIndex]} 
+                      src={questionRecordings[`part${currentPart}_q${speakingQuestionIndex}`]} 
                       controls 
                       className="mx-auto"
                     />
