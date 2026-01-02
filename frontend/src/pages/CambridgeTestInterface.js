@@ -993,15 +993,6 @@ export default function CambridgeTestInterface() {
     );
   };
 
-  // Speaking state for TTS and questions
-  const [speakingQuestionIndex, setSpeakingQuestionIndex] = useState(0);
-  const [isTTSPlaying, setIsTTSPlaying] = useState(false);
-  const [ttsAudioUrl, setTtsAudioUrl] = useState(null);
-  const [showNextQuestion, setShowNextQuestion] = useState(false);
-  const [part2PrepTime, setPart2PrepTime] = useState(60); // 1 minute prep
-  const [isPreparing, setIsPreparing] = useState(false);
-  const ttsAudioRef = useRef(null);
-
   // Generate TTS for current question
   const playQuestionAudio = async (questionText, isFirst = false) => {
     try {
