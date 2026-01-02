@@ -2249,8 +2249,6 @@ export default function CambridgeTestInterface() {
           </div>
         </div>
       )}
-        </div>
-      </div>
 
       {/* Submit Confirmation Modal */}
       {showSubmitModal && (
