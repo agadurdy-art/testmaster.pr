@@ -960,18 +960,49 @@ export default function CambridgeTestInterface() {
               <Badge className="bg-purple-100 text-purple-700 mb-2">{currentTask.title}</Badge>
               <h3 className="font-bold text-lg text-gray-900">{currentTask.type === 'map_comparison' ? 'Map Description' : 'Essay'}</h3>
             </div>
-            <div className="text-right text-sm text-gray-500">
-              <div className="flex items-center gap-1"><Clock className="w-4 h-4" /> {currentTask.time_recommended}</div>
-              <div>{currentTask.word_count}</div>
-            </div>
           </div>
 
-          {/* Rubric Box - Cambridge Style: thin black border, italic text */}
-          <div className="mb-6 p-5 border border-gray-800 bg-white">
-            <p className="italic text-gray-800 whitespace-pre-line leading-relaxed">
-              {currentTask.prompt}
-            </p>
-          </div>
+          {/* Task 1 - Simple rubric with visuals */}
+          {currentTask.task_number === 1 && (
+            <>
+              <p className="text-gray-700 mb-4">
+                You should spend about {currentTask.time_recommended} on this task.
+              </p>
+              
+              {/* Rubric Box - Cambridge Style */}
+              <div className="mb-4 p-5 border border-gray-800 bg-white">
+                <p className="italic text-gray-800 whitespace-pre-line leading-relaxed">
+                  {currentTask.prompt}
+                </p>
+              </div>
+              
+              <p className="text-gray-700 mb-4">
+                Write {currentTask.word_count}.
+              </p>
+            </>
+          )}
+
+          {/* Task 2 - Essay format with separate sections */}
+          {currentTask.task_number === 2 && (
+            <>
+              {/* Before rubric text */}
+              <p className="text-gray-700 mb-4 whitespace-pre-line">
+                {currentTask.prompt_before || `You should spend about ${currentTask.time_recommended} on this task.\n\nWrite about the following topic:`}
+              </p>
+              
+              {/* Rubric Box - Cambridge Style: thin black border, italic text */}
+              <div className="mb-4 p-5 border border-gray-800 bg-white">
+                <p className="italic text-gray-800 whitespace-pre-line leading-relaxed">
+                  {currentTask.prompt_rubric || currentTask.prompt}
+                </p>
+              </div>
+              
+              {/* After rubric text */}
+              <p className="text-gray-700 mb-4 whitespace-pre-line">
+                {currentTask.prompt_after || `Give reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite ${currentTask.word_count}.`}
+              </p>
+            </>
+          )}
 
           {/* Side by Side Images for Map Comparison */}
           {currentTask.visual_data?.type === 'side_by_side_images' && (
