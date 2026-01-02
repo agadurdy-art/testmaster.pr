@@ -92,7 +92,7 @@ async def generate_tts(request: TTSRequest):
             f.write(audio_data)
         
         return TTSResponse(
-            audio_url=f"/static/audio/tts_cache/{cache_path.name}",
+            audio_url=f"/api/audio/tts/{cache_path.name}",
             cached=False
         )
         
