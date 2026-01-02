@@ -71,6 +71,10 @@ export default function CambridgeTestInterface() {
   const [textSize, setTextSize] = useState('standard'); // standard, large, extra-large
   const [colorTheme, setColorTheme] = useState('standard'); // standard, yellow-black, blue-white, blue-cream
   
+  // Question navigation
+  const [currentQuestion, setCurrentQuestion] = useState(1);
+  const [reviewedQuestions, setReviewedQuestions] = useState({});
+  
   // Audio state
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
