@@ -418,6 +418,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load Audio routes: {e}")
 
+# Cambridge Speaking evaluation routes
+try:
+    from routes.cambridge_speaking import router as cambridge_speaking_router
+    app.include_router(cambridge_speaking_router)
+    print("✅ Cambridge Speaking routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Cambridge Speaking routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
