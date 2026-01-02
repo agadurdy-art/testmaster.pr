@@ -2158,11 +2158,11 @@ export default function CambridgeTestInterface() {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  onClick={() => setHideQuestions(!hideQuestions)}
+                  onClick={() => setScreenHidden(true)}
                   className="text-white hover:bg-slate-700"
                 >
                   <EyeOff className="w-4 h-4 mr-1" />
-                  {hideQuestions ? 'Show' : 'Hide'}
+                  Hide
                 </Button>
               )}
             </div>
