@@ -137,7 +137,7 @@ async def generate_speaking_questions_audio(request: TTSBatchRequest):
             if cache_path.exists():
                 results.append({
                     "text": text,
-                    "audio_url": f"/static/audio/tts_cache/{cache_path.name}",
+                    "audio_url": f"/api/audio/tts/{cache_path.name}",
                     "cached": True
                 })
                 continue
