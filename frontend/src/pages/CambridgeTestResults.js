@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/badge';
 import { 
   CheckCircle, XCircle, ArrowLeft, BookOpen, Headphones, PenTool, Mic,
   TrendingUp, Award, Target, BarChart3, ChevronDown, ChevronUp, Lightbulb,
-  BookMarked, GraduationCap, RefreshCw, MapPin, Eye, FileText, Home
+  BookMarked, GraduationCap, RefreshCw, MapPin, Eye, FileText, Home, ChevronRight
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -20,9 +20,14 @@ export default function CambridgeTestResults() {
   const [loading, setLoading] = useState(true);
   const [evaluating, setEvaluating] = useState(false);
   const [results, setResults] = useState(null);
-  const [answerKey, setAnswerKey] = useState(null);
   const [expandedSection, setExpandedSection] = useState(null);
   const [writingViewTab, setWritingViewTab] = useState('feedback');
+  
+  // AI Feedback state
+  const [skillBreakdown, setSkillBreakdown] = useState([]);
+  const [teacherFeedback, setTeacherFeedback] = useState(null);
+  const [recommendedLessons, setRecommendedLessons] = useState([]);
+  const [questionResults, setQuestionResults] = useState({ listening: [], reading: [] });
   
   // Get data from navigation state
   const { answers = {}, testData = {}, mode = 'full', skill = null, speakingEvaluations = {} } = location.state || {};
@@ -33,38 +38,84 @@ export default function CambridgeTestResults() {
       navigate('/question-bank');
       return;
     }
-    calculateResults();
+    evaluateFullTest();
   }, []);
 
-  const calculateResults = async () => {
+  const evaluateFullTest = async () => {
     setLoading(true);
     
     try {
-      const res = await fetch(`${API_URL}/api/cambridge/answers/${bookId}/${testId}`);
+      // Call the comprehensive evaluation endpoint
+      const res = await fetch(`${API_URL}/api/cambridge/evaluate/full-test`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          book_id: bookId,
+          test_id: testId,
+          answers: answers,
+          user_plan: 'free'
+        })
+      });
+      
       const data = await res.json();
       
       if (data.success) {
-        setAnswerKey(data.answers);
+        // Set scores
+        setResults({
+          listening: {
+            correct: data.scores.listening.correct,
+            total: data.scores.listening.total,
+            band: data.scores.listening.band,
+            percentage: data.scores.listening.percentage
+          },
+          reading: {
+            correct: data.scores.reading.correct,
+            total: data.scores.reading.total,
+            band: data.scores.reading.band,
+            percentage: data.scores.reading.percentage
+          },
+          writing: { score: null, evaluated: false, tasks: [] },
+          speaking: { score: null, evaluated: false, parts: [] },
+          overall: data.scores.overall.band
+        });
+        
+        // Set AI feedback data
+        setSkillBreakdown(data.skill_breakdown || []);
+        setTeacherFeedback(data.teacher_feedback || null);
+        setRecommendedLessons(data.recommended_lessons || []);
+        setQuestionResults(data.question_results || { listening: [], reading: [] });
+        
+      } else {
+        toast.error('Could not evaluate test');
       }
-      
-      const calculatedResults = {
-        listening: calculateSectionScore('listening', answers, data.answers?.listening),
-        reading: calculateSectionScore('reading', answers, data.answers?.reading),
-        writing: { score: null, evaluated: false, tasks: [] },
-        speaking: { score: null, evaluated: false, parts: [] },
-        overall: null
-      };
-      
-      const scores = [calculatedResults.listening.band, calculatedResults.reading.band].filter(s => s);
-      if (scores.length > 0) {
-        calculatedResults.overall = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 2) / 2;
-      }
-      
-      setResults(calculatedResults);
       
     } catch (error) {
-      console.error('Error calculating results:', error);
+      console.error('Error evaluating test:', error);
       toast.error('Could not load results');
+      
+      // Fallback to basic calculation
+      try {
+        const ansRes = await fetch(`${API_URL}/api/cambridge/answers/${bookId}/${testId}`);
+        const ansData = await ansRes.json();
+        
+        if (ansData.success) {
+          const listeningResult = calculateSectionScore('listening', answers, ansData.answers?.listening);
+          const readingResult = calculateSectionScore('reading', answers, ansData.answers?.reading);
+          
+          const scores = [listeningResult.band, readingResult.band].filter(s => s);
+          const overall = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length * 2) / 2 : null;
+          
+          setResults({
+            listening: listeningResult,
+            reading: readingResult,
+            writing: { score: null, evaluated: false, tasks: [] },
+            speaking: { score: null, evaluated: false, parts: [] },
+            overall
+          });
+        }
+      } catch (fallbackError) {
+        console.error('Fallback error:', fallbackError);
+      }
     } finally {
       setLoading(false);
     }
@@ -94,18 +145,7 @@ export default function CambridgeTestResults() {
     });
     
     const percentage = total > 0 ? (correct / total) * 100 : 0;
-    let band = 5.0;
-    if (percentage >= 90) band = 9.0;
-    else if (percentage >= 82) band = 8.5;
-    else if (percentage >= 75) band = 8.0;
-    else if (percentage >= 68) band = 7.5;
-    else if (percentage >= 60) band = 7.0;
-    else if (percentage >= 52) band = 6.5;
-    else if (percentage >= 45) band = 6.0;
-    else if (percentage >= 38) band = 5.5;
-    else if (percentage >= 30) band = 5.0;
-    else if (percentage >= 22) band = 4.5;
-    else band = 4.0;
+    const band = calculateBand(percentage);
     
     return { correct, total, band, percentage, details };
   };
@@ -120,6 +160,20 @@ export default function CambridgeTestResults() {
       return correctAns.split('/').some(ans => normalize(ans) === normalize(userAns));
     }
     return normalize(userAns) === normalize(correctAns);
+  };
+
+  const calculateBand = (percentage) => {
+    if (percentage >= 90) return 9.0;
+    if (percentage >= 82) return 8.5;
+    if (percentage >= 75) return 8.0;
+    if (percentage >= 68) return 7.5;
+    if (percentage >= 60) return 7.0;
+    if (percentage >= 52) return 6.5;
+    if (percentage >= 45) return 6.0;
+    if (percentage >= 38) return 5.5;
+    if (percentage >= 30) return 5.0;
+    if (percentage >= 22) return 4.5;
+    return 4.0;
   };
 
   const getBandColorClass = (score) => score >= 7 ? 'text-green-600' : score >= 6 ? 'text-blue-600' : score >= 5 ? 'text-yellow-600' : 'text-red-600';
@@ -220,11 +274,15 @@ export default function CambridgeTestResults() {
       <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 flex items-center justify-center">
         <div className="text-center">
           <RefreshCw className="w-16 h-16 text-red-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-500">Calculating your results...</p>
+          <p className="text-gray-500">Analyzing your performance...</p>
         </div>
       </div>
     );
   }
+
+  // Calculate strengths and weaknesses from skill breakdown
+  const strengths = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) >= 0.7);
+  const weaknesses = skillBreakdown.filter(s => s.total > 0 && (s.correct / s.total) < 0.5);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 via-violet-50/30 to-gray-100 py-8 px-4 sm:px-6">
@@ -279,8 +337,135 @@ export default function CambridgeTestResults() {
           </div>
         </Card>
 
-        {/* Listening Results - Detailed with Locate & Explain */}
-        {results?.listening?.details?.length > 0 && (
+        {/* AI Teacher Feedback Card */}
+        {teacherFeedback && (
+          <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg">
+                <Award className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-blue-900">Your Personal Feedback</h3>
+                <p className="text-sm text-blue-600">AI-powered analysis of your performance</p>
+              </div>
+            </div>
+            
+            {/* Quick Summary */}
+            <div className="bg-white/60 rounded-xl p-4 mb-4">
+              <p className="text-gray-800 leading-relaxed">{teacherFeedback.short}</p>
+            </div>
+
+            {/* Strengths & Weaknesses */}
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              {/* Strengths */}
+              <div className="bg-green-50 rounded-xl p-4 border border-green-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <h4 className="font-semibold text-green-800">Your Strengths</h4>
+                </div>
+                <div className="space-y-2">
+                  {strengths.slice(0, 3).map((skill, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-sm">
+                      <span className="text-green-700">{skill.label}</span>
+                      <span className="font-medium text-green-800">{Math.round((skill.correct / skill.total) * 100)}%</span>
+                    </div>
+                  ))}
+                  {strengths.length === 0 && (
+                    <p className="text-sm text-green-600">Keep practicing to identify your strengths!</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Areas to Improve */}
+              <div className="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Target className="w-5 h-5 text-amber-600" />
+                  <h4 className="font-semibold text-amber-800">Areas to Improve</h4>
+                </div>
+                <div className="space-y-2">
+                  {weaknesses.slice(0, 3).map((skill, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-sm">
+                      <span className="text-amber-700">{skill.label}</span>
+                      <span className="font-medium text-amber-800">{Math.round((skill.correct / skill.total) * 100)}%</span>
+                    </div>
+                  ))}
+                  {weaknesses.length === 0 && (
+                    <p className="text-sm text-amber-600">Great job! No major weaknesses identified.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Detailed Tips */}
+            <div className="bg-violet-50 rounded-xl p-4 border border-violet-100">
+              <div className="flex items-center gap-2 mb-3">
+                <Lightbulb className="w-5 h-5 text-violet-600" />
+                <h4 className="font-semibold text-violet-800">Tips to Improve</h4>
+              </div>
+              <p className="text-gray-700 leading-relaxed text-sm">{teacherFeedback.detailed}</p>
+            </div>
+
+            {/* Skill-specific Tips */}
+            {skillBreakdown.filter(s => s.tip && s.total > 0 && (s.correct / s.total) < 0.7).length > 0 && (
+              <div className="mt-4 space-y-3">
+                <h4 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <TrendingUp className="w-4 h-4" /> Practice Recommendations
+                </h4>
+                {skillBreakdown.filter(s => s.tip && s.total > 0 && (s.correct / s.total) < 0.7).slice(0, 3).map((skill, idx) => (
+                  <div key={idx} className="bg-white/60 rounded-lg p-3 border border-gray-100">
+                    <p className="font-medium text-gray-800 text-sm mb-1">{skill.label}</p>
+                    <p className="text-gray-600 text-sm">{skill.tip}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+        )}
+
+        {/* Recommended Lessons Card */}
+        {recommendedLessons.length > 0 && (
+          <Card className="p-6 mb-6 bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-200 rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
+                <GraduationCap className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-indigo-900">Recommended Lessons</h3>
+                <p className="text-sm text-indigo-600">Based on your weak areas</p>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              {recommendedLessons.map((lesson, idx) => (
+                <div 
+                  key={idx}
+                  className="flex items-center gap-4 p-4 bg-white rounded-xl hover:bg-indigo-50 cursor-pointer transition-all border border-indigo-100"
+                  onClick={() => navigate(lesson.route || '/mastery')}
+                >
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                    lesson.priority === 'high' ? 'bg-red-100' : 'bg-indigo-100'
+                  }`}>
+                    <BookOpen className={`w-5 h-5 ${
+                      lesson.priority === 'high' ? 'text-red-600' : 'text-indigo-600'
+                    }`} />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-gray-900">{lesson.title}</h4>
+                    <p className="text-sm text-gray-500">{lesson.reason}</p>
+                    <p className="text-xs text-indigo-600 mt-1">{lesson.course}</p>
+                  </div>
+                  {lesson.priority === 'high' && (
+                    <Badge className="bg-red-100 text-red-700 text-xs">Priority</Badge>
+                  )}
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
+        {/* Listening Results - Detailed with Explanations */}
+        {questionResults.listening?.length > 0 && (
           <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
             <div 
               className="flex items-center justify-between cursor-pointer"
@@ -291,15 +476,15 @@ export default function CambridgeTestResults() {
                   <Headphones className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Listening Results</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Listening - Answer Review</h3>
                   <p className="text-sm text-gray-500">
-                    {results.listening.correct}/{results.listening.total} correct ({Math.round(results.listening.percentage)}%)
+                    {results?.listening?.correct}/{results?.listening?.total} correct ({Math.round(results?.listening?.percentage || 0)}%)
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results.listening.band)}`}>
-                  Band {results.listening.band}
+                <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results?.listening?.band || 5)}`}>
+                  Band {results?.listening?.band || '-'}
                 </Badge>
                 {expandedSection === 'listening' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
               </div>
@@ -307,7 +492,7 @@ export default function CambridgeTestResults() {
             
             {expandedSection === 'listening' && (
               <div className="mt-6 space-y-3 max-h-[500px] overflow-y-auto pr-2">
-                {results.listening.details.map((q, idx) => (
+                {questionResults.listening.map((q, idx) => (
                   <div 
                     key={idx} 
                     className={`p-4 rounded-xl border-l-4 ${
@@ -316,53 +501,60 @@ export default function CambridgeTestResults() {
                         : 'bg-red-50 border-red-500'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
-                            q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-                          }`}>
-                            {q.question_id}
-                          </span>
-                          {q.is_correct ? (
-                            <CheckCircle className="w-5 h-5 text-green-600" />
-                          ) : (
-                            <XCircle className="w-5 h-5 text-red-600" />
-                          )}
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-4 text-sm mb-2">
-                          <div>
-                            <span className="text-gray-500">Your Answer: </span>
-                            <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                              {q.user_answer || 'No answer'}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Correct Answer: </span>
-                            <span className="font-semibold text-green-700">
-                              {Array.isArray(q.correct_answer) ? q.correct_answer.join(' / ') : q.correct_answer}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        {/* Explanation */}
-                        {!q.is_correct && (
-                          <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                            <div className="flex items-start gap-2">
-                              <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                              <div>
-                                <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
-                                <p className="text-sm text-gray-700 leading-relaxed">
-                                  The correct answer is &ldquo;{Array.isArray(q.correct_answer) ? q.correct_answer[0] : q.correct_answer}&rdquo;. 
-                                  Listen carefully to the audio for keywords and context clues related to this question.
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        )}
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
+                        q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                      }`}>
+                        {q.question_id}
+                      </span>
+                      <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600">
+                        {q.question_type?.replace(/_/g, ' ') || 'Question'}
+                      </span>
+                      {q.is_correct ? (
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                      ) : (
+                        <XCircle className="w-5 h-5 text-red-600" />
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-4 text-sm mb-2">
+                      <div>
+                        <span className="text-gray-500">Your Answer: </span>
+                        <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
+                          {q.user_answer || 'No answer'}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Correct: </span>
+                        <span className="font-semibold text-green-700">{q.correct_answer}</span>
                       </div>
                     </div>
+                    
+                    {/* Explanation */}
+                    {q.explanation && (
+                      <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                        <div className="flex items-start gap-2">
+                          <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
+                            <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Skill Tip */}
+                    {q.skill_tip && !q.is_correct && (
+                      <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+                        <div className="flex items-start gap-2">
+                          <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-xs font-semibold text-purple-700 mb-1">Skill Tip</p>
+                            <p className="text-sm text-gray-700 leading-relaxed">{q.skill_tip}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -371,7 +563,7 @@ export default function CambridgeTestResults() {
         )}
 
         {/* Reading Results - Detailed with Locate & Explain */}
-        {results?.reading?.details?.length > 0 && (
+        {questionResults.reading?.length > 0 && (
           <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
             <div 
               className="flex items-center justify-between cursor-pointer"
@@ -382,15 +574,15 @@ export default function CambridgeTestResults() {
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Reading Results</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Reading - Answer Review</h3>
                   <p className="text-sm text-gray-500">
-                    {results.reading.correct}/{results.reading.total} correct ({Math.round(results.reading.percentage)}%)
+                    {results?.reading?.correct}/{results?.reading?.total} correct ({Math.round(results?.reading?.percentage || 0)}%)
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results.reading.band)}`}>
-                  Band {results.reading.band}
+                <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results?.reading?.band || 5)}`}>
+                  Band {results?.reading?.band || '-'}
                 </Badge>
                 {expandedSection === 'reading' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
               </div>
@@ -398,7 +590,7 @@ export default function CambridgeTestResults() {
             
             {expandedSection === 'reading' && (
               <div className="mt-6 space-y-3 max-h-[500px] overflow-y-auto pr-2">
-                {results.reading.details.map((q, idx) => (
+                {questionResults.reading.map((q, idx) => (
                   <div 
                     key={idx} 
                     className={`p-4 rounded-xl border-l-4 ${
@@ -407,77 +599,73 @@ export default function CambridgeTestResults() {
                         : 'bg-red-50 border-red-500'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
-                            q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-                          }`}>
-                            {q.question_id}
-                          </span>
-                          {q.is_correct ? (
-                            <CheckCircle className="w-5 h-5 text-green-600" />
-                          ) : (
-                            <XCircle className="w-5 h-5 text-red-600" />
-                          )}
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-4 text-sm mb-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
+                        q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                      }`}>
+                        {q.question_id}
+                      </span>
+                      <span className="text-xs px-2 py-0.5 rounded bg-gray-200 text-gray-600">
+                        {q.question_type?.replace(/_/g, ' ') || 'Question'}
+                      </span>
+                      {q.is_correct ? (
+                        <CheckCircle className="w-5 h-5 text-green-600" />
+                      ) : (
+                        <XCircle className="w-5 h-5 text-red-600" />
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-4 text-sm mb-2">
+                      <div>
+                        <span className="text-gray-500">Your Answer: </span>
+                        <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
+                          {q.user_answer || 'No answer'}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Correct: </span>
+                        <span className="font-semibold text-green-700">{q.correct_answer}</span>
+                      </div>
+                    </div>
+                    
+                    {/* Locate in Passage */}
+                    {q.passage_excerpt && (
+                      <div className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                        <div className="flex items-start gap-2">
+                          <MapPin className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <span className="text-gray-500">Your Answer: </span>
-                            <span className={`font-semibold ${q.is_correct ? 'text-green-700' : 'text-red-700'}`}>
-                              {q.user_answer || 'No answer'}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Correct Answer: </span>
-                            <span className="font-semibold text-green-700">
-                              {Array.isArray(q.correct_answer) ? q.correct_answer.join(' / ') : q.correct_answer}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        {/* Locate in Passage */}
-                        <div className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
-                          <div className="flex items-start gap-2">
-                            <MapPin className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-xs font-semibold text-yellow-700 mb-1">Located in Passage</p>
-                              <p className="text-sm text-gray-700 italic leading-relaxed">
-                                This answer can be found in Passage {Math.ceil(parseInt(q.question_id) / 13)}. 
-                                Look for keywords and synonyms related to the question.
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Explanation */}
-                        <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                          <div className="flex items-start gap-2">
-                            <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
-                              <p className="text-sm text-gray-700 leading-relaxed">
-                                {getExplanationText(q.correct_answer)}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Skill Tip */}
-                        <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
-                          <div className="flex items-start gap-2">
-                            <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
-                            <div>
-                              <p className="text-xs font-semibold text-purple-700 mb-1">Skill Tip</p>
-                              <p className="text-sm text-gray-700 leading-relaxed">
-                                {getSkillTip(q.correct_answer)}
-                              </p>
-                            </div>
+                            <p className="text-xs font-semibold text-yellow-700 mb-1">Located in Passage</p>
+                            <p className="text-sm text-gray-700 italic leading-relaxed">&ldquo;...{q.passage_excerpt}...&rdquo;</p>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    )}
+                    
+                    {/* Explanation */}
+                    {q.explanation && (
+                      <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                        <div className="flex items-start gap-2">
+                          <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-xs font-semibold text-blue-700 mb-1">Explanation</p>
+                            <p className="text-sm text-gray-700 leading-relaxed">{q.explanation}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Skill Tip */}
+                    {q.skill_tip && (
+                      <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+                        <div className="flex items-start gap-2">
+                          <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="text-xs font-semibold text-purple-700 mb-1">Skill Tip</p>
+                            <p className="text-sm text-gray-700 leading-relaxed">{q.skill_tip}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -587,80 +775,17 @@ export default function CambridgeTestResults() {
                       </ul>
                     </div>
                   )}
-                  
-                  {/* Vocabulary Notes */}
-                  {task.feedback?.vocabulary_notes && (
-                    <div className="mb-3 p-3 bg-blue-50 rounded-lg border border-blue-100">
-                      <p className="text-sm font-semibold text-blue-700 mb-1">Vocabulary Notes</p>
-                      <p className="text-sm text-gray-600">{task.feedback.vocabulary_notes}</p>
-                    </div>
-                  )}
-                  
-                  {/* Grammar Notes */}
-                  {task.feedback?.grammar_notes && (
-                    <div className="mb-3 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                      <p className="text-sm font-semibold text-indigo-700 mb-1">Grammar Notes</p>
-                      <p className="text-sm text-gray-600">{task.feedback.grammar_notes}</p>
-                    </div>
-                  )}
-
-                  {/* Tab Navigation for Original Text & Samples */}
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex gap-2 mb-4">
-                      <Button
-                        variant={writingViewTab === 'original' ? 'default' : 'ghost'}
-                        size="sm"
-                        onClick={() => setWritingViewTab('original')}
-                        className={writingViewTab === 'original' ? 'bg-cyan-500 text-white' : ''}
-                      >
-                        <Eye className="w-4 h-4 mr-1" /> Your Text
-                      </Button>
-                      <Button
-                        variant={writingViewTab === 'sample' ? 'default' : 'ghost'}
-                        size="sm"
-                        onClick={() => setWritingViewTab('sample')}
-                        className={writingViewTab === 'sample' ? 'bg-cyan-500 text-white' : ''}
-                      >
-                        <FileText className="w-4 h-4 mr-1" /> Sample Answers
-                      </Button>
-                    </div>
-                    
-                    {writingViewTab === 'original' && task.userResponse && (
-                      <div className="p-4 bg-gray-50 rounded-lg">
-                        <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{task.userResponse}</p>
-                      </div>
-                    )}
-                    
-                    {writingViewTab === 'sample' && task.referenceSamples && (
-                      <div className="space-y-4">
-                        {task.referenceSamples.band_6 && (
-                          <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                            <p className="font-medium text-yellow-800 mb-2">Band 6 Sample</p>
-                            <p className="text-sm text-gray-600 whitespace-pre-wrap mb-2">{task.referenceSamples.band_6.response}</p>
-                            <p className="text-xs text-yellow-700 italic">{task.referenceSamples.band_6.examiner_comment}</p>
-                          </div>
-                        )}
-                        {task.referenceSamples.band_8 && (
-                          <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                            <p className="font-medium text-green-800 mb-2">Band 8+ Sample</p>
-                            <p className="text-sm text-gray-600 whitespace-pre-wrap mb-2">{task.referenceSamples.band_8.response}</p>
-                            <p className="text-xs text-green-700 italic">{task.referenceSamples.band_8.examiner_comment}</p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
                 </div>
               ))}
             </div>
           )}
         </Card>
 
-        {/* Speaking Evaluation Section */}
+        {/* Speaking Section */}
         <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
           <div 
             className="flex items-center justify-between cursor-pointer"
-            onClick={() => setExpandedSection(expandedSection === 'speaking' ? null : 'speaking')}
+            onClick={() => Object.keys(speakingEvaluations).length > 0 && setExpandedSection(expandedSection === 'speaking' ? null : 'speaking')}
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg">
@@ -696,19 +821,11 @@ export default function CambridgeTestResults() {
             <div className="mt-6 space-y-4">
               {Object.entries(speakingEvaluations).map(([questionIdx, evaluation]) => (
                 <div key={questionIdx} className="p-5 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-200">
-                  {/* Response Header */}
                   <div className="flex justify-between items-center mb-4 pb-3 border-b border-emerald-100">
                     <span className="font-bold text-lg text-gray-900">Response {parseInt(questionIdx) + 1}</span>
-                    <div className="flex items-center gap-2">
-                      {evaluation.tier === 'premium' && (
-                        <Badge className="bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs">
-                          Premium Analysis
-                        </Badge>
-                      )}
-                      <Badge className={`text-lg px-3 py-1 ${getBandLightBg(evaluation.overall_band || 5)}`}>
-                        Band {evaluation.overall_band || 5}
-                      </Badge>
-                    </div>
+                    <Badge className={`text-lg px-3 py-1 ${getBandLightBg(evaluation.overall_band || 5)}`}>
+                      Band {evaluation.overall_band || 5}
+                    </Badge>
                   </div>
                   
                   {/* Criteria Scores */}
@@ -749,104 +866,11 @@ export default function CambridgeTestResults() {
                     </div>
                   )}
                   
-                  {/* Premium Azure Scores (if available) */}
-                  {evaluation.azure_scores && (
-                    <div className="mb-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-lg border border-amber-200">
-                      <p className="text-xs font-bold text-amber-700 mb-3">Azure Pronunciation Analysis</p>
-                      <div className="grid grid-cols-5 gap-2">
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-amber-700">{Math.round(evaluation.azure_scores.pronunciation)}%</div>
-                          <div className="text-xs text-gray-500">Overall</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-blue-600">{Math.round(evaluation.azure_scores.accuracy)}%</div>
-                          <div className="text-xs text-gray-500">Accuracy</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-green-600">{Math.round(evaluation.azure_scores.fluency)}%</div>
-                          <div className="text-xs text-gray-500">Fluency</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-purple-600">{Math.round(evaluation.azure_scores.completeness)}%</div>
-                          <div className="text-xs text-gray-500">Completeness</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-pink-600">{Math.round(evaluation.azure_scores.prosody)}%</div>
-                          <div className="text-xs text-gray-500">Prosody</div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Problem Words (Premium) */}
-                  {evaluation.word_level_results && evaluation.word_level_results.length > 0 && (
-                    <div className="mb-4 p-3 bg-red-50 rounded-lg border border-red-200">
-                      <p className="text-xs font-bold text-red-700 mb-2">Words to Practice</p>
-                      <div className="flex flex-wrap gap-2">
-                        {evaluation.word_level_results.slice(0, 10).map((word, i) => (
-                          <span key={i} className="px-2 py-1 bg-white rounded text-sm text-red-700 border border-red-200">
-                            {word.word} ({Math.round(word.accuracy_score)}%)
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Transcript */}
-                  {evaluation.transcript && (
-                    <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                      <p className="text-xs font-bold text-gray-700 mb-1">Your Response (Transcribed)</p>
-                      <p className="text-sm text-gray-600 italic">{evaluation.transcript}</p>
-                    </div>
-                  )}
-                  
                   {/* Feedback */}
                   {evaluation.feedback && (
                     <div className="mb-3 p-3 bg-emerald-50 rounded-lg border-l-4 border-emerald-500">
                       <p className="text-xs font-bold text-emerald-700 mb-1">Teacher&apos;s Feedback</p>
                       <p className="text-sm text-gray-700">{evaluation.feedback}</p>
-                    </div>
-                  )}
-                  
-                  {/* Mentor Notes (Premium) */}
-                  {evaluation.mentor_notes && (
-                    <div className="mb-3 p-3 bg-indigo-50 rounded-lg border-l-4 border-indigo-500">
-                      <p className="text-xs font-bold text-indigo-700 mb-1">Mentor Notes</p>
-                      <p className="text-sm text-gray-700">{evaluation.mentor_notes}</p>
-                    </div>
-                  )}
-                  
-                  {/* Strengths & Weaknesses */}
-                  <div className="grid md:grid-cols-2 gap-3">
-                    {evaluation.strengths && evaluation.strengths.length > 0 && (
-                      <div className="p-3 bg-green-50 rounded-lg border border-green-100">
-                        <p className="text-xs font-bold text-green-700 mb-2 flex items-center gap-1">
-                          <CheckCircle className="w-3 h-3" /> Strengths
-                        </p>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          {evaluation.strengths.map((s, i) => <li key={i}>• {s}</li>)}
-                        </ul>
-                      </div>
-                    )}
-                    {evaluation.weaknesses && evaluation.weaknesses.length > 0 && (
-                      <div className="p-3 bg-amber-50 rounded-lg border border-amber-100">
-                        <p className="text-xs font-bold text-amber-700 mb-2 flex items-center gap-1">
-                          <Target className="w-3 h-3" /> Areas to Improve
-                        </p>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          {evaluation.weaknesses.map((w, i) => <li key={i}>• {w}</li>)}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Tip */}
-                  {evaluation.tip && (
-                    <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
-                      <p className="text-xs font-bold text-purple-700 mb-1 flex items-center gap-1">
-                        <Lightbulb className="w-3 h-3" /> Improvement Tip
-                      </p>
-                      <p className="text-sm text-gray-700">{evaluation.tip}</p>
                     </div>
                   )}
                 </div>
@@ -855,10 +879,52 @@ export default function CambridgeTestResults() {
           )}
         </Card>
 
+        {/* Skill Breakdown Chart */}
+        {skillBreakdown.length > 0 && (
+          <Card className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 text-violet-600" />
+              Skill Breakdown
+            </h3>
+            <div className="space-y-3">
+              {skillBreakdown.map((skill, idx) => {
+                const accuracy = skill.total > 0 ? (skill.correct / skill.total) * 100 : 0;
+                return (
+                  <div key={idx} className="flex items-center gap-4">
+                    <div className="w-48 text-sm text-gray-700 truncate">{skill.label}</div>
+                    <div className="flex-1 bg-gray-200 rounded-full h-3">
+                      <div 
+                        className={`h-3 rounded-full transition-all ${
+                          accuracy >= 70 ? 'bg-green-500' : accuracy >= 50 ? 'bg-yellow-500' : 'bg-red-500'
+                        }`}
+                        style={{ width: `${accuracy}%` }}
+                      />
+                    </div>
+                    <div className="w-16 text-right text-sm font-medium">
+                      {skill.correct}/{skill.total}
+                    </div>
+                    <div className={`w-12 text-right text-sm font-bold ${
+                      accuracy >= 70 ? 'text-green-600' : accuracy >= 50 ? 'text-yellow-600' : 'text-red-600'
+                    }`}>
+                      {Math.round(accuracy)}%
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        )}
+
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4">
           <Button onClick={() => navigate('/question-bank')} variant="outline" className="flex-1">
             <BookMarked className="w-4 h-4 mr-2" /> More Tests
+          </Button>
+          <Button 
+            onClick={() => navigate('/mastery')} 
+            className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 shadow-lg"
+          >
+            <GraduationCap className="w-4 h-4 mr-2" /> Study Weak Areas
           </Button>
           <Button 
             onClick={() => navigate(`/cambridge-test/${bookId}/${testId}`)} 
@@ -870,30 +936,4 @@ export default function CambridgeTestResults() {
       </div>
     </div>
   );
-}
-
-// Helper functions for explanations
-function getExplanationText(answer) {
-  const ans = Array.isArray(answer) ? answer[0] : answer;
-  if (ans === 'TRUE' || ans === 'YES') {
-    return `The correct answer is "${ans}". The statement agrees with the information in the passage.`;
-  }
-  if (ans === 'FALSE' || ans === 'NO') {
-    return `The correct answer is "${ans}". The statement contradicts information in the passage.`;
-  }
-  if (ans === 'NOT GIVEN') {
-    return `The correct answer is "NOT GIVEN". There is no information in the passage about this statement.`;
-  }
-  return `The correct answer is "${ans}". This answer directly matches information provided in the text.`;
-}
-
-function getSkillTip(answer) {
-  const ans = Array.isArray(answer) ? answer[0] : answer;
-  if (ans === 'TRUE' || ans === 'FALSE' || ans === 'NOT GIVEN') {
-    return 'For True/False/Not Given questions, focus on exact wording. If the passage says something similar but not exactly the same, consider if it truly matches or contradicts.';
-  }
-  if (ans === 'YES' || ans === 'NO') {
-    return "Yes/No/Not Given questions test opinions and claims. Look for the writer's view, not just facts.";
-  }
-  return 'Read the question carefully and scan for synonyms and paraphrases in the passage.';
 }
