@@ -375,9 +375,48 @@ IELTS17_TEST2 = {
                     "task_type": "report",
                     "duration": "20 minutes",
                     "word_count": 150,
-                    "description": "The table and charts below give information about the police budget for 2017 and 2018 in one area of Britain.",
+                    "description": "The table and charts below give information about the police budget for 2017 and 2018 in one area of Britain. The table shows where the money came from and the charts show how it was distributed.",
                     "instructions": "Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-                    "visual_type": "table_and_pie_charts"
+                    "visual_type": "table_and_pie_charts",
+                    "visual_url": "/static/images/cambridge/ielts17/test2_writing_task1.png",
+                    "visual_data": {
+                        "title": "Police Budget 2017-2018 (in £m)",
+                        "table": {
+                            "headers": ["Sources", "2017", "2018"],
+                            "rows": [
+                                ["National Government", "175.5m", "177.8m"],
+                                ["Local Taxes", "91.2m", "102.3m"],
+                                ["Other sources (eg grants)", "38m", "38.5m"],
+                                ["Total", "304.7m", "318.6m"]
+                            ]
+                        },
+                        "pie_charts": {
+                            "title": "How the money was spent",
+                            "charts": [
+                                {
+                                    "year": "2017",
+                                    "segments": [
+                                        {"category": "Salaries (officers and staff)", "percentage": 75, "color": "gray"},
+                                        {"category": "Technology", "percentage": 8, "color": "white"},
+                                        {"category": "Buildings and transport", "percentage": 17, "color": "black"}
+                                    ]
+                                },
+                                {
+                                    "year": "2018",
+                                    "segments": [
+                                        {"category": "Salaries (officers and staff)", "percentage": 69, "color": "gray"},
+                                        {"category": "Technology", "percentage": 14, "color": "white"},
+                                        {"category": "Buildings and transport", "percentage": 17, "color": "black"}
+                                    ]
+                                }
+                            ],
+                            "legend": [
+                                {"label": "Salaries (officers and staff)", "color": "gray"},
+                                {"label": "Technology", "color": "white"},
+                                {"label": "Buildings and transport", "color": "black"}
+                            ]
+                        }
+                    }
                 },
                 {
                     "task_number": 2,
