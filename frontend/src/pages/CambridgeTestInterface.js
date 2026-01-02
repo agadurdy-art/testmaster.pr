@@ -2044,16 +2044,26 @@ export default function CambridgeTestInterface() {
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="text-sm text-gray-500">
             Answered: <span className="font-medium text-gray-700">
-              {Object.keys(answers).filter(k => k.startsWith(currentSection)).length}
-            </span> questions
+              {getAnsweredCount(currentSection)}
+            </span> / {getTotalQuestions(currentSection)} questions
           </div>
-          <Button 
-            onClick={() => setShowSubmitModal(true)}
-            className="bg-red-600 hover:bg-red-700"
-          >
-            Submit {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
-            <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline"
+              onClick={() => setShowReviewPanel(true)}
+              className="flex items-center gap-2"
+            >
+              <ListChecks className="w-4 h-4" />
+              Review
+            </Button>
+            <Button 
+              onClick={() => setShowSubmitModal(true)}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Submit {currentSection.charAt(0).toUpperCase() + currentSection.slice(1)}
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
         </div>
       </div>
 
