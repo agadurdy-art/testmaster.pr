@@ -1219,7 +1219,8 @@ export default function CambridgeTestInterface() {
 
   // Generate TTS for current question
   const playQuestionAudio = async (questionText, isFirst = false) => {
-    const playCount = questionPlayCounts[speakingQuestionIndex] || 0;
+    const playKey = `part${currentPart}_q${speakingQuestionIndex}`;
+    const playCount = questionPlayCounts[playKey] || 0;
     if (playCount >= 2) {
       toast.error('Maximum 2 plays reached for this question');
       return;
@@ -1248,10 +1249,10 @@ export default function CambridgeTestInterface() {
       
       const data = await res.json();
       if (data.audio_url) {
-        // Increment play count
+        // Increment play count with part-based key
         setQuestionPlayCounts(prev => ({
           ...prev,
-          [speakingQuestionIndex]: playCount + 1
+          [playKey]: playCount + 1
         }));
         
         setTtsAudioUrl(`${API_URL}${data.audio_url}`);
