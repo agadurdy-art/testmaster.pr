@@ -6,7 +6,7 @@ import { Badge } from '../components/ui/badge';
 import { 
   ArrowLeft, Headphones, BookOpen, PenTool, Mic,
   Clock, Play, Pause, Volume2, Settings, HelpCircle, EyeOff,
-  ChevronRight, Timer, AlertTriangle
+  ChevronRight, Timer, AlertTriangle, Target
 } from 'lucide-react';
 import { toast } from 'sonner';
 
