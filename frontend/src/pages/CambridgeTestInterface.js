@@ -884,9 +884,41 @@ export default function CambridgeTestInterface() {
             </div>
           </div>
 
-          <div className="mb-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
-            <p className="text-gray-700 whitespace-pre-line">{currentTask.prompt}</p>
-          </div>
+          {/* Task 1 Prompt - Simple */}
+          {currentTask.task_number === 1 && (
+            <div className="mb-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <p className="text-gray-700 whitespace-pre-line">{currentTask.prompt}</p>
+            </div>
+          )}
+
+          {/* Task 2 Prompt - Essay Rubric Box */}
+          {currentTask.task_number === 2 && (
+            <div className="mb-6 p-6 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl border-2 border-purple-300 shadow-sm">
+              <div className="text-center mb-4">
+                <Badge className="bg-purple-200 text-purple-800 text-sm px-4 py-1">ESSAY QUESTION</Badge>
+              </div>
+              <div className="bg-white rounded-lg p-5 border border-purple-200">
+                <p className="text-gray-800 text-lg leading-relaxed whitespace-pre-line font-medium">
+                  {currentTask.prompt.split('\n\n')[0]}
+                </p>
+                {currentTask.prompt.split('\n\n').length > 1 && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <p className="text-gray-700 whitespace-pre-line">
+                      {currentTask.prompt.split('\n\n').slice(1).join('\n\n')}
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div className="mt-4 flex justify-center gap-6 text-sm text-purple-600">
+                <span className="flex items-center gap-1">
+                  <Clock className="w-4 h-4" /> {currentTask.time_recommended}
+                </span>
+                <span className="flex items-center gap-1">
+                  <PenTool className="w-4 h-4" /> {currentTask.word_count}
+                </span>
+              </div>
+            </div>
+          )}
 
           {/* Side by Side Images for Map Comparison */}
           {currentTask.visual_data?.type === 'side_by_side_images' && (
