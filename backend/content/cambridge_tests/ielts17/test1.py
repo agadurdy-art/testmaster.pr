@@ -594,15 +594,6 @@ The tantalising question left is that of what it all meant. Would Charles II hav
                         ]
                     }
                 },
-                                    "Factories replaced by housing",
-                                    "School and playground east of roundabout",
-                                    "Shops and medical center around roundabout",
-                                    "New bridge crossing river to housing area"
-                                ]
-                            }
-                        ]
-                    }
-                },
                 {
                     "task_number": 2,
                     "title": "Writing Task 2",
