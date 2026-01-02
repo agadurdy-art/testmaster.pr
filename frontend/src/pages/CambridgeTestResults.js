@@ -25,7 +25,7 @@ export default function CambridgeTestResults() {
   const [writingViewTab, setWritingViewTab] = useState('feedback');
   
   // Get data from navigation state
-  const { answers = {}, testData = {}, mode = 'full', skill = null } = location.state || {};
+  const { answers = {}, testData = {}, mode = 'full', skill = null, speakingEvaluations = {} } = location.state || {};
 
   useEffect(() => {
     if (!location.state) {
