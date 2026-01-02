@@ -43,23 +43,18 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 - **Writing Tasks - Cambridge rubric format**
   - Task 1: "You should spend 20 minutes..." + italic rubric + visuals
   - Task 2: "Write about the following topic:" + italic rubric + "Give reasons..."
-- **Speaking Part 1 & 3 - Audio-only questions with State Machine**
-  - Questions HIDDEN - only topic shown
-  - "Listen to Question" (2 plays max via ElevenLabs TTS)
-  - "Record Answer" per question - **BUG FIXED**: No longer replays audio
+- **Speaking Section - Fully Functional State Machine**
+  - Part 1: Topic display, per-question Listen/Record with proper state reset
+  - Part 2: Task Card visible, 1-minute preparation timer, recording controls
+  - Part 3: "Themes" display (not Topic), 6 questions from 2 themes
   - State machine: IDLE → LOADING_AUDIO → PLAYING_PROMPT → READY_TO_RECORD → RECORDING → RECORDED
+  - Part-based keys for recordings and play counts (no cross-part conflicts)
 - **Listening audio** - Working via `/api/audio/cambridge/` endpoint
-- **Test Results Page** - Full evaluation with:
-  - Overall Band score
-  - Section-by-section scores (L/R/W/S)
-  - Answer Details (correct/incorrect)
-  - Recommended Next Steps
-  - "Get AI Feedback" for Writing
+- **Test Results Page** - Full evaluation with scores and recommendations
 
 ### In Progress
 - Answer keys (need to extract from PDF - placeholders currently)
 - Writing AI evaluation endpoint for Cambridge tests
-- Speaking full-test evaluation integration
 
 ### Pending
 - IELTS 16, 18, 19 integration
@@ -80,7 +75,9 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 ## Credentials
 - Test account: test@ielts.com / admin123
 
-## Last Updated: Jan 2, 2025
-- Fixed Speaking UI bug: Record button no longer replays question audio
-- Added missing React imports (CheckCircle, RefreshCw)
-- Added missing state variables for evaluation features
+## Bug Fixes (Jan 2, 2025 - Session 2)
+- ✅ Fixed: Q2+ missing Record button - State now resets on Next Question
+- ✅ Fixed: Same question audio playing - Part-based keys for TTS tracking
+- ✅ Fixed: Part 3 showing Part 1 questions - Proper topics.flatMap extraction
+- ✅ Fixed: Part 3 showing "Topic" instead of "Themes" - Added conditional display
+- ✅ Fixed: Part 2 recording error - Using consistent recording function
