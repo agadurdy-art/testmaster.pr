@@ -30,18 +30,48 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 ├── content/cambridge_tests/ielts17/test1.py  # Test content
 ├── routes/
 │   ├── cambridge.py           # Cambridge test API
+│   ├── cambridge_speaking.py  # Speaking evaluation (GPT-4o + Azure)
+│   ├── audio.py               # Audio streaming
+│   ├── recordings.py          # User recordings
+│   ├── tts.py                 # Text-to-Speech (ElevenLabs)
 │   └── full_test.py           # Test session management
-└── static/visuals/            # PDF-extracted images
+└── static/
+    ├── audio/cambridge/       # IELTS audio files
+    └── visuals/               # PDF-extracted images
 ```
 
-### Key Features Implemented
-- ✅ Cambridge IELTS 17 Test 1 content extraction
-- ✅ Full test interface with section timers
-- ✅ Writing Task 1 authentic PDF visual
-- ✅ **Full Test / Skill Practice mode selection** (NEW)
-- ✅ Audio player for Listening section
-- ✅ Question types: note_completion, multiple_choice, matching, etc.
-- ✅ Old AI-generated tests locked as "Coming Soon"
+## Key Features Implemented (Jan 2, 2025)
+
+### ✅ Completed
+- Cambridge IELTS 17 Test 1 content (all 4 sections)
+- **Full Test / Skill Practice mode selection**
+- **Writing Task 1 & 2 - Cambridge rubric format**
+  - Task 1: Simple rubric with side-by-side maps
+  - Task 2: "Write about the following topic:" + italic rubric box + "Give reasons..."
+- **Speaking Part 1 & 3 - Audio-only questions**
+  - Questions HIDDEN - only topic shown
+  - "Listen to Question" (2 plays max)
+  - "Record Answer" per question
+  - "Get AI Feedback" - GPT-4o evaluation with band scores
+- **Listening audio** - Working via `/api/audio/cambridge/` endpoint
+- **Recording system** - MediaRecorder with error handling
+
+### In Progress
+- Answer keys integration (PDF extraction needed)
+- Writing evaluation with model answers
+- Results/Summary page
+
+### Pending
+- IELTS 16, 18, 19 integration
+- Premium Azure pronunciation assessment
+
+## API Endpoints
+- `GET /api/cambridge/test/{book}/{test}` - Fetch test data
+- `GET /api/audio/cambridge/{book}/{filename}` - Stream audio
+- `GET /api/visuals/image/{name}` - Serve images
+- `POST /api/tts/generate` - Generate TTS for speaking questions
+- `POST /api/recordings/save` - Save user recordings
+- `POST /api/cambridge/speaking/evaluate` - Evaluate speaking responses
 
 ## Test Selection Flow
 1. User goes to Question Bank → Full Tests tab
@@ -50,33 +80,16 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
    - **Full Test Mode**: Complete all 4 sections (~2h 45m)
    - **Skill Practice**: Individual section (Listening/Reading/Writing/Speaking)
 
-## API Endpoints
-- `GET /api/cambridge/test/{book}/{test}` - Fetch test data
-- `GET /api/visuals/image/{name}` - Serve PDF-extracted images
-- `GET /api/full-test/sets` - List available tests
-
-## Current Status (Jan 2, 2025)
-
-### Completed
-- Cambridge IELTS 17 Test 1 content (all 4 sections)
-- Writing Task 1 authentic PDF map visual
-- Full Test / Skill Practice mode selection modal
-- Test interface with timers and section navigation
-
-### In Progress
-- Reading section may have gaps (Q23-26 reported missing)
-- Test evaluation/results page not connected to Cambridge tests
-
-### Pending
-- IELTS 16, 18, 19 integration
-- Session persistence fix
-- Progress tracking dashboard
-
-## Technical Notes
-- PDF visual extraction uses PyMuPDF (fitz)
-- Images served via `/api/visuals/image/{name}` endpoint
-- Skill mode uses URL query parameter: `?skill=writing`
-- Section times: Listening 40min, Reading 60min, Writing 60min, Speaking 14min
+## Speaking Evaluation
+- **Free tier**: Whisper transcription + GPT-4o feedback
+- **Premium tier**: Azure Pronunciation Assessment + detailed analysis
 
 ## Credentials
 - Test account: test@ielts.com / admin123
+
+## Technical Notes
+- PDF visual extraction uses PyMuPDF (fitz)
+- Audio served via `/api/audio/` endpoint (not /static/)
+- Skill mode uses URL query parameter: `?skill=writing`
+- Section times: Listening 40min, Reading 60min, Writing 60min, Speaking 14min
+- Recording: WebM format via MediaRecorder API
