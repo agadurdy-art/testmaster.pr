@@ -236,7 +236,7 @@ export default function CambridgeTestInterface() {
     } else {
       // All sections completed - show results
       navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
-        state: { answers, testData, mode: 'full' } 
+        state: { answers, testData, mode: 'full', speakingEvaluations: questionEvaluations } 
       });
     }
   };
