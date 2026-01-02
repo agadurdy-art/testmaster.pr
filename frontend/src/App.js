@@ -376,6 +376,11 @@ function AppWithSessionHandler() {
           path="/full-test/results/:sessionId" 
           element={user ? <FullTestResults user={user} /> : <Navigate to="/" />} 
         />
+        {/* Cambridge IELTS Tests */}
+        <Route 
+          path="/cambridge-test/:bookId/:testId" 
+          element={user ? <CambridgeTestInterface user={user} /> : <Navigate to="/" />} 
+        />
         {/* Admin Tools */}
         <Route 
           path="/admin/visual-generator" 
