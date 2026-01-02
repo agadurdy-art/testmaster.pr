@@ -952,22 +952,128 @@ export default function CambridgeTestInterface() {
     );
   };
 
-  // Render Speaking Section
+  // Speaking state for TTS and questions
+  const [speakingQuestionIndex, setSpeakingQuestionIndex] = useState(0);
+  const [isTTSPlaying, setIsTTSPlaying] = useState(false);
+  const [ttsAudioUrl, setTtsAudioUrl] = useState(null);
+  const [showNextQuestion, setShowNextQuestion] = useState(false);
+  const [part2PrepTime, setPart2PrepTime] = useState(60); // 1 minute prep
+  const [isPreparing, setIsPreparing] = useState(false);
+  const ttsAudioRef = useRef(null);
+
+  // Generate TTS for current question
+  const playQuestionAudio = async (questionText, isFirst = false) => {
+    try {
+      setIsTTSPlaying(true);
+      
+      // Add transition phrase if not first question
+      let textToSpeak = questionText;
+      if (!isFirst) {
+        const transitions = [
+          "Now, let me ask you... ",
+          "Moving on... ",
+          "And what about this... ",
+          "I would like to ask you... ",
+        ];
+        textToSpeak = transitions[speakingQuestionIndex % transitions.length] + questionText;
+      }
+      
+      const res = await fetch(`${API_URL}/api/tts/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: textToSpeak })
+      });
+      
+      const data = await res.json();
+      if (data.audio_url) {
+        setTtsAudioUrl(`${API_URL}${data.audio_url}`);
+      }
+    } catch (error) {
+      console.error('TTS Error:', error);
+      toast.error('Could not play question audio');
+      setIsTTSPlaying(false);
+    }
+  };
+
+  // Handle TTS audio ended
+  const handleTTSEnded = () => {
+    setIsTTSPlaying(false);
+    setShowNextQuestion(true);
+  };
+
+  // Move to next question in Part 1/3
+  const nextSpeakingQuestion = () => {
+    const parts = sectionData?.parts || [];
+    const currentSpeakingPart = parts[currentPart];
+    
+    let questions = [];
+    if (currentSpeakingPart?.questions) {
+      questions = currentSpeakingPart.questions;
+    } else if (currentSpeakingPart?.topics) {
+      // Flatten Part 3 topics into questions array
+      questions = currentSpeakingPart.topics.flatMap(t => t.questions || []);
+    }
+    
+    if (speakingQuestionIndex < questions.length - 1) {
+      setSpeakingQuestionIndex(speakingQuestionIndex + 1);
+      setShowNextQuestion(false);
+      playQuestionAudio(questions[speakingQuestionIndex + 1], false);
+    }
+  };
+
+  // Start Part 2 preparation timer
+  const startPart2Prep = () => {
+    setIsPreparing(true);
+    setPart2PrepTime(60);
+  };
+
+  // Part 2 prep timer effect
+  useEffect(() => {
+    let interval;
+    if (isPreparing && part2PrepTime > 0) {
+      interval = setInterval(() => {
+        setPart2PrepTime(prev => prev - 1);
+      }, 1000);
+    } else if (isPreparing && part2PrepTime === 0) {
+      setIsPreparing(false);
+      toast.info('Preparation time is over. Please start speaking.');
+    }
+    return () => clearInterval(interval);
+  }, [isPreparing, part2PrepTime]);
+
+  // Render Speaking Section - Real IELTS style
   const renderSpeakingSection = () => {
     const parts = sectionData?.parts || [];
     const currentSpeakingPart = parts[currentPart];
     
     if (!currentSpeakingPart) return null;
 
+    // Get questions for Part 1 or Part 3
+    let questions = [];
+    if (currentSpeakingPart.questions) {
+      questions = currentSpeakingPart.questions;
+    } else if (currentSpeakingPart.topics) {
+      questions = currentSpeakingPart.topics.flatMap(t => t.questions || []);
+    }
+
+    const isPart1or3 = currentSpeakingPart.part_number === 1 || currentSpeakingPart.part_number === 3;
+    const isPart2 = currentSpeakingPart.part_number === 2;
+
     return (
       <div className="space-y-4">
+        {/* Part Navigation */}
         <div className="flex gap-2">
           {parts.map((part, idx) => (
             <Button
               key={idx}
               variant={currentPart === idx ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setCurrentPart(idx)}
+              onClick={() => {
+                setCurrentPart(idx);
+                setSpeakingQuestionIndex(0);
+                setShowNextQuestion(false);
+                setIsPreparing(false);
+              }}
               className={currentPart === idx ? 'bg-orange-600 hover:bg-orange-700' : ''}
             >
               Part {part.part_number}
@@ -976,7 +1082,8 @@ export default function CambridgeTestInterface() {
         </div>
 
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
             <div>
               <Badge className="bg-orange-100 text-orange-700 mb-2">Part {currentSpeakingPart.part_number}</Badge>
               <h3 className="font-bold text-lg text-gray-900">{currentSpeakingPart.title}</h3>
@@ -984,90 +1091,216 @@ export default function CambridgeTestInterface() {
             <Badge className="bg-gray-100 text-gray-700">{currentSpeakingPart.duration}</Badge>
           </div>
 
-          {currentSpeakingPart.topic && (
-            <div className="mb-4 p-3 bg-orange-50 rounded-lg border border-orange-200">
-              <span className="text-sm font-medium text-orange-700">Topic: {currentSpeakingPart.topic}</span>
-            </div>
-          )}
-
-          {/* Part 1 Questions */}
-          {currentSpeakingPart.questions && (
-            <div className="space-y-3 mb-6">
-              <h4 className="font-medium text-gray-700">Sample Questions:</h4>
-              {currentSpeakingPart.questions.map((q, qIdx) => (
-                <div key={qIdx} className="p-4 bg-white border rounded-lg text-sm">
-                  {q}
+          {/* Part 1 or Part 3 - Audio Only Interface */}
+          {isPart1or3 && (
+            <div className="space-y-6">
+              {/* Topic hint only */}
+              {currentSpeakingPart.topic && (
+                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
+                  <span className="text-sm font-medium text-orange-700">Topic: {currentSpeakingPart.topic}</span>
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
-          {/* Part 2 Task Card */}
-          {currentSpeakingPart.task_card && (
-            <div className="p-5 bg-amber-50 border-2 border-amber-300 rounded-lg mb-6">
-              <h4 className="font-bold text-lg mb-3 text-amber-900">{currentSpeakingPart.task_card.topic}</h4>
-              <p className="text-sm text-gray-600 mb-3">You should say:</p>
-              <ul className="list-disc ml-5 space-y-2 text-sm">
-                {currentSpeakingPart.task_card.points?.map((point, pIdx) => (
-                  <li key={pIdx} className="text-gray-700">{point}</li>
-                ))}
-              </ul>
-              <div className="mt-4 pt-3 border-t border-amber-300 flex gap-4 text-xs text-amber-700">
-                <span>⏱ Preparation: {currentSpeakingPart.preparation_time}</span>
-                <span>🎤 Speaking: {currentSpeakingPart.speaking_time}</span>
+              {/* Audio-only question interface */}
+              <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-8 text-center">
+                <div className="mb-6">
+                  <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <Headphones className="w-10 h-10 text-white" />
+                  </div>
+                  <p className="text-white text-lg font-medium">
+                    {isTTSPlaying ? 'Listen to the examiner...' : 'Click Play to hear the question'}
+                  </p>
+                  <p className="text-gray-400 text-sm mt-2">
+                    Question {speakingQuestionIndex + 1} of {questions.length}
+                  </p>
+                </div>
+
+                {/* TTS Audio Player (hidden) */}
+                {ttsAudioUrl && (
+                  <audio
+                    ref={ttsAudioRef}
+                    src={ttsAudioUrl}
+                    autoPlay
+                    onEnded={handleTTSEnded}
+                    onPlay={() => setIsTTSPlaying(true)}
+                  />
+                )}
+
+                {/* Play Question Button */}
+                {!isTTSPlaying && !showNextQuestion && (
+                  <Button
+                    onClick={() => playQuestionAudio(questions[speakingQuestionIndex], speakingQuestionIndex === 0)}
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3"
+                    size="lg"
+                  >
+                    <Play className="w-5 h-5 mr-2" /> Play Question
+                  </Button>
+                )}
+
+                {/* Playing indicator */}
+                {isTTSPlaying && (
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="flex gap-1">
+                      {[1,2,3,4,5].map(i => (
+                        <div key={i} className="w-1 bg-orange-500 rounded animate-pulse" style={{
+                          height: `${20 + Math.random() * 20}px`,
+                          animationDelay: `${i * 0.1}s`
+                        }} />
+                      ))}
+                    </div>
+                    <span className="text-orange-400 ml-2">Playing...</span>
+                  </div>
+                )}
+
+                {/* After question played - Record button */}
+                {showNextQuestion && (
+                  <div className="space-y-4">
+                    <p className="text-green-400 text-sm">Question played. Record your answer or move to next question.</p>
+                    
+                    <div className="flex gap-3 justify-center">
+                      {speakingQuestionIndex < questions.length - 1 && (
+                        <Button
+                          onClick={nextSpeakingQuestion}
+                          variant="outline"
+                          className="border-gray-600 text-gray-300 hover:bg-gray-700"
+                        >
+                          Next Question <ChevronRight className="w-4 h-4 ml-1" />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Recording Controls */}
+              <div className="p-6 bg-gray-50 rounded-lg">
+                <p className="text-center text-sm text-gray-600 mb-4">Record your response</p>
+                <div className="flex justify-center gap-4">
+                  {!isRecording ? (
+                    <Button 
+                      onClick={startRecording}
+                      className="bg-red-600 hover:bg-red-700"
+                      size="lg"
+                    >
+                      <Mic className="w-5 h-5 mr-2" /> Start Recording
+                    </Button>
+                  ) : (
+                    <Button 
+                      onClick={stopRecording}
+                      variant="destructive"
+                      size="lg"
+                      className="animate-pulse"
+                    >
+                      <Pause className="w-5 h-5 mr-2" /> Stop Recording
+                    </Button>
+                  )}
+                </div>
+                
+                {recordedAudio[`part${currentPart + 1}`] && (
+                  <div className="mt-4 text-center">
+                    <p className="text-sm text-green-600 mb-2">Recording saved!</p>
+                    <audio 
+                      src={recordedAudio[`part${currentPart + 1}`]} 
+                      controls 
+                      className="mx-auto"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           )}
 
-          {/* Part 3 Topics */}
-          {currentSpeakingPart.topics && (
-            <div className="space-y-4 mb-6">
-              {currentSpeakingPart.topics.map((topic, tIdx) => (
-                <div key={tIdx} className="p-4 bg-white border rounded-lg">
-                  <h5 className="font-medium text-orange-700 mb-3">{topic.theme}</h5>
-                  <ul className="space-y-2">
-                    {topic.questions?.map((q, qIdx) => (
-                      <li key={qIdx} className="text-sm text-gray-700 flex items-start gap-2">
-                        <span className="text-orange-400">•</span>
-                        {q}
-                      </li>
-                    ))}
-                  </ul>
+          {/* Part 2 - Task Card (Visible) */}
+          {isPart2 && currentSpeakingPart.task_card && (
+            <div className="space-y-6">
+              {/* Task Card - Visible like real test */}
+              <div className="p-6 bg-amber-50 border-2 border-amber-400 rounded-xl shadow-md">
+                <div className="text-center mb-4">
+                  <Badge className="bg-amber-200 text-amber-800 text-sm px-4 py-1">TASK CARD</Badge>
                 </div>
-              ))}
+                <h4 className="font-bold text-xl mb-4 text-amber-900 text-center">
+                  {currentSpeakingPart.task_card.topic}
+                </h4>
+                <p className="text-sm text-gray-600 mb-4 font-medium">You should say:</p>
+                <ul className="space-y-3 mb-6">
+                  {currentSpeakingPart.task_card.points?.map((point, pIdx) => (
+                    <li key={pIdx} className="flex items-start gap-3 text-gray-700">
+                      <span className="w-6 h-6 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0 text-amber-800 font-bold text-sm">
+                        {pIdx + 1}
+                      </span>
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <div className="pt-4 border-t border-amber-300 text-center">
+                  <p className="text-sm text-amber-700">
+                    And explain why this is important to you.
+                  </p>
+                </div>
+              </div>
+
+              {/* Preparation Timer */}
+              {!isPreparing && part2PrepTime === 60 && (
+                <div className="text-center">
+                  <p className="text-gray-600 mb-4">You have 1 minute to prepare. Click when ready.</p>
+                  <Button onClick={startPart2Prep} className="bg-blue-600 hover:bg-blue-700">
+                    <Clock className="w-4 h-4 mr-2" /> Start 1 Minute Preparation
+                  </Button>
+                </div>
+              )}
+
+              {isPreparing && (
+                <div className="text-center p-6 bg-blue-50 rounded-lg">
+                  <p className="text-blue-700 font-medium mb-2">Preparation Time</p>
+                  <div className="text-4xl font-mono font-bold text-blue-600">
+                    {Math.floor(part2PrepTime / 60)}:{(part2PrepTime % 60).toString().padStart(2, '0')}
+                  </div>
+                  <p className="text-sm text-blue-500 mt-2">Think about what you want to say</p>
+                </div>
+              )}
+
+              {/* Recording Controls */}
+              <div className="p-6 bg-gray-50 rounded-lg">
+                <div className="text-center">
+                  <p className="text-sm text-gray-600 mb-4">
+                    {isPreparing ? 'Prepare your answer, then record' : 'Record your response (1-2 minutes)'}
+                  </p>
+                  <div className="flex justify-center gap-4">
+                    {!isRecording ? (
+                      <Button 
+                        onClick={startRecording}
+                        className="bg-red-600 hover:bg-red-700"
+                        size="lg"
+                        disabled={isPreparing}
+                      >
+                        <Mic className="w-5 h-5 mr-2" /> Start Recording
+                      </Button>
+                    ) : (
+                      <Button 
+                        onClick={stopRecording}
+                        variant="destructive"
+                        size="lg"
+                        className="animate-pulse"
+                      >
+                        <Pause className="w-5 h-5 mr-2" /> Stop Recording
+                      </Button>
+                    )}
+                  </div>
+                  
+                  {recordedAudio[`part${currentPart + 1}`] && (
+                    <div className="mt-4">
+                      <p className="text-sm text-green-600 mb-2">Recording saved!</p>
+                      <audio 
+                        src={recordedAudio[`part${currentPart + 1}`]} 
+                        controls 
+                        className="mx-auto"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
-
-          {/* Recording Controls */}
-          <div className="p-6 bg-gray-50 rounded-lg text-center">
-            <p className="text-sm text-gray-600 mb-4">Record your response for this part</p>
-            {!isRecording ? (
-              <Button 
-                onClick={startRecording}
-                className="bg-orange-600 hover:bg-orange-700"
-              >
-                <Mic className="w-4 h-4 mr-2" /> Start Recording
-              </Button>
-            ) : (
-              <Button 
-                onClick={stopRecording}
-                variant="destructive"
-              >
-                <Pause className="w-4 h-4 mr-2" /> Stop Recording
-              </Button>
-            )}
-            
-            {recordedAudio[`part${currentPart + 1}`] && (
-              <div className="mt-4">
-                <p className="text-sm text-green-600 mb-2">Recording saved!</p>
-                <audio 
-                  src={recordedAudio[`part${currentPart + 1}`]} 
-                  controls 
-                  className="mx-auto"
-                />
-              </div>
-            )}
-          </div>
         </Card>
       </div>
     );
