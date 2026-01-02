@@ -410,6 +410,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load Recordings routes: {e}")
 
+# Audio streaming routes
+try:
+    from routes.audio import router as audio_router
+    app.include_router(audio_router)
+    print("✅ Audio routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Audio routes: {e}")
+
 # ============ Models ============
 
 class User(BaseModel):
