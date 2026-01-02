@@ -9,18 +9,14 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 3. **Visual Integration**: PDF-extracted images for Writing Task 1 (maps, charts, diagrams)
 4. **UI Language**: English
 
-## User Personas
-- IELTS test takers preparing for Academic or General Training exams
-- Students practicing individual skills (Listening, Reading, Writing, Speaking)
-
 ## Architecture
 
 ### Frontend (React + Tailwind)
 ```
 /app/frontend/src/pages/
 ├── CambridgeTestInterface.js  # Main test interface (Full + Skill modes)
+├── CambridgeTestResults.js    # Test results with scores & recommendations
 ├── QuestionBank.js            # Test selection with mode picker modal
-├── Dashboard.js               # User dashboard
 └── Login.js                   # Authentication
 ```
 
@@ -29,12 +25,11 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 /app/backend/
 ├── content/cambridge_tests/ielts17/test1.py  # Test content
 ├── routes/
-│   ├── cambridge.py           # Cambridge test API
-│   ├── cambridge_speaking.py  # Speaking evaluation (GPT-4o + Azure)
+│   ├── cambridge.py           # Cambridge test API + Answer Keys
+│   ├── cambridge_speaking.py  # Speaking evaluation (GPT-4o)
 │   ├── audio.py               # Audio streaming
 │   ├── recordings.py          # User recordings
-│   ├── tts.py                 # Text-to-Speech (ElevenLabs)
-│   └── full_test.py           # Test session management
+│   └── tts.py                 # Text-to-Speech (ElevenLabs)
 └── static/
     ├── audio/cambridge/       # IELTS audio files
     └── visuals/               # PDF-extracted images
@@ -45,51 +40,41 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 ### ✅ Completed
 - Cambridge IELTS 17 Test 1 content (all 4 sections)
 - **Full Test / Skill Practice mode selection**
-- **Writing Task 1 & 2 - Cambridge rubric format**
-  - Task 1: Simple rubric with side-by-side maps
-  - Task 2: "Write about the following topic:" + italic rubric box + "Give reasons..."
+- **Writing Tasks - Cambridge rubric format**
+  - Task 1: "You should spend 20 minutes..." + italic rubric + visuals
+  - Task 2: "Write about the following topic:" + italic rubric + "Give reasons..."
 - **Speaking Part 1 & 3 - Audio-only questions**
   - Questions HIDDEN - only topic shown
-  - "Listen to Question" (2 plays max)
+  - "Listen to Question" (2 plays max via ElevenLabs TTS)
   - "Record Answer" per question
-  - "Get AI Feedback" - GPT-4o evaluation with band scores
 - **Listening audio** - Working via `/api/audio/cambridge/` endpoint
-- **Recording system** - MediaRecorder with error handling
+- **Test Results Page** - Full evaluation with:
+  - Overall Band score
+  - Section-by-section scores (L/R/W/S)
+  - Answer Details (correct/incorrect)
+  - Recommended Next Steps
+  - "Get AI Feedback" for Writing
 
 ### In Progress
-- Answer keys integration (PDF extraction needed)
-- Writing evaluation with model answers
-- Results/Summary page
+- Answer keys (need to extract from PDF)
+- Writing AI evaluation via GPT-4o
+- Speaking full-test evaluation
 
 ### Pending
 - IELTS 16, 18, 19 integration
-- Premium Azure pronunciation assessment
 
 ## API Endpoints
 - `GET /api/cambridge/test/{book}/{test}` - Fetch test data
+- `GET /api/cambridge/answers/{book}/{test}` - Get answer key
 - `GET /api/audio/cambridge/{book}/{filename}` - Stream audio
-- `GET /api/visuals/image/{name}` - Serve images
 - `POST /api/tts/generate` - Generate TTS for speaking questions
 - `POST /api/recordings/save` - Save user recordings
 - `POST /api/cambridge/speaking/evaluate` - Evaluate speaking responses
 
-## Test Selection Flow
-1. User goes to Question Bank → Full Tests tab
-2. Clicks on Cambridge IELTS 17 Test 1
-3. Modal appears with two options:
-   - **Full Test Mode**: Complete all 4 sections (~2h 45m)
-   - **Skill Practice**: Individual section (Listening/Reading/Writing/Speaking)
-
-## Speaking Evaluation
-- **Free tier**: Whisper transcription + GPT-4o feedback
-- **Premium tier**: Azure Pronunciation Assessment + detailed analysis
+## Test Flow
+1. Question Bank → Full Tests → Select test → Modal (Full/Skill mode)
+2. Take test with timers, audio, recording
+3. Submit → Results page with scores and recommendations
 
 ## Credentials
 - Test account: test@ielts.com / admin123
-
-## Technical Notes
-- PDF visual extraction uses PyMuPDF (fitz)
-- Audio served via `/api/audio/` endpoint (not /static/)
-- Skill mode uses URL query parameter: `?skill=writing`
-- Section times: Listening 40min, Reading 60min, Writing 60min, Speaking 14min
-- Recording: WebM format via MediaRecorder API
