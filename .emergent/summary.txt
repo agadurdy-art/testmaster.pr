@@ -1,76 +1,73 @@
 <analysis>**original_problem_statement:**
-The user's primary objective is to build a comprehensive and authentic IELTS test bank using official Cambridge IELTS materials, replacing previously created, inaccurate AI-generated content.
+The user's primary objective is to build a comprehensive IELTS test bank using official Cambridge materials. The initial goal was to fix the Cambridge results page to show detailed feedback. This evolved into a larger requirement: creating a full feedback loop where test results generate AI-powered analysis, identify weak points, and recommend specific lessons from the existing course catalog, mirroring the functionality of the main Question Bank.
+
+The user then requested the addition of new test content (IELTS 17, Test 2), requiring the agent to process a PDF, extract all question data, handle audio/visual assets, and integrate it into the existing system.
 
 **PRODUCT REQUIREMENTS:**
-1.  **Authentic Content**: All test content (questions, passages, visuals, audio) must be extracted directly from the provided Cambridge IELTS PDFs and audio files.
-2.  **Lock Old Content**: The previously created AI-generated tests must be disabled and marked as Coming Soon. (Note: This was partially reversed; the General Training test was unlocked at the user's request).
-3.  **Full Test Experience**: A computer-delivered test interface must simulate the real test, including per-section timers, interactive question types, audio playback, and writing/speaking inputs.
-4.  **Skill Practice Mode**: Users must be able to choose between taking a Full Test or practicing a single skill (Listening, Reading, Writing, or Speaking) individually.
-5.  **Authentic UI/UX**: The test interface, especially for Speaking and Writing, must closely mimic the real computer-delivered IELTS test experience. This includes reusing all UI components and logic from the existing AI-generated Question Bank section of the app.
-6.  **Test Evaluation**: Upon completion, a results page must show scores and detailed feedback. The evaluation for all skills must use the exact same sophisticated AI feedback protocols as the existing Question Bank section.
-7.  **UI Language**: All user-facing UI text must be in English.
+1.  **Authentic Content**: All test content must be extracted from official Cambridge IELTS materials.
+2.  **Full Feedback Loop**: Upon test completion, the results page must display:
+    *   Scores and skill breakdown by question type.
+    *   AI-generated teacher feedback.
+    *   A list of recommended lessons from the course catalog, targeted at the user's weakest areas.
+3.  **Content Integration**: The system must be generic to allow for the easy addition of new tests by creating new data files and updating a central registry.
+4.  **UI Parity**: The Cambridge test interface must have all the same UI elements as the main test interface, including Help and Settings buttons.
+5.  **Premium Gating**: The advanced Speaking evaluation (using Azure) must be gated and available only to users with a premium subscription plan.
 
 **User's preferred language**: Turkish. The next agent **MUST** respond to the user in **Turkish**.
 
 **what currently exists?**
-- A full-featured test interface () that now closely mirrors the UI of the existing AI-generated Question Bank ().
-- The interface includes a split-screen for Reading, text highlighter, notes, a realistic dark header, settings/help modals, and a detailed question navigation bar at the bottom.
-- The content for **IELTS 17, Test 1** has been fully integrated, including answer keys and sample writing answers.
-- A **Skill Practice Mode** is available from the  page.
-- The backend evaluation endpoints (, ) have been updated to call the existing, powerful evaluation protocols from the main Question Bank (, ).
-- The General Training AI-generated test has been unlocked for the user to provide UI examples.
-- All previously reported bugs in the Speaking section (state not resetting, wrong questions playing) have been fixed.
+- A full-featured test system for Cambridge IELTS, now including **IELTS 17 Test 1** and **IELTS 17 Test 2**.
+- A completely overhauled results page () that successfully fetches and displays a comprehensive, AI-generated evaluation. This includes a skill breakdown, AI teacher feedback, and a list of recommended lessons, effectively creating the full feedback loop requested by the user.
+- The backend () has a new endpoint () that performs this complex evaluation.
+- The system for adding new tests is proven; Test 2 was added by creating  and updating the  registry. The structure for content files is now well-defined.
+- Premium Speaking evaluation is integrated; the frontend sends the user's plan, and the backend is ready to handle the logic (though the full flow isn't fully tested).
+- A persistent file () with credentials for a test user has been created to avoid login issues during testing.
 
 **Last working item**:
--   **Last item agent was working**: The user reported that the  page is not displaying the detailed evaluation feedback (like Locate in Passage, Explanation, and skill-based analysis) that is present in the main Question Bank's results page. The user provided screenshots showing the rich, detailed feedback they expect. The agent acknowledged this failure and was about to refactor  to correctly render this complex data, using the existing  as a direct template.
+-   **Last item agent was working**: The user reported that for the newly added IELTS 17 Test 2:
+    1.  Listening questions 28-30 are still not appearing on the test interface.
+    2.  The Cambridge test UI is missing standard buttons like Help and Settings that are present in the main test interface.
+    The agent was about to investigate  to understand why these UI elements and questions were not being rendered correctly.
 -   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: screenshot tool. The agent must modify  and then run a full test to verify the results page. The screenshot should confirm that detailed feedback for Reading (Locate, Explain), Writing (criteria scores), and Speaking (premium analysis if applicable) is displayed correctly, matching the layout from the user's screenshots.
+-   **Which testing method agent to use?**: frontend testing agent. The agent should be instructed to:
+    1.  Navigate to the IELTS 17 Test 2 Listening section.
+    2.  Verify that questions 28, 29, and 30 are present and interactive.
+    3.  Verify that the Help and Settings buttons are visible and functional in the header of the test interface.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Fix Cambridge Test Results Page UI (P0)**
--   **Issue 2: Implement Premium Speaking Evaluation Gating (P1)**
--   **Issue 3: Ingest Content for Remaining Cambridge Books (P2)**
--   **Issue 4: Frontend Session Persistence Bug (P3)**
+-   **Issue 1: Fix Missing Content & UI in Test Interface (P0)**
+-   **Issue 2: Ingest Content for Remaining Cambridge Books (P1)**
+-   **Issue 3: Frontend Session Persistence Bug (P2)**
 
 **Issues Detail:**
--   **Issue 1: Fix Cambridge Test Results Page UI**
-    -   **Attempted fixes**: The agent created a basic results page and later added sections for detailed feedback, but it still fails to render the complex data correctly, appearing empty to the user.
+-   **Issue 1: Fix Missing Content & UI in Test Interface**
+    -   **Attempted fixes**: The agent fixed the data structure for questions 8-10 in  but failed to resolve the issue for questions 28-30. The missing UI buttons have not yet been addressed.
     -   **Next debug checklist**:
-        1.  Open  (the working QB results page) and  (the broken page).
-        2.  Analyze how  structures its state and JSX to render accordions and detailed views for Locate in Passage, Explanation, and Skill Tip.
-        3.  Copy the relevant components, state management logic, and JSX structure from  into .
-        4.  Ensure the data structure returned by the Cambridge evaluation endpoints matches what the  components expect.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is the user's main point of frustration. Fixing it will align the Cambridge tests with the high-quality feedback experience of the rest of the application, fulfilling a core requirement.
+        1.  **For Q28-30**:
+            *   Review  to see the exact, working data structure for a  question group in Listening Part 3.
+            *   Compare this with the structure in  for Q28-30 and correct any discrepancies.
+        2.  **For Missing Buttons**:
+            *   View  (the working reference).
+            *   Identify the JSX and component responsible for rendering the header, including the Help and Settings buttons and their associated modals.
+            *   Copy this entire header structure into , replacing the current, incomplete header.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is a direct bug report from the user. Fixing it will ensure content and UI parity between the Cambridge tests and the rest of the application, which is a core requirement.
     -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: Y
+    -   **Is recurring issue?**: Y (data structure issues have occurred multiple times)
     -   **Should Test frontend/backend/both after fix?**: frontend
     -   **Blocked on other issue**: None.
 
--   **Issue 2: Implement Premium Speaking Evaluation Gating**
-    -   **Attempted fixes**: The agent has confirmed the premium evaluation logic exists in  and the Azure key is available.
-    -   **Next debug checklist**:
-        1.  Modify the submission logic in  to include the user's subscription plan () in the request payload to the speaking evaluation endpoint.
-        2.  In , add logic to check the user's plan.
-        3.  If the plan is  or , call the premium Azure-based evaluation function. Otherwise, use the standard (free tier) evaluation.
-        4.  Ensure  can render the richer data from the premium response.
-    -   **Why fix this issue and what will be achieved with the fix?**: Fulfills a business logic requirement to provide enhanced features for paying customers.
-    -   **Status**: NOT STARTED
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: both
-    -   **Blocked on other issue**: Issue 1: Fix Cambridge Test Results Page UI
-
--   **Issue 3: Ingest Content for Remaining Cambridge Books**
+-   **Issue 2: Ingest Content for Remaining Cambridge Books**
     -   **Attempted fixes**: None.
-    -   **Next debug checklist**: Await user provision of content for IELTS books 16, 18, and 19.
+    -   **Next debug checklist**: Await user provision of content for IELTS 17 (Tests 3, 4) and books 16, 18, and 19.
     -   **Why fix this issue and what will be achieved with the fix?**: Expands the content library, which is the main goal of the project.
     -   **Status**: BLOCKED (waiting for user to provide content)
     -   **Is recurring issue?**: N
     -   **Should Test frontend/backend/both after fix?**: backend
     -   **Blocked on other issue**: None.
 
--   **Issue 4: Frontend Session Persistence Bug**
+-   **Issue 3: Frontend Session Persistence Bug**
     -   **Attempted fixes**: None. This is a known, low-priority technical debt.
     -   **Next debug checklist**: Investigate  and  session restoration logic.
     -   **Why fix this issue and what will be achieved with the fix?**: Improves general application usability and developer testing experience.
@@ -80,74 +77,94 @@ The user's primary objective is to build a comprehensive and authentic IELTS tes
     -   **Blocked on other issue**: None.
 
 **In progress Task List**:
--   **Task 1: Refactor Cambridge Test Results Page**
-    -   **Where to resume**: In . The immediate goal is to replace the current rendering logic with the proven components and logic from .
-    -   **What will be achieved with this?**: A functional, detailed, and user-approved test results page.
-    -   **Status**: IN PROGRESS
-    -   **Should Test frontend/backend/both after fix?**: frontend
-    -   **Blocked on something**: None.
+None. The current work is classified as a bug fix under the Issues list.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P0) Premium Speaking (Azure) Integration**: Implement plan-based gating for premium speaking evaluation.
-    *   **(P1) Ingest Content for IELTS 16, 18, and 19**: Awaiting user-provided PDFs/audio.
+    *   **(P1) Ingest Content for IELTS 17 (Test 3 & 4), and Books 16, 18, 19**: Awaiting user-provided PDFs/audio.
 *   **Future Tasks:**
     *   Add shorts-style practice mode to the landing page.
     *   Add a game element to course lessons.
     *   Create YLE (Starters, Movers, Flyers) course content.
 
 **Completed work in this session**
--   **Fixed Speaking UI Bugs**: Resolved state management issues, ensuring correct question playback and UI resets between questions and parts.
--   **Populated Answer Keys**: Integrated correct answers for Listening/Reading and sample answers for Writing into .
--   **Integrated QB Evaluation Protocols**: Backend routes for Cambridge tests now correctly call the main Question Bank's evaluation functions for Writing and Speaking.
--   **Major UI Overhaul**: Successfully refactored  to be a near-perfect replica of the main , including a split-screen for Reading, highlighter, notes, a realistic header with modals, and a functional bottom navigation bar.
--   **Unlocked AI-Generated Content**: Re-enabled the General Training test in  as requested by the user.
+- **Results Page Overhaul & Feedback Loop**:
+  - The critical P0 issue of the broken  page was resolved.
+  - Implemented a new backend endpoint () and updated the frontend to provide a full feedback loop, including AI-generated teacher feedback and recommended lessons.
+- **Premium Speaking Gating**: Implemented the frontend logic to send the user's plan to the backend for premium speaking evaluation.
+- **Content Integration (IELTS 17, Test 2)**:
+  - Successfully processed uploaded PDF and audio files.
+  - Created a new data file  with the full test content.
+  - Added a static file route for images in  and updated the writing task to include a visual.
+  - Fixed the frontend  to display Test 2 as available.
+- **Improved Developer Experience**: Created and saved persistent test credentials in  to streamline testing.
+- **Data Structure Refinement**: Iteratively debugged and corrected the data structure of  to exactly match the working format of , resolving numerous empty section bugs.
+
+**Earlier issues found/mentioned but not fixed**
+- The session persistence bug mentioned in the initial handoff remains unfixed and is listed in the pending issues.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Component Reusability**: The user heavily emphasized that the agent must not reinvent UI. The correct approach is to identify and reuse existing, working components from  and .
--   **Protocol Unification**: Instead of writing new evaluation logic, the backend for Cambridge tests must act as a wrapper that calls the canonical evaluation functions already defined for the main Question Bank.
+-   **Data Structure Normalization**: The agent learned that the frontend rendering is rigidly tied to the data structure in . Any new content file must precisely replicate this structure, including keys like , , , and the format for grouped questions.
+-   **Dynamic Content Loading**: The backend is designed to dynamically load tests listed in the  dictionary in , making the system extensible.
+-   **Component Reusability**: The core issue of missing UI buttons stems from not reusing the complete header component from .
 
 **All files of reference**
--   : The file that needs to be fixed immediately.
--   : The reference file containing the correct implementation for the results page.
--   : The main test interface, which has been heavily modified.
--   : The reference file for the main test interface UI components.
--   : The backend route for Cambridge test content and writing evaluation.
--   : The backend route for Cambridge speaking evaluation.
--   : Data and answer key file for the first test.
+-   : The file where the current bugs (missing questions/buttons) are located.
+-   : The reference file containing the correct header UI that needs to be copied.
+-   : The data file for Test 2, which may still have a minor error in the Q28-30 structure.
+-   : The golden copy reference for the correct data structure of a test file.
+-   : Contains the core logic for loading and evaluating tests.
+-   : The recently fixed results page.
+-   : Contains login info for testing.
 
 **Critical Info for New Agent**
--   **DO NOT REINVENT THE UI**: The user has become extremely frustrated with the agent rewriting UI components from scratch. You MUST treat the existing AI-generated Question Bank (, ) as the source of truth. Your primary task is to integrate the Cambridge content into this *existing* framework, not build a new one.
--   **Focus on the Results Page**: The immediate and highest priority task is to fix  to display detailed feedback exactly like  does. The user has provided screenshots of the expected output.
--   The user has provided a strong persona prompt for the agent: Question Bank Agent locked. Ready to ingest questions. This means you should focus solely on data processing and integration into the existing system, avoiding any suggestions for UI/UX changes.
+-   **DATA STRUCTURE IS KING**: Do not attempt to generate test content files from scratch. Your first step must be to copy  and then carefully replace the content while preserving every single key and structural element. The agent wasted significant time in this session due to repeated data structure mismatches.
+-   **REUSE UI COMPONENTS**: The user has previously expressed frustration with the agent re-creating UI. The missing Help and Settings buttons are another example of this. You must copy the entire working header component from  to .
+-   **The user is technically savvy** and provides precise feedback (e.g., Q28-30 halen eksik). Trust their bug reports and investigate them directly.
+
+**documents and test reports created in this job**
+-   /app/memory/TEST_CREDENTIALS.md
+-   /app/memory/PRD.md
+-   /app/test_reports/iteration_1.json
+-   /app/test_reports/iteration_2.json
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. **User:** Corrects agent's implementation of the navigation bar, stating it must be identical to the one in the existing QB.
-9.  **User:** Criticizes the agent for re-creating UI elements (modals) from scratch instead of reusing the existing code from .
-8.  **User:** Confirms the UI is now correct after the agent copied the components. States the hide button is not working. Provides a persona prompt for the agent to be a data processor only, not a designer.
-7.  **User:** Asks what the current evaluation protocol is because the results page feels empty.
-6.  **User:** Confirms the agent should apply all existing QB evaluation protocols to the Cambridge tests as they are part of the same system.
-5.  **User:** **(LATEST & CRITICAL)** Expresses extreme frustration. States the evaluation is not working and features like Locate and Explain are missing. Asks WHY????????? why i have to make prompts each time. Provides screenshots showing the expected detailed results page vs. the current empty-looking one.
+10. **User:** States that Test 2 is not visible on the frontend.
+9.  **User:** Asks the agent to add a visual and detailed description for Writing Task 1 of Test 2.
+8.  **User:** Reports that questions are not appearing in Test 2.
+7.  **User:** Reports that Listening Part 1/4, Reading, and Writing Task 1 are all empty.
+6.  **User:** Provides screenshots of the actual questions that should be in the test, showing the agent's generated content was incorrect.
+5.  **User:** Reports that Listening Test 2, questions 8-10 are missing.
+4.  **User:** Reports that questions 28-30 are also missing.
+3.  **User:** **(LATEST & CRITICAL)** Reports that questions 28-30 are *still* missing and that the test UI lacks buttons like Help and Settings.
+2.  **User:** Provides screenshots showing the empty sections in Test 2.
+1.  **User:** Provides screenshots showing the missing questions in Test 2 listening section.
 
 **Project Health Check:**
 -   **Broken**:
-    -    UI is fundamentally broken. It does not render the detailed evaluation data (Locate, Explain, criteria scores), which is a critical failure in the user's eyes.
+    -    is missing critical UI elements (Help/Settings buttons) and is not rendering all questions for Test 2, making the test experience incomplete and inconsistent.
+-   **Mocked**: N/A
 -   **Incomplete**:
-    -   **Premium Speaking Gating**: The logic to switch between free and premium evaluation based on user plan is not implemented.
-    -   **Content Library**: Only 1 out of 4+ books is integrated.
+    -   The content library is still small (2/4 tests from one book).
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o (via Emergent LLM Key)**: Used for the core AI evaluation of Writing and the Free Tier of Speaking.
--   **Azure Speech Services**: Used for the Premium Tier of Speaking evaluation (pronunciation assessment). The key is confirmed to be available in the environment.
--   **ElevenLabs**: Integrated for Text-to-Speech to read Speaking questions aloud.
+-   **OpenAI GPT-4o (via Emergent LLM Key)**: Used for Writing evaluation and the full results page feedback generation.
+-   **Azure Speech Services**: Used for Premium Tier Speaking evaluation.
+-   **ElevenLabs**: Used for Text-to-Speech in the Speaking section.
 
 **Testing status**
--   **Testing agent used after significant changes**: NO
+-   **Testing agent used after significant changes**: YES, successfully validated the comprehensive results page.
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: None.
 
+**Credentials to test flow:**
+Credentials can be found in .
+-   **Email**: test@ieltsace.com
+-   **Password**: TestPassword123!
+
 **What agent forgot to execute**
--   The agent repeatedly forgot the user's core principle: **reuse existing code and UI components**. It consistently attempted to build features from scratch, leading to multiple rounds of corrections and user frustration. The most recent and critical oversight was failing to properly replicate the data rendering logic from  into .</analysis>
+-   The agent repeatedly failed to create a  file with the correct data structure, causing multiple rounds of empty section bugs reported by the user.
+-   The agent failed to ensure UI parity when implementing the Cambridge test interface, omitting the Help and Settings buttons that were a standard part of the existing test UI.</analysis>
