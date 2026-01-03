@@ -174,12 +174,17 @@ async def assess_pronunciation(
             # Get pronunciation assessment result
             pronunciation_result = speechsdk.PronunciationAssessmentResult(result)
             
-            # Extract scores
+            # Extract scores with None protection
+            accuracy = getattr(pronunciation_result, 'accuracy_score', None)
+            fluency = getattr(pronunciation_result, 'fluency_score', None)
+            prosody = getattr(pronunciation_result, 'prosody_score', None)
+            pronunciation = getattr(pronunciation_result, 'pronunciation_score', None)
+            
             assessment_data = {
-                "accuracy_score": pronunciation_result.accuracy_score,
-                "fluency_score": pronunciation_result.fluency_score,
-                "prosody_score": pronunciation_result.prosody_score if hasattr(pronunciation_result, 'prosody_score') else 0,
-                "pronunciation_score": pronunciation_result.pronunciation_score,
+                "accuracy_score": accuracy if accuracy is not None else 0,
+                "fluency_score": fluency if fluency is not None else 0,
+                "prosody_score": prosody if prosody is not None else 0,
+                "pronunciation_score": pronunciation if pronunciation is not None else 0,
                 "recognized_text": result.text,
                 "words": []
             }
