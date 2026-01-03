@@ -436,6 +436,16 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load Cambridge Speaking routes: {e}")
 
+# Test Admin routes (debug, validation, practice)
+try:
+    from routes.test_admin import router as test_admin_router
+    app.include_router(test_admin_router)
+    print("✅ Test Admin routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Test Admin routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 # ============ Models ============
 
 class User(BaseModel):
