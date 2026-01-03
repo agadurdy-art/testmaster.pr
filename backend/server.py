@@ -3372,7 +3372,17 @@ async def evaluate_grammar_vocab_quiz(request: GrammarVocabEvaluateRequest):
     score = (correct_count / total * 100) if total > 0 else 0
     
     # Identify weak areas (units where user got questions wrong)
-    weak_units = list(set([r["unit_id"] for r in results if not r["is_correct"]]))
+    weak_units = list(set([r["unit_id"] for r in results if not r["is_correct"] and r["unit_id"]]))
+    
+    # Get recommended lessons based on weak areas
+    recommended_lessons = []
+    for unit_id in weak_units[:3]:  # Top 3 weak areas
+        lesson = await db.vocab_grammar_lessons.find_one(
+            {"id": unit_id}, 
+            {"_id": 0, "id": 1, "title": 1, "band_level": 1, "type": 1, "unit_number": 1}
+        )
+        if lesson:
+            recommended_lessons.append(lesson)
     
     # Save progress if user_id provided
     if user_id and total > 0:
@@ -3392,6 +3402,7 @@ async def evaluate_grammar_vocab_quiz(request: GrammarVocabEvaluateRequest):
         "total": total,
         "results": results,
         "weak_units": weak_units,
+        "recommended_lessons": recommended_lessons,
         "recommendation": f"Review these units: {', '.join(weak_units)}" if weak_units else "Great job! Keep practicing!"
     }
 
