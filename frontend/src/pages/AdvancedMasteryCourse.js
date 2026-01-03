@@ -606,18 +606,25 @@ export default function AdvancedMasteryCourse({ user }) {
 
     return (
       <div className="flex gap-2 overflow-x-auto pb-2 mb-6">
-        {sections.map(s => (
-          <Button
-            key={s.id}
-            variant={currentSection === s.id ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => setCurrentSection(s.id)}
-            className={currentSection === s.id ? 'bg-gradient-to-r from-amber-500 to-orange-600 border-0' : ''}
-          >
-            <s.icon className="w-4 h-4 mr-2" />
-            {s.label}
-          </Button>
-        ))}
+        {sections.map(s => {
+          const sectionComplete = selectedModule ? isSectionCompleted('advanced', selectedModule.module_number, s.id) : false;
+          return (
+            <Button
+              key={s.id}
+              variant={currentSection === s.id ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setCurrentSection(s.id)}
+              className={`${currentSection === s.id ? 'bg-gradient-to-r from-amber-500 to-orange-600 border-0' : ''} ${sectionComplete ? 'border-green-400' : ''}`}
+            >
+              {sectionComplete ? (
+                <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
+              ) : (
+                <s.icon className="w-4 h-4 mr-2" />
+              )}
+              {s.label}
+            </Button>
+          );
+        })}
       </div>
     );
   };
