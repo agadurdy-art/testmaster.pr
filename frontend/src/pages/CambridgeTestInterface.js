@@ -1224,12 +1224,18 @@ export default function CambridgeTestInterface() {
           {/* Passage Text - Selectable */}
           <div className="prose prose-sm max-w-none select-text">
             {currentPassage.passage_text?.split('\n\n').map((para, idx) => {
+              // Check if paragraph starts with a section heading (A, B, C, etc.)
+              const headingMatch = para.match(/^([A-Z])\n/);
+              const isHeading = headingMatch !== null;
+              const headingLetter = headingMatch ? headingMatch[1] : null;
+              const paragraphText = isHeading ? para.substring(2) : para;
+              
               // Check if any highlights exist in this paragraph
               const paraHighlights = highlights.filter(h => 
                 h.section === 'reading' && para.includes(h.text)
               );
               
-              let displayText = para;
+              let displayText = paragraphText;
               paraHighlights.forEach(h => {
                 const color = h.color === 'blue' ? 'bg-blue-200' : 'bg-yellow-200';
                 displayText = displayText.replace(
@@ -1239,11 +1245,15 @@ export default function CambridgeTestInterface() {
               });
               
               return (
-                <p 
-                  key={idx} 
-                  className="mb-4 text-gray-700 leading-relaxed text-sm"
-                  dangerouslySetInnerHTML={{ __html: displayText }}
-                />
+                <div key={idx} className="mb-4">
+                  {isHeading && (
+                    <h3 className="font-bold text-lg text-green-700 mb-2">{headingLetter}</h3>
+                  )}
+                  <p 
+                    className="text-gray-700 leading-relaxed text-sm"
+                    dangerouslySetInnerHTML={{ __html: displayText }}
+                  />
+                </div>
               );
             })}
           </div>
