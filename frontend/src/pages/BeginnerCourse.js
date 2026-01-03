@@ -649,18 +649,25 @@ export default function BeginnerCourse({ user }) {
           
           {/* Section Tabs */}
           <div className="flex flex-wrap gap-2">
-            {sections.map((section) => (
-              <Button
-                key={section.id}
-                variant={currentSection === section.id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setCurrentSection(section.id)}
-                className={currentSection === section.id ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white' : ''}
-              >
-                <section.icon className="w-4 h-4 mr-1" />
-                {section.label}
-              </Button>
-            ))}
+            {sections.map((section) => {
+              const sectionComplete = isSectionCompleted('beginner', selectedLesson.lesson_number, section.id);
+              return (
+                <Button
+                  key={section.id}
+                  variant={currentSection === section.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCurrentSection(section.id)}
+                  className={`relative ${currentSection === section.id ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white' : ''} ${sectionComplete ? 'border-green-400' : ''}`}
+                >
+                  {sectionComplete ? (
+                    <CheckCircle className="w-4 h-4 mr-1 text-green-500" />
+                  ) : (
+                    <section.icon className="w-4 h-4 mr-1" />
+                  )}
+                  {section.label}
+                </Button>
+              );
+            })}
           </div>
         </Card>
         
