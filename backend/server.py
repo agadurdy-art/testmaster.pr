@@ -436,6 +436,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load Cambridge Speaking routes: {e}")
 
+# Beginner Pronunciation routes
+try:
+    from routes.beginner_pronunciation import router as beginner_pronunciation_router
+    app.include_router(beginner_pronunciation_router)
+    print("✅ Beginner Pronunciation routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Beginner Pronunciation routes: {e}")
+
 # Test Admin routes (debug, validation, practice)
 try:
     from routes.test_admin import router as test_admin_router
