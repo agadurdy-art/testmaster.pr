@@ -3,6 +3,8 @@ Practice Service
 ================
 Micro-based practice mode that pulls from canonical test data.
 Single source of truth - no duplicate content.
+
+HARD RULE: Only APPROVED/PUBLISHED tests feed into practice pools.
 """
 
 from typing import Dict, Any, List, Optional
@@ -18,7 +20,23 @@ class PracticeService:
     - Reading: Shows only relevant paragraph for each question
     - Listening: Uses answer_span for short audio clips
     - Speaking: Part 1 & 3 audio-only, Part 2 visible cue card
+    
+    HARD RULE: Only draws from APPROVED/PUBLISHED tests.
+    Never uses DRAFT/PENDING_QA/FAILED_VALIDATION tests.
     """
+    
+    # Import here to avoid circular imports
+    _qa_service = None
+    
+    @classmethod
+    def get_qa_service(cls):
+        if cls._qa_service is None:
+            try:
+                from services.qa_workflow_service import QAWorkflowService
+                cls._qa_service = QAWorkflowService()
+            except ImportError:
+                cls._qa_service = None
+        return cls._qa_service
     
     def __init__(self, test_registry: Dict[str, Any]):
         """
@@ -28,8 +46,19 @@ class PracticeService:
         self._practice_pool = None
         self._rebuild_pool()
     
+    def _is_test_publishable(self, test_id: str) -> bool:
+        """
+        Check if a test is publishable (APPROVED or PUBLISHED).
+        If QA service is not available, defaults to True for backwards compatibility.
+        """
+        qa_service = self.get_qa_service()
+        if qa_service:
+            return qa_service.is_publishable(test_id)
+        # Fallback: allow all tests if QA service not available
+        return True
+    
     def _rebuild_pool(self):
-        """Build practice pool from all valid tests"""
+        """Build practice pool from all valid AND PUBLISHABLE tests only"""
         self._practice_pool = {
             "listening": [],
             "reading": [],
@@ -43,6 +72,11 @@ class PracticeService:
                     continue
                 
                 source = f"{book_id}_{test_id}"
+                
+                # HARD RULE: Only include publishable tests
+                if not self._is_test_publishable(source):
+                    continue
+                
                 self._index_test(test_data, source)
     
     def _index_test(self, test_data: Dict, source: str):
