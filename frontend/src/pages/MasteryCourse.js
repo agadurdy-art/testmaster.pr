@@ -437,6 +437,11 @@ export default function MasteryCourse({ user }) {
     setQuizScore(score);
     setQuizSubmitted(true);
     toast.success(`Quiz completed! ${correct}/${total} correct (${answered} answered, ${total - answered} skipped)`);
+    
+    // Mark quiz section as complete
+    if (selectedModule) {
+      markSectionComplete('mastery', selectedModule.module_number, 'quiz');
+    }
   };
 
   // Render modules list
