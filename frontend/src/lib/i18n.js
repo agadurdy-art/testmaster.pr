@@ -941,6 +941,28 @@ export const translations = {
     landingIELTSAceSub: 'Cambridge Eğitimli AI',
     landingIELTSAceBestFor: 'En iyi: Gerçek gelişim isteyen ciddi öğrenciler için',
     landingRecommended: 'ÖNERİLEN',
+    
+    // Comparison Items - Traditional
+    landingTradItem1: 'Sınırlı pratik süresi',
+    landingTradItem2: 'Pahalı özel öğretmenler',
+    landingTradItem3: 'Grup için genel geri bildirim',
+    landingTradItem4: 'Sabit program gerekli',
+    landingTradItem5: 'Anında değerlendirme yok',
+    
+    // Comparison Items - Other AI
+    landingOtherAIItem1: 'Anında geri bildirim',
+    landingOtherAIItem2: 'Etkileşim için şişirilmiş puanlar',
+    landingOtherAIItem3: 'Genel teşvik edici yorumlar',
+    landingOtherAIItem4: 'Sınav görevlisi mantığı yok',
+    landingOtherAIItem5: 'Net gelişim yolu yok',
+    
+    // Comparison Items - IELTS Ace
+    landingAceItem1: 'Gerçek sınav görevlisi değerlendirme mantığı',
+    landingAceItem2: 'Dürüst band puanları (şişirme yok)',
+    landingAceItem3: 'NEDEN o bandı aldığınızı açıklar',
+    landingAceItem4: 'Tam olarak zayıf noktalarınızı teşhis eder',
+    landingAceItem5: 'Test → Çalış → Tekrar Dene yolu',
+    
     landingQuote1: 'Sizi akıcı konuşmanız için eğitmiyoruz.',
     landingQuote2: 'Sizi bir IELTS adayı gibi düşünmeniz, yanıt vermeniz ve performans göstermeniz için eğitiyoruz.',
     
