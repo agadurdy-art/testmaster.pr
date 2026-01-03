@@ -513,6 +513,17 @@ export default function AdvancedMasteryCourse({ user }) {
   // Render modules list
   const renderModulesList = () => (
     <div className="space-y-6">
+      {/* English-only notice for non-EN users */}
+      {language !== 'en' && (
+        <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-center gap-3">
+          <Globe className="w-5 h-5 text-amber-600 flex-shrink-0" />
+          <div>
+            <span className="font-medium text-amber-800">{englishNotice.title}: </span>
+            <span className="text-amber-700 text-sm">{englishNotice.message}</span>
+          </div>
+        </div>
+      )}
+      
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
