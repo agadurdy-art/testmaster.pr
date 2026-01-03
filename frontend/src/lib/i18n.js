@@ -1047,6 +1047,22 @@ export const translations = {
     landingFooterTagline: 'Cambridge uyumlu IELTS AI değerlendiriciniz',
     landingFooterMotto: 'Bir değerlendirici gibi düşün. Bir aday gibi performans göster.',
     
+    // How AI Works
+    landingHowAIWorks: 'Gerçek Değerlendiriciler Nasıl Düşünür',
+    landingHowAIWorksTitle: 'AI\'mız Cambridge sınav görevlisi gibi değerlendirir',
+    landingHowAIWorksDesc: 'AI\'mız performansınızı gerçek IELTS sınav görevlilerinin kullandığı mantıkla değerlendirir:',
+    landingAIStep1: 'Soru İlgisi',
+    landingAIStep1Desc: 'Sorulan soruyu gerçekten cevapladınız mı?',
+    landingAIStep2: 'Görev Tamamlama',
+    landingAIStep2Desc: 'Görevin tüm bölümlerini tamamladınız mı?',
+    landingAIStep3: 'Dil Kontrolü',
+    landingAIStep3Desc: 'Dilbilginiz ve kelime bilginiz ne kadar doğru?',
+    landingAIStep4: 'Band Kanıtı',
+    landingAIStep4Desc: 'Band puanı için net bir kanıt var mı?',
+    landingKeyRule: 'Temel Kural:',
+    landingKeyRuleDesc: 'Bir cevap soruyu cevaplamıyorsa, akıcılığa bakılmaksızın puan sınırlandırılır.',
+    landingKeyRuleDesc2: 'Gerçek sınav görevlileri böyle düşünür. Ve gerçek ilerleme böyle olur.',
+    
     // Auth
     landingSignIn: 'Giriş Yap',
     landingCreateAccount: 'Hesap Oluştur',
