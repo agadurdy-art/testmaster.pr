@@ -3338,9 +3338,15 @@ async def get_grammar_vocab_units(band_level: Optional[str] = None):
         "total": len(units)
     }
 
+class GrammarVocabEvaluateRequest(BaseModel):
+    answers: Dict[str, str]
+    user_id: Optional[str] = None
+
 @api_router.post("/question-bank/grammar-vocab/evaluate")
-async def evaluate_grammar_vocab_quiz(answers: Dict[str, str], user_id: Optional[str] = None):
+async def evaluate_grammar_vocab_quiz(request: GrammarVocabEvaluateRequest):
     """Evaluate grammar & vocab quiz answers and provide feedback."""
+    answers = request.answers
+    user_id = request.user_id
     results = []
     correct_count = 0
     
