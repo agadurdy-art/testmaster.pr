@@ -740,7 +740,7 @@ export default function ComprehensiveLevelTest({ user }) {
     formData.append('file', blob, 'audio.webm');
 
     try {
-      const response = await fetch(`${API_URL}/api/speaking/transcribe`, {
+      const response = await fetch(`${API_URL}/api/transcribe-audio`, {
         method: 'POST',
         body: formData
       });

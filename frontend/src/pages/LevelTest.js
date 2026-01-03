@@ -124,7 +124,7 @@ export default function LevelTest({ user, onShowAuth }) {
     try {
       const formData = new FormData();
       formData.append('file', new File([blob], 'recording.webm', { type: 'audio/webm' }));
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/speaking/transcribe`, { method: 'POST', body: formData });
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/transcribe-audio`, { method: 'POST', body: formData });
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));

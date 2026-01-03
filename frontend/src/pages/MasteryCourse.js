@@ -341,7 +341,7 @@ export default function MasteryCourse({ user }) {
     try {
       const formData = new FormData();
       formData.append('file', new File([audioBlob], 'recording.webm', { type: 'audio/webm' }));
-      const response = await fetch(`${API_URL}/api/speaking/transcribe`, { method: 'POST', body: formData });
+      const response = await fetch(`${API_URL}/api/transcribe-audio`, { method: 'POST', body: formData });
       if (!response.ok) throw new Error('Transcription failed');
       const data = await response.json();
       setSpeakingResponse(data.text || '');
