@@ -42,13 +42,14 @@ def simplify_feedback(assessment_result: dict, target_text: str) -> dict:
     Convert technical Azure feedback to beginner-friendly format.
     No complex terminology - simple, encouraging feedback.
     """
-    accuracy = assessment_result.get("accuracy_score", 0)
-    fluency = assessment_result.get("fluency_score", 0)
-    prosody = assessment_result.get("prosody_score", 0)
-    pronunciation = assessment_result.get("pronunciation_score", 0)
+    accuracy = assessment_result.get("accuracy_score") or 0
+    fluency = assessment_result.get("fluency_score") or 0
+    prosody = assessment_result.get("prosody_score") or 0
+    pronunciation = assessment_result.get("pronunciation_score") or 0
     
-    # Overall score (average)
-    overall = (accuracy + fluency + prosody + pronunciation) / 4
+    # Overall score (average) - only count non-zero scores
+    scores = [s for s in [accuracy, fluency, prosody, pronunciation] if s > 0]
+    overall = sum(scores) / len(scores) if scores else 0
     
     # Simple star rating (1-5)
     stars = min(5, max(1, int(overall / 20) + 1))
