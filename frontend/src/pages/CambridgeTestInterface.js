@@ -1020,93 +1020,105 @@ export default function CambridgeTestInterface() {
             </div>
           )}
 
-          {/* Multiple Choice Questions */}
-          {currentPartData.questions?.filter(q => q.type === 'multiple_choice' && q.question).map((q, qIdx) => (
-            <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
-              <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question}</p>
-              <div className="space-y-2">
-                {q.options?.map((opt, optIdx) => (
-                  <label key={optIdx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border transition-colors">
-                    <input
-                      type="radio"
-                      name={`listening_q${q.number}`}
-                      value={opt.charAt(0)}
-                      checked={answers[`listening_${q.number}`] === opt.charAt(0)}
-                      onChange={(e) => handleAnswerChange(q.number, e.target.value)}
-                      className="w-4 h-4 text-blue-600"
-                    />
-                    <span className="text-sm">{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          {/* Multiple Selection Questions */}
-          {currentPartData.questions?.filter(q => q.type === 'multiple_selection').map((q, qIdx) => (
-            <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
-              <p className="text-xs text-blue-600 font-medium mb-1">{q.instruction}</p>
-              <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question}</p>
-              <div className="space-y-2">
-                {q.options?.map((opt, optIdx) => (
-                  <label key={optIdx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border transition-colors">
-                    <input
-                      type="checkbox"
-                      value={opt.charAt(0)}
-                      checked={(answers[`listening_${q.number}`] || []).includes(opt.charAt(0))}
-                      onChange={(e) => {
-                        const current = answers[`listening_${q.number}`] || [];
-                        if (e.target.checked && current.length < (q.answer_count || 2)) {
-                          handleAnswerChange(q.number, [...current, opt.charAt(0)]);
-                        } else if (!e.target.checked) {
-                          handleAnswerChange(q.number, current.filter(v => v !== opt.charAt(0)));
-                        }
-                      }}
-                      className="w-4 h-4 text-blue-600 rounded"
-                    />
-                    <span className="text-sm">{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          {/* Matching Questions */}
-          {currentPartData.questions?.filter(q => q.type === 'matching').map((q, qIdx) => (
-            <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
-              <p className="text-xs text-blue-600 font-medium mb-2">{q.instruction}</p>
-              
-              {q.options_box && (
-                <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <h5 className="font-semibold text-sm mb-3 text-blue-800">{q.options_box.title}</h5>
-                  <div className="grid grid-cols-1 gap-2 text-sm">
-                    {q.options_box.options?.map((opt, oIdx) => (
-                      <div key={oIdx} className="text-gray-700">{opt}</div>
+          {/* Render questions in original order */}
+          {currentPartData.questions?.map((q, qIdx) => {
+            // Multiple Selection Questions (e.g., Q21-22)
+            if (q.type === 'multiple_selection') {
+              return (
+                <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
+                  <p className="text-xs text-blue-600 font-medium mb-1">{q.instruction}</p>
+                  <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question}</p>
+                  <div className="space-y-2">
+                    {q.options?.map((opt, optIdx) => (
+                      <label key={optIdx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border transition-colors">
+                        <input
+                          type="checkbox"
+                          value={opt.charAt(0)}
+                          checked={(answers[`listening_${q.number}`] || []).includes(opt.charAt(0))}
+                          onChange={(e) => {
+                            const current = answers[`listening_${q.number}`] || [];
+                            if (e.target.checked && current.length < (q.answer_count || 2)) {
+                              handleAnswerChange(q.number, [...current, opt.charAt(0)]);
+                            } else if (!e.target.checked) {
+                              handleAnswerChange(q.number, current.filter(v => v !== opt.charAt(0)));
+                            }
+                          }}
+                          className="w-4 h-4 text-blue-600 rounded"
+                        />
+                        <span className="text-sm">{opt}</span>
+                      </label>
                     ))}
                   </div>
                 </div>
-              )}
-              
-              <div className="space-y-3">
-                {q.items?.map((item, iIdx) => (
-                  <div key={iIdx} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-                    <span className="font-bold text-blue-600 w-8">{item.number}.</span>
-                    <span className="flex-1 text-sm font-medium">{item.item}</span>
-                    <select
-                      value={answers[`listening_${item.number}`] || ''}
-                      onChange={(e) => handleAnswerChange(item.number, e.target.value)}
-                      className="w-20 px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    >
-                      <option value="">-</option>
-                      {['A', 'B', 'C', 'D', 'E', 'F'].map(l => (
-                        <option key={l} value={l}>{l}</option>
-                      ))}
-                    </select>
+              );
+            }
+            
+            // Matching Questions (e.g., Q23-27)
+            if (q.type === 'matching') {
+              return (
+                <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
+                  <p className="text-xs text-blue-600 font-medium mb-2">{q.instruction}</p>
+                  
+                  {q.options_box && (
+                    <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                      <h5 className="font-semibold text-sm mb-3 text-blue-800">{q.options_box.title}</h5>
+                      <div className="grid grid-cols-1 gap-2 text-sm">
+                        {q.options_box.options?.map((opt, oIdx) => (
+                          <div key={oIdx} className="text-gray-700">{opt}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="space-y-3">
+                    {q.items?.map((item, iIdx) => (
+                      <div key={iIdx} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                        <span className="font-bold text-blue-600 w-8">{item.number}.</span>
+                        <span className="flex-1 text-sm font-medium">{item.item}</span>
+                        <select
+                          value={answers[`listening_${item.number}`] || ''}
+                          onChange={(e) => handleAnswerChange(item.number, e.target.value)}
+                          className="w-20 px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                          <option value="">-</option>
+                          {q.options_box?.options?.map((opt, oIdx) => {
+                            const letter = opt.charAt(0);
+                            return <option key={letter} value={letter}>{letter}</option>;
+                          })}
+                        </select>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
+                </div>
+              );
+            }
+            
+            // Multiple Choice Questions (e.g., Q28-30)
+            if (q.type === 'multiple_choice' && q.question) {
+              return (
+                <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
+                  <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question}</p>
+                  <div className="space-y-2">
+                    {q.options?.map((opt, optIdx) => (
+                      <label key={optIdx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border transition-colors">
+                        <input
+                          type="radio"
+                          name={`listening_q${q.number}`}
+                          value={opt.charAt(0)}
+                          checked={answers[`listening_${q.number}`] === opt.charAt(0)}
+                          onChange={(e) => handleAnswerChange(q.number, e.target.value)}
+                          className="w-4 h-4 text-blue-600"
+                        />
+                        <span className="text-sm">{opt}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+            
+            return null;
+          })}
         </Card>
       </div>
     );
