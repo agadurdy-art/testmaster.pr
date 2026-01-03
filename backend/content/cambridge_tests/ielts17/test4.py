@@ -685,5 +685,100 @@ For the world record attempt, Gareyev hopes to play 47 blindfold games at once i
                 }
             ]
         }
+    },
+    "answer_keys": {
+        "listening": {
+            "1": "floors",
+            "2": "oven",
+            "3": "shirts",
+            "4": "windows",
+            "5": "balcony",
+            "6": "electrician",
+            "7": "dust",
+            "8": "police",
+            "9": "training",
+            "10": "report",
+            "11": "C",
+            "12": "A",
+            "13": "A",
+            "14": "C",
+            "15": "B",
+            "16": "C",
+            "17": "A",
+            "18": "B",
+            "19": "C",
+            "20": "A",
+            "21": "A",
+            "22": "C",
+            "23": "A",
+            "24": "D",
+            "25": "D",
+            "26": "G",
+            "27": "B",
+            "28": "E",
+            "29": "C",
+            "30": "H",
+            "31": "golden",
+            "32": "healthy",
+            "33": "climate",
+            "34": "stones",
+            "35": "
+
+
+diameter",
+            "36": "tube",
+            "37": "
+
+
+fire",
+            "38": "steam",
+            "39": "
+
+
+cloudy",
+            "40": "litre"
+        },
+        "reading": {
+            "1": "FALSE",
+            "2": "FALSE",
+            "3": "NOT GIVEN",
+            "4": "TRUE",
+            "5": "NOT GIVEN",
+            "6": "TRUE",
+            "7": "droppings",
+            "8": "coffee",
+            "9": "mosquitoes",
+            "10": "protein",
+            "11": "unclean",
+            "12": "culture",
+            "13": "houses",
+            "14": "E",
+            "15": "C",
+            "16": "D",
+            "17": "F",
+            "18": "C",
+            "19": "descendants",
+            "20": "sermon",
+            "21": "fine",
+            "22": "innovation",
+            "23": "B",
+            "24": "E",
+            "25": "B",
+            "26": "D",
+            "27": "D",
+            "28": "E",
+            "29": "F",
+            "30": "B",
+            "31": "H",
+            "32": "E",
+            "33": "FALSE",
+            "34": "NOT GIVEN",
+            "35": "NOT GIVEN",
+            "36": "TRUE",
+            "37": "memory",
+            "38": "communication",
+            "39": "visual",
+            "40": "board"
+        }
     }
 }
