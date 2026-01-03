@@ -1639,20 +1639,70 @@ export default function CambridgeTestInterface() {
           {/* Task 1 - Simple rubric with visuals */}
           {currentTask.task_number === 1 && (
             <>
-              <p className="text-gray-700 mb-4">
-                You should spend about {currentTask.time_recommended} on this task.
-              </p>
-              
-              {/* Rubric Box - Cambridge Style */}
+              {/* Full instruction from PDF */}
               <div className="mb-4 p-5 border border-gray-800 bg-white">
-                <p className="italic text-gray-800 whitespace-pre-line leading-relaxed">
-                  {currentTask.prompt}
+                <p className="text-gray-800 whitespace-pre-line leading-relaxed">
+                  {currentTask.instruction}
                 </p>
               </div>
               
-              <p className="text-gray-700 mb-4">
-                Write {currentTask.word_count}.
-              </p>
+              {/* Visual data - Table and Charts */}
+              {currentTask.visual && (
+                <div className="mb-4 p-4 bg-gray-50 border rounded-lg">
+                  {/* Table */}
+                  {currentTask.visual.table_data && (
+                    <div className="mb-4">
+                      <h4 className="font-bold text-sm mb-2">{currentTask.visual.table_data.title}</h4>
+                      <table className="w-full border-collapse border border-gray-300 text-sm">
+                        <thead>
+                          <tr className="bg-gray-100">
+                            {currentTask.visual.table_data.headers.map((h, i) => (
+                              <th key={i} className="border border-gray-300 p-2 text-left">{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {currentTask.visual.table_data.rows.map((row, ri) => (
+                            <tr key={ri}>
+                              {row.map((cell, ci) => (
+                                <td key={ci} className="border border-gray-300 p-2">{cell}</td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                  
+                  {/* Pie Charts */}
+                  {currentTask.visual.charts && (
+                    <div className="grid grid-cols-2 gap-4">
+                      {currentTask.visual.charts.map((chart, ci) => (
+                        <div key={ci} className="p-3 bg-white border rounded">
+                          <h5 className="font-semibold text-sm mb-2">{chart.year} - {chart.title}</h5>
+                          <div className="space-y-1">
+                            {chart.segments.map((seg, si) => (
+                              <div key={si} className="flex justify-between text-xs">
+                                <span>{seg.label}</span>
+                                <span className="font-bold">{seg.percentage}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Image fallback */}
+                  {currentTask.visual.image_url && !currentTask.visual.table_data && (
+                    <img 
+                      src={`${API_URL}${currentTask.visual.image_url}`} 
+                      alt="Task 1 Visual" 
+                      className="max-w-full rounded"
+                    />
+                  )}
+                </div>
+              )}
             </>
           )}
 
