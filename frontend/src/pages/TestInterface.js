@@ -1333,31 +1333,23 @@ function ElevenLabsExaminer() {
               <Card className="flex-1 overflow-hidden flex flex-col">
                 {/* Questions Header */}
                 {(() => {
-                  // Calculate actual question numbers based on spans for all parts
+                  // IELTS Listening has fixed question ranges per part
                   const currentPart = Math.floor(currentQuestion / 10) + 1;
-                  let startQuestionNumber = 0;
                   
-                  // Sum up spans from previous parts
-                  for (let p = 1; p < currentPart; p++) {
-                    const prevPartQuestions = test.questions?.slice((p - 1) * 10, p * 10) || [];
-                    for (const pq of prevPartQuestions) {
-                      const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
-                      startQuestionNumber += span;
-                    }
-                  }
+                  // Fixed IELTS question ranges - Part 1: 1-10, Part 2: 11-20, Part 3: 21-30, Part 4: 31-40
+                  const partRanges = {
+                    1: { start: 1, end: 10 },
+                    2: { start: 11, end: 20 },
+                    3: { start: 21, end: 30 },
+                    4: { start: 31, end: 40 }
+                  };
                   
-                  // Calculate end question number for current part
-                  const currentPartQuestions = test.questions?.slice((currentPart - 1) * 10, currentPart * 10) || [];
-                  let endQuestionNumber = startQuestionNumber;
-                  for (const cq of currentPartQuestions) {
-                    const span = (cq.type === 'multiple_choice_multi' && cq.answer_count) ? cq.answer_count : 1;
-                    endQuestionNumber += span;
-                  }
+                  const range = partRanges[currentPart] || { start: (currentPart - 1) * 10 + 1, end: currentPart * 10 };
                   
                   return (
                     <div className="p-4 border-b bg-gradient-to-r from-sky-50 to-blue-50">
                       <h2 className="text-lg font-bold text-gray-900">
-                        Part {currentPart} - Questions {startQuestionNumber + 1}-{endQuestionNumber}
+                        Part {currentPart} - Questions {range.start}-{range.end}
                       </h2>
                     </div>
                   );
