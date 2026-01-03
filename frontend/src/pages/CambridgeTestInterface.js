@@ -2152,32 +2152,39 @@ export default function CambridgeTestInterface() {
           )}
 
           {/* Part 2 - Task Card (Visible) */}
-          {isPart2 && currentSpeakingPart.task_card && (
+          {isPart2 && (currentSpeakingPart.task_card || currentSpeakingPart.topic_card) && (
             <div className="space-y-6">
               {/* Task Card - Visible like real test */}
               <div className="p-6 bg-amber-50 border-2 border-amber-400 rounded-xl shadow-md">
                 <div className="text-center mb-4">
                   <Badge className="bg-amber-200 text-amber-800 text-sm px-4 py-1">TASK CARD</Badge>
                 </div>
-                <h4 className="font-bold text-xl mb-4 text-amber-900 text-center">
-                  {currentSpeakingPart.task_card.topic}
+                <h4 className="font-bold text-lg mb-4 text-amber-900">
+                  {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.instruction}
                 </h4>
                 <p className="text-sm text-gray-600 mb-4 font-medium">You should say:</p>
                 <ul className="space-y-3 mb-6">
-                  {currentSpeakingPart.task_card.points?.map((point, pIdx) => (
+                  {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.points?.map((point, pIdx) => (
                     <li key={pIdx} className="flex items-start gap-3 text-gray-700">
                       <span className="w-6 h-6 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0 text-amber-800 font-bold text-sm">
-                        {pIdx + 1}
+                        •
                       </span>
                       {point}
                     </li>
                   ))}
                 </ul>
-                <div className="pt-4 border-t border-amber-300 text-center">
-                  <p className="text-sm text-amber-700">
-                    And explain why this is important to you.
-                  </p>
-                </div>
+                {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.final_prompt && (
+                  <div className="pt-4 border-t border-amber-300">
+                    <p className="text-sm text-amber-700 font-medium">
+                      {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card).final_prompt}
+                    </p>
+                  </div>
+                )}
+                {currentSpeakingPart.examiner_note && (
+                  <div className="mt-4 pt-4 border-t border-amber-200 text-xs text-gray-500 italic">
+                    {currentSpeakingPart.examiner_note}
+                  </div>
+                )}
               </div>
 
               {/* Preparation Timer */}
