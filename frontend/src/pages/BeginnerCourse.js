@@ -48,7 +48,12 @@ const TOPIC_CONFIG = {
 
 export default function BeginnerCourse({ user }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { language } = useI18n();
+  
+  // Check for preview mode and lesson from URL
+  const isPreviewMode = searchParams.get('preview') === 'true';
+  const lessonIdFromUrl = searchParams.get('lesson');
   
   // Theme support
   const { activeTheme } = useTheme();
