@@ -304,7 +304,37 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - `/app/tests/test_game_bank.py` - Game Bank API tests (40 tests) (NEW)
 
 ## Test Reports
-- `/app/test_reports/iteration_8.json` - Game Bank comprehensive test results (NEW)
+- `/app/test_reports/iteration_12.json` - Audio Transcription Fix (January 3, 2025) - 13/13 tests passed
+- `/app/test_reports/iteration_11.json` - Vocabulary & Grammar Feature test results
+- `/app/test_reports/iteration_10.json` - Beginner Pronunciation test results
+- `/app/test_reports/iteration_8.json` - Game Bank comprehensive test results
 - `/app/test_reports/iteration_6.json` - Test 4 comprehensive test results
-- `/app/test_reports/pytest/game_bank_results.xml` - Game Bank pytest results (NEW)
+- `/app/test_reports/pytest/transcription_results.xml` - Transcription endpoints pytest results (NEW)
+- `/app/test_reports/pytest/game_bank_results.xml` - Game Bank pytest results
 - `/app/test_reports/pytest/test4_results.xml` - Test 4 pytest results
+
+## Bug Fixes (January 3, 2025 - Latest Session)
+
+### ✅ Audio Transcription Route Conflict Fix - COMPLETE
+- **Issue**: User reported ALL audio recording and evaluation features broken across the app
+- **Root Cause**: Multiple frontend files were calling `/api/speaking/transcribe` with incorrect parameters. The speaking_qb.py endpoint expects `audio`, `question_id`, `part` but most pages were sending just `file`.
+- **Fix Applied**: 
+  - Main transcription endpoint renamed to `/api/transcribe-audio` in `server.py`
+  - Updated 5 frontend files to use the correct endpoint:
+    - `SpeakingPractice.js`
+    - `ComprehensiveLevelTest.js`
+    - `MasteryCourse.js`
+    - `LevelTest.js`
+    - `lib/api.js` (transcribeAudio function)
+  - `BeginnerCourse.js` was already correct
+  - `SpeakingPracticeQB.js` correctly uses `/api/speaking/transcribe` with proper params
+- **Endpoint Mapping**:
+  - `/api/transcribe-audio`: Simple transcription (file → {text, language})
+  - `/api/speaking/transcribe`: QB-specific (audio, question_id, part → {success, transcript})
+- **Test Results**: 13/13 backend tests passed (100%)
+- **Test Report**: `/app/test_reports/iteration_12.json`
+
+### ✅ Landing Page "Try our courses" Update - COMPLETE
+- **Issue**: Landing page courses modal didn't show the new "Vocabulary & Grammar" course
+- **Fix Applied**: Added Vocabulary & Grammar course to COURSES array in `LandingPage.js`
+- **Verified**: Screenshot confirmed course appears in modal with correct details (Band 4.5 - 7.0+, 30 units, 250+ items)
