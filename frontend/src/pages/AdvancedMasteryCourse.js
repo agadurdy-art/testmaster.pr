@@ -497,6 +497,11 @@ export default function AdvancedMasteryCourse({ user }) {
     });
     setQuizSubmitted(true);
     toast.success(`Quiz complete! ${correct}/${total} correct (${answered} answered, ${total - answered} skipped)`);
+    
+    // Mark quiz section as complete for progress tracking
+    if (selectedModule) {
+      markSectionComplete('advanced', selectedModule.module_number, 'quiz');
+    }
   };
 
   // Render modules list
