@@ -1416,14 +1416,14 @@ export default function CambridgeTestInterface() {
                 <div className="space-y-3">
                   <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
                   {q.title && <h5 className="font-semibold text-gray-800">{q.title}</h5>}
-                  {q.sentences?.map((sent, sIdx) => (
+                  {(q.sentences || q.items)?.map((sent, sIdx) => (
                     <div key={sIdx} className="p-3 bg-white border rounded-lg">
                       <span className="text-sm">
-                        {sent.text.includes('___') ? (
-                          renderGapFill(sent.text.replace(`___${sent.number}___`, `___${sent.number}___`))
+                        {(sent.text || sent.sentence)?.includes('___') ? (
+                          renderGapFill((sent.text || sent.sentence).replace(`___${sent.number}___`, `___${sent.number}___`))
                         ) : (
                           <>
-                            {sent.number}. {sent.text}
+                            {sent.number}. {sent.text || sent.sentence}
                             <input
                               type="text"
                               value={answers[`reading_${sent.number}`] || ''}
