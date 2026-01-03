@@ -735,20 +735,30 @@ export default function GameBank() {
       {/* Content */}
       <div className="max-w-4xl mx-auto p-4 pb-20">
         {/* Topic Selection */}
-        <Card className="p-4 mb-6">
-          <h3 className="font-medium text-gray-700 mb-3">Choose a Topic:</h3>
+        <Card className="p-4 mb-6 bg-gradient-to-r from-violet-50 to-purple-50 border-violet-100">
+          <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <span className="text-xl">📚</span> Choose a Topic:
+          </h3>
           <div className="flex flex-wrap gap-2">
-            {topics.map(topic => (
-              <Button
-                key={topic}
-                variant={selectedTopic === topic ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedTopic(topic)}
-                className={selectedTopic === topic ? 'bg-violet-500' : ''}
-              >
-                {topic.charAt(0).toUpperCase() + topic.slice(1)}
-              </Button>
-            ))}
+            {topics.map(topic => {
+              const topicEmojis = {
+                family: '👨‍👩‍👧', food: '🍎', animals: '🐾', colors: '🎨', 
+                numbers: '🔢', school: '🏫', weather: '🌤️', travel: '✈️',
+                health: '💪', jobs: '👷', home: '🏠', ielts_academic: '📖'
+              };
+              return (
+                <Button
+                  key={topic}
+                  variant={selectedTopic === topic ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedTopic(topic)}
+                  className={`${selectedTopic === topic ? 'bg-gradient-to-r from-violet-500 to-purple-600 text-white' : 'hover:bg-violet-50'} transition-all`}
+                >
+                  <span className="mr-1">{topicEmojis[topic] || '📝'}</span>
+                  {topic === 'ielts_academic' ? 'IELTS Academic' : topic.charAt(0).toUpperCase() + topic.slice(1).replace('_', ' ')}
+                </Button>
+              );
+            })}
           </div>
         </Card>
         
