@@ -318,6 +318,163 @@ async def get_question_bank_stats(db=None):
 
 # ============ PRACTICE MODE ENDPOINTS ============
 
+def get_questions_from_cambridge_tests(skill: str, count: int = 10, question_type: str = None):
+    """Extract questions from Cambridge IELTS tests for MICRO-BASED practice mode."""
+    import random
+    from routes.cambridge import CAMBRIDGE_TESTS
+    
+    all_questions = []
+    
+    for book_id, book_data in CAMBRIDGE_TESTS.items():
+        for test_id, test_data in book_data.get("tests", {}).items():
+            if test_data is None:
+                continue
+                
+            sections = test_data.get("sections", {})
+            source_name = f"{book_id}_{test_id}"
+            
+            if skill == "reading":
+                reading = sections.get("reading", {})
+                for passage in reading.get("passages", []):
+                    passage_text = passage.get("passage_text", passage.get("text", ""))
+                    
+                    for q_group in passage.get("questions", []):
+                        q_type = q_group.get("type", "unknown")
+                        
+                        # Filter by question type if specified
+                        if question_type and q_type != question_type:
+                            continue
+                        
+                        # For MICRO-BASED practice: extract only relevant context
+                        if q_type == "true_false_not_given" or q_type == "yes_no_not_given":
+                            for stmt in q_group.get("statements", []):
+                                # Find relevant paragraph for this statement
+                                relevant_text = extract_relevant_context(passage_text, stmt.get("statement", ""))
+                                all_questions.append({
+                                    "id": f"{source_name}_R{stmt['number']}",
+                                    "type": q_type,
+                                    "question_number": stmt["number"],
+                                    "statement": stmt["statement"],
+                                    "context": relevant_text,  # Only relevant paragraph
+                                    "passage_title": passage.get("title", ""),
+                                    "skill": "reading",
+                                    "source": source_name,
+                                    "instruction": q_group.get("instruction", "")
+                                })
+                        
+                        elif q_type == "section_matching":
+                            for item in q_group.get("items", []):
+                                all_questions.append({
+                                    "id": f"{source_name}_R{item['number']}",
+                                    "type": q_type,
+                                    "question_number": item["number"],
+                                    "question": item["item"],
+                                    "context": passage_text[:1500],  # First few paragraphs
+                                    "passage_title": passage.get("title", ""),
+                                    "skill": "reading",
+                                    "source": source_name,
+                                    "instruction": q_group.get("instruction", "")
+                                })
+                        
+                        elif q_type == "sentence_completion":
+                            for item in q_group.get("items", []):
+                                relevant_text = extract_relevant_context(passage_text, item.get("sentence", ""))
+                                all_questions.append({
+                                    "id": f"{source_name}_R{item['number']}",
+                                    "type": q_type,
+                                    "question_number": item["number"],
+                                    "sentence": item["sentence"],
+                                    "context": relevant_text,
+                                    "passage_title": passage.get("title", ""),
+                                    "skill": "reading",
+                                    "source": source_name,
+                                    "instruction": q_group.get("instruction", "")
+                                })
+                        
+                        elif q_type == "multiple_choice":
+                            for item in q_group.get("items", []):
+                                relevant_text = extract_relevant_context(passage_text, item.get("question", ""))
+                                all_questions.append({
+                                    "id": f"{source_name}_R{item['number']}",
+                                    "type": q_type,
+                                    "question_number": item["number"],
+                                    "question": item["question"],
+                                    "options": item.get("options", []),
+                                    "context": relevant_text,
+                                    "passage_title": passage.get("title", ""),
+                                    "skill": "reading",
+                                    "source": source_name,
+                                    "instruction": q_group.get("instruction", "")
+                                })
+                        
+                        elif q_type == "note_completion":
+                            # For note completion, show the visual/notes structure
+                            all_questions.append({
+                                "id": f"{source_name}_R_notes_{q_group.get('number', 'group')}",
+                                "type": q_type,
+                                "question_range": q_group.get("number", ""),
+                                "visual": q_group.get("visual", {}),
+                                "context": passage_text[:1000],
+                                "passage_title": passage.get("title", ""),
+                                "skill": "reading",
+                                "source": source_name,
+                                "instruction": q_group.get("instruction", "")
+                            })
+            
+            elif skill == "listening":
+                listening = sections.get("listening", {})
+                for part in listening.get("parts", []):
+                    part_num = part.get("part_number", 1)
+                    
+                    for q in part.get("questions", []):
+                        q_type = q.get("type", "note_completion")
+                        
+                        if question_type and q_type != question_type:
+                            continue
+                        
+                        all_questions.append({
+                            "id": f"{source_name}_L{q.get('number', '')}",
+                            "type": q_type,
+                            "question_number": q.get("number", ""),
+                            "question": q.get("question", q.get("item", "")),
+                            "part": part_num,
+                            "context": part.get("title", ""),
+                            "audio_file": part.get("audio_file", ""),
+                            "skill": "listening",
+                            "source": source_name
+                        })
+    
+    random.shuffle(all_questions)
+    return all_questions[:count] if count else all_questions
+
+
+def extract_relevant_context(full_text: str, search_term: str, context_size: int = 500) -> str:
+    """Extract only the relevant paragraph/context for a question - MICRO-BASED practice."""
+    if not full_text or not search_term:
+        return full_text[:context_size] if full_text else ""
+    
+    paragraphs = full_text.split('\n\n')
+    
+    # Search for the most relevant paragraph
+    search_words = search_term.lower().split()[:5]  # Use first 5 words
+    
+    best_para = ""
+    best_score = 0
+    
+    for para in paragraphs:
+        para_lower = para.lower()
+        score = sum(1 for word in search_words if word in para_lower)
+        if score > best_score:
+            best_score = score
+            best_para = para
+    
+    if best_para:
+        return best_para[:context_size]
+    
+    # Fallback: return first paragraph
+    return paragraphs[0][:context_size] if paragraphs else full_text[:context_size]
+
+
 def get_questions_from_full_tests(skill: str, count: int = 10):
     """Extract questions from ALL Full Test content for practice mode."""
     import random
