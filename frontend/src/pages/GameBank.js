@@ -698,7 +698,7 @@ export default function GameBank() {
             {finalScore.stars >= 3 ? '🏆' : finalScore.stars >= 2 ? '🎉' : finalScore.stars >= 1 ? '👍' : '💪'}
           </div>
           
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Game Complete!</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">{getText('gameComplete')}</h2>
           <p className="text-gray-600 mb-4">{finalScore.message}</p>
           
           <div className="flex justify-center gap-1 mb-4">
@@ -713,14 +713,14 @@ export default function GameBank() {
           <div className="text-4xl font-bold text-violet-600 mb-2">
             {finalScore.score} / {finalScore.total}
           </div>
-          <p className="text-sm text-gray-500 mb-6">{finalScore.percentage}% correct</p>
+          <p className="text-sm text-gray-500 mb-6">{finalScore.percentage}% {getText('correct')}</p>
           
           <div className="flex gap-3">
             <Button onClick={resetGame} variant="outline" className="flex-1">
-              <Home className="w-4 h-4 mr-2" /> Menu
+              <Home className="w-4 h-4 mr-2" /> {getText('backToGames')}
             </Button>
             <Button onClick={() => startGame(selectedGame)} className="flex-1 bg-gradient-to-r from-violet-500 to-purple-600">
-              <RefreshCw className="w-4 h-4 mr-2" /> Play Again
+              <RefreshCw className="w-4 h-4 mr-2" /> {getText('playAgain')}
             </Button>
           </div>
         </Card>
@@ -735,7 +735,7 @@ export default function GameBank() {
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-6">
             <Button variant="ghost" onClick={resetGame}>
-              <ArrowLeft className="w-5 h-5 mr-2" /> Back
+              <ArrowLeft className="w-5 h-5 mr-2" /> {getText('back')}
             </Button>
             <h1 className="font-bold text-gray-800">{gameData.title}</h1>
           </div>
