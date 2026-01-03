@@ -192,6 +192,19 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - All landing page sections fully translated to Turkish in `/app/frontend/src/lib/i18n.js`
 - Verified sections: Hero, Methodology, Comparison, Practical Learning, Skills, Who For, Complete Prep, Honesty Promise, Footer, Auth modals
 
+### ✅ Beginner Course Pronunciation Check - TESTED & WORKING (January 3, 2025)
+- **Backend API Tests**: 13/13 passed (100%)
+  - `GET /api/beginner/pronunciation/words/{topic}` - Returns words with phonetic guides (IPA + simplified)
+  - `POST /api/beginner/pronunciation/assess` - Azure Speech SDK integration working
+  - Topics supported: family, food, daily_life, greetings
+- **Frontend UI Verified**:
+  - Vocabulary section with Listen (speaker) and Mic (record) buttons
+  - Star rating feedback UI (1-5 stars)
+  - Feedback includes: main_feedback, encouragement, tips, word_feedback
+  - Microphone permission handling with graceful error messages
+- **Backend Fix Applied**: None score handling in `beginner_pronunciation.py`
+- **Test Report**: `/app/test_reports/iteration_10.json`
+
 ## Completed Features (January 3, 2025)
 
 ### ✅ Multi-Language Control System - COMPLETE
