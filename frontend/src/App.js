@@ -299,6 +299,10 @@ function AppWithSessionHandler() {
           element={user ? <VocabGrammarCourse user={user} /> : <Navigate to="/" />} 
         />
         <Route 
+          path="/vocab-grammar/quiz" 
+          element={user ? <VocabGrammarQuiz user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
           path="/writing-practice" 
           element={user ? <WritingPractice user={user} /> : <Navigate to="/" />} 
         />
