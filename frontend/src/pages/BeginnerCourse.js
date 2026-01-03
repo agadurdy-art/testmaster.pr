@@ -750,8 +750,8 @@ export default function BeginnerCourse({ user }) {
     <Card className="p-6 bg-white border-0 shadow-lg">
       <div className="text-center mb-6 pb-4 border-b border-green-100">
         <div className="text-4xl mb-2">📚</div>
-        <h3 className="text-xl font-bold text-gray-900">New Words to Learn!</h3>
-        <p className="text-sm text-gray-500">Click the speaker to hear how to say each word</p>
+        <h3 className="text-xl font-bold text-gray-900">{getText('newWords')}</h3>
+        <p className="text-sm text-gray-500">{getText('clickToListen')}</p>
       </div>
       
       <div className="space-y-4">
