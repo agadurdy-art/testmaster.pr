@@ -378,12 +378,14 @@ def get_questions_from_cambridge_tests(skill: str, count: int = 10, question_typ
                         
                         elif q_type == "sentence_completion":
                             for item in q_group.get("items", []):
-                                relevant_text = extract_relevant_context(passage_text, item.get("sentence", ""))
+                                # Support both 'sentence' and 'text' keys
+                                sentence_text = item.get("sentence", item.get("text", ""))
+                                relevant_text = extract_relevant_context(passage_text, sentence_text)
                                 all_questions.append({
                                     "id": f"{source_name}_R{item['number']}",
                                     "type": q_type,
                                     "question_number": item["number"],
-                                    "sentence": item["sentence"],
+                                    "sentence": sentence_text,
                                     "context": relevant_text,
                                     "passage_title": passage.get("title", ""),
                                     "skill": "reading",
