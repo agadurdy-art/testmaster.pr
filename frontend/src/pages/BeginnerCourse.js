@@ -672,19 +672,72 @@ export default function BeginnerCourse({ user }) {
           <div key={idx} className="p-4 bg-gray-50 rounded-xl">
             <div className="flex items-center justify-between mb-2">
               <h4 className="text-lg font-bold text-gray-900">{item.word}</h4>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => playPronunciation(item.word)}
-                disabled={playingAudio === item.word}
-              >
-                {playingAudio === item.word ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Volume2 className="w-4 h-4" />
-                )}
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => playPronunciation(item.word)}
+                  disabled={playingAudio === item.word}
+                  className="text-blue-600"
+                >
+                  {playingAudio === item.word ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Volume2 className="w-4 h-4" />
+                  )}
+                </Button>
+                <Button
+                  variant={pronunciationRecording && pronunciationWord === item.word ? "destructive" : "outline"}
+                  size="sm"
+                  onClick={() => {
+                    if (pronunciationRecording && pronunciationWord === item.word) {
+                      stopPronunciationRecording();
+                    } else {
+                      startPronunciationRecording(item.word);
+                    }
+                  }}
+                  disabled={evaluatingPronunciation || (pronunciationRecording && pronunciationWord !== item.word)}
+                  className={pronunciationRecording && pronunciationWord === item.word ? "" : "text-green-600"}
+                >
+                  {evaluatingPronunciation && pronunciationWord === item.word ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : pronunciationRecording && pronunciationWord === item.word ? (
+                    <Square className="w-4 h-4" />
+                  ) : (
+                    <Mic className="w-4 h-4" />
+                  )}
+                </Button>
+              </div>
             </div>
+            
+            {/* Pronunciation Feedback */}
+            {pronunciationFeedback && pronunciationWord === item.word && (
+              <div className={`mt-3 p-3 rounded-lg ${pronunciationFeedback.stars >= 4 ? 'bg-green-50 border border-green-200' : pronunciationFeedback.stars >= 2 ? 'bg-amber-50 border border-amber-200' : 'bg-red-50 border border-red-200'}`}>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="flex">
+                    {[1,2,3,4,5].map(star => (
+                      <Star 
+                        key={star} 
+                        className={`w-4 h-4 ${star <= pronunciationFeedback.stars ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+                      />
+                    ))}
+                  </div>
+                  <span className="font-medium text-sm">{pronunciationFeedback.main_feedback}</span>
+                </div>
+                <p className="text-sm text-gray-600">{pronunciationFeedback.encouragement}</p>
+                {pronunciationFeedback.tips && pronunciationFeedback.tips.length > 0 && (
+                  <ul className="mt-2 text-xs text-gray-500">
+                    {pronunciationFeedback.tips.map((tip, i) => (
+                      <li key={i} className="flex items-center gap-1">
+                        <Lightbulb className="w-3 h-3 text-amber-500" />
+                        {tip}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+            
             <p className="text-gray-600 mb-2">
               <span className="font-medium text-gray-700">Meaning:</span> {item.meaning}
             </p>
