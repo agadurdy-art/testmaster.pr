@@ -316,9 +316,10 @@ export default function LandingPage({ onLogin, user, showLogin }) {
   useEffect(() => {
     const fetchAllCourseLessons = async () => {
       try {
-        // Fetch lessons from all 3 courses
-        const [beginnerRes, masteryRes, advancedRes] = await Promise.all([
+        // Fetch lessons from all 4 courses
+        const [beginnerRes, vocabRes, masteryRes, advancedRes] = await Promise.all([
           fetch(`${API_URL}/api/beginner-english/lessons`).catch(() => ({ ok: false })),
+          fetch(`${API_URL}/api/vocab-grammar/lessons`).catch(() => ({ ok: false })),
           fetch(`${API_URL}/api/mastery-course/modules`).catch(() => ({ ok: false })),
           fetch(`${API_URL}/api/advanced-mastery/modules`).catch(() => ({ ok: false }))
         ]);
@@ -328,6 +329,15 @@ export default function LandingPage({ onLogin, user, showLogin }) {
         if (beginnerRes.ok) {
           const data = await beginnerRes.json();
           lessons.beginner = Array.isArray(data) ? data.slice(0, 3) : [];
+        }
+        
+        if (vocabRes.ok) {
+          const data = await vocabRes.json();
+          // Get 3 lessons from different band levels for variety
+          const foundation = data.filter(l => l.band_level === 'foundation').slice(0, 1);
+          const development = data.filter(l => l.band_level === 'development').slice(0, 1);
+          const advanced = data.filter(l => l.band_level === 'advanced').slice(0, 1);
+          lessons['vocab-grammar'] = [...foundation, ...development, ...advanced];
         }
         
         if (masteryRes.ok) {
