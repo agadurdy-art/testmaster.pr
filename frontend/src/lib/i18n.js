@@ -982,6 +982,27 @@ export const translations = {
     landingGuaranteedDesc: 'Her ders hemen uygulayabileceğiniz pratik bir alıştırmayla biter.',
     landingStartLearning: 'Öğrenmeye Başla',
     
+    // Vocabulary & Skills
+    landingVocabMastery: 'Kelime Ustalığı',
+    landingVocabMasteryDesc: 'Gerçek kullanımla konuya özel kelime öğrenin. Her bağlamda doğal olarak sofistike dil kullanın.',
+    landingTimeManagement: 'Zaman Yönetimi',
+    landingTimeManagementDesc: 'Zamanlı koşullarda pratik yapın. Her durumda baskı altında verimli çalışma becerileri geliştirin.',
+    
+    // Who is it for
+    landingWhoFor: 'IELTS Ace kimler için?',
+    landingWhoFor1: 'Band 4-5\'te takılan öğrenciler',
+    landingWhoFor1Desc: 'Orta seviye tavanını kırmak',
+    landingWhoFor2: 'Band 6-7+ hedefleyenler',
+    landingWhoFor2Desc: 'Hedefinize ulaşmak için kesin geri bildirime ihtiyacınız var',
+    landingWhoFor3: 'Kendi kendine öğrenenler',
+    landingWhoFor3Desc: 'Öğretmen olmadan net rehberliğe ihtiyacınız var',
+    landingWhoFor4: 'Belirsiz geri bildirimden bıkanlar',
+    landingWhoFor4Desc: 'Dürüst, uygulanabilir tavsiye isteyenler',
+    
+    // Complete Prep
+    landingCompletePrep: 'Eksiksiz IELTS Hazırlığı',
+    landingCompletePrepDesc: 'AI destekli değerlendirme ile dört beceri',
+    
     // Try Our Lessons
     landingTryOurLessons: 'Derslerimizi Deneyin',
     landingChooseCourse: 'Seviyenizi Seçin',
