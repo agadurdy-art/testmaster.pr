@@ -165,9 +165,12 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - ✅ **Multi-Language System (Phase 1)** - Game Bank fully supports EN/VI/TR
 
 ### P0: In Progress - Multi-Language Control System
-- 🔧 **Phase 2**: Dashboard, BeginnerCourse, other components
-- 🔧 **Phase 3**: AI Output language control
-- 🔧 **Phase 4**: Language leak detection in dev mode
+- ✅ **Phase 1**: Core helpers (getLocalizedText, langGuard, leakDetection) - DONE
+- ✅ **Phase 2**: Game Bank fully multi-language - DONE
+- ✅ **Phase 3**: Dashboard already multi-language - VERIFIED
+- ✅ **Phase 4**: BeginnerCourse multi-language UI - DONE
+- ✅ **Phase 5**: Language leak watcher in App.js - DONE
+- ✅ **Phase 6**: Backend language_utils.py for AI prompts - DONE
 
 ### P1: Content Library Expansion (ON HOLD per user request)
 - Cambridge IELTS 18 (all 4 tests) - waiting for user to provide PDF/audio
