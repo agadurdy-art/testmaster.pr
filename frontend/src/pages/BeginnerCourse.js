@@ -770,7 +770,7 @@ export default function BeginnerCourse({ user }) {
                   {playingAudio === item.word ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <>🔊 Listen</>
+                    <>🔊 {getText('listen')}</>
                   )}
                 </Button>
                 <Button
