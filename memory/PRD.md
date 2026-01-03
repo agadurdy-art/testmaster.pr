@@ -173,13 +173,14 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 ## Completed Features (January 3, 2025)
 
 ### ✅ Game Bank Feature - COMPLETE
-- **Backend API**: `/api/games/*` with 6 game types and 6 vocabulary topics
+- **Backend API**: `/api/games/*` with 6 game types and 12 vocabulary topics
   - GET `/api/games/list` - Lists all games and topics
   - GET `/api/games/play/{game_type}?topic=X&count=N` - Generates game content
   - POST `/api/games/submit/{game_id}` - Submits score and returns stars (0-3)
 - **Game Types**: matching_pairs, spelling_bee, true_false, word_race, lucky_wheel, fishing
-- **Topics**: family, food, animals, colors, numbers, school
+- **Topics (12)**: family, food, animals, colors, numbers, school, weather, travel, health, jobs, home, ielts_academic
 - **Frontend**: `/game-bank` route with interactive game components
+- **Dashboard Integration**: "Quick Games" section with 3 featured games and "Daily Challenge"
 - **Test Results**: 40/40 backend tests passed
 
 ### ✅ Lesson Progress Tracking - COMPLETE
