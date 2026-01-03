@@ -446,6 +446,16 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+# QA Admin routes (evidence packs, approval workflow)
+try:
+    from routes.qa_admin import router as qa_admin_router
+    app.include_router(qa_admin_router)
+    print("✅ QA Admin routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load QA Admin routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 # ============ Models ============
 
 class User(BaseModel):
