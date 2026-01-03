@@ -50,18 +50,36 @@ IELTS17_TEST2 = {
                                     "Taking Mrs Carroll to ___6___",
                                     "Work in the ___7___ at Mr Selsbury's house"
                                 ]
+                            },
+                            {
+                                "heading": "Village social events",
+                                "subsections": [
+                                    {
+                                        "name": "19 Oct",
+                                        "items": [
+                                            "Event: ___8___",
+                                            "Location: Village hall",
+                                            "Help: providing refreshments"
+                                        ]
+                                    },
+                                    {
+                                        "name": "18 Nov",
+                                        "items": [
+                                            "Event: dance",
+                                            "Location: Village hall",
+                                            "Help: checking ___9___"
+                                        ]
+                                    },
+                                    {
+                                        "name": "31 Dec",
+                                        "items": [
+                                            "Event: New Year's Eve party",
+                                            "Location: Mountfort Hotel",
+                                            "Help: designing the ___10___"
+                                        ]
+                                    }
+                                ]
                             }
-                        ]
-                    },
-                    "table_visual": {
-                        "type": "table",
-                        "title": "Village social events",
-                        "instruction": "Questions 8-10: Complete the table below. Write ONE WORD ONLY for each answer.",
-                        "headers": ["Date", "Event", "Location", "Help needed"],
-                        "rows": [
-                            {"date": "19 Oct", "event": "___8___", "location": "Village hall", "help": "providing refreshments"},
-                            {"date": "18 Nov", "event": "dance", "location": "Village hall", "help": "checking ___9___"},
-                            {"date": "31 Dec", "event": "New Year's Eve party", "location": "Mountfort Hotel", "help": "designing the ___10___"}
                         ]
                     },
                     "questions": [
@@ -72,9 +90,9 @@ IELTS17_TEST2 = {
                         {"number": 5, "type": "note_completion"},
                         {"number": 6, "type": "note_completion"},
                         {"number": 7, "type": "note_completion"},
-                        {"number": 8, "type": "table_completion"},
-                        {"number": 9, "type": "table_completion"},
-                        {"number": 10, "type": "table_completion"}
+                        {"number": 8, "type": "note_completion"},
+                        {"number": 9, "type": "note_completion"},
+                        {"number": 10, "type": "note_completion"}
                     ]
                 },
                 {
@@ -548,16 +566,16 @@ Despite decades of research, the nature of creative problem-solving remains inco
     },
     "answer_keys": {
         "listening": {
-            "1": "/(re)?shelving/i",
-            "2": "/(the )?/(record|catalogue|catalog)(s)?/i",
-            "3": "/(Green|green)/",
-            "4": "/(transport|transportation)/i",
-            "5": "/(painting|art)/i",
-            "6": "/(hospital|the hospital)/i",
-            "7": "/(garden|a garden)/i",
-            "8": "/(quiz|a quiz)/i",
-            "9": "/(ticket|tickets)/i",
-            "10": "/(poster|a poster|posters)/i",
+            "1": ["shelving", "re-shelving", "reshelving"],
+            "2": ["records", "record", "catalogue", "catalog"],
+            "3": "Green",
+            "4": "transport",
+            "5": "painting",
+            "6": "hospital",
+            "7": "garden",
+            "8": "quiz",
+            "9": ["tickets", "ticket"],
+            "10": "poster",
             "11": "A",
             "12": "C",
             "13": "C",
