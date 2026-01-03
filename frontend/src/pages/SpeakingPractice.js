@@ -140,7 +140,29 @@ export default function SpeakingPractice({ user }) {
 
   const resetPractice = () => { setView('parts'); setSelectedPart(null); setSelectedTopic(null); setCurrentQuestionIndex(0); setRecordings([]); setTranscripts([]); setAudioBlob(null); setFeedback(null); setIsPreparing(false); setIsSpeaking(false); setPrepTime(0); setSpeakTime(0); };
 
-  const playQuestion = (text) => { if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.9; setPlayingAudio(text); u.onend = () => setPlayingAudio(null); window.speechSynthesis.speak(u); } };
+  // Auto-record mode state
+  const [autoRecordEnabled, setAutoRecordEnabled] = useState(true);
+  
+  const playQuestion = (text, autoStartRecord = false) => { 
+    if ('speechSynthesis' in window) { 
+      window.speechSynthesis.cancel(); 
+      const u = new SpeechSynthesisUtterance(text); 
+      u.lang = 'en-US'; 
+      u.rate = 0.9; 
+      setPlayingAudio(text); 
+      u.onend = () => { 
+        setPlayingAudio(null);
+        // Auto-start recording after prompt plays (if enabled and not Part 2 which has prep time)
+        if (autoStartRecord && autoRecordEnabled && selectedPart !== 'part2' && !recording) {
+          setTimeout(() => {
+            toast.info('🎤 Recording starting...');
+            startRecording();
+          }, 500);
+        }
+      }; 
+      window.speechSynthesis.speak(u); 
+    } 
+  };
 
   const getBandColor = (band) => band >= 7 ? 'bg-green-100 text-green-700' : band >= 6 ? 'bg-blue-100 text-blue-700' : band >= 5 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700';
 
