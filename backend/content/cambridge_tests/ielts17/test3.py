@@ -481,17 +481,21 @@ There is even hope that oil palm plantations might not need to be such sterile m
                                 "D: Its regulations regarding sustainability are stricter than those governing other industries.",
                                 "E: It was formed at the request of environmentalists concerned about the loss of virgin forests."
                             ],
-                            "select_count": 2
+                            "select_count": 2,
+                            "items": [
+                                {"number": 21},
+                                {"number": 22}
+                            ]
                         },
                         {
                             "number": "23-26",
                             "type": "sentence_completion",
                             "instruction": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
                             "items": [
-                                {"number": 23, "sentence": "One advantage of palm oil for manufacturers is that it stays __________ even when not refrigerated."},
-                                {"number": 24, "sentence": "The __________ is the best known of the animals suffering habitat loss as a result of the spread of oil palm plantations."},
-                                {"number": 25, "sentence": "As one of its criteria for the certification of sustainable palm oil, the RSPO insists that growers check __________ on a routine basis."},
-                                {"number": 26, "sentence": "Ellwood and his researchers are looking into whether the bird's nest fern could restore __________ in areas where oil palm trees are grown."}
+                                {"number": 23, "text": "One advantage of palm oil for manufacturers is that it stays __________ even when not refrigerated."},
+                                {"number": 24, "text": "The __________ is the best known of the animals suffering habitat loss as a result of the spread of oil palm plantations."},
+                                {"number": 25, "text": "As one of its criteria for the certification of sustainable palm oil, the RSPO insists that growers check __________ on a routine basis."},
+                                {"number": 26, "text": "Ellwood and his researchers are looking into whether the bird's nest fern could restore __________ in areas where oil palm trees are grown."}
                             ]
                         }
                     ]
