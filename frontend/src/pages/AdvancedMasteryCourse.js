@@ -108,6 +108,20 @@ export default function AdvancedMasteryCourse({ user }) {
     };
   }, []);
 
+  // Auto-select module from URL parameter (for preview mode from landing page)
+  useEffect(() => {
+    if (lessonIdFromUrl && modules.length > 0) {
+      const targetModule = modules.find(m => 
+        String(m.id) === lessonIdFromUrl || 
+        String(m.module_number) === lessonIdFromUrl
+      );
+      if (targetModule) {
+        setSelectedModule(targetModule);
+        setView('module-detail');
+      }
+    }
+  }, [lessonIdFromUrl, modules]);
+
   const loadModules = async () => {
     try {
       const res = await fetch(`${API_URL}/api/advanced-mastery/modules`);
