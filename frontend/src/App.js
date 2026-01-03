@@ -21,6 +21,7 @@ import LevelTest from './pages/LevelTest';
 import ComprehensiveLevelTest from './pages/ComprehensiveLevelTest';
 import AdaptiveLevelTest from './pages/AdaptiveLevelTest';
 import VocabGrammarCourse from './pages/VocabGrammarCourse';
+import VocabGrammarQuiz from './pages/VocabGrammarQuiz';
 import WritingPractice from './pages/WritingPractice';
 import SpeakingPractice from './pages/SpeakingPractice';
 import Progress from './pages/Progress';
