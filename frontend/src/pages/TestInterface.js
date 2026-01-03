@@ -1359,10 +1359,8 @@ function ElevenLabsExaminer() {
                     {/* Task descriptions for Listening */}
                     {(() => {
                       const currentPart = Math.floor(currentQuestion / 10) + 1;
-                      const partQuestions = test.questions?.slice(
-                        Math.floor(currentQuestion / 10) * 10,
-                        (Math.floor(currentQuestion / 10) + 1) * 10
-                      ) || [];
+                      // Filter questions by section field instead of array index
+                      const partQuestions = test.questions?.filter(q => q.section === currentPart) || [];
                       let currentType = null;
                       const listeningTaskDescriptions = {
                         'note_completion': {
@@ -1398,7 +1396,7 @@ function ElevenLabsExaminer() {
                       // Calculate starting question number based on previous parts' spans
                       let runningQuestionNumber = 0;
                       for (let p = 1; p < currentPart; p++) {
-                        const prevPartQuestions = test.questions?.slice((p - 1) * 10, p * 10) || [];
+                        const prevPartQuestions = test.questions?.filter(q => q.section === p) || [];
                         for (const pq of prevPartQuestions) {
                           const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
                           runningQuestionNumber += span;
