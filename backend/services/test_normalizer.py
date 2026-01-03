@@ -310,7 +310,7 @@ class TestNormalizer:
                                 })
         
         # Sort questions by number
-        all_questions.sort(key=lambda x: x.get("number", 0))
+        all_questions.sort(key=lambda x: int(x.get("number", 0)) if str(x.get("number", 0)).isdigit() else 0)
         
         return {
             "passages": normalized_passages,
