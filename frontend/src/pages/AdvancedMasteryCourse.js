@@ -9,13 +9,15 @@ import {
   BookOpen, ChevronLeft, ChevronRight, Home, Trophy, Star, Mic, 
   PenTool, HelpCircle, GraduationCap, Target, Sparkles, Volume2,
   Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap, AlertCircle,
-  Headphones, Play, Pause, RotateCcw
+  Headphones, Play, Pause, RotateCcw, Globe
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
 import { WritingEvaluationResult, ReadingEvaluationResult } from '../components/EvaluationResult';
+import { useI18n } from '../lib/i18n';
+import { getEnglishOnlyNotice } from '../lib/languageLock';
 import { 
   markSectionComplete, 
   getLessonProgress, 
