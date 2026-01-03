@@ -13,7 +13,7 @@ import tempfile
 # Import QB evaluation functions directly
 from routes.speaking_qb import (
     evaluate_speaking_test as qb_evaluate_full_speaking,
-    evaluate_speaking_with_azure,
+    azure_pronunciation_assessment as evaluate_speaking_with_azure,
     evaluate_speaking_premium
 )
 
