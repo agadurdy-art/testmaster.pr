@@ -1,6 +1,6 @@
 """
 Cambridge IELTS 17 - Test 2
-Complete test content extracted from official Cambridge materials
+Official test content in correct IELTS format
 """
 
 IELTS17_TEST2 = {
@@ -21,44 +21,47 @@ IELTS17_TEST2 = {
                     "title": "Opportunities for voluntary work in Southoe village",
                     "question_range": "1-10",
                     "question_count": 10,
-                    "context": "A conversation about volunteer opportunities in Southoe village",
-                    "question_types": ["note_completion"],
+                    "context": "A conversation about voluntary work opportunities",
+                    "question_types": ["note_completion", "table_completion"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part1.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
                     "visual": {
                         "type": "notes",
-                        "title": "Voluntary work in Southoe village",
+                        "title": "Opportunities for voluntary work in Southoe village",
                         "sections": [
                             {
                                 "heading": "Library",
                                 "items": [
-                                    "Help with ___1___ books",
-                                    "Update ___2___"
+                                    "Help with ___1___ books (times to be arranged)",
+                                    "Help needed to keep ___2___ of books up to date",
+                                    "Library is in the ___3___ Room in the village hall"
                                 ]
                             },
                             {
-                                "heading": "Lunch Club",
+                                "heading": "Lunch club",
                                 "items": [
-                                    "Held on ___3___ Street",
-                                    "Help individuals with ___4___"
+                                    "Help by providing ___4___",
+                                    "Help with hobbies such as ___5___"
                                 ]
                             },
                             {
-                                "heading": "Classes",
+                                "heading": "Help for individuals needed next week",
                                 "items": [
-                                    "Volunteers can teach ___5___"
-                                ]
-                            },
-                            {
-                                "heading": "Fundraising Events",
-                                "items": [
-                                    "Location: ___6___",
-                                    "May event will be in a ___7___",
-                                    "April event type: ___8___",
-                                    "Help with selling ___9___",
-                                    "Help to make a ___10___"
+                                    "Taking Mrs Carroll to ___6___",
+                                    "Work in the ___7___ at Mr Selsbury's house"
                                 ]
                             }
+                        ]
+                    },
+                    "table_visual": {
+                        "type": "table",
+                        "title": "Village social events",
+                        "instruction": "Questions 8-10: Complete the table below. Write ONE WORD ONLY for each answer.",
+                        "headers": ["Date", "Event", "Location", "Help needed"],
+                        "rows": [
+                            {"date": "19 Oct", "event": "___8___", "location": "Village hall", "help": "providing refreshments"},
+                            {"date": "18 Nov", "event": "dance", "location": "Village hall", "help": "checking ___9___"},
+                            {"date": "31 Dec", "event": "New Year's Eve party", "location": "Mountfort Hotel", "help": "designing the ___10___"}
                         ]
                     },
                     "questions": [
@@ -69,9 +72,9 @@ IELTS17_TEST2 = {
                         {"number": 5, "type": "note_completion"},
                         {"number": 6, "type": "note_completion"},
                         {"number": 7, "type": "note_completion"},
-                        {"number": 8, "type": "note_completion"},
-                        {"number": 9, "type": "note_completion"},
-                        {"number": 10, "type": "note_completion"}
+                        {"number": 8, "type": "table_completion"},
+                        {"number": 9, "type": "table_completion"},
+                        {"number": 10, "type": "table_completion"}
                     ]
                 },
                 {
@@ -79,155 +82,173 @@ IELTS17_TEST2 = {
                     "title": "Oniton Hall",
                     "question_range": "11-20",
                     "question_count": 10,
-                    "context": "A tour guide introducing Oniton Hall to visitors",
+                    "context": "Information about Oniton Hall visitor attraction",
                     "question_types": ["multiple_choice", "matching"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part2.mp3",
                     "questions": [
                         {
                             "number": 11,
                             "type": "multiple_choice",
-                            "question": "What change was made to Oniton Hall in the 19th century?",
-                            "options": ["A: The kitchen wing was changed", "B: The gardens were redesigned", "C: The stable block was converted"]
+                            "question": "Many past owners made changes to",
+                            "options": ["A: the gardens.", "B: the house.", "C: the farm."]
                         },
                         {
                             "number": 12,
                             "type": "multiple_choice",
-                            "question": "Sir Edward Downes built the house primarily because he wanted",
-                            "options": ["A: somewhere to display his art collection", "B: a quiet place to write his books", "C: a place to entertain guests"]
+                            "question": "Sir Edward Downes built Oniton Hall because he wanted",
+                            "options": ["A: a place for discussing politics.", "B: a place to display his wealth.", "C: a place for artists and writers."]
                         },
                         {
                             "number": 13,
                             "type": "multiple_choice",
-                            "question": "What can visitors learn about the servants who worked at Oniton Hall?",
-                            "options": ["A: how they spent their leisure time", "B: how their working conditions changed", "C: how they felt about their employer"]
+                            "question": "Visitors can learn about the work of servants in the past from",
+                            "options": ["A: audio guides.", "B: photographs.", "C: people in costume."]
                         },
                         {
                             "number": 14,
                             "type": "multiple_choice",
-                            "question": "What activity can children take part in at Oniton Hall?",
-                            "options": ["A: making costumes", "B: following a trail", "C: making a video"]
+                            "question": "What is new for children at Oniton Hall?",
+                            "options": ["A: clothes for dressing up", "B: mini tractors", "C: the adventure playground"]
                         },
                         {
                             "number": "15-20",
                             "type": "matching",
-                            "instruction": "What activity can visitors do at each of the following places? Choose SIX answers from the box and write the correct letter, A-H.",
+                            "instruction": "Which activity is offered at each of the following locations on the farm? Choose SIX answers from the box and write the correct letter, A-H, next to Questions 15-20.",
                             "options_box": {
                                 "title": "Activities",
                                 "options": [
-                                    "A: exercise classes",
-                                    "B: bird watching",
-                                    "C: cycling",
-                                    "D: fishing",
-                                    "E: horse riding",
-                                    "F: swimming",
-                                    "G: walk in woods",
-                                    "H: golf"
+                                    "A: shopping",
+                                    "B: watching cows being milked",
+                                    "C: seeing old farming equipment",
+                                    "D: eating and drinking",
+                                    "E: starting a trip",
+                                    "F: seeing rare breeds of animals",
+                                    "G: helping to look after animals",
+                                    "H: using farming tools"
                                 ]
                             },
                             "items": [
-                                {"number": 15, "item": "Farm shop area"},
-                                {"number": 16, "item": "Lake"},
-                                {"number": 17, "item": "Woods"},
-                                {"number": 18, "item": "Gym"},
-                                {"number": 19, "item": "Stables"},
-                                {"number": 20, "item": "Pool"}
+                                {"number": 15, "item": "dairy"},
+                                {"number": 16, "item": "large barn"},
+                                {"number": 17, "item": "small barn"},
+                                {"number": 18, "item": "stables"},
+                                {"number": 19, "item": "shed"},
+                                {"number": 20, "item": "parkland"}
                             ]
                         }
                     ]
                 },
                 {
                     "part_number": 3,
-                    "title": "Romeo and Juliet Production Reviews",
+                    "title": "Romeo and Juliet Production",
                     "question_range": "21-30",
                     "question_count": 10,
-                    "context": "A discussion between students about a production of Romeo and Juliet",
-                    "question_types": ["multiple_selection", "matching"],
+                    "context": "Two students discussing a production of Romeo and Juliet",
+                    "question_types": ["multiple_selection", "matching", "multiple_choice"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part3.mp3",
                     "questions": [
                         {
                             "number": "21-22",
                             "type": "multiple_selection",
-                            "instruction": "Choose TWO letters, A-E",
-                            "question": "Which TWO things should reviews include, according to Ed and Gemma?",
+                            "instruction": "Choose TWO letters, A-E.",
+                            "question": "Which TWO things do the students agree they need to include in their reviews of Romeo and Juliet?",
                             "options": [
-                                "A: information about the plot",
-                                "B: advice for the director",
-                                "C: description of the actors",
-                                "D: comments on the costumes",
-                                "E: judgement on the overall production"
+                                "A: analysis of the text",
+                                "B: a summary of the plot",
+                                "C: a description of the theatre",
+                                "D: a personal reaction",
+                                "E: a reference to particular scenes"
                             ],
                             "answer_count": 2
                         },
                         {
-                            "number": "23-30",
+                            "number": "23-27",
                             "type": "matching",
-                            "instruction": "What opinion does each student express about aspects of the production?",
+                            "instruction": "Which opinion do the speakers give about each of the following aspects of The Emporium's production of Romeo and Juliet? Choose FIVE answers from the box and write the correct letter, A-G, next to Questions 23-27.",
                             "options_box": {
                                 "title": "Opinions",
                                 "options": [
-                                    "A: They weren't necessary",
-                                    "B: They were effective",
-                                    "C: They were inappropriate",
-                                    "D: They were old-fashioned",
-                                    "E: They needed more variety",
-                                    "F: They weren't well done",
-                                    "G: They weren't suitable"
+                                    "A: They both expected this to be more traditional.",
+                                    "B: They both thought this was original.",
+                                    "C: They agree this created the right atmosphere.",
+                                    "D: They agree this was a major strength.",
+                                    "E: They were both disappointed by this.",
+                                    "F: They disagree about why this was an issue.",
+                                    "G: They disagree about how this could be improved."
                                 ]
                             },
                             "items": [
-                                {"number": 23, "item": "The set"},
-                                {"number": 24, "item": "The lighting"},
-                                {"number": 25, "item": "The costumes"},
-                                {"number": 26, "item": "The music"},
-                                {"number": 27, "item": "The actors' delivery of their lines"},
-                                {"number": 28, "item": "The relevance of Romeo and Juliet"},
-                                {"number": 29, "item": "Watching in another language"},
-                                {"number": 30, "item": "Shakespeare's international appeal"}
+                                {"number": 23, "item": "the set"},
+                                {"number": 24, "item": "the lighting"},
+                                {"number": 25, "item": "the costume design"},
+                                {"number": 26, "item": "the music"},
+                                {"number": 27, "item": "the actors' delivery"}
                             ]
+                        },
+                        {
+                            "number": 28,
+                            "type": "multiple_choice",
+                            "question": "The students think the story of Romeo and Juliet is still relevant for young people today because",
+                            "options": ["A: it illustrates how easily conflict can start.", "B: it deals with problems that families experience.", "C: it teaches them about relationships."]
+                        },
+                        {
+                            "number": 29,
+                            "type": "multiple_choice",
+                            "question": "The students found watching Romeo and Juliet in another language",
+                            "options": ["A: frustrating.", "B: demanding.", "C: moving."]
+                        },
+                        {
+                            "number": 30,
+                            "type": "multiple_choice",
+                            "question": "Why do the students think Shakespeare's plays have such international appeal?",
+                            "options": ["A: The stories are exciting.", "B: There are recognisable characters.", "C: They can be interpreted in many ways."]
                         }
                     ]
                 },
                 {
                     "part_number": 4,
-                    "title": "Impact of digital technology on the Icelandic language",
+                    "title": "The impact of digital technology on the Icelandic language",
                     "question_range": "31-40",
                     "question_count": 10,
                     "context": "A lecture about how digital technology affects the Icelandic language",
                     "question_types": ["note_completion"],
                     "audio_file": "/api/audio/cambridge/ielts17/test2_part4.mp3",
-                    "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+                    "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
                     "visual": {
                         "type": "notes",
-                        "title": "Impact of digital technology on the Icelandic language",
+                        "title": "The impact of digital technology on the Icelandic language",
                         "sections": [
                             {
-                                "heading": "Icelandic Language Facts",
+                                "heading": "The Icelandic language",
                                 "items": [
-                                    "Number of speakers worldwide: ___31___",
-                                    "Growth of ___32___ has been rapid"
+                                    "has approximately ___31___ speakers",
+                                    "has a ___32___ that is still growing",
+                                    "has not changed a lot over the last thousand years",
+                                    "has its own words for computer-based concepts, such as web browser and ___33___"
                                 ]
                             },
                             {
-                                "heading": "Impact of Technology",
+                                "heading": "Young speakers",
                                 "items": [
-                                    "Young people learn English from ___33___ and videos",
-                                    "Children use ___34___ to access English content",
-                                    "Some children become ___35___ in English and Icelandic"
+                                    "are big users of digital technology, such as ___34___",
+                                    "are becoming ___35___ very quickly",
+                                    "are having discussions using only English while they are in the ___36___ at school",
+                                    "are better able to identify the content of a ___37___ in English than Icelandic"
                                 ]
                             },
                             {
-                                "heading": "Concerns",
+                                "heading": "Technology and internet companies",
                                 "items": [
-                                    "Use of English in the school ___36___",
-                                    "Children might learn English word from a ___37___ before Icelandic word",
-                                    "Concerns about errors in ___38___"
+                                    "write very little in Icelandic because of the small number of speakers and because of how complicated its ___38___ is"
                                 ]
                             },
                             {
-                                "heading": "Importance of Icelandic",
+                                "heading": "The Icelandic government",
                                 "items": [
-                                    "Language is important for national ___39___",
-                                    "Goal is for people to remain ___40___ in Icelandic"
+                                    "has set up a fund to support the production of more digital content in the language",
+                                    "believes that Icelandic has a secure future",
+                                    "is worried that young Icelanders may lose their ___39___ as Icelanders",
+                                    "is worried about the consequences of children not being ___40___ in either Icelandic or English"
                                 ]
                             }
                         ]
@@ -313,17 +334,17 @@ Since their discovery, the scrolls have been the subject of intense scholarly de
                     "title": "A second attempt at domesticating the tomato",
                     "question_range": "14-26",
                     "question_count": 13,
-                    "passage_text": """A: The fruit we know today as the tomato is a far cry from its wild ancestor. The original wild tomatoes that grew in the Andes mountains of South America were small, about the size of a blueberry, and not particularly appealing in taste. Through thousands of years of domestication, farmers gradually selected plants with larger, tastier fruit, eventually producing the tomatoes we enjoy today.
+                    "passage_text": """A: The fruit we know today as the tomato is a far cry from its wild ancestor. The original wild tomatoes that grew in the Andes mountains of South America were small, about the size of a blueberry, and not particularly appealing in taste. Through thousands of years of domestication, farmers gradually selected plants with larger, tastier fruit.
 
-B: The tomato's journey from the Americas to the rest of the world began in the 16th century when Spanish conquistadors brought seeds back to Europe. Initially, Europeans were suspicious of the fruit, with some believing it to be poisonous due to its membership in the nightshade family. It wasn't until the 18th and 19th centuries that tomatoes became widely accepted as food in Europe and North America.
+B: The tomato's journey from the Americas to the rest of the world began in the 16th century when Spanish conquistadors brought seeds back to Europe. Initially, Europeans were suspicious of the fruit, with some believing it to be poisonous due to its membership in the nightshade family.
 
-C: Scientists are now attempting what might be called a 'second domestication' of the tomato. Using gene-editing technology called CRISPR, researchers are modifying wild tomato varieties to create new cultivars that combine the best traits of both wild and domesticated plants. The appeal of wild tomatoes lies in their natural resistance to diseases, tolerance to drought and salt, and superior flavour compounds.
+C: Scientists are now attempting what might be called a 'second domestication' of the tomato. Using gene-editing technology called CRISPR, researchers are modifying wild tomato varieties to create new cultivars. The appeal of wild tomatoes lies in their natural resistance to diseases and superior flavour compounds.
 
-D: The modern commercial tomato, while large and visually appealing, has lost many beneficial traits through centuries of selective breeding. Commercial varieties are often susceptible to diseases and pests, requiring extensive use of pesticides. They also tend to have less flavour than wild varieties, as breeders focused primarily on appearance, shelf life, and uniform ripening rather than taste.
+D: The modern commercial tomato has lost many beneficial traits through centuries of selective breeding. Commercial varieties are often susceptible to diseases and pests, requiring extensive use of pesticides. They also tend to have less flavour than wild varieties.
 
-E: Through gene editing, scientists hope to reintroduce beneficial traits from wild tomatoes into domesticated varieties. Early results have been promising, with edited plants showing improved disease resistance, better flavour profiles, and higher nutritional content. Some modified varieties have shown increased levels of lycopene, a compound associated with various health benefits.
+E: Through gene editing, scientists hope to reintroduce beneficial traits from wild tomatoes into domesticated varieties. Early results have been promising, with edited plants showing improved disease resistance and better flavour profiles.
 
-F: The technology is not without controversy. While proponents argue that gene editing is simply a more precise form of traditional breeding, critics raise concerns about unforeseen consequences and the control of food supply by large corporations. The regulatory status of gene-edited crops varies between countries, affecting their commercial viability.""",
+F: The technology is not without controversy. Critics raise concerns about unforeseen consequences and the control of food supply by large corporations.""",
                     "questions": [
                         {
                             "number": "14-18",
@@ -374,19 +395,19 @@ F: The technology is not without controversy. While proponents argue that gene e
                     "title": "Insight or evolution?",
                     "question_range": "27-40",
                     "question_count": 14,
-                    "passage_text": """The nature of creative problem-solving has fascinated psychologists and neuroscientists for decades. How do we arrive at solutions to complex problems? Two competing theories have dominated the field: the insight theory, which suggests that solutions come suddenly in 'eureka' moments, and the evolutionary theory, which proposes that solutions develop gradually through trial and error.
+                    "passage_text": """The nature of creative problem-solving has fascinated psychologists and neuroscientists for decades. How do we arrive at solutions to complex problems? Two competing theories have dominated the field: the insight theory and the evolutionary theory.
 
-The insight theory gained prominence through the work of Gestalt psychologists in the early 20th century. They described problem-solving as a process of sudden reorganisation of mental elements, leading to an instantaneous solution. The classic example is Archimedes supposedly shouting 'Eureka!' upon discovering how to measure the volume of an irregular object while sitting in his bath.
+The insight theory gained prominence through the work of Gestalt psychologists in the early 20th century. They described problem-solving as a process of sudden reorganisation of mental elements, leading to an instantaneous solution.
 
-More recent research using brain imaging has provided some support for the insight model. Studies show that moments of insight are associated with distinctive patterns of brain activity, particularly in regions involved in integrating disparate pieces of information. Immediately before an insight occurs, there is often a burst of activity in the right hemisphere of the brain.
+More recent research using brain imaging has provided some support for the insight model. Studies show that moments of insight are associated with distinctive patterns of brain activity.
 
-However, the evolutionary theory challenges this view. Proponents argue that what appears to be sudden insight is actually the culmination of a gradual, unconscious process of testing and rejecting potential solutions. According to this view, our brains continuously generate and evaluate possible solutions, and the 'eureka' moment occurs when an adequate solution finally reaches conscious awareness.
+However, the evolutionary theory challenges this view. Proponents argue that what appears to be sudden insight is actually the culmination of a gradual, unconscious process of testing and rejecting potential solutions.
 
-Recent evidence suggests that both theories may have merit. Some problems do seem to be solved through genuine insight, while others are tackled through more incremental processes. Individual differences also play a role; some people appear to rely more heavily on insight, while others favour systematic approaches.
+Recent evidence suggests that both theories may have merit. Some problems do seem to be solved through genuine insight, while others are tackled through more incremental processes. Individual differences also play a role.
 
-The implications of this research extend beyond academic psychology. Understanding how we solve problems has potential applications in education, business innovation, and artificial intelligence. If insight can be cultivated, teaching methods could be designed to encourage it. Similarly, AI systems might be developed to mimic human insight processes.
+The implications of this research extend beyond academic psychology. Understanding how we solve problems has potential applications in education, business innovation, and artificial intelligence.
 
-Despite decades of research, the nature of creative problem-solving remains incompletely understood. What is clear is that the human mind possesses remarkable capabilities for finding solutions to novel challenges, whether through sudden flashes of insight, gradual evolutionary processes, or some combination of both.""",
+Despite decades of research, the nature of creative problem-solving remains incompletely understood. What is clear is that the human mind possesses remarkable capabilities for finding solutions to novel challenges.""",
                     "questions": [
                         {
                             "number": "27-31",
@@ -527,43 +548,43 @@ Despite decades of research, the nature of creative problem-solving remains inco
     },
     "answer_keys": {
         "listening": {
-            "1": "collecting",
-            "2": "records",
-            "3": "West",
-            "4": "transport",
-            "5": "art",
-            "6": "hospital",
-            "7": "garden",
-            "8": "quiz",
-            "9": "tickets",
-            "10": "poster",
-            "11": "B",
+            "1": "/(re)?shelving/i",
+            "2": "/(the )?/(record|catalogue|catalog)(s)?/i",
+            "3": "/(Green|green)/",
+            "4": "/(transport|transportation)/i",
+            "5": "/(painting|art)/i",
+            "6": "/(hospital|the hospital)/i",
+            "7": "/(garden|a garden)/i",
+            "8": "/(quiz|a quiz)/i",
+            "9": "/(ticket|tickets)/i",
+            "10": "/(poster|a poster|posters)/i",
+            "11": "A",
             "12": "C",
             "13": "C",
             "14": "B",
-            "15": "D",
+            "15": "B",
             "16": "C",
-            "17": "G",
-            "18": "A",
-            "19": "E",
-            "20": "F",
+            "17": "F",
+            "18": "G",
+            "19": "H",
+            "20": "E",
             "21": ["D", "E"],
             "22": ["D", "E"],
-            "23": "D",
+            "23": "A",
             "24": "C",
-            "25": "A",
-            "26": "E",
-            "27": "F",
-            "28": "B",
+            "25": "E",
+            "26": "F",
+            "27": "G",
+            "28": "C",
             "29": "C",
             "30": "C",
-            "31": "321,000",
+            "31": "340,000",
             "32": "vocabulary",
             "33": "podcast",
             "34": "smartphones",
             "35": "bilingual",
             "36": "playground",
-            "37": "picture",
+            "37": "photograph",
             "38": "grammar",
             "39": "identity",
             "40": "fluent"
