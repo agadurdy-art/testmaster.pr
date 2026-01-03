@@ -10,12 +10,14 @@ import {
   CheckCircle, XCircle, ArrowLeft, Loader2, GraduationCap,
   MessageSquare, PenTool, AlertCircle, Trophy, Star, Home,
   Languages, FileText, HelpCircle, Lightbulb, Award, Target,
-  CircleCheck, Circle
+  CircleCheck, Circle, Globe
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
+import { useI18n } from '../lib/i18n';
+import { getEnglishOnlyNotice } from '../lib/languageLock';
 import { 
   markSectionComplete, 
   getLessonProgress, 
