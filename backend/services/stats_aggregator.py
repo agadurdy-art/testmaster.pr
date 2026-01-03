@@ -3,6 +3,8 @@ Stats Aggregator Service
 ========================
 Auto-updates stats when tests are added/removed.
 Single source of truth for all test statistics.
+
+HARD RULE: Only counts APPROVED/PUBLISHED tests in public stats.
 """
 
 from typing import Dict, Any, List
@@ -15,7 +17,24 @@ class StatsAggregator:
     ======================
     Computes and caches statistics from all ingested tests.
     Auto-updates when tests change - no manual config needed.
+    
+    HARD RULE: Only APPROVED/PUBLISHED tests are counted in:
+    - Public stats displayed to users
+    - Practice pool calculations
     """
+    
+    # Import here to avoid circular imports
+    _qa_service = None
+    
+    @classmethod
+    def get_qa_service(cls):
+        if cls._qa_service is None:
+            try:
+                from services.qa_workflow_service import QAWorkflowService
+                cls._qa_service = QAWorkflowService()
+            except ImportError:
+                cls._qa_service = None
+        return cls._qa_service
     
     def __init__(self, test_registry: Dict[str, Any]):
         """Initialize with test registry"""
@@ -24,15 +43,34 @@ class StatsAggregator:
         self._last_computed = None
         self.compute_stats()
     
+    def _is_test_publishable(self, test_id: str) -> bool:
+        """Check if a test is publishable (APPROVED or PUBLISHED)"""
+        qa_service = self.get_qa_service()
+        if qa_service:
+            return qa_service.is_publishable(test_id)
+        return True  # Fallback for backwards compatibility
+    
+    def _get_test_status(self, test_id: str) -> str:
+        """Get test status string"""
+        qa_service = self.get_qa_service()
+        if qa_service:
+            return qa_service.get_test_status(test_id).value
+        return "UNKNOWN"
+    
     def compute_stats(self) -> Dict[str, Any]:
         """
         Compute comprehensive stats from all tests.
         Called automatically when tests are added/removed.
+        
+        Returns two sets of stats:
+        - public_stats: Only APPROVED/PUBLISHED tests (shown to users)
+        - admin_stats: All tests regardless of status (for admin)
         """
         stats = {
             "total_tests": 0,
             "valid_tests": 0,
             "failed_tests": 0,
+            "publishable_tests": 0,  # APPROVED/PUBLISHED only
             "total_questions": {
                 "listening": 0,
                 "reading": 0,
@@ -57,11 +95,13 @@ class StatsAggregator:
                 "book_id": book_id,
                 "title": book_data.get("title", book_id),
                 "test_count": 0,
-                "valid_tests": 0
+                "valid_tests": 0,
+                "publishable_tests": 0
             }
             
             for test_id, test_data in book_data.get("tests", {}).items():
                 stats["total_tests"] += 1
+                full_test_id = f"{book_id}_{test_id}"
                 
                 if test_data is None:
                     stats["failed_tests"] += 1
@@ -70,6 +110,14 @@ class StatsAggregator:
                 stats["valid_tests"] += 1
                 book_stats["test_count"] += 1
                 book_stats["valid_tests"] += 1
+                
+                # Check if publishable
+                is_publishable = self._is_test_publishable(full_test_id)
+                test_status = self._get_test_status(full_test_id)
+                
+                if is_publishable:
+                    stats["publishable_tests"] += 1
+                    book_stats["publishable_tests"] += 1
                 
                 # Get test stats
                 test_stats = self._get_test_stats(test_data, book_id, test_id)
