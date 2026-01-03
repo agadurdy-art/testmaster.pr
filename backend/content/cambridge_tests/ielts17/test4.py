@@ -722,20 +722,11 @@ For the world record attempt, Gareyev hopes to play 47 blindfold games at once i
             "32": "healthy",
             "33": "climate",
             "34": "stones",
-            "35": "
-
-
-diameter",
+            "35": "diameter",
             "36": "tube",
-            "37": "
-
-
-fire",
+            "37": "fire",
             "38": "steam",
-            "39": "
-
-
-cloudy",
+            "39": "cloudy",
             "40": "litre"
         },
         "reading": {
