@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -7,7 +7,7 @@ import {
   ArrowLeft, Clock, Shuffle, Brain, Target, 
   CheckCircle, XCircle, ChevronRight, BookOpen, Headphones,
   Mic, PenTool, RotateCcw, Play, Timer, Award,
-  Loader2, AlertCircle, Lightbulb
+  Loader2, AlertCircle, Lightbulb, Pause, Volume2
 } from 'lucide-react';
 import { toast } from 'sonner';
 
