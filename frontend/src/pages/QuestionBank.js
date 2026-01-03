@@ -267,7 +267,7 @@ export default function QuestionBank() {
               <div className="text-white/70 text-sm">Skill Areas</div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">{topics.length || stats?.topics_count || 18}</div>
+              <div className="text-2xl font-bold">{stats?.topics_count || 18}</div>
               <div className="text-white/70 text-sm">Topics</div>
             </div>
           </div>
