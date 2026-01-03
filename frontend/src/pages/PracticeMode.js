@@ -601,13 +601,72 @@ export default function PracticeMode({ user }) {
                 </div>
               )}
 
-              {/* Audio Transcript (for listening practice) */}
+              {/* Audio Player (for listening practice) */}
               {currentQuestion.audio_transcript && (
-                <div className="mb-6 p-4 bg-purple-50 rounded-lg border border-purple-100">
-                  <p className="text-xs text-purple-500 mb-2 flex items-center gap-1">
-                    <Headphones className="w-3 h-3" /> Audio Transcript (for practice)
-                  </p>
-                  <p className="text-sm text-gray-700">{currentQuestion.audio_transcript}</p>
+                <div className="mb-6">
+                  {/* Hidden audio element */}
+                  <audio 
+                    ref={audioRef}
+                    onEnded={() => setIsPlayingAudio(false)}
+                    onPause={() => setIsPlayingAudio(false)}
+                  />
+                  
+                  {/* Audio Player Card */}
+                  <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl p-4 text-white">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Button
+                          onClick={playAudio}
+                          disabled={audioLoading}
+                          className="w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 border-0"
+                        >
+                          {audioLoading ? (
+                            <Loader2 className="w-6 h-6 animate-spin" />
+                          ) : isPlayingAudio ? (
+                            <Pause className="w-6 h-6" />
+                          ) : (
+                            <Play className="w-6 h-6 ml-1" />
+                          )}
+                        </Button>
+                        <div>
+                          <p className="font-semibold flex items-center gap-2">
+                            <Headphones className="w-4 h-4" />
+                            Listening Audio
+                          </p>
+                          <p className="text-sm text-white/70">
+                            {isPlayingAudio ? 'Playing...' : 'Click to play audio'}
+                          </p>
+                        </div>
+                      </div>
+                      <Volume2 className="w-6 h-6 text-white/50" />
+                    </div>
+                    
+                    {/* Audio waveform animation */}
+                    {isPlayingAudio && (
+                      <div className="flex items-center justify-center gap-1 mt-3">
+                        {[...Array(12)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="w-1 bg-white/60 rounded-full animate-pulse"
+                            style={{
+                              height: `${Math.random() * 20 + 8}px`,
+                              animationDelay: `${i * 0.1}s`
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Show transcript option (collapsed by default) */}
+                  <details className="mt-2">
+                    <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">
+                      Show transcript (for review)
+                    </summary>
+                    <p className="mt-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
+                      {currentQuestion.audio_transcript}
+                    </p>
+                  </details>
                 </div>
               )}
 
