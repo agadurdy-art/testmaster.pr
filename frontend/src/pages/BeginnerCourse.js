@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
+import { useI18n } from '../lib/i18n';
 import { 
   markSectionComplete, 
   getLessonProgress, 
