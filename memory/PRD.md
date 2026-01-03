@@ -338,3 +338,18 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - **Issue**: Landing page courses modal didn't show the new "Vocabulary & Grammar" course
 - **Fix Applied**: Added Vocabulary & Grammar course to COURSES array in `LandingPage.js`
 - **Verified**: Screenshot confirmed course appears in modal with correct details (Band 4.5 - 7.0+, 30 units, 250+ items)
+
+### ✅ Course Preview Without Login - COMPLETE (January 3, 2025)
+- **Issue**: Users couldn't try courses from landing page without signing up - "Try our courses" was just marketing copy
+- **Root Cause**: Course routes (`/beginner-course`, `/mastery-course`, `/advanced-mastery`, `/vocab-grammar`) required user authentication and redirected to `/` if not logged in
+- **Fix Applied**:
+  1. Updated COURSES array in LandingPage.js - renamed "Foundation Course" to "Beginner Course", changed previewRoute to direct course URLs
+  2. Removed user auth guards from course routes in App.js (lines 318-328)
+  3. Added URL parameter support (`?lesson={id}&preview=true`) in course components for auto-navigation
+  4. Components modified: BeginnerCourse.js, MasteryCourse.js, AdvancedMasteryCourse.js (added useSearchParams)
+- **Test Results**: 100% frontend tests passed (iteration_13.json)
+- **Features Verified**:
+  - All 4 courses accessible without login
+  - URL parameters auto-navigate to specific lessons
+  - AI Writing feedback works in Mastery/Advanced courses
+  - Language switching (EN/VI/TR) translates UI while keeping course content in English
