@@ -2202,8 +2202,8 @@ export default function AdvancedMasteryCourse({ user }) {
         {view === 'module-detail' && selectedModule && renderModuleDetail()}
       </div>
       
-      {/* CTA Banner for visitors (non-logged-in users) */}
-      {!user && <SignUpCTA variant="banner" />}
+      {/* CTA Banner for visitors - only show on quiz section or after completing */}
+      {!user && (currentSection === 'quiz' || currentSection === 'writing') && <SignUpCTA variant="banner" />}
     </div>
   );
 }

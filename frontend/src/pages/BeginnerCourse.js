@@ -1880,8 +1880,8 @@ export default function BeginnerCourse({ user }) {
         {view === 'lesson-detail' && renderLessonDetail()}
       </div>
       
-      {/* CTA Banner for visitors (non-logged-in users) */}
-      {!user && <SignUpCTA variant="banner" />}
+      {/* CTA Banner for visitors - only show on quiz section or after completing quiz */}
+      {!user && (currentSection === 'quiz' || quizSubmitted) && <SignUpCTA variant="banner" />}
     </div>
   );
 }
