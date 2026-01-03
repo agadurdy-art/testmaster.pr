@@ -31,6 +31,10 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function AdvancedMasteryCourse({ user }) {
   const navigate = useNavigate();
+  const { language } = useI18n();
+  
+  // English-only notice for this IELTS-level module
+  const englishNotice = getEnglishOnlyNotice(language);
   
   // Theme support
   const { activeTheme } = useTheme();
