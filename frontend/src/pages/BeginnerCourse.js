@@ -1879,6 +1879,9 @@ export default function BeginnerCourse({ user }) {
         {view === 'lessons' && renderLessonsList()}
         {view === 'lesson-detail' && renderLessonDetail()}
       </div>
+      
+      {/* CTA Banner for visitors (non-logged-in users) */}
+      {!user && <SignUpCTA variant="banner" />}
     </div>
   );
 }
