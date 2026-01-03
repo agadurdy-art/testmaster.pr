@@ -1107,6 +1107,20 @@ export const translations = {
     landingNeedAccount: 'Hesabınız yok mu? Kaydolun',
     landingContinueWith: 'Veya şununla devam et',
     landingContinueGoogle: 'Google ile Devam Et',
+    
+    // Grammar Practice (Beginner Course)
+    grammarRule: 'Dilbilgisi Kuralı',
+    moreExamples: 'Daha Fazla Örnek',
+    commonMistake: 'Sık Yapılan Hata',
+    grammarPractice: 'Dilbilgisi Pratiği',
+    fillInBlanks: 'Boşlukları doğru kelimeyle doldurun:',
+    checkAnswers: 'Cevapları Kontrol Et',
+    tryAgain: 'Tekrar Dene',
+    perfectScore: '🎉 Mükemmel! Bu dilbilgisi konusunda ustalaştınız!',
+    goodJob: '👍 İyi iş! Yukarıdaki hataları gözden geçirin.',
+    example: 'Örnek',
+    vocabulary: 'Kelime',
+    grammar: 'Dilbilgisi',
   },
 };
 
