@@ -575,12 +575,12 @@ The time seems right for abandoning the naive notions of intelligent design and 
                     "description": "The examiner asks you about yourself, your home, work or studies and other familiar topics.",
                     "topics": [
                         {
-                            "topic": "History",
+                            "topic": "Reading",
                             "questions": [
-                                "What did you study in history lessons when you were at school?",
-                                "Did you enjoy studying history at school? [Why/Why not?]",
-                                "How often do you watch TV programmes about history now? [Why/Why not?]",
-                                "What period in history would you like to learn more about? [Why?]"
+                                "Did you have a favourite book when you were a child? [Why/Why not?]",
+                                "How much reading do you do for your work/studies? [Why/Why not?]",
+                                "What kinds of books do you read for pleasure? [Why/Why not?]",
+                                "Do you prefer to read a newspaper or a magazine online, or to buy a copy? [Why?]"
                             ]
                         }
                     ]
@@ -592,13 +592,13 @@ The time seems right for abandoning the naive notions of intelligent design and 
                     "preparation_time": "1 minute",
                     "speaking_time": "1-2 minutes",
                     "topic_card": {
-                        "instruction": "Describe the neighbourhood you lived in when you were a child.",
+                        "instruction": "Describe a big city you would like to visit.",
                         "points": [
-                            "where in your town/city the neighbourhood was",
-                            "what kind of people lived there",
-                            "what it was like to live in this neighbourhood"
+                            "which big city you would like to visit",
+                            "how you would travel there",
+                            "what you would do there"
                         ],
-                        "final_prompt": "and explain whether you would like to live in this neighbourhood in the future."
+                        "final_prompt": "and explain why you would like to visit this big city."
                     },
                     "examiner_note": "You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish."
                 },
@@ -608,19 +608,19 @@ The time seems right for abandoning the naive notions of intelligent design and 
                     "duration": "4-5 minutes",
                     "discussion_topics": [
                         {
-                            "topic": "Neighbours",
+                            "topic": "Visiting cities on holiday",
                             "questions": [
-                                "What sort of things can neighbours do to help each other?",
-                                "How well do people generally know their neighbours in your country?",
-                                "How important do you think it is to have good neighbours?"
+                                "What are the most interesting things to do while visiting cities on holiday?",
+                                "Why can it be expensive to visit cities on holiday?",
+                                "Do you think it is better to visit cities alone or in a group with friends?"
                             ]
                         },
                         {
-                            "topic": "Facilities in cities",
+                            "topic": "The growth of cities",
                             "questions": [
-                                "Which facilities are most important to people living in cities?",
-                                "How does shopping in small local shops differ from shopping in large city centre shops?",
-                                "Do you think that children should always go to the school nearest to where they live?"
+                                "Why have cities increased in size in recent years?",
+                                "What are the challenges created by ever-growing cities?",
+                                "In what ways do you think cities of the future will be different to cities today?"
                             ]
                         }
                     ]
