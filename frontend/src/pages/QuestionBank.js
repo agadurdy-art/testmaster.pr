@@ -217,6 +217,12 @@ export default function QuestionBank() {
       return;
     }
     
+    // Special handling for Grammar & Vocabulary - redirect to dedicated quiz page
+    if (skill === 'grammar_vocab') {
+      navigate(`/vocab-grammar/quiz${selectedBand ? `?band=${selectedBand}` : ''}`);
+      return;
+    }
+    
     // Navigate to practice page with params
     navigate(`/question-bank/practice?mode=${mode}&skill=${skill}${selectedTopic ? `&topic=${selectedTopic}` : ''}${selectedBand ? `&band=${selectedBand}` : ''}`);
   };
