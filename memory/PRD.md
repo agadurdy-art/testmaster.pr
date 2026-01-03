@@ -159,9 +159,15 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 ## Pending Tasks
 
 ### P0: Completed (January 3, 2025)
-- ✅ **Game Bank & Practice Mode Expansion** - 6 mini-game types (Matching Pairs, Spelling Bee, True/False, Word Race, Lucky Wheel, Fishing Trip) with 6 vocabulary topics
-- ✅ **Lesson Progress Visibility** - Progress bars and checkmarks added to BeginnerCourse, MasteryCourse, and AdvancedMasteryCourse
-- ✅ **Kid-Friendly UX for Beginner Course** - Fun language, encouraging messages, colorful design
+- ✅ **Game Bank & Practice Mode Expansion** - 6 mini-game types with 12 vocabulary topics
+- ✅ **Lesson Progress Visibility** - Progress bars and checkmarks added to all courses
+- ✅ **Kid-Friendly UX for Beginner Course** - Fun language, encouraging messages
+- ✅ **Multi-Language System (Phase 1)** - Game Bank fully supports EN/VI/TR
+
+### P0: In Progress - Multi-Language Control System
+- 🔧 **Phase 2**: Dashboard, BeginnerCourse, other components
+- 🔧 **Phase 3**: AI Output language control
+- 🔧 **Phase 4**: Language leak detection in dev mode
 
 ### P1: Content Library Expansion (ON HOLD per user request)
 - Cambridge IELTS 18 (all 4 tests) - waiting for user to provide PDF/audio
@@ -172,16 +178,37 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 
 ## Completed Features (January 3, 2025)
 
+### ✅ Multi-Language Control System (Phase 1) - COMPLETE
+- **Language Helper**: `/app/frontend/src/lib/getLocalizedText.js`
+  - `getLocalizedText(obj, lang, options)` - Main localization function
+  - `getText(obj, lang)` - Simple text getter
+  - `getContentWithSupport(obj, lang)` - Content with EN support for VI/TR
+  - `hasLocalizedContent(obj, lang)` - Check if content exists
+  - `filterByLanguage(items, lang, field)` - Filter arrays by language
+- **Language Guard**: `/app/frontend/src/lib/langGuard.js`
+  - `LocalizedBlock` - React component for localized content
+  - `LocalizedText` - Simple text component
+  - `LanguageEmptyState` - Empty state for missing translations
+- **Leak Detection**: `/app/frontend/src/lib/leakDetection.js`
+  - `detectLanguageLeak(text, lang)` - Detect forbidden characters
+  - `scanDomForLanguageLeaks(lang)` - DOM scanner for dev mode
+  - Turkish chars: ğĞüÜşŞıİöÖçÇ
+  - Vietnamese chars: ăĂâÂêÊôÔơƠưƯđĐ + diacritics
+- **Game Bank Backend**: Fully multi-language
+  - VOCABULARY_DATA with `{en, vi, tr}` structure
+  - 12 topics × 8 words = 96 vocabulary items in 3 languages
+  - All game UI strings in 3 languages
+  - API accepts `lang` param and `X-System-Language` header
+
 ### ✅ Game Bank Feature - COMPLETE
 - **Backend API**: `/api/games/*` with 6 game types and 12 vocabulary topics
-  - GET `/api/games/list` - Lists all games and topics
-  - GET `/api/games/play/{game_type}?topic=X&count=N` - Generates game content
-  - POST `/api/games/submit/{game_id}` - Submits score and returns stars (0-3)
+  - GET `/api/games/list?lang=X` - Lists games and topics in specified language
+  - GET `/api/games/play/{game_type}?topic=X&count=N&lang=X` - Generates localized game
+  - POST `/api/games/submit/{game_id}?lang=X` - Returns localized results
 - **Game Types**: matching_pairs, spelling_bee, true_false, word_race, lucky_wheel, fishing
 - **Topics (12)**: family, food, animals, colors, numbers, school, weather, travel, health, jobs, home, ielts_academic
-- **Frontend**: `/game-bank` route with interactive game components
-- **Dashboard Integration**: "Quick Games" section with 3 featured games and "Daily Challenge"
-- **Test Results**: 40/40 backend tests passed
+- **Frontend**: `/game-bank` route with i18n integration
+- **Dashboard Integration**: "Quick Games" section with featured games
 
 ### ✅ Lesson Progress Tracking - COMPLETE
 - **Progress Tracker Library**: `/app/frontend/src/lib/progressTracker.js`
