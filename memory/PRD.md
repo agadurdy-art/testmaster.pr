@@ -200,15 +200,26 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - Shorts-style practice mode on landing page
 - Course lesson game elements
 - YLE (Starters, Movers, Flyers) content
+- Speaking Practice auto-record flow refinement
+- Beginner Course pronunciation check full testing
 
 ## Key Files Reference
-- `/app/backend/content/cambridge_tests/ielts17/test4.py` - Test 4 data (NEW)
+- `/app/backend/routes/game_bank.py` - Game Bank API routes (NEW)
+- `/app/frontend/src/pages/GameBank.js` - Game Bank UI with 6 game types (NEW)
+- `/app/frontend/src/lib/progressTracker.js` - Progress tracking utility (NEW)
+- `/app/frontend/src/pages/BeginnerCourse.js` - Kid-friendly UX + progress tracking
+- `/app/frontend/src/pages/MasteryCourse.js` - Progress tracking
+- `/app/frontend/src/pages/AdvancedMasteryCourse.js` - Progress tracking
+- `/app/backend/content/cambridge_tests/ielts17/test4.py` - Test 4 data
 - `/app/frontend/src/pages/CambridgeTestResults.js` - Results page
 - `/app/frontend/src/pages/CambridgeTestInterface.js` - Test interface
 - `/app/frontend/src/pages/QuestionBank.js` - Test selection
 - `/app/backend/routes/cambridge.py` - Backend routes with full-test evaluation
 - `/app/tests/test_ielts17_test4.py` - Test 4 API tests (24 tests)
+- `/app/tests/test_game_bank.py` - Game Bank API tests (40 tests) (NEW)
 
 ## Test Reports
+- `/app/test_reports/iteration_8.json` - Game Bank comprehensive test results (NEW)
 - `/app/test_reports/iteration_6.json` - Test 4 comprehensive test results
-- `/app/test_reports/pytest/test4_results.xml` - pytest results
+- `/app/test_reports/pytest/game_bank_results.xml` - Game Bank pytest results (NEW)
+- `/app/test_reports/pytest/test4_results.xml` - Test 4 pytest results
