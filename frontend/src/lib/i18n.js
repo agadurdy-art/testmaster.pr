@@ -776,6 +776,20 @@ export const translations = {
     landingNeedAccount: 'Chưa có tài khoản? Đăng ký',
     landingContinueWith: 'Hoặc tiếp tục với',
     landingContinueGoogle: 'Tiếp tục với Google',
+    
+    // Grammar Practice (Beginner Course)
+    grammarRule: 'Quy tắc ngữ pháp',
+    moreExamples: 'Thêm ví dụ',
+    commonMistake: 'Lỗi thường gặp',
+    grammarPractice: 'Luyện ngữ pháp',
+    fillInBlanks: 'Điền vào chỗ trống với từ đúng:',
+    checkAnswers: 'Kiểm tra đáp án',
+    tryAgain: 'Thử lại',
+    perfectScore: '🎉 Hoàn hảo! Bạn đã thành thạo ngữ pháp này!',
+    goodJob: '👍 Tốt lắm! Xem lại các lỗi ở trên.',
+    example: 'Ví dụ',
+    vocabulary: 'Từ vựng',
+    grammar: 'Ngữ pháp',
   },
   tr: {
     languageLabel: 'Dil',
