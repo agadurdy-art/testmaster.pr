@@ -205,6 +205,22 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - **Backend Fix Applied**: None score handling in `beginner_pronunciation.py`
 - **Test Report**: `/app/test_reports/iteration_10.json`
 
+### ✅ Vocabulary & Grammar Course - COMPLETE (January 3, 2025)
+- **Course Structure**: 30 Units, 255 Items, 90 Quizzes
+  - Foundation (Band 4.5-): 14 units, 105 items
+  - Development (Band 5.0-6.5): 8 units, 75 items
+  - Advanced (Band 7.0+): 8 units, 75 items
+- **Backend APIs**: 28/28 tests passed (100%)
+  - `GET /api/vocab-grammar/lessons` - Course lessons with vocabulary and grammar
+  - `GET /api/question-bank/grammar-vocab/quizzes` - Quiz questions with filters
+  - `GET /api/question-bank/grammar-vocab/units` - Units grouped by band level
+  - `POST /api/question-bank/grammar-vocab/evaluate` - Quiz evaluation with explanations
+- **Frontend Pages**:
+  - `VocabGrammarCourse.js` - Band selection, lessons list, lesson detail (word, IPA, definition, examples, collocations, IELTS tips, pronunciation, flashcards, quiz)
+  - `VocabGrammarQuiz.js` - Quiz interface with band filters, progress, questions, answer checking, explanations, weak areas
+- **Integration**: Question Bank → Grammar & Vocab redirects to dedicated quiz page
+- **Test Report**: `/app/test_reports/iteration_11.json`
+
 ## Completed Features (January 3, 2025)
 
 ### ✅ Multi-Language Control System - COMPLETE
