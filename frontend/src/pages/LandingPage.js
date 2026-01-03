@@ -332,15 +332,16 @@ export default function LandingPage({ onLogin, user, showLogin }) {
         
         if (beginnerRes.ok) {
           const data = await beginnerRes.json();
-          lessons.beginner = Array.isArray(data) ? data.slice(0, 3) : [];
+          // Show 6 lessons: 3 free + 3 locked
+          lessons.beginner = Array.isArray(data) ? data.slice(0, 6) : [];
         }
         
         if (vocabRes.ok) {
           const data = await vocabRes.json();
-          // Get 3 lessons from different band levels for variety
-          const foundation = data.filter(l => l.band_level === 'foundation').slice(0, 1);
-          const development = data.filter(l => l.band_level === 'development').slice(0, 1);
-          const advanced = data.filter(l => l.band_level === 'advanced').slice(0, 1);
+          // Get 6 lessons from different band levels for variety (3 free + 3 locked)
+          const foundation = data.filter(l => l.band_level === 'foundation').slice(0, 2);
+          const development = data.filter(l => l.band_level === 'development').slice(0, 2);
+          const advanced = data.filter(l => l.band_level === 'advanced').slice(0, 2);
           lessons['vocab-grammar'] = [...foundation, ...development, ...advanced];
         }
         
