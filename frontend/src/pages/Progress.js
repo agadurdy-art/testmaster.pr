@@ -466,12 +466,12 @@ export default function Progress({ user }) {
                   .map(([type, data]) => {
                     const score = data.avg_score || data.avgBand || 0;
                     const courses = {
-                      reading: { name: 'Reading Mastery Course', path: '/course/mastery', icon: '📖', level: score < 4 ? 'Beginner' : 'Intermediate' },
-                      listening: { name: 'Listening Skills Course', path: '/course/beginner', icon: '🎧', level: score < 4 ? 'Beginner' : 'Intermediate' },
-                      writing: { name: 'Writing Excellence Course', path: '/course/advanced-mastery', icon: '✍️', level: score < 4 ? 'Beginner' : 'Advanced' },
+                      reading: { name: 'Reading Mastery Course', path: '/mastery-course', icon: '📖', level: score < 4 ? 'Beginner' : 'Intermediate' },
+                      listening: { name: 'Listening Skills Course', path: '/beginner-course', icon: '🎧', level: score < 4 ? 'Beginner' : 'Intermediate' },
+                      writing: { name: 'Writing Excellence Course', path: '/advanced-mastery', icon: '✍️', level: score < 4 ? 'Beginner' : 'Advanced' },
                       speaking: { name: 'Speaking Confidence Course', path: '/speaking-practice', icon: '🎤', level: score < 4 ? 'Beginner' : 'Intermediate' }
                     };
-                    const course = courses[type] || { name: `${type} Course`, path: '/learning', icon: '📚', level: 'All Levels' };
+                    const course = courses[type] || { name: `${type} Course`, path: '/mastery-course', icon: '📚', level: 'All Levels' };
                     return (
                       <div key={type} className="p-3 bg-white rounded-lg shadow-sm">
                         <div className="flex items-center justify-between mb-2">
@@ -497,7 +497,7 @@ export default function Progress({ user }) {
                   <div className="text-center py-4">
                     <p className="text-sm text-green-600 font-medium mb-2">🎉 All skills at Band 6+!</p>
                     <Button 
-                      onClick={() => navigate('/course/advanced-mastery')}
+                      onClick={() => navigate('/advanced-mastery')}
                       variant="outline"
                       size="sm"
                       className="text-violet-600 border-violet-300"
