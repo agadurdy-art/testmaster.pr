@@ -752,11 +752,11 @@ export default function GameBank() {
       {/* Header */}
       <div className="p-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <Button variant="ghost" onClick={() => navigate(-1)} className="text-white">
-            <ArrowLeft className="w-5 h-5 mr-2" /> Back
+          <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-white">
+            <ArrowLeft className="w-5 h-5 mr-2" /> {getText('backToDashboard')}
           </Button>
           <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <Sparkles className="w-6 h-6" /> Game Bank
+            <Sparkles className="w-6 h-6" /> {getText('title')}
           </h1>
           <div className="w-20" />
         </div>
@@ -767,7 +767,7 @@ export default function GameBank() {
         {/* Topic Selection */}
         <Card className="p-4 mb-6 bg-gradient-to-r from-violet-50 to-purple-50 border-violet-100">
           <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-            <span className="text-xl">📚</span> Choose a Topic:
+            <span className="text-xl">📚</span> {getText('chooseTopic')}
           </h3>
           <div className="flex flex-wrap gap-2">
             {topics.map(topic => {
@@ -776,16 +776,18 @@ export default function GameBank() {
                 numbers: '🔢', school: '🏫', weather: '🌤️', travel: '✈️',
                 health: '💪', jobs: '👷', home: '🏠', ielts_academic: '📖'
               };
+              const topicId = topic.id || topic;
+              const topicTitle = topic.title || topicId;
               return (
                 <Button
-                  key={topic}
-                  variant={selectedTopic === topic ? 'default' : 'outline'}
+                  key={topicId}
+                  variant={selectedTopic === topicId ? 'default' : 'outline'}
                   size="sm"
-                  onClick={() => setSelectedTopic(topic)}
-                  className={`${selectedTopic === topic ? 'bg-gradient-to-r from-violet-500 to-purple-600 text-white' : 'hover:bg-violet-50'} transition-all`}
+                  onClick={() => setSelectedTopic(topicId)}
+                  className={`${selectedTopic === topicId ? 'bg-gradient-to-r from-violet-500 to-purple-600 text-white' : 'hover:bg-violet-50'} transition-all`}
                 >
-                  <span className="mr-1">{topicEmojis[topic] || '📝'}</span>
-                  {topic === 'ielts_academic' ? 'IELTS Academic' : topic.charAt(0).toUpperCase() + topic.slice(1).replace('_', ' ')}
+                  <span className="mr-1">{topicEmojis[topicId] || '📝'}</span>
+                  {topicTitle}
                 </Button>
               );
             })}
@@ -813,7 +815,7 @@ export default function GameBank() {
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <Card className="p-8">
               <Loader2 className="w-12 h-12 animate-spin text-violet-500 mx-auto" />
-              <p className="mt-4 text-gray-600">Loading game...</p>
+              <p className="mt-4 text-gray-600">{getText('loading')}</p>
             </Card>
           </div>
         )}
