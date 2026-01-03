@@ -6,7 +6,7 @@ import {
   BookOpen, Headphones, Mic, PenTool, Trophy, TrendingUp, Target, BookMarked, 
   LogOut, Menu, MessageSquare, ChevronRight, Clock, Award, Sparkles, 
   GraduationCap, BarChart3, Flame, Star, X, User, Zap, LayoutDashboard, FileText, CreditCard,
-  Play, ArrowRight, History, Lightbulb, CheckCircle, Mail, HelpCircle, Lock
+  Play, ArrowRight, History, Lightbulb, CheckCircle, Mail, HelpCircle, Lock, Gamepad2
 } from 'lucide-react';
 import { getTests, getUserProgress, getUser } from '../lib/api';
 import { toast } from 'sonner';
