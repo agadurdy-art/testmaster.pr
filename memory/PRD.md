@@ -179,10 +179,11 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 
 ## Pending Tasks
 
-### P2: Content Library Expansion
+### P1: Content Library Expansion
+- IELTS 17 Test 4 (waiting for user to provide PDF/audio)
 - IELTS 16, 18, 19 content (waiting for user to provide PDFs/audio)
 
-### P3: Session Persistence Bug
+### P2: Session Persistence Bug
 - Frontend localStorage session restoration issue
 
 ## Future Tasks
