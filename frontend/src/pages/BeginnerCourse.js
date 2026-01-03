@@ -623,7 +623,7 @@ export default function BeginnerCourse({ user }) {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-xs font-medium text-gray-500 bg-white/80 px-2 py-0.5 rounded-full">
-                        Lesson {lesson.lesson_number}
+                        {getText('lesson')} {lesson.lesson_number}
                       </span>
                       {lessonProgress > 0 && !isComplete && (
                         <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
