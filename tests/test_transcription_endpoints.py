@@ -171,7 +171,7 @@ class TestSpeakingQuestionBankEndpoints:
         assert response.status_code == 200
         data = response.json()
         assert 'band_levels' in data
-        print(f"✓ Speaking band levels: {list(data['band_levels'].keys())}")
+        print(f"✓ Speaking band levels: {len(data['band_levels'])} levels")
     
     def test_speaking_modules_endpoint(self):
         """Test /api/speaking/modules endpoint."""
