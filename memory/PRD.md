@@ -24,13 +24,25 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 ### Backend (FastAPI + MongoDB)
 ```
 /app/backend/
-├── content/cambridge_tests/ielts17/test1.py
+├── content/cambridge_tests/ielts17/
+│   ├── test1.py               # IELTS 17 Test 1 data
+│   └── test2.py               # IELTS 17 Test 2 data
 ├── routes/
 │   ├── cambridge.py           # Cambridge test API + evaluations
 │   ├── cambridge_speaking.py  # Speaking evaluation (Free + Premium)
 │   └── speaking_qb.py         # Core speaking evaluation protocols
 └── writing_evaluator.py       # Core writing evaluation protocols
 ```
+
+## Completed Features (January 3, 2025)
+
+### ✅ Part 3 Question Ordering Fix - COMPLETE
+- Fixed rendering order: Q21-22 (multiple_selection) → Q23-27 (matching) → Q28-30 (multiple_choice)
+- Changed from filter-based to map-based rendering to preserve original order
+
+### ✅ Hide Button Fix - COMPLETE
+- Removed section-specific condition - Hide button now visible in all sections
+- Works with overlay and "Resume test" button
 
 ## Completed Features (January 2, 2025)
 
