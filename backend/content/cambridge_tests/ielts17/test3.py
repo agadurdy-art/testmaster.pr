@@ -503,7 +503,7 @@ There is even hope that oil palm plantations might not need to be such sterile m
                     "question_count": 14,
                     "time_recommendation": "20 minutes",
                     "passage_intro": "Katharine L. Shester reviews a book by Jason Barr about the development of New York City",
-                    "text": """Katharine L. Shester reviews a book by Jason Barr about the development of New York City
+                    "passage_text": """Katharine L. Shester reviews a book by Jason Barr about the development of New York City
 
 In Building the Skyline, Jason Barr takes the reader through a detailed history of New York City. The book combines geology, history, economics, and a lot of data to explain why business clusters developed where they did and how the early decisions of workers and firms shaped the skyline we see today. Building the Skyline is organized into two distinct parts. The first is primarily historical and addresses New York's settlement and growth from 1609 to 1900; the second deals primarily with the 20th century and is a compilation of chapters commenting on different aspects of New York's urban development. The tone and organization of the book changes somewhat between the first and second parts, as the latter chapters incorporate aspects of Barr's related research papers.
 
