@@ -357,41 +357,11 @@ Rocha and his colleagues believe that maximising bat populations can help to boo
                             "type": "true_false_not_given",
                             "instruction": "Do the following statements agree with the information given in Reading Passage 1? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, NOT GIVEN if there is no information on this.",
                             "statements": [
-                                {"number": 1, "statement": "Many Madagascan forests are being
-
-
-destroyed by attacks from insects."},
-                                {"number": 2, "statement": "Loss of habitat
-
-
-has badly affected insectivorous bats in Madagascar."},
-                                {"number": 3, "statement": "Ricardo Rocha has
-
-
-carried out studies of bats in different
-
-
-parts of the world."},
-                                {"number": 4, "statement": "Habitat modification
-
-
-has
-
-
-resulted in indigenous bats
-
-
-in Madagascar
-
-
-becoming useful to farmers."},
-                                {"number": 5, "statement": "The Malagasy
-
-
-mouse-eared bat is more common than
-
-
-other indigenous bat species in Madagascar."},
+                                {"number": 1, "statement": "Many Madagascan forests are being destroyed by attacks from insects."},
+                                {"number": 2, "statement": "Loss of habitat has badly affected insectivorous bats in Madagascar."},
+                                {"number": 3, "statement": "Ricardo Rocha has carried out studies of bats in different parts of the world."},
+                                {"number": 4, "statement": "Habitat modification has resulted in indigenous bats in Madagascar becoming useful to farmers."},
+                                {"number": 5, "statement": "The Malagasy mouse-eared bat is more common than other indigenous bat species in Madagascar."},
                                 {"number": 6, "statement": "Bats may feed on paddy swarming caterpillars and grass webworms."}
                             ]
                         },
@@ -411,10 +381,7 @@ other indigenous bat species in Madagascar."},
                                     {
                                         "heading": "Method",
                                         "items": [
-                                            "ultrasonic
-
-
-recording to identify favourite feeding spots",
+                                            "ultrasonic recording to identify favourite feeding spots",
                                             "DNA analysis of bat ___7___"
                                         ]
                                     },
@@ -490,22 +457,7 @@ Ogilvie hopes to start finding answers to these questions over the next few year
                             "type": "section_matching",
                             "instruction": "Reading Passage 2 has six sections, A-F. Which section contains the following information? Write the correct letter, A-F, in boxes 14-18 on your answer sheet.",
                             "items": [
-                                {"number": 14, "item": "an
-
-
-explanation of
-
-
-the
-
-
-need
-
-
-for
-
-
-research to focus on individuals with a fairly consistent income"},
+                                {"number": 14, "item": "an explanation of the need for research to focus on individuals with a fairly consistent income"},
                                 {"number": 15, "item": "examples of the sources the database has been compiled from"},
                                 {"number": 16, "item": "an account of one individual's refusal to obey an order"},
                                 {"number": 17, "item": "a reference to a region being particularly suited to research into the link between education and economic growth"},
