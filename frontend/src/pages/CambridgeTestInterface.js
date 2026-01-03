@@ -2171,17 +2171,15 @@ export default function CambridgeTestInterface() {
                 <HelpCircle className="w-4 h-4 mr-1" />
                 Help
               </Button>
-              {(currentSection === 'reading' || currentSection === 'writing') && (
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => setScreenHidden(true)}
-                  className="text-white hover:bg-slate-700"
-                >
-                  <EyeOff className="w-4 h-4 mr-1" />
-                  Hide
-                </Button>
-              )}
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setScreenHidden(true)}
+                className="text-white hover:bg-slate-700"
+              >
+                <EyeOff className="w-4 h-4 mr-1" />
+                Hide
+              </Button>
             </div>
           </div>
         </div>
