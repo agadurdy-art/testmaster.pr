@@ -2712,7 +2712,16 @@ export default function ComprehensiveLevelTest({ user }) {
                       <p className="text-white/80 text-sm mb-2">{course.band_range}</p>
                       <p className="text-white/90 mb-4">{course.reason}</p>
                       <Button
-                        onClick={() => navigate(`/lesson-preview/${course.id}`)}
+                        onClick={() => {
+                          // Navigate to the appropriate course page
+                          const courseRoutes = {
+                            'beginner': '/beginner-english',
+                            'mastery': '/mastery-course',
+                            'advanced': '/advanced-mastery'
+                          };
+                          const route = courseRoutes[course.id] || `/lesson-preview/${course.id}/1`;
+                          navigate(route);
+                        }}
                         className="w-full bg-white text-violet-600 hover:bg-gray-100"
                       >
                         Explore Course
