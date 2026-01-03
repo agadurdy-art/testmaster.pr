@@ -268,21 +268,21 @@ async def get_question_bank_stats(db=None):
         speaking_total = total_sets * 3 + speaking_qb_count + cambridge_speaking
         
         return {
-            "total_questions": total_questions,
+            "total_questions": cambridge_count,  # Only Cambridge questions
             "by_skill": {
-                "reading": reading_total,
-                "listening": listening_total,
-                "writing": writing_total,
-                "speaking": speaking_total,
+                "reading": cambridge_reading,
+                "listening": cambridge_listening,
+                "writing": cambridge_writing,
+                "speaking": cambridge_speaking,
                 "grammar_vocab": 0
             },
             "by_band": {
-                "4.0-5.0": int(total_questions * 0.25),
-                "5.5-6.5": int(total_questions * 0.35),
-                "7.0-9.0": int(total_questions * 0.40)
+                "4.0-5.0": int(cambridge_count * 0.25),
+                "5.5-6.5": int(cambridge_count * 0.35),
+                "7.0-9.0": int(cambridge_count * 0.40)
             },
             "by_type": question_types,
-            "full_tests": total_sets,
+            "full_tests": cambridge_tests,  # Only Cambridge tests
             "cambridge_tests": cambridge_tests,
             "academic_tests": academic_sets,
             "general_tests": general_sets,
