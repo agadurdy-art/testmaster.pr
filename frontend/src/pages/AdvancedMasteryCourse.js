@@ -26,6 +26,7 @@ import {
   isSectionCompleted,
   markLessonComplete
 } from '../lib/progressTracker';
+import SignUpCTA from '../components/SignUpCTA';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
