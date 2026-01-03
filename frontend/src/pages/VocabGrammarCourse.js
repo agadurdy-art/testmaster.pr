@@ -66,6 +66,8 @@ const getVocabImage = (word) => {
 
 export default function VocabGrammarCourse({ user }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const lessonFromUrl = searchParams.get('lesson');
   
   // ALL HOOKS MUST BE AT TOP LEVEL - NEVER INSIDE CONDITIONS
   const [selectedBand, setSelectedBand] = useState(null);
@@ -88,10 +90,37 @@ export default function VocabGrammarCourse({ user }) {
   const [shuffledDefs, setShuffledDefs] = useState([]);
   const [mcqShuffledOptions, setMcqShuffledOptions] = useState([]);
 
+  // Handle URL lesson parameter - auto-navigate to lesson from quiz
+  useEffect(() => {
+    if (lessonFromUrl) {
+      const loadLessonFromUrl = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`${API_URL}/api/vocab-grammar/lessons`);
+          const data = await res.json();
+          const targetLesson = data.find(l => l.id === lessonFromUrl);
+          if (targetLesson) {
+            setSelectedBand(targetLesson.band_level);
+            setLessons(data.filter(l => l.band_level === targetLesson.band_level));
+            setSelectedLesson(targetLesson);
+            setView('lesson');
+            toast.success(`Opened: ${targetLesson.title}`, { duration: 2000 });
+          } else {
+            toast.error('Lesson not found');
+          }
+        } catch (error) {
+          console.error('Error loading lesson:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      loadLessonFromUrl();
+    }
+  }, [lessonFromUrl]);
 
   // Fetch lessons for selected band
   useEffect(() => {
-    if (selectedBand) {
+    if (selectedBand && !lessonFromUrl) {
       fetchLessons();
     }
   }, [selectedBand]);
