@@ -539,20 +539,24 @@ export default function BeginnerCourse({ user }) {
       </Button>
       
       <div className="text-center mb-8">
-        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-200">
-          <GraduationCap className="w-10 h-10 text-white" />
+        <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-200 animate-bounce">
+          <span className="text-5xl">🌟</span>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Beginner English Course</h1>
-        <p className="text-gray-600">For Band 4.5 and below • 14 Essential Lessons</p>
-        <p className="text-sm text-gray-500 mt-2 max-w-xl mx-auto">
-          This course is for students who want to start learning for the IELTS exam. 
-          The language is simple and easy to understand.
-        </p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Let's Learn English!</h1>
+        <p className="text-gray-600 text-lg">Your Adventure Starts Here! 🚀</p>
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mt-4 max-w-xl mx-auto border border-green-100">
+          <p className="text-sm text-green-800">
+            <span className="font-semibold">Hey there!</span> 👋 Ready to become an English superstar? 
+            Pick a lesson below and let's have fun learning together! Each lesson is full of cool words, 
+            fun games, and amazing stories.
+          </p>
+        </div>
       </div>
       
       {loading ? (
         <div className="text-center py-12">
           <Loader2 className="w-8 h-8 animate-spin mx-auto text-green-500" />
+          <p className="mt-2 text-green-600">Loading your lessons...</p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
