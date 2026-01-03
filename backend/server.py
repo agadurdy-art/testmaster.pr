@@ -3285,6 +3285,135 @@ async def get_vocab_grammar_progress(user_id: str):
     ).to_list(100)
     return progress
 
+# ============ Question Bank - Grammar & Vocab Quiz ============
+
+@api_router.get("/question-bank/grammar-vocab/quizzes")
+async def get_grammar_vocab_quizzes(
+    band_level: Optional[str] = None,
+    unit_id: Optional[str] = None,
+    quiz_type: Optional[str] = None,
+    limit: int = 20,
+    random_order: bool = True
+):
+    """Get grammar & vocabulary quiz questions for Question Bank practice."""
+    query = {}
+    if band_level:
+        query["band_level"] = band_level
+    if unit_id:
+        query["unit_id"] = unit_id
+    if quiz_type:
+        query["type"] = quiz_type
+    
+    quizzes = await db.vocab_grammar_quizzes.find(query, {"_id": 0}).to_list(200)
+    
+    if random_order and quizzes:
+        import random
+        random.shuffle(quizzes)
+    
+    return {
+        "quizzes": quizzes[:limit],
+        "total": len(quizzes),
+        "band_level": band_level,
+        "unit_id": unit_id
+    }
+
+@api_router.get("/question-bank/grammar-vocab/units")
+async def get_grammar_vocab_units(band_level: Optional[str] = None):
+    """Get all vocab/grammar units available for quiz practice."""
+    query = {}
+    if band_level:
+        query["band_level"] = band_level
+    
+    units = await db.vocab_grammar_lessons.find(query, {"_id": 0, "id": 1, "title": 1, "band_level": 1, "type": 1, "unit_number": 1}).to_list(100)
+    
+    # Group by band level
+    grouped = {"foundation": [], "development": [], "advanced": []}
+    for unit in units:
+        level = unit.get("band_level", "foundation")
+        if level in grouped:
+            grouped[level].append(unit)
+    
+    return {
+        "units": grouped,
+        "total": len(units)
+    }
+
+@api_router.post("/question-bank/grammar-vocab/evaluate")
+async def evaluate_grammar_vocab_quiz(answers: Dict[str, str], user_id: Optional[str] = None):
+    """Evaluate grammar & vocab quiz answers and provide feedback."""
+    results = []
+    correct_count = 0
+    
+    for quiz_id, user_answer in answers.items():
+        quiz = await db.vocab_grammar_quizzes.find_one({"id": quiz_id}, {"_id": 0})
+        if quiz:
+            is_correct = user_answer.lower().strip() == quiz.get("answer", "").lower().strip()
+            if is_correct:
+                correct_count += 1
+            
+            results.append({
+                "quiz_id": quiz_id,
+                "question": quiz.get("question"),
+                "user_answer": user_answer,
+                "correct_answer": quiz.get("answer"),
+                "is_correct": is_correct,
+                "explanation": quiz.get("explanation"),
+                "unit_id": quiz.get("unit_id"),
+                "unit_title": quiz.get("unit_title")
+            })
+    
+    total = len(answers)
+    score = (correct_count / total * 100) if total > 0 else 0
+    
+    # Identify weak areas (units where user got questions wrong)
+    weak_units = list(set([r["unit_id"] for r in results if not r["is_correct"]]))
+    
+    # Save progress if user_id provided
+    if user_id and total > 0:
+        await db.vocab_grammar_quiz_progress.update_one(
+            {"user_id": user_id},
+            {
+                "$inc": {"total_questions": total, "correct_answers": correct_count},
+                "$addToSet": {"weak_units": {"$each": weak_units}},
+                "$set": {"last_quiz_date": datetime.now(timezone.utc).isoformat()}
+            },
+            upsert=True
+        )
+    
+    return {
+        "score": round(score, 1),
+        "correct": correct_count,
+        "total": total,
+        "results": results,
+        "weak_units": weak_units,
+        "recommendation": f"Review these units: {', '.join(weak_units)}" if weak_units else "Great job! Keep practicing!"
+    }
+
+@api_router.get("/question-bank/grammar-vocab/weak-areas/{user_id}")
+async def get_grammar_vocab_weak_areas(user_id: str):
+    """Get user's weak areas and recommend lessons to review."""
+    progress = await db.vocab_grammar_quiz_progress.find_one({"user_id": user_id}, {"_id": 0})
+    
+    if not progress:
+        return {"weak_units": [], "recommended_lessons": [], "message": "No quiz history found. Start practicing!"}
+    
+    weak_unit_ids = progress.get("weak_units", [])
+    
+    # Get lesson details for weak units
+    recommended_lessons = []
+    for unit_id in weak_unit_ids[:5]:  # Top 5 weak areas
+        lesson = await db.vocab_grammar_lessons.find_one({"id": unit_id}, {"_id": 0, "id": 1, "title": 1, "band_level": 1, "type": 1})
+        if lesson:
+            recommended_lessons.append(lesson)
+    
+    return {
+        "weak_units": weak_unit_ids,
+        "recommended_lessons": recommended_lessons,
+        "total_questions": progress.get("total_questions", 0),
+        "correct_answers": progress.get("correct_answers", 0),
+        "accuracy": round((progress.get("correct_answers", 0) / progress.get("total_questions", 1)) * 100, 1)
+    }
+
 # Admin endpoint to add new tests
 class CreateTestRequest(BaseModel):
     title: str
