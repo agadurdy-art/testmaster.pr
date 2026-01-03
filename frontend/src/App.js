@@ -58,25 +58,33 @@ import CambridgeTestInterface from './pages/CambridgeTestInterface';
 import CambridgeTestResults from './pages/CambridgeTestResults';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
+import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
 
 // Language Leak Watcher Component (Development Only)
 function LanguageLeakWatcher() {
   const { language } = useI18n();
+  const location = useLocation();
   
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development') return;
     
     const id = setTimeout(() => {
-      const leak = scanDomForLanguageLeaks(language);
+      // Get effective language based on route
+      const effectiveLang = getEffectiveLanguage(location.pathname, language);
+      const leak = scanDomForLanguageLeaks(effectiveLang);
+      
       if (leak) {
-        console.error('🚨 LANGUAGE LEAK DETECTED:', leak);
+        const routeInfo = isEnglishLockedRoute(location.pathname) 
+          ? '(English-locked route)' 
+          : `(System: ${language})`;
+        console.error(`🚨 LANGUAGE LEAK DETECTED ${routeInfo}:`, leak);
         // Uncomment to break on leak detection:
         // throw new Error(`${leak.type}: ${leak.sample}`);
       }
     }, 500);
     
     return () => clearTimeout(id);
-  }, [language]);
+  }, [language, location.pathname]);
   
   return null;
 }
