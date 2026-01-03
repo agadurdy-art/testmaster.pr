@@ -84,9 +84,82 @@ export default function PracticeMode({ user }) {
   const [timerActive, setTimerActive] = useState(false);
   const [practiceStarted, setPracticeStarted] = useState(false);
   const [stats, setStats] = useState({ correct: 0, incorrect: 0, skipped: 0 });
+  
+  // Audio states for listening practice
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [audioLoading, setAudioLoading] = useState(false);
+  const [audioUrl, setAudioUrl] = useState(null);
+  const audioRef = useRef(null);
 
   const ModeIcon = MODES[mode]?.icon || Shuffle;
   const SkillIcon = SKILLS[skill]?.icon || BookOpen;
+
+  // Generate TTS audio for listening practice
+  const generateAudio = async (text) => {
+    if (!text) return;
+    
+    setAudioLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/api/vocab-grammar/tts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, voice: 'alloy', speed: 0.9 })
+      });
+      
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        setAudioUrl(url);
+        return url;
+      }
+    } catch (error) {
+      console.error('TTS error:', error);
+      // Fallback to browser TTS
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        utterance.lang = 'en-US';
+        window.speechSynthesis.speak(utterance);
+      }
+    } finally {
+      setAudioLoading(false);
+    }
+  };
+
+  const playAudio = async () => {
+    const currentQuestion = questions[currentIndex];
+    if (!currentQuestion?.audio_transcript) return;
+    
+    if (isPlayingAudio && audioRef.current) {
+      audioRef.current.pause();
+      setIsPlayingAudio(false);
+      return;
+    }
+    
+    // Generate new audio if not already generated
+    if (!audioUrl) {
+      const url = await generateAudio(currentQuestion.audio_transcript);
+      if (url && audioRef.current) {
+        audioRef.current.src = url;
+        audioRef.current.play();
+        setIsPlayingAudio(true);
+      }
+    } else if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+      setIsPlayingAudio(true);
+    }
+  };
+
+  // Reset audio when question changes
+  useEffect(() => {
+    setAudioUrl(null);
+    setIsPlayingAudio(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, [currentIndex]);
 
   // Load questions based on skill and mode
   useEffect(() => {
