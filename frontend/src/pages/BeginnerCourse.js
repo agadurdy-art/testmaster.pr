@@ -1803,7 +1803,7 @@ export default function BeginnerCourse({ user }) {
           </div>
           
           <Button onClick={submitQuiz} className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white">
-            Submit Quiz
+            {getText('submitQuiz')}
           </Button>
         </>
       ) : (
@@ -1818,26 +1818,26 @@ export default function BeginnerCourse({ user }) {
             <div className="text-6xl mb-4">📚</div>
           )}
           <h4 className="text-2xl font-bold text-gray-900 mb-2">
-            {quizScore >= 90 ? 'WOW! You\'re Amazing!' : 
-             quizScore >= 70 ? 'Super Job!' : 
-             quizScore >= 50 ? 'Good Try!' : 'Nice Effort!'}
+            {quizScore >= 90 ? getText('wow') : 
+             quizScore >= 70 ? getText('superJob') : 
+             quizScore >= 50 ? getText('goodTry') : getText('niceEffort')}
           </h4>
           <p className="text-4xl font-bold text-cyan-600 mb-4">{quizScore}%</p>
           <p className="text-gray-600 mb-6 max-w-md mx-auto">
-            {quizScore >= 90 ? '🎉 You\'re a superstar! You know this lesson really well!' : 
-             quizScore >= 70 ? '🌟 Great work! You learned a lot from this lesson!' : 
-             quizScore >= 50 ? '👍 You\'re getting better! Try again to get an even higher score!' : 
-             '💡 Learning takes practice! Go back and review the lesson, then try again. You can do it!'}
+            {quizScore >= 90 ? `🎉 ${getText('wowMsg')}` : 
+             quizScore >= 70 ? `🌟 ${getText('superJobMsg')}` : 
+             quizScore >= 50 ? `👍 ${getText('goodTryMsg')}` : 
+             `💡 ${getText('niceEffortMsg')}`}
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Button variant="outline" onClick={() => { setQuizSubmitted(false); setQuizAnswers({}); }} className="gap-2">
-              🔄 Try Again
+              🔄 {getText('tryAgain')}
             </Button>
             <Button 
               onClick={() => { setView('lessons'); setSelectedLesson(null); }}
               className="bg-gradient-to-r from-green-500 to-emerald-600 text-white gap-2"
             >
-              🏠 Back to Lessons
+              🏠 {getText('backToLessons')}
             </Button>
           </div>
         </div>
