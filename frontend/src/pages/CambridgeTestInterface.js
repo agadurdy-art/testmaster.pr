@@ -1495,9 +1495,10 @@ export default function CambridgeTestInterface() {
               )}
 
               {/* Multiple Choice - Reading */}
-              {q.type === 'multiple_choice' && q.questions && (
+              {q.type === 'multiple_choice' && (q.questions || q.items) && (
                 <div className="space-y-4">
-                  {q.questions.map((mcq, mIdx) => (
+                  <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
+                  {(q.questions || q.items).map((mcq, mIdx) => (
                     <div key={mIdx} className="p-4 bg-white border rounded-lg">
                       <p className="text-sm font-medium mb-3">{mcq.number}. {mcq.question}</p>
                       <div className="space-y-2">
