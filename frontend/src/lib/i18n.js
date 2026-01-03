@@ -1010,6 +1010,7 @@ export const translations = {
     landingAdvancedCourse: 'İleri IELTS Ustalık Kursu',
     landingAdvancedCourseDesc: 'Kelime, dilbilgisi, okuma pasajları, yazma ödevleri ve konuşma pratiği içeren 20 kapsamlı modül — hepsi Cambridge uyumlu içerikle.',
     landingExploreCourse: 'Kursu Keşfet',
+    landingBand6to9: 'Band 6.0 → 9.0 Yol Haritası',
     landingTryLessonsBadge: 'Ücretsiz Önizleme',
     landingTryLessonsTitle: 'Derslerimizi Deneyin — Kayıt Gerekmez',
     landingTryLessonsDesc: 'Karar vermeden önce Cambridge uyumlu derslerimizi deneyimleyin. Her modül gelişmiş kelime, dilbilgisi yapıları ve AI destekli pratik içerir.',
