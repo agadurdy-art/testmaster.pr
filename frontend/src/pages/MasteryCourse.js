@@ -563,20 +563,27 @@ export default function MasteryCourse({ user }) {
             </ul>
           </div>
           
-          {/* Section Tabs */}
+          {/* Section Tabs with Completion Status */}
           <div className="flex flex-wrap gap-2">
-            {sections.map((section) => (
-              <Button
-                key={section.id}
-                variant={currentSection === section.id ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setCurrentSection(section.id)}
-                className={currentSection === section.id ? 'bg-gradient-to-r from-violet-500 to-purple-600' : ''}
-              >
-                <section.icon className="w-4 h-4 mr-1" />
-                {section.label}
-              </Button>
-            ))}
+            {sections.map((section) => {
+              const sectionComplete = isSectionCompleted('mastery', selectedModule.module_number, section.id);
+              return (
+                <Button
+                  key={section.id}
+                  variant={currentSection === section.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setCurrentSection(section.id)}
+                  className={`relative ${currentSection === section.id ? 'bg-gradient-to-r from-violet-500 to-purple-600' : ''} ${sectionComplete ? 'border-green-400' : ''}`}
+                >
+                  {sectionComplete ? (
+                    <CircleCheck className="w-4 h-4 mr-1 text-green-500" />
+                  ) : (
+                    <section.icon className="w-4 h-4 mr-1" />
+                  )}
+                  {section.label}
+                </Button>
+              );
+            })}
           </div>
         </Card>
         
