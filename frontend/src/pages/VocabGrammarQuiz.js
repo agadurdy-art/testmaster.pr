@@ -199,8 +199,50 @@ export default function VocabGrammarQuiz({ user }) {
               {results.correct} out of {results.total} correct
             </p>
 
-            {/* Weak Areas */}
-            {results.weak_units && results.weak_units.length > 0 && (
+            {/* Recommended Lessons - Smart suggestions based on weak areas */}
+            {results.recommended_lessons && results.recommended_lessons.length > 0 && (
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5 mb-6 text-left">
+                <div className="flex items-center gap-2 text-blue-700 font-semibold mb-3">
+                  <Target className="w-5 h-5" />
+                  Recommended for You
+                </div>
+                <p className="text-sm text-blue-600 mb-4">
+                  Based on your results, we recommend reviewing these lessons:
+                </p>
+                <div className="space-y-2">
+                  {results.recommended_lessons.map((lesson, i) => (
+                    <div 
+                      key={i}
+                      className="bg-white rounded-lg p-3 border border-blue-100 hover:border-blue-300 cursor-pointer transition-all group"
+                      onClick={() => navigate(`/vocab-grammar?lesson=${lesson.id}`)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium text-gray-800 group-hover:text-blue-600">
+                            {lesson.title}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <Badge variant="secondary" className="text-xs capitalize">
+                              {lesson.band_level}
+                            </Badge>
+                            <Badge variant="outline" className="text-xs capitalize">
+                              {lesson.type}
+                            </Badge>
+                          </div>
+                        </div>
+                        <Button size="sm" variant="ghost" className="text-blue-600">
+                          Review <ChevronRight className="w-4 h-4 ml-1" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Weak Areas - Fallback if no recommended_lessons */}
+            {(!results.recommended_lessons || results.recommended_lessons.length === 0) && 
+             results.weak_units && results.weak_units.length > 0 && (
               <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
                 <div className="flex items-center gap-2 text-amber-700 font-medium mb-2">
                   <AlertCircle className="w-5 h-5" />
@@ -215,7 +257,7 @@ export default function VocabGrammarQuiz({ user }) {
                       key={i} 
                       variant="outline" 
                       className="cursor-pointer hover:bg-amber-100"
-                      onClick={() => goToLesson(unit)}
+                      onClick={() => navigate(`/vocab-grammar?lesson=${unit}`)}
                     >
                       {unit.replace(/-/g, ' ')} →
                     </Badge>
@@ -226,6 +268,9 @@ export default function VocabGrammarQuiz({ user }) {
 
             {/* Results Breakdown */}
             <div className="space-y-3 mb-8 text-left">
+              <h3 className="font-semibold text-gray-700 flex items-center gap-2">
+                <BookOpen className="w-4 h-4" /> Question Details
+              </h3>
               {results.results?.map((r, i) => (
                 <div 
                   key={i} 
@@ -240,10 +285,20 @@ export default function VocabGrammarQuiz({ user }) {
                     <div className="flex-1">
                       <p className="text-sm font-medium">{r.question}</p>
                       {!r.is_correct && (
-                        <p className="text-xs text-gray-600 mt-1">
-                          Your answer: <span className="text-red-600">{r.user_answer}</span> | 
-                          Correct: <span className="text-green-600">{r.correct_answer}</span>
-                        </p>
+                        <>
+                          <p className="text-xs text-gray-600 mt-1">
+                            Your answer: <span className="text-red-600">{r.user_answer}</span> | 
+                            Correct: <span className="text-green-600">{r.correct_answer}</span>
+                          </p>
+                          {r.unit_id && (
+                            <button 
+                              className="text-xs text-blue-500 hover:underline mt-1 flex items-center gap-1"
+                              onClick={() => navigate(`/vocab-grammar?lesson=${r.unit_id}`)}
+                            >
+                              <RefreshCw className="w-3 h-3" /> Review this topic
+                            </button>
+                          )}
+                        </>
                       )}
                       <p className="text-xs text-gray-500 mt-1 italic">{r.explanation}</p>
                     </div>
