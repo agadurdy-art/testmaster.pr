@@ -56,6 +56,30 @@ import FullTestResults from './pages/FullTestResults';
 import VisualGenerator from './pages/VisualGenerator';
 import CambridgeTestInterface from './pages/CambridgeTestInterface';
 import CambridgeTestResults from './pages/CambridgeTestResults';
+import { useI18n } from './lib/i18n';
+import { scanDomForLanguageLeaks } from './lib/leakDetection';
+
+// Language Leak Watcher Component (Development Only)
+function LanguageLeakWatcher() {
+  const { language } = useI18n();
+  
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') return;
+    
+    const id = setTimeout(() => {
+      const leak = scanDomForLanguageLeaks(language);
+      if (leak) {
+        console.error('🚨 LANGUAGE LEAK DETECTED:', leak);
+        // Uncomment to break on leak detection:
+        // throw new Error(`${leak.type}: ${leak.sample}`);
+      }
+    }, 500);
+    
+    return () => clearTimeout(id);
+  }, [language]);
+  
+  return null;
+}
 
 
 function EmergentBadgeWrapper() {
