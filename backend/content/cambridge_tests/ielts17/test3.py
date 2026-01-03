@@ -614,7 +614,7 @@ In spite of its flaws, Building the Skyline is quite enjoyable. The combination 
                             "1968": [35, 10, 6, 10, 10, 8, 8, 5],
                             "2018": [15, 20, 5, 9, 13, 9, 23, 16]
                         },
-                        "image_url": "/api/cambridge/image/ielts17/test3/writing_task1_chart.png"
+                        "image_url": "/api/cambridge/images/ielts17/test3/test3_writing_task1.png"
                     }
                 },
                 {
