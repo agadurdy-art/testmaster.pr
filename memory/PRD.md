@@ -28,19 +28,65 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 │   ├── test1.py               # IELTS 17 Test 1 data
 │   ├── test2.py               # IELTS 17 Test 2 data
 │   ├── test3.py               # IELTS 17 Test 3 data
-│   └── test4.py               # IELTS 17 Test 4 data (NEW - January 3, 2025)
+│   └── test4.py               # IELTS 17 Test 4 data
 ├── routes/
 │   ├── cambridge.py           # Cambridge test API + evaluations
 │   ├── cambridge_speaking.py  # Speaking evaluation (Free + Premium)
-│   └── speaking_qb.py         # Core speaking evaluation protocols
+│   ├── qa_admin.py            # QA workflow & evidence pack routes (NEW)
+│   └── test_admin.py          # Test debug & validation routes
 ├── services/
 │   ├── test_normalizer.py     # Converts raw test data to canonical format
-│   ├── practice_service.py    # MICRO-BASED practice mode
-│   └── stats_aggregator.py    # Auto-computes stats
+│   ├── practice_service.py    # MICRO-BASED practice mode (status-filtered)
+│   ├── stats_aggregator.py    # Auto-computes stats (status-filtered)
+│   ├── qa_workflow_service.py # QA approval workflow (NEW)
+│   └── evidence_pack_generator.py # Evidence pack generator (NEW)
 ├── schemas/
-│   └── test_package.py        # Canonical test schema
+│   ├── test_package.py        # Canonical test schema
+│   ├── visual_asset.py        # Visual asset & AI blocker schema (NEW)
+│   └── qa_workflow.py         # QA workflow schema (NEW)
 └── writing_evaluator.py       # Core writing evaluation protocols
 ```
+
+## QA Workflow System (NEW - January 3, 2025)
+
+### HARD GUARANTEES IMPLEMENTED:
+
+#### A) AI Visual Generation BANNED
+- Runtime guard blocks any visual with `source=ai_generated`
+- Forbidden markers: `dalle`, `midjourney`, `stable-diffusion`, `openai`, `gpt-image`, `nano-banana`
+- Only `user_upload` or `pdf_crop` sources allowed
+- Validation endpoint: `POST /api/admin/qa/validate/visual`
+
+#### B) Test Status Workflow
+```
+DRAFT → FAILED_VALIDATION → PENDING_QA → APPROVED → PUBLISHED
+```
+- Only APPROVED/PUBLISHED tests appear in user-facing lists
+- Only APPROVED/PUBLISHED tests feed into practice pools
+- Content changes after APPROVED reverts to PENDING_QA
+
+#### C) Speaking Part 2 Cue Card Hard Gate
+- Must have: topic (min 10 chars), bullets (min 2), timing_note
+- If missing → FAILED_VALIDATION
+- Editor endpoint: `POST /api/admin/qa/cuecard/edit`
+
+#### D) Evidence Pack for Human QA
+- Auto-generated PDF vs UI comparison evidence
+- Includes: Reading passages, Writing prompts/visuals, Speaking cue cards, Listening audio status
+- Approval gate: `POST /api/admin/qa/approve`
+
+### QA Admin API Endpoints:
+- `GET /api/admin/qa/evidence/{test_id}` - Full evidence pack
+- `GET /api/admin/qa/status/all` - All test statuses
+- `GET /api/admin/qa/publishable` - Only publishable tests
+- `POST /api/admin/qa/approve` - Approve test for publication
+- `POST /api/admin/qa/publish/{test_id}` - Publish approved test
+- `GET /api/admin/qa/visuals/{test_id}/slots` - Required visual slots
+- `POST /api/admin/qa/visuals/attach` - Attach visual (user_upload/pdf_crop only)
+- `GET /api/admin/qa/cuecard/{test_id}` - Get cue card
+- `POST /api/admin/qa/cuecard/edit` - Edit cue card
+- `GET /api/admin/qa/validate/{test_id}` - Full validation
+- `POST /api/admin/qa/validate/visual` - Validate visual source
 
 ## Completed Features (January 3, 2025)
 
