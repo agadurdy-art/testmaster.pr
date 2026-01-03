@@ -463,24 +463,48 @@ export default function MasteryCourse({ user }) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {modules.map((module) => {
             const config = MODULE_CONFIG[module.title] || { icon: '📚', color: 'from-gray-500 to-gray-600' };
+            const moduleProgress = getLessonProgress('mastery', module.module_number);
+            const isComplete = isLessonCompleted('mastery', module.module_number);
+            
             return (
               <Card 
                 key={module.id}
-                className={`p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border shadow-md ${bgCard}`}
+                className={`p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border shadow-md ${bgCard} ${isComplete ? 'ring-2 ring-green-400' : ''}`}
                 onClick={() => selectModule(module)}
               >
                 <div className="flex items-start gap-4">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${config.color} flex items-center justify-center text-2xl shadow-lg flex-shrink-0`}>
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${config.color} flex items-center justify-center text-2xl shadow-lg flex-shrink-0 relative`}>
                     {config.icon}
+                    {isComplete && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                        <CheckCircle className="w-3 h-3 text-white" />
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <span className={`text-xs font-medium text-violet-600 ${isDark ? 'bg-violet-900/30' : 'bg-violet-50'} px-2 py-0.5 rounded-full`}>
-                      Module {module.module_number}
-                    </span>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className={`text-xs font-medium text-violet-600 ${isDark ? 'bg-violet-900/30' : 'bg-violet-50'} px-2 py-0.5 rounded-full`}>
+                        Module {module.module_number}
+                      </span>
+                      {moduleProgress > 0 && !isComplete && (
+                        <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                          {moduleProgress}%
+                        </span>
+                      )}
+                    </div>
                     <h3 className={`font-bold ${textPrimary} mt-1`}>{module.title}</h3>
                     <p className={`text-xs ${textSecondary} mt-1 line-clamp-2`}>
                       {module.learning_goals?.[0]}
                     </p>
+                    {/* Progress Bar */}
+                    {moduleProgress > 0 && (
+                      <div className="mt-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full ${isComplete ? 'bg-green-500' : 'bg-violet-500'} transition-all`}
+                          style={{ width: `${moduleProgress}%` }}
+                        />
+                      </div>
+                    )}
                   </div>
                   <ChevronRight className={`w-5 h-5 ${textSecondary} flex-shrink-0`} />
                 </div>
