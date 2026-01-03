@@ -179,6 +179,19 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 ### P2: Session Persistence Bug
 - Frontend localStorage session restoration issue (known bug)
 
+## Bug Fixes (January 3, 2025)
+
+### ✅ Listening Test Q31-32 Part Display Fix - COMPLETE
+- **Issue**: Q31-32 were incorrectly showing under Part 3 instead of Part 4
+- **Root Cause**: Frontend used array index slicing (`slice((currentPart-1)*10, currentPart*10)`) instead of filtering by `section` field
+- **Fix Applied**: Changed to `filter(q => q.section === currentPart)` in `/app/frontend/src/pages/TestInterface.js`
+- **Affected Lines**: 1286-1289 (Question Numbers Grid), 1364-1367 (Questions List)
+- **Result**: Questions now correctly grouped by their `section` field from backend data
+
+### ✅ Landing Page Turkish Translation - COMPLETE  
+- All landing page sections fully translated to Turkish in `/app/frontend/src/lib/i18n.js`
+- Verified sections: Hero, Methodology, Comparison, Practical Learning, Skills, Who For, Complete Prep, Honesty Promise, Footer, Auth modals
+
 ## Completed Features (January 3, 2025)
 
 ### ✅ Multi-Language Control System - COMPLETE
