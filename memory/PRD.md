@@ -49,17 +49,30 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 - **Fixed**: `text` → `passage_text` field mapping
 - **Fixed**: `cue_card` → `task_card` field mapping
 
-### ✅ Auto-Stats System - COMPLETE
-- Cambridge tests automatically counted in stats
-- Question types automatically tracked
-- Practice pool size calculated dynamically
-- Stats update automatically when new tests are ingested
+## Architecture - Test Data Contract System (January 3, 2025)
 
-### ✅ Practice Mode Cambridge Integration - COMPLETE
-- Practice mode now pulls from Cambridge tests
-- MICRO-BASED reading: Only relevant paragraph shown
-- Question type filtering supported
-- Source filtering (cambridge/legacy/all)
+### Canonical Test Schema
+- `/app/backend/schemas/test_package.py`: Defines TestPackage schema with strict validation
+- All tests MUST conform to this schema to be valid
+
+### Services
+- `/app/backend/services/test_normalizer.py`: Converts raw test data to canonical format
+- `/app/backend/services/practice_service.py`: MICRO-BASED practice mode (minimal context per question)
+- `/app/backend/services/stats_aggregator.py`: Auto-computes stats when tests are added/removed
+
+### Admin API Endpoints
+- `GET /api/admin/tests/list` - List all tests with status
+- `GET /api/admin/tests/debug/{test_id}` - Debug info for a test
+- `GET /api/admin/tests/validate/{test_id}` - Validate a test against schema
+- `GET /api/admin/tests/stats` - Auto-computed aggregate stats
+- `GET /api/admin/tests/practice/pool-stats` - Practice pool statistics
+- `GET /api/admin/tests/practice/random?skill=X` - Get micro-based practice questions
+
+### Practice Mode Rules
+- **Reading**: Shows only relevant paragraph (micro_context)
+- **Listening**: Uses answer_span for short audio clips
+- **Speaking Part 1 & 3**: Audio-only (DO NOT show text)
+- **Speaking Part 2**: Visible cue card (topic + bullets + timing)
 
 ### ✅ IELTS 17 Test 2 Reading Section - COMPLETE (PDF Extract)
 - Extracted all 3 passages from PDF (pages 37-49)
