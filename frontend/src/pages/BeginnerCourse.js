@@ -1764,21 +1764,36 @@ export default function BeginnerCourse({ user }) {
         </>
       ) : (
         <div className="text-center py-8">
-          <Trophy className={`w-16 h-16 mx-auto mb-4 ${quizScore >= 70 ? 'text-yellow-500' : 'text-gray-400'}`} />
-          <h4 className="text-2xl font-bold text-gray-900 mb-2">Quiz Complete!</h4>
+          {quizScore >= 90 ? (
+            <div className="text-6xl mb-4 animate-bounce">🏆</div>
+          ) : quizScore >= 70 ? (
+            <div className="text-6xl mb-4">⭐</div>
+          ) : quizScore >= 50 ? (
+            <div className="text-6xl mb-4">💪</div>
+          ) : (
+            <div className="text-6xl mb-4">📚</div>
+          )}
+          <h4 className="text-2xl font-bold text-gray-900 mb-2">
+            {quizScore >= 90 ? 'WOW! You\'re Amazing!' : 
+             quizScore >= 70 ? 'Super Job!' : 
+             quizScore >= 50 ? 'Good Try!' : 'Nice Effort!'}
+          </h4>
           <p className="text-4xl font-bold text-cyan-600 mb-4">{quizScore}%</p>
-          <p className="text-gray-600 mb-6">
-            {quizScore >= 70 ? '🎉 Great job! You\'ve mastered this lesson!' : 'Keep practicing to improve your score.'}
+          <p className="text-gray-600 mb-6 max-w-md mx-auto">
+            {quizScore >= 90 ? '🎉 You\'re a superstar! You know this lesson really well!' : 
+             quizScore >= 70 ? '🌟 Great work! You learned a lot from this lesson!' : 
+             quizScore >= 50 ? '👍 You\'re getting better! Try again to get an even higher score!' : 
+             '💡 Learning takes practice! Go back and review the lesson, then try again. You can do it!'}
           </p>
-          <div className="flex gap-3 justify-center">
-            <Button variant="outline" onClick={() => { setQuizSubmitted(false); setQuizAnswers({}); }}>
-              Try Again
+          <div className="flex gap-3 justify-center flex-wrap">
+            <Button variant="outline" onClick={() => { setQuizSubmitted(false); setQuizAnswers({}); }} className="gap-2">
+              🔄 Try Again
             </Button>
             <Button 
               onClick={() => { setView('lessons'); setSelectedLesson(null); }}
-              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white"
+              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white gap-2"
             >
-              <Home className="w-4 h-4 mr-2" /> Back to Lessons
+              🏠 Back to Lessons
             </Button>
           </div>
         </div>
