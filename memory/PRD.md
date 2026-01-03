@@ -36,6 +36,20 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 ## Completed Features (January 3, 2025)
 
+### ✅ IELTS 17 Test 2 Reading Section - COMPLETE (PDF Extract)
+- Extracted all 3 passages from PDF (pages 37-49)
+- **Passage 1**: "The Dead Sea Scrolls" (Q1-13)
+- **Passage 2**: "A second attempt at domesticating the tomato" (Q14-26)
+- **Passage 3**: "Insight or evolution?" (Q27-40)
+- All question types implemented with correct data structures
+
+### ✅ New Question Type Support - COMPLETE
+Added frontend rendering for:
+- `matching_features` - Researcher matching with dropdown (Q19-23)
+- `sentence_completion` - Text input with gap fill (Q24-26)
+- `summary_completion` - Word box + dropdown in summary text (Q37-40)
+- Updated `true_false_not_given` and `yes_no_not_given` to support both `statements` and `items` formats
+
 ### ✅ Part 3 Question Ordering Fix - COMPLETE
 - Fixed rendering order: Q21-22 (multiple_selection) → Q23-27 (matching) → Q28-30 (multiple_choice)
 - Changed from filter-based to map-based rendering to preserve original order
