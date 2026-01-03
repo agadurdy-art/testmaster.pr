@@ -316,15 +316,15 @@ function AppWithSessionHandler() {
         />
         <Route 
           path="/beginner-course" 
-          element={user ? <BeginnerCourse user={user} /> : <Navigate to="/" />} 
+          element={<BeginnerCourse user={user} />} 
         />
         <Route 
           path="/mastery-course" 
-          element={user ? <MasteryCourse user={user} /> : <Navigate to="/" />} 
+          element={<MasteryCourse user={user} />} 
         />
         <Route 
           path="/advanced-mastery" 
-          element={user ? <AdvancedMasteryCourse user={user} /> : <Navigate to="/" />} 
+          element={<AdvancedMasteryCourse user={user} />} 
         />
         <Route 
           path="/game-bank" 
