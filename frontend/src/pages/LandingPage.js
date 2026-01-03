@@ -978,42 +978,74 @@ export default function LandingPage({ onLogin, user, showLogin }) {
                   
                   {lessons.length > 0 ? (
                     <div className="grid sm:grid-cols-3 gap-3">
-                      {lessons.map((lesson, idx) => (
-                        <Card
-                          key={lesson.id || idx}
-                          onClick={() => {
-                            setShowCourseSelector(false);
-                            // Navigate directly to the real course page with lesson parameter
-                            if (course.id === 'vocab-grammar') {
-                              navigate(`/vocab-grammar?lesson=${lesson.id}&preview=true`);
-                            } else if (course.id === 'beginner') {
-                              navigate(`/beginner-course?lesson=${lesson.id}&preview=true`);
-                            } else if (course.id === 'mastery') {
-                              navigate(`/mastery-course?lesson=${lesson.module_number || idx + 1}&preview=true`);
-                            } else if (course.id === 'advanced') {
-                              navigate(`/advanced-mastery?lesson=${lesson.id || lesson.module_number || idx + 1}&preview=true`);
-                            } else {
-                              navigate(`${course.previewRoute}?preview=true`);
-                            }
-                          }}
-                          className="p-4 bg-white border-0 shadow-sm hover:shadow-lg cursor-pointer transition-all hover:-translate-y-1 rounded-xl"
-                        >
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-white font-bold text-sm`}>
-                              {lesson.module_number || lesson.unit_number || idx + 1}
+                      {lessons.map((lesson, idx) => {
+                        const isLocked = idx >= 3;
+                        const lockText = {
+                          en: 'Sign up to unlock',
+                          vi: 'Đăng ký để mở khóa',
+                          tr: 'Açmak için kayıt olun'
+                        };
+                        
+                        return (
+                          <Card
+                            key={lesson.id || idx}
+                            onClick={() => {
+                              if (isLocked) {
+                                // Show signup prompt for locked lessons
+                                setShowCourseSelector(false);
+                                navigate('/?signup=true');
+                                return;
+                              }
+                              setShowCourseSelector(false);
+                              // Navigate directly to the real course page with lesson parameter
+                              if (course.id === 'vocab-grammar') {
+                                navigate(`/vocab-grammar?lesson=${lesson.id}&preview=true`);
+                              } else if (course.id === 'beginner') {
+                                navigate(`/beginner-course?lesson=${lesson.id}&preview=true`);
+                              } else if (course.id === 'mastery') {
+                                navigate(`/mastery-course?lesson=${lesson.module_number || idx + 1}&preview=true`);
+                              } else if (course.id === 'advanced') {
+                                navigate(`/advanced-mastery?lesson=${lesson.id || lesson.module_number || idx + 1}&preview=true`);
+                              } else {
+                                navigate(`${course.previewRoute}?preview=true`);
+                              }
+                            }}
+                            className={`p-4 border-0 shadow-sm transition-all rounded-xl relative ${
+                              isLocked 
+                                ? 'bg-gray-100 cursor-pointer hover:bg-gray-200 opacity-75' 
+                                : 'bg-white hover:shadow-lg cursor-pointer hover:-translate-y-1'
+                            }`}
+                          >
+                            {/* Lock overlay for locked lessons */}
+                            {isLocked && (
+                              <div className="absolute inset-0 flex items-center justify-center bg-gray-900/5 rounded-xl">
+                                <div className="flex flex-col items-center">
+                                  <svg className="w-6 h-6 text-gray-500 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                  </svg>
+                                  <span className="text-xs font-medium text-gray-600">{lockText[language] || lockText.en}</span>
+                                </div>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-2 mb-2">
+                              <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${isLocked ? 'from-gray-400 to-gray-500' : course.color} flex items-center justify-center text-white font-bold text-sm`}>
+                                {lesson.module_number || lesson.unit_number || idx + 1}
+                              </div>
+                              {!isLocked && (
+                                <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">
+                                  {t('landingFreePreview')}
+                                </span>
+                              )}
                             </div>
-                            <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">
-                              {t('landingFreePreview')}
-                            </span>
-                          </div>
-                          <h4 className="font-semibold text-gray-900 text-sm truncate">
-                            {lesson.title || lesson.topic || `Lesson ${idx + 1}`}
-                          </h4>
-                          <p className="text-xs text-gray-500 truncate mt-1">
-                            {lesson.subtitle || lesson.description || lesson.band_level || ''}
-                          </p>
-                        </Card>
-                      ))}
+                            <h4 className={`font-semibold text-sm truncate ${isLocked ? 'text-gray-500' : 'text-gray-900'}`}>
+                              {lesson.title || lesson.topic || `Lesson ${idx + 1}`}
+                            </h4>
+                            <p className="text-xs text-gray-500 truncate mt-1">
+                              {lesson.subtitle || lesson.description || lesson.band_level || ''}
+                            </p>
+                          </Card>
+                        );
+                      })}
                     </div>
                   ) : (
                     <div className="text-center py-4 text-gray-500 text-sm">
