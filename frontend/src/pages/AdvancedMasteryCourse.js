@@ -541,27 +541,53 @@ export default function AdvancedMasteryCourse({ user }) {
 
       {/* Modules Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {modules.map((module) => (
-          <Card 
-            key={module.id}
-            className="p-5 bg-white border-0 shadow-lg hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl"
-            onClick={() => selectModule(module)}
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
-                {module.module_number}
+        {modules.map((module) => {
+          const moduleProgress = getLessonProgress('advanced', module.module_number);
+          const isComplete = isLessonCompleted('advanced', module.module_number);
+          
+          return (
+            <Card 
+              key={module.id}
+              className={`p-5 bg-white border-0 shadow-lg hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl ${isComplete ? 'ring-2 ring-green-400' : ''}`}
+              onClick={() => selectModule(module)}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform relative">
+                  {module.module_number}
+                  {isComplete && (
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                      <CheckCircle className="w-2.5 h-2.5 text-white" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-gray-900 truncate">{module.title}</h3>
+                  <p className="text-xs text-gray-500 truncate">{module.subtitle}</p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-gray-900 truncate">{module.title}</h3>
-                <p className="text-xs text-gray-500 truncate">{module.subtitle}</p>
+              <div className="flex items-center justify-between gap-2 text-xs text-amber-600">
+                <div className="flex items-center gap-1">
+                  <Zap className="w-3 h-3" />
+                  <span>Band 7-9 Focus</span>
+                </div>
+                {moduleProgress > 0 && !isComplete && (
+                  <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                    {moduleProgress}%
+                  </span>
+                )}
               </div>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-amber-600">
-              <Zap className="w-3 h-3" />
-              <span>Band 7-9 Focus</span>
-            </div>
-          </Card>
-        ))}
+              {/* Progress Bar */}
+              {moduleProgress > 0 && (
+                <div className="mt-2 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full ${isComplete ? 'bg-green-500' : 'bg-amber-500'} transition-all`}
+                    style={{ width: `${moduleProgress}%` }}
+                  />
+                </div>
+              )}
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
