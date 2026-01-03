@@ -16,14 +16,12 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Matching Pairs Game
 const MatchingPairsGame = ({ game, onComplete }) => {
-  const [cards, setCards] = useState([]);
+  const [cards, setCards] = useState(() => 
+    game.questions.map((q, idx) => ({ ...q, index: idx }))
+  );
   const [flipped, setFlipped] = useState([]);
   const [matched, setMatched] = useState([]);
   const [moves, setMoves] = useState(0);
-  
-  useEffect(() => {
-    setCards(game.questions.map((q, idx) => ({ ...q, index: idx })));
-  }, [game]);
   
   const handleCardClick = (index) => {
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) return;
