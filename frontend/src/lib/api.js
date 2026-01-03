@@ -86,7 +86,7 @@ export const evaluateSpeaking = async (data) => {
 export const transcribeAudio = async (audioFile) => {
   const formData = new FormData();
   formData.append('file', audioFile);
-  const response = await api.post('/speaking/transcribe', formData, {
+  const response = await api.post('/transcribe-audio', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   });
   return response.data;
