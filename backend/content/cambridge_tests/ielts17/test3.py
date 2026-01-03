@@ -601,7 +601,10 @@ In spite of its flaws, Building the Skyline is quite enjoyable. The combination 
                             "type": "summary_completion",
                             "instruction": "Complete the summary using the list of phrases, A-J, below. Write the correct letter, A-J, in boxes 36-40 on your answer sheet.",
                             "title": "The bedrock myth",
-                            "text": "In chapter seven, Barr indicates how the lack of bedrock close to the surface does not explain why skyscrapers are absent from 36__________. He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as 37__________, especially when compared to 38__________.\n\nA particularly enjoyable part of the chapter was Barr's account of how foundations are built. He describes not only how 39__________ are made possible by the use of caissons, but he also discusses their 40__________. The chapter is well researched but relatively easy to understand.",
+                            "summary": {
+                                "title": "The bedrock myth",
+                                "text": "In chapter seven, Barr indicates how the lack of bedrock close to the surface does not explain why skyscrapers are absent from ___36___. He points out that although the cost of foundations increases when bedrock is deep below the surface, this cannot be regarded as ___37___, especially when compared to ___38___.\n\nA particularly enjoyable part of the chapter was Barr's account of how foundations are built. He describes not only how ___39___ are made possible by the use of caissons, but he also discusses their ___40___. The chapter is well researched but relatively easy to understand."
+                            },
                             "options": [
                                 "A: development plans",
                                 "B: deep excavations",
@@ -613,6 +616,13 @@ In spite of its flaws, Building the Skyline is quite enjoyable. The combination 
                                 "H: specific areas",
                                 "I: total expenditure",
                                 "J: construction guidelines"
+                            ],
+                            "items": [
+                                {"number": 36},
+                                {"number": 37},
+                                {"number": 38},
+                                {"number": 39},
+                                {"number": 40}
                             ]
                         }
                     ]
