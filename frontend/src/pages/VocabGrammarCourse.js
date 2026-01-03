@@ -11,6 +11,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import PronunciationRecorder from '../components/PronunciationRecorder';
+import SignUpCTA from '../components/SignUpCTA';
+import { useI18n } from '../lib/i18n';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
