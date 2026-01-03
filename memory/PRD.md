@@ -44,8 +44,8 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 ## Completed Features (January 3, 2025)
 
-### ✅ IELTS 17 Test 4 - COMPLETE (Full Ingestion)
-- **All 4 skills fully functional with 24/24 tests passed**
+### ✅ IELTS 17 Test 4 - COMPLETE (Full Ingestion + Fixes)
+- **All 4 skills fully functional with 37/37 tests passed (24 base + 13 fixes)**
 - **Listening Section**: 4 parts, 40 questions, audio files working
   - Part 1: Easy Life Cleaning Services (Q1-10) - note_completion
   - Part 2: Hotel Staff Turnover (Q11-20) - multiple_choice, matching
@@ -54,13 +54,15 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 - **Reading Section**: 3 passages with full text (500+ chars each)
   - Passage 1: Bats to the rescue (Q1-13) - true_false_not_given, note_completion
   - Passage 2: Does education fuel economic growth? (Q14-26) - section_matching, sentence_completion, multiple_selection
-  - Passage 3: Timur Gareyev – blindfold chess champion (Q27-40) - section_matching, true_false_not_given, sentence_completion
+  - Passage 3: Timur Gareyev – blindfold chess champion (Q27-40) - section_matching, true_false_not_given, **summary_completion** (Q37-40 fixed)
+  - **Q37-40 FIX**: Changed to summary_completion type with unified paragraph and text inputs
+  - **Answer Keys FIX**: Q37=memory, Q38=numbers, Q39=communication, Q40=visual
 - **Writing Section**: 2 tasks
-  - Task 1: Line graph - Shop closures and openings 2011-2018 (visual generated)
+  - Task 1: Line graph - Shop closures and openings 2011-2018 (**original PDF visual - not AI generated**)
   - Task 2: Opinion essay - Alternative medicines
 - **Speaking Section**: 3 parts with correct Task Card display
   - Part 1: Maps topic (4 questions)
-  - Part 2: Describe an occasion when you had to do something in a hurry
+  - Part 2: Describe an occasion when you had to do something in a hurry (**bullets fixed to display properly**)
   - Part 3: Arriving late, Managing study time (6 questions)
 - **Answer Keys**: 40 listening + 40 reading answers complete
 - **Debug Endpoint**: Returns VALID status with no issues
