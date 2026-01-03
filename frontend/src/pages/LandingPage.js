@@ -189,6 +189,21 @@ const COURSES = [
     previewRoute: '/lesson-preview/beginner'
   },
   {
+    id: 'vocab-grammar',
+    name: 'Vocabulary & Grammar',
+    nameVi: 'Từ vựng & Ngữ pháp',
+    nameTr: 'Kelime & Dilbilgisi',
+    bandRange: 'Band 4.5 - 7.0+',
+    description: '30 units with 250+ vocabulary and grammar items',
+    descriptionVi: '30 bài học với 250+ từ vựng và ngữ pháp',
+    descriptionTr: '250+ kelime ve dilbilgisi öğesiyle 30 ünite',
+    color: 'from-pink-500 to-rose-600',
+    lightBg: 'bg-pink-50',
+    icon: '📖',
+    apiEndpoint: '/api/vocab-grammar/lessons',
+    previewRoute: '/vocab-grammar'
+  },
+  {
     id: 'mastery',
     name: 'Mastery Course',
     nameVi: 'Khóa học Trung cấp',
