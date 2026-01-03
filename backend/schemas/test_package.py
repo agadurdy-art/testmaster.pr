@@ -399,8 +399,14 @@ class TestPackageValidator:
         if len(questions) != 40:
             errors.append(f"Reading must have 40 questions, found {len(questions)}")
         
-        # Verify numbers 1-40
-        numbers = sorted([q.get("number", 0) for q in questions])
+        # Verify numbers 1-40 (handle string numbers)
+        def safe_int(x):
+            try:
+                return int(x)
+            except (ValueError, TypeError):
+                return 0
+        
+        numbers = sorted([safe_int(q.get("number", 0)) for q in questions])
         expected = list(range(1, 41))
         if numbers != expected:
             errors.append(f"Reading question numbers not contiguous 1-40: got {numbers[:5]}...{numbers[-5:]}")
