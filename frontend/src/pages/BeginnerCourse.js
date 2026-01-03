@@ -520,6 +520,11 @@ export default function BeginnerCourse({ user }) {
     setQuizScore(Math.round((correct / total) * 100));
     setQuizSubmitted(true);
     toast.success(`Quiz completed! Score: ${Math.round((correct / total) * 100)}%`);
+    
+    // Mark quiz section as complete for progress tracking
+    if (selectedLesson) {
+      markSectionComplete('beginner', selectedLesson.lesson_number, 'quiz');
+    }
   };
 
   // Render lessons list
