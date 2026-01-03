@@ -979,13 +979,18 @@ export default function LandingPage({ onLogin, user, showLogin }) {
                           key={lesson.id || idx}
                           onClick={() => {
                             setShowCourseSelector(false);
-                            navigate(`/lesson-preview/${course.id}/${lesson.id || lesson.module_number || idx + 1}`);
+                            // Handle vocab-grammar course differently - go to lesson page directly
+                            if (course.id === 'vocab-grammar') {
+                              navigate(`/vocab-grammar?lesson=${lesson.id}`);
+                            } else {
+                              navigate(`/lesson-preview/${course.id}/${lesson.id || lesson.module_number || idx + 1}`);
+                            }
                           }}
                           className="p-4 bg-white border-0 shadow-sm hover:shadow-lg cursor-pointer transition-all hover:-translate-y-1 rounded-xl"
                         >
                           <div className="flex items-center gap-2 mb-2">
                             <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-white font-bold text-sm`}>
-                              {lesson.module_number || idx + 1}
+                              {lesson.module_number || lesson.unit_number || idx + 1}
                             </div>
                             <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-bold rounded-full">
                               {t('landingFreePreview')}
@@ -995,7 +1000,7 @@ export default function LandingPage({ onLogin, user, showLogin }) {
                             {lesson.title || lesson.topic || `Lesson ${idx + 1}`}
                           </h4>
                           <p className="text-xs text-gray-500 truncate mt-1">
-                            {lesson.subtitle || lesson.description || ''}
+                            {lesson.subtitle || lesson.description || lesson.band_level || ''}
                           </p>
                         </Card>
                       ))}
