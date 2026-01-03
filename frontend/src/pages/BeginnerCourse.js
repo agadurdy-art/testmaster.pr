@@ -1078,16 +1078,19 @@ export default function BeginnerCourse({ user }) {
           </Button>
         ) : (
           <div className="mt-6 p-4 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-xl text-center">
-            <Trophy className="w-10 h-10 text-purple-600 mx-auto mb-2" />
+            <div className="text-4xl mb-2">
+              {listeningScore === listening.questions.length ? '🎧🏆' : 
+               listeningScore >= listening.questions.length / 2 ? '🎧⭐' : '🎧💪'}
+            </div>
             <p className="text-lg font-bold text-gray-800">
-              Your Score: {listeningScore}/{listening.questions.length}
+              You got {listeningScore} out of {listening.questions.length}!
             </p>
             <p className="text-sm text-gray-600">
               {listeningScore === listening.questions.length 
-                ? 'Perfect! Great listening skills! 🎉' 
+                ? 'WOW! Perfect score! Your ears are amazing! 🎉' 
                 : listeningScore >= listening.questions.length / 2
-                  ? 'Good job! Keep practicing! 👍'
-                  : 'Keep listening and try again! 💪'}
+                  ? 'Nice listening! You heard a lot of the words! 👍'
+                  : 'Good try! Listen again and you\'ll hear more! 💪'}
             </p>
           </div>
         )}
