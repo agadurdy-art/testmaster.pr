@@ -16,8 +16,8 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Band level configuration
 const BAND_LEVELS = [
-  { id: 'beginner', label: 'Band 4.5 & Below', color: 'from-green-500 to-emerald-600', icon: '🌱' },
-  { id: 'intermediate', label: 'Band 4.5 - 6.5', color: 'from-yellow-500 to-orange-500', icon: '📚' },
+  { id: 'foundation', label: 'Band 4.5 & Below', color: 'from-green-500 to-emerald-600', icon: '🌱' },
+  { id: 'development', label: 'Band 4.5 - 6.5', color: 'from-yellow-500 to-orange-500', icon: '📚' },
   { id: 'advanced', label: 'Band 6.5+', color: 'from-red-500 to-pink-600', icon: '🎯' }
 ];
 
