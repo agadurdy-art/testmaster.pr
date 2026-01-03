@@ -1709,21 +1709,21 @@ export default function CambridgeTestInterface() {
           {/* Task 2 - Essay format with separate sections */}
           {currentTask.task_number === 2 && (
             <>
-              {/* Before rubric text */}
+              {/* Instruction */}
               <p className="text-gray-700 mb-4 whitespace-pre-line">
-                {currentTask.prompt_before || `You should spend about ${currentTask.time_recommended} on this task.\n\nWrite about the following topic:`}
+                {currentTask.instruction}
               </p>
               
-              {/* Rubric Box - Cambridge Style: thin black border, italic text */}
+              {/* Essay Prompt - Cambridge Style: thin black border */}
               <div className="mb-4 p-5 border border-gray-800 bg-white">
-                <p className="italic text-gray-800 whitespace-pre-line leading-relaxed">
-                  {currentTask.prompt_rubric || currentTask.prompt}
+                <p className="font-semibold text-gray-800 whitespace-pre-line leading-relaxed">
+                  {currentTask.prompt}
                 </p>
               </div>
               
-              {/* After rubric text */}
+              {/* Requirements */}
               <p className="text-gray-700 mb-4 whitespace-pre-line">
-                {currentTask.prompt_after || `Give reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite ${currentTask.word_count}.`}
+                {currentTask.requirements}
               </p>
             </>
           )}
