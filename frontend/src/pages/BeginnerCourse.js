@@ -708,14 +708,15 @@ export default function BeginnerCourse({ user }) {
   // Render Vocabulary Section
   const renderVocabulary = () => (
     <Card className="p-6 bg-white border-0 shadow-lg">
-      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-        <BookOpen className="w-5 h-5 text-green-600" />
-        Vocabulary
-      </h3>
+      <div className="text-center mb-6 pb-4 border-b border-green-100">
+        <div className="text-4xl mb-2">📚</div>
+        <h3 className="text-xl font-bold text-gray-900">New Words to Learn!</h3>
+        <p className="text-sm text-gray-500">Click the speaker to hear how to say each word</p>
+      </div>
       
       <div className="space-y-4">
         {selectedLesson.vocabulary.map((item, idx) => (
-          <div key={idx} className="p-4 bg-gray-50 rounded-xl">
+          <div key={idx} className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
             <div className="flex items-center justify-between mb-2">
               <h4 className="text-lg font-bold text-gray-900">{item.word}</h4>
               <div className="flex items-center gap-2">
@@ -724,12 +725,12 @@ export default function BeginnerCourse({ user }) {
                   size="sm"
                   onClick={() => playPronunciation(item.word)}
                   disabled={playingAudio === item.word}
-                  className="text-blue-600"
+                  className="text-blue-600 gap-1"
                 >
                   {playingAudio === item.word ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <Volume2 className="w-4 h-4" />
+                    <>🔊 Listen</>
                   )}
                 </Button>
                 <Button
@@ -743,7 +744,7 @@ export default function BeginnerCourse({ user }) {
                     }
                   }}
                   disabled={evaluatingPronunciation || (pronunciationRecording && pronunciationWord !== item.word)}
-                  className={pronunciationRecording && pronunciationWord === item.word ? "" : "text-green-600"}
+                  className={pronunciationRecording && pronunciationWord === item.word ? "gap-1" : "text-green-600 gap-1"}
                 >
                   {evaluatingPronunciation && pronunciationWord === item.word ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
