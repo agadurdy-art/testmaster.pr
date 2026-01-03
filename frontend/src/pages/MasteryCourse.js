@@ -1933,6 +1933,9 @@ export default function MasteryCourse({ user }) {
         {view === 'modules' && renderModulesList()}
         {view === 'module-detail' && renderModuleDetail()}
       </div>
+      
+      {/* CTA Banner for visitors (non-logged-in users) */}
+      {!user && <SignUpCTA variant="banner" />}
     </div>
   );
 }
