@@ -69,7 +69,7 @@ async def list_cambridge_books():
 @router.get("/images/{book_id}/{test_id}/{filename}")
 async def get_cambridge_image(book_id: str, test_id: str, filename: str):
     """Serve Cambridge test images"""
-    base_path = Path(__file__).parent.parent / "static" / "images" / "cambridge" / book_id
+    base_path = Path(__file__).parent.parent / "static" / "images" / "cambridge" / book_id / test_id
     file_path = base_path / filename
     
     if not file_path.exists():
