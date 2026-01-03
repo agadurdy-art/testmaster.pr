@@ -673,14 +673,15 @@ In spite of its flaws, Building the Skyline is quite enjoyable. The combination 
                     "title": "Individual Long Turn",
                     "duration": "3-4 minutes",
                     "description": "You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish.",
-                    "cue_card": {
-                        "topic": "Describe a monument (e.g., a statue or sculpture) that you like.",
+                    "task_card": {
+                        "instruction": "Describe a monument (e.g., a statue or sculpture) that you like.",
                         "points": [
                             "what this monument is",
                             "where this monument is",
                             "what it looks like",
                             "and explain why you like this monument."
                         ],
+                        "final_prompt": "You will have to talk about this topic for one to two minutes.",
                         "preparation_time": "1 minute",
                         "speaking_time": "1-2 minutes"
                     }
