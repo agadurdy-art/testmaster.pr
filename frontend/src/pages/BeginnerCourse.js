@@ -93,6 +93,14 @@ export default function BeginnerCourse({ user }) {
   const [listeningScore, setListeningScore] = useState(0);
   const [isPlayingListening, setIsPlayingListening] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
+  
+  // Pronunciation Practice states
+  const [pronunciationRecording, setPronunciationRecording] = useState(false);
+  const [pronunciationWord, setPronunciationWord] = useState(null);
+  const [pronunciationFeedback, setPronunciationFeedback] = useState(null);
+  const [evaluatingPronunciation, setEvaluatingPronunciation] = useState(false);
+  const pronunciationRecorderRef = useRef(null);
+  const pronunciationChunksRef = useRef([]);
 
   // Fetch lessons on mount
   useEffect(() => {
