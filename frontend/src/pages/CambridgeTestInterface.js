@@ -1443,19 +1443,30 @@ export default function CambridgeTestInterface() {
               {q.type === 'summary_completion' && (
                 <div className="space-y-3">
                   <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
-                  {q.options && (
-                    <div className="p-3 bg-green-50 rounded-lg border border-green-200 grid grid-cols-2 gap-2 text-sm">
-                      {q.options.map((opt, oIdx) => (
-                        <div key={oIdx}>{opt}</div>
-                      ))}
+                  {/* Word box - supports both formats */}
+                  {(q.options || q.word_box) && (
+                    <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                      <h5 className="font-semibold text-sm mb-2 text-green-800">Word List</h5>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        {q.options?.map((opt, oIdx) => (
+                          <div key={oIdx}>{opt}</div>
+                        ))}
+                        {q.word_box?.options?.map((opt, oIdx) => (
+                          <div key={oIdx} className="text-gray-700">
+                            <span className="font-bold">{opt.letter}</span> - {opt.word}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
-                  {q.summary && (
+                  {/* Summary text - supports both formats */}
+                  {(q.summary || q.summary_text) && (
                     <div className="p-4 bg-white border rounded-lg">
-                      <h5 className="font-semibold mb-2">{q.summary.title}</h5>
+                      {q.summary?.title && <h5 className="font-semibold mb-2">{q.summary.title}</h5>}
                       <p className="text-sm leading-relaxed">
-                        {q.summary.text.split(/___(\d+)___/).map((part, pIdx) => {
+                        {(q.summary?.text || q.summary_text).split(/___(\d+)___/).map((part, pIdx) => {
                           if (/^\d+$/.test(part)) {
+                            const wordOptions = q.word_box?.options || [];
                             return (
                               <select
                                 key={pIdx}
@@ -1464,9 +1475,14 @@ export default function CambridgeTestInterface() {
                                 className="mx-1 px-2 py-1 border rounded text-sm"
                               >
                                 <option value="">({part})</option>
-                                {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map(l => (
-                                  <option key={l} value={l}>{l}</option>
-                                ))}
+                                {wordOptions.length > 0 
+                                  ? wordOptions.map(opt => (
+                                      <option key={opt.letter} value={opt.letter}>{opt.letter}</option>
+                                    ))
+                                  : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map(l => (
+                                      <option key={l} value={l}>{l}</option>
+                                    ))
+                                }
                               </select>
                             );
                           }
