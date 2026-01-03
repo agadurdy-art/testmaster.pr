@@ -569,6 +569,7 @@ const FishingGame = ({ game, onComplete }) => {
 
 export default function GameBank() {
   const navigate = useNavigate();
+  const { language } = useI18n();
   const [games, setGames] = useState([]);
   const [topics, setTopics] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
@@ -578,16 +579,44 @@ export default function GameBank() {
   const [gameComplete, setGameComplete] = useState(false);
   const [finalScore, setFinalScore] = useState({ score: 0, total: 0, stars: 0 });
   
+  // UI Strings based on language
+  const UI = {
+    title: { en: 'Game Bank', vi: 'Ngân hàng trò chơi', tr: 'Oyun Bankası' },
+    subtitle: { en: 'Learn vocabulary while having fun!', vi: 'Học từ vựng vui vẻ!', tr: 'Eğlenerek kelime öğren!' },
+    chooseTopic: { en: 'Choose a Topic:', vi: 'Chọn chủ đề:', tr: 'Konu Seç:' },
+    loading: { en: 'Loading game...', vi: 'Đang tải trò chơi...', tr: 'Oyun yükleniyor...' },
+    moves: { en: 'Moves', vi: 'Lượt', tr: 'Hamle' },
+    matched: { en: 'Matched', vi: 'Đã ghép', tr: 'Eşleşen' },
+    score: { en: 'Score', vi: 'Điểm', tr: 'Puan' },
+    correct: { en: 'Correct', vi: 'Đúng', tr: 'Doğru' },
+    question: { en: 'Question', vi: 'Câu hỏi', tr: 'Soru' },
+    typeWord: { en: 'Type the word...', vi: 'Nhập từ...', tr: 'Kelimeyi yaz...' },
+    submit: { en: 'Submit', vi: 'Gửi', tr: 'Gönder' },
+    hint: { en: 'Hint', vi: 'Gợi ý', tr: 'İpucu' },
+    catchFish: { en: 'Catch the correct fish!', vi: 'Bắt con cá đúng!', tr: 'Doğru balığı yakala!' },
+    gameComplete: { en: 'Game Complete!', vi: 'Hoàn thành!', tr: 'Oyun Bitti!' },
+    playAgain: { en: 'Play Again', vi: 'Chơi lại', tr: 'Tekrar Oyna' },
+    backToGames: { en: 'Back to Games', vi: 'Quay lại', tr: 'Oyunlara Dön' },
+    back: { en: 'Back', vi: 'Quay lại', tr: 'Geri' },
+    backToDashboard: { en: 'Back to Dashboard', vi: 'Về trang chính', tr: 'Ana Sayfaya Dön' },
+  };
+  
+  const getText = (key) => UI[key]?.[language] || UI[key]?.en || key;
+  
   useEffect(() => {
     fetchGameList();
-  }, []);
+  }, [language]);
   
   const fetchGameList = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/games/list`);
+      const res = await fetch(`${API_URL}/api/games/list?lang=${language}`);
       const data = await res.json();
       setGames(data.games);
       setTopics(data.topics);
+      // Set default topic from first available
+      if (data.topics?.length > 0 && !data.topics.find(t => t.id === selectedTopic)) {
+        setSelectedTopic(data.topics[0].id);
+      }
     } catch (error) {
       console.error('Error fetching games:', error);
     }
@@ -596,7 +625,7 @@ export default function GameBank() {
   const startGame = async (gameType) => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/games/play/${gameType}?topic=${selectedTopic}&count=8`);
+      const res = await fetch(`${API_URL}/api/games/play/${gameType}?topic=${selectedTopic}&count=8&lang=${language}`);
       const data = await res.json();
       
       if (data.success) {
@@ -606,7 +635,7 @@ export default function GameBank() {
       }
     } catch (error) {
       console.error('Error starting game:', error);
-      toast.error('Could not start game');
+      toast.error(language === 'tr' ? 'Oyun başlatılamadı' : language === 'vi' ? 'Không thể bắt đầu trò chơi' : 'Could not start game');
     } finally {
       setLoading(false);
     }
@@ -614,7 +643,7 @@ export default function GameBank() {
   
   const handleGameComplete = async (score, total) => {
     try {
-      const res = await fetch(`${API_URL}/api/games/submit/${gameData.game_id}`, {
+      const res = await fetch(`${API_URL}/api/games/submit/${gameData.game_id}?lang=${language}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ score, total, time_taken: 0 })
