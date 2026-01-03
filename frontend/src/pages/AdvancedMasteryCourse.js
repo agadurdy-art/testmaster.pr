@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Textarea } from '../components/ui/textarea';
@@ -31,7 +31,12 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 export default function AdvancedMasteryCourse({ user }) {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { language } = useI18n();
+  
+  // Check for preview mode and lesson from URL
+  const isPreviewMode = searchParams.get('preview') === 'true';
+  const lessonIdFromUrl = searchParams.get('lesson');
   
   // English-only notice for this IELTS-level module
   const englishNotice = getEnglishOnlyNotice(language);
