@@ -1928,17 +1928,24 @@ export default function CambridgeTestInterface() {
           {/* Part 1 or Part 3 - Individual Question Interface */}
           {isPart1or3 && (
             <div className="space-y-6">
-              {/* Topic hint - Part 1 shows single topic, Part 3 shows themes */}
-              {currentSpeakingPart.topic && (
-                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
-                  <span className="text-sm font-medium text-orange-700">Topic: {currentSpeakingPart.topic}</span>
-                </div>
-              )}
+              {/* Topic hint - Part 1 shows topic, Part 3 shows discussion topics */}
               {currentSpeakingPart.topics && currentSpeakingPart.topics.length > 0 && (
                 <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
                   <span className="text-sm font-medium text-orange-700">
-                    Themes: {currentSpeakingPart.topics.map(t => t.theme).join(', ')}
+                    Topic: {currentSpeakingPart.topics.map(t => t.topic).join(', ')}
                   </span>
+                </div>
+              )}
+              {currentSpeakingPart.discussion_topics && currentSpeakingPart.discussion_topics.length > 0 && (
+                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
+                  <span className="text-sm font-medium text-orange-700">
+                    Discussion: {currentSpeakingPart.discussion_topics.map(dt => dt.topic).join(', ')}
+                  </span>
+                </div>
+              )}
+              {currentSpeakingPart.topic && !currentSpeakingPart.topics && !currentSpeakingPart.discussion_topics && (
+                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
+                  <span className="text-sm font-medium text-orange-700">Topic: {currentSpeakingPart.topic}</span>
                 </div>
               )}
 
