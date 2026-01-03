@@ -1303,7 +1303,7 @@ export default function CambridgeTestInterface() {
               {q.type === 'true_false_not_given' && (
                 <div className="space-y-3">
                   <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
-                  {q.statements?.map((stmt, sIdx) => (
+                  {(q.statements || q.items)?.map((stmt, sIdx) => (
                     <div key={sIdx} className="p-4 bg-white border rounded-lg">
                       <p className="text-sm mb-3">{stmt.number}. {stmt.statement}</p>
                       <div className="flex gap-4">
@@ -1330,7 +1330,7 @@ export default function CambridgeTestInterface() {
               {q.type === 'yes_no_not_given' && (
                 <div className="space-y-3">
                   <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
-                  {q.statements?.map((stmt, sIdx) => (
+                  {(q.statements || q.items)?.map((stmt, sIdx) => (
                     <div key={sIdx} className="p-4 bg-white border rounded-lg">
                       <p className="text-sm mb-3">{stmt.number}. {stmt.statement}</p>
                       <div className="flex gap-4">
