@@ -210,7 +210,7 @@ const TrueFalseGame = ({ game, onComplete }) => {
       
       <Card className="p-8 text-center">
         <p className="text-xl md:text-2xl font-medium text-gray-800 mb-8">
-          "{currentQ.statement}"
+          &ldquo;{currentQ.statement}&rdquo;
         </p>
         
         <div className="flex justify-center gap-4">
