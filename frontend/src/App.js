@@ -290,6 +290,10 @@ function AppWithSessionHandler() {
           element={user ? <AdvancedMasteryCourse user={user} /> : <Navigate to="/" />} 
         />
         <Route 
+          path="/game-bank" 
+          element={<GameBank />} 
+        />
+        <Route 
           path="/lesson-preview/:courseType/:lessonId" 
           element={<LessonPreview />} 
         />
