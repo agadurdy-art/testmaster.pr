@@ -51,6 +51,10 @@ const MODULE_CONFIG = {
 
 export default function MasteryCourse({ user }) {
   const navigate = useNavigate();
+  const { language } = useI18n();
+  
+  // English-only notice for this IELTS-level module
+  const englishNotice = getEnglishOnlyNotice(language);
   
   // Theme support
   const { activeTheme } = useTheme();
