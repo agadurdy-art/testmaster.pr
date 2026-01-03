@@ -2958,9 +2958,10 @@ async def evaluate_speaking(data: SpeakingTest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Speaking test with AI
-@api_router.post("/speaking/transcribe")
-async def transcribe_audio(file: UploadFile = File(...)):
+# Speaking test with AI - simple transcribe endpoint
+@api_router.post("/transcribe-audio")
+async def transcribe_audio_simple(file: UploadFile = File(...)):
+    """Simple transcription endpoint for beginner course and other uses."""
     try:
         # Read audio file
         audio_data = await file.read()
