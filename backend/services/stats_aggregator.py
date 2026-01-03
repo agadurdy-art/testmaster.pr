@@ -127,7 +127,8 @@ class StatsAggregator:
                     "test_id": f"{book_id}_{test_id}",
                     "book": book_id,
                     "title": test_data.get("title", test_id),
-                    "status": "VALID",
+                    "status": test_status,
+                    "is_publishable": is_publishable,
                     "stats": test_stats
                 })
                 
