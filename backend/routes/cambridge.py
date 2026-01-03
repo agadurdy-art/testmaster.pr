@@ -4,7 +4,9 @@ Serves authentic Cambridge IELTS test content with full evaluation
 """
 
 from fastapi import APIRouter, HTTPException, Body
+from fastapi.responses import FileResponse
 from typing import Optional, Dict, Any
+from pathlib import Path
 import os
 import json
 import uuid
