@@ -37,6 +37,26 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 ## Completed Features (January 3, 2025)
 
+### ✅ IELTS 17 Test 3 - COMPLETE (Full Ingestion)
+- **Listening Section** (40 questions, 4 parts):
+  - Part 1: Advice on surfing holidays (Q1-10) - note_completion
+  - Part 2: Extended hours childcare service (Q11-20) - multiple_selection, multiple_choice, matching
+  - Part 3: Holly's Work Placement Tutorial (Q21-30) - multiple_choice, matching
+  - Part 4: Bird Migration Theory (Q31-40) - note_completion
+  - All 4 audio files available at `/api/audio/cambridge/ielts17/test3_partX.mp3`
+- **Reading Section** (40 questions, 3 passages):
+  - Passage 1: The thylacine (Q1-13) - note_completion, true_false_not_given
+  - Passage 2: Palm oil (Q14-26) - section_matching, multiple_selection, sentence_completion
+  - Passage 3: Building the Skyline (Q27-40) - multiple_choice, yes_no_not_given, summary_completion
+- **Writing Section** (2 tasks):
+  - Task 1: Bar chart comparing family spending 1968 vs 2018 (image: `/api/cambridge/images/ielts17/test3/test3_writing_task1.png`)
+  - Task 2: Discussion essay about professionals working abroad
+- **Speaking Section** (3 parts):
+  - Part 1: Introduction (Topic: Drinks)
+  - Part 2: Cue card (Topic: Monument)
+  - Part 3: Discussion (Topics: Public monuments, Architecture)
+- **Testing**: 19/19 backend tests passed, frontend UI verified
+
 ### ✅ IELTS 17 Test 2 Reading Section - COMPLETE (PDF Extract)
 - Extracted all 3 passages from PDF (pages 37-49)
 - **Passage 1**: "The Dead Sea Scrolls" (Q1-13)
