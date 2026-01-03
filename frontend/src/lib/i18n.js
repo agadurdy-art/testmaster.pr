@@ -1021,6 +1021,12 @@ export const translations = {
     landingSignUpForMore: 'Tüm kurslardaki tüm derslerin kilidini açmak için kayıt olun.',
     landingUnlockAll: 'Tüm Derslerin Kilidini Aç',
     
+    // Complete Prep Skills
+    landingReadingFeature: 'Akademik & Genel • Tam pasajlar • 12 soru tipi',
+    landingListeningFeature: '4 bölüm • Gerçek ses • Zamanlı pratik',
+    landingWritingFeature: 'Görev 1 & 2 • AI puanlama • Band 8+ örnekler',
+    landingSpeakingFeature: '3 bölüm • AI sınav görevlisi • Model cevaplar',
+    
     // Honesty Promise
     landingHonestyTitle: 'Dürüstlük Sözümüz',
     landingNoPromise: 'Anında Band 7 vaat etmiyoruz.',
