@@ -179,6 +179,20 @@ export default function BeginnerCourse({ user }) {
     };
   }, []);
 
+  // Auto-select lesson from URL parameter (for preview mode from landing page)
+  useEffect(() => {
+    if (lessonIdFromUrl && lessons.length > 0) {
+      const targetLesson = lessons.find(l => 
+        String(l.id) === lessonIdFromUrl || 
+        String(l.lesson_number) === lessonIdFromUrl
+      );
+      if (targetLesson) {
+        setSelectedLesson(targetLesson);
+        setView('lesson-detail');
+      }
+    }
+  }, [lessonIdFromUrl, lessons]);
+
   const fetchLessons = async () => {
     try {
       const response = await fetch(`${API_URL}/api/beginner-english/lessons`);
