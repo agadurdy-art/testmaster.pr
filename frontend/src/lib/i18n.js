@@ -386,6 +386,20 @@ export const translations = {
     landingNeedAccount: "Need an account? Sign up",
     landingContinueWith: 'Or continue with',
     landingContinueGoogle: 'Continue with Google',
+    
+    // Grammar Practice (Beginner Course)
+    grammarRule: 'Grammar Rule',
+    moreExamples: 'More Examples',
+    commonMistake: 'Common Mistake',
+    grammarPractice: 'Grammar Practice',
+    fillInBlanks: 'Fill in the blanks with the correct word:',
+    checkAnswers: 'Check Answers',
+    tryAgain: 'Try Again',
+    perfectScore: '🎉 Perfect! You mastered this grammar!',
+    goodJob: '👍 Good job! Review the mistakes above.',
+    example: 'Example',
+    vocabulary: 'Vocabulary',
+    grammar: 'Grammar',
   },
   vi: {
     languageLabel: 'Ngôn ngữ',
