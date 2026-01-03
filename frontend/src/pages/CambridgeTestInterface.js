@@ -1469,6 +1469,12 @@ export default function CambridgeTestInterface() {
                       </div>
                     </div>
                   )}
+                  {/* Title if present */}
+                  {q.title && (
+                    <div className="p-3 bg-gray-50 rounded-lg border">
+                      <h5 className="font-bold text-center text-gray-900">{q.title}</h5>
+                    </div>
+                  )}
                   {/* Summary text - supports both formats */}
                   {(q.summary || q.summary_text) && (
                     <div className="p-4 bg-white border rounded-lg">
@@ -1476,7 +1482,21 @@ export default function CambridgeTestInterface() {
                       <p className="text-sm leading-relaxed">
                         {(q.summary?.text || q.summary_text).split(/___(\d+)___/).map((part, pIdx) => {
                           if (/^\d+$/.test(part)) {
-                            const wordOptions = q.word_box?.options || [];
+                            const wordOptions = q.word_box?.options || q.options || [];
+                            // If no word options, use text input (ONE WORD ONLY from passage)
+                            if (wordOptions.length === 0) {
+                              return (
+                                <input
+                                  key={pIdx}
+                                  type="text"
+                                  placeholder={part}
+                                  value={answers[`reading_${part}`] || ''}
+                                  onChange={(e) => handleAnswerChange(part, e.target.value)}
+                                  className="mx-1 px-2 py-1 border-b-2 border-green-400 bg-green-50 text-center w-24 focus:outline-none focus:border-green-600"
+                                />
+                              );
+                            }
+                            // If word options provided, use dropdown
                             return (
                               <select
                                 key={pIdx}
@@ -1485,12 +1505,12 @@ export default function CambridgeTestInterface() {
                                 className="mx-1 px-2 py-1 border rounded text-sm"
                               >
                                 <option value="">({part})</option>
-                                {wordOptions.length > 0 
+                                {Array.isArray(wordOptions) && wordOptions[0]?.letter
                                   ? wordOptions.map(opt => (
                                       <option key={opt.letter} value={opt.letter}>{opt.letter}</option>
                                     ))
-                                  : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'].map(l => (
-                                      <option key={l} value={l}>{l}</option>
+                                  : wordOptions.map((opt, idx) => (
+                                      <option key={idx} value={opt}>{opt}</option>
                                     ))
                                 }
                               </select>
