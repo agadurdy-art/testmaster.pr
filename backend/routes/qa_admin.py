@@ -87,6 +87,35 @@ async def get_evidence_summary(test_id: str):
 
 # ============ STATUS ENDPOINTS ============
 
+@router.get("/status/all")
+async def get_all_test_statuses():
+    """Get status of all tests"""
+    from routes.cambridge import CAMBRIDGE_TESTS
+    
+    results = []
+    for book_id, book_data in CAMBRIDGE_TESTS.items():
+        for tid, test_data in book_data.get("tests", {}).items():
+            if test_data is None:
+                continue
+            
+            test_id = f"{book_id}_{tid}"
+            status = _qa_service.get_test_status(test_id)
+            
+            results.append({
+                "test_id": test_id,
+                "book": book_id,
+                "test": tid,
+                "status": status.value,
+                "is_publishable": _qa_service.is_publishable(test_id)
+            })
+    
+    return {
+        "total": len(results),
+        "publishable_count": len([r for r in results if r["is_publishable"]]),
+        "tests": results
+    }
+
+
 @router.get("/status/{test_id}")
 async def get_test_status(test_id: str):
     """Get current status of a test"""
@@ -102,17 +131,6 @@ async def get_test_status(test_id: str):
         "status": status.value,
         "is_publishable": _qa_service.is_publishable(test_id)
     }
-
-
-@router.get("/status/all")
-async def get_all_test_statuses():
-    """Get status of all tests"""
-    from routes.cambridge import CAMBRIDGE_TESTS
-    
-    results = []
-    for book_id, book_data in CAMBRIDGE_TESTS.items():
-        for tid, test_data in book_data.get("tests", {}).items():
-            if test_data is None:
                 continue
             
             test_id = f"{book_id}_{tid}"
