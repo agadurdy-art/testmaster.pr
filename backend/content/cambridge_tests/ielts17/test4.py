@@ -582,14 +582,15 @@ For the world record attempt, Gareyev hopes to play 47 blindfold games at once i
                         },
                         {
                             "number": "37-40",
-                            "type": "sentence_completion",
+                            "type": "summary_completion",
                             "instruction": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.",
                             "title": "How the research was carried out",
+                            "summary_text": "The researchers started by testing Gareyev's ___37___; for example, he was required to recall a string of ___38___ in order and also in reverse order. Although his performance was normal, scans showed an unusual amount of ___39___ within the areas of Gareyev's brain that are concerned with directing attention. In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with ___40___ input.",
                             "items": [
-                                {"number": 37, "text": "The researchers started by testing Gareyev's ___37___; for example, he was required to recall a string of numbers in order and also in reverse order."},
-                                {"number": 38, "text": "Although his performance was normal, scans showed an unusual amount of ___38___ within the areas of Gareyev's brain that are concerned with directing attention."},
-                                {"number": 39, "text": "In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with ___39___ input."},
-                                {"number": 40, "text": "The game comes to an end when the chess player either wins or loses, and then they move on to the next ___40___."}
+                                {"number": 37, "gap": "___37___"},
+                                {"number": 38, "gap": "___38___"},
+                                {"number": 39, "gap": "___39___"},
+                                {"number": 40, "gap": "___40___"}
                             ]
                         }
                     ]
