@@ -1283,15 +1283,13 @@ function ElevenLabsExaminer() {
                 <div className="grid grid-cols-5 gap-1">
                   {(() => {
                     const currentPart = Math.floor(currentQuestion / 10) + 1;
-                    const partQuestions = test.questions?.slice(
-                      (currentPart - 1) * 10,
-                      currentPart * 10
-                    ) || [];
+                    // Filter questions by section field instead of array index
+                    const partQuestions = test.questions?.filter(q => q.section === currentPart) || [];
                     
                     // Calculate starting question number based on previous parts' spans
                     let startNum = 0;
                     for (let p = 1; p < currentPart; p++) {
-                      const prevPartQuestions = test.questions?.slice((p - 1) * 10, p * 10) || [];
+                      const prevPartQuestions = test.questions?.filter(q => q.section === p) || [];
                       for (const pq of prevPartQuestions) {
                         const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
                         startNum += span;
