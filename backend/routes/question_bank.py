@@ -583,15 +583,29 @@ async def get_random_practice(
     topic: Optional[str] = Query(None, description="Filter by topic"),
     band_level: Optional[str] = Query(None, description="Filter by band level"),
     question_type: Optional[str] = Query(None, description="Filter by question type"),
-    count: int = Query(20, ge=1, le=50, description="Number of questions")
+    count: int = Query(20, ge=1, le=50, description="Number of questions"),
+    source: str = Query("all", description="Source: cambridge, legacy, or all")
 ):
-    """Get random practice questions from all Full Test sets."""
+    """Get random MICRO-BASED practice questions - auto-pulls from Cambridge tests."""
     try:
-        questions = get_questions_from_full_tests(skill, count)
+        questions = []
         
-        # Filter by question type if specified
-        if question_type:
-            questions = [q for q in questions if q.get("type") == question_type]
+        # Get from Cambridge tests (primary source)
+        if source in ["cambridge", "all"]:
+            cambridge_questions = get_questions_from_cambridge_tests(skill, count, question_type)
+            questions.extend(cambridge_questions)
+        
+        # Get from legacy full tests
+        if source in ["legacy", "all"]:
+            legacy_questions = get_questions_from_full_tests(skill, count)
+            if question_type:
+                legacy_questions = [q for q in legacy_questions if q.get("type") == question_type]
+            questions.extend(legacy_questions)
+        
+        # Shuffle combined results
+        import random
+        random.shuffle(questions)
+        questions = questions[:count]
         
         return {
             "success": True,
@@ -603,9 +617,12 @@ async def get_random_practice(
             },
             "count": len(questions),
             "questions": questions,
-            "source": "all_full_tests"
+            "source": source,
+            "micro_based": True
         }
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return {
             "success": False,
             "error": str(e),
