@@ -96,8 +96,9 @@ class EvidencePackGenerator:
         
         for p in passages_data:
             text = p.get('passage_text', p.get('text', ''))
+            pid = p.get('passage_number', p.get('pid', 'P?'))
             passages.append(PassageEvidence(
-                pid=p.get('passage_number', p.get('pid', 'P?')),
+                pid=str(pid),
                 title=p.get('title', 'Unknown'),
                 first_300_chars=text[:300] if text else '',
                 last_300_chars=text[-300:] if text else '',
