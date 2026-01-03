@@ -7,7 +7,7 @@ import requests
 import io
 
 # Get backend URL from frontend env
-BACKEND_URL = "https://edugames-ielts.preview.emergentagent.com/api"
+BACKEND_URL = "https://multi-lang-ielts.preview.emergentagent.com/api"
 
 def test_pronunciation_evaluation_system():
     """Test the complete 3-layer pronunciation evaluation system"""
