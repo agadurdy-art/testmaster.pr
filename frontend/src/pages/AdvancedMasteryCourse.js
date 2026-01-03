@@ -2201,6 +2201,9 @@ export default function AdvancedMasteryCourse({ user }) {
         {view === 'modules' && renderModulesList()}
         {view === 'module-detail' && selectedModule && renderModuleDetail()}
       </div>
+      
+      {/* CTA Banner for visitors (non-logged-in users) */}
+      {!user && <SignUpCTA variant="banner" />}
     </div>
   );
 }
