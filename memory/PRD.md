@@ -181,7 +181,8 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 
 ## Completed Features (January 3, 2025)
 
-### ✅ Multi-Language Control System (Phase 1) - COMPLETE
+### ✅ Multi-Language Control System - COMPLETE
+- **150/150 backend tests passed** - Language purity verified
 - **Language Helper**: `/app/frontend/src/lib/getLocalizedText.js`
   - `getLocalizedText(obj, lang, options)` - Main localization function
   - `getText(obj, lang)` - Simple text getter
@@ -195,13 +196,19 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - **Leak Detection**: `/app/frontend/src/lib/leakDetection.js`
   - `detectLanguageLeak(text, lang)` - Detect forbidden characters
   - `scanDomForLanguageLeaks(lang)` - DOM scanner for dev mode
-  - Turkish chars: ğĞüÜşŞıİöÖçÇ
-  - Vietnamese chars: ăĂâÂêÊôÔơƠưƯđĐ + diacritics
-- **Game Bank Backend**: Fully multi-language
-  - VOCABULARY_DATA with `{en, vi, tr}` structure
-  - 12 topics × 8 words = 96 vocabulary items in 3 languages
+  - `LanguageLeakWatcher` component in App.js
+- **Backend Utils**: `/app/backend/routes/language_utils.py`
+  - `get_language_prompt_guard(lang)` - AI prompt language guards
+  - `get_ai_system_message(lang, role)` - Localized system messages
+  - `get_feedback_labels(lang)` - Localized feedback labels
+- **Game Bank**: Fully multi-language
+  - 12 topics × 8 words = 96 vocabulary items in EN/VI/TR
   - All game UI strings in 3 languages
-  - API accepts `lang` param and `X-System-Language` header
+  - API accepts `?lang=` param and `X-System-Language` header
+- **Language Purity Verified**:
+  - EN: No Turkish (ğüşıöç) or Vietnamese (ăâêôơưđ) characters
+  - TR: No Vietnamese characters allowed
+  - VI: No Turkish characters allowed
 
 ### ✅ Game Bank Feature - COMPLETE
 - **Backend API**: `/api/games/*` with 6 game types and 12 vocabulary topics
