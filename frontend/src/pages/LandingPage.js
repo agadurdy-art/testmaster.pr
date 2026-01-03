@@ -983,11 +983,17 @@ export default function LandingPage({ onLogin, user, showLogin }) {
                           key={lesson.id || idx}
                           onClick={() => {
                             setShowCourseSelector(false);
-                            // Handle vocab-grammar course differently - go to lesson page directly
+                            // Navigate directly to the real course page with lesson parameter
                             if (course.id === 'vocab-grammar') {
-                              navigate(`/vocab-grammar?lesson=${lesson.id}`);
+                              navigate(`/vocab-grammar?lesson=${lesson.id}&preview=true`);
+                            } else if (course.id === 'beginner') {
+                              navigate(`/beginner-course?lesson=${lesson.id}&preview=true`);
+                            } else if (course.id === 'mastery') {
+                              navigate(`/mastery-course?lesson=${lesson.module_number || idx + 1}&preview=true`);
+                            } else if (course.id === 'advanced') {
+                              navigate(`/advanced-mastery?lesson=${lesson.id || lesson.module_number || idx + 1}&preview=true`);
                             } else {
-                              navigate(`/lesson-preview/${course.id}/${lesson.id || lesson.module_number || idx + 1}`);
+                              navigate(`${course.previewRoute}?preview=true`);
                             }
                           }}
                           className="p-4 bg-white border-0 shadow-sm hover:shadow-lg cursor-pointer transition-all hover:-translate-y-1 rounded-xl"
