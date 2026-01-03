@@ -589,7 +589,7 @@ For the world record attempt, Gareyev hopes to play 47 blindfold games at once i
                                 {"number": 37, "text": "The researchers started by testing Gareyev's ___37___; for example, he was required to recall a string of numbers in order and also in reverse order."},
                                 {"number": 38, "text": "Although his performance was normal, scans showed an unusual amount of ___38___ within the areas of Gareyev's brain that are concerned with directing attention."},
                                 {"number": 39, "text": "In addition, the scans raised the possibility of unusual strength in the parts of his brain that deal with ___39___ input."},
-                                {"number": 40, "text": ""}
+                                {"number": 40, "text": "The game comes to an end when the chess player either wins or loses, and then they move on to the next ___40___."}
                             ]
                         }
                     ]

@@ -32,6 +32,12 @@ except ImportError:
     IELTS17_TEST3 = None
     print("Warning: Could not import IELTS 17 Test 3")
 
+try:
+    from content.cambridge_tests.ielts17.test4 import IELTS17_TEST4
+except ImportError:
+    IELTS17_TEST4 = None
+    print("Warning: Could not import IELTS 17 Test 4")
+
 # LLM Key for evaluation
 EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
 
@@ -46,10 +52,10 @@ CAMBRIDGE_TESTS = {
             "test1": IELTS17_TEST1,
             "test2": IELTS17_TEST2,
             "test3": IELTS17_TEST3,
-            "test4": None,  # Coming soon
+            "test4": IELTS17_TEST4,
         },
-        "available_tests": ["test1", "test2", "test3"],
-        "coming_soon": ["test4"]
+        "available_tests": ["test1", "test2", "test3", "test4"],
+        "coming_soon": []
     }
 }
 
