@@ -457,6 +457,17 @@ export default function MasteryCourse({ user }) {
         <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
       </Button>
       
+      {/* English-only notice for non-EN users */}
+      {language !== 'en' && (
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-3">
+          <Globe className="w-5 h-5 text-blue-600 flex-shrink-0" />
+          <div>
+            <span className="font-medium text-blue-800">{englishNotice.title}: </span>
+            <span className="text-blue-700 text-sm">{englishNotice.message}</span>
+          </div>
+        </div>
+      )}
+      
       <div className="text-center mb-8">
         <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
           <Award className="w-10 h-10 text-white" />
