@@ -435,6 +435,7 @@ function App() {
     <ThemeProvider>
       <Router>
         <div className="App min-h-screen bg-background text-foreground">
+          <LanguageLeakWatcher />
           <AppWithSessionHandler />
         </div>
       </Router>
