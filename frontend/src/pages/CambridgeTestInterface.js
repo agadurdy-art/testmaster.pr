@@ -1881,7 +1881,11 @@ export default function CambridgeTestInterface() {
     if (currentSpeakingPart.questions) {
       questions = currentSpeakingPart.questions;
     } else if (currentSpeakingPart.topics) {
+      // Part 1 - topics array with questions
       questions = currentSpeakingPart.topics.flatMap(t => t.questions || []);
+    } else if (currentSpeakingPart.discussion_topics) {
+      // Part 3 - discussion_topics array with questions
+      questions = currentSpeakingPart.discussion_topics.flatMap(dt => dt.questions || []);
     }
 
     const isPart1or3 = currentSpeakingPart.part_number === 1 || currentSpeakingPart.part_number === 3;
