@@ -119,10 +119,62 @@ async def get_question_types():
 
 @router.get("/stats")
 async def get_question_bank_stats(db=None):
-    """Get overall question bank statistics."""
-    # Import full test content to count questions
+    """Get overall question bank statistics - AUTO-UPDATES when new tests are added."""
     try:
-        # Count all Academic sets
+        # Import Cambridge tests
+        from routes.cambridge import CAMBRIDGE_TESTS
+        
+        cambridge_count = 0
+        cambridge_tests = 0
+        cambridge_listening = 0
+        cambridge_reading = 0
+        cambridge_writing = 0
+        cambridge_speaking = 0
+        question_types = {}
+        
+        # Auto-count Cambridge tests
+        for book_id, book_data in CAMBRIDGE_TESTS.items():
+            for test_id, test_data in book_data.get("tests", {}).items():
+                if test_data is not None:
+                    cambridge_tests += 1
+                    sections = test_data.get("sections", {})
+                    
+                    # Listening
+                    listening = sections.get("listening", {})
+                    l_total = listening.get("total_questions", 0)
+                    cambridge_listening += l_total
+                    cambridge_count += l_total
+                    
+                    # Count listening question types
+                    for part in listening.get("parts", []):
+                        for qt in part.get("question_types", []):
+                            question_types[f"listening_{qt}"] = question_types.get(f"listening_{qt}", 0) + 10
+                    
+                    # Reading
+                    reading = sections.get("reading", {})
+                    r_total = reading.get("total_questions", 0)
+                    cambridge_reading += r_total
+                    cambridge_count += r_total
+                    
+                    # Count reading question types
+                    for passage in reading.get("passages", []):
+                        for q in passage.get("questions", []):
+                            qt = q.get("type", "unknown")
+                            question_types[f"reading_{qt}"] = question_types.get(f"reading_{qt}", 0) + 1
+                    
+                    # Writing
+                    writing = sections.get("writing", {})
+                    w_total = writing.get("total_tasks", 0)
+                    cambridge_writing += w_total
+                    cambridge_count += w_total
+                    
+                    # Speaking
+                    speaking = sections.get("speaking", {})
+                    s_total = speaking.get("total_parts", 0)
+                    cambridge_speaking += s_total
+                    cambridge_count += s_total
+        
+        # Count legacy full_tests too
         academic_count = 0
         academic_sets = 0
         try:
