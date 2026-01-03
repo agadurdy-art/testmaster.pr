@@ -2157,7 +2157,8 @@ export default function CambridgeTestInterface() {
                 </h4>
                 <p className="text-sm text-gray-600 mb-4 font-medium">You should say:</p>
                 <ul className="space-y-3 mb-6">
-                  {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.points?.map((point, pIdx) => (
+                  {((currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.points || 
+                    (currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.bullets)?.map((point, pIdx) => (
                     <li key={pIdx} className="flex items-start gap-3 text-gray-700">
                       <span className="w-6 h-6 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0 text-amber-800 font-bold text-sm">
                         •
