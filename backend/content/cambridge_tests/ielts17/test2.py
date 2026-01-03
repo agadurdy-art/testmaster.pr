@@ -519,7 +519,7 @@ The time seems right for abandoning the naive notions of intelligent design and 
                     "visual": {
                         "type": "table_and_pie_charts",
                         "description": "Police Budget 2017-2018",
-                        "image_url": "/api/static/images/cambridge/ielts17/test2_writing_task1.png",
+                        "image_url": "/static/images/cambridge/ielts17/test2_writing_task1.png",
                         "table_data": {
                             "title": "Police Budget 2017-2018 (in £m)",
                             "headers": ["Sources", "2017", "2018"],
