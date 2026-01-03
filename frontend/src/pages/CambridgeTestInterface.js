@@ -1656,10 +1656,10 @@ export default function CambridgeTestInterface() {
           {/* Task 1 - Simple rubric with visuals */}
           {currentTask.task_number === 1 && (
             <>
-              {/* Full instruction from PDF */}
+              {/* Full instruction/prompt from PDF */}
               <div className="mb-4 p-5 border border-gray-800 bg-white">
                 <p className="text-gray-800 whitespace-pre-line leading-relaxed">
-                  {currentTask.instruction}
+                  {currentTask.prompt || currentTask.instruction}
                 </p>
               </div>
               
