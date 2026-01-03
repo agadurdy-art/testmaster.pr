@@ -492,10 +492,10 @@ There is even hope that oil palm plantations might not need to be such sterile m
                             "type": "sentence_completion",
                             "instruction": "Complete the sentences below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
                             "items": [
-                                {"number": 23, "text": "One advantage of palm oil for manufacturers is that it stays __________ even when not refrigerated."},
-                                {"number": 24, "text": "The __________ is the best known of the animals suffering habitat loss as a result of the spread of oil palm plantations."},
-                                {"number": 25, "text": "As one of its criteria for the certification of sustainable palm oil, the RSPO insists that growers check __________ on a routine basis."},
-                                {"number": 26, "text": "Ellwood and his researchers are looking into whether the bird's nest fern could restore __________ in areas where oil palm trees are grown."}
+                                {"number": 23, "text": "One advantage of palm oil for manufacturers is that it stays ___23___ even when not refrigerated."},
+                                {"number": 24, "text": "The ___24___ is the best known of the animals suffering habitat loss as a result of the spread of oil palm plantations."},
+                                {"number": 25, "text": "As one of its criteria for the certification of sustainable palm oil, the RSPO insists that growers check ___25___ on a routine basis."},
+                                {"number": 26, "text": "Ellwood and his researchers are looking into whether the bird's nest fern could restore ___26___ in areas where oil palm trees are grown."}
                             ]
                         }
                     ]
