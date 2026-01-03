@@ -444,6 +444,14 @@ try:
 except Exception as e:
     print(f"⚠️  Could not load Beginner Pronunciation routes: {e}")
 
+# Game Bank routes
+try:
+    from routes.game_bank import router as game_bank_router
+    app.include_router(game_bank_router)
+    print("✅ Game Bank routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Game Bank routes: {e}")
+
 # Test Admin routes (debug, validation, practice)
 try:
     from routes.test_admin import router as test_admin_router
