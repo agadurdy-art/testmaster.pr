@@ -268,6 +268,83 @@ export default function BeginnerCourse({ user }) {
     
     fallbackToBrowserTTS(text);
   };
+  
+  // Pronunciation Recording Functions
+  const startPronunciationRecording = async (word) => {
+    try {
+      setPronunciationWord(word);
+      setPronunciationFeedback(null);
+      pronunciationChunksRef.current = [];
+      
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          pronunciationChunksRef.current.push(e.data);
+        }
+      };
+      
+      mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach(track => track.stop());
+        const audioBlob = new Blob(pronunciationChunksRef.current, { type: 'audio/webm' });
+        await assessPronunciation(audioBlob, word);
+      };
+      
+      pronunciationRecorderRef.current = mediaRecorder;
+      mediaRecorder.start();
+      setPronunciationRecording(true);
+      
+      // Auto-stop after 3 seconds for single words
+      setTimeout(() => {
+        if (pronunciationRecorderRef.current?.state === 'recording') {
+          stopPronunciationRecording();
+        }
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Error starting pronunciation recording:', error);
+      toast.error('Could not access microphone');
+    }
+  };
+  
+  const stopPronunciationRecording = () => {
+    if (pronunciationRecorderRef.current?.state === 'recording') {
+      pronunciationRecorderRef.current.stop();
+      setPronunciationRecording(false);
+    }
+  };
+  
+  const assessPronunciation = async (audioBlob, word) => {
+    setEvaluatingPronunciation(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('audio', audioBlob, 'recording.webm');
+      formData.append('reference_text', word);
+      
+      const response = await fetch(`${API_URL}/api/beginner/pronunciation/assess`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setPronunciationFeedback(data.feedback);
+        
+        if (data.feedback.stars >= 4) {
+          toast.success(data.feedback.main_feedback);
+        }
+      } else {
+        throw new Error('Assessment failed');
+      }
+    } catch (error) {
+      console.error('Pronunciation assessment error:', error);
+      toast.error('Could not assess pronunciation. Try again!');
+    } finally {
+      setEvaluatingPronunciation(false);
+    }
+  };
 
   const fallbackToBrowserTTS = (text) => {
     if ('speechSynthesis' in window) {
