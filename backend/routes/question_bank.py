@@ -255,17 +255,17 @@ async def get_question_bank_stats(db=None):
         # Speaking QB questions (from the Speaking Question Bank)
         speaking_qb_count = 100  # Approximate - based on topics * questions per topic
         
-        total_questions = academic_count + general_count + speaking_qb_count
+        total_questions = academic_count + general_count + speaking_qb_count + cambridge_count
         total_sets = academic_sets + general_sets
         
         # Listening: 40 questions per set
         # Reading: 40 questions per set
         # Writing: 2 tasks per set
         # Speaking: 3 parts per set
-        listening_total = total_sets * 40
-        reading_total = total_sets * 40
-        writing_total = total_sets * 2
-        speaking_total = total_sets * 3 + speaking_qb_count
+        listening_total = total_sets * 40 + cambridge_listening
+        reading_total = total_sets * 40 + cambridge_reading
+        writing_total = total_sets * 2 + cambridge_writing
+        speaking_total = total_sets * 3 + speaking_qb_count + cambridge_speaking
         
         return {
             "total_questions": total_questions,
@@ -281,15 +281,19 @@ async def get_question_bank_stats(db=None):
                 "5.5-6.5": int(total_questions * 0.35),
                 "7.0-9.0": int(total_questions * 0.40)
             },
-            "by_topic": {},
+            "by_type": question_types,
             "full_tests": total_sets,
+            "cambridge_tests": cambridge_tests,
             "academic_tests": academic_sets,
             "general_tests": general_sets,
+            "practice_pool_size": cambridge_listening + cambridge_reading,
             "practice_sets": 4,  # Listening, Reading, Writing, Speaking
             "topics_count": 18
         }
     except Exception as e:
         print(f"Error calculating stats: {e}")
+        import traceback
+        traceback.print_exc()
         return {
             "total_questions": 270,
             "by_skill": {
@@ -304,8 +308,10 @@ async def get_question_bank_stats(db=None):
                 "5.5-6.5": 60,
                 "7.0-9.0": 160
             },
-            "by_topic": {},
+            "by_type": {},
             "full_tests": 2,
+            "cambridge_tests": 0,
+            "practice_pool_size": 0,
             "practice_sets": 4,
             "topics_count": 18
         }
