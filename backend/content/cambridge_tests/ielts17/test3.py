@@ -357,17 +357,17 @@ There have been numerous expeditions and searches for the thylacine over the yea
                                         "items": [
                                             "looked rather like a dog",
                                             "had a series of stripes along its body and tail",
-                                            "ate an entirely 1__________ diet",
-                                            "probably depended mainly on 2__________ when hunting",
-                                            "young spent first months of life inside its mother's 3__________"
+                                            "ate an entirely ___1___ diet",
+                                            "probably depended mainly on ___2___ when hunting",
+                                            "young spent first months of life inside its mother's ___3___"
                                         ]
                                     },
                                     {
                                         "heading": "Decline and extinction",
                                         "items": [
-                                            "last evidence in mainland Australia is a 3,100-year-old 4__________",
+                                            "last evidence in mainland Australia is a 3,100-year-old ___4___",
                                             "probably went extinct in mainland Australia due to animals known as dingoes",
-                                            "reduction in 5__________ and available sources of food were partly responsible for decline in Tasmania"
+                                            "reduction in ___5___ and available sources of food were partly responsible for decline in Tasmania"
                                         ]
                                     }
                                 ]
