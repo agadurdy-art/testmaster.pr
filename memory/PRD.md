@@ -158,12 +158,43 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 
 ## Pending Tasks
 
-### P0: Content Library Expansion
+### P0: Completed (January 3, 2025)
+- ✅ **Game Bank & Practice Mode Expansion** - 6 mini-game types (Matching Pairs, Spelling Bee, True/False, Word Race, Lucky Wheel, Fishing Trip) with 6 vocabulary topics
+- ✅ **Lesson Progress Visibility** - Progress bars and checkmarks added to BeginnerCourse, MasteryCourse, and AdvancedMasteryCourse
+- ✅ **Kid-Friendly UX for Beginner Course** - Fun language, encouraging messages, colorful design
+
+### P1: Content Library Expansion (ON HOLD per user request)
 - Cambridge IELTS 18 (all 4 tests) - waiting for user to provide PDF/audio
 - Cambridge IELTS 16, 19 content - waiting for user to provide PDFs/audio
 
 ### P2: Session Persistence Bug
 - Frontend localStorage session restoration issue (known bug)
+
+## Completed Features (January 3, 2025)
+
+### ✅ Game Bank Feature - COMPLETE
+- **Backend API**: `/api/games/*` with 6 game types and 6 vocabulary topics
+  - GET `/api/games/list` - Lists all games and topics
+  - GET `/api/games/play/{game_type}?topic=X&count=N` - Generates game content
+  - POST `/api/games/submit/{game_id}` - Submits score and returns stars (0-3)
+- **Game Types**: matching_pairs, spelling_bee, true_false, word_race, lucky_wheel, fishing
+- **Topics**: family, food, animals, colors, numbers, school
+- **Frontend**: `/game-bank` route with interactive game components
+- **Test Results**: 40/40 backend tests passed
+
+### ✅ Lesson Progress Tracking - COMPLETE
+- **Progress Tracker Library**: `/app/frontend/src/lib/progressTracker.js`
+- **Features**: markSectionComplete, getLessonProgress, isLessonCompleted, getCourseProgress, isSectionCompleted
+- **Implemented in**: BeginnerCourse.js, MasteryCourse.js, AdvancedMasteryCourse.js
+- **UI Elements**: Progress bars on lesson cards, checkmarks for completed sections
+
+### ✅ Kid-Friendly UX for Beginner Course - COMPLETE
+- Fun title: "Let's Learn English!" with animated star icon
+- Encouraging subtitle: "Your Adventure Starts Here! 🚀"
+- Friendly welcome message with emojis
+- Enhanced vocabulary section with "New Words to Learn!" header
+- Quiz results with tiered feedback messages (WOW!/Super Job!/Good Try!/Nice Effort!)
+- Listening results with kid-friendly language
 
 ## Future Tasks
 - Shorts-style practice mode on landing page
