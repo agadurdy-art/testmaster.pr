@@ -183,6 +183,11 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 
 ### ✅ Multi-Language Control System - COMPLETE
 - **150/150 backend tests passed** - Language purity verified
+- **Language Lock System**: `/app/frontend/src/lib/languageLock.js`
+  - `isEnglishLockedRoute(pathname)` - Check if route is English-only
+  - `getEffectiveLanguage(pathname, systemLanguage)` - Get effective language for route
+  - `getEnglishOnlyNotice(systemLanguage)` - Get localized notice for EN-only sections
+  - English-locked routes: TestInterface, MasteryCourse, AdvancedMasteryCourse, practice pages
 - **Language Helper**: `/app/frontend/src/lib/getLocalizedText.js`
   - `getLocalizedText(obj, lang, options)` - Main localization function
   - `getText(obj, lang)` - Simple text getter
@@ -196,15 +201,15 @@ Stored in: `/app/memory/TEST_CREDENTIALS.md`
 - **Leak Detection**: `/app/frontend/src/lib/leakDetection.js`
   - `detectLanguageLeak(text, lang)` - Detect forbidden characters
   - `scanDomForLanguageLeaks(lang)` - DOM scanner for dev mode
-  - `LanguageLeakWatcher` component in App.js
+  - `LanguageLeakWatcher` component in App.js (route-aware)
 - **Backend Utils**: `/app/backend/routes/language_utils.py`
   - `get_language_prompt_guard(lang)` - AI prompt language guards
   - `get_ai_system_message(lang, role)` - Localized system messages
   - `get_feedback_labels(lang)` - Localized feedback labels
-- **Game Bank**: Fully multi-language
-  - 12 topics × 8 words = 96 vocabulary items in EN/VI/TR
-  - All game UI strings in 3 languages
-  - API accepts `?lang=` param and `X-System-Language` header
+- **Game Bank**: Fully multi-language (12 topics × 8 words × 3 languages)
+- **Route-based Language Rules**:
+  - **EN/VI/TR**: Dashboard, BeginnerCourse, GameBank, general site
+  - **EN-only**: TestInterface, MasteryCourse, AdvancedMasteryCourse, practice pages
 - **Language Purity Verified**:
   - EN: No Turkish (ğüşıöç) or Vietnamese (ăâêôơưđ) characters
   - TR: No Vietnamese characters allowed
