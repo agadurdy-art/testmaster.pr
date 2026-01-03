@@ -347,12 +347,14 @@ export default function LandingPage({ onLogin, user, showLogin }) {
         
         if (masteryRes.ok) {
           const data = await masteryRes.json();
-          lessons.mastery = Array.isArray(data) ? data.slice(0, 3) : [];
+          // Show 6 modules: 3 free + 3 locked
+          lessons.mastery = Array.isArray(data) ? data.slice(0, 6) : [];
         }
         
         if (advancedRes.ok) {
           const data = await advancedRes.json();
-          lessons.advanced = Array.isArray(data) ? data.slice(0, 3) : [];
+          // Show 6 modules: 3 free + 3 locked
+          lessons.advanced = Array.isArray(data) ? data.slice(0, 6) : [];
           setPreviewModules(data); // For backwards compatibility
         }
         
