@@ -65,6 +65,20 @@ async def list_cambridge_books():
     return {"success": True, "books": books}
 
 
+# Serve static images for Cambridge tests
+@router.get("/images/{book_id}/{test_id}/{filename}")
+async def get_cambridge_image(book_id: str, test_id: str, filename: str):
+    """Serve Cambridge test images"""
+    base_path = Path(__file__).parent.parent / "static" / "images" / "cambridge" / book_id
+    file_path = base_path / filename
+    
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail=f"Image not found: {filename}")
+    
+    return FileResponse(file_path, media_type="image/png")
+
+
+
 @router.get("/books/{book_id}")
 async def get_cambridge_book(book_id: str):
     """Get details of a specific Cambridge book"""
