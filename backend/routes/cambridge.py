@@ -45,11 +45,11 @@ CAMBRIDGE_TESTS = {
         "tests": {
             "test1": IELTS17_TEST1,
             "test2": IELTS17_TEST2,
-            "test3": None,  # Coming soon
+            "test3": IELTS17_TEST3,
             "test4": None,  # Coming soon
         },
-        "available_tests": ["test1", "test2"],
-        "coming_soon": ["test3", "test4"]
+        "available_tests": ["test1", "test2", "test3"],
+        "coming_soon": ["test4"]
     }
 }
 
