@@ -971,6 +971,9 @@ export default function VocabGrammarCourse({ user }) {
         {view === 'lesson' && renderLessonDetail()}
         {view === 'practice' && renderPractice()}
       </div>
+      
+      {/* CTA Banner for visitors (non-logged-in users) */}
+      {!user && <SignUpCTA variant="banner" />}
     </div>
   );
 }
