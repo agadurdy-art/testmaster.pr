@@ -48,11 +48,52 @@ const TOPIC_CONFIG = {
 
 export default function BeginnerCourse({ user }) {
   const navigate = useNavigate();
+  const { language } = useI18n();
   
   // Theme support
   const { activeTheme } = useTheme();
   const isDark = activeTheme === THEME_MODES.DARK;
   const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
+  
+  // Multi-language UI strings
+  const UI = {
+    title: { en: "Let's Learn English!", vi: "Hãy học tiếng Anh!", tr: "Hadi İngilizce Öğrenelim!" },
+    subtitle: { en: "Your Adventure Starts Here! 🚀", vi: "Cuộc phiêu lưu của bạn bắt đầu! 🚀", tr: "Maceran Burada Başlıyor! 🚀" },
+    welcomeMsg: { 
+      en: "Hey there! 👋 Ready to become an English superstar? Pick a lesson below and let's have fun learning together!",
+      vi: "Xin chào! 👋 Sẵn sàng trở thành ngôi sao tiếng Anh chưa? Chọn bài học bên dưới và cùng vui học nhé!",
+      tr: "Merhaba! 👋 İngilizce süperstarı olmaya hazır mısın? Aşağıdan bir ders seç ve birlikte eğlenerek öğrenelim!"
+    },
+    backToDashboard: { en: "Back to Dashboard", vi: "Về trang chính", tr: "Ana Sayfaya Dön" },
+    loading: { en: "Loading your lessons...", vi: "Đang tải bài học...", tr: "Dersler yükleniyor..." },
+    lesson: { en: "Lesson", vi: "Bài", tr: "Ders" },
+    newWords: { en: "New Words to Learn!", vi: "Từ mới để học!", tr: "Öğrenilecek Yeni Kelimeler!" },
+    clickToListen: { en: "Click the speaker to hear how to say each word", vi: "Nhấp vào loa để nghe cách phát âm", tr: "Her kelimenin nasıl söylendiğini duymak için hoparlöre tıkla" },
+    listen: { en: "Listen", vi: "Nghe", tr: "Dinle" },
+    recording: { en: "Recording...", vi: "Đang ghi...", tr: "Kayıt yapılıyor..." },
+    record: { en: "Record", vi: "Ghi âm", tr: "Kaydet" },
+    vocabulary: { en: "Vocabulary", vi: "Từ vựng", tr: "Kelime" },
+    grammar: { en: "Grammar", vi: "Ngữ pháp", tr: "Dilbilgisi" },
+    listening: { en: "Listening", vi: "Nghe", tr: "Dinleme" },
+    reading: { en: "Reading", vi: "Đọc", tr: "Okuma" },
+    speaking: { en: "Speaking", vi: "Nói", tr: "Konuşma" },
+    writing: { en: "Writing", vi: "Viết", tr: "Yazma" },
+    quiz: { en: "Quiz", vi: "Kiểm tra", tr: "Quiz" },
+    submitQuiz: { en: "Submit Quiz", vi: "Nộp bài", tr: "Quiz'i Gönder" },
+    tryAgain: { en: "Try Again", vi: "Thử lại", tr: "Tekrar Dene" },
+    backToLessons: { en: "Back to Lessons", vi: "Quay lại bài học", tr: "Derslere Dön" },
+    quizComplete: { en: "Quiz Complete!", vi: "Hoàn thành!", tr: "Quiz Bitti!" },
+    wow: { en: "WOW! You're Amazing!", vi: "TUYỆT VỜI! Bạn thật tuyệt!", tr: "VAAAY! Harikasın!" },
+    superJob: { en: "Super Job!", vi: "Làm tốt lắm!", tr: "Süper İş!" },
+    goodTry: { en: "Good Try!", vi: "Cố gắng tốt!", tr: "İyi Deneme!" },
+    niceEffort: { en: "Nice Effort!", vi: "Nỗ lực tốt!", tr: "Güzel Çaba!" },
+    wowMsg: { en: "You're a superstar! You know this lesson really well!", vi: "Bạn là ngôi sao! Bạn hiểu bài học này rất tốt!", tr: "Sen bir süperstarsın! Bu dersi çok iyi biliyorsun!" },
+    superJobMsg: { en: "Great work! You learned a lot from this lesson!", vi: "Làm tốt lắm! Bạn đã học được nhiều từ bài này!", tr: "Harika iş! Bu dersten çok şey öğrendin!" },
+    goodTryMsg: { en: "You're getting better! Try again to get an even higher score!", vi: "Bạn đang tiến bộ! Thử lại để đạt điểm cao hơn!", tr: "Gelişiyorsun! Daha yüksek puan için tekrar dene!" },
+    niceEffortMsg: { en: "Learning takes practice! Go back and review the lesson, then try again. You can do it!", vi: "Học cần luyện tập! Quay lại xem bài học rồi thử lại. Bạn làm được!", tr: "Öğrenmek pratik ister! Geri dön ve dersi tekrar et, sonra tekrar dene. Yapabilirsin!" }
+  };
+  
+  const getText = (key) => UI[key]?.[language] || UI[key]?.en || key;
   
   // Theme-aware classes
   const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-b from-gray-50 via-orange-50/30 to-gray-100';
