@@ -514,12 +514,42 @@ The time seems right for abandoning the naive notions of intelligent design and 
                     "title": "Report Writing",
                     "duration": "20 minutes",
                     "word_count": "at least 150 words",
-                    "task_type": "table_description",
-                    "instruction": "The table below shows the numbers of visitors to Ashdown Museum during the year before and the year after it was refurbished. The charts show the result of surveys asking visitors how satisfied they were with their visit, during the same two periods.",
+                    "task_type": "table_and_charts",
+                    "instruction": "You should spend about 20 minutes on this task.\n\nThe table and charts below give information on the police budget for 2017 and 2018 in one area of Britain. The table shows where the money came from and the charts show how it was distributed.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
                     "visual": {
                         "type": "table_and_pie_charts",
-                        "description": "Table showing visitor numbers and satisfaction surveys",
-                        "image_url": "/api/static/images/cambridge/ielts17/test2_writing_task1.png"
+                        "description": "Police Budget 2017-2018",
+                        "image_url": "/api/static/images/cambridge/ielts17/test2_writing_task1.png",
+                        "table_data": {
+                            "title": "Police Budget 2017-2018 (in £m)",
+                            "headers": ["Sources", "2017", "2018"],
+                            "rows": [
+                                ["National Government", "175.5", "177.8"],
+                                ["Local Taxes", "91.2", "102.3"],
+                                ["Other sources (eg grants)", "38.5", "38.5"],
+                                ["Total", "304.7", "318.6"]
+                            ]
+                        },
+                        "charts": [
+                            {
+                                "year": "2017",
+                                "title": "How the money was spent",
+                                "segments": [
+                                    {"label": "Salaries (officers and staff)", "percentage": 75},
+                                    {"label": "Technology", "percentage": 17},
+                                    {"label": "Buildings and transport", "percentage": 8}
+                                ]
+                            },
+                            {
+                                "year": "2018",
+                                "title": "How the money was spent",
+                                "segments": [
+                                    {"label": "Salaries (officers and staff)", "percentage": 69},
+                                    {"label": "Technology", "percentage": 14},
+                                    {"label": "Buildings and transport", "percentage": 17}
+                                ]
+                            }
+                        ]
                     }
                 },
                 {
@@ -527,8 +557,10 @@ The time seems right for abandoning the naive notions of intelligent design and 
                     "title": "Essay Writing",
                     "duration": "40 minutes",
                     "word_count": "at least 250 words",
-                    "task_type": "opinion_essay",
-                    "instruction": "In their advertising, businesses nowadays usually emphasise that their products are new in some way. Why is this? Do you think it is a positive or negative development?"
+                    "task_type": "causes_and_opinion",
+                    "instruction": "You should spend about 40 minutes on this task.\n\nWrite about the following topic:",
+                    "prompt": "Some children spend hours every day on their smartphones.\n\nWhy is this the case? Do you think this is a positive or a negative development?",
+                    "requirements": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words."
                 }
             ]
         },
@@ -540,27 +572,58 @@ The time seems right for abandoning the naive notions of intelligent design and 
                     "part_number": 1,
                     "title": "Introduction and Interview",
                     "duration": "4-5 minutes",
+                    "description": "The examiner asks you about yourself, your home, work or studies and other familiar topics.",
                     "topics": [
-                        {"topic": "Work or Studies", "questions": ["Do you work or are you a student?", "What do you do for work?", "Why did you choose that job?"]},
-                        {"topic": "Neighbours", "questions": ["How well do you know your neighbours?", "How often do you see them?", "How can neighbours help each other?"]}
+                        {
+                            "topic": "History",
+                            "questions": [
+                                "What did you study in history lessons when you were at school?",
+                                "Did you enjoy studying history at school? [Why/Why not?]",
+                                "How often do you watch TV programmes about history now? [Why/Why not?]",
+                                "What period in history would you like to learn more about? [Why?]"
+                            ]
+                        }
                     ]
                 },
                 {
                     "part_number": 2,
-                    "title": "Long Turn",
+                    "title": "Individual Long Turn",
                     "duration": "3-4 minutes",
+                    "preparation_time": "1 minute",
+                    "speaking_time": "1-2 minutes",
                     "topic_card": {
-                        "instruction": "Describe a film you watched that you found disappointing.",
-                        "points": ["what the film was about", "why you decided to watch it", "why you found it disappointing"],
-                        "final_prompt": "and explain whether you would recommend this film to others."
-                    }
+                        "instruction": "Describe the neighbourhood you lived in when you were a child.",
+                        "points": [
+                            "where in your town/city the neighbourhood was",
+                            "what kind of people lived there",
+                            "what it was like to live in this neighbourhood"
+                        ],
+                        "final_prompt": "and explain whether you would like to live in this neighbourhood in the future."
+                    },
+                    "examiner_note": "You will have to talk about the topic for one to two minutes. You have one minute to think about what you are going to say. You can make some notes to help you if you wish."
                 },
                 {
                     "part_number": 3,
-                    "title": "Discussion",
+                    "title": "Two-way Discussion",
                     "duration": "4-5 minutes",
-                    "topic": "Films and Society",
-                    "questions": ["What kinds of films are most popular in your country?", "Do you think films can influence peoples behaviour?", "Why do some people prefer foreign films?"]
+                    "discussion_topics": [
+                        {
+                            "topic": "Neighbours",
+                            "questions": [
+                                "What sort of things can neighbours do to help each other?",
+                                "How well do people generally know their neighbours in your country?",
+                                "How important do you think it is to have good neighbours?"
+                            ]
+                        },
+                        {
+                            "topic": "Facilities in cities",
+                            "questions": [
+                                "Which facilities are most important to people living in cities?",
+                                "How does shopping in small local shops differ from shopping in large city centre shops?",
+                                "Do you think that children should always go to the school nearest to where they live?"
+                            ]
+                        }
+                    ]
                 }
             ]
         }
