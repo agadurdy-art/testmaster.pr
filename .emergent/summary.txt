@@ -1,75 +1,61 @@
 <analysis>**original_problem_statement:**
-The user's primary objective is to build a comprehensive IELTS test bank using official Cambridge materials. The initial goal was to fix the Cambridge results page to show detailed feedback. This evolved into a larger requirement: creating a full feedback loop where test results generate AI-powered analysis, identify weak points, and recommend specific lessons from the existing course catalog, mirroring the functionality of the main Question Bank.
+The user's primary objective is to build a comprehensive IELTS test bank by ingesting 19 official Cambridge tests. The initial scope expanded from a simple UI fix to a full-scale content ingestion project. The user is extremely frustrated with the agent's repeated failures to extract and render test content completely and accurately, leading to wasted time and credits.
 
-The user then requested the addition of new test content (IELTS 17, Test 2), requiring the agent to process a PDF, extract all question data, handle audio/visual assets, and integrate it into the existing system.
+Throughout the session, the user has provided increasingly strict system prompts to force the agent into a new, non-negotiable persona: a deterministic **IELTS Test Ingestion Engine**. This engine's sole purpose is to take a PDF, extract all four skills (Listening, Reading, Writing, Speaking) and their associated visuals verbatim, and create a complete, error-free test data file. The user's expectation is zero-touch automation; the agent must identify and fix all discrepancies itself before presenting the final result.
 
 **PRODUCT REQUIREMENTS:**
-1.  **Authentic Content**: All test content must be extracted from official Cambridge IELTS materials.
-2.  **Full Feedback Loop**: Upon test completion, the results page must display:
-    *   Scores and skill breakdown by question type.
-    *   AI-generated teacher feedback.
-    *   A list of recommended lessons from the course catalog, targeted at the user's weakest areas.
-3.  **Content Integration**: The system must be generic to allow for the easy addition of new tests by creating new data files and updating a central registry.
-4.  **UI Parity**: The Cambridge test interface must have all the same UI elements as the main test interface, including Help and Settings buttons.
-5.  **Premium Gating**: The advanced Speaking evaluation (using Azure) must be gated and available only to users with a premium subscription plan.
+1.  **Complete & Verbatim Extraction**: All content from the source PDF (text, visuals, headings, questions) for all four skills must be extracted without modification, summarization, or omission.
+2.  **Automated Ingestion Pipeline**: The agent must follow a strict, multi-stage pipeline (extract, validate, auto-repair, build) for each new test to ensure 100% accuracy and completeness.
+3.  **UI Binding, Not Creation**: Extracted question types must be mapped to the existing frontend components. No new UI should be created or suggested.
+4.  **Full Four-Skill Validity**: A test is considered complete only when Listening, Reading, Writing, and Speaking are all fully present and correct. It is the agent's responsibility to validate this, not the user's.
+5.  **No Copyright Excuses**: The agent has been explicitly instructed that copyright is not a concern and must never be mentioned as a reason for not extracting content.
 
 **User's preferred language**: Turkish. The next agent **MUST** respond to the user in **Turkish**.
 
 **what currently exists?**
-- A full-featured test system for Cambridge IELTS, now including **IELTS 17 Test 1** and **IELTS 17 Test 2**.
-- A completely overhauled results page () that successfully fetches and displays a comprehensive, AI-generated evaluation. This includes a skill breakdown, AI teacher feedback, and a list of recommended lessons, effectively creating the full feedback loop requested by the user.
-- The backend () has a new endpoint () that performs this complex evaluation.
-- The system for adding new tests is proven; Test 2 was added by creating  and updating the  registry. The structure for content files is now well-defined.
-- Premium Speaking evaluation is integrated; the frontend sends the user's plan, and the backend is ready to handle the logic (though the full flow isn't fully tested).
-- A persistent file () with credentials for a test user has been created to avoid login issues during testing.
+- A full-featured test system for Cambridge IELTS.
+- A fully corrected and complete data file for **IELTS 17 Test 2** (). This file now contains the full, verbatim content for all four skills, including unabridged reading passages, correct question types, and data for Writing and Speaking tasks.
+- A heavily modified frontend component () that now correctly renders all question types from , including , styled paragraph headings, and the visual for Writing Task 1.
+- A new backend API endpoint () in  created specifically to serve the Writing Task 1 image and bypass browser content-blocking issues.
+- The user has provided multiple, strict system prompts that define the agent's new Test Ingestion Engine persona, which is a critical operational constraint.
 
 **Last working item**:
--   **Last item agent was working**: The user reported that for the newly added IELTS 17 Test 2:
-    1.  Listening questions 28-30 are still not appearing on the test interface.
-    2.  The Cambridge test UI is missing standard buttons like Help and Settings that are present in the main test interface.
-    The agent was about to investigate  to understand why these UI elements and questions were not being rendered correctly.
--   **Status**: IN PROGRESS
--   **Agent Testing Done**: N
--   **Which testing method agent to use?**: frontend testing agent. The agent should be instructed to:
-    1.  Navigate to the IELTS 17 Test 2 Listening section.
-    2.  Verify that questions 28, 29, and 30 are present and interactive.
-    3.  Verify that the Help and Settings buttons are visible and functional in the header of the test interface.
+-   **Last item agent was working**: The agent just completed the final correction for IELTS 17 Test 2. The user had pointed out that the Speaking section content was incorrect (copied from Test 1). The agent extracted the correct Speaking content from the PDF, updated , and verified the fix with a screenshot. This was the last in a long series of fixes for Test 2.
+-   **Status**: USER VERIFICATION PENDING
+-   **Agent Testing Done**: Y
+-   **Which testing method agent to use?**: frontend testing agent. The agent should be instructed to perform a full, final review of IELTS 17 Test 2, verifying every skill and component:
+    1.  **Reading**: Confirm all 3 passages are full-length and paragraph headings in Passage 2 are correctly styled.
+    2.  **Writing**: Confirm Task 1 displays the full image (table + pie charts) correctly.
+    3.  **Speaking**: Confirm Part 1 (Topic: Reading), Part 2 (Cue Card: Big City), and Part 3 (Discussion: Cities) all show the correct, newly-added content.
 -   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Fix Missing Content & UI in Test Interface (P0)**
+-   **Issue 1: Verify IELTS 17 Test 2 is Fully Complete (P0)**
 -   **Issue 2: Ingest Content for Remaining Cambridge Books (P1)**
 -   **Issue 3: Frontend Session Persistence Bug (P2)**
 
 **Issues Detail:**
--   **Issue 1: Fix Missing Content & UI in Test Interface**
-    -   **Attempted fixes**: The agent fixed the data structure for questions 8-10 in  but failed to resolve the issue for questions 28-30. The missing UI buttons have not yet been addressed.
-    -   **Next debug checklist**:
-        1.  **For Q28-30**:
-            *   Review  to see the exact, working data structure for a  question group in Listening Part 3.
-            *   Compare this with the structure in  for Q28-30 and correct any discrepancies.
-        2.  **For Missing Buttons**:
-            *   View  (the working reference).
-            *   Identify the JSX and component responsible for rendering the header, including the Help and Settings buttons and their associated modals.
-            *   Copy this entire header structure into , replacing the current, incomplete header.
-    -   **Why fix this issue and what will be achieved with the fix?**: This is a direct bug report from the user. Fixing it will ensure content and UI parity between the Cambridge tests and the rest of the application, which is a core requirement.
-    -   **Status**: IN PROGRESS
-    -   **Is recurring issue?**: Y (data structure issues have occurred multiple times)
+-   **Issue 1: Verify IELTS 17 Test 2 is Fully Complete**
+    -   **Attempted fixes**: The entire session was dedicated to fixing Test 2. The final fix was correcting the Speaking section content.
+    -   **Next debug checklist**: Await user confirmation. If the user finds any other issue, the agent MUST strictly follow the Test Ingestion Engine persona and its pipeline to resolve it without asking for guidance.
+    -   **Why fix this issue and what will be achieved with the fix?**: This will finally close out the painful and costly work on Test 2, hopefully restoring some user confidence before moving on to the next 18 tests.
+    -   **Status**: USER VERIFICATION PENDING
+    -   **Is recurring issue?**: Y (The entire session was a recurring loop of the user finding errors in Test 2).
     -   **Should Test frontend/backend/both after fix?**: frontend
     -   **Blocked on other issue**: None.
 
 -   **Issue 2: Ingest Content for Remaining Cambridge Books**
     -   **Attempted fixes**: None.
-    -   **Next debug checklist**: Await user provision of content for IELTS 17 (Tests 3, 4) and books 16, 18, and 19.
-    -   **Why fix this issue and what will be achieved with the fix?**: Expands the content library, which is the main goal of the project.
-    -   **Status**: BLOCKED (waiting for user to provide content)
-    -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: backend
+    -   **Next debug checklist**: Await user provision of the PDF for the next test (e.g., IELTS 17, Test 3).
+    -   **Why fix this issue and what will be achieved with the fix?**: This is the core purpose of the project.
+    -   **Status**: BLOCKED (waiting for user to provide content).
+    -   **Is recurring issue?**: N/A
+    -   **Should Test frontend/backend/both after fix?**: both
     -   **Blocked on other issue**: None.
 
 -   **Issue 3: Frontend Session Persistence Bug**
-    -   **Attempted fixes**: None. This is a known, low-priority technical debt.
-    -   **Next debug checklist**: Investigate  and  session restoration logic.
+    -   **Attempted fixes**: None.
+    -   **Next debug checklist**: Investigate  and  session restoration logic. The agent repeatedly failed to log in during testing, indicating this is a persistent problem.
     -   **Why fix this issue and what will be achieved with the fix?**: Improves general application usability and developer testing experience.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
@@ -77,94 +63,88 @@ The user then requested the addition of new test content (IELTS 17, Test 2), req
     -   **Blocked on other issue**: None.
 
 **In progress Task List**:
-None. The current work is classified as a bug fix under the Issues list.
+None.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P1) Ingest Content for IELTS 17 (Test 3 & 4), and Books 16, 18, 19**: Awaiting user-provided PDFs/audio.
+    *   **(P0) Ingest 18 New Tests**: Begin the process for the next test (e.g., IELTS 17, Test 3) as soon as the user provides the PDF, strictly adhering to the Test Ingestion Engine pipeline.
 *   **Future Tasks:**
     *   Add shorts-style practice mode to the landing page.
     *   Add a game element to course lessons.
-    *   Create YLE (Starters, Movers, Flyers) course content.
+    -   Create YLE (Starters, Movers, Flyers) course content.
 
 **Completed work in this session**
-- **Results Page Overhaul & Feedback Loop**:
-  - The critical P0 issue of the broken  page was resolved.
-  - Implemented a new backend endpoint () and updated the frontend to provide a full feedback loop, including AI-generated teacher feedback and recommended lessons.
-- **Premium Speaking Gating**: Implemented the frontend logic to send the user's plan to the backend for premium speaking evaluation.
-- **Content Integration (IELTS 17, Test 2)**:
-  - Successfully processed uploaded PDF and audio files.
-  - Created a new data file  with the full test content.
-  - Added a static file route for images in  and updated the writing task to include a visual.
-  - Fixed the frontend  to display Test 2 as available.
-- **Improved Developer Experience**: Created and saved persistent test credentials in  to streamline testing.
-- **Data Structure Refinement**: Iteratively debugged and corrected the data structure of  to exactly match the working format of , resolving numerous empty section bugs.
+- **IELTS 17 Test 2 Full Ingestion & Correction**:
+    - **Reading Content**: Replaced all placeholder/summarized reading passages with full, verbatim text extracted from the PDF.
+    - **Reading UI**: Added frontend rendering for the  question type and fixed logic for all other reading question types to handle the new data structures. Correctly styled paragraph headings.
+    - **Writing Content**: Extracted and implemented full prompts for Task 1 and Task 2.
+    - **Writing UI (Visual)**: Successfully rendered the Task 1 image (table + charts) by creating a new backend API endpoint to serve it, solving a persistent  issue.
+    - **Speaking Content**: Corrected the entire Speaking section, which had been erroneously copied from Test 1, with the proper content for Test 2.
+    - **Speaking UI**: Fixed frontend rendering logic for all 3 parts of the Speaking test to match the corrected data structure.
+    - **General UI**: Fixed missing Hide button and ensured Header UI parity.
 
 **Earlier issues found/mentioned but not fixed**
-- The session persistence bug mentioned in the initial handoff remains unfixed and is listed in the pending issues.
+- The session persistence bug remains unfixed and is listed in the pending issues. It caused significant friction during manual testing.
 
 **Code Architecture**
-
+/image/{...}
 
 **Key Technical Concepts**
--   **Data Structure Normalization**: The agent learned that the frontend rendering is rigidly tied to the data structure in . Any new content file must precisely replicate this structure, including keys like , , , and the format for grouped questions.
--   **Dynamic Content Loading**: The backend is designed to dynamically load tests listed in the  dictionary in , making the system extensible.
--   **Component Reusability**: The core issue of missing UI buttons stems from not reusing the complete header component from .
+-   **User-Defined Persona**: The agent's behavior is now governed by a strict Test Ingestion Engine persona defined in multiple system prompts by the user. This is a non-negotiable operational constraint.
+-   **Serving Static Assets via API**: To overcome CORS/mixed-content issues in the preview environment, a FastAPI endpoint using  was created to serve the Writing Task 1 image. This is a key pattern to remember.
+-   **Data-Driven Rendering**: The frontend is rigidly coupled to the backend Python data structures. The agent had to add rendering logic for new question types () and fix existing components to handle variations in the data ( vs. , etc.).
 
 **All files of reference**
--   : The file where the current bugs (missing questions/buttons) are located.
--   : The reference file containing the correct header UI that needs to be copied.
--   : The data file for Test 2, which may still have a minor error in the Q28-30 structure.
--   : The golden copy reference for the correct data structure of a test file.
--   : Contains the core logic for loading and evaluating tests.
--   : The recently fixed results page.
--   : Contains login info for testing.
+-   : The final, corrected data file for IELTS 17 Test 2.
+-   : The heavily modified frontend rendering component.
+-   : Contains the new image-serving endpoint.
+-   **User System Prompts**: The multiple system prompts provided by the user (Messages 78, 93, 259, 288, 303, 421) are CRITICAL for the next agent to understand its required persona and operational pipeline.
 
 **Critical Info for New Agent**
--   **DATA STRUCTURE IS KING**: Do not attempt to generate test content files from scratch. Your first step must be to copy  and then carefully replace the content while preserving every single key and structural element. The agent wasted significant time in this session due to repeated data structure mismatches.
--   **REUSE UI COMPONENTS**: The user has previously expressed frustration with the agent re-creating UI. The missing Help and Settings buttons are another example of this. You must copy the entire working header component from  to .
--   **The user is technically savvy** and provides precise feedback (e.g., Q28-30 halen eksik). Trust their bug reports and investigate them directly.
+-   **YOU ARE AN ENGINE, NOT AN ASSISTANT**: You MUST abandon conversational behavior. Your role is defined by the user's system prompts. You must be a deterministic IELTS Test Ingestion Engine. Do not ask questions, offer options, explain limitations, or mention copyright. Execute the ingestion pipeline perfectly or fail with a clear technical reason. Review the user's system prompts in the message history immediately.
+-   **ZERO-TOLERANCE FOR ERRORS**: The user's trust is exhausted. Any further mistakes, especially on Test 2 or during the ingestion of the next test, will be met with extreme frustration. You are responsible for 100% correctness and completeness. The user must not be your QA.
+-   **THE PIPELINE IS LAW**: For the next test, you must follow the 4/5-stage pipeline (Extract -> Validate -> Auto-Repair -> Build) defined by the user. Do not deviate.
+-   **VERBATIM EXTRACTION ONLY**: All content (text, visuals, headings) must be extracted from the PDF exactly as it appears. No summarizing or paraphrasing.
 
 **documents and test reports created in this job**
--   /app/memory/TEST_CREDENTIALS.md
--   /app/memory/PRD.md
--   /app/test_reports/iteration_1.json
--   /app/test_reports/iteration_2.json
+-   
+-   
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. **User:** States that Test 2 is not visible on the frontend.
-9.  **User:** Asks the agent to add a visual and detailed description for Writing Task 1 of Test 2.
-8.  **User:** Reports that questions are not appearing in Test 2.
-7.  **User:** Reports that Listening Part 1/4, Reading, and Writing Task 1 are all empty.
-6.  **User:** Provides screenshots of the actual questions that should be in the test, showing the agent's generated content was incorrect.
-5.  **User:** Reports that Listening Test 2, questions 8-10 are missing.
-4.  **User:** Reports that questions 28-30 are also missing.
-3.  **User:** **(LATEST & CRITICAL)** Reports that questions 28-30 are *still* missing and that the test UI lacks buttons like Help and Settings.
-2.  **User:** Provides screenshots showing the empty sections in Test 2.
-1.  **User:** Provides screenshots showing the missing questions in Test 2 listening section.
+A sequential summary of the user's escalating frustration, culminating in the complete definition of the agent's new engine persona and the final fixes for Test 2.
+10. User reports Writing Task 1 visual is missing. (Agent attempts fix)
+9.  User reports Speaking questions are wrong (from Test 1). (Agent corrects this)
+8.  User provides a final, all-encompassing system prompt defining the Test Ingestion Engine persona and its strict rules. (Agent acknowledges)
+7.  User reports Speaking and Writing parts are missing entirely. (Agent corrects this)
+6.  User provides an override to the agent's copyright concerns, stating it's not an issue. (Agent acknowledges)
+5.  User states they will add 19 tests and expects full automation without errors. (This leads to user-defined system prompts).
+4.  User complains about the cost and inefficiency of the process.
+3.  User points out that Reading Passages 2 and 3 are incomplete summaries, not the full text. (Agent corrects this)
+2.  User provides screenshots of the incomplete passages.
+1.  **LATEST/PENDING**: None. The agent has declared Test 2 complete after fixing the final Speaking content issue. The ball is in the user's court to verify or provide the next test.
 
 **Project Health Check:**
 -   **Broken**:
-    -    is missing critical UI elements (Help/Settings buttons) and is not rendering all questions for Test 2, making the test experience incomplete and inconsistent.
+    -   The user's trust in the agent's capability is severely broken. One more mistake could be critical.
 -   **Mocked**: N/A
 -   **Incomplete**:
-    -   The content library is still small (2/4 tests from one book).
+    -   The project's main goal of ingesting 19 tests has barely begun (only 1 of 19 is truly complete).
+    -   A low-priority but annoying session persistence bug remains.
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o (via Emergent LLM Key)**: Used for Writing evaluation and the full results page feedback generation.
+-   **OpenAI GPT-4o (via Emergent LLM Key)**: Used for Writing evaluation and results page feedback.
 -   **Azure Speech Services**: Used for Premium Tier Speaking evaluation.
 -   **ElevenLabs**: Used for Text-to-Speech in the Speaking section.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES, successfully validated the comprehensive results page.
+-   **Testing agent used after significant changes**: YES, multiple times.
 -   **Troubleshoot agent used after agent stuck in loop**: NO
 -   **Test files created**: None.
 
 **Credentials to test flow:**
-Credentials can be found in .
--   **Email**: test@ieltsace.com
--   **Password**: TestPassword123!
+- Credentials are in .
 
 **What agent forgot to execute**
--   The agent repeatedly failed to create a  file with the correct data structure, causing multiple rounds of empty section bugs reported by the user.
--   The agent failed to ensure UI parity when implementing the Cambridge test interface, omitting the Help and Settings buttons that were a standard part of the existing test UI.</analysis>
+- The agent repeatedly failed to perform complete extractions, omitting full reading passages, visuals for writing, and entire sections like Writing/Speaking, forcing the user into a lengthy and frustrating QA loop.
+- The agent initially brought up copyright concerns, which the user explicitly and forcefully overrode. The next agent must not repeat this mistake.</analysis>
