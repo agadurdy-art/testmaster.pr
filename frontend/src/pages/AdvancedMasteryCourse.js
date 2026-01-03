@@ -16,6 +16,14 @@ import SideBySideReader from '../components/test/SideBySideReader';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
 import { WritingEvaluationResult, ReadingEvaluationResult } from '../components/EvaluationResult';
+import { 
+  markSectionComplete, 
+  getLessonProgress, 
+  isLessonCompleted, 
+  getCourseProgress,
+  isSectionCompleted,
+  markLessonComplete
+} from '../lib/progressTracker';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
