@@ -150,6 +150,11 @@ export default function BeginnerCourse({ user }) {
   const [isPlayingListening, setIsPlayingListening] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   
+  // Grammar Practice states
+  const [grammarPracticeAnswers, setGrammarPracticeAnswers] = useState({});
+  const [grammarPracticeSubmitted, setGrammarPracticeSubmitted] = useState(false);
+  const [grammarPracticeScore, setGrammarPracticeScore] = useState(0);
+  
   // Pronunciation Practice states
   const [pronunciationRecording, setPronunciationRecording] = useState(false);
   const [pronunciationWord, setPronunciationWord] = useState(null);
