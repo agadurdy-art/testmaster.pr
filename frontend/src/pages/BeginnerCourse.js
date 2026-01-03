@@ -577,20 +577,18 @@ export default function BeginnerCourse({ user }) {
         onClick={() => navigate('/dashboard')}
         className="mb-4"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" /> Back to Dashboard
+        <ArrowLeft className="w-4 h-4 mr-2" /> {getText('backToDashboard')}
       </Button>
       
       <div className="text-center mb-8">
         <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-green-200 animate-bounce">
           <span className="text-5xl">🌟</span>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Let&apos;s Learn English!</h1>
-        <p className="text-gray-600 text-lg">Your Adventure Starts Here! 🚀</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{getText('title')}</h1>
+        <p className="text-gray-600 text-lg">{getText('subtitle')}</p>
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mt-4 max-w-xl mx-auto border border-green-100">
           <p className="text-sm text-green-800">
-            <span className="font-semibold">Hey there!</span> 👋 Ready to become an English superstar? 
-            Pick a lesson below and let&apos;s have fun learning together! Each lesson is full of cool words, 
-            fun games, and amazing stories.
+            {getText('welcomeMsg')}
           </p>
         </div>
       </div>
@@ -598,7 +596,7 @@ export default function BeginnerCourse({ user }) {
       {loading ? (
         <div className="text-center py-12">
           <Loader2 className="w-8 h-8 animate-spin mx-auto text-green-500" />
-          <p className="mt-2 text-green-600">Loading your lessons...</p>
+          <p className="mt-2 text-green-600">{getText('loading')}</p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
