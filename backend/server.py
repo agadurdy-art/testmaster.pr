@@ -6228,6 +6228,35 @@ async def delete_feedback(feedback_id: str):
         raise HTTPException(status_code=500, detail="Failed to delete feedback")
 
 
+# ============ ADMIN: RESEED DATABASE ============
+
+@app.post("/api/admin/reseed-tests")
+async def reseed_tests(admin_key: str = None):
+    """Reseed tests collection with latest format (admin only)"""
+    # Simple admin key check
+    if admin_key != "emergent2025reseed":
+        raise HTTPException(status_code=403, detail="Invalid admin key")
+    
+    try:
+        import subprocess
+        logger.info("🌱 Admin triggered reseed of tests...")
+        result = subprocess.run(
+            ["python", "seed_data.py"], 
+            cwd="/app/backend", 
+            capture_output=True, 
+            text=True,
+            timeout=120
+        )
+        logger.info(f"Seed output: {result.stdout}")
+        if result.returncode != 0:
+            logger.error(f"Seed error: {result.stderr}")
+            return {"success": False, "error": result.stderr}
+        return {"success": True, "message": "Tests reseeded successfully", "output": result.stdout[:500]}
+    except Exception as e:
+        logger.error(f"Reseed error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.on_event("startup")
 async def startup_event():
     """Seed vocab grammar lessons and beginner english lessons if they don't exist"""
