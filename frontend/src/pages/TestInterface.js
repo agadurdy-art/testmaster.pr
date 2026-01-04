@@ -997,6 +997,10 @@ function ElevenLabsExaminer() {
                         'form_completion': {
                           title: 'Form Completion',
                           instruction: 'Complete the form below. Write NO MORE THAN THREE WORDS AND/OR A NUMBER for each answer.'
+                        },
+                        'summary_completion_block': {
+                          title: 'Summary Completion',
+                          instruction: 'Complete the summary using the list of phrases, A–K, below. Write the correct letter, A–K, in boxes on your answer sheet.'
                         }
                       };
                       
