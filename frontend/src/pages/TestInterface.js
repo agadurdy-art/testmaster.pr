@@ -1038,7 +1038,12 @@ function ElevenLabsExaminer() {
                       for (const p of passagesBeforeCurrent) {
                         const pQuestions = test.questions?.filter(q => q.passage === p) || [];
                         for (const pq of pQuestions) {
-                          const span = (pq.type === 'multiple_choice_multi' && pq.answer_count) ? pq.answer_count : 1;
+                          let span = 1;
+                          if (pq.type === 'multiple_choice_multi' && pq.answer_count) {
+                            span = pq.answer_count;
+                          } else if (pq.type === 'summary_completion_block' && pq.blanks) {
+                            span = pq.blanks.length;
+                          }
                           runningQuestionNumber += span;
                         }
                       }
