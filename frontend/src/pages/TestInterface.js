@@ -1927,7 +1927,22 @@ function ElevenLabsExaminer() {
                   {testType === 'writing' && question.task === 'task1' && (
                     <div className="bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm">
                       <p className="text-sm text-gray-700 mb-3 font-medium">Writing Task 1 Visual</p>
-                      {question.image_url ? (
+                      
+                      {/* Side-by-side images for map comparisons */}
+                      {question.visual_data?.type === 'side_by_side_images' && question.visual_data?.images ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {question.visual_data.images.map((img, idx) => (
+                            <div key={idx} className="text-center">
+                              <p className="text-sm font-medium text-gray-800 mb-2">{img.title}</p>
+                              <img
+                                src={img.url}
+                                alt={img.title || `Image ${idx + 1}`}
+                                className="w-full h-auto max-h-[350px] object-contain mx-auto border border-gray-200 rounded"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      ) : question.image_url ? (
                         <img
                           src={question.image_url}
                           alt="Writing Task 1 graph or chart"
