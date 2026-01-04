@@ -732,19 +732,33 @@ Write at least 250 words.""",
         "questions": [
             {
                 "id": 1,
+                "task_number": 1,
                 "task": "task1",
-                "type": "graph_description",
+                "type": "map_comparison",
                 "question": """The plans below show a harbour in 2000 and how it looks today.
 
 Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
 
 Write at least 150 words.""",
-                "image_url": "https://customer-assets.emergentagent.com/job_testmaster-18/artifacts/otft83z3_Screenshot%202025-12-02%20at%2020.04.35.png",
+                "visual_data": {
+                    "type": "side_by_side_images",
+                    "images": [
+                        {
+                            "title": "Porth Harbour (in 2000)",
+                            "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/csy5kx8j_Screenshot%202026-01-04%20at%2009.21.11.png"
+                        },
+                        {
+                            "title": "Porth Harbour (today)",
+                            "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/4he4nkvg_Screenshot%202026-01-04%20at%2009.21.19.png"
+                        }
+                    ]
+                },
                 "word_limit": 150,
                 "time_suggestion": 20
             },
             {
                 "id": 2,
+                "task_number": 2,
                 "task": "task2",
                 "type": "essay",
                 "question": """The working week should be shorter and workers should have a longer weekend.
