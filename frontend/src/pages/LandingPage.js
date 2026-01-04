@@ -968,25 +968,33 @@ export default function LandingPage({ onLogin, user, showLogin }) {
           
           {/* Feedback & Contact Links */}
           <div className="flex items-center justify-center gap-4 mb-4">
-            <a 
-              href={`mailto:${SUPPORT_EMAIL}?subject=Feedback%20-%20IELTS%20Ace%20Beta`}
+            <button 
+              onClick={() => { setFeedbackType('feedback'); setShowFeedbackModal(true); }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-lg transition-colors text-sm"
             >
               <MessageSquare className="w-4 h-4" />
               {getText('Give Feedback', 'Gửi phản hồi', 'Geri Bildirim Ver')}
-            </a>
-            <a 
-              href={`mailto:${SUPPORT_EMAIL}?subject=Bug%20Report%20-%20IELTS%20Ace%20Beta`}
+            </button>
+            <button 
+              onClick={() => { setFeedbackType('bug'); setShowFeedbackModal(true); }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors text-sm"
             >
               <AlertTriangle className="w-4 h-4" />
               {getText('Report an Issue', 'Báo lỗi', 'Sorun Bildir')}
-            </a>
+            </button>
           </div>
           
           <p className="text-gray-500 text-sm">© 2025 IELTS Ace. All rights reserved.</p>
         </div>
       </footer>
+      
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+        user={user}
+        type={feedbackType}
+      />
 
       {/* Course Selector Dialog */}
       <Dialog open={showCourseSelector} onOpenChange={setShowCourseSelector}>
