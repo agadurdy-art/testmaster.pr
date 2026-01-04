@@ -1942,6 +1942,68 @@ function ElevenLabsExaminer() {
                             </div>
                           ))}
                         </div>
+                      ) : question.visual_data?.type === 'line_graph' && question.visual_data?.data ? (
+                        /* Line Graph - render as styled data table */
+                        <div className="space-y-4">
+                          <h4 className="text-center font-semibold text-gray-800">{question.visual_data.title || 'Line Graph'}</h4>
+                          <div className="overflow-x-auto">
+                            <table className="w-full border-collapse border border-gray-300 text-sm">
+                              <thead>
+                                <tr className="bg-gray-100">
+                                  <th className="border border-gray-300 px-3 py-2 text-left">{question.visual_data.x_axis || 'Year'}</th>
+                                  {Object.keys(question.visual_data.data).map(country => (
+                                    <th key={country} className="border border-gray-300 px-3 py-2 text-center">{country}</th>
+                                  ))}
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {Object.keys(Object.values(question.visual_data.data)[0] || {}).map(year => (
+                                  <tr key={year} className="hover:bg-gray-50">
+                                    <td className="border border-gray-300 px-3 py-2 font-medium">{year}</td>
+                                    {Object.keys(question.visual_data.data).map(country => (
+                                      <td key={`${country}-${year}`} className="border border-gray-300 px-3 py-2 text-center">
+                                        {question.visual_data.data[country][year]}
+                                      </td>
+                                    ))}
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                          <p className="text-xs text-gray-500 text-center mt-2">
+                            {question.visual_data.y_axis && `Y-axis: ${question.visual_data.y_axis}`}
+                          </p>
+                          {/* Visual representation as colored bars */}
+                          <div className="mt-4 space-y-3">
+                            <p className="text-xs font-medium text-gray-600">Visual Trend (scaled):</p>
+                            {Object.entries(question.visual_data.data).map(([country, values], idx) => {
+                              const colors = ['bg-blue-500', 'bg-green-500', 'bg-orange-500', 'bg-purple-500'];
+                              const maxVal = Math.max(...Object.values(values));
+                              return (
+                                <div key={country} className="flex items-center gap-2">
+                                  <span className="w-20 text-xs font-medium text-gray-700">{country}</span>
+                                  <div className="flex-1 flex gap-1">
+                                    {Object.entries(values).map(([year, val]) => (
+                                      <div key={year} className="flex-1 flex flex-col items-center">
+                                        <div 
+                                          className={`w-full ${colors[idx % colors.length]} rounded-t`}
+                                          style={{ height: `${(val / maxVal) * 60}px` }}
+                                        />
+                                        <span className="text-[10px] text-gray-500 mt-1">{year}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ) : question.visual_data?.image_url ? (
+                        <img
+                          src={question.visual_data.image_url}
+                          alt="Writing Task 1 graph or chart"
+                          className="w-full h-auto max-h-[400px] object-contain mx-auto border border-gray-200 rounded"
+                        />
                       ) : question.image_url ? (
                         <img
                           src={question.image_url}
