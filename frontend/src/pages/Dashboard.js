@@ -776,6 +776,46 @@ export default function Dashboard({ user, onLogout }) {
             />
           </div>
         )}
+        
+        {/* Beta Feedback CTA */}
+        <div className="mt-6 mb-6">
+          <Card className={`p-4 ${bgCard} border shadow-sm rounded-2xl`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                  <span className="text-lg">🧪</span>
+                </div>
+                <div>
+                  <p className={`font-semibold ${textPrimary} text-sm`}>
+                    {getText('Help us improve!', 'Giúp chúng tôi cải thiện!', 'Gelişmemize yardım edin!')}
+                  </p>
+                  <p className={`text-xs ${textSecondary}`}>
+                    {getText('This platform is in beta. Your feedback matters.', 'Nền tảng đang trong beta. Phản hồi của bạn rất quan trọng.', 'Bu platform beta aşamasında. Geri bildiriminiz önemli.')}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('Bug Report - IELTS Ace Beta')}&body=${encodeURIComponent(`Hi,\n\nI found an issue:\n\nUser: ${user?.name}\nEmail: ${user?.email}\n\nDescription:\n\n`)}`}
+                  className="text-xs border-gray-300"
+                >
+                  <AlertTriangle className="w-3 h-3 mr-1" />
+                  {getText('Report Issue', 'Báo lỗi', 'Sorun Bildir')}
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('Feedback - IELTS Ace Beta')}&body=${encodeURIComponent(`Hi,\n\nI have some feedback:\n\nUser: ${user?.name}\nEmail: ${user?.email}\n\nFeedback:\n\n`)}`}
+                  className="text-xs bg-violet-600 hover:bg-violet-700 text-white"
+                >
+                  <MessageSquare className="w-3 h-3 mr-1" />
+                  {getText('Give Feedback', 'Gửi phản hồi', 'Geri Bildirim')}
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       </main>
     </div>
   );
