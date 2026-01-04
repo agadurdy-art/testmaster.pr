@@ -5,18 +5,23 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 ## Latest Update (January 4, 2025)
 
-### ✅ Reading Test Summary Completion - IELTS 17 Format Fixed
-- **Issue**: Reading Test 2 Q27-32 were showing as separate questions with duplicate text ("However, maths had little...")
-- **Fix**: Implemented `summary_completion_block` type that renders as continuous paragraph (matching original Cambridge format)
-- **New Format Features**:
-  - Single summary paragraph with numbered blanks (**27**, **28**, etc.)
-  - Dropdown selects for each blank position
-  - Word bank (A-K) displayed below the summary
-  - Proper question counting (P3 now shows 0/14 correctly)
-- **Verified Working**:
-  - Reading Test 1 & 2: All 3 passages with correct question types
-  - Listening Test 1 & 2: All 4 parts with audio
-  - Question types: true_false_notgiven, yes_no_notgiven, sentence_completion, summary_completion_block, matching_information, multiple_choice, multiple_choice_multi
+### ✅ Reading & Listening Tests - IELTS 17 Format Complete
+**Issues Fixed**:
+1. Q27-32 Summary Completion was showing as duplicate separate questions
+2. Q33-40 were not visible after summary block
+
+**Solutions Implemented**:
+- Created `summary_completion_block` type for continuous paragraph format with numbered blanks (**27**, **28**, etc.)
+- Fixed question number calculation for blocks with multiple blanks
+- All question types now render correctly
+
+**Verified Working**:
+- Reading Test 1 & 2: All 40 questions per test
+  - Passage 1: TRUE/FALSE/NOT GIVEN, Sentence Completion
+  - Passage 2: Matching Information, Multiple Choice
+  - Passage 3: Summary Completion Block (Q27-32), YES/NO/NOT GIVEN (Q33-37), Multiple Choice (Q38-40)
+- Listening Test 1 & 2: All 40 questions per test
+  - Part 1-4 with audio and Note/Form Completion questions
 
 ## Core Requirements
 1. **Authentic Content**: All test content extracted directly from Cambridge IELTS PDFs
