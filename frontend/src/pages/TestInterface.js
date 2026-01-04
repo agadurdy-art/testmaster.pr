@@ -1162,9 +1162,58 @@ function ElevenLabsExaminer() {
                             })()
                           )}
 
+                          {/* Summary completion with word bank (options) */}
+                          {q.type === 'summary_completion' && q.options && q.options.length > 0 && (
+                            <div className="mt-2">
+                              <div className="text-xs text-gray-500 mb-2">Choose from the word bank:</div>
+                              <div className="flex flex-wrap gap-1 mb-2 p-2 bg-gray-50 rounded border">
+                                {q.options.map((option, optIdx) => {
+                                  const optionLetter = option.split(')')[0].trim();
+                                  return (
+                                    <button
+                                      key={optIdx}
+                                      onClick={() => handleAnswerChange(q.id, optionLetter)}
+                                      className={`px-2 py-1 rounded text-xs transition-colors ${
+                                        answers[q.id] === optionLetter
+                                          ? 'bg-sky-500 text-white'
+                                          : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-100'
+                                      }`}
+                                    >
+                                      {option}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Matching information/headings with options */}
+                          {(q.type === 'matching_information' || q.type === 'matching_headings') && q.options && (
+                            <div className="mt-2 space-y-1">
+                              {q.options.map((option, optIdx) => {
+                                const optionLetter = option.split(')')[0].trim();
+                                return (
+                                  <button
+                                    key={optIdx}
+                                    onClick={() => handleAnswerChange(q.id, optionLetter)}
+                                    className={`w-full text-left px-2 py-1.5 rounded text-xs transition-colors ${
+                                      answers[q.id] === optionLetter
+                                        ? 'bg-sky-500 text-white'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    }`}
+                                  >
+                                    {option}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {/* Text input for sentence/note/form completion without options */}
                           {(q.type === 'sentence_completion' || q.type === 'form_completion' || 
-                            q.type === 'note_completion' || q.type === 'matching_information' || 
-                            q.type === 'matching_headings' || q.type === 'summary_completion') && (
+                            q.type === 'note_completion' || 
+                            (q.type === 'summary_completion' && (!q.options || q.options.length === 0)) ||
+                            ((q.type === 'matching_information' || q.type === 'matching_headings') && (!q.options || q.options.length === 0))) && (
                             <Input
                               value={answers[q.id] || ''}
                               onChange={(e) => handleAnswerChange(q.id, e.target.value)}
