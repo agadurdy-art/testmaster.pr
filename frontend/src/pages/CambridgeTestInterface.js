@@ -1683,17 +1683,41 @@ export default function CambridgeTestInterface() {
                 </p>
               </div>
               
-              {/* Visual data - Image */}
+              {/* Visual data - Image with improved presentation */}
               {currentTask.visual && (
-                <div className="mb-4">
-                  {/* Always show image if available */}
+                <div className="mb-4 bg-white rounded-lg border shadow-sm overflow-hidden">
+                  <div className="bg-gray-100 px-4 py-2 border-b">
+                    <h4 className="text-sm font-semibold text-gray-700 text-center">
+                      {currentTask.visual.title || 'Visual Reference'}
+                    </h4>
+                  </div>
                   {currentTask.visual.image_url && (
                     <img 
-                      src={`${API_URL}${currentTask.visual.image_url}`} 
+                      src={currentTask.visual.image_url.startsWith('http') ? currentTask.visual.image_url : `${API_URL}${currentTask.visual.image_url}`} 
                       alt="Task 1 Visual" 
-                      className="max-w-full rounded border shadow-sm mx-auto"
+                      className="max-w-full mx-auto p-2"
                     />
                   )}
+                </div>
+              )}
+              
+              {/* External image URL (for tests with direct URLs) */}
+              {currentTask.image_url && !currentTask.visual && (
+                <div className="mb-4 bg-white rounded-lg border shadow-sm overflow-hidden">
+                  <div className="bg-gray-100 px-4 py-2 border-b">
+                    <h4 className="text-sm font-semibold text-gray-700 text-center">
+                      Visual Reference
+                    </h4>
+                  </div>
+                  <img 
+                    src={currentTask.image_url} 
+                    alt="Task 1 Visual" 
+                    className="max-w-full mx-auto p-2"
+                    onError={(e) => {
+                      console.error('Failed to load image:', currentTask.image_url);
+                      e.target.style.display = 'none';
+                    }}
+                  />
                 </div>
               )}
             </>
