@@ -403,7 +403,12 @@ export default function LandingPage({ onLogin, user, showLogin }) {
               <Trophy className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className={`text-xl font-bold ${textPrimary}`}>{t('appName')}</h1>
+              <div className="flex items-center gap-2">
+                <h1 className={`text-xl font-bold ${textPrimary}`}>{t('appName')}</h1>
+                <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-bold rounded-full">
+                  🧪 Beta
+                </span>
+              </div>
               <p className={`text-xs ${textSecondary}`}>Cambridge-Aligned AI</p>
             </div>
           </div>
@@ -424,6 +429,23 @@ export default function LandingPage({ onLogin, user, showLogin }) {
       <section className="pt-20 pb-24 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
+            {/* Early Access Notice */}
+            <div className={`mb-6 p-4 rounded-xl ${isDark ? 'bg-amber-900/30 border-amber-700' : 'bg-amber-50 border-amber-200'} border`}>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <span className="text-lg">🧪</span>
+                <span className={`font-semibold ${isDark ? 'text-amber-300' : 'text-amber-800'}`}>
+                  {getText('Early Access · Beta Version', 'Early Access · Phiên bản Beta', 'Erken Erişim · Beta Sürümü')}
+                </span>
+              </div>
+              <p className={`text-sm ${isDark ? 'text-amber-200/80' : 'text-amber-700'}`}>
+                {getText(
+                  'This platform is currently in beta. Some features are still being improved. Your feedback helps us build a better learning experience.',
+                  'Nền tảng đang trong giai đoạn beta. Một số tính năng đang được cải thiện. Phản hồi của bạn giúp chúng tôi xây dựng trải nghiệm học tập tốt hơn.',
+                  'Bu platform şu anda beta aşamasında. Bazı özellikler hâlâ geliştirilmektedir. Geri bildiriminiz daha iyi bir öğrenme deneyimi oluşturmamıza yardımcı oluyor.'
+                )}
+              </p>
+            </div>
+            
             <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isDark ? 'bg-violet-900/50 text-violet-300' : 'bg-violet-100 text-violet-700'} text-sm font-medium mb-8`}>
               <Brain className="w-4 h-4" />
               <span>{t('landingBadge')}</span>
@@ -927,16 +949,29 @@ export default function LandingPage({ onLogin, user, showLogin }) {
               <Trophy className="w-6 h-6 text-white" />
             </div>
             <h3 className="text-2xl font-bold text-white">{t('appName')}</h3>
+            <span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs font-bold rounded-full">Beta</span>
           </div>
           <p className="text-gray-400 mb-2">{t('landingFooterTagline')}</p>
           <p className="text-violet-400 text-sm mb-4">{t('landingFooterMotto')}</p>
-          <a 
-            href={`mailto:${SUPPORT_EMAIL}?subject=Support%20Request`}
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-violet-400 transition-colors mb-4"
-          >
-            <Mail className="w-4 h-4" />
-            Contact Us
-          </a>
+          
+          {/* Feedback & Contact Links */}
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <a 
+              href={`mailto:${SUPPORT_EMAIL}?subject=Feedback%20-%20IELTS%20Ace%20Beta`}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white rounded-lg transition-colors text-sm"
+            >
+              <MessageSquare className="w-4 h-4" />
+              {getText('Give Feedback', 'Gửi phản hồi', 'Geri Bildirim Ver')}
+            </a>
+            <a 
+              href={`mailto:${SUPPORT_EMAIL}?subject=Bug%20Report%20-%20IELTS%20Ace%20Beta`}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors text-sm"
+            >
+              <AlertTriangle className="w-4 h-4" />
+              {getText('Report an Issue', 'Báo lỗi', 'Sorun Bildir')}
+            </a>
+          </div>
+          
           <p className="text-gray-500 text-sm">© 2025 IELTS Ace. All rights reserved.</p>
         </div>
       </footer>
