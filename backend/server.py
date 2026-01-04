@@ -6340,57 +6340,6 @@ async def seed_reading_test_2_inline():
             logger.error(f"Fallback seed failed: {result.stderr}")
     except Exception as e:
         logger.error(f"Inline seed error: {e}")
-                {"id": 23, "passage": 2, "type": "sentence_completion", "question": "Athletes face__(23)__ challenges."},
-                {"id": 24, "passage": 2, "type": "sentence_completion", "question": "Research shows that__(24)__ strategies help performance."},
-                {"id": 25, "passage": 2, "type": "sentence_completion", "question": "Athletes work with sports__(25)__."},
-                {"id": 26, "passage": 2, "type": "sentence_completion", "question": "The pressure to__(26)__ at the highest level creates stress."},
-                {"id": "27-32", "passage": 3, "type": "summary_completion_block", 
-                 "title": "Maryam Mirzakhani",
-                 "summary_text": "Maryam Mirzakhani is regarded as **27** .................. in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little **28** .................. for her as a child and in fact her performance was below average until she was **29** .................. by a difficult puzzle that one of her siblings showed her.\n\nLater, as a professional mathematician, she had an inquiring mind and proved herself to be **30** .................. when things did not go smoothly. She said she got the greatest **31** .................. from making ground-breaking discoveries and in fact she was responsible for some extremely **32** .................. mathematical studies.",
-                 "blanks": [27, 28, 29, 30, 31, 32],
-                 "options": ["A) appeal", "B) determined", "C) intrigued", "D) single", "E) achievement", "F) devoted", "G) involved", "H) unique", "I) innovative", "J) satisfaction", "K) intent"]},
-                {"id": 33, "passage": 3, "type": "yes_no_notgiven", "question": "Many people who ended up winning prestigious intellectual prizes only reached an average standard when young."},
-                {"id": 34, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein's failures as a young man were due to his lack of confidence."},
-                {"id": 35, "passage": 3, "type": "yes_no_notgiven", "question": "It is difficult to reach agreement on whether some children are actually born gifted."},
-                {"id": 36, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein was upset by the public's view of his life's work."},
-                {"id": 37, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein put his success down to the speed at which he dealt with scientific questions."},
-                {"id": 38, "passage": 3, "type": "multiple_choice", "question": "What does Eyre believe is needed for children to equal 'gifted' standards?", "options": ["A) Natural talent", "B) Dedicated practice and support", "C) High IQ scores", "D) Early education"]},
-                {"id": 39, "passage": 3, "type": "multiple_choice", "question": "What is the result of Ericsson's research?", "options": ["A) Talent is innate", "B) Practice is key to expertise", "C) Genetics determine success", "D) Age is the key factor"]},
-                {"id": 40, "passage": 3, "type": "multiple_choice", "question": "What is the main conclusion of the passage?", "options": ["A) Gifted children are born, not made", "B) The nature vs nurture debate continues", "C) Environment is everything", "D) Testing is unreliable"]}
-            ],
-            "answer_key": [
-                {"question_id": 1, "answer": "18th"},
-                {"question_id": 2, "answer": "agrarian"},
-                {"question_id": 3, "answer": "homes"},
-                {"question_id": 4, "answer": "False"},
-                {"question_id": 5, "answer": "True"},
-                {"question_id": 6, "answer": "False"},
-                {"question_id": 7, "answer": "True"},
-                {"question_id": 8, "answer": "B"},
-                {"question_id": 9, "answer": "B"},
-                {"question_id": 10, "answer": "textile"},
-                {"question_id": 11, "answer": "mass"},
-                {"question_id": 12, "answer": "True"},
-                {"question_id": 13, "answer": "False"},
-                {"question_id": 27, "answer": "H"},
-                {"question_id": 28, "answer": "A"},
-                {"question_id": 29, "answer": "C"},
-                {"question_id": 30, "answer": "B"},
-                {"question_id": 31, "answer": "J"},
-                {"question_id": 32, "answer": "I"},
-                {"question_id": 33, "answer": "Yes"},
-                {"question_id": 34, "answer": "Not Given"},
-                {"question_id": 35, "answer": "Yes"},
-                {"question_id": 38, "answer": "B"},
-                {"question_id": 39, "answer": "B"},
-                {"question_id": 40, "answer": "B"}
-            ]
-        }
-        
-        await db.tests.insert_one(reading_test_2)
-        logger.info("✅ STARTUP: Reading Test 2 with summary_completion_block seeded inline")
-    except Exception as e:
-        logger.error(f"Inline seed error: {e}")
 
 
 @app.on_event("startup")
