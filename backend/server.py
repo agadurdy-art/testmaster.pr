@@ -616,6 +616,31 @@ class ManualCreditRequest(BaseModel):
     admin_token: str
 
 
+# Feedback Models
+class FeedbackCreate(BaseModel):
+    user_id: Optional[str] = None
+    user_email: Optional[str] = None
+    user_name: Optional[str] = None
+    type: str = "general"  # general, bug, feature, content, ui
+    message: str
+    rating: Optional[int] = None
+    page_url: Optional[str] = None
+    user_agent: Optional[str] = None
+
+
+class FeedbackResponse(BaseModel):
+    id: str
+    user_id: Optional[str] = None
+    user_email: Optional[str] = None
+    user_name: Optional[str] = None
+    type: str
+    message: str
+    rating: Optional[int] = None
+    page_url: Optional[str] = None
+    resolved: bool = False
+    created_at: datetime
+
+
 # Password hashing helpers
 
 def hash_password(password: str) -> str:
