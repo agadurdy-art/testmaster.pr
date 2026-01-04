@@ -1,0 +1,165 @@
+<analysis>**original_problem_statement:**
+The user's initial request was to fix two critical issues: widespread audio evaluation failures and an outdated Try our courses section on the landing page.
+
+After the agent fixed these, the user provided more detailed feedback, stating the Try our courses preview feature was fundamentally broken. Visitors could not properly access or interact with the real course content.
+
+This led to a series of new requests:
+1.  **Fix Course Previews:** Implement a true visitor mode allowing non-logged-in users to access and interact with the full features of a limited number of lessons for each course, directly from the landing page.
+2.  **Lock Lessons:** In the preview modal, show only the first 3 lessons of each course as free, with the rest appearing as locked to encourage sign-ups.
+3.  **Add a CTA:** Implement a multi-language Call to Action banner to prompt visitors to sign up, but only show it at the end of a lesson section (e.g., in the quiz) so as not to be intrusive.
+4.  **Enrich Content:** The Grammar section in the Beginner Course was too basic and needed to be enhanced with more examples and an interactive practice quiz.
+5.  **Fix Practice Mode:** The Listening Practice Mode in the Question Bank was only showing a text transcript instead of playing audio. This needed to be fixed to use a real audio player.
+6.  **Fix Progress Page:** Links on the My Progress page that should lead to recommended courses were broken.
+7.  **Update Cambridge Content:** The user reported inaccuracies in the Cambridge test content (specifically Reading Test 2 Q28-29) and provided new assets (images and a PDF for Cambridge 19) to update Writing Task 1 visuals and Listening Test 1 (Farley House map) questions.
+
+**User's preferred language**: Turkish
+
+**what currently exists?**
+- The application is largely functional. The audio evaluation systems and the initial landing page course list have been fixed.
+- A comprehensive visitor preview system is now in place. Non-logged-in users can access full-featured versions of the first 3 lessons of each course directly from the landing page modal.
+- The landing page modal correctly displays the first 3 lessons as FREE and the subsequent lessons as locked, with multi-language text.
+- A multi-language Sign Up CTA banner has been created and is conditionally rendered only in the Quiz section of the course pages to encourage user registration.
+- The Beginner Course's Grammar section has been significantly improved with more examples, common mistakes, and an interactive fill-in-the-blanks quiz with translations.
+- The Listening Practice Mode in the Question Bank now features a functional TTS audio player instead of just displaying a static transcript.
+- Broken navigation links on the My Progress page have been fixed.
+- The database has been correctly seeded with test data after the agent discovered it was empty.
+- A script was created and run to update the database with new content for Listening Test 1 (Farley House) and a new side-by-side visual format for Writing Task 1, based on user-provided assets.
+
+**Last working item**:
+-   **Last item agent was working**: The agent was implementing the user's request to update the Cambridge test content based on provided assets ( and images). A Python script () was created and executed to update the database for:
+    1.  **Listening Test 1**: Replaced existing questions with new ones based on the Farley House map.
+    2.  **Writing Test 2**: Changed the visual data structure to support side-by-side images for the Porth Harbour map comparison.
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: N (The database update script was successfully executed, but the agent has not visually verified the changes on the frontend.)
+-   **Which testing method agent to use?**: . The agent needs to navigate to the relevant test interfaces to verify:
+    1.  If the Porth Harbour maps in Writing Test 2 now render side-by-side.
+    2.  If the Farley House map and new questions appear correctly in Listening Test 1.
+-   **User Testing Done**: N
+
+**All Pending/In progress Issue list**:
+-   **Issue 1: Verify Cambridge Content Update (P0)**
+    -   The database has been updated, but the frontend results are unconfirmed.
+
+**Issues Detail:**
+-   **Issue 1: Verify Cambridge Content Update**
+    -   **Attempted fixes**: A script () was run to modify the  collection in MongoDB, updating the questions for Listening Test 1 and the visual data structure for Writing Test 2.
+    -   **Next debug checklist**:
+        1.  Log in as the test user (who has a pro plan).
+        2.  Navigate to the  interface ( and select Test 2). Use the  to confirm the Porth Harbour maps are now rendered side-by-side.
+        3.  Navigate to the  interface (). Use the  to confirm the Farley House map and its corresponding questions are now displayed.
+    -   **Why fix this issue and what will be achieved with the fix?**: To complete the user's explicit request to correct and improve the accuracy and presentation of the Cambridge test content.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on other issue**: None.
+
+**In progress Task List**:
+-   **Task 1: Finalize Cambridge Content Update (P0)**
+    -   **Where to resume**: Visually verifying the frontend changes after the database update.
+    -   **What will be achieved with this?**: The platform's premium test content will be more accurate and better presented, matching user expectations.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on something**: None.
+
+**Upcoming and Future Tasks**
+*   **Upcoming Tasks:**
+    *   **(P1)** Review and correct the  and  for the newly added Cambridge 19 questions, as requested by the user.
+*   **Future Tasks (Backlog):**
+    *   Implement an XP/points system with a leaderboard.
+    *   Ingest content for Cambridge IELTS tests 16 and 18.
+    *   Create course content for YLE (Starters, Movers, Flyers).
+
+**Completed work in this session**
+-   **Visitor Course Preview System**: Implemented a full visitor mode allowing non-logged-in users to try full-featured lessons.
+-   **Lesson Locking UI**: Updated the landing page modal to show the first 3 lessons as free and the rest as locked.
+-   **Conditional CTA Banner**: Added a multi-language Sign Up banner that appears non-intrusively in quiz sections.
+-   **Beginner Course Grammar Enhancement**: Overhauled the grammar section with an interactive practice quiz and richer content.
+-   **Listening Practice Mode Audio Fix**: Replaced a static transcript with a dynamic, TTS-powered audio player.
+-   **Progress Page Navigation Fix**: Corrected broken links on the My Progress page.
+-   **Audio System E2E Fix**: Resolved all backend and frontend issues related to audio transcription and evaluation (verified with ).
+-   **Database Seeding**: Identified that the DB was empty and successfully ran the seed scripts to populate course and test data.
+-   **Reading Question Correction**: Fixed a duplicate question (Q28/Q29) in the seed data for a reading test.
+
+**Earlier issues found/mentioned but not fixed**
+-   **Issue 1: Frontend Session Persistence Bug**
+    -   **Debug checklist**: Review  and  for state initialization logic from .
+    -   **Why to solve this issue and what will be achieved with this?**: It severely hinders testing and creates a poor user experience, forcing re-logins.
+    -   **Is recurring issue?**: Y
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Status**: NOT STARTED (explicitly deferred by the user in the previous session).
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Conditional Rendering for Visitor Mode**: Adapting full-featured components to work with a null  object by checking for a  URL parameter.
+-   **Dynamic Text-to-Speech (TTS) Generation**: Generating audio on-the-fly in the frontend for listening practice questions rather than pre-generating files.
+-   **Database Seeding and Scripted Updates**: Using Python scripts to populate and later modify specific documents in the MongoDB database to correct content without manual intervention.
+-   **Conditional UI based on User Plan**: The  variable in  shows/hides content based on the user's subscription status (               total        used        free      shared  buff/cache   available
+Mem:        16359156     8812380      847964       46060     7010216     7546776
+Swap:              0           0           0 vs. ).
+
+**key DB schema**
+-   **tests**: (Modified)
+    -   The  array within a  test document was updated to use a  object with  and an  array.
+    -    field was added to writing tasks.
+    -   The questions for Listening Test 1 were replaced.
+
+**All files of reference**
+-   : The script used to update Cambridge content. **CRITICAL for understanding the last change.**
+-   : The component that renders the Cambridge Writing and Listening tests.
+-   : The page for Question Bank practice, where the audio player was added.
+-   : Where the new interactive grammar quiz was built.
+-   : Contains the logic for the Try our courses modal, including free/locked lessons.
+-   : Contains the route definitions and logic for allowing visitor access.
+-   : The new reusable CTA banner component.
+
+**Critical Info for New Agent**
+-   Your first task is to **visually verify** the database changes made in the last step. Use screenshots to check the Writing and Listening test interfaces.
+-   The test user  has been upgraded to a pro plan. You must log in as this user to access premium content like Test 2.
+-   The platform now has a clear distinction between full tests (in the  collection, accessed via ) and the Question Bank (which should use the  collection, but is still empty). The user's focus has been on improving the full tests.
+-   The session persistence bug is a known, recurring issue. Be prepared to re-login frequently during testing or use direct URL navigation to bypass it.
+
+**documents and test reports created in this job**
+-    (Audio Features E2E Test)
+-    (Visitor Preview Flow E2E Test)
+-    (Full Platform User Journey Test)
+-    (DB update script)
+
+**Last 10 User Messages and any pending HUMAN messages**
+10. **User**: can you build maps and diagrams on figma? (CLARIFIED)
+9.  **User**: Asks to fix inaccurate maps/diagrams in the Question Bank and offers to provide correct images. (IN PROGRESS)
+8.  **User**: Asks about the current map/diagram questions in the system. (RESOLVED)
+7.  **User**: Provides several image assets and a  file. (RECEIVED)
+6.  **User**: Asks the agent to correct issues in Cambridge 19 content based on the provided assets. (IN PROGRESS)
+5.  **User**: Provides new image assets and clarifies the request: 1. Use new visuals for Writing Task 1. 2. Update question format to IELTS 17 style. 3. Use the new Farley House map for Listening Test 1. (IN PROGRESS)
+4.  **User**: Asks to fix broken navigation on the My Progress page and provides a screenshot. (COMPLETED)
+3.  **User**: Reports that the Listening Practice Mode isn't playing audio and provides a screenshot. (COMPLETED)
+2.  **User**: my progres kisminda course secenegine tiklayince beni kursa götürmüyor (My progress part does not take me to the course when I click on the course option) (COMPLETED)
+1.  **User**: can you build maps and diagrams on figma? (CLARIFIED)
+
+**Project Health Check:**
+-   **Broken**:
+    -   The user journey is hampered by a session persistence bug, requiring frequent re-logins.
+-   **Mocked**: No mocked components. All features rely on live backend data.
+
+**3rd Party Integrations**
+-   **OpenAI GPT-4o (Emergent LLM Key)**: Used for Writing evaluation and Speech-to-Text.
+-   **Azure Speech Services**: Used for Premium Speaking evaluation and Beginner Pronunciation Assessment.
+-   **ElevenLabs**: Used for Text-to-Speech, notably in the newly fixed Listening Practice Mode.
+-   **PayPal**: Confirmed as the primary, active payment gateway.
+
+**Testing status**
+-   **Testing agent used after significant changes**: YES. The agent was used three times to validate major feature implementations and bug fixes.
+-   **Troubleshoot agent used after agent stuck in loop**: NO
+-   **Test files created**:  was created to perform a one-off database update.
+-   **Known regressions**: The session persistence issue remains and was a significant hindrance during manual testing in this session.
+
+**Credentials to test flow:**
+-   **Email**: 
+-   **Password**: 
+-   **Note**: This user has a  plan and can access premium content.
+
+**What agent forgot to execute**
+-   The agent ran a script to update the database with new Cambridge content but did not visually verify the changes on the frontend with screenshots. This is the most critical next step.
+-   The user's request also included check the answer key and explanations, which has not been started yet.</analysis>
