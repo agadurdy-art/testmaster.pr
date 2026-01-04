@@ -6319,6 +6319,98 @@ async def reseed_tests(admin_key: str = None):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+async def seed_reading_test_2_inline():
+    """Inline seed for Reading Test 2 with summary_completion_block - runs on startup"""
+    try:
+        # Delete old Reading Test 2 if exists
+        await db.tests.delete_one({"title": "Academic Reading Practice Test 2"})
+        
+        reading_test_2 = {
+            "id": str(uuid.uuid4()),
+            "title": "Academic Reading Practice Test 2",
+            "test_type": "reading",
+            "duration": 60,
+            "passages": [
+                {"id": 1, "title": "The Industrial Revolution in Britain", "text": "The Industrial Revolution, which took place from the 18th to 19th centuries, was a period during which predominantly agrarian, rural societies in Europe and America became industrial and urban. Prior to the Industrial Revolution, which began in Britain in the late 1700s, manufacturing was often done in people's homes, using hand tools or basic machines. Industrialization marked a shift to powered, special-purpose machinery, factories and mass production. The iron and textile industries, along with the development of the steam engine, played central roles in the Industrial Revolution."},
+                {"id": 2, "title": "Athletes and Stress", "text": "Professional athletes face unique psychological challenges that can significantly impact their performance. The pressure to perform at the highest level, combined with public scrutiny and the physical demands of their sport, creates a complex stress environment. Research has shown that athletes who develop effective coping strategies tend to perform better under pressure. These strategies include visualization techniques, mindfulness practices, and working with sports psychologists."},
+                {"id": 3, "title": "An inquiry into the existence of the gifted child", "text": "The question of whether some children are born with exceptional intellectual abilities has long fascinated researchers and educators alike. While some argue that giftedness is primarily innate, others contend that environmental factors and deliberate practice play crucial roles in developing exceptional abilities. The debate continues to shape educational policies and practices around the world."}
+            ],
+            "questions": [
+                {"id": 1, "passage": 1, "type": "sentence_completion", "question": "The Industrial Revolution took place from the__(1)__ to 19th centuries."},
+                {"id": 2, "passage": 1, "type": "sentence_completion", "question": "Before the revolution, societies were predominantly__(2)__ and rural."},
+                {"id": 3, "passage": 1, "type": "sentence_completion", "question": "Manufacturing was often done in people's__(3)__."},
+                {"id": 4, "passage": 1, "type": "true_false_notgiven", "question": "The Industrial Revolution began in America."},
+                {"id": 5, "passage": 1, "type": "true_false_notgiven", "question": "The steam engine played a central role in the Industrial Revolution."},
+                {"id": 6, "passage": 1, "type": "true_false_notgiven", "question": "The textile industry was not important during this period."},
+                {"id": 7, "passage": 1, "type": "true_false_notgiven", "question": "Industrialization led to mass production."},
+                {"id": 8, "passage": 1, "type": "multiple_choice", "question": "Where did the Industrial Revolution begin?", "options": ["A) America", "B) Britain", "C) France", "D) Germany"]},
+                {"id": 9, "passage": 1, "type": "multiple_choice", "question": "What replaced hand tools?", "options": ["A) Better hand tools", "B) Powered machinery", "C) Animal power", "D) Wind power"]},
+                {"id": 10, "passage": 1, "type": "sentence_completion", "question": "The iron and__(10)__ industries were central to the revolution."},
+                {"id": 11, "passage": 1, "type": "sentence_completion", "question": "Industrialization marked a shift to__(11)__ production."},
+                {"id": 12, "passage": 1, "type": "true_false_notgiven", "question": "Basic machines were used before the Industrial Revolution."},
+                {"id": 13, "passage": 1, "type": "true_false_notgiven", "question": "The revolution only affected Britain."},
+                {"id": 14, "passage": 2, "type": "matching_information", "question": "Which aspect discusses mental challenges?", "options": ["A) Physical demands", "B) Psychological challenges", "C) Financial issues", "D) Family problems"]},
+                {"id": 15, "passage": 2, "type": "matching_information", "question": "What helps athletes perform better?", "options": ["A) More training", "B) Better equipment", "C) Coping strategies", "D) Higher salaries"]},
+                {"id": 16, "passage": 2, "type": "matching_information", "question": "What creates stress for athletes?", "options": ["A) Only physical demands", "B) Only public scrutiny", "C) Combination of pressures", "D) Lack of talent"]},
+                {"id": 17, "passage": 2, "type": "true_false_notgiven", "question": "All athletes handle stress the same way."},
+                {"id": 18, "passage": 2, "type": "true_false_notgiven", "question": "Visualization is one coping strategy used by athletes."},
+                {"id": 19, "passage": 2, "type": "true_false_notgiven", "question": "Sports psychologists can help athletes."},
+                {"id": 20, "passage": 2, "type": "true_false_notgiven", "question": "Public scrutiny has no effect on athletes."},
+                {"id": 21, "passage": 2, "type": "multiple_choice", "question": "What type of challenges do athletes face?", "options": ["A) Only physical", "B) Only mental", "C) Both physical and psychological", "D) Neither"]},
+                {"id": 22, "passage": 2, "type": "multiple_choice", "question": "What practice helps with stress?", "options": ["A) Avoiding competition", "B) Mindfulness", "C) Ignoring pressure", "D) Working alone"]},
+                {"id": 23, "passage": 2, "type": "sentence_completion", "question": "Athletes face__(23)__ challenges."},
+                {"id": 24, "passage": 2, "type": "sentence_completion", "question": "Research shows that__(24)__ strategies help performance."},
+                {"id": 25, "passage": 2, "type": "sentence_completion", "question": "Athletes work with sports__(25)__."},
+                {"id": 26, "passage": 2, "type": "sentence_completion", "question": "The pressure to__(26)__ at the highest level creates stress."},
+                {"id": "27-32", "passage": 3, "type": "summary_completion_block", 
+                 "title": "Maryam Mirzakhani",
+                 "summary_text": "Maryam Mirzakhani is regarded as **27** .................. in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little **28** .................. for her as a child and in fact her performance was below average until she was **29** .................. by a difficult puzzle that one of her siblings showed her.\n\nLater, as a professional mathematician, she had an inquiring mind and proved herself to be **30** .................. when things did not go smoothly. She said she got the greatest **31** .................. from making ground-breaking discoveries and in fact she was responsible for some extremely **32** .................. mathematical studies.",
+                 "blanks": [27, 28, 29, 30, 31, 32],
+                 "options": ["A) appeal", "B) determined", "C) intrigued", "D) single", "E) achievement", "F) devoted", "G) involved", "H) unique", "I) innovative", "J) satisfaction", "K) intent"]},
+                {"id": 33, "passage": 3, "type": "yes_no_notgiven", "question": "Many people who ended up winning prestigious intellectual prizes only reached an average standard when young."},
+                {"id": 34, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein's failures as a young man were due to his lack of confidence."},
+                {"id": 35, "passage": 3, "type": "yes_no_notgiven", "question": "It is difficult to reach agreement on whether some children are actually born gifted."},
+                {"id": 36, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein was upset by the public's view of his life's work."},
+                {"id": 37, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein put his success down to the speed at which he dealt with scientific questions."},
+                {"id": 38, "passage": 3, "type": "multiple_choice", "question": "What does Eyre believe is needed for children to equal 'gifted' standards?", "options": ["A) Natural talent", "B) Dedicated practice and support", "C) High IQ scores", "D) Early education"]},
+                {"id": 39, "passage": 3, "type": "multiple_choice", "question": "What is the result of Ericsson's research?", "options": ["A) Talent is innate", "B) Practice is key to expertise", "C) Genetics determine success", "D) Age is the key factor"]},
+                {"id": 40, "passage": 3, "type": "multiple_choice", "question": "What is the main conclusion of the passage?", "options": ["A) Gifted children are born, not made", "B) The nature vs nurture debate continues", "C) Environment is everything", "D) Testing is unreliable"]}
+            ],
+            "answer_key": [
+                {"question_id": 1, "answer": "18th"},
+                {"question_id": 2, "answer": "agrarian"},
+                {"question_id": 3, "answer": "homes"},
+                {"question_id": 4, "answer": "False"},
+                {"question_id": 5, "answer": "True"},
+                {"question_id": 6, "answer": "False"},
+                {"question_id": 7, "answer": "True"},
+                {"question_id": 8, "answer": "B"},
+                {"question_id": 9, "answer": "B"},
+                {"question_id": 10, "answer": "textile"},
+                {"question_id": 11, "answer": "mass"},
+                {"question_id": 12, "answer": "True"},
+                {"question_id": 13, "answer": "False"},
+                {"question_id": 27, "answer": "H"},
+                {"question_id": 28, "answer": "A"},
+                {"question_id": 29, "answer": "C"},
+                {"question_id": 30, "answer": "B"},
+                {"question_id": 31, "answer": "J"},
+                {"question_id": 32, "answer": "I"},
+                {"question_id": 33, "answer": "Yes"},
+                {"question_id": 34, "answer": "Not Given"},
+                {"question_id": 35, "answer": "Yes"},
+                {"question_id": 38, "answer": "B"},
+                {"question_id": 39, "answer": "B"},
+                {"question_id": 40, "answer": "B"}
+            ]
+        }
+        
+        await db.tests.insert_one(reading_test_2)
+        logger.info("✅ STARTUP: Reading Test 2 with summary_completion_block seeded inline")
+    except Exception as e:
+        logger.error(f"Inline seed error: {e}")
+
+
 @app.on_event("startup")
 async def startup_event():
     """Seed vocab grammar lessons and beginner english lessons if they don't exist"""
