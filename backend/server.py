@@ -6320,44 +6320,26 @@ async def reseed_tests(admin_key: str = None):
 
 
 async def seed_reading_test_2_inline():
-    """Inline seed for Reading Test 2 with summary_completion_block - runs on startup"""
+    """Import and run seed_data.py async function for Reading Test 2"""
     try:
-        # Delete old Reading Test 2 if exists
-        await db.tests.delete_one({"title": "Academic Reading Practice Test 2"})
+        # Import the full seed data with complete passages
+        from seed_data import reading_test_2
         
-        reading_test_2 = {
-            "id": str(uuid.uuid4()),
-            "title": "Academic Reading Practice Test 2",
-            "test_type": "reading",
-            "duration": 60,
-            "passages": [
-                {"id": 1, "title": "The Industrial Revolution in Britain", "text": "The Industrial Revolution, which took place from the 18th to 19th centuries, was a period during which predominantly agrarian, rural societies in Europe and America became industrial and urban. Prior to the Industrial Revolution, which began in Britain in the late 1700s, manufacturing was often done in people's homes, using hand tools or basic machines. Industrialization marked a shift to powered, special-purpose machinery, factories and mass production. The iron and textile industries, along with the development of the steam engine, played central roles in the Industrial Revolution."},
-                {"id": 2, "title": "Athletes and Stress", "text": "Professional athletes face unique psychological challenges that can significantly impact their performance. The pressure to perform at the highest level, combined with public scrutiny and the physical demands of their sport, creates a complex stress environment. Research has shown that athletes who develop effective coping strategies tend to perform better under pressure. These strategies include visualization techniques, mindfulness practices, and working with sports psychologists."},
-                {"id": 3, "title": "An inquiry into the existence of the gifted child", "text": "The question of whether some children are born with exceptional intellectual abilities has long fascinated researchers and educators alike. While some argue that giftedness is primarily innate, others contend that environmental factors and deliberate practice play crucial roles in developing exceptional abilities. The debate continues to shape educational policies and practices around the world."}
-            ],
-            "questions": [
-                {"id": 1, "passage": 1, "type": "sentence_completion", "question": "The Industrial Revolution took place from the__(1)__ to 19th centuries."},
-                {"id": 2, "passage": 1, "type": "sentence_completion", "question": "Before the revolution, societies were predominantly__(2)__ and rural."},
-                {"id": 3, "passage": 1, "type": "sentence_completion", "question": "Manufacturing was often done in people's__(3)__."},
-                {"id": 4, "passage": 1, "type": "true_false_notgiven", "question": "The Industrial Revolution began in America."},
-                {"id": 5, "passage": 1, "type": "true_false_notgiven", "question": "The steam engine played a central role in the Industrial Revolution."},
-                {"id": 6, "passage": 1, "type": "true_false_notgiven", "question": "The textile industry was not important during this period."},
-                {"id": 7, "passage": 1, "type": "true_false_notgiven", "question": "Industrialization led to mass production."},
-                {"id": 8, "passage": 1, "type": "multiple_choice", "question": "Where did the Industrial Revolution begin?", "options": ["A) America", "B) Britain", "C) France", "D) Germany"]},
-                {"id": 9, "passage": 1, "type": "multiple_choice", "question": "What replaced hand tools?", "options": ["A) Better hand tools", "B) Powered machinery", "C) Animal power", "D) Wind power"]},
-                {"id": 10, "passage": 1, "type": "sentence_completion", "question": "The iron and__(10)__ industries were central to the revolution."},
-                {"id": 11, "passage": 1, "type": "sentence_completion", "question": "Industrialization marked a shift to__(11)__ production."},
-                {"id": 12, "passage": 1, "type": "true_false_notgiven", "question": "Basic machines were used before the Industrial Revolution."},
-                {"id": 13, "passage": 1, "type": "true_false_notgiven", "question": "The revolution only affected Britain."},
-                {"id": 14, "passage": 2, "type": "matching_information", "question": "Which aspect discusses mental challenges?", "options": ["A) Physical demands", "B) Psychological challenges", "C) Financial issues", "D) Family problems"]},
-                {"id": 15, "passage": 2, "type": "matching_information", "question": "What helps athletes perform better?", "options": ["A) More training", "B) Better equipment", "C) Coping strategies", "D) Higher salaries"]},
-                {"id": 16, "passage": 2, "type": "matching_information", "question": "What creates stress for athletes?", "options": ["A) Only physical demands", "B) Only public scrutiny", "C) Combination of pressures", "D) Lack of talent"]},
-                {"id": 17, "passage": 2, "type": "true_false_notgiven", "question": "All athletes handle stress the same way."},
-                {"id": 18, "passage": 2, "type": "true_false_notgiven", "question": "Visualization is one coping strategy used by athletes."},
-                {"id": 19, "passage": 2, "type": "true_false_notgiven", "question": "Sports psychologists can help athletes."},
-                {"id": 20, "passage": 2, "type": "true_false_notgiven", "question": "Public scrutiny has no effect on athletes."},
-                {"id": 21, "passage": 2, "type": "multiple_choice", "question": "What type of challenges do athletes face?", "options": ["A) Only physical", "B) Only mental", "C) Both physical and psychological", "D) Neither"]},
-                {"id": 22, "passage": 2, "type": "multiple_choice", "question": "What practice helps with stress?", "options": ["A) Avoiding competition", "B) Mindfulness", "C) Ignoring pressure", "D) Working alone"]},
+        # Delete old and insert new
+        await db.tests.delete_one({"title": "Academic Reading Practice Test 2"})
+        await db.tests.insert_one(reading_test_2)
+        logger.info("✅ STARTUP: Reading Test 2 with full passages seeded from seed_data.py")
+    except ImportError as e:
+        logger.error(f"Could not import seed_data: {e}")
+        # Fallback: run subprocess
+        import subprocess
+        result = subprocess.run(["python", "seed_data.py"], cwd="/app/backend", capture_output=True, text=True, timeout=120)
+        if result.returncode == 0:
+            logger.info("✅ STARTUP: Fallback seed_data.py executed successfully")
+        else:
+            logger.error(f"Fallback seed failed: {result.stderr}")
+    except Exception as e:
+        logger.error(f"Inline seed error: {e}")
                 {"id": 23, "passage": 2, "type": "sentence_completion", "question": "Athletes face__(23)__ challenges."},
                 {"id": 24, "passage": 2, "type": "sentence_completion", "question": "Research shows that__(24)__ strategies help performance."},
                 {"id": 25, "passage": 2, "type": "sentence_completion", "question": "Athletes work with sports__(25)__."},
