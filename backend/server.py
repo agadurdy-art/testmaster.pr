@@ -6377,9 +6377,6 @@ async def startup_event():
         except Exception as e:
             logger.error(f"AUTO-SYNC failed: {e}")
         
-        # Legacy checks (kept for backwards compatibility)
-        tests_count = await db.tests.count_documents({})
-        
         # Seed learning platform levels if not present
         learning_levels_count = await db.learning_levels.count_documents({})
         if learning_levels_count == 0:
