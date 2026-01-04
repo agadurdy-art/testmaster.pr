@@ -5,6 +5,13 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 ## Latest Update (January 4, 2025)
 
+### ✅ Writing Test Visuals - Side-by-Side Maps
+- **Issue**: Writing Test 1 and Test 2 were showing the same visual
+- **Fix**: 
+  - Test 1: Line graph (Melbourne activities 2000-2020)
+  - Test 2: Side-by-side map comparison (Porth Harbour 2000 vs today)
+- **New Feature**: `visual_data.type: 'side_by_side_images'` renders two images with titles
+
 ### ✅ Reading & Listening Tests - IELTS 17 Format Complete
 **Issues Fixed**:
 1. Q27-32 Summary Completion was showing as duplicate separate questions
@@ -22,6 +29,7 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
   - Passage 3: Summary Completion Block (Q27-32), YES/NO/NOT GIVEN (Q33-37), Multiple Choice (Q38-40)
 - Listening Test 1 & 2: All 40 questions per test
   - Part 1-4 with audio and Note/Form Completion questions
+- Writing Test 1 & 2: Different Task 1 visuals (graph vs maps)
 
 ## Core Requirements
 1. **Authentic Content**: All test content extracted directly from Cambridge IELTS PDFs
