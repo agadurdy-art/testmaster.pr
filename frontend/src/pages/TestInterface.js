@@ -865,6 +865,10 @@ function ElevenLabsExaminer() {
             {(() => {
               // Calculate total questions accounting for spans
               const actualTotalQuestions = test.questions?.reduce((total, q) => {
+                // summary_completion_block has multiple blanks
+                if (q.type === 'summary_completion_block' && q.blanks) {
+                  return total + q.blanks.length;
+                }
                 const span = (q.type === 'multiple_choice_multi' && q.answer_count) ? q.answer_count : 1;
                 return total + span;
               }, 0) || 40;
