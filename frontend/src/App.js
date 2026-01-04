@@ -13,6 +13,7 @@ import CourseDetail from './pages/CourseDetail';
 import Profile from './pages/Profile';
 import ContentAdmin from './pages/ContentAdmin';
 import AdminPanel from './pages/AdminPanel';
+import AdminFeedback from './pages/AdminFeedback';
 import PricingPage from './pages/PricingPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
