@@ -6370,12 +6370,15 @@ async def startup_event():
             await db.advanced_mastery_modules.insert_many(ADVANCED_MODULES)
             logger.info(f"✅ Advanced mastery reseeded: {len(ADVANCED_MODULES)} modules")
         
-        # ========== AUTO-SYNC: Ensure database is in sync ==========
+        # ========== FULL DATABASE SYNC - HER STARTUP'TA TÜM VERİYİ SENKRONIZE ET ==========
         try:
-            from auto_sync import run_auto_sync
-            await run_auto_sync(db)
+            from full_sync import full_database_sync
+            await full_database_sync(db)
         except Exception as e:
-            logger.error(f"AUTO-SYNC failed: {e}")
+            logger.error(f"FULL SYNC FAILED: {e}")
+            # Fallback: En azından kritik verileri sync et
+            import subprocess
+            subprocess.run(["python", "seed_data.py"], cwd="/app/backend", timeout=300)
         
         # Seed learning platform levels if not present
         learning_levels_count = await db.learning_levels.count_documents({})
