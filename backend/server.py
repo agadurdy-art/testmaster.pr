@@ -6320,26 +6320,25 @@ async def reseed_tests(admin_key: str = None):
 
 
 async def seed_reading_test_2_inline():
-    """Import and run seed_data.py async function for Reading Test 2"""
+    """Run full seed_data.py to ensure all tests have complete data"""
     try:
-        # Import the full seed data with complete passages
-        from seed_data import reading_test_2
-        
-        # Delete old and insert new
-        await db.tests.delete_one({"title": "Academic Reading Practice Test 2"})
-        await db.tests.insert_one(reading_test_2)
-        logger.info("✅ STARTUP: Reading Test 2 with full passages seeded from seed_data.py")
-    except ImportError as e:
-        logger.error(f"Could not import seed_data: {e}")
-        # Fallback: run subprocess
         import subprocess
-        result = subprocess.run(["python", "seed_data.py"], cwd="/app/backend", capture_output=True, text=True, timeout=120)
+        logger.info("🌱 Running full seed_data.py for complete test data...")
+        result = subprocess.run(
+            ["python", "seed_data.py"], 
+            cwd="/app/backend", 
+            capture_output=True, 
+            text=True, 
+            timeout=180,
+            env={**os.environ, "PYTHONPATH": "/app/backend"}
+        )
         if result.returncode == 0:
-            logger.info("✅ STARTUP: Fallback seed_data.py executed successfully")
+            logger.info("✅ STARTUP: seed_data.py executed successfully with full passages")
+            logger.info(f"Output: {result.stdout[:500]}")
         else:
-            logger.error(f"Fallback seed failed: {result.stderr}")
+            logger.error(f"seed_data.py failed: {result.stderr}")
     except Exception as e:
-        logger.error(f"Inline seed error: {e}")
+        logger.error(f"Seed error: {e}")
 
 
 @app.on_event("startup")
