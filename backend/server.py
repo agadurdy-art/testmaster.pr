@@ -6370,25 +6370,15 @@ async def startup_event():
             await db.advanced_mastery_modules.insert_many(ADVANCED_MODULES)
             logger.info(f"✅ Advanced mastery reseeded: {len(ADVANCED_MODULES)} modules")
         
-        # Seed tests - Check for proper passage content (>1000 chars) AND summary_completion_block
+        # ========== AUTO-SYNC: Ensure database is in sync ==========
+        try:
+            from auto_sync import run_auto_sync
+            await run_auto_sync(db)
+        except Exception as e:
+            logger.error(f"AUTO-SYNC failed: {e}")
+        
+        # Legacy checks (kept for backwards compatibility)
         tests_count = await db.tests.count_documents({})
-        has_new_format = await db.tests.count_documents({"questions.type": "summary_completion_block"})
-        
-        # Check if passages have proper content
-        reading_test_2 = await db.tests.find_one({"title": "Academic Reading Practice Test 2"})
-        passages_ok = False
-        if reading_test_2:
-            passages = reading_test_2.get("passages", [])
-            if passages and all(len(p.get("text", "")) > 1000 for p in passages):
-                passages_ok = True
-        
-        if tests_count == 0 or has_new_format == 0 or not passages_ok:
-            logger.info(f"Tests need update (count={tests_count}, new_format={has_new_format}, passages_ok={passages_ok}), running seed...")
-            await seed_reading_test_2_inline()
-        else:
-            logger.info(f"Found {tests_count} tests with new format and proper passages in database")
-            # Fix combined question IDs if needed (Q20-21 issue)
-            await fix_combined_question_ids()
         
         # Seed learning platform levels if not present
         learning_levels_count = await db.learning_levels.count_documents({})
