@@ -246,7 +246,12 @@ export default function Dashboard({ user, onLogout }) {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
               <Trophy className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent hidden sm:block">IELTS Ace</h1>
+            <div className="hidden sm:block">
+              <div className="flex items-center gap-2">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">IELTS Ace</h1>
+                <span className="px-2 py-0.5 bg-amber-100 text-amber-700 text-[10px] font-bold rounded-full">🧪 Beta</span>
+              </div>
+            </div>
           </div>
           
           <nav className="flex items-center space-x-2">
