@@ -6320,25 +6320,8 @@ async def reseed_tests(admin_key: str = None):
 
 
 async def seed_reading_test_2_inline():
-    """Run full seed_data.py to ensure all tests have complete data"""
-    try:
-        import subprocess
-        logger.info("🌱 Running full seed_data.py for complete test data...")
-        result = subprocess.run(
-            ["python", "seed_data.py"], 
-            cwd="/app/backend", 
-            capture_output=True, 
-            text=True, 
-            timeout=180,
-            env={**os.environ, "PYTHONPATH": "/app/backend"}
-        )
-        if result.returncode == 0:
-            logger.info("✅ STARTUP: seed_data.py executed successfully with full passages")
-            logger.info(f"Output: {result.stdout[:500]}")
-        else:
-            logger.error(f"seed_data.py failed: {result.stderr}")
-    except Exception as e:
-        logger.error(f"Seed error: {e}")
+    """DEPRECATED - Use auto_sync.run_auto_sync() instead"""
+    pass
 
 
 @app.on_event("startup")
