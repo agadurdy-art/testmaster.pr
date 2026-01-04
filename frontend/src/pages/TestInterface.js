@@ -935,7 +935,30 @@ function ElevenLabsExaminer() {
                   <div className="flex gap-1">
                     {[1, 2, 3].map((passageNum) => {
                       const passageQuestions = test.questions?.filter(q => q.passage === passageNum) || [];
-                      const answeredCount = passageQuestions.filter(q => answers[q.id]).length;
+                      
+                      // Calculate actual question count including block blanks
+                      const actualQuestionCount = passageQuestions.reduce((total, q) => {
+                        if (q.type === 'summary_completion_block' && q.blanks) {
+                          return total + q.blanks.length;
+                        }
+                        if (q.type === 'multiple_choice_multi' && q.answer_count) {
+                          return total + q.answer_count;
+                        }
+                        return total + 1;
+                      }, 0);
+                      
+                      // Calculate answered count including block blanks
+                      const answeredCount = passageQuestions.reduce((count, q) => {
+                        if (q.type === 'summary_completion_block' && q.blanks) {
+                          return count + q.blanks.filter(blankNum => answers[blankNum]).length;
+                        }
+                        if (q.type === 'multiple_choice_multi' && q.answer_count) {
+                          const ans = answers[q.id];
+                          return count + (Array.isArray(ans) ? Math.min(ans.length, q.answer_count) : (ans ? 1 : 0));
+                        }
+                        return count + (answers[q.id] ? 1 : 0);
+                      }, 0);
+                      
                       return (
                         <button
                           key={passageNum}
@@ -943,14 +966,14 @@ function ElevenLabsExaminer() {
                           className={`flex-1 px-2 py-2 rounded-lg text-xs font-semibold transition-colors ${
                             currentPassage === passageNum
                               ? 'bg-sky-500 text-white'
-                              : answeredCount === passageQuestions.length && passageQuestions.length > 0
+                              : answeredCount === actualQuestionCount && actualQuestionCount > 0
                               ? 'bg-green-100 text-green-700 hover:bg-green-200'
                               : 'bg-white text-gray-600 hover:bg-gray-100 border'
                           }`}
                         >
                           <div>P{passageNum}</div>
                           <div className="text-[10px] opacity-75">
-                            {answeredCount}/{passageQuestions.length}
+                            {answeredCount}/{actualQuestionCount}
                           </div>
                         </button>
                       );
