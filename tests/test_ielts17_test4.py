@@ -6,7 +6,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://lesson-preview-hub.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://syncflow-6.preview.emergentagent.com')
 
 class TestIELTS17Test4API:
     """Test Cambridge IELTS 17 Test 4 API endpoints"""
