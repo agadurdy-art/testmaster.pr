@@ -1045,7 +1045,12 @@ function ElevenLabsExaminer() {
                       
                       return passageQuestions.map((q, idx) => {
                         // Get span for this question
-                        const questionSpan = (q.type === 'multiple_choice_multi' && q.answer_count) ? q.answer_count : 1;
+                        let questionSpan = 1;
+                        if (q.type === 'multiple_choice_multi' && q.answer_count) {
+                          questionSpan = q.answer_count;
+                        } else if (q.type === 'summary_completion_block' && q.blanks) {
+                          questionSpan = q.blanks.length;
+                        }
                         const questionNumber = runningQuestionNumber;
                         
                         // Increment for next question
