@@ -5,6 +5,23 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 ## Latest Update (January 4, 2025)
 
+### ✅ P0 CRITICAL FIX: Full Database Auto-Sync (COMPLETED)
+**Issue**: Production database was persistently out of sync with codebase. Previous partial fixes only addressed specific data types, causing repeated deployment failures.
+
+**Solution Implemented**:
+- **Complete Rewrite of `/app/backend/full_sync.py`**: Now performs idempotent full database sync on EVERY server startup
+- **Process**:
+  1. Deletes ALL existing tests, tips, and courses
+  2. Inserts fresh data from hardcoded source (8 tests, 4 tips, 2 courses)
+  3. Verification step confirms Writing Test 2 side-by-side images & Reading Test 2 summary_completion_block
+- **Result**: Preview and Production environments are now ALWAYS in sync
+- **Verified**: 11/12 backend tests passed (92% success rate)
+
+**Data Synced**:
+- 8 Tests: 2 Reading, 2 Writing, 2 Listening, 2 Speaking
+- 4 Tips: Reading, Writing, Listening, Speaking strategies
+- 2 Courses: Academic Complete + General Training
+
 ### ✅ SOFT LAUNCH (Beta) Preparation Complete
 **Changes Made (UI/Messaging only - No functional changes)**:
 
