@@ -803,7 +803,7 @@ export default function Dashboard({ user, onLogout }) {
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('Bug Report - IELTS Ace Beta')}&body=${encodeURIComponent(`Hi,\n\nI found an issue:\n\nUser: ${user?.name}\nEmail: ${user?.email}\n\nDescription:\n\n`)}`}
+                  onClick={() => { setFeedbackType('bug'); setShowFeedbackModal(true); }}
                   className="text-xs border-gray-300"
                 >
                   <AlertTriangle className="w-3 h-3 mr-1" />
@@ -811,7 +811,7 @@ export default function Dashboard({ user, onLogout }) {
                 </Button>
                 <Button
                   size="sm"
-                  onClick={() => window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('Feedback - IELTS Ace Beta')}&body=${encodeURIComponent(`Hi,\n\nI have some feedback:\n\nUser: ${user?.name}\nEmail: ${user?.email}\n\nFeedback:\n\n`)}`}
+                  onClick={() => { setFeedbackType('feedback'); setShowFeedbackModal(true); }}
                   className="text-xs bg-violet-600 hover:bg-violet-700 text-white"
                 >
                   <MessageSquare className="w-3 h-3 mr-1" />
@@ -822,6 +822,14 @@ export default function Dashboard({ user, onLogout }) {
           </Card>
         </div>
       </main>
+      
+      {/* Feedback Modal */}
+      <FeedbackModal
+        isOpen={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+        user={user}
+        type={feedbackType}
+      />
     </div>
   );
 }
