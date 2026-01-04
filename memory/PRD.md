@@ -3,6 +3,17 @@
 ## Original Problem Statement
 Build a comprehensive IELTS practice application using authentic Cambridge IELTS materials (Books 16, 17, 18, 19) with a computer-delivered test interface that includes all standard IELTS test features. The results page must be the final link in the learning chain - user takes test → sees results → understands weaknesses → gets directed to relevant courses.
 
+## Latest Update (January 4, 2025)
+
+### ✅ Reading & Listening Test Questions Fixed - IELTS 17 Format
+- **Issue**: Reading Test 2 questions were broken - showing duplicate/incorrect questions (Q28, Q29 repeating)
+- **Fix**: Database reseeded with proper IELTS 17 format questions
+- **Frontend Updated**: Summary completion with word bank now renders correctly with clickable options (A-K)
+- **Verified Working**:
+  - Reading Test 1 & 2: All 3 passages each with correct question types
+  - Listening Test 1 & 2: All 4 parts with audio and questions
+  - Question types: true_false_notgiven, yes_no_notgiven, sentence_completion, summary_completion with word bank, matching_information, multiple_choice, multiple_choice_multi
+
 ## Core Requirements
 1. **Authentic Content**: All test content extracted directly from Cambridge IELTS PDFs
 2. **Full Test Experience**: Computer-delivered interface with timers, audio, and all question types
