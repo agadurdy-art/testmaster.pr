@@ -462,22 +462,14 @@ def get_writing_test_1():
                 "task_number": 1,
                 "task": "task1",
                 "type": "line_graph",
-                "question": """The graph below shows the average carbon dioxide (CO2) emissions per person in the United Kingdom, Sweden, Italy and Portugal between 1967 and 2007.
+                "question": """The graph below shows the number of participants taking part in five different activities at one Australian community centre between 2000 and 2020.
 
 Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
 
 Write at least 150 words.""",
                 "visual_data": {
-                    "type": "line_graph",
-                    "title": "Average CO2 emissions per person, 1967-2007",
-                    "x_axis": "Year",
-                    "y_axis": "Metric tonnes",
-                    "data": {
-                        "UK": {"1967": 11.0, "1977": 10.5, "1987": 10.0, "1997": 9.5, "2007": 9.0},
-                        "Sweden": {"1967": 9.0, "1977": 10.5, "1987": 8.0, "1997": 7.0, "2007": 6.0},
-                        "Italy": {"1967": 4.0, "1977": 6.0, "1987": 7.0, "1997": 8.0, "2007": 8.0},
-                        "Portugal": {"1967": 1.5, "1977": 2.5, "1987": 3.5, "1997": 5.5, "2007": 5.5}
-                    }
+                    "type": "image",
+                    "image_url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/1uka5mxg_Screenshot%202026-01-05%20at%2001.14.15.png"
                 },
                 "word_limit": 150,
                 "time_suggestion": 20
