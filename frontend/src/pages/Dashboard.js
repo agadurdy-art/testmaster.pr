@@ -19,7 +19,7 @@ import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import FeedbackModal from '../components/FeedbackModal';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
-const SUPPORT_EMAIL = 'ieltsace@testmaster.pro';
+const SUPPORT_EMAIL = 'support@testmaster.pro';
 
 export default function Dashboard({ user, onLogout }) {
   const navigate = useNavigate();
