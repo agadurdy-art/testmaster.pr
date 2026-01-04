@@ -6370,12 +6370,8 @@ async def startup_event():
         has_new_format = await db.tests.count_documents({"questions.type": "summary_completion_block"})
         
         if tests_count == 0 or has_new_format == 0:
-            logger.info(f"Tests need update (count={tests_count}, new_format={has_new_format}), running seed...")
-            import subprocess
-            result = subprocess.run(["python", "seed_data.py"], cwd="/app/backend", capture_output=True, text=True)
-            logger.info(f"Tests seed output: {result.stdout}")
-            if result.returncode != 0:
-                logger.error(f"Tests seed error: {result.stderr}")
+            logger.info(f"Tests need update (count={tests_count}, new_format={has_new_format}), seeding inline...")
+            await seed_reading_test_2_inline()
         else:
             logger.info(f"Found {tests_count} tests with new format in database")
             # Fix combined question IDs if needed (Q20-21 issue)
