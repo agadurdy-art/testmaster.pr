@@ -6238,20 +6238,82 @@ async def reseed_tests(admin_key: str = None):
         raise HTTPException(status_code=403, detail="Invalid admin key")
     
     try:
-        import subprocess
+        import uuid
         logger.info("🌱 Admin triggered reseed of tests...")
-        result = subprocess.run(
-            ["python", "seed_data.py"], 
-            cwd="/app/backend", 
-            capture_output=True, 
-            text=True,
-            timeout=120
-        )
-        logger.info(f"Seed output: {result.stdout}")
-        if result.returncode != 0:
-            logger.error(f"Seed error: {result.stderr}")
-            return {"success": False, "error": result.stderr}
-        return {"success": True, "message": "Tests reseeded successfully", "output": result.stdout[:500]}
+        
+        # Clear existing tests
+        await db.tests.delete_many({})
+        
+        # Reading Test 2 with summary_completion_block
+        reading_test_2 = {
+            "id": str(uuid.uuid4()),
+            "title": "Academic Reading Practice Test 2",
+            "test_type": "reading",
+            "duration": 60,
+            "passages": [
+                {"id": 1, "title": "The Industrial Revolution in Britain", "text": "The Industrial Revolution, which took place from the 18th to 19th centuries, was a period during which predominantly agrarian, rural societies in Europe and America became industrial and urban..."},
+                {"id": 2, "title": "Athletes and Stress", "text": "Professional athletes face unique psychological challenges that can significantly impact their performance..."},
+                {"id": 3, "title": "An inquiry into the existence of the gifted child", "text": "The question of whether some children are born with exceptional intellectual abilities has long fascinated researchers..."}
+            ],
+            "questions": [
+                # Passage 1 - Sentence Completion
+                {"id": 1, "passage": 1, "type": "sentence_completion", "question": "The__(1)__ century saw the beginning of the Industrial Revolution."},
+                {"id": 2, "passage": 1, "type": "sentence_completion", "question": "Before the revolution, most societies were__(2)__ and__(3)__."},
+                {"id": 3, "passage": 1, "type": "sentence_completion", "question": "The revolution began in__(4)__."},
+                {"id": 4, "passage": 1, "type": "true_false_notgiven", "question": "The Industrial Revolution only affected Europe."},
+                {"id": 5, "passage": 1, "type": "true_false_notgiven", "question": "Rural societies became urban during this period."},
+                {"id": 6, "passage": 1, "type": "true_false_notgiven", "question": "The revolution lasted for exactly 100 years."},
+                {"id": 7, "passage": 1, "type": "true_false_notgiven", "question": "Agriculture was the main economic activity before the revolution."},
+                {"id": 8, "passage": 1, "type": "multiple_choice", "question": "What was the main change during the Industrial Revolution?", "options": ["A) Agricultural to industrial", "B) Urban to rural", "C) Industrial to digital", "D) None of the above"]},
+                {"id": 9, "passage": 1, "type": "multiple_choice", "question": "Where did the revolution primarily occur?", "options": ["A) Asia", "B) Europe and America", "C) Africa", "D) Australia"]},
+                {"id": 10, "passage": 1, "type": "sentence_completion", "question": "The revolution transformed__(10)__ societies."},
+                {"id": 11, "passage": 1, "type": "sentence_completion", "question": "People moved from__(11)__ to__(12)__ areas."},
+                {"id": 12, "passage": 1, "type": "sentence_completion", "question": "New__(13)__ were developed during this time."},
+                {"id": 13, "passage": 1, "type": "true_false_notgiven", "question": "The Industrial Revolution had no impact on society."},
+                # Passage 2 - Matching Information
+                {"id": 14, "passage": 2, "type": "matching_information", "question": "Which paragraph mentions the psychological impact on athletes?", "options": ["A) Paragraph A", "B) Paragraph B", "C) Paragraph C", "D) Paragraph D"]},
+                {"id": 15, "passage": 2, "type": "matching_information", "question": "Which paragraph discusses coping mechanisms?", "options": ["A) Paragraph A", "B) Paragraph B", "C) Paragraph C", "D) Paragraph D"]},
+                {"id": 16, "passage": 2, "type": "matching_information", "question": "Which paragraph talks about performance anxiety?", "options": ["A) Paragraph A", "B) Paragraph B", "C) Paragraph C", "D) Paragraph D"]},
+                {"id": 17, "passage": 2, "type": "matching_information", "question": "Which paragraph mentions professional support?", "options": ["A) Paragraph A", "B) Paragraph B", "C) Paragraph C", "D) Paragraph D"]},
+                {"id": 18, "passage": 2, "type": "true_false_notgiven", "question": "All athletes experience the same level of stress."},
+                {"id": 19, "passage": 2, "type": "true_false_notgiven", "question": "Stress can negatively affect athletic performance."},
+                {"id": 20, "passage": 2, "type": "true_false_notgiven", "question": "Professional athletes never need psychological help."},
+                {"id": 21, "passage": 2, "type": "multiple_choice", "question": "What is the main topic of the passage?", "options": ["A) Physical training", "B) Psychological challenges", "C) Nutrition", "D) Equipment"]},
+                {"id": 22, "passage": 2, "type": "multiple_choice", "question": "How do athletes typically cope with stress?", "options": ["A) Ignoring it", "B) Various coping mechanisms", "C) Quitting sports", "D) Medication only"]},
+                {"id": 23, "passage": 2, "type": "sentence_completion", "question": "Athletes face__(23)__ challenges."},
+                {"id": 24, "passage": 2, "type": "sentence_completion", "question": "Performance can be affected by__(24)__."},
+                {"id": 25, "passage": 2, "type": "sentence_completion", "question": "Support from__(25)__ is important."},
+                {"id": 26, "passage": 2, "type": "sentence_completion", "question": "Coping__(26)__ vary among athletes."},
+                # Passage 3 - Summary Completion Block + Yes/No/NG + Multiple Choice
+                {"id": "27-32", "passage": 3, "type": "summary_completion_block", 
+                 "title": "Maryam Mirzakhani",
+                 "summary_text": "Maryam Mirzakhani is regarded as **27** .................. in the field of mathematics because she was the only female holder of the prestigious Fields Medal – a record that she retained at the time of her death. However, maths held little **28** .................. for her as a child and in fact her performance was below average until she was **29** .................. by a difficult puzzle that one of her siblings showed her.\n\nLater, as a professional mathematician, she had an inquiring mind and proved herself to be **30** .................. when things did not go smoothly. She said she got the greatest **31** .................. from making ground-breaking discoveries and in fact she was responsible for some extremely **32** .................. mathematical studies.",
+                 "blanks": [27, 28, 29, 30, 31, 32],
+                 "options": ["A) appeal", "B) determined", "C) intrigued", "D) single", "E) achievement", "F) devoted", "G) involved", "H) unique", "I) innovative", "J) satisfaction", "K) intent"]},
+                {"id": 33, "passage": 3, "type": "yes_no_notgiven", "question": "Many people who ended up winning prestigious intellectual prizes only reached an average standard when young."},
+                {"id": 34, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein's failures as a young man were due to his lack of confidence."},
+                {"id": 35, "passage": 3, "type": "yes_no_notgiven", "question": "It is difficult to reach agreement on whether some children are actually born gifted."},
+                {"id": 36, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein was upset by the public's view of his life's work."},
+                {"id": 37, "passage": 3, "type": "yes_no_notgiven", "question": "Einstein put his success down to the speed at which he dealt with scientific questions."},
+                {"id": 38, "passage": 3, "type": "multiple_choice", "question": "What does Eyre believe is needed for children to equal 'gifted' standards?", "options": ["A) Natural talent", "B) Dedicated practice and support", "C) High IQ scores", "D) Early education"]},
+                {"id": 39, "passage": 3, "type": "multiple_choice", "question": "What is the result of Ericsson's research?", "options": ["A) Talent is innate", "B) Practice makes perfect", "C) Genetics determine success", "D) Age is the key factor"]},
+                {"id": 40, "passage": 3, "type": "multiple_choice", "question": "What is the main conclusion of the passage?", "options": ["A) Gifted children are born, not made", "B) The debate continues", "C) Environment is everything", "D) Testing is unreliable"]}
+            ],
+            "answer_key": [
+                {"question_id": 1, "answer": "18th"},
+                {"question_id": 27, "answer": "H"},
+                {"question_id": 28, "answer": "A"},
+                {"question_id": 29, "answer": "C"},
+                {"question_id": 30, "answer": "B"},
+                {"question_id": 31, "answer": "J"},
+                {"question_id": 32, "answer": "I"}
+            ]
+        }
+        
+        await db.tests.insert_one(reading_test_2)
+        logger.info("✅ Reading Test 2 with summary_completion_block seeded")
+        
+        return {"success": True, "message": "Tests reseeded with summary_completion_block format"}
     except Exception as e:
         logger.error(f"Reseed error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
