@@ -274,6 +274,10 @@ export default function LandingPage({ onLogin, user, showLogin }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
+  // Feedback modal state
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackType, setFeedbackType] = useState('feedback');
+  
   // Update showAuth when showLogin prop changes
   useEffect(() => {
     if (showLogin) {
