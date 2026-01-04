@@ -1,17 +1,67 @@
 """
-AUTO SYNC MODULE
+AUTO SYNC MODULE - COMPLETE DATABASE SYNCHRONIZATION
 Ensures production database is always in sync with latest schema and data.
 Runs automatically on every backend startup.
+Covers ALL tests: Reading, Writing, Listening, Speaking
 """
 
 import asyncio
 import logging
 import uuid
 from datetime import datetime, timezone
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
 
 logger = logging.getLogger(__name__)
+
+# ============ WRITING TEST 2 DATA ============
+WRITING_TEST_2_DATA = {
+    "title": "Academic Writing Test 2",
+    "test_type": "writing",
+    "duration": 60,
+    "questions": [
+        {
+            "id": 1,
+            "task_number": 1,
+            "task": "task1",
+            "type": "map_comparison",
+            "question": """The plans below show a harbour in 2000 and how it looks today.
+
+Summarise the information by selecting and reporting the main features, and make comparisons where relevant.
+
+Write at least 150 words.""",
+            "visual_data": {
+                "type": "side_by_side_images",
+                "images": [
+                    {
+                        "title": "Porth Harbour (in 2000)",
+                        "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/csy5kx8j_Screenshot%202026-01-04%20at%2009.21.11.png"
+                    },
+                    {
+                        "title": "Porth Harbour (today)",
+                        "url": "https://customer-assets.emergentagent.com/job_lesson-preview-hub/artifacts/4he4nkvg_Screenshot%202026-01-04%20at%2009.21.19.png"
+                    }
+                ]
+            },
+            "word_limit": 150,
+            "time_suggestion": 20
+        },
+        {
+            "id": 2,
+            "task_number": 2,
+            "task": "task2",
+            "type": "essay",
+            "question": """The working week should be shorter and workers should have a longer weekend.
+
+Do you agree or disagree?
+
+Give reasons for your answer and include any relevant examples from your own knowledge or experience.
+
+Write at least 250 words.""",
+            "word_limit": 250,
+            "time_suggestion": 40
+        }
+    ],
+    "answer_key": []
+}
 
 # Full passage content for Reading Test 2
 PASSAGE_1_TEXT = """The Industrial Revolution, which took place from the 18th to 19th centuries, was a period during which predominantly agrarian, rural societies in Europe and America became industrial and urban. Prior to the Industrial Revolution, which began in Britain in the late 1700s, manufacturing was often done in people's homes, using hand tools or basic machines. Industrialization marked a shift to powered, special-purpose machinery, factories and mass production.
