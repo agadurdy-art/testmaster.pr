@@ -1029,6 +1029,79 @@ function ElevenLabsExaminer() {
                         const taskInfo = taskDescriptions[q.type] || { title: q.type?.replace(/_/g, ' '), instruction: 'Answer the following questions.' };
                         const isAnswered = !!answers[q.id];
                         
+                        // Special handling for summary_completion_block (Q27-32 style continuous paragraph)
+                        if (q.type === 'summary_completion_block') {
+                          return (
+                            <React.Fragment key={q.id}>
+                              {/* Task Header */}
+                              {showTaskHeader && (
+                                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                  <h4 className="font-bold text-blue-900 text-sm mb-1">
+                                    Questions {q.blanks?.[0] || '27'}-{q.blanks?.[q.blanks?.length - 1] || '32'}
+                                  </h4>
+                                  <p className="text-xs text-blue-700 leading-relaxed">
+                                    {taskInfo.instruction}
+                                  </p>
+                                </div>
+                              )}
+                              
+                              {/* Summary Block with Title */}
+                              <div className="p-4 bg-white rounded-lg border shadow-sm">
+                                {q.title && (
+                                  <h3 className="text-center font-bold text-gray-900 mb-4 text-lg">{q.title}</h3>
+                                )}
+                                
+                                {/* Summary Text with Blanks */}
+                                <div className="text-sm text-gray-800 leading-relaxed mb-4 space-y-3">
+                                  {q.summary_text?.split('\n\n').map((paragraph, pIdx) => (
+                                    <p key={pIdx}>
+                                      {paragraph.split(/(\*\*\d+\*\*)/).map((part, partIdx) => {
+                                        const match = part.match(/\*\*(\d+)\*\*/);
+                                        if (match) {
+                                          const blankNum = parseInt(match[1]);
+                                          const blankAnswer = answers[blankNum] || '';
+                                          return (
+                                            <span key={partIdx} className="inline-flex items-center mx-1">
+                                              <span className="font-bold text-sky-600">{blankNum}</span>
+                                              <select
+                                                value={blankAnswer}
+                                                onChange={(e) => handleAnswerChange(blankNum, e.target.value)}
+                                                className={`ml-1 px-2 py-0.5 border rounded text-xs ${
+                                                  blankAnswer ? 'bg-green-50 border-green-300' : 'bg-gray-50 border-gray-300'
+                                                }`}
+                                              >
+                                                <option value="">.......................</option>
+                                                {q.options?.map((opt, optIdx) => (
+                                                  <option key={optIdx} value={opt.split(')')[0].trim()}>
+                                                    {opt}
+                                                  </option>
+                                                ))}
+                                              </select>
+                                            </span>
+                                          );
+                                        }
+                                        return <span key={partIdx}>{part}</span>;
+                                      })}
+                                    </p>
+                                  ))}
+                                </div>
+                                
+                                {/* Word Bank */}
+                                <div className="border-t pt-3 mt-3">
+                                  <div className="grid grid-cols-3 gap-2 text-xs">
+                                    {q.options?.map((opt, optIdx) => (
+                                      <div key={optIdx} className="text-gray-700">
+                                        <span className="font-bold">{opt.split(')')[0]}</span>
+                                        {opt.split(')')[1]}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </React.Fragment>
+                          );
+                        }
+                        
                         return (
                           <React.Fragment key={q.id}>
                             {/* Task Header */}
