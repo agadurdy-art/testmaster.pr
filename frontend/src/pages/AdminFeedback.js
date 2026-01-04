@@ -21,7 +21,7 @@ export default function AdminFeedback({ user }) {
   const [selectedFeedback, setSelectedFeedback] = useState(null);
 
   // Check if user is admin
-  const isAdmin = user?.email?.includes('admin') || user?.role === 'admin' || user?.email === 'ieltsace@testmaster.pro';
+  const isAdmin = user?.role === 'admin' || user?.email === 'aga.durdy@gmail.com';
 
   useEffect(() => {
     if (!isAdmin) {
