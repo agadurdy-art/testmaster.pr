@@ -39,6 +39,10 @@ export default function Dashboard({ user, onLogout }) {
   const [showLockedModal, setShowLockedModal] = useState(false);
   const [lockedFeatureName, setLockedFeatureName] = useState('');
   
+  // Feedback modal state
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackType, setFeedbackType] = useState('feedback');
+  
   // Theme-aware class helpers
   const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-br from-slate-50 to-purple-50';
   const bgCard = isDark ? 'bg-gray-800 border-gray-700' : isNightShift ? 'bg-amber-100/50 border-amber-200' : 'bg-white border-gray-200';
