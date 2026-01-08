@@ -165,6 +165,41 @@ IELTS18_TEST2 = {
                     "question_range": "31-40",
                     "question_count": 10,
                     "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/917musbi_18%20section2-%20part4.mp3",
+                    "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+                    "visual": {
+                        "type": "notes",
+                        "title": "Pockets",
+                        "sections": [
+                            {
+                                "heading": "Reason for choice of subject",
+                                "items": [
+                                    "They are ___31___ but can be overlooked by consumers and designers."
+                                ]
+                            },
+                            {
+                                "heading": "Pockets in men's clothes",
+                                "items": [
+                                    "Men started to wear ___32___ in the 18th century.",
+                                    "A ___33___ sewed pockets into the lining of the garments.",
+                                    "The wearer could use the pockets for small items.",
+                                    "Bigger pockets might be made for men who belonged to a certain type of ___34___."
+                                ]
+                            },
+                            {
+                                "heading": "Pockets in women's clothes",
+                                "items": [
+                                    "Women's pockets were less ___35___ than men's.",
+                                    "Women were very concerned about pickpockets.",
+                                    "Pockets were produced in pairs using ___36___ to link them together.",
+                                    "Pockets hung from the women's ___37___ under skirts and petticoats.",
+                                    "Items such as ___38___ could be reached through a gap in the material.",
+                                    "Pockets, of various sizes, stayed inside clothing for many decades.",
+                                    "When dresses changed shape, hidden pockets had a negative effect on the ___39___ of women.",
+                                    "Bags called 'pouches' became popular, before women carried a ___40___."
+                                ]
+                            }
+                        ]
+                    },
                     "questions": [
                         {"number": 31, "type": "note_completion", "answer": "convenient"},
                         {"number": 32, "type": "note_completion", "answer": "suits"},
