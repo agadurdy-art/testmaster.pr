@@ -1040,6 +1040,35 @@ export default function CambridgeTestInterface() {
             </div>
           )}
 
+          {/* Table Visual (for Part 1 Job tables, etc.) */}
+          {currentPartData.table && (
+            <div className="bg-white rounded-lg border mb-4 overflow-hidden">
+              <h4 className="font-semibold text-gray-800 p-3 bg-slate-100 border-b">{currentPartData.table.title}</h4>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-50">
+                    <tr>
+                      {currentPartData.table.headers?.map((header, hIdx) => (
+                        <th key={hIdx} className="px-3 py-2 text-left font-medium text-gray-700 border-b">{header}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentPartData.table.rows?.map((row, rIdx) => (
+                      <tr key={rIdx} className="border-b hover:bg-gray-50">
+                        {row.cells?.map((cell, cIdx) => (
+                          <td key={cIdx} className="px-3 py-2 text-gray-700 align-top whitespace-pre-line">
+                            {cell.includes('___') ? renderGapFill(cell) : cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
           {/* Render questions in original order */}
           {currentPartData.questions?.map((q, qIdx) => {
             // Multiple Selection Questions (e.g., Q21-22)
