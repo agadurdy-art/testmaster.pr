@@ -1,6 +1,6 @@
 """
 Cambridge IELTS 18 - Test 2
-Complete test structure following Cambridge 17 format
+Complete test with answer keys
 """
 
 IELTS18_TEST2 = {
@@ -24,9 +24,17 @@ IELTS18_TEST2 = {
                     "context": "Conversation",
                     "question_types": ["note_completion"],
                     "audio_file": "AUDIO_PLACEHOLDER",
-                    "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
                     "questions": [
-                        {"number": i, "type": "note_completion", "answer": "TBD"} for i in range(1, 11)
+                        {"number": 1, "type": "note_completion", "answer": "training"},
+                        {"number": 2, "type": "note_completion", "answer": "discount"},
+                        {"number": 3, "type": "note_completion", "answer": "taxi"},
+                        {"number": 4, "type": "note_completion", "answer": "service"},
+                        {"number": 5, "type": "note_completion", "answer": "English"},
+                        {"number": 6, "type": "note_completion", "answer": "Wivenhoe"},
+                        {"number": 7, "type": "note_completion", "answer": "equipment"},
+                        {"number": 8, "type": "note_completion", "answer": "9.75"},
+                        {"number": 9, "type": "note_completion", "answer": "deliveries"},
+                        {"number": 10, "type": "note_completion", "answer": "Sunday"}
                     ]
                 },
                 {
@@ -35,10 +43,17 @@ IELTS18_TEST2 = {
                     "question_range": "11-20",
                     "question_count": 10,
                     "context": "Monologue",
-                    "question_types": ["multiple_choice", "matching"],
+                    "question_types": ["multiple_selection", "matching"],
                     "audio_file": "AUDIO_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(11, 21)
+                        {"number": "11-12", "type": "multiple_selection", "answer": ["B", "E"], "answer_count": 2},
+                        {"number": "13-14", "type": "multiple_selection", "answer": ["B", "C"], "answer_count": 2},
+                        {"number": 15, "type": "matching", "answer": "G"},
+                        {"number": 16, "type": "matching", "answer": "C"},
+                        {"number": 17, "type": "matching", "answer": "D"},
+                        {"number": 18, "type": "matching", "answer": "B"},
+                        {"number": 19, "type": "matching", "answer": "H"},
+                        {"number": 20, "type": "matching", "answer": "A"}
                     ]
                 },
                 {
@@ -47,10 +62,18 @@ IELTS18_TEST2 = {
                     "question_range": "21-30",
                     "question_count": 10,
                     "context": "Discussion",
-                    "question_types": ["multiple_choice", "matching"],
+                    "question_types": ["multiple_choice", "multiple_selection", "matching"],
                     "audio_file": "AUDIO_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(21, 31)
+                        {"number": 21, "type": "multiple_choice", "answer": "C"},
+                        {"number": 22, "type": "multiple_choice", "answer": "A"},
+                        {"number": 23, "type": "multiple_choice", "answer": "B"},
+                        {"number": 24, "type": "multiple_choice", "answer": "B"},
+                        {"number": "25-26", "type": "multiple_selection", "answer": ["A", "B"], "answer_count": 2},
+                        {"number": 27, "type": "matching", "answer": "D"},
+                        {"number": 28, "type": "matching", "answer": "A"},
+                        {"number": 29, "type": "matching", "answer": "C"},
+                        {"number": 30, "type": "matching", "answer": "F"}
                     ]
                 },
                 {
@@ -62,11 +85,27 @@ IELTS18_TEST2 = {
                     "question_types": ["sentence_completion"],
                     "audio_file": "AUDIO_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(31, 41)
+                        {"number": 31, "type": "sentence_completion", "answer": "convenient"},
+                        {"number": 32, "type": "sentence_completion", "answer": "suits"},
+                        {"number": 33, "type": "sentence_completion", "answer": "tailor"},
+                        {"number": 34, "type": "sentence_completion", "answer": "profession"},
+                        {"number": 35, "type": "sentence_completion", "answer": "visible"},
+                        {"number": 36, "type": "sentence_completion", "answer": "string(s)"},
+                        {"number": 37, "type": "sentence_completion", "answer": "waist(s)"},
+                        {"number": 38, "type": "sentence_completion", "answer": "perfume"},
+                        {"number": 39, "type": "sentence_completion", "answer": "image"},
+                        {"number": 40, "type": "sentence_completion", "answer": "handbag"}
                     ]
                 }
             ],
-            "answer_key": {}
+            "answer_key": {
+                1: "training", 2: "discount", 3: "taxi", 4: "service", 5: "English",
+                6: "Wivenhoe", 7: "equipment", 8: "9.75", 9: "deliveries", 10: "Sunday",
+                "11-12": ["B", "E"], "13-14": ["B", "C"], 15: "G", 16: "C", 17: "D", 18: "B", 19: "H", 20: "A",
+                21: "C", 22: "A", 23: "B", 24: "B", "25-26": ["A", "B"], 27: "D", 28: "A", 29: "C", 30: "F",
+                31: "convenient", 32: "suits", 33: "tailor", 34: "profession", 35: "visible",
+                36: "string(s)", 37: "waist(s)", 38: "perfume", 39: "image", 40: "handbag"
+            }
         },
         "reading": {
             "total_questions": 40,
@@ -74,52 +113,87 @@ IELTS18_TEST2 = {
             "passages": [
                 {
                     "passage_number": 1,
-                    "title": "The growth of the British film industry",
+                    "title": "Stonehenge",
                     "question_range": "1-13",
                     "question_count": 13,
-                    "topic": "Development of the British film industry",
-                    "question_types": ["true_false_notgiven", "sentence_completion"],
+                    "topic": "The history and purpose of Stonehenge",
+                    "question_types": ["sentence_completion", "true_false_notgiven"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "true_false_notgiven", "answer": "TBD"} for i in range(1, 8)
-                    ] + [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(8, 14)
+                        {"number": 1, "type": "sentence_completion", "answer": "(deer) antlers"},
+                        {"number": 2, "type": "sentence_completion", "answer": "(timber) posts"},
+                        {"number": 3, "type": "sentence_completion", "answer": "tree trunks"},
+                        {"number": 4, "type": "sentence_completion", "answer": "oxen"},
+                        {"number": 5, "type": "sentence_completion", "answer": "glaciers"},
+                        {"number": 6, "type": "sentence_completion", "answer": "druids"},
+                        {"number": 7, "type": "sentence_completion", "answer": "burial"},
+                        {"number": 8, "type": "sentence_completion", "answer": "calendar"},
+                        {"number": 9, "type": "true_false_notgiven", "answer": "TRUE"},
+                        {"number": 10, "type": "true_false_notgiven", "answer": "FALSE"},
+                        {"number": 11, "type": "true_false_notgiven", "answer": "FALSE"},
+                        {"number": 12, "type": "true_false_notgiven", "answer": "TRUE"},
+                        {"number": 13, "type": "true_false_notgiven", "answer": "NOT GIVEN"}
                     ]
                 },
                 {
                     "passage_number": 2,
-                    "title": "Stonehenge",
+                    "title": "Passage 2",
                     "question_range": "14-26",
                     "question_count": 13,
-                    "topic": "The history and purpose of Stonehenge",
-                    "question_types": ["matching_information", "sentence_completion", "multiple_choice"],
+                    "topic": "Topic placeholder",
+                    "question_types": ["multiple_choice", "yes_no_notgiven"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "matching_information", "answer": "TBD"} for i in range(14, 19)
-                    ] + [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(19, 24)
-                    ] + [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(24, 27)
+                        {"number": 14, "type": "multiple_choice", "answer": "C"},
+                        {"number": 15, "type": "multiple_choice", "answer": "A"},
+                        {"number": 16, "type": "multiple_choice", "answer": "B"},
+                        {"number": 17, "type": "multiple_choice", "answer": "D"},
+                        {"number": 18, "type": "multiple_choice", "answer": "C"},
+                        {"number": 19, "type": "multiple_choice", "answer": "D"},
+                        {"number": 20, "type": "yes_no_notgiven", "answer": "YES"},
+                        {"number": 21, "type": "yes_no_notgiven", "answer": "NOT GIVEN"},
+                        {"number": 22, "type": "yes_no_notgiven", "answer": "NO"},
+                        {"number": 23, "type": "yes_no_notgiven", "answer": "YES"},
+                        {"number": 24, "type": "multiple_choice", "answer": "C"},
+                        {"number": 25, "type": "multiple_choice", "answer": "A"},
+                        {"number": 26, "type": "multiple_choice", "answer": "E"}
                     ]
                 },
                 {
                     "passage_number": 3,
-                    "title": "Energy solutions",
+                    "title": "Passage 3",
                     "question_range": "27-40",
                     "question_count": 14,
-                    "topic": "Solutions to energy problems",
-                    "question_types": ["summary_completion", "yes_no_notgiven", "multiple_choice"],
+                    "topic": "Topic placeholder",
+                    "question_types": ["yes_no_notgiven", "sentence_completion"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "summary_completion", "answer": "TBD"} for i in range(27, 33)
-                    ] + [
-                        {"number": i, "type": "yes_no_notgiven", "answer": "TBD"} for i in range(33, 38)
-                    ] + [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(38, 41)
+                        {"number": 27, "type": "yes_no_notgiven", "answer": "NOT GIVEN"},
+                        {"number": 28, "type": "yes_no_notgiven", "answer": "NOT GIVEN"},
+                        {"number": 29, "type": "yes_no_notgiven", "answer": "TRUE"},
+                        {"number": 30, "type": "yes_no_notgiven", "answer": "FALSE"},
+                        {"number": 31, "type": "yes_no_notgiven", "answer": "TRUE"},
+                        {"number": 32, "type": "yes_no_notgiven", "answer": "NOT GIVEN"},
+                        {"number": 33, "type": "yes_no_notgiven", "answer": "FALSE"},
+                        {"number": 34, "type": "sentence_completion", "answer": "transport"},
+                        {"number": 35, "type": "sentence_completion", "answer": "staircases"},
+                        {"number": 36, "type": "sentence_completion", "answer": "engineering"},
+                        {"number": 37, "type": "sentence_completion", "answer": "rule"},
+                        {"number": 38, "type": "sentence_completion", "answer": "Roman"},
+                        {"number": 39, "type": "sentence_completion", "answer": "Paris"},
+                        {"number": 40, "type": "sentence_completion", "answer": "outwards"}
                     ]
                 }
             ],
-            "answer_key": {}
+            "answer_key": {
+                1: "(deer) antlers", 2: "(timber) posts", 3: "tree trunks", 4: "oxen", 5: "glaciers",
+                6: "druids", 7: "burial", 8: "calendar", 9: "TRUE", 10: "FALSE",
+                11: "FALSE", 12: "TRUE", 13: "NOT GIVEN",
+                14: "C", 15: "A", 16: "B", 17: "D", 18: "C", 19: "D",
+                20: "YES", 21: "NOT GIVEN", 22: "NO", 23: "YES", 24: "C", 25: "A", 26: "E",
+                27: "NOT GIVEN", 28: "NOT GIVEN", 29: "TRUE", 30: "FALSE", 31: "TRUE", 32: "NOT GIVEN", 33: "FALSE",
+                34: "transport", 35: "staircases", 36: "engineering", 37: "rule", 38: "Roman", 39: "Paris", 40: "outwards"
+            }
         },
         "writing": {
             "total_tasks": 2,
@@ -131,7 +205,6 @@ IELTS18_TEST2 = {
                     "description": "Describe visual information",
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
-                    "visual_type": "map",
                     "visual_url": "VISUAL_PLACEHOLDER",
                     "prompt": "PROMPT_PLACEHOLDER"
                 },
@@ -149,31 +222,9 @@ IELTS18_TEST2 = {
             "total_parts": 3,
             "duration": "11-14 minutes",
             "parts": [
-                {
-                    "part_number": 1,
-                    "title": "Introduction and Interview",
-                    "duration": "4-5 minutes",
-                    "topics": ["Topic 1", "Topic 2", "Topic 3"],
-                    "sample_questions": ["QUESTIONS_PLACEHOLDER"]
-                },
-                {
-                    "part_number": 2,
-                    "title": "Individual Long Turn",
-                    "duration": "3-4 minutes",
-                    "preparation_time": "1 minute",
-                    "speaking_time": "1-2 minutes",
-                    "cue_card": {
-                        "topic": "TOPIC_PLACEHOLDER",
-                        "points": ["point 1", "point 2", "point 3", "point 4"]
-                    }
-                },
-                {
-                    "part_number": 3,
-                    "title": "Two-way Discussion",
-                    "duration": "4-5 minutes",
-                    "topic": "TOPIC_PLACEHOLDER",
-                    "sample_questions": ["QUESTIONS_PLACEHOLDER"]
-                }
+                {"part_number": 1, "title": "Introduction and Interview", "duration": "4-5 minutes"},
+                {"part_number": 2, "title": "Individual Long Turn", "duration": "3-4 minutes"},
+                {"part_number": 3, "title": "Two-way Discussion", "duration": "4-5 minutes"}
             ]
         }
     }
