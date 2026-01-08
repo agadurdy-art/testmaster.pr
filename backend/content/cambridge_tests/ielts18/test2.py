@@ -106,15 +106,57 @@ IELTS18_TEST2 = {
                     "question_count": 10,
                     "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/cf87vrw1_18%20section2-%20part3.mp3",
                     "questions": [
-                        {"number": 21, "type": "multiple_choice", "answer": "C"},
-                        {"number": 22, "type": "multiple_choice", "answer": "A"},
-                        {"number": 23, "type": "multiple_choice", "answer": "B"},
-                        {"number": 24, "type": "multiple_choice", "answer": "B"},
-                        {"number": "25-26", "type": "multiple_selection", "answer": ["A", "B"], "select_count": 2},
-                        {"number": 27, "type": "matching", "answer": "D"},
-                        {"number": 28, "type": "matching", "answer": "A"},
-                        {"number": 29, "type": "matching", "answer": "C"},
-                        {"number": 30, "type": "matching", "answer": "F"}
+                        {
+                            "number": 21,
+                            "type": "multiple_choice",
+                            "question_text": "Why do the students think the Laki eruption of 1783 is so important?",
+                            "options": ["A It was the most severe eruption in modern times.", "B It led to the formal study of volcanoes.", "C It had a profound effect on society."],
+                            "answer": "C"
+                        },
+                        {
+                            "number": 22,
+                            "type": "multiple_choice",
+                            "question_text": "What surprised Adam about observations made at the time?",
+                            "options": ["A the number of places producing them", "B the contradictions in them", "C the lack of scientific data to support them"],
+                            "answer": "A"
+                        },
+                        {
+                            "number": 23,
+                            "type": "multiple_choice",
+                            "question_text": "According to Michelle, what did the contemporary sources say about the Laki haze?",
+                            "options": ["A People thought it was similar to ordinary fog.", "B It was associated with health issues.", "C It completely blocked out the sun for weeks."],
+                            "answer": "B"
+                        },
+                        {
+                            "number": 24,
+                            "type": "multiple_choice",
+                            "question_text": "Adam corrects Michelle when she claims that Benjamin Franklin",
+                            "options": ["A came to the wrong conclusion about the cause of the haze.", "B was the first to identify the reason for the haze.", "C supported the opinions of other observers about the haze."],
+                            "answer": "B"
+                        },
+                        {
+                            "number": "25-26",
+                            "type": "multiple_selection",
+                            "instruction": "Choose TWO letters, A-E.",
+                            "question_text": "Which TWO issues following the Laki eruption surprised the students?",
+                            "options": ["A how widespread the effects were", "B how long-lasting the effects were", "C the number of deaths it caused", "D the speed at which the volcanic ash cloud spread", "E how people ignored the warning signs"],
+                            "answer": ["A", "B"],
+                            "select_count": 2
+                        },
+                        {
+                            "number": "27-30",
+                            "type": "matching",
+                            "instruction": "What comment do the students make about the impact of the Laki eruption on the following countries? Choose FOUR answers from the box and write the correct letter, A-F, next to Questions 27-30.",
+                            "options_title": "Comments",
+                            "options": ["A This country suffered the most severe loss of life.", "B The impact on agriculture was predictable.", "C There was a significant increase in deaths of young people.", "D Animals suffered from a sickness.", "E This country saw the highest rise in food prices in the world.", "F It caused a particularly harsh winter."],
+                            "items": [
+                                {"number": 27, "item": "Iceland"},
+                                {"number": 28, "item": "Egypt"},
+                                {"number": 29, "item": "UK"},
+                                {"number": 30, "item": "USA"}
+                            ],
+                            "answers": {"27": "D", "28": "A", "29": "C", "30": "F"}
+                        }
                     ]
                 },
                 {
