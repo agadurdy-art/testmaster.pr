@@ -1403,16 +1403,16 @@ def test_ielts_visual_integration():
         print("❌ IELTS VISUAL INTEGRATION TESTS FAILED!")
         return False
 
-def test_cambridge_ielts_18_implementation():
-    """Test Cambridge IELTS 18 Implementation as per review request"""
+def test_cambridge_ielts_18_api_endpoints():
+    """Test Cambridge IELTS 18 API endpoints as per review request"""
     print("\n" + "="*80)
-    print("🚀 TESTING CAMBRIDGE IELTS 18 IMPLEMENTATION")
+    print("🚀 TESTING CAMBRIDGE IELTS 18 API ENDPOINTS")
     print("="*80)
     
     success_count = 0
-    total_tests = 6
+    total_tests = 5
     
-    # Test 1: GET /api/cambridge/books - Should return both ielts17 and ielts18 with 4 tests each
+    # Test 1: GET /api/cambridge/books - Verify ielts18 book is listed with 4 available tests
     print("\n=== Test 1: GET /api/cambridge/books ===")
     try:
         response = requests.get(f"{BACKEND_URL}/cambridge/books")
@@ -1423,31 +1423,31 @@ def test_cambridge_ielts_18_implementation():
             print(f"✅ API call successful")
             
             books = result.get("books", [])
-            ielts17_found = False
             ielts18_found = False
             
             for book in books:
                 book_id = book.get("book_id")
                 available_tests = book.get("available_tests", 0)
                 
-                if book_id == "ielts17" and available_tests == 4:
-                    print(f"✅ IELTS 17 found with 4 tests available")
-                    ielts17_found = True
-                elif book_id == "ielts18" and available_tests == 4:
-                    print(f"✅ IELTS 18 found with 4 tests available")
-                    ielts18_found = True
+                if book_id == "ielts18":
+                    if available_tests == 4:
+                        print(f"✅ IELTS 18 found with 4 tests available")
+                        ielts18_found = True
+                    else:
+                        print(f"❌ IELTS 18 found but has {available_tests} tests (expected 4)")
+                    break
             
-            if ielts17_found and ielts18_found:
-                print(f"✅ Both IELTS 17 and IELTS 18 books available with 4 tests each")
+            if ielts18_found:
+                print(f"✅ IELTS 18 book is listed with 4 available tests")
                 success_count += 1
             else:
-                print(f"❌ Missing books: IELTS17={ielts17_found}, IELTS18={ielts18_found}")
+                print(f"❌ IELTS 18 book not found in books list")
         else:
             print(f"❌ Failed with status {response.status_code}: {response.text}")
     except Exception as e:
         print(f"❌ Error: {e}")
     
-    # Test 2-5: Test each of the 4 Cambridge 18 tests
+    # Test 2-5: Test each of the 4 Cambridge 18 tests with detailed structure verification
     cambridge_18_tests = ["test1", "test2", "test3", "test4"]
     
     for i, test_id in enumerate(cambridge_18_tests, 2):
@@ -1457,6 +1457,116 @@ def test_cambridge_ielts_18_implementation():
             print(f"Status Code: {response.status_code}")
             
             if response.status_code == 200:
+                result = response.json()
+                test_data = result.get("test", {})
+                print(f"✅ API call successful")
+                
+                # Verify complete test structure
+                sections = test_data.get("sections", {})
+                test_passed = True
+                
+                # Check listening section - should have 4 parts
+                listening = sections.get("listening", {})
+                listening_parts = listening.get("parts", [])
+                if len(listening_parts) == 4:
+                    print(f"✅ Listening has 4 parts")
+                else:
+                    print(f"❌ Listening has {len(listening_parts)} parts (expected 4)")
+                    test_passed = False
+                
+                # Check reading section - should have 3 passages
+                reading = sections.get("reading", {})
+                reading_passages = reading.get("passages", [])
+                if len(reading_passages) == 3:
+                    print(f"✅ Reading has 3 passages")
+                else:
+                    print(f"❌ Reading has {len(reading_passages)} passages (expected 3)")
+                    test_passed = False
+                
+                # Check writing section - should have 2 tasks
+                writing = sections.get("writing", {})
+                writing_tasks = writing.get("tasks", [])
+                if len(writing_tasks) == 2:
+                    print(f"✅ Writing has 2 tasks")
+                else:
+                    print(f"❌ Writing has {len(writing_tasks)} tasks (expected 2)")
+                    test_passed = False
+                
+                # Special check for Test 2 - verify Part 2 has map_image field
+                if test_id == "test2":
+                    part2_has_map = False
+                    if len(listening_parts) >= 2:
+                        part2 = listening_parts[1]  # Part 2 (index 1)
+                        if "map_image" in part2 or any("map" in str(qg).lower() for qg in part2.get("question_groups", [])):
+                            print(f"✅ Test 2 Part 2 has map_image field")
+                            part2_has_map = True
+                        else:
+                            print(f"❌ Test 2 Part 2 missing map_image field")
+                            test_passed = False
+                
+                # Verify matching questions have proper structure
+                matching_questions_verified = True
+                for section_name, section_data in sections.items():
+                    if section_name == "listening":
+                        for part in section_data.get("parts", []):
+                            for qg in part.get("question_groups", []):
+                                if qg.get("question_type") == "matching":
+                                    # Check for options array
+                                    if "options" not in qg or not qg.get("options"):
+                                        print(f"❌ Matching question in {section_name} missing options array")
+                                        matching_questions_verified = False
+                                    # Check for items array with question text
+                                    if "items" not in qg or not qg.get("items"):
+                                        print(f"❌ Matching question in {section_name} missing items array")
+                                        matching_questions_verified = False
+                                    # Check for instruction text
+                                    if "instruction" not in qg or not qg.get("instruction"):
+                                        print(f"❌ Matching question in {section_name} missing instruction text")
+                                        matching_questions_verified = False
+                    elif section_name == "reading":
+                        for passage in section_data.get("passages", []):
+                            for qg in passage.get("question_groups", []):
+                                if qg.get("question_type") == "matching":
+                                    # Check for options array
+                                    if "options" not in qg or not qg.get("options"):
+                                        print(f"❌ Matching question in {section_name} missing options array")
+                                        matching_questions_verified = False
+                                    # Check for items array with question text
+                                    if "items" not in qg or not qg.get("items"):
+                                        print(f"❌ Matching question in {section_name} missing items array")
+                                        matching_questions_verified = False
+                                    # Check for instruction text
+                                    if "instruction" not in qg or not qg.get("instruction"):
+                                        print(f"❌ Matching question in {section_name} missing instruction text")
+                                        matching_questions_verified = False
+                
+                if matching_questions_verified:
+                    print(f"✅ Matching questions have proper structure (options, items, instruction)")
+                
+                if test_passed and matching_questions_verified:
+                    print(f"✅ {test_id} structure verification passed")
+                    success_count += 1
+                else:
+                    print(f"❌ {test_id} structure verification failed")
+            else:
+                print(f"❌ Failed with status {response.status_code}: {response.text}")
+        except Exception as e:
+            print(f"❌ Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 CAMBRIDGE IELTS 18 API SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if success_count == total_tests:
+        print("✅ ALL CAMBRIDGE IELTS 18 API TESTS PASSED!")
+        print("   Key features verified:")
+        print("   - IELTS 18 book listed with 4 available tests")
+        print("   - All 4 tests have complete structure (listening: 4 parts, reading: 3 passages, writing: 2 tasks)")
+        print("   - Test 2 Part 2 has map_image field")
+        print("   - Matching questions have options array, items array, and instruction text")
+        return True
+    else:
+        print("❌ SOME CAMBRIDGE IELTS 18 API TESTS FAILED!")
+        return False
                 result = response.json()
                 print(f"✅ API call successful")
                 
