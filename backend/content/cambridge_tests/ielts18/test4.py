@@ -139,6 +139,47 @@ IELTS18_TEST4 = {
                     "question_count": 10,
                     "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/f7r3nlpt_18%20section4%20part4.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD ONLY for each answer.",
+                    "visual": {
+                        "type": "notes",
+                        "title": "Victor Hugo",
+                        "sections": [
+                            {
+                                "heading": "His novel, Les Misérables",
+                                "items": [
+                                    "It has been adapted for theatre and cinema.",
+                                    "We know more about its overall ___31___ than about its author."
+                                ]
+                            },
+                            {
+                                "heading": "His early career",
+                                "items": [
+                                    "In Paris, his career was successful and he led the Romantic movement.",
+                                    "He spoke publicly about social issues, such as ___32___ and education.",
+                                    "Napoleon III disliked his views and exiled him."
+                                ]
+                            },
+                            {
+                                "heading": "His exile from France",
+                                "items": [
+                                    "Victor Hugo had to live elsewhere in ___33___.",
+                                    "He used his income from the sale of some ___34___ he had written to buy a house on Guernsey."
+                                ]
+                            },
+                            {
+                                "heading": "His house on Guernsey",
+                                "items": [
+                                    "Victor Hugo lived in this house until the end of the Empire in France.",
+                                    "The ground floor contains portraits, ___35___ and tapestries that he valued.",
+                                    "He bought cheap ___36___ made of wood and turned this into beautiful wall carvings.",
+                                    "The first floor consists of furnished areas with wallpaper and ___37___ that have a Chinese design.",
+                                    "The library still contains many of his favourite books.",
+                                    "He wrote in a room at the top of the house that had a view of the ___38___.",
+                                    "He entertained other writers as well as poor ___39___ in his house.",
+                                    "Victor Hugo's ___40___ gave ownership of the house to the city of Paris in 1927."
+                                ]
+                            }
+                        ]
+                    },
                     "questions": [
                         {"number": 31, "type": "note_completion", "answer": "plot"},
                         {"number": 32, "type": "note_completion", "answer": "poverty"},
