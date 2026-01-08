@@ -187,9 +187,61 @@ IELTS18_TEST2 = {
             "total_parts": 3,
             "duration": "11-14 minutes",
             "parts": [
-                {"part_number": 1, "title": "Introduction and Interview", "duration": "4-5 minutes"},
-                {"part_number": 2, "title": "Individual Long Turn", "duration": "3-4 minutes"},
-                {"part_number": 3, "title": "Two-way Discussion", "duration": "4-5 minutes"}
+                {
+                    "part_number": 1,
+                    "title": "Introduction and Interview",
+                    "topic": "Science",
+                    "duration": "4-5 minutes",
+                    "instructions": "The examiner will ask you questions about yourself and familiar topics.",
+                    "questions": [
+                        "Did you like studying science when you were at school? [Why/Why not?]",
+                        "What do you remember about your science teachers at school?",
+                        "How interested are you in science now? [Why/Why not?]",
+                        "What do you think has been an important recent scientific development? [Why?]"
+                    ]
+                },
+                {
+                    "part_number": 2,
+                    "title": "Individual Long Turn",
+                    "duration": "3-4 minutes",
+                    "instructions": "You will have to talk about a topic for 1-2 minutes. You have one minute to prepare.",
+                    "cue_card": {
+                        "topic": "Describe a tourist attraction in your country that you would recommend.",
+                        "bullet_points": [
+                            "what the tourist attraction is",
+                            "where in your country this tourist attraction is",
+                            "what visitors can see and do at this tourist attraction"
+                        ],
+                        "final_prompt": "and explain why you would recommend this tourist attraction."
+                    },
+                    "follow_up_questions": [
+                        "Have you been to this place yourself?"
+                    ]
+                },
+                {
+                    "part_number": 3,
+                    "title": "Two-way Discussion",
+                    "duration": "4-5 minutes",
+                    "instructions": "The examiner will ask you further questions connected to the topic in Part 2.",
+                    "discussion_topics": [
+                        {
+                            "topic": "Museums and art galleries",
+                            "questions": [
+                                "What are the most popular museums and art galleries where you live?",
+                                "Do you believe that all museums and art galleries should be free?",
+                                "What kinds of things make a museum or art gallery an interesting place to visit?"
+                            ]
+                        },
+                        {
+                            "topic": "The holiday industry",
+                            "questions": [
+                                "Why, do you think, do some people book package holidays rather than travelling independently?",
+                                "Would you say that large numbers of tourists cause problems for local people?",
+                                "What sort of impact can large holiday resorts have on the environment?"
+                            ]
+                        }
+                    ]
+                }
             ]
         }
     }
