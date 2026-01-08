@@ -206,7 +206,7 @@ IELTS18_TEST2 = {
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
                     "visual_url": "VISUAL_PLACEHOLDER",
-                    "prompt": "PROMPT_PLACEHOLDER"
+                    "prompt": "The chart below shows the percentage of households in the United States in different annual income categories in 2007, 2011 and 2015. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
                     "task_number": 2,
@@ -214,7 +214,7 @@ IELTS18_TEST2 = {
                     "description": "Write an essay",
                     "word_limit": "at least 250 words",
                     "time_suggestion": "40 minutes",
-                    "prompt": "PROMPT_PLACEHOLDER"
+                    "prompt": "Some university students want to learn about other subjects in addition to their main subjects. Others believe it is more important to give all their time and attention to studying for a qualification. Discuss both these views and give your own opinion."
                 }
             ]
         },
