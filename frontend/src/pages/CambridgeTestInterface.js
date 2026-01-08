@@ -1963,8 +1963,8 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
               
-              {/* Visual data - Image with improved presentation */}
-              {currentTask.visual && (
+              {/* Visual data - Image with improved presentation (only if no visual_url) */}
+              {currentTask.visual && !currentTask.visual_url && (
                 <div className="mb-4 bg-white rounded-lg border shadow-sm overflow-hidden">
                   <div className="bg-gray-100 px-4 py-2 border-b">
                     <h4 className="text-sm font-semibold text-gray-700 text-center">
