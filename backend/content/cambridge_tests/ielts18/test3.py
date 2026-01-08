@@ -296,10 +296,7 @@ IELTS18_TEST3 = {
                             "type": "matching_information",
                             "instruction": "Reading Passage 1 has eight sections, A-H. Which section contains the following information? Write the correct letter, A-H, in boxes 1-4 on your answer sheet.",
                             "items": [
-                                {"number": 1, "text": "an explanation of the industrial
-
-
- processes that create potential raw materials for concrete", "answer": "G"},
+                                {"number": 1, "text": "an explanation of the industrial processes that create potential raw materials for concrete", "answer": "G"},
                                 {"number": 2, "text": "a reference to the various locations where high-rise wooden buildings can be found", "answer": "D"},
                                 {"number": 3, "text": "an indication of how widely available the raw materials of concrete are", "answer": "C"},
                                 {"number": 4, "text": "the belief that more high-rise wooden buildings are needed before wood can be regarded as a viable construction material", "answer": "F"}
