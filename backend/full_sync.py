@@ -261,7 +261,7 @@ We live at a time when widespread misinformation is common. Yet at this time man
             {"question_id": 4, "answer": "False", "explanation": "The rackets they use now 'weigh more than the average model'."},
             {"question_id": 5, "answer": "Not Given", "explanation": "We are told Werner Fischer used the spaghetti-strung racket, but not who designed it."},
             {"question_id": 6, "answer": "True", "explanation": "Players change string tension depending on 'factors including climatic conditions'."},
-            {"question_id": 7, "answer": "True", "explanation": "Pete Sampras's serving power 'was attributed to' the addition of lead weights."},
+            {"question_id": 7, "answer": "False", "explanation": "The text says the change was 'believed to have contributed' but doesn't confirm it was attributed to lead weights as fact."},
             {"question_id": 8, "answer": "paint", "explanation": "Mike and Bob Bryan 'experimented with different kinds of paint'."},
             {"question_id": 9, "answer": "topspin", "explanation": "The spaghetti-strung racket 'generated so much topspin that it was quickly banned'."},
             {"question_id": 10, "answer": "training", "explanation": "Racket modification became 'equal in significance to nutrition or training'."},
