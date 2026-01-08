@@ -207,9 +207,9 @@ IELTS18_TEST1 = {
                     "description": "Describe visual information",
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
-                    "visual_type": "chart",
-                    "visual_url": "VISUAL_PLACEHOLDER",
-                    "prompt": "The chart below shows the results of a survey about the most popular types of information people like to find out about in their local area."
+                    "visual_type": "line_graph",
+                    "visual_url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/5olsly9y_cambridge%2018%20test%201%20writing%20task%201.png",
+                    "prompt": "The graph below shows the percentage of the population living in cities in four Asian countries between 1970 and 2040. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
                     "task_number": 2,
