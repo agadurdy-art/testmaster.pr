@@ -1403,6 +1403,168 @@ def test_ielts_visual_integration():
         print("❌ IELTS VISUAL INTEGRATION TESTS FAILED!")
         return False
 
+def test_cambridge_ielts_18_speaking_content():
+    """Test Cambridge IELTS 18 Speaking content for all 4 tests as per review request"""
+    print("\n" + "="*80)
+    print("🚀 TESTING CAMBRIDGE IELTS 18 SPEAKING CONTENT")
+    print("="*80)
+    
+    success_count = 0
+    total_tests = 4
+    issues_found = []
+    
+    # Test each of the 4 Cambridge 18 tests for speaking content
+    cambridge_18_tests = ["test1", "test2", "test3", "test4"]
+    
+    for i, test_id in enumerate(cambridge_18_tests, 1):
+        print(f"\n=== Test {i}: GET /api/cambridge/test/ielts18/{test_id} - Speaking Content ===")
+        try:
+            response = requests.get(f"{BACKEND_URL}/cambridge/test/ielts18/{test_id}")
+            print(f"Status Code: {response.status_code}")
+            
+            if response.status_code == 200:
+                result = response.json()
+                test_data = result.get("test", {})
+                speaking = test_data.get("speaking", {})
+                parts = speaking.get("parts", {})
+                
+                print(f"✅ API call successful for {test_id}")
+                
+                # Check if speaking section exists
+                if not speaking:
+                    issues_found.append(f"{test_id}: No speaking section found")
+                    print(f"❌ {test_id}: No speaking section found")
+                    continue
+                
+                if not parts:
+                    issues_found.append(f"{test_id}: No speaking parts found")
+                    print(f"❌ {test_id}: No speaking parts found")
+                    continue
+                
+                test_passed = True
+                
+                # Verify Part 1 has questions OR sample_questions array (not empty)
+                part1 = parts.get("part1", {})
+                if part1:
+                    questions = part1.get("questions", [])
+                    sample_questions = part1.get("sample_questions", [])
+                    
+                    if not questions and not sample_questions:
+                        issues_found.append(f"{test_id}: Part 1 has no questions or sample_questions")
+                        print(f"❌ {test_id}: Part 1 has no questions or sample_questions")
+                        test_passed = False
+                    elif (questions and len(questions) == 0) and (sample_questions and len(sample_questions) == 0):
+                        issues_found.append(f"{test_id}: Part 1 has empty questions and sample_questions arrays")
+                        print(f"❌ {test_id}: Part 1 has empty questions and sample_questions arrays")
+                        test_passed = False
+                    else:
+                        q_count = len(questions) if questions else 0
+                        sq_count = len(sample_questions) if sample_questions else 0
+                        print(f"✅ {test_id}: Part 1 has {q_count} questions and {sq_count} sample_questions")
+                else:
+                    issues_found.append(f"{test_id}: Part 1 not found")
+                    print(f"❌ {test_id}: Part 1 not found")
+                    test_passed = False
+                
+                # Verify Part 2 has cue_card with topic and (bullet_points OR points) array
+                part2 = parts.get("part2", {})
+                if part2:
+                    cue_card = part2.get("cue_card", {})
+                    
+                    if not cue_card:
+                        issues_found.append(f"{test_id}: Part 2 has no cue_card")
+                        print(f"❌ {test_id}: Part 2 has no cue_card")
+                        test_passed = False
+                    else:
+                        topic = cue_card.get("topic", "")
+                        bullet_points = cue_card.get("bullet_points", [])
+                        points = cue_card.get("points", [])
+                        
+                        if not topic:
+                            issues_found.append(f"{test_id}: Part 2 cue_card has no topic")
+                            print(f"❌ {test_id}: Part 2 cue_card has no topic")
+                            test_passed = False
+                        
+                        if not bullet_points and not points:
+                            issues_found.append(f"{test_id}: Part 2 cue_card has no bullet_points or points")
+                            print(f"❌ {test_id}: Part 2 cue_card has no bullet_points or points")
+                            test_passed = False
+                        elif (bullet_points and len(bullet_points) == 0) and (points and len(points) == 0):
+                            issues_found.append(f"{test_id}: Part 2 cue_card has empty bullet_points and points arrays")
+                            print(f"❌ {test_id}: Part 2 cue_card has empty bullet_points and points arrays")
+                            test_passed = False
+                        else:
+                            bp_count = len(bullet_points) if bullet_points else 0
+                            p_count = len(points) if points else 0
+                            print(f"✅ {test_id}: Part 2 has topic and {bp_count} bullet_points, {p_count} points")
+                else:
+                    issues_found.append(f"{test_id}: Part 2 not found")
+                    print(f"❌ {test_id}: Part 2 not found")
+                    test_passed = False
+                
+                # Verify Part 3 has discussion_topics array with questions
+                part3 = parts.get("part3", {})
+                if part3:
+                    discussion_topics = part3.get("discussion_topics", [])
+                    
+                    if not discussion_topics:
+                        issues_found.append(f"{test_id}: Part 3 has no discussion_topics")
+                        print(f"❌ {test_id}: Part 3 has no discussion_topics")
+                        test_passed = False
+                    elif len(discussion_topics) == 0:
+                        issues_found.append(f"{test_id}: Part 3 has empty discussion_topics array")
+                        print(f"❌ {test_id}: Part 3 has empty discussion_topics array")
+                        test_passed = False
+                    else:
+                        # Check if discussion topics have questions
+                        topics_with_questions = 0
+                        for topic in discussion_topics:
+                            if isinstance(topic, dict) and topic.get("questions"):
+                                topics_with_questions += 1
+                        
+                        if topics_with_questions == 0:
+                            issues_found.append(f"{test_id}: Part 3 discussion_topics have no questions")
+                            print(f"❌ {test_id}: Part 3 discussion_topics have no questions")
+                            test_passed = False
+                        else:
+                            print(f"✅ {test_id}: Part 3 has {len(discussion_topics)} discussion_topics with {topics_with_questions} having questions")
+                else:
+                    issues_found.append(f"{test_id}: Part 3 not found")
+                    print(f"❌ {test_id}: Part 3 not found")
+                    test_passed = False
+                
+                if test_passed:
+                    success_count += 1
+                    print(f"✅ {test_id}: All speaking content requirements met")
+                else:
+                    print(f"❌ {test_id}: Speaking content issues found")
+                    
+            else:
+                issues_found.append(f"{test_id}: API call failed with status {response.status_code}")
+                print(f"❌ {test_id}: Failed with status {response.status_code}: {response.text}")
+        except Exception as e:
+            issues_found.append(f"{test_id}: Error - {str(e)}")
+            print(f"❌ {test_id}: Error: {e}")
+    
+    print(f"\n{'='*80}")
+    print(f"🏁 CAMBRIDGE IELTS 18 SPEAKING CONTENT SUMMARY: {success_count}/{total_tests} tests passed")
+    
+    if issues_found:
+        print(f"\n❌ ISSUES FOUND:")
+        for issue in issues_found:
+            print(f"   - {issue}")
+    
+    if success_count == total_tests:
+        print("✅ ALL CAMBRIDGE IELTS 18 SPEAKING CONTENT TESTS PASSED!")
+        print("   All 4 tests have complete speaking content:")
+        print("   - Part 1: questions or sample_questions arrays")
+        print("   - Part 2: cue_card with topic and bullet_points/points")
+        print("   - Part 3: discussion_topics with questions")
+        return True
+    else:
+        print("❌ SOME CAMBRIDGE IELTS 18 SPEAKING CONTENT TESTS FAILED!")
+        return False
+
 def test_cambridge_ielts_18_api_endpoints():
     """Test Cambridge IELTS 18 API endpoints as per review request"""
     print("\n" + "="*80)
