@@ -64,7 +64,7 @@ IELTS18_TEST2 = {
                     "question_count": 10,
                     "context": "Discussion",
                     "question_types": ["multiple_choice", "multiple_selection", "matching"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/cf87vrw1_18%20section2-%20part3.mp3",
                     "questions": [
                         {"number": 21, "type": "multiple_choice", "answer": "C"},
                         {"number": 22, "type": "multiple_choice", "answer": "A"},
@@ -84,7 +84,7 @@ IELTS18_TEST2 = {
                     "question_count": 10,
                     "context": "Lecture",
                     "question_types": ["sentence_completion"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/917musbi_18%20section2-%20part4.mp3",
                     "questions": [
                         {"number": 31, "type": "sentence_completion", "answer": "convenient"},
                         {"number": 32, "type": "sentence_completion", "answer": "suits"},
