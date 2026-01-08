@@ -204,7 +204,7 @@ IELTS18_TEST4 = {
                     "description": "Describe visual information",
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
-                    "visual_url": "VISUAL_PLACEHOLDER",
+                    "visual_url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/gcde44oh_cambridge%2018%20test%204%20writing%20task%201.png",
                     "prompt": "The line graph below shows the average monthly change in the prices of three metals during 2014. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
