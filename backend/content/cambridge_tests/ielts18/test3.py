@@ -23,7 +23,7 @@ IELTS18_TEST3 = {
                     "question_count": 10,
                     "context": "Conversation",
                     "question_types": ["note_completion"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/9zpu0ev8_18%20section3%20part1.mp3",
                     "questions": [
                         {"number": 1, "type": "note_completion", "answer": "Marrowfield"},
                         {"number": 2, "type": "note_completion", "answer": "relative"},
@@ -44,7 +44,7 @@ IELTS18_TEST3 = {
                     "question_count": 10,
                     "context": "Monologue",
                     "question_types": ["multiple_selection", "multiple_choice"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/kayzyfyq_18%20section3%20part2.mp3",
                     "questions": [
                         {"number": "11-12", "type": "multiple_selection", "answer": ["B", "C"], "answer_count": 2},
                         {"number": "13-14", "type": "multiple_selection", "answer": ["B", "D"], "answer_count": 2},
@@ -63,7 +63,7 @@ IELTS18_TEST3 = {
                     "question_count": 10,
                     "context": "Discussion",
                     "question_types": ["multiple_selection", "matching"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/36tybmfs_18%20section3%20part3.mp3",
                     "questions": [
                         {"number": "21-22", "type": "multiple_selection", "answer": ["A", "E"], "answer_count": 2},
                         {"number": "23-24", "type": "multiple_selection", "answer": ["B", "D"], "answer_count": 2},
