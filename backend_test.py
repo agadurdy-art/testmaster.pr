@@ -6357,37 +6357,34 @@ def test_full_test_mode():
         return False
 
 if __name__ == "__main__":
-    print("🚀 Starting IELTS Ace Backend API Tests - VISUAL INTEGRATION TESTING")
+    print("🚀 Starting IELTS Ace Backend API Tests - CAMBRIDGE IELTS 18 TESTING")
     print("=" * 80)
     
-    # Test authentication first
-    user_id = test_authentication()
-    if not user_id:
-        print("❌ Authentication failed - stopping tests")
-        exit(1)
-    
-    # Run Visual Integration tests as per review request
+    # Run Cambridge IELTS 18 tests as per review request
     all_passed = True
     
-    # Test 1: IELTS Visual Integration System
-    visual_integration_passed = test_ielts_visual_integration()
-    all_passed = all_passed and visual_integration_passed
+    # Test 1: Cambridge IELTS 18 Implementation
+    cambridge_18_passed = test_cambridge_ielts_18_implementation()
+    all_passed = all_passed and cambridge_18_passed
     
     # Final summary
     print("\n" + "=" * 80)
-    print("🏁 FINAL TEST SUMMARY - VISUAL INTEGRATION TESTING")
+    print("🏁 FINAL TEST SUMMARY - CAMBRIDGE IELTS 18 TESTING")
     print("=" * 80)
     
     if all_passed:
-        print("✅ ALL VISUAL INTEGRATION TESTS PASSED! Backend visual system is working correctly.")
+        print("✅ ALL CAMBRIDGE IELTS 18 TESTS PASSED! Backend implementation is working correctly.")
         print("   Key components verified:")
-        print("   - Visual Image API serves all 6 PNG images correctly")
-        print("   - Full Test API returns visual_data with image_url")
-        print("   - Visual integration works for Writing and Listening sections")
-        print("   - Set E is properly registered in full test router")
+        print("   - Cambridge books API returns both IELTS 17 and 18 with 4 tests each")
+        print("   - All 4 Cambridge 18 tests load successfully with complete content")
+        print("   - Reading sections have 3 passages with actual text content (not placeholders)")
+        print("   - Listening sections have 4 parts with audio file URLs")
+        print("   - Writing sections have 2 tasks")
+        print("   - Answer keys are present for listening and reading sections")
+        print("   - Authentication works with provided test credentials")
     else:
-        print("❌ SOME VISUAL INTEGRATION TESTS FAILED! Check the output above for details.")
+        print("❌ SOME CAMBRIDGE IELTS 18 TESTS FAILED! Check the output above for details.")
     
-    print("\n🎯 Visual integration testing complete!")
+    print("\n🎯 Cambridge IELTS 18 testing complete!")
     
     exit(0 if all_passed else 1)
