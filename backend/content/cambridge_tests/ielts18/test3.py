@@ -203,7 +203,17 @@ IELTS18_TEST3 = {
                     "description": "Describe visual information",
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
-                    "visual_url": "VISUAL_PLACEHOLDER",
+                    "visual_type": "side_by_side_images",
+                    "images": [
+                        {
+                            "title": "Central Library 20 years ago",
+                            "url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/pp5571jj_cambridge%2018%20test%203%20writing%20task%201%20pic%201.png"
+                        },
+                        {
+                            "title": "Central Library today",
+                            "url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/khviu3ek_cambridge%2018%20test%203%20writing%20task%201%20pic%202.png"
+                        }
+                    ],
                     "prompt": "The diagrams below show a Central Library 20 years ago and how it looks now. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
