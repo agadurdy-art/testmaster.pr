@@ -321,10 +321,10 @@ Produce grown this way typically sells at prices that, while generally higher th
                                         "cells": [
                                             "no soil used; nutrients added to water, which is recycled",
                                             "produce chosen because of its ___7___",
-                                            "
+                                            "sold
 
 
-"
+locally"
                                         ]
                                     }
                                 ]
