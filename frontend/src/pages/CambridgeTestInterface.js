@@ -2157,7 +2157,7 @@ export default function CambridgeTestInterface() {
               {currentSpeakingPart.topics && currentSpeakingPart.topics.length > 0 && (
                 <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
                   <span className="text-sm font-medium text-orange-700">
-                    Topic: {currentSpeakingPart.topics.map(t => t.topic).join(', ')}
+                    Topic: {currentSpeakingPart.topics.map(t => typeof t === 'string' ? t : t.topic).join(', ')}
                   </span>
                 </div>
               )}
