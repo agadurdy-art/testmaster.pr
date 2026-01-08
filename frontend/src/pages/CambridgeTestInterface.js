@@ -2102,6 +2102,9 @@ export default function CambridgeTestInterface() {
     let questions = [];
     if (currentSpeakingPart.questions) {
       questions = currentSpeakingPart.questions;
+    } else if (currentSpeakingPart.sample_questions) {
+      // Support sample_questions field
+      questions = currentSpeakingPart.sample_questions;
     } else if (currentSpeakingPart.topics) {
       // Part 1 - topics array with questions
       questions = currentSpeakingPart.topics.flatMap(t => t.questions || []);
