@@ -1116,6 +1116,26 @@ export default function CambridgeTestInterface() {
                 </div>
               );
             }
+
+            // Map Labelling Questions (e.g., Q15-20)
+            if (q.type === 'map_labelling') {
+              return (
+                <div key={qIdx} className="mb-4 p-3 bg-white border rounded-lg flex items-center gap-4">
+                  <span className="font-bold text-blue-600 w-8">{q.number}.</span>
+                  <span className="flex-1 text-sm">{q.question_text}</span>
+                  <select
+                    value={answers[`listening_${q.number}`] || ''}
+                    onChange={(e) => handleAnswerChange(q.number, e.target.value)}
+                    className="w-16 px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">-</option>
+                    {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'].map(l => (
+                      <option key={l} value={l}>{l}</option>
+                    ))}
+                  </select>
+                </div>
+              );
+            }
             
             return null;
           })}
