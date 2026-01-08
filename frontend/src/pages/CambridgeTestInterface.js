@@ -1073,17 +1073,22 @@ export default function CambridgeTestInterface() {
               );
             }
             
-            // Matching Questions (e.g., Q23-27)
+            // Matching Questions (e.g., Q16-20)
             if (q.type === 'matching') {
+              // Support both options_box and direct options array
+              const optionsArray = q.options_box?.options || q.options || [];
+              const optionsTitle = q.options_box?.title || q.options_title || 'Options';
+              
               return (
                 <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
                   <p className="text-xs text-blue-600 font-medium mb-2">{q.instruction}</p>
                   
-                  {q.options_box && (
+                  {/* Options Box - show available choices */}
+                  {optionsArray.length > 0 && (
                     <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                      <h5 className="font-semibold text-sm mb-3 text-blue-800">{q.options_box.title}</h5>
+                      <h5 className="font-semibold text-sm mb-3 text-blue-800">{optionsTitle}</h5>
                       <div className="grid grid-cols-1 gap-2 text-sm">
-                        {q.options_box.options?.map((opt, oIdx) => (
+                        {optionsArray.map((opt, oIdx) => (
                           <div key={oIdx} className="text-gray-700">{opt}</div>
                         ))}
                       </div>
@@ -1101,7 +1106,7 @@ export default function CambridgeTestInterface() {
                           className="w-20 px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         >
                           <option value="">-</option>
-                          {q.options_box?.options?.map((opt, oIdx) => {
+                          {optionsArray.map((opt, oIdx) => {
                             const letter = opt.charAt(0);
                             return <option key={letter} value={letter}>{letter}</option>;
                           })}
