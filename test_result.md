@@ -147,6 +147,7 @@ test_plan:
     - "GET /api/cambridge/test/ielts18/test2 - Return complete test structure + map_image"
     - "GET /api/cambridge/test/ielts18/test3 - Return complete test structure"
     - "GET /api/cambridge/test/ielts18/test4 - Return complete test structure"
+    - "Cambridge IELTS 18 Speaking content verification for all 4 tests"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -154,3 +155,5 @@ test_plan:
 agent_communication:
   - agent: "testing"
     message: "✅ ALL CAMBRIDGE IELTS 18 API ENDPOINT TESTS PASSED! All 5 backend API endpoints are working correctly. Key findings: (1) GET /api/cambridge/books returns ielts18 with 4 available tests, (2) All 4 test endpoints return complete structures with listening (4 parts), reading (3 passages), writing (2 tasks), (3) Test 2 Part 2 has map_image field as required, (4) Matching question structure validation is in place. Frontend testing was not performed due to system limitations but backend APIs are fully functional."
+  - agent: "testing"
+    message: "✅ CAMBRIDGE IELTS 18 SPEAKING CONTENT VERIFICATION COMPLETE! All 4 tests have complete speaking content structure: Part 1 (questions/sample_questions), Part 2 (cue_card with topic and bullet_points/points), Part 3 (discussion_topics with questions/sample_questions). Test 1 uses sample_questions format, Tests 2-4 use discussion_topics format. No missing content detected. All speaking content requirements met for review request."
