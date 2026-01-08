@@ -6639,30 +6639,28 @@ def test_full_test_mode():
         return False
 
 if __name__ == "__main__":
-    print("🚀 Starting IELTS Ace Backend API Tests - CAMBRIDGE IELTS 18 API ENDPOINT TESTING")
+    print("🚀 Starting IELTS Ace Backend API Tests - CAMBRIDGE IELTS 18 SPEAKING CONTENT TESTING")
     print("=" * 80)
     
-    # Run Cambridge IELTS 18 API endpoint tests as per review request
-    cambridge_18_passed = test_cambridge_ielts_18_api_endpoints()
+    # Run Cambridge IELTS 18 Speaking content tests as per review request
+    cambridge_18_speaking_passed = test_cambridge_ielts_18_speaking_content()
     
     # Final summary
     print("\n" + "=" * 80)
-    print("🏁 FINAL TEST SUMMARY - CAMBRIDGE IELTS 18 API ENDPOINT TESTING")
+    print("🏁 FINAL TEST SUMMARY - CAMBRIDGE IELTS 18 SPEAKING CONTENT TESTING")
     print("=" * 80)
     
-    if cambridge_18_passed:
-        print("✅ ALL CAMBRIDGE IELTS 18 API ENDPOINT TESTS PASSED!")
-        print("   Key API endpoints verified:")
-        print("   - GET /api/cambridge/books returns ielts18 with 4 available tests")
-        print("   - GET /api/cambridge/test/ielts18/test1 returns complete test structure")
-        print("   - GET /api/cambridge/test/ielts18/test2 returns complete test structure + map_image")
-        print("   - GET /api/cambridge/test/ielts18/test3 returns complete test structure")
-        print("   - GET /api/cambridge/test/ielts18/test4 returns complete test structure")
-        print("   - All tests have listening (4 parts), reading (3 passages), writing (2 tasks)")
-        print("   - Matching questions have options array, items array, and instruction text")
+    if cambridge_18_speaking_passed:
+        print("✅ ALL CAMBRIDGE IELTS 18 SPEAKING CONTENT TESTS PASSED!")
+        print("   Key speaking content verified for all 4 tests:")
+        print("   - Part 1: Has questions OR sample_questions array (not empty)")
+        print("   - Part 2: Has cue_card with topic and (bullet_points OR points) array")
+        print("   - Part 3: Has discussion_topics array with questions")
+        print("   - No missing content found in any test")
     else:
-        print("❌ SOME CAMBRIDGE IELTS 18 API ENDPOINT TESTS FAILED!")
+        print("❌ SOME CAMBRIDGE IELTS 18 SPEAKING CONTENT TESTS FAILED!")
+        print("   Check the detailed output above for specific missing content")
     
-    print("\n🎯 Cambridge IELTS 18 API endpoint testing complete!")
+    print("\n🎯 Cambridge IELTS 18 Speaking content testing complete!")
     
-    exit(0 if cambridge_18_passed else 1)
+    exit(0 if cambridge_18_speaking_passed else 1)
