@@ -64,10 +64,7 @@ IELTS18_TEST1 = {
                     "title": "Urban planning discussion",
                     "question_range": "21-30",
                     "question_count": 10,
-                    "context": "Two students discussing an assignment on urban
-
-
- planning",
+                    "context": "Two students discussing an assignment on urban planning",
                     "question_types": ["multiple_choice", "matching"],
                     "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/wlt7wyhd_18%20section1-part3.mp3",
                     "questions": [
