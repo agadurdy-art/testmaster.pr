@@ -23,6 +23,45 @@ IELTS18_TEST4 = {
                     "question_count": 10,
                     "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/0j10j9a6_18%20section4%20part1.mp3",
                     "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
+                    "visual": {
+                        "type": "notes",
+                        "title": "Job details from employment agency",
+                        "sections": [
+                            {
+                                "heading": "",
+                                "items": [
+                                    "Role: ___1___",
+                                    "Location: Fordham ___2___ Centre",
+                                    "___3___ Road, Fordham"
+                                ]
+                            },
+                            {
+                                "heading": "Work involves",
+                                "items": [
+                                    "dealing with enquiries",
+                                    "making ___4___ and reorganising them",
+                                    "maintaining the internal ___5___",
+                                    "general administration"
+                                ]
+                            },
+                            {
+                                "heading": "Requirements",
+                                "items": [
+                                    "___6___ (essential)",
+                                    "a calm and ___7___ manner",
+                                    "good IT skills"
+                                ]
+                            },
+                            {
+                                "heading": "Other information",
+                                "items": [
+                                    "a ___8___ job – further opportunities may be available",
+                                    "hours: 7.45 a.m. to ___9___ p.m. Monday to Friday",
+                                    "___10___ is available onsite"
+                                ]
+                            }
+                        ]
+                    },
                     "questions": [
                         {"number": 1, "type": "form_completion", "answer": "receptionist"},
                         {"number": 2, "type": "form_completion", "answer": "Leisure"},
