@@ -748,8 +748,8 @@ export default function QuestionBank() {
               </Card>
               
               {/* Coming Soon Books */}
-              <div className="grid md:grid-cols-3 gap-4">
-                {['IELTS 16', 'IELTS 18', 'IELTS 19'].map(book => (
+              <div className="grid md:grid-cols-2 gap-4">
+                {['IELTS 16', 'IELTS 19'].map(book => (
                   <Card key={book} className="p-5 bg-gray-50 border-2 border-dashed border-gray-200">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-10 h-10 rounded-lg bg-gray-200 flex items-center justify-center">
