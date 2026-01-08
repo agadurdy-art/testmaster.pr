@@ -205,7 +205,7 @@ IELTS18_TEST4 = {
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
                     "visual_url": "VISUAL_PLACEHOLDER",
-                    "prompt": "PROMPT_PLACEHOLDER"
+                    "prompt": "The line graph below shows the average monthly change in the prices of three metals during 2014. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
                     "task_number": 2,
@@ -213,7 +213,7 @@ IELTS18_TEST4 = {
                     "description": "Write an essay",
                     "word_limit": "at least 250 words",
                     "time_suggestion": "40 minutes",
-                    "prompt": "PROMPT_PLACEHOLDER"
+                    "prompt": "In some countries, people are having fewer children. What do you think the reasons are? Is it a positive or negative development?"
                 }
             ]
         },
