@@ -13,7 +13,7 @@ import uuid
 
 router = APIRouter(prefix="/api/cambridge", tags=["cambridge"])
 
-# Import test content
+# Import test content - IELTS 17
 try:
     from content.cambridge_tests.ielts17.test1 import IELTS17_TEST1
 except ImportError:
@@ -37,6 +37,31 @@ try:
 except ImportError:
     IELTS17_TEST4 = None
     print("Warning: Could not import IELTS 17 Test 4")
+
+# Import test content - IELTS 18
+try:
+    from content.cambridge_tests.ielts18.test1 import IELTS18_TEST1
+except ImportError:
+    IELTS18_TEST1 = None
+    print("Warning: Could not import IELTS 18 Test 1")
+
+try:
+    from content.cambridge_tests.ielts18.test2 import IELTS18_TEST2
+except ImportError:
+    IELTS18_TEST2 = None
+    print("Warning: Could not import IELTS 18 Test 2")
+
+try:
+    from content.cambridge_tests.ielts18.test3 import IELTS18_TEST3
+except ImportError:
+    IELTS18_TEST3 = None
+    print("Warning: Could not import IELTS 18 Test 3")
+
+try:
+    from content.cambridge_tests.ielts18.test4 import IELTS18_TEST4
+except ImportError:
+    IELTS18_TEST4 = None
+    print("Warning: Could not import IELTS 18 Test 4")
 
 # LLM Key for evaluation
 EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
