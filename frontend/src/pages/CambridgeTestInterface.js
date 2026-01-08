@@ -193,10 +193,24 @@ export default function CambridgeTestInterface() {
   };
 
   const handleAnswerChange = (questionNum, value) => {
-    setAnswers(prev => ({
-      ...prev,
-      [`${currentSection}_${questionNum}`]: value
-    }));
+    // Handle compound question numbers like "14-15", "27-28", "29-30"
+    const qNumStr = String(questionNum);
+    if (qNumStr.includes('-')) {
+      const [start, end] = qNumStr.split('-').map(n => parseInt(n, 10));
+      // Store value for each individual question in the range
+      setAnswers(prev => {
+        const newAnswers = { ...prev };
+        for (let i = start; i <= end; i++) {
+          newAnswers[`${currentSection}_${i}`] = value;
+        }
+        return newAnswers;
+      });
+    } else {
+      setAnswers(prev => ({
+        ...prev,
+        [`${currentSection}_${questionNum}`]: value
+      }));
+    }
   };
 
   const handleStartTest = () => {
