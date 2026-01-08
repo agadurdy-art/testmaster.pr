@@ -266,87 +266,15 @@ IELTS18_TEST3 = {
                     },
                     "questions": [
                         {"number": 31, "type": "note_completion", "answer": "technical"},
-                        {"number": 32, "type": "note_completion", "answer": "
-
-
-affordable"},
-                        {"number": 33, "type": "note_completion", "answer": "
-
-
-thousands"},
-                        {"number": 34, "type": "note_completion", "answer": "
-
-
-
-
-
-identification"},
-                        {"number": 35, "type": "note_completion", "answer": "
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-communicating"},
-                        {"number": 36, "type": "note_completion", "answer": "
-
-
-military"},
-                        {"number": 37, "type": "note_completion", "answer": "
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-position"},
-                        {"number": 38, "type": "note_completion", "answer": "
-
-
-prediction"},
-                        {"number": 39, "type": "note_completion", "answer": "
-
-
-database"},
-                        {"number": 40, "type": "note_completion", "answer": "
-
-
-trust"}
+                        {"number": 32, "type": "note_completion", "answer": "affordable"},
+                        {"number": 33, "type": "note_completion", "answer": "thousands"},
+                        {"number": 34, "type": "note_completion", "answer": "identification"},
+                        {"number": 35, "type": "note_completion", "answer": "communicating"},
+                        {"number": 36, "type": "note_completion", "answer": "military"},
+                        {"number": 37, "type": "note_completion", "answer": "position"},
+                        {"number": 38, "type": "note_completion", "answer": "prediction"},
+                        {"number": 39, "type": "note_completion", "answer": "database"},
+                        {"number": 40, "type": "note_completion", "answer": "trust"}
                     ]
                 }
             ]
