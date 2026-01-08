@@ -1890,7 +1890,7 @@ export default function CambridgeTestInterface() {
           {currentTask.visual_url && (
             <div className="mb-6">
               <img 
-                src={`${API_URL}${currentTask.visual_url}`}
+                src={currentTask.visual_url.startsWith('http') ? currentTask.visual_url : `${API_URL}${currentTask.visual_url}`}
                 alt={currentTask.title || 'Visual'}
                 className="w-full max-w-4xl mx-auto rounded-lg border shadow-sm bg-white"
                 onError={(e) => {
