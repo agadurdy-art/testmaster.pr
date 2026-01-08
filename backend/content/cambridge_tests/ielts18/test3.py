@@ -496,9 +496,10 @@ IELTS18_TEST3 = {
                     "task_number": 1,
                     "task_type": "report",
                     "title": "Writing Task 1",
-                    "prompt": "The graph below gives information about the percentage of the population in four Asian countries living in cities from 1970 to 2020, with predictions for 2030 and 2040.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+                    "prompt": "The two maps below show the change to the Central Library 20 years ago and how it looks now.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "requirements": "Write at least 150 words.",
-                    "visual_url": None,
+                    "visual_url": "https://customer-assets.emergentagent.com/job_756d9309-ff91-4a3b-8fb8-033e2a6316d5/artifacts/trqumjap_cambridge%2018%20test%203%20writing%20task%201%20pic%201.png",
+                    "visual_url_2": "https://customer-assets.emergentagent.com/job_756d9309-ff91-4a3b-8fb8-033e2a6316d5/artifacts/lvq82khh_cambridge%2018%20test%203%20writing%20task%201%20pic%202.png",
                     "time_recommendation": "20 minutes"
                 },
                 {
@@ -509,6 +510,67 @@ IELTS18_TEST3 = {
                     "prompt": "In many countries around the world, rural people are moving to cities, so the population in the countryside is decreasing.\n\nDo you think this is a positive or a negative development?",
                     "requirements": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.",
                     "time_recommendation": "40 minutes"
+                }
+            ]
+        },
+        "speaking": {
+            "total_parts": 3,
+            "duration": "11-14 minutes",
+            "parts": [
+                {
+                    "part_number": 1,
+                    "title": "Introduction and Interview",
+                    "topic": "Online shopping",
+                    "duration": "4-5 minutes",
+                    "instructions": "The examiner will ask you questions about yourself and familiar topics.",
+                    "questions": [
+                        "How often do you buy things online? [Why?]",
+                        "What was the last thing you bought online?",
+                        "Do you ever see things in shops and then buy them online? [Why/Why not?]",
+                        "Do you think the popularity of online shopping is changing your town or city centre? [Why/Why not?]"
+                    ]
+                },
+                {
+                    "part_number": 2,
+                    "title": "Individual Long Turn",
+                    "duration": "3-4 minutes",
+                    "instructions": "You will have to talk about a topic for 1-2 minutes. You have one minute to prepare.",
+                    "cue_card": {
+                        "topic": "Describe a time when you enjoyed visiting a member of your family in their home.",
+                        "bullet_points": [
+                            "who you visited and where they lived",
+                            "why you made this visit",
+                            "what happened during this visit"
+                        ],
+                        "final_prompt": "and explain what you enjoyed about this visit."
+                    },
+                    "follow_up_questions": [
+                        "Do you often visit family members?"
+                    ]
+                },
+                {
+                    "part_number": 3,
+                    "title": "Two-way Discussion",
+                    "duration": "4-5 minutes",
+                    "instructions": "The examiner will ask you further questions connected to the topic in Part 2.",
+                    "discussion_topics": [
+                        {
+                            "topic": "Family occasions",
+                            "questions": [
+                                "When do families celebrate together in your country?",
+                                "How often do all the generations in a family come together in your country?",
+                                "Why is it that some people might not enjoy attending family occasions?"
+                            ]
+                        },
+                        {
+                            "topic": "Everyday life in families",
+                            "questions": [
+                                "Do you think it is a good thing for parents to help their children with schoolwork?",
+                                "How important do you think it is for families to eat together at least once a day?",
+                                "Do you believe that everyone in a family should share household tasks?"
+                            ]
+                        }
+                    ]
                 }
             ]
         }
