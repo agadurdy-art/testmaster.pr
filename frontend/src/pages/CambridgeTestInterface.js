@@ -1845,6 +1845,49 @@ export default function CambridgeTestInterface() {
                 </p>
               </div>
               
+              {/* Two maps/images side by side (for map comparison tasks) */}
+              {currentTask.visual_url && currentTask.visual_url_2 && (
+                <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+                    <div className="bg-gray-100 px-4 py-2 border-b">
+                      <h4 className="text-sm font-semibold text-gray-700 text-center">20 years ago</h4>
+                    </div>
+                    <img 
+                      src={currentTask.visual_url}
+                      alt="Map - 20 years ago" 
+                      className="max-w-full mx-auto p-2"
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                  </div>
+                  <div className="bg-white rounded-lg border shadow-sm overflow-hidden">
+                    <div className="bg-gray-100 px-4 py-2 border-b">
+                      <h4 className="text-sm font-semibold text-gray-700 text-center">Now</h4>
+                    </div>
+                    <img 
+                      src={currentTask.visual_url_2}
+                      alt="Map - Now" 
+                      className="max-w-full mx-auto p-2"
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Single visual URL (for tests with direct URLs) */}
+              {currentTask.visual_url && !currentTask.visual_url_2 && (
+                <div className="mb-4 bg-white rounded-lg border shadow-sm overflow-hidden">
+                  <div className="bg-gray-100 px-4 py-2 border-b">
+                    <h4 className="text-sm font-semibold text-gray-700 text-center">Visual Reference</h4>
+                  </div>
+                  <img 
+                    src={currentTask.visual_url.startsWith('http') ? currentTask.visual_url : `${API_URL}${currentTask.visual_url}`}
+                    alt="Task 1 Visual" 
+                    className="max-w-full mx-auto p-2"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                </div>
+              )}
+              
               {/* Visual data - Image with improved presentation */}
               {currentTask.visual && (
                 <div className="mb-4 bg-white rounded-lg border shadow-sm overflow-hidden">
@@ -1863,8 +1906,8 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
               
-              {/* External image URL (for tests with direct URLs) */}
-              {currentTask.image_url && !currentTask.visual && (
+              {/* External image URL (for tests with direct URLs) - legacy support */}
+              {currentTask.image_url && !currentTask.visual && !currentTask.visual_url && (
                 <div className="mb-4 bg-white rounded-lg border shadow-sm overflow-hidden">
                   <div className="bg-gray-100 px-4 py-2 border-b">
                     <h4 className="text-sm font-semibold text-gray-700 text-center">
