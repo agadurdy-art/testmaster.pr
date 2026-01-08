@@ -1386,15 +1386,42 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
 
-              {/* Matching Features (Researcher Matching) */}
+              {/* Matching Information */}
+              {q.type === 'matching_information' && (
+                <div className="space-y-3">
+                  <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
+                  {q.items?.map((item, iIdx) => (
+                    <div key={iIdx} className="p-3 bg-white border rounded-lg flex items-start gap-3">
+                      <span className="font-bold text-green-600 w-8 flex-shrink-0">{item.number}.</span>
+                      <span className="text-sm flex-1">{item.text || item.question_text}</span>
+                      <select
+                        value={answers[`reading_${item.number}`] || ''}
+                        onChange={(e) => handleAnswerChange(item.number, e.target.value)}
+                        className="w-16 px-2 py-1 border rounded text-sm flex-shrink-0"
+                      >
+                        <option value="">-</option>
+                        {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'].map(l => (
+                          <option key={l} value={l}>{l}</option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Matching Features (Researcher/Person Matching) */}
               {q.type === 'matching_features' && (
                 <div className="space-y-3">
                   <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
-                  {q.researchers && (
+                  {/* Options title and list if provided */}
+                  {(q.options_title || q.researchers) && (
                     <div className="p-3 bg-green-50 rounded-lg border border-green-200">
-                      <h5 className="font-semibold text-sm mb-2 text-green-800">List of Researchers</h5>
+                      <h5 className="font-semibold text-sm mb-2 text-green-800">{q.options_title || 'List of Researchers'}</h5>
                       <div className="grid grid-cols-2 gap-2 text-sm">
-                        {q.researchers.map((r, rIdx) => (
+                        {q.options?.map((opt, oIdx) => (
+                          <div key={oIdx} className="text-gray-700">{opt}</div>
+                        ))}
+                        {q.researchers?.map((r, rIdx) => (
                           <div key={rIdx} className="text-gray-700">
                             <span className="font-bold">{r.letter}</span> - {r.name}
                           </div>
