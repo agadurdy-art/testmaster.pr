@@ -1974,8 +1974,8 @@ export default function CambridgeTestInterface() {
             </div>
           )}
 
-          {/* Visual URL (Cambridge tests with static images) */}
-          {currentTask.visual_url && (
+          {/* Visual URL (Cambridge tests with static images - only if no dual visuals) */}
+          {currentTask.visual_url && !currentTask.visual_url_2 && (
             <div className="mb-6">
               <img 
                 src={currentTask.visual_url.startsWith('http') ? currentTask.visual_url : `${API_URL}${currentTask.visual_url}`}
