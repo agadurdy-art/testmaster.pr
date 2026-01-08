@@ -247,22 +247,10 @@ But Anna Surgenor, of the UK's Green Building Council, notes that although these
 
 
 ", "answer": "NOT GIVEN"},
-                                {"number": 10, "statement": "
-
-
-", "answer": "TRUE"},
-                                {"number": 11, "statement": "
-
-
-", "answer": "FALSE"},
-                                {"number": 12, "statement": "
-
-
-", "answer": "TRUE"},
-                                {"number": 13, "statement": "
-
-
-", "answer": "NOT GIVEN"}
+                                {"number": 10, "statement": "-", "answer": "TRUE"},
+                                {"number": 11, "statement": "-", "answer": "FALSE"},
+                                {"number": 12, "statement": "-", "answer": "TRUE"},
+                                {"number": 13, "statement": "-", "answer": "NOT GIVEN"}
                             ]
                         }
                     ]
@@ -389,110 +377,101 @@ Having a variety of different abilities in a collaborative learning environment 
 without
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__( are", "answer": "YES"},
+( are", "answer": "YES"},
                                 {"number": 37, "statement": "
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__( ", "answer": "NOT GIVEN"},
-                                {"number": 38, "statement": "
-
-
-", "answer": "YES"},
-                                {"number": 39, "statement": "
-
-
-", "answer": "NO"},
-                                {"number": 40, "statement": "
-
-
-", "answer": "YES"}
+(((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((( ", "answer": "NOT GIVEN"},
+                                {"number": 38, "statement": "-", "answer": "YES"},
+                                {"number": 39, "statement": "-", "answer": "NO"},
+                                {"number": 40, "statement": "-", "answer": "YES"}
                             ]
                         }
                     ]

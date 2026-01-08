@@ -51,167 +51,167 @@ IELTS18_TEST2 = {
                         {
                             "number": "11-12",
                             "type": "multiple_selection",
-                            "question_text": "Which TWO things does the speaker say about the__(
+                            "question_text": "Which TWO things does the speaker say about the(
 
 
 new
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
 __
 
 
-__(community
+(community
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
 center",
                             "options": ["A The
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(", "B
+(", "B
 
 
-__(", "C
+(", "C
 
 
-__(", "D
+(", "D
 
 
-__(", "E
+(", "E
 
 
-__("],
+("],
                             "answer": ["B", "E"],
                             "select_count": 2
                         },
@@ -221,95 +221,95 @@ __("],
                             "question_text": "Which TWO facilities
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(",
+(",
                             "options": ["A
 
 
-__(", "B
+(", "B
 
 
-__(", "C
+(", "C
 
 
-__(", "D
+(", "D
 
 
-__(", "E
+(", "E
 
 
-__("],
+("],
                             "answer": ["B", "C"],
                             "select_count": 2
                         },
@@ -336,76 +336,76 @@ __("],
                             "question_text": "Why do the students
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(__(
+((
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(",
+(",
                             "options": ["A It was the most severe eruption in modern times.", "B It led to the formal study of volcanoes.", "C It had a profound effect on society."],
                             "answer": "C"
                         },
@@ -441,34 +441,34 @@ __(",
                         {
                             "number": "27-30",
                             "type": "matching",
-                            "instruction": "What comment do the students make about the impact of the__(
+                            "instruction": "What comment do the students make about the impact of the(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(",
+(",
                             "items": [
                                 {"number": 27, "item": "Iceland"},
                                 {"number": 28, "item": "Egypt"},
@@ -479,64 +479,64 @@ __(",
                             "options": ["A
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__( severe loss of life.", "B
+( severe loss of life.", "B
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(agriculture
+(agriculture
 
 
-__(
+(
 
 
-__(predictable.", "C
+(predictable.", "C
 
 
-__(
+(
 
 
-__(significant increase in deaths of young people.", "D
+(significant increase in deaths of young people.", "D
 
 
-__(
+(
 
 
-__(Animals suffered from a sickness.", "E
+(Animals suffered from a sickness.", "E
 
 
-__(
+(
 
 
-__(highest rise in food prices in the world.", "F
+(highest rise in food prices in the world.", "F
 
 
-__(
+(
 
 
-__( a particularly harsh winter."],
+( a particularly harsh winter."],
                             "answers": {"27": "D", "28": "A", "29": "C", "30": "F"}
                         }
                     ]

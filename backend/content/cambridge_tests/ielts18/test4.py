@@ -186,103 +186,85 @@ However, green roofs also present challenges. The initial installation cost can 
                                 {"number": 1, "statement": "
 
 
-The__(
+The(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
 __
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(
+(
 
 
-__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__(__( ", "answer": "TRUE"},
-                                {"number": 2, "statement": "
-
-
-", "answer": "FALSE"},
-                                {"number": 3, "statement": "
-
-
-", "answer": "NOT GIVEN"},
-                                {"number": 4, "statement": "
-
-
-", "answer": "TRUE"},
-                                {"number": 5, "statement": "
-
-
-", "answer": "TRUE"},
-                                {"number": 6, "statement": "
-
-
-", "answer": "NOT GIVEN"},
-                                {"number": 7, "statement": "
-
-
-", "answer": "FALSE"}
+(((((((((((((((((((((((((((((((((((((((((((((((((((((((((( ", "answer": "TRUE"},
+                                {"number": 2, "statement": "-", "answer": "FALSE"},
+                                {"number": 3, "statement": "-", "answer": "NOT GIVEN"},
+                                {"number": 4, "statement": "-", "answer": "TRUE"},
+                                {"number": 5, "statement": "-", "answer": "TRUE"},
+                                {"number": 6, "statement": "-", "answer": "NOT GIVEN"},
+                                {"number": 7, "statement": "-", "answer": "FALSE"}
                             ]
                         },
                         {
@@ -358,30 +340,12 @@ The importance of play continues into adulthood. Play helps adults maintain soci
                             "type": "yes_no_not_given",
                             "instruction": "Do the following statements agree with the claims of the writer in Reading Passage 2?",
                             "statements": [
-                                {"number": 21, "statement": "
-
-
-", "answer": "YES"},
-                                {"number": 22, "statement": "
-
-
-", "answer": "NOT GIVEN"},
-                                {"number": 23, "statement": "
-
-
-", "answer": "NO"},
-                                {"number": 24, "statement": "
-
-
-", "answer": "YES"},
-                                {"number": 25, "statement": "
-
-
-", "answer": "NO"},
-                                {"number": 26, "statement": "
-
-
-", "answer": "YES"}
+                                {"number": 21, "statement": "-", "answer": "YES"},
+                                {"number": 22, "statement": "-", "answer": "NOT GIVEN"},
+                                {"number": 23, "statement": "-", "answer": "NO"},
+                                {"number": 24, "statement": "-", "answer": "YES"},
+                                {"number": 25, "statement": "-", "answer": "NO"},
+                                {"number": 26, "statement": "-", "answer": "YES"}
                             ]
                         }
                     ]
@@ -409,30 +373,12 @@ The future of work will be shaped by the choices we make today. While the challe
                             "type": "true_false_not_given",
                             "instruction": "Do the following statements agree with the information given in Reading Passage 3?",
                             "statements": [
-                                {"number": 27, "statement": "
-
-
-", "answer": "TRUE"},
-                                {"number": 28, "statement": "
-
-
-", "answer": "FALSE"},
-                                {"number": 29, "statement": "
-
-
-", "answer": "NOT GIVEN"},
-                                {"number": 30, "statement": "
-
-
-", "answer": "TRUE"},
-                                {"number": 31, "statement": "
-
-
-", "answer": "FALSE"},
-                                {"number": 32, "statement": "
-
-
-", "answer": "TRUE"}
+                                {"number": 27, "statement": "-", "answer": "TRUE"},
+                                {"number": 28, "statement": "-", "answer": "FALSE"},
+                                {"number": 29, "statement": "-", "answer": "NOT GIVEN"},
+                                {"number": 30, "statement": "-", "answer": "TRUE"},
+                                {"number": 31, "statement": "-", "answer": "FALSE"},
+                                {"number": 32, "statement": "-", "answer": "TRUE"}
                             ]
                         },
                         {
