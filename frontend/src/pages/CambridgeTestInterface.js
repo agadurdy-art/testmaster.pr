@@ -2374,7 +2374,7 @@ export default function CambridgeTestInterface() {
           )}
 
           {/* Part 2 - Task Card (Visible) */}
-          {isPart2 && (currentSpeakingPart.task_card || currentSpeakingPart.topic_card) && (
+          {isPart2 && (currentSpeakingPart.cue_card || currentSpeakingPart.task_card || currentSpeakingPart.topic_card) && (
             <div className="space-y-6">
               {/* Task Card - Visible like real test */}
               <div className="p-6 bg-amber-50 border-2 border-amber-400 rounded-xl shadow-md">
@@ -2382,11 +2382,13 @@ export default function CambridgeTestInterface() {
                   <Badge className="bg-amber-200 text-amber-800 text-sm px-4 py-1">TASK CARD</Badge>
                 </div>
                 <h4 className="font-bold text-lg mb-4 text-amber-900">
-                  {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.instruction}
+                  {currentSpeakingPart.cue_card?.topic || 
+                   (currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.instruction}
                 </h4>
                 <p className="text-sm text-gray-600 mb-4 font-medium">You should say:</p>
                 <ul className="space-y-3 mb-6">
-                  {((currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.points || 
+                  {(currentSpeakingPart.cue_card?.bullet_points ||
+                    (currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.points || 
                     (currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.bullets)?.map((point, pIdx) => (
                     <li key={pIdx} className="flex items-start gap-3 text-gray-700">
                       <span className="w-6 h-6 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0 text-amber-800 font-bold text-sm">
@@ -2396,10 +2398,12 @@ export default function CambridgeTestInterface() {
                     </li>
                   ))}
                 </ul>
-                {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.final_prompt && (
+                {(currentSpeakingPart.cue_card?.final_prompt ||
+                  (currentSpeakingPart.task_card || currentSpeakingPart.topic_card)?.final_prompt) && (
                   <div className="pt-4 border-t border-amber-300">
                     <p className="text-sm text-amber-700 font-medium">
-                      {(currentSpeakingPart.task_card || currentSpeakingPart.topic_card).final_prompt}
+                      {currentSpeakingPart.cue_card?.final_prompt ||
+                       (currentSpeakingPart.task_card || currentSpeakingPart.topic_card).final_prompt}
                     </p>
                   </div>
                 )}
