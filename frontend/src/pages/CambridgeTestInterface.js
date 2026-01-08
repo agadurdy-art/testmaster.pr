@@ -1484,6 +1484,61 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
 
+              {/* Table Completion */}
+              {q.type === 'table_completion' && (
+                <div className="space-y-3">
+                  <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
+                  {q.title && <h5 className="font-semibold text-gray-800 text-center">{q.title}</h5>}
+                  {q.table && (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm border-collapse">
+                        <thead>
+                          <tr className="bg-green-50">
+                            {q.table.headers?.map((header, hIdx) => (
+                              <th key={hIdx} className="border border-green-200 px-3 py-2 text-left font-semibold text-green-800">
+                                {header}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {q.table.rows?.map((row, rIdx) => (
+                            <tr key={rIdx} className={rIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                              <td className="border border-green-200 px-3 py-2 font-medium text-gray-700">
+                                {row.label}
+                              </td>
+                              {row.cells?.map((cell, cIdx) => (
+                                <td key={cIdx} className="border border-green-200 px-3 py-2 text-gray-700">
+                                  {cell.includes('___') ? (
+                                    <span>
+                                      {cell.split(/___(\d+)___/).map((part, pIdx) => {
+                                        if (/^\d+$/.test(part)) {
+                                          return (
+                                            <input
+                                              key={pIdx}
+                                              type="text"
+                                              value={answers[`reading_${part}`] || ''}
+                                              onChange={(e) => handleAnswerChange(part, e.target.value)}
+                                              className="mx-1 px-2 py-1 border-b-2 border-green-400 bg-green-50 text-center w-24 focus:outline-none focus:border-green-600"
+                                              placeholder={part}
+                                            />
+                                          );
+                                        }
+                                        return <span key={pIdx}>{part}</span>;
+                                      })}
+                                    </span>
+                                  ) : cell}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Summary Completion */}
               {q.type === 'summary_completion' && (
                 <div className="space-y-3">
