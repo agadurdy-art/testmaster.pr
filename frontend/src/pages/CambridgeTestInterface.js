@@ -1632,54 +1632,28 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
 
-              {/* Generic Question Types - sentence_completion, table_completion, matching_information, etc. */}
-              {['sentence_completion', 'table_completion', 'matching_information', 'matching_features', 'summary_completion', 'true_false_notgiven', 'yes_no_notgiven'].includes(q.type) && (
+              {/* Generic Question Types - fallback for individual questions without items array */}
+              {['true_false_notgiven', 'yes_no_notgiven'].includes(q.type) && !q.items && !q.statements && (
                 <div className="p-4 bg-white border rounded-lg">
                   <div className="flex items-start gap-3">
                     <span className="font-bold text-green-600 w-8">{q.number}.</span>
                     <div className="flex-1">
                       <p className="text-sm mb-3">{q.question_text || q.statement || q.item}</p>
-                      {/* True/False/Not Given or Yes/No/Not Given */}
-                      {(q.type === 'true_false_notgiven' || q.type === 'yes_no_notgiven') && (
-                        <div className="flex gap-4">
-                          {(q.type === 'true_false_notgiven' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : ['YES', 'NO', 'NOT GIVEN']).map(opt => (
-                            <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                              <input
-                                type="radio"
-                                name={`reading_q${q.number}`}
-                                value={opt}
-                                checked={answers[`reading_${q.number}`] === opt}
-                                onChange={(e) => handleAnswerChange(q.number, e.target.value)}
-                                className="w-4 h-4 text-green-600"
-                              />
-                              <span className="text-sm font-medium">{opt}</span>
-                            </label>
-                          ))}
-                        </div>
-                      )}
-                      {/* Text input for sentence/table/summary completion */}
-                      {['sentence_completion', 'table_completion', 'summary_completion'].includes(q.type) && (
-                        <input
-                          type="text"
-                          value={answers[`reading_${q.number}`] || ''}
-                          onChange={(e) => handleAnswerChange(q.number, e.target.value)}
-                          className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-green-500"
-                          placeholder="Type your answer..."
-                        />
-                      )}
-                      {/* Letter selection for matching questions */}
-                      {['matching_information', 'matching_features'].includes(q.type) && (
-                        <select
-                          value={answers[`reading_${q.number}`] || ''}
-                          onChange={(e) => handleAnswerChange(q.number, e.target.value)}
-                          className="w-24 px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-green-500"
-                        >
-                          <option value="">-</option>
-                          {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'].map(l => (
-                            <option key={l} value={l}>{l}</option>
-                          ))}
-                        </select>
-                      )}
+                      <div className="flex gap-4">
+                        {(q.type === 'true_false_notgiven' ? ['TRUE', 'FALSE', 'NOT GIVEN'] : ['YES', 'NO', 'NOT GIVEN']).map(opt => (
+                          <label key={opt} className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="radio"
+                              name={`reading_q${q.number}`}
+                              value={opt}
+                              checked={answers[`reading_${q.number}`] === opt}
+                              onChange={(e) => handleAnswerChange(q.number, e.target.value)}
+                              className="w-4 h-4 text-green-600"
+                            />
+                            <span className="text-sm font-medium">{opt}</span>
+                          </label>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
