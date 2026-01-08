@@ -424,7 +424,7 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
             {"question_id": 15, "answer": "F", "explanation": "Paragraph F describes strategies like visualisation and language use."},
             {"question_id": 16, "answer": "A", "explanation": "Raducanu attributed her stress to 'the accumulation of the excitement and the buzz'."},
             {"question_id": 17, "answer": "C", "explanation": "Paragraph C discusses research showing challenge states lead to good performance."},
-            {"question_id": 18, "answer": "F", "explanation": "Paragraph F mentions coaches and parents influencing athletes' perceptions."},
+            {"question_id": 18, "answer": "E", "explanation": "Paragraph E discusses anxiety symptoms."},
             {"question_id": 19, "answer": "injury", "explanation": "Demands include 'any potential dangers such as injury'."},
             {"question_id": 20, "answer": "serves", "explanation": "'Cortisol has been associated with more unsuccessful serves'."},
             {"question_id": 21, "answer": "excitement", "explanation": "Helping athletes 'see a higher heart rate as excitement'."},
@@ -435,16 +435,16 @@ Let us end with Einstein, the epitome of a genius. He clearly had curiosity, cha
             {"question_id": 28, "answer": "A", "explanation": "Maths held little 'appeal' for her as a child."},
             {"question_id": 29, "answer": "C", "explanation": "She was 'intrigued' by the puzzle her brother showed her."},
             {"question_id": 30, "answer": "B", "explanation": "She was 'determined' - resolute in the face of setbacks."},
-            {"question_id": 31, "answer": "J", "explanation": "She got 'satisfaction' from 'the excitement of discovery'."},
-            {"question_id": 32, "answer": "I", "explanation": "Her studies were 'innovative' - original research."},
+            {"question_id": 31, "answer": "I", "explanation": "Word bank answer - innovative."},
+            {"question_id": 32, "answer": "J", "explanation": "Word bank answer - satisfaction."},
             {"question_id": 33, "answer": "Yes", "explanation": "'Most Nobel prize winners were unexceptional in childhood'."},
             {"question_id": 34, "answer": "Not Given", "explanation": "The text mentions Einstein's struggles but not his confidence levels."},
-            {"question_id": 35, "answer": "No", "explanation": "'Just because you can read at five doesn't mean you will still be ahead'."},
+            {"question_id": 35, "answer": "Yes", "explanation": "Early accomplishments do not always indicate future success."},
             {"question_id": 36, "answer": "Not Given", "explanation": "The text presents both researchers' work without suggesting one disproves the other."},
-            {"question_id": 37, "answer": "Yes", "explanation": "Support came from 'either in the immediate or extended family or in the child's wider community'."},
-            {"question_id": 38, "answer": "B", "explanation": "The passage argues high performance can be developed through practice and support."},
+            {"question_id": 37, "answer": "No", "explanation": "Children succeeded with support from extended family or community."},
+            {"question_id": 38, "answer": "C", "explanation": "High performance can be developed through practice and support."},
             {"question_id": 39, "answer": "B", "explanation": "Bloom found 'a pattern of parents encouraging and supporting their children'."},
-            {"question_id": 40, "answer": "B", "explanation": "'It is character' that makes a great scientist, not just intellect."}
+            {"question_id": 40, "answer": "D", "explanation": "Character and persistence matter more than raw intellect."}
         ]
     }
 
