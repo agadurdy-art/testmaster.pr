@@ -411,34 +411,7 @@ G. Thinnings and dense and dead wood removal for fire prevention also center on 
                         {"number": 16, "type": "matching_information", "question_text": "mention of the potential use of wood to help run vehicles", "answer": "C"},
                         {"number": 17, "type": "matching_information", "question_text": "examples of insects that attack trees", "answer": "E"},
                         {"number": 18, "type": "matching_information", "question_text": "an alternative name for trees that produce low-use wood", "answer": "B"},
-                        {"number": 19, "type": "matching_features", "question_text": "
-
-
-to
-
-
-prevent
-
-
-
-
-
-
-
-
- 
-
-
-competition
-
-
- 
-
-
-__(purpose)__
-
-
-", "answer": "B"},
+                        {"number": 19, "type": "matching_features", "question_text": "to prevent competition", "answer": "B"},
                         {"number": 20, "type": "multiple_choice", "answer": "C"},
                         {"number": 21, "type": "multiple_choice", "answer": "C"},
                         {"number": 22, "type": "sentence_completion", "answer": "fire"},
