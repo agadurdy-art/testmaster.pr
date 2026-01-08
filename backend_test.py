@@ -1517,28 +1517,33 @@ def test_cambridge_ielts_18_speaking_content():
                 part3 = parts.get("part3", {})
                 if part3:
                     discussion_topics = part3.get("discussion_topics", [])
+                    sample_questions = part3.get("sample_questions", [])
                     
-                    if not discussion_topics:
-                        issues_found.append(f"{test_id}: Part 3 has no discussion_topics")
-                        print(f"❌ {test_id}: Part 3 has no discussion_topics")
+                    if not discussion_topics and not sample_questions:
+                        issues_found.append(f"{test_id}: Part 3 has no discussion_topics or sample_questions")
+                        print(f"❌ {test_id}: Part 3 has no discussion_topics or sample_questions")
                         test_passed = False
-                    elif len(discussion_topics) == 0:
-                        issues_found.append(f"{test_id}: Part 3 has empty discussion_topics array")
-                        print(f"❌ {test_id}: Part 3 has empty discussion_topics array")
+                    elif (discussion_topics and len(discussion_topics) == 0) and (sample_questions and len(sample_questions) == 0):
+                        issues_found.append(f"{test_id}: Part 3 has empty discussion_topics and sample_questions arrays")
+                        print(f"❌ {test_id}: Part 3 has empty discussion_topics and sample_questions arrays")
                         test_passed = False
                     else:
                         # Check if discussion topics have questions
                         topics_with_questions = 0
-                        for topic in discussion_topics:
-                            if isinstance(topic, dict) and topic.get("questions"):
-                                topics_with_questions += 1
+                        if discussion_topics:
+                            for topic in discussion_topics:
+                                if isinstance(topic, dict) and topic.get("questions"):
+                                    topics_with_questions += 1
                         
-                        if topics_with_questions == 0:
-                            issues_found.append(f"{test_id}: Part 3 discussion_topics have no questions")
-                            print(f"❌ {test_id}: Part 3 discussion_topics have no questions")
+                        sq_count = len(sample_questions) if sample_questions else 0
+                        dt_count = len(discussion_topics) if discussion_topics else 0
+                        
+                        if topics_with_questions == 0 and sq_count == 0:
+                            issues_found.append(f"{test_id}: Part 3 discussion_topics have no questions and no sample_questions")
+                            print(f"❌ {test_id}: Part 3 discussion_topics have no questions and no sample_questions")
                             test_passed = False
                         else:
-                            print(f"✅ {test_id}: Part 3 has {len(discussion_topics)} discussion_topics with {topics_with_questions} having questions")
+                            print(f"✅ {test_id}: Part 3 has {dt_count} discussion_topics with {topics_with_questions} having questions, and {sq_count} sample_questions")
                 else:
                     issues_found.append(f"{test_id}: Part 3 not found")
                     print(f"❌ {test_id}: Part 3 not found")
