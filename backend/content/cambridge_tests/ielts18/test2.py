@@ -23,7 +23,7 @@ IELTS18_TEST2 = {
                     "question_count": 10,
                     "context": "Conversation",
                     "question_types": ["note_completion"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/yop1zyzd_18%20section2-part1.mp3",
                     "questions": [
                         {"number": 1, "type": "note_completion", "answer": "training"},
                         {"number": 2, "type": "note_completion", "answer": "discount"},
@@ -44,7 +44,8 @@ IELTS18_TEST2 = {
                     "question_count": 10,
                     "context": "Monologue",
                     "question_types": ["multiple_selection", "matching"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/9m4gec9w_18%20section2-part2.mp3",
+                    "map_image": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/2h4t8ajo_cambridge%2018%20test%202%20Listening%20Q15-20.png",
                     "questions": [
                         {"number": "11-12", "type": "multiple_selection", "answer": ["B", "E"], "answer_count": 2},
                         {"number": "13-14", "type": "multiple_selection", "answer": ["B", "C"], "answer_count": 2},
