@@ -1425,11 +1425,12 @@ def test_cambridge_ielts_18_speaking_content():
             if response.status_code == 200:
                 result = response.json()
                 test_data = result.get("test", {})
-                speaking = test_data.get("speaking", {})
+                sections = test_data.get("sections", {})
+                speaking = sections.get("speaking", {})
                 parts = speaking.get("parts", {})
                 
                 print(f"✅ API call successful for {test_id}")
-                print(f"   Debug: test_data keys: {list(test_data.keys())}")
+                print(f"   Debug: sections keys: {list(sections.keys())}")
                 print(f"   Debug: speaking keys: {list(speaking.keys()) if speaking else 'No speaking section'}")
                 print(f"   Debug: parts type: {type(parts)}")
                 
