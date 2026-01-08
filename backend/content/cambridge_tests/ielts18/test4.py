@@ -1,6 +1,6 @@
 """
 Cambridge IELTS 18 - Test 4
-Complete test structure following Cambridge 17 format
+Complete test with answer keys
 """
 
 IELTS18_TEST4 = {
@@ -24,9 +24,17 @@ IELTS18_TEST4 = {
                     "context": "Conversation",
                     "question_types": ["note_completion"],
                     "audio_file": "AUDIO_PLACEHOLDER",
-                    "instructions": "Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.",
                     "questions": [
-                        {"number": i, "type": "note_completion", "answer": "TBD"} for i in range(1, 11)
+                        {"number": 1, "type": "note_completion", "answer": "receptionist"},
+                        {"number": 2, "type": "note_completion", "answer": "Medical"},
+                        {"number": 3, "type": "note_completion", "answer": "Chastons"},
+                        {"number": 4, "type": "note_completion", "answer": "appointments"},
+                        {"number": 5, "type": "note_completion", "answer": "database"},
+                        {"number": 6, "type": "note_completion", "answer": "experience"},
+                        {"number": 7, "type": "note_completion", "answer": "confident"},
+                        {"number": 8, "type": "note_completion", "answer": "temporary"},
+                        {"number": 9, "type": "note_completion", "answer": "1.15"},
+                        {"number": 10, "type": "note_completion", "answer": "parking"}
                     ]
                 },
                 {
@@ -38,7 +46,16 @@ IELTS18_TEST4 = {
                     "question_types": ["multiple_choice", "matching"],
                     "audio_file": "AUDIO_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(11, 21)
+                        {"number": 11, "type": "multiple_choice", "answer": "B"},
+                        {"number": 12, "type": "multiple_choice", "answer": "A"},
+                        {"number": 13, "type": "multiple_choice", "answer": "A"},
+                        {"number": 14, "type": "multiple_choice", "answer": "C"},
+                        {"number": 15, "type": "matching", "answer": "F"},
+                        {"number": 16, "type": "matching", "answer": "G"},
+                        {"number": 17, "type": "matching", "answer": "E"},
+                        {"number": 18, "type": "matching", "answer": "A"},
+                        {"number": 19, "type": "matching", "answer": "C"},
+                        {"number": 20, "type": "matching", "answer": "B"}
                     ]
                 },
                 {
@@ -47,10 +64,18 @@ IELTS18_TEST4 = {
                     "question_range": "21-30",
                     "question_count": 10,
                     "context": "Discussion",
-                    "question_types": ["multiple_choice", "matching"],
+                    "question_types": ["multiple_selection", "multiple_choice", "matching"],
                     "audio_file": "AUDIO_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(21, 31)
+                        {"number": "21-22", "type": "multiple_selection", "answer": ["B", "D"], "answer_count": 2},
+                        {"number": 23, "type": "multiple_choice", "answer": "D"},
+                        {"number": 24, "type": "multiple_choice", "answer": "A"},
+                        {"number": 25, "type": "multiple_choice", "answer": "C"},
+                        {"number": 26, "type": "matching", "answer": "G"},
+                        {"number": 27, "type": "matching", "answer": "F"},
+                        {"number": 28, "type": "matching", "answer": "A"},
+                        {"number": 29, "type": "matching", "answer": "B"},
+                        {"number": 30, "type": "matching", "answer": "C"}
                     ]
                 },
                 {
@@ -62,11 +87,27 @@ IELTS18_TEST4 = {
                     "question_types": ["sentence_completion"],
                     "audio_file": "AUDIO_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(31, 41)
+                        {"number": 31, "type": "sentence_completion", "answer": "plot"},
+                        {"number": 32, "type": "sentence_completion", "answer": "poverty"},
+                        {"number": 33, "type": "sentence_completion", "answer": "Europe"},
+                        {"number": 34, "type": "sentence_completion", "answer": "poetry"},
+                        {"number": 35, "type": "sentence_completion", "answer": "drawings"},
+                        {"number": 36, "type": "sentence_completion", "answer": "furniture"},
+                        {"number": 37, "type": "sentence_completion", "answer": "lamps"},
+                        {"number": 38, "type": "sentence_completion", "answer": "harbour"},
+                        {"number": 39, "type": "sentence_completion", "answer": "children"},
+                        {"number": 40, "type": "sentence_completion", "answer": "relatives"}
                     ]
                 }
             ],
-            "answer_key": {}
+            "answer_key": {
+                1: "receptionist", 2: "Medical", 3: "Chastons", 4: "appointments", 5: "database",
+                6: "experience", 7: "confident", 8: "temporary", 9: "1.15", 10: "parking",
+                11: "B", 12: "A", 13: "A", 14: "C", 15: "F", 16: "G", 17: "E", 18: "A", 19: "C", 20: "B",
+                "21-22": ["B", "D"], 23: "D", 24: "A", 25: "C", 26: "G", 27: "F", 28: "A", 29: "B", 30: "C",
+                31: "plot", 32: "poverty", 33: "Europe", 34: "poetry", 35: "drawings",
+                36: "furniture", 37: "lamps", 38: "harbour", 39: "children", 40: "relatives"
+            }
         },
         "reading": {
             "total_questions": 40,
@@ -78,12 +119,20 @@ IELTS18_TEST4 = {
                     "question_range": "1-13",
                     "question_count": 13,
                     "topic": "Topic placeholder",
-                    "question_types": ["true_false_notgiven", "sentence_completion"],
+                    "question_types": ["matching_information", "sentence_completion", "multiple_selection"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "true_false_notgiven", "answer": "TBD"} for i in range(1, 8)
-                    ] + [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(8, 14)
+                        {"number": 1, "type": "matching_information", "answer": "D"},
+                        {"number": 2, "type": "matching_information", "answer": "C"},
+                        {"number": 3, "type": "matching_information", "answer": "E"},
+                        {"number": 4, "type": "matching_information", "answer": "B"},
+                        {"number": 5, "type": "matching_information", "answer": "D"},
+                        {"number": 6, "type": "sentence_completion", "answer": "energy"},
+                        {"number": 7, "type": "sentence_completion", "answer": "food"},
+                        {"number": 8, "type": "sentence_completion", "answer": "gardening"},
+                        {"number": 9, "type": "sentence_completion", "answer": "obesity"},
+                        {"number": "10-11", "type": "multiple_selection", "answer": ["C", "D"], "answer_count": 2},
+                        {"number": "12-13", "type": "multiple_selection", "answer": ["A", "D"], "answer_count": 2}
                     ]
                 },
                 {
@@ -92,14 +141,22 @@ IELTS18_TEST4 = {
                     "question_range": "14-26",
                     "question_count": 13,
                     "topic": "Topic placeholder",
-                    "question_types": ["matching_information", "sentence_completion", "multiple_choice"],
+                    "question_types": ["multiple_choice", "yes_no_notgiven"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "matching_information", "answer": "TBD"} for i in range(14, 19)
-                    ] + [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(19, 24)
-                    ] + [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(24, 27)
+                        {"number": 14, "type": "multiple_choice", "answer": "B"},
+                        {"number": 15, "type": "multiple_choice", "answer": "C"},
+                        {"number": 16, "type": "multiple_choice", "answer": "D"},
+                        {"number": 17, "type": "multiple_choice", "answer": "C"},
+                        {"number": 18, "type": "multiple_choice", "answer": "B"},
+                        {"number": 19, "type": "multiple_choice", "answer": "A"},
+                        {"number": 20, "type": "multiple_choice", "answer": "E"},
+                        {"number": 21, "type": "multiple_choice", "answer": "B"},
+                        {"number": 22, "type": "multiple_choice", "answer": "D"},
+                        {"number": 23, "type": "yes_no_notgiven", "answer": "YES"},
+                        {"number": 24, "type": "yes_no_notgiven", "answer": "NO"},
+                        {"number": 25, "type": "yes_no_notgiven", "answer": "NOT GIVEN"},
+                        {"number": 26, "type": "yes_no_notgiven", "answer": "YES"}
                     ]
                 },
                 {
@@ -108,18 +165,34 @@ IELTS18_TEST4 = {
                     "question_range": "27-40",
                     "question_count": 14,
                     "topic": "Topic placeholder",
-                    "question_types": ["summary_completion", "yes_no_notgiven", "multiple_choice"],
+                    "question_types": ["yes_no_notgiven", "matching_features"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "summary_completion", "answer": "TBD"} for i in range(27, 33)
-                    ] + [
-                        {"number": i, "type": "yes_no_notgiven", "answer": "TBD"} for i in range(33, 38)
-                    ] + [
-                        {"number": i, "type": "multiple_choice", "answer": "TBD"} for i in range(38, 41)
+                        {"number": 27, "type": "yes_no_notgiven", "answer": "YES"},
+                        {"number": 28, "type": "yes_no_notgiven", "answer": "NOT GIVEN"},
+                        {"number": 29, "type": "yes_no_notgiven", "answer": "NO"},
+                        {"number": 30, "type": "yes_no_notgiven", "answer": "NO"},
+                        {"number": 31, "type": "matching_features", "answer": "I"},
+                        {"number": 32, "type": "matching_features", "answer": "F"},
+                        {"number": 33, "type": "matching_features", "answer": "A"},
+                        {"number": 34, "type": "matching_features", "answer": "C"},
+                        {"number": 35, "type": "matching_features", "answer": "H"},
+                        {"number": 36, "type": "matching_features", "answer": "E"},
+                        {"number": 37, "type": "matching_features", "answer": "B"},
+                        {"number": 38, "type": "matching_features", "answer": "A"},
+                        {"number": 39, "type": "matching_features", "answer": "D"},
+                        {"number": 40, "type": "matching_features", "answer": "C"}
                     ]
                 }
             ],
-            "answer_key": {}
+            "answer_key": {
+                1: "D", 2: "C", 3: "E", 4: "B", 5: "D", 6: "energy", 7: "food", 8: "gardening", 9: "obesity",
+                "10-11": ["C", "D"], "12-13": ["A", "D"],
+                14: "B", 15: "C", 16: "D", 17: "C", 18: "B", 19: "A", 20: "E", 21: "B", 22: "D",
+                23: "YES", 24: "NO", 25: "NOT GIVEN", 26: "YES",
+                27: "YES", 28: "NOT GIVEN", 29: "NO", 30: "NO",
+                31: "I", 32: "F", 33: "A", 34: "C", 35: "H", 36: "E", 37: "B", 38: "A", 39: "D", 40: "C"
+            }
         },
         "writing": {
             "total_tasks": 2,
@@ -131,7 +204,6 @@ IELTS18_TEST4 = {
                     "description": "Describe visual information",
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
-                    "visual_type": "chart",
                     "visual_url": "VISUAL_PLACEHOLDER",
                     "prompt": "PROMPT_PLACEHOLDER"
                 },
@@ -149,31 +221,9 @@ IELTS18_TEST4 = {
             "total_parts": 3,
             "duration": "11-14 minutes",
             "parts": [
-                {
-                    "part_number": 1,
-                    "title": "Introduction and Interview",
-                    "duration": "4-5 minutes",
-                    "topics": ["Topic 1", "Topic 2", "Topic 3"],
-                    "sample_questions": ["QUESTIONS_PLACEHOLDER"]
-                },
-                {
-                    "part_number": 2,
-                    "title": "Individual Long Turn",
-                    "duration": "3-4 minutes",
-                    "preparation_time": "1 minute",
-                    "speaking_time": "1-2 minutes",
-                    "cue_card": {
-                        "topic": "TOPIC_PLACEHOLDER",
-                        "points": ["point 1", "point 2", "point 3", "point 4"]
-                    }
-                },
-                {
-                    "part_number": 3,
-                    "title": "Two-way Discussion",
-                    "duration": "4-5 minutes",
-                    "topic": "TOPIC_PLACEHOLDER",
-                    "sample_questions": ["QUESTIONS_PLACEHOLDER"]
-                }
+                {"part_number": 1, "title": "Introduction and Interview", "duration": "4-5 minutes"},
+                {"part_number": 2, "title": "Individual Long Turn", "duration": "3-4 minutes"},
+                {"part_number": 3, "title": "Two-way Discussion", "duration": "4-5 minutes"}
             ]
         }
     }
