@@ -18,22 +18,67 @@ IELTS18_TEST2 = {
             "parts": [
                 {
                     "part_number": 1,
-                    "title": "Cycle tour",
+                    "title": "Working at Milo's Restaurants",
                     "question_range": "1-10",
                     "question_count": 10,
                     "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/yop1zyzd_18%20section2-part1.mp3",
+                    "instructions": "Questions 1-5: Complete the notes below. Write ONE WORD ONLY for each answer. Questions 6-10: Complete the table below. Write ONE WORD AND/OR A NUMBER for each answer.",
+                    "visual": {
+                        "type": "notes",
+                        "title": "Working at Milo's Restaurants",
+                        "sections": [
+                            {
+                                "heading": "Benefits",
+                                "items": [
+                                    "___1___ provided for all staff",
+                                    "___2___ during weekdays at all Milo's Restaurants",
+                                    "___3___ provided after midnight"
+                                ]
+                            },
+                            {
+                                "heading": "Person specification",
+                                "items": [
+                                    "must be prepared to work well in a team",
+                                    "must care about maintaining a high standard of ___4___",
+                                    "must have a qualification in ___5___"
+                                ]
+                            }
+                        ]
+                    },
                     "questions": [
                         {"number": 1, "type": "note_completion", "answer": "training"},
                         {"number": 2, "type": "note_completion", "answer": "discount"},
                         {"number": 3, "type": "note_completion", "answer": "taxi"},
                         {"number": 4, "type": "note_completion", "answer": "service"},
                         {"number": 5, "type": "note_completion", "answer": "English"},
-                        {"number": 6, "type": "note_completion", "answer": "Wivenhoe"},
-                        {"number": 7, "type": "note_completion", "answer": "equipment"},
-                        {"number": 8, "type": "note_completion", "answer": "9.75"},
-                        {"number": 9, "type": "note_completion", "answer": "deliveries"},
-                        {"number": 10, "type": "note_completion", "answer": "Sunday"}
-                    ]
+                        {"number": 6, "type": "table_completion", "answer": "Wivenhoe"},
+                        {"number": 7, "type": "table_completion", "answer": "equipment"},
+                        {"number": 8, "type": "table_completion", "answer": "9.75"},
+                        {"number": 9, "type": "table_completion", "answer": "deliveries"},
+                        {"number": 10, "type": "table_completion", "answer": "Sunday"}
+                    ],
+                    "table": {
+                        "title": "Job Opportunities",
+                        "headers": ["Location", "Job title", "Responsibilities include", "Pay and conditions"],
+                        "rows": [
+                            {
+                                "cells": [
+                                    "___6___ Street",
+                                    "Breakfast supervisor",
+                                    "Checking portions, etc. are correct\nMaking sure ___7___ is clean",
+                                    "Starting salary £___8___ per hour\nStart work at 5.30 a.m."
+                                ]
+                            },
+                            {
+                                "cells": [
+                                    "City Road",
+                                    "Junior chef",
+                                    "Supporting senior chefs\nMaintaining stock and organising ___9___",
+                                    "Annual salary £23,000\nNo work on a ___10___ once a month"
+                                ]
+                            }
+                        ]
+                    }
                 },
                 {
                     "part_number": 2,
