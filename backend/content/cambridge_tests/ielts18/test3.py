@@ -116,10 +116,22 @@ IELTS18_TEST3 = {
                     "question_range": "1-13",
                     "question_count": 13,
                     "topic": "Topic placeholder",
-                    "question_types": ["true_false_notgiven", "sentence_completion"],
+                    "question_types": ["matching_features", "sentence_completion", "multiple_choice"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(1, 14)
+                        {"number": 1, "type": "matching_features", "answer": "G"},
+                        {"number": 2, "type": "matching_features", "answer": "D"},
+                        {"number": 3, "type": "matching_features", "answer": "C"},
+                        {"number": 4, "type": "matching_features", "answer": "F"},
+                        {"number": 5, "type": "sentence_completion", "answer": "architects"},
+                        {"number": 6, "type": "sentence_completion", "answer": "moisture"},
+                        {"number": 7, "type": "sentence_completion", "answer": "layers"},
+                        {"number": 8, "type": "sentence_completion", "answer": "speed"},
+                        {"number": 9, "type": "multiple_choice", "answer": "C"},
+                        {"number": 10, "type": "multiple_choice", "answer": "A"},
+                        {"number": 11, "type": "multiple_choice", "answer": "B"},
+                        {"number": 12, "type": "multiple_choice", "answer": "D"},
+                        {"number": 13, "type": "multiple_choice", "answer": "A"}
                     ]
                 },
                 {
@@ -128,10 +140,22 @@ IELTS18_TEST3 = {
                     "question_range": "14-26",
                     "question_count": 13,
                     "topic": "Topic placeholder",
-                    "question_types": ["matching_information", "sentence_completion"],
+                    "question_types": ["matching_headings", "multiple_choice", "sentence_completion"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(14, 27)
+                        {"number": 14, "type": "matching_headings", "answer": "iii"},
+                        {"number": 15, "type": "matching_headings", "answer": "viii"},
+                        {"number": 16, "type": "matching_headings", "answer": "vi"},
+                        {"number": 17, "type": "matching_headings", "answer": "v"},
+                        {"number": 18, "type": "matching_headings", "answer": "vii"},
+                        {"number": 19, "type": "matching_headings", "answer": "i"},
+                        {"number": 20, "type": "matching_headings", "answer": "iv"},
+                        {"number": 21, "type": "multiple_choice", "answer": "A"},
+                        {"number": 22, "type": "multiple_choice", "answer": "C"},
+                        {"number": 23, "type": "multiple_choice", "answer": "B"},
+                        {"number": 24, "type": "sentence_completion", "answer": "speed"},
+                        {"number": 25, "type": "sentence_completion", "answer": "fifty / 50"},
+                        {"number": 26, "type": "sentence_completion", "answer": "strict"}
                     ]
                 },
                 {
@@ -140,14 +164,34 @@ IELTS18_TEST3 = {
                     "question_range": "27-40",
                     "question_count": 14,
                     "topic": "Topic placeholder",
-                    "question_types": ["summary_completion", "yes_no_notgiven"],
+                    "question_types": ["matching_information", "yes_no_notgiven"],
                     "text": "PASSAGE_TEXT_PLACEHOLDER",
                     "questions": [
-                        {"number": i, "type": "sentence_completion", "answer": "TBD"} for i in range(27, 41)
+                        {"number": 27, "type": "matching_information", "answer": "B"},
+                        {"number": 28, "type": "matching_information", "answer": "A"},
+                        {"number": 29, "type": "matching_information", "answer": "C"},
+                        {"number": 30, "type": "matching_information", "answer": "C"},
+                        {"number": 31, "type": "matching_information", "answer": "H"},
+                        {"number": 32, "type": "matching_information", "answer": "D"},
+                        {"number": 33, "type": "matching_information", "answer": "F"},
+                        {"number": 34, "type": "matching_information", "answer": "E"},
+                        {"number": 35, "type": "matching_information", "answer": "B"},
+                        {"number": 36, "type": "yes_no_notgiven", "answer": "NO"},
+                        {"number": 37, "type": "yes_no_notgiven", "answer": "NOT GIVEN"},
+                        {"number": 38, "type": "yes_no_notgiven", "answer": "YES"},
+                        {"number": 39, "type": "yes_no_notgiven", "answer": "NO"},
+                        {"number": 40, "type": "yes_no_notgiven", "answer": "NOT GIVEN"}
                     ]
                 }
             ],
-            "answer_key": {}
+            "answer_key": {
+                1: "G", 2: "D", 3: "C", 4: "F", 5: "architects", 6: "moisture", 7: "layers", 8: "speed",
+                9: "C", 10: "A", 11: "B", 12: "D", 13: "A",
+                14: "iii", 15: "viii", 16: "vi", 17: "v", 18: "vii", 19: "i", 20: "iv",
+                21: "A", 22: "C", 23: "B", 24: "speed", 25: "fifty / 50", 26: "strict",
+                27: "B", 28: "A", 29: "C", 30: "C", 31: "H", 32: "D", 33: "F", 34: "E", 35: "B",
+                36: "NO", 37: "NOT GIVEN", 38: "YES", 39: "NO", 40: "NOT GIVEN"
+            }
         },
         "writing": {
             "total_tasks": 2,
