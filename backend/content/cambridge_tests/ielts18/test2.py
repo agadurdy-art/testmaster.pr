@@ -54,46 +54,6 @@ IELTS18_TEST2 = {
                         {"number": 20, "type": "map_labelling", "question_text": "outdoor screen", "answer": "A"}
                     ]
                 },
- area near the
-
-
- bypass", "B improved transport options", "C access to the lake", "D parking for residents", "E more open space"], "answer": ["B", "E"], "select_count": 2},
-                        {"number": "13-14", "type": "multiple_selection", "instruction": "Choose TWO letters, A-E.", "options": ["A a shopping centre", "B a sports centre", "C a school", "D a cinema", "E a library"], "answer": ["B", "C"], "select_count": 2},
-                        {"number": 15, "type": "map_labelling", "question_text": "playground", "answer": "G"},
-                        {"number": 16, "type": "map_labelling", "question_text": "
-
-
- sports centre", "answer": "C"},
-                        {"number": 17, "type": "map_labelling", "question_text": "supermarket", "answer": "D"},
-                        {"number": 18, "type": "map_labelling", "question_text": "
-
-
- 
-
-
- children's clinic", "answer": "B"},
-                        {"number": 19, "type": "map_labelling", "question_text": "community centre", "answer": "H"},
-                        {"number": 20, "type": "map_labelling", "question_text": "
-
-
- 
-
-
- 
-
-
- 
-
-
- 
-
-
- outdoor
-
-
- screen", "answer": "A"}
-                    ]
-                },
                 {
                     "part_number": 3,
                     "title": "Laki eruption",
