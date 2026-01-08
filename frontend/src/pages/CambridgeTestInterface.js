@@ -945,7 +945,7 @@ export default function CambridgeTestInterface() {
           </div>
           <audio
             ref={audioRef}
-            src={`${API_URL}${currentPartData.audio_file}`}
+            src={currentPartData.audio_file?.startsWith('http') ? currentPartData.audio_file : `${API_URL}${currentPartData.audio_file}`}
             onTimeUpdate={handleAudioTimeUpdate}
             onLoadedMetadata={handleAudioLoaded}
             onEnded={() => setIsPlaying(false)}
