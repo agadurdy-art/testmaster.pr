@@ -41,15 +41,17 @@ IELTS18_TEST2 = {
                     "question_range": "11-20",
                     "question_count": 10,
                     "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/9m4gec9w_18%20section2-part2.mp3",
+                    "map_image": "https://customer-assets.emergentagent.com/job_756d9309-ff91-4a3b-8fb8-033e2a6316d5/artifacts/m3n8yvaj_cambridge%2018%20test%202%20Listening%20Q15-20.png",
+                    "map_instruction": "Label the map below. Write the correct letter, A-I, next to questions 15-20.",
                     "questions": [
-                        {"number": "11-12", "type": "multiple_selection", "answer": ["B", "E"], "select_count": 2},
-                        {"number": "13-14", "type": "multiple_selection", "answer": ["B", "C"], "select_count": 2},
-                        {"number": 15, "type": "map_labelling", "answer": "G"},
-                        {"number": 16, "type": "map_labelling", "answer": "C"},
-                        {"number": 17, "type": "map_labelling", "answer": "D"},
-                        {"number": 18, "type": "map_labelling", "answer": "B"},
-                        {"number": 19, "type": "map_labelling", "answer": "H"},
-                        {"number": 20, "type": "map_labelling", "answer": "A"}
+                        {"number": "11-12", "type": "multiple_selection", "instruction": "Choose TWO letters, A-E.", "options": ["A a]l residents__(|uding__(hose__(n_(he_(rea_(ear_($8_)_b_(](n;g)]", "B improved_(ransport_)ptions", "C_(ccess_(o_(he_(a]e", "D_(arking_(or_(esidents", "E_(ore_(pen_(pace"], "answer": ["B", "E"], "select_count": 2},
+                        {"number": "13-14", "type": "multiple_selection", "instruction": "Choose TWO letters, A-E.", "options": ["A a_(hopping_(entre", "B a_(ports_(entre", "C a_(chool", "D a_(inema", "E a_(ibrary"], "answer": ["B", "C"], "select_count": 2},
+                        {"number": 15, "type": "map_labelling", "question_text": "__(|ayground", "answer": "G"},
+                        {"number": 16, "type": "map_labelling", "question_text": "_(ports_(entre", "answer": "C"},
+                        {"number": 17, "type": "map_labelling", "question_text": "supermarket", "answer": "D"},
+                        {"number": 18, "type": "map_labelling", "question_text": "_(hil_(ren__(linic", "answer": "B"},
+                        {"number": 19, "type": "map_labelling", "question_text": "_(ommunity_(entre", "answer": "H"},
+                        {"number": 20, "type": "map_labelling", "question_text": "_(creen", "answer": "A"}
                     ]
                 },
                 {
