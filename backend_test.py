@@ -1436,7 +1436,14 @@ def test_cambridge_ielts_18_speaking_content():
                     print(f"❌ {test_id}: No speaking section found")
                     continue
                 
-                if not parts:
+                # Handle both dict and list formats for parts
+                if isinstance(parts, list):
+                    # Convert list to dict for easier access
+                    parts_dict = {}
+                    for i, part in enumerate(parts, 1):
+                        parts_dict[f"part{i}"] = part
+                    parts = parts_dict
+                elif not parts:
                     issues_found.append(f"{test_id}: No speaking parts found")
                     print(f"❌ {test_id}: No speaking parts found")
                     continue
