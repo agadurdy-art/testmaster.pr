@@ -1430,9 +1430,6 @@ def test_cambridge_ielts_18_speaking_content():
                 parts = speaking.get("parts", {})
                 
                 print(f"✅ API call successful for {test_id}")
-                print(f"   Debug: sections keys: {list(sections.keys())}")
-                print(f"   Debug: speaking keys: {list(speaking.keys()) if speaking else 'No speaking section'}")
-                print(f"   Debug: parts type: {type(parts)}")
                 
                 # Check if speaking section exists
                 if not speaking:
