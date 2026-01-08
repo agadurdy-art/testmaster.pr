@@ -1,89 +1,86 @@
 <analysis>**original_problem_statement:**
-The user initially faced critical data synchronization issues where production did not reflect preview changes. This primary blocker was resolved by implementing a full, idempotent database sync on application startup.
+The user's initial goal was to add the complete Cambridge IELTS 18 test book to the application, as the previous agent's attempt resulted in broken, incomplete placeholder files. The user provided a PDF and all necessary audio/image assets.
 
-Following this, the user requested the addition of new content. The agent verified and corrected the answer keys for the existing Cambridge 19 tests.
+Throughout the session, the user provided extremely detailed, structured instructions (acting as a project manager) to pivot the agent's strategy. The new, overriding goal is to create a schema-driven dynamic UI that renders any question type correctly, treating each test as if seen for the first time. The user insists on a human-eye QA process, where the final UI must be a 100% perfect match to the provided PDF content for all four skills (Listening, Reading, Writing, Speaking) across all four tests. The agent must find and fix all discrepancies without user intervention.
 
-The current and main task is to implement the complete Cambridge 18 test book. The user has provided a PDF with all content, audio files for all listening sections, and answer keys as screenshots. The agent has created the file structure, added answer keys, visuals, and most audio files. However, the user reported that the Cambridge 18 tests are appearing empty, without any questions or content, suggesting the agent only created placeholder files. The user has also requested help with creating a Facebook launch message for the platform.
+**PRODUCT REQUIREMENTS:**
+1.  **100% Content Completeness:** All 4 tests for IELTS 18 must be fully implemented across all 4 skills: Listening, Reading, Writing, and Speaking.
+2.  **Dynamic UI Renderer:** The frontend must dynamically render UI components based on the question  defined in the backend data model. It should not rely on hardcoded layouts from IELTS 17.
+3.  **Real Test Feel:** The UI must replicate the real IELTS test experience, including correct question grouping, instructions, and component rendering.
+4.  **No Content Generation:** The agent must NOT generate or invent any content (text, questions, visuals). All content must come from user-provided assets (screenshots, PDF).
+5.  **Completeness Gates:** The agent must implement and run validation checks to ensure no content (instructions, questions, options, visuals, cue cards) is missing before marking a test as ready.
+6.  **Human-Eye QA:** The agent is required to perform a meticulous, manual-like comparison of the UI against the source PDF for all tests and skills, logging and fixing every single discrepancy found.
 
 **User's preferred language**: Turkish
 
 **what currently exists?**
-- A robust full database auto-sync mechanism () runs on every backend startup, ensuring data consistency.
-- The platform contains content for Cambridge IELTS 17 and 19. The answer keys for Cambridge 19 have been verified and corrected.
-- The file structure for Cambridge IELTS 18 has been created under .
-- All answer keys (Listening & Reading) for all 4 tests of Cambridge 18 have been added to the respective Python files.
-- All Writing Task visuals/prompts for Cambridge 18 have been added.
-- Listening audio files for Cambridge 18, Tests 1, 2, and 3 are implemented.
-- The frontend  page has been updated to show Cambridge 18 as an available, active test book with 4 tests.
-- The stats on the Question Bank page dynamically reflect the addition of Cambridge 18, showing 680 Total Questions and 8 Full Tests.
+- The backend has been stabilized. All four Cambridge IELTS 18 test files ( to ) have been repaired and fully populated with content for Listening, Reading, Writing, and Speaking, based on user-provided screenshots.
+- The frontend component  has been significantly enhanced with new, dynamic renderers for various question types that were previously broken, including , , , and .
+- A bug preventing visuals (graphs/maps) in the Writing and Listening sections from displaying has been fixed. The UI now supports displaying two images side-by-side for Writing Task 1.
+- The core data for the Speaking section (questions, cue cards) is in the backend, but the UI is not rendering it correctly due to inconsistencies in data keys between the frontend and backend. The agent has just applied patches to the frontend to address this.
 
 **Last working item**:
--   **Last item agent was working**: The agent was working on adding the complete Cambridge 18 test book. The user provided the final set of audio files (for Test 4) and simultaneously reported a critical bug: **cambridge 18 icerigi empty. his soru, gorsel vs yok. sadece test format var** (Cambridge 18 content is empty. There are no questions, visuals etc. Only the test format exists). The agent was about to add the Test 4 audio files and then begin investigating why the C18 content is missing.
+-   **Last item agent was working**: The agent was debugging why the Speaking section UI was not rendering content, particularly the Part 2 cue card. It was discovered that the frontend expected data keys like , , and , while the backend data files used different keys like , , and . The agent applied several  edits to  to make the frontend code accept both sets of keys as fallbacks.
 -   **Status**: IN PROGRESS
 -   **Agent Testing Done**: N
--   **Which testing method agent to use?**: Both.
-    1.  **Backend**: Use  to call the API endpoint  for each of the 4 tests to check if the JSON response contains the full question and passage data.
-    2.  **Frontend**: Use the  to navigate to the Question Bank, log in, start a Cambridge 18 test (e.g., Reading or Writing), and verify that the questions, passages, and visuals are rendered correctly.
--   **User Testing Done**: Y (User reported the issue).
+-   **Which testing method agent to use?**: screenshot tool. The agent must verify if the speaking cue cards and questions are now visible after the frontend patch.
+-   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Cambridge 18 content is empty (P0)**
--   **Issue 2: Frontend Session Persistence Bug (P2)**
+-   Issue 1: (P0) Speaking Section UI is Broken / Not Displaying Content
+-   Issue 2: (P1) Frontend Session Persistence Bug
 
 **Issues Detail:**
--   **Issue 1: Cambridge 18 content is empty**
-    -   **Attempted fixes**: None. The issue was just reported by the user. The agent created the file structure and added answer keys/visuals, but likely failed to populate the core content (question text, reading passages).
+-   **Issue 1: Speaking Section UI is Broken / Not Displaying Content**
+    -   **Attempted fixes**: The agent identified that different data keys were used in the backend (, , ) versus what the frontend was looking for (, , ). The agent patched  to check for these alternative keys.
     -   **Next debug checklist**:
-        1.  First, add the recently provided audio files for Test 4 to .
-        2.  Review all test files ( to ) in . Verify if they contain the actual  text,  text for reading, etc., or if they are just placeholders with answer keys.
-        3.  **If the files are empty**, the agent must parse the  file (provided by the user and located at  in the previous session) to extract all Reading passages and all questions for every section (Listening, Reading, Writing) and populate the Python test files.
-        4.  Restart the backend backend: stopped
-backend: started.
-        5.  Verify the fix using the testing methods described in the  section (curl and screenshot).
-    -   **Why fix this issue and what will be achieved with the fix?**: This is the highest priority task. Fixing it will complete the addition of the Cambridge 18 book, a major content update requested by the user.
+        1.  Use the  to navigate to the Speaking section of Cambridge IELTS 18, Test 1.
+        2.  Start the test and verify if the Part 1 questions now appear.
+        3.  Proceed to Part 2 and confirm that the cue card (with its topic and bullet points) is now correctly rendered.
+        4.  If successful, quickly check the Speaking section for at least one other test (e.g., Test 2) to ensure the fix is universal.
+    -   **Why fix this issue and what will be achieved with the fix?**: This is the last known major feature blocker. Fixing it will make the Speaking skill fully functional and is a critical step toward completing the entire IELTS 18 module.
     -   **Status**: IN PROGRESS
     -   **Is recurring issue?**: N
-    -   **Should Test frontend/backend/both after fix?**: Both.
-    -   **Blocked on other issue**: None.
+    -   **Should Test frontend/backend/both after fix?**: Frontend
+    -   **Blocked on other issue**: None
 
 -   **Issue 2: Frontend Session Persistence Bug**
-    -   **Attempted fixes**: None directly. The user dismissed it as a non-issue for normal users, but it repeatedly complicated the agent's multi-page testing flow by causing logouts on page navigation.
+    -   **Attempted fixes**: None. The agent observed this issue (Session kaybedildi - login tekrar gerekiyor) but decided to work around it to focus on content implementation.
     -   **Next debug checklist**:
-        1.  Review  and how the  state is initialized and updated from .
-        2.  The issue seems to be that state is lost on hard navigations/reloads. Ensure that the  hook that reads from  correctly restores the session on every load.
-    -   **Why fix this issue and what will be achieved with the fix?**: Will improve user experience by preventing logouts on page reloads and will significantly simplify e2e testing.
+        1.  Review  and related authentication components.
+        2.  Investigate how the session token is handled in  or application state upon page refresh.
+        3.  Ensure the application correctly re-authenticates the user without requiring a manual login each time.
+    -   **Why fix this issue and what will be achieved with the fix?**: This bug slows down testing and creates a poor user experience. Fixing it will make development and verification more efficient.
     -   **Status**: NOT STARTED
     -   **Is recurring issue?**: Y
-    -   **Should Test frontend/backend/both after fix?**: Frontend.
+    -   **Should Test frontend/backend/both after fix?**: Frontend
+    -   **Blocked on other issue**: None
 
 **In progress Task List**:
--   **Task 1: Fully Implement Cambridge 18 Content (P0)**
-    -   **Where to resume**: Start by adding the final audio files for Test 4 to . Immediately after, begin debugging the empty content issue by inspecting the C18 test files for missing question and passage text.
-    -   **What will be achieved with this?**: The platform will feature the complete Cambridge IELTS 18 book, with all tests, sections, questions, visuals, and audio fully functional.
+-   **Task 1: (P0) Finalize and QA Cambridge 18 Implementation**
+    -   **Where to resume**: Immediately test the recent frontend patch for the Speaking section. Once confirmed, begin the comprehensive human-eye QA process mandated by the user in their last instruction (Message #334). This involves systematically comparing every part of every test (1-4) in the UI against the official PDF to find and log all discrepancies.
+    -   **What will be achieved with this?**: A fully functional, complete, and verified Cambridge 18 test suite that meets the user's strict quality standards.
     -   **Status**: IN PROGRESS
-    -   **Should Test frontend/backend/both after fix?**: Both.
-    -   **Blocked on something**: None.
+    -   **Should Test frontend/backend/both after fix?**: Both
+    -   **Blocked on something**: The final verification of the Speaking UI fix.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
     *   (P1) Ingest content for Cambridge IELTS tests 16.
-*   **Future Tasks (Backlog):**
+*   **Future Tasks:**
     *   Implement an XP/points system with a leaderboard.
     *   Create course content for YLE (Starters, Movers, Flyers).
 
 **Completed work in this session**
--   **P0 Data Sync Issue Resolved**: Implemented a full, automatic database synchronization on startup, which fixed the critical deployment data inconsistency problem.
--   **Writing Test Visuals Fixed**: Correctly implemented visuals for Writing Test 1 (line graph) and Test 2 (side-by-side maps) in the general test pool.
--   **Cambridge 19 Answer Keys Verified**: Corrected multiple answers in the Reading tests based on a user-provided PDF.
--   **Facebook Launch Content Created**: Generated launch announcement posts in English and Vietnamese, including relevant hashtags.
--   **Cambridge 18 Content Scaffolding**:
-    -   Created the file structure, answer keys, writing prompts, and visuals for all 4 tests of Cambridge 18.
-    -   Added listening audio for Tests 1, 2, and 3.
-    -   Integrated Cambridge 18 into the frontend Question Bank, making it visible and accessible to users.
-    -   Updated the backend router and stats calculation to include the new book.
+-   **Backend Stabilization**: Repaired all syntax errors in  through  for IELTS 18, making the backend fully operational.
+-   **Content Population**: Populated all 4 tests for IELTS 18 with complete data for Listening, Reading, Writing, and Speaking, using user-provided screenshots as the source of truth.
+-   **Dynamic Frontend Rendering**: Greatly improved  to correctly render complex question types that were previously broken (, , , etc.).
+-   **Visuals Fixed**: Corrected bugs that prevented images for Writing and Listening tasks from appearing and added support for side-by-side images.
+-   **Backend Testing**: Verified all four test endpoints return valid data via curl and ran a successful backend test suite.
+-   **Frontend Testing**: Performed extensive visual testing with the screenshot tool to validate UI components as they were being fixed.
 
 **Earlier issues found/mentioned but not fixed**
--   None apart from the pending Session Persistence Bug.
+-   **Frontend Session Persistence Bug**: The user is logged out on page refresh. This was noted in the previous fork and observed again in this session but was deprioritized.
 
 **Known issue recurrence from previous fork**
 -   **Issue recurrence in previous fork**: Frontend Session Persistence Bug.
@@ -94,58 +91,68 @@ backend: started.
 
 
 **Key Technical Concepts**
--   **Idempotent Startup Sync**: The core solution to the user's primary problem.  now ensures the DB matches the source data on every start.
--   **Modular Test Content**: The app uses two systems for tests: a general pool from  and modular, book-based content from , which are loaded dynamically by the  router. The current issue is within this modular system.
+-   **Schema-Driven UI**: The primary architectural pattern is rendering frontend components based on a  field from the backend data model. This allows for dynamic and flexible UI generation.
+-   **Data Reconciliation**: The frontend was made more robust to handle inconsistencies in backend data keys (e.g., checking for  or ).
+-   **Content-First Workflow**: The agent's process shifted from code generation to a content-first approach, where data integrity (from user assets) is paramount and the code must adapt to it.
 
 **key DB schema**
--   No schema changes were made in this session.
+-   N/A. All test content is stored as Python dictionaries within  files in the backend filesystem.
+
+**changes in tech stack**
+-   None.
 
 **All files of reference**
--   : The directory containing the new (and currently incomplete) Cambridge 18 test files. **This is the primary area for the next agent to work on.**
--   : The router that serves the content from the directory above.
--   : The UI where the new Cambridge 18 book is displayed.
--   : The script that solved the main P0 data sync issue.
--   : The component that renders all tests; may need debugging if the C18 content issue is on the frontend.
+-   : **Critical file.** Heavily modified to contain all the logic for rendering the dynamic question types. The recent patches for the Speaking UI are here.
+-   : This directory contains the four Python files ( to ) that serve as the database for all IELTS 18 content. They have been completely rewritten and are now syntactically valid.
+-   : Defines the API routes for accessing the test content.
+-   : Defines the frontend routing. A routing path was corrected here during the session.
+
+**Areas that need refactoring**:
+-   The  component has grown very large (over 2500 lines) and handles rendering logic for dozens of question types. It could be broken down into smaller, reusable components for each question type to improve maintainability.
+-   The data key inconsistencies ( vs ) should be standardized in the backend data files rather than being handled with fallbacks in the frontend.
+
+**key api endpoints**
+-   : Lists available test books.
+-   : Fetches the complete content for a specific test.
 
 **Critical Info for New Agent**
--   **PRIORITY #1**: Fix the empty content for Cambridge 18. The user's report (no questions, no visuals) is a strong indicator that you need to populate the test files in  with the actual question text and reading passages from the . Do not assume the files are complete; inspect them first.
--   The user is very direct and has low tolerance for regressions or mistakes. Double-check your work, and do not make assumptions (e.g., generating content). Use only the assets provided by the user.
--   The session persistence bug makes multi-page testing via Playwright difficult. When testing, perform login and subsequent navigation within the same browser context/tab to maintain the session.
--   You have all the necessary assets to complete the Cambridge 18 implementation: the PDF, all audio files, all answer keys, and all visual URLs.
+-   **The User is the PM**: The user's instructions are detailed, precise, and non-negotiable. Follow them exactly, especially the final QA process outlined in message #334. Do not assume anything; the user's prompts are the absolute source of truth.
+-   **Verify the Speaking Fix**: Your immediate first action must be to test the patch applied to the Speaking section UI. Confirm if the cue cards now render correctly.
+-   **Begin Human-Eye QA**: After verifying the Speaking fix, your main task is to perform the comprehensive QA check mandated by the user. Systematically go through every part of every test, comparing the UI to the official PDF/screenshots and fixing all discrepancies.
+-   **Do Not Generate Content**: The agent's role has shifted from creator to verifier and fixer. All required content should already be in the user-provided assets and the backend Python files. Your job is to ensure the UI displays it with 100% accuracy.
+-   **Session Bug is Low Priority**: Acknowledge the session persistence bug, but do not work on it unless you have completed the entire Cambridge 18 QA and the user explicitly asks for it.
 
 **documents and test reports created in this job**
 -   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: Asks for Facebook launch message. (Completed)
-2.  **User**: Provides philosophy for the launch message. (Completed)
-3.  **User**: Asks for more hashtags. (Completed)
-4.  **User**: Asks what tasks are pending. (Agent answered)
-5.  **User**: Confirms deploy status, asks to verify C19 answers with provided PDF, and dismisses the session bug. (Completed)
-6.  **User**: Reports that feedback is low after launch and asks for suggestions. (Agent provided strategies)
-7.  **User**: **Requests implementation of Cambridge 18**, provides PDF and Test 1 audio. (In Progress)
-8.  **User**: Provides answer key screenshots for C18 Tests 1, 2, 3. (Completed)
-9.  **User**: Provides answer key screenshots for C18 Test 3 Reading and Test 4. (Completed)
-10. **User**: Provides C18 writing prompts and visuals. (Completed)
-11. **User**: Provides C18 Test 2 and 3 audio. (Completed)
-12. **User**: **Provides C18 Test 4 audio and reports that C18 content is currently empty.** (Current task)
+1.  **User (Msg #280):** Provides assets for Test 3 Writing and Speaking. (Completed)
+2.  **User (Msg #305):** Provides asset for Test 4 Speaking. (Completed)
+3.  **User (Msg #323):** Provides asset for Test 2 Speaking. (Completed)
+4.  **User (Msg #334):** *Crucial pending instruction.* Provides the official PDF and issues a MASTER PROMPT demanding a full human-eye QA of all 4 tests against the PDF. The agent must find and fix all issues (missing instructions, broken inputs, etc.) without further user reports. This is the main task for the next agent.
+5.  **Agent (Msg #335):** Acknowledges the QA task and plans to start. (In Progress)
+6.  **Agent (Msg #336):** Fails to extract text from the new PDF but decides to proceed with UI checking using existing assets. (Done)
+7.  **Agent (Msg #337-344):** Starts the QA process and immediately finds a critical issue: the Speaking cue card for Test 1 is missing in the UI. (In Progress)
+8.  **Agent (Msg #348-357):** Investigates the backend data and frontend code, discovering the data key mismatch ( vs ) as the root cause. (Done)
+9.  **Agent (Msg #358-364):** Applies patches to  to handle the different data keys. (Completed)
+10. **Agent (Msg #365-367):** Attempts to test the fix, but the tool call fails/is interrupted. The verification is still pending. (Pending)
 
 **Project Health Check:**
--   **Broken**: The newly added Cambridge 18 feature is broken; it appears as available but contains no content.
--   **Mocked**: None.
+-   **Broken**: The Speaking section UI is not rendering content correctly, preventing users from taking the speaking test. This is the current P0 issue.
 
 **3rd Party Integrations**
--   No new integrations were added. Existing integrations include OpenAI, Azure Speech, ElevenLabs, PayPal, Google Analytics, and Microsoft Clarity.
+-   None.
 
 **Testing status**
--   **Testing agent used after significant changes**: YES, for the initial DB sync fix. Not used for the Cambridge 18 implementation.
--   **Test files created**: None. The agent created content files, not test files.
--   **Known regressions**: The Writing Test 1 visual disappeared and had to be fixed. The new Cambridge 18 content is not appearing.
+-   **Testing agent used after significant changes**: YES. A backend testing agent was used and passed after all  files were fixed.
+-   **Troubleshoot agent used after agent stuck in loop**: NO. The agent successfully pivoted strategy away from the initial failing approach.
+-   **Test files created**: None.
+-   **Known regressions**: None. The agent fixed the initial regression where the backend was crashing.
 
 **Credentials to test flow:**
--   **Admin Email**: 
 -   **Student Email**: 
 -   **Student Password**: 
 
 **What agent forgot to execute**
--   The agent created the Python file structure for Cambridge 18 but **critically forgot to populate these files with the actual question text, reading passages, and other core content from the provided **. The user's last message confirms this (content is empty... only test format var). The agent only added answer keys and visual URLs after the fact, but the main content is missing.</analysis>
+-   The agent has not yet addressed the long-standing Frontend Session Persistence Bug.
+-   The agent was about to execute the verification step for the Speaking UI fix but was interrupted. This is the immediate next action.</analysis>
