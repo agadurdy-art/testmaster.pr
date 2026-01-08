@@ -6477,34 +6477,30 @@ def test_full_test_mode():
         return False
 
 if __name__ == "__main__":
-    print("🚀 Starting IELTS Ace Backend API Tests - CAMBRIDGE IELTS 18 TESTING")
+    print("🚀 Starting IELTS Ace Backend API Tests - CAMBRIDGE IELTS 18 API ENDPOINT TESTING")
     print("=" * 80)
     
-    # Run Cambridge IELTS 18 tests as per review request
-    all_passed = True
-    
-    # Test 1: Cambridge IELTS 18 Implementation
-    cambridge_18_passed = test_cambridge_ielts_18_implementation()
-    all_passed = all_passed and cambridge_18_passed
+    # Run Cambridge IELTS 18 API endpoint tests as per review request
+    cambridge_18_passed = test_cambridge_ielts_18_api_endpoints()
     
     # Final summary
     print("\n" + "=" * 80)
-    print("🏁 FINAL TEST SUMMARY - CAMBRIDGE IELTS 18 TESTING")
+    print("🏁 FINAL TEST SUMMARY - CAMBRIDGE IELTS 18 API ENDPOINT TESTING")
     print("=" * 80)
     
-    if all_passed:
-        print("✅ ALL CAMBRIDGE IELTS 18 TESTS PASSED! Backend implementation is working correctly.")
-        print("   Key components verified:")
-        print("   - Cambridge books API returns both IELTS 17 and 18 with 4 tests each")
-        print("   - All 4 Cambridge 18 tests load successfully with complete content")
-        print("   - Reading sections have 3 passages with actual text content (not placeholders)")
-        print("   - Listening sections have 4 parts with audio file URLs")
-        print("   - Writing sections have 2 tasks")
-        print("   - Answer keys are present for listening and reading sections")
-        print("   - Authentication works with provided test credentials")
+    if cambridge_18_passed:
+        print("✅ ALL CAMBRIDGE IELTS 18 API ENDPOINT TESTS PASSED!")
+        print("   Key API endpoints verified:")
+        print("   - GET /api/cambridge/books returns ielts18 with 4 available tests")
+        print("   - GET /api/cambridge/test/ielts18/test1 returns complete test structure")
+        print("   - GET /api/cambridge/test/ielts18/test2 returns complete test structure + map_image")
+        print("   - GET /api/cambridge/test/ielts18/test3 returns complete test structure")
+        print("   - GET /api/cambridge/test/ielts18/test4 returns complete test structure")
+        print("   - All tests have listening (4 parts), reading (3 passages), writing (2 tasks)")
+        print("   - Matching questions have options array, items array, and instruction text")
     else:
-        print("❌ SOME CAMBRIDGE IELTS 18 TESTS FAILED! Check the output above for details.")
+        print("❌ SOME CAMBRIDGE IELTS 18 API ENDPOINT TESTS FAILED!")
     
-    print("\n🎯 Cambridge IELTS 18 testing complete!")
+    print("\n🎯 Cambridge IELTS 18 API endpoint testing complete!")
     
-    exit(0 if all_passed else 1)
+    exit(0 if cambridge_18_passed else 1)
