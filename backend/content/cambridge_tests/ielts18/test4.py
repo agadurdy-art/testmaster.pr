@@ -85,7 +85,7 @@ IELTS18_TEST4 = {
                     "question_count": 10,
                     "context": "Lecture",
                     "question_types": ["sentence_completion"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_ieltsflow/artifacts/lwqt6la4_18%20section4%20part4.mp3",
                     "questions": [
                         {"number": 31, "type": "sentence_completion", "answer": "plot"},
                         {"number": 32, "type": "sentence_completion", "answer": "poverty"},
