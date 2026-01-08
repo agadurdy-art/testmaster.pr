@@ -1,37 +1,34 @@
-# Test Results - Cambridge IELTS 17 Integration
+# Test Results - Cambridge IELTS 18 Implementation
 
-## Testing Protocol
-- Test Cambridge IELTS API endpoints
-- Verify audio files are served correctly
-- Test Question Bank UI updates
+## Current Focus
+Testing Cambridge IELTS 18 content implementation - all 4 tests
 
-## Test Coverage
-### Backend Tests
-- [x] Cambridge books API returns IELTS 17
-- [x] Cambridge test data API returns Test 1 content
-- [x] Audio files available at correct paths
-- [ ] Frontend Full Tests tab shows Cambridge IELTS 17
+## What to Test
+
+### Backend API Tests
+1. Test all 4 Cambridge 18 tests load correctly:
+   - GET /api/cambridge/test/ielts18/test1
+   - GET /api/cambridge/test/ielts18/test2
+   - GET /api/cambridge/test/ielts18/test3
+   - GET /api/cambridge/test/ielts18/test4
+   
+2. Verify each test has:
+   - Reading passages with actual text content (not placeholders)
+   - Listening parts with audio URLs
+   - Writing tasks with prompts and visual URLs
+   - Answer keys for all sections
 
 ### Frontend Tests
-- [ ] Question Bank Full Tests tab redesign
-- [ ] Cambridge Test Interface loads correctly
-- [ ] Audio player works for listening sections
+1. Navigate to Question Bank
+2. Click "Full Tests" tab
+3. Verify both Cambridge 17 and Cambridge 18 are displayed
+4. Click on Cambridge 18 Test 1
+5. Start Reading section and verify passage text appears
+6. Navigate to Writing section and verify prompt and image appear
 
-## Test Credentials
-- Email: test@ielts.com
-- Password: admin123
+## Credentials
+- Email: teststudent_1767460068@test.com
+- Password: testpassword
 
-## API Endpoints to Test
-- GET /api/cambridge/books
-- GET /api/cambridge/test/ielts17/test1
-- GET /static/audio/cambridge/ielts17/test1_part1.mp3
-
-## Current Status
-- Backend: Working - Cambridge routes loaded successfully
-- Content: IELTS 17 Test 1 with all 4 sections (Listening, Reading, Writing, Speaking)
-- Audio: 4 audio files downloaded and ready
-- Frontend: Session persistence issue preventing navigation
-
-## Incorporate User Feedback
-- AI-Generated tests (Set 1-6) should show as "Coming Soon"
-- Cambridge IELTS 17 should be the primary available test
+## API Base URL
+Read from /app/frontend/.env REACT_APP_BACKEND_URL
