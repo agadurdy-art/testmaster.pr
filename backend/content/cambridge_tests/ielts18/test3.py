@@ -204,7 +204,7 @@ IELTS18_TEST3 = {
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
                     "visual_url": "VISUAL_PLACEHOLDER",
-                    "prompt": "PROMPT_PLACEHOLDER"
+                    "prompt": "The diagrams below show a Central Library 20 years ago and how it looks now. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
                     "task_number": 2,
@@ -212,7 +212,7 @@ IELTS18_TEST3 = {
                     "description": "Write an essay",
                     "word_limit": "at least 250 words",
                     "time_suggestion": "40 minutes",
-                    "prompt": "PROMPT_PLACEHOLDER"
+                    "prompt": "Nowadays more and more people decide to have children later in their life. What are the reasons? Do the advantages of this trend outweigh the disadvantages?"
                 }
             ]
         },
