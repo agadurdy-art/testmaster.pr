@@ -205,7 +205,7 @@ IELTS18_TEST2 = {
                     "description": "Describe visual information",
                     "word_limit": "at least 150 words",
                     "time_suggestion": "20 minutes",
-                    "visual_url": "VISUAL_PLACEHOLDER",
+                    "visual_url": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/vmrty9ai_cambridge%2018%20test%202%20writing%20task%201.png",
                     "prompt": "The chart below shows the percentage of households in the United States in different annual income categories in 2007, 2011 and 2015. Summarise the information by selecting and reporting the main features, and make comparisons where relevant."
                 },
                 {
