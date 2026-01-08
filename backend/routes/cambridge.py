@@ -81,6 +81,19 @@ CAMBRIDGE_TESTS = {
         },
         "available_tests": ["test1", "test2", "test3", "test4"],
         "coming_soon": []
+    },
+    "ielts18": {
+        "book_id": "ielts18",
+        "title": "Cambridge IELTS 18",
+        "description": "Official Cambridge IELTS 18 Academic practice tests",
+        "tests": {
+            "test1": IELTS18_TEST1,
+            "test2": IELTS18_TEST2,
+            "test3": IELTS18_TEST3,
+            "test4": IELTS18_TEST4,
+        },
+        "available_tests": ["test1", "test2", "test3", "test4"],
+        "coming_soon": []
     }
 }
 
