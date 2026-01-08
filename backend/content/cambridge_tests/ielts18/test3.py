@@ -82,7 +82,7 @@ IELTS18_TEST3 = {
                     "question_count": 10,
                     "context": "Lecture",
                     "question_types": ["sentence_completion"],
-                    "audio_file": "AUDIO_PLACEHOLDER",
+                    "audio_file": "https://customer-assets.emergentagent.com/job_syncflow-6/artifacts/6jq6rift_18%20section3%20part4.mp3",
                     "questions": [
                         {"number": 31, "type": "sentence_completion", "answer": "technical"},
                         {"number": 32, "type": "sentence_completion", "answer": "cheap"},
