@@ -1430,17 +1430,25 @@ export default function CambridgeTestInterface() {
                     </div>
                   )}
                   {q.items?.map((item, iIdx) => (
-                    <div key={iIdx} className="p-3 bg-white border rounded-lg flex items-center gap-3">
-                      <span className="font-bold text-green-600 w-8">{item.number}.</span>
-                      <span className="text-sm flex-1">{item.statement}</span>
+                    <div key={iIdx} className="p-3 bg-white border rounded-lg flex items-start gap-3">
+                      <span className="font-bold text-green-600 w-8 flex-shrink-0">{item.number}.</span>
+                      <span className="text-sm flex-1">{item.statement || item.text}</span>
                       <select
                         value={answers[`reading_${item.number}`] || ''}
                         onChange={(e) => handleAnswerChange(item.number, e.target.value)}
-                        className="w-16 px-2 py-1 border rounded text-sm"
+                        className="w-16 px-2 py-1 border rounded text-sm flex-shrink-0"
                       >
                         <option value="">-</option>
+                        {/* Support both researchers array and options array */}
                         {q.researchers?.map(r => (
                           <option key={r.letter} value={r.letter}>{r.letter}</option>
+                        ))}
+                        {!q.researchers && q.options?.map((opt, oIdx) => {
+                          const letter = opt.charAt(0);
+                          return <option key={letter} value={letter}>{letter}</option>;
+                        })}
+                        {!q.researchers && !q.options && ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'].map(l => (
+                          <option key={l} value={l}>{l}</option>
                         ))}
                       </select>
                     </div>
