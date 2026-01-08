@@ -1223,7 +1223,7 @@ export default function CambridgeTestInterface() {
           
           {/* Passage Text - Selectable */}
           <div className="prose prose-sm max-w-none select-text">
-            {currentPassage.passage_text?.split('\n\n').map((para, idx) => {
+            {(currentPassage.text || currentPassage.passage_text)?.split('\n\n').map((para, idx) => {
               // Check if paragraph starts with a section heading (A, B, C, etc.)
               const headingMatch = para.match(/^([A-Z])\n/);
               const isHeading = headingMatch !== null;
