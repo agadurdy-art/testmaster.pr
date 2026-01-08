@@ -73,6 +73,18 @@ backend:
         agent: "testing"
         comment: "✅ Matching questions structure verified. Tests checked for options array, items array, and instruction text. No matching questions found in current test data, but structure validation is in place."
 
+  - task: "Cambridge IELTS 18 Speaking content verification for all 4 tests"
+    implemented: true
+    working: true
+    file: "backend/routes/cambridge.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ ALL CAMBRIDGE IELTS 18 SPEAKING CONTENT TESTS PASSED! Verified speaking content for all 4 tests: (1) Part 1 has questions OR sample_questions arrays (not empty), (2) Part 2 has cue_card with topic and bullet_points/points arrays, (3) Part 3 has discussion_topics with questions OR sample_questions. Test 1 uses sample_questions format while Tests 2-4 use discussion_topics format. No missing content found in any test."
+
 frontend:
   - task: "Navigate to /cambridge-test/ielts18/test1?skill=listening"
     implemented: true
