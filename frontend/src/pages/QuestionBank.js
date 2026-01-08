@@ -697,6 +697,56 @@ export default function QuestionBank() {
                 </div>
               </Card>
               
+              {/* IELTS 18 */}
+              <Card className="p-6 border-2 border-blue-100 bg-gradient-to-br from-white to-blue-50">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-bold text-lg text-gray-900">Cambridge IELTS 18</h3>
+                      <Badge className="bg-green-100 text-green-700 text-xs">Available</Badge>
+                    </div>
+                    <p className="text-sm text-gray-500">Official Academic practice tests</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-2xl font-bold text-blue-600">4</span>
+                    <span className="text-sm text-gray-500">/4 tests</span>
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                  {[1, 2, 3, 4].map(testNum => (
+                    <div 
+                      key={testNum}
+                      className="p-4 bg-white rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-md transition-all cursor-pointer"
+                      onClick={() => {
+                        setSelectedCambridgeTest({ book: 'ielts18', test: `test${testNum}`, title: `IELTS 18 - Test ${testNum}` });
+                        setShowCambridgeTestModal(true);
+                      }}
+                      data-testid={`cambridge-test-ielts18-test${testNum}`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-bold text-gray-900">Test {testNum}</span>
+                        <PlayCircle className="w-5 h-5 text-green-600" />
+                      </div>
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1 text-xs text-gray-500">
+                          <Headphones className="w-3 h-3" /> Listening
+                        </div>
+                        <div className="flex items-center gap-1 text-xs text-gray-500">
+                          <BookOpen className="w-3 h-3" /> Reading
+                        </div>
+                        <div className="flex items-center gap-1 text-xs text-gray-500">
+                          <PenTool className="w-3 h-3" /> Writing
+                        </div>
+                        <div className="flex items-center gap-1 text-xs text-gray-500">
+                          <Mic className="w-3 h-3" /> Speaking
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+              
               {/* Coming Soon Books */}
               <div className="grid md:grid-cols-3 gap-4">
                 {['IELTS 16', 'IELTS 18', 'IELTS 19'].map(book => (
