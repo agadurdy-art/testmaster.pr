@@ -198,6 +198,67 @@ IELTS18_TEST4 = {
                 {"task_number": 1, "task_type": "report", "title": "Writing Task 1", "prompt": "The graph below shows the average monthly change in the prices of three metals during 2014.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.", "requirements": "Write at least 150 words.", "visual_url": "https://customer-assets.emergentagent.com/job_756d9309-ff91-4a3b-8fb8-033e2a6316d5/artifacts/8hozzt5q_Screenshot%202026-01-08%20at%2019.39.25.png", "time_recommendation": "20 minutes"},
                 {"task_number": 2, "task_type": "essay", "title": "Writing Task 2", "instruction": "Write about the following topic:", "prompt": "In many countries, people are now living longer than ever before. Some people say an ageing population creates problems for governments. Other people think there are benefits if society has more elderly people.\n\nTo what extent do the advantages of having an ageing population outweigh the disadvantages?", "requirements": "Give reasons for your answer and include any relevant examples from your own knowledge or experience.\n\nWrite at least 250 words.", "time_recommendation": "40 minutes"}
             ]
+        },
+        "speaking": {
+            "total_parts": 3,
+            "duration": "11-14 minutes",
+            "parts": [
+                {
+                    "part_number": 1,
+                    "title": "Introduction and Interview",
+                    "topic": "Sleep",
+                    "duration": "4-5 minutes",
+                    "instructions": "The examiner will ask you questions about yourself and familiar topics.",
+                    "questions": [
+                        "How many hours do you usually sleep at night?",
+                        "Do you sometimes sleep during the day? [Why/Why not?]",
+                        "What do you do if you can't get to sleep at night? [Why?]",
+                        "Do you ever remember the dreams you've had while you were asleep?"
+                    ]
+                },
+                {
+                    "part_number": 2,
+                    "title": "Individual Long Turn",
+                    "duration": "3-4 minutes",
+                    "instructions": "You will have to talk about a topic for 1-2 minutes. You have one minute to prepare.",
+                    "cue_card": {
+                        "topic": "Describe a time when you met someone who you became good friends with.",
+                        "bullet_points": [
+                            "who you met",
+                            "when and where you met this person",
+                            "what you thought about this person when you first met"
+                        ],
+                        "final_prompt": "and explain why you think you became good friends with this person."
+                    },
+                    "follow_up_questions": [
+                        "Do you still see this friend often?"
+                    ]
+                },
+                {
+                    "part_number": 3,
+                    "title": "Two-way Discussion",
+                    "duration": "4-5 minutes",
+                    "instructions": "The examiner will ask you further questions connected to the topic in Part 2.",
+                    "discussion_topics": [
+                        {
+                            "topic": "Friends at school",
+                            "questions": [
+                                "How important is it for children to have lots of friends at school?",
+                                "Do you think it is wrong for parents to influence which friends their children have?",
+                                "Why do you think children often choose different friends as they get older?"
+                            ]
+                        },
+                        {
+                            "topic": "Making new friends",
+                            "questions": [
+                                "If a person is moving to a new town, what is a good way for them to make friends?",
+                                "Can you think of any disadvantages of making new friends online?",
+                                "Would you say it is harder for people to make new friends as they get older?"
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     },
     "answer_key": {
