@@ -1047,7 +1047,7 @@ export default function CambridgeTestInterface() {
               return (
                 <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
                   <p className="text-xs text-blue-600 font-medium mb-1">{q.instruction}</p>
-                  <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question}</p>
+                  <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question_text || q.question}</p>
                   <div className="space-y-2">
                     {q.options?.map((opt, optIdx) => (
                       <label key={optIdx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border transition-colors">
@@ -1119,10 +1119,10 @@ export default function CambridgeTestInterface() {
             }
             
             // Multiple Choice Questions (e.g., Q28-30)
-            if (q.type === 'multiple_choice' && q.question) {
+            if (q.type === 'multiple_choice' && (q.question || q.question_text)) {
               return (
                 <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
-                  <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question}</p>
+                  <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question_text || q.question}</p>
                   <div className="space-y-2">
                     {q.options?.map((opt, optIdx) => (
                       <label key={optIdx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border transition-colors">
