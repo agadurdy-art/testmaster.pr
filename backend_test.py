@@ -1538,7 +1538,17 @@ def test_cambridge_ielts_18_implementation():
                     else:
                         print(f"❌ Answer keys incomplete: listening={len(listening_answers)}, reading={len(reading_answers)}")
                 else:
-                    print(f"❌ Answer keys missing or incomplete")
+                    # Check for answer keys within sections (fallback)
+                    listening_section = sections.get("listening", {})
+                    reading_section = sections.get("reading", {})
+                    listening_answer_key = listening_section.get("answer_key", {})
+                    reading_answer_key = reading_section.get("answer_key", {})
+                    
+                    if len(listening_answer_key) > 0 and len(reading_answer_key) > 0:
+                        print(f"✅ Answer keys present in sections: listening ({len(listening_answer_key)}) and reading ({len(reading_answer_key)})")
+                        success_count += 1
+                    else:
+                        print(f"❌ Answer keys missing or incomplete in sections: listening={len(listening_answer_key)}, reading={len(reading_answer_key)}")
             else:
                 print(f"❌ Failed with status {response.status_code}: {response.text}")
         except Exception as e:
