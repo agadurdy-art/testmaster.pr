@@ -1290,6 +1290,10 @@ export default function CambridgeTestInterface() {
             onChange={(e) => handleAnswerChange(part, e.target.value)}
             className="w-32 mx-1 px-3 py-1 border-2 border-blue-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-200 outline-none bg-white text-center font-medium"
             placeholder={part}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
           />
         );
       }
