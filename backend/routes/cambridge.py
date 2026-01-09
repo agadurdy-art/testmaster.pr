@@ -600,44 +600,74 @@ def extract_answer_keys_from_test(test_data: Dict) -> Dict:
     for part in listening.get("parts", []):
         for q in part.get("questions", []):
             qnum = str(q.get("number", ""))
+            qtype = q.get("type", "")
+            
+            # Handle matching questions with separate answers dict
+            if qtype == "matching" and "answers" in q:
+                for qn, ans in q.get("answers", {}).items():
+                    answer_keys["listening"][str(qn)] = ans
             # Handle compound question numbers like "14-15"
-            if "-" in qnum:
+            elif "-" in qnum:
                 answer = q.get("answer", [])
-                # Store as list for compound questions
                 answer_keys["listening"][qnum] = answer if isinstance(answer, list) else [answer]
             else:
-                answer_keys["listening"][qnum] = q.get("answer", "")
-        
-        # Also check for answers in matching questions
-        if "answers" in part:
-            for qnum, ans in part.get("answers", {}).items():
-                answer_keys["listening"][str(qnum)] = ans
+                if q.get("answer"):
+                    answer_keys["listening"][qnum] = q.get("answer")
     
     # Extract reading answers
     reading = sections.get("reading", {})
     for passage in reading.get("passages", []):
         for q in passage.get("questions", []):
-            # Handle different question structures
-            if q.get("type") == "matching_information" and "items" in q:
+            qtype = q.get("type", "")
+            qnum = str(q.get("number", ""))
+            
+            # Handle matching_information with items
+            if qtype == "matching_information" and "items" in q:
                 for item in q.get("items", []):
-                    qnum = str(item.get("number", ""))
-                    answer_keys["reading"][qnum] = item.get("answer", "")
-            elif q.get("type") == "matching_features" and "items" in q:
+                    inum = str(item.get("number", ""))
+                    if item.get("answer"):
+                        answer_keys["reading"][inum] = item.get("answer")
+            # Handle matching_features with items
+            elif qtype == "matching_features" and "items" in q:
                 for item in q.get("items", []):
-                    qnum = str(item.get("number", ""))
-                    answer_keys["reading"][qnum] = item.get("answer", "")
+                    inum = str(item.get("number", ""))
+                    if item.get("answer"):
+                        answer_keys["reading"][inum] = item.get("answer")
+            # Handle sentence_completion with sentences
             elif "sentences" in q:
                 for sent in q.get("sentences", []):
-                    qnum = str(sent.get("number", ""))
-                    answer_keys["reading"][qnum] = sent.get("answer", "")
-            else:
-                qnum = str(q.get("number", ""))
-                # Handle compound question numbers
-                if "-" in qnum:
-                    answer = q.get("answer", [])
+                    snum = str(sent.get("number", ""))
+                    if sent.get("answer"):
+                        answer_keys["reading"][snum] = sent.get("answer")
+            # Handle table_completion with rows
+            elif qtype == "table_completion" and "rows" in q:
+                for row in q.get("rows", []):
+                    for cell in row.get("cells", []):
+                        if isinstance(cell, dict) and cell.get("number"):
+                            cnum = str(cell.get("number"))
+                            if cell.get("answer"):
+                                answer_keys["reading"][cnum] = cell.get("answer")
+            # Handle true_false_not_given with statements
+            elif qtype in ["true_false_not_given", "true_false_ng", "yes_no_ng"] and "statements" in q:
+                for stmt in q.get("statements", []):
+                    stnum = str(stmt.get("number", ""))
+                    if stmt.get("answer"):
+                        answer_keys["reading"][stnum] = stmt.get("answer")
+            # Handle summary_completion with items
+            elif qtype == "summary_completion" and "items" in q:
+                for item in q.get("items", []):
+                    inum = str(item.get("number", ""))
+                    if item.get("answer"):
+                        answer_keys["reading"][inum] = item.get("answer")
+            # Handle compound question numbers
+            elif "-" in qnum:
+                answer = q.get("answer", [])
+                if answer:
                     answer_keys["reading"][qnum] = answer if isinstance(answer, list) else [answer]
-                else:
-                    answer_keys["reading"][qnum] = q.get("answer", "")
+            # Standard question with direct answer
+            else:
+                if q.get("answer"):
+                    answer_keys["reading"][qnum] = q.get("answer")
     
     return answer_keys
 
