@@ -586,6 +586,62 @@ Be specific, constructive, and mention actual question types by name."""
         raise HTTPException(status_code=500, detail=str(e))
 
 
+def extract_answer_keys_from_test(test_data: Dict) -> Dict:
+    """Extract answer keys from test questions"""
+    answer_keys = {
+        "listening": {},
+        "reading": {}
+    }
+    
+    sections = test_data.get("sections", {})
+    
+    # Extract listening answers
+    listening = sections.get("listening", {})
+    for part in listening.get("parts", []):
+        for q in part.get("questions", []):
+            qnum = str(q.get("number", ""))
+            # Handle compound question numbers like "14-15"
+            if "-" in qnum:
+                answer = q.get("answer", [])
+                # Store as list for compound questions
+                answer_keys["listening"][qnum] = answer if isinstance(answer, list) else [answer]
+            else:
+                answer_keys["listening"][qnum] = q.get("answer", "")
+        
+        # Also check for answers in matching questions
+        if "answers" in part:
+            for qnum, ans in part.get("answers", {}).items():
+                answer_keys["listening"][str(qnum)] = ans
+    
+    # Extract reading answers
+    reading = sections.get("reading", {})
+    for passage in reading.get("passages", []):
+        for q in passage.get("questions", []):
+            # Handle different question structures
+            if q.get("type") == "matching_information" and "items" in q:
+                for item in q.get("items", []):
+                    qnum = str(item.get("number", ""))
+                    answer_keys["reading"][qnum] = item.get("answer", "")
+            elif q.get("type") == "matching_features" and "items" in q:
+                for item in q.get("items", []):
+                    qnum = str(item.get("number", ""))
+                    answer_keys["reading"][qnum] = item.get("answer", "")
+            elif "sentences" in q:
+                for sent in q.get("sentences", []):
+                    qnum = str(sent.get("number", ""))
+                    answer_keys["reading"][qnum] = sent.get("answer", "")
+            else:
+                qnum = str(q.get("number", ""))
+                # Handle compound question numbers
+                if "-" in qnum:
+                    answer = q.get("answer", [])
+                    answer_keys["reading"][qnum] = answer if isinstance(answer, list) else [answer]
+                else:
+                    answer_keys["reading"][qnum] = q.get("answer", "")
+    
+    return answer_keys
+
+
 def calculate_section_results(section: str, user_answers: Dict, correct_answers: Dict, test_data: Dict) -> Dict:
     """Calculate detailed results for a section"""
     results = {
