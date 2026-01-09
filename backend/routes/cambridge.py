@@ -621,25 +621,19 @@ def extract_answer_keys_from_test(test_data: Dict) -> Dict:
             qtype = q.get("type", "")
             qnum = str(q.get("number", ""))
             
-            # Handle matching_information with items
-            if qtype == "matching_information" and "items" in q:
+            # Handle questions with "items" array (sentence_completion, table_completion, matching_*, summary_completion)
+            if "items" in q:
                 for item in q.get("items", []):
                     inum = str(item.get("number", ""))
                     if item.get("answer"):
                         answer_keys["reading"][inum] = item.get("answer")
-            # Handle matching_features with items
-            elif qtype == "matching_features" and "items" in q:
-                for item in q.get("items", []):
-                    inum = str(item.get("number", ""))
-                    if item.get("answer"):
-                        answer_keys["reading"][inum] = item.get("answer")
-            # Handle sentence_completion with sentences
-            elif "sentences" in q:
-                for sent in q.get("sentences", []):
-                    snum = str(sent.get("number", ""))
-                    if sent.get("answer"):
-                        answer_keys["reading"][snum] = sent.get("answer")
-            # Handle table_completion with rows
+            # Handle true_false_not_given with statements
+            elif qtype in ["true_false_not_given", "true_false_ng", "yes_no_ng"] and "statements" in q:
+                for stmt in q.get("statements", []):
+                    stnum = str(stmt.get("number", ""))
+                    if stmt.get("answer"):
+                        answer_keys["reading"][stnum] = stmt.get("answer")
+            # Handle table_completion with rows (legacy format)
             elif qtype == "table_completion" and "rows" in q:
                 for row in q.get("rows", []):
                     for cell in row.get("cells", []):
@@ -647,18 +641,12 @@ def extract_answer_keys_from_test(test_data: Dict) -> Dict:
                             cnum = str(cell.get("number"))
                             if cell.get("answer"):
                                 answer_keys["reading"][cnum] = cell.get("answer")
-            # Handle true_false_not_given with statements
-            elif qtype in ["true_false_not_given", "true_false_ng", "yes_no_ng"] and "statements" in q:
-                for stmt in q.get("statements", []):
-                    stnum = str(stmt.get("number", ""))
-                    if stmt.get("answer"):
-                        answer_keys["reading"][stnum] = stmt.get("answer")
-            # Handle summary_completion with items
-            elif qtype == "summary_completion" and "items" in q:
-                for item in q.get("items", []):
-                    inum = str(item.get("number", ""))
-                    if item.get("answer"):
-                        answer_keys["reading"][inum] = item.get("answer")
+            # Handle sentence_completion with sentences (legacy format)
+            elif "sentences" in q:
+                for sent in q.get("sentences", []):
+                    snum = str(sent.get("number", ""))
+                    if sent.get("answer"):
+                        answer_keys["reading"][snum] = sent.get("answer")
             # Handle compound question numbers
             elif "-" in qnum:
                 answer = q.get("answer", [])
