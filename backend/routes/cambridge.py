@@ -668,6 +668,17 @@ def compare_answers(user_ans, correct_ans) -> bool:
     def normalize(s):
         return str(s).lower().strip().replace(".", "").replace(",", "")
     
+    # Handle array user answers (multiple selection)
+    if isinstance(user_ans, list):
+        if isinstance(correct_ans, list):
+            # Both are lists - compare as sets
+            user_set = set(normalize(a) for a in user_ans)
+            correct_set = set(normalize(a) for a in correct_ans)
+            return user_set == correct_set
+        else:
+            # User gave multiple, correct is single
+            return False
+    
     user_normalized = normalize(user_ans)
     
     if isinstance(correct_ans, list):
