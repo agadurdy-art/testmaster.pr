@@ -1806,37 +1806,48 @@ export default function CambridgeTestInterface() {
                     </p>
                   )}
                   <div className="space-y-2">
-                    {q.options?.map((opt, oIdx) => {
-                      // For multiple selection with items, track answers for first item number
+                    {(() => {
                       const answerKey = q.items ? `reading_${q.items[0].number}` : `reading_${q.number}`;
-                      return (
-                        <label key={oIdx} className="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            value={opt.charAt(0)}
-                            checked={(answers[answerKey] || []).includes(opt.charAt(0))}
-                            onChange={(e) => {
-                              const current = answers[answerKey] || [];
-                              const selectCount = q.select_count || 2;
-                              if (e.target.checked && current.length < selectCount) {
-                                handleAnswerChange(q.items ? q.items[0].number : q.number, [...current, opt.charAt(0)]);
-                                // Also set second answer for items
-                                if (q.items && q.items.length > 1 && current.length === 0) {
-                                  // First selection goes to first item
-                                } else if (q.items && q.items.length > 1 && current.length === 1) {
-                                  // Second selection - we need to split
+                      const currentAnswers = Array.isArray(answers[answerKey]) ? answers[answerKey] : [];
+                      const maxSelections = q.select_count || 2;
+                      
+                      return q.options?.map((opt, oIdx) => {
+                        const optValue = opt.charAt(0);
+                        const isChecked = currentAnswers.includes(optValue);
+                        
+                        return (
+                          <label key={oIdx} className={`flex items-center gap-3 p-2 rounded cursor-pointer ${isChecked ? 'bg-green-50 border border-green-300' : 'hover:bg-gray-50'}`}>
+                            <input
+                              type="checkbox"
+                              value={optValue}
+                              checked={isChecked}
+                              onChange={(e) => {
+                                let newAnswers;
+                                if (e.target.checked) {
+                                  if (currentAnswers.length < maxSelections) {
+                                    newAnswers = [...currentAnswers, optValue];
+                                  } else {
+                                    return; // Max reached
+                                  }
+                                } else {
+                                  newAnswers = currentAnswers.filter(v => v !== optValue);
                                 }
-                              } else if (!e.target.checked) {
-                                handleAnswerChange(q.items ? q.items[0].number : q.number, current.filter(v => v !== opt.charAt(0)));
-                              }
-                            }}
-                            className="w-4 h-4 text-green-600 rounded"
-                          />
-                          <span className="text-sm">{opt}</span>
-                        </label>
-                      );
-                    })}
+                                setAnswers(prev => ({
+                                  ...prev,
+                                  [answerKey]: newAnswers
+                                }));
+                              }}
+                              className="w-4 h-4 text-green-600 rounded"
+                            />
+                            <span className="text-sm">{opt}</span>
+                          </label>
+                        );
+                      });
+                    })()}
                   </div>
+                  <p className="text-xs text-gray-500 mt-2">
+                    Select {q.select_count || 2} options ({(Array.isArray(answers[q.items ? `reading_${q.items[0].number}` : `reading_${q.number}`]) ? answers[q.items ? `reading_${q.items[0].number}` : `reading_${q.number}`] : []).length}/{q.select_count || 2} selected)
+                  </p>
                 </div>
               )}
 
