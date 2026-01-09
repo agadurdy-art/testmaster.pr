@@ -704,12 +704,20 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
             results["by_type"][qtype]["correct"] += 1
         
         # Add to details
+        # Safely get correct answer for display
+        if isinstance(correct_ans, list) and len(correct_ans) > 0:
+            display_correct = ", ".join(str(a) for a in correct_ans)
+        elif isinstance(correct_ans, str):
+            display_correct = correct_ans
+        else:
+            display_correct = str(correct_ans) if correct_ans else "-"
+            
         results["details"].append({
             "question_id": qnum,
             "question_type": qtype,
             "question_text": meta.get("text", ""),
-            "user_answer": user_ans or "-",
-            "correct_answer": correct_ans if isinstance(correct_ans, str) else correct_ans[0] if isinstance(correct_ans, list) else str(correct_ans),
+            "user_answer": user_ans if user_ans else "-",
+            "correct_answer": display_correct,
             "is_correct": is_correct,
             "passage_excerpt": None,  # Could be populated from test data
             "explanation": generate_explanation(qtype, correct_ans, is_correct),
