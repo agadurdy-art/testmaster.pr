@@ -454,8 +454,12 @@ async def evaluate_cambridge_full_test(
         if not test_data:
             raise HTTPException(status_code=404, detail="Test not found")
         
-        # Get answer key
+        # Get answer key - extract from test data if not provided directly
         answer_key = test_data.get("answer_keys", {})
+        
+        # If answer_keys not present, extract from questions
+        if not answer_key:
+            answer_key = extract_answer_keys_from_test(test_data)
         
         # ============ CALCULATE SCORES ============
         listening_results = calculate_section_results("listening", answers, answer_key.get("listening", {}), test_data)
