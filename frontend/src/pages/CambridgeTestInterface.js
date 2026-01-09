@@ -1133,31 +1133,50 @@ export default function CambridgeTestInterface() {
           {currentPartData.questions?.map((q, qIdx) => {
             // Multiple Selection Questions (e.g., Q21-22)
             if (q.type === 'multiple_selection') {
+              const questionKey = `listening_${q.number}`;
+              const currentAnswers = Array.isArray(answers[questionKey]) ? answers[questionKey] : [];
+              const maxSelections = q.select_count || q.answer_count || 2;
+              
               return (
                 <div key={qIdx} className="mb-6 p-4 bg-white border rounded-lg">
                   <p className="text-xs text-blue-600 font-medium mb-1">{q.instruction}</p>
                   <p className="font-medium mb-3 text-gray-900">{q.number}. {q.question_text || q.question}</p>
                   <div className="space-y-2">
-                    {q.options?.map((opt, optIdx) => (
-                      <label key={optIdx} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border transition-colors">
-                        <input
-                          type="checkbox"
-                          value={opt.charAt(0)}
-                          checked={(answers[`listening_${q.number}`] || []).includes(opt.charAt(0))}
-                          onChange={(e) => {
-                            const current = answers[`listening_${q.number}`] || [];
-                            if (e.target.checked && current.length < (q.answer_count || 2)) {
-                              handleAnswerChange(q.number, [...current, opt.charAt(0)]);
-                            } else if (!e.target.checked) {
-                              handleAnswerChange(q.number, current.filter(v => v !== opt.charAt(0)));
-                            }
-                          }}
-                          className="w-4 h-4 text-blue-600 rounded"
-                        />
-                        <span className="text-sm">{opt}</span>
-                      </label>
-                    ))}
+                    {q.options?.map((opt, optIdx) => {
+                      const optValue = opt.charAt(0);
+                      const isChecked = currentAnswers.includes(optValue);
+                      
+                      return (
+                        <label key={optIdx} className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer border transition-colors ${isChecked ? 'bg-blue-50 border-blue-300' : 'hover:bg-gray-50'}`}>
+                          <input
+                            type="checkbox"
+                            value={optValue}
+                            checked={isChecked}
+                            onChange={(e) => {
+                              let newAnswers;
+                              if (e.target.checked) {
+                                if (currentAnswers.length < maxSelections) {
+                                  newAnswers = [...currentAnswers, optValue];
+                                } else {
+                                  return; // Max selections reached
+                                }
+                              } else {
+                                newAnswers = currentAnswers.filter(v => v !== optValue);
+                              }
+                              // Store as array directly without splitting
+                              setAnswers(prev => ({
+                                ...prev,
+                                [questionKey]: newAnswers
+                              }));
+                            }}
+                            className="w-4 h-4 text-blue-600 rounded"
+                          />
+                          <span className="text-sm">{opt}</span>
+                        </label>
+                      );
+                    })}
                   </div>
+                  <p className="text-xs text-gray-500 mt-2">Select {maxSelections} options ({currentAnswers.length}/{maxSelections} selected)</p>
                 </div>
               );
             }
