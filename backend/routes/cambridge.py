@@ -815,7 +815,13 @@ def get_skill_tip(section: str, qtype: str, accuracy: float) -> str:
 
 def generate_explanation(qtype: str, correct_ans, is_correct: bool) -> str:
     """Generate explanation for the answer"""
-    ans_text = correct_ans if isinstance(correct_ans, str) else correct_ans[0] if isinstance(correct_ans, list) else str(correct_ans)
+    # Safely get answer text
+    if isinstance(correct_ans, list) and len(correct_ans) > 0:
+        ans_text = ", ".join(str(a) for a in correct_ans)
+    elif isinstance(correct_ans, str):
+        ans_text = correct_ans
+    else:
+        ans_text = str(correct_ans) if correct_ans else "N/A"
     
     if qtype in ["true_false_ng", "yes_no_ng"]:
         if ans_text.upper() == "TRUE" or ans_text.upper() == "YES":
