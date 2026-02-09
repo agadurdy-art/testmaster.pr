@@ -262,12 +262,12 @@ IELTS18_TEST2 = {
                             "number": "24-26",
                             "type": "summary_completion",
                             "instruction": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.",
-                            "title": "The positive__(24)__ of_(25)__intelligent machines",
-                            "summary_text": "__(24)__ powerful AI will be able to make __(25)__ decisions for us. For example, it could be used to manage resources in the__(26)__.",
+                            "title": "The positive impact of super-intelligent machines",
+                            "summary_text": "Powerful AI, with ___24___ abilities, will be able to make moral decisions for us. For example, it could be used to manage resources in the ___25___ here in the UK. However, it is important that such AI has its__(26)__ specified correctly to ensure fair treatment.",
                             "items": [
-                                {"number": 24, "answer": "super"},
-                                {"number": 25, "answer": "ethical"},
-                                {"number": 26, "answer": "NHS"}
+                                {"number": 24, "answer": "ethical"},
+                                {"number": 25, "answer": "NHS"},
+                                {"number": 26, "answer": "goals"}
                             ]
                         }
                     ]
