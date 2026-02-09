@@ -1442,8 +1442,8 @@ export default function CambridgeTestInterface() {
               {/* Note Completion */}
               {q.type === 'note_completion' && (
                 <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-                  <p className="text-sm text-green-700 font-medium mb-3">{q.instruction}</p>
-                  {q.visual && (
+                  {q.instruction && <p className="text-sm text-green-700 font-medium mb-3">{q.instruction}</p>}
+                  {q.visual ? (
                     <div className="space-y-4">
                       <h5 className="font-semibold text-gray-800">{q.visual.title}</h5>
                       {q.visual.sections?.map((section, sIdx) => (
@@ -1461,6 +1461,22 @@ export default function CambridgeTestInterface() {
                           </ul>
                         </div>
                       ))}
+                    </div>
+                  ) : (
+                    /* Single question format - text input */
+                    <div className="flex items-center gap-3">
+                      <span className="font-bold text-green-600">{q.number}.</span>
+                      <span className="text-sm">{q.question_text}</span>
+                      <input
+                        type="text"
+                        value={answers[`reading_${q.number}`] || ''}
+                        onChange={(e) => handleAnswerChange(q.number, e.target.value)}
+                        className="flex-1 max-w-[200px] px-3 py-2 border rounded-lg text-sm"
+                        placeholder="Your answer"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck="false"
+                      />
                     </div>
                   )}
                 </div>
