@@ -531,6 +531,13 @@ export default function CambridgeTestInterface() {
                         else if (qNum <= 26) setCurrentPart(1);
                         else setCurrentPart(2);
                       }
+                      // Scroll to question after state update
+                      setTimeout(() => {
+                        const el = document.getElementById(`question-${qNum}`);
+                        if (el) {
+                          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                      }, 100);
                     }}
                     className={`w-7 h-7 text-xs font-medium rounded transition-all
                       ${isCurrent ? 'bg-blue-500 text-white' : 
