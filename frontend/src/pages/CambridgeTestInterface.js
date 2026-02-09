@@ -1438,7 +1438,7 @@ export default function CambridgeTestInterface() {
           </div>
 
           {currentPassage.questions?.map((q, qIdx) => (
-            <div key={qIdx} className="mb-6">
+            <div key={qIdx} id={`question-${q.number}`} className="mb-6">
               {/* Note Completion */}
               {q.type === 'note_completion' && (
                 <div className="p-4 bg-green-50 rounded-lg border border-green-200">
