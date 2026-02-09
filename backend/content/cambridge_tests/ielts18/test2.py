@@ -258,9 +258,18 @@ IELTS18_TEST2 = {
                         {"number": 21, "type": "yes_no_not_given", "statement": "Silicon police would need to exist in large numbers in order to be effective.", "answer": "NOT GIVEN"},
                         {"number": 22, "type": "yes_no_not_given", "statement": "Many people are comfortable with the prospect of their independence being restricted by machines.", "answer": "NO"},
                         {"number": 23, "type": "yes_no_not_given", "statement": "If we want to ensure that machines act in our best interests, we all need to work together.", "answer": "YES"},
-                        {"number": 24, "type": "summary_completion", "answer": "C"},
-                        {"number": 25, "type": "summary_completion", "answer": "A"},
-                        {"number": 26, "type": "summary_completion", "answer": "E"}
+                        {
+                            "number": "24-26",
+                            "type": "summary_completion",
+                            "instruction": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer.",
+                            "title": "The positive__(24)__ of_(25)__intelligent machines",
+                            "summary_text": "__(24)__ powerful AI will be able to make __(25)__ decisions for us. For example, it could be used to manage resources in the__(26)__.",
+                            "items": [
+                                {"number": 24, "answer": "super"},
+                                {"number": 25, "answer": "ethical"},
+                                {"number": 26, "answer": "NHS"}
+                            ]
+                        }
                     ]
                 },
                 {
