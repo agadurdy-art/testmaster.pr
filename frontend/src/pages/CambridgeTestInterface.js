@@ -533,7 +533,23 @@ export default function CambridgeTestInterface() {
                       }
                       // Scroll to question after state update
                       setTimeout(() => {
-                        const el = document.getElementById(`question-${qNum}`);
+                        // First try exact match
+                        let el = document.getElementById(`question-${qNum}`);
+                        // If not found, try to find group question (e.g., question-24-26 for Q24)
+                        if (!el) {
+                          const allQuestionDivs = document.querySelectorAll('[id^="question-"]');
+                          for (const div of allQuestionDivs) {
+                            const idParts = div.id.replace('question-', '').split('-');
+                            if (idParts.length === 2) {
+                              const start = parseInt(idParts[0]);
+                              const end = parseInt(idParts[1]);
+                              if (qNum >= start && qNum <= end) {
+                                el = div;
+                                break;
+                              }
+                            }
+                          }
+                        }
                         if (el) {
                           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
