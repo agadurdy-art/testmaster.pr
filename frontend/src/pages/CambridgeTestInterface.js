@@ -1469,19 +1469,42 @@ export default function CambridgeTestInterface() {
               {/* True/False/Not Given */}
               {q.type === 'true_false_not_given' && (
                 <div className="space-y-3">
-                  <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
-                  {(q.statements || q.items)?.map((stmt, sIdx) => (
-                    <div key={sIdx} className="p-4 bg-white border rounded-lg">
-                      <p className="text-sm mb-3">{stmt.number}. {stmt.statement}</p>
+                  {q.instruction && <p className="text-sm text-green-700 font-medium">{q.instruction}</p>}
+                  {/* Handle grouped statements OR single question */}
+                  {(q.statements || q.items) ? (
+                    (q.statements || q.items).map((stmt, sIdx) => (
+                      <div key={sIdx} className="p-4 bg-white border rounded-lg">
+                        <p className="text-sm mb-3">{stmt.number}. {stmt.statement}</p>
+                        <div className="flex gap-4">
+                          {['TRUE', 'FALSE', 'NOT GIVEN'].map(opt => (
+                            <label key={opt} className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="radio"
+                                name={`reading_q${stmt.number}`}
+                                value={opt}
+                                checked={answers[`reading_${stmt.number}`] === opt}
+                                onChange={(e) => handleAnswerChange(stmt.number, e.target.value)}
+                                className="w-4 h-4 text-green-600"
+                              />
+                              <span className="text-sm font-medium">{opt}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    /* Single question format */
+                    <div className="p-4 bg-white border rounded-lg">
+                      <p className="text-sm mb-3">{q.number}. {q.statement}</p>
                       <div className="flex gap-4">
                         {['TRUE', 'FALSE', 'NOT GIVEN'].map(opt => (
                           <label key={opt} className="flex items-center gap-2 cursor-pointer">
                             <input
                               type="radio"
-                              name={`reading_q${stmt.number}`}
+                              name={`reading_q${q.number}`}
                               value={opt}
-                              checked={answers[`reading_${stmt.number}`] === opt}
-                              onChange={(e) => handleAnswerChange(stmt.number, e.target.value)}
+                              checked={answers[`reading_${q.number}`] === opt}
+                              onChange={(e) => handleAnswerChange(q.number, e.target.value)}
                               className="w-4 h-4 text-green-600"
                             />
                             <span className="text-sm font-medium">{opt}</span>
@@ -1489,7 +1512,7 @@ export default function CambridgeTestInterface() {
                         ))}
                       </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
 
