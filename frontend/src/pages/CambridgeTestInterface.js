@@ -1761,7 +1761,7 @@ export default function CambridgeTestInterface() {
               {/* Summary Completion */}
               {q.type === 'summary_completion' && (
                 <div className="space-y-3">
-                  <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
+                  {q.instruction && <p className="text-sm text-green-700 font-medium">{q.instruction}</p>}
                   {/* Word box - supports both formats */}
                   {(q.options || q.word_box) && (
                     <div className="p-3 bg-green-50 rounded-lg border border-green-200">
@@ -1785,7 +1785,7 @@ export default function CambridgeTestInterface() {
                     </div>
                   )}
                   {/* Summary text - supports both formats */}
-                  {(q.summary || q.summary_text) && (
+                  {(q.summary || q.summary_text) ? (
                     <div className="p-4 bg-white border rounded-lg">
                       {q.summary?.title && <h5 className="font-semibold mb-2">{q.summary.title}</h5>}
                       <p className="text-sm leading-relaxed">
@@ -1802,6 +1802,9 @@ export default function CambridgeTestInterface() {
                                   value={answers[`reading_${part}`] || ''}
                                   onChange={(e) => handleAnswerChange(part, e.target.value)}
                                   className="mx-1 px-2 py-1 border-b-2 border-green-400 bg-green-50 text-center w-24 focus:outline-none focus:border-green-600"
+                                  autoComplete="off"
+                                  autoCorrect="off"
+                                  spellCheck="false"
                                 />
                               );
                             }
@@ -1828,6 +1831,22 @@ export default function CambridgeTestInterface() {
                           return <span key={pIdx}>{part}</span>;
                         })}
                       </p>
+                    </div>
+                  ) : (
+                    /* Single question format - just text input */
+                    <div className="p-4 bg-white border rounded-lg flex items-center gap-3">
+                      <span className="font-bold text-green-600">{q.number}.</span>
+                      <span className="text-sm flex-1">{q.question_text}</span>
+                      <input
+                        type="text"
+                        value={answers[`reading_${q.number}`] || ''}
+                        onChange={(e) => handleAnswerChange(q.number, e.target.value)}
+                        className="w-32 px-3 py-2 border rounded-lg text-sm"
+                        placeholder="Your answer"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck="false"
+                      />
                     </div>
                   )}
                 </div>
