@@ -1834,21 +1834,44 @@ export default function CambridgeTestInterface() {
               )}
 
               {/* Multiple Choice - Reading */}
-              {q.type === 'multiple_choice' && (q.questions || q.items) && (
+              {q.type === 'multiple_choice' && (
                 <div className="space-y-4">
-                  <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
-                  {(q.questions || q.items).map((mcq, mIdx) => (
-                    <div key={mIdx} className="p-4 bg-white border rounded-lg">
-                      <p className="text-sm font-medium mb-3">{mcq.number}. {mcq.question}</p>
+                  {q.instruction && <p className="text-sm text-green-700 font-medium">{q.instruction}</p>}
+                  {/* Handle grouped questions OR single question */}
+                  {(q.questions || q.items) ? (
+                    (q.questions || q.items).map((mcq, mIdx) => (
+                      <div key={mIdx} className="p-4 bg-white border rounded-lg">
+                        <p className="text-sm font-medium mb-3">{mcq.number}. {mcq.question || mcq.question_text}</p>
+                        <div className="space-y-2">
+                          {mcq.options?.map((opt, oIdx) => (
+                            <label key={oIdx} className="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
+                              <input
+                                type="radio"
+                                name={`reading_q${mcq.number}`}
+                                value={opt.charAt(0)}
+                                checked={answers[`reading_${mcq.number}`] === opt.charAt(0)}
+                                onChange={(e) => handleAnswerChange(mcq.number, e.target.value)}
+                                className="w-4 h-4 text-green-600"
+                              />
+                              <span className="text-sm">{opt}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    /* Single question format */
+                    <div className="p-4 bg-white border rounded-lg">
+                      <p className="text-sm font-medium mb-3">{q.number}. {q.question || q.question_text}</p>
                       <div className="space-y-2">
-                        {mcq.options?.map((opt, oIdx) => (
+                        {q.options?.map((opt, oIdx) => (
                           <label key={oIdx} className="flex items-center gap-3 p-2 rounded hover:bg-gray-50 cursor-pointer">
                             <input
                               type="radio"
-                              name={`reading_q${mcq.number}`}
+                              name={`reading_q${q.number}`}
                               value={opt.charAt(0)}
-                              checked={answers[`reading_${mcq.number}`] === opt.charAt(0)}
-                              onChange={(e) => handleAnswerChange(mcq.number, e.target.value)}
+                              checked={answers[`reading_${q.number}`] === opt.charAt(0)}
+                              onChange={(e) => handleAnswerChange(q.number, e.target.value)}
                               className="w-4 h-4 text-green-600"
                             />
                             <span className="text-sm">{opt}</span>
@@ -1856,7 +1879,7 @@ export default function CambridgeTestInterface() {
                         ))}
                       </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
 
