@@ -1687,26 +1687,53 @@ export default function CambridgeTestInterface() {
                 <div className="space-y-3">
                   <p className="text-sm text-green-700 font-medium">{q.instruction}</p>
                   {q.title && <h5 className="font-semibold text-gray-800">{q.title}</h5>}
-                  {(q.sentences || q.items)?.map((sent, sIdx) => (
-                    <div key={sIdx} className="p-3 bg-white border rounded-lg">
-                      <span className="text-sm">
-                        {(sent.text || sent.sentence)?.includes('___') ? (
-                          renderGapFill((sent.text || sent.sentence).replace(`___${sent.number}___`, `___${sent.number}___`))
-                        ) : (
-                          <>
-                            {sent.number}. {sent.text || sent.sentence}
-                            <input
-                              type="text"
-                              value={answers[`reading_${sent.number}`] || ''}
-                              onChange={(e) => handleAnswerChange(sent.number, e.target.value)}
-                              className="w-32 ml-2 px-2 py-1 border-b-2 border-green-300 focus:border-green-600 outline-none"
-                              placeholder="answer"
-                            />
-                          </>
-                        )}
-                      </span>
-                    </div>
-                  ))}
+                  {(q.sentences || q.items)?.map((sent, sIdx) => {
+                    const sentText = sent.text || sent.sentence || '';
+                    // Replace simple _____ with numbered format ___N___
+                    const normalizedText = sentText.replace(/_____+/g, `___${sent.number}___`);
+                    
+                    return (
+                      <div key={sIdx} className="p-3 bg-white border rounded-lg flex items-start gap-2">
+                        <span className="font-bold text-green-600 shrink-0">{sent.number}.</span>
+                        <span className="text-sm flex-1">
+                          {normalizedText.includes('___') ? (
+                            normalizedText.split(/___(\d+)___/).map((part, pIdx) => {
+                              if (/^\d+$/.test(part)) {
+                                return (
+                                  <input
+                                    key={pIdx}
+                                    type="text"
+                                    value={answers[`reading_${part}`] || ''}
+                                    onChange={(e) => handleAnswerChange(part, e.target.value)}
+                                    className="w-32 mx-1 px-3 py-1 border-2 border-green-300 rounded-lg focus:border-green-600 focus:ring-2 focus:ring-green-200 outline-none bg-white text-center font-medium"
+                                    placeholder={part}
+                                    autoComplete="off"
+                                    autoCorrect="off"
+                                    spellCheck="false"
+                                  />
+                                );
+                              }
+                              return <span key={pIdx}>{part}</span>;
+                            })
+                          ) : (
+                            <>
+                              {sentText}
+                              <input
+                                type="text"
+                                value={answers[`reading_${sent.number}`] || ''}
+                                onChange={(e) => handleAnswerChange(sent.number, e.target.value)}
+                                className="w-32 ml-2 px-2 py-1 border-b-2 border-green-300 focus:border-green-600 outline-none"
+                                placeholder="answer"
+                                autoComplete="off"
+                                autoCorrect="off"
+                                spellCheck="false"
+                              />
+                            </>
+                          )}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
 
