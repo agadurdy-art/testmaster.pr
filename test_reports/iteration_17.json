@@ -1,0 +1,92 @@
+{
+  "iteration": 17,
+  "timestamp": "2026-02-09T12:10:00Z",
+  "test_type": "E2E_EVALUATION",
+  "target": "Cambridge IELTS 18 - Test 1",
+  "summary": {
+    "status": "PASSED",
+    "overall_result": "100% score achieved with Band 9.0"
+  },
+  "tests": [
+    {
+      "name": "Backend Evaluation API - Test 1 Listening",
+      "status": "PASSED",
+      "details": {
+        "correct": 37,
+        "total": 37,
+        "percentage": 100.0,
+        "band": 9.0
+      }
+    },
+    {
+      "name": "Backend Evaluation API - Test 1 Reading",
+      "status": "PASSED",
+      "details": {
+        "correct": 40,
+        "total": 40,
+        "percentage": 100.0,
+        "band": 9.0
+      }
+    },
+    {
+      "name": "Backend Evaluation API - Overall Score",
+      "status": "PASSED",
+      "details": {
+        "correct": 77,
+        "total": 77,
+        "percentage": 100.0,
+        "band": 9.0
+      }
+    },
+    {
+      "name": "Frontend - Test Interface Loads",
+      "status": "PASSED",
+      "details": "Test 1 Listening page loads with 40 questions and 4 parts"
+    },
+    {
+      "name": "Frontend - Question Types Render",
+      "status": "PASSED",
+      "details": "Note completion, multiple choice, multiple selection, matching questions all render correctly"
+    },
+    {
+      "name": "Frontend - Checkbox State Management",
+      "status": "PASSED",
+      "details": "Multiple selection checkboxes (Q14-15) work correctly, showing '2/2 selected'"
+    },
+    {
+      "name": "Frontend - Answer Counter",
+      "status": "PASSED",
+      "details": "0/40 -> 10/40 -> 14/40 counter updates correctly as answers are filled"
+    }
+  ],
+  "bugs_fixed": [
+    {
+      "bug": "Evaluation always returning 0% score",
+      "fix": "Fixed extract_answer_keys_from_test to handle all question types including sentence_completion with items",
+      "file": "/app/backend/routes/cambridge.py"
+    },
+    {
+      "bug": "Missing reading answer keys (1-7, 22-26)",
+      "fix": "Updated extraction logic to prioritize 'items' array for all question types",
+      "file": "/app/backend/routes/cambridge.py"
+    }
+  ],
+  "known_issues": [
+    {
+      "issue": "Session Persistence Bug",
+      "description": "User session is lost on some page transitions during automated testing",
+      "priority": "P1",
+      "status": "NOT FIXED"
+    },
+    {
+      "issue": "Listening shows 37/37 instead of 40/40",
+      "description": "Compound questions (14-15, 27-28, 29-30) count as single entries - this is expected behavior",
+      "priority": "INFO",
+      "status": "EXPECTED"
+    }
+  ],
+  "recommendations": [
+    "Fix session persistence for reliable E2E automated testing",
+    "Run same E2E test for Test 2, 3, 4 to verify complete coverage"
+  ]
+}
