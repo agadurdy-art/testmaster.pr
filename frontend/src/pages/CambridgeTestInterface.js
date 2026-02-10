@@ -845,8 +845,8 @@ export default function CambridgeTestInterface() {
           <AlertTriangle className="w-16 h-16 mx-auto text-amber-500 mb-4" />
           <h2 className="text-xl font-bold mb-2">Test Not Found</h2>
           <p className="text-gray-500 mb-4">The requested test could not be loaded.</p>
-          <Button onClick={() => navigate('/question-bank')}>
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
+          <Button onClick={() => navigate(`/question-bank?openTest=${bookId}_${testId}`)}>
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Test
           </Button>
         </Card>
       </div>
@@ -2838,7 +2838,7 @@ export default function CambridgeTestInterface() {
         <div className="bg-white border-b px-4 py-2">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={() => navigate('/question-bank')} className="text-gray-600">
+              <Button variant="ghost" size="sm" onClick={() => navigate(`/question-bank?openTest=${bookId}_${testId}`)} className="text-gray-600">
                 <ArrowLeft className="w-4 h-4 mr-1" /> Exit Test
               </Button>
             </div>
