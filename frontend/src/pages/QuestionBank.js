@@ -69,6 +69,22 @@ export default function QuestionBank() {
     loadData();
   }, []);
 
+  // Auto-open Cambridge test modal when returning from a test via openTest param
+  useEffect(() => {
+    const openTest = searchParams.get('openTest');
+    if (openTest) {
+      const [book, test] = openTest.split('_');
+      if (book && test) {
+        const bookNum = book.replace('ielts', '');
+        const testNum = test.replace('test', '');
+        setSelectedCambridgeTest({ book, test, title: `IELTS ${bookNum} - Test ${testNum}` });
+        setShowCambridgeTestModal(true);
+        searchParams.delete('openTest');
+        setSearchParams(searchParams, { replace: true });
+      }
+    }
+  }, [searchParams, setSearchParams]);
+
   // Reload topics when band changes (Topic Gating)
   useEffect(() => {
     loadTopicsForBand(selectedBand);
