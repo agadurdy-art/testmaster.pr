@@ -15,6 +15,14 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 **Testing**: All 7 UI tests passed (iteration_18.json) - 100% success rate
 
+### ✅ UX FIX: Exit Test Navigation
+**Issue**: "Exit Test" button navigated to the generic Question Bank page. User wanted to return to the test's skill selection so they could continue with other skills.
+
+**Solution**:
+- "Exit Test" now navigates to `/question-bank?openTest=bookId_testId`
+- QuestionBank reads the `openTest` param and auto-opens the test modal
+- User can immediately pick another skill (Listening, Writing, etc.) without searching again
+
 ---
 
 ## Previous Update (February 9, 2026)
