@@ -3,7 +3,21 @@
 ## Original Problem Statement
 Build a comprehensive IELTS practice application using authentic Cambridge IELTS materials (Books 16, 17, 18, 19) with a computer-delivered test interface that includes all standard IELTS test features. The results page must be the final link in the learning chain - user takes test → sees results → understands weaknesses → gets directed to relevant courses.
 
-## Latest Update (February 9, 2026)
+## Latest Update (February 10, 2026)
+
+### ✅ P1 FIX: Test 4 Reading Passage 3 - Complete Text Added
+**Issue**: The passage text for "Alfred Wegener: science, exploration and the theory of continental drift" was only a single introductory sentence instead of the full 8-paragraph article from Cambridge IELTS 18.
+
+**Solution Implemented**:
+- Updated `/app/backend/content/cambridge_tests/ielts18/test4.py` with the complete passage text (Introduction + 7 paragraphs + Paleoclimatology footnote)
+- Fixed title from "revolution" to "exploration" to match the official book
+- Verified all question types render correctly: Q27-30 (YES/NO/NOT GIVEN), Q31-36 (summary completion with word box A-J), Q37-40 (multiple choice)
+
+**Testing**: All 7 UI tests passed (iteration_18.json) - 100% success rate
+
+---
+
+## Previous Update (February 9, 2026)
 
 ### ✅ P0 CRITICAL: Cambridge IELTS 18 Test 1 E2E Verification (COMPLETED)
 **Issue**: User demanded full E2E verification with 100% score to prove evaluation system works correctly.
