@@ -38,6 +38,7 @@ const SECTION_COLORS = {
 
 export default function QuestionBank() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState(null);
