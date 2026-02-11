@@ -1016,25 +1016,7 @@ export default function CambridgeTestInterface() {
             )}
           </div>
           
-          {/* Map Image for map labelling questions */}
-          {currentPartData.map_image && (
-            <div className="mb-4 bg-white rounded-lg border overflow-hidden">
-              <div className="bg-blue-50 px-4 py-2 border-b">
-                <h4 className="text-sm font-semibold text-blue-800">
-                  {currentPartData.map_instruction || 'Label the map below'}
-                </h4>
-              </div>
-              <img 
-                src={currentPartData.map_image}
-                alt="Map for labelling"
-                className="w-full max-w-2xl mx-auto p-2"
-                onError={(e) => {
-                  console.error('Failed to load map image');
-                  e.target.style.display = 'none';
-                }}
-              />
-            </div>
-          )}
+          {/* Map Image - moved inline to render before map_labelling questions */}
 
           {/* Visual Notes */}
           {currentPartData.visual && currentPartData.visual.type === 'notes' && (
