@@ -36,6 +36,7 @@ export default function CambridgeTestInterface() {
   // Retry wrong-only mode from results page
   const retryWrongOnly = location.state?.retryWrongOnly || false;
   const wrongQuestions = location.state?.wrongQuestions || {};
+  const retryLabel = location.state?.retryLabel || null;
   
   // Get user from localStorage for premium check
   const [user, setUser] = useState(() => {
