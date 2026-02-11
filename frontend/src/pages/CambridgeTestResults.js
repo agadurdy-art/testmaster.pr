@@ -620,7 +620,7 @@ export default function CambridgeTestResults() {
                         : 'bg-red-50 border-red-500'
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
                         q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
                       }`}>
@@ -633,6 +633,18 @@ export default function CambridgeTestResults() {
                         <CheckCircle className="w-5 h-5 text-green-600" />
                       ) : (
                         <XCircle className="w-5 h-5 text-red-600" />
+                      )}
+                      {q.reason_code && !q.is_correct && (
+                        <span data-testid={`reason-badge-listening-${q.question_id}`} className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                          q.reason_code === 'UNANSWERED' ? 'bg-gray-200 text-gray-700' :
+                          q.reason_code === 'TFNG_CONFUSION' || q.reason_code === 'YNNG_CONFUSION' ? 'bg-orange-100 text-orange-700' :
+                          q.reason_code === 'SPELLING_ERROR' ? 'bg-amber-100 text-amber-700' :
+                          q.reason_code === 'DISTRACTOR_TRAP' ? 'bg-rose-100 text-rose-700' :
+                          q.reason_code === 'NEAR_MISS' ? 'bg-yellow-100 text-yellow-700' :
+                          'bg-red-100 text-red-700'
+                        }`}>
+                          {q.reason_label}
+                        </span>
                       )}
                     </div>
                     
