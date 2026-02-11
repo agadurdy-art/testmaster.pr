@@ -3,7 +3,38 @@
 ## Original Problem Statement
 Build a comprehensive IELTS practice application using authentic Cambridge IELTS materials (Books 16, 17, 18, 19) with a computer-delivered test interface that includes all standard IELTS test features. The results page must be the final link in the learning chain - user takes test → sees results → understands weaknesses → gets directed to relevant courses.
 
-## Latest Update (February 10, 2026)
+## Latest Update (February 11, 2026)
+
+### Results Page Enhancement - Phase 2 Complete
+
+#### Step 1: Mistake Reason Codes (`reasonCode`)
+- **Backend** (`/app/backend/routes/cambridge.py`): Added `classify_reason_code()` function that assigns high-signal reason codes to every wrong answer:
+  - `UNANSWERED` — No answer provided
+  - `TFNG_CONFUSION` — TRUE/FALSE/NOT GIVEN mix-up
+  - `YNNG_CONFUSION` — YES/NO/NOT GIVEN mix-up
+  - `SPELLING_ERROR` — Close but misspelled (70%+ char similarity)
+  - `DISTRACTOR_TRAP` — Selected wrong option in multiple choice
+  - `NEAR_MISS` — Close but not matching (shared root/substring)
+  - `WRONG_ANSWER` — Completely incorrect
+- **Response fields**: Each question detail now includes `reason_code` and `reason_label`
+- **Aggregate**: `reason_summary` dict added to response with counts per reason type
+- **Frontend**: Color-coded reason badges displayed next to each wrong answer, "Why You Lost Marks" summary card shows aggregate breakdown
+
+#### Step 2: Evidence for Wrong Answers
+- **Backend**: `extract_evidence_text()` function extracts ~160-char passage excerpt around the correct answer from reading passage text
+- **Policy**: Only shows evidence when passage text contains the answer. Returns `null` when not found — no guessing
+- **Listening**: Evidence not available (no time ranges in data)
+- **Frontend**: Yellow "Evidence in Passage" card with Eye icon for reading wrong answers; Gray "Evidence not available" for questions where evidence couldn't be found
+
+#### Step 3: Retry Wrong-Only
+- **Frontend** (`CambridgeTestResults.js`): "Retry Wrong Only (N)" button appears when there are wrong answers
+- **Navigation**: Passes `retryWrongOnly=true` and `wrongQuestions` map to test interface
+- **Frontend** (`CambridgeTestInterface.js`): Amber banner shows "Retry Mode" with question count; wrong questions highlighted in nav bar; correct questions dimmed
+- **Testing**: 93% backend pass rate, 100% frontend code verification (iteration_19.json)
+
+---
+
+## Previous Update (February 10, 2026)
 
 ### ✅ P1 FIX: Test 4 Reading Passage 3 - Complete Text Added
 **Issue**: The passage text for "Alfred Wegener: science, exploration and the theory of continental drift" was only a single introductory sentence instead of the full 8-paragraph article from Cambridge IELTS 18.
