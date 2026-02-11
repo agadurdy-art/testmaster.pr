@@ -2289,15 +2289,18 @@ export default function CambridgeTestInterface() {
             </div>
           )}
 
+          {/* Generic textarea - skip for Task 1 with single visual (already has inline textarea) */}
+          {!(currentTask.task_number === 1 && currentTask.visual_url && !currentTask.visual_url_2) && (
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Your Response</label>
             <textarea
+              data-testid={`writing-task${currentTask.task_number}-textarea`}
               value={answers[`writing_task${currentTask.task_number}`] || ''}
               onChange={(e) => setAnswers(prev => ({
                 ...prev,
                 [`writing_task${currentTask.task_number}`]: e.target.value
               }))}
-              className="w-full h-80 p-4 border rounded-lg resize-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm"
+              className="w-full h-80 p-4 border rounded-lg resize-vertical focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm"
               placeholder="Write your response here..."
             />
             <div className="flex justify-between mt-2 text-sm">
@@ -2309,6 +2312,7 @@ export default function CambridgeTestInterface() {
               <span className="text-gray-500">Target: {currentTask.word_count}</span>
             </div>
           </div>
+          )}
         </Card>
       </div>
     );
