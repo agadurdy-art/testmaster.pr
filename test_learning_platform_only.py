@@ -9,7 +9,7 @@ import os
 from datetime import datetime
 
 # Get backend URL from frontend env
-BACKEND_URL = "https://exam-renderer-fix.preview.emergentagent.com/api"
+BACKEND_URL = "https://mistake-analysis.preview.emergentagent.com/api"
 
 def test_learning_platform_apis():
     """Test the complete learning platform backend APIs as requested in review"""
