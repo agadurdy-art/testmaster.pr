@@ -23,6 +23,12 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 - QuestionBank reads the `openTest` param and auto-opens the test modal
 - User can immediately pick another skill (Listening, Writing, etc.) without searching again
 
+### ✅ Results Page Phase 1 Enhancements (3 features)
+1. **Band Score Transparency** — Clickable "How is this calculated?" shows per-skill breakdown: raw score → percentage → band mapping
+2. **Submission Integrity Warnings** — Yellow alert when questions left unanswered, with count per section and helpful tip
+3. **Fastest Score Gain Card** — Top 3 areas where fixing wrong answers gives biggest band improvement, with progress bars and specific tips
+4. **Question Metadata Fix** — Skill breakdown now shows correct question types (was showing "Unknown" due to data format mismatch)
+
 ---
 
 ## Previous Update (February 9, 2026)
