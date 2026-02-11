@@ -606,6 +606,14 @@ Be specific, constructive, and mention actual question types by name."""
                 "message": f"{unanswered_r} reading question(s) left unanswered. These count as wrong."
             })
         
+        # ============ REASON CODE SUMMARY ============
+        all_details = listening_results.get("details", []) + reading_results.get("details", [])
+        reason_counts = {}
+        for d in all_details:
+            rc = d.get("reason_code")
+            if rc:
+                reason_counts[rc] = reason_counts.get(rc, 0) + 1
+        
         return {
             "success": True,
             "test_id": test_id,
@@ -638,7 +646,8 @@ Be specific, constructive, and mention actual question types by name."""
                 "reading": reading_results.get("details", [])
             },
             "fastest_gain": fastest_gain,
-            "integrity_warnings": integrity_warnings
+            "integrity_warnings": integrity_warnings,
+            "reason_summary": reason_counts
         }
         
     except Exception as e:
