@@ -495,5 +495,85 @@ class TestCambridgeTestEndpoints:
         print(f"✓ Test loaded: {test.get('title', 'Unknown')}")
 
 
+class TestRetryByTypeReason:
+    """Test that reason codes and question types can be used for filtered retry"""
+    
+    def test_reason_codes_groupable_for_retry(self):
+        """Verify wrong answers can be grouped by reason_code for retry"""
+        test_answers = {
+            "listening_1": "",         # UNANSWERED
+            "listening_2": "wrong",    # WRONG_ANSWER
+            "reading_1": "",           # UNANSWERED
+            "reading_8": "FALSE",      # Might be TFNG_CONFUSION
+            "reading_9": "TRUE",       # Might be TFNG_CONFUSION
+        }
+        
+        response = requests.post(
+            f"{BASE_URL}/api/cambridge/evaluate/full-test",
+            json={
+                "book_id": "ielts17",
+                "test_id": "test1",
+                "answers": test_answers,
+                "user_plan": "free"
+            }
+        )
+        
+        assert response.status_code == 200
+        data = response.json()
+        assert data.get("success") == True
+        
+        all_details = data["question_results"]["listening"] + data["question_results"]["reading"]
+        wrong = [q for q in all_details if not q["is_correct"]]
+        
+        # Group by reason_code
+        by_reason = {}
+        for q in wrong:
+            rc = q.get("reason_code", "UNKNOWN")
+            by_reason.setdefault(rc, []).append(q["question_id"])
+        
+        print(f"✓ Wrong answers grouped by reason: {dict((k, len(v)) for k, v in by_reason.items())}")
+        assert len(by_reason) > 0, "Should have at least one reason group"
+    
+    def test_question_types_groupable_for_retry(self):
+        """Verify wrong answers can be grouped by question_type for retry"""
+        test_answers = {
+            "listening_1": "wrong",
+            "reading_1": "wrong",
+            "reading_8": "wrong",
+            "reading_14": "wrong",
+        }
+        
+        response = requests.post(
+            f"{BASE_URL}/api/cambridge/evaluate/full-test",
+            json={
+                "book_id": "ielts17",
+                "test_id": "test1",
+                "answers": test_answers,
+                "user_plan": "free"
+            }
+        )
+        
+        assert response.status_code == 200
+        data = response.json()
+        assert data.get("success") == True
+        
+        all_details = data["question_results"]["listening"] + data["question_results"]["reading"]
+        wrong = [q for q in all_details if not q["is_correct"]]
+        
+        # Group by question_type
+        by_type = {}
+        for q in wrong:
+            qt = q.get("question_type", "unknown")
+            by_type.setdefault(qt, []).append(q["question_id"])
+        
+        print(f"✓ Wrong answers grouped by type: {dict((k, len(v)) for k, v in by_type.items())}")
+        assert len(by_type) > 0, "Should have at least one type group"
+        
+        # Each group should have question_id values usable for retry filtering
+        for qt, qids in by_type.items():
+            for qid in qids:
+                assert qid is not None, f"question_id should not be None in type {qt}"
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v", "--tb=short"])
