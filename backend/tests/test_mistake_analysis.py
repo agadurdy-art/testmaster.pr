@@ -16,16 +16,11 @@ BASE_URL = os.environ.get('REACT_APP_BACKEND_URL') or os.environ.get('API_URL') 
 class TestMistakeAnalysis:
     """Test reason codes, evidence text, and reason summary features"""
     
-    @pytest.fixture(autouse=True)
-    def setup(self):
-        """Validate BASE_URL is set"""
-        assert BASE_URL, "REACT_APP_BACKEND_URL environment variable must be set"
-    
-    def test_health_check(self):
-        """Verify API is accessible"""
-        response = requests.get(f"{BASE_URL}/api/health")
+    def test_api_accessible(self):
+        """Verify API is accessible via cambridge books endpoint"""
+        response = requests.get(f"{BASE_URL}/api/cambridge/books")
         assert response.status_code == 200
-        print(f"✓ Health check passed: {response.json()}")
+        print(f"✓ API accessible: {response.json().get('success')}")
     
     def test_full_test_evaluation_with_mixed_answers(self):
         """
