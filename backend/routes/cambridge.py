@@ -837,6 +837,20 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
             display_correct = correct_ans
         else:
             display_correct = str(correct_ans) if correct_ans else "-"
+        
+        # Reason code for wrong answers
+        reason = None
+        if not is_correct:
+            reason = classify_reason_code(user_ans, correct_ans, qtype)
+        
+        # Evidence: extract passage excerpt for reading wrong answers
+        evidence_text = ""
+        if not is_correct and section == "reading":
+            passage_num = meta.get("passage", 1)
+            passage_texts = _get_passage_texts(section_data)
+            p_text = passage_texts.get(passage_num, "")
+            if p_text:
+                evidence_text = extract_evidence_text(correct_ans, p_text)
             
         results["details"].append({
             "question_id": qnum,
@@ -845,7 +859,9 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
             "user_answer": user_ans if user_ans else "-",
             "correct_answer": display_correct,
             "is_correct": is_correct,
-            "passage_excerpt": None,  # Could be populated from test data
+            "reason_code": reason.get("code") if reason else None,
+            "reason_label": reason.get("label") if reason else None,
+            "evidence_text": evidence_text if evidence_text else None,
             "explanation": generate_explanation(qtype, correct_ans, is_correct),
             "skill_tip": get_skill_tip(section, qtype, 1 if is_correct else 0)
         })
