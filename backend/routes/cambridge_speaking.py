@@ -3,7 +3,7 @@ Cambridge Speaking Evaluation Routes
 Uses existing QB evaluation protocols - no new code, just imports
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Body
 from typing import Optional, List, Dict, Any
 import os
 import json
