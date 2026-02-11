@@ -1257,21 +1257,41 @@ export default function CambridgeTestInterface() {
 
             // Map Labelling Questions (e.g., Q15-20)
             if (q.type === 'map_labelling') {
+              // Show map image before the first map_labelling question
+              const isFirstMapQ = qIdx === 0 || currentPartData.questions[qIdx - 1]?.type !== 'map_labelling';
               return (
-                <div key={qIdx} className="mb-4 p-3 bg-white border rounded-lg flex items-center gap-4">
-                  <span className="font-bold text-blue-600 w-8">{q.number}.</span>
-                  <span className="flex-1 text-sm">{q.question_text}</span>
-                  <select
-                    value={answers[`listening_${q.number}`] || ''}
-                    onChange={(e) => handleAnswerChange(q.number, e.target.value)}
-                    className="w-16 px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="">-</option>
-                    {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'].map(l => (
-                      <option key={l} value={l}>{l}</option>
-                    ))}
-                  </select>
-                </div>
+                <React.Fragment key={qIdx}>
+                  {isFirstMapQ && currentPartData.map_image && (
+                    <div className="mb-4 bg-white rounded-lg border overflow-hidden">
+                      <div className="bg-blue-50 px-4 py-2 border-b">
+                        <h4 className="text-sm font-semibold text-blue-800">
+                          {currentPartData.map_instruction || 'Label the map below'}
+                        </h4>
+                      </div>
+                      <img 
+                        src={currentPartData.map_image}
+                        alt="Map for labelling"
+                        className="w-full max-w-2xl mx-auto p-2"
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                      />
+                    </div>
+                  )}
+                  <div className="mb-4 p-3 bg-white border rounded-lg flex items-center gap-4">
+                    <span className="font-bold text-blue-600 w-8">{q.number}.</span>
+                    <span className="flex-1 text-sm">{q.question_text}</span>
+                    <select
+                      data-testid={`listening-q${q.number}-select`}
+                      value={answers[`listening_${q.number}`] || ''}
+                      onChange={(e) => handleAnswerChange(q.number, e.target.value)}
+                      className="w-16 px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">-</option>
+                      {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'].map(l => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
+                  </div>
+                </React.Fragment>
               );
             }
             
