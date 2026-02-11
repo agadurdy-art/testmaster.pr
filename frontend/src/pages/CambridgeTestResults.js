@@ -32,6 +32,7 @@ export default function CambridgeTestResults() {
   const [fastestGain, setFastestGain] = useState([]);
   const [integrityWarnings, setIntegrityWarnings] = useState([]);
   const [showBandTooltip, setShowBandTooltip] = useState(null);
+  const [reasonSummary, setReasonSummary] = useState({});
   
   // Get data from navigation state
   const { answers = {}, testData = {}, mode = 'full', skill = null, speakingEvaluations = {} } = location.state || {};
