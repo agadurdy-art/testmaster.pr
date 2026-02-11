@@ -91,6 +91,7 @@ export default function CambridgeTestResults() {
         setQuestionResults(data.question_results || { listening: [], reading: [] });
         setFastestGain(data.fastest_gain || []);
         setIntegrityWarnings(data.integrity_warnings || []);
+        setReasonSummary(data.reason_summary || {});
         
       } else {
         toast.error('Could not evaluate test');
