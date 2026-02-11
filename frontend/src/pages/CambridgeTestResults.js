@@ -88,6 +88,8 @@ export default function CambridgeTestResults() {
         setTeacherFeedback(data.teacher_feedback || null);
         setRecommendedLessons(data.recommended_lessons || []);
         setQuestionResults(data.question_results || { listening: [], reading: [] });
+        setFastestGain(data.fastest_gain || []);
+        setIntegrityWarnings(data.integrity_warnings || []);
         
       } else {
         toast.error('Could not evaluate test');
