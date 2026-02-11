@@ -34,6 +34,13 @@ export default function CambridgeTestResults() {
   const [showBandTooltip, setShowBandTooltip] = useState(null);
   const [reasonSummary, setReasonSummary] = useState({});
   
+  // Speaking P2 state
+  const [fluencyInsights, setFluencyInsights] = useState(null);
+  const [speakingDrills, setSpeakingDrills] = useState([]);
+  const [modelAnswers, setModelAnswers] = useState({});
+  const [loadingDrills, setLoadingDrills] = useState(false);
+  const [loadingModels, setLoadingModels] = useState({});
+  
   // Get data from navigation state
   const { answers = {}, testData = {}, mode = 'full', skill = null, speakingEvaluations = {} } = location.state || {};
 
