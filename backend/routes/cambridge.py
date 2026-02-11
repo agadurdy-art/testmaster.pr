@@ -722,6 +722,15 @@ def extract_answer_keys_from_test(test_data: Dict) -> Dict:
     return answer_keys
 
 
+def _get_passage_texts(section_data: dict) -> dict:
+    """Build mapping from passage_number to passage_text for reading sections"""
+    texts = {}
+    for passage in section_data.get("passages", []):
+        pnum = passage.get("passage_number", 1)
+        texts[pnum] = passage.get("passage_text", "") or passage.get("text", "") or ""
+    return texts
+
+
 def calculate_section_results(section: str, user_answers: Dict, correct_answers: Dict, test_data: Dict) -> Dict:
     """Calculate detailed results for a section"""
     results = {
