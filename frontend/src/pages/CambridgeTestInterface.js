@@ -563,8 +563,10 @@ export default function CambridgeTestInterface() {
                       }, 100);
                     }}
                     className={`w-7 h-7 text-xs font-medium rounded transition-all
-                      ${isCurrent ? 'bg-blue-500 text-white' : 
+                      ${isSkippedInRetry ? 'bg-green-200 text-green-600 opacity-50' :
+                        isCurrent ? 'bg-blue-500 text-white' : 
                         isAnswered ? 'bg-slate-700 text-white' : 
+                        isWrongRetry ? 'bg-amber-200 text-amber-800 ring-1 ring-amber-400' :
                         'bg-slate-200 text-slate-700 hover:bg-slate-300'}
                       ${isReviewed ? 'ring-2 ring-yellow-400' : ''}
                     `}
