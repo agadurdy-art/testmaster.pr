@@ -803,6 +803,8 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
                         start, end = qnum.split("-")
                         for n in range(int(start), int(end) + 1):
                             question_metadata[str(n)] = {"type": qtype, "text": q.get("question_text", q.get("question", "")), "passage": passage_num}
+                        # Also store compound key
+                        question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "passage": passage_num}
                     except ValueError:
                         question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "passage": passage_num}
     
