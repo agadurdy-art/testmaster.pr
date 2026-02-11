@@ -40,6 +40,28 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 - **Test Interface**: Banner shows filter label (e.g., "Retry Mode: true false ng (5 questions)")
 - **Testing**: 16/16 backend tests passed (100%) including retry grouping tests
 
+### Speaking P2 Features Complete (February 11, 2026)
+
+#### 1. Fluency Insights (Client-Side)
+- Client-side transcript analysis: filler count, fillers/min, total words, self-corrections
+- Filler detection: 14 common patterns ("um", "uh", "like", "you know", "sort of", etc.)
+- Confidence indicators: high for fillers (text-based), low for pauses (timestamps needed)
+- "Not available" fallback with explanation when transcript missing
+
+#### 2. Personalized Micro Drills
+- Template-first: 4 drill templates (fluency shadowing, vocabulary collocations, grammar transformation, pronunciation minimal pairs)
+- LLM personalization: 1 short tip per weak criterion via OpenAI (max ~100 tokens each)
+- Targets criteria below Band 6, or lowest 2 if none below 6
+- Fallback: template-only drills when LLM unavailable
+
+#### 3. Model Answer Compare
+- Band 7 and Band 8 model answers generated via LLM, cached in MongoDB
+- Length-appropriate: Part 1 (2-3 sentences), Part 2 (1-2 min monolog), Part 3 (analytical paragraph)
+- 3-5 bullet-point differences between Band 7 and 8
+- Fallback: structure templates when LLM unavailable
+
+**Testing**: 29/29 backend tests (100%), all frontend components verified
+
 ---
 
 ## Previous Update (February 10, 2026)
