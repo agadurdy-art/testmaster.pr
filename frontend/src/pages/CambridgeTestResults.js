@@ -694,7 +694,7 @@ export default function CambridgeTestResults() {
           </Card>
         )}
 
-        {/* Mistake Reason Summary */}
+        {/* Mistake Analysis & Targeted Retry (merged) */}
         {Object.keys(reasonSummary).length > 0 && (
           <Card data-testid="reason-summary-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
@@ -703,34 +703,93 @@ export default function CambridgeTestResults() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">Why You Lost Marks</h3>
-                <p className="text-sm text-gray-500">Breakdown of mistake types across all sections</p>
+                <p className="text-sm text-gray-500">Mistake patterns — click any to retry those questions</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {Object.entries(reasonSummary)
-                .sort(([,a], [,b]) => b - a)
-                .map(([code, count]) => {
-                  const reasonMeta = {
-                    UNANSWERED: { color: 'bg-gray-100 text-gray-700 border-gray-200', icon: '—' },
-                    TFNG_CONFUSION: { color: 'bg-orange-50 text-orange-700 border-orange-200', icon: 'T/F' },
-                    YNNG_CONFUSION: { color: 'bg-orange-50 text-orange-700 border-orange-200', icon: 'Y/N' },
-                    SPELLING_ERROR: { color: 'bg-amber-50 text-amber-700 border-amber-200', icon: 'Abc' },
-                    DISTRACTOR_TRAP: { color: 'bg-rose-50 text-rose-700 border-rose-200', icon: '!?' },
-                    NEAR_MISS: { color: 'bg-yellow-50 text-yellow-700 border-yellow-200', icon: '~' },
-                    WRONG_ANSWER: { color: 'bg-red-50 text-red-700 border-red-200', icon: 'X' },
-                  };
-                  const meta = reasonMeta[code] || reasonMeta.WRONG_ANSWER;
-                  return (
-                    <div key={code} data-testid={`reason-summary-${code}`} className={`p-3 rounded-xl border ${meta.color}`}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-lg font-bold">{meta.icon}</span>
-                        <span className="text-xl font-bold">{count}</span>
+            
+            {/* Reason chips with counts (clickable for retry) */}
+            {(() => {
+              const allWrong = [...(questionResults.listening || []), ...(questionResults.reading || [])].filter(q => !q.is_correct);
+              const byReason = {};
+              allWrong.forEach(q => {
+                const r = q.reason_code || 'WRONG_ANSWER';
+                if (!byReason[r]) byReason[r] = [];
+                byReason[r].push(q);
+              });
+              const buildWrongMap = (items) => {
+                const map = {};
+                items.forEach(q => {
+                  const section = (questionResults.listening || []).includes(q) ? 'listening' : 'reading';
+                  map[`${section}_${q.question_id}`] = true;
+                });
+                return map;
+              };
+              
+              return (
+                <div className="space-y-4">
+                  <div className="flex flex-wrap gap-2">
+                    {Object.entries(byReason)
+                      .sort(([,a],[,b]) => b.length - a.length)
+                      .map(([code, items]) => {
+                        const reasonMeta = {
+                          UNANSWERED: { color: 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200', icon: '—' },
+                          TFNG_CONFUSION: { color: 'bg-orange-50 text-orange-700 border-orange-300 hover:bg-orange-100', icon: 'T/F' },
+                          YNNG_CONFUSION: { color: 'bg-orange-50 text-orange-700 border-orange-300 hover:bg-orange-100', icon: 'Y/N' },
+                          SPELLING_ERROR: { color: 'bg-amber-50 text-amber-700 border-amber-300 hover:bg-amber-100', icon: 'Abc' },
+                          DISTRACTOR_TRAP: { color: 'bg-rose-50 text-rose-700 border-rose-300 hover:bg-rose-100', icon: '!?' },
+                          NEAR_MISS: { color: 'bg-yellow-50 text-yellow-700 border-yellow-300 hover:bg-yellow-100', icon: '~' },
+                          WRONG_ANSWER: { color: 'bg-red-50 text-red-700 border-red-300 hover:bg-red-100', icon: 'X' },
+                        };
+                        const meta = reasonMeta[code] || reasonMeta.WRONG_ANSWER;
+                        const isUnanswered = code === 'UNANSWERED';
+                        return (
+                          <button
+                            key={code}
+                            data-testid={`reason-summary-${code}`}
+                            onClick={() => !isUnanswered && navigate(`/cambridge-test/${bookId}/${testId}`, {
+                              state: { retryWrongOnly: true, wrongQuestions: buildWrongMap(items), retryLabel: code.replace(/_/g, ' '), testData }
+                            })}
+                            disabled={isUnanswered}
+                            className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl border transition-colors ${meta.color} ${isUnanswered ? 'opacity-60 cursor-default' : 'cursor-pointer'}`}
+                          >
+                            <span className="text-lg font-bold">{meta.icon}</span>
+                            <div className="text-left">
+                              <p className="text-sm font-bold">{items.length}</p>
+                              <p className="text-[10px] font-medium leading-tight">{code.replace(/_/g, ' ')}</p>
+                            </div>
+                            {!isUnanswered && <RefreshCw className="w-3 h-3 opacity-40" />}
+                          </button>
+                        );
+                      })}
+                  </div>
+                  
+                  {/* By Question Type row */}
+                  {(() => {
+                    const byType = {};
+                    allWrong.forEach(q => { const t = q.question_type || 'unknown'; if (!byType[t]) byType[t] = []; byType[t].push(q); });
+                    return Object.keys(byType).length > 1 ? (
+                      <div className="pt-3 border-t border-gray-100">
+                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">By Question Type</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {Object.entries(byType).sort(([,a],[,b]) => b.length - a.length).map(([type, items]) => (
+                            <button
+                              key={type}
+                              data-testid={`retry-type-${type}`}
+                              onClick={() => navigate(`/cambridge-test/${bookId}/${testId}`, {
+                                state: { retryWrongOnly: true, wrongQuestions: buildWrongMap(items), retryLabel: type.replace(/_/g, ' '), testData }
+                              })}
+                              className="text-xs px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 hover:bg-indigo-100 transition-colors"
+                            >
+                              {type.replace(/_/g, ' ')} <span className="font-bold">{items.length}</span>
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                      <p className="text-xs font-medium">{code.replace(/_/g, ' ')}</p>
-                    </div>
-                  );
-                })}
-            </div>
+                    ) : null;
+                  })()}
+                </div>
+              );
+            })()}
           </Card>
         )}
 
