@@ -29,17 +29,17 @@ class TestInfrastructure:
     def test_ielts18_tests_available(self):
         r = requests.get(f"{BASE_URL}/api/cambridge/books")
         data = r.json()
-        ielts18 = next((b for b in data["books"] if b["id"] == "ielts18"), None)
+        ielts18 = next((b for b in data["books"] if b.get("book_id") == "ielts18"), None)
         assert ielts18 is not None, "IELTS 18 book not found"
-        assert len(ielts18.get("tests", [])) >= 4, f"Expected >=4 tests, got {len(ielts18.get('tests', []))}"
-        print(f"OK — IELTS 18 has {len(ielts18['tests'])} tests")
+        assert ielts18.get("available_tests", 0) >= 4, f"Expected >=4 tests, got {ielts18.get('available_tests')}"
+        print(f"OK — IELTS 18 has {ielts18['available_tests']} tests")
 
     def test_ielts17_tests_available(self):
         r = requests.get(f"{BASE_URL}/api/cambridge/books")
         data = r.json()
-        ielts17 = next((b for b in data["books"] if b["id"] == "ielts17"), None)
+        ielts17 = next((b for b in data["books"] if b.get("book_id") == "ielts17"), None)
         assert ielts17 is not None, "IELTS 17 book not found"
-        print(f"OK — IELTS 17 has {len(ielts17.get('tests', []))} tests")
+        print(f"OK — IELTS 17 has {ielts17.get('available_tests', 0)} tests")
 
 
 # ============================================================
