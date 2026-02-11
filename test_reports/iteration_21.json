@@ -1,0 +1,99 @@
+{
+  "iteration": 21,
+  "timestamp": "2026-02-11T18:40:00Z",
+  "test_type": "BACKEND_AND_FRONTEND",
+  "target": "One Next Step CTA Feature - Decision Engine, CTA Card, Focus Plan Page",
+  "summary": {
+    "status": "PASSED WITH BUG FIX",
+    "overall_result": "Fixed critical bug in computeNextStepPlan() - was checking results.scores but results were stored directly as results.listening/results.reading. All 29 backend tests pass. CTA card and Focus Plan page now render correctly with all required data-testid attributes."
+  },
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "features_tested": [
+    {
+      "feature": "Backend: All 29 existing tests (16 mistake analysis + 13 speaking P2)",
+      "status": "PASSED",
+      "details": "All pytest tests pass: test_mistake_analysis.py (16 tests) + test_speaking_p2.py (13 tests)"
+    },
+    {
+      "feature": "Frontend: next-step-cta card on results page",
+      "status": "PASSED (AFTER BUG FIX)",
+      "details": "Card renders with title, subtitle, focus area badge, 15 min badge, and Start Focus Plan button"
+    },
+    {
+      "feature": "Frontend: CTA decision engine (computeNextStepPlan)",
+      "status": "PASSED (AFTER BUG FIX)",
+      "details": "Fixed bug: was checking results.scores but data is stored as results.listening/results.reading directly. Now correctly picks lowest skill and most impactful action."
+    },
+    {
+      "feature": "Frontend: next-step-start-btn navigates to /focus-plan",
+      "status": "PASSED",
+      "details": "Clicking 'Start Focus Plan' navigates to /focus-plan with plan data in location.state"
+    },
+    {
+      "feature": "Frontend: FocusPlan page with focus-plan-title",
+      "status": "PASSED",
+      "details": "FocusPlan.js renders title like 'Reach Band 5 in Listening' with data-testid='focus-plan-title'"
+    },
+    {
+      "feature": "Frontend: FocusPlan page with focus-plan-why",
+      "status": "PASSED",
+      "details": "Why This Focus card renders with reason text and data points like '79x UNANSWERED', 'listening band: 4', 'Target: Band 5'"
+    },
+    {
+      "feature": "Frontend: FocusPlan page with focus-plan-steps",
+      "status": "PASSED",
+      "details": "Your Plan (3 Steps) card renders numbered steps with titles, details, and duration"
+    },
+    {
+      "feature": "Frontend: focus-plan-start-btn navigates to retry",
+      "status": "PASSED",
+      "details": "Start Practice button navigates to /cambridge-test/{bookId}/{testId} with retryWrongOnly state"
+    },
+    {
+      "feature": "Frontend: Previous features (reason codes, evidence, retry, speaking drills)",
+      "status": "PASSED",
+      "details": "All Phase 2 and Speaking P2 features still work - reason badges, evidence text, targeted retry buttons visible"
+    }
+  ],
+  "test_report_links": [
+    "/app/backend/tests/test_mistake_analysis.py",
+    "/app/backend/tests/test_speaking_p2.py",
+    "/app/test_reports/pytest/focus_plan_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "BUG FIXED: computeNextStepPlan() was checking results?.scores but setResults() stores data directly as results.listening, results.reading, etc. Fixed by checking results?.listening && results?.reading instead."
+  ],
+  "updated_files": [
+    "/app/frontend/src/pages/CambridgeTestResults.js"
+  ],
+  "success_rate": {
+    "backend": "100% (29/29 tests passed)",
+    "frontend": "100% (all CTA and Focus Plan features working after bug fix)"
+  },
+  "test_credentials": "localStorage user: {id: 'test-user-focus-plan-123', email: 'test@ieltsace.com', plan: 'pro', examCredits: 100}",
+  "seed_data_creation": "None - uses existing ielts17/test1 test data",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "The One Next Step CTA feature is now working. BUG FIX applied: computeNextStepPlan() was incorrectly checking results.scores (undefined) instead of results.listening/results.reading. After fix, CTA card renders on results page after test evaluation. FocusPlan page at /focus-plan reads plan from location.state. The decision engine prioritizes: (1) speaking filler>3/min → fluency drill, (2) TFNG confusion >=3 → TFNG retry, (3) largest reason code cluster → targeted retry, (4) default → lowest skill improvement.",
+  "bug_fix_details": {
+    "file": "/app/frontend/src/pages/CambridgeTestResults.js",
+    "function": "computeNextStepPlan()",
+    "issue": "Function checked 'results?.scores' but setResults() stores data directly as results.listening, results.reading, etc. - not under results.scores",
+    "fix": "Changed check from 'results?.scores' to 'results?.listening && results?.reading', removed 'const scores = results.scores;' and updated references to use 'results.listening?.band' and 'results.reading?.band' directly"
+  },
+  "pytest_results": {
+    "total": 29,
+    "passed": 29,
+    "failed": 0,
+    "test_files": ["test_mistake_analysis.py (16 tests)", "test_speaking_p2.py (13 tests)"]
+  }
+}
