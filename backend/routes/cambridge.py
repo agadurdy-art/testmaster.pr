@@ -546,6 +546,66 @@ Be specific, constructive, and mention actual question types by name."""
         listening_band = calculate_band_from_percentage(listening_results["percentage"])
         reading_band = calculate_band_from_percentage(reading_results["percentage"])
         
+        # ============ FASTEST SCORE GAIN ============
+        fastest_gain = []
+        # Sort skill areas by: most wrong answers that are easiest to fix
+        gain_candidates = []
+        for s in skill_breakdown:
+            if s["total"] > 0:
+                wrong = s["total"] - s["correct"]
+                accuracy = s["correct"] / s["total"]
+                if wrong > 0:
+                    gain_candidates.append({
+                        "label": s["label"],
+                        "skill_id": s["skill_id"],
+                        "wrong_count": wrong,
+                        "total": s["total"],
+                        "accuracy": round(accuracy * 100),
+                        "potential_gain": wrong,  # how many more correct answers possible
+                        "tip": s.get("tip", "")
+                    })
+        # Sort by most wrong answers (biggest potential gain)
+        gain_candidates.sort(key=lambda x: x["wrong_count"], reverse=True)
+        fastest_gain = gain_candidates[:3]
+        
+        # ============ INTEGRITY WARNINGS ============
+        integrity_warnings = []
+        # Check for unanswered questions
+        listening_answers = answers.get("listening", {})
+        reading_answers = answers.get("reading", {})
+        
+        unanswered_listening = sum(1 for k in answer_key.get("listening", {}) if not listening_answers.get(f"listening_{k}", "").strip() if isinstance(listening_answers.get(f"listening_{k}", ""), str)) if isinstance(listening_answers, dict) else 0
+        unanswered_reading = sum(1 for k in answer_key.get("reading", {}) if not reading_answers.get(f"reading_{k}", "").strip() if isinstance(reading_answers.get(f"reading_{k}", ""), str)) if isinstance(reading_answers, dict) else 0
+        
+        # Count unanswered from flat answers dict
+        unanswered_l = 0
+        unanswered_r = 0
+        for qnum in answer_key.get("listening", {}):
+            key = f"listening_{qnum}"
+            val = answers.get(key, "")
+            if not val or (isinstance(val, str) and not val.strip()):
+                unanswered_l += 1
+        for qnum in answer_key.get("reading", {}):
+            key = f"reading_{qnum}"
+            val = answers.get(key, "")
+            if not val or (isinstance(val, str) and not val.strip()):
+                unanswered_r += 1
+        
+        if unanswered_l > 0:
+            integrity_warnings.append({
+                "type": "unanswered",
+                "section": "listening",
+                "count": unanswered_l,
+                "message": f"{unanswered_l} listening question(s) left unanswered. These count as wrong."
+            })
+        if unanswered_r > 0:
+            integrity_warnings.append({
+                "type": "unanswered",
+                "section": "reading",
+                "count": unanswered_r,
+                "message": f"{unanswered_r} reading question(s) left unanswered. These count as wrong."
+            })
+        
         return {
             "success": True,
             "test_id": test_id,
@@ -576,7 +636,9 @@ Be specific, constructive, and mention actual question types by name."""
             "question_results": {
                 "listening": listening_results.get("details", []),
                 "reading": reading_results.get("details", [])
-            }
+            },
+            "fastest_gain": fastest_gain,
+            "integrity_warnings": integrity_warnings
         }
         
     except Exception as e:
