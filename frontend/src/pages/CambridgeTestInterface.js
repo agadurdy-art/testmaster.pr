@@ -1839,9 +1839,14 @@ export default function CambridgeTestInterface() {
                   {/* Summary text - supports both formats */}
                   {(q.summary || q.summary_text) ? (
                     <div className="p-4 bg-white border rounded-lg">
-                      {q.summary?.title && <h5 className="font-semibold mb-2">{q.summary.title}</h5>}
+                      {(q.summary?.title || q.title) && <h5 className="font-semibold mb-2">{q.summary?.title || q.title}</h5>}
                       <p className="text-sm leading-relaxed">
-                        {(q.summary?.text || q.summary_text).split(/___(\d+)___/).map((part, pIdx) => {
+                        {(() => {
+                          let text = q.summary?.text || q.summary_text;
+                          // Normalize "31 _____" format to "___31___" format
+                          text = text.replace(/(\d+)\s+_____/g, '___$1___');
+                          // Also normalize "___6___" style (already correct) - no-op
+                          return text.split(/___(\d+)___/).map((part, pIdx) => {
                           if (/^\d+$/.test(part)) {
                             const wordOptions = q.word_box?.options || q.options || [];
                             // If no word options, use text input (ONE WORD ONLY from passage)
