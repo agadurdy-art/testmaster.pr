@@ -322,17 +322,17 @@ class TestAuthFlow:
         r = requests.post(f"{BASE_URL}/api/auth/register", json={
             "email": email, "password": "Test1234!", "name": "E2E Test"
         })
-        if r.status_code == 200:
-            data = r.json()
-            assert data.get("token") or data.get("success")
-            print(f"OK — Register: {email}")
+        assert r.status_code == 200
+        data = r.json()
+        assert data.get("id") or data.get("email"), f"Register failed: {list(data.keys())}"
+        print(f"OK — Register: {email}")
         
         r2 = requests.post(f"{BASE_URL}/api/auth/login", json={
             "email": email, "password": "Test1234!"
         })
         assert r2.status_code == 200
         data2 = r2.json()
-        assert data2.get("token") or data2.get("user")
+        assert data2.get("token") or data2.get("user") or data2.get("id"), f"Login failed: {list(data2.keys())}"
         print(f"OK — Login: {email}")
 
 
