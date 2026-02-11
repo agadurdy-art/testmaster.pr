@@ -741,26 +741,68 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
     
     if section == "listening":
         for part in section_data.get("parts", []):
-            for qg in part.get("question_groups", []):
-                qtype = qg.get("question_type", "note_completion")
-                for q in qg.get("questions", []):
-                    qnum = str(q.get("question_number"))
-                    question_metadata[qnum] = {
-                        "type": qtype,
-                        "text": q.get("question_text", ""),
-                        "part": part.get("part_number", 1)
-                    }
+            part_num = part.get("part_number", 1)
+            for q in part.get("questions", []):
+                qtype = q.get("type", "unknown")
+                qnum = str(q.get("number", ""))
+                
+                # Handle grouped questions with items
+                if "items" in q:
+                    for item in q.get("items", []):
+                        inum = str(item.get("number", ""))
+                        if inum:
+                            question_metadata[inum] = {"type": qtype, "text": item.get("question_text", ""), "part": part_num}
+                # Handle matching with answers dict
+                elif qtype == "matching" and "answers" in q:
+                    for qn in q.get("answers", {}):
+                        question_metadata[str(qn)] = {"type": qtype, "text": q.get("question_text", ""), "part": part_num}
+                # Handle individual questions
+                elif qnum and "-" not in qnum:
+                    question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "part": part_num}
+                # Handle range questions like "11-12"
+                elif "-" in qnum:
+                    try:
+                        start, end = qnum.split("-")
+                        for n in range(int(start), int(end) + 1):
+                            question_metadata[str(n)] = {"type": qtype, "text": q.get("question_text", ""), "part": part_num}
+                    except ValueError:
+                        question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "part": part_num}
+    
     elif section == "reading":
         for passage in section_data.get("passages", []):
-            for qg in passage.get("question_groups", []):
-                qtype = qg.get("question_type", "multiple_choice")
-                for q in qg.get("questions", []):
-                    qnum = str(q.get("question_number"))
-                    question_metadata[qnum] = {
-                        "type": qtype,
-                        "text": q.get("question_text", ""),
-                        "passage": passage.get("passage_number", 1)
-                    }
+            passage_num = passage.get("passage_number", 1)
+            for q in passage.get("questions", []):
+                qtype = q.get("type", "unknown")
+                qnum = str(q.get("number", ""))
+                
+                # Handle questions with items array
+                if "items" in q:
+                    for item in q.get("items", []):
+                        inum = str(item.get("number", ""))
+                        if inum:
+                            question_metadata[inum] = {"type": qtype, "text": item.get("question_text", ""), "passage": passage_num}
+                # Handle TFNG/YNNG with statements
+                elif "statements" in q:
+                    for stmt in q.get("statements", []):
+                        snum = str(stmt.get("number", ""))
+                        if snum:
+                            question_metadata[snum] = {"type": qtype, "text": stmt.get("text", ""), "passage": passage_num}
+                # Handle table_completion with rows
+                elif "rows" in q:
+                    for row in q.get("rows", []):
+                        for cell in row.get("cells", []):
+                            if isinstance(cell, dict) and cell.get("number"):
+                                question_metadata[str(cell["number"])] = {"type": qtype, "text": "", "passage": passage_num}
+                # Handle individual or range questions
+                elif qnum and "-" not in qnum:
+                    question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", q.get("question", "")), "passage": passage_num}
+                elif "-" in qnum:
+                    try:
+                        start, end = qnum.split("-")
+                        for n in range(int(start), int(end) + 1):
+                            question_metadata[str(n)] = {"type": qtype, "text": q.get("question_text", q.get("question", "")), "passage": passage_num}
+                    except ValueError:
+                        question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "passage": passage_num}
     
     # Evaluate each answer
     for qnum, correct_ans in correct_answers.items():
