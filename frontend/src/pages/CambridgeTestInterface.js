@@ -2227,8 +2227,8 @@ export default function CambridgeTestInterface() {
             </>
           )}
 
-          {/* Side by Side Images for Map Comparison */}
-          {currentTask.visual_data?.type === 'side_by_side_images' && (
+          {/* Side by Side Images for Map Comparison (only for Task 2 or tasks without visual_url) */}
+          {currentTask.task_number !== 1 && currentTask.visual_data?.type === 'side_by_side_images' && (
             <div className="mb-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {currentTask.visual_data.images.map((img, idx) => (
@@ -2251,23 +2251,8 @@ export default function CambridgeTestInterface() {
             </div>
           )}
 
-          {/* Visual URL (Cambridge tests with static images - only if no dual visuals) */}
-          {currentTask.visual_url && !currentTask.visual_url_2 && (
-            <div className="mb-6">
-              <img 
-                src={currentTask.visual_url.startsWith('http') ? currentTask.visual_url : `${API_URL}${currentTask.visual_url}`}
-                alt={currentTask.title || 'Visual'}
-                className="w-full max-w-4xl mx-auto rounded-lg border shadow-sm bg-white"
-                onError={(e) => {
-                  console.error('Failed to load image:', currentTask.visual_url);
-                  e.target.style.display = 'none';
-                }}
-              />
-            </div>
-          )}
-
-          {/* Single Image Visual (legacy support) */}
-          {currentTask.visual_data?.type === 'image' && (
+          {/* Single Image Visual - legacy (only for Task 2 or tasks without visual_url) */}
+          {currentTask.task_number !== 1 && currentTask.visual_data?.type === 'image' && (
             <div className="mb-6">
               <img 
                 src={`${API_URL}/api/visuals/image/${currentTask.visual_data.image_url.replace('.png', '')}`}
