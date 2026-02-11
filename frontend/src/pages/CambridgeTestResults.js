@@ -136,6 +136,122 @@ export default function CambridgeTestResults() {
     }
   };
 
+  // ============ SPEAKING P2: Fluency Analysis (client-side) ============
+  useEffect(() => {
+    if (Object.keys(speakingEvaluations).length === 0) return;
+    
+    const FILLER_WORDS = ['um', 'uh', 'er', 'ah', 'like', 'you know', 'i mean', 'sort of', 'kind of', 'basically', 'actually', 'literally', 'right', 'so yeah'];
+    
+    let totalFillers = 0;
+    let totalWords = 0;
+    let totalSelfCorrections = 0;
+    const fillerDetails = {};
+    let hasTranscript = false;
+    
+    Object.values(speakingEvaluations).forEach(ev => {
+      const transcript = ev?.transcript || '';
+      if (!transcript || transcript === '[Could not transcribe audio]') return;
+      hasTranscript = true;
+      
+      const words = transcript.toLowerCase().split(/\s+/).filter(Boolean);
+      totalWords += words.length;
+      
+      // Count fillers
+      const textLower = transcript.toLowerCase();
+      FILLER_WORDS.forEach(filler => {
+        const regex = new RegExp(`\\b${filler}\\b`, 'gi');
+        const matches = textLower.match(regex);
+        if (matches) {
+          totalFillers += matches.length;
+          fillerDetails[filler] = (fillerDetails[filler] || 0) + matches.length;
+        }
+      });
+      
+      // Self-corrections (patterns like "I went... I mean I go")
+      const corrections = (transcript.match(/\.\.\.|—|I mean,|no,? wait|sorry,?/gi) || []).length;
+      totalSelfCorrections += corrections;
+    });
+    
+    if (!hasTranscript) {
+      setFluencyInsights({ available: false, reason: 'No transcript available. Record speaking responses to get fluency analytics.' });
+      return;
+    }
+    
+    // Estimate speaking time (~130 words per minute for IELTS)
+    const estimatedMinutes = totalWords / 130;
+    const fillerPerMinute = estimatedMinutes > 0 ? (totalFillers / estimatedMinutes) : 0;
+    
+    // Confidence: high for fillers (text-based), low for pauses (no timestamps)
+    setFluencyInsights({
+      available: true,
+      filler_count: totalFillers,
+      filler_per_minute: Math.round(fillerPerMinute * 10) / 10,
+      filler_details: fillerDetails,
+      total_words: totalWords,
+      self_correction_count: totalSelfCorrections,
+      pause_data: { available: false, reason: 'Requires audio timestamps (available in Premium tier)' },
+      confidence: { fillers: 'high', pauses: 'low' }
+    });
+  }, [speakingEvaluations]);
+
+  // Fetch speaking drills
+  const fetchDrills = async () => {
+    if (speakingDrills.length > 0) return;
+    setLoadingDrills(true);
+    try {
+      const evals = Object.values(speakingEvaluations);
+      if (evals.length === 0) return;
+      
+      const avgCriteria = {};
+      let count = 0;
+      evals.forEach(ev => {
+        if (ev?.criteria) {
+          count++;
+          Object.entries(ev.criteria).forEach(([k, v]) => {
+            avgCriteria[k] = (avgCriteria[k] || 0) + (v || 5);
+          });
+        }
+      });
+      if (count > 0) Object.keys(avgCriteria).forEach(k => avgCriteria[k] = Math.round(avgCriteria[k] / count));
+      
+      const weaknesses = evals.flatMap(ev => ev?.weaknesses || []).slice(0, 5);
+      const transcript = evals.map(ev => ev?.transcript || '').join(' ').slice(0, 400);
+      
+      const res = await fetch(`${API_URL}/api/cambridge/speaking/generate-drills`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ criteria: avgCriteria, weaknesses, transcript })
+      });
+      const data = await res.json();
+      if (data.success) setSpeakingDrills(data.drills || []);
+    } catch (e) {
+      console.error('Drill fetch error:', e);
+    } finally {
+      setLoadingDrills(false);
+    }
+  };
+
+  // Fetch model answers for a specific question
+  const fetchModelAnswer = async (questionIdx, question, part) => {
+    if (modelAnswers[questionIdx]) return;
+    setLoadingModels(prev => ({ ...prev, [questionIdx]: true }));
+    try {
+      const res = await fetch(`${API_URL}/api/cambridge/speaking/model-answers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question, part, book_id: bookId, test_id: testId })
+      });
+      const data = await res.json();
+      if (data.success || data.band7 || data.band8) {
+        setModelAnswers(prev => ({ ...prev, [questionIdx]: data }));
+      }
+    } catch (e) {
+      console.error('Model answer error:', e);
+    } finally {
+      setLoadingModels(prev => ({ ...prev, [questionIdx]: false }));
+    }
+  };
+
   const calculateSectionScore = (section, userAnswers, correctAnswers) => {
     if (!correctAnswers) {
       return { correct: 0, total: 0, band: 5.0, percentage: 0, details: [] };
