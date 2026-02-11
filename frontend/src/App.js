@@ -431,6 +431,10 @@ function AppWithSessionHandler() {
           path="/cambridge-test/:bookId/:testId/results" 
           element={user ? <CambridgeTestResults user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/focus-plan" 
+          element={user ? <FocusPlan /> : <Navigate to="/" />} 
+        />
         {/* Admin Tools */}
         <Route 
           path="/admin/visual-generator" 
