@@ -10,7 +10,8 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL')
+# Try multiple env vars for URL resolution
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL') or os.environ.get('API_URL') or 'http://localhost:8001'
 
 class TestMistakeAnalysis:
     """Test reason codes, evidence text, and reason summary features"""
