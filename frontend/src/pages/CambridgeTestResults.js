@@ -315,7 +315,7 @@ export default function CambridgeTestResults() {
         reason: `T/F/NG questions test whether you can distinguish between what the text says, contradicts, or doesn't mention. You confused ${tfngWrong.length} answers — this is a pattern that targeted practice fixes quickly.`,
         data_points: [
           `${tfngWrong.length} T/F/NG errors`,
-          `Reading band: ${scores.reading?.band}`,
+          `Reading band: ${results.reading?.band}`,
           `Target: Band ${targetBand}`
         ],
         steps: [
