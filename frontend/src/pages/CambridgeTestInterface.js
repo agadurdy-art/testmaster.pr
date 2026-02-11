@@ -2917,7 +2917,7 @@ export default function CambridgeTestInterface() {
             <div className="flex items-center gap-2">
               <RefreshCw className="w-4 h-4" />
               <span className="font-medium text-sm">
-                Retry Mode: Only wrong questions shown ({Object.keys(wrongQuestions).length} questions)
+                Retry Mode{retryLabel ? `: ${retryLabel}` : ''} ({Object.keys(wrongQuestions).length} questions)
               </span>
             </div>
             <Button 
