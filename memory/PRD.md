@@ -26,11 +26,19 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 - **Listening**: Evidence not available (no time ranges in data)
 - **Frontend**: Yellow "Evidence in Passage" card with Eye icon for reading wrong answers; Gray "Evidence not available" for questions where evidence couldn't be found
 
-#### Step 3: Retry Wrong-Only
+#### Step 3: Retry Wrong-Only (P0)
 - **Frontend** (`CambridgeTestResults.js`): "Retry Wrong Only (N)" button appears when there are wrong answers
 - **Navigation**: Passes `retryWrongOnly=true` and `wrongQuestions` map to test interface
 - **Frontend** (`CambridgeTestInterface.js`): Amber banner shows "Retry Mode" with question count; wrong questions highlighted in nav bar; correct questions dimmed
-- **Testing**: 93% backend pass rate, 100% frontend code verification (iteration_19.json)
+
+#### Step 4: Retry by Type / Reason (P1)
+- **Frontend** (`CambridgeTestResults.js`): "Targeted Retry" card with two rows of filter chips:
+  - **By Question Type**: e.g., "true false ng (5)", "note completion (8)" — retry only questions of that type
+  - **By Mistake Reason**: e.g., "TFNG CONFUSION (4)", "SPELLING ERROR (2)" — retry only questions with that mistake pattern
+  - UNANSWERED is excluded from reason filters (not useful to retry blanks)
+- **Navigation**: Each chip navigates to test interface with filtered wrongQuestions and a `retryLabel`
+- **Test Interface**: Banner shows filter label (e.g., "Retry Mode: true false ng (5 questions)")
+- **Testing**: 16/16 backend tests passed (100%) including retry grouping tests
 
 ---
 
