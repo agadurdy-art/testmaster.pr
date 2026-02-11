@@ -730,7 +730,7 @@ export default function CambridgeTestResults() {
                         : 'bg-red-50 border-red-500'
                     }`}
                   >
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
                         q.is_correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
                       }`}>
@@ -743,6 +743,18 @@ export default function CambridgeTestResults() {
                         <CheckCircle className="w-5 h-5 text-green-600" />
                       ) : (
                         <XCircle className="w-5 h-5 text-red-600" />
+                      )}
+                      {q.reason_code && !q.is_correct && (
+                        <span data-testid={`reason-badge-reading-${q.question_id}`} className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                          q.reason_code === 'UNANSWERED' ? 'bg-gray-200 text-gray-700' :
+                          q.reason_code === 'TFNG_CONFUSION' || q.reason_code === 'YNNG_CONFUSION' ? 'bg-orange-100 text-orange-700' :
+                          q.reason_code === 'SPELLING_ERROR' ? 'bg-amber-100 text-amber-700' :
+                          q.reason_code === 'DISTRACTOR_TRAP' ? 'bg-rose-100 text-rose-700' :
+                          q.reason_code === 'NEAR_MISS' ? 'bg-yellow-100 text-yellow-700' :
+                          'bg-red-100 text-red-700'
+                        }`}>
+                          {q.reason_label}
+                        </span>
                       )}
                     </div>
                     
@@ -759,15 +771,23 @@ export default function CambridgeTestResults() {
                       </div>
                     </div>
                     
-                    {/* Locate in Passage */}
-                    {q.passage_excerpt && (
-                      <div className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
+                    {/* Evidence from Passage */}
+                    {q.evidence_text && !q.is_correct && (
+                      <div data-testid={`evidence-reading-${q.question_id}`} className="mt-3 p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
                         <div className="flex items-start gap-2">
-                          <MapPin className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                          <Eye className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <p className="text-xs font-semibold text-yellow-700 mb-1">Located in Passage</p>
-                            <p className="text-sm text-gray-700 italic leading-relaxed">&ldquo;...{q.passage_excerpt}...&rdquo;</p>
+                            <p className="text-xs font-semibold text-yellow-700 mb-1">Evidence in Passage</p>
+                            <p className="text-sm text-gray-700 italic leading-relaxed">"...{q.evidence_text}..."</p>
                           </div>
+                        </div>
+                      </div>
+                    )}
+                    {!q.evidence_text && !q.is_correct && (
+                      <div className="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-gray-300">
+                        <div className="flex items-start gap-2">
+                          <Eye className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-xs text-gray-500">Evidence not available for this question</p>
                         </div>
                       </div>
                     )}
@@ -786,7 +806,7 @@ export default function CambridgeTestResults() {
                     )}
                     
                     {/* Skill Tip */}
-                    {q.skill_tip && (
+                    {q.skill_tip && !q.is_correct && (
                       <div className="mt-3 p-3 bg-purple-50 rounded-lg border-l-4 border-purple-400">
                         <div className="flex items-start gap-2">
                           <GraduationCap className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
