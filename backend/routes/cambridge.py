@@ -765,6 +765,8 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
                         start, end = qnum.split("-")
                         for n in range(int(start), int(end) + 1):
                             question_metadata[str(n)] = {"type": qtype, "text": q.get("question_text", ""), "part": part_num}
+                        # Also store compound key for answer_key matching
+                        question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "part": part_num}
                     except ValueError:
                         question_metadata[qnum] = {"type": qtype, "text": q.get("question_text", ""), "part": part_num}
     
