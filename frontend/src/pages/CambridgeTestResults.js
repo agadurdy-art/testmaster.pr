@@ -6,7 +6,8 @@ import { Badge } from '../components/ui/badge';
 import { 
   CheckCircle, XCircle, ArrowLeft, BookOpen, Headphones, PenTool, Mic,
   TrendingUp, Award, Target, BarChart3, ChevronDown, ChevronUp, Lightbulb,
-  BookMarked, GraduationCap, RefreshCw, MapPin, Eye, FileText, Home, ChevronRight
+  BookMarked, GraduationCap, RefreshCw, MapPin, Eye, FileText, Home, ChevronRight,
+  AlertTriangle, Zap, Info
 } from 'lucide-react';
 import { toast } from 'sonner';
 
