@@ -1092,22 +1092,25 @@ export default function CambridgeTestResults() {
               className="flex items-center justify-between cursor-pointer"
               onClick={() => setExpandedSection(expandedSection === 'reading' ? null : 'reading')}
             >
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-lg flex-shrink-0">
                   <BookOpen className="w-5 h-5 text-white" />
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Reading - Answer Review</h3>
-                  <p className="text-sm text-gray-500">
-                    {results?.reading?.correct}/{results?.reading?.total} correct ({Math.round(results?.reading?.percentage || 0)}%)
-                  </p>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-semibold text-gray-900">Reading</h3>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <div className="h-1.5 flex-1 max-w-[120px] bg-gray-200 rounded-full overflow-hidden">
+                      <div className="h-full bg-green-500 rounded-full" style={{width: `${Math.round(results?.reading?.percentage || 0)}%`}} />
+                    </div>
+                    <span className="text-xs text-gray-500">{results?.reading?.correct}/{results?.reading?.total}</span>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Badge className={`text-lg px-3 py-1 ${getBandLightBg(results?.reading?.band || 5)}`}>
-                  Band {results?.reading?.band || '-'}
+              <div className="flex items-center gap-2">
+                <Badge className={`text-sm px-2.5 py-0.5 ${getBandLightBg(results?.reading?.band || 5)}`}>
+                  {results?.reading?.band || '-'}
                 </Badge>
-                {expandedSection === 'reading' ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                {expandedSection === 'reading' ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
               </div>
             </div>
             
