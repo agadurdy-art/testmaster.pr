@@ -309,7 +309,48 @@ export default function CambridgeTestResults() {
         {/* Main Score Card */}
         <Card className="p-8 mb-6 bg-white border-0 shadow-lg rounded-2xl text-center">
           <p className="text-gray-500 mb-2 text-lg">Your Estimated Band Score</p>
-          <p className={`text-8xl font-bold mb-8 ${getBandColorClass(results?.overall || 5)}`}>{results?.overall || '-'}</p>
+          <p className={`text-8xl font-bold mb-4 ${getBandColorClass(results?.overall || 5)}`}>{results?.overall || '-'}</p>
+          
+          {/* Band Calculation Tooltip */}
+          <div className="mb-6">
+            <button 
+              data-testid="band-transparency-toggle"
+              onClick={() => setShowBandTooltip(!showBandTooltip)} 
+              className="text-sm text-gray-400 hover:text-violet-600 transition-colors flex items-center gap-1 mx-auto"
+            >
+              <Info className="w-3.5 h-3.5" /> How is this calculated?
+            </button>
+            {showBandTooltip && (
+              <div data-testid="band-calculation-breakdown" className="mt-3 mx-auto max-w-md bg-gray-50 rounded-xl p-4 text-left border">
+                <h4 className="font-semibold text-gray-800 text-sm mb-3">Band Score Mapping</h4>
+                <div className="space-y-2 text-sm">
+                  {results?.listening && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600 flex items-center gap-1.5"><Headphones className="w-3.5 h-3.5 text-blue-500" /> Listening</span>
+                      <span className="text-gray-800">{results.listening.correct}/{results.listening.total} ({Math.round(results.listening.percentage)}%) <span className="font-bold text-blue-600 ml-1">= Band {results.listening.band}</span></span>
+                    </div>
+                  )}
+                  {results?.reading && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600 flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5 text-green-500" /> Reading</span>
+                      <span className="text-gray-800">{results.reading.correct}/{results.reading.total} ({Math.round(results.reading.percentage)}%) <span className="font-bold text-green-600 ml-1">= Band {results.reading.band}</span></span>
+                    </div>
+                  )}
+                  {results?.writing?.evaluated && results.writing.score && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600 flex items-center gap-1.5"><PenTool className="w-3.5 h-3.5 text-purple-500" /> Writing</span>
+                      <span className="font-bold text-purple-600">Band {results.writing.score}</span>
+                    </div>
+                  )}
+                  <div className="pt-2 mt-2 border-t border-gray-200 flex justify-between items-center">
+                    <span className="text-gray-800 font-medium">Overall (average, rounded to nearest 0.5)</span>
+                    <span className={`font-bold text-lg ${getBandColorClass(results?.overall || 5)}`}>Band {results?.overall}</span>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400 mt-3">Based on official IELTS band descriptors and raw score conversion tables.</p>
+              </div>
+            )}
+          </div>
           
           <div className="grid grid-cols-4 gap-4 pt-6 border-t border-gray-100">
             <div>
