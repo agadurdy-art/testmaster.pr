@@ -1085,7 +1085,7 @@ def generate_explanation(qtype: str, correct_ans, is_correct: bool) -> str:
         elif ans_text.upper() == "FALSE" or ans_text.upper() == "NO":
             return f"The correct answer is '{ans_text}'. The statement contradicts information in the passage."
         else:
-            return f"The correct answer is 'NOT GIVEN'. There is no information about this in the passage."
+            return "The correct answer is 'NOT GIVEN'. There is no information about this in the passage."
     
     return f"The correct answer is '{ans_text}'. This can be found directly in the text/audio."
 
