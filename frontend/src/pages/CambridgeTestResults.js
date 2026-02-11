@@ -254,15 +254,15 @@ export default function CambridgeTestResults() {
 
   // ============ ONE NEXT STEP CTA: Decision Engine ============
   const computeNextStepPlan = () => {
-    if (!results?.scores) return null;
+    // Results are stored directly (results.listening, results.reading) not under results.scores
+    if (!results?.listening && !results?.reading) return null;
     
-    const scores = results.scores;
     const allWrong = [...(questionResults.listening || []), ...(questionResults.reading || [])].filter(q => !q.is_correct);
     
     // 1. Find lowest skill
     const skillScores = {
-      listening: scores.listening?.band || 9,
-      reading: scores.reading?.band || 9
+      listening: results.listening?.band || 9,
+      reading: results.reading?.band || 9
     };
     
     // Add speaking if available
