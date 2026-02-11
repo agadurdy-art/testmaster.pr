@@ -384,6 +384,76 @@ export default function CambridgeTestResults() {
           </div>
         </Card>
 
+        {/* Integrity Warnings */}
+        {integrityWarnings.length > 0 && (
+          <Card data-testid="integrity-warnings" className="p-4 mb-6 bg-amber-50 border border-amber-200 rounded-2xl">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <h3 className="font-semibold text-amber-800 text-sm">Submission Integrity</h3>
+                <div className="mt-1 space-y-1">
+                  {integrityWarnings.map((w, idx) => (
+                    <p key={idx} className="text-sm text-amber-700">{w.message}</p>
+                  ))}
+                </div>
+                <p className="text-xs text-amber-500 mt-2">Tip: Always review unanswered questions before submitting. Even a guess is better than blank.</p>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Fastest Score Gain Card */}
+        {fastestGain.length > 0 && (
+          <Card data-testid="fastest-gain-card" className="p-6 mb-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg">
+                <Zap className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-emerald-900">Fastest Score Gain</h3>
+                <p className="text-sm text-emerald-600">Fix these areas for the biggest improvement</p>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              {fastestGain.map((item, idx) => (
+                <div key={idx} className="p-4 bg-white rounded-xl border border-emerald-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white ${
+                        idx === 0 ? 'bg-red-500' : idx === 1 ? 'bg-amber-500' : 'bg-blue-500'
+                      }`}>{idx + 1}</span>
+                      <span className="font-medium text-gray-900 text-sm">{item.label}</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-red-600 font-bold text-sm">+{item.wrong_count} possible</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex-1 bg-gray-200 rounded-full h-2">
+                      <div 
+                        className={`h-2 rounded-full ${
+                          item.accuracy >= 70 ? 'bg-green-500' : item.accuracy >= 50 ? 'bg-yellow-500' : 'bg-red-500'
+                        }`}
+                        style={{ width: `${item.accuracy}%` }}
+                      />
+                    </div>
+                    <span className="text-xs text-gray-500 w-8">{item.accuracy}%</span>
+                  </div>
+                  {item.tip && <p className="text-xs text-gray-600 leading-relaxed">{item.tip}</p>}
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-4 p-3 bg-emerald-100/50 rounded-lg">
+              <p className="text-sm text-emerald-800 font-medium flex items-center gap-1.5">
+                <Target className="w-4 h-4" />
+                Focus on #{1}: fixing {fastestGain[0]?.wrong_count || 0} questions here could boost your band by ~0.5
+              </p>
+            </div>
+          </Card>
+        )}
+
         {/* AI Teacher Feedback Card */}
         {teacherFeedback && (
           <Card className="p-6 mb-6 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200 rounded-2xl">
