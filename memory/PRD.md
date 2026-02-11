@@ -76,6 +76,15 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 **Testing**: 29/29 backend tests (100%), all CTA + Focus Plan features verified (iteration_21.json)
 
+### Results Page UX Polish (February 11, 2026)
+- **Skeleton loader**: Replaced spinner with shimmer skeleton layout during loading
+- **Compact score grid**: 2x2 grid on mobile, 4-col on desktop, with progress bars and correct/total counts
+- **Merged cards**: "Why You Lost Marks" and "Targeted Retry" combined into single card — reason chips are clickable for direct retry
+- **Cleaner section headers**: Listening/Reading headers show inline progress bar + compact band badge
+- **Visual hierarchy**: Important info (scores, mistakes, CTA) at top; detail sections collapsed by default
+
+**Testing**: 61/61 backend tests (100%), lint clean
+
 ---
 
 ## Previous Update (February 10, 2026)
