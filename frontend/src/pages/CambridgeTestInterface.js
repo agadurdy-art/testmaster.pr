@@ -2150,18 +2150,41 @@ export default function CambridgeTestInterface() {
                 </div>
               )}
 
-              {/* Single visual URL (for tests with direct URLs) */}
+              {/* Single visual + textarea side by side */}
               {currentTask.visual_url && !currentTask.visual_url_2 && (
-                <div className="mb-4 bg-white rounded-lg border shadow-sm overflow-hidden">
-                  <div className="bg-gray-100 px-4 py-2 border-b">
-                    <h4 className="text-sm font-semibold text-gray-700 text-center">Visual Reference</h4>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div className="bg-white rounded-lg border shadow-sm overflow-hidden h-fit sticky top-4">
+                    <div className="bg-gray-100 px-3 py-1.5 border-b">
+                      <h4 className="text-xs font-semibold text-gray-600 text-center">Visual Reference</h4>
+                    </div>
+                    <img 
+                      src={currentTask.visual_url.startsWith('http') ? currentTask.visual_url : `${API_URL}${currentTask.visual_url}`}
+                      alt="Task 1 Visual" 
+                      className="w-full h-auto p-2"
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                    />
                   </div>
-                  <img 
-                    src={currentTask.visual_url.startsWith('http') ? currentTask.visual_url : `${API_URL}${currentTask.visual_url}`}
-                    alt="Task 1 Visual" 
-                    className="max-w-full mx-auto p-2"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Your Response</label>
+                    <textarea
+                      data-testid="writing-task1-textarea"
+                      value={answers[`writing_task${currentTask.task_number}`] || ''}
+                      onChange={(e) => setAnswers(prev => ({
+                        ...prev,
+                        [`writing_task${currentTask.task_number}`]: e.target.value
+                      }))}
+                      className="w-full h-80 p-4 border rounded-lg resize-vertical focus:ring-2 focus:ring-purple-500 focus:border-transparent font-mono text-sm"
+                      placeholder="Write your response here..."
+                    />
+                    <div className="flex justify-between mt-2 text-sm">
+                      <span className="text-gray-500">
+                        Word count: <span className="font-medium text-gray-700">
+                          {(answers[`writing_task${currentTask.task_number}`] || '').split(/\s+/).filter(Boolean).length}
+                        </span>
+                      </span>
+                      <span className="text-gray-500">Target: {currentTask.word_count}</span>
+                    </div>
+                  </div>
                 </div>
               )}
               
