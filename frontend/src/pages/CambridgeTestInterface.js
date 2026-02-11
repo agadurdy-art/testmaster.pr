@@ -2905,6 +2905,28 @@ export default function CambridgeTestInterface() {
         </div>
       </div>
 
+      {/* Retry Wrong-Only Mode Banner */}
+      {retryWrongOnly && (
+        <div data-testid="retry-wrong-banner" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="w-4 h-4" />
+              <span className="font-medium text-sm">
+                Retry Mode: Only wrong questions shown ({Object.keys(wrongQuestions).length} questions)
+              </span>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => navigate(`/cambridge-test/${bookId}/${testId}`)}
+              className="text-white hover:bg-white/20 text-xs"
+            >
+              Full Test
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-6 pb-24">
         {currentSection === 'listening' && renderListeningSection()}
