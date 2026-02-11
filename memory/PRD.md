@@ -62,6 +62,20 @@ Build a comprehensive IELTS practice application using authentic Cambridge IELTS
 
 **Testing**: 29/29 backend tests (100%), all frontend components verified
 
+### "One Next Step" CTA Complete (February 11, 2026)
+
+#### CTA Decision Engine (Client-Side)
+- Priority logic: (1) Speaking filler>3/min → fluency drill, (2) TFNG confusion >=3 → TFNG retry, (3) Largest reason code cluster → targeted retry, (4) Default → lowest skill improvement
+- Returns: title, subtitle, focus_area, reason, data_points, steps, expected_outcome, action_type + action_data
+- Dark gradient card at bottom of results page with amber accent
+
+#### Focus Plan Intermediate Page (`/focus-plan`)
+- Receives plan data via navigation state
+- Shows: skill-colored header, "Why This Focus" card with data points, numbered plan steps, expected outcome, large Start button
+- Start button routes to: retry (with wrongQuestions filter), drill (back to results), or question-bank
+
+**Testing**: 29/29 backend tests (100%), all CTA + Focus Plan features verified (iteration_21.json)
+
 ---
 
 ## Previous Update (February 10, 2026)
