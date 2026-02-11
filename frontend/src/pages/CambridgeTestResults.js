@@ -645,35 +645,34 @@ export default function CambridgeTestResults() {
             )}
           </div>
           
-          <div className="grid grid-cols-4 gap-4 pt-6 border-t border-gray-100">
-            <div>
-              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-blue-500 flex items-center justify-center shadow-lg">
-                <Headphones className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-2xl font-bold text-gray-900">{results?.listening?.band || '-'}</p>
-              <p className="text-sm text-gray-500">Listening</p>
-            </div>
-            <div>
-              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-green-500 flex items-center justify-center shadow-lg">
-                <BookOpen className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-2xl font-bold text-gray-900">{results?.reading?.band || '-'}</p>
-              <p className="text-sm text-gray-500">Reading</p>
-            </div>
-            <div>
-              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-purple-500 flex items-center justify-center shadow-lg">
-                <PenTool className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-2xl font-bold text-gray-900">{results?.writing?.score || '-'}</p>
-              <p className="text-sm text-gray-500">Writing</p>
-            </div>
-            <div>
-              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-orange-500 flex items-center justify-center shadow-lg">
-                <Mic className="w-6 h-6 text-white" />
-              </div>
-              <p className="text-2xl font-bold text-gray-900">{results?.speaking?.score || '-'}</p>
-              <p className="text-sm text-gray-500">Speaking</p>
-            </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-gray-100">
+            {[
+              { label: 'Listening', band: results?.listening?.band, pct: results?.listening?.percentage, icon: Headphones, color: 'blue', correct: results?.listening?.correct, total: results?.listening?.total },
+              { label: 'Reading', band: results?.reading?.band, pct: results?.reading?.percentage, icon: BookOpen, color: 'green', correct: results?.reading?.correct, total: results?.reading?.total },
+              { label: 'Writing', band: results?.writing?.score, pct: null, icon: PenTool, color: 'purple' },
+              { label: 'Speaking', band: results?.speaking?.score, pct: null, icon: Mic, color: 'orange' },
+            ].map(s => {
+              const Icon = s.icon;
+              return (
+                <div key={s.label} className={`p-3 rounded-xl bg-${s.color}-50/50 border border-${s.color}-100`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-8 h-8 rounded-lg bg-${s.color}-500 flex items-center justify-center`}>
+                      <Icon className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-xs font-medium text-gray-500">{s.label}</span>
+                  </div>
+                  <p className={`text-2xl font-bold ${getBandColorClass(s.band || 0)}`}>{s.band || '-'}</p>
+                  {s.pct != null && (
+                    <div className="mt-1.5">
+                      <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                        <div className={`h-full bg-${s.color}-500 rounded-full transition-all duration-700`} style={{width: `${Math.round(s.pct)}%`}} />
+                      </div>
+                      <p className="text-[10px] text-gray-400 mt-0.5">{s.correct}/{s.total} correct</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </Card>
 
