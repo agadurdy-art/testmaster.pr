@@ -1886,7 +1886,8 @@ export default function CambridgeTestInterface() {
                             );
                           }
                           return <span key={pIdx}>{part}</span>;
-                        })}
+                        });
+                        })()}
                       </p>
                     </div>
                   ) : (
