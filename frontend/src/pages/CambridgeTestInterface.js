@@ -2108,7 +2108,7 @@ export default function CambridgeTestInterface() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <Badge className="bg-purple-100 text-purple-700 mb-2">{currentTask.title}</Badge>
-              <h3 className="font-bold text-lg text-gray-900">{currentTask.type === 'map_comparison' ? 'Map Description' : 'Essay'}</h3>
+              <h3 className="font-bold text-lg text-gray-900">{currentTask.task_type === 'report' ? 'Report' : currentTask.type === 'map_comparison' ? 'Map Description' : 'Essay'}</h3>
             </div>
           </div>
 
