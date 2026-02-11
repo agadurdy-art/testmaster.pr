@@ -294,7 +294,18 @@ class TestQuestionTypeCoverage:
         data = r.json()
         test = data.get("test", data)
         passages = test.get("sections", {}).get("reading", {}).get("passages", [])
-        total_q = sum(len(p.get("questions", [])) for p in passages)
+        # Questions are grouped: one group may have multiple statements/items
+        total_q = 0
+        for p in passages:
+            for q in p.get("questions", []):
+                if q.get("statements"):
+                    total_q += len(q["statements"])
+                elif q.get("items"):
+                    total_q += len(q["items"])
+                elif q.get("questions"):
+                    total_q += len(q["questions"])
+                else:
+                    total_q += 1
         assert total_q >= 30, f"{test_id}: Expected >=30 reading questions, got {total_q}"
         print(f"OK — ielts18/{test_id} reading: {total_q} questions")
 
