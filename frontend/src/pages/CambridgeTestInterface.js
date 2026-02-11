@@ -31,6 +31,11 @@ const isPremiumUser = (user) => {
 export default function CambridgeTestInterface() {
   const { bookId, testId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Retry wrong-only mode from results page
+  const retryWrongOnly = location.state?.retryWrongOnly || false;
+  const wrongQuestions = location.state?.wrongQuestions || {};
   
   // Get user from localStorage for premium check
   const [user, setUser] = useState(() => {
