@@ -1958,7 +1958,7 @@ export default function CambridgeTestInterface() {
               {q.type === 'multiple_selection' && (
                 <div className="p-4 bg-white border rounded-lg">
                   <p className="text-xs text-green-600 font-medium mb-1">{q.instruction}</p>
-                  <p className="text-sm font-medium mb-3">{q.question}</p>
+                  <p className="text-sm font-medium mb-3"><span className="text-green-700 font-bold">{q.number}.</span> {q.question_text || q.question}</p>
                   {/* Show which question numbers to fill */}
                   {q.items && (
                     <p className="text-xs text-gray-500 mb-2">
