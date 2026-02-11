@@ -385,7 +385,7 @@ export default function CambridgeTestResults() {
       focus_area: weakSkill.charAt(0).toUpperCase() + weakSkill.slice(1),
       skill: weakSkill,
       reason: `Your ${weakSkill} score (${weakBand}) is your lowest skill. Improving it has the highest impact on your overall band.`,
-      data_points: [`${weakSkill} band: ${weakBand}`, `Overall: ${scores.overall?.band}`],
+      data_points: [`${weakSkill} band: ${weakBand}`, `Overall: ${results?.overall}`],
       steps: [
         { title: 'Review your results', detail: `Look at the questions you got wrong in ${weakSkill}`, duration: '3 min' },
         { title: 'Practice weak areas', detail: 'Focus on the question types where you lost the most marks', duration: '10 min' },
