@@ -522,6 +522,8 @@ export default function CambridgeTestInterface() {
                 const isAnswered = !!answers[answerKey];
                 const isCurrent = currentQuestion === qNum;
                 const isReviewed = reviewedQuestions[qNum];
+                const isWrongRetry = retryWrongOnly && wrongQuestions[answerKey];
+                const isSkippedInRetry = retryWrongOnly && !wrongQuestions[answerKey];
                 
                 return (
                   <button
