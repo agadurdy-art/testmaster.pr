@@ -404,6 +404,46 @@ export default function CambridgeTestResults() {
           </Card>
         )}
 
+        {/* Mistake Reason Summary */}
+        {Object.keys(reasonSummary).length > 0 && (
+          <Card data-testid="reason-summary-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center shadow-lg">
+                <AlertTriangle className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">Why You Lost Marks</h3>
+                <p className="text-sm text-gray-500">Breakdown of mistake types across all sections</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {Object.entries(reasonSummary)
+                .sort(([,a], [,b]) => b - a)
+                .map(([code, count]) => {
+                  const reasonMeta = {
+                    UNANSWERED: { color: 'bg-gray-100 text-gray-700 border-gray-200', icon: '—' },
+                    TFNG_CONFUSION: { color: 'bg-orange-50 text-orange-700 border-orange-200', icon: 'T/F' },
+                    YNNG_CONFUSION: { color: 'bg-orange-50 text-orange-700 border-orange-200', icon: 'Y/N' },
+                    SPELLING_ERROR: { color: 'bg-amber-50 text-amber-700 border-amber-200', icon: 'Abc' },
+                    DISTRACTOR_TRAP: { color: 'bg-rose-50 text-rose-700 border-rose-200', icon: '!?' },
+                    NEAR_MISS: { color: 'bg-yellow-50 text-yellow-700 border-yellow-200', icon: '~' },
+                    WRONG_ANSWER: { color: 'bg-red-50 text-red-700 border-red-200', icon: 'X' },
+                  };
+                  const meta = reasonMeta[code] || reasonMeta.WRONG_ANSWER;
+                  return (
+                    <div key={code} data-testid={`reason-summary-${code}`} className={`p-3 rounded-xl border ${meta.color}`}>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-lg font-bold">{meta.icon}</span>
+                        <span className="text-xl font-bold">{count}</span>
+                      </div>
+                      <p className="text-xs font-medium">{code.replace(/_/g, ' ')}</p>
+                    </div>
+                  );
+                })}
+            </div>
+          </Card>
+        )}
+
         {/* Fastest Score Gain Card */}
         {fastestGain.length > 0 && (
           <Card data-testid="fastest-gain-card" className="p-6 mb-6 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl">
