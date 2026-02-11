@@ -154,12 +154,14 @@ class TestModelAnswersEndpoint:
         # Check band7 structure
         band7 = data.get("band7", {})
         assert "answer" in band7 or "structure" in band7, "band7 missing answer/structure"
-        print(f"✓ Band 7 answer present: {len(band7.get('answer', band7.get('structure', '')))[:50]}...")
+        band7_text = band7.get('answer', band7.get('structure', ''))
+        print(f"✓ Band 7 answer present: {band7_text[:50] if band7_text else 'N/A'}...")
         
         # Check band8 structure
         band8 = data.get("band8", {})
         assert "answer" in band8 or "structure" in band8, "band8 missing answer/structure"
-        print(f"✓ Band 8 answer present: {len(band8.get('answer', band8.get('structure', '')))[:50]}...")
+        band8_text = band8.get('answer', band8.get('structure', ''))
+        print(f"✓ Band 8 answer present: {band8_text[:50] if band8_text else 'N/A'}...")
         
         # Check key_features
         if band7.get("key_features"):
