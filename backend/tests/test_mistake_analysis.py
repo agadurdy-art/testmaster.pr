@@ -94,8 +94,7 @@ class TestMistakeAnalysis:
         assert "reason_summary" in data, "Missing 'reason_summary' in response"
         reason_summary = data["reason_summary"]
         print(f"✓ reason_summary present: {reason_summary}")
-        
-        return data
+    
     
     def test_reason_codes_in_listening_results(self):
         """Verify reason_code and reason_label are present for wrong listening answers"""
