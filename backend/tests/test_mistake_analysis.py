@@ -140,8 +140,7 @@ class TestMistakeAnalysis:
             assert reason_code in valid_codes, f"Question {qid}: invalid reason_code '{reason_code}'"
             
             print(f"✓ Question {qid}: reason_code={reason_code}, reason_label={reason_label}")
-        
-        return data
+    
     
     def test_unanswered_reason_code(self):
         """Verify UNANSWERED reason code is correctly assigned for empty answers"""
