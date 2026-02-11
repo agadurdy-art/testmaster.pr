@@ -854,6 +854,102 @@ def calculate_section_results(section: str, user_answers: Dict, correct_answers:
     return results
 
 
+def classify_reason_code(user_ans, correct_ans, qtype: str) -> dict:
+    """Assign a high-signal reason code for an incorrect answer"""
+    
+    REASON_LABELS = {
+        "UNANSWERED": "No answer provided",
+        "TFNG_CONFUSION": "T/F/NG mix-up",
+        "YNNG_CONFUSION": "Y/N/NG mix-up",
+        "SPELLING_ERROR": "Spelling mistake",
+        "DISTRACTOR_TRAP": "Distractor selected",
+        "NEAR_MISS": "Close but incorrect",
+        "WRONG_ANSWER": "Incorrect answer",
+    }
+    
+    def normalize(s):
+        return str(s).lower().strip().replace(".", "").replace(",", "")
+    
+    # 1. Unanswered
+    if not user_ans or (isinstance(user_ans, str) and not user_ans.strip()):
+        return {"code": "UNANSWERED", "label": REASON_LABELS["UNANSWERED"]}
+    
+    user_norm = normalize(user_ans)
+    
+    # 2. TFNG confusion
+    if qtype in ("true_false_ng", "true_false_not_given"):
+        tfng_set = {"true", "false", "not given"}
+        if user_norm in tfng_set:
+            return {"code": "TFNG_CONFUSION", "label": REASON_LABELS["TFNG_CONFUSION"]}
+    
+    # 3. YNNG confusion
+    if qtype in ("yes_no_ng",):
+        ynng_set = {"yes", "no", "not given"}
+        if user_norm in ynng_set:
+            return {"code": "YNNG_CONFUSION", "label": REASON_LABELS["YNNG_CONFUSION"]}
+    
+    # 4. Spelling error — check Levenshtein-like similarity
+    correct_norms = []
+    if isinstance(correct_ans, list):
+        correct_norms = [normalize(a) for a in correct_ans]
+    elif isinstance(correct_ans, str):
+        correct_norms = [normalize(a) for a in correct_ans.split("/")]
+    
+    for cn in correct_norms:
+        if cn and user_norm and len(user_norm) > 2 and len(cn) > 2:
+            # Simple ratio: shared chars / max length
+            common = sum(1 for a, b in zip(user_norm, cn) if a == b)
+            ratio = common / max(len(user_norm), len(cn))
+            if ratio >= 0.7 and ratio < 1.0:
+                return {"code": "SPELLING_ERROR", "label": REASON_LABELS["SPELLING_ERROR"]}
+    
+    # 5. Distractor trap — for multiple choice
+    if qtype in ("multiple_choice", "multiple_selection"):
+        return {"code": "DISTRACTOR_TRAP", "label": REASON_LABELS["DISTRACTOR_TRAP"]}
+    
+    # 6. Near miss — user wrote something that shares a root with correct answer
+    for cn in correct_norms:
+        if cn and user_norm and len(cn) > 3 and len(user_norm) > 3:
+            if cn[:3] == user_norm[:3] or cn in user_norm or user_norm in cn:
+                return {"code": "NEAR_MISS", "label": REASON_LABELS["NEAR_MISS"]}
+    
+    return {"code": "WRONG_ANSWER", "label": REASON_LABELS["WRONG_ANSWER"]}
+
+
+def extract_evidence_text(correct_ans, passage_text: str) -> str:
+    """Extract a passage excerpt containing the correct answer. Returns empty string if not found."""
+    if not passage_text or not correct_ans:
+        return ""
+    
+    search_terms = []
+    if isinstance(correct_ans, list):
+        search_terms = [str(a) for a in correct_ans]
+    elif isinstance(correct_ans, str):
+        search_terms = [a.strip() for a in correct_ans.split("/")]
+    
+    text_lower = passage_text.lower()
+    for term in search_terms:
+        term_lower = term.lower().strip()
+        if not term_lower or len(term_lower) < 2:
+            continue
+        idx = text_lower.find(term_lower)
+        if idx >= 0:
+            start = max(0, idx - 80)
+            end = min(len(passage_text), idx + len(term_lower) + 80)
+            excerpt = passage_text[start:end].strip()
+            # Clean up to nearest word boundary
+            if start > 0:
+                space_idx = excerpt.find(" ")
+                if space_idx > 0 and space_idx < 15:
+                    excerpt = excerpt[space_idx + 1:]
+            if end < len(passage_text):
+                space_idx = excerpt.rfind(" ")
+                if space_idx > len(excerpt) - 15:
+                    excerpt = excerpt[:space_idx]
+            return excerpt
+    return ""
+
+
 def compare_answers(user_ans, correct_ans) -> bool:
     """Compare user answer with correct answer(s)"""
     if not user_ans or not correct_ans:
