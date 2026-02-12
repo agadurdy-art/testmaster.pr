@@ -1424,6 +1424,15 @@ async def get_test(test_id: str):
     
     return test
 
+@api_router.get("/listening-test-audio/{filename}")
+async def serve_listening_test_audio(filename: str):
+    """Serve uploaded listening test audio files"""
+    audio_path = Path(f"static/audio/listening_tests/{filename}.mp3")
+    if not audio_path.exists():
+        raise HTTPException(status_code=404, detail="Audio file not found")
+    return FileResponse(path=audio_path, media_type="audio/mpeg")
+
+
 @api_router.post("/tests/submit")
 async def submit_test(submission: SubmitAnswers):
     # Get test
