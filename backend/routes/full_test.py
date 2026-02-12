@@ -94,6 +94,27 @@ except ImportError:
     ACADEMIC_SET_E = None
     print("Warning: Could not import Academic Set E")
 
+# Import Set F content
+try:
+    from content.full_tests.academic.set_f import ACADEMIC_SET_F
+except ImportError:
+    ACADEMIC_SET_F = None
+    print("Warning: Could not import Academic Set F")
+
+# Import Set G content
+try:
+    from content.full_tests.academic.set_g import ACADEMIC_SET_G
+except ImportError:
+    ACADEMIC_SET_G = None
+    print("Warning: Could not import Academic Set G")
+
+# Import Set H content
+try:
+    from content.full_tests.academic.set_h import ACADEMIC_SET_H
+except ImportError:
+    ACADEMIC_SET_H = None
+    print("Warning: Could not import Academic Set H")
+
 # Import Cambridge IELTS content
 try:
     from content.cambridge_tests.ielts17.test1 import IELTS17_TEST1
