@@ -18,27 +18,25 @@ IELTS test preparation application with FastAPI backend, React frontend, and Mon
 - 4 General Training test sets (Set A-D)
 - Cambridge IELTS 17 & 18 integration
 - 26 user-provided visual assets integrated
-- TTS audio files generated for ALL listening scripts (including Set E fix)
+- TTS audio files generated for ALL sets including Set E fix
 
 ### Feedback Mechanism (Completed - Feb 2026)
-Enhanced Full Test feedback to Cambridge-level:
-- Per-question reason codes (UNANSWERED, SPELLING_ERROR, WRONG_ANSWER, etc.)
-- Skill breakdown by question type
-- AI Teacher Feedback via Emergent LLM
-- Fastest Score Gain analysis
-- Integrity warnings, recommended lessons
-- Per-question explanations, evidence text, skill tips
+Enhanced Full Test feedback to Cambridge-level richness:
+- Per-question reason codes, skill breakdown, AI teacher feedback
+- Fastest score gain, integrity warnings, recommended lessons
+- Evidence text from passages, per-question explanations
 
-### QB UI Redesign (Completed - Feb 2026)
-- Academic IELTS: organized card with 8 sets in 4-column grid
-- General Training: clean separate card
+### QB Full Tests UX Redesign (Completed - Feb 2026)
+2-step category selection:
+1. **Selection Screen**: Two prominent cards — "Cambridge IELTS" vs "AI Practice Tests"
+2. **Cambridge View**: IELTS 17 (4 tests), IELTS 18 (4 tests), Coming Soon (IELTS 16, 19)
+3. **AI Practice View**: Academic IELTS (8 sets A-H grid) + General Training (4 sets A-D grid)
+- Back button to return to category selection
 - All Turkish text translated to English
-- Better visual hierarchy between Cambridge and AI-generated tests
 
 ### Audio Fix (Completed - Feb 2026)
-- Set E listening audio (4 parts) generated via ElevenLabs TTS
-- Set E-H imports added to full_test_audio.py generate endpoint
-- All 8 sets now have working audio: verified 200 status on all endpoints
+- Set E listening audio (4 parts) generated
+- All 8 academic sets have working audio
 
 ## Architecture
 ```
@@ -53,10 +51,9 @@ TTS: ElevenLabs
 
 ### P1 - Future Tasks
 - Create additional Academic test sets (I, J) using remaining 12 visuals
-- Migrate test set data from Python files to MongoDB for scalability
+- Migrate test set data from Python files to MongoDB
 
 ### P2 - Enhancements
-- Retry functionality for wrong questions in Full Tests
+- Retry functionality for wrong questions
 - Speaking drills and model answers
-- Progress tracking across multiple test attempts
-- Writing evaluation with reference samples
+- Progress tracking across test attempts
