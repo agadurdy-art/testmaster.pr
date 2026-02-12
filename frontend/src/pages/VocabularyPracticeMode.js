@@ -46,9 +46,23 @@ export default function VocabularyPracticeMode({ user }) {
     if (option === currentExercise.answer) setScore(p => p + 1);
   };
 
-  const handleMatchSelect = (termId) => {
-    if (matchState.selected === null) setMatchState(p => ({ ...p, selected: termId }));
-    else setMatchState(p => ({ selected: null, matches: { ...p.matches, [p.selected]: termId, [termId]: p.selected } }));
+  const handleMatchSelect = (type, id) => {
+    if (type === 'term') {
+      // Always select a term first
+      setMatchState(prev => ({ ...prev, selectedTerm: id, selectedDef: null }));
+    } else {
+      // Definition clicked
+      if (matchState.selectedTerm !== null) {
+        // We have a term selected - make the match
+        setMatchState(prev => ({
+          selectedTerm: null,
+          selectedDef: null,
+          matches: { ...prev.matches, [prev.selectedTerm]: id }
+        }));
+      } else {
+        setMatchState(prev => ({ ...prev, selectedDef: id, selectedTerm: null }));
+      }
+    }
   };
 
   const checkMatching = () => {
