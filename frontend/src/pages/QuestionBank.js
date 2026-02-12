@@ -406,158 +406,117 @@ export default function QuestionBank({ user }) {
 
         {/* Overview Tab */}
         {activeTab === 'overview' && (
-          <div className="space-y-8">
-            {/* STEP 1: Filter Selection (Band & Topics at TOP) */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 border border-indigo-100">
-              <div className="flex items-center gap-2 mb-4">
-                <Filter className="w-5 h-5 text-indigo-600" />
-                <h2 className="text-lg font-bold text-gray-900">1. First, Select Filters</h2>
-                <span className="text-sm text-gray-500">(Optional)</span>
-              </div>
-              
-              {/* Band Levels - Horizontal */}
-              <div className="mb-4">
-                <p className="text-sm font-medium text-gray-700 mb-2">Band Level:</p>
-                <div className="flex flex-wrap gap-2">
-                  {bandLevels.map(band => (
-                    <Button
-                      key={band.id}
-                      variant={selectedBand === band.id ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => {
-                        const newBand = selectedBand === band.id ? null : band.id;
-                        setSelectedBand(newBand);
-                        // Clear topic when band changes (it might not be available)
-                        setSelectedTopic(null);
-                      }}
-                      className={selectedBand === band.id ? 'bg-indigo-600 hover:bg-indigo-700' : ''}
-                      style={{ borderColor: band.color }}
-                    >
-                      <div 
-                        className="w-2 h-2 rounded-full mr-2"
-                        style={{ backgroundColor: band.color }}
-                      ></div>
-                      {band.name}
-                      {selectedBand === band.id && <CheckCircle className="w-3 h-3 ml-2" />}
-                    </Button>
-                  ))}
-                </div>
-                {selectedBand && (
-                  <p className="text-xs text-indigo-600 mt-2">
-                    📚 {selectedBand === '4.0-5.0' ? 'Beginner Course topics' : 
-                        selectedBand === '5.5-6.5' ? 'Beginner + Mastery Course topics' : 
-                        'All course topics'} showing ({topics.length} topics)
-                  </p>
-                )}
-              </div>
-
-              {/* Topics - Horizontal Scroll with Stage Info */}
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">Topic ({topics.length}):</p>
-                <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto">
-                  {topics.map(topic => (
-                    <Badge
-                      key={topic.id}
-                      variant={selectedTopic === topic.id ? 'default' : 'outline'}
-                      className={`cursor-pointer py-1.5 px-3 text-sm ${
-                        selectedTopic === topic.id 
-                          ? 'bg-indigo-600 hover:bg-indigo-700' 
-                          : 'hover:bg-gray-100'
-                      }`}
-                      onClick={() => setSelectedTopic(selectedTopic === topic.id ? null : topic.id)}
-                      title={topic.stages ? `Courses: ${topic.stages.join(', ')}` : ''}
-                    >
-                      <span className="mr-1">{topic.icon}</span> {topic.name}
-                      {topic.stages && topic.stages.length > 1 && (
-                        <span className="ml-1 text-xs opacity-70">+{topic.stages.length - 1}</span>
-                      )}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* Active Filters Summary */}
-              {(selectedBand || selectedTopic) && (
-                <div className="mt-4 pt-4 border-t flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm text-indigo-700">
-                    <CheckCircle className="w-4 h-4" />
-                    <span>
-                      {selectedBand && bandLevels.find(b => b.id === selectedBand)?.name}
-                      {selectedBand && selectedTopic && ' • '}
-                      {selectedTopic && topics.find(t => t.id === selectedTopic)?.name}
-                    </span>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
-                    className="text-gray-500 hover:text-gray-700"
+          <div className="space-y-6">
+            {/* Compact Filter Bar */}
+            <div className="flex flex-wrap items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm border border-slate-100">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Filter</span>
+              <div className="h-5 w-px bg-slate-200" />
+              {/* Band pills */}
+              <div className="flex gap-1.5">
+                {bandLevels.map(band => (
+                  <button
+                    key={band.id}
+                    onClick={() => { setSelectedBand(selectedBand === band.id ? null : band.id); setSelectedTopic(null); }}
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                      selectedBand === band.id
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
                   >
-                    <X className="w-4 h-4 mr-1" /> Clear
-                  </Button>
+                    <span className="inline-block w-1.5 h-1.5 rounded-full mr-1.5" style={{ backgroundColor: band.color }} />
+                    {band.name}
+                  </button>
+                ))}
+              </div>
+              <div className="h-5 w-px bg-slate-200" />
+              {/* Topic dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    const el = document.getElementById('topic-dropdown');
+                    if (el) el.classList.toggle('hidden');
+                  }}
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1 ${
+                    selectedTopic
+                      ? 'bg-purple-100 text-purple-700'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                  data-testid="topic-filter-btn"
+                >
+                  {selectedTopic ? (topics.find(t => t.id === selectedTopic)?.name || 'Topic') : 'All Topics'}
+                  <Filter className="w-3 h-3" />
+                </button>
+                <div id="topic-dropdown" className="hidden absolute top-full left-0 mt-1 w-72 bg-white rounded-xl border border-slate-200 shadow-xl z-50 py-2 max-h-64 overflow-y-auto" data-testid="topic-dropdown">
+                  <button
+                    onClick={() => { setSelectedTopic(null); document.getElementById('topic-dropdown')?.classList.add('hidden'); }}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-indigo-50 text-slate-600 font-medium"
+                  >
+                    All Topics
+                  </button>
+                  <div className="border-t border-slate-100 my-1" />
+                  {topics.map(topic => (
+                    <button
+                      key={topic.id}
+                      onClick={() => { setSelectedTopic(topic.id); document.getElementById('topic-dropdown')?.classList.add('hidden'); }}
+                      className={`w-full px-3 py-1.5 text-left text-xs hover:bg-indigo-50 truncate ${
+                        selectedTopic === topic.id ? 'bg-indigo-50 text-indigo-700 font-medium' : 'text-slate-600'
+                      }`}
+                    >
+                      <span className="mr-1.5">{topic.icon}</span>{topic.name}
+                    </button>
+                  ))}
                 </div>
+              </div>
+              {/* Clear */}
+              {(selectedBand || selectedTopic) && (
+                <>
+                  <div className="h-5 w-px bg-slate-200" />
+                  <button
+                    onClick={() => { setSelectedBand(null); setSelectedTopic(null); }}
+                    className="text-xs text-slate-400 hover:text-red-500 flex items-center gap-1 transition-colors"
+                  >
+                    <X className="w-3 h-3" /> Clear
+                  </button>
+                </>
               )}
             </div>
 
-            {/* STEP 2: Skills Grid */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Target className="w-5 h-5 text-indigo-600" />
-                <h2 className="text-lg font-bold text-gray-900">2. Select Skill and Start</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {skills.map(skill => {
-                  const Icon = skillIcons[skill.id] || BookOpen;
-                  const colorClass = skillColors[skill.id] || 'from-gray-500 to-gray-600';
-                  return (
-                    <Card
-                      key={skill.id}
-                      className="p-5 cursor-pointer hover:shadow-lg transition-all border-0 shadow-md overflow-hidden relative group"
-                      onClick={() => {
-                        if (skill.id === 'writing') {
-                          setShowWritingModal(true);
-                        } else if (skill.id === 'reading') {
-                          setShowReadingModal(true);
-                        } else if (skill.id === 'listening') {
-                          setShowListeningModal(true);
-                        } else if (skill.id === 'speaking') {
-                          setShowSpeakingModal(true);
-                        } else {
-                          setSelectedSkill(skill.id);
-                          setActiveTab('practice');
-                        }
-                      }}
-                    >
-                      <div className={`absolute inset-0 bg-gradient-to-br ${colorClass} opacity-5 group-hover:opacity-10 transition-opacity`}></div>
-                      <div className={`w-12 h-12 bg-gradient-to-br ${colorClass} rounded-xl flex items-center justify-center mb-3`}>
-                        <Icon className="w-6 h-6 text-white" />
-                      </div>
-                      <h3 className="font-bold text-gray-900 mb-1">{skill.name}</h3>
-                      <p className="text-sm text-gray-500 mb-3">{skill.description}</p>
-                      
-                      {/* Show selected filters on card */}
-                      {(selectedBand || selectedTopic) && (
-                        <div className="mb-2 flex flex-wrap gap-1">
-                          {selectedBand && (
-                            <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded">
-                              {bandLevels.find(b => b.id === selectedBand)?.name}
-                            </span>
-                          )}
-                          {selectedTopic && (
-                            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">
-                              {topics.find(t => t.id === selectedTopic)?.icon}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      
-                      <div className="flex items-center text-indigo-600 text-sm font-medium">
-                        Start <ChevronRight className="w-4 h-4 ml-1" />
-                      </div>
-                    </Card>
-                  );
-                })}
-              </div>
+            {/* Skills Grid - compact */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              {skills.map(skill => {
+                const Icon = skillIcons[skill.id] || BookOpen;
+                const colors = {
+                  reading: { bg: 'bg-blue-500', light: 'bg-blue-50 hover:bg-blue-100 border-blue-200', text: 'text-blue-600' },
+                  listening: { bg: 'bg-purple-500', light: 'bg-purple-50 hover:bg-purple-100 border-purple-200', text: 'text-purple-600' },
+                  writing: { bg: 'bg-emerald-500', light: 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200', text: 'text-emerald-600' },
+                  speaking: { bg: 'bg-orange-500', light: 'bg-orange-50 hover:bg-orange-100 border-orange-200', text: 'text-orange-600' },
+                  grammar_vocab: { bg: 'bg-pink-500', light: 'bg-pink-50 hover:bg-pink-100 border-pink-200', text: 'text-pink-600' }
+                };
+                const c = colors[skill.id] || colors.reading;
+                return (
+                  <button
+                    key={skill.id}
+                    onClick={() => {
+                      if (skill.id === 'writing') setShowWritingModal(true);
+                      else if (skill.id === 'reading') setShowReadingModal(true);
+                      else if (skill.id === 'listening') setShowListeningModal(true);
+                      else if (skill.id === 'speaking') setShowSpeakingModal(true);
+                      else { setSelectedSkill(skill.id); setActiveTab('practice'); }
+                    }}
+                    className={`${c.light} border rounded-xl p-4 text-left transition-all hover:shadow-md group`}
+                    data-testid={`skill-${skill.id}`}
+                  >
+                    <div className={`${c.bg} w-10 h-10 rounded-lg flex items-center justify-center mb-3`}>
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="font-bold text-sm text-slate-800">{skill.name}</h3>
+                    <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-1">{skill.description}</p>
+                    <div className={`flex items-center ${c.text} text-xs font-medium mt-2 group-hover:gap-1 transition-all`}>
+                      Start <ChevronRight className="w-3.5 h-3.5" />
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
