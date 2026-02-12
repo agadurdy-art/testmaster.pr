@@ -64,6 +64,7 @@ import LizFloatingButton from './components/LizFloatingButton';
 import VocabularyLearnMode from './pages/VocabularyLearnMode';
 import VocabularyPracticeMode from './pages/VocabularyPracticeMode';
 import VocabularyQuizMode from './pages/VocabularyQuizMode';
+import VocabularyProductionMode from './pages/VocabularyProductionMode';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
@@ -345,6 +346,10 @@ function AppWithSessionHandler() {
         <Route 
           path="/vocabulary/quiz/:moduleId" 
           element={user ? <VocabularyQuizMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/production/:moduleId" 
+          element={user ? <VocabularyProductionMode user={user} /> : <Navigate to="/" />} 
         />
         <Route 
           path="/game-bank" 
