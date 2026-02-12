@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { 
-  ArrowLeft, CheckCircle, XCircle, ArrowRight,
+  ArrowLeft, CheckCircle, XCircle, ChevronLeft, ChevronRight,
   Award, Lightbulb, RotateCcw, Zap
 } from 'lucide-react';
 import { toast } from 'sonner';
@@ -24,25 +24,15 @@ export default function VocabularyPracticeMode({ user }) {
   const [matchState, setMatchState] = useState({ selected: null, matches: {} });
   const [completed, setCompleted] = useState(false);
 
-  useEffect(() => {
-    fetchExercises();
-  }, [moduleId]);
+  useEffect(() => { fetchExercises(); }, [moduleId]);
 
   const fetchExercises = async () => {
     try {
       const res = await fetch(`${API_URL}/api/vocabulary-engine/${moduleId}/practice`);
-      if (res.ok) {
-        const d = await res.json();
-        setData(d);
-      } else {
-        toast.error('Failed to load exercises');
-        navigate('/advanced-mastery');
-      }
-    } catch {
-      toast.error('Connection error');
-    } finally {
-      setLoading(false);
-    }
+      if (res.ok) setData(await res.json());
+      else { toast.error('Failed to load exercises'); navigate('/advanced-mastery'); }
+    } catch { toast.error('Connection error'); }
+    finally { setLoading(false); }
   };
 
   const currentExercise = data?.exercises?.[currentIdx];
@@ -52,132 +42,69 @@ export default function VocabularyPracticeMode({ user }) {
     if (isChecked) return;
     setSelectedAnswer(option);
     setIsChecked(true);
-    setTotalAnswered(prev => prev + 1);
-    if (option === currentExercise.answer) {
-      setScore(prev => prev + 1);
-    }
+    setTotalAnswered(p => p + 1);
+    if (option === currentExercise.answer) setScore(p => p + 1);
   };
 
   const handleMatchSelect = (termId) => {
-    if (matchState.selected === null) {
-      setMatchState(prev => ({ ...prev, selected: termId }));
-    } else {
-      setMatchState(prev => ({
-        selected: null,
-        matches: { ...prev.matches, [prev.selected]: termId, [termId]: prev.selected }
-      }));
-    }
+    if (matchState.selected === null) setMatchState(p => ({ ...p, selected: termId }));
+    else setMatchState(p => ({ selected: null, matches: { ...p.matches, [p.selected]: termId, [termId]: p.selected } }));
   };
 
   const checkMatching = () => {
     if (!currentExercise) return;
-    const answers = currentExercise.answers;
-    const terms = currentExercise.terms;
     let correct = 0;
-    terms.forEach(term => {
-      const userMatch = matchState.matches[term.id];
-      if (userMatch && answers[term.id] === userMatch) correct++;
+    currentExercise.terms.forEach(t => {
+      if (matchState.matches[t.id] && currentExercise.answers[t.id] === matchState.matches[t.id]) correct++;
     });
     setIsChecked(true);
-    setTotalAnswered(prev => prev + 1);
-    if (correct === terms.length) setScore(prev => prev + 1);
+    setTotalAnswered(p => p + 1);
+    if (correct === currentExercise.terms.length) setScore(p => p + 1);
   };
 
   const goNext = () => {
     if (currentIdx < data.exercises.length - 1) {
-      setCurrentIdx(prev => prev + 1);
-      setSelectedAnswer(null);
-      setIsChecked(false);
-      setShowHint(false);
+      setCurrentIdx(p => p + 1); setSelectedAnswer(null); setIsChecked(false); setShowHint(false);
       setMatchState({ selected: null, matches: {} });
-    } else {
-      setCompleted(true);
-    }
+    } else setCompleted(true);
   };
 
   const handleFinishPractice = async () => {
-    if (!user) return;
-    try {
-      await fetch(`${API_URL}/api/vocabulary-engine/progress`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id, module_id: moduleId, section: 'practice', completed: true }),
-      });
-      toast.success('Practice completed!');
-      navigate(`/vocabulary/quiz/${moduleId}`);
-    } catch {
-      toast.error('Failed to save progress');
+    if (user) {
+      try { await fetch(`${API_URL}/api/vocabulary-engine/progress`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: user.id, module_id: moduleId, section: 'practice', completed: true }) }); } catch {}
     }
+    toast.success('Practice completed!');
+    navigate(`/vocabulary/quiz/${moduleId}`);
   };
 
   const handleRetry = () => {
-    setCurrentIdx(0);
-    setSelectedAnswer(null);
-    setIsChecked(false);
-    setScore(0);
-    setTotalAnswered(0);
-    setShowHint(false);
-    setMatchState({ selected: null, matches: {} });
-    setCompleted(false);
-    fetchExercises();
+    setCurrentIdx(0); setSelectedAnswer(null); setIsChecked(false); setScore(0); setTotalAnswered(0);
+    setShowHint(false); setMatchState({ selected: null, matches: {} }); setCompleted(false); fetchExercises();
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-teal-50/30 flex items-center justify-center" data-testid="practice-mode-loading">
-        <div className="animate-spin rounded-full h-10 w-10 border-2 border-emerald-500 border-t-transparent" />
-      </div>
-    );
-  }
-
-  if (!data || !data.exercises?.length) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-teal-50/30 flex items-center justify-center text-gray-700">
-        <p>No exercises available.</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center" data-testid="practice-mode-loading"><div className="animate-spin rounded-full h-8 w-8 border-[3px] border-gray-200 border-t-teal-500" /></div>;
+  if (!data || !data.exercises?.length) return <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center"><p className="text-[#86868B]">No exercises available.</p></div>;
 
   if (completed) {
-    const percentage = Math.round((score / totalAnswered) * 100);
+    const pct = Math.round((score / totalAnswered) * 100);
     return (
-      <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-teal-50/30 flex items-center justify-center p-4" data-testid="practice-complete-screen">
-        <div className="w-full max-w-md text-center">
-          <div className={`w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center ${
-            percentage >= 70 ? 'bg-emerald-100' : 'bg-amber-100'
-          }`}>
-            {percentage >= 70 
-              ? <Award className="w-12 h-12 text-emerald-600" />
-              : <RotateCcw className="w-12 h-12 text-amber-600" />
-            }
+      <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center p-4" data-testid="practice-complete-screen">
+        <div className="w-full max-w-sm text-center">
+          <div className={`w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center ${pct >= 70 ? 'bg-green-50' : 'bg-orange-50'}`}>
+            {pct >= 70 ? <Award className="w-10 h-10 text-green-500" /> : <RotateCcw className="w-10 h-10 text-orange-500" />}
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Practice Complete!</h2>
-          <p className="text-gray-500 mb-6">{data.module_title}</p>
-          
-          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
-            <div className="text-5xl font-bold mb-2" data-testid="practice-score">
-              <span className={percentage >= 70 ? 'text-emerald-600' : 'text-amber-600'}>{score}</span>
-              <span className="text-gray-300">/{totalAnswered}</span>
-            </div>
-            <p className="text-gray-400 text-sm">{percentage}% accuracy</p>
+          <h2 className="text-[22px] font-bold text-[#1D1D1F] mb-1">Practice Complete!</h2>
+          <p className="text-[14px] text-[#86868B] mb-6">{data.module_title}</p>
+          <div className="bg-white rounded-[20px] p-6 mb-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+            <p className="text-[48px] font-bold tabular-nums" data-testid="practice-score">
+              <span className={pct >= 70 ? 'text-green-500' : 'text-orange-500'}>{score}</span>
+              <span className="text-[#D1D1D6]">/{totalAnswered}</span>
+            </p>
+            <p className="text-[14px] text-[#86868B]">{pct}% accuracy</p>
           </div>
-
           <div className="flex gap-3">
-            <Button
-              variant="outline"
-              onClick={handleRetry}
-              className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
-              data-testid="retry-practice-btn"
-            >
-              <RotateCcw className="w-4 h-4 mr-2" /> Try Again
-            </Button>
-            <Button
-              onClick={handleFinishPractice}
-              className="flex-1 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white"
-              data-testid="go-to-quiz-btn"
-            >
-              Mastery Quiz <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            <button onClick={handleRetry} className="flex-1 h-12 rounded-full bg-white shadow-[0_1px_6px_rgba(0,0,0,0.06)] text-[14px] font-semibold text-[#3A3A3C] flex items-center justify-center gap-2" data-testid="retry-practice-btn"><RotateCcw className="w-4 h-4" /> Retry</button>
+            <button onClick={handleFinishPractice} className="flex-1 h-12 rounded-full bg-orange-500 shadow-[0_2px_10px_rgba(234,88,12,0.3)] text-[14px] font-semibold text-white flex items-center justify-center gap-2" data-testid="go-to-quiz-btn">Mastery Quiz <ChevronRight className="w-4 h-4" /></button>
           </div>
         </div>
       </div>
@@ -185,70 +112,28 @@ export default function VocabularyPracticeMode({ user }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-teal-50/30 text-gray-900 flex flex-col" data-testid="vocabulary-practice-mode">
-      {/* Top bar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-emerald-200/60 bg-white/80 backdrop-blur-sm">
-        <button 
-          onClick={() => navigate('/advanced-mastery')} 
-          className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
-          data-testid="back-to-course-practice-btn"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back
-        </button>
-        <p className="text-sm font-medium text-gray-700">Controlled Practice</p>
-        <div className="flex items-center gap-3">
-          <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200" data-testid="practice-score-badge">
-            <Zap className="w-3 h-3 mr-1" />{score}/{totalAnswered}
-          </Badge>
-          <span className="text-sm text-gray-400" data-testid="exercise-counter">
-            {currentIdx + 1}/{data.exercises.length}
-          </span>
+    <div className="min-h-screen bg-[#F5F5F7] flex flex-col" data-testid="vocabulary-practice-mode">
+      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-xl border-b border-black/[0.04]">
+        <div className="flex items-center justify-between px-4 py-3 max-w-3xl mx-auto">
+          <button onClick={() => navigate('/advanced-mastery')} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-to-course-practice-btn"><ChevronLeft className="w-4 h-4" /> Back</button>
+          <p className="text-[15px] font-semibold text-[#1D1D1F]">Practice</p>
+          <div className="flex items-center gap-3">
+            <Badge className="bg-green-50 text-green-600 border-green-200 text-[12px] font-semibold" data-testid="practice-score-badge"><Zap className="w-3 h-3 mr-1" />{score}/{totalAnswered}</Badge>
+            <span className="text-[13px] text-[#86868B] tabular-nums" data-testid="exercise-counter">{currentIdx + 1}/{data.exercises.length}</span>
+          </div>
         </div>
+        <div className="h-[3px] bg-black/[0.04]"><div className="h-full bg-teal-500 transition-all duration-300" style={{ width: `${progress}%` }} data-testid="practice-progress-bar" /></div>
       </div>
 
-      {/* Progress bar */}
-      <div className="h-1.5 bg-emerald-100">
-        <div 
-          className="h-full bg-gradient-to-r from-emerald-400 to-teal-500 transition-all duration-300 rounded-r-full"
-          style={{ width: `${progress}%` }}
-          data-testid="practice-progress-bar"
-        />
-      </div>
-
-      {/* Exercise area */}
       <div className="flex-1 flex items-center justify-center px-4 py-8">
-        <div className="w-full max-w-2xl">
-          {currentExercise.type === 'fill_blank' && (
-            <FillBlankExercise
-              exercise={currentExercise}
-              selectedAnswer={selectedAnswer}
-              isChecked={isChecked}
-              showHint={showHint}
-              onSelect={checkFillBlank}
-              onShowHint={() => setShowHint(true)}
-            />
-          )}
-
-          {currentExercise.type === 'matching' && (
-            <MatchingExercise
-              exercise={currentExercise}
-              matchState={matchState}
-              isChecked={isChecked}
-              onSelect={handleMatchSelect}
-              onCheck={checkMatching}
-            />
-          )}
-
+        <div className="w-full max-w-xl">
+          {currentExercise.type === 'fill_blank' && <FillBlankExercise exercise={currentExercise} selectedAnswer={selectedAnswer} isChecked={isChecked} showHint={showHint} onSelect={checkFillBlank} onShowHint={() => setShowHint(true)} />}
+          {currentExercise.type === 'matching' && <MatchingExercise exercise={currentExercise} matchState={matchState} isChecked={isChecked} onSelect={handleMatchSelect} onCheck={checkMatching} />}
           {isChecked && (
             <div className="mt-6 flex justify-end">
-              <Button
-                onClick={goNext}
-                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white"
-                data-testid="next-exercise-btn"
-              >
-                {currentIdx === data.exercises.length - 1 ? 'See Results' : 'Next'} 
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              <button onClick={goNext} className="h-11 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-[14px] font-semibold px-6 shadow-[0_2px_10px_rgba(234,88,12,0.3)] flex items-center gap-2 transition-colors" data-testid="next-exercise-btn">
+                {currentIdx === data.exercises.length - 1 ? 'See Results' : 'Next'} <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           )}
         </div>
@@ -260,51 +145,30 @@ export default function VocabularyPracticeMode({ user }) {
 function FillBlankExercise({ exercise, selectedAnswer, isChecked, showHint, onSelect, onShowHint }) {
   return (
     <div data-testid="fill-blank-exercise">
-      <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">{exercise.instruction}</p>
-      
-      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
-        <p className="text-lg text-gray-700 leading-relaxed">{exercise.sentence}</p>
+      <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">{exercise.instruction}</p>
+      <div className="bg-white rounded-[20px] p-6 mb-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+        <p className="text-[16px] text-[#1D1D1F] leading-relaxed">{exercise.sentence}</p>
       </div>
-
       {!showHint && !isChecked && exercise.hint && (
-        <button 
-          onClick={onShowHint}
-          className="text-xs text-amber-600 hover:text-amber-700 mb-4 flex items-center gap-1"
-          data-testid="show-hint-btn"
-        >
-          <Lightbulb className="w-3 h-3" /> Show hint
-        </button>
+        <button onClick={onShowHint} className="text-[13px] text-orange-500 font-medium mb-4 flex items-center gap-1" data-testid="show-hint-btn"><Lightbulb className="w-3.5 h-3.5" /> Show hint</button>
       )}
-
       {showHint && exercise.hint && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4" data-testid="hint-display">
-          <p className="text-sm text-amber-700"><Lightbulb className="w-3 h-3 inline mr-1" />{exercise.hint}</p>
-        </div>
+        <div className="bg-orange-50 rounded-2xl p-3.5 mb-4" data-testid="hint-display"><p className="text-[13px] text-orange-600"><Lightbulb className="w-3.5 h-3.5 inline mr-1" />{exercise.hint}</p></div>
       )}
-
       <div className="grid grid-cols-2 gap-3" data-testid="fill-blank-options">
         {exercise.options.map((opt, i) => {
-          let cls = 'bg-white border-gray-200 text-gray-700 hover:bg-amber-50 hover:border-amber-300';
+          let cls = 'bg-white border-black/[0.06] text-[#1D1D1F] hover:border-orange-300 hover:bg-orange-50/40';
           if (isChecked) {
-            if (opt === exercise.answer) cls = 'bg-emerald-50 border-emerald-400 text-emerald-800';
-            else if (opt === selectedAnswer) cls = 'bg-red-50 border-red-400 text-red-700';
-            else cls = 'bg-gray-50 border-gray-100 text-gray-400';
+            if (opt === exercise.answer) cls = 'bg-green-50 border-green-300 text-green-700';
+            else if (opt === selectedAnswer) cls = 'bg-red-50 border-red-300 text-red-600';
+            else cls = 'bg-white border-black/[0.04] text-[#AEAEB2]';
           }
           return (
-            <button
-              key={i}
-              onClick={() => onSelect(opt)}
-              disabled={isChecked}
-              className={`p-4 rounded-xl border text-left transition-all shadow-sm ${cls} disabled:cursor-default`}
-              data-testid={`option-${i}`}
-            >
-              <span className="text-sm">{opt}</span>
-              {isChecked && opt === exercise.answer && (
-                <CheckCircle className="w-4 h-4 inline ml-2 text-emerald-500" />
-              )}
-              {isChecked && opt === selectedAnswer && opt !== exercise.answer && (
-                <XCircle className="w-4 h-4 inline ml-2 text-red-500" />
-              )}
+            <button key={i} onClick={() => onSelect(opt)} disabled={isChecked}
+              className={`p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls} disabled:cursor-default`} data-testid={`option-${i}`}>
+              <span className="text-[14px] font-medium">{opt}</span>
+              {isChecked && opt === exercise.answer && <CheckCircle className="w-4 h-4 inline ml-2 text-green-500" />}
+              {isChecked && opt === selectedAnswer && opt !== exercise.answer && <XCircle className="w-4 h-4 inline ml-2 text-red-400" />}
             </button>
           );
         })}
@@ -315,78 +179,41 @@ function FillBlankExercise({ exercise, selectedAnswer, isChecked, showHint, onSe
 
 function MatchingExercise({ exercise, matchState, isChecked, onSelect, onCheck }) {
   const allMatched = exercise.terms.every(t => matchState.matches[t.id]);
-
   return (
     <div data-testid="matching-exercise">
-      <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">{exercise.instruction}</p>
-      
-      <div className="grid grid-cols-2 gap-6">
-        <div className="space-y-3">
-          <p className="text-xs text-gray-400 mb-2">Terms</p>
+      <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">{exercise.instruction}</p>
+      <div className="grid grid-cols-2 gap-5">
+        <div className="space-y-2.5">
+          <p className="text-[12px] text-[#AEAEB2] font-semibold mb-1">Terms</p>
           {exercise.terms.map((term) => {
-            const isSelected = matchState.selected === term.id;
-            const isMatched = !!matchState.matches[term.id];
-            let correct = false;
-            if (isChecked && isMatched) correct = exercise.answers[term.id] === matchState.matches[term.id];
-            let cls = 'bg-white border-gray-200 text-gray-700';
-            if (isSelected) cls = 'bg-amber-50 border-amber-400 text-amber-800';
-            else if (isChecked && correct) cls = 'bg-emerald-50 border-emerald-400 text-emerald-800';
-            else if (isChecked && isMatched && !correct) cls = 'bg-red-50 border-red-400 text-red-700';
-            else if (isMatched) cls = 'bg-blue-50 border-blue-300 text-blue-700';
-            
-            return (
-              <button
-                key={term.id}
-                onClick={() => !isChecked && onSelect(term.id)}
-                disabled={isChecked}
-                className={`w-full p-3 rounded-lg border text-left text-sm transition-all shadow-sm ${cls}`}
-                data-testid={`match-term-${term.id}`}
-              >
-                {term.text}
-              </button>
-            );
+            const sel = matchState.selected === term.id, matched = !!matchState.matches[term.id];
+            let cor = false; if (isChecked && matched) cor = exercise.answers[term.id] === matchState.matches[term.id];
+            let cls = 'bg-white border-black/[0.06] text-[#1D1D1F]';
+            if (sel) cls = 'bg-orange-50 border-orange-400 text-orange-700';
+            else if (isChecked && cor) cls = 'bg-green-50 border-green-300 text-green-700';
+            else if (isChecked && matched && !cor) cls = 'bg-red-50 border-red-300 text-red-600';
+            else if (matched) cls = 'bg-sky-50 border-sky-300 text-sky-700';
+            return <button key={term.id} onClick={() => !isChecked && onSelect(term.id)} disabled={isChecked} className={`w-full p-3 rounded-2xl border text-left text-[14px] font-medium transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls}`} data-testid={`match-term-${term.id}`}>{term.text}</button>;
           })}
         </div>
-
-        <div className="space-y-3">
-          <p className="text-xs text-gray-400 mb-2">Meanings</p>
+        <div className="space-y-2.5">
+          <p className="text-[12px] text-[#AEAEB2] font-semibold mb-1">Meanings</p>
           {exercise.definitions.map((def) => {
-            const isSelected = matchState.selected === def.id;
-            const matchedBy = Object.entries(matchState.matches).find(([k, v]) => v === def.id)?.[0];
-            const isMatched = !!matchedBy;
-            let correct = false;
-            if (isChecked && isMatched) correct = exercise.answers[matchedBy] === def.id;
-            let cls = 'bg-white border-gray-200 text-gray-700';
-            if (isSelected) cls = 'bg-amber-50 border-amber-400 text-amber-800';
-            else if (isChecked && correct) cls = 'bg-emerald-50 border-emerald-400 text-emerald-800';
-            else if (isChecked && isMatched && !correct) cls = 'bg-red-50 border-red-400 text-red-700';
-            else if (isMatched) cls = 'bg-blue-50 border-blue-300 text-blue-700';
-
-            return (
-              <button
-                key={def.id}
-                onClick={() => !isChecked && onSelect(def.id)}
-                disabled={isChecked}
-                className={`w-full p-3 rounded-lg border text-left text-sm transition-all shadow-sm ${cls}`}
-                data-testid={`match-def-${def.id}`}
-              >
-                {def.text}
-              </button>
-            );
+            const sel = matchState.selected === def.id;
+            const matchedBy = Object.entries(matchState.matches).find(([, v]) => v === def.id)?.[0];
+            const matched = !!matchedBy;
+            let cor = false; if (isChecked && matched) cor = exercise.answers[matchedBy] === def.id;
+            let cls = 'bg-white border-black/[0.06] text-[#3A3A3C]';
+            if (sel) cls = 'bg-orange-50 border-orange-400 text-orange-700';
+            else if (isChecked && cor) cls = 'bg-green-50 border-green-300 text-green-700';
+            else if (isChecked && matched && !cor) cls = 'bg-red-50 border-red-300 text-red-600';
+            else if (matched) cls = 'bg-sky-50 border-sky-300 text-sky-700';
+            return <button key={def.id} onClick={() => !isChecked && onSelect(def.id)} disabled={isChecked} className={`w-full p-3 rounded-2xl border text-left text-[13px] transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls}`} data-testid={`match-def-${def.id}`}>{def.text}</button>;
           })}
         </div>
       </div>
-
       {!isChecked && allMatched && (
-        <div className="mt-4 flex justify-center">
-          <Button
-            onClick={onCheck}
-            className="bg-gradient-to-r from-amber-500 to-orange-600 text-white"
-            data-testid="check-matching-btn"
-          >
-            Check Answers
-          </Button>
-        </div>
+        <div className="mt-5 flex justify-center"><button onClick={onCheck} className="h-11 rounded-full bg-orange-500 text-white text-[14px] font-semibold px-6 shadow-[0_2px_10px_rgba(234,88,12,0.3)]" data-testid="check-matching-btn">Check Answers</button></div>
       )}
     </div>
   );
