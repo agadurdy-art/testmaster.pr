@@ -109,7 +109,15 @@ async def stream_listening_audio(test_id: str, part_number: int):
     if not listening_path.exists():
         raise HTTPException(status_code=404, detail=f"Listening audio directory not found for {test_id}")
     
-    # Search for file matching the part number (files have hash suffix)
+    # Search for file matching the part number (with or without hash suffix)
+    exact_match = listening_path / f"listening_part{part_number}.mp3"
+    if exact_match.exists():
+        return FileResponse(
+            path=str(exact_match),
+            media_type="audio/mpeg",
+            filename=f"listening_part{part_number}.mp3"
+        )
+    
     for file in listening_path.iterdir():
         if file.name.startswith(f"listening_part{part_number}_") and file.suffix == ".mp3":
             return FileResponse(
