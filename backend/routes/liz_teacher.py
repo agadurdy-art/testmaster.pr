@@ -665,3 +665,111 @@ async def speech_to_text(file: UploadFile = File(...)):
             except OSError:
                 pass
         raise HTTPException(status_code=500, detail=str(e))
+
+
+
+# ── Homework Endpoints ──
+
+@router.get("/homework/{user_id}")
+async def get_homework(user_id: str, status: Optional[str] = None):
+    """Get student's homework list."""
+    query = {"user_id": user_id}
+    if status:
+        query["status"] = status
+    homework = await db.liz_homework.find(
+        query, {"_id": 0}
+    ).sort("created_at", -1).to_list(20)
+    return {"success": True, "homework": homework}
+
+
+@router.post("/homework/assign")
+async def assign_homework(req: HomeworkAssignRequest):
+    """Manually assign homework (fallback if auto-detection missed it)."""
+    hw = {
+        "homework_id": str(uuid.uuid4()),
+        "user_id": req.user_id,
+        "session_id": "",
+        "type": req.hw_type,
+        "title": req.title or f"{req.hw_type.capitalize()} Practice",
+        "task": req.task or "Complete the assigned practice.",
+        "due_date": (datetime.now(timezone.utc) + timedelta(days=req.due_days)).isoformat(),
+        "status": "pending",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+    await db.liz_homework.insert_one(hw)
+    return {"success": True, "homework": {k: v for k, v in hw.items() if k != "_id"}}
+
+
+@router.post("/homework/{homework_id}/submit")
+async def submit_homework(homework_id: str, req: HomeworkSubmitRequest):
+    """Student submits their homework answer."""
+    hw = await db.liz_homework.find_one(
+        {"homework_id": homework_id, "user_id": req.user_id}, {"_id": 0}
+    )
+    if not hw:
+        raise HTTPException(status_code=404, detail="Homework not found")
+
+    await db.liz_homework.update_one(
+        {"homework_id": homework_id},
+        {"$set": {
+            "submission": req.submission,
+            "submitted_at": datetime.now(timezone.utc).isoformat(),
+            "status": "submitted"
+        }}
+    )
+
+    # Auto-review with Liz
+    api_key = get_api_key()
+    feedback = ""
+    score = None
+    if api_key:
+        try:
+            review_prompt = f"""Review this student's homework submission using IELTS criteria.
+
+Homework: [{hw.get('type', 'general').upper()}] {hw.get('title', '')}
+Task: {hw.get('task', '')}
+Student's Submission: {req.submission}
+
+Provide:
+1. Score out of 10
+2. What they did well
+3. What needs improvement
+4. Corrected version or model answer (if applicable)
+Keep feedback concise but specific."""
+
+            chat = LlmChat(
+                api_key=api_key,
+                session_id=f"liz_review_{homework_id}",
+                system_message="You are Liz, a professional IELTS teacher reviewing a student's homework. Be specific and constructive."
+            ).with_model("openai", "gpt-4o")
+            feedback = await chat.send_message(UserMessage(text=review_prompt))
+
+            # Try to extract score
+            score_match = re.search(r'(\d+)\s*/\s*10', feedback)
+            if score_match:
+                score = float(score_match.group(1))
+        except Exception:
+            feedback = "I'll review this in our next session."
+
+    await db.liz_homework.update_one(
+        {"homework_id": homework_id},
+        {"$set": {"feedback": feedback, "score": score, "status": "reviewed"}}
+    )
+
+    return {
+        "success": True,
+        "feedback": feedback,
+        "score": score,
+        "status": "reviewed"
+    }
+
+
+@router.delete("/homework/{homework_id}")
+async def delete_homework(homework_id: str, user_id: str):
+    """Remove a homework assignment."""
+    result = await db.liz_homework.delete_one(
+        {"homework_id": homework_id, "user_id": user_id}
+    )
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Homework not found")
+    return {"success": True}
