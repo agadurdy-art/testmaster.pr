@@ -381,6 +381,39 @@ export default function LizTeacher({ user }) {
     if (status === 'speaking') setStatus('idle');
   };
 
+  // Homework actions
+  const submitHomework = async (hwId, answer) => {
+    setSubmittingHw(true);
+    try {
+      const res = await fetch(`${API_URL}/api/liz/homework/${hwId}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id, submission: answer })
+      });
+      const data = await res.json();
+      if (data.success) {
+        fetchHomework();
+        if (data.feedback) {
+          setLatestLiz(data.feedback);
+          setMessages(prev => [...prev, { role: 'assistant', content: `Homework Review:\n\n${data.feedback}`, timestamp: new Date().toISOString() }]);
+          await speakText(data.feedback);
+        }
+      }
+    } catch { /* ignore */ }
+    setSubmittingHw(false);
+  };
+
+  const deleteHomework = async (hwId) => {
+    try {
+      await fetch(`${API_URL}/api/liz/homework/${hwId}?user_id=${user.id}`, { method: 'DELETE' });
+      setHomework(prev => prev.filter(h => h.homework_id !== hwId));
+    } catch { /* ignore */ }
+  };
+
+  const requestHomework = () => {
+    sendMessage('Please assign me homework based on what we covered today. Make it specific and challenging.');
+  };
+
   const loadSession = async (sid) => {
     try {
       const res = await fetch(`${API_URL}/api/liz/history/${sid}?user_id=${user.id}`);
