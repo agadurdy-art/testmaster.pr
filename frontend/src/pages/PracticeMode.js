@@ -83,11 +83,17 @@ export default function PracticeMode({ user }) {
 
   useEffect(() => { loadNewSet(); }, [loadNewSet]);
 
-  // Reset audio on question change
+  // Reset audio on question change - must fully clear old source
   useEffect(() => {
-    setAudioUrl(null);
     setIsPlayingAudio(false);
-    if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
+    setAudioLoading(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.removeAttribute('src');
+      audioRef.current.load();
+    }
+    // Revoke old blob URL to free memory
+    setAudioUrl(prev => { if (prev) URL.revokeObjectURL(prev); return null; });
   }, [currentIndex]);
 
   const generateAudio = async (text) => {
