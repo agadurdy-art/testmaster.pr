@@ -13,6 +13,13 @@ import NotebookPanel from '../components/NotebookPanel';
 import HighlightableText from '../components/HighlightableText';
 import QuestionNavigation from '../components/test/QuestionNavigation';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
+const resolveAudioUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http')) return url;
+  return `${BACKEND_URL}${url}`;
+};
+
 export default function TestInterface({ user }) {
   const { testType } = useParams();
   const navigate = useNavigate();
