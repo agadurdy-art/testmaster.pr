@@ -223,28 +223,12 @@ export default function QuestionBank({ user }) {
 
   const practiceModesConfig = [
     {
-      id: 'timed',
-      name: 'Timed Practice',
-      icon: Clock,
-      description: 'Simulate real IELTS exam conditions',
-      color: 'from-red-500 to-orange-500',
-      badge: 'Exam Mode'
-    },
-    {
       id: 'random',
-      name: 'Random Practice',
+      name: 'Quick Practice',
       icon: Shuffle,
-      description: 'Fresh questions every attempt',
-      color: 'from-blue-500 to-cyan-500',
-      badge: 'Variety'
-    },
-    {
-      id: 'smart',
-      name: 'Smart Practice',
-      icon: Brain,
-      description: 'AI-powered focus on your weak areas',
-      color: 'from-purple-500 to-pink-500',
-      badge: 'AI Powered'
+      description: '3 questions per set, swipe through like Shorts',
+      color: 'from-indigo-500 to-purple-600',
+      badge: 'Shorts'
     }
   ];
 
