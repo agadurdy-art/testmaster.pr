@@ -603,11 +603,8 @@ async def generate_ai_teacher_feedback(results: Dict, skill_breakdown: list, tes
         weak_summary = ", ".join([s["label"] for s in weak_areas[:3]]) if weak_areas else "None identified"
         strong_summary = ", ".join([s["label"] for s in strong_areas[:3]]) if strong_areas else "Keep practicing"
 
-        # Detect system language from test context
-        lang_note = "Respond in the student's system language (Turkish) so they fully understand the feedback."
-
         prompt = f"""You are an experienced IELTS teacher providing feedback on an IELTS practice test.
-{lang_note}
+Respond in English.
 
 TEST RESULTS:
 - Listening: {listening.get('correct', 0)}/{listening.get('total', 0)} ({listening.get('percentage', 0):.1f}%)
