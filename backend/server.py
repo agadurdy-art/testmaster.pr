@@ -5124,6 +5124,337 @@ Return JSON only:
 
 
 
+
+# ============ VOCABULARY ENGINE ENDPOINTS ============
+
+@api_router.get("/vocabulary-engine/{module_id}/slides")
+async def get_vocabulary_slides(module_id: str):
+    """Get vocabulary data formatted as slides for Learn Mode"""
+    module = await db.advanced_mastery_modules.find_one({"id": module_id}, {"_id": 0})
+    if not module:
+        raise HTTPException(status_code=404, detail="Module not found")
+    
+    vocab = module.get("vocabulary", {})
+    pronunciation_map = {}
+    for p in vocab.get("pronunciation_guide", []):
+        pronunciation_map[p["word"].lower()] = p
+    
+    slides = []
+    
+    # Advanced terms
+    for item in vocab.get("advanced_terms", []):
+        pron = pronunciation_map.get(item["term"].lower(), {})
+        slides.append({
+            "id": f"term-{len(slides)}",
+            "category": "Advanced Term",
+            "word": item["term"],
+            "meaning": item["meaning"],
+            "example": item["example"],
+            "usage": item.get("usage", ""),
+            "collocations": item.get("collocations", []),
+            "ipa": pron.get("ipa", ""),
+            "stress": pron.get("stress", ""),
+            "audio_tip": pron.get("audio_tip", ""),
+            "common_mistake": pron.get("common_mistake", ""),
+        })
+    
+    # Idioms
+    for item in vocab.get("idioms", []):
+        slides.append({
+            "id": f"idiom-{len(slides)}",
+            "category": "Idiom",
+            "word": item["idiom"],
+            "meaning": item["meaning"],
+            "example": item["example"],
+            "usage": item.get("usage_context", ""),
+            "collocations": [],
+            "ipa": "",
+            "stress": "",
+            "audio_tip": "",
+            "common_mistake": "",
+        })
+    
+    # Collocations
+    for item in vocab.get("collocations", []):
+        slides.append({
+            "id": f"colloc-{len(slides)}",
+            "category": f"Collocation ({item.get('type', '')})",
+            "word": item["collocation"],
+            "meaning": "",
+            "example": item["example"],
+            "usage": "",
+            "collocations": item.get("alternatives", []),
+            "ipa": "",
+            "stress": "",
+            "audio_tip": "",
+            "common_mistake": "",
+        })
+    
+    # Phrasal verbs
+    for item in vocab.get("phrasal_verbs", []):
+        slides.append({
+            "id": f"phrasal-{len(slides)}",
+            "category": "Phrasal Verb",
+            "word": item["phrasal_verb"],
+            "meaning": item["meaning"],
+            "example": item["example"],
+            "usage": f"Formal alternative: {item.get('formal_alternative', '')}",
+            "collocations": [],
+            "ipa": "",
+            "stress": "",
+            "audio_tip": "",
+            "common_mistake": "",
+        })
+    
+    # Word formation data
+    word_formations = []
+    for item in vocab.get("word_formation", []):
+        word_formations.append({
+            "root": item.get("root", ""),
+            "noun": item.get("noun", ""),
+            "verb": item.get("verb", ""),
+            "adjective": item.get("adjective", ""),
+            "adverb": item.get("adverb", ""),
+        })
+    
+    return {
+        "module_id": module_id,
+        "module_title": module.get("title", ""),
+        "module_number": module.get("module_number", 0),
+        "slides": slides,
+        "word_formations": word_formations,
+        "total_slides": len(slides),
+    }
+
+
+@api_router.get("/vocabulary-engine/{module_id}/practice")
+async def get_vocabulary_practice(module_id: str):
+    """Get practice exercises generated from vocabulary data"""
+    import random
+    
+    module = await db.advanced_mastery_modules.find_one({"id": module_id}, {"_id": 0})
+    if not module:
+        raise HTTPException(status_code=404, detail="Module not found")
+    
+    vocab = module.get("vocabulary", {})
+    exercises = []
+    
+    # 1. Fill-in-the-blank from advanced terms
+    terms = vocab.get("advanced_terms", [])
+    for item in terms:
+        word = item["term"]
+        sentence = item["example"]
+        # Create blank by replacing the word (case-insensitive)
+        import re
+        blanked = re.sub(re.escape(word), "______", sentence, flags=re.IGNORECASE, count=1)
+        if blanked != sentence:
+            # Generate distractors from other terms
+            other_terms = [t["term"] for t in terms if t["term"] != word]
+            distractors = random.sample(other_terms, min(3, len(other_terms)))
+            options = [word] + distractors
+            random.shuffle(options)
+            exercises.append({
+                "id": f"fib-term-{len(exercises)}",
+                "type": "fill_blank",
+                "instruction": "Fill in the blank with the correct word:",
+                "sentence": blanked,
+                "answer": word,
+                "options": options,
+                "hint": item["meaning"][:80] + "..." if len(item["meaning"]) > 80 else item["meaning"],
+            })
+    
+    # 2. Matching - idioms to meanings
+    idioms = vocab.get("idioms", [])
+    if len(idioms) >= 4:
+        match_items = random.sample(idioms, min(5, len(idioms)))
+        terms_list = [{"id": f"m-{i}", "text": item["idiom"]} for i, item in enumerate(match_items)]
+        defs_list = [{"id": f"m-{i}", "text": item["meaning"]} for i, item in enumerate(match_items)]
+        shuffled_defs = defs_list.copy()
+        random.shuffle(shuffled_defs)
+        exercises.append({
+            "id": f"match-idioms-{len(exercises)}",
+            "type": "matching",
+            "instruction": "Match each idiom with its correct meaning:",
+            "terms": terms_list,
+            "definitions": shuffled_defs,
+            "answers": {t["id"]: t["id"] for t in terms_list},
+        })
+    
+    # 3. Fill-in-the-blank from collocations
+    collocations = vocab.get("collocations", [])
+    for item in collocations:
+        col = item["collocation"]
+        parts = col.split()
+        if len(parts) >= 2:
+            blank_word = parts[-1]
+            blanked_col = " ".join(parts[:-1]) + " ______"
+            other_options = [c["collocation"].split()[-1] for c in collocations if c["collocation"] != col]
+            other_options = list(set(other_options))
+            distractors = random.sample(other_options, min(3, len(other_options)))
+            options = [blank_word] + distractors
+            random.shuffle(options)
+            exercises.append({
+                "id": f"fib-col-{len(exercises)}",
+                "type": "fill_blank",
+                "instruction": "Complete the collocation:",
+                "sentence": f'{blanked_col} (Example: "{item["example"]}")',
+                "answer": blank_word,
+                "options": options,
+                "hint": item.get("type", ""),
+            })
+    
+    # 4. Fill-in-the-blank from phrasal verbs
+    phrasal_verbs = vocab.get("phrasal_verbs", [])
+    for item in phrasal_verbs:
+        word = item["phrasal_verb"]
+        sentence = item["example"]
+        blanked = re.sub(re.escape(word), "______", sentence, flags=re.IGNORECASE, count=1)
+        # Also try with different casing
+        if blanked == sentence:
+            for pv in [word.lower(), word.title(), word.capitalize()]:
+                blanked = sentence.replace(pv, "______", 1)
+                if blanked != sentence:
+                    break
+        if blanked != sentence:
+            other_pvs = [p["phrasal_verb"] for p in phrasal_verbs if p["phrasal_verb"] != word]
+            distractors = random.sample(other_pvs, min(3, len(other_pvs)))
+            options = [word] + distractors
+            random.shuffle(options)
+            exercises.append({
+                "id": f"fib-pv-{len(exercises)}",
+                "type": "fill_blank",
+                "instruction": "Fill in the blank with the correct phrasal verb:",
+                "sentence": blanked,
+                "answer": word,
+                "options": options,
+                "hint": item["meaning"],
+            })
+    
+    # 5. Word formation exercise
+    word_forms = vocab.get("word_formation", [])
+    for item in word_forms:
+        forms = ["noun", "verb", "adjective", "adverb"]
+        available = [(f, item[f]) for f in forms if item.get(f)]
+        if len(available) >= 2:
+            target_form, target_word = random.choice(available)
+            other_words = [item[f] for f, _ in available if f != target_form]
+            other_all = [wf.get(target_form, "") for wf in word_forms if wf.get("root") != item["root"] and wf.get(target_form)]
+            distractors = random.sample(other_all, min(3, len(other_all)))
+            options = [target_word] + distractors
+            random.shuffle(options)
+            exercises.append({
+                "id": f"wf-{len(exercises)}",
+                "type": "fill_blank",
+                "instruction": f'Choose the correct {target_form} form of "{item["root"]}":',
+                "sentence": f"Root word: {item['root']} → {target_form}: ______",
+                "answer": target_word,
+                "options": options,
+                "hint": f"Other forms: {', '.join(f'{f}={w}' for f, w in available if f != target_form)}",
+            })
+    
+    random.shuffle(exercises)
+    
+    return {
+        "module_id": module_id,
+        "module_title": module.get("title", ""),
+        "exercises": exercises,
+        "total_exercises": len(exercises),
+    }
+
+
+@api_router.get("/vocabulary-engine/{module_id}/quiz")
+async def get_vocabulary_quiz(module_id: str):
+    """Get mastery quiz questions for a module"""
+    module = await db.advanced_mastery_modules.find_one({"id": module_id}, {"_id": 0})
+    if not module:
+        raise HTTPException(status_code=404, detail="Module not found")
+    
+    quiz = module.get("quiz", {})
+    questions = quiz.get("questions", [])
+    
+    # Filter vocabulary-related questions and take up to 10
+    vocab_questions = [q for q in questions if "vocabulary" in q.get("question", "").lower() or "collocation" in q.get("question", "").lower()]
+    other_questions = [q for q in questions if q not in vocab_questions]
+    
+    # Ensure 10 questions: prioritize vocab, fill with others
+    selected = vocab_questions[:10]
+    if len(selected) < 10:
+        remaining = 10 - len(selected)
+        selected += other_questions[:remaining]
+    
+    # Add IDs to questions
+    for i, q in enumerate(selected):
+        q["id"] = f"q-{i}"
+    
+    return {
+        "module_id": module_id,
+        "module_title": module.get("title", ""),
+        "questions": selected[:10],
+        "total_questions": len(selected[:10]),
+        "passing_score": 80,
+    }
+
+
+class VocabQuizSubmission(BaseModel):
+    module_id: str
+    user_id: str
+    answers: dict
+    score: int
+    total: int
+
+@api_router.post("/vocabulary-engine/quiz/submit")
+async def submit_vocabulary_quiz(submission: VocabQuizSubmission):
+    """Submit vocabulary quiz results"""
+    passed = (submission.score / submission.total * 100) >= 80 if submission.total > 0 else False
+    
+    await db.vocabulary_progress.update_one(
+        {"user_id": submission.user_id, "module_id": submission.module_id},
+        {"$set": {
+            "quiz_score": submission.score,
+            "quiz_total": submission.total,
+            "quiz_passed": passed,
+            "quiz_completed_at": datetime.now(timezone.utc).isoformat(),
+        }},
+        upsert=True,
+    )
+    
+    return {
+        "passed": passed,
+        "score": submission.score,
+        "total": submission.total,
+        "percentage": round(submission.score / submission.total * 100) if submission.total > 0 else 0,
+    }
+
+
+class VocabProgressUpdate(BaseModel):
+    user_id: str
+    module_id: str
+    section: str  # "learn", "practice", "quiz"
+    completed: bool = True
+
+@api_router.post("/vocabulary-engine/progress")
+async def save_vocabulary_progress(progress: VocabProgressUpdate):
+    """Save vocabulary engine progress"""
+    await db.vocabulary_progress.update_one(
+        {"user_id": progress.user_id, "module_id": progress.module_id},
+        {"$set": {
+            f"{progress.section}_completed": progress.completed,
+            f"{progress.section}_completed_at": datetime.now(timezone.utc).isoformat(),
+        }},
+        upsert=True,
+    )
+    return {"success": True}
+
+
+@api_router.get("/vocabulary-engine/progress/{user_id}")
+async def get_vocabulary_progress(user_id: str):
+    """Get all vocabulary engine progress for a user"""
+    progress = await db.vocabulary_progress.find(
+        {"user_id": user_id}, {"_id": 0}
+    ).to_list(100)
+    return {"progress": progress}
+
+
 # ============ ADVANCED IELTS MASTERY COURSE ENDPOINTS (Band 6.0-9.0) ============
 
 @api_router.get("/advanced-mastery/modules")
