@@ -181,7 +181,7 @@ export default function PracticeMode({ user }) {
     if (!answer) return;
     setRevealed(true);
     const correctVal = questions[currentIndex]?.correct;
-    const isCorrect = normalizeAnswer(answer) === normalizeAnswer(correctVal);
+    const isCorrect = isAnswerCorrect(answer, correctVal);
     setSetStats(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
   };
 
@@ -367,7 +367,7 @@ export default function PracticeMode({ user }) {
                   {hasOptions ? q.options.map((opt, idx) => {
                     const optVal = extractOptionValue(opt);
                     const isSelected = selectedAnswer === optVal;
-                    const isCorrectOpt = normalizeAnswer(q.correct) === normalizeAnswer(optVal);
+                    const isCorrectOpt = isAnswerCorrect(optVal, q.correct);
 
                     let optClass = 'bg-amber-50/50 border-amber-200/60 hover:bg-amber-100/70';
                     if (revealed) {
@@ -417,7 +417,7 @@ export default function PracticeMode({ user }) {
                 {/* Feedback (after reveal) */}
                 {revealed && (
                   <div className="px-5 pb-5" data-testid="answer-feedback">
-                    {normalizeAnswer(hasOptions ? selectedAnswer : textAnswer) === normalizeAnswer(q.correct) ? (
+                    {isAnswerCorrect(hasOptions ? selectedAnswer : textAnswer, q.correct) ? (
                       <div className="flex items-start gap-2.5 bg-emerald-50 rounded-2xl p-3.5 border border-emerald-200">
                         <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                         <div>
