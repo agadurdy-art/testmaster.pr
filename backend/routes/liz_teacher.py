@@ -6,10 +6,11 @@ Provides personalized guidance, progress analysis, skill building,
 speaking/writing evaluation, and structured study planning.
 """
 import os
+import re
 import uuid
 import tempfile
 from datetime import datetime, timezone, timedelta
-from typing import Optional
+from typing import Optional, List
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from pydantic import BaseModel
 
