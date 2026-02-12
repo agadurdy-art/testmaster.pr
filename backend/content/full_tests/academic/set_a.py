@@ -258,18 +258,22 @@ In next week's lecture, we'll examine sleep disorders and their treatments. Plea
                     "type": "data_description",
                     "time_suggested": 1200,
                     "word_limit": {"min": 150, "recommended": 170},
-                    "prompt": "The charts below show the percentage of water used for different purposes in six areas of the world.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+                    "prompt": "The graph below shows the percentage of the population living in cities in four South East Asian countries between 1970 and 2040.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "visual_data": {
-                        "type": "bar_chart",
-                        "image_url": "academic_set_a_barchart.png",
-                        "title": "Water Usage by Sector (%)",
-                        "categories": ["North America", "South America", "Europe", "Africa", "Central Asia", "Southeast Asia"],
-                        "data": [
-                            {"sector": "Domestic", "values": [13, 19, 15, 9, 3, 7]},
-                            {"sector": "Industrial", "values": [48, 10, 54, 7, 5, 12]},
-                            {"sector": "Agricultural", "values": [39, 71, 31, 84, 92, 81]}
+                        "type": "line_graph",
+                        "image_url": "visual_002_line_graph_urbanization.png",
+                        "title": "Percentage of the population living in cities",
+                        "x_axis": "Year",
+                        "y_axis": "Percentage (%)",
+                        "x_labels": [1970, 1980, 1990, 2000, 2010, 2020, 2030, 2040],
+                        "datasets": [
+                            {"country": "Philippines", "data": [33, 37, 43, 48, 47, 49, 53, 56]},
+                            {"country": "Malaysia", "data": [30, 40, 50, 62, 72, 77, 80, 83]},
+                            {"country": "Thailand", "data": [20, 23, 27, 31, 35, 40, 45, 49]},
+                            {"country": "Indonesia", "data": [17, 22, 30, 42, 50, 56, 63, 70]}
                         ]
-                    }
+                    },
+                    "visual_description": "Line graph showing urbanization trends for four South East Asian countries from 1970-2040. Malaysia starts at about 30% and rises steeply to approximately 83% by 2040, consistently the highest. Indonesia starts lowest at around 17% in 1970 but shows rapid growth, reaching about 70% by 2040. Philippines starts at approximately 33% and grows moderately to about 56%. Thailand has the slowest growth, from roughly 20% to 49%."
                 },
                 {
                     "task_number": 2,

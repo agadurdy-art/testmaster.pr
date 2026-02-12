@@ -191,23 +191,21 @@ For your assignment, I'd like you to research one specific marine ecosystem and 
                     "type": "data_description",
                     "time_recommended": 20,
                     "word_minimum": 150,
-                    "prompt": "The graph below shows the percentage of households with internet access in four different countries between 2005 and 2020.",
-                    # Structured Chart Data for Frontend Rendering
+                    "prompt": "The bar chart below shows the number of households in the US (in millions) by their annual income in 2007, 2011 and 2015.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "visual_data": {
-                        "type": "line_graph",
-                        "image_url": "academic_set_b_linegraph.png",
-                        "title": "Percentage of Households with Internet Access (2005-2020)",
-                        "x_axis": "Year",
-                        "y_axis": "Percentage (%)",
-                        "x_labels": [2005, 2008, 2011, 2014, 2017, 2020],
-                        "datasets": [
-                            {"country": "Japan", "color": "#e53935", "data": [65, 72, 79, 83, 88, 92]},
-                            {"country": "Germany", "color": "#1e88e5", "data": [58, 68, 75, 81, 86, 89]},
-                            {"country": "Brazil", "color": "#43a047", "data": [21, 32, 42, 53, 62, 71]},
-                            {"country": "Nigeria", "color": "#fb8c00", "data": [4, 10, 18, 26, 34, 42]}
+                        "type": "bar_chart",
+                        "image_url": "visual_004_bar_chart_us_households.png",
+                        "title": "Number of US households (in millions), by annual income",
+                        "x_axis": "Annual Income",
+                        "y_axis": "Number of households (millions)",
+                        "categories": ["Less than $25,000", "$25,000-$49,999", "$50,000-$74,999", "$75,000-$99,999", "$100,000 or more"],
+                        "data": [
+                            {"year": "2007", "values": [28, 26, 21, 15, 16]},
+                            {"year": "2011", "values": [30, 27, 20, 14, 18]},
+                            {"year": "2015", "values": [28, 25, 19, 15, 33]}
                         ]
                     },
-                    "visual_description": "Line graph showing internet access trends for Japan, Germany, Brazil, and Nigeria from 2005-2020. Japan starts at 65% and reaches 92%. Germany goes from 58% to 89%. Brazil rises from 21% to 71%. Nigeria grows from 4% to 42%.",
+                    "visual_description": "Clustered bar chart showing US households by income bracket for 2007, 2011, and 2015. The lowest bracket (under $25,000) remained relatively stable around 28-30 million. The $25,000-$49,999 bracket stayed around 25-27 million. Middle income ($50,000-$74,999) declined slightly from 21 to 19 million. The $75,000-$99,999 bracket was stable at around 14-15 million. The most notable change was in the highest bracket ($100,000+), which roughly doubled from 16 million in 2007 to 33 million in 2015.",
                     "requirements": [
                         "Summarise the information by selecting and reporting the main features",
                         "Make comparisons where relevant"
