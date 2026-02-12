@@ -85,7 +85,7 @@ class TestLizGreetAPI:
 
 
 class TestLizChatAPI:
-    """Tests for Liz chat endpoint"""
+    """Tests for Liz chat endpoint with lesson mode prompts"""
     
     def test_chat_basic_message(self):
         """Test basic chat message to Liz"""
@@ -102,19 +102,45 @@ class TestLizChatAPI:
         assert len(data["response"]) > 0, "Expected non-empty response"
         print(f"✓ Chat response received: {data['response'][:100]}...")
     
-    def test_chat_with_quick_prompt(self):
-        """Test chat with a quick prompt similar to UI buttons"""
+    def test_chat_lesson_speaking_practice(self):
+        """Test chat with Speaking Practice lesson mode prompt"""
         response = requests.post(f"{BASE_URL}/api/liz/chat", json={
             "user_id": TEST_USER_ID,
-            "message": "Analyze my progress"
+            "message": "Start a structured IELTS Speaking practice session. Begin with Part 1 warm-up questions, then move to Part 2 cue card, and finish with Part 3 discussion. Guide me step by step."
         })
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
         
         data = response.json()
         assert data.get("success") == True
         assert "response" in data
-        # Liz should respond about progress analysis
-        print(f"✓ Progress analysis response: {data['response'][:100]}...")
+        # Should contain speaking-related content
+        print(f"✓ Speaking Practice lesson response: {data['response'][:100]}...")
+    
+    def test_chat_lesson_vocabulary_builder(self):
+        """Test chat with Vocabulary Builder lesson mode prompt"""
+        response = requests.post(f"{BASE_URL}/api/liz/chat", json={
+            "user_id": TEST_USER_ID,
+            "message": "Start an interactive vocabulary lesson. Teach me useful IELTS vocabulary with examples, then quiz me on it. Use adaptive difficulty."
+        })
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
+        
+        data = response.json()
+        assert data.get("success") == True
+        assert "response" in data
+        print(f"✓ Vocabulary Builder lesson response: {data['response'][:100]}...")
+    
+    def test_chat_lesson_study_plan(self):
+        """Test chat with Study Plan lesson mode prompt"""
+        response = requests.post(f"{BASE_URL}/api/liz/chat", json={
+            "user_id": TEST_USER_ID,
+            "message": "Analyze my progress and create a detailed study plan for the next week. Be specific about what I should practice each day."
+        })
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
+        
+        data = response.json()
+        assert data.get("success") == True
+        assert "response" in data
+        print(f"✓ Study Plan lesson response: {data['response'][:100]}...")
     
     def test_chat_with_voice_flag(self):
         """Test chat with is_voice flag set to true"""
