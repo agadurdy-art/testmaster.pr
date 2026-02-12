@@ -31,73 +31,73 @@ ACADEMIC_SET_C = {
                 # PART 1: Map/Plan Labelling Focus (Q1-10)
                 {
                     "part_number": 1,
-                    "title": "University Campus Tour",
-                    "context": "A student guide showing a new student around the campus",
-                    "speakers": ["Guide", "Student"],
-                    "question_types": ["map_labelling", "form_completion"],
+                    "title": "Recreation Ground Changes",
+                    "context": "A council officer describing proposed changes to a recreation ground to local residents",
+                    "speakers": ["Officer", "Resident"],
+                    "question_types": ["map_labelling"],
                     
-                    # Visual Map Data - Frontend will render this
                     "visual": {
                         "type": "map",
-                        "image_url": "academic_set_c_campus.png",
-                        "title": "Westbrook University Campus Map",
-                        "description": "Map showing campus buildings. Label the buildings marked A-H.",
+                        "image_url": "visual_006_map_recreation_after.png",
+                        "title": "Recreation ground after proposed changes",
+                        "description": "Map showing recreation ground after proposed changes. Label the areas marked A-I.",
                         "orientation": "North at top",
                         "elements": [
-                            # Fixed/Given elements (already labeled)
-                            {"id": "entrance", "label": "Main Entrance", "position": {"x": 50, "y": 95}, "type": "gate", "given": True},
-                            {"id": "lawn", "label": "Central Lawn", "position": {"x": 50, "y": 50}, "type": "area", "given": True},
-                            {"id": "path_main", "label": "Main Path", "position": {"x": 50, "y": 70}, "type": "path", "given": True},
-                            
-                            # Buildings to be labeled by student (A-H)
-                            {"id": "A", "label": "?", "position": {"x": 50, "y": 60}, "type": "building", "shape": "rectangle", "given": False},
-                            {"id": "B", "label": "?", "position": {"x": 20, "y": 50}, "type": "building", "shape": "rectangle", "note": "glass structure", "given": False},
-                            {"id": "C", "label": "?", "position": {"x": 50, "y": 30}, "type": "building", "shape": "rectangle", "given": False},
-                            {"id": "D", "label": "?", "position": {"x": 70, "y": 30}, "type": "building", "shape": "rectangle", "given": False},
-                            {"id": "E", "label": "?", "position": {"x": 80, "y": 50}, "type": "building", "shape": "tower", "given": False},
-                            {"id": "F", "label": "?", "position": {"x": 85, "y": 40}, "type": "building", "shape": "dome", "given": False},
-                            {"id": "G", "label": "?", "position": {"x": 90, "y": 20}, "type": "building", "shape": "rectangle", "given": False}
+                            {"id": "road", "label": "Road", "position": "top", "type": "road", "given": True},
+                            {"id": "river", "label": "River", "position": "bottom", "type": "water", "given": True},
+                            {"id": "community_hall", "label": "Community Hall", "position": "top-right", "type": "building", "given": True},
+                            {"id": "field", "label": "Field", "position": "centre-right", "type": "area", "given": True},
+                            {"id": "A", "label": "?", "type": "area", "given": False},
+                            {"id": "B", "label": "?", "type": "area", "given": False},
+                            {"id": "C", "label": "?", "type": "area", "given": False},
+                            {"id": "D", "label": "?", "type": "area", "given": False},
+                            {"id": "E", "label": "?", "type": "area", "given": False},
+                            {"id": "F", "label": "?", "type": "area", "given": False}
                         ],
-                        "compass": {"position": {"x": 90, "y": 90}},
                         "answer_key": {
-                            "A": "Administration Building",
-                            "B": "Science Complex", 
-                            "C": "Main Library",
-                            "D": "Student Union",
-                            "E": "Engineering Faculty",
-                            "F": "Planetarium",
-                            "G": "Sports Centre"
+                            "A": "New car park",
+                            "B": "Cricket pitch",
+                            "C": "Playground",
+                            "D": "Skateboard ramp",
+                            "E": "Pavilion",
+                            "F": "Notice board"
                         }
                     },
                     
                     "audio_script": """
-Guide: Welcome to Westbrook University. I'm James, and I'll be showing you around the main campus today. Do you have the campus map I emailed you?
-Student: Yes, I printed it out. I'm Sarah, by the way. This place is huge!
-Guide: It can be overwhelming at first. Let's start from where we're standing now - that's the Main Entrance, which is at the bottom of your map, facing south.
-Student: Got it. So we're looking north into the campus?
-Guide: Exactly. Now, directly ahead of you, you can see a large brick building. That's the Administration Building. All student registrations and ID cards are handled there.
-Student: Is that where I go for my student visa paperwork?
-Guide: Yes, the International Office is on the second floor. Now, if you look to your left - that's the west side - you'll see a modern glass structure. That's our Science Complex.
-Student: The one with the solar panels on the roof?
-Guide: That's right. It houses Biology, Chemistry, and Physics departments. Moving clockwise, the building directly north of where we're standing - past the central lawn - is the Main Library. It's open twenty-four hours during exam periods.
-Student: That's useful to know. What about the building to the right of it?
-Guide: That's the Student Union. It has cafeterias, common rooms, and the student services desk. Now, on the east side of campus - that's your right - there's a tall tower building. That's the Engineering Faculty.
-Student: I can see it. Must be about eight floors?
-Guide: Ten actually. Behind it, you'll notice a domed building - that's the Planetarium, part of our Astronomy department. It's open to the public on Friday evenings.
-Student: Amazing! What about sports facilities?
-Guide: Good question. The Sports Centre is at the northeast corner of campus, behind the Engineering tower. It has an Olympic-sized pool, gym, and indoor courts. The outdoor playing fields are beyond that, but they're not on this map.
+Officer: Good evening, everyone. Thank you for coming to this meeting about the proposed changes to the recreation ground. I'm David Clarke from the town council. As you can see on the map I've distributed, the recreation ground borders the road to the north and the river runs along the southern edge. The Community Hall is in the northeast corner, and the main open field is on the right-hand side.
+
+Now, let me walk you through the proposed changes. First, you'll notice area A on the map, which is at the top left, next to the road. We're planning to build a new car park there. Currently people park along the road, which causes congestion, so this should help considerably.
+
+Resident: How many spaces will that have?
+
+Officer: Around forty-five spaces, including disabled parking. Now, moving down from the car park, area B is in the centre-left of the map. This will become a proper cricket pitch. Several local teams have been requesting dedicated facilities for years.
+
+Next to the cricket pitch, slightly to the south, you can see area C. This is earmarked for a children's playground. It will have climbing frames, swings, and a sandpit - all suitable for children aged three to twelve.
+
+Resident: What about older children?
+
+Officer: Great question. That brings us to area D, which is in the lower left part of the map, closer to the river. We're installing a skateboard ramp there. It's positioned away from the playground for safety reasons.
+
+Now, area E is between the field and the Community Hall, on the right side. We're building a pavilion there - it will have changing rooms, showers, and a small kitchen for events and matches.
+
+Finally, area F is right at the entrance from the road, near the new car park. We're putting up a large notice board there so visitors can see upcoming events, maps, and safety information as they arrive.
+
+Resident: When will the work start?
+
+Officer: Construction begins in March and should be completed by August.
                     """,
                     "questions": [
-                        {"id": "L1Q1", "type": "map_labelling", "question": "Write the correct letter A-G: Administration Building", "answer": "A"},
-                        {"id": "L1Q2", "type": "map_labelling", "question": "Write the correct letter A-G: Science Complex", "answer": "B"},
-                        {"id": "L1Q3", "type": "form_completion", "question": "The Science Complex has ______ panels on the roof", "answer": "solar"},
-                        {"id": "L1Q4", "type": "map_labelling", "question": "Write the correct letter A-G: Main Library", "answer": "C"},
-                        {"id": "L1Q5", "type": "form_completion", "question": "Library hours during exams: ______ hours", "answer": "24/twenty-four"},
-                        {"id": "L1Q6", "type": "map_labelling", "question": "Write the correct letter A-G: Student Union", "answer": "D"},
-                        {"id": "L1Q7", "type": "map_labelling", "question": "Write the correct letter A-G: Engineering Faculty", "answer": "E"},
-                        {"id": "L1Q8", "type": "form_completion", "question": "Engineering tower number of floors: ______", "answer": "10/ten"},
-                        {"id": "L1Q9", "type": "form_completion", "question": "Planetarium public opening day: ______", "answer": "Friday/Fridays"},
-                        {"id": "L1Q10", "type": "map_labelling", "question": "Write the correct letter A-G: Sports Centre", "answer": "G"}
+                        {"id": "L1Q1", "type": "map_labelling", "question": "Write the correct letter A-F next to Questions 15-20.\n\nQ15: New car park", "answer": "A"},
+                        {"id": "L1Q2", "type": "map_labelling", "question": "Q16: Cricket pitch", "answer": "B"},
+                        {"id": "L1Q3", "type": "map_labelling", "question": "Q17: Playground", "answer": "C"},
+                        {"id": "L1Q4", "type": "map_labelling", "question": "Q18: Skateboard ramp", "answer": "D"},
+                        {"id": "L1Q5", "type": "map_labelling", "question": "Q19: Pavilion", "answer": "E"},
+                        {"id": "L1Q6", "type": "map_labelling", "question": "Q20: Notice board", "answer": "F"},
+                        {"id": "L1Q7", "type": "form_completion", "question": "Number of parking spaces planned: approximately ______", "answer": "45/forty-five"},
+                        {"id": "L1Q8", "type": "form_completion", "question": "Playground suitable for children aged ______ to twelve", "answer": "3/three"},
+                        {"id": "L1Q9", "type": "form_completion", "question": "Construction begins in: ______", "answer": "March"},
+                        {"id": "L1Q10", "type": "form_completion", "question": "Completion expected by: ______", "answer": "August"}
                     ]
                 },
                 
