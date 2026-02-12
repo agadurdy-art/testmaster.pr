@@ -150,21 +150,27 @@ async def chat_with_emily(req: ChatRequest):
     user_context = await get_user_context(req.user_id)
     system_msg = EMILY_SYSTEM_PROMPT.replace("{user_context}", user_context)
 
-    # Create LLM chat instance
+    # Build conversation context from history
+    prev_messages = session.get("messages", [])
+    history_context = ""
+    if prev_messages:
+        recent = prev_messages[-16:]  # Last 16 messages (8 turns)
+        history_lines = []
+        for msg in recent:
+            role = "Student" if msg["role"] == "user" else "Emily"
+            history_lines.append(f"{role}: {msg['content']}")
+        history_context = "\n\n## Recent Conversation History:\n" + "\n".join(history_lines)
+
+    system_msg = EMILY_SYSTEM_PROMPT.replace("{user_context}", user_context) + history_context
+
+    # Create LLM chat instance - single call, no replay
     chat = LlmChat(
         api_key=api_key,
-        session_id=f"emily_{session_id}",
+        session_id=f"emily_{session_id}_{datetime.now(timezone.utc).strftime('%H%M%S')}",
         system_message=system_msg
     ).with_model("openai", "gpt-4o")
 
-    # Replay previous messages for context
-    prev_messages = session.get("messages", [])
-    for msg in prev_messages[-20:]:  # Last 20 messages for context window
-        if msg["role"] == "user":
-            await chat.send_message(UserMessage(text=msg["content"]))
-        # Assistant messages are automatically tracked by LlmChat
-
-    # Send the new message
+    # Send the new message (single API call)
     response = await chat.send_message(UserMessage(text=req.message))
 
     # Store messages in MongoDB
