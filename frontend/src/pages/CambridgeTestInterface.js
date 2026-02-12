@@ -255,6 +255,22 @@ export default function CambridgeTestInterface() {
       setShowSubmitModal(false);
     } else {
       // All sections completed - show results
+      // Track Cambridge test completion
+      try {
+        const userData = JSON.parse(localStorage.getItem('user'));
+        if (userData?.id) {
+          fetch(`${API_URL}/api/user/track-completion`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              user_id: userData.id,
+              test_id: `${bookId}_${testId}`,
+              category: 'cambridge',
+              band_score: 0,
+            })
+          }).catch(() => {});
+        }
+      } catch {}
       navigate(`/cambridge-test/${bookId}/${testId}/results`, { 
         state: { answers, testData, mode: 'full', speakingEvaluations: questionEvaluations } 
       });
