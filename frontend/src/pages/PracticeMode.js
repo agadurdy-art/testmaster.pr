@@ -91,7 +91,11 @@ export default function PracticeMode({ user }) {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/question-bank/practice/random?skill=${skill}&count=3`);
+      // Use dedicated listening endpoint with pre-generated audio
+      const endpoint = skill === 'listening'
+        ? `${API_URL}/api/question-bank/practice/listening-sets?count=3`
+        : `${API_URL}/api/question-bank/practice/random?skill=${skill}&count=3`;
+      const res = await fetch(endpoint);
       const data = await res.json();
       if (data.success && data.questions?.length > 0) {
         setQuestions(data.questions);
