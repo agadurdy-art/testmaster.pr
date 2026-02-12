@@ -152,6 +152,76 @@ class TTSRequest(BaseModel):
     text: str
 
 
+class HomeworkSubmitRequest(BaseModel):
+    user_id: str
+    submission: str
+
+
+class HomeworkAssignRequest(BaseModel):
+    user_id: str
+    hw_type: str = "vocabulary"
+    title: str = ""
+    task: str = ""
+    due_days: int = 2
+
+
+HOMEWORK_PATTERN = re.compile(r'\[HOMEWORK\](.*?)\[/HOMEWORK\]', re.DOTALL)
+
+
+def parse_homework_from_response(response: str, user_id: str, session_id: str):
+    """Parse [HOMEWORK] blocks from Liz's response. Returns (cleaned_response, homework_list)."""
+    matches = HOMEWORK_PATTERN.findall(response)
+    homework_list = []
+    for match in matches:
+        hw = {"user_id": user_id, "session_id": session_id, "status": "pending",
+              "homework_id": str(uuid.uuid4()), "created_at": datetime.now(timezone.utc).isoformat()}
+        for line in match.strip().split("\n"):
+            line = line.strip()
+            if line.lower().startswith("type:"):
+                hw["type"] = line.split(":", 1)[1].strip().lower()
+            elif line.lower().startswith("title:"):
+                hw["title"] = line.split(":", 1)[1].strip()
+            elif line.lower().startswith("task:"):
+                hw["task"] = line.split(":", 1)[1].strip()
+            elif line.lower().startswith("due:"):
+                try:
+                    days = int(line.split(":", 1)[1].strip())
+                except ValueError:
+                    days = 2
+                hw["due_date"] = (datetime.now(timezone.utc) + timedelta(days=days)).isoformat()
+        if hw.get("title") and hw.get("task"):
+            hw.setdefault("type", "vocabulary")
+            hw.setdefault("due_date", (datetime.now(timezone.utc) + timedelta(days=2)).isoformat())
+            homework_list.append(hw)
+
+    cleaned = HOMEWORK_PATTERN.sub("", response).strip()
+    return cleaned, homework_list
+
+
+async def get_homework_context(user_id: str) -> str:
+    """Get pending homework info for system prompt."""
+    if db is None:
+        return ""
+    pending = await db.liz_homework.find(
+        {"user_id": user_id, "status": {"$in": ["pending", "submitted"]}},
+        {"_id": 0}
+    ).sort("due_date", 1).to_list(10)
+    if not pending:
+        return ""
+    lines = ["## Student's Pending Homework:"]
+    for hw in pending:
+        status_text = "awaiting submission" if hw["status"] == "pending" else "submitted - needs your review"
+        overdue = ""
+        if hw.get("due_date"):
+            due = datetime.fromisoformat(hw["due_date"])
+            if due < datetime.now(timezone.utc) and hw["status"] == "pending":
+                overdue = " (OVERDUE)"
+        lines.append(f"- [{hw.get('type', 'general').upper()}] {hw.get('title', 'Untitled')} - {status_text}{overdue}")
+        if hw["status"] == "submitted":
+            lines.append(f"  Student's submission: \"{hw.get('submission', '')[:200]}\"")
+    return "\n".join(lines)
+
+
 def get_api_key():
     return os.environ.get("EMERGENT_LLM_KEY", "")
 
