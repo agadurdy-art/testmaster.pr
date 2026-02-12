@@ -900,20 +900,8 @@ export default function QuestionBank() {
             )}
           </div>
         )}
-                </div>
-                <div>
-                  <h2 className="font-bold text-xl text-gray-900">Cambridge IELTS</h2>
-                  <p className="text-sm text-gray-500">Official Cambridge practice tests</p>
-                </div>
-              </div>
-              
-              {/* IELTS 17 */}
-              <Card className="p-6 border-2 border-red-100 bg-gradient-to-br from-white to-red-50">
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-lg text-gray-900">Cambridge IELTS 17</h3>
-                      <Badge className="bg-green-100 text-green-700 text-xs">Available</Badge>
+
+        {/* Progress Tab */}
                     </div>
                     <p className="text-sm text-gray-500">Official Academic practice tests</p>
                   </div>
