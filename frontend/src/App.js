@@ -335,6 +335,18 @@ function AppWithSessionHandler() {
           element={<AdvancedMasteryCourse user={user} />} 
         />
         <Route 
+          path="/vocabulary/learn/:moduleId" 
+          element={user ? <VocabularyLearnMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/practice/:moduleId" 
+          element={user ? <VocabularyPracticeMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/vocabulary/quiz/:moduleId" 
+          element={user ? <VocabularyQuizMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
           path="/game-bank" 
           element={<GameBank />} 
         />
