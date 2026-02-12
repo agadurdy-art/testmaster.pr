@@ -1408,6 +1408,20 @@ async def get_test(test_id: str):
     test = await db.tests.find_one({"id": test_id}, {"_id": 0})
     if not test:
         raise HTTPException(status_code=404, detail="Test not found")
+    
+    # For listening tests, attach audio URLs from uploaded files
+    if test.get("test_type") == "listening":
+        for i, section in enumerate(test.get("sections", [])):
+            part_num = i + 1
+            # Map test to its audio files by checking which test index this is
+            all_listening = await db.tests.find(
+                {"test_type": "listening"}, {"_id": 0, "id": 1}
+            ).sort("title", 1).to_list(20)
+            test_idx = next((idx for idx, t in enumerate(all_listening) if t["id"] == test_id), 0) + 1
+            audio_path = Path(f"static/audio/listening_tests/test{test_idx}_part{part_num}.mp3")
+            if audio_path.exists():
+                section["audio_url"] = f"/api/listening-test-audio/test{test_idx}_part{part_num}"
+    
     return test
 
 @api_router.post("/tests/submit")
