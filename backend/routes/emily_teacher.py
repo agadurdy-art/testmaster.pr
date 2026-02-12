@@ -76,7 +76,7 @@ def get_api_key():
 
 async def get_user_context(user_id: str) -> str:
     """Fetch user's progress data to give Emily context."""
-    if not db:
+    if db is None:
         return "No progress data available yet."
 
     context_parts = []
