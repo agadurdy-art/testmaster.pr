@@ -357,6 +357,25 @@ export default function Dashboard({ user, onLogout }) {
           </p>
         </div>
 
+
+        {/* Quick Stats Row - Always visible */}
+        <div className="grid grid-cols-5 gap-3 mb-6">
+          {[
+            { icon: BarChart3, label: getText('Tests', 'Bài thi', 'Testler'), value: progress?.total_tests || 0, color: 'text-blue-600', bg: isDark ? 'bg-blue-900/30' : 'bg-blue-50' },
+            { icon: Award, label: getText('Avg Band', 'TB Band', 'Ort. Band'), value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: isDark ? 'bg-purple-900/30' : 'bg-purple-50' },
+            { icon: Flame, label: getText('Best', 'Cao nhất', 'En İyi'), value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: isDark ? 'bg-orange-900/30' : 'bg-orange-50' },
+            { icon: Zap, label: getText('Streak', 'Streak', 'Seri'), value: `${progress?.streak || 0}🔥`, color: 'text-red-600', bg: isDark ? 'bg-red-900/30' : 'bg-red-50' },
+            { icon: Star, label: getText('Badges', 'Huy hiệu', 'Rozetler'), value: progress?.badges?.length || 0, color: 'text-amber-600', bg: isDark ? 'bg-amber-900/30' : 'bg-amber-50' }
+          ].map((stat, idx) => (
+            <Card key={idx} className={`p-3 ${stat.bg} border-0 rounded-xl text-center transition-colors duration-300`}>
+              <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-1`} />
+              <p className={`text-lg font-bold ${textPrimary}`}>{stat.value}</p>
+              <p className={`text-xs ${textSecondary}`}>{stat.label}</p>
+            </Card>
+          ))}
+        </div>
+
+
         {/* Continue Learning Card - Prominent CTA */}
         {continueData && (
           <Card 
@@ -387,9 +406,74 @@ export default function Dashboard({ user, onLogout }) {
           </Card>
         )}
 
+
+        {/* ── Section 1: Practice & Test ── */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-1.5 h-5 bg-violet-500 rounded-full" />
+            <h2 className={`text-sm font-bold uppercase tracking-wide ${textPrimary}`}>{getText('Practice & Test', 'Luyện thi', 'Pratik & Test')}</h2>
+          </div>
+          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {/* Tests Section */}
+                <GraduationCap className="w-5 h-5 text-white" />
+              {testModules.map((module) => (
+                <div
+                  key={module.type}
+                  onClick={() => startTest(module.type)}
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : module.lightBg} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-lg ${module.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      <module.icon className="w-5 h-5 text-white" />
+                      <p className={`font-semibold ${textPrimary}`}>{module.title}</p>
+                      <p className={`text-xs ${textSecondary}`}>{module.description}</p>
+                  {perSkillStats[module.type]?.best && (
+                    <div className={`flex items-center gap-1 mt-2 text-xs ${textSecondary}`}>
+                      <Star className="w-3 h-3 text-yellow-500" />
+                      <span>Best: {perSkillStats[module.type].best}</span>
+                  )}
+              ))}
+
+            </div>
+            <div className={`flex gap-3 mt-4 pt-4 border-t ${isDark ? "border-gray-700" : "border-gray-100"}`}>
+              <div
+                onClick={() => navigate('/question-bank')}
+                className={`flex-1 p-3 ${isDark ? "bg-gray-700/50 hover:bg-gray-700" : "bg-violet-50 hover:bg-violet-100"} rounded-xl cursor-pointer transition-all flex items-center gap-3 group`}
+              >
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <BookOpen className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className={`font-semibold text-sm ${textPrimary}`}>{getText("Question Bank", "Ngân hàng câu hỏi", "Soru Bankası")}</p>
+                  <p className={`text-xs ${textSecondary}`}>{getText("1420+ questions", "1420+ câu hỏi", "1420+ soru")}</p>
+                </div>
+              </div>
+              <div
+                onClick={() => navigate('/question-bank?tab=practice')}
+                className={`flex-1 p-3 ${isDark ? "bg-gray-700/50 hover:bg-gray-700" : "bg-purple-50 hover:bg-purple-100"} rounded-xl cursor-pointer transition-all flex items-center gap-3 group`}
+              >
+                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Zap className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <p className={`font-semibold text-sm ${textPrimary}`}>{getText("Quick Practice", "Luyện nhanh", "Hızlı Pratik")}</p>
+                  <p className={`text-xs ${textSecondary}`}>{getText("Short practice sets", "Bài tập ngắn", "Kısa pratik setleri")}</p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* ── Section 2: Learn & Grow ── */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-1.5 h-5 bg-blue-500 rounded-full" />
+            <h2 className={`text-sm font-bold uppercase tracking-wide ${textPrimary}`}>{getText('Learn & Grow', 'Học & Phát triển', 'Öğren & Geliş')}</h2>
+          </div>
         {/* Learning Platform CTA */}
         <Card 
-          className="p-5 mb-6 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+          className="p-5 mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
           onClick={() => navigate('/learning')}
         >
           <div className="flex items-center justify-between">
@@ -417,159 +501,7 @@ export default function Dashboard({ user, onLogout }) {
           </div>
         </Card>
 
-        {/* Quick Stats Row - Always visible */}
-        <div className="grid grid-cols-5 gap-3 mb-6">
-          {[
-            { icon: BarChart3, label: getText('Tests', 'Bài thi', 'Testler'), value: progress?.total_tests || 0, color: 'text-blue-600', bg: isDark ? 'bg-blue-900/30' : 'bg-blue-50' },
-            { icon: Award, label: getText('Avg Band', 'TB Band', 'Ort. Band'), value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: isDark ? 'bg-purple-900/30' : 'bg-purple-50' },
-            { icon: Flame, label: getText('Best', 'Cao nhất', 'En İyi'), value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: isDark ? 'bg-orange-900/30' : 'bg-orange-50' },
-            { icon: Zap, label: getText('Streak', 'Streak', 'Seri'), value: `${progress?.streak || 0}🔥`, color: 'text-red-600', bg: isDark ? 'bg-red-900/30' : 'bg-red-50' },
-            { icon: Star, label: getText('Badges', 'Huy hiệu', 'Rozetler'), value: progress?.badges?.length || 0, color: 'text-amber-600', bg: isDark ? 'bg-amber-900/30' : 'bg-amber-50' }
-          ].map((stat, idx) => (
-            <Card key={idx} className={`p-3 ${stat.bg} border-0 rounded-xl text-center transition-colors duration-300`}>
-              <stat.icon className={`w-5 h-5 ${stat.color} mx-auto mb-1`} />
-              <p className={`text-lg font-bold ${textPrimary}`}>{stat.value}</p>
-              <p className={`text-xs ${textSecondary}`}>{stat.label}</p>
-            </Card>
-          ))}
-        </div>
-
-        {/* Badges Section - Show if user has badges */}
-        {progress?.badges?.length > 0 && (
-          <Card className={`p-4 mb-6 ${isDark ? 'bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border-amber-700' : 'bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200'} rounded-2xl transition-colors duration-300`}>
-            <div className="flex items-center justify-between mb-3">
-              <h3 className={`font-semibold ${textPrimary} flex items-center gap-2`}>
-                <Trophy className="w-5 h-5 text-amber-500" />
-                {getText('Your Achievements', 'Thành tích của bạn', 'Başarılarınız')}
-              </h3>
-              <span className={`text-sm ${isDark ? 'text-amber-400' : 'text-amber-700'}`}>{progress.badges.length} {getText('badges', 'huy hiệu', 'rozet')}</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {progress.badges.slice(0, 8).map((badge, idx) => (
-                <div 
-                  key={idx} 
-                  className={`flex items-center gap-2 ${isDark ? 'bg-gray-700' : 'bg-white'} px-3 py-2 rounded-lg shadow-sm`}
-                  title={badge.description}
-                >
-                  <span className="text-xl">{badge.icon}</span>
-                  <span className={`text-sm font-medium ${textPrimary}`}>{badge.name}</span>
-                </div>
-              ))}
-              {progress.badges.length > 8 && (
-                <button 
-                  onClick={() => navigate('/progress')}
-                  className={`text-sm ${isDark ? 'text-amber-400 hover:text-amber-300' : 'text-amber-700 hover:text-amber-800'} font-medium px-3 py-2`}
-                >
-                  +{progress.badges.length - 8} {getText('more', 'khác', 'daha fazla')}
-                </button>
-              )}
-            </div>
-          </Card>
-        )}
-
-        {/* Main Navigation Grid */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
-          
-          {/* Tests Section */}
-          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-200">
-                <GraduationCap className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h2 className={`text-lg font-bold ${textPrimary}`}>{getText('Practice Tests', 'Bài kiểm tra', 'Pratik Testler')}</h2>
-                <p className={`text-xs ${textSecondary}`}>{getText('Practice all 4 IELTS skills', 'Luyện tập 4 kỹ năng IELTS', '4 IELTS becerisini pratik yapın')}</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              {testModules.map((module) => (
-                <div
-                  key={module.type}
-                  onClick={() => startTest(module.type)}
-                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : module.lightBg} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group`}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg ${module.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                      <module.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <p className={`font-semibold ${textPrimary}`}>{module.title}</p>
-                      <p className={`text-xs ${textSecondary}`}>{module.description}</p>
-                    </div>
-                  </div>
-                  {perSkillStats[module.type]?.best && (
-                    <div className={`flex items-center gap-1 mt-2 text-xs ${textSecondary}`}>
-                      <Star className="w-3 h-3 text-yellow-500" />
-                      <span>Best: {perSkillStats[module.type].best}</span>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </Card>
-
-          {/* Quick Games Section */}
-          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300 relative overflow-hidden`}>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <div className="flex items-center justify-between mb-4 relative">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-200 animate-pulse">
-                  <Gamepad2 className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h2 className={`text-lg font-bold ${textPrimary}`}>{getText('Quick Games', 'Trò chơi nhanh', 'Hızlı Oyunlar')}</h2>
-                  <p className={`text-xs ${textSecondary}`}>{getText('Learn vocabulary while having fun!', 'Học từ vựng vui vẻ!', 'Eğlenerek kelime öğren!')}</p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate('/game-bank')}
-                className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
-              >
-                {getText('See All', 'Xem tất cả', 'Tümünü Gör')} <ChevronRight className="w-4 h-4 ml-1" />
-              </Button>
-            </div>
-            <div className="grid grid-cols-3 gap-3 relative">
-              {[
-                { type: 'matching_pairs', name: getText('Matching', 'Ghép cặp', 'Eşleştirme'), icon: '🎯', color: 'from-blue-500 to-cyan-500', topic: 'family' },
-                { type: 'spelling_bee', name: getText('Spelling', 'Đánh vần', 'Heceleme'), icon: '🐝', color: 'from-amber-500 to-yellow-500', topic: 'animals' },
-                { type: 'word_race', name: getText('Word Race', 'Đua từ', 'Kelime Yarışı'), icon: '🏎️', color: 'from-green-500 to-emerald-500', topic: 'food' },
-              ].map((game) => (
-                <div
-                  key={game.type}
-                  onClick={() => navigate(`/game-bank?game=${game.type}&topic=${game.topic}`)}
-                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gradient-to-br from-gray-50 to-white'} rounded-xl cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 group text-center border ${isDark ? 'border-gray-600' : 'border-gray-100'}`}
-                >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${game.color} flex items-center justify-center text-2xl mx-auto mb-2 group-hover:scale-110 transition-transform shadow-lg`}>
-                    {game.icon}
-                  </div>
-                  <p className={`font-semibold text-sm ${textPrimary}`}>{game.name}</p>
-                </div>
-              ))}
-            </div>
-            <div 
-              onClick={() => navigate('/game-bank')}
-              className={`mt-4 p-3 ${isDark ? 'bg-gradient-to-r from-purple-900/50 to-pink-900/50' : 'bg-gradient-to-r from-purple-50 to-pink-50'} rounded-xl cursor-pointer hover:shadow-md transition-all group flex items-center justify-between`}
-            >
-              <div className="flex items-center gap-3">
-                <div className="text-2xl">🎮</div>
-                <div>
-                  <p className={`font-semibold text-sm ${textPrimary}`}>{getText('Daily Challenge', 'Thử thách hàng ngày', 'Günlük Meydan Okuma')}</p>
-                  <p className={`text-xs ${textSecondary}`}>{getText('Complete 3 games to earn bonus XP!', 'Hoàn thành 3 trò chơi để nhận XP thưởng!', '3 oyun tamamla, bonus XP kazan!')}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex -space-x-1">
-                  <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center text-xs">⭐</div>
-                  <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center text-xs">⭐</div>
-                  <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center text-xs">⭐</div>
-                </div>
-                <ChevronRight className={`w-5 h-5 ${textSecondary} group-hover:translate-x-1 transition-transform`} />
-              </div>
-            </div>
-          </Card>
-
+          <div className="grid lg:grid-cols-2 gap-4">
           {/* Lessons/Courses Section */}
           <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center gap-3 mb-4">
@@ -603,10 +535,6 @@ export default function Dashboard({ user, onLogout }) {
             </div>
           </Card>
         </div>
-
-        {/* Learning Tools + Recent Tests Row */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-6">
-          
           {/* Learning Tools */}
           <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center gap-3 mb-4">
@@ -682,7 +610,119 @@ export default function Dashboard({ user, onLogout }) {
               <ChevronRight className={`w-5 h-5 ${textSecondary}`} />
             </div>
           </Card>
+          </div>
+        </div>
 
+        {/* ── Section 3: Play & Fun ── */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-1.5 h-5 bg-purple-500 rounded-full" />
+            <h2 className={`text-sm font-bold uppercase tracking-wide ${textPrimary}`}>{getText('Play & Fun', 'Chơi & Vui', 'Oyna & Eğlen')}</h2>
+          </div>
+          {/* Quick Games Section */}
+          <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300 relative overflow-hidden`}>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+            <div className="flex items-center justify-between mb-4 relative">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center shadow-lg shadow-purple-200 animate-pulse">
+                  <Gamepad2 className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h2 className={`text-lg font-bold ${textPrimary}`}>{getText('Quick Games', 'Trò chơi nhanh', 'Hızlı Oyunlar')}</h2>
+                  <p className={`text-xs ${textSecondary}`}>{getText('Learn vocabulary while having fun!', 'Học từ vựng vui vẻ!', 'Eğlenerek kelime öğren!')}</p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate('/game-bank')}
+                className="text-purple-600 hover:text-purple-700 hover:bg-purple-50"
+              >
+                {getText('See All', 'Xem tất cả', 'Tümünü Gör')} <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+            <div className="grid grid-cols-3 gap-3 relative">
+              {[
+                { type: 'matching_pairs', name: getText('Matching', 'Ghép cặp', 'Eşleştirme'), icon: '🎯', color: 'from-blue-500 to-cyan-500', topic: 'family' },
+                { type: 'spelling_bee', name: getText('Spelling', 'Đánh vần', 'Heceleme'), icon: '🐝', color: 'from-amber-500 to-yellow-500', topic: 'animals' },
+                { type: 'word_race', name: getText('Word Race', 'Đua từ', 'Kelime Yarışı'), icon: '🏎️', color: 'from-green-500 to-emerald-500', topic: 'food' },
+              ].map((game) => (
+                <div
+                  key={game.type}
+                  onClick={() => navigate(`/game-bank?game=${game.type}&topic=${game.topic}`)}
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gradient-to-br from-gray-50 to-white'} rounded-xl cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 group text-center border ${isDark ? 'border-gray-600' : 'border-gray-100'}`}
+                >
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${game.color} flex items-center justify-center text-2xl mx-auto mb-2 group-hover:scale-110 transition-transform shadow-lg`}>
+                    {game.icon}
+                  </div>
+                  <p className={`font-semibold text-sm ${textPrimary}`}>{game.name}</p>
+                </div>
+              ))}
+            </div>
+            <div 
+              onClick={() => navigate('/game-bank')}
+              className={`mt-4 p-3 ${isDark ? 'bg-gradient-to-r from-purple-900/50 to-pink-900/50' : 'bg-gradient-to-r from-purple-50 to-pink-50'} rounded-xl cursor-pointer hover:shadow-md transition-all group flex items-center justify-between`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="text-2xl">🎮</div>
+                <div>
+                  <p className={`font-semibold text-sm ${textPrimary}`}>{getText('Daily Challenge', 'Thử thách hàng ngày', 'Günlük Meydan Okuma')}</p>
+                  <p className={`text-xs ${textSecondary}`}>{getText('Complete 3 games to earn bonus XP!', 'Hoàn thành 3 trò chơi để nhận XP thưởng!', '3 oyun tamamla, bonus XP kazan!')}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="flex -space-x-1">
+                  <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center text-xs">⭐</div>
+                  <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center text-xs">⭐</div>
+                  <div className="w-6 h-6 rounded-full bg-gray-300 flex items-center justify-center text-xs">⭐</div>
+                </div>
+                <ChevronRight className={`w-5 h-5 ${textSecondary} group-hover:translate-x-1 transition-transform`} />
+              </div>
+            </div>
+          </Card>
+
+        </div>
+
+        {/* ── Section 4: Your Progress ── */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-1.5 h-5 bg-emerald-500 rounded-full" />
+            <h2 className={`text-sm font-bold uppercase tracking-wide ${textPrimary}`}>{getText('Your Progress', 'Tiến độ của bạn', 'İlerlemeniz')}</h2>
+          </div>
+        {/* Badges Section - Show if user has badges */}
+        {progress?.badges?.length > 0 && (
+          <Card className={`p-4 mb-6 ${isDark ? 'bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border-amber-700' : 'bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200'} rounded-2xl transition-colors duration-300`}>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className={`font-semibold ${textPrimary} flex items-center gap-2`}>
+                <Trophy className="w-5 h-5 text-amber-500" />
+                {getText('Your Achievements', 'Thành tích của bạn', 'Başarılarınız')}
+              </h3>
+              <span className={`text-sm ${isDark ? 'text-amber-400' : 'text-amber-700'}`}>{progress.badges.length} {getText('badges', 'huy hiệu', 'rozet')}</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {progress.badges.slice(0, 8).map((badge, idx) => (
+                <div 
+                  key={idx} 
+                  className={`flex items-center gap-2 ${isDark ? 'bg-gray-700' : 'bg-white'} px-3 py-2 rounded-lg shadow-sm`}
+                  title={badge.description}
+                >
+                  <span className="text-xl">{badge.icon}</span>
+                  <span className={`text-sm font-medium ${textPrimary}`}>{badge.name}</span>
+                </div>
+              ))}
+              {progress.badges.length > 8 && (
+                <button 
+                  onClick={() => navigate('/progress')}
+                  className={`text-sm ${isDark ? 'text-amber-400 hover:text-amber-300' : 'text-amber-700 hover:text-amber-800'} font-medium px-3 py-2`}
+                >
+                  +{progress.badges.length - 8} {getText('more', 'khác', 'daha fazla')}
+                </button>
+              )}
+            </div>
+          </Card>
+        )}
+
+          <div className="grid lg:grid-cols-2 gap-4">
           {/* Recent Tests */}
           <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center justify-between mb-4">
@@ -751,26 +791,24 @@ export default function Dashboard({ user, onLogout }) {
             )}
           </Card>
         </div>
-
-        {/* Progress Overview - Click to see full progress */}
-        <Card 
-          className="p-5 bg-gradient-to-r from-violet-600 to-purple-600 border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all"
-          onClick={() => navigate('/progress')}
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-white" />
+          <Card 
+            className="p-5 bg-gradient-to-r from-violet-600 to-purple-600 border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all"
+            onClick={() => navigate('/progress')}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">{getText('View Full Progress', 'Xem tiến độ đầy đủ', 'Tüm İlerlemeyi Gör')}</h3>
+                  <p className="text-violet-200 text-sm">{getText('Detailed analytics & AI feedback', 'Phân tích chi tiết & phản hồi AI', 'Detaylı analitik & AI geri bildirimi')}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-bold text-white">{getText('View Full Progress', 'Xem tiến độ đầy đủ', 'Tüm İlerlemeyi Gör')}</h3>
-                <p className="text-violet-200 text-sm">{getText('Detailed analytics & AI feedback', 'Phân tích chi tiết & phản hồi AI', 'Detaylı analitik & AI geri bildirimi')}</p>
-              </div>
+              <ChevronRight className="w-6 h-6 text-white" />
             </div>
-            <ChevronRight className="w-6 h-6 text-white" />
+          </Card>
           </div>
-        </Card>
-
         {/* Skill Breakdown (if user has enough tests) */}
         {hasProgress && progress.total_tests > 2 && (
           <div className="mt-6">
@@ -782,6 +820,8 @@ export default function Dashboard({ user, onLogout }) {
           </div>
         )}
         
+        </div>
+
         {/* Beta Feedback CTA */}
         <div className="mt-6 mb-6">
           <Card className={`p-4 ${bgCard} border shadow-sm rounded-2xl`}>
