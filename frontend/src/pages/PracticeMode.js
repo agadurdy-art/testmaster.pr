@@ -331,7 +331,7 @@ export default function PracticeMode({ user }) {
                 </div>
 
                 {/* Audio Player for Listening */}
-                {q.audio_transcript && (
+                {(q.audio_file || q.audio_transcript) && (
                   <div className="mx-5 mb-3">
                     <audio ref={audioRef} onEnded={() => setIsPlayingAudio(false)} onPause={() => setIsPlayingAudio(false)} />
                     <div className="bg-gradient-to-r from-amber-100 to-orange-100 rounded-2xl p-3.5 flex items-center gap-3 border border-amber-200/50">
