@@ -485,7 +485,7 @@ export default function QuestionBank() {
             {/* Skill Selection */}
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Filter className="w-5 h-5" /> Beceri Seç
+                <Filter className="w-5 h-5" /> Select Skill
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
                 {skills.map(skill => {
@@ -1078,7 +1078,7 @@ export default function QuestionBank() {
               {/* Show selected filters */}
               {(selectedBand || selectedTopic) && (
                 <div className="mb-4 p-3 bg-blue-50 rounded-lg">
-                  <p className="text-xs text-blue-600 font-medium mb-1">Seçili Filtreler:</p>
+                  <p className="text-xs text-blue-600 font-medium mb-1">Active Filters:</p>
                   <div className="flex gap-2 flex-wrap">
                     {selectedBand && (
                       <Badge className="bg-blue-100 text-blue-700">
@@ -1094,14 +1094,14 @@ export default function QuestionBank() {
                 </div>
               )}
 
-              <p className="text-sm text-gray-500 mb-6">IELTS Reading türünü veya soru tipini seçin:</p>
+              <p className="text-sm text-gray-500 mb-6">Select an IELTS Reading type or question type:</p>
 
               {/* Question Type Based Practice - NEW */}
               <div className="mb-6 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
                 <h4 className="text-sm font-bold text-amber-700 mb-3 flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4" /> SORU TİPİNE GÖRE PRATİK
+                  <HelpCircle className="w-4 h-4" /> PRACTICE BY QUESTION TYPE
                 </h4>
-                <p className="text-xs text-amber-600 mb-3">Belirli bir soru tipinde uzmanlaşmak için seçin</p>
+                <p className="text-xs text-amber-600 mb-3">Choose a specific question type to master</p>
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { id: 'multiple_choice', name: 'Multiple Choice', icon: '🔘' },
@@ -1152,7 +1152,7 @@ export default function QuestionBank() {
                       <p className="text-sm text-gray-500">Research articles, journals, academic texts</p>
                       <div className="flex gap-2 mt-2 flex-wrap">
                         <Badge className="bg-blue-100 text-blue-700">Band 7-9</Badge>
-                        <Badge className="bg-gray-100 text-gray-600">5 Modül</Badge>
+                        <Badge className="bg-gray-100 text-gray-600">5 Modules</Badge>
                         <Badge className="bg-indigo-100 text-indigo-700">Advanced</Badge>
                       </div>
                     </div>
@@ -1185,7 +1185,7 @@ export default function QuestionBank() {
                       <p className="text-sm text-gray-500">Policy documents, contracts, workplace notices</p>
                       <div className="flex gap-2 mt-2 flex-wrap">
                         <Badge className="bg-purple-100 text-purple-700">Band 7-9</Badge>
-                        <Badge className="bg-gray-100 text-gray-600">5 Modül</Badge>
+                        <Badge className="bg-gray-100 text-gray-600">5 Modules</Badge>
                         <Badge className="bg-pink-100 text-pink-700">Advanced</Badge>
                       </div>
                     </div>
@@ -1196,7 +1196,7 @@ export default function QuestionBank() {
               {/* Mastery Level Section - NEW */}
               <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
                 <h4 className="text-sm font-bold text-green-700 mb-3 flex items-center gap-2">
-                  <Award className="w-4 h-4" /> MASTERY SEVİYE (Band 6-7)
+                  <Award className="w-4 h-4" /> MASTERY LEVEL (Band 6-7)
                 </h4>
                 <div className="grid grid-cols-2 gap-3">
                   <Card 
@@ -1212,7 +1212,7 @@ export default function QuestionBank() {
                       <BookOpen className="w-5 h-5 text-green-600" />
                       <div>
                         <p className="font-medium text-sm text-gray-900">Academic</p>
-                        <p className="text-xs text-gray-500">5 Modül</p>
+                        <p className="text-xs text-gray-500">5 Modules</p>
                       </div>
                     </div>
                   </Card>
@@ -1229,7 +1229,7 @@ export default function QuestionBank() {
                       <FileText className="w-5 h-5 text-green-600" />
                       <div>
                         <p className="font-medium text-sm text-gray-900">General</p>
-                        <p className="text-xs text-gray-500">4 Modül</p>
+                        <p className="text-xs text-gray-500">4 Modules</p>
                       </div>
                     </div>
                   </Card>
