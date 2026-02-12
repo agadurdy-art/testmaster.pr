@@ -645,22 +645,25 @@ async def get_smart_practice(
     user_id: str = Query(..., description="User ID for personalization")
 ):
     """Get AI-recommended practice based on user's weak areas."""
-    # For now, return a balanced mix of questions from all skills
+    import random
     recommendations = []
     
     for skill in ["listening", "reading", "writing", "speaking"]:
-        questions = get_questions_from_full_tests(skill, 5)
-        for q in questions:
+        cambridge_qs = get_questions_from_cambridge_tests(skill, 5)
+        legacy_qs = get_questions_from_full_tests(skill, 5)
+        combined = cambridge_qs + legacy_qs
+        random.shuffle(combined)
+        for q in combined[:5]:
             q["recommended_reason"] = f"Practice your {skill} skills"
-        recommendations.extend(questions)
+        recommendations.extend(combined[:5])
     
     return {
         "success": True,
         "user_id": user_id,
         "recommendations": recommendations,
-        "weak_areas": ["listening", "writing"],  # Placeholder - would be from user data
+        "weak_areas": ["listening", "writing"],
         "suggested_focus": "Focus on listening comprehension and writing task achievement",
-        "source": "full_test_academic_set_a"
+        "source": "all"
     }
 
 
