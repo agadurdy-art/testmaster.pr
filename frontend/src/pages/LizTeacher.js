@@ -34,13 +34,13 @@ function AudioBars({ active }) {
   );
 }
 
-function LizPresence({ status }) {
+function LizPresence({ status, onStop }) {
   const isSpeaking = status === 'speaking';
   const isThinking = status === 'thinking';
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative">
+      <div className="relative cursor-pointer" onClick={isSpeaking ? onStop : undefined}>
         {/* Glow ring when speaking */}
         {isSpeaking && (
           <div className="absolute -inset-3 rounded-full bg-teal-400/20 animate-ping" style={{ animationDuration: '1.5s' }} />
@@ -53,6 +53,12 @@ function LizPresence({ status }) {
               : 'border-white/80 shadow-lg'
         }`}>
           <img src={LIZ_AVATAR} alt="Liz" className="w-full h-full object-cover" />
+          {/* Stop overlay when speaking */}
+          {isSpeaking && (
+            <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+              <VolumeX className="w-8 h-8 text-white drop-shadow-lg" />
+            </div>
+          )}
         </div>
         {/* Status dot */}
         <div className={`absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-white ${
@@ -60,13 +66,22 @@ function LizPresence({ status }) {
         }`} />
       </div>
       <AudioBars active={isSpeaking} />
-      <p className="text-xs text-slate-400 mt-1" data-testid="liz-status">
-        {status === 'speaking' && 'Liz is speaking...'}
-        {status === 'thinking' && 'Liz is preparing...'}
-        {status === 'listening' && 'Listening to you...'}
-        {status === 'transcribing' && 'Understanding...'}
-        {status === 'idle' && ''}
-      </p>
+      {isSpeaking ? (
+        <button
+          onClick={onStop}
+          className="flex items-center gap-1.5 mt-1 px-3 py-1 rounded-full bg-slate-100 hover:bg-red-50 text-slate-500 hover:text-red-500 text-xs font-medium transition-colors"
+          data-testid="stop-speaking-btn"
+        >
+          <VolumeX className="w-3.5 h-3.5" /> Stop
+        </button>
+      ) : (
+        <p className="text-xs text-slate-400 mt-1" data-testid="liz-status">
+          {status === 'thinking' && 'Liz is preparing...'}
+          {status === 'listening' && 'Listening to you...'}
+          {status === 'transcribing' && 'Understanding...'}
+          {status === 'idle' && ''}
+        </p>
+      )}
     </div>
   );
 }
