@@ -511,7 +511,7 @@ export default function QuestionBank() {
             {/* Practice Modes */}
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <Zap className="w-5 h-5" /> Pratik Modu
+                <Zap className="w-5 h-5" /> Practice Mode
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {practiceModesConfig.map(mode => {
@@ -542,7 +542,7 @@ export default function QuestionBank() {
             {(selectedSkill || selectedTopic || selectedBand) && (
               <div className="p-4 bg-indigo-50 rounded-xl">
                 <div className="flex items-center flex-wrap gap-2">
-                  <span className="text-sm text-gray-600">Aktif Filtreler:</span>
+                  <span className="text-sm text-gray-600">Active Filters:</span>
                   {selectedSkill && (
                     <Badge variant="secondary" className="cursor-pointer" onClick={() => setSelectedSkill(null)}>
                       {skills.find(s => s.id === selectedSkill)?.name} ✕
@@ -935,7 +935,7 @@ export default function QuestionBank() {
                     )}
                     {selectedTopic && (
                       <Badge className="bg-purple-100 text-purple-700 text-xs">
-                        Konu: {topics.find(t => t.id === selectedTopic)?.name || selectedTopic}
+                        Topic: {topics.find(t => t.id === selectedTopic)?.name || selectedTopic}
                       </Badge>
                     )}
                   </div>
