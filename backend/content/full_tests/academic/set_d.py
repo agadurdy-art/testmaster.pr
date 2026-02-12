@@ -253,45 +253,47 @@ Next week, we'll examine how these principles apply to addiction and behaviour c
                 {
                     "task_number": 1,
                     "type": "data_description",
-                    "subtype": "process_diagram",
+                    "subtype": "floor_plan_comparison",
                     "time_recommended": 20,
                     "word_minimum": 150,
-                    "prompt": "The diagram below shows the process of recycling plastic bottles.",
+                    "prompt": "The two maps below show the layout of a library 20 years ago and the same library today.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     
                     "visual_data": {
-                        "type": "process",
-                        "image_url": "academic_set_d_process.png",
-                        "title": "Plastic Bottle Recycling Process",
-                        "stages": [
-                            {"number": 1, "name": "Collection", "description": "Bottles collected from recycling bins"},
-                            {"number": 2, "name": "Sorting", "description": "Sorted by plastic type and colour"},
-                            {"number": 3, "name": "Cleaning", "description": "Washed to remove labels and residue"},
-                            {"number": 4, "name": "Shredding", "description": "Cut into small flakes"},
-                            {"number": 5, "name": "Melting", "description": "Heated to 270°C"},
-                            {"number": 6, "name": "Pelletizing", "description": "Formed into small pellets"},
-                            {"number": 7, "name": "Manufacturing", "description": "Pellets used to make new products"}
-                        ],
-                        "flow_direction": "left_to_right",
-                        "cycle": False
+                        "type": "floor_plan_comparison",
+                        "image_url": "visual_005_floor_plan_library_before.png",
+                        "image_url_after": "visual_026_floor_plan_library_today.png",
+                        "title": "Central Library",
+                        "before": {
+                            "label": "20 years ago",
+                            "rooms": [
+                                {"name": "CDs, videos, computer games", "position": "top-left"},
+                                {"name": "Children's books", "position": "top-right"},
+                                {"name": "Adult fiction books", "position": "middle-left"},
+                                {"name": "Adult non-fiction books", "position": "middle-right"},
+                                {"name": "Tables & chairs", "position": "centre"},
+                                {"name": "Reading room (newspapers & magazines)", "position": "bottom-left"},
+                                {"name": "Enquiry desk (tickets, book returns, etc.)", "position": "bottom-right"},
+                                {"name": "Entrance", "position": "bottom-centre"}
+                            ]
+                        },
+                        "after": {
+                            "label": "Today",
+                            "rooms": [
+                                {"name": "Storytelling events (with sofas)", "position": "top-left"},
+                                {"name": "Lecture room", "position": "top-right"},
+                                {"name": "Children's fiction books", "position": "middle-left"},
+                                {"name": "Adult fiction books", "position": "middle-right"},
+                                {"name": "All reference books", "position": "middle-left-lower"},
+                                {"name": "Self-service machines", "position": "middle-right-lower"},
+                                {"name": "Information desk", "position": "middle-right"},
+                                {"name": "Computer room", "position": "bottom-left"},
+                                {"name": "Cafe", "position": "bottom-right"},
+                                {"name": "Entrance", "position": "bottom-centre"}
+                            ]
+                        }
                     },
                     
-                    "visual_description": """
-PLASTIC BOTTLE RECYCLING PROCESS
-
-Stage 1: COLLECTION - Plastic bottles collected from household and public recycling bins
-    ↓
-Stage 2: SORTING - Bottles sorted by plastic type (PET, HDPE) and colour at recycling facility
-    ↓
-Stage 3: CLEANING - Bottles washed in industrial washers to remove labels, caps, and residue
-    ↓
-Stage 4: SHREDDING - Clean bottles shredded into small plastic flakes (approximately 1cm)
-    ↓
-Stage 5: MELTING - Flakes heated to 270°C in industrial furnace
-    ↓
-Stage 6: PELLETIZING - Molten plastic extruded and cut into uniform pellets
-    ↓
-Stage 7: MANUFACTURING - Pellets sold to manufacturers for new plastic products
-""",
+                    "visual_description": "Two floor plans showing Central Library's layout changes. 20 YEARS AGO: Top-left had CDs/videos/games, top-right had children's books, middle sections had adult fiction (left) and non-fiction (right), centre had tables and chairs, bottom-left was a reading room for newspapers/magazines, bottom-right was an enquiry desk, with entrance at bottom-centre. TODAY: Top-left became a storytelling events area with sofas, top-right became a lecture room, children's fiction books moved to middle-left, adult fiction stayed middle-right with an information desk added, all reference books on left, self-service machines on right, bottom-left became a computer room, bottom-right became a cafe, entrance remains at bottom-centre.",
                     "requirements": [
                         "Summarise the information by selecting and reporting the main features",
                         "Make comparisons where relevant"

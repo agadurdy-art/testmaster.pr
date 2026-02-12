@@ -203,53 +203,49 @@ Practical implications abound. Spaced practice - distributing study over time - 
                 {
                     "task_number": 1,
                     "type": "data_description",
-                    "subtype": "pie_chart",
+                    "subtype": "map_comparison",
                     "time_recommended": 20,
                     "word_minimum": 150,
-                    "prompt": "The pie charts below show the main reasons why students chose to study at a particular university in 2000 and 2020.",
+                    "prompt": "The two maps below show an airport now and plans for the airport after proposed development.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     
                     "visual_data": {
-                        "type": "pie_chart_comparison",
-                        "image_url": "academic_set_e_piechart.png",
-                        "title": "Reasons for University Choice",
-                        "charts": [
-                            {
-                                "year": 2000,
-                                "data": [
-                                    {"reason": "Course reputation", "percentage": 35},
-                                    {"reason": "Location", "percentage": 25},
-                                    {"reason": "Cost/Fees", "percentage": 20},
-                                    {"reason": "Facilities", "percentage": 12},
-                                    {"reason": "Social life", "percentage": 8}
-                                ]
-                            },
-                            {
-                                "year": 2020,
-                                "data": [
-                                    {"reason": "Career prospects", "percentage": 32},
-                                    {"reason": "Course reputation", "percentage": 28},
-                                    {"reason": "Cost/Fees", "percentage": 18},
-                                    {"reason": "Location", "percentage": 14},
-                                    {"reason": "Facilities", "percentage": 8}
-                                ]
-                            }
-                        ]
+                        "type": "map_comparison",
+                        "image_url": "visual_015_map_airport_before_after.png",
+                        "title": "Southwest Airport",
+                        "before": {
+                            "label": "Now",
+                            "features": [
+                                {"name": "Departures", "position": "left"},
+                                {"name": "Arrivals", "position": "right"},
+                                {"name": "Check-in", "position": "centre"},
+                                {"name": "Passport control", "position": "behind check-in"},
+                                {"name": "Cafe", "position": "after passport control"},
+                                {"name": "Shops", "position": "after passport control"},
+                                {"name": "8 Gates", "position": "far end"},
+                                {"name": "Car park", "position": "outside, left"},
+                                {"name": "Bus station", "position": "outside, right"}
+                            ]
+                        },
+                        "after": {
+                            "label": "After Development",
+                            "features": [
+                                {"name": "Departures", "position": "left"},
+                                {"name": "Arrivals (expanded)", "position": "right"},
+                                {"name": "Check-in (larger)", "position": "centre"},
+                                {"name": "Bag drop (new)", "position": "near check-in"},
+                                {"name": "Passport control", "position": "behind check-in"},
+                                {"name": "Cafe (x2)", "position": "after passport control"},
+                                {"name": "Shops (more)", "position": "after passport control"},
+                                {"name": "ATM (new)", "position": "near shops"},
+                                {"name": "Car hire (new)", "position": "near arrivals"},
+                                {"name": "18 Gates", "position": "far end"},
+                                {"name": "Sky train (new)", "position": "connecting terminals"},
+                                {"name": "Car park (x2, larger)", "position": "outside, both sides"},
+                                {"name": "Bus station", "position": "outside, right"}
+                            ]
+                        }
                     },
-                    "visual_description": """
-2000:
-- Course reputation: 35%
-- Location: 25%
-- Cost/Fees: 20%
-- Facilities: 12%
-- Social life: 8%
-
-2020:
-- Career prospects: 32%
-- Course reputation: 28%
-- Cost/Fees: 18%
-- Location: 14%
-- Facilities: 8%
-""",
+                    "visual_description": "Two maps showing Southwest Airport's development plans. NOW: Simple layout with departures (left), arrivals (right), central check-in, passport control, one cafe and shops area, 8 gates, one car park and bus station outside. AFTER DEVELOPMENT: Significantly expanded with 18 gates (from 8), new bag drop facility, two cafes, more shops, ATM added, car hire desk, sky train connecting terminals, two larger car parks. The overall footprint is much larger with enhanced passenger facilities.",
                     "requirements": [
                         "Summarise the information by selecting and reporting the main features",
                         "Make comparisons where relevant"

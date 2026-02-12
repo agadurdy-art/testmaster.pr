@@ -234,59 +234,29 @@ The future of writing remains open. Voice recognition and artificial intelligenc
                 {
                     "task_number": 1,
                     "type": "data_description",
-                    "subtype": "bar_chart_with_table",
+                    "subtype": "process_diagram",
                     "time_recommended": 20,
                     "word_minimum": 150,
-                    "prompt": "The bar chart shows the percentage of people who cycled to work in five European cities in 2010 and 2020. The table shows the average distance cycled per person per week in the same cities.",
-                    # Structured Chart Data for Frontend Rendering
+                    "prompt": "The diagram below shows how plastic bottles are recycled.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.",
                     "visual_data": {
-                        "type": "combined",
-                        "charts": [
-                            {
-                                "chart_type": "bar",
-                                "title": "Percentage of People Cycling to Work",
-                                "x_axis": "City",
-                                "y_axis": "Percentage (%)",
-                                "legend": ["2010", "2020"],
-                                "data": [
-                                    {"city": "Amsterdam", "2010": 35, "2020": 48},
-                                    {"city": "Copenhagen", "2010": 30, "2020": 42},
-                                    {"city": "Berlin", "2010": 12, "2020": 19},
-                                    {"city": "Paris", "2010": 5, "2020": 14},
-                                    {"city": "London", "2010": 3, "2020": 8}
-                                ]
-                            },
-                            {
-                                "chart_type": "table",
-                                "title": "Average Distance Cycled (km/person/week)",
-                                "headers": ["City", "2010", "2020"],
-                                "data": [
-                                    ["Amsterdam", 22, 28],
-                                    ["Copenhagen", 18, 24],
-                                    ["Berlin", 8, 12],
-                                    ["Paris", 3, 7],
-                                    ["London", 2, 5]
-                                ]
-                            }
-                        ]
+                        "type": "process",
+                        "image_url": "visual_010_process_plastic_recycling.png",
+                        "title": "How plastic bottles are recycled",
+                        "stages": [
+                            {"number": 1, "name": "Collection", "description": "Plastic bottles are collected from recycling bins and taken to a recycling centre"},
+                            {"number": 2, "name": "Sorting", "description": "Bottles are sorted by hand and by machine into different types of plastic"},
+                            {"number": 3, "name": "Crushing", "description": "Sorted bottles are crushed and compressed into large blocks"},
+                            {"number": 4, "name": "Washing", "description": "Crushed plastic is washed in large vats to remove labels and dirt"},
+                            {"number": 5, "name": "Shredding", "description": "Clean plastic is shredded into small flakes"},
+                            {"number": 6, "name": "Heating", "description": "Flakes are heated and melted into liquid plastic"},
+                            {"number": 7, "name": "Pelletizing", "description": "Molten plastic is formed into uniform pellets"},
+                            {"number": 8, "name": "Raw material", "description": "Pellets are used as raw material for producing new products"},
+                            {"number": 9, "name": "End products", "description": "New products such as clothing, containers, bottles and bags are manufactured"}
+                        ],
+                        "flow_direction": "left_to_right_with_wrap",
+                        "cycle": False
                     },
-                    "visual_description": """
-BAR CHART - Cycling to Work (%)
-                    2010    2020
-Amsterdam           35%     48%
-Copenhagen          30%     42%
-Berlin              12%     19%
-Paris                5%     14%
-London               3%      8%
-
-TABLE - Average Distance Cycled (km/person/week)
-City          2010    2020
-Amsterdam      22      28
-Copenhagen     18      24
-Berlin          8      12
-Paris           3       7
-London          2       5
-""",
+                    "visual_description": "Process diagram showing 9 stages of plastic bottle recycling. Starts with collection from recycling bins, then sorting by type, crushing into blocks, washing to remove contaminants, shredding into flakes, heating/melting, pelletizing, and finally manufacturing new products including clothing, containers, bottles and bags.",
                     "requirements": [
                         "Summarise the information by selecting and reporting the main features",
                         "Make comparisons where relevant"
