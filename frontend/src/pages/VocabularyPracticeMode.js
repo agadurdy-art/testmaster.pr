@@ -193,36 +193,42 @@ function FillBlankExercise({ exercise, selectedAnswer, isChecked, showHint, onSe
 
 function MatchingExercise({ exercise, matchState, isChecked, onSelect, onCheck }) {
   const allMatched = exercise.terms.every(t => matchState.matches[t.id]);
+  // Reverse map: which term is matched to which definition
+  const defToTerm = {};
+  Object.entries(matchState.matches).forEach(([termId, defId]) => { defToTerm[defId] = termId; });
+
   return (
     <div data-testid="matching-exercise">
-      <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">{exercise.instruction}</p>
+      <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-2">{exercise.instruction}</p>
+      <p className="text-[12px] text-[#AEAEB2] mb-4">Select a term on the left, then select its meaning on the right.</p>
       <div className="grid grid-cols-2 gap-5">
         <div className="space-y-2.5">
           <p className="text-[12px] text-[#AEAEB2] font-semibold mb-1">Terms</p>
           {exercise.terms.map((term) => {
-            const sel = matchState.selected === term.id, matched = !!matchState.matches[term.id];
-            let cor = false; if (isChecked && matched) cor = exercise.answers[term.id] === matchState.matches[term.id];
+            const isSel = matchState.selectedTerm === term.id;
+            const isMatched = !!matchState.matches[term.id];
+            let cor = false; if (isChecked && isMatched) cor = exercise.answers[term.id] === matchState.matches[term.id];
             let cls = 'bg-white border-black/[0.06] text-[#1D1D1F]';
-            if (sel) cls = 'bg-orange-50 border-orange-400 text-orange-700';
+            if (isSel) cls = 'bg-orange-50 border-orange-400 text-orange-700 ring-2 ring-orange-200';
             else if (isChecked && cor) cls = 'bg-green-50 border-green-300 text-green-700';
-            else if (isChecked && matched && !cor) cls = 'bg-red-50 border-red-300 text-red-600';
-            else if (matched) cls = 'bg-sky-50 border-sky-300 text-sky-700';
-            return <button key={term.id} onClick={() => !isChecked && onSelect(term.id)} disabled={isChecked} className={`w-full p-3 rounded-2xl border text-left text-[14px] font-medium transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls}`} data-testid={`match-term-${term.id}`}>{term.text}</button>;
+            else if (isChecked && isMatched && !cor) cls = 'bg-red-50 border-red-300 text-red-600';
+            else if (isMatched) cls = 'bg-sky-50 border-sky-300 text-sky-700';
+            return <button key={term.id} onClick={() => !isChecked && onSelect('term', term.id)} disabled={isChecked} className={`w-full p-3 rounded-2xl border text-left text-[14px] font-medium transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls}`} data-testid={`match-term-${term.id}`}>{term.text}</button>;
           })}
         </div>
         <div className="space-y-2.5">
           <p className="text-[12px] text-[#AEAEB2] font-semibold mb-1">Meanings</p>
           {exercise.definitions.map((def) => {
-            const sel = matchState.selected === def.id;
-            const matchedBy = Object.entries(matchState.matches).find(([, v]) => v === def.id)?.[0];
-            const matched = !!matchedBy;
-            let cor = false; if (isChecked && matched) cor = exercise.answers[matchedBy] === def.id;
+            const isSel = matchState.selectedDef === def.id;
+            const matchedByTerm = defToTerm[def.id];
+            const isMatched = !!matchedByTerm;
+            let cor = false; if (isChecked && isMatched) cor = exercise.answers[matchedByTerm] === def.id;
             let cls = 'bg-white border-black/[0.06] text-[#3A3A3C]';
-            if (sel) cls = 'bg-orange-50 border-orange-400 text-orange-700';
+            if (isSel) cls = 'bg-orange-50 border-orange-400 text-orange-700 ring-2 ring-orange-200';
             else if (isChecked && cor) cls = 'bg-green-50 border-green-300 text-green-700';
-            else if (isChecked && matched && !cor) cls = 'bg-red-50 border-red-300 text-red-600';
-            else if (matched) cls = 'bg-sky-50 border-sky-300 text-sky-700';
-            return <button key={def.id} onClick={() => !isChecked && onSelect(def.id)} disabled={isChecked} className={`w-full p-3 rounded-2xl border text-left text-[13px] transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls}`} data-testid={`match-def-${def.id}`}>{def.text}</button>;
+            else if (isChecked && isMatched && !cor) cls = 'bg-red-50 border-red-300 text-red-600';
+            else if (isMatched) cls = 'bg-sky-50 border-sky-300 text-sky-700';
+            return <button key={def.id} onClick={() => !isChecked && onSelect('def', def.id)} disabled={isChecked} className={`w-full p-3 rounded-2xl border text-left text-[13px] transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls}`} data-testid={`match-def-${def.id}`}>{def.text}</button>;
           })}
         </div>
       </div>
