@@ -1905,7 +1905,7 @@ function ElevenLabsExaminer() {
                       </div>
                       <audio
                         ref={listeningAudioRef}
-                        src={test.sections[Math.floor(currentQuestion / 10)]?.audio_url}
+                        src={resolveAudioUrl(test.sections[Math.floor(currentQuestion / 10)]?.audio_url)}
                         onEnded={() => setListeningAudioPlaying(false)}
                         onPlay={() => setListeningAudioPlaying(true)}
                         onPause={() => setListeningAudioPlaying(false)}
