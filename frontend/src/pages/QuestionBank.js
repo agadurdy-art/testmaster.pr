@@ -599,7 +599,7 @@ export default function QuestionBank() {
                         <Badge className="bg-gray-100 text-gray-500">+2 coming</Badge>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <span className="font-semibold text-red-600">8 Tests Available</span>
+                        <span className="font-semibold text-red-600">{stats?.cambridge_tests || 0} Tests Available</span>
                         <span>&middot;</span>
                         <span>4 Sections Each</span>
                       </div>
@@ -627,7 +627,7 @@ export default function QuestionBank() {
                         <Badge className="bg-purple-100 text-purple-700">General Training</Badge>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <span className="font-semibold text-indigo-600">12 Tests Available</span>
+                        <span className="font-semibold text-indigo-600">{(stats?.ai_academic_tests || 0) + (stats?.ai_general_tests || 0)} Tests Available</span>
                         <span>&middot;</span>
                         <span>AI Feedback</span>
                       </div>
