@@ -901,14 +901,23 @@ export default function AdvancedMasteryCourse({ user }) {
             <h4 className="font-semibold text-amber-800 flex items-center gap-2">
               <Sparkles className="w-4 h-4" /> Interactive Vocabulary Engine
             </h4>
-            <p className="text-sm text-gray-600 mt-1">Learn with slides, practice exercises & mastery quiz</p>
+            <p className="text-sm text-gray-600 mt-1">Learn with slides, practice exercises, AI writing & mastery quiz</p>
           </div>
-          <Button 
-            onClick={() => navigate(`/vocabulary/learn/${selectedModule.id}`)}
-            className="bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700"
-          >
-            Start Learning <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
+          <div className="flex gap-2 flex-wrap">
+            <Button 
+              onClick={() => navigate(`/vocabulary/learn/${selectedModule.id}`)}
+              className="bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700"
+            >
+              Start Learning <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => navigate(`/vocabulary/production/${selectedModule.id}`)}
+              className="border-indigo-300 text-indigo-700 hover:bg-indigo-50"
+            >
+              <PenTool className="w-4 h-4 mr-1" /> AI Writing
+            </Button>
+          </div>
         </div>
       </div>
 
