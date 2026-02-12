@@ -913,15 +913,8 @@ export default function QuestionBank() {
           </div>
         )}
       </div>
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-gray-500">
-                        <BookOpen className="w-3 h-3" /> Reading
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-gray-500">
-                        <PenTool className="w-3 h-3" /> Writing
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-gray-500">
-                        <Mic className="w-3 h-3" /> Speaking
+
+      {/* Writing Task Selection Modal */}
                       </div>
                     </div>
                   </div>
