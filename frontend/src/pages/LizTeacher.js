@@ -538,7 +538,7 @@ export default function LizTeacher({ user }) {
       {/* ── Main Content ── */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-6 gap-4 overflow-hidden">
         {/* Liz Presence */}
-        <LizPresence status={status} />
+        <LizPresence status={status} onStop={stopSpeaking} />
 
         {/* Current Liz Speech */}
         <SpeechDisplay text={latestLiz} status={status} />
