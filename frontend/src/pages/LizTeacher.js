@@ -396,6 +396,14 @@ export default function LizTeacher({ user }) {
     if (status === 'speaking') setStatus('idle');
   };
 
+  const stopSpeaking = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setStatus('idle');
+  };
+
   // Homework actions
   const submitHomework = async (hwId, answer) => {
     setSubmittingHw(true);
