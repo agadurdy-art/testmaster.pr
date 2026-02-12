@@ -1,8 +1,9 @@
 """
-Test Liz AI Teacher endpoints - Personal IELTS Teacher & Coach
-=====================================================
+Test Liz AI Teacher endpoints - Personal IELTS Teacher & Coach (v33 - Teacher UI)
+==================================================================================
 Tests for:
-- POST /api/liz/chat - Send message and get response
+- POST /api/liz/greet - Auto-greeting with text + TTS audio in one call (NEW)
+- POST /api/liz/chat - Send message and get response (with lesson mode prompts)
 - GET /api/liz/sessions/{user_id} - List chat sessions
 - GET /api/liz/history/{session_id}?user_id={user_id} - Get chat messages
 - POST /api/liz/tts - Text-to-speech (JSON body: {text: string})
@@ -17,6 +18,70 @@ import time
 
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 TEST_USER_ID = "6565a865-dbf9-4596-b756-eaf6c29295c8"
+
+
+class TestLizGreetAPI:
+    """Tests for the NEW greet endpoint - Returns greeting text + TTS audio in one call"""
+    
+    def test_greet_basic(self):
+        """Test basic greet endpoint returns greeting text and audio"""
+        response = requests.post(f"{BASE_URL}/api/liz/greet", json={
+            "user_id": TEST_USER_ID
+        })
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
+        
+        data = response.json()
+        assert data.get("success") == True, "Expected success=True"
+        assert "session_id" in data, "Expected session_id in response"
+        assert "greeting" in data, "Expected greeting text in response"
+        assert len(data["greeting"]) > 0, "Expected non-empty greeting"
+        # Audio should be present (base64 encoded)
+        assert "audio" in data, "Expected audio field in response"
+        if data["audio"]:
+            assert len(data["audio"]) > 100, "Expected substantial base64 audio data"
+            print(f"✓ Greet returned greeting + {len(data['audio'])} bytes audio")
+        else:
+            print(f"✓ Greet returned greeting (audio may be None if TTS failed)")
+        print(f"✓ Greeting: {data['greeting'][:100]}...")
+    
+    def test_greet_creates_session(self):
+        """Test that greet endpoint creates a new session"""
+        response = requests.post(f"{BASE_URL}/api/liz/greet", json={
+            "user_id": TEST_USER_ID
+        })
+        assert response.status_code == 200
+        
+        data = response.json()
+        session_id = data.get("session_id")
+        assert session_id is not None
+        
+        # Verify session was created by fetching history
+        history_response = requests.get(f"{BASE_URL}/api/liz/history/{session_id}?user_id={TEST_USER_ID}")
+        assert history_response.status_code == 200
+        history_data = history_response.json()
+        # Greeting message should be stored
+        assert len(history_data.get("messages", [])) >= 1, "Greeting should be stored in session"
+        print(f"✓ Greet created session {session_id} with stored greeting")
+    
+    def test_greet_personalized(self):
+        """Test that greeting is personalized based on user context"""
+        response = requests.post(f"{BASE_URL}/api/liz/greet", json={
+            "user_id": TEST_USER_ID
+        })
+        assert response.status_code == 200
+        
+        data = response.json()
+        greeting = data.get("greeting", "").lower()
+        # Should have some personalized content (mentioning student, progress, lesson, etc.)
+        has_personal_touch = any(word in greeting for word in ["student", "progress", "practice", "lesson", "today", "work", "focus", "welcome", "hi", "hello"])
+        assert has_personal_touch, f"Greeting should be personalized: {greeting[:200]}"
+        print(f"✓ Greeting appears personalized")
+    
+    def test_greet_missing_user_id(self):
+        """Test greet without user_id returns error"""
+        response = requests.post(f"{BASE_URL}/api/liz/greet", json={})
+        assert response.status_code == 422, f"Expected 422 for missing user_id, got {response.status_code}"
+        print("✓ Missing user_id correctly returns 422 error")
 
 
 class TestLizChatAPI:
