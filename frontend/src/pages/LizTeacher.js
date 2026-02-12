@@ -191,6 +191,9 @@ export default function LizTeacher({ user }) {
   const [sessions, setSessions] = useState([]);
   const [showSessions, setShowSessions] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
+  const [showHomework, setShowHomework] = useState(false);
+  const [homework, setHomework] = useState([]);
+  const [submittingHw, setSubmittingHw] = useState(false);
   const [autoVoice, setAutoVoice] = useState(true);
   const [hasGreeted, setHasGreeted] = useState(false);
   const audioRef = useRef(null);
