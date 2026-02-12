@@ -1,44 +1,76 @@
 # IELTS Ace - Product Requirements Document
 
 ## Original Problem Statement
-IELTS preparation platform with Cambridge-aligned AI examiner. Features include level checking, question bank, full tests, practice modes, and AI feedback.
+An IELTS exam preparation platform with AI-powered evaluation, Cambridge-aligned test content, and comprehensive practice modes for Reading, Listening, Writing, and Speaking skills.
 
-## Core Requirements
-- Full test feedback system for AI-generated and Cambridge tests
-- Question Bank with Cambridge + AI practice tests
-- English-only UI and AI feedback
-- Dynamic statistics reflecting actual content
-- Test Completion Rate tracking with breakdown
-- Quick Practice mode (YouTube Shorts style)
-
-## Architecture
-- **Frontend:** React (CRA) on port 3000
-- **Backend:** FastAPI (Python) on port 8001
-- **Database:** MongoDB via MONGO_URL (DB: ielts_database)
-- **AI:** Emergent LLM Key for AI Teacher feedback
-- **TTS:** ElevenLabs / Browser TTS for listening audio
+## Core Architecture
+- **Frontend**: React (Vite) with Tailwind CSS + Shadcn UI
+- **Backend**: FastAPI (Python) on port 8001
+- **Database**: MongoDB
+- **TTS**: OpenAI TTS via Emergent Integrations (base64 audio response)
+- **LLM**: OpenAI GPT-4o via Emergent LLM Key for writing evaluation
 
 ## What's Been Implemented
-- Full Test feedback system (skill analysis, AI Teacher advice)
-- QB Full Tests UX redesign (Cambridge vs AI selection)
-- Language standardization to English
-- Missing audio files generated for Set E
-- **QB Stats bug fix (Feb 12, 2026):** Dynamic counts - 1420 questions, 20 full tests, 47 topics
-- **Test Completion Rate (Feb 12, 2026):** 5th stat box with breakdown (Cambridge/AI Academic/AI General)
-- **Quick Practice (Feb 12, 2026):** YouTube Shorts style - 3 questions per set, instant feedback, "Next Set" for infinite fresh questions from 1200+ pool. Dark theme, card-based UI. Supports Reading + Listening.
 
-## Key Files
-- `/app/backend/routes/question_bank.py` - QB stats + practice endpoints (fixed pool: all 12 AI sets + 8 Cambridge)
-- `/app/backend/routes/full_test.py` - Full test API + completion tracking
-- `/app/backend/server.py` - Completion tracking endpoints
-- `/app/frontend/src/pages/PracticeMode.js` - Quick Practice (Shorts-style, rewritten)
-- `/app/frontend/src/pages/QuestionBank.js` - QB page with stats + completion
+### Question Bank (QB) Page
+- Dynamic statistics showing real-time test/question counts
+- Test Completion Rate feature with MongoDB tracking (`user_completions` collection)
+- Clickable progress breakdown by Cambridge, AI Academic, AI General tests
+- Files: `QuestionBank.js`, `routes/question_bank.py`, `routes/full_test.py`
 
-## DB Collections
-- `user_completions` - Tracks test completions
-- `test_attempts` - Practice test attempts
+### Quick Practice Mode (Shorts-style)
+- 3-question sets with instant feedback and summary screen
+- Reading: passages + MC/TFNG/fill-in-the-blank questions
+- Listening: TTS audio playback with base64 decoding
+- Writing/Speaking: redirects to dedicated pages
+- Light warm UI theme (amber, cream, orange tones)
+- Files: `PracticeMode.js`, `routes/question_bank.py`
+
+### Full Test System
+- Cambridge IELTS 17-18 test data
+- AI-generated Academic (Sets A-H) and General (Sets A-D) tests
+- Complete IELTS exam simulation with timed sections
+- Files: `routes/full_test.py`, `content/full_tests/`
+
+### Writing Practice
+- Task 1 (visual description) with SVG chart generation
+- Task 2 (essay) with AI evaluation using IELTS band descriptors
+- Model answer generation
+- Dual-track support (Academic/General)
+- Files: `WritingPractice.js`, `routes/question_bank.py`
+
+### Other Features
+- Adaptive Level Test
+- Vocabulary & Grammar lessons
+- Speaking practice with pronunciation evaluation
+- Cambridge speaking practice
+- Learning platform with beginner/advanced/mastery courses
+
+## Key API Endpoints
+- `GET /api/question-bank/practice/random?skill={skill}&count=3` - Quick Practice questions (filtered: only questions with correct answers)
+- `GET /api/question-bank/stats` - Dynamic QB statistics
+- `GET /api/user/{user_id}/completion-stats` - Test completion progress
+- `POST /api/user/track-completion` - Log completed test
+- `POST /api/vocab-grammar/tts` - TTS (returns JSON {audio: base64, format: mp3})
+- `POST /api/question-bank/writing/evaluate` - AI writing evaluation
+
+## Key Technical Decisions
+- Questions without correct answers are filtered out from practice mode at the API level
+- Answer comparison uses case-insensitive normalization (`normalizeAnswer()`)
+- MC option value extraction handles multiple formats: `A)`, `A:`, `A.`, `A ` (`extractOptionValue()`)
+- TTS returns base64 JSON, frontend decodes via `atob()` → `Uint8Array` → `Blob`
+- Writing skill redirects from practice to `/writing-practice` page
+
+## Bug Fixes Applied (Feb 12, 2026)
+1. **P0 - Reading feedback logic**: Fixed option value extraction regex to handle `A text`, `A: text`, `A. text` formats + case-insensitive comparison
+2. **P1 - Listening audio missing**: Fixed base64 JSON response handling in frontend (was treating JSON as blob)
+3. **P1 - Writing crash**: Fixed redirect from `/writing-practice/task1` to `/writing-practice`
+4. **P2 - Dark UI**: Replaced slate-900 dark theme with amber/cream/orange warm tones
+5. **Backend filter**: Questions with empty `correct` field are now excluded from practice
 
 ## Backlog
-- P2: QuestionBank.js refactoring into smaller components
-- P2: Progress tab implementation
-- P3: Writing and Speaking practice modes
+- No pending tasks currently. All reported bugs are fixed and tested.
+
+## Test Credentials
+- Email: test@test.com / Password: test1234
+- localStorage auth: `{"id":"6565a865-dbf9-4596-b756-eaf6c29295c8","email":"test@test.com","name":"Test User","plan":"free"}`
