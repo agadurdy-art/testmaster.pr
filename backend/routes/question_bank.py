@@ -119,11 +119,11 @@ async def get_question_types():
 
 @router.get("/stats")
 async def get_question_bank_stats(db=None):
-    """Get overall question bank statistics - AUTO-UPDATES when new tests are added."""
+    """Get overall question bank statistics - dynamically counts all tests."""
     try:
-        # Import Cambridge tests
         from routes.cambridge import CAMBRIDGE_TESTS
-        
+        from routes.full_test import get_all_test_sets, get_test_by_id
+
         cambridge_count = 0
         cambridge_tests = 0
         cambridge_listening = 0
@@ -131,186 +131,111 @@ async def get_question_bank_stats(db=None):
         cambridge_writing = 0
         cambridge_speaking = 0
         question_types = {}
-        
-        # Auto-count Cambridge tests
+
         for book_id, book_data in CAMBRIDGE_TESTS.items():
             for test_id, test_data in book_data.get("tests", {}).items():
                 if test_data is not None:
                     cambridge_tests += 1
                     sections = test_data.get("sections", {})
-                    
-                    # Listening
                     listening = sections.get("listening", {})
                     l_total = listening.get("total_questions", 0)
                     cambridge_listening += l_total
                     cambridge_count += l_total
-                    
-                    # Count listening question types
                     for part in listening.get("parts", []):
                         for qt in part.get("question_types", []):
                             question_types[f"listening_{qt}"] = question_types.get(f"listening_{qt}", 0) + 10
-                    
-                    # Reading
                     reading = sections.get("reading", {})
                     r_total = reading.get("total_questions", 0)
                     cambridge_reading += r_total
                     cambridge_count += r_total
-                    
-                    # Count reading question types
                     for passage in reading.get("passages", []):
                         for q in passage.get("questions", []):
                             qt = q.get("type", "unknown")
                             question_types[f"reading_{qt}"] = question_types.get(f"reading_{qt}", 0) + 1
-                    
-                    # Writing
                     writing = sections.get("writing", {})
                     w_total = writing.get("total_tasks", 0)
                     cambridge_writing += w_total
                     cambridge_count += w_total
-                    
-                    # Speaking
                     speaking = sections.get("speaking", {})
                     s_total = speaking.get("total_parts", 0)
                     cambridge_speaking += s_total
                     cambridge_count += s_total
-        
-        # Count legacy full_tests too
-        academic_count = 0
-        academic_sets = 0
+
+        # Dynamically count AI full tests using the test registry
+        all_sets = get_all_test_sets()
+        academic_sets_list = all_sets.get("academic", [])
+        general_sets_list = all_sets.get("general", [])
+        ai_academic_count = len(academic_sets_list)
+        ai_general_count = len(general_sets_list)
+
+        ai_question_count = 0
+        ai_listening = 0
+        ai_reading = 0
+        ai_writing = 0
+        ai_speaking = 0
+        for s in academic_sets_list + general_sets_list:
+            test = get_test_by_id(s["test_id"])
+            if test:
+                sections = test.get("sections", {})
+                l_q = sections.get("listening", {}).get("total_questions", 0)
+                r_q = sections.get("reading", {}).get("total_questions", 0)
+                w_q = len(sections.get("writing", {}).get("tasks", []))
+                s_q = len(sections.get("speaking", {}).get("parts", []))
+                ai_listening += l_q
+                ai_reading += r_q
+                ai_writing += w_q
+                ai_speaking += s_q
+                ai_question_count += l_q + r_q + w_q + s_q
+
+        # Dynamic topics count
+        topics_count = 18
         try:
-            from content.full_tests.academic.set_a import ACADEMIC_SET_A
-            academic_count += ACADEMIC_SET_A["sections"]["listening"]["total_questions"]
-            academic_count += ACADEMIC_SET_A["sections"]["reading"]["total_questions"]
-            academic_count += len(ACADEMIC_SET_A["sections"]["writing"]["tasks"])
-            academic_count += len(ACADEMIC_SET_A["sections"]["speaking"]["parts"])
-            academic_sets += 1
-        except: pass
-        
-        try:
-            from content.full_tests.academic.set_b import ACADEMIC_SET_B
-            academic_count += ACADEMIC_SET_B["sections"]["listening"]["total_questions"]
-            academic_count += ACADEMIC_SET_B["sections"]["reading"]["total_questions"]
-            academic_count += len(ACADEMIC_SET_B["sections"]["writing"]["tasks"])
-            academic_count += len(ACADEMIC_SET_B["sections"]["speaking"]["parts"])
-            academic_sets += 1
-        except: pass
-        
-        try:
-            from content.full_tests.academic.set_c import ACADEMIC_SET_C
-            academic_count += ACADEMIC_SET_C["sections"]["listening"]["total_questions"]
-            academic_count += ACADEMIC_SET_C["sections"]["reading"]["total_questions"]
-            academic_count += len(ACADEMIC_SET_C["sections"]["writing"]["tasks"])
-            academic_count += len(ACADEMIC_SET_C["sections"]["speaking"]["parts"])
-            academic_sets += 1
-        except: pass
-        
-        try:
-            from content.full_tests.academic.set_d import ACADEMIC_SET_D
-            academic_count += ACADEMIC_SET_D["sections"]["listening"]["total_questions"]
-            academic_count += ACADEMIC_SET_D["sections"]["reading"]["total_questions"]
-            academic_count += len(ACADEMIC_SET_D["sections"]["writing"]["tasks"])
-            academic_count += len(ACADEMIC_SET_D["sections"]["speaking"]["parts"])
-            academic_sets += 1
-        except: pass
-        
-        # Count all General sets
-        general_count = 0
-        general_sets = 0
-        try:
-            from content.full_tests.general.set_a import GENERAL_SET_A
-            general_count += GENERAL_SET_A["sections"]["listening"]["total_questions"]
-            general_count += GENERAL_SET_A["sections"]["reading"]["total_questions"]
-            general_count += len(GENERAL_SET_A["sections"]["writing"]["tasks"])
-            general_count += len(GENERAL_SET_A["sections"]["speaking"]["parts"])
-            general_sets += 1
-        except: pass
-        
-        try:
-            from content.full_tests.general.set_b import GENERAL_SET_B
-            general_count += GENERAL_SET_B["sections"]["listening"]["total_questions"]
-            general_count += GENERAL_SET_B["sections"]["reading"]["total_questions"]
-            general_count += len(GENERAL_SET_B["sections"]["writing"]["tasks"])
-            general_count += len(GENERAL_SET_B["sections"]["speaking"]["parts"])
-            general_sets += 1
-        except: pass
-        
-        try:
-            from content.full_tests.general.set_c import GENERAL_SET_C
-            general_count += GENERAL_SET_C["sections"]["listening"]["total_questions"]
-            general_count += GENERAL_SET_C["sections"]["reading"]["total_questions"]
-            general_count += len(GENERAL_SET_C["sections"]["writing"]["tasks"])
-            general_count += len(GENERAL_SET_C["sections"]["speaking"]["parts"])
-            general_sets += 1
-        except: pass
-        
-        try:
-            from content.full_tests.general.set_d import GENERAL_SET_D
-            general_count += GENERAL_SET_D["sections"]["listening"]["total_questions"]
-            general_count += GENERAL_SET_D["sections"]["reading"]["total_questions"]
-            general_count += len(GENERAL_SET_D["sections"]["writing"]["tasks"])
-            general_count += len(GENERAL_SET_D["sections"]["speaking"]["parts"])
-            general_sets += 1
-        except: pass
-        
-        # Speaking QB questions (from the Speaking Question Bank)
-        speaking_qb_count = 100  # Approximate - based on topics * questions per topic
-        
-        total_questions = academic_count + general_count + speaking_qb_count + cambridge_count
-        total_sets = academic_sets + general_sets
-        
-        # Listening: 40 questions per set
-        # Reading: 40 questions per set
-        # Writing: 2 tasks per set
-        # Speaking: 3 parts per set
-        listening_total = total_sets * 40 + cambridge_listening
-        reading_total = total_sets * 40 + cambridge_reading
-        writing_total = total_sets * 2 + cambridge_writing
-        speaking_total = total_sets * 3 + speaking_qb_count + cambridge_speaking
-        
+            from routes.lesson_registry import get_all_topics
+            topics_data = get_all_topics()
+            if topics_data:
+                topics_count = len(topics_data)
+        except Exception:
+            pass
+
+        total_questions = cambridge_count + ai_question_count
+        total_full_tests = cambridge_tests + ai_academic_count + ai_general_count
+
         return {
-            "total_questions": cambridge_count,  # Only Cambridge questions
+            "total_questions": total_questions,
             "by_skill": {
-                "reading": cambridge_reading,
-                "listening": cambridge_listening,
-                "writing": cambridge_writing,
-                "speaking": cambridge_speaking,
+                "reading": cambridge_reading + ai_reading,
+                "listening": cambridge_listening + ai_listening,
+                "writing": cambridge_writing + ai_writing,
+                "speaking": cambridge_speaking + ai_speaking,
                 "grammar_vocab": 0
             },
             "by_band": {
-                "4.0-5.0": int(cambridge_count * 0.25),
-                "5.5-6.5": int(cambridge_count * 0.35),
-                "7.0-9.0": int(cambridge_count * 0.40)
+                "4.0-5.0": int(total_questions * 0.25),
+                "5.5-6.5": int(total_questions * 0.35),
+                "7.0-9.0": int(total_questions * 0.40)
             },
             "by_type": question_types,
-            "full_tests": cambridge_tests,  # Only Cambridge tests
+            "full_tests": total_full_tests,
             "cambridge_tests": cambridge_tests,
-            "academic_tests": academic_sets,
-            "general_tests": general_sets,
-            "practice_pool_size": cambridge_listening + cambridge_reading,
-            "practice_sets": 4,  # Listening, Reading, Writing, Speaking
-            "topics_count": 18
+            "ai_academic_tests": ai_academic_count,
+            "ai_general_tests": ai_general_count,
+            "practice_pool_size": cambridge_listening + cambridge_reading + ai_listening + ai_reading,
+            "practice_sets": 4,
+            "topics_count": topics_count
         }
     except Exception as e:
         print(f"Error calculating stats: {e}")
         import traceback
         traceback.print_exc()
         return {
-            "total_questions": 270,
-            "by_skill": {
-                "reading": 80,
-                "listening": 80,
-                "writing": 4,
-                "speaking": 106,
-                "grammar_vocab": 0
-            },
-            "by_band": {
-                "4.0-5.0": 50,
-                "5.5-6.5": 60,
-                "7.0-9.0": 160
-            },
+            "total_questions": 0,
+            "by_skill": {"reading": 0, "listening": 0, "writing": 0, "speaking": 0, "grammar_vocab": 0},
+            "by_band": {"4.0-5.0": 0, "5.5-6.5": 0, "7.0-9.0": 0},
             "by_type": {},
-            "full_tests": 2,
+            "full_tests": 0,
             "cambridge_tests": 0,
+            "ai_academic_tests": 0,
+            "ai_general_tests": 0,
             "practice_pool_size": 0,
             "practice_sets": 4,
             "topics_count": 18
