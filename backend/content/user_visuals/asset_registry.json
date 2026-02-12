@@ -1,0 +1,93 @@
+{
+  "status": "COLLECTING",
+  "note": "Kullanici gorsel gonderiyor. 'bitti' deyinceye kadar bekleniyor.",
+  "total_assets": 5,
+  "assets": [
+    {
+      "id": "asset_001",
+      "original_filename": "Screenshot 2026-02-11 at 23.33.46.png",
+      "saved_as": "visual_001_line_graph_metals.png",
+      "url": "https://customer-assets.emergentagent.com/job_574001fa-81aa-4a59-8146-12310553b962/artifacts/2m449vtz_Screenshot%202026-02-11%20at%2023.33.46.png",
+      "visual_type": "line_graph",
+      "ielts_task": "writing_task1",
+      "description": "Average monthly change in prices of copper, nickel and zinc (2014). Y-axis: % change compared with previous month (-4 to 7). X-axis: Months (J-D). Three metals tracked with different line styles.",
+      "data_summary": {
+        "title": "Average monthly change in prices of copper, nickel and zinc (2014)",
+        "items": ["Copper (dashed, circles)", "Nickel (solid, filled circles)", "Zinc (solid, x markers)"],
+        "x_axis": "Month (Jan-Dec)",
+        "y_axis": "% change in price compared with previous month",
+        "key_trends": "All three metals drop sharply in June. Nickel starts highest (6%) in Jan, drops to -3% in June. Zinc most stable overall."
+      },
+      "suggested_test": null,
+      "source": "user_upload"
+    },
+    {
+      "id": "asset_002",
+      "original_filename": "test1 task 1.png",
+      "saved_as": "visual_002_line_graph_urbanization.png",
+      "url": "https://customer-assets.emergentagent.com/job_574001fa-81aa-4a59-8146-12310553b962/artifacts/vwtfu75s_test1%20task%201.png",
+      "visual_type": "line_graph",
+      "ielts_task": "writing_task1",
+      "description": "Percentage of the population living in cities for 4 Southeast Asian countries (1970-2040). Includes historical data and projections.",
+      "data_summary": {
+        "title": "Percentage of the population living in cities",
+        "items": ["Philippines", "Malaysia", "Thailand", "Indonesia"],
+        "x_axis": "Year (1970-2040)",
+        "y_axis": "Percentage (%) of total population (0-90)",
+        "key_trends": "Malaysia consistently highest (~30% to ~83%). Indonesia rapid growth post-2000. Thailand slowest growth. Philippines moderate growth with some stagnation."
+      },
+      "suggested_test": "Test 1 (from filename)",
+      "source": "user_upload"
+    },
+    {
+      "id": "asset_003",
+      "original_filename": "test2task1.png",
+      "saved_as": "visual_003_map_housing_estate.png",
+      "url": "https://customer-assets.emergentagent.com/job_574001fa-81aa-4a59-8146-12310553b962/artifacts/tqa3my5e_test2task1.png",
+      "visual_type": "map",
+      "ielts_task": "writing_task1",
+      "description": "Map of a residential housing estate with labeled areas A-I. Features: Lake, Apartment blocks, Housing for the elderly, West Entrance, South Entrance, London Road, Main Road, direction to Nunston. Compass rose (N/S/E/W). Key: Housing pattern.",
+      "data_summary": {
+        "title": "Residential Housing Estate Map",
+        "labeled_areas": ["A (near Lake)", "B (Housing for elderly)", "C (near West Entrance)", "D (south of Lake)", "E (east side)", "F (west curved road)", "G (south curved)", "H (southwest, trees)", "I (southeast)"],
+        "features": ["Lake", "Apartment blocks", "Housing for the elderly", "West Entrance", "South Entrance", "London Road", "Main Road", "To Nunston"],
+        "key_trends": "Could be used as map description or paired with 'after' version for comparison"
+      },
+      "suggested_test": "Test 2 (from filename)",
+      "source": "user_upload"
+    },
+    {
+      "id": "asset_004",
+      "original_filename": "test3task1.png",
+      "saved_as": "visual_004_bar_chart_us_households.png",
+      "url": "https://customer-assets.emergentagent.com/job_574001fa-81aa-4a59-8146-12310553b962/artifacts/qmulrmqx_test3task1.png",
+      "visual_type": "bar_chart",
+      "ielts_task": "writing_task1",
+      "description": "Clustered bar chart showing Number of US households (in millions) by annual income for years 2007, 2011, 2015. Five income brackets.",
+      "data_summary": {
+        "title": "Number of US households (in millions), by annual income",
+        "years": ["2007", "2011", "2015"],
+        "income_brackets": ["Less than $25,000", "$25,000-$49,999", "$50,000-$74,999", "$75,000-$99,999", "$100,000 or more"],
+        "key_trends": "Highest income bracket ($100k+) grew significantly from ~16M to ~33M. Lower brackets relatively stable or declining."
+      },
+      "suggested_test": "Test 3 (from filename)",
+      "source": "user_upload"
+    },
+    {
+      "id": "asset_005",
+      "original_filename": "test4task1a.png",
+      "saved_as": "visual_005_floor_plan_library_before.png",
+      "url": "https://customer-assets.emergentagent.com/job_574001fa-81aa-4a59-8146-12310553b962/artifacts/8bfg45mc_test4task1a.png",
+      "visual_type": "floor_plan",
+      "ielts_task": "writing_task1",
+      "description": "Floor plan of Central Library 20 years ago. Shows: Entrance (bottom), Enquiry desk, Reading room (newspapers & magazines), Adult fiction books, Adult non-fiction books, Children's books, CDs/videos/computer games, Tables & chairs (center).",
+      "data_summary": {
+        "title": "Central Library 20 years ago",
+        "rooms": ["CDs, videos, computer games (top-left)", "Children's books (top-right)", "Adult fiction books (mid-left)", "Adult non-fiction books (mid-right)", "Reading room - newspapers & magazines (bottom-left)", "Tables & chairs (center)", "Enquiry desk - tickets, book returns etc. (bottom-right)", "Entrance (bottom-center)"],
+        "key_trends": "This is labeled '20 years ago' and 'a' in filename - implies a 'b' (current version) will follow for before/after comparison"
+      },
+      "suggested_test": "Test 4 (from filename)",
+      "source": "user_upload"
+    }
+  ]
+}
