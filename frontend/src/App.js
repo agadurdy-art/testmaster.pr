@@ -447,7 +447,7 @@ function AppWithSessionHandler() {
           element={user ? <VisualGenerator /> : <Navigate to="/" />} 
         />
       </Routes>
-      {user && !window.location.pathname.startsWith('/emily') && <EmilyFloatingButton />}
+      {user && !location.pathname.startsWith('/emily') && <EmilyFloatingButton />}
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
       <Toaster position="top-right" />
