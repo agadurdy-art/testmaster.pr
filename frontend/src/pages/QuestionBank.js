@@ -903,10 +903,16 @@ export default function QuestionBank() {
 
         {/* Progress Tab */}
         {activeTab === 'progress' && (
-                    </div>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-1 text-xs text-gray-500">
-                        <Headphones className="w-3 h-3" /> Listening
+          <div className="space-y-6">
+            <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+              <TrendingUp className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Progress Analysis</h3>
+              <p className="text-gray-500 mb-6">Track your performance and discover weak areas</p>
+              <Badge className="bg-amber-100 text-amber-700">Coming Soon</Badge>
+            </div>
+          </div>
+        )}
+      </div>
                       </div>
                       <div className="flex items-center gap-1 text-xs text-gray-500">
                         <BookOpen className="w-3 h-3" /> Reading
