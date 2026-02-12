@@ -674,7 +674,7 @@ export default function PracticeMode({ user }) {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">{currentQuestion.text}</h3>
 
               {/* Options */}
-              {currentQuestion.options && (
+              {currentQuestion.options && currentQuestion.options.length > 0 ? (
                 <div className="space-y-3">
                   {currentQuestion.options.map((option, idx) => (
                     <button
@@ -689,6 +689,17 @@ export default function PracticeMode({ user }) {
                       <span className="text-gray-700">{option}</span>
                     </button>
                   ))}
+                </div>
+              ) : (
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    placeholder="Type your answer..."
+                    value={answers[currentQuestion.id] || ''}
+                    onChange={(e) => handleAnswer(e.target.value)}
+                    className="w-full p-4 rounded-lg border-2 border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-700"
+                    data-testid="practice-answer-input"
+                  />
                 </div>
               )}
             </Card>
