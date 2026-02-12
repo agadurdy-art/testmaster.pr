@@ -59,6 +59,8 @@ import VisualGenerator from './pages/VisualGenerator';
 import CambridgeTestInterface from './pages/CambridgeTestInterface';
 import CambridgeTestResults from './pages/CambridgeTestResults';
 import FocusPlan from './pages/FocusPlan';
+import EmilyTeacher from './pages/EmilyTeacher';
+import EmilyFloatingButton from './components/EmilyFloatingButton';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
