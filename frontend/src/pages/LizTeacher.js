@@ -216,6 +216,17 @@ export default function LizTeacher({ user }) {
       .catch(() => {});
   }, [user?.id]);
 
+  // Load homework
+  const fetchHomework = useCallback(() => {
+    if (!user?.id) return;
+    fetch(`${API_URL}/api/liz/homework/${user.id}`)
+      .then(r => r.json())
+      .then(d => { if (d.success) setHomework(d.homework || []); })
+      .catch(() => {});
+  }, [user?.id]);
+
+  useEffect(() => { fetchHomework(); }, [fetchHomework]);
+
   // Auto-greet on first load
   const hasGreetedRef = useRef(false);
   useEffect(() => {
