@@ -745,7 +745,7 @@ Keep feedback concise but specific."""
             feedback = await chat.send_message(UserMessage(text=review_prompt))
 
             # Try to extract score
-            score_match = re.search(r'(\d+)\s*/\s*10', feedback)
+            score_match = re.search(r'(\d+)\s*(?:/|out of)\s*10', feedback)
             if score_match:
                 score = float(score_match.group(1))
         except Exception:
