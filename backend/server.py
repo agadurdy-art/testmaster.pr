@@ -473,6 +473,18 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+try:
+    from routes.emily_teacher import router as emily_router
+    from routes import emily_teacher
+    emily_teacher.db = db
+    app.include_router(emily_router)
+    print("✅ Emily AI Teacher routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Emily Teacher routes: {e}")
+    import traceback
+    traceback.print_exc()
+
+
 # ============ Models ============
 
 class User(BaseModel):
