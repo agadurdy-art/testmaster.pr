@@ -65,8 +65,15 @@ export default function PracticeMode({ user }) {
     setRevealed(false);
     setSetDone(false);
     setSetStats({ correct: 0, total: 0 });
-    setAudioUrl(null);
-    if (audioRef.current) { audioRef.current.pause(); }
+    // Fully reset audio state for new set
+    setIsPlayingAudio(false);
+    setAudioLoading(false);
+    setAudioUrl(prev => { if (prev) URL.revokeObjectURL(prev); return null; });
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.removeAttribute('src');
+      audioRef.current.load();
+    }
 
     try {
       const res = await fetch(`${API_URL}/api/question-bank/practice/random?skill=${skill}&count=3`);
