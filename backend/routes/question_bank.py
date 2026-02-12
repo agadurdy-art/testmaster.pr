@@ -433,103 +433,113 @@ def extract_relevant_context(full_text: str, search_term: str, context_size: int
 
 
 def get_questions_from_full_tests(skill: str, count: int = 10):
-    """Extract questions from ALL Full Test content for practice mode."""
+    """Extract questions from ALL Full Test content for practice mode, normalized for frontend."""
     import random
-    
+
     all_questions = []
-    
-    # Academic Sets
+
+    # All sets (including E-H for academic)
     sets_to_import = [
         ("content.full_tests.academic.set_a", "ACADEMIC_SET_A", "academic_set_a"),
         ("content.full_tests.academic.set_b", "ACADEMIC_SET_B", "academic_set_b"),
         ("content.full_tests.academic.set_c", "ACADEMIC_SET_C", "academic_set_c"),
         ("content.full_tests.academic.set_d", "ACADEMIC_SET_D", "academic_set_d"),
+        ("content.full_tests.academic.set_e", "ACADEMIC_SET_E", "academic_set_e"),
+        ("content.full_tests.academic.set_f", "ACADEMIC_SET_F", "academic_set_f"),
+        ("content.full_tests.academic.set_g", "ACADEMIC_SET_G", "academic_set_g"),
+        ("content.full_tests.academic.set_h", "ACADEMIC_SET_H", "academic_set_h"),
         ("content.full_tests.general.set_a", "GENERAL_SET_A", "general_set_a"),
         ("content.full_tests.general.set_b", "GENERAL_SET_B", "general_set_b"),
         ("content.full_tests.general.set_c", "GENERAL_SET_C", "general_set_c"),
         ("content.full_tests.general.set_d", "GENERAL_SET_D", "general_set_d"),
     ]
-    
+
     for module_path, var_name, source_name in sets_to_import:
         try:
             module = __import__(module_path, fromlist=[var_name])
             test_set = getattr(module, var_name)
-            
+
             if skill == "listening":
                 for part in test_set["sections"]["listening"]["parts"]:
+                    audio_script = part.get("audio_script", part.get("transcript", ""))
                     for q in part["questions"]:
+                        q_text = q.get("question", "")
                         all_questions.append({
                             "id": f"{source_name}_{q['id']}",
-                            "type": q.get("type", "note_completion"),
-                            "question": q["question"],
-                            "answer": q.get("answer", ""),
-                            "instruction": q.get("instruction", ""),
-                            "part": part["part_number"],
+                            "type": q.get("type", "note-completion").replace("_", "-"),
+                            "text": q_text if q_text else f"Part {part['part_number']} - {part.get('title', 'Listening')}",
+                            "correct": q.get("answer", ""),
+                            "options": q.get("options", []),
+                            "audio_transcript": audio_script[:500] if audio_script else f"Listen about: {part.get('title', '')}",
                             "context": part["title"],
+                            "part": part["part_number"],
                             "skill": "listening",
-                            "source": source_name
+                            "source": source_name,
+                            "difficulty": "easy" if part["part_number"] <= 2 else "medium"
                         })
-            
+
             elif skill == "reading":
                 for passage in test_set["sections"]["reading"]["passages"]:
-                    passage_text = passage.get("text", "")[:500] + "..."  # Truncate for practice
+                    passage_text = passage.get("text", "")
+                    passage_title = passage.get("title", "")
                     for q in passage["questions"]:
+                        q_type = q.get("type", "multiple_choice").replace("_", "-")
                         all_questions.append({
                             "id": f"{source_name}_{q['id']}",
-                            "type": q.get("type", "multiple_choice"),
-                            "question": q["question"],
+                            "type": q_type,
+                            "text": q.get("question", ""),
+                            "passage": extract_relevant_context(passage_text, q.get("question", "")),
+                            "passage_title": passage_title,
                             "options": q.get("options", []),
-                            "answer": q.get("answer", ""),
-                            "passage_number": passage["passage_number"],
-                            "passage_title": passage["title"],
-                            "passage_preview": passage_text,
+                            "correct": q.get("answer", ""),
+                            "instruction": q.get("instruction", ""),
                             "skill": "reading",
-                            "source": source_name
+                            "source": source_name,
+                            "difficulty": "medium"
                         })
-            
+
             elif skill == "writing":
                 for task in test_set["sections"]["writing"]["tasks"]:
                     all_questions.append({
                         "id": f"{source_name}_W{task['task_number']}",
-                        "type": task["type"],
-                        "prompt": task["prompt"],
+                        "type": f"task{task['task_number']}",
+                        "text": task["prompt"],
                         "word_limit": task["word_limit"],
-                        "task_number": task["task_number"],
                         "skill": "writing",
-                        "source": source_name
+                        "source": source_name,
+                        "difficulty": "medium" if task["task_number"] == 1 else "hard"
                     })
-            
+
             elif skill == "speaking":
                 for part in test_set["sections"]["speaking"]["parts"]:
                     part_num = part["part_number"]
-                    
                     if part_num == 2:
+                        cue = part.get("cue_card", {})
                         all_questions.append({
                             "id": f"{source_name}_S2_cue",
-                            "question": part.get("cue_card", {}).get("topic", ""),
-                            "bullet_points": part.get("cue_card", {}).get("bullet_points", []),
-                            "follow_ups": part.get("follow_up", []),
+                            "type": "cue-card",
+                            "text": cue.get("topic", ""),
+                            "options": cue.get("bullet_points", []),
                             "part": part_num,
-                            "type": "cue_card",
                             "skill": "speaking",
-                            "source": source_name
+                            "source": source_name,
+                            "difficulty": "medium"
                         })
                     else:
                         for q in part.get("questions", []):
                             all_questions.append({
                                 "id": f"{source_name}_{q.get('id', f'S{part_num}Q')}",
-                                "question": q.get("question", ""),
-                                "follow_ups": q.get("follow_ups", []),
+                                "type": f"part{part_num}",
+                                "text": q.get("question", ""),
                                 "part": part_num,
-                                "type": "discussion",
                                 "skill": "speaking",
-                                "source": source_name
+                                "source": source_name,
+                                "difficulty": "easy" if part_num == 1 else "hard"
                             })
         except Exception as e:
             print(f"Could not import {module_path}: {e}")
             continue
-    
-    # Shuffle and limit
+
     random.shuffle(all_questions)
     return all_questions[:count]
 
