@@ -790,63 +790,89 @@ export default function QuestionBank() {
                   <Zap className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="font-bold text-xl text-gray-900">AI-Generated Tests</h2>
-                  <p className="text-sm text-gray-500">Practice tests created by our AI engine</p>
+                  <h2 className="font-bold text-xl text-gray-900">IELTS Practice Tests</h2>
+                  <p className="text-sm text-gray-500">AI-generated full tests with real exam visuals</p>
                 </div>
               </div>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                {/* General Training - Active */}
-                <Card 
-                  className="p-4 bg-white border-2 border-purple-200 hover:border-purple-400 hover:shadow-lg transition-all cursor-pointer"
-                  onClick={() => navigate('/full-test?type=general')}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-                        <span className="font-bold text-purple-600">GT</span>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-gray-900">General Training</h4>
-                        <span className="text-xs text-gray-500">Full Test Available</span>
-                      </div>
+
+              {/* Academic IELTS */}
+              <Card className="p-6 border-2 border-indigo-100 bg-gradient-to-br from-white to-indigo-50/30">
+                <div className="flex items-start justify-between mb-5">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-bold text-lg text-gray-900">Academic IELTS</h3>
+                      <Badge className="bg-indigo-100 text-indigo-700 text-xs">8 Sets</Badge>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-purple-500" />
+                    <p className="text-sm text-gray-500">Complete practice tests with Listening, Reading, Writing & Speaking</p>
                   </div>
-                </Card>
+                </div>
                 
-                {/* Academic Sets - Active */}
-                {[
-                  {num: 1, id: 'academic_set_a_01', label: 'A', desc: 'Line Graph - Urbanisation'},
-                  {num: 2, id: 'academic_set_b_01', label: 'B', desc: 'Bar Chart - US Households'},
-                  {num: 3, id: 'academic_set_c_01', label: 'C', desc: 'Process Diagram + Map'},
-                  {num: 4, id: 'academic_set_d_01', label: 'D', desc: 'Floor Plan Comparison'},
-                  {num: 5, id: 'academic_set_e_01', label: 'E', desc: 'Airport Map Comparison'},
-                  {num: 6, id: 'academic_set_f_01', label: 'F', desc: 'Line Graph - Metal Prices'},
-                  {num: 7, id: 'academic_set_g_01', label: 'G', desc: 'Paired Graphs - Appliances'},
-                  {num: 8, id: 'academic_set_h_01', label: 'H', desc: 'Process - Sugar Production'}
-                ].map(set => (
-                  <Card 
-                    key={set.num} 
-                    className="p-4 bg-white border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition-all cursor-pointer"
-                    data-testid={`academic-set-${set.num}-card`}
-                    onClick={() => navigate(`/full-test?type=academic&set=${set.id}`)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
-                          <span className="font-bold text-indigo-600">{set.label}</span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {[
+                    {id: 'academic_set_a_01', label: 'A', topic: 'Urbanisation'},
+                    {id: 'academic_set_b_01', label: 'B', topic: 'US Households'},
+                    {id: 'academic_set_c_01', label: 'C', topic: 'Diagrams & Maps'},
+                    {id: 'academic_set_d_01', label: 'D', topic: 'Floor Plans'},
+                    {id: 'academic_set_e_01', label: 'E', topic: 'Airport Maps'},
+                    {id: 'academic_set_f_01', label: 'F', topic: 'Metal Prices'},
+                    {id: 'academic_set_g_01', label: 'G', topic: 'Appliances'},
+                    {id: 'academic_set_h_01', label: 'H', topic: 'Sugar Production'}
+                  ].map(set => (
+                    <div 
+                      key={set.id}
+                      data-testid={`academic-set-${set.label.toLowerCase()}-card`}
+                      className="p-4 bg-white rounded-xl border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-md transition-all cursor-pointer group"
+                      onClick={() => {
+                        const fullTest = fullTests.find(t => t.test_id === set.id);
+                        if (fullTest) {
+                          openTestModal(fullTest);
+                        } else {
+                          navigate(`/full-test?type=academic&set=${set.id}`);
+                        }
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center group-hover:bg-indigo-200 transition-colors">
+                          <span className="font-bold text-indigo-700 text-lg">{set.label}</span>
                         </div>
-                        <div>
-                          <h4 className="font-medium text-gray-900">Academic Set {set.label}</h4>
-                          <span className="text-xs text-gray-500">{set.desc}</span>
-                        </div>
+                        <PlayCircle className="w-5 h-5 text-indigo-400 group-hover:text-indigo-600 transition-colors" />
                       </div>
-                      <ChevronRight className="w-5 h-5 text-indigo-500" />
+                      <h4 className="font-semibold text-gray-900 text-sm">Set {set.label}</h4>
+                      <p className="text-xs text-gray-500 mt-0.5">{set.topic}</p>
+                      <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-gray-100">
+                        <Headphones className="w-3 h-3 text-blue-400" />
+                        <BookOpen className="w-3 h-3 text-green-400" />
+                        <PenTool className="w-3 h-3 text-purple-400" />
+                        <Mic className="w-3 h-3 text-orange-400" />
+                        <span className="text-[10px] text-gray-400 ml-auto">4 sections</span>
+                      </div>
                     </div>
-                  </Card>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </Card>
+
+              {/* General Training */}
+              <Card 
+                className="p-5 bg-white border-2 border-purple-100 hover:border-purple-300 hover:shadow-lg transition-all cursor-pointer group"
+                onClick={() => navigate('/full-test?type=general')}
+                data-testid="general-training-card"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                      <span className="font-bold text-purple-700 text-lg">GT</span>
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-bold text-gray-900">General Training IELTS</h4>
+                        <Badge className="bg-purple-100 text-purple-700 text-xs">4 Sets</Badge>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-0.5">Practice tests for General Training module</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-purple-400 group-hover:text-purple-600 transition-colors" />
+                </div>
+              </Card>
             </div>
             
             <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
