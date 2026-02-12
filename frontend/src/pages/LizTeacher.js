@@ -468,6 +468,19 @@ export default function LizTeacher({ user }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {/* Homework button with badge */}
+            <button
+              onClick={() => setShowHomework(v => !v)}
+              className={`relative p-2 rounded-full transition-colors ${showHomework ? 'text-teal-600 bg-teal-50' : 'text-slate-400 bg-slate-50 hover:bg-slate-100'}`}
+              data-testid="homework-toggle-btn"
+            >
+              <ClipboardList className="w-4 h-4" />
+              {homework.filter(h => h.status === 'pending').length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center" data-testid="homework-badge">
+                  {homework.filter(h => h.status === 'pending').length}
+                </span>
+              )}
+            </button>
             <button
               onClick={toggleAutoVoice}
               className={`p-2 rounded-full transition-colors ${autoVoice ? 'text-teal-600 bg-teal-50' : 'text-slate-400 bg-slate-50'}`}
