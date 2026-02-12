@@ -478,7 +478,7 @@ async def evaluate_full_test(
 
     # Evaluate Reading
     reading_result = None
-    if "reading" in answers:
+    if "reading" in answers and "reading" in test.get("sections", {}):
         reading_result = evaluate_reading(test, answers["reading"])
         results["sections"]["reading"] = reading_result
 
