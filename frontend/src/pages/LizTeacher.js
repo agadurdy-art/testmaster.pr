@@ -135,11 +135,12 @@ export default function LizTeacher({ user }) {
   }, [user?.id]);
 
   // Auto-greet on first load
+  const hasGreetedRef = useRef(false);
   useEffect(() => {
-    if (!user?.id || hasGreeted || sessionId) return;
+    if (!user?.id || hasGreetedRef.current || hasGreeted || sessionId) return;
+    hasGreetedRef.current = true;
     greetStudent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
+  }, [user?.id, hasGreeted, sessionId]); // greetStudent is stable enough
 
   const playAudio = useCallback((base64Audio) => {
     return new Promise((resolve) => {
