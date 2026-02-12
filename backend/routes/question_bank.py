@@ -611,6 +611,53 @@ async def get_random_practice(
         }
 
 
+@router.get("/practice/listening-sets")
+async def get_practice_listening_set(
+    set_num: Optional[int] = Query(None, description="Specific set number (1-17), or random if omitted"),
+    count: int = Query(3, ge=1, le=3)
+):
+    """Get pre-made listening practice questions with local audio files."""
+    try:
+        from content.practice_listening_data import PRACTICE_LISTENING_QUESTIONS
+        
+        available_sets = list(set(q["set"] for q in PRACTICE_LISTENING_QUESTIONS))
+        
+        if set_num and set_num in available_sets:
+            target_set = set_num
+        else:
+            target_set = random.choice(available_sets)
+        
+        set_questions = [q for q in PRACTICE_LISTENING_QUESTIONS if q["set"] == target_set]
+        
+        questions = []
+        for q in set_questions[:count]:
+            questions.append({
+                "id": q["id"],
+                "type": q["type"],
+                "text": q["text"],
+                "correct": q["correct"],
+                "options": q.get("options", []),
+                "skill": "listening",
+                "audio_file": f"/api/static/audio/practice_listening/{q['id']}.mp3",
+                "audio_transcript": q.get("audio_transcript", ""),
+                "source": "practice_listening"
+            })
+        
+        return {
+            "success": True,
+            "skill": "listening",
+            "set_number": target_set,
+            "total_sets": len(available_sets),
+            "count": len(questions),
+            "questions": questions
+        }
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return {"success": False, "error": str(e), "questions": []}
+
+
+
 @router.get("/practice/timed")
 async def get_timed_practice(
     skill: str = Query(..., description="Skill to practice"),
