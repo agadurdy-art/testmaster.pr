@@ -190,8 +190,10 @@ async def get_question_bank_stats(db=None):
         # Dynamic topics count
         topics_count = 18
         try:
-            from routes.lesson_registry import get_all_topics
-            topics_data = get_all_topics()
+            from server import db as app_db
+            from services.lesson_registry import LessonRegistry
+            registry = LessonRegistry(app_db)
+            topics_data = await registry.get_all_topics()
             if topics_data:
                 topics_count = len(topics_data)
         except Exception:
