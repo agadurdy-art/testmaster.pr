@@ -7,7 +7,7 @@ Tests the specific requirements from the review request
 import requests
 import json
 
-BACKEND_URL = "https://learning-hub-278.preview.emergentagent.com/api"
+BACKEND_URL = "https://test-scoring-system.preview.emergentagent.com/api"
 
 def test_authentication():
     """Test authentication with provided test credentials"""
