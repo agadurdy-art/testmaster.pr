@@ -533,7 +533,6 @@ export default function Dashboard({ user, onLogout }) {
               ))}
             </div>
           </Card>
-        </div>
           {/* Learning Tools */}
           <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center gap-3 mb-4">
