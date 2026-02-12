@@ -461,124 +461,330 @@ async def evaluate_full_test(
     section_times: Dict[str, int]
 ) -> Dict[str, Any]:
     """
-    Evaluate all sections and generate comprehensive results.
+    Comprehensive test evaluation with rich feedback.
+    Returns: sections, overall, skill_breakdown, teacher_feedback,
+    recommended_lessons, question_results, fastest_gain, integrity_warnings, reason_summary
     """
     results = {
         "sections": {},
         "overall": {}
     }
-    
+
     # Evaluate Listening
+    listening_result = None
     if "listening" in answers:
         listening_result = evaluate_listening(test, answers["listening"])
         results["sections"]["listening"] = listening_result
-    
+
     # Evaluate Reading
+    reading_result = None
     if "reading" in answers:
         reading_result = evaluate_reading(test, answers["reading"])
         results["sections"]["reading"] = reading_result
-    
-    # Evaluate Writing (requires AI)
+
+    # Evaluate Writing (AI)
     if "writing" in answers:
         writing_result = await evaluate_writing_section(test, answers["writing"])
         results["sections"]["writing"] = writing_result
-    
-    # Evaluate Speaking (requires AI)
+
+    # Evaluate Speaking (AI)
     if "speaking" in answers:
         speaking_result = await evaluate_speaking_section(test, answers["speaking"])
         results["sections"]["speaking"] = speaking_result
-    
+
     # Calculate overall band
     bands = []
     for section in ["listening", "reading", "writing", "speaking"]:
         if section in results["sections"]:
             bands.append(results["sections"][section].get("band", 0))
-    
     if bands:
-        overall = sum(bands) / len(bands)
-        # IELTS rounding to nearest 0.5
-        overall = round(overall * 2) / 2
+        overall = round(sum(bands) / len(bands) * 2) / 2
         results["overall"]["band"] = overall
         results["overall"]["sections_completed"] = len(bands)
-    
-    # Add summary
+
+    # ============ RICH FEEDBACK ============
+    if CAMBRIDGE_HELPERS_AVAILABLE:
+        # Skill breakdown by question type
+        skill_breakdown = []
+        for section_name, section_result in [("listening", listening_result), ("reading", reading_result)]:
+            if section_result and "by_type" in section_result:
+                for qtype, stats in section_result["by_type"].items():
+                    accuracy = stats["correct"] / stats["total"] if stats["total"] > 0 else 0
+                    skill_breakdown.append({
+                        "skill_id": f"{section_name}_{qtype}",
+                        "label": f"{section_name.title()} - {qtype.replace('_', ' ').title()}",
+                        "correct": stats["correct"],
+                        "total": stats["total"],
+                        "tip": get_skill_tip(section_name, qtype, accuracy)
+                    })
+        results["skill_breakdown"] = skill_breakdown
+
+        # Fastest gain
+        gain_candidates = []
+        for s in skill_breakdown:
+            if s["total"] > 0:
+                wrong = s["total"] - s["correct"]
+                if wrong > 0:
+                    gain_candidates.append({
+                        "label": s["label"],
+                        "skill_id": s["skill_id"],
+                        "wrong_count": wrong,
+                        "total": s["total"],
+                        "accuracy": round((s["correct"] / s["total"]) * 100),
+                        "potential_gain": wrong,
+                        "tip": s.get("tip", "")
+                    })
+        gain_candidates.sort(key=lambda x: x["wrong_count"], reverse=True)
+        results["fastest_gain"] = gain_candidates[:3]
+
+        # Question results (detailed per question)
+        results["question_results"] = {
+            "listening": listening_result.get("details", []) if listening_result else [],
+            "reading": reading_result.get("details", []) if reading_result else []
+        }
+
+        # Integrity warnings
+        integrity_warnings = []
+        for sec_name, sec_result in [("listening", listening_result), ("reading", reading_result)]:
+            if sec_result:
+                unanswered = sum(1 for d in sec_result.get("details", []) if d.get("reason_code") == "UNANSWERED")
+                if unanswered > 0:
+                    integrity_warnings.append({
+                        "type": "unanswered",
+                        "section": sec_name,
+                        "count": unanswered,
+                        "message": f"{unanswered} {sec_name} question(s) left unanswered. These count as wrong."
+                    })
+        results["integrity_warnings"] = integrity_warnings
+
+        # Reason summary
+        all_details = results["question_results"]["listening"] + results["question_results"]["reading"]
+        reason_counts = {}
+        for d in all_details:
+            rc = d.get("reason_code")
+            if rc:
+                reason_counts[rc] = reason_counts.get(rc, 0) + 1
+        results["reason_summary"] = reason_counts
+
+        # Recommended lessons
+        results["recommended_lessons"] = generate_lesson_recommendations(skill_breakdown, test.get("test_type", "academic"))
+
+        # AI Teacher Feedback
+        teacher_feedback = await generate_ai_teacher_feedback(results, skill_breakdown, test)
+        results["teacher_feedback"] = teacher_feedback
+    else:
+        results["skill_breakdown"] = []
+        results["fastest_gain"] = []
+        results["question_results"] = {"listening": [], "reading": []}
+        results["integrity_warnings"] = []
+        results["reason_summary"] = {}
+        results["recommended_lessons"] = []
+        results["teacher_feedback"] = None
+
+    # Summary
     results["summary"] = generate_test_summary(results)
-    
     return results
 
 
+async def generate_ai_teacher_feedback(results: Dict, skill_breakdown: list, test: Dict) -> Optional[Dict]:
+    """Generate AI teacher feedback using LLM."""
+    EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY")
+    if not EMERGENT_LLM_KEY:
+        return None
+    try:
+        from emergentintegrations.llm.openai import LlmChat, UserMessage
+
+        sections = results.get("sections", {})
+        listening = sections.get("listening", {})
+        reading = sections.get("reading", {})
+
+        weak_areas = [s for s in skill_breakdown if s["total"] > 0 and (s["correct"] / s["total"]) < 0.5]
+        strong_areas = [s for s in skill_breakdown if s["total"] > 0 and (s["correct"] / s["total"]) >= 0.7]
+        weak_summary = ", ".join([s["label"] for s in weak_areas[:3]]) if weak_areas else "None identified"
+        strong_summary = ", ".join([s["label"] for s in strong_areas[:3]]) if strong_areas else "Keep practicing"
+
+        # Detect system language from test context
+        lang_note = "Respond in the student's system language (Turkish) so they fully understand the feedback."
+
+        prompt = f"""You are an experienced IELTS teacher providing feedback on an IELTS practice test.
+{lang_note}
+
+TEST RESULTS:
+- Listening: {listening.get('correct', 0)}/{listening.get('total', 0)} ({listening.get('percentage', 0):.1f}%)
+- Reading: {reading.get('correct', 0)}/{reading.get('total', 0)} ({reading.get('percentage', 0):.1f}%)
+- Overall Band: {results.get('overall', {}).get('band', 'N/A')}
+
+WEAK AREAS: {weak_summary}
+STRONG AREAS: {strong_summary}
+
+DETAILED BREAKDOWN:
+{json.dumps(skill_breakdown, indent=2)}
+
+Generate personalized feedback in JSON format:
+{{
+    "short": "2-3 sentence summary of performance with encouragement",
+    "detailed": "4-5 sentences with specific study recommendations based on weak areas"
+}}
+
+Be specific, constructive, and mention actual question types by name."""
+
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=str(uuid.uuid4()),
+            system_message="You are an IELTS teacher. Respond only with valid JSON."
+        )
+        response = await chat.send_message(user_message=UserMessage(text=prompt))
+
+        response_text = str(response)
+        if "```json" in response_text:
+            response_text = response_text.split("```json")[1].split("```")[0]
+        elif "```" in response_text:
+            response_text = response_text.split("```")[1].split("```")[0]
+
+        return json.loads(response_text.strip())
+    except Exception as e:
+        print(f"AI teacher feedback error: {e}")
+        return None
+
+
 def evaluate_listening(test: Dict, answers: Dict) -> Dict:
-    """Evaluate listening section answers."""
+    """Evaluate listening section with rich per-question feedback."""
     test_listening = test["sections"]["listening"]
     correct = 0
     total = 0
     details = []
-    
+    by_type = {}
+
     for part in test_listening.get("parts", []):
+        part_num = part.get("part_number", 1)
         for q in part.get("questions", []):
             q_id = q["id"]
+            q_type = q.get("type", "unknown")
             total += 1
             user_answer = answers.get(q_id, "")
             correct_answer = q.get("answer", "")
-            
-            # Check answer (case-insensitive, allow alternative answers)
+
             is_correct = check_answer(user_answer, correct_answer)
             if is_correct:
                 correct += 1
-            
-            details.append({
+
+            # Track by question type
+            if q_type not in by_type:
+                by_type[q_type] = {"correct": 0, "total": 0}
+            by_type[q_type]["total"] += 1
+            if is_correct:
+                by_type[q_type]["correct"] += 1
+
+            # Rich detail
+            detail = {
                 "question_id": q_id,
-                "user_answer": user_answer,
+                "question_type": q_type,
+                "question_text": q.get("question", ""),
+                "user_answer": user_answer if user_answer else "-",
                 "correct_answer": correct_answer,
-                "is_correct": is_correct
-            })
-    
+                "is_correct": is_correct,
+                "part": part_num,
+                "reason_code": None,
+                "reason_label": None,
+                "explanation": None,
+                "skill_tip": None
+            }
+
+            if CAMBRIDGE_HELPERS_AVAILABLE:
+                if not is_correct:
+                    reason = classify_reason_code(user_answer, correct_answer, q_type)
+                    detail["reason_code"] = reason.get("code")
+                    detail["reason_label"] = reason.get("label")
+                detail["explanation"] = generate_explanation(q_type, correct_answer, is_correct)
+                detail["skill_tip"] = get_skill_tip("listening", q_type, 1 if is_correct else 0)
+
+            details.append(detail)
+
     band = calculate_listening_band(correct)
-    
+
     return {
         "band": band,
         "correct": correct,
         "total": total,
         "percentage": round((correct / total) * 100, 1) if total > 0 else 0,
-        "details": details
+        "details": details,
+        "by_type": by_type
     }
 
 
 def evaluate_reading(test: Dict, answers: Dict) -> Dict:
-    """Evaluate reading section answers."""
+    """Evaluate reading section with rich per-question feedback."""
     test_reading = test["sections"]["reading"]
     correct = 0
     total = 0
     details = []
-    
+    by_type = {}
+
+    # Build passage texts for evidence extraction
+    passage_texts = {}
     for passage in test_reading.get("passages", []):
+        p_num = passage.get("passage_number", 1)
+        passage_texts[p_num] = passage.get("text", "")
+
+    for passage in test_reading.get("passages", []):
+        p_num = passage.get("passage_number", 1)
         for q in passage.get("questions", []):
             q_id = q["id"]
+            q_type = q.get("type", "unknown")
             total += 1
             user_answer = answers.get(q_id, "")
             correct_answer = q.get("answer", "")
-            
+
             is_correct = check_answer(user_answer, correct_answer)
             if is_correct:
                 correct += 1
-            
-            details.append({
+
+            # Track by type
+            if q_type not in by_type:
+                by_type[q_type] = {"correct": 0, "total": 0}
+            by_type[q_type]["total"] += 1
+            if is_correct:
+                by_type[q_type]["correct"] += 1
+
+            detail = {
                 "question_id": q_id,
-                "user_answer": user_answer,
+                "question_type": q_type,
+                "question_text": q.get("question", q.get("statement", "")),
+                "user_answer": user_answer if user_answer else "-",
                 "correct_answer": correct_answer,
                 "is_correct": is_correct,
-                "passage": passage["passage_number"]
-            })
-    
+                "passage": p_num,
+                "reason_code": None,
+                "reason_label": None,
+                "evidence_text": None,
+                "explanation": None,
+                "skill_tip": None
+            }
+
+            if CAMBRIDGE_HELPERS_AVAILABLE:
+                if not is_correct:
+                    reason = classify_reason_code(user_answer, correct_answer, q_type)
+                    detail["reason_code"] = reason.get("code")
+                    detail["reason_label"] = reason.get("label")
+                    # Extract evidence from passage
+                    p_text = passage_texts.get(p_num, "")
+                    if p_text:
+                        detail["evidence_text"] = extract_evidence_text(correct_answer, p_text)
+                detail["explanation"] = generate_explanation(q_type, correct_answer, is_correct)
+                detail["skill_tip"] = get_skill_tip("reading", q_type, 1 if is_correct else 0)
+
+            details.append(detail)
+
     test_type = test.get("test_type", "academic")
     band = calculate_reading_band(correct, test_type)
-    
+
     return {
         "band": band,
         "correct": correct,
         "total": total,
         "percentage": round((correct / total) * 100, 1) if total > 0 else 0,
-        "details": details
+        "details": details,
+        "by_type": by_type
     }
 
 
