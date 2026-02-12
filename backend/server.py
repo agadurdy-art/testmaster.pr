@@ -5455,6 +5455,67 @@ async def get_vocabulary_progress(user_id: str):
     return {"progress": progress}
 
 
+
+class ProductionModeRequest(BaseModel):
+    word: str
+    sentence: str
+    word_meaning: str = ""
+    module_title: str = ""
+
+@api_router.post("/vocabulary-engine/evaluate-sentence")
+async def evaluate_production_sentence(request: ProductionModeRequest):
+    """AI evaluates a user-written sentence using a target vocabulary word"""
+    try:
+        chat = LlmChat(
+            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            session_id=str(uuid.uuid4()),
+            system_message="You are a strict but encouraging IELTS vocabulary coach. Evaluate student sentences for grammar accuracy and correct vocabulary usage. Be concise."
+        ).with_model("openai", "gpt-4o")
+
+        prompt = f"""Evaluate this IELTS student's sentence. They must use the target word correctly.
+
+Target Word: {request.word}
+Word Meaning: {request.word_meaning}
+Student's Sentence: "{request.sentence}"
+
+Respond in this exact JSON format:
+{{
+  "grammar_correct": true/false,
+  "word_usage_correct": true/false,
+  "overall_score": 1-5,
+  "feedback": "1-2 sentence feedback on grammar and usage",
+  "improved_sentence": "A corrected/improved version if needed, or the same sentence if perfect",
+  "tip": "One short tip for better IELTS writing"
+}}
+
+RULES:
+- Score 5 = perfect grammar + natural word usage
+- Score 1 = major grammar errors or word completely misused
+- Be strict on grammar but encouraging in tone
+- Return ONLY valid JSON, no markdown"""
+
+        response = await chat.send_message_async(prompt)
+        text = response.text.strip()
+        # Clean markdown wrapping
+        if text.startswith("```"):
+            text = text.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
+
+        import json as json_mod
+        result = json_mod.loads(text)
+        return result
+    except Exception as e:
+        logging.getLogger(__name__).error(f"Production mode evaluation error: {e}")
+        return {
+            "grammar_correct": False,
+            "word_usage_correct": False,
+            "overall_score": 3,
+            "feedback": "Could not evaluate your sentence right now. Please try again.",
+            "improved_sentence": request.sentence,
+            "tip": "Keep practicing writing sentences with new vocabulary!"
+        }
+
+
+
 # ============ ADVANCED IELTS MASTERY COURSE ENDPOINTS (Band 6.0-9.0) ============
 
 @api_router.get("/advanced-mastery/modules")
