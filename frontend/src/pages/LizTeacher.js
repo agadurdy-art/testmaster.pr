@@ -5,7 +5,8 @@ import {
   ArrowLeft, Send, Volume2, VolumeX, Plus,
   Loader2, ChevronDown, Mic, MicOff,
   MessageSquare, BookOpen, PenTool, Target,
-  GraduationCap, ChevronUp
+  GraduationCap, ChevronUp, ClipboardList,
+  CheckCircle2, Clock, X, Star, FileText
 } from 'lucide-react';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
