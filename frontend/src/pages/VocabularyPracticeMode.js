@@ -21,7 +21,7 @@ export default function VocabularyPracticeMode({ user }) {
   const [score, setScore] = useState(0);
   const [totalAnswered, setTotalAnswered] = useState(0);
   const [showHint, setShowHint] = useState(false);
-  const [matchState, setMatchState] = useState({ selected: null, matches: {} });
+  const [matchState, setMatchState] = useState({ selectedTerm: null, selectedDef: null, matches: {} });
   const [completed, setCompleted] = useState(false);
 
   useEffect(() => { fetchExercises(); }, [moduleId]);
@@ -79,7 +79,7 @@ export default function VocabularyPracticeMode({ user }) {
   const goNext = () => {
     if (currentIdx < data.exercises.length - 1) {
       setCurrentIdx(p => p + 1); setSelectedAnswer(null); setIsChecked(false); setShowHint(false);
-      setMatchState({ selected: null, matches: {} });
+      setMatchState({ selectedTerm: null, selectedDef: null, matches: {} });
     } else setCompleted(true);
   };
 
@@ -93,7 +93,7 @@ export default function VocabularyPracticeMode({ user }) {
 
   const handleRetry = () => {
     setCurrentIdx(0); setSelectedAnswer(null); setIsChecked(false); setScore(0); setTotalAnswered(0);
-    setShowHint(false); setMatchState({ selected: null, matches: {} }); setCompleted(false); fetchExercises();
+    setShowHint(false); setMatchState({ selectedTerm: null, selectedDef: null, matches: {} }); setCompleted(false); fetchExercises();
   };
 
   if (loading) return <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center" data-testid="practice-mode-loading"><div className="animate-spin rounded-full h-8 w-8 border-[3px] border-gray-200 border-t-teal-500" /></div>;
