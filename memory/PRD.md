@@ -13,47 +13,36 @@ An IELTS exam preparation platform with AI-powered evaluation, Cambridge-aligned
 
 ## What's Been Implemented
 
-### Vocabulary Engine - Phase 1 (Feb 12, 2026) - NEW
-Interactive vocabulary learning system for Advanced Course with 3 modes:
-1. **Learn Mode** (`/vocabulary/learn/:moduleId`): Full-screen slide view, 28 slides per module covering advanced terms, idioms, collocations, phrasal verbs. IPA pronunciation, TTS, flip-card interaction, word formation table.
-2. **Controlled Practice** (`/vocabulary/practice/:moduleId`): Fill-in-the-blank & matching exercises (25 per module). Score tracking, hints, completion screen.
-3. **Mastery Quiz** (`/vocabulary/quiz/:moduleId`): 10 multiple-choice questions, 80% passing threshold, question review with explanations.
-- Navigation flow: Advanced Mastery Course > Module > "Start Learning" CTA > Learn > Practice > Quiz
-- Backend APIs: `/api/vocabulary-engine/{moduleId}/slides`, `/practice`, `/quiz`, `/quiz/submit`, `/progress`
+### Vocabulary Engine - Phase 1 & 2 (Feb 12, 2026)
+Interactive vocabulary learning system for Advanced Course with 4 modes:
+1. **Learn Mode** (`/vocabulary/learn/:moduleId`): Full-screen slide view, 28 slides per module (Advanced Terms, Idioms, Collocations, Phrasal Verbs). IPA pronunciation, TTS, flip-card, word formation table. Light amber/cream theme.
+2. **Controlled Practice** (`/vocabulary/practice/:moduleId`): Fill-in-blank & matching exercises (25/module). Hints, score tracking. Light emerald/teal theme.
+3. **Mastery Quiz** (`/vocabulary/quiz/:moduleId`): 10 MCQ questions, 80% pass threshold, review with explanations. Light purple/pink theme.
+4. **Production Mode (AI)** (`/vocabulary/production/:moduleId`): Users write sentences with target words (8 per module), GPT-4o evaluates grammar & word usage. Scores 1-5 stars, shows improved version & tips. Light indigo/blue theme.
+- Backend APIs: `/api/vocabulary-engine/{moduleId}/slides`, `/practice`, `/quiz`, `/quiz/submit`, `/evaluate-sentence`, `/progress`
+- Navigation: Advanced Mastery Course > Module > "Start Learning" or "AI Writing" CTA
 
 ### Dashboard Redesign (Feb 12, 2026)
-Sections reordered pedagogically (test-learn-test):
-1. **Practice & Test**: 4 skill cards + Question Bank/Quick Practice buttons
-2. **Learn & Grow**: Complete Learning Platform CTA + Courses | Learning Tools
-3. **Play & Fun**: Quick Games + Daily Challenge
-4. **Your Progress**: Achievements + Recent Tests | View Full Progress + Skill Breakdown
+Sections reordered pedagogically: Practice & Test, Learn & Grow, Play & Fun, Your Progress.
 
 ### Question Bank UI Simplified (Feb 12, 2026)
-- Compact filter bar (band pills + topic dropdown) replacing the old 47-topic grid
+Compact filter bar (band pills + topic dropdown).
 
-### Liz AI Teacher - Real Teacher Experience (Feb 12, 2026)
-- Teacher presence UI with avatar + speaking animations
-- Voice-first: auto-TTS every response + STT microphone input + stop button
-- Structured lesson modes: Speaking, Vocabulary, Grammar, Study Plan
-- Progress awareness (memory injection) with all student data
-- Homework system: auto-assign via [HOMEWORK] markers, submit, auto-review with GPT-4o
-- Plan-gated: only Booster/Pro users (upgrade gate for Free/Starter)
+### Liz AI Teacher (Feb 12, 2026)
+Teacher presence UI, voice-first (TTS/STT), homework system, plan-gated (Booster/Pro).
 
 ### Other Features (Previously Implemented)
-- Question Bank, Quick Practice, Full Test System, Writing Practice
-- Level Test, Vocabulary & Grammar, Speaking Practice
-- Learning Platform (beginner/advanced/mastery)
+Question Bank, Quick Practice, Full Test System, Writing Practice, Level Test, Vocabulary & Grammar, Speaking Practice, Learning Platform (beginner/advanced/mastery).
 
 ## Backlog / Upcoming Tasks
 
-### P0 - Phase 1 Continuation
-- **Production Mode (Mini AI)**: GPT-4o evaluates user-written sentences with target words
+### P0 - Phase 1 Remaining
 - **Review Bank**: Spaced repetition system for difficult words
 
 ### P1 - Future Phases
 - **Phase 2**: Grammar Engine (Concept, Drill, Production, Quiz)
 - **Phase 3**: Teacher Control Layer (student monitoring, lesson assignment)
-- **Phase 4**: Learning Pathway restructuring (course → skill-based stages)
+- **Phase 4**: Learning Pathway restructuring (course -> skill-based stages)
 - **Phase 5**: AI Content Expansion (NotebookLM, podcasts/slides)
 
 ### P2 - Other
