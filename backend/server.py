@@ -1408,6 +1408,24 @@ async def get_test(test_id: str):
     test = await db.tests.find_one({"id": test_id}, {"_id": 0})
     if not test:
         raise HTTPException(status_code=404, detail="Test not found")
+    
+    # For listening tests, inject audio URLs into sections
+    if test.get("test_type") == "listening":
+        audio_files = [
+            "ls_b45_001", "ls_b45_002", "ls_b45_003", "ls_b45_004",
+            "ls_b56_001", "ls_b56_002", "ls_b56_003", "ls_b56_004",
+            "ls_b79_001", "ls_b79_002", "ls_b79_003", "ls_b79_004",
+        ]
+        # Map test index to audio set (Test 1 -> b45, Test 2 -> b56)
+        all_listening = await db.tests.find({"test_type": "listening"}, {"_id": 0, "id": 1}).to_list(10)
+        test_idx = next((i for i, t in enumerate(all_listening) if t["id"] == test_id), 0)
+        base = test_idx * 4  # 4 parts per test
+        
+        for i, section in enumerate(test.get("sections", [])):
+            audio_idx = base + i
+            if audio_idx < len(audio_files):
+                section["audio_url"] = f"/api/listening/audio/{audio_files[audio_idx]}"
+    
     return test
 
 @api_router.post("/tests/submit")
