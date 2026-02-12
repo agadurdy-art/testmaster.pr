@@ -126,6 +126,19 @@ export default function QuestionBank({ user }) {
       setFullTests(allTests);
       setCambridgeBooks(cambridgeData.books || []);
       
+      // Load completion stats if user is logged in
+      if (user?.id) {
+        try {
+          const compRes = await fetch(`${API_URL}/api/user/${user.id}/completion-stats`);
+          if (compRes.ok) {
+            const compData = await compRes.json();
+            setCompletionStats(compData);
+          }
+        } catch (err) {
+          console.error('Error loading completion stats:', err);
+        }
+      }
+      
       // Load all topics initially (from Lesson Registry)
       await loadTopicsForBand(null);
     } catch (error) {
