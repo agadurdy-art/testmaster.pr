@@ -821,7 +821,10 @@ export default function QuestionBank() {
                   {num: 2, id: 'academic_set_b_01', label: 'B', desc: 'Bar Chart - US Households'},
                   {num: 3, id: 'academic_set_c_01', label: 'C', desc: 'Process Diagram + Map'},
                   {num: 4, id: 'academic_set_d_01', label: 'D', desc: 'Floor Plan Comparison'},
-                  {num: 5, id: 'academic_set_e_01', label: 'E', desc: 'Airport Map Comparison'}
+                  {num: 5, id: 'academic_set_e_01', label: 'E', desc: 'Airport Map Comparison'},
+                  {num: 6, id: 'academic_set_f_01', label: 'F', desc: 'Line Graph - Metal Prices'},
+                  {num: 7, id: 'academic_set_g_01', label: 'G', desc: 'Paired Graphs - Appliances'},
+                  {num: 8, id: 'academic_set_h_01', label: 'H', desc: 'Process - Sugar Production'}
                 ].map(set => (
                   <Card 
                     key={set.num} 
