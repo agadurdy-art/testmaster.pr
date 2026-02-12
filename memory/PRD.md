@@ -67,9 +67,12 @@ An IELTS exam preparation platform with AI-powered evaluation, Cambridge-aligned
 3. **P1 - Writing crash**: Fixed redirect from `/writing-practice/task1` to `/writing-practice`
 4. **P2 - Dark UI**: Replaced slate-900 dark theme with amber/cream/orange warm tones
 5. **Backend filter**: Questions with empty `correct` field are now excluded from practice
+6. **Listening audio state reset**: Fixed audio not playing on subsequent questions - audio element src is now properly cleared with `removeAttribute('src')` + `load()` on question change, and old blob URLs are revoked
 
-## Backlog
-- No pending tasks currently. All reported bugs are fixed and tested.
+## Backlog / Future Tasks
+- **Spaced Repetition System**: Track which questions the user gets wrong and re-serve them in future practice sets for more effective long-term IELTS preparation
+- Refactor PracticeMode.js into smaller components (QuestionCard, FeedbackView, SummaryScreen)
+- Enrich Cambridge test data with more correct answers to expand the practice pool
 
 ## Test Credentials
 - Email: test@test.com / Password: test1234
