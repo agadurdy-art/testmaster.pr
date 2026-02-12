@@ -349,10 +349,12 @@ def get_questions_from_cambridge_tests(skill: str, count: int = 10, question_typ
 
                         elif q_type == "summary_completion":
                             summary_text = q_group.get("summary", "")
+                            if isinstance(summary_text, dict):
+                                summary_text = summary_text.get("text", str(summary_text))
                             all_questions.append({
                                 "id": f"{source_name}_R_sum_{q_group.get('number', '')}",
                                 "type": "sentence-completion",
-                                "text": f"Complete the summary: {summary_text[:200]}...",
+                                "text": f"Complete the summary: {str(summary_text)[:200]}...",
                                 "passage": passage_text[:1000],
                                 "passage_title": passage_title,
                                 "options": q_group.get("options", []),
