@@ -236,7 +236,8 @@ export default function FullTestInterface({ user }) {
           test_id: testId,
           mode: mode,
           all_answers: sectionAnswers,
-          section_times: sectionTimes
+          section_times: sectionTimes,
+          user_id: (() => { try { return JSON.parse(localStorage.getItem('user'))?.id; } catch { return null; } })()
         })
       });
       const data = await res.json();
