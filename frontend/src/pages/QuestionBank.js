@@ -912,7 +912,7 @@ export default function QuestionBank() {
             <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
               <PenTool className="w-5 h-5 text-green-600" /> Writing Practice
             </h2>
-            <p className="text-gray-500 mb-4">Hangi görevi pratik yapmak istiyorsunuz?</p>
+            <p className="text-gray-500 mb-4">Which task would you like to practice?</p>
             
             <div className="space-y-3">
               {/* ====== ACADEMIC WRITING SECTION ====== */}
@@ -920,13 +920,13 @@ export default function QuestionBank() {
                 <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wider mb-2 flex items-center gap-2">
                   <BookOpen className="w-4 h-4" /> Academic IELTS
                 </p>
-                <p className="text-xs text-gray-500 mb-3">Kurs konularıyla ilişkili • Topic ve Band seçimi aktif</p>
+                <p className="text-xs text-gray-500 mb-3">Course-aligned topics with band filtering</p>
               </div>
               
               {/* Active Filters for Academic - Only show for Academic */}
               {(selectedTopic || selectedBand) && (
                 <div className="mb-3 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                  <p className="text-xs text-indigo-600 font-medium mb-1">Academic Writing Filtreleri:</p>
+                  <p className="text-xs text-indigo-600 font-medium mb-1">Academic Writing Filters:</p>
                   <div className="flex gap-2 flex-wrap">
                     {selectedBand && (
                       <Badge className="bg-indigo-100 text-indigo-700 text-xs">
@@ -999,13 +999,13 @@ export default function QuestionBank() {
                 <p className="text-xs font-semibold text-purple-600 uppercase tracking-wider mb-2 flex items-center gap-2">
                   <FileText className="w-4 h-4" /> General Training IELTS
                 </p>
-                <p className="text-xs text-gray-500 mb-3">Mektup yazma pratiği • Kurs konularından bağımsız</p>
+                <p className="text-xs text-gray-500 mb-3">Letter writing practice, independent of course topics</p>
               </div>
               
               {/* Note: No topic/band filters for General Training */}
               <div className="mb-3 p-3 bg-purple-50 rounded-lg border border-purple-100">
                 <p className="text-xs text-purple-600">
-                  ℹ️ General Training mektup yazma, kurs konularından bağımsızdır. 32 farklı mektup senaryosu (Formal, Semi-formal, Informal) içerir.
+                  General Training letter writing is independent of course topics. It includes 32 different letter scenarios (Formal, Semi-formal, Informal).
                 </p>
               </div>
               
