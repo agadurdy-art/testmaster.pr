@@ -479,13 +479,19 @@ async def chat_with_liz(req: ChatRequest):
 
     response = await chat.send_message(UserMessage(text=req.message))
 
+    # Parse homework assignments from response
+    cleaned_response, hw_list = parse_homework_from_response(response, req.user_id, session_id)
+    for hw in hw_list:
+        await db.liz_homework.insert_one(hw)
+    display_response = cleaned_response if cleaned_response else response
+
     now = datetime.now(timezone.utc).isoformat()
     await db.liz_sessions.update_one(
         {"session_id": session_id},
         {"$push": {"messages": {
             "$each": [
                 {"role": "user", "content": req.message, "timestamp": now, "is_voice": req.is_voice},
-                {"role": "assistant", "content": response, "timestamp": now}
+                {"role": "assistant", "content": display_response, "timestamp": now}
             ]
         }}}
     )
@@ -493,7 +499,8 @@ async def chat_with_liz(req: ChatRequest):
     return {
         "success": True,
         "session_id": session_id,
-        "response": response
+        "response": display_response,
+        "homework_assigned": [{"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]} for h in hw_list]
     }
 
 
