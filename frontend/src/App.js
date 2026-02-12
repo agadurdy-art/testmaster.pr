@@ -447,7 +447,7 @@ function AppWithSessionHandler() {
           element={user ? <VisualGenerator /> : <Navigate to="/" />} 
         />
       </Routes>
-      {user && !location.pathname.startsWith('/liz') && <LizFloatingButton />}
+      {user && !location.pathname.startsWith('/liz') && <LizFloatingButton user={user} />}
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
       <Toaster position="top-right" />
