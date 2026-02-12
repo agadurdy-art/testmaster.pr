@@ -466,12 +466,15 @@ def get_questions_from_full_tests(skill: str, count: int = 10):
                     audio_script = part.get("audio_script", part.get("transcript", ""))
                     for q in part["questions"]:
                         q_text = q.get("question", "")
+                        q_type = q.get("type", "note-completion").replace("_", "-")
+                        opts = q.get("options", [])
+                        # For completion types without options, provide the answer as hint format
                         all_questions.append({
                             "id": f"{source_name}_{q['id']}",
-                            "type": q.get("type", "note-completion").replace("_", "-"),
+                            "type": q_type,
                             "text": q_text if q_text else f"Part {part['part_number']} - {part.get('title', 'Listening')}",
                             "correct": q.get("answer", ""),
-                            "options": q.get("options", []),
+                            "options": opts,
                             "audio_transcript": audio_script[:500] if audio_script else f"Listen about: {part.get('title', '')}",
                             "context": part["title"],
                             "part": part["part_number"],
