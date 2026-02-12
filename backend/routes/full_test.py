@@ -483,12 +483,12 @@ async def evaluate_full_test(
         results["sections"]["reading"] = reading_result
 
     # Evaluate Writing (AI)
-    if "writing" in answers:
+    if "writing" in answers and "writing" in test.get("sections", {}):
         writing_result = await evaluate_writing_section(test, answers["writing"])
         results["sections"]["writing"] = writing_result
 
     # Evaluate Speaking (AI)
-    if "speaking" in answers:
+    if "speaking" in answers and "speaking" in test.get("sections", {}):
         speaking_result = await evaluate_speaking_section(test, answers["speaking"])
         results["sections"]["speaking"] = speaking_result
 
