@@ -521,9 +521,14 @@ async def greet_student(req: NewSessionRequest):
 
     session = await get_or_create_session(req.user_id)
     user_context = await get_user_context(req.user_id)
+    hw_context = await get_homework_context(req.user_id)
+
+    hw_note = ""
+    if hw_context:
+        hw_note = f"\n\nIMPORTANT - The student has pending homework. Briefly remind them.\n{hw_context}"
 
     greeting_system = f"""You are Liz, a professional IELTS teacher. Generate a brief, warm greeting (2-3 sentences max) for your student who just opened their lesson.
-Based on their profile, mention something specific about their progress and suggest what to work on today. Be warm but professional. Speak naturally as if you're face-to-face.
+Based on their profile, mention something specific about their progress and suggest what to work on today. Be warm but professional. Speak naturally as if you're face-to-face.{hw_note}
 
 Student Profile:
 {user_context}"""
