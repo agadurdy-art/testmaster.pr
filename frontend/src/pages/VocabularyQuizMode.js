@@ -23,26 +23,19 @@ export default function VocabularyQuizMode({ user }) {
   const [submitted, setSubmitted] = useState(false);
   const [result, setResult] = useState(null);
 
-  useEffect(() => { fetchQuiz(); fetchPassage(); }, [moduleId]);
+  useEffect(() => { fetchQuiz(); }, [moduleId]);
 
   const fetchQuiz = async () => {
     try {
       const res = await fetch(`${API_URL}/api/vocabulary-engine/${moduleId}/quiz`);
-      if (res.ok) setData(await res.json());
+      if (res.ok) {
+        const d = await res.json();
+        setData(d);
+        if (d.reading_passage) setPassage(d.reading_passage);
+      }
       else { toast.error('Failed to load quiz'); navigate('/advanced-mastery'); }
     } catch { toast.error('Connection error'); }
     finally { setLoading(false); }
-  };
-
-  const fetchPassage = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/advanced-mastery/modules`);
-      if (res.ok) {
-        const modules = await res.json();
-        const mod = modules.find(m => m.id === moduleId);
-        if (mod?.reading?.text) setPassage(mod.reading.text);
-      }
-    } catch {}
   };
 
   const selectAnswer = (qid, ans) => { if (!submitted) setAnswers(p => ({ ...p, [qid]: ans })); };
