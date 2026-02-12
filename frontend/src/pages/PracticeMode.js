@@ -155,6 +155,8 @@ export default function PracticeMode({ user }) {
       catch (e) { console.error('Audio replay failed:', e); }
     }
   };
+
+  const generateAudio = async (text) => {
     if (!text) return;
     setAudioLoading(true);
     try {
@@ -185,25 +187,6 @@ export default function PracticeMode({ user }) {
         window.speechSynthesis.speak(u);
       }
     } finally { setAudioLoading(false); }
-  };
-
-  const playAudio = async () => {
-    const q = questions[currentIndex];
-    if (!q?.audio_transcript) return;
-    if (isPlayingAudio && audioRef.current) { audioRef.current.pause(); setIsPlayingAudio(false); return; }
-    if (!audioUrl) {
-      const url = await generateAudio(q.audio_transcript);
-      if (url && audioRef.current) {
-        audioRef.current.src = url;
-        audioRef.current.load();
-        try { await audioRef.current.play(); setIsPlayingAudio(true); }
-        catch (e) { console.error('Audio play failed:', e); }
-      }
-    } else if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      try { await audioRef.current.play(); setIsPlayingAudio(true); }
-      catch (e) { console.error('Audio replay failed:', e); }
-    }
   };
 
   const handleSelect = (answer) => {
