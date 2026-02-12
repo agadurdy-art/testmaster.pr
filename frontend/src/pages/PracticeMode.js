@@ -19,6 +19,21 @@ function normalizeAnswer(val) {
   return val.toString().trim().toLowerCase();
 }
 
+function isAnswerCorrect(userAnswer, correctAnswer) {
+  if (!userAnswer || !correctAnswer) return false;
+  const user = normalizeAnswer(userAnswer);
+  const correct = normalizeAnswer(correctAnswer);
+  if (user === correct) return true;
+  // Handle multiple acceptable answers separated by / or 'or' or 'and'
+  // e.g. "fire/flame", "A and B", "Monday or Tuesday"
+  const alternatives = correct.split(/\s*[\/]\s*|\s+or\s+/i).map(a => a.trim().toLowerCase());
+  if (alternatives.some(alt => alt === user)) return true;
+  // Handle "A and B" where user types just one part
+  const parts = correct.split(/\s+and\s+/i).map(a => a.trim().toLowerCase());
+  if (parts.length > 1 && parts.some(p => p === user)) return true;
+  return false;
+}
+
 function extractOptionValue(opt) {
   if (!opt) return opt;
   const match = opt.match(/^([A-D])[\s\):.]/i);
