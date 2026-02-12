@@ -474,13 +474,13 @@ except Exception as e:
     traceback.print_exc()
 
 try:
-    from routes.emily_teacher import router as emily_router
-    from routes import emily_teacher
-    emily_teacher.db = db
-    app.include_router(emily_router)
-    print("✅ Emily AI Teacher routes loaded")
+    from routes.liz_teacher import router as liz_router
+    from routes import liz_teacher
+    liz_teacher.db = db
+    app.include_router(liz_router)
+    print("✅ Liz AI Teacher routes loaded")
 except Exception as e:
-    print(f"⚠️  Could not load Emily Teacher routes: {e}")
+    print(f"⚠️  Could not load Liz Teacher routes: {e}")
     import traceback
     traceback.print_exc()
 

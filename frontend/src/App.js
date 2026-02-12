@@ -59,8 +59,8 @@ import VisualGenerator from './pages/VisualGenerator';
 import CambridgeTestInterface from './pages/CambridgeTestInterface';
 import CambridgeTestResults from './pages/CambridgeTestResults';
 import FocusPlan from './pages/FocusPlan';
-import EmilyTeacher from './pages/EmilyTeacher';
-import EmilyFloatingButton from './components/EmilyFloatingButton';
+import LizTeacher from './pages/LizTeacher';
+import LizFloatingButton from './components/LizFloatingButton';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
@@ -408,8 +408,8 @@ function AppWithSessionHandler() {
           element={user ? <PracticeMode user={user} /> : <Navigate to="/" />} 
         />
         <Route 
-          path="/emily" 
-          element={user ? <EmilyTeacher user={user} /> : <Navigate to="/" />} 
+          path="/liz" 
+          element={user ? <LizTeacher user={user} /> : <Navigate to="/" />} 
         />
         <Route 
           path="/question-bank" 
@@ -447,7 +447,7 @@ function AppWithSessionHandler() {
           element={user ? <VisualGenerator /> : <Navigate to="/" />} 
         />
       </Routes>
-      {user && !location.pathname.startsWith('/emily') && <EmilyFloatingButton />}
+      {user && !location.pathname.startsWith('/liz') && <LizFloatingButton />}
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
       <Toaster position="top-right" />
