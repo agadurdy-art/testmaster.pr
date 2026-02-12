@@ -382,7 +382,6 @@ async def serve_cached_audio(set_id: str):
     return FileResponse(
         path=cache_path,
         media_type="audio/mpeg",
-        filename=f"{set_id}.mp3"
     )
 
 
