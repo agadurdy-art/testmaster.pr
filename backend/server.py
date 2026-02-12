@@ -5404,7 +5404,7 @@ class VocabQuizSubmission(BaseModel):
 
 @api_router.post("/vocabulary-engine/quiz/submit")
 async def submit_vocabulary_quiz(submission: VocabQuizSubmission):
-    """Submit vocabulary quiz results"""
+    """Submit vocabulary quiz results and auto-add wrong answers to review bank"""
     passed = (submission.score / submission.total * 100) >= 80 if submission.total > 0 else False
     
     await db.vocabulary_progress.update_one(
@@ -5417,6 +5417,34 @@ async def submit_vocabulary_quiz(submission: VocabQuizSubmission):
         }},
         upsert=True,
     )
+    
+    # Auto-add wrong answers to review bank
+    module = await db.advanced_mastery_modules.find_one({"id": submission.module_id}, {"_id": 0})
+    if module:
+        questions = module.get("quiz", {}).get("questions", [])
+        for i, q in enumerate(questions[:10]):
+            qid = f"q-{i}"
+            user_ans = submission.answers.get(qid)
+            if user_ans and user_ans != q.get("answer"):
+                # Extract keyword from question for review
+                word = q.get("question", "")[:60]
+                await db.review_bank.update_one(
+                    {"user_id": submission.user_id, "word": word, "module_id": submission.module_id},
+                    {"$set": {
+                        "meaning": q.get("question", ""),
+                        "category": "quiz_mistake",
+                        "source": "quiz",
+                        "mastery_status": "learning",
+                        "last_seen": datetime.now(timezone.utc).isoformat(),
+                    },
+                    "$inc": {"mistake_count": 1},
+                    "$setOnInsert": {
+                        "review_count": 0,
+                        "next_review": datetime.now(timezone.utc).isoformat(),
+                        "created_at": datetime.now(timezone.utc).isoformat(),
+                    }},
+                    upsert=True,
+                )
     
     return {
         "passed": passed,
