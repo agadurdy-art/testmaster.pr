@@ -409,25 +409,44 @@ async def complete_test(
     test_id: str = Body(...),
     all_answers: Dict[str, Dict[str, Any]] = Body(...),
     section_times: Dict[str, int] = Body(default={}),
-    mode: str = Body(default="full")
+    mode: str = Body(default="full"),
+    user_id: Optional[str] = Body(default=None)
 ):
     """
     Complete test and generate full evaluation.
-    
-    This is called after all sections are submitted.
-    Generates comprehensive results including:
-    - Band scores per section
-    - Overall band score
-    - Detailed feedback
-    - Strengths and weaknesses
-    - Improvement recommendations
     """
     test = get_test_by_id(test_id)
     if not test:
         raise HTTPException(status_code=404, detail=f"Test set '{test_id}' not found")
     
     results = await evaluate_full_test(test, all_answers, section_times)
-    
+
+    # Track completion in DB
+    if user_id:
+        try:
+            from server import db
+            category = "ai_academic" if test_id.startswith("academic_") else "ai_general"
+            band = results.get("overall_band", 0) if isinstance(results, dict) else 0
+            existing = await db.user_completions.find_one(
+                {"user_id": user_id, "test_id": test_id, "category": category}, {"_id": 0}
+            )
+            record = {
+                "user_id": user_id,
+                "test_id": test_id,
+                "category": category,
+                "band_score": band,
+                "completed_at": datetime.now(timezone.utc).isoformat(),
+            }
+            if existing:
+                await db.user_completions.update_one(
+                    {"user_id": user_id, "test_id": test_id, "category": category},
+                    {"$set": record},
+                )
+            else:
+                await db.user_completions.insert_one(record)
+        except Exception as e:
+            print(f"Warning: Could not track full test completion: {e}")
+
     return {
         "success": True,
         "session_id": session_id,
