@@ -16,6 +16,19 @@ import os
 
 router = APIRouter(prefix="/api/full-test", tags=["Full Test Mode"])
 
+# Import shared evaluation helpers from cambridge routes
+try:
+    from routes.cambridge import (
+        classify_reason_code, compare_answers as cambridge_compare,
+        calculate_band_from_percentage, get_skill_tip,
+        generate_explanation, generate_lesson_recommendations,
+        extract_evidence_text
+    )
+    CAMBRIDGE_HELPERS_AVAILABLE = True
+except ImportError:
+    CAMBRIDGE_HELPERS_AVAILABLE = False
+    print("Warning: Could not import cambridge evaluation helpers")
+
 # Import test structure utilities
 try:
     from content.full_tests.test_structure import (
