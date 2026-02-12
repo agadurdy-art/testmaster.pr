@@ -70,7 +70,30 @@ try:
     from content.full_tests.general.set_d import GENERAL_SET_D
 except ImportError:
     GENERAL_SET_D = None
-    GENERAL_SET_B = None
+
+# Import Set E content
+try:
+    from content.full_tests.academic.set_e import ACADEMIC_SET_E
+except ImportError:
+    ACADEMIC_SET_E = None
+
+# Import Set F content
+try:
+    from content.full_tests.academic.set_f import ACADEMIC_SET_F
+except ImportError:
+    ACADEMIC_SET_F = None
+
+# Import Set G content
+try:
+    from content.full_tests.academic.set_g import ACADEMIC_SET_G
+except ImportError:
+    ACADEMIC_SET_G = None
+
+# Import Set H content
+try:
+    from content.full_tests.academic.set_h import ACADEMIC_SET_H
+except ImportError:
+    ACADEMIC_SET_H = None
 
 AUDIO_BASE_PATH = Path("/app/backend/static/audio/full_tests")
 
