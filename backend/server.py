@@ -291,8 +291,9 @@ api_router = APIRouter(prefix="/api")
 # Mount static files for audio
 static_audio_path = ROOT_DIR / "static" / "audio"
 if static_audio_path.exists():
+    app.mount("/api/static/audio", StaticFiles(directory=str(static_audio_path)), name="audio_api")
     app.mount("/static/audio", StaticFiles(directory=str(static_audio_path)), name="audio")
-    print("✅ Static audio files mounted at /static/audio")
+    print("✅ Static audio files mounted at /api/static/audio and /static/audio")
 else:
     print("⚠️  Static audio directory not found")
 
