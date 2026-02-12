@@ -807,31 +807,47 @@ export default function FullTestInterface({ user }) {
             <p className="text-slate-600 text-lg">Listen and answer questions {(listeningPart-1)*10 + 1} - {listeningPart * 10}</p>
           </div>
 
-          {/* Audio Player with Volume Control */}
+          {/* Audio Player with Progress Bar & Time */}
           <div className="mb-6 p-4 bg-gradient-to-r from-slate-100 to-slate-50 rounded-lg border border-slate-200">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <button
-                  onClick={handlePlayAudio}
-                  disabled={audioEndedParts[listeningPart]}
-                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg
-                    ${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'}
-                    ${audioEndedParts[listeningPart] ? 'bg-slate-400 cursor-not-allowed' : ''}
-                    text-white`}
-                >
-                  {audioPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
-                </button>
-                <div>
-                  <p className="font-semibold text-slate-900 text-lg">
+            <div className="flex items-center gap-4 mb-3">
+              <button
+                onClick={handlePlayAudio}
+                disabled={audioEndedParts[listeningPart]}
+                className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg shrink-0
+                  ${audioPlaying ? 'bg-amber-500 hover:bg-amber-600' : 'bg-green-500 hover:bg-green-600'}
+                  ${audioEndedParts[listeningPart] ? 'bg-slate-400 cursor-not-allowed' : ''}
+                  text-white`}
+                data-testid="full-test-play-btn"
+              >
+                {audioPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-1" />}
+              </button>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between mb-1">
+                  <p className="font-semibold text-slate-900">
                     {audioPlaying ? 'Playing...' : audioEndedParts[listeningPart] ? 'Audio Completed' : 'Click to Play Audio'}
                   </p>
-                  <p className="text-sm text-slate-500">Audio plays once only - Part {listeningPart}</p>
+                  <p className="text-sm text-slate-500">Part {listeningPart} of 4</p>
+                </div>
+                {/* Progress Bar */}
+                <div className="w-full bg-slate-200 rounded-full h-2 mb-1.5 overflow-hidden">
+                  <div 
+                    className="bg-amber-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: audioDuration > 0 ? `${(audioCurrentTime / audioDuration) * 100}%` : '0%' }}
+                  />
+                </div>
+                {/* Time Display */}
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span>{formatTimeShort(Math.floor(audioCurrentTime))}</span>
+                  <span>
+                    {audioDuration > 0 
+                      ? `-${formatTimeShort(Math.floor(audioDuration - audioCurrentTime))} remaining`
+                      : 'Audio plays once only'}
+                  </span>
                 </div>
               </div>
-              
               {/* Volume Control */}
-              <div className="flex items-center gap-2">
-                <Volume2 className="w-5 h-5 text-slate-500" />
+              <div className="flex items-center gap-1.5 shrink-0">
+                <Volume2 className="w-4 h-4 text-slate-500" />
                 <input 
                   type="range" 
                   min="0" 
@@ -842,18 +858,21 @@ export default function FullTestInterface({ user }) {
                       audioRef.current.volume = e.target.value / 100;
                     }
                   }}
-                  className="w-24 h-2 bg-slate-300 rounded-lg appearance-none cursor-pointer"
+                  className="w-20 h-1.5 bg-slate-300 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
             </div>
             <audio
               ref={audioRef}
-              key={listeningPart} // Force new audio element when part changes
+              key={listeningPart}
               src={`${API_URL}/api/full-test/audio/stream/${testId}/listening/${listeningPart}`}
               onEnded={handleAudioEnded}
               onPlay={() => setAudioPlaying(true)}
               onPause={() => setAudioPlaying(false)}
+              onLoadedMetadata={(e) => setAudioDuration(e.target.duration || 0)}
+              onTimeUpdate={(e) => setAudioCurrentTime(e.target.currentTime || 0)}
               style={{ display: 'none' }}
+              data-testid="full-test-audio-element"
             />
           </div>
 
