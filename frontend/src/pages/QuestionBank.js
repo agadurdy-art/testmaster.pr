@@ -815,20 +815,31 @@ export default function QuestionBank() {
                   </div>
                 </Card>
                 
-                {/* Academic Sets - Coming Soon */}
-                {[1, 2, 3, 4, 5].map(num => (
-                  <Card key={num} className="p-4 bg-gray-50 border-2 border-dashed border-gray-200 opacity-60">
+                {/* Academic Sets - Active */}
+                {[
+                  {num: 1, id: 'academic_set_a_01', label: 'A', desc: 'Line Graph - Urbanisation'},
+                  {num: 2, id: 'academic_set_b_01', label: 'B', desc: 'Bar Chart - US Households'},
+                  {num: 3, id: 'academic_set_c_01', label: 'C', desc: 'Process Diagram + Map'},
+                  {num: 4, id: 'academic_set_d_01', label: 'D', desc: 'Floor Plan Comparison'},
+                  {num: 5, id: 'academic_set_e_01', label: 'E', desc: 'Airport Map Comparison'}
+                ].map(set => (
+                  <Card 
+                    key={set.num} 
+                    className="p-4 bg-white border-2 border-indigo-200 hover:border-indigo-400 hover:shadow-lg transition-all cursor-pointer"
+                    data-testid={`academic-set-${set.num}-card`}
+                    onClick={() => navigate(`/full-test?type=academic&set=${set.id}`)}
+                  >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-gray-200 flex items-center justify-center">
-                          <span className="font-bold text-gray-400">{num}</span>
+                        <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
+                          <span className="font-bold text-indigo-600">{set.label}</span>
                         </div>
                         <div>
-                          <h4 className="font-medium text-gray-400">Academic Set {num}</h4>
-                          <span className="text-xs text-gray-400">Coming Soon</span>
+                          <h4 className="font-medium text-gray-900">Academic Set {set.label}</h4>
+                          <span className="text-xs text-gray-500">{set.desc}</span>
                         </div>
                       </div>
-                      <Clock className="w-5 h-5 text-gray-300" />
+                      <ChevronRight className="w-5 h-5 text-indigo-500" />
                     </div>
                   </Card>
                 ))}
