@@ -1012,6 +1012,41 @@ export default function FullTestInterface({ user }) {
     const renderVisual = (visualData) => {
       if (!visualData) return null;
       
+      // Before/After comparison - two images side by side
+      if (visualData.image_url && visualData.image_url_after) {
+        return (
+          <div className="mt-4 p-4 bg-white border rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                {visualData.before?.label && (
+                  <p className="text-center text-sm font-semibold text-slate-700 mb-2">{visualData.before.label}</p>
+                )}
+                <img 
+                  src={`${API_URL}/api/visuals/image/${visualData.image_url.replace('.png', '')}`}
+                  alt={visualData.before?.label || 'Before'}
+                  className="w-full rounded border"
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
+              </div>
+              <div>
+                {visualData.after?.label && (
+                  <p className="text-center text-sm font-semibold text-slate-700 mb-2">{visualData.after.label}</p>
+                )}
+                <img 
+                  src={`${API_URL}/api/visuals/image/${visualData.image_url_after.replace('.png', '')}`}
+                  alt={visualData.after?.label || 'After'}
+                  className="w-full rounded border"
+                  onError={(e) => { e.target.style.display = 'none'; }}
+                />
+              </div>
+            </div>
+            {visualData.title && (
+              <p className="text-center text-sm text-slate-600 mt-2">{visualData.title}</p>
+            )}
+          </div>
+        );
+      }
+      
       // If image URL is provided, render the PNG directly
       if (visualData.image_url) {
         return (
