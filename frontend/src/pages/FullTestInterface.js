@@ -378,17 +378,20 @@ export default function FullTestInterface({ user }) {
       if (audioPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        audioRef.current.play().catch(e => console.error('Audio play failed:', e));
       }
     }
   };
 
   const handleAudioEnded = () => {
     setAudioPlaying(false);
+    setAudioCurrentTime(0);
     // Mark this specific part as ended
     setAudioEndedParts(prev => ({ ...prev, [listeningPart]: true }));
     if (listeningPart < 4) {
       setTimeout(() => {
+        setAudioDuration(0);
+        setAudioCurrentTime(0);
         setListeningPart(prev => prev + 1);
       }, 2000);
     }
