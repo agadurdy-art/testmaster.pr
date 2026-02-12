@@ -1,103 +1,86 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
-import { Badge } from '../components/ui/badge';
 import { 
-  ArrowLeft, Clock, Shuffle, Brain, Target, 
-  CheckCircle, XCircle, ChevronRight, BookOpen, Headphones,
-  Mic, PenTool, RotateCcw, Play, Timer, Award,
-  Loader2, AlertCircle, Lightbulb, Pause, Volume2
+  ArrowLeft, CheckCircle, XCircle, ChevronRight,
+  BookOpen, Headphones, Play, Pause, Volume2,
+  Loader2, Lightbulb, RotateCcw, Zap
 } from 'lucide-react';
-import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-const MODES = {
-  timed: { 
-    name: 'Timed Practice', 
-    icon: Clock, 
-    color: 'from-red-500 to-orange-500',
-    description: 'Real exam conditions with time pressure'
-  },
-  random: { 
-    name: 'Random Practice', 
-    icon: Shuffle, 
-    color: 'from-blue-500 to-cyan-500',
-    description: 'Random questions for variety'
-  },
-  smart: { 
-    name: 'Smart Practice', 
-    icon: Brain, 
-    color: 'from-purple-500 to-pink-500',
-    description: 'AI-powered focus on weak areas'
-  }
-};
-
 const SKILLS = {
-  reading: { name: 'Reading', icon: BookOpen, color: 'text-blue-600', bg: 'bg-blue-50' },
-  listening: { name: 'Listening', icon: Headphones, color: 'text-purple-600', bg: 'bg-purple-50' },
-  writing: { name: 'Writing', icon: PenTool, color: 'text-green-600', bg: 'bg-green-50' },
-  speaking: { name: 'Speaking', icon: Mic, color: 'text-orange-600', bg: 'bg-orange-50' }
-};
-
-// Time limits per question type (in seconds)
-const TIME_LIMITS = {
-  reading: {
-    'multiple-choice': 90,
-    'true-false-ng': 75,
-    'matching-headings': 120,
-    'sentence-completion': 90,
-    'summary-completion': 120,
-    'matching-info': 90,
-    'default': 90
-  },
-  listening: {
-    'default': 30 // Per question
-  },
-  writing: {
-    'task1': 20 * 60, // 20 minutes
-    'task2': 40 * 60  // 40 minutes
-  },
-  speaking: {
-    'part1': 30,
-    'part2': 120,
-    'part3': 45
-  }
+  reading: { name: 'Reading', icon: BookOpen, color: 'from-blue-500 to-cyan-500', accent: 'text-blue-600', bg: 'bg-blue-50' },
+  listening: { name: 'Listening', icon: Headphones, color: 'from-purple-500 to-indigo-500', accent: 'text-purple-600', bg: 'bg-purple-50' },
 };
 
 export default function PracticeMode({ user }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  
-  const mode = searchParams.get('mode') || 'random';
   const skill = searchParams.get('skill') || 'reading';
-  const topic = searchParams.get('topic');
-  const band = searchParams.get('band');
-  
-  const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [showResults, setShowResults] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [timerActive, setTimerActive] = useState(false);
-  const [practiceStarted, setPracticeStarted] = useState(false);
-  const [stats, setStats] = useState({ correct: 0, incorrect: 0, skipped: 0 });
-  
-  // Audio states for listening practice
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [revealed, setRevealed] = useState(false);
+  const [setStats, setSetStats] = useState({ correct: 0, total: 0 });
+  const [setDone, setSetDone] = useState(false);
+  const [totalSets, setTotalSets] = useState(0);
+  const [totalCorrect, setTotalCorrect] = useState(0);
+  const [totalAnswered, setTotalAnswered] = useState(0);
+  const [slideDir, setSlideDir] = useState('');
+  const [textAnswer, setTextAnswer] = useState('');
+
+  // Audio
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioLoading, setAudioLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const audioRef = useRef(null);
 
-  const ModeIcon = MODES[mode]?.icon || Shuffle;
   const SkillIcon = SKILLS[skill]?.icon || BookOpen;
 
-  // Generate TTS audio for listening practice
+  // Redirect writing/speaking to their own pages
+  useEffect(() => {
+    if (skill === 'speaking') { navigate('/question-bank/speaking'); return; }
+    if (skill === 'writing') { navigate('/writing-practice/task1'); return; }
+  }, [skill, navigate]);
+
+  const loadNewSet = useCallback(async () => {
+    setLoading(true);
+    setCurrentIndex(0);
+    setSelectedAnswer(null);
+    setTextAnswer('');
+    setRevealed(false);
+    setSetDone(false);
+    setSetStats({ correct: 0, total: 0 });
+    setAudioUrl(null);
+    if (audioRef.current) { audioRef.current.pause(); }
+
+    try {
+      const res = await fetch(`${API_URL}/api/question-bank/practice/random?skill=${skill}&count=3`);
+      const data = await res.json();
+      if (data.success && data.questions?.length > 0) {
+        setQuestions(data.questions);
+      }
+    } catch (err) {
+      console.error('Load error:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [skill]);
+
+  useEffect(() => { loadNewSet(); }, [loadNewSet]);
+
+  // Reset audio on question change
+  useEffect(() => {
+    setAudioUrl(null);
+    setIsPlayingAudio(false);
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
+  }, [currentIndex]);
+
   const generateAudio = async (text) => {
     if (!text) return;
-    
     setAudioLoading(true);
     try {
       const response = await fetch(`${API_URL}/api/vocab-grammar/tts`, {
@@ -105,732 +88,342 @@ export default function PracticeMode({ user }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, voice: 'alloy', speed: 0.9 })
       });
-      
       if (response.ok) {
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
         setAudioUrl(url);
         return url;
       }
-    } catch (error) {
-      console.error('TTS error:', error);
-      // Fallback to browser TTS
+    } catch {
       if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.9;
-        utterance.lang = 'en-US';
-        window.speechSynthesis.speak(utterance);
+        const u = new SpeechSynthesisUtterance(text);
+        u.rate = 0.9; u.lang = 'en-US';
+        window.speechSynthesis.speak(u);
       }
-    } finally {
-      setAudioLoading(false);
-    }
+    } finally { setAudioLoading(false); }
   };
 
   const playAudio = async () => {
-    const currentQuestion = questions[currentIndex];
-    if (!currentQuestion?.audio_transcript) return;
-    
-    if (isPlayingAudio && audioRef.current) {
-      audioRef.current.pause();
-      setIsPlayingAudio(false);
-      return;
-    }
-    
-    // Generate new audio if not already generated
+    const q = questions[currentIndex];
+    if (!q?.audio_transcript) return;
+    if (isPlayingAudio && audioRef.current) { audioRef.current.pause(); setIsPlayingAudio(false); return; }
     if (!audioUrl) {
-      const url = await generateAudio(currentQuestion.audio_transcript);
-      if (url && audioRef.current) {
-        audioRef.current.src = url;
-        audioRef.current.play();
-        setIsPlayingAudio(true);
-      }
-    } else if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play();
-      setIsPlayingAudio(true);
-    }
+      const url = await generateAudio(q.audio_transcript);
+      if (url && audioRef.current) { audioRef.current.src = url; audioRef.current.play(); setIsPlayingAudio(true); }
+    } else if (audioRef.current) { audioRef.current.currentTime = 0; audioRef.current.play(); setIsPlayingAudio(true); }
   };
 
-  // Reset audio when question changes
-  useEffect(() => {
-    setAudioUrl(null);
-    setIsPlayingAudio(false);
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
-  }, [currentIndex]);
-
-  // Load questions based on skill and mode
-  useEffect(() => {
-    loadQuestions();
-  }, [skill, mode, topic, band]);
-
-  const loadQuestions = async () => {
-    setLoading(true);
-    try {
-      let endpoint = '';
-      let params = new URLSearchParams();
-      
-      if (topic) params.set('topic', topic);
-      if (band) params.set('band_level', band);
-      params.set('count', mode === 'timed' ? '40' : '20');
-
-      // Use question-bank practice endpoints that pull from Full Tests
-      switch (mode) {
-        case 'timed':
-          endpoint = `/api/question-bank/practice/timed?skill=${skill}&${params.toString()}`;
-          break;
-        case 'smart':
-          endpoint = `/api/question-bank/practice/smart?user_id=${user?.id || 'anonymous'}&skill=${skill}`;
-          break;
-        case 'random':
-        default:
-          endpoint = `/api/question-bank/practice/random?skill=${skill}&${params.toString()}`;
-          break;
-      }
-
-      // Special handling for speaking and writing
-      if (skill === 'speaking') {
-        navigate(`/question-bank/speaking?${params.toString()}`);
-        return;
-      }
-      
-      if (skill === 'writing') {
-        navigate(`/writing-practice/task1?${params.toString()}`);
-        return;
-      }
-
-      const res = await fetch(`${API_URL}${endpoint}`);
-      const data = await res.json();
-      
-      if (data.success && data.questions && data.questions.length > 0) {
-        let loadedQuestions = data.questions;
-        
-        // For smart mode, already sorted by backend
-        // For random mode, shuffle
-        if (mode === 'random') {
-          loadedQuestions = shuffleArray([...loadedQuestions]);
-        }
-        
-        setQuestions(loadedQuestions);
-        
-        // Set initial time for timed mode
-        if (mode === 'timed' && loadedQuestions.length > 0) {
-          const firstQ = loadedQuestions[0];
-          const timeLimit = TIME_LIMITS[skill]?.[firstQ.type] || TIME_LIMITS[skill]?.default || 90;
-          setTimeLeft(timeLimit);
-        }
-      } else {
-        // Fallback to sample questions if no data from backend
-        const sampleQuestions = generateSampleQuestions(skill, mode);
-        setQuestions(sampleQuestions);
-        if (mode === 'timed') {
-          setTimeLeft(TIME_LIMITS[skill]?.default || 90);
-        }
-      }
-    } catch (error) {
-      console.error('Error loading questions:', error);
-      // Fallback to sample questions
-      const sampleQuestions = generateSampleQuestions(skill, mode);
-      setQuestions(sampleQuestions);
-      if (mode === 'timed') {
-        setTimeLeft(TIME_LIMITS[skill]?.default || 90);
-      }
-    } finally {
-      setLoading(false);
-    }
+  const handleSelect = (answer) => {
+    if (revealed) return;
+    setSelectedAnswer(answer);
   };
 
-  // Timer effect for timed mode
-  useEffect(() => {
-    let timer;
-    if (mode === 'timed' && timerActive && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft(prev => {
-          if (prev <= 1) {
-            handleTimeUp();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [timerActive, timeLeft, mode]);
-
-  const handleTimeUp = () => {
-    setTimerActive(false);
-    toast.error('Time\'s up!');
-    // Auto-skip to next question
-    handleNext(true);
+  const handleConfirm = () => {
+    if (revealed) return;
+    const answer = (questions[currentIndex]?.options?.length > 0) ? selectedAnswer : textAnswer;
+    if (!answer) return;
+    setRevealed(true);
+    const isCorrect = answer === questions[currentIndex]?.correct;
+    setSetStats(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
   };
 
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
-
-  const prioritizeQuestions = (questions) => {
-    // Smart mode: Sort by difficulty (harder first) or user's weak areas
-    return questions.sort((a, b) => {
-      const diffA = a.difficulty || 'medium';
-      const diffB = b.difficulty || 'medium';
-      const diffOrder = { hard: 0, medium: 1, easy: 2 };
-      return (diffOrder[diffA] || 1) - (diffOrder[diffB] || 1);
-    });
-  };
-
-  const generateSampleQuestions = (skill, mode) => {
-    // Generate sample questions based on skill
-    const baseQuestions = {
-      reading: [
-        {
-          id: 'r1',
-          type: 'true-false-ng',
-          text: 'The passage states that climate change is primarily caused by human activities.',
-          passage: 'Climate change refers to long-term shifts in global temperatures and weather patterns. While natural processes can contribute to these changes, scientific consensus holds that human activities have been the primary driver since the mid-20th century, particularly through the burning of fossil fuels.',
-          options: ['TRUE', 'FALSE', 'NOT GIVEN'],
-          correct: 'TRUE',
-          explanation: 'The passage explicitly states that "human activities have been the primary driver since the mid-20th century."',
-          difficulty: 'medium'
-        },
-        {
-          id: 'r2',
-          type: 'multiple-choice',
-          text: 'What is the main idea of the passage?',
-          passage: 'Renewable energy sources like solar, wind, and hydroelectric power are becoming increasingly important as the world seeks to reduce its dependence on fossil fuels. These clean energy alternatives produce little to no greenhouse gas emissions during operation.',
-          options: [
-            'A) Fossil fuels are the best energy source',
-            'B) Renewable energy is becoming more important',
-            'C) Solar power is the only clean energy',
-            'D) Climate change is not a concern'
-          ],
-          correct: 'B',
-          explanation: 'The passage focuses on how renewable energy sources are "becoming increasingly important."',
-          difficulty: 'easy'
-        },
-        {
-          id: 'r3',
-          type: 'sentence-completion',
-          text: 'Complete the sentence: The industrial revolution began in _______ during the 18th century.',
-          options: ['France', 'Germany', 'Britain', 'Spain'],
-          correct: 'Britain',
-          passage: 'The industrial revolution, which began in Britain during the 18th century, transformed manufacturing processes and led to significant social and economic changes.',
-          explanation: 'The passage clearly states "began in Britain during the 18th century."',
-          difficulty: 'easy'
-        }
-      ],
-      listening: [
-        {
-          id: 'l1',
-          type: 'form-completion',
-          text: 'What time does the train depart?',
-          audio_transcript: 'The next train to London will depart from platform 3 at 14:30.',
-          options: ['13:30', '14:30', '15:30', '16:30'],
-          correct: '14:30',
-          explanation: 'The announcement clearly states "14:30".',
-          difficulty: 'easy'
-        },
-        {
-          id: 'l2',
-          type: 'multiple-choice',
-          text: 'What is the speaker\'s main concern?',
-          audio_transcript: 'I\'m really worried about the environmental impact of this new factory. The pollution levels could increase significantly.',
-          options: [
-            'A) Job opportunities',
-            'B) Environmental impact',
-            'C) Traffic congestion',
-            'D) Noise pollution'
-          ],
-          correct: 'B',
-          explanation: 'The speaker explicitly mentions being "worried about the environmental impact."',
-          difficulty: 'medium'
-        }
-      ],
-      writing: [
-        {
-          id: 'w1',
-          type: 'task2',
-          text: 'Some people believe that universities should focus on academic knowledge, while others think they should prepare students for employment. Discuss both views and give your own opinion.',
-          word_limit: 250,
-          time_limit: 40,
-          difficulty: 'medium'
-        }
-      ],
-      speaking: [
-        {
-          id: 's1',
-          type: 'part1',
-          text: 'What is your favorite type of music? Why do you enjoy it?',
-          time_limit: 30,
-          difficulty: 'easy'
-        }
-      ]
-    };
-
-    let questions = baseQuestions[skill] || baseQuestions.reading;
-    
-    // Add more questions for variety
-    if (mode !== 'timed') {
-      questions = [...questions, ...questions.map((q, i) => ({
-        ...q,
-        id: `${q.id}_copy_${i}`
-      }))];
-    }
-
-    return questions;
-  };
-
-  const handleAnswer = (answer) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questions[currentIndex].id]: answer
-    }));
-  };
-
-  const handleNext = (skipped = false) => {
-    const currentQ = questions[currentIndex];
-    const userAnswer = answers[currentQ.id];
-    
-    // Update stats
-    if (skipped || !userAnswer) {
-      setStats(prev => ({ ...prev, skipped: prev.skipped + 1 }));
-    } else if (userAnswer === currentQ.correct) {
-      setStats(prev => ({ ...prev, correct: prev.correct + 1 }));
-    } else {
-      setStats(prev => ({ ...prev, incorrect: prev.incorrect + 1 }));
-    }
-
+  const handleNext = () => {
     if (currentIndex < questions.length - 1) {
-      setCurrentIndex(prev => prev + 1);
-      
-      // Reset timer for timed mode
-      if (mode === 'timed') {
-        const nextQ = questions[currentIndex + 1];
-        const timeLimit = TIME_LIMITS[skill]?.[nextQ?.type] || TIME_LIMITS[skill]?.default || 90;
-        setTimeLeft(timeLimit);
-      }
+      setSlideDir('slide-out-left');
+      setTimeout(() => {
+        setCurrentIndex(prev => prev + 1);
+        setSelectedAnswer(null);
+        setTextAnswer('');
+        setRevealed(false);
+        setSlideDir('slide-in-right');
+        setTimeout(() => setSlideDir(''), 300);
+      }, 200);
     } else {
-      // Practice complete
-      setShowResults(true);
-      setTimerActive(false);
+      // Set complete
+      setSetDone(true);
+      setTotalSets(prev => prev + 1);
+      setTotalCorrect(prev => prev + setStats.correct);
+      setTotalAnswered(prev => prev + setStats.total);
     }
   };
 
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(prev => prev - 1);
-    }
+  const handleNextSet = () => {
+    loadNewSet();
   };
 
-  const startPractice = () => {
-    setPracticeStarted(true);
-    if (mode === 'timed') {
-      setTimerActive(true);
-    }
-  };
-
-  const restartPractice = () => {
-    setCurrentIndex(0);
-    setAnswers({});
-    setShowResults(false);
-    setStats({ correct: 0, incorrect: 0, skipped: 0 });
-    setPracticeStarted(false);
-    
-    // Reload questions for fresh practice
-    if (mode === 'random') {
-      setQuestions(shuffleArray([...questions]));
-    }
-    
-    if (mode === 'timed') {
-      const firstQ = questions[0];
-      const timeLimit = TIME_LIMITS[skill]?.[firstQ?.type] || TIME_LIMITS[skill]?.default || 90;
-      setTimeLeft(timeLimit);
-    }
-  };
-
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const currentQuestion = questions[currentIndex];
+  const q = questions[currentIndex];
+  const hasOptions = q?.options?.length > 0;
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-10 h-10 animate-spin text-white/60 mx-auto mb-3" />
+          <p className="text-white/40 text-sm">Loading questions...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <Button variant="ghost" onClick={() => navigate('/question-bank')}>
-            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
-          </Button>
-          
-          <div className="flex items-center gap-2">
-            <Badge className={`bg-gradient-to-r ${MODES[mode]?.color} text-white`}>
-              <ModeIcon className="w-3 h-3 mr-1" />
-              {MODES[mode]?.name}
-            </Badge>
-            <Badge className={SKILLS[skill]?.bg + ' ' + SKILLS[skill]?.color}>
-              <SkillIcon className="w-3 h-3 mr-1" />
-              {SKILLS[skill]?.name}
-            </Badge>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col" data-testid="quick-practice">
+      {/* Top Bar */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+        <button onClick={() => navigate('/question-bank')} className="text-white/60 hover:text-white flex items-center gap-1.5 text-sm" data-testid="back-to-qb">
+          <ArrowLeft className="w-4 h-4" /> Back
+        </button>
+        <div className="flex items-center gap-2">
+          <div className={`px-3 py-1 rounded-full bg-gradient-to-r ${SKILLS[skill]?.color} text-white text-xs font-semibold flex items-center gap-1.5`}>
+            <SkillIcon className="w-3.5 h-3.5" />
+            {SKILLS[skill]?.name}
           </div>
+          {totalSets > 0 && (
+            <span className="text-white/40 text-xs">{totalCorrect}/{totalAnswered} total</span>
+          )}
         </div>
+      </div>
 
-        {/* Pre-Start Screen */}
-        {!practiceStarted && !showResults && (
-          <Card className="p-8 text-center">
-            <div className={`w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br ${MODES[mode]?.color} flex items-center justify-center`}>
-              <ModeIcon className="w-10 h-10 text-white" />
-            </div>
-            
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">{MODES[mode]?.name}</h1>
-            <p className="text-gray-500 mb-6">{MODES[mode]?.description}</p>
-            
-            <div className="bg-gray-50 rounded-xl p-4 mb-6 max-w-md mx-auto">
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p className="text-gray-500">Skill</p>
-                  <p className="font-semibold text-gray-900">{SKILLS[skill]?.name}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Questions</p>
-                  <p className="font-semibold text-gray-900">{questions.length}</p>
-                </div>
-                {topic && (
-                  <div>
-                    <p className="text-gray-500">Topic</p>
-                    <p className="font-semibold text-gray-900 capitalize">{topic.replace('_', ' ')}</p>
-                  </div>
-                )}
-                {band && (
-                  <div>
-                    <p className="text-gray-500">Band</p>
-                    <p className="font-semibold text-gray-900">{band}</p>
-                  </div>
-                )}
+      {/* Main Area */}
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-lg">
+
+          {/* Set Done Screen */}
+          {setDone ? (
+            <div className="text-center" data-testid="set-complete">
+              <div className="w-20 h-20 mx-auto mb-5 rounded-full bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center">
+                <Zap className="w-10 h-10 text-white" />
               </div>
-            </div>
-
-            {mode === 'timed' && (
-              <div className="bg-red-50 rounded-lg p-3 mb-6 max-w-md mx-auto">
-                <p className="text-sm text-red-600 flex items-center justify-center gap-2">
-                  <Timer className="w-4 h-4" />
-                  Timer will start immediately. Answer within time limit!
-                </p>
-              </div>
-            )}
-
-            {mode === 'smart' && (
-              <div className="bg-purple-50 rounded-lg p-3 mb-6 max-w-md mx-auto">
-                <p className="text-sm text-purple-600 flex items-center justify-center gap-2">
-                  <Brain className="w-4 h-4" />
-                  Questions sorted by difficulty. Harder questions first!
-                </p>
-              </div>
-            )}
-
-            <Button 
-              size="lg"
-              className={`bg-gradient-to-r ${MODES[mode]?.color} hover:opacity-90`}
-              onClick={startPractice}
-            >
-              <Play className="w-5 h-5 mr-2" /> Start Practice
-            </Button>
-          </Card>
-        )}
-
-        {/* Practice In Progress */}
-        {practiceStarted && !showResults && currentQuestion && (
-          <div className="space-y-4">
-            {/* Progress & Timer Bar */}
-            <Card className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Badge variant="outline">
-                    Question {currentIndex + 1} of {questions.length}
-                  </Badge>
-                  <Badge className={currentQuestion.difficulty === 'hard' ? 'bg-red-100 text-red-700' : 
-                                   currentQuestion.difficulty === 'easy' ? 'bg-green-100 text-green-700' : 
-                                   'bg-yellow-100 text-yellow-700'}>
-                    {currentQuestion.difficulty || 'medium'}
-                  </Badge>
-                </div>
-                
-                {mode === 'timed' && (
-                  <div className={`flex items-center gap-2 ${timeLeft < 30 ? 'text-red-600' : 'text-gray-600'}`}>
-                    <Timer className="w-4 h-4" />
-                    <span className="font-mono font-bold">{formatTime(timeLeft)}</span>
-                  </div>
-                )}
-              </div>
-              
-              {/* Progress bar */}
-              <div className="mt-3 h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full bg-gradient-to-r ${MODES[mode]?.color} transition-all duration-300`}
-                  style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
-                />
-              </div>
-            </Card>
-
-            {/* Question Card */}
-            <Card className="p-6">
-              {/* Question Type Badge */}
-              <Badge className="mb-4 bg-indigo-100 text-indigo-700">
-                {currentQuestion.type?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-              </Badge>
-
-              {/* Passage (if exists) */}
-              {currentQuestion.passage && (
-                <div className="mb-6 p-4 bg-gray-50 rounded-lg border">
-                  <p className="text-sm text-gray-700 leading-relaxed">{currentQuestion.passage}</p>
-                </div>
-              )}
-
-              {/* Audio Player (for listening practice) */}
-              {currentQuestion.audio_transcript && (
-                <div className="mb-6">
-                  {/* Hidden audio element */}
-                  <audio 
-                    ref={audioRef}
-                    onEnded={() => setIsPlayingAudio(false)}
-                    onPause={() => setIsPlayingAudio(false)}
-                  />
-                  
-                  {/* Audio Player Card */}
-                  <div className="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl p-4 text-white">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <Button
-                          onClick={playAudio}
-                          disabled={audioLoading}
-                          className="w-14 h-14 rounded-full bg-white/20 hover:bg-white/30 border-0"
-                        >
-                          {audioLoading ? (
-                            <Loader2 className="w-6 h-6 animate-spin" />
-                          ) : isPlayingAudio ? (
-                            <Pause className="w-6 h-6" />
-                          ) : (
-                            <Play className="w-6 h-6 ml-1" />
-                          )}
-                        </Button>
-                        <div>
-                          <p className="font-semibold flex items-center gap-2">
-                            <Headphones className="w-4 h-4" />
-                            Listening Audio
-                          </p>
-                          <p className="text-sm text-white/70">
-                            {isPlayingAudio ? 'Playing...' : 'Click to play audio'}
-                          </p>
-                        </div>
-                      </div>
-                      <Volume2 className="w-6 h-6 text-white/50" />
-                    </div>
-                    
-                    {/* Audio waveform animation */}
-                    {isPlayingAudio && (
-                      <div className="flex items-center justify-center gap-1 mt-3">
-                        {[...Array(12)].map((_, i) => (
-                          <div
-                            key={i}
-                            className="w-1 bg-white/60 rounded-full animate-pulse"
-                            style={{
-                              height: `${Math.random() * 20 + 8}px`,
-                              animationDelay: `${i * 0.1}s`
-                            }}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Show transcript option (collapsed by default) */}
-                  <details className="mt-2">
-                    <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">
-                      Show transcript (for review)
-                    </summary>
-                    <p className="mt-2 text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                      {currentQuestion.audio_transcript}
-                    </p>
-                  </details>
-                </div>
-              )}
-
-              {/* Question Text */}
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">{currentQuestion.text}</h3>
-
-              {/* Options */}
-              {currentQuestion.options && currentQuestion.options.length > 0 ? (
-                <div className="space-y-3">
-                  {currentQuestion.options.map((option, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleAnswer(option.startsWith('A)') || option.startsWith('B)') || option.startsWith('C)') || option.startsWith('D)') ? option.charAt(0) : option)}
-                      className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
-                        answers[currentQuestion.id] === (option.startsWith('A)') || option.startsWith('B)') || option.startsWith('C)') || option.startsWith('D)') ? option.charAt(0) : option)
-                          ? 'border-indigo-500 bg-indigo-50'
-                          : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <span className="text-gray-700">{option}</span>
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    placeholder="Type your answer..."
-                    value={answers[currentQuestion.id] || ''}
-                    onChange={(e) => handleAnswer(e.target.value)}
-                    className="w-full p-4 rounded-lg border-2 border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none text-gray-700"
-                    data-testid="practice-answer-input"
-                  />
-                </div>
-              )}
-            </Card>
-
-            {/* Navigation Buttons */}
-            <div className="flex justify-between items-center">
-              <Button
-                variant="outline"
-                onClick={handlePrevious}
-                disabled={currentIndex === 0}
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" /> Previous
-              </Button>
-
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  onClick={() => handleNext(true)}
-                >
-                  Skip
-                </Button>
-                <Button
-                  onClick={() => handleNext(false)}
-                  disabled={!answers[currentQuestion.id]}
-                  className="bg-indigo-600 hover:bg-indigo-700"
-                >
-                  {currentIndex === questions.length - 1 ? 'Finish' : 'Next'}
-                  <ChevronRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Results Screen */}
-        {showResults && (
-          <Card className="p-8">
-            <div className="text-center mb-8">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                <Award className="w-10 h-10 text-white" />
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Practice Complete!</h2>
-              <p className="text-gray-500">{MODES[mode]?.name} - {SKILLS[skill]?.name}</p>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mb-8 max-w-md mx-auto">
-              <div className="text-center p-4 bg-green-50 rounded-xl">
-                <CheckCircle className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-green-600">{stats.correct}</p>
-                <p className="text-sm text-gray-500">Correct</p>
-              </div>
-              <div className="text-center p-4 bg-red-50 rounded-xl">
-                <XCircle className="w-6 h-6 text-red-600 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-red-600">{stats.incorrect}</p>
-                <p className="text-sm text-gray-500">Incorrect</p>
-              </div>
-              <div className="text-center p-4 bg-gray-50 rounded-xl">
-                <AlertCircle className="w-6 h-6 text-gray-500 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-gray-500">{stats.skipped}</p>
-                <p className="text-sm text-gray-500">Skipped</p>
-              </div>
-            </div>
-
-            {/* Score */}
-            <div className="text-center mb-8">
-              <p className="text-sm text-gray-500 mb-2">Your Score</p>
-              <p className="text-4xl font-bold text-indigo-600">
-                {Math.round((stats.correct / questions.length) * 100)}%
+              <h2 className="text-2xl font-bold text-white mb-2">Set Complete!</h2>
+              <p className="text-white/50 text-sm mb-6">
+                {setStats.correct}/{setStats.total} correct this round
               </p>
-              <p className="text-sm text-gray-500 mt-1">
-                {stats.correct} out of {questions.length} correct
-              </p>
-            </div>
 
-            {/* Review Answers */}
-            <div className="mb-8">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <Lightbulb className="w-4 h-4 text-yellow-500" /> Review Answers
-              </h3>
-              <div className="space-y-3 max-h-64 overflow-y-auto">
-                {questions.map((q, idx) => {
-                  const userAnswer = answers[q.id];
-                  const isCorrect = userAnswer === q.correct;
-                  const wasSkipped = !userAnswer;
-
+              {/* Mini score cards */}
+              <div className="flex justify-center gap-3 mb-8">
+                {questions.map((qq, i) => {
+                  const isCorrect = setStats.total > i; // simplified
                   return (
-                    <div 
-                      key={q.id}
-                      className={`p-3 rounded-lg border ${
-                        wasSkipped ? 'bg-gray-50 border-gray-200' :
-                        isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
-                      }`}
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                          wasSkipped ? 'bg-gray-200 text-gray-600' :
-                          isCorrect ? 'bg-green-200 text-green-700' : 'bg-red-200 text-red-700'
-                        }`}>
-                          {idx + 1}
-                        </span>
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-700 mb-1">{q.text.substring(0, 80)}...</p>
-                          <div className="flex items-center gap-4 text-xs">
-                            <span className="text-gray-500">Your answer: {userAnswer || 'Skipped'}</span>
-                            {!isCorrect && !wasSkipped && (
-                              <span className="text-green-600">Correct: {q.correct}</span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                    <div key={i} className="w-16 h-16 rounded-xl bg-white/10 flex flex-col items-center justify-center">
+                      <span className="text-lg">{i + 1}</span>
+                      <span className="text-[10px] text-white/40">{qq.type?.split('-')[0]}</span>
                     </div>
                   );
                 })}
               </div>
-            </div>
 
-            {/* Actions */}
-            <div className="flex justify-center gap-4">
-              <Button variant="outline" onClick={() => navigate('/question-bank')}>
-                <ArrowLeft className="w-4 h-4 mr-2" /> Back to Question Bank
-              </Button>
-              <Button 
-                onClick={restartPractice}
-                className={`bg-gradient-to-r ${MODES[mode]?.color} hover:opacity-90`}
-              >
-                <RotateCcw className="w-4 h-4 mr-2" /> Practice Again
+              {totalSets > 0 && (
+                <p className="text-white/30 text-xs mb-6">
+                  Session: {totalSets} sets - {totalCorrect}/{totalAnswered} overall ({totalAnswered > 0 ? Math.round((totalCorrect/totalAnswered)*100) : 0}%)
+                </p>
+              )}
+
+              <div className="flex flex-col gap-3">
+                <Button
+                  onClick={handleNextSet}
+                  className="w-full h-14 text-lg bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 rounded-2xl"
+                  data-testid="next-set-btn"
+                >
+                  <Zap className="w-5 h-5 mr-2" /> Next Set
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate('/question-bank')}
+                  className="text-white/40 hover:text-white/70"
+                >
+                  Done for now
+                </Button>
+              </div>
+            </div>
+          ) : q ? (
+            /* Question Card */
+            <div className={`transition-all duration-200 ${slideDir === 'slide-out-left' ? 'opacity-0 -translate-x-8' : slideDir === 'slide-in-right' ? 'opacity-100 translate-x-0' : ''}`}>
+
+              {/* Progress dots */}
+              <div className="flex items-center justify-center gap-2 mb-5">
+                {questions.map((_, i) => (
+                  <div
+                    key={i}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === currentIndex ? 'w-8 bg-white' :
+                      i < currentIndex ? 'w-4 bg-white/40' : 'w-4 bg-white/15'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Card */}
+              <div className="bg-white/[0.07] backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden" data-testid="question-card">
+
+                {/* Type badge + question number */}
+                <div className="px-5 pt-4 pb-2 flex items-center justify-between">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-white/30">
+                    {q.type?.replace(/-/g, ' ')}
+                  </span>
+                  <span className="text-[11px] text-white/20">{currentIndex + 1}/3</span>
+                </div>
+
+                {/* Audio Player for Listening */}
+                {q.audio_transcript && (
+                  <div className="mx-5 mb-3">
+                    <audio ref={audioRef} onEnded={() => setIsPlayingAudio(false)} onPause={() => setIsPlayingAudio(false)} />
+                    <div className="bg-gradient-to-r from-purple-600/40 to-indigo-600/40 rounded-2xl p-3.5 flex items-center gap-3">
+                      <button
+                        onClick={playAudio}
+                        disabled={audioLoading}
+                        className="w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center shrink-0 transition-colors"
+                        data-testid="play-audio-btn"
+                      >
+                        {audioLoading ? <Loader2 className="w-5 h-5 text-white animate-spin" /> :
+                         isPlayingAudio ? <Pause className="w-5 h-5 text-white" /> :
+                         <Play className="w-5 h-5 text-white ml-0.5" />}
+                      </button>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-white text-sm font-medium flex items-center gap-1.5">
+                          <Headphones className="w-3.5 h-3.5" /> Listen
+                        </p>
+                        <p className="text-white/40 text-xs truncate">
+                          {isPlayingAudio ? 'Playing...' : 'Tap to play'}
+                        </p>
+                      </div>
+                      {isPlayingAudio && (
+                        <div className="flex items-end gap-[3px] h-5">
+                          {[...Array(5)].map((_, i) => (
+                            <div key={i} className="w-[3px] bg-white/50 rounded-full animate-pulse"
+                              style={{ height: `${8 + Math.random() * 12}px`, animationDelay: `${i * 0.15}s` }}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Reading Passage */}
+                {q.passage && (
+                  <div className="mx-5 mb-3 max-h-40 overflow-y-auto">
+                    <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
+                      {q.passage_title && <p className="text-white/50 text-[11px] font-semibold uppercase tracking-wider mb-1.5">{q.passage_title}</p>}
+                      <p className="text-white/70 text-sm leading-relaxed">{q.passage}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Question */}
+                <div className="px-5 pb-3">
+                  <h3 className="text-white text-base font-semibold leading-snug" data-testid="question-text">{q.text}</h3>
+                </div>
+
+                {/* Options or Text Input */}
+                <div className="px-5 pb-5 space-y-2">
+                  {hasOptions ? q.options.map((opt, idx) => {
+                    const optVal = (opt.match(/^[A-D]\)/) ? opt.charAt(0) : opt);
+                    const isSelected = selectedAnswer === optVal;
+                    const isCorrectOpt = q.correct === optVal;
+
+                    let optClass = 'bg-white/[0.05] border-white/10 hover:bg-white/[0.1]';
+                    if (revealed) {
+                      if (isCorrectOpt) optClass = 'bg-emerald-500/20 border-emerald-400/40';
+                      else if (isSelected && !isCorrectOpt) optClass = 'bg-red-500/20 border-red-400/40';
+                      else optClass = 'bg-white/[0.03] border-white/5 opacity-50';
+                    } else if (isSelected) {
+                      optClass = 'bg-indigo-500/20 border-indigo-400/50 ring-1 ring-indigo-400/30';
+                    }
+
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => handleSelect(optVal)}
+                        disabled={revealed}
+                        className={`w-full p-3.5 text-left rounded-2xl border transition-all ${optClass}`}
+                        data-testid={`option-${idx}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                            revealed && isCorrectOpt ? 'bg-emerald-400 text-white' :
+                            revealed && isSelected && !isCorrectOpt ? 'bg-red-400 text-white' :
+                            isSelected ? 'bg-indigo-500 text-white' :
+                            'bg-white/10 text-white/50'
+                          }`}>
+                            {revealed && isCorrectOpt ? <CheckCircle className="w-4 h-4" /> :
+                             revealed && isSelected && !isCorrectOpt ? <XCircle className="w-4 h-4" /> :
+                             String.fromCharCode(65 + idx)}
+                          </span>
+                          <span className="text-white/80 text-sm">{opt}</span>
+                        </div>
+                      </button>
+                    );
+                  }) : (
+                    <input
+                      type="text"
+                      placeholder="Type your answer..."
+                      value={textAnswer}
+                      onChange={(e) => setTextAnswer(e.target.value)}
+                      disabled={revealed}
+                      className="w-full p-3.5 rounded-2xl bg-white/[0.05] border border-white/10 text-white placeholder-white/30 focus:border-indigo-400/50 focus:ring-1 focus:ring-indigo-400/30 outline-none text-sm"
+                      data-testid="practice-answer-input"
+                    />
+                  )}
+                </div>
+
+                {/* Feedback (after reveal) */}
+                {revealed && (
+                  <div className="px-5 pb-5" data-testid="answer-feedback">
+                    {(hasOptions ? selectedAnswer : textAnswer) === q.correct ? (
+                      <div className="flex items-start gap-2.5 bg-emerald-500/10 rounded-2xl p-3.5 border border-emerald-400/20">
+                        <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-emerald-400 text-sm font-semibold">Correct!</p>
+                          {q.explanation && <p className="text-white/50 text-xs mt-1">{q.explanation}</p>}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-start gap-2.5 bg-red-500/10 rounded-2xl p-3.5 border border-red-400/20">
+                        <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-red-400 text-sm font-semibold">Incorrect</p>
+                          <p className="text-white/50 text-xs mt-1">
+                            Correct answer: <span className="text-emerald-400 font-medium">{q.correct}</span>
+                          </p>
+                          {q.explanation && <p className="text-white/40 text-xs mt-1"><Lightbulb className="w-3 h-3 inline mr-1" />{q.explanation}</p>}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Action Button */}
+              <div className="mt-4">
+                {!revealed ? (
+                  <Button
+                    onClick={handleConfirm}
+                    disabled={hasOptions ? !selectedAnswer : !textAnswer}
+                    className="w-full h-13 text-base bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 rounded-2xl disabled:opacity-30"
+                    data-testid="confirm-answer-btn"
+                  >
+                    Confirm
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleNext}
+                    className="w-full h-13 text-base bg-white/10 hover:bg-white/15 text-white rounded-2xl"
+                    data-testid="next-question-btn"
+                  >
+                    {currentIndex < questions.length - 1 ? 'Next' : 'See Results'}
+                    <ChevronRight className="w-5 h-5 ml-1" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center text-white/40">
+              <p>No questions available. Try again later.</p>
+              <Button variant="ghost" onClick={loadNewSet} className="mt-3 text-white/50">
+                <RotateCcw className="w-4 h-4 mr-2" /> Retry
               </Button>
             </div>
-          </Card>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
