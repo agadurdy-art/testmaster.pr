@@ -36,7 +36,7 @@ const SECTION_COLORS = {
   speaking: { bg: 'bg-orange-500', light: 'bg-orange-50', text: 'text-orange-600' }
 };
 
-export default function QuestionBank() {
+export default function QuestionBank({ user }) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState('overview');
