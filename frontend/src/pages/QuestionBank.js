@@ -67,6 +67,10 @@ export default function QuestionBank() {
   
   // Full Tests sub-category: null (selection screen), 'cambridge', 'ai'
   const [testCategory, setTestCategory] = useState(null);
+  
+  // Completion tracking
+  const [completionStats, setCompletionStats] = useState(null);
+  const [showCompletionDetail, setShowCompletionDetail] = useState(false);
 
   useEffect(() => {
     loadData();
