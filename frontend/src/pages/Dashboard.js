@@ -678,7 +678,40 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             </div>
           </Card>
+        </div>
 
+        {/* ── Section 4: Your Progress ── */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-1.5 h-5 bg-emerald-500 rounded-full" />
+            <h2 className={`text-sm font-bold uppercase tracking-wide ${textPrimary}`}>{getText('Your Progress', 'Tiến độ của bạn', 'İlerlemeniz')}</h2>
+          </div>
+          {/* Badges Section */}
+          {progress?.badges?.length > 0 && (
+            <Card className={`p-4 mb-4 ${isDark ? 'bg-gradient-to-r from-amber-900/30 to-yellow-900/30 border-amber-700' : 'bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200'} rounded-2xl transition-colors duration-300`}>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className={`font-semibold ${textPrimary} flex items-center gap-2`}>
+                  <Trophy className="w-5 h-5 text-amber-500" />
+                  {getText('Your Achievements', 'Thành tích của bạn', 'Başarılarınız')}
+                </h3>
+                <span className={`text-sm ${isDark ? 'text-amber-400' : 'text-amber-700'}`}>{progress.badges.length} {getText('badges', 'huy hiệu', 'rozet')}</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {progress.badges.slice(0, 8).map((badge, idx) => (
+                  <div key={idx} className={`flex items-center gap-2 ${isDark ? 'bg-gray-700' : 'bg-white'} px-3 py-2 rounded-lg shadow-sm`} title={badge.description}>
+                    <span className="text-xl">{badge.icon}</span>
+                    <span className={`text-sm font-medium ${textPrimary}`}>{badge.name}</span>
+                  </div>
+                ))}
+                {progress.badges.length > 8 && (
+                  <button onClick={() => navigate('/progress')} className={`text-sm ${isDark ? 'text-amber-400 hover:text-amber-300' : 'text-amber-700 hover:text-amber-800'} font-medium px-3 py-2`}>
+                    +{progress.badges.length - 8} {getText('more', 'khác', 'daha fazla')}
+                  </button>
+                )}
+              </div>
+            </Card>
+          )}
+          <div className="grid lg:grid-cols-2 gap-4">
           <Card className={`p-5 ${bgCard} border shadow-lg rounded-2xl transition-colors duration-300`}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
