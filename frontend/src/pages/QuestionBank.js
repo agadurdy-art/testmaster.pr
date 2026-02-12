@@ -902,28 +902,7 @@ export default function QuestionBank() {
         )}
 
         {/* Progress Tab */}
-                    </div>
-                    <p className="text-sm text-gray-500">Official Academic practice tests</p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-2xl font-bold text-red-600">4</span>
-                    <span className="text-sm text-gray-500">/4 tests</span>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                  {/* Test 1 - Available */}
-                  <div 
-                    className="p-4 bg-white rounded-xl border-2 border-green-200 hover:border-green-400 hover:shadow-md transition-all cursor-pointer"
-                    onClick={() => {
-                      setSelectedCambridgeTest({ book: 'ielts17', test: 'test1', title: 'IELTS 17 - Test 1' });
-                      setShowCambridgeTestModal(true);
-                    }}
-                    data-testid="cambridge-test-ielts17-test1"
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-gray-900">Test 1</span>
-                      <PlayCircle className="w-5 h-5 text-green-600" />
+        {activeTab === 'progress' && (
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center gap-1 text-xs text-gray-500">
