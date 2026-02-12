@@ -103,6 +103,84 @@ const LESSON_MODES = [
   { icon: Target, label: 'Study Plan', prompt: 'Analyze my progress and create a detailed study plan for the next week. Be specific about what I should practice each day.', testId: 'lesson-plan' },
 ];
 
+const HW_ICONS = { vocabulary: BookOpen, writing: PenTool, grammar: FileText, speaking: MessageSquare };
+
+function HomeworkCard({ hw, onSubmit, onDelete, submitting }) {
+  const [answer, setAnswer] = useState('');
+  const [expanded, setExpanded] = useState(false);
+  const Icon = HW_ICONS[hw.type] || ClipboardList;
+  const isOverdue = hw.status === 'pending' && hw.due_date && new Date(hw.due_date) < new Date();
+  const statusColors = {
+    pending: isOverdue ? 'text-red-500' : 'text-amber-500',
+    submitted: 'text-blue-500',
+    reviewed: 'text-emerald-500'
+  };
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm" data-testid={`homework-${hw.homework_id}`}>
+      <div className="flex items-start gap-3 cursor-pointer" onClick={() => setExpanded(!expanded)}>
+        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
+          hw.status === 'reviewed' ? 'bg-emerald-50' : 'bg-teal-50'
+        }`}>
+          {hw.status === 'reviewed' ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> : <Icon className="w-5 h-5 text-teal-500" />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium text-slate-800 truncate">{hw.title}</span>
+            <span className={`text-[10px] font-medium ${statusColors[hw.status]}`}>
+              {hw.status === 'reviewed' ? 'Reviewed' : hw.status === 'submitted' ? 'Submitted' : isOverdue ? 'Overdue' : 'Due'}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+            <span className="capitalize">{hw.type}</span>
+            {hw.due_date && <span>· {new Date(hw.due_date).toLocaleDateString()}</span>}
+            {hw.score != null && (
+              <span className="flex items-center gap-0.5 text-amber-500"><Star className="w-3 h-3" />{hw.score}/10</span>
+            )}
+          </div>
+        </div>
+        <button onClick={(e) => { e.stopPropagation(); onDelete(hw.homework_id); }} className="text-slate-300 hover:text-red-400 p-1">
+          <X className="w-3.5 h-3.5" />
+        </button>
+      </div>
+
+      {expanded && (
+        <div className="mt-3 pt-3 border-t border-slate-100 space-y-2">
+          <p className="text-xs text-slate-600">{hw.task}</p>
+          {hw.feedback && (
+            <div className="bg-teal-50 rounded-lg p-2.5 text-xs text-teal-800">
+              <span className="font-semibold">Liz's Feedback:</span>
+              <p className="mt-1 whitespace-pre-wrap">{hw.feedback}</p>
+            </div>
+          )}
+          {hw.status === 'pending' && (
+            <div className="space-y-2">
+              <textarea
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="Type your answer here..."
+                className="w-full px-3 py-2 text-xs border border-slate-200 rounded-lg resize-none focus:border-teal-400 outline-none"
+                rows={3}
+                data-testid="homework-answer-input"
+              />
+              <Button
+                size="sm"
+                onClick={() => { onSubmit(hw.homework_id, answer); setAnswer(''); }}
+                disabled={!answer.trim() || submitting}
+                className="bg-teal-500 hover:bg-teal-600 text-white text-xs h-8 w-full"
+                data-testid="homework-submit-btn"
+              >
+                {submitting ? <Loader2 className="w-3 h-3 animate-spin mr-1" /> : null}
+                Submit to Liz
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function LizTeacher({ user }) {
   const navigate = useNavigate();
   const [status, setStatus] = useState('idle');
