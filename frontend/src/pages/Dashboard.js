@@ -778,7 +778,6 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             )}
           </Card>
-        </div>
           <Card 
             className="p-5 bg-gradient-to-r from-violet-600 to-purple-600 border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all"
             onClick={() => navigate('/progress')}
