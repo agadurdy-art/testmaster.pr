@@ -5494,7 +5494,7 @@ RULES:
 - Be strict on grammar but encouraging in tone
 - Return ONLY valid JSON, no markdown"""
 
-        response = await chat.send_message_async(prompt)
+        response = await chat.send_message(UserMessage(text=prompt))
         text = response.text.strip()
         # Clean markdown wrapping
         if text.startswith("```"):
