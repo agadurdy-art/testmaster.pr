@@ -5495,7 +5495,8 @@ RULES:
 - Return ONLY valid JSON, no markdown"""
 
         response = await chat.send_message(UserMessage(text=prompt))
-        text = response.text.strip()
+        text = response if isinstance(response, str) else response.text
+        text = text.strip()
         # Clean markdown wrapping
         if text.startswith("```"):
             text = text.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
