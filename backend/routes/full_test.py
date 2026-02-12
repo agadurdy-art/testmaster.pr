@@ -133,7 +133,7 @@ def get_all_test_sets() -> Dict[str, Any]:
     }
     
     # Academic sets
-    for test_data in [ACADEMIC_SET_A, ACADEMIC_SET_B, ACADEMIC_SET_C, ACADEMIC_SET_D, ACADEMIC_SET_E]:
+    for test_data in [ACADEMIC_SET_A, ACADEMIC_SET_B, ACADEMIC_SET_C, ACADEMIC_SET_D, ACADEMIC_SET_E, ACADEMIC_SET_F, ACADEMIC_SET_G, ACADEMIC_SET_H]:
         if test_data:
             sets["academic"].append({
                 "test_id": test_data["test_id"],
@@ -181,6 +181,15 @@ def get_test_by_id(test_id: str) -> Optional[Dict[str, Any]]:
     elif test_id == "academic_set_e_01":
         if ACADEMIC_SET_E:
             return ACADEMIC_SET_E
+    elif test_id == "academic_set_f_01":
+        if ACADEMIC_SET_F:
+            return ACADEMIC_SET_F
+    elif test_id == "academic_set_g_01":
+        if ACADEMIC_SET_G:
+            return ACADEMIC_SET_G
+    elif test_id == "academic_set_h_01":
+        if ACADEMIC_SET_H:
+            return ACADEMIC_SET_H
     elif test_id == "general_set_a_01":
         return GENERAL_SET_A
     elif test_id == "general_set_b_01":
