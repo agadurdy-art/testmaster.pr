@@ -109,7 +109,7 @@ export default function PracticeMode({ user }) {
 
   useEffect(() => { loadNewSet(); }, [loadNewSet]);
 
-  // Reset audio on question change - must fully clear old source
+  // Reset audio on question change
   useEffect(() => {
     setIsPlayingAudio(false);
     setAudioLoading(false);
@@ -118,11 +118,43 @@ export default function PracticeMode({ user }) {
       audioRef.current.removeAttribute('src');
       audioRef.current.load();
     }
-    // Revoke old blob URL to free memory
-    setAudioUrl(prev => { if (prev) URL.revokeObjectURL(prev); return null; });
+    // Revoke old blob URL to free memory (only if it's a blob URL)
+    setAudioUrl(prev => { if (prev && prev.startsWith('blob:')) URL.revokeObjectURL(prev); return null; });
   }, [currentIndex]);
 
-  const generateAudio = async (text) => {
+  const playAudio = async () => {
+    const q = questions[currentIndex];
+    if (!q) return;
+    if (isPlayingAudio && audioRef.current) { audioRef.current.pause(); setIsPlayingAudio(false); return; }
+
+    // Use pre-generated audio file if available (listening practice sets)
+    if (q.audio_file) {
+      const fileUrl = `${API_URL}${q.audio_file}`;
+      if (audioRef.current) {
+        audioRef.current.src = fileUrl;
+        audioRef.current.load();
+        try { await audioRef.current.play(); setIsPlayingAudio(true); }
+        catch (e) { console.error('Audio file play failed:', e); }
+      }
+      return;
+    }
+
+    // Fallback: Generate TTS audio from transcript
+    if (!q.audio_transcript) return;
+    if (!audioUrl) {
+      const url = await generateAudio(q.audio_transcript);
+      if (url && audioRef.current) {
+        audioRef.current.src = url;
+        audioRef.current.load();
+        try { await audioRef.current.play(); setIsPlayingAudio(true); }
+        catch (e) { console.error('Audio play failed:', e); }
+      }
+    } else if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      try { await audioRef.current.play(); setIsPlayingAudio(true); }
+      catch (e) { console.error('Audio replay failed:', e); }
+    }
+  };
     if (!text) return;
     setAudioLoading(true);
     try {
