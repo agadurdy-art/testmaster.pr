@@ -5386,12 +5386,16 @@ async def get_vocabulary_quiz(module_id: str):
     for i, q in enumerate(selected):
         q["id"] = f"q-{i}"
     
+    # Get reading passage for TFNG questions
+    reading_passage = module.get("reading", {}).get("text", "")
+    
     return {
         "module_id": module_id,
         "module_title": module.get("title", ""),
         "questions": selected[:10],
         "total_questions": len(selected[:10]),
         "passing_score": 80,
+        "reading_passage": reading_passage,
     }
 
 
