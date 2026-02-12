@@ -486,13 +486,19 @@ def get_questions_from_full_tests(skill: str, count: int = 10):
                     passage_title = passage.get("title", "")
                     for q in passage["questions"]:
                         q_type = q.get("type", "multiple_choice").replace("_", "-")
+                        opts = q.get("options", [])
+                        # Add default options for known types
+                        if not opts and q_type in ("true-false-ng", "true-false-not-given"):
+                            opts = ["TRUE", "FALSE", "NOT GIVEN"]
+                        elif not opts and q_type in ("yes-no-ng", "yes-no-not-given"):
+                            opts = ["YES", "NO", "NOT GIVEN"]
                         all_questions.append({
                             "id": f"{source_name}_{q['id']}",
                             "type": q_type,
                             "text": q.get("question", ""),
                             "passage": extract_relevant_context(passage_text, q.get("question", "")),
                             "passage_title": passage_title,
-                            "options": q.get("options", []),
+                            "options": opts,
                             "correct": q.get("answer", ""),
                             "instruction": q.get("instruction", ""),
                             "skill": "reading",
