@@ -246,133 +246,161 @@ async def get_question_bank_stats(db=None):
 # ============ PRACTICE MODE ENDPOINTS ============
 
 def get_questions_from_cambridge_tests(skill: str, count: int = 10, question_type: str = None):
-    """Extract questions from Cambridge IELTS tests for MICRO-BASED practice mode."""
+    """Extract questions from Cambridge IELTS tests, normalized for PracticeMode frontend."""
     import random
     from routes.cambridge import CAMBRIDGE_TESTS
-    
+
     all_questions = []
-    
+
     for book_id, book_data in CAMBRIDGE_TESTS.items():
         for test_id, test_data in book_data.get("tests", {}).items():
             if test_data is None:
                 continue
-                
             sections = test_data.get("sections", {})
             source_name = f"{book_id}_{test_id}"
-            
+
             if skill == "reading":
                 reading = sections.get("reading", {})
                 for passage in reading.get("passages", []):
                     passage_text = passage.get("passage_text", passage.get("text", ""))
-                    
+                    passage_title = passage.get("title", "")
+
                     for q_group in passage.get("questions", []):
                         q_type = q_group.get("type", "unknown")
-                        
-                        # Filter by question type if specified
                         if question_type and q_type != question_type:
                             continue
-                        
-                        # For MICRO-BASED practice: extract only relevant context
-                        if q_type == "true_false_not_given" or q_type == "yes_no_not_given":
+
+                        if q_type in ("true_false_not_given", "yes_no_not_given"):
+                            opts = ["TRUE", "FALSE", "NOT GIVEN"] if q_type == "true_false_not_given" else ["YES", "NO", "NOT GIVEN"]
                             for stmt in q_group.get("statements", []):
-                                # Find relevant paragraph for this statement
-                                relevant_text = extract_relevant_context(passage_text, stmt.get("statement", ""))
+                                ctx = extract_relevant_context(passage_text, stmt.get("statement", ""))
                                 all_questions.append({
                                     "id": f"{source_name}_R{stmt['number']}",
-                                    "type": q_type,
-                                    "question_number": stmt["number"],
-                                    "statement": stmt["statement"],
-                                    "context": relevant_text,  # Only relevant paragraph
-                                    "passage_title": passage.get("title", ""),
+                                    "type": "true-false-ng",
+                                    "text": stmt.get("statement", ""),
+                                    "passage": ctx,
+                                    "passage_title": passage_title,
+                                    "options": opts,
+                                    "correct": stmt.get("answer", ""),
                                     "skill": "reading",
                                     "source": source_name,
-                                    "instruction": q_group.get("instruction", "")
+                                    "difficulty": "medium"
                                 })
-                        
+
                         elif q_type == "section_matching":
                             for item in q_group.get("items", []):
                                 all_questions.append({
                                     "id": f"{source_name}_R{item['number']}",
-                                    "type": q_type,
-                                    "question_number": item["number"],
-                                    "question": item["item"],
-                                    "context": passage_text[:1500],  # First few paragraphs
-                                    "passage_title": passage.get("title", ""),
+                                    "type": "matching",
+                                    "text": item.get("item", ""),
+                                    "passage": passage_text[:1500],
+                                    "passage_title": passage_title,
+                                    "correct": item.get("answer", ""),
                                     "skill": "reading",
                                     "source": source_name,
-                                    "instruction": q_group.get("instruction", "")
+                                    "difficulty": "hard"
                                 })
-                        
+
                         elif q_type == "sentence_completion":
-                            for item in q_group.get("items", []):
-                                # Support both 'sentence' and 'text' keys
-                                sentence_text = item.get("sentence", item.get("text", ""))
-                                relevant_text = extract_relevant_context(passage_text, sentence_text)
+                            for item in q_group.get("sentences", q_group.get("items", [])):
+                                sent = item.get("sentence", item.get("text", item.get("item", "")))
+                                ctx = extract_relevant_context(passage_text, sent)
                                 all_questions.append({
-                                    "id": f"{source_name}_R{item['number']}",
-                                    "type": q_type,
-                                    "question_number": item["number"],
-                                    "sentence": sentence_text,
-                                    "context": relevant_text,
-                                    "passage_title": passage.get("title", ""),
+                                    "id": f"{source_name}_R{item.get('number', '')}",
+                                    "type": "sentence-completion",
+                                    "text": sent,
+                                    "passage": ctx,
+                                    "passage_title": passage_title,
+                                    "correct": item.get("answer", ""),
                                     "skill": "reading",
                                     "source": source_name,
-                                    "instruction": q_group.get("instruction", "")
+                                    "difficulty": "medium"
                                 })
-                        
+
                         elif q_type == "multiple_choice":
-                            for item in q_group.get("items", []):
-                                relevant_text = extract_relevant_context(passage_text, item.get("question", ""))
+                            for item in q_group.get("questions", q_group.get("items", [])):
+                                ctx = extract_relevant_context(passage_text, item.get("question", ""))
                                 all_questions.append({
-                                    "id": f"{source_name}_R{item['number']}",
-                                    "type": q_type,
-                                    "question_number": item["number"],
-                                    "question": item["question"],
+                                    "id": f"{source_name}_R{item.get('number', '')}",
+                                    "type": "multiple-choice",
+                                    "text": item.get("question", ""),
+                                    "passage": ctx,
+                                    "passage_title": passage_title,
                                     "options": item.get("options", []),
-                                    "context": relevant_text,
-                                    "passage_title": passage.get("title", ""),
+                                    "correct": item.get("answer", ""),
                                     "skill": "reading",
                                     "source": source_name,
-                                    "instruction": q_group.get("instruction", "")
+                                    "difficulty": "medium"
                                 })
-                        
-                        elif q_type == "note_completion":
-                            # For note completion, show the visual/notes structure
+
+                        elif q_type == "multiple_selection":
                             all_questions.append({
-                                "id": f"{source_name}_R_notes_{q_group.get('number', 'group')}",
-                                "type": q_type,
-                                "question_range": q_group.get("number", ""),
-                                "visual": q_group.get("visual", {}),
-                                "context": passage_text[:1000],
-                                "passage_title": passage.get("title", ""),
+                                "id": f"{source_name}_R_ms_{q_group.get('number', '')}",
+                                "type": "multiple-choice",
+                                "text": q_group.get("question", q_group.get("instruction", "")),
+                                "passage": extract_relevant_context(passage_text, q_group.get("question", "")),
+                                "passage_title": passage_title,
+                                "options": q_group.get("options", []),
+                                "correct": "",
                                 "skill": "reading",
                                 "source": source_name,
-                                "instruction": q_group.get("instruction", "")
+                                "difficulty": "hard"
                             })
-            
+
+                        elif q_type == "summary_completion":
+                            summary_text = q_group.get("summary", "")
+                            all_questions.append({
+                                "id": f"{source_name}_R_sum_{q_group.get('number', '')}",
+                                "type": "sentence-completion",
+                                "text": f"Complete the summary: {summary_text[:200]}...",
+                                "passage": passage_text[:1000],
+                                "passage_title": passage_title,
+                                "options": q_group.get("options", []),
+                                "correct": "",
+                                "skill": "reading",
+                                "source": source_name,
+                                "difficulty": "hard"
+                            })
+
+                        elif q_type == "note_completion":
+                            all_questions.append({
+                                "id": f"{source_name}_R_nc_{q_group.get('number', '')}",
+                                "type": "sentence-completion",
+                                "text": q_group.get("instruction", "Complete the notes below."),
+                                "passage": passage_text[:1000],
+                                "passage_title": passage_title,
+                                "correct": "",
+                                "skill": "reading",
+                                "source": source_name,
+                                "difficulty": "medium"
+                            })
+
             elif skill == "listening":
                 listening = sections.get("listening", {})
                 for part in listening.get("parts", []):
                     part_num = part.get("part_number", 1)
-                    
+                    audio_script = part.get("audio_script", part.get("transcript", ""))
+
                     for q in part.get("questions", []):
                         q_type = q.get("type", "note_completion")
-                        
                         if question_type and q_type != question_type:
                             continue
-                        
+                        q_text = q.get("question", q.get("item", q.get("statement", "")))
                         all_questions.append({
                             "id": f"{source_name}_L{q.get('number', '')}",
-                            "type": q_type,
-                            "question_number": q.get("number", ""),
-                            "question": q.get("question", q.get("item", "")),
-                            "part": part_num,
-                            "context": part.get("title", ""),
+                            "type": q_type.replace("_", "-"),
+                            "text": q_text if q_text else f"Part {part_num} - {part.get('title', 'Listening')}",
+                            "options": q.get("options", []),
+                            "correct": q.get("answer", ""),
+                            "audio_transcript": audio_script[:500] if audio_script else f"Listen to the audio about: {part.get('title', '')}",
                             "audio_file": part.get("audio_file", ""),
+                            "context": part.get("title", ""),
+                            "part": part_num,
                             "skill": "listening",
-                            "source": source_name
+                            "source": source_name,
+                            "difficulty": "easy" if part_num <= 2 else "medium"
                         })
-    
+
     random.shuffle(all_questions)
     return all_questions[:count] if count else all_questions
 
