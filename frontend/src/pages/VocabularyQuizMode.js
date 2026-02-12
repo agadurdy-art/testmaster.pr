@@ -15,13 +15,15 @@ export default function VocabularyQuizMode({ user }) {
   const { moduleId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const [passage, setPassage] = useState('');
   const [loading, setLoading] = useState(true);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [fillInputs, setFillInputs] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [result, setResult] = useState(null);
 
-  useEffect(() => { fetchQuiz(); }, [moduleId]);
+  useEffect(() => { fetchQuiz(); fetchPassage(); }, [moduleId]);
 
   const fetchQuiz = async () => {
     try {
@@ -32,22 +34,56 @@ export default function VocabularyQuizMode({ user }) {
     finally { setLoading(false); }
   };
 
+  const fetchPassage = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/advanced-mastery/modules`);
+      if (res.ok) {
+        const modules = await res.json();
+        const mod = modules.find(m => m.id === moduleId);
+        if (mod?.reading?.text) setPassage(mod.reading.text);
+      }
+    } catch {}
+  };
+
   const selectAnswer = (qid, ans) => { if (!submitted) setAnswers(p => ({ ...p, [qid]: ans })); };
+  const updateFillInput = (qid, val) => { if (!submitted) setFillInputs(p => ({ ...p, [qid]: val })); };
 
   const submitQuiz = async () => {
     if (!data) return;
     let correct = 0;
-    data.questions.forEach(q => { if (answers[q.id] === q.answer) correct++; });
+    // Merge fill inputs into answers
+    const mergedAnswers = { ...answers };
+    data.questions.forEach(q => {
+      if (q.type === 'fill_blank' && fillInputs[q.id]) {
+        mergedAnswers[q.id] = fillInputs[q.id];
+      }
+      // Check correctness
+      const userAns = mergedAnswers[q.id] || '';
+      if (q.type === 'fill_blank') {
+        if (userAns.trim().toLowerCase() === q.answer.trim().toLowerCase()) correct++;
+      } else {
+        if (userAns === q.answer) correct++;
+      }
+    });
+
     const total = data.questions.length;
     const pct = Math.round((correct / total) * 100);
     setResult({ score: correct, total, percentage: pct, passed: pct >= PASSING_SCORE });
     setSubmitted(true);
+    setAnswers(mergedAnswers);
+
     if (user) {
-      try { await fetch(`${API_URL}/api/vocabulary-engine/quiz/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ module_id: moduleId, user_id: user.id, answers, score: correct, total }) }); } catch {}
+      try { await fetch(`${API_URL}/api/vocabulary-engine/quiz/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ module_id: moduleId, user_id: user.id, answers: mergedAnswers, score: correct, total }) }); } catch {}
     }
   };
 
-  const handleRetry = () => { setCurrentIdx(0); setAnswers({}); setSubmitted(false); setResult(null); fetchQuiz(); };
+  const handleRetry = () => { setCurrentIdx(0); setAnswers({}); setFillInputs({}); setSubmitted(false); setResult(null); fetchQuiz(); };
+
+  const isQuestionAnswered = (q) => {
+    if (q.type === 'fill_blank') return !!fillInputs[q.id]?.trim();
+    return !!answers[q.id];
+  };
+  const answeredCount = data ? data.questions.filter(isQuestionAnswered).length : 0;
 
   if (loading) return <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center" data-testid="quiz-mode-loading"><div className="animate-spin rounded-full h-8 w-8 border-[3px] border-gray-200 border-t-violet-500" /></div>;
   if (!data || !data.questions?.length) return <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center"><p className="text-[#86868B]">No quiz questions available.</p></div>;
@@ -83,14 +119,21 @@ export default function VocabularyQuizMode({ user }) {
             <div className="bg-white rounded-[20px] p-4 mb-5 max-h-64 overflow-y-auto shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
               <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">Review</p>
               {data.questions.map((q, i) => {
-                const correct = answers[q.id] === q.answer;
+                const userAns = answers[q.id] || '';
+                let isCorrect;
+                if (q.type === 'fill_blank') {
+                  isCorrect = userAns.trim().toLowerCase() === q.answer.trim().toLowerCase();
+                } else {
+                  isCorrect = userAns === q.answer;
+                }
                 return (
-                  <div key={i} className={`p-3 rounded-2xl mb-2 ${correct ? 'bg-green-50' : 'bg-red-50'}`}>
+                  <div key={i} className={`p-3 rounded-2xl mb-2 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
                     <div className="flex items-start gap-2">
-                      {correct ? <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 shrink-0" /> : <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />}
+                      {isCorrect ? <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 shrink-0" /> : <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />}
                       <div className="min-w-0">
                         <p className="text-[13px] text-[#1D1D1F] leading-snug">{q.question}</p>
-                        {!correct && <p className="text-[12px] text-green-600 mt-1">Correct: {q.answer}</p>}
+                        {!isCorrect && <p className="text-[12px] text-green-600 mt-1">Correct: {q.answer}</p>}
+                        {!isCorrect && userAns && <p className="text-[12px] text-red-400 mt-0.5">Your answer: {userAns}</p>}
                         {q.explanation && <p className="text-[12px] text-[#AEAEB2] mt-1">{q.explanation}</p>}
                       </div>
                     </div>
@@ -111,7 +154,6 @@ export default function VocabularyQuizMode({ user }) {
 
   const question = data.questions[currentIdx];
   const prog = ((currentIdx + 1) / data.questions.length) * 100;
-  const answered = Object.keys(answers).length;
 
   return (
     <div className="min-h-screen bg-[#F5F5F7] flex flex-col" data-testid="vocabulary-quiz-mode">
@@ -119,42 +161,92 @@ export default function VocabularyQuizMode({ user }) {
         <div className="flex items-center justify-between px-4 py-3 max-w-3xl mx-auto">
           <button onClick={() => navigate('/advanced-mastery')} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-from-quiz"><ChevronLeft className="w-4 h-4" /> Back</button>
           <p className="text-[15px] font-semibold text-[#1D1D1F]">Mastery Quiz</p>
-          <Badge className="bg-violet-50 text-violet-600 border-violet-200 text-[12px] font-semibold">{answered}/{data.questions.length}</Badge>
+          <Badge className="bg-violet-50 text-violet-600 border-violet-200 text-[12px] font-semibold">{answeredCount}/{data.questions.length}</Badge>
         </div>
         <div className="h-[3px] bg-black/[0.04]"><div className="h-full bg-violet-500 transition-all duration-300" style={{ width: `${prog}%` }} data-testid="quiz-progress-bar" /></div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-4 py-8">
+      <div className="flex-1 flex items-center justify-center px-4 py-6 overflow-y-auto">
         <div className="w-full max-w-xl">
-          <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">Question {currentIdx + 1} of {data.questions.length}</p>
-          
+          <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">
+            Question {currentIdx + 1} of {data.questions.length}
+            {question.type === 'fill_blank' && <span className="ml-2 text-orange-500">Fill in the Blank</span>}
+            {question.type === 'true_false_ng' && <span className="ml-2 text-sky-500">True / False / Not Given</span>}
+          </p>
+
+          {/* TFNG: Show reading passage */}
+          {question.type === 'true_false_ng' && passage && (
+            <div className="bg-white rounded-[20px] p-5 mb-4 shadow-[0_2px_12px_rgba(0,0,0,0.06)] max-h-48 overflow-y-auto" data-testid="tfng-passage">
+              <p className="text-[11px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-2">Reference Passage</p>
+              <p className="text-[13px] text-[#3A3A3C] leading-relaxed">{passage}</p>
+            </div>
+          )}
+
+          {/* Question text */}
           <div className="bg-white rounded-[20px] p-6 mb-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
             <p className="text-[16px] text-[#1D1D1F] leading-relaxed" data-testid="quiz-question-text">{question.question}</p>
           </div>
 
-          <div className="space-y-2.5" data-testid="quiz-options">
-            {question.options?.map((option, i) => {
-              const letter = option.charAt(0);
-              const sel = answers[question.id] === letter;
-              return (
-                <button key={i} onClick={() => selectAnswer(question.id, letter)}
-                  className={`w-full p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${sel ? 'bg-violet-50 border-violet-300 text-violet-700' : 'bg-white border-black/[0.06] text-[#3A3A3C] hover:bg-violet-50/40 hover:border-violet-200'}`}
-                  data-testid={`quiz-option-${letter}`}>
-                  <span className="text-[14px] font-medium">{option}</span>
-                </button>
-              );
-            })}
-          </div>
+          {/* Multiple choice options */}
+          {question.type === 'multiple_choice' && question.options && (
+            <div className="space-y-2.5" data-testid="quiz-options-mc">
+              {question.options.map((option, i) => {
+                const letter = option.charAt(0);
+                const sel = answers[question.id] === letter;
+                return (
+                  <button key={i} onClick={() => selectAnswer(question.id, letter)}
+                    className={`w-full p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${sel ? 'bg-violet-50 border-violet-300 text-violet-700' : 'bg-white border-black/[0.06] text-[#3A3A3C] hover:bg-violet-50/40 hover:border-violet-200'}`}
+                    data-testid={`quiz-option-${letter}`}>
+                    <span className="text-[14px] font-medium">{option}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
+          {/* True/False/Not Given options */}
+          {question.type === 'true_false_ng' && (
+            <div className="space-y-2.5" data-testid="quiz-options-tfng">
+              {['True', 'False', 'Not Given'].map((option) => {
+                const sel = answers[question.id] === option;
+                return (
+                  <button key={option} onClick={() => selectAnswer(question.id, option)}
+                    className={`w-full p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${sel ? 'bg-violet-50 border-violet-300 text-violet-700' : 'bg-white border-black/[0.06] text-[#3A3A3C] hover:bg-violet-50/40 hover:border-violet-200'}`}
+                    data-testid={`quiz-option-tfng-${option.toLowerCase().replace(' ', '-')}`}>
+                    <span className="text-[14px] font-medium">{option}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Fill in the blank input */}
+          {question.type === 'fill_blank' && (
+            <div data-testid="quiz-fill-blank">
+              <input
+                type="text"
+                value={fillInputs[question.id] || ''}
+                onChange={(e) => updateFillInput(question.id, e.target.value)}
+                placeholder="Type your answer here..."
+                className="w-full p-4 rounded-2xl border border-black/[0.06] bg-white text-[15px] text-[#1D1D1F] placeholder-[#AEAEB2] shadow-[0_1px_4px_rgba(0,0,0,0.04)] focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all"
+                data-testid="quiz-fill-input"
+              />
+              {fillInputs[question.id] && (
+                <p className="text-[12px] text-[#86868B] mt-2 px-1">Your answer: <span className="font-medium text-violet-600">{fillInputs[question.id]}</span></p>
+              )}
+            </div>
+          )}
+
+          {/* Navigation */}
           <div className="flex items-center justify-between mt-8 px-2">
             <button onClick={() => setCurrentIdx(p => Math.max(0, p - 1))} disabled={currentIdx === 0} className="w-11 h-11 rounded-full bg-white shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-center disabled:opacity-25" data-testid="quiz-prev-btn"><ChevronLeft className="w-5 h-5 text-[#3A3A3C]" /></button>
             <div className="flex gap-[5px]">
               {data.questions.map((q, i) => (
-                <button key={i} onClick={() => setCurrentIdx(i)} className={`rounded-full transition-all duration-200 ${i === currentIdx ? 'w-6 h-2 bg-violet-500' : answers[q.id] ? 'w-2 h-2 bg-violet-300' : 'w-2 h-2 bg-[#D1D1D6]'}`} data-testid={`quiz-dot-${i}`} />
+                <button key={i} onClick={() => setCurrentIdx(i)} className={`rounded-full transition-all duration-200 ${i === currentIdx ? 'w-6 h-2 bg-violet-500' : isQuestionAnswered(q) ? 'w-2 h-2 bg-violet-300' : 'w-2 h-2 bg-[#D1D1D6]'}`} data-testid={`quiz-dot-${i}`} />
               ))}
             </div>
             {currentIdx === data.questions.length - 1 ? (
-              <button onClick={submitQuiz} disabled={answered < data.questions.length} className="h-11 rounded-full bg-violet-500 hover:bg-violet-600 text-white text-[14px] font-semibold px-5 shadow-[0_2px_10px_rgba(139,92,246,0.3)] disabled:opacity-30 flex items-center gap-2 transition-colors" data-testid="submit-quiz-btn">Submit <Award className="w-4 h-4" /></button>
+              <button onClick={submitQuiz} disabled={answeredCount < data.questions.length} className="h-11 rounded-full bg-violet-500 hover:bg-violet-600 text-white text-[14px] font-semibold px-5 shadow-[0_2px_10px_rgba(139,92,246,0.3)] disabled:opacity-30 flex items-center gap-2 transition-colors" data-testid="submit-quiz-btn">Submit <Award className="w-4 h-4" /></button>
             ) : (
               <button onClick={() => setCurrentIdx(p => Math.min(data.questions.length - 1, p + 1))} className="w-11 h-11 rounded-full bg-white shadow-[0_1px_8px_rgba(0,0,0,0.08)] flex items-center justify-center" data-testid="quiz-next-btn"><ChevronRight className="w-5 h-5 text-[#3A3A3C]" /></button>
             )}
