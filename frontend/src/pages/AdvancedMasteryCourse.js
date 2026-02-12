@@ -894,7 +894,25 @@ export default function AdvancedMasteryCourse({ user }) {
         </div>
       )}
 
-      <div className="mt-6 flex justify-end">
+      {/* Interactive Vocabulary Engine CTA */}
+      <div className="mt-6 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20">
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <h4 className="font-semibold text-amber-800 flex items-center gap-2">
+              <Sparkles className="w-4 h-4" /> Interactive Vocabulary Engine
+            </h4>
+            <p className="text-sm text-gray-600 mt-1">Learn with slides, practice exercises & mastery quiz</p>
+          </div>
+          <Button 
+            onClick={() => navigate(`/vocabulary/learn/${selectedModule.id}`)}
+            className="bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700"
+          >
+            Start Learning <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-4 flex justify-end">
         <Button onClick={() => setCurrentSection('grammar')} className="bg-gradient-to-r from-amber-500 to-orange-600">
           Next: Grammar <ChevronRight className="w-4 h-4 ml-1" />
         </Button>
