@@ -314,6 +314,8 @@ export default function LizTeacher({ user }) {
         setSessionId(data.session_id);
         setLatestLiz(data.response);
         setMessages(prev => [...prev, { role: 'assistant', content: data.response, timestamp: new Date().toISOString() }]);
+        // Refresh homework if new one was assigned
+        if (data.homework_assigned?.length > 0) fetchHomework();
         // Auto-TTS
         await speakText(data.response);
       } else {
