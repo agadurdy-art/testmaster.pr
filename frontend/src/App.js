@@ -65,6 +65,7 @@ import VocabularyLearnMode from './pages/VocabularyLearnMode';
 import VocabularyPracticeMode from './pages/VocabularyPracticeMode';
 import VocabularyQuizMode from './pages/VocabularyQuizMode';
 import VocabularyProductionMode from './pages/VocabularyProductionMode';
+import ReviewBank from './pages/ReviewBank';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
@@ -350,6 +351,10 @@ function AppWithSessionHandler() {
         <Route 
           path="/vocabulary/production/:moduleId" 
           element={user ? <VocabularyProductionMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/review-bank" 
+          element={user ? <ReviewBank user={user} /> : <Navigate to="/" />} 
         />
         <Route 
           path="/game-bank" 
