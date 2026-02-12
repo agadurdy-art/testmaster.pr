@@ -64,6 +64,9 @@ export default function QuestionBank() {
   // Cambridge Test Selection Modal State
   const [showCambridgeTestModal, setShowCambridgeTestModal] = useState(false);
   const [selectedCambridgeTest, setSelectedCambridgeTest] = useState(null);
+  
+  // Full Tests sub-category: null (selection screen), 'cambridge', 'ai'
+  const [testCategory, setTestCategory] = useState(null);
 
   useEffect(() => {
     loadData();
