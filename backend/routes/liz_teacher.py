@@ -454,7 +454,8 @@ async def chat_with_liz(req: ChatRequest):
     session_id = session["session_id"]
 
     user_context = await get_user_context(req.user_id)
-    system_msg = LIZ_SYSTEM_PROMPT.replace("{user_context}", user_context)
+    hw_context = await get_homework_context(req.user_id)
+    system_msg = LIZ_SYSTEM_PROMPT.replace("{user_context}", user_context).replace("{homework_context}", hw_context)
 
     # Add voice context if this is a spoken message
     if req.is_voice:
