@@ -49,12 +49,10 @@ export default function VocabularyQuizMode({ user }) {
 
   const submitQuiz = async () => {
     if (!data) return;
-    
     let correctCount = 0;
     data.questions.forEach(q => {
       if (answers[q.id] === q.answer) correctCount++;
     });
-
     const total = data.questions.length;
     const percentage = Math.round((correctCount / total) * 100);
     const passed = percentage >= PASSING_SCORE;
@@ -62,19 +60,12 @@ export default function VocabularyQuizMode({ user }) {
     setResult({ score: correctCount, total, percentage, passed });
     setSubmitted(true);
 
-    // Save to backend
     if (user) {
       try {
         await fetch(`${API_URL}/api/vocabulary-engine/quiz/submit`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            module_id: moduleId,
-            user_id: user.id,
-            answers,
-            score: correctCount,
-            total,
-          }),
+          body: JSON.stringify({ module_id: moduleId, user_id: user.id, answers, score: correctCount, total }),
         });
       } catch {
         console.error('Failed to save quiz result');
@@ -92,15 +83,15 @@ export default function VocabularyQuizMode({ user }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center" data-testid="quiz-mode-loading">
-        <div className="animate-spin rounded-full h-10 w-10 border-2 border-amber-400 border-t-transparent" />
+      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-pink-50/30 flex items-center justify-center" data-testid="quiz-mode-loading">
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-purple-500 border-t-transparent" />
       </div>
     );
   }
 
   if (!data || !data.questions?.length) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">
+      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-pink-50/30 flex items-center justify-center text-gray-700">
         <p>No quiz questions available.</p>
       </div>
     );
@@ -109,36 +100,34 @@ export default function VocabularyQuizMode({ user }) {
   // Results screen
   if (submitted && result) {
     return (
-      <div className="min-h-screen bg-slate-950 flex flex-col" data-testid="quiz-results-screen">
-        {/* Top bar */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-slate-900/80">
+      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-pink-50/30 flex flex-col" data-testid="quiz-results-screen">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-purple-200/60 bg-white/80">
           <button 
             onClick={() => navigate('/advanced-mastery')} 
-            className="flex items-center gap-2 text-sm text-slate-400 hover:text-white"
+            className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900"
             data-testid="back-from-quiz-results"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Course
           </button>
-          <p className="text-sm font-medium text-slate-300">Mastery Quiz Results</p>
+          <p className="text-sm font-medium text-gray-700">Mastery Quiz Results</p>
           <div />
         </div>
 
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="w-full max-w-lg">
-            {/* Score card */}
             <div className="text-center mb-8">
               <div className={`w-28 h-28 mx-auto mb-4 rounded-full flex items-center justify-center ${
-                result.passed ? 'bg-emerald-500/20' : 'bg-red-500/20'
+                result.passed ? 'bg-emerald-100' : 'bg-red-100'
               }`}>
                 {result.passed 
-                  ? <Trophy className="w-14 h-14 text-emerald-400" />
-                  : <Target className="w-14 h-14 text-red-400" />
+                  ? <Trophy className="w-14 h-14 text-emerald-600" />
+                  : <Target className="w-14 h-14 text-red-500" />
                 }
               </div>
-              <h2 className="text-3xl font-bold text-white mb-1">
+              <h2 className="text-3xl font-bold text-gray-900 mb-1">
                 {result.passed ? 'Mastery Achieved!' : 'Keep Practicing'}
               </h2>
-              <p className="text-slate-400">
+              <p className="text-gray-500">
                 {result.passed 
                   ? 'You have mastered this vocabulary module.' 
                   : `You need ${PASSING_SCORE}% to pass. Review and try again.`
@@ -146,38 +135,38 @@ export default function VocabularyQuizMode({ user }) {
               </p>
             </div>
 
-            <div className="bg-slate-900 rounded-xl border border-white/10 p-6 mb-6 text-center">
+            <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6 text-center shadow-sm">
               <div className="text-6xl font-bold mb-2" data-testid="quiz-final-score">
-                <span className={result.passed ? 'text-emerald-400' : 'text-red-400'}>
+                <span className={result.passed ? 'text-emerald-600' : 'text-red-500'}>
                   {result.percentage}%
                 </span>
               </div>
-              <p className="text-slate-400">{result.score} / {result.total} correct</p>
-              <Badge className={`mt-3 ${result.passed ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' : 'bg-red-500/20 text-red-300 border-red-500/30'}`}>
+              <p className="text-gray-400">{result.score} / {result.total} correct</p>
+              <Badge className={`mt-3 ${result.passed ? 'bg-emerald-100 text-emerald-700 border-emerald-200' : 'bg-red-100 text-red-700 border-red-200'}`}>
                 {result.passed ? 'PASSED' : 'NOT PASSED'}
               </Badge>
             </div>
 
             {/* Question review */}
-            <div className="bg-slate-900 rounded-xl border border-white/10 p-4 mb-6 max-h-72 overflow-y-auto">
-              <p className="text-sm text-slate-400 mb-3">Question Review</p>
+            <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6 max-h-72 overflow-y-auto shadow-sm">
+              <p className="text-sm text-gray-400 mb-3">Question Review</p>
               {data.questions.map((q, i) => {
                 const userAnswer = answers[q.id];
                 const isCorrect = userAnswer === q.answer;
                 return (
-                  <div key={i} className={`p-3 rounded-lg mb-2 ${isCorrect ? 'bg-emerald-500/10 border border-emerald-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
+                  <div key={i} className={`p-3 rounded-lg mb-2 ${isCorrect ? 'bg-emerald-50 border border-emerald-200' : 'bg-red-50 border border-red-200'}`}>
                     <div className="flex items-start gap-2">
                       {isCorrect 
-                        ? <CheckCircle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                        : <XCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                        ? <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                        : <XCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                       }
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-slate-300 leading-snug">{q.question}</p>
+                        <p className="text-sm text-gray-700 leading-snug">{q.question}</p>
                         {!isCorrect && (
-                          <p className="text-xs text-emerald-400 mt-1">Correct: {q.answer}) {q.options?.find(o => o.startsWith(q.answer))?.slice(3) || ''}</p>
+                          <p className="text-xs text-emerald-600 mt-1">Correct: {q.answer}) {q.options?.find(o => o.startsWith(q.answer))?.slice(3) || ''}</p>
                         )}
                         {q.explanation && (
-                          <p className="text-xs text-slate-500 mt-1">{q.explanation}</p>
+                          <p className="text-xs text-gray-400 mt-1">{q.explanation}</p>
                         )}
                       </div>
                     </div>
@@ -191,7 +180,7 @@ export default function VocabularyQuizMode({ user }) {
                 <Button
                   variant="outline"
                   onClick={handleRetry}
-                  className="flex-1 border-white/10 text-slate-300 hover:bg-white/10"
+                  className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
                   data-testid="retry-quiz-btn"
                 >
                   <RotateCcw className="w-4 h-4 mr-2" /> Try Again
@@ -216,28 +205,26 @@ export default function VocabularyQuizMode({ user }) {
   const answeredCount = Object.keys(answers).length;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col" data-testid="vocabulary-quiz-mode">
+    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-pink-50/30 text-gray-900 flex flex-col" data-testid="vocabulary-quiz-mode">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-slate-900/80 backdrop-blur-sm">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-purple-200/60 bg-white/80 backdrop-blur-sm">
         <button 
           onClick={() => navigate('/advanced-mastery')}
-          className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
           data-testid="back-from-quiz"
         >
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
-        <p className="text-sm font-medium text-slate-300">Mastery Quiz</p>
-        <div className="flex items-center gap-2">
-          <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">
-            {answeredCount}/{data.questions.length}
-          </Badge>
-        </div>
+        <p className="text-sm font-medium text-gray-700">Mastery Quiz</p>
+        <Badge className="bg-purple-100 text-purple-700 border-purple-200">
+          {answeredCount}/{data.questions.length}
+        </Badge>
       </div>
 
       {/* Progress */}
-      <div className="h-1 bg-slate-800">
+      <div className="h-1.5 bg-purple-100">
         <div 
-          className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300"
+          className="h-full bg-gradient-to-r from-purple-400 to-pink-500 transition-all duration-300 rounded-r-full"
           style={{ width: `${progress}%` }}
           data-testid="quiz-progress-bar"
         />
@@ -246,19 +233,16 @@ export default function VocabularyQuizMode({ user }) {
       {/* Question area */}
       <div className="flex-1 flex items-center justify-center px-4 py-8">
         <div className="w-full max-w-2xl">
-          {/* Question number */}
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-xs text-slate-500">Question {currentIdx + 1} of {data.questions.length}</span>
+            <span className="text-xs text-gray-400">Question {currentIdx + 1} of {data.questions.length}</span>
           </div>
 
-          {/* Question */}
-          <div className="bg-slate-900 rounded-xl border border-white/10 p-6 mb-6">
-            <p className="text-lg text-slate-200 leading-relaxed" data-testid="quiz-question-text">
+          <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6 shadow-sm">
+            <p className="text-lg text-gray-700 leading-relaxed" data-testid="quiz-question-text">
               {question.question}
             </p>
           </div>
 
-          {/* Options */}
           <div className="space-y-3" data-testid="quiz-options">
             {question.options?.map((option, i) => {
               const letter = option.charAt(0);
@@ -267,10 +251,10 @@ export default function VocabularyQuizMode({ user }) {
                 <button
                   key={i}
                   onClick={() => selectAnswer(question.id, letter)}
-                  className={`w-full p-4 rounded-xl border text-left transition-all ${
+                  className={`w-full p-4 rounded-xl border text-left transition-all shadow-sm ${
                     isSelected 
-                      ? 'bg-amber-500/20 border-amber-500 text-amber-200' 
-                      : 'bg-slate-900 border-white/10 text-slate-300 hover:bg-white/5 hover:border-white/20'
+                      ? 'bg-purple-50 border-purple-400 text-purple-800' 
+                      : 'bg-white border-gray-200 text-gray-600 hover:bg-purple-50/50 hover:border-purple-200'
                   }`}
                   data-testid={`quiz-option-${letter}`}
                 >
@@ -286,13 +270,12 @@ export default function VocabularyQuizMode({ user }) {
               variant="outline"
               onClick={() => setCurrentIdx(prev => Math.max(0, prev - 1))}
               disabled={currentIdx === 0}
-              className="border-white/10 text-slate-300 hover:bg-white/10 disabled:opacity-30"
+              className="border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-30"
               data-testid="quiz-prev-btn"
             >
               <ArrowLeft className="w-4 h-4 mr-1" /> Previous
             </Button>
 
-            {/* Question dots */}
             <div className="flex gap-1">
               {data.questions.map((q, i) => (
                 <button
@@ -300,10 +283,10 @@ export default function VocabularyQuizMode({ user }) {
                   onClick={() => setCurrentIdx(i)}
                   className={`w-3 h-3 rounded-full transition-all ${
                     i === currentIdx 
-                      ? 'bg-purple-400 scale-125' 
+                      ? 'bg-purple-500 scale-125' 
                       : answers[q.id] 
-                        ? 'bg-purple-400/40' 
-                        : 'bg-slate-700'
+                        ? 'bg-purple-300' 
+                        : 'bg-gray-200'
                   }`}
                   data-testid={`quiz-dot-${i}`}
                 />
@@ -323,7 +306,7 @@ export default function VocabularyQuizMode({ user }) {
               <Button
                 variant="outline"
                 onClick={() => setCurrentIdx(prev => Math.min(data.questions.length - 1, prev + 1))}
-                className="border-white/10 text-slate-300 hover:bg-white/10"
+                className="border-gray-200 text-gray-600 hover:bg-gray-50"
                 data-testid="quiz-next-btn"
               >
                 Next <ArrowRight className="w-4 h-4 ml-1" />
