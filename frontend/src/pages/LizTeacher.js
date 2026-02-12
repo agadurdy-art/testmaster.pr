@@ -537,6 +537,29 @@ export default function LizTeacher({ user }) {
           </div>
         )}
 
+        {/* Homework Panel */}
+        {showHomework && (
+          <div className="w-full max-w-xl space-y-2" data-testid="homework-panel">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5">
+                <ClipboardList className="w-4 h-4 text-teal-500" /> My Homework
+              </h3>
+              {messages.length > 2 && (
+                <button onClick={requestHomework} disabled={isLizBusy} className="text-[11px] text-teal-600 hover:text-teal-700 font-medium disabled:opacity-40" data-testid="request-homework-btn">
+                  + Ask for homework
+                </button>
+              )}
+            </div>
+            {homework.length === 0 ? (
+              <p className="text-xs text-slate-400 text-center py-3">No homework yet. Liz will assign tasks during lessons.</p>
+            ) : (
+              homework.map(hw => (
+                <HomeworkCard key={hw.homework_id} hw={hw} onSubmit={submitHomework} onDelete={deleteHomework} submitting={submittingHw} />
+              ))
+            )}
+          </div>
+        )}
+
         {/* Transcript toggle */}
         {messages.length > 1 && (
           <button
