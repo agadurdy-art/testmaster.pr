@@ -580,6 +580,9 @@ async def get_random_practice(
                 legacy_questions = [q for q in legacy_questions if q.get("type") == question_type]
             questions.extend(legacy_questions)
         
+        # Filter out questions with empty correct answer (unusable for practice feedback)
+        questions = [q for q in questions if q.get("correct")]
+        
         # Shuffle combined results
         import random
         random.shuffle(questions)
