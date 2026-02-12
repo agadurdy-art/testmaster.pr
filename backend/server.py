@@ -1401,6 +1401,19 @@ async def health_check():
 async def get_tests(test_type: Optional[str] = None):
     query = {"test_type": test_type} if test_type else {}
     tests = await db.tests.find(query, {"_id": 0}).to_list(100)
+    
+    # For listening tests, inject audio URLs
+    for test in tests:
+        if test.get("test_type") == "listening":
+            all_listening = [t for t in tests if t.get("test_type") == "listening"]
+            all_listening.sort(key=lambda t: t.get("title", ""))
+            test_idx = next((i for i, t in enumerate(all_listening) if t["id"] == test["id"]), 0) + 1
+            for i, section in enumerate(test.get("sections", [])):
+                part_num = i + 1
+                audio_path = Path(f"static/audio/listening_tests/test{test_idx}_part{part_num}.mp3")
+                if audio_path.exists():
+                    section["audio_url"] = f"/api/listening-test-audio/test{test_idx}_part{part_num}"
+    
     return tests
 
 @api_router.get("/tests/{test_id}")
