@@ -296,24 +296,103 @@ export default function QuestionBank({ user }) {
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">{stats?.total_questions || 185}</div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-total-questions">
+              <div className="text-2xl font-bold">{stats?.total_questions || 0}</div>
               <div className="text-white/70 text-sm">Total Questions</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">{stats?.full_tests || 4}</div>
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-full-tests">
+              <div className="text-2xl font-bold">{stats?.full_tests || 0}</div>
               <div className="text-white/70 text-sm">Full Tests</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-skill-areas">
               <div className="text-2xl font-bold">{stats?.practice_sets || 4}</div>
               <div className="text-white/70 text-sm">Skill Areas</div>
             </div>
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <div className="text-2xl font-bold">{stats?.topics_count || 18}</div>
+            <div className="bg-white/10 backdrop-blur rounded-xl p-4" data-testid="stat-topics">
+              <div className="text-2xl font-bold">{stats?.topics_count || 0}</div>
               <div className="text-white/70 text-sm">Topics</div>
             </div>
+            {/* Completion Rate - 5th stat box */}
+            <div 
+              className="bg-white/20 backdrop-blur rounded-xl p-4 cursor-pointer hover:bg-white/25 transition-colors relative"
+              data-testid="stat-completion-rate"
+              onClick={() => setShowCompletionDetail(!showCompletionDetail)}
+            >
+              <div className="text-2xl font-bold">
+                {completionStats ? `${completionStats.total_full_completed}/${completionStats.total_full_available}` : '0/20'}
+              </div>
+              <div className="text-white/70 text-sm">Completed</div>
+              {completionStats?.total_full_completed > 0 && (
+                <div className="mt-1.5 w-full bg-white/20 rounded-full h-1.5">
+                  <div 
+                    className="bg-emerald-400 h-1.5 rounded-full transition-all duration-500"
+                    style={{ width: `${Math.round((completionStats.total_full_completed / completionStats.total_full_available) * 100)}%` }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Completion Breakdown Popup */}
+          {showCompletionDetail && completionStats && (
+            <div className="mt-4 bg-white/15 backdrop-blur-lg rounded-xl p-5 border border-white/20" data-testid="completion-breakdown">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-sm">Completion Breakdown</h3>
+                <button onClick={() => setShowCompletionDetail(false)} className="text-white/60 hover:text-white">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <BookMarked className="w-4 h-4 text-red-300" />
+                    <span className="text-xs font-medium text-white/80">Cambridge</span>
+                  </div>
+                  <div className="text-lg font-bold">{completionStats.cambridge.completed}/{completionStats.cambridge.total}</div>
+                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
+                    <div className="bg-red-400 h-1 rounded-full" style={{ width: `${(completionStats.cambridge.completed / completionStats.cambridge.total) * 100}%` }} />
+                  </div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Zap className="w-4 h-4 text-indigo-300" />
+                    <span className="text-xs font-medium text-white/80">AI Academic</span>
+                  </div>
+                  <div className="text-lg font-bold">{completionStats.ai_academic.completed}/{completionStats.ai_academic.total}</div>
+                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
+                    <div className="bg-indigo-400 h-1 rounded-full" style={{ width: `${(completionStats.ai_academic.completed / completionStats.ai_academic.total) * 100}%` }} />
+                  </div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Zap className="w-4 h-4 text-purple-300" />
+                    <span className="text-xs font-medium text-white/80">AI General</span>
+                  </div>
+                  <div className="text-lg font-bold">{completionStats.ai_general.completed}/{completionStats.ai_general.total}</div>
+                  <div className="mt-1 w-full bg-white/20 rounded-full h-1">
+                    <div className="bg-purple-400 h-1 rounded-full" style={{ width: `${(completionStats.ai_general.completed / completionStats.ai_general.total) * 100}%` }} />
+                  </div>
+                </div>
+              </div>
+              {/* Practice Stats */}
+              {completionStats.practice && Object.keys(completionStats.practice).length > 0 && (
+                <div className="border-t border-white/15 pt-3">
+                  <p className="text-xs font-medium text-white/60 mb-2">Practice Sessions</p>
+                  <div className="flex flex-wrap gap-2">
+                    {Object.entries(completionStats.practice).map(([skill, count]) => (
+                      <span key={skill} className="bg-white/10 rounded-lg px-3 py-1.5 text-xs font-medium">
+                        {skill.charAt(0).toUpperCase() + skill.slice(1)}: {count}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {completionStats.total_full_completed === 0 && Object.keys(completionStats.practice || {}).length === 0 && (
+                <p className="text-xs text-white/50 text-center">No tests completed yet. Start practicing to see your progress!</p>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
