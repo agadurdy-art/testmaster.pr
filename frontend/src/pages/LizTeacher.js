@@ -3,109 +3,129 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import {
   ArrowLeft, Send, Volume2, VolumeX, Plus,
-  Loader2, Sparkles, BookOpen, ChevronDown,
-  Mic, MicOff, BarChart3, GraduationCap, Target
+  Loader2, ChevronDown, Mic, MicOff,
+  MessageSquare, BookOpen, PenTool, Target,
+  GraduationCap, ChevronUp
 } from 'lucide-react';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const LIZ_AVATAR = 'https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png';
 
-function MessageBubble({ msg, onSpeak, speakingId }) {
-  const isUser = msg.role === 'user';
-  const isSpeaking = speakingId === msg.timestamp;
+/* ── Status: idle | listening | transcribing | thinking | speaking ── */
+
+function AudioBars({ active }) {
+  if (!active) return null;
+  const heights = [12, 20, 28, 20, 12, 24, 16, 28, 20, 12];
+  return (
+    <div className="flex items-end justify-center gap-[3px] h-8" data-testid="audio-bars">
+      {heights.map((h, i) => (
+        <div
+          key={i}
+          className="w-[3px] rounded-full bg-teal-400"
+          style={{
+            animation: `audioPulse 0.6s ease-in-out infinite alternate`,
+            animationDelay: `${i * 0.07}s`,
+            height: `${h}px`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function LizPresence({ status }) {
+  const isSpeaking = status === 'speaking';
+  const isThinking = status === 'thinking';
 
   return (
-    <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`} data-testid={`message-${msg.role}`}>
-      {!isUser && (
-        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center shrink-0 mt-1 shadow-sm">
-          <GraduationCap className="w-5 h-5 text-white" />
-        </div>
-      )}
-      <div className={`max-w-[80%] ${isUser ? 'ml-auto' : ''}`}>
-        <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-          isUser
-            ? 'bg-gradient-to-r from-slate-700 to-slate-800 text-white rounded-tr-sm'
-            : 'bg-white border border-slate-200 text-slate-800 rounded-tl-sm shadow-sm'
+    <div className="flex flex-col items-center">
+      <div className="relative">
+        {/* Glow ring when speaking */}
+        {isSpeaking && (
+          <div className="absolute -inset-3 rounded-full bg-teal-400/20 animate-ping" style={{ animationDuration: '1.5s' }} />
+        )}
+        <div className={`relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 transition-all duration-500 ${
+          isSpeaking
+            ? 'border-teal-400 shadow-[0_0_30px_rgba(20,184,166,0.4)]'
+            : isThinking
+              ? 'border-teal-300/50 animate-pulse'
+              : 'border-white/80 shadow-lg'
         }`}>
-          {msg.content}
+          <img src={LIZ_AVATAR} alt="Liz" className="w-full h-full object-cover" />
         </div>
-        <div className={`flex items-center gap-2 mt-1 ${isUser ? 'justify-end' : ''}`}>
-          <span className="text-[10px] text-slate-400">
-            {msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
-          </span>
-          {msg.is_voice && isUser && (
-            <Mic className="w-3 h-3 text-teal-400" />
-          )}
-          {!isUser && (
-            <button
-              onClick={() => onSpeak(msg.content, msg.timestamp)}
-              className={`text-slate-400 hover:text-teal-500 transition-colors ${isSpeaking ? 'text-teal-500' : ''}`}
-              data-testid="speak-btn"
-            >
-              {isSpeaking ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-            </button>
-          )}
-        </div>
+        {/* Status dot */}
+        <div className={`absolute bottom-1 right-1 w-4 h-4 rounded-full border-2 border-white ${
+          isSpeaking ? 'bg-teal-400' : isThinking ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'
+        }`} />
       </div>
+      <AudioBars active={isSpeaking} />
+      <p className="text-xs text-slate-400 mt-1" data-testid="liz-status">
+        {status === 'speaking' && 'Liz is speaking...'}
+        {status === 'thinking' && 'Liz is preparing...'}
+        {status === 'listening' && 'Listening to you...'}
+        {status === 'transcribing' && 'Understanding...'}
+        {status === 'idle' && ''}
+      </p>
     </div>
   );
 }
 
-function TypingIndicator() {
+function SpeechDisplay({ text, status }) {
+  if (!text) return null;
   return (
-    <div className="flex gap-3" data-testid="liz-typing">
-      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center shrink-0 mt-1">
-        <GraduationCap className="w-5 h-5 text-white" />
-      </div>
-      <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm">
-        <div className="flex gap-1.5 items-center">
-          <div className="w-2 h-2 bg-teal-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-          <div className="w-2 h-2 bg-teal-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-          <div className="w-2 h-2 bg-teal-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-        </div>
-      </div>
+    <div className={`max-w-xl mx-auto px-5 py-4 rounded-2xl text-sm sm:text-base leading-relaxed text-center whitespace-pre-wrap transition-all ${
+      status === 'speaking'
+        ? 'bg-white/90 border border-teal-200 shadow-md text-slate-800'
+        : 'bg-white/60 border border-slate-200 text-slate-700'
+    }`} data-testid="liz-speech">
+      {text}
     </div>
   );
 }
 
-function RecordingIndicator() {
+function TranscriptItem({ msg }) {
+  const isUser = msg.role === 'user';
   return (
-    <div className="flex items-center gap-2 text-red-500 text-sm font-medium animate-pulse" data-testid="recording-indicator">
-      <div className="w-3 h-3 bg-red-500 rounded-full" />
-      Recording... Tap to stop
+    <div className={`flex gap-2 text-xs py-1.5 ${isUser ? 'justify-end' : ''}`}>
+      <span className={`font-semibold ${isUser ? 'text-slate-500' : 'text-teal-600'}`}>
+        {isUser ? 'You' : 'Liz'}:
+      </span>
+      <span className="text-slate-600 max-w-[80%] truncate">{msg.content}</span>
     </div>
   );
 }
 
-const QUICK_PROMPTS = [
-  { icon: BarChart3, text: "Analyze my progress", testId: "quick-analyze" },
-  { icon: Target, text: "Build a study plan for me", testId: "quick-plan" },
-  { icon: Sparkles, text: "Give me a vocabulary lesson", testId: "quick-vocab" },
-  { icon: BookOpen, text: "Let's practice grammar", testId: "quick-grammar" },
+const LESSON_MODES = [
+  { icon: MessageSquare, label: 'Speaking Practice', prompt: 'Start a structured IELTS Speaking practice session. Begin with Part 1 warm-up questions, then move to Part 2 cue card, and finish with Part 3 discussion. Guide me step by step.', testId: 'lesson-speaking' },
+  { icon: BookOpen, label: 'Vocabulary Builder', prompt: 'Start an interactive vocabulary lesson. Teach me useful IELTS vocabulary with examples, then quiz me on it. Use adaptive difficulty.', testId: 'lesson-vocab' },
+  { icon: PenTool, label: 'Grammar Lesson', prompt: 'Start a structured grammar lesson focused on common IELTS grammar patterns. Explain a concept, give me a task, then provide feedback. Build up difficulty.', testId: 'lesson-grammar' },
+  { icon: Target, label: 'Study Plan', prompt: 'Analyze my progress and create a detailed study plan for the next week. Be specific about what I should practice each day.', testId: 'lesson-plan' },
 ];
 
 export default function LizTeacher({ user }) {
   const navigate = useNavigate();
+  const [status, setStatus] = useState('idle');
   const [messages, setMessages] = useState([]);
+  const [latestLiz, setLatestLiz] = useState('');
   const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState(null);
   const [sessions, setSessions] = useState([]);
   const [showSessions, setShowSessions] = useState(false);
-  const [speakingId, setSpeakingId] = useState(null);
-  const [isRecording, setIsRecording] = useState(false);
-  const [isTranscribing, setIsTranscribing] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [showTranscript, setShowTranscript] = useState(false);
+  const [autoVoice, setAutoVoice] = useState(true);
+  const [hasGreeted, setHasGreeted] = useState(false);
   const audioRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
+  const transcriptEndRef = useRef(null);
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollTranscript = useCallback(() => {
+    transcriptEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  useEffect(() => { scrollToBottom(); }, [messages, loading, scrollToBottom]);
+  useEffect(() => { scrollTranscript(); }, [messages, scrollTranscript]);
 
+  // Load sessions
   useEffect(() => {
     if (!user?.id) return;
     fetch(`${API_URL}/api/liz/sessions/${user.id}`)
@@ -114,84 +134,17 @@ export default function LizTeacher({ user }) {
       .catch(() => {});
   }, [user?.id]);
 
-  const loadSession = async (sid) => {
-    try {
-      const res = await fetch(`${API_URL}/api/liz/history/${sid}?user_id=${user.id}`);
-      const data = await res.json();
-      if (data.success) {
-        setMessages(data.messages || []);
-        setSessionId(sid);
-        setShowSessions(false);
-      }
-    } catch { /* ignore */ }
-  };
+  // Auto-greet on first load
+  useEffect(() => {
+    if (!user?.id || hasGreeted || sessionId) return;
+    greetStudent();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
-  const startNewSession = () => {
-    setMessages([]);
-    setSessionId(null);
-    setShowSessions(false);
-  };
-
-  const sendMessage = async (text, isVoice = false) => {
-    if (!text?.trim() || loading) return;
-    const userMsg = { role: 'user', content: text.trim(), timestamp: new Date().toISOString(), is_voice: isVoice };
-    setMessages(prev => [...prev, userMsg]);
-    setInput('');
-    setLoading(true);
-
-    try {
-      const res = await fetch(`${API_URL}/api/liz/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user_id: user.id,
-          message: text.trim(),
-          session_id: sessionId,
-          is_voice: isVoice
-        })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setSessionId(data.session_id);
-        const assistantMsg = {
-          role: 'assistant',
-          content: data.response,
-          timestamp: new Date().toISOString()
-        };
-        setMessages(prev => [...prev, assistantMsg]);
-
-        // Auto-play TTS if the user sent a voice message
-        if (isVoice) {
-          speakText(data.response, assistantMsg.timestamp);
-        }
-      }
-    } catch {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: "I couldn't process your message right now. Please try again.",
-        timestamp: new Date().toISOString()
-      }]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const speakText = async (text, msgId) => {
-    if (speakingId === msgId && audioRef.current) {
-      audioRef.current.pause();
-      setSpeakingId(null);
-      return;
-    }
-    try {
-      setSpeakingId(msgId);
-      const res = await fetch(`${API_URL}/api/liz/tts`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: text.substring(0, 500) })
-      });
-      const data = await res.json();
-      if (data.audio) {
-        const byteChars = atob(data.audio);
+  const playAudio = useCallback((base64Audio) => {
+    return new Promise((resolve) => {
+      try {
+        const byteChars = atob(base64Audio);
         const byteArray = new Uint8Array(byteChars.length);
         for (let i = 0; i < byteChars.length; i++) byteArray[i] = byteChars.charCodeAt(i);
         const blob = new Blob([byteArray], { type: 'audio/mpeg' });
@@ -199,11 +152,82 @@ export default function LizTeacher({ user }) {
         if (audioRef.current) audioRef.current.pause();
         const audio = new Audio(url);
         audioRef.current = audio;
-        audio.onended = () => { setSpeakingId(null); URL.revokeObjectURL(url); };
-        audio.play();
+        setStatus('speaking');
+        audio.onended = () => { setStatus('idle'); URL.revokeObjectURL(url); resolve(); };
+        audio.onerror = () => { setStatus('idle'); resolve(); };
+        audio.play().catch(() => { setStatus('idle'); resolve(); });
+      } catch { setStatus('idle'); resolve(); }
+    });
+  }, []);
+
+  const speakText = useCallback(async (text) => {
+    if (!autoVoice) return;
+    try {
+      const res = await fetch(`${API_URL}/api/liz/tts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text.substring(0, 500) })
+      });
+      const data = await res.json();
+      if (data.audio) await playAudio(data.audio);
+    } catch {
+      setStatus('idle');
+    }
+  }, [autoVoice, playAudio]);
+
+  const greetStudent = async () => {
+    setHasGreeted(true);
+    setStatus('thinking');
+    try {
+      const res = await fetch(`${API_URL}/api/liz/greet`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSessionId(data.session_id);
+        setLatestLiz(data.greeting);
+        setMessages([{ role: 'assistant', content: data.greeting, timestamp: new Date().toISOString() }]);
+        if (data.audio && autoVoice) {
+          await playAudio(data.audio);
+        } else {
+          setStatus('idle');
+        }
+      } else {
+        setStatus('idle');
       }
     } catch {
-      setSpeakingId(null);
+      setStatus('idle');
+    }
+  };
+
+  const sendMessage = async (text, isVoice = false) => {
+    if (!text?.trim() || status === 'thinking' || status === 'speaking') return;
+    const trimmed = text.trim();
+    setMessages(prev => [...prev, { role: 'user', content: trimmed, timestamp: new Date().toISOString() }]);
+    setInput('');
+    setStatus('thinking');
+
+    try {
+      const res = await fetch(`${API_URL}/api/liz/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSessionId(data.session_id);
+        setLatestLiz(data.response);
+        setMessages(prev => [...prev, { role: 'assistant', content: data.response, timestamp: new Date().toISOString() }]);
+        // Auto-TTS
+        await speakText(data.response);
+      } else {
+        setStatus('idle');
+      }
+    } catch {
+      setLatestLiz("I couldn't process that. Please try again.");
+      setStatus('idle');
     }
   };
 
@@ -211,125 +235,134 @@ export default function LizTeacher({ user }) {
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
-          ? 'audio/webm;codecs=opus'
-          : 'audio/webm'
-      });
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus' : 'audio/webm';
+      const recorder = new MediaRecorder(stream, { mimeType });
       chunksRef.current = [];
-
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) chunksRef.current.push(e.data);
-      };
-
-      mediaRecorder.onstop = async () => {
-        stream.getTracks().forEach(track => track.stop());
+      recorder.ondataavailable = (e) => { if (e.data.size > 0) chunksRef.current.push(e.data); };
+      recorder.onstop = async () => {
+        stream.getTracks().forEach(t => t.stop());
         const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
-        if (blob.size > 0) {
-          await transcribeAudio(blob);
-        }
+        if (blob.size > 0) await transcribeAudio(blob);
       };
-
-      mediaRecorder.start();
-      mediaRecorderRef.current = mediaRecorder;
-      setIsRecording(true);
-    } catch {
-      // Microphone access denied
-    }
+      recorder.start();
+      mediaRecorderRef.current = recorder;
+      setStatus('listening');
+    } catch { /* mic denied */ }
   };
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
     }
-    setIsRecording(false);
+    setStatus('transcribing');
   };
 
   const transcribeAudio = async (blob) => {
-    setIsTranscribing(true);
+    setStatus('transcribing');
     try {
       const formData = new FormData();
       formData.append('file', blob, 'recording.webm');
-      const res = await fetch(`${API_URL}/api/liz/stt`, {
-        method: 'POST',
-        body: formData
-      });
+      const res = await fetch(`${API_URL}/api/liz/stt`, { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.text?.trim()) {
         await sendMessage(data.text, true);
+      } else {
+        setStatus('idle');
       }
     } catch {
-      // STT failed silently
-    } finally {
-      setIsTranscribing(false);
+      setStatus('idle');
     }
   };
 
   const handleMicClick = () => {
-    if (isRecording) {
-      stopRecording();
-    } else {
-      startRecording();
-    }
+    if (status === 'listening') stopRecording();
+    else if (status === 'idle') startRecording();
+  };
+
+  const toggleAutoVoice = () => {
+    if (audioRef.current) audioRef.current.pause();
+    setAutoVoice(v => !v);
+    if (status === 'speaking') setStatus('idle');
+  };
+
+  const loadSession = async (sid) => {
+    try {
+      const res = await fetch(`${API_URL}/api/liz/history/${sid}?user_id=${user.id}`);
+      const data = await res.json();
+      if (data.success) {
+        const msgs = data.messages || [];
+        setMessages(msgs);
+        setSessionId(sid);
+        setShowSessions(false);
+        setHasGreeted(true);
+        const lastLiz = [...msgs].reverse().find(m => m.role === 'assistant');
+        if (lastLiz) setLatestLiz(lastLiz.content);
+      }
+    } catch { /* ignore */ }
+  };
+
+  const startNewSession = () => {
+    setMessages([]);
+    setSessionId(null);
+    setLatestLiz('');
+    setShowSessions(false);
+    setHasGreeted(false);
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage(input);
-    }
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input); }
   };
 
+  const isLizBusy = status === 'thinking' || status === 'speaking';
+  const isUserBusy = status === 'listening' || status === 'transcribing';
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-teal-50/30 to-white flex flex-col" data-testid="liz-teacher-page">
-      {/* Header */}
-      <div className="border-b border-slate-200/80 bg-white/90 backdrop-blur-sm px-4 py-3">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-white flex flex-col" data-testid="liz-teacher-page">
+      {/* CSS for audio bars */}
+      <style>{`
+        @keyframes audioPulse {
+          0% { transform: scaleY(0.4); opacity: 0.5; }
+          100% { transform: scaleY(1); opacity: 1; }
+        }
+      `}</style>
+
+      {/* ── Header ── */}
+      <div className="border-b border-slate-200/60 bg-white/80 backdrop-blur-sm px-4 py-2.5">
+        <div className="max-w-2xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-slate-700 transition-colors" data-testid="liz-back-btn">
+            <button onClick={() => navigate(-1)} className="text-slate-400 hover:text-slate-700" data-testid="liz-back-btn">
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center shadow-sm">
-              <GraduationCap className="w-6 h-6 text-white" />
-            </div>
             <div>
-              <h1 className="font-bold text-slate-900 text-base">Liz</h1>
-              <p className="text-teal-600/70 text-xs">Your IELTS Teacher & Coach</p>
+              <h1 className="font-bold text-slate-900 text-sm">Liz</h1>
+              <p className="text-teal-600/60 text-[10px]">Your IELTS Teacher</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <button
+              onClick={toggleAutoVoice}
+              className={`p-2 rounded-full transition-colors ${autoVoice ? 'text-teal-600 bg-teal-50' : 'text-slate-400 bg-slate-50'}`}
+              data-testid="auto-voice-toggle"
+              title={autoVoice ? 'Voice On' : 'Voice Off'}
+            >
+              {autoVoice ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+            </button>
             <div className="relative">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowSessions(!showSessions)}
-                className="text-slate-500 hover:text-slate-700 text-xs"
-                data-testid="sessions-btn"
-              >
-                History <ChevronDown className="w-3.5 h-3.5 ml-1" />
+              <Button variant="ghost" size="sm" onClick={() => setShowSessions(!showSessions)} className="text-slate-500 text-xs" data-testid="sessions-btn">
+                History <ChevronDown className="w-3 h-3 ml-1" />
               </Button>
               {showSessions && (
-                <div className="absolute right-0 top-full mt-1 w-64 bg-white rounded-xl border border-slate-200 shadow-xl z-50 py-2 max-h-60 overflow-y-auto" data-testid="sessions-dropdown">
-                  <button
-                    onClick={startNewSession}
-                    className="w-full px-4 py-2.5 text-left text-sm hover:bg-teal-50 flex items-center gap-2 text-teal-700 font-medium"
-                    data-testid="new-session-btn"
-                  >
-                    <Plus className="w-4 h-4" /> New Conversation
+                <div className="absolute right-0 top-full mt-1 w-60 bg-white rounded-xl border border-slate-200 shadow-xl z-50 py-2 max-h-60 overflow-y-auto" data-testid="sessions-dropdown">
+                  <button onClick={startNewSession} className="w-full px-4 py-2 text-left text-sm hover:bg-teal-50 flex items-center gap-2 text-teal-700 font-medium" data-testid="new-session-btn">
+                    <Plus className="w-4 h-4" /> New Lesson
                   </button>
                   <div className="border-t border-slate-100 my-1" />
                   {sessions.map(s => (
-                    <button
-                      key={s.session_id}
-                      onClick={() => loadSession(s.session_id)}
-                      className={`w-full px-4 py-2 text-left text-sm hover:bg-teal-50 truncate ${
-                        sessionId === s.session_id ? 'bg-teal-50 text-teal-800' : 'text-slate-600'
-                      }`}
-                    >
-                      {s.preview || 'New conversation'}
+                    <button key={s.session_id} onClick={() => loadSession(s.session_id)} className={`w-full px-4 py-1.5 text-left text-xs hover:bg-teal-50 truncate ${sessionId === s.session_id ? 'bg-teal-50 text-teal-800' : 'text-slate-500'}`}>
+                      {s.preview || 'New lesson'}
                     </button>
                   ))}
-                  {sessions.length === 0 && <p className="px-4 py-2 text-xs text-slate-400">No previous sessions</p>}
+                  {sessions.length === 0 && <p className="px-4 py-2 text-[11px] text-slate-400">No previous lessons</p>}
                 </div>
               )}
             </div>
@@ -337,97 +370,97 @@ export default function LizTeacher({ user }) {
         </div>
       </div>
 
-      {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-4 py-6 space-y-4">
-          {messages.length === 0 && !loading && (
-            <div className="text-center py-12" data-testid="liz-welcome">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <GraduationCap className="w-10 h-10 text-white" />
-              </div>
-              <h2 className="text-xl font-bold text-slate-900 mb-2">Hi, I'm Liz</h2>
-              <p className="text-slate-500 text-sm mb-8 max-w-md mx-auto">
-                Your personal IELTS teacher and study coach. I track your progress,
-                identify your weak areas, and build structured plans to help you
-                reach your target band score.
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {QUICK_PROMPTS.map((p) => (
-                  <button
-                    key={p.testId}
-                    onClick={() => sendMessage(p.text)}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-full text-sm text-slate-700 hover:bg-teal-50 hover:border-teal-300 hover:text-teal-800 transition-all shadow-sm"
-                    data-testid={p.testId}
-                  >
-                    <p.icon className="w-4 h-4 text-teal-500" />
-                    {p.text}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+      {/* ── Main Content ── */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-6 gap-4 overflow-hidden">
+        {/* Liz Presence */}
+        <LizPresence status={status} />
 
-          {messages.map((msg, i) => (
-            <MessageBubble key={i} msg={msg} onSpeak={speakText} speakingId={speakingId} />
-          ))}
+        {/* Current Liz Speech */}
+        <SpeechDisplay text={latestLiz} status={status} />
 
-          {loading && <TypingIndicator />}
-          {isTranscribing && (
-            <div className="flex items-center gap-2 text-teal-600 text-sm pl-12">
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Transcribing your voice...
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
+        {/* Lesson mode buttons (only on fresh start, no messages yet) */}
+        {messages.length <= 1 && status === 'idle' && latestLiz && (
+          <div className="flex flex-wrap justify-center gap-2 mt-2" data-testid="lesson-modes">
+            {LESSON_MODES.map(m => (
+              <button
+                key={m.testId}
+                onClick={() => sendMessage(m.prompt)}
+                className="flex items-center gap-1.5 px-3 py-2 bg-white/80 border border-slate-200 rounded-xl text-xs text-slate-600 hover:bg-teal-50 hover:border-teal-300 hover:text-teal-700 transition-all shadow-sm"
+                data-testid={m.testId}
+              >
+                <m.icon className="w-3.5 h-3.5 text-teal-500" />
+                {m.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Transcript toggle */}
+        {messages.length > 1 && (
+          <button
+            onClick={() => setShowTranscript(v => !v)}
+            className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 transition-colors"
+            data-testid="transcript-toggle"
+          >
+            {showTranscript ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+            {showTranscript ? 'Hide' : 'Show'} conversation ({messages.length} messages)
+          </button>
+        )}
+
+        {/* Transcript */}
+        {showTranscript && messages.length > 0 && (
+          <div className="w-full max-w-xl max-h-48 overflow-y-auto bg-white/50 border border-slate-200 rounded-xl px-4 py-2 space-y-0.5" data-testid="transcript">
+            {messages.map((msg, i) => <TranscriptItem key={i} msg={msg} />)}
+            <div ref={transcriptEndRef} />
+          </div>
+        )}
       </div>
 
-      {/* Input Area */}
-      <div className="border-t border-slate-200/80 bg-white/90 backdrop-blur-sm px-4 py-3">
-        <div className="max-w-3xl mx-auto">
-          {isRecording && (
-            <div className="mb-2 flex justify-center">
-              <RecordingIndicator />
-            </div>
-          )}
-          <div className="flex items-end gap-2">
-            {/* Mic button */}
-            <button
-              onClick={handleMicClick}
-              disabled={loading || isTranscribing}
-              className={`h-11 w-11 rounded-full flex items-center justify-center shrink-0 transition-all ${
-                isRecording
-                  ? 'bg-red-500 text-white shadow-lg shadow-red-200 animate-pulse'
-                  : 'bg-slate-100 text-slate-500 hover:bg-teal-50 hover:text-teal-600'
-              } disabled:opacity-30`}
-              data-testid="mic-btn"
-            >
-              {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
-            </button>
+      {/* ── Input Area ── */}
+      <div className="border-t border-slate-200/60 bg-white/80 backdrop-blur-sm px-4 py-4">
+        <div className="max-w-2xl mx-auto flex flex-col items-center gap-3">
+          {/* Microphone - primary action */}
+          <button
+            onClick={handleMicClick}
+            disabled={isLizBusy || status === 'transcribing'}
+            className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
+              status === 'listening'
+                ? 'bg-red-500 text-white shadow-lg shadow-red-200/60 scale-110 animate-pulse'
+                : 'bg-gradient-to-br from-teal-500 to-emerald-600 text-white shadow-lg shadow-teal-200/40 hover:scale-105 hover:shadow-xl'
+            } disabled:opacity-30 disabled:scale-100`}
+            data-testid="mic-btn"
+          >
+            {status === 'listening' ? <MicOff className="w-7 h-7" /> :
+             status === 'transcribing' ? <Loader2 className="w-7 h-7 animate-spin" /> :
+             <Mic className="w-7 h-7" />}
+          </button>
+          <p className="text-[11px] text-slate-400">
+            {status === 'listening' ? 'Tap to stop recording' :
+             status === 'transcribing' ? 'Processing your voice...' :
+             isLizBusy ? '' : 'Tap to speak to Liz'}
+          </p>
 
-            {/* Text input */}
-            <div className="flex-1 relative">
-              <textarea
+          {/* Text input - secondary */}
+          <div className="w-full flex items-end gap-2">
+            <div className="flex-1">
+              <input
+                type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Type your message to Liz..."
-                rows={1}
-                disabled={isRecording}
-                className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:border-teal-400 focus:ring-1 focus:ring-teal-300/50 outline-none text-sm resize-none disabled:opacity-50"
-                style={{ minHeight: '44px', maxHeight: '120px' }}
+                placeholder="Or type here..."
+                disabled={isLizBusy || isUserBusy}
+                className="w-full px-4 py-2.5 rounded-full border border-slate-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:border-teal-400 focus:ring-1 focus:ring-teal-300/50 outline-none text-sm disabled:opacity-40"
                 data-testid="liz-input"
               />
             </div>
-
-            {/* Send button */}
             <Button
               onClick={() => sendMessage(input)}
-              disabled={!input.trim() || loading || isRecording}
-              className="h-11 w-11 rounded-full bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white disabled:opacity-30 shrink-0 p-0"
+              disabled={!input.trim() || isLizBusy || isUserBusy}
+              className="h-10 w-10 rounded-full bg-slate-700 hover:bg-slate-800 text-white disabled:opacity-30 shrink-0 p-0"
               data-testid="liz-send-btn"
             >
-              {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+              {status === 'thinking' ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </Button>
           </div>
         </div>

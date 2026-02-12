@@ -413,6 +413,57 @@ async def create_new_session(req: NewSessionRequest):
     return {"success": True, "session_id": session["session_id"]}
 
 
+@router.post("/greet")
+async def greet_student(req: NewSessionRequest):
+    """Generate a personalized greeting when the student opens a lesson.
+    Returns greeting text + TTS audio in a single call."""
+    api_key = get_api_key()
+    if not api_key:
+        raise HTTPException(status_code=500, detail="LLM API key not configured")
+
+    session = await get_or_create_session(req.user_id)
+    user_context = await get_user_context(req.user_id)
+
+    greeting_system = f"""You are Liz, a professional IELTS teacher. Generate a brief, warm greeting (2-3 sentences max) for your student who just opened their lesson.
+Based on their profile, mention something specific about their progress and suggest what to work on today. Be warm but professional. Speak naturally as if you're face-to-face.
+
+Student Profile:
+{user_context}"""
+
+    chat = LlmChat(
+        api_key=api_key,
+        session_id=f"liz_greet_{session['session_id']}",
+        system_message=greeting_system
+    ).with_model("openai", "gpt-4o")
+
+    greeting = await chat.send_message(UserMessage(text="Greet me and suggest today's lesson."))
+
+    # Store greeting in session
+    now = datetime.now(timezone.utc).isoformat()
+    await db.liz_sessions.update_one(
+        {"session_id": session["session_id"]},
+        {"$push": {"messages": {"role": "assistant", "content": greeting, "timestamp": now}}}
+    )
+
+    # Generate TTS audio
+    audio_base64 = None
+    try:
+        from emergentintegrations.llm.openai import OpenAITextToSpeech
+        tts = OpenAITextToSpeech(api_key=api_key)
+        audio_base64 = await tts.generate_speech_base64(
+            text=greeting[:500], voice="nova", model="tts-1"
+        )
+    except Exception:
+        pass
+
+    return {
+        "success": True,
+        "session_id": session["session_id"],
+        "greeting": greeting,
+        "audio": audio_base64
+    }
+
+
 @router.get("/history/{session_id}")
 async def get_chat_history(session_id: str, user_id: str):
     """Get chat history for a session."""
