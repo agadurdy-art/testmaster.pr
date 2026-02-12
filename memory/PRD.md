@@ -7,75 +7,80 @@ An IELTS exam preparation platform with AI-powered evaluation, Cambridge-aligned
 - **Frontend**: React with Tailwind CSS + Shadcn UI
 - **Backend**: FastAPI (Python) on port 8001
 - **Database**: MongoDB
-- **TTS**: OpenAI TTS via Emergent Integrations
+- **TTS**: OpenAI TTS (nova voice) via Emergent Integrations
 - **STT**: OpenAI Whisper via Emergent Integrations
 - **LLM**: OpenAI GPT-4o via Emergent LLM Key
 
 ## What's Been Implemented
 
-### Liz AI Teacher (Renamed from Emily - Feb 12, 2026)
-- Professional IELTS teacher and study coach powered by GPT-4o
-- Full-page chat interface at `/liz` with teal/emerald professional theme
-- Floating button (graduation cap) on all pages except `/liz`
-- Multi-turn conversation with MongoDB-persisted chat history (`liz_sessions` collection)
-- Session management: create new, load previous, view history
-- **Voice Interaction**: 
-  - TTS (Text-to-Speech) using OpenAI nova voice for Liz's responses
-  - STT (Speech-to-Text) using OpenAI Whisper for student voice input
-  - Auto-TTS: When student sends voice message, Liz's response plays automatically
-  - Microphone button in input area with recording indicator
-- **Progress Awareness**: Liz knows student's level, scores, weak/strong skills, study streak, inactivity, completed lessons, grammar quiz progress, and recommends next steps
-- Quick prompts: Analyze my progress, Build a study plan, Give me a vocabulary lesson, Let's practice grammar
-- Professional persona: Uses IELTS terminology, no generic praise, structured feedback
-- Skill Builder capabilities with adaptive difficulty
-- Speaking/Writing evaluation using IELTS band descriptors
-- Files: `routes/liz_teacher.py`, `LizTeacher.js`, `LizFloatingButton.js`
+### Liz AI Teacher - Real Teacher Experience (Feb 12, 2026)
+**NOT a chatbot - a real IELTS teacher who speaks, guides, and leads lessons.**
+
+#### Teacher Presence UI
+- Large centered avatar with status-based animations (idle/thinking/speaking)
+- Glowing border + audio visualization bars when speaking
+- Status indicator dot (green=idle, amber=thinking, teal=speaking)
+- Auto-greeting: Liz speaks a personalized greeting when student opens the lesson
+
+#### Voice-First Interaction
+- **TTS (auto)**: Every Liz response is spoken automatically via OpenAI TTS (nova voice)
+- **STT**: Student speaks via microphone, transcribed by OpenAI Whisper
+- **Auto-voice toggle**: Header button to enable/disable voice
+- Microphone is the PRIMARY input method (large centered button)
+- Text input available as secondary option
+
+#### Structured Lesson Modes
+- **Speaking Practice**: IELTS Speaking Parts 1-3 simulation
+- **Vocabulary Builder**: Interactive vocabulary with adaptive difficulty
+- **Grammar Lesson**: Concept → task → feedback → harder task → recap
+- **Study Plan**: Personalized weekly plan based on progress data
+
+#### Progress Awareness (Memory Injection)
+Liz knows: student name, plan, estimated level, target band, weak/strong skills, last 5 scores, improvement trend, study streak, days inactive, completed lessons, grammar quiz progress, recommended next step
+
+#### Backend Endpoints
+- `POST /api/liz/greet` - Personalized greeting + TTS audio in one call
+- `POST /api/liz/chat` - Chat with lesson/voice context
+- `POST /api/liz/tts` - Text-to-Speech (JSON body)
+- `POST /api/liz/stt` - Speech-to-Text (file upload)
+- `POST /api/liz/new-session` - Create session
+- `GET /api/liz/sessions/{user_id}` - List sessions
+- `GET /api/liz/history/{session_id}` - Get messages
+
+#### Session Management
+- MongoDB-persisted chat history (`liz_sessions` collection)
+- Session list with previews
+- "New Lesson" to start fresh
+- Conversation transcript toggle (show/hide)
+
+#### Floating Button
+- Graduation cap icon on all pages except `/liz`
+- Navigates to Liz's lesson page
 
 ### Question Bank (QB) Page
-- Dynamic statistics showing real-time test/question counts
-- Test Completion Rate feature with MongoDB tracking
-- Clickable progress breakdown by test type
+- Dynamic statistics, Test Completion Rate, progress breakdown
 
 ### Quick Practice Mode (Shorts-style)
-- 3-question sets with instant feedback and summary screen
-- Reading: MC/TFNG/fill-in-the-blank with multi-answer support
-- Listening: 51 pre-generated questions (17 sets) with local MP3 audio files
-- Writing/Speaking: redirects to dedicated pages
-- Light warm UI theme (amber, cream, orange tones)
+- 3-question sets, Reading + Listening, light warm UI theme
 
 ### Full Test System
-- Cambridge IELTS 17-18 + AI-generated tests (Academic A-H, General A-D)
-- Audio player with progress bar, time elapsed/remaining display
-- All 4 listening parts audio working for all test sets
+- Cambridge IELTS 17-18 + AI-generated tests
+- Audio player with progress bar
 
 ### Writing Practice
-- Task 1 + Task 2 with AI evaluation
-- Model answer generation
-- Dual-track support (Academic/General)
+- Task 1 + Task 2 with AI evaluation, dual-track Academic/General
 
 ### Other Features
 - Adaptive Level Test, Vocabulary & Grammar lessons
 - Speaking practice with pronunciation evaluation
 - Learning platform with beginner/advanced/mastery courses
 
-## Key API Endpoints
-- `POST /api/liz/chat` - Chat with Liz (GPT-4o)
-- `GET /api/liz/sessions/{user_id}` - List chat sessions
-- `GET /api/liz/history/{session_id}` - Get chat messages
-- `POST /api/liz/tts` - Liz voice responses (JSON body: {text})
-- `POST /api/liz/stt` - Speech-to-text via Whisper (multipart file upload)
-- `POST /api/liz/new-session` - Create new chat session
-- `GET /api/question-bank/practice/listening-sets` - Practice listening questions
-- `GET /api/question-bank/practice/random` - Practice reading questions
-- `GET /api/full-test/audio/stream/{test_id}/listening/{part}` - Full test audio
-
 ## Backlog / Future Tasks
 - **P1: Spaced Repetition System**: Track wrong answers and re-serve them
 - **P2: Weekly Progress Reports**: Auto-generated by Liz
-- **P2: Automatic Study Roadmap Generation**: AI-powered personalized study plans
+- **P2: Automatic Study Roadmap**: AI-powered personalized study plans
+- **P2: Speaking Mock Test Mode**: Full IELTS Speaking simulation with timing
 - **P3: Exam Readiness Prediction**: Based on performance trends
-- Generate more listening practice questions (expand beyond 51)
-- Refactor PracticeMode.js into smaller components
 
 ## Test Credentials
 - Email: test@test.com / Password: test1234
