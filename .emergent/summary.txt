@@ -3706,7 +3706,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <PreparedRequest [GET]>
-url = '/api/emily/history/nonexistent_session_123?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8'
+url = '/api/emily/history/nonexistent_session_123?user_id=unified-path-1'
 params = OrderedDict()
 
     def prepare_url(self, url, params):
@@ -3742,7 +3742,7 @@ params = OrderedDict()
                 f"Invalid URL {url!r}: No scheme supplied. "
                 f"Perhaps you meant https://{url}?"
             )
-E           requests.exceptions.MissingSchema: Invalid URL '/api/emily/history/nonexistent_session_123?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8': No scheme supplied. Perhaps you meant https:///api/emily/history/nonexistent_session_123?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8?
+E           requests.exceptions.MissingSchema: Invalid URL '/api/emily/history/nonexistent_session_123?user_id=unified-path-1': No scheme supplied. Perhaps you meant https:///api/emily/history/nonexistent_session_123?user_id=unified-path-1?
 
 /root/.venv/lib/python3.11/site-packages/requests/models.py:438: MissingSchema
 ________________________ TestEmilyTTSAPI.test_tts_basic ________________________
@@ -8022,7 +8022,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <PreparedRequest [DELETE]>
-url = '/api/liz/homework/9d9b5ab2-a8e3-433b-942b-572679c9e783?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8'
+url = '/api/liz/homework/9d9b5ab2-a8e3-433b-942b-572679c9e783?user_id=unified-path-1'
 params = OrderedDict()
 
     def prepare_url(self, url, params):
@@ -8058,7 +8058,7 @@ params = OrderedDict()
                 f"Invalid URL {url!r}: No scheme supplied. "
                 f"Perhaps you meant https://{url}?"
             )
-E           requests.exceptions.MissingSchema: Invalid URL '/api/liz/homework/9d9b5ab2-a8e3-433b-942b-572679c9e783?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8': No scheme supplied. Perhaps you meant https:///api/liz/homework/9d9b5ab2-a8e3-433b-942b-572679c9e783?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8?
+E           requests.exceptions.MissingSchema: Invalid URL '/api/liz/homework/9d9b5ab2-a8e3-433b-942b-572679c9e783?user_id=unified-path-1': No scheme supplied. Perhaps you meant https:///api/liz/homework/9d9b5ab2-a8e3-433b-942b-572679c9e783?user_id=unified-path-1?
 
 /root/.venv/lib/python3.11/site-packages/requests/models.py:438: MissingSchema
 __________ TestHomeworkAutoDetection.test_chat_auto_creates_homework ___________
@@ -9216,7 +9216,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <PreparedRequest [GET]>
-url = '/api/liz/history/c55c40b3-c556-4071-810a-81a2c8754ec8?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8'
+url = '/api/liz/history/c55c40b3-c556-4071-810a-81a2c8754ec8?user_id=unified-path-1'
 params = OrderedDict()
 
     def prepare_url(self, url, params):
@@ -9252,7 +9252,7 @@ params = OrderedDict()
                 f"Invalid URL {url!r}: No scheme supplied. "
                 f"Perhaps you meant https://{url}?"
             )
-E           requests.exceptions.MissingSchema: Invalid URL '/api/liz/history/c55c40b3-c556-4071-810a-81a2c8754ec8?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8': No scheme supplied. Perhaps you meant https:///api/liz/history/c55c40b3-c556-4071-810a-81a2c8754ec8?user_id=6565a865-dbf9-4596-b756-eaf6c29295c8?
+E           requests.exceptions.MissingSchema: Invalid URL '/api/liz/history/c55c40b3-c556-4071-810a-81a2c8754ec8?user_id=unified-path-1': No scheme supplied. Perhaps you meant https:///api/liz/history/c55c40b3-c556-4071-810a-81a2c8754ec8?user_id=unified-path-1?
 
 /root/.venv/lib/python3.11/site-packages/requests/models.py:438: MissingSchema
 _________________________ TestLizTTSAPI.test_tts_basic _________________________
