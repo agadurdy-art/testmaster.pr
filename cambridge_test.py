@@ -9,7 +9,7 @@ import json
 import os
 
 # Get backend URL from frontend env
-BACKEND_URL = "https://unified-path-1.preview.emergentagent.com/api"
+BACKEND_URL = "https://unified-english-prep.preview.emergentagent.com/api"
 
 def test_cambridge_ielts_18_api_endpoints():
     """Test Cambridge IELTS 18 API endpoints as per review request"""
