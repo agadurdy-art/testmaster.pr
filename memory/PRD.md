@@ -27,33 +27,25 @@ Transform the IELTS test preparation application from a fragmented multi-course 
 
 ## What's Implemented (Feb 14, 2026)
 
-### Backend ✅
+### Backend
 - Unified learning data models (Stage, Unit, Lesson, Activity)
 - 8 stages seeded in database
 - Stage 1 fully seeded: 1 unit, 4 lessons, each with 10 activity types
-- All activity content: warmup questions, vocabulary, matching games, reading passages, grammar rules, error hunter games, listening transcripts, production prompts, exit quizzes
+- All activity content: warmup, vocabulary, matching games, reading, grammar, error hunter, listening, production, exit quizzes
 - API endpoints for stages, units, lessons, activities, progress tracking, daily habit, spaced repetition
 - User authentication (register/login)
 
-### Frontend ✅
-- UnifiedCoursePage: 8-stage learning path overview with progress
-- UnifiedStagePage: Stage detail with units and lessons
-- UnifiedLessonPage: Full 10-step lesson flow with interactive components:
-  - Retrieval Warmup (quiz with feedback)
-  - Vocabulary Module (word cards + typing exercise)
-  - Matching Game (word-definition matching)
-  - Micro Reading (passage + comprehension questions)
-  - Grammar Focus (rules with correct/incorrect examples)
-  - Error Hunter Game (identify grammar errors)
-  - Listening Activity (TTS + comprehension)
-  - Production Activity (writing/speaking with examples)
-  - Exit Ticket (quiz with pass/fail)
-- DailyHabitPage: Streak tracking, review cards, spaced repetition
+### Frontend
+- **Dashboard**: CTA navigates to `/unified` (new unified course)
+- **UnifiedCoursePage**: 8-stage learning path overview
+- **UnifiedStagePage**: Stage detail with units and lessons
+- **UnifiedLessonPage**: Full 10-step interactive lesson flow
+- **DailyHabitPage**: Streak tracking, review cards, spaced repetition
+- **Mobile menu**: "Learning Path" link added
 
-### Testing ✅
-- 18/18 backend tests passing
-- All frontend features verified via Playwright
-- Test report: /app/test_reports/iteration_39.json
+### Navigation Fix (Feb 14)
+- Dashboard "Complete Learning Path" CTA now routes to `/unified` instead of old `/learning`
+- Mobile menu includes "Learning Path" shortcut
 
 ## P1 - High Priority (Next)
 - Integrate image generation for vocabulary (OpenAI GPT-4o)
