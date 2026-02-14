@@ -66,9 +66,13 @@ import VocabularyPracticeMode from './pages/VocabularyPracticeMode';
 import VocabularyQuizMode from './pages/VocabularyQuizMode';
 import VocabularyProductionMode from './pages/VocabularyProductionMode';
 import ReviewBank from './pages/ReviewBank';
+import UnifiedCoursePage from './pages/UnifiedCoursePage';
+import UnifiedStagePage from './pages/UnifiedStagePage';
+import UnifiedLessonPage from './pages/UnifiedLessonPage';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
+
 
 // Language Leak Watcher Component (Development Only)
 function LanguageLeakWatcher() {
