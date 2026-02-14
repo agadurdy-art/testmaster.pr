@@ -1,15 +1,11 @@
-# Test Credentials - IELTS Ace
+# Test Credentials
 
-## Test Account (Always Use This)
-- **Email:** test@ieltsace.com
-- **Password:** TestPassword123!
-- **Plan:** Pro (Premium features enabled)
-- **Status:** Verified
-
-## Admin Account
-- **Email:** admin@ieltsace.tesmaster.pro
-- **Plan:** Premium
+## Tester Account (Persistent)
+- **Email:** geldiaga67@gmail.com
+- **Password:** geldiaga67
+- **Purpose:** Primary tester account. Keep registered across all forks.
+- **User ID:** 749c16e2-528f-4e8a-ab48-3e900fc11116
 
 ## Notes
-- Test account has Pro plan for testing premium features like Azure Speaking evaluation
-- Always use these credentials for testing, DO NOT create new accounts each session
+- This account should be used for all future testing
+- If the DB is reset, re-register with the same credentials
