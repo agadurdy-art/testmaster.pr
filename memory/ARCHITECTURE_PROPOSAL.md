@@ -174,11 +174,120 @@ Legend: ✅ = Full | ⚡ = Adapted | ❌ = Not included
 
 ---
 
-## 3. Activity Module Specifications
+## 3. Gamification System (Dual Mode)
 
-### 3.1 Vocabulary Module (Existing - Adapt)
+### 🔵 In-Lesson Micro-Gamification
 
-**iSmart-Style Vocabulary Interface:**
+**Purpose**: Attention reset + retrieval reinforcement
+
+**Rules**:
+- Maximum 10 minutes total per lesson
+- Fast, intense, focused
+- No AI required (quick response)
+
+**Types**:
+| Game Type | Purpose | When Used |
+|-----------|---------|-----------|
+| **Recognition Game** | Visual matching | After Vocabulary |
+| **Active Recall Game** | Type/select answer | After Vocabulary |
+| **Pattern Speed Drill** | Grammar patterns | After Grammar |
+| **Error Hunter** | Find mistakes | After Grammar |
+| **Word Race** | Timed vocabulary | Review sessions |
+
+**Scoring**:
+```
+Per Game:
+├── 3 Crowns (★★★) = Perfect (90-100%)
+├── 2 Crowns (★★☆) = Good (70-89%)
+├── 1 Crown (★☆☆) = Pass (50-69%)
+└── 0 Crowns (☆☆☆) = Retry needed
+```
+
+### 🟢 Daily Habit Mode (Retention Engine)
+
+**Purpose**: Combat forgetting curve through daily micro-practice
+
+**Duration**: 5-10 minutes per day
+
+**Content Mix (Adaptive)**:
+- 5 old vocabulary words (spaced repetition selection)
+- 2 grammar patterns (weakest areas)
+- 1 micro reading passage (60 seconds)
+- 1 micro listening clip (60 seconds)
+
+**Algorithm**:
+- Weak skills get higher weight
+- Old + new content mixed (interleaving)
+- Difficulty adapts to performance
+
+**Rewards**:
+```
+Daily Streak:
+├── 7 days = Bronze badge + 50 bonus points
+├── 30 days = Silver badge + 200 bonus points
+├── 100 days = Gold badge + 500 bonus points
+└── 365 days = Diamond badge + Lifetime achievement
+```
+
+---
+
+## 4. Retention & Review System
+
+### Spaced Review Cycle (SRS)
+
+```
+New Word Learned
+      │
+      ▼
+  [24 hours] ──→ Review #1
+      │
+      ▼
+  [7 days] ──→ Review #2
+      │
+      ▼
+  [30 days] ──→ Review #3
+      │
+      ▼
+  [MASTERED] ──→ Archive (occasional refresh)
+```
+
+### Cumulative Review (Every 4 Lessons)
+
+After every 4 lessons, a **Spiral Test** includes:
+- 40% current unit content
+- 30% previous unit content
+- 20% 2 units ago content
+- 10% random older content
+
+This prevents forgetting and reinforces connections.
+
+### Interleaving Strategy
+
+Never present same-type questions consecutively:
+```
+❌ Wrong: Vocab → Vocab → Vocab → Grammar → Grammar
+✅ Right: Vocab → Grammar → Old Vocab → New Grammar → Listening
+```
+
+---
+
+## 5. Activity Module Specifications
+
+### 5.1 Retrieval Warm-up Module (NEW)
+
+**Purpose**: Activate prior knowledge before new learning
+
+**Types by Stage**:
+| Stage | Warm-up Type |
+|-------|--------------|
+| 1-2 | Picture flashback (3-5 old words) |
+| 3-4 | Quick quiz (5 mixed questions) |
+| 5-6 | Sentence completion (prior grammar) |
+| 7-8 | Mini cloze test (academic vocab) |
+
+### 5.2 Vocabulary Module (Existing - Enhanced)
+
+**iSmart-Style Interface:**
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
@@ -186,65 +295,88 @@ Legend: ✅ = Full | ⚡ = Adapted | ❌ = Not included
 ├──────────────┬─────────────────────────────────────────────────┤
 │              │                                                 │
 │ ☑ cube       │            [CUBE IMAGE]                        │
-│              │                                                 │
-│ ○ net of cube│       ╔═══════════════════════╗                │
-│              │       ║  cube                 ║                │
-│ ○ cuboid     │       ║  /kjuːb/        🔊   ║                │
-│              │       ╚═══════════════════════╝                │
-│ ○ face       │                                                 │
+│              │                Stage 1-3: Required              │
+│ ○ net of cube│                Stage 4+: Optional              │
 │              │       ╔═══════════════════════╗                │
-│ ○ vertex     │       ║  This is a cube.  🔊 ║                │
-│              │       ╚═══════════════════════╝                │
-│ ○ edge       │                                                 │
+│ ○ cuboid     │       ║  cube                 ║                │
+│              │       ║  /kjuːb/        🔊   ║                │
+│ ○ face       │       ╚═══════════════════════╝                │
+│              │                                                 │
+│ ○ vertex     │       ╔═══════════════════════╗                │
+│              │       ║  This is a cube.  🔊 ║                │
+│ ○ edge       │       ╚═══════════════════════╝                │
+│              │                                                 │
 │              │       [Re-enter the vocabulary: _________ ]    │
 │              │                                                 │
-│              │       [ 🎤 Record ]  Attempts: 1/1             │
+│              │       [ 🎤 Record ]  Attempts: 2/3             │
 │              │                                                 │
 └──────────────┴─────────────────────────────────────────────────┘
 ```
 
 **Components:**
 1. Word list sidebar (checkmarks for completion)
-2. Visual image display
+2. Visual image display (stage-dependent)
 3. Word + IPA pronunciation + TTS
 4. Example sentence + TTS
-5. Input field for word recall
-6. Record button for pronunciation practice
-7. Attempts counter
+5. Input field for active recall
+6. Record button for pronunciation
+7. Attempts counter (multiple tries allowed)
 
-### 3.2 Lecture Module (New)
+### 5.3 Micro Reading Module (NEW)
 
-**Purpose:** Present grammar rules, concepts, or strategies
+**Purpose**: Contextualize vocabulary in natural text
 
-**Components:**
-- Video player (optional)
-- Slide-based presentation
-- Interactive examples
-- Quick comprehension checks
+**Structure**:
+- 60-120 word passage
+- Contains 5-8 target vocabulary words
+- 2-3 comprehension questions
+- Highlighted vocabulary (clickable for definition)
 
-### 3.3 Practice Module (Existing - Enhance)
+### 5.4 Grammar Focus Module (NEW)
 
-**Types:**
-1. **Matching** - Drag-drop word-definition pairs
-2. **Fill-in-Blank** - Complete sentences
-3. **Multiple Choice** - Select correct answer
-4. **True/False/Not Given** - Reading-style questions
-5. **Ordering** - Arrange words/sentences
+**Presentation Types**:
+1. **Rule Card**: Visual grammar rule explanation
+2. **Example Bank**: 5-10 example sentences
+3. **Pattern Highlight**: Color-coded structure
+4. **Comparison**: Correct vs incorrect examples
 
-**Gamification:**
-- 3 crowns system (★★★)
-- Point rewards
-- Time bonuses
+### 5.5 Listening Module (Enhanced)
 
-### 3.4 Materials Module (New)
+**Stage Adaptation**:
+| Stage | Audio Type | Speed | Length |
+|-------|------------|-------|--------|
+| 1-2 | Simple dialogue | Slow | 30-60 sec |
+| 3-4 | Story/conversation | Normal | 1-2 min |
+| 5-6 | Academic talk | Normal | 2-3 min |
+| 7-8 | IELTS-style | Fast | 3-5 min |
 
-**Purpose:** Downloadable resources
+### 5.6 Production Module (Speaking/Writing)
 
-**Components:**
-- PDF worksheets
-- Audio files
-- Additional reading
-- Homework assignments
+**Speaking Activities**:
+| Stage | Activity Type |
+|-------|---------------|
+| 1-2 | Repeat after audio |
+| 3-4 | Guided response (prompts) |
+| 5-6 | Opinion expression |
+| 7-8 | IELTS Part 1/2/3 simulation |
+
+**Writing Activities**:
+| Stage | Activity Type |
+|-------|---------------|
+| 1-2 | Not included |
+| 3-4 | Sentence writing |
+| 5-6 | Paragraph writing |
+| 7-8 | Full essay (Task 1/2) with AI evaluation |
+
+### 5.7 Exit Ticket Module (NEW)
+
+**Purpose**: Quick lesson mastery check
+
+**Structure**:
+- 3-5 rapid questions
+- Covers all lesson content
+- Must score 70%+ to mark lesson complete
+- Failed = automatic re-study suggestion
 
 ---
 
