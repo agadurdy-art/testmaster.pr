@@ -484,6 +484,16 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+# Unified Learning System routes
+try:
+    from unified_learning_routes import router as unified_learning_router
+    app.include_router(unified_learning_router)
+    print("✅ Unified Learning System routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Unified Learning routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 
 # ============ Models ============
 
