@@ -208,32 +208,25 @@
 
 ---
 
-## Questions for Content Decision
+## Content Decisions (APPROVED)
 
-### Q1: Vocabulary Source
-- A) Use standard Pre-A1 word lists (Cambridge YLE Starters aligned)
-- B) Create custom word list for Turkish students
-- C) Mix of both
+### Q1: Vocabulary Source ✅
+**Decision: A - Cambridge YLE Starters aligned (international standard)**
 
-### Q2: Grammar Depth for Stage 1
-- A) Minimal grammar (focus on vocabulary + phrases)
-- B) Light grammar (basic patterns like "I have...", "It is...")
-- C) No explicit grammar (implicit through sentences only)
+### Q2: Grammar Depth for Stage 1 ✅
+**Decision: B - Light grammar (basic patterns like "I have...", "It is...", "I like...")**
 
-### Q3: Cultural Adaptation
-- A) Generic international content
-- B) Include some Turkish context (Turkish names, local references)
-- C) Fully localized for Turkey
+### Q3: Cultural Adaptation ✅
+**Decision: A - Generic international content**
 
-### Q4: Sentence Complexity
-- A) Single words only at start, sentences later
-- B) Simple sentences from the beginning
-- C) Mix based on lesson
+### Q4: Pronunciation ✅
+**Decision: C - Both British & American English available (user choice)**
 
-### Q5: Audio/Visual Style
-- A) British English pronunciation
-- B) American English pronunciation
-- C) Both available (user choice)
+### Q5: Visual Strategy ✅
+**Decision: C - Hybrid Approach**
+- **Core objects** (animals, food, colors): Stock images (consistency matters)
+- **Abstract concepts** (actions, emotions): AI generated
+- **Diagrams** (body parts, rooms): Custom illustrations
 
 ---
 
