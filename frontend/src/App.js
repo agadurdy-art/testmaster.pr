@@ -375,6 +375,10 @@ function AppWithSessionHandler() {
           path="/unified/lesson/:lessonId" 
           element={user ? <UnifiedLessonPage user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/unified/daily-habit" 
+          element={user ? <DailyHabitPage user={user} /> : <Navigate to="/" />} 
+        />
         
         <Route 
           path="/game-bank" 
