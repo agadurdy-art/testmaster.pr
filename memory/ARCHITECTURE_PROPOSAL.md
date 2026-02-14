@@ -1393,6 +1393,27 @@ When these five enhancements are implemented alongside the 10-step lesson flow a
 
 ---
 
+## 16. Success Metrics
+
+### Engagement
+- Daily active users
+- Average session duration
+- Lesson completion rate
+- Daily streak length distribution
+
+### Learning Outcomes
+- Exit ticket pass rate
+- Certification exam scores
+- Stage progression rate
+- Vocabulary retention (SRS metrics)
+
+### System Health
+- Time to complete lesson
+- Drop-off points in 10-step flow
+- Most/least engaged activities
+
+---
+
 *Document Version: 2.0*
 *Updated: February 2026*
 *Status: PENDING USER APPROVAL*
