@@ -1,38 +1,72 @@
-# IELTS Ace - Product Requirements Document
+# IELTS Ace - Unified Learning Platform PRD
 
 ## Original Problem Statement
-IELTS exam preparation platform being transformed into a "Hybrid Learning Platform" controlled by teachers.
+Transform the IELTS test preparation application from a fragmented multi-course structure into a **single, unified, step-by-step learning pathway** (Hybrid Learning Platform). Caters to all levels from absolute beginner (Pre-A1) to IELTS mastery (C1-C2), inspired by competitors like "iSmart" and designed for teachers using smart boards.
 
-## Core Architecture
-- **Frontend**: React + Tailwind CSS + Shadcn UI
-- **Backend**: FastAPI on port 8001
-- **Database**: MongoDB
-- **LLM**: OpenAI GPT-4o via Emergent LLM Key
-- **TTS/STT**: OpenAI TTS + Whisper via Emergent Integrations, ElevenLabs for Listening QB
+## Core Requirements
+1. **Unified Learning Path**: Single course with 8 stages (Pre-A1 to C1-C2 IELTS Mastery)
+2. **10-Step Lesson Flow**: Warm-up → Vocabulary → Vocab Game → Reading → Grammar → Grammar Game → Listening → Speaking → Exit Quiz → Review
+3. **Adaptive UI**: Visual tone adapts to user's level
+4. **Retention Features**: Daily Habit Mode, Spaced Repetition, Interleaving
+5. **Hybrid Assessment**: AI + teacher feedback at Certification Gates
+6. **Teacher Control Panel**: Monitor student retention and progress
 
-## What's Been Implemented
+## User Language
+- User communicates in **Turkish**
+- All code, UI text, and system-generated content in **English**
 
-### Listening Test Audio Fix (Feb 12, 2026)
-- User-provided MP3 files (Test 1 Part 1-4) stored at `/app/backend/static/audio/listening_tests/`
-- Backend dynamically injects `audio_url` into test sections when serving data
-- Frontend resolves relative `/api/` URLs to full backend URL for `<audio>` elements
-- Listening QB audio fix: removed `Content-Disposition: attachment` header
+## Test Credentials (Persistent)
+- Email: geldiaga67@gmail.com
+- Password: geldiaga67
+- User ID: 749c16e2-528f-4e8a-ab48-3e900fc11116
 
-### Vocabulary Engine - Phase 1 COMPLETE (Feb 12, 2026)
-iOS-inspired design (`#F5F5F7`, white cards, `rounded-[20px]`, subtle shadows):
-1. **Learn Mode** - Flip-card slides (28/module), IPA, TTS, word formation
-2. **Controlled Practice** - Fill-in-blank + matching (25/module), fixed matching click logic
-3. **Mastery Quiz** - 10Q (MC + fill_blank + TFNG with passage), 80% pass, auto-adds to Review Bank
-4. **Production Mode AI** - GPT-4o evaluates sentences (1-5 stars)
-5. **Review Bank** - Spaced repetition (1d->3d->7d->14d->mastered)
+## Architecture
+- **Frontend**: React + Shadcn UI + Tailwind CSS
+- **Backend**: FastAPI + MongoDB
+- **Key Routes**: /unified, /unified/stage/:stageId, /unified/lesson/:lessonId, /unified/daily-habit
 
-### Other Features
-- Dashboard, Question Bank, Liz AI Teacher, Quick Practice, Full Test System
+## What's Implemented (Feb 14, 2026)
 
-## Backlog
-- **P1**: Grammar Engine, Teacher Control Layer
-- **P2**: Learning Pathway restructuring, AI Content Expansion
-- **P3**: Weekly reports, Speaking mock test, Exam readiness
+### Backend ✅
+- Unified learning data models (Stage, Unit, Lesson, Activity)
+- 8 stages seeded in database
+- Stage 1 fully seeded: 1 unit, 4 lessons, each with 10 activity types
+- All activity content: warmup questions, vocabulary, matching games, reading passages, grammar rules, error hunter games, listening transcripts, production prompts, exit quizzes
+- API endpoints for stages, units, lessons, activities, progress tracking, daily habit, spaced repetition
+- User authentication (register/login)
 
-## Test Credentials
-- Email: test@test.com / Password: test1234
+### Frontend ✅
+- UnifiedCoursePage: 8-stage learning path overview with progress
+- UnifiedStagePage: Stage detail with units and lessons
+- UnifiedLessonPage: Full 10-step lesson flow with interactive components:
+  - Retrieval Warmup (quiz with feedback)
+  - Vocabulary Module (word cards + typing exercise)
+  - Matching Game (word-definition matching)
+  - Micro Reading (passage + comprehension questions)
+  - Grammar Focus (rules with correct/incorrect examples)
+  - Error Hunter Game (identify grammar errors)
+  - Listening Activity (TTS + comprehension)
+  - Production Activity (writing/speaking with examples)
+  - Exit Ticket (quiz with pass/fail)
+- DailyHabitPage: Streak tracking, review cards, spaced repetition
+
+### Testing ✅
+- 18/18 backend tests passing
+- All frontend features verified via Playwright
+- Test report: /app/test_reports/iteration_39.json
+
+## P1 - High Priority (Next)
+- Integrate image generation for vocabulary (OpenAI GPT-4o)
+- Build first Micro-Game components
+- Add more review items to Daily Habit via spaced repetition queue
+
+## P2 - Medium Priority
+- Build Stages 2-8 content
+- Adaptive UI that changes with user level
+- Certification Gate between stages
+- Booster Mode for weak areas
+
+## P3 - Future
+- Teacher Control Panel with analytics
+- Migration of old course content
+- Multi-language support for UI
