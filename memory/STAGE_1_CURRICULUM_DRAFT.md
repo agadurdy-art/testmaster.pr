@@ -230,28 +230,28 @@
 
 ---
 
-## Visual Asset Strategy Options
+## Visual Asset Strategy - APPROVED: Hybrid Approach
 
-### Option A: AI Generation (Fast but Variable)
-- Use DALL-E / Midjourney / Nano Banana for all images
-- Pro: Fast, scalable, consistent style possible
-- Con: May need prompt engineering, occasional odd results
+### Implementation Plan
 
-### Option B: Stock Images (Slower but Professional)
-- Source from Unsplash, Pexels, or paid stock
-- Pro: Professional quality, consistent
-- Con: Finding matching style across 300+ images is hard
+| Content Type | Source | Priority | Notes |
+|--------------|--------|----------|-------|
+| Animals (pets, farm) | Stock (Unsplash/Pexels) | P0 | Must be consistent style |
+| Food (fruits, meals) | Stock | P0 | Realistic photos preferred |
+| Colors | Simple color swatches | P0 | Can generate programmatically |
+| Family | Stock/Illustrations | P1 | Diverse representations |
+| Body Parts | Custom diagram | P1 | Labeled illustration |
+| Clothes | Stock | P1 | Clear, isolated items |
+| School items | Stock | P1 | Common objects |
+| Home/Rooms | Illustrations | P2 | Can be AI-assisted |
+| Actions/Verbs | AI Generated | P2 | Abstract concepts |
+| Emotions | AI Generated | P2 | Facial expressions |
 
-### Option C: Hybrid Approach (Recommended)
-- **Core objects** (animals, food, colors): Stock images (consistency matters)
-- **Abstract concepts** (actions, emotions): AI generated
-- **Diagrams** (body parts, rooms): Custom illustrations
-
-### Option D: Placeholder First
-- Use colored placeholder boxes with word text
-- Replace with real images over time
-- Pro: Can start building immediately
-- Con: Poor initial user experience
+### Visual Style Guidelines
+- Clean, simple backgrounds (white or solid color)
+- Consistent illustration style within category
+- Child-friendly, not scary or confusing
+- High contrast for visibility on smart boards
 
 ---
 
