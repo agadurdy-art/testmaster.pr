@@ -844,81 +844,246 @@ Visual Design - Stage 5-8 (Professional):
 
 ---
 
-## 7. Existing Asset Reuse
+## 9. API Endpoints (Updated)
 
-### Can Reuse Directly
-- VocabularyLearnMode.js (adapt for new data model)
-- VocabularyPracticeMode.js (add crowns)
-- VocabularyQuizMode.js → Quiz component
-- VocabularyProductionMode.js → IELTS stages only
-- ReviewBank.js → Cross-stage review system
+### Stage Navigation
+```
+GET  /api/unified/stages                    # List all 8 stages
+GET  /api/unified/stages/{stage_id}         # Get stage details + units
+GET  /api/unified/stages/{stage_id}/units   # List units in stage
+```
 
-### Need Modification
-- AdvancedMasteryCourse.js → Break into smaller components
-- Listening components → Integrate into lesson flow
-- Reading components → Integrate into lesson flow
+### Unit & Lesson
+```
+GET  /api/unified/units/{unit_id}           # Get unit with lessons
+GET  /api/unified/lessons/{lesson_id}       # Get lesson with 10-step flow
+GET  /api/unified/lessons/{lesson_id}/activity/{activity_id}  # Get activity content
+```
 
-### New Components Required
-- LessonPathView.js (iSmart-style winding path)
-- StageSelector.js (stage overview)
-- UnitGrid.js (units within a stage)
-- LecturePlayer.js (video/slide presentation)
-- MaterialsDownload.js (PDF/resource downloads)
-- PointsDisplay.js (gamification header)
-- Leaderboard.js
-- AchievementBadges.js
-
----
-
-## 8. API Endpoints (New)
-
-### Stages
-- `GET /api/learning/stages` - List all stages
-- `GET /api/learning/stages/{stage_id}` - Get stage details
-
-### Units
-- `GET /api/learning/stages/{stage_id}/units` - List units in stage
-- `GET /api/learning/units/{unit_id}` - Get unit details
-
-### Lessons
-- `GET /api/learning/units/{unit_id}/lessons` - List lessons in unit
-- `GET /api/learning/lessons/{lesson_id}` - Get lesson with activity flow
-- `GET /api/learning/lessons/{lesson_id}/activities/{activity_id}` - Get activity content
-
-### Progress
-- `GET /api/learning/progress` - Get user's overall progress
-- `POST /api/learning/progress/activity` - Mark activity complete
-- `POST /api/learning/progress/lesson` - Mark lesson complete
+### Activity Completion
+```
+POST /api/unified/progress/activity         # Mark activity complete
+     Body: { lesson_id, activity_type, score, crowns?, time_spent }
+POST /api/unified/progress/lesson           # Mark lesson complete
+POST /api/unified/progress/certification    # Submit certification exam
+```
 
 ### Gamification
-- `GET /api/learning/leaderboard` - Get rankings
-- `GET /api/learning/achievements` - Get user achievements
-- `POST /api/learning/points` - Award points
+```
+GET  /api/unified/leaderboard               # Global rankings
+GET  /api/unified/leaderboard/stage/{id}    # Stage-specific rankings
+GET  /api/unified/achievements              # User achievements
+POST /api/unified/points/award              # Award points (internal)
+```
+
+### Daily Habit Mode
+```
+GET  /api/unified/daily-habit/today         # Get today's review items
+POST /api/unified/daily-habit/complete      # Mark daily practice done
+GET  /api/unified/daily-habit/streak        # Get streak info
+```
+
+### Spaced Repetition
+```
+GET  /api/unified/review-queue              # Items due for review
+POST /api/unified/review-queue/update       # Update item after review
+```
 
 ---
 
-## 9. Questions for User Approval
+## 10. New React Components Required
 
-1. **Stage Names**: Are the proposed stage names appropriate for Turkish students?
-2. **Activity Flow**: Should every lesson follow the same 5-step flow, or allow customization?
-3. **Content Priority**: Which stage should we populate with content first?
-4. **Existing Content**: Should we migrate existing Advanced course content, or start fresh?
-5. **Teacher Features**: When should we start building teacher features?
-6. **Gamification Level**: How important is the points/ranking system?
+### Navigation & Layout
+| Component | Purpose |
+|-----------|---------|
+| `UnifiedCoursePage.js` | Main course shell with stage navigation |
+| `StageSelector.js` | Stage overview cards (8 stages) |
+| `UnitGrid.js` | Grid of units within a stage |
+| `LessonPathView.js` | iSmart-style winding activity path |
+| `LessonPathViewPro.js` | Linear progress bar for Stage 5-8 |
+
+### Activity Modules
+| Component | Purpose |
+|-----------|---------|
+| `RetrievalWarmup.js` | Prior knowledge activation |
+| `VocabularyModule.js` | Enhanced vocab (adapt existing) |
+| `MicroGame.js` | Quick game wrapper (matching, recall) |
+| `MicroReading.js` | Short reading with vocab highlights |
+| `GrammarFocus.js` | Rule presentation + examples |
+| `ListeningTask.js` | Audio player + questions |
+| `ProductionModule.js` | Speaking recorder / writing input |
+| `ExitTicket.js` | Quick quiz gate |
+
+### Gamification
+| Component | Purpose |
+|-----------|---------|
+| `PointsDisplay.js` | Header points/streak widget |
+| `CrownDisplay.js` | Activity score crowns |
+| `Leaderboard.js` | Rankings table |
+| `AchievementBadge.js` | Achievement display |
+| `DailyHabitCard.js` | Daily practice CTA |
+| `CertificationGate.js` | Stage completion exam |
+
+### Progress & Analytics
+| Component | Purpose |
+|-----------|---------|
+| `ProgressDashboard.js` | Overall progress visualization |
+| `StageProgressRing.js` | Circular progress per stage |
+| `ReviewCalendar.js` | Spaced repetition schedule |
 
 ---
 
-## 10. Next Steps
+## 11. Implementation Phases (No Timelines)
 
-Upon approval:
-1. Create new database collections
-2. Build core navigation components
-3. Create first sample unit with full lesson flow
-4. Test with iSmart-style UI
-5. Iterate based on feedback
+### Phase 1: Foundation Infrastructure
+**Goal**: Build the skeleton that holds everything together
+
+**Tasks**:
+1. Create MongoDB collections: `unified_stages`, `unified_units`, `unified_lessons`, `unified_activities`
+2. Build seed scripts for Stage 1 sample content (1 unit, 4 lessons)
+3. Create `UnifiedCoursePage.js` with basic navigation
+4. Build `StageSelector.js` component
+5. Build `UnitGrid.js` component
+6. Build `LessonPathView.js` (iSmart-style for Stage 1-4)
+
+### Phase 2: Activity Modules
+**Goal**: Build all 10 activity types
+
+**Tasks**:
+1. `RetrievalWarmup.js` - Simple flashback quiz
+2. Adapt existing `VocabularyLearnMode.js` → `VocabularyModule.js`
+3. `MicroGame.js` - Matching + Active Recall modes
+4. `MicroReading.js` - Highlighted text reader
+5. `GrammarFocus.js` - Rule cards + examples
+6. Adapt existing listening components → `ListeningTask.js`
+7. `ProductionModule.js` - Speaking/Writing with AI eval
+8. `ExitTicket.js` - Quick quiz with pass gate
+
+### Phase 3: Gamification & Retention
+**Goal**: Make learning sticky
+
+**Tasks**:
+1. Implement points system (backend + frontend display)
+2. Crown scoring for games
+3. Streak tracking
+4. `DailyHabitCard.js` + daily practice flow
+5. Spaced repetition queue + algorithm
+6. `Leaderboard.js` component
+7. Achievement system
+
+### Phase 4: Content Population
+**Goal**: Fill the system with real lessons
+
+**Tasks**:
+1. Migrate existing `beginner_course` → Stage 1-2
+2. Migrate existing `advanced_mastery_modules` → Stage 7-8
+3. Create content for Stage 3-6 (gaps)
+4. Generate audio for all new content
+5. Generate/source images for Stage 1-3
+
+### Phase 5: Polish & Teacher Features
+**Goal**: Production-ready system
+
+**Tasks**:
+1. Stage-adaptive UI themes
+2. Certification exams for each stage
+3. Parent view dashboard
+4. Teacher control panel (basic)
+5. Analytics & reporting
+6. Performance optimization
 
 ---
 
-*Document Version: 1.0*
-*Created: February 2026*
-*Status: PENDING APPROVAL*
+## 12. Existing Asset Reuse Summary
+
+### ✅ Can Reuse Directly
+| Asset | Current Location | New Location |
+|-------|------------------|--------------|
+| Vocabulary Learn Mode UI | `VocabularyLearnMode.js` | Adapt to `VocabularyModule.js` |
+| Vocabulary Practice | `VocabularyPracticeMode.js` | Integrate into `MicroGame.js` |
+| Mastery Quiz | `VocabularyQuizMode.js` | Use for Exit Ticket |
+| Production Mode (AI) | `VocabularyProductionMode.js` | Reuse for Stage 7-8 |
+| Review Bank | `ReviewBank.js` | Enhance for SRS system |
+| Audio infrastructure | Backend TTS routes | Reuse unchanged |
+| Image serving | Backend static routes | Reuse unchanged |
+
+### 🔄 Need Modification
+| Asset | Changes Needed |
+|-------|----------------|
+| `AdvancedMasteryCourse.js` | Extract reusable components, deprecate page |
+| `BeginnerCourse.js` | Map content to Stage 1-3, deprecate page |
+| Listening components | Integrate into lesson flow |
+| Reading components | Integrate into lesson flow |
+
+### 🆕 New Development Required
+| Component | Priority |
+|-----------|----------|
+| Unified navigation shell | P0 |
+| 10-step lesson flow | P0 |
+| Daily Habit Mode | P1 |
+| Certification Gates | P1 |
+| Leaderboard system | P2 |
+| Teacher dashboard | P2 |
+
+---
+
+## 13. Questions for User Approval
+
+### Architecture Decisions
+1. ✅ **8 Stages confirmed** (Foundations → IELTS Mastery)
+2. ✅ **10-step lesson flow** (PhD-corrected)
+3. ✅ **Mastery-based** (not time-based)
+4. ✅ **Stage-adaptive tone** (playful → professional)
+
+### Implementation Questions
+
+**Q1: Content Priority**
+Which stage should we build first with full content?
+- A) Stage 1 (Foundations) - Start from the beginning
+- B) Stage 7-8 (IELTS) - Migrate existing Advanced content first
+- C) Both simultaneously
+
+**Q2: Daily Habit Mode Priority**
+When should Daily Habit Mode be implemented?
+- A) Phase 1 (Core feature from start)
+- B) Phase 3 (After basic flow works)
+
+**Q3: Visual Assets**
+For Stage 1-3 vocabulary images:
+- A) Use AI generation (fast but may vary in quality)
+- B) Source stock images (slower but consistent)
+- C) Placeholder first, replace later
+
+**Q4: Existing Course Pages**
+What to do with current `/beginner`, `/advanced`, `/mastery` routes?
+- A) Keep accessible during transition
+- B) Hide immediately, build new only
+- C) Redirect to new unified system
+
+---
+
+## 14. Success Metrics
+
+### Engagement
+- Daily active users
+- Average session duration
+- Lesson completion rate
+- Daily streak length distribution
+
+### Learning Outcomes
+- Exit ticket pass rate
+- Certification exam scores
+- Stage progression rate
+- Vocabulary retention (SRS metrics)
+
+### System Health
+- Time to complete lesson
+- Drop-off points in 10-step flow
+- Most/least engaged activities
+
+---
+
+*Document Version: 2.0*
+*Updated: February 2026*
+*Status: PENDING USER APPROVAL*
+*Based on: PhD-Level Curriculum Design Guidelines*
