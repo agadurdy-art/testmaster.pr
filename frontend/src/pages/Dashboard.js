@@ -305,6 +305,9 @@ export default function Dashboard({ user, onLogout }) {
               ))}
               <hr className={`my-2 ${isDark ? 'border-gray-700' : isNightShift ? 'border-amber-200' : 'border-gray-200'}`} />
               <p className={`text-xs ${textSecondary} px-3 py-1`}>{getText('Courses', 'Khóa học', 'Kurslar')}</p>
+              <Button variant="ghost" className={`w-full justify-start text-blue-600 font-semibold`} onClick={() => { navigate('/unified'); setMobileMenuOpen(false); }}>
+                <GraduationCap className="w-4 h-4 mr-3" />{getText('Learning Path', 'Lộ trình học', 'Öğrenme Yolu')}
+              </Button>
               {courses.map((c) => (
                 <Button key={c.id} variant="ghost" className={`w-full justify-start ${textSecondary}`} onClick={() => { navigate(c.route); setMobileMenuOpen(false); }}>
                   <span className="mr-3">{c.icon}</span>{c.name}
