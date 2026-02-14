@@ -1,71 +1,102 @@
-# Unified Learning Path - Architecture Proposal
-## Hybrid Learning Platform v2.0
+# Testmaster Complete English Program
+## Unified Learning Path - Architecture Proposal v2.0
+### PhD-Level Curriculum Design
 
 ---
 
 ## Executive Summary
 
-This document proposes a complete architectural transformation from the current fragmented course structure (Beginner → Advanced → Mastery) to a **single, unified, step-by-step learning pathway** inspired by the iSmart education platform.
+This document proposes a complete architectural transformation from the current fragmented course structure (Beginner → Advanced → Mastery) to a **single, unified, mastery-based learning pathway**.
 
-### Core Vision
-A cohesive learning journey from **absolute beginner (Pre-A1/Kindergarten)** to **IELTS mastery (C2)** with:
-- Linear, sequential lesson progression
-- Teacher-friendly smart board UI
-- Gamification (points, rankings, achievements)
-- Reusable activity modules
+### Core Pedagogical Principles
+- ❌ Time-based progression
+- ✅ **Mastery-based** progression
+- ✅ **Spiral curriculum** (topics revisited at increasing complexity)
+- ✅ **High-frequency exposure** (reading & listening integrated)
+- ✅ **Retrieval + Spaced repetition** built-in
+- ✅ **Teacher + Self-study hybrid**
+
+### Platform Tone Strategy
+| Stage Level | Visual Style | Tone |
+|-------------|--------------|------|
+| Stage 1-3 | Colorful, engaging, visual-heavy | Fun, gamified |
+| Stage 4-6 | Balanced, selective visuals | Semi-academic |
+| Stage 7-8 | Minimal, professional | IELTS-focused |
 
 ---
 
-## 1. CEFR-Based Stage Structure
+## 1. Stage Structure (Cambridge-Aligned + IELTS)
 
 ### Stage Overview
 
-| Stage | CEFR Level | Target Audience | Duration |
-|-------|------------|-----------------|----------|
-| **Foundation** | Pre-A1 | Kindergarten/Starters | 3 months |
-| **Elementary** | A1-A2 | Primary school (ages 7-10) | 6 months |
-| **Pre-Intermediate** | A2-B1 | Middle school (ages 11-13) | 6 months |
-| **Intermediate** | B1-B2 | High school (ages 14-16) | 6 months |
-| **Upper-Intermediate** | B2-C1 | IELTS Foundation | 4 months |
-| **Advanced** | C1-C2 | IELTS Academic/General | 4 months |
+| Stage | Name | CEFR | Units | Lessons/Unit | Total Lessons |
+|-------|------|------|-------|--------------|---------------|
+| **1** | Foundations | Pre-A1 | 12 | 4 | 48 |
+| **2** | Starters | A1 | 12 | 4 | 48 |
+| **3** | Movers | A1-A2 | 10 | 4 | 40 |
+| **4** | Flyers | A2-B1 | 10 | 4 | 40 |
+| **5** | B1 Academic | B1 | 8 | 4 | 32 |
+| **6** | B2 Academic | B2 | 8 | 4 | 32 |
+| **7** | IELTS Foundation | B2-C1 | 6 | 5 | 30 |
+| **8** | IELTS Mastery | C1-C2 | 6 | 5 | 30 |
+
+**Total: 300 Lessons**
+
+### Stage Internal Structure
+Each Stage contains:
+- **2 Substages** (A/B) for gradual progression
+- **Certification Gate** at stage end (must pass to unlock next)
+- **Booster Mode** for struggling students
 
 ### Stage Details
 
-#### Stage 1: Foundation (Pre-A1)
+#### Stage 1: Foundations (Pre-A1)
+- **Target**: Kindergarten / Absolute beginners
+- **Units**: 12 (colors, numbers, family, animals, body, food, etc.)
+- **Visual Strategy**: Every word has an image (AI-generated acceptable)
+- **Tone**: Highly visual, game-heavy, colorful
+
+#### Stage 2: Starters (A1)
+- **Target**: Primary school (ages 6-8)
 - **Units**: 12
-- **Lessons per Unit**: 5
-- **Focus**: Basic vocabulary, colors, numbers, family, animals
-- **Activities**: Picture-word matching, audio repetition, simple games
+- **Focus**: Basic phrases, simple present tense
+- **Visual Strategy**: Image-rich, audio-heavy
 
-#### Stage 2: Elementary (A1-A2)
-- **Units**: 20
-- **Lessons per Unit**: 6
-- **Focus**: Simple sentences, present tense, daily routines
-- **Activities**: Vocabulary + Grammar + Listening + Speaking basics
+#### Stage 3: Movers (A1-A2)
+- **Target**: Primary school (ages 8-10)
+- **Units**: 10
+- **Focus**: Present continuous, descriptions, can/can't
+- **Visual Strategy**: Selective images, concept illustrations
 
-#### Stage 3: Pre-Intermediate (A2-B1)
-- **Units**: 24
-- **Lessons per Unit**: 6
-- **Focus**: Past/future tenses, descriptions, opinions
-- **Activities**: Reading comprehension, conversation practice
+#### Stage 4: Flyers (A2-B1)
+- **Target**: Late primary / early middle school
+- **Units**: 10
+- **Focus**: Past tense, comparisons, opinions
+- **Visual Strategy**: Concept visuals only
 
-#### Stage 4: Intermediate (B1-B2)
-- **Units**: 24
-- **Lessons per Unit**: 8
-- **Focus**: Complex grammar, academic vocabulary, formal writing
-- **Activities**: Essay structure, listening for details
+#### Stage 5: B1 Academic
+- **Target**: Middle school / academic prep
+- **Units**: 8
+- **Focus**: Formal writing basics, complex sentences
+- **Visual Strategy**: Minimal, diagram-focused
 
-#### Stage 5: Upper-Intermediate (B2-C1) - IELTS Foundation
-- **Units**: 16
-- **Lessons per Unit**: 8
-- **Focus**: IELTS task types introduction, band score criteria
-- **Activities**: Timed practice, strategy lessons
+#### Stage 6: B2 Academic
+- **Target**: High school / pre-IELTS
+- **Units**: 8
+- **Focus**: Essay structure, academic vocabulary
+- **Visual Strategy**: Charts/graphs for writing tasks
 
-#### Stage 6: Advanced (C1-C2) - IELTS Mastery
-- **Units**: 20
-- **Lessons per Unit**: 10
-- **Focus**: Band 7+ strategies, full mock tests
-- **Activities**: Full tests, feedback analysis, production mode
+#### Stage 7: IELTS Foundation (B2-C1)
+- **Target**: IELTS beginners
+- **Units**: 6
+- **Focus**: All 4 skills, task type introduction
+- **Visual Strategy**: IELTS Task 1 visuals only
+
+#### Stage 8: IELTS Mastery (C1-C2)
+- **Target**: Band 7+ preparation
+- **Units**: 6
+- **Focus**: Advanced strategies, full mock tests
+- **Visual Strategy**: Professional, minimal
 
 ---
 
