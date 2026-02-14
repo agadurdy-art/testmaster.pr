@@ -380,20 +380,27 @@ Never present same-type questions consecutively:
 
 ---
 
-## 4. Data Models
+## 6. Data Models (Updated)
 
 ### Stage Model
 ```javascript
 {
   _id: ObjectId,
-  stage_id: "foundation",
-  name: "Foundation",
+  stage_id: "stage_1_foundations",
+  number: 1,
+  name: "Foundations",
   cefr_level: "Pre-A1",
-  order: 1,
   total_units: 12,
-  description: "Basic English for beginners",
+  lessons_per_unit: 4,
+  description: "Basic English for absolute beginners",
+  target_audience: "Kindergarten / Ages 4-6",
   icon: "rocket",
   color: "#FF6B6B",
+  visual_strategy: "heavy", // heavy | selective | minimal
+  tone: "playful", // playful | balanced | academic
+  substages: ["A", "B"],
+  certification_gate: true,
+  has_booster_mode: true,
   unlock_requirements: null,
   created_at: ISODate
 }
@@ -403,70 +410,134 @@ Never present same-type questions consecutively:
 ```javascript
 {
   _id: ObjectId,
-  unit_id: "foundation_unit_01",
-  stage_id: "foundation",
+  unit_id: "stage_1_unit_01",
+  stage_id: "stage_1_foundations",
   number: 1,
+  substage: "A",
   title: "Hello! Nice to meet you",
   description: "Greetings and introductions",
-  total_lessons: 5,
+  total_lessons: 4,
   order: 1,
+  theme_color: "#FF6B6B",
+  thumbnail_url: "/static/images/units/greetings.png",
   unlock_requirements: {
     previous_unit_completion: true,
     min_score: 70
   },
+  spiral_review_topics: [], // Topics to review from earlier units
   created_at: ISODate
 }
 ```
 
-### Lesson Model
+### Lesson Model (10-Step Flow)
 ```javascript
 {
   _id: ObjectId,
-  lesson_id: "foundation_unit_01_lesson_01",
-  unit_id: "foundation_unit_01",
-  stage_id: "foundation",
+  lesson_id: "stage_1_unit_01_lesson_01",
+  unit_id: "stage_1_unit_01",
+  stage_id: "stage_1_foundations",
   number: 1,
   title: "Greetings",
   description: "Learn basic greetings",
+  estimated_duration_minutes: 35,
+  points_reward: 50,
+  
+  // The 10-Step Scientific Flow
   activity_flow: [
     {
       order: 1,
-      type: "vocabulary",
-      activity_id: "vocab_greetings_01",
-      icon: "book",
-      label: "Vocabulary"
+      type: "retrieval_warmup",
+      activity_id: "warmup_greetings_01",
+      icon: "refresh",
+      label: "Warm-up",
+      duration_minutes: 3,
+      is_skippable: false
     },
     {
       order: 2,
-      type: "lecture",
-      activity_id: "lecture_greetings_01",
-      icon: "laptop",
-      label: "Lecture"
+      type: "vocabulary",
+      activity_id: "vocab_greetings_01",
+      icon: "book",
+      label: "Vocabulary",
+      duration_minutes: 6,
+      is_skippable: false
     },
     {
       order: 3,
-      type: "practice",
-      activity_id: "practice_greetings_01",
+      type: "micro_game_vocab",
+      activity_id: "game_vocab_greetings_01",
       icon: "gamepad",
-      label: "Practice 1"
+      label: "Vocab Game",
+      duration_minutes: 4,
+      is_skippable: false
     },
     {
       order: 4,
-      type: "practice",
-      activity_id: "practice_greetings_02",
-      icon: "gamepad",
-      label: "Practice 2"
+      type: "micro_reading",
+      activity_id: "reading_greetings_01",
+      icon: "file-text",
+      label: "Micro Reading",
+      duration_minutes: 4,
+      is_skippable: true // Optional for Stage 1
     },
     {
       order: 5,
-      type: "materials",
-      activity_id: "materials_greetings_01",
-      icon: "file",
-      label: "Materials"
+      type: "grammar_focus",
+      activity_id: "grammar_greetings_01",
+      icon: "edit",
+      label: "Grammar",
+      duration_minutes: 5,
+      is_skippable: true // Not for Stage 1-2
+    },
+    {
+      order: 6,
+      type: "micro_game_grammar",
+      activity_id: "game_grammar_greetings_01",
+      icon: "gamepad",
+      label: "Grammar Game",
+      duration_minutes: 4,
+      is_skippable: true
+    },
+    {
+      order: 7,
+      type: "listening",
+      activity_id: "listening_greetings_01",
+      icon: "headphones",
+      label: "Listening",
+      duration_minutes: 5,
+      is_skippable: false
+    },
+    {
+      order: 8,
+      type: "production",
+      activity_id: "production_greetings_01",
+      icon: "mic",
+      label: "Speaking",
+      production_type: "speaking", // speaking | writing
+      duration_minutes: 5,
+      is_skippable: false
+    },
+    {
+      order: 9,
+      type: "exit_ticket",
+      activity_id: "exit_greetings_01",
+      icon: "check-circle",
+      label: "Exit Quiz",
+      duration_minutes: 3,
+      pass_threshold: 70,
+      is_skippable: false
+    },
+    {
+      order: 10,
+      type: "auto_review",
+      activity_id: "review_greetings_01",
+      icon: "repeat",
+      label: "Review Scheduled",
+      duration_minutes: 0, // Automatic
+      is_skippable: false
     }
   ],
-  estimated_duration_minutes: 20,
-  points_reward: 50,
+  
   created_at: ISODate
 }
 ```
@@ -476,7 +547,7 @@ Never present same-type questions consecutively:
 {
   _id: ObjectId,
   activity_id: "vocab_greetings_01",
-  lesson_id: "foundation_unit_01_lesson_01",
+  lesson_id: "stage_1_unit_01_lesson_01",
   type: "vocabulary",
   words: [
     {
@@ -485,52 +556,104 @@ Never present same-type questions consecutively:
       ipa: "/həˈloʊ/",
       definition: "A greeting",
       example_sentence: "Hello! How are you?",
-      image_url: "/static/images/vocab/hello.png",
+      image_url: "/static/images/vocab/hello.png", // Required for Stage 1-3
       audio_url: "/static/audio/vocab/hello.mp3",
-      sentence_audio_url: "/static/audio/vocab/hello_sentence.mp3"
-    },
-    // ... more words
+      sentence_audio_url: "/static/audio/vocab/hello_sentence.mp3",
+      difficulty: 1 // 1-5 scale
+    }
+    // ... more words (8-12 per lesson)
   ],
   requires_typing: true,
   requires_pronunciation: true,
+  max_attempts: 3,
   pass_threshold: 80,
   created_at: ISODate
 }
 ```
 
-### User Progress Model
+### User Progress Model (Enhanced)
 ```javascript
 {
   _id: ObjectId,
   user_id: ObjectId,
-  current_stage: "foundation",
+  
+  // Current Position
+  current_stage: 1,
   current_unit: 1,
   current_lesson: 3,
+  
+  // Gamification
   total_points: 4575,
-  rank: 42,
+  global_rank: 42,
+  daily_streak: 15,
+  longest_streak: 23,
+  
+  // Stage Progress
   stage_progress: {
-    foundation: {
+    "stage_1_foundations": {
       started_at: ISODate,
       completed_at: null,
+      substage: "A",
       units_completed: 0,
       lessons_completed: 12,
-      total_lessons: 60
+      total_lessons: 48,
+      average_score: 85,
+      certification_passed: false
     }
   },
+  
+  // Detailed Lesson Tracking
   lesson_progress: {
-    "foundation_unit_01_lesson_01": {
+    "stage_1_unit_01_lesson_01": {
       completed: true,
-      activities_completed: ["vocabulary", "lecture", "practice", "practice", "materials"],
-      score: 95,
+      activities_completed: {
+        retrieval_warmup: { completed: true, score: 100 },
+        vocabulary: { completed: true, score: 90 },
+        micro_game_vocab: { completed: true, crowns: 3 },
+        micro_reading: { completed: true, score: 85 },
+        grammar_focus: { skipped: true }, // Stage 1 doesn't have grammar
+        micro_game_grammar: { skipped: true },
+        listening: { completed: true, score: 80 },
+        production: { completed: true, score: 75 },
+        exit_ticket: { completed: true, score: 90, passed: true }
+      },
+      total_score: 87,
       points_earned: 50,
       crowns: 3,
+      time_spent_minutes: 32,
       completed_at: ISODate
     }
   },
+  
+  // Spaced Repetition Queue
+  review_queue: [
+    {
+      item_type: "vocabulary",
+      item_id: "word_hello",
+      lesson_id: "stage_1_unit_01_lesson_01",
+      next_review_date: ISODate,
+      review_count: 2,
+      ease_factor: 2.5,
+      interval_days: 7
+    }
+  ],
+  
+  // Daily Habit Stats
+  daily_habit: {
+    today_completed: false,
+    last_completed: ISODate,
+    items_reviewed_today: 0,
+    weak_areas: ["vocabulary", "listening"] // Auto-calculated
+  },
+  
+  // Achievements
   achievements: [
     { type: "first_lesson", earned_at: ISODate },
-    { type: "perfect_score", earned_at: ISODate }
-  ]
+    { type: "7_day_streak", earned_at: ISODate },
+    { type: "perfect_score", count: 5, last_earned: ISODate }
+  ],
+  
+  updated_at: ISODate
 }
 ```
 
