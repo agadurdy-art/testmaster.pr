@@ -659,101 +659,188 @@ Never present same-type questions consecutively:
 
 ---
 
-## 5. UI/UX Design Specifications
+## 7. UI/UX Design Specifications
 
-### 5.1 Color Palette
+### 7.1 Stage-Adaptive Color Palette
 
 ```css
 :root {
-  /* Stage Colors */
-  --stage-foundation: #FF6B6B;
-  --stage-elementary: #4ECDC4;
-  --stage-preint: #45B7D1;
-  --stage-intermediate: #96CEB4;
-  --stage-upperint: #FFEAA7;
-  --stage-advanced: #DDA0DD;
+  /* Stage Colors (Tone-matched) */
+  --stage-1-foundations: #FF6B6B;  /* Warm red - playful */
+  --stage-2-starters: #4ECDC4;     /* Teal - friendly */
+  --stage-3-movers: #45B7D1;       /* Sky blue - energetic */
+  --stage-4-flyers: #96CEB4;       /* Mint - transitional */
+  --stage-5-b1: #778899;           /* Slate - semi-academic */
+  --stage-6-b2: #6B7B8C;           /* Steel - academic */
+  --stage-7-ielts-found: #4A5568;  /* Charcoal - professional */
+  --stage-8-ielts-master: #2D3748; /* Dark slate - serious */
   
-  /* UI Colors */
-  --primary: #FF9800;
-  --secondary: #2196F3;
-  --success: #4CAF50;
-  --warning: #FFC107;
-  --background: #FFF8E1;
-  --card: #FFFFFF;
-  --text-primary: #333333;
-  --text-secondary: #757575;
+  /* Universal UI Colors */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
+  --crown-gold: #FFD700;
+  --points-gem: #8B5CF6;
 }
 ```
 
-### 5.2 Lesson Path Component
+### 7.2 Lesson Path Component (iSmart-Inspired)
 
 ```
-Visual Design:
-- Winding path connecting activities
-- Checkmarks for completed items
-- Crown system for practice scores
-- Current activity highlighted
-- Locked activities grayed out
+Visual Design - Stage 1-4 (Playful):
+┌──────────────────────────────────────────────────────────────┐
+│                                                              │
+│      [1.Warm-up]                     [4.Reading]            │
+│          🔄 ✓                            📄 ✓                │
+│           ╲                              ╱                   │
+│            ╲                            ╱                    │
+│         [2.Vocab]────────────────[3.Game]                   │
+│              📖 ✓         ★★★        🎮 ✓                   │
+│                   ╲                 ╱                        │
+│                    ╲               ╱                         │
+│                   [5.Grammar]───[6.Game]                    │
+│                        📐           🎮                       │
+│                         ╲         ╱                          │
+│                     [7.Listen]─[8.Speak]                    │
+│                         🎧        🎤                         │
+│                          ╲       ╱                           │
+│                       [9.Exit]──[10.Review]                 │
+│                          ✅       🔁                         │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+
+Visual Design - Stage 5-8 (Professional):
+┌──────────────────────────────────────────────────────────────┐
+│  Lesson Progress                                             │
+├──────────────────────────────────────────────────────────────┤
+│  [1] ✓  [2] ✓  [3] ✓  [4] ○  [5] ○  [6] ○  [7] ○  [8] ○  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│        Progress: 30%        Time: ~25 min remaining          │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### 5.3 Navigation Structure
+### 7.3 Navigation Structure
 
+**Header Component:**
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  [Logo]  [User Avatar]    🏆 5  📊 Ranking  💎 4,575 +     │
-├──────────┬───────────────────────────────────────────────────┤
-│          │                                                   │
-│ 🏠 Home  │          < Unit 7 - Lesson 1: Greetings          │
-│          │                                                   │
-│ 📋 Tasks │              [LESSON PATH VIEW]                   │
-│          │                                                   │
-│ 🔔 Notif │                                                   │
-│          │                                                   │
-│ 👨‍👩‍👧 Parent│                                                   │
-│          │                                                   │
-└──────────┴───────────────────────────────────────────────────┘
+│  [Logo]  [User Avatar]    🏆 5  📊 Rank #42  💎 4,575 +     │
+│                           └─streak─┘  └─rank─┘   └─points─┘  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### 5.4 Teacher Control Panel (Future)
+**Sidebar (Stage 1-4 - Visual Icons):**
+```
+┌──────────┐
+│ 🚀       │ Home
+│ 📋       │ Tasks
+│ 🔔       │ Notifications
+│ 👨‍👩‍👧      │ Parent View
+│ 🏆       │ Achievements
+│ 📊       │ My Progress
+└──────────┘
+```
 
-- Class management
-- Student progress tracking
-- Content assignment
-- Real-time monitoring
-- Smart board presentation mode
+**Sidebar (Stage 5-8 - Text-based):**
+```
+┌──────────────┐
+│ Dashboard    │
+│ My Course    │
+│ Practice     │
+│ Mock Tests   │
+│ Progress     │
+│ Resources    │
+└──────────────┘
+```
+
+### 7.4 Daily Habit Mode UI
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│  🔥 Daily Practice                          Streak: 15 days   │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  Today's Mix (5-10 min):                                       │
+│                                                                │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
+│  │ 5 Words     │  │ 2 Grammar   │  │ 1 Reading   │            │
+│  │ 📚          │  │ 📐          │  │ 📄          │            │
+│  └─────────────┘  └─────────────┘  └─────────────┘            │
+│                                                                │
+│  ┌─────────────┐                                               │
+│  │ 1 Listening │                                               │
+│  │ 🎧          │                                               │
+│  └─────────────┘                                               │
+│                                                                │
+│                    [ Start Daily Practice ]                    │
+│                                                                │
+│  ─────────────────────────────────────────────────────────────│
+│  Tomorrow's preview: 3 vocab reviews due, 1 grammar pattern   │
+└────────────────────────────────────────────────────────────────┘
+```
+
+### 7.5 Certification Gate UI
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│                    🎓 STAGE 1 CERTIFICATION                   │
+│                         Foundations                            │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  Requirements to unlock Stage 2:                               │
+│                                                                │
+│  ✓ Complete all 48 lessons                    [48/48]         │
+│  ✓ Average score above 70%                    [85%]           │
+│  ○ Pass certification exam                    [Not taken]      │
+│                                                                │
+│  ─────────────────────────────────────────────────────────────│
+│                                                                │
+│  Certification Exam:                                           │
+│  • 30 questions (mixed types)                                  │
+│  • 30 minutes                                                  │
+│  • Pass mark: 70%                                              │
+│                                                                │
+│                    [ Take Certification Exam ]                 │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## 6. Migration Strategy
+## 8. Content Migration Strategy
 
-### Phase 1: Foundation (Weeks 1-2)
-1. Create new data models
-2. Build Stage/Unit/Lesson navigation UI
-3. Build Lesson Path component (iSmart-style)
-4. Migrate existing Vocabulary Engine to new structure
+### Existing Content Mapping
 
-### Phase 2: Activity Modules (Weeks 3-4)
-1. Refactor Vocabulary module for new data model
-2. Build Lecture module
-3. Enhance Practice module with crowns/gamification
-4. Build Materials/Download module
+| Current Location | Target Stage | Migration Notes |
+|------------------|--------------|-----------------|
+| `beginner_course` data | Stage 1-3 | Extract vocabulary, adapt for 10-step flow |
+| `advanced_mastery_modules` | Stage 7-8 | Map existing vocab engine content |
+| `mastery_course` data | Stage 6-7 | Bridge content between B2 and IELTS |
+| Listening QB | All Stages | Redistribute by difficulty |
+| Reading QB | Stage 4-8 | Academic readings to higher stages |
+| Vocabulary Engine | Template | Reuse UI, adapt data model |
 
-### Phase 3: Content Population (Weeks 5-8)
-1. Create Foundation stage content (12 units)
-2. Migrate existing Advanced content to new structure
-3. Build content creation tools for teachers
+### Migration Phases
 
-### Phase 4: Gamification & Polish (Weeks 9-10)
-1. Implement points system
-2. Build leaderboard
-3. Add achievements
-4. Create progress visualizations
+**Phase 1: Schema Migration**
+1. Create new collections: `unified_stages`, `unified_units`, `unified_lessons`
+2. Keep old collections as read-only backup
+3. Build migration scripts
 
-### Phase 5: Teacher Layer (Weeks 11-12)
-1. Teacher dashboard
-2. Class management
-3. Content assignment
-4. Analytics
+**Phase 2: Content Transformation**
+1. Map `beginner_course` → Stage 1-3 lessons
+2. Map `advanced_mastery_modules` → Stage 7-8 lessons
+3. Fill gaps with placeholder content (to be created)
+
+**Phase 3: UI Transition**
+1. Build new unified course navigation
+2. Keep old course pages accessible during transition
+3. Add "Try New Version" toggle for beta testing
+
+**Phase 4: Full Cutover**
+1. Make unified system default
+2. Archive old course routes
+3. Redirect old URLs to new system
 
 ---
 
