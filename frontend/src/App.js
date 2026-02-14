@@ -360,6 +360,21 @@ function AppWithSessionHandler() {
           path="/review-bank" 
           element={user ? <ReviewBank user={user} /> : <Navigate to="/" />} 
         />
+        
+        {/* Unified Learning System Routes */}
+        <Route 
+          path="/unified" 
+          element={user ? <UnifiedCoursePage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/stage/:stageId" 
+          element={user ? <UnifiedStagePage user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/unified/lesson/:lessonId" 
+          element={user ? <UnifiedLessonPage user={user} /> : <Navigate to="/" />} 
+        />
+        
         <Route 
           path="/game-bank" 
           element={<GameBank />} 
