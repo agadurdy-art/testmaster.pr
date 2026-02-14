@@ -1,120 +1,71 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { 
   ArrowLeft, ChevronRight, CheckCircle, Clock, Zap, X,
   RefreshCw, BookOpen, Gamepad2, FileText, Edit3, Headphones, 
-  Mic, Repeat, Play, Star, Lock, Volume2
+  Mic, Repeat, Play, Star, Lock, Volume2, AlertCircle, ThumbsUp, ThumbsDown
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Progress } from '../components/ui/progress';
+import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Activity icons mapping
 const ACTIVITY_ICONS = {
-  'retrieval_warmup': RefreshCw,
-  'vocabulary': BookOpen,
-  'micro_game_vocab': Gamepad2,
-  'micro_reading': FileText,
-  'grammar_focus': Edit3,
-  'micro_game_grammar': Gamepad2,
-  'listening': Headphones,
-  'production': Mic,
-  'exit_ticket': CheckCircle,
-  'auto_review': Repeat
+  'retrieval_warmup': RefreshCw, 'vocabulary': BookOpen, 'micro_game_vocab': Gamepad2,
+  'micro_reading': FileText, 'grammar_focus': Edit3, 'micro_game_grammar': Gamepad2,
+  'listening': Headphones, 'production': Mic, 'exit_ticket': CheckCircle, 'auto_review': Repeat
 };
 
-// Activity labels
 const ACTIVITY_LABELS = {
-  'retrieval_warmup': 'Warm-up',
-  'vocabulary': 'Vocabulary',
-  'micro_game_vocab': 'Vocab Game',
-  'micro_reading': 'Reading',
-  'grammar_focus': 'Grammar',
-  'micro_game_grammar': 'Grammar Game',
-  'listening': 'Listening',
-  'production': 'Speaking',
-  'exit_ticket': 'Exit Quiz',
-  'auto_review': 'Review'
+  'retrieval_warmup': 'Warm-up', 'vocabulary': 'Vocabulary', 'micro_game_vocab': 'Vocab Game',
+  'micro_reading': 'Reading', 'grammar_focus': 'Grammar', 'micro_game_grammar': 'Grammar Game',
+  'listening': 'Listening', 'production': 'Speaking', 'exit_ticket': 'Exit Quiz', 'auto_review': 'Review'
 };
 
-// Lesson path visualization (iSmart-inspired)
+// ═══════ LESSON PATH SIDEBAR ═══════
 function LessonPath({ activities, currentActivity, completedActivities, onActivityClick }) {
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm">
-      <h3 className="text-lg font-bold text-gray-900 mb-6">Lesson Progress</h3>
-      
-      {/* Path visualization */}
-      <div className="relative">
+    <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+      <h3 className="text-base font-bold text-gray-900 mb-4" data-testid="lesson-progress-title">Lesson Progress</h3>
+      <div className="space-y-1">
         {activities.map((activity, index) => {
           const Icon = ACTIVITY_ICONS[activity.type] || Play;
           const isCompleted = completedActivities.includes(activity.type);
           const isCurrent = currentActivity === activity.type;
-          const isSkippable = activity.is_skippable;
           const isAccessible = index === 0 || completedActivities.includes(activities[index - 1]?.type);
-          
-          // Skip activities with 0 duration (skippable in this stage)
-          if (activity.duration_minutes === 0 && activity.is_skippable) {
-            return null;
-          }
-          
+          if (activity.duration_minutes === 0 && activity.is_skippable) return null;
+
           return (
-            <div key={activity.activity_id} className="relative">
-              {/* Connection line */}
-              {index > 0 && (
-                <div className="absolute left-6 -top-4 w-0.5 h-4 bg-gray-200" />
-              )}
-              
-              <div 
-                className={`flex items-center gap-4 p-3 rounded-xl transition-all cursor-pointer ${
-                  isCurrent ? 'bg-blue-50 border-2 border-blue-500' :
+            <div key={activity.activity_id} className="relative" data-testid={`activity-step-${activity.type}`}>
+              {index > 0 && <div className="absolute left-5 -top-1 w-0.5 h-1 bg-gray-200" />}
+              <button
+                className={`w-full flex items-center gap-3 p-2.5 rounded-xl transition-all text-left ${
+                  isCurrent ? 'bg-blue-50 ring-2 ring-blue-400' :
                   isCompleted ? 'bg-green-50' :
-                  isAccessible ? 'hover:bg-gray-50' : 'opacity-50'
+                  isAccessible ? 'hover:bg-gray-50' : 'opacity-40 cursor-not-allowed'
                 }`}
                 onClick={() => isAccessible && onActivityClick(activity)}
+                disabled={!isAccessible}
               >
-                {/* Icon */}
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
                   isCompleted ? 'bg-green-500 text-white' :
                   isCurrent ? 'bg-blue-500 text-white' :
-                  isAccessible ? 'bg-gray-100 text-gray-600' : 'bg-gray-100 text-gray-400'
+                  isAccessible ? 'bg-gray-100 text-gray-500' : 'bg-gray-100 text-gray-300'
                 }`}>
-                  {isCompleted ? (
-                    <CheckCircle className="w-6 h-6" />
-                  ) : !isAccessible ? (
-                    <Lock className="w-5 h-5" />
-                  ) : (
-                    <Icon className="w-6 h-6" />
-                  )}
+                  {isCompleted ? <CheckCircle className="w-5 h-5" /> : !isAccessible ? <Lock className="w-4 h-4" /> : <Icon className="w-5 h-5" />}
                 </div>
-                
-                {/* Content */}
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-gray-900">
-                      {ACTIVITY_LABELS[activity.type] || activity.label}
-                    </span>
-                    {isSkippable && (
-                      <Badge variant="outline" className="text-xs">Optional</Badge>
-                    )}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm font-medium text-gray-900 truncate">{ACTIVITY_LABELS[activity.type] || activity.label}</span>
+                    {activity.is_skippable && <Badge variant="outline" className="text-[10px] px-1.5 py-0">Optional</Badge>}
                   </div>
-                  <span className="text-sm text-gray-500">
-                    {activity.duration_minutes} min
-                  </span>
+                  <span className="text-xs text-gray-400">{activity.duration_minutes} min</span>
                 </div>
-                
-                {/* Status */}
-                {isCompleted && (
-                  <div className="flex items-center text-green-600">
-                    <CheckCircle className="w-5 h-5" />
-                  </div>
-                )}
-                {isCurrent && !isCompleted && (
-                  <ChevronRight className="w-5 h-5 text-blue-500" />
-                )}
-              </div>
+                {isCurrent && !isCompleted && <ChevronRight className="w-4 h-4 text-blue-500 shrink-0" />}
+              </button>
             </div>
           );
         })}
@@ -123,386 +74,691 @@ function LessonPath({ activities, currentActivity, completedActivities, onActivi
   );
 }
 
-// Vocabulary Module Component
-function VocabularyModule({ activity, onComplete }) {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [completedWords, setCompletedWords] = useState([]);
-  const [userInput, setUserInput] = useState('');
+// ═══════ RETRIEVAL WARMUP ═══════
+function RetrievalWarmup({ activity, onComplete }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
-  
-  const words = activity?.words || [];
-  const currentWord = words[currentWordIndex];
-  
-  const handleCheckWord = () => {
-    const correct = userInput.toLowerCase().trim() === currentWord.word.toLowerCase();
-    setIsCorrect(correct);
+  const [correct, setCorrect] = useState(0);
+  const questions = activity?.questions || [];
+  const q = questions[currentIndex];
+
+  const handleSelect = (option) => {
+    if (showFeedback) return;
+    setSelectedAnswer(option);
     setShowFeedback(true);
-    
-    if (correct && !completedWords.includes(currentWord.word_id)) {
-      setCompletedWords([...completedWords, currentWord.word_id]);
-    }
+    if (option === q.correct_answer) setCorrect(c => c + 1);
   };
-  
-  const handleNextWord = () => {
+
+  const handleNext = () => {
+    setSelectedAnswer(null);
     setShowFeedback(false);
-    setUserInput('');
-    
-    if (currentWordIndex < words.length - 1) {
-      setCurrentWordIndex(currentWordIndex + 1);
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(i => i + 1);
     } else {
-      // All words done
-      const score = Math.round((completedWords.length / words.length) * 100);
-      onComplete(score);
+      onComplete(Math.round((correct / questions.length) * 100));
     }
   };
-  
-  const speakWord = (text) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.8;
-    speechSynthesis.speak(utterance);
-  };
-  
-  if (!currentWord) {
-    return <div>No vocabulary data</div>;
-  }
-  
+
+  if (!q) return <div className="text-center text-gray-500 py-12">No warmup questions available</div>;
+
   return (
-    <div className="space-y-6">
-      {/* Progress */}
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-gray-600">
-          Word {currentWordIndex + 1} of {words.length}
-        </span>
-        <Progress value={(currentWordIndex / words.length) * 100} className="w-32" />
+    <div className="max-w-2xl mx-auto" data-testid="retrieval-warmup">
+      <div className="flex items-center justify-between mb-6">
+        <Badge className="bg-orange-100 text-orange-700 border-0"><RefreshCw className="w-3 h-3 mr-1" /> Warm-up</Badge>
+        <span className="text-sm text-gray-500">{currentIndex + 1} / {questions.length}</span>
       </div>
-      
-      {/* Word list sidebar */}
+      <Progress value={((currentIndex + 1) / questions.length) * 100} className="mb-8" />
+      <Card className="p-8">
+        <h3 className="text-xl font-bold text-gray-900 mb-6">{q.question_text}</h3>
+        <div className="space-y-3">
+          {q.options?.map((option) => {
+            const isSelected = selectedAnswer === option;
+            const isCorrectOption = option === q.correct_answer;
+            let cls = 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/30';
+            if (showFeedback) {
+              if (isCorrectOption) cls = 'border-green-500 bg-green-50 text-green-800';
+              else if (isSelected && !isCorrectOption) cls = 'border-red-500 bg-red-50 text-red-800';
+              else cls = 'border-gray-200 opacity-50';
+            } else if (isSelected) cls = 'border-blue-500 bg-blue-50';
+            return (
+              <button key={option} className={`w-full p-4 rounded-xl text-left border-2 transition-all font-medium ${cls}`}
+                onClick={() => handleSelect(option)} disabled={showFeedback}
+                data-testid={`warmup-option-${option.substring(0,10).replace(/\s/g,'-')}`}>
+                {option}
+                {showFeedback && isCorrectOption && <CheckCircle className="inline w-5 h-5 ml-2 text-green-600" />}
+                {showFeedback && isSelected && !isCorrectOption && <X className="inline w-5 h-5 ml-2 text-red-600" />}
+              </button>
+            );
+          })}
+        </div>
+        {showFeedback && (
+          <div className="mt-6 flex justify-end">
+            <Button onClick={handleNext} data-testid="warmup-next-btn">
+              {currentIndex < questions.length - 1 ? 'Next' : 'Continue'}
+              <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+        )}
+      </Card>
+    </div>
+  );
+}
+
+// ═══════ VOCABULARY MODULE ═══════
+function VocabularyModule({ activity, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [done, setDone] = useState([]);
+  const [input, setInput] = useState('');
+  const [feedback, setFeedback] = useState(null); // 'correct' | 'wrong'
+  const words = activity?.words || [];
+  const w = words[idx];
+
+  const speakWord = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.8; speechSynthesis.speak(u); };
+
+  const check = () => {
+    const ok = input.toLowerCase().trim() === w.word.toLowerCase();
+    setFeedback(ok ? 'correct' : 'wrong');
+    if (ok && !done.includes(w.word_id)) setDone([...done, w.word_id]);
+  };
+
+  const next = () => {
+    setFeedback(null); setInput('');
+    if (idx < words.length - 1) setIdx(idx + 1);
+    else onComplete(Math.round((done.length / words.length) * 100));
+  };
+
+  if (!w) return <div className="text-center text-gray-500 py-12">No vocabulary data</div>;
+
+  return (
+    <div data-testid="vocabulary-module">
+      <div className="flex items-center justify-between mb-4">
+        <Badge className="bg-blue-100 text-blue-700 border-0"><BookOpen className="w-3 h-3 mr-1" /> Vocabulary</Badge>
+        <span className="text-sm text-gray-500">Word {idx + 1} of {words.length}</span>
+      </div>
+      <Progress value={(idx / words.length) * 100} className="mb-6" />
+
       <div className="flex gap-6">
-        {/* Word list */}
-        <div className="w-48 bg-gray-50 rounded-xl p-4">
-          <h4 className="text-sm font-medium text-gray-500 mb-3">Words</h4>
-          {words.map((word, index) => (
-            <div 
-              key={word.word_id}
-              className={`flex items-center gap-2 py-2 text-sm ${
-                index === currentWordIndex ? 'text-blue-600 font-medium' :
-                completedWords.includes(word.word_id) ? 'text-green-600' : 'text-gray-600'
-              }`}
-            >
-              {completedWords.includes(word.word_id) ? (
-                <CheckCircle className="w-4 h-4 text-green-500" />
-              ) : index === currentWordIndex ? (
-                <div className="w-4 h-4 rounded-full bg-blue-500" />
-              ) : (
-                <div className="w-4 h-4 rounded-full border-2 border-gray-300" />
-              )}
-              {word.word}
+        {/* Word sidebar */}
+        <div className="w-44 bg-gray-50 rounded-xl p-3 hidden md:block">
+          <h4 className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wider">Words</h4>
+          {words.map((word, i) => (
+            <div key={word.word_id} className={`flex items-center gap-2 py-1.5 text-sm ${i === idx ? 'text-blue-600 font-semibold' : done.includes(word.word_id) ? 'text-green-600' : 'text-gray-500'}`}>
+              {done.includes(word.word_id) ? <CheckCircle className="w-3.5 h-3.5 text-green-500 shrink-0" /> : i === idx ? <div className="w-3.5 h-3.5 rounded-full bg-blue-500 shrink-0" /> : <div className="w-3.5 h-3.5 rounded-full border-2 border-gray-300 shrink-0" />}
+              <span className="truncate">{word.word}</span>
             </div>
           ))}
         </div>
-        
-        {/* Main content */}
-        <div className="flex-1">
-          <Card className="p-8 text-center">
-            {/* Image placeholder */}
-            <div className="w-48 h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl mx-auto mb-6 flex items-center justify-center">
-              <span className="text-6xl">📚</span>
+
+        {/* Main card */}
+        <Card className="flex-1 p-8 text-center">
+          <div className="w-32 h-32 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl mx-auto mb-5 flex items-center justify-center">
+            <BookOpen className="w-12 h-12 text-blue-400" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-1" data-testid="current-word">{w.word}</h2>
+          <button className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-3" onClick={() => speakWord(w.word)}>
+            <Volume2 className="w-4 h-4" /><span className="text-sm">{w.ipa}</span>
+          </button>
+          <p className="text-gray-600 mb-3 text-sm">{w.definition}</p>
+          <div className="bg-gray-50 rounded-xl p-3 mb-5">
+            <p className="text-gray-700 italic text-sm">"{w.example_sentence}"</p>
+            <button className="mt-1 text-xs text-blue-600 inline-flex items-center gap-1" onClick={() => speakWord(w.example_sentence)}><Volume2 className="w-3 h-3" /> Listen</button>
+          </div>
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-600 block">Type the word:</label>
+            <input type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && !feedback && input.trim() && check()}
+              className={`w-full max-w-xs mx-auto px-4 py-3 text-center text-lg border-2 rounded-xl focus:outline-none ${feedback === 'correct' ? 'border-green-500 bg-green-50' : feedback === 'wrong' ? 'border-red-500 bg-red-50' : 'border-gray-200 focus:border-blue-500'}`}
+              placeholder="Type here..." disabled={!!feedback} autoFocus data-testid="vocab-input" />
+            {feedback && <div className={`text-base font-semibold ${feedback === 'correct' ? 'text-green-600' : 'text-red-600'}`}>{feedback === 'correct' ? 'Correct!' : `The answer is: ${w.word}`}</div>}
+            <div className="flex justify-center gap-3">
+              {!feedback ? <Button onClick={check} disabled={!input.trim()} data-testid="vocab-check-btn">Check</Button> : <Button onClick={next} data-testid="vocab-next-btn">{idx < words.length - 1 ? 'Next Word' : 'Complete'}</Button>}
             </div>
-            
-            {/* Word */}
-            <div className="mb-4">
-              <h2 className="text-4xl font-bold text-gray-900 mb-2">{currentWord.word}</h2>
-              <button 
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700"
-                onClick={() => speakWord(currentWord.word)}
-              >
-                <Volume2 className="w-5 h-5" />
-                <span className="text-lg">{currentWord.ipa}</span>
-              </button>
-            </div>
-            
-            {/* Definition */}
-            <p className="text-gray-600 mb-4">{currentWord.definition}</p>
-            
-            {/* Example sentence */}
-            <div className="bg-gray-50 rounded-xl p-4 mb-6">
-              <p className="text-gray-700 italic">"{currentWord.example_sentence}"</p>
-              <button 
-                className="mt-2 text-sm text-blue-600 hover:text-blue-700 inline-flex items-center gap-1"
-                onClick={() => speakWord(currentWord.example_sentence)}
-              >
-                <Volume2 className="w-4 h-4" />
-                Listen
-              </button>
-            </div>
-            
-            {/* Input */}
-            <div className="space-y-4">
-              <label className="text-sm font-medium text-gray-700 block">
-                Type the word:
-              </label>
-              <input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleCheckWord()}
-                className={`w-full max-w-xs mx-auto px-4 py-3 text-center text-xl border-2 rounded-xl focus:outline-none focus:ring-2 ${
-                  showFeedback ? (isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50') : 'border-gray-200 focus:border-blue-500'
-                }`}
-                placeholder="Type here..."
-                disabled={showFeedback}
-                autoFocus
-              />
-              
-              {showFeedback && (
-                <div className={`text-lg font-medium ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
-                  {isCorrect ? '✓ Correct!' : `✗ The answer is: ${currentWord.word}`}
-                </div>
-              )}
-              
-              <div className="flex justify-center gap-4">
-                {!showFeedback ? (
-                  <Button onClick={handleCheckWord} disabled={!userInput.trim()}>
-                    Check
-                  </Button>
-                ) : (
-                  <Button onClick={handleNextWord}>
-                    {currentWordIndex < words.length - 1 ? 'Next Word' : 'Complete'}
-                  </Button>
-                )}
-              </div>
-            </div>
-          </Card>
-        </div>
+          </div>
+        </Card>
       </div>
     </div>
   );
 }
 
-// Matching Game Component
+// ═══════ MATCHING GAME (Vocab) ═══════
 function MatchingGame({ activity, onComplete }) {
-  const [items, setItems] = useState([]);
+  const [items] = useState(() => [...(activity?.items || [])].sort(() => Math.random() - 0.5));
+  const [shuffledMatches] = useState(() => [...(activity?.items || [])].sort(() => Math.random() - 0.5));
   const [selectedWord, setSelectedWord] = useState(null);
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [matchedPairs, setMatchedPairs] = useState([]);
-  const [wrongAttempt, setWrongAttempt] = useState(false);
-  
-  useEffect(() => {
-    if (activity?.items) {
-      // Shuffle items
-      const shuffledItems = [...activity.items].sort(() => Math.random() - 0.5);
-      setItems(shuffledItems);
-    }
-  }, [activity]);
-  
+  const [wrongPair, setWrongPair] = useState(false);
+
   useEffect(() => {
     if (selectedWord && selectedMatch) {
       const item = items.find(i => i.word === selectedWord);
       if (item && item.match === selectedMatch) {
-        // Correct match
-        setMatchedPairs([...matchedPairs, selectedWord]);
-        setSelectedWord(null);
-        setSelectedMatch(null);
-        
-        // Check if complete
-        if (matchedPairs.length + 1 === items.length) {
-          const score = 100; // Perfect score for completing
-          onComplete(score, 3); // 3 crowns for perfect
-        }
+        const newMatched = [...matchedPairs, selectedWord];
+        setMatchedPairs(newMatched);
+        setSelectedWord(null); setSelectedMatch(null);
+        if (newMatched.length === items.length) onComplete(100, 3);
       } else {
-        // Wrong match
-        setWrongAttempt(true);
-        setTimeout(() => {
-          setWrongAttempt(false);
-          setSelectedWord(null);
-          setSelectedMatch(null);
-        }, 500);
+        setWrongPair(true);
+        setTimeout(() => { setWrongPair(false); setSelectedWord(null); setSelectedMatch(null); }, 500);
       }
     }
   }, [selectedWord, selectedMatch]);
-  
-  const shuffledMatches = [...items].sort(() => Math.random() - 0.5);
-  
+
   return (
-    <div className="space-y-6">
+    <div data-testid="matching-game">
+      <div className="flex items-center justify-between mb-6">
+        <Badge className="bg-purple-100 text-purple-700 border-0"><Gamepad2 className="w-3 h-3 mr-1" /> Vocab Game</Badge>
+        <span className="text-sm text-gray-500">{matchedPairs.length} / {items.length} matched</span>
+      </div>
       <div className="text-center mb-6">
-        <h3 className="text-xl font-bold text-gray-900">Match the Words</h3>
-        <p className="text-gray-600">Connect words with their definitions</p>
+        <h3 className="text-lg font-bold text-gray-900">Match the Words</h3>
+        <p className="text-sm text-gray-500">Connect words with their definitions</p>
       </div>
-      
-      <div className="grid grid-cols-2 gap-8 max-w-4xl mx-auto">
-        {/* Words column */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-medium text-gray-500 mb-4">Words</h4>
-          {items.map((item) => (
-            <button
-              key={item.word}
-              className={`w-full p-4 rounded-xl text-left font-medium transition-all ${
-                matchedPairs.includes(item.word) ? 'bg-green-100 text-green-700 cursor-default' :
-                selectedWord === item.word ? 'bg-blue-500 text-white ring-2 ring-blue-300' :
+      <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div className="space-y-2">
+          <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Words</h4>
+          {items.map(item => (
+            <button key={item.word} disabled={matchedPairs.includes(item.word)}
+              className={`w-full p-3.5 rounded-xl text-left font-medium transition-all text-sm ${
+                matchedPairs.includes(item.word) ? 'bg-green-100 text-green-700' :
+                selectedWord === item.word ? 'bg-blue-500 text-white shadow-md' :
                 'bg-white border-2 border-gray-200 hover:border-blue-300'
-              } ${wrongAttempt && selectedWord === item.word ? 'animate-shake bg-red-100' : ''}`}
+              } ${wrongPair && selectedWord === item.word ? 'bg-red-100 border-red-400' : ''}`}
               onClick={() => !matchedPairs.includes(item.word) && setSelectedWord(item.word)}
-              disabled={matchedPairs.includes(item.word)}
-            >
-              {item.word}
-              {matchedPairs.includes(item.word) && (
-                <CheckCircle className="inline w-5 h-5 ml-2" />
-              )}
+              data-testid={`match-word-${item.word}`}>
+              {item.word} {matchedPairs.includes(item.word) && <CheckCircle className="inline w-4 h-4 ml-1" />}
             </button>
           ))}
         </div>
-        
-        {/* Definitions column */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-medium text-gray-500 mb-4">Definitions</h4>
-          {shuffledMatches.map((item) => (
-            <button
-              key={item.match}
-              className={`w-full p-4 rounded-xl text-left text-sm transition-all ${
-                matchedPairs.includes(item.word) ? 'bg-green-100 text-green-700 cursor-default' :
-                selectedMatch === item.match ? 'bg-blue-500 text-white ring-2 ring-blue-300' :
+        <div className="space-y-2">
+          <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Definitions</h4>
+          {shuffledMatches.map(item => (
+            <button key={item.match} disabled={matchedPairs.includes(item.word)}
+              className={`w-full p-3.5 rounded-xl text-left text-sm transition-all ${
+                matchedPairs.includes(item.word) ? 'bg-green-100 text-green-700' :
+                selectedMatch === item.match ? 'bg-blue-500 text-white shadow-md' :
                 'bg-white border-2 border-gray-200 hover:border-blue-300'
-              } ${wrongAttempt && selectedMatch === item.match ? 'animate-shake bg-red-100' : ''}`}
+              } ${wrongPair && selectedMatch === item.match ? 'bg-red-100 border-red-400' : ''}`}
               onClick={() => !matchedPairs.includes(item.word) && setSelectedMatch(item.match)}
-              disabled={matchedPairs.includes(item.word)}
-            >
-              {item.match}
-              {matchedPairs.includes(item.word) && (
-                <CheckCircle className="inline w-5 h-5 ml-2" />
-              )}
+              data-testid={`match-def-${item.word}`}>
+              {item.match} {matchedPairs.includes(item.word) && <CheckCircle className="inline w-4 h-4 ml-1" />}
             </button>
           ))}
         </div>
-      </div>
-      
-      {/* Progress */}
-      <div className="text-center">
-        <span className="text-sm text-gray-600">
-          {matchedPairs.length} / {items.length} matched
-        </span>
       </div>
     </div>
   );
 }
 
-// Exit Ticket Component
-function ExitTicket({ activity, onComplete }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [showResults, setShowResults] = useState(false);
-  
-  const questions = activity?.questions || [];
-  const currentQuestion = questions[currentIndex];
-  
+// ═══════ MICRO READING ═══════
+function MicroReading({ activity, onComplete }) {
+  const [currentQ, setCurrentQ] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [correct, setCorrect] = useState(0);
+  const [showPassage, setShowPassage] = useState(true);
+  const questions = activity?.comprehension_questions || [];
+  const q = questions[currentQ];
+
+  const highlightText = (text) => {
+    if (!activity?.highlighted_words?.length) return text;
+    let result = text;
+    activity.highlighted_words.forEach(word => {
+      const regex = new RegExp(`\\b(${word})\\b`, 'gi');
+      result = result.replace(regex, `<mark class="bg-yellow-200 px-0.5 rounded">$1</mark>`);
+    });
+    return result;
+  };
+
   const handleAnswer = (answer) => {
-    setAnswers({ ...answers, [currentQuestion.question_id]: answer });
-    
-    if (currentIndex < questions.length - 1) {
-      setTimeout(() => setCurrentIndex(currentIndex + 1), 300);
-    } else {
-      setShowResults(true);
+    if (showFeedback) return;
+    setSelectedAnswer(answer);
+    setShowFeedback(true);
+    if (answer === q.correct_answer) setCorrect(c => c + 1);
+  };
+
+  const handleNext = () => {
+    setSelectedAnswer(null); setShowFeedback(false);
+    if (currentQ < questions.length - 1) { setCurrentQ(i => i + 1); }
+    else onComplete(Math.round((correct / questions.length) * 100));
+  };
+
+  return (
+    <div data-testid="micro-reading">
+      <div className="flex items-center justify-between mb-4">
+        <Badge className="bg-emerald-100 text-emerald-700 border-0"><FileText className="w-3 h-3 mr-1" /> Reading</Badge>
+        {questions.length > 0 && <span className="text-sm text-gray-500">Question {currentQ + 1}/{questions.length}</span>}
+      </div>
+
+      {/* Passage */}
+      {showPassage && (
+        <Card className="p-6 mb-6 bg-amber-50/50 border-amber-200">
+          <h4 className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-3">Read the passage</h4>
+          <p className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(activity?.passage_text || '') }} />
+          {questions.length > 0 && (
+            <Button variant="outline" size="sm" className="mt-4" onClick={() => setShowPassage(false)} data-testid="reading-answer-questions-btn">
+              Answer Questions <ChevronRight className="w-3 h-3 ml-1" />
+            </Button>
+          )}
+          {questions.length === 0 && <Button className="mt-4" onClick={() => onComplete(100)}>Continue</Button>}
+        </Card>
+      )}
+
+      {/* Questions */}
+      {!showPassage && q && (
+        <Card className="p-6">
+          <button className="text-sm text-blue-600 mb-4 flex items-center gap-1" onClick={() => setShowPassage(true)}>
+            <ArrowLeft className="w-3 h-3" /> Show passage
+          </button>
+          <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
+          <div className="space-y-2.5">
+            {(q.options || []).map(option => {
+              const isSelected = selectedAnswer === option;
+              const isCorrectOption = option === q.correct_answer;
+              let cls = 'border-gray-200 hover:border-blue-300';
+              if (showFeedback) {
+                if (isCorrectOption) cls = 'border-green-500 bg-green-50';
+                else if (isSelected) cls = 'border-red-500 bg-red-50';
+                else cls = 'border-gray-200 opacity-50';
+              }
+              return (
+                <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium ${cls}`}
+                  onClick={() => handleAnswer(option)} disabled={showFeedback}>
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+          {showFeedback && (
+            <div className="mt-5 flex justify-end">
+              <Button onClick={handleNext}>{currentQ < questions.length - 1 ? 'Next' : 'Continue'} <ChevronRight className="w-4 h-4 ml-1" /></Button>
+            </div>
+          )}
+        </Card>
+      )}
+    </div>
+  );
+}
+
+// ═══════ GRAMMAR FOCUS ═══════
+function GrammarFocus({ activity, onComplete }) {
+  const [ruleIdx, setRuleIdx] = useState(0);
+  const rules = activity?.rules || [];
+  const rule = rules[ruleIdx];
+
+  return (
+    <div data-testid="grammar-focus">
+      <div className="flex items-center justify-between mb-4">
+        <Badge className="bg-violet-100 text-violet-700 border-0"><Edit3 className="w-3 h-3 mr-1" /> Grammar</Badge>
+        <span className="text-sm text-gray-500">Rule {ruleIdx + 1}/{rules.length}</span>
+      </div>
+      <Progress value={((ruleIdx + 1) / rules.length) * 100} className="mb-6" />
+
+      {rule && (
+        <Card className="p-8">
+          {/* Pattern highlight */}
+          {activity?.pattern_highlight && (
+            <div className="text-center mb-6">
+              <div className="inline-block bg-violet-100 text-violet-800 font-mono text-lg px-6 py-3 rounded-xl font-bold">
+                {activity.pattern_highlight}
+              </div>
+            </div>
+          )}
+
+          {/* Rule */}
+          <div className="bg-blue-50 rounded-xl p-5 mb-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">{rule.rule_text}</h3>
+            <code className="text-sm text-blue-700 bg-blue-100 px-2 py-1 rounded">{rule.pattern}</code>
+          </div>
+
+          {/* Examples */}
+          <div className="space-y-3 mb-6">
+            {rule.examples?.map((ex, i) => (
+              <div key={i} className="grid grid-cols-2 gap-3">
+                <div className="flex items-center gap-2 bg-green-50 p-3 rounded-xl">
+                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
+                  <span className="text-sm font-medium text-green-800">{ex.correct}</span>
+                </div>
+                <div className="flex items-center gap-2 bg-red-50 p-3 rounded-xl">
+                  <X className="w-5 h-5 text-red-500 shrink-0" />
+                  <span className="text-sm font-medium text-red-800 line-through">{ex.incorrect}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Example sentences */}
+          {ruleIdx === rules.length - 1 && activity?.example_sentences && (
+            <div className="bg-gray-50 rounded-xl p-4 mb-6">
+              <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Practice sentences</h4>
+              <ul className="space-y-1.5">
+                {activity.example_sentences.map((s, i) => (
+                  <li key={i} className="text-sm text-gray-700 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />{s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="flex justify-end gap-3">
+            {ruleIdx > 0 && <Button variant="outline" onClick={() => setRuleIdx(i => i - 1)}>Previous</Button>}
+            {ruleIdx < rules.length - 1 ? (
+              <Button onClick={() => setRuleIdx(i => i + 1)} data-testid="grammar-next-btn">Next Rule <ChevronRight className="w-4 h-4 ml-1" /></Button>
+            ) : (
+              <Button onClick={() => onComplete(100)} data-testid="grammar-complete-btn">Got it! <ThumbsUp className="w-4 h-4 ml-1" /></Button>
+            )}
+          </div>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+// ═══════ ERROR HUNTER GAME (Grammar) ═══════
+function ErrorHunterGame({ activity, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [score, setScore] = useState(0);
+  const [answered, setAnswered] = useState(false);
+  const items = activity?.items || [];
+  const item = items[idx];
+
+  const handleAnswer = (hasError) => {
+    if (answered) return;
+    setAnswered(true);
+    if (hasError === item.has_error) setScore(s => s + 1);
+  };
+
+  const next = () => {
+    setAnswered(false);
+    if (idx < items.length - 1) setIdx(i => i + 1);
+    else {
+      const pct = Math.round((score / items.length) * 100);
+      const crowns = pct >= 90 ? 3 : pct >= 70 ? 2 : pct >= 50 ? 1 : 0;
+      onComplete(pct, crowns);
     }
   };
-  
-  const calculateScore = () => {
-    let correct = 0;
-    questions.forEach(q => {
-      if (answers[q.question_id]?.toLowerCase() === q.correct_answer.toLowerCase()) {
-        correct++;
-      }
-    });
-    return Math.round((correct / questions.length) * 100);
-  };
-  
-  if (showResults) {
-    const score = calculateScore();
-    const passed = score >= (activity?.pass_threshold || 70);
-    
-    return (
-      <Card className="p-8 text-center max-w-lg mx-auto">
-        <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center ${
-          passed ? 'bg-green-100' : 'bg-red-100'
-        }`}>
-          {passed ? (
-            <CheckCircle className="w-10 h-10 text-green-600" />
-          ) : (
-            <X className="w-10 h-10 text-red-600" />
-          )}
+
+  if (!item) return null;
+
+  return (
+    <div data-testid="error-hunter-game">
+      <div className="flex items-center justify-between mb-4">
+        <Badge className="bg-pink-100 text-pink-700 border-0"><Gamepad2 className="w-3 h-3 mr-1" /> Grammar Game</Badge>
+        <span className="text-sm text-gray-500">{idx + 1} / {items.length}</span>
+      </div>
+      <Progress value={(idx / items.length) * 100} className="mb-6" />
+
+      <Card className="p-8 text-center max-w-xl mx-auto">
+        <h3 className="text-base font-medium text-gray-600 mb-4">Is this sentence correct?</h3>
+        <div className="bg-gray-50 rounded-2xl p-6 mb-6">
+          <p className="text-2xl font-bold text-gray-900">{item.sentence}</p>
         </div>
-        
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">
-          {passed ? 'Great Job!' : 'Keep Practicing'}
-        </h3>
-        
-        <p className="text-4xl font-bold mb-4" style={{ color: passed ? '#16a34a' : '#dc2626' }}>
-          {score}%
+
+        {!answered ? (
+          <div className="flex justify-center gap-4">
+            <Button className="bg-green-600 hover:bg-green-700 px-8" onClick={() => handleAnswer(false)} data-testid="error-correct-btn">
+              <ThumbsUp className="w-5 h-5 mr-2" /> Correct
+            </Button>
+            <Button variant="destructive" className="px-8" onClick={() => handleAnswer(true)} data-testid="error-wrong-btn">
+              <ThumbsDown className="w-5 h-5 mr-2" /> Has Error
+            </Button>
+          </div>
+        ) : (
+          <div>
+            <div className={`p-4 rounded-xl mb-4 ${(item.has_error === (answered && true)) || (!item.has_error && !answered) ? '' : ''} ${
+              ((item.has_error && answered) || (!item.has_error && !answered)) ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+            }`}>
+              {item.has_error ? (
+                <div>
+                  <p className="font-medium mb-1">This sentence has an error!</p>
+                  <p className="text-sm">Correct: <strong>{item.correct_sentence}</strong></p>
+                </div>
+              ) : <p className="font-medium">This sentence is correct!</p>}
+            </div>
+            <Button onClick={next} data-testid="error-next-btn">{idx < items.length - 1 ? 'Next' : 'See Results'} <ChevronRight className="w-4 h-4 ml-1" /></Button>
+          </div>
+        )}
+      </Card>
+    </div>
+  );
+}
+
+// ═══════ LISTENING ACTIVITY ═══════
+function ListeningActivity({ activity, onComplete }) {
+  const [showTranscript, setShowTranscript] = useState(false);
+  const [currentQ, setCurrentQ] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [correct, setCorrect] = useState(0);
+  const [phase, setPhase] = useState('listen'); // listen -> questions
+  const questions = activity?.questions || [];
+  const q = questions[currentQ];
+
+  const speakText = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.85; speechSynthesis.speak(u); };
+
+  const handleAnswer = (answer) => {
+    if (showFeedback) return;
+    setSelectedAnswer(answer);
+    setShowFeedback(true);
+    if (answer === q.correct_answer) setCorrect(c => c + 1);
+  };
+
+  const handleNext = () => {
+    setSelectedAnswer(null); setShowFeedback(false);
+    if (currentQ < questions.length - 1) setCurrentQ(i => i + 1);
+    else onComplete(Math.round((correct / questions.length) * 100));
+  };
+
+  return (
+    <div data-testid="listening-activity">
+      <div className="flex items-center justify-between mb-4">
+        <Badge className="bg-cyan-100 text-cyan-700 border-0"><Headphones className="w-3 h-3 mr-1" /> Listening</Badge>
+      </div>
+
+      {phase === 'listen' && (
+        <Card className="p-8 text-center max-w-xl mx-auto">
+          <div className="w-24 h-24 bg-cyan-100 rounded-full mx-auto mb-6 flex items-center justify-center">
+            <Headphones className="w-12 h-12 text-cyan-600" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Listen carefully</h3>
+          <p className="text-gray-600 mb-6 text-sm">Click the play button to hear the audio. You can listen multiple times.</p>
+          <Button className="bg-cyan-600 hover:bg-cyan-700 mb-4" onClick={() => speakText(activity?.transcript || '')} data-testid="listening-play-btn">
+            <Play className="w-5 h-5 mr-2" /> Play Audio
+          </Button>
+          <div>
+            <button className="text-sm text-gray-500 underline" onClick={() => setShowTranscript(!showTranscript)}>
+              {showTranscript ? 'Hide' : 'Show'} transcript
+            </button>
+            {showTranscript && (
+              <div className="mt-3 bg-gray-50 rounded-xl p-4 text-left">
+                <p className="text-sm text-gray-700">{activity?.transcript}</p>
+              </div>
+            )}
+          </div>
+          {questions.length > 0 && (
+            <Button className="mt-6" onClick={() => setPhase('questions')} data-testid="listening-answer-btn">
+              Answer Questions <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          )}
+          {questions.length === 0 && <Button className="mt-6" onClick={() => onComplete(100)}>Continue</Button>}
+        </Card>
+      )}
+
+      {phase === 'questions' && q && (
+        <Card className="p-6 max-w-xl mx-auto">
+          <button className="text-sm text-blue-600 mb-4 flex items-center gap-1" onClick={() => setPhase('listen')}>
+            <ArrowLeft className="w-3 h-3" /> Listen again
+          </button>
+          <Progress value={((currentQ + 1) / questions.length) * 100} className="mb-5" />
+          <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
+          <div className="space-y-2.5">
+            {(q.options || []).map(option => {
+              const isSelected = selectedAnswer === option;
+              const isCorrectOption = option === q.correct_answer;
+              let cls = 'border-gray-200 hover:border-cyan-300';
+              if (showFeedback) {
+                if (isCorrectOption) cls = 'border-green-500 bg-green-50';
+                else if (isSelected) cls = 'border-red-500 bg-red-50';
+                else cls = 'border-gray-200 opacity-50';
+              }
+              return (
+                <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium ${cls}`}
+                  onClick={() => handleAnswer(option)} disabled={showFeedback}>
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+          {showFeedback && <div className="mt-5 flex justify-end"><Button onClick={handleNext}>{currentQ < questions.length - 1 ? 'Next' : 'Continue'}</Button></div>}
+        </Card>
+      )}
+    </div>
+  );
+}
+
+// ═══════ PRODUCTION (Speaking/Writing) ═══════
+function ProductionActivity({ activity, onComplete }) {
+  const [response, setResponse] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    if (!response.trim()) return;
+    setSubmitted(true);
+  };
+
+  return (
+    <div data-testid="production-activity">
+      <div className="flex items-center justify-between mb-4">
+        <Badge className="bg-rose-100 text-rose-700 border-0">
+          <Mic className="w-3 h-3 mr-1" /> {activity?.production_type === 'writing' ? 'Writing' : 'Speaking'}
+        </Badge>
+      </div>
+
+      <Card className="p-6 max-w-2xl mx-auto">
+        <h3 className="text-lg font-bold text-gray-900 mb-4">{activity?.prompt || 'Practice task'}</h3>
+
+        {activity?.evaluation_criteria?.length > 0 && (
+          <div className="bg-gray-50 rounded-xl p-4 mb-5">
+            <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">What to include</h4>
+            <ul className="space-y-1">
+              {activity.evaluation_criteria.map((c, i) => (
+                <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
+                  <CheckCircle className="w-3.5 h-3.5 text-gray-400 shrink-0" />{c}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {!submitted ? (
+          <div className="space-y-4">
+            <textarea
+              value={response} onChange={e => setResponse(e.target.value)}
+              className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 min-h-[120px] text-sm"
+              placeholder={activity?.production_type === 'writing' ? 'Write your answer here...' : 'Type what you would say...'}
+              data-testid="production-textarea"
+            />
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-gray-400">{response.split(/\s+/).filter(Boolean).length} words</span>
+              <Button onClick={handleSubmit} disabled={!response.trim()} data-testid="production-submit-btn">Submit</Button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="bg-green-50 rounded-xl p-5 mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <h4 className="font-semibold text-green-800">Nice work!</h4>
+              </div>
+              <p className="text-sm text-green-700 mb-3">Your response has been recorded.</p>
+              {activity?.example_response && (
+                <div className="bg-white rounded-lg p-3 border border-green-200">
+                  <h5 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Example response</h5>
+                  <p className="text-sm text-gray-700 italic">"{activity.example_response}"</p>
+                </div>
+              )}
+            </div>
+            <Button onClick={() => onComplete(80)} data-testid="production-continue-btn">Continue</Button>
+          </div>
+        )}
+      </Card>
+    </div>
+  );
+}
+
+// ═══════ EXIT TICKET ═══════
+function ExitTicket({ activity, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [showResults, setShowResults] = useState(false);
+  const questions = activity?.questions || [];
+  const q = questions[idx];
+
+  const handleAnswer = (answer) => {
+    const newAnswers = { ...answers, [q.question_id]: answer };
+    setAnswers(newAnswers);
+    if (idx < questions.length - 1) setTimeout(() => setIdx(i => i + 1), 300);
+    else setShowResults(true);
+  };
+
+  const calcScore = () => {
+    let c = 0;
+    questions.forEach(q => { if (answers[q.question_id]?.toLowerCase() === q.correct_answer.toLowerCase()) c++; });
+    return Math.round((c / questions.length) * 100);
+  };
+
+  if (showResults) {
+    const score = calcScore();
+    const passed = score >= (activity?.pass_threshold || 70);
+    return (
+      <Card className="p-8 text-center max-w-lg mx-auto" data-testid="exit-ticket-results">
+        <div className={`w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center ${passed ? 'bg-green-100' : 'bg-red-100'}`}>
+          {passed ? <CheckCircle className="w-10 h-10 text-green-600" /> : <AlertCircle className="w-10 h-10 text-red-600" />}
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">{passed ? 'Great Job!' : 'Keep Practicing'}</h3>
+        <p className="text-4xl font-bold mb-4" style={{ color: passed ? '#16a34a' : '#dc2626' }}>{score}%</p>
+        <p className="text-gray-600 mb-6 text-sm">
+          {passed ? 'You passed! Moving to the next step.' : `You need ${activity?.pass_threshold || 70}% to pass. Try again!`}
         </p>
-        
-        <p className="text-gray-600 mb-6">
-          {passed 
-            ? 'You passed the exit quiz! Moving on...' 
-            : `You need ${activity?.pass_threshold || 70}% to pass. Review the lesson and try again.`
-          }
-        </p>
-        
-        <Button onClick={() => onComplete(score, passed)}>
-          {passed ? 'Continue' : 'Try Again'}
-        </Button>
+        <Button onClick={() => onComplete(score, passed)} data-testid="exit-ticket-continue-btn">{passed ? 'Continue' : 'Try Again'}</Button>
       </Card>
     );
   }
-  
+
+  if (!q) return null;
+
   return (
-    <div className="max-w-2xl mx-auto">
-      {/* Progress */}
-      <div className="mb-6">
-        <div className="flex justify-between text-sm text-gray-600 mb-2">
-          <span>Question {currentIndex + 1} of {questions.length}</span>
-          <span>{Math.round(((currentIndex) / questions.length) * 100)}%</span>
-        </div>
-        <Progress value={(currentIndex / questions.length) * 100} />
+    <div className="max-w-2xl mx-auto" data-testid="exit-ticket">
+      <div className="flex items-center justify-between mb-4">
+        <Badge className="bg-amber-100 text-amber-700 border-0"><CheckCircle className="w-3 h-3 mr-1" /> Exit Quiz</Badge>
+        <span className="text-sm text-gray-500">{idx + 1} / {questions.length}</span>
       </div>
-      
-      <Card className="p-8">
-        <h3 className="text-xl font-bold text-gray-900 mb-6">
-          {currentQuestion?.question_text}
-        </h3>
-        
-        {currentQuestion?.question_type === 'multiple_choice' && (
-          <div className="space-y-3">
-            {currentQuestion.options?.map((option) => (
-              <button
-                key={option}
-                className={`w-full p-4 rounded-xl text-left border-2 transition-all ${
-                  answers[currentQuestion.question_id] === option 
-                    ? 'border-blue-500 bg-blue-50' 
-                    : 'border-gray-200 hover:border-blue-300'
-                }`}
-                onClick={() => handleAnswer(option)}
-              >
+      <Progress value={(idx / questions.length) * 100} className="mb-6" />
+      <Card className="p-6">
+        <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question_text}</h3>
+        {q.question_type === 'multiple_choice' && (
+          <div className="space-y-2.5">
+            {q.options?.map(option => (
+              <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium ${
+                answers[q.question_id] === option ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:border-blue-300'
+              }`} onClick={() => handleAnswer(option)}>
                 {option}
               </button>
             ))}
           </div>
         )}
-        
-        {currentQuestion?.question_type === 'fill_blank' && (
-          <div className="space-y-4">
-            <input
-              type="text"
-              className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:border-blue-500"
-              placeholder="Type your answer..."
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && e.target.value.trim()) {
-                  handleAnswer(e.target.value.trim());
-                }
-              }}
-              autoFocus
-            />
-            <p className="text-sm text-gray-500">Press Enter to submit</p>
+        {q.question_type === 'fill_blank' && (
+          <div className="space-y-3">
+            <input type="text" className="w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:border-blue-500 text-sm"
+              placeholder="Type your answer..." onKeyDown={e => { if (e.key === 'Enter' && e.target.value.trim()) handleAnswer(e.target.value.trim()); }} autoFocus />
+            <p className="text-xs text-gray-400">Press Enter to submit</p>
+          </div>
+        )}
+        {q.question_type === 'true_false' && (
+          <div className="flex justify-center gap-4">
+            <Button className="px-8" variant={answers[q.question_id] === 'true' ? 'default' : 'outline'} onClick={() => handleAnswer('true')}>True</Button>
+            <Button className="px-8" variant={answers[q.question_id] === 'false' ? 'default' : 'outline'} onClick={() => handleAnswer('false')}>False</Button>
           </div>
         )}
       </Card>
@@ -510,34 +766,7 @@ function ExitTicket({ activity, onComplete }) {
   );
 }
 
-// Placeholder Activity Component
-function PlaceholderActivity({ type, onComplete, onSkip, isSkippable }) {
-  return (
-    <Card className="p-12 text-center max-w-lg mx-auto">
-      <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-        {React.createElement(ACTIVITY_ICONS[type] || Play, { className: 'w-8 h-8 text-gray-400' })}
-      </div>
-      <h3 className="text-xl font-bold text-gray-900 mb-2">
-        {ACTIVITY_LABELS[type] || type}
-      </h3>
-      <p className="text-gray-600 mb-6">
-        This activity module is coming soon.
-      </p>
-      <div className="flex justify-center gap-4">
-        {isSkippable && (
-          <Button variant="outline" onClick={onSkip}>
-            Skip
-          </Button>
-        )}
-        <Button onClick={() => onComplete(100)}>
-          Mark Complete
-        </Button>
-      </div>
-    </Card>
-  );
-}
-
-// Main Lesson Page Component
+// ═══════ MAIN LESSON PAGE ═══════
 export default function UnifiedLessonPage({ user }) {
   const navigate = useNavigate();
   const { lessonId } = useParams();
@@ -546,278 +775,168 @@ export default function UnifiedLessonPage({ user }) {
   const [currentActivityData, setCurrentActivityData] = useState(null);
   const [completedActivities, setCompletedActivities] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showPath, setShowPath] = useState(true);
-  
-  useEffect(() => {
-    loadLesson();
-  }, [lessonId]);
-  
+  const [activityLoading, setActivityLoading] = useState(false);
+
+  useEffect(() => { loadLesson(); }, [lessonId]);
+
   const loadLesson = async () => {
     try {
       setLoading(true);
       const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}`);
       const data = await res.json();
       setLesson(data);
-      
-      // Find first non-skippable activity
-      const firstActivity = data.activity_flow?.find(a => !a.is_skippable || a.duration_minutes > 0);
-      if (firstActivity) {
-        setCurrentActivityType(firstActivity.type);
-        await loadActivityData(firstActivity.type);
-      }
-    } catch (error) {
-      console.error('Error loading lesson:', error);
-    } finally {
-      setLoading(false);
-    }
+      const first = data.activity_flow?.find(a => !a.is_skippable || a.duration_minutes > 0);
+      if (first) { setCurrentActivityType(first.type); await loadActivityData(first.type); }
+    } catch (error) { console.error('Error loading lesson:', error); } finally { setLoading(false); }
   };
-  
+
   const loadActivityData = async (activityType) => {
     try {
+      setActivityLoading(true);
       const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/${activityType}`);
-      if (res.ok) {
-        const data = await res.json();
-        setCurrentActivityData(data);
-      } else {
-        setCurrentActivityData(null);
-      }
-    } catch (error) {
-      console.error('Error loading activity:', error);
-      setCurrentActivityData(null);
-    }
+      setCurrentActivityData(res.ok ? await res.json() : null);
+    } catch { setCurrentActivityData(null); } finally { setActivityLoading(false); }
   };
-  
-  const handleActivityComplete = async (score, crownsOrPassed) => {
-    // Mark activity as complete
+
+  const handleActivityComplete = useCallback(async (score, crownsOrPassed) => {
     if (!completedActivities.includes(currentActivityType)) {
-      setCompletedActivities([...completedActivities, currentActivityType]);
+      setCompletedActivities(prev => [...prev, currentActivityType]);
     }
-    
-    // Save progress to backend
     if (user?.id) {
       try {
         await fetch(`${API_URL}/api/unified/progress/activity`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            user_id: user.id,
-            lesson_id: lessonId,
-            activity_type: currentActivityType,
-            score: score,
-            crowns: typeof crownsOrPassed === 'number' ? crownsOrPassed : null,
-            time_spent_seconds: 0
-          })
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: user.id, lesson_id: lessonId, activity_type: currentActivityType, score, crowns: typeof crownsOrPassed === 'number' ? crownsOrPassed : null, time_spent_seconds: 0 })
         });
-      } catch (error) {
-        console.error('Error saving progress:', error);
-      }
-    }
-    
-    // Move to next activity
-    moveToNextActivity();
-  };
-  
-  const handleActivitySkip = () => {
-    if (!completedActivities.includes(currentActivityType)) {
-      setCompletedActivities([...completedActivities, currentActivityType]);
+      } catch (e) { console.error('Error saving progress:', e); }
     }
     moveToNextActivity();
-  };
-  
-  const moveToNextActivity = () => {
+  }, [currentActivityType, completedActivities, user, lessonId]);
+
+  const handleActivitySkip = useCallback(() => {
+    if (!completedActivities.includes(currentActivityType)) setCompletedActivities(prev => [...prev, currentActivityType]);
+    moveToNextActivity();
+  }, [currentActivityType, completedActivities]);
+
+  const moveToNextActivity = useCallback(() => {
     const activities = lesson?.activity_flow || [];
     const currentIndex = activities.findIndex(a => a.type === currentActivityType);
-    
-    // Find next non-skippable activity
     let nextActivity = null;
     for (let i = currentIndex + 1; i < activities.length; i++) {
       const a = activities[i];
-      if (!a.is_skippable || a.duration_minutes > 0) {
-        nextActivity = a;
-        break;
-      } else {
-        // Auto-skip zero-duration activities
-        if (!completedActivities.includes(a.type)) {
-          setCompletedActivities(prev => [...prev, a.type]);
-        }
-      }
+      if (!a.is_skippable || a.duration_minutes > 0) { nextActivity = a; break; }
+      else { setCompletedActivities(prev => prev.includes(a.type) ? prev : [...prev, a.type]); }
     }
-    
-    if (nextActivity) {
-      setCurrentActivityType(nextActivity.type);
-      loadActivityData(nextActivity.type);
-    } else {
-      // Lesson complete
-      handleLessonComplete();
-    }
-  };
-  
+    if (nextActivity) { setCurrentActivityType(nextActivity.type); loadActivityData(nextActivity.type); }
+    else handleLessonComplete();
+  }, [lesson, currentActivityType]);
+
   const handleLessonComplete = async () => {
     if (user?.id) {
       try {
         await fetch(`${API_URL}/api/unified/progress/lesson`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            user_id: user.id,
-            lesson_id: lessonId
-          })
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: user.id, lesson_id: lessonId })
         });
-      } catch (error) {
-        console.error('Error completing lesson:', error);
-      }
+        toast.success('Lesson completed! Points awarded.');
+      } catch (e) { console.error('Error completing lesson:', e); }
     }
-    
-    // Navigate back to stage page
     navigate(`/unified/stage/${lesson?.stage_id}`);
   };
-  
-  const handleActivityClick = (activity) => {
-    setCurrentActivityType(activity.type);
-    loadActivityData(activity.type);
-  };
-  
+
+  const handleActivityClick = (activity) => { setCurrentActivityType(activity.type); loadActivityData(activity.type); };
+
   const renderActivity = () => {
+    if (activityLoading) return <div className="flex items-center justify-center py-20"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" /></div>;
     const activity = lesson?.activity_flow?.find(a => a.type === currentActivityType);
-    
+
     switch (currentActivityType) {
+      case 'retrieval_warmup':
+        return currentActivityData ? <RetrievalWarmup activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
       case 'vocabulary':
-        return currentActivityData ? (
-          <VocabularyModule 
-            activity={currentActivityData} 
-            onComplete={handleActivityComplete}
-          />
-        ) : (
-          <PlaceholderActivity 
-            type={currentActivityType} 
-            onComplete={handleActivityComplete}
-            onSkip={handleActivitySkip}
-            isSkippable={activity?.is_skippable}
-          />
-        );
-        
+        return currentActivityData ? <VocabularyModule activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
       case 'micro_game_vocab':
-        return currentActivityData ? (
-          <MatchingGame 
-            activity={currentActivityData} 
-            onComplete={handleActivityComplete}
-          />
-        ) : (
-          <PlaceholderActivity 
-            type={currentActivityType} 
-            onComplete={handleActivityComplete}
-            onSkip={handleActivitySkip}
-            isSkippable={activity?.is_skippable}
-          />
-        );
-        
+        return currentActivityData ? <MatchingGame activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+      case 'micro_reading':
+        return currentActivityData ? <MicroReading activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+      case 'grammar_focus':
+        return currentActivityData ? <GrammarFocus activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+      case 'micro_game_grammar':
+        return currentActivityData ? <ErrorHunterGame activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+      case 'listening':
+        return currentActivityData ? <ListeningActivity activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+      case 'production':
+        return currentActivityData ? <ProductionActivity activity={currentActivityData} onComplete={handleActivityComplete} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
       case 'exit_ticket':
-        return currentActivityData ? (
-          <ExitTicket 
-            activity={currentActivityData} 
-            onComplete={(score, passed) => {
-              if (passed) {
-                handleActivityComplete(score);
-              }
-            }}
-          />
-        ) : (
-          <PlaceholderActivity 
-            type={currentActivityType} 
-            onComplete={handleActivityComplete}
-            onSkip={handleActivitySkip}
-            isSkippable={activity?.is_skippable}
-          />
-        );
-        
+        return currentActivityData ? <ExitTicket activity={currentActivityData} onComplete={(score, passed) => { if (passed) handleActivityComplete(score); }} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
       default:
-        return (
-          <PlaceholderActivity 
-            type={currentActivityType} 
-            onComplete={handleActivityComplete}
-            onSkip={handleActivitySkip}
-            isSkippable={activity?.is_skippable}
-          />
-        );
+        return <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
     }
   };
-  
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
-      </div>
-    );
-  }
-  
-  if (!lesson) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Lesson not found</p>
-      </div>
-    );
-  }
-  
+
+  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" /></div>;
+  if (!lesson) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-600">Lesson not found</p></div>;
+
   const totalActivities = lesson.activity_flow?.filter(a => !a.is_skippable || a.duration_minutes > 0).length || 0;
-  const completedCount = completedActivities.length;
-  const progressPercent = Math.round((completedCount / totalActivities) * 100);
-  
+  const progressPercent = Math.round((completedActivities.length / totalActivities) * 100);
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" data-testid="unified-lesson-page">
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => navigate(`/unified/stage/${lesson.stage_id}`)}
-              >
-                <X className="w-5 h-5" />
-              </Button>
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="sm" onClick={() => navigate(`/unified/stage/${lesson.stage_id}`)} data-testid="lesson-back-btn"><X className="w-5 h-5" /></Button>
               <div>
-                <h1 className="font-bold text-gray-900">{lesson.title}</h1>
+                <h1 className="font-bold text-gray-900 text-sm">{lesson.title}</h1>
                 <p className="text-xs text-gray-500">Lesson {lesson.number}</p>
               </div>
             </div>
-            
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Clock className="w-4 h-4" />
-                {lesson.estimated_duration_minutes} min
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-600">
-                <Zap className="w-4 h-4" />
-                {lesson.points_reward} pts
-              </div>
-              <div className="w-32">
-                <Progress value={progressPercent} />
-              </div>
+              <span className="flex items-center gap-1 text-xs text-gray-500"><Clock className="w-3.5 h-3.5" />{lesson.estimated_duration_minutes} min</span>
+              <span className="flex items-center gap-1 text-xs text-gray-500"><Zap className="w-3.5 h-3.5" />{lesson.points_reward} pts</span>
+              <div className="w-28"><Progress value={progressPercent} /></div>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Main content */}
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Lesson path sidebar */}
+
+      {/* Content */}
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-1">
-            <LessonPath
-              activities={lesson.activity_flow || []}
-              currentActivity={currentActivityType}
-              completedActivities={completedActivities}
-              onActivityClick={handleActivityClick}
-            />
+            <LessonPath activities={lesson.activity_flow || []} currentActivity={currentActivityType} completedActivities={completedActivities} onActivityClick={handleActivityClick} />
           </div>
-          
-          {/* Activity content */}
-          <div className="lg:col-span-3">
-            {renderActivity()}
-          </div>
+          <div className="lg:col-span-3">{renderActivity()}</div>
         </div>
       </div>
     </div>
+  );
+}
+
+// ═══════ PLACEHOLDER ═══════
+function PlaceholderActivity({ type, onComplete, onSkip, isSkippable }) {
+  return (
+    <Card className="p-12 text-center max-w-lg mx-auto" data-testid="placeholder-activity">
+      <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+        {React.createElement(ACTIVITY_ICONS[type] || Play, { className: 'w-8 h-8 text-gray-400' })}
+      </div>
+      <h3 className="text-lg font-bold text-gray-900 mb-2">{ACTIVITY_LABELS[type] || type}</h3>
+      <p className="text-gray-500 mb-6 text-sm">This activity module is coming soon.</p>
+      <div className="flex justify-center gap-3">
+        {isSkippable && <Button variant="outline" onClick={onSkip} data-testid="placeholder-skip-btn">Skip</Button>}
+        <Button onClick={() => onComplete(100)} data-testid="placeholder-complete-btn">Mark Complete</Button>
+      </div>
+    </Card>
   );
 }
