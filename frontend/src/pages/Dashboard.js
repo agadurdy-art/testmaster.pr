@@ -473,7 +473,8 @@ export default function Dashboard({ user, onLogout }) {
         {/* Learning Platform CTA */}
         <Card 
           className="p-5 mb-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white border-0 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-          onClick={() => navigate('/learning')}
+          onClick={() => navigate('/unified')}
+          data-testid="unified-course-cta"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -482,13 +483,13 @@ export default function Dashboard({ user, onLogout }) {
               </div>
               <div>
                 <h2 className="text-lg sm:text-xl font-bold text-white mb-1">
-                  {getText('Complete Learning Platform', 'Nền tảng học tập hoàn chỉnh', 'Tam Öğrenme Platformu')}
+                  {getText('Complete Learning Path', 'Lộ trình học tập hoàn chỉnh', 'Tam Öğrenme Yolu')}
                 </h2>
                 <p className="text-white/80 text-sm">
                   {getText(
-                    'Cambridge YLE → CEFR → IELTS 9.0 Pathway',
-                    'Lộ trình Cambridge YLE → CEFR → IELTS 9.0',
-                    'Cambridge YLE → CEFR → IELTS 9.0 Yolu'
+                    'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Mastery',
+                    'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Mastery',
+                    'Pre-A1 → A1 → A2 → B1 → B2 → IELTS Ustalık'
                   )}
                 </p>
               </div>
