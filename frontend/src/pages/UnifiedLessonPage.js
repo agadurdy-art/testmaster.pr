@@ -962,7 +962,10 @@ function ExitTicket({ activity, onComplete, onSkip }) {
     <div className="max-w-2xl mx-auto" data-testid="exit-ticket">
       <div className="flex items-center justify-between mb-4">
         <Badge className="bg-amber-100 text-amber-700 border-0"><CheckCircle className="w-3 h-3 mr-1" /> Exit Quiz</Badge>
-        <span className="text-sm text-gray-500">{idx + 1} / {questions.length}</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-500">{idx + 1} / {questions.length}</span>
+          <SkipButton onSkip={onSkip} />
+        </div>
       </div>
       <Progress value={(idx / questions.length) * 100} className="mb-6" />
       <Card className="p-6">
