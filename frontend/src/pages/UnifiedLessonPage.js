@@ -1086,12 +1086,7 @@ export default function UnifiedLessonPage({ user }) {
   const moveToNextActivity = useCallback(() => {
     const activities = lesson?.activity_flow || [];
     const currentIndex = activities.findIndex(a => a.type === currentActivityType);
-    let nextActivity = null;
-    for (let i = currentIndex + 1; i < activities.length; i++) {
-      const a = activities[i];
-      if (!a.is_skippable || a.duration_minutes > 0) { nextActivity = a; break; }
-      else { setCompletedActivities(prev => prev.includes(a.type) ? prev : [...prev, a.type]); }
-    }
+    const nextActivity = activities[currentIndex + 1];
     if (nextActivity) { setCurrentActivityType(nextActivity.type); loadActivityData(nextActivity.type); }
     else handleLessonComplete();
   }, [lesson, currentActivityType]);
