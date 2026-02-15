@@ -20,6 +20,7 @@ A "Mastery-Based" and "Retention-Driven" English learning platform named "Testma
 - [x] **FIXED (Feb 15)**: Reading/Grammar/Listening/Production content display (field name mapping)
 - [x] **FIXED (Feb 15)**: Multi-answer evaluation support (Array correct_answer)
 - [x] **FIXED (Feb 15)**: All units/lessons/activities unlocked for testing
+- [x] **FIXED (Feb 15)**: Unique content per lesson (V3 seed) - each of 4 lessons has different reading, listening, grammar, vocab, warmup
 
 ## Key Files
 - `/app/frontend/src/pages/UnifiedLessonPage.js` - All 10 activity components
