@@ -979,6 +979,8 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
 function ProductionActivity({ activity, onComplete, onSkip }) {
   const [response, setResponse] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const criteria = activity?.evaluation_criteria || activity?.rubric || [];
+  const exampleResponse = activity?.example_response || activity?.example_answer || '';
 
   const handleSubmit = () => {
     if (!response.trim()) return;
@@ -997,11 +999,11 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
       <Card className="p-6 max-w-2xl mx-auto">
         <h3 className="text-lg font-bold text-gray-900 mb-4">{activity?.prompt || 'Practice task'}</h3>
 
-        {activity?.evaluation_criteria?.length > 0 && (
+        {criteria.length > 0 && (
           <div className="bg-gray-50 rounded-xl p-4 mb-5">
             <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">What to include</h4>
             <ul className="space-y-1">
-              {activity.evaluation_criteria.map((c, i) => (
+              {criteria.map((c, i) => (
                 <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
                   <CheckCircle className="w-3.5 h-3.5 text-gray-400 shrink-0" />{c}
                 </li>
