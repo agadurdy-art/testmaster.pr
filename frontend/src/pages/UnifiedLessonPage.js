@@ -1335,6 +1335,7 @@ export default function UnifiedLessonPage({ user }) {
   const [lessonSummaryData, setLessonSummaryData] = useState({ words: [], grammarRules: [] });
   const [loading, setLoading] = useState(true);
   const [activityLoading, setActivityLoading] = useState(false);
+  const [showRoadmap, setShowRoadmap] = useState(true);
 
   useEffect(() => { loadLesson(); }, [lessonId]);
 
