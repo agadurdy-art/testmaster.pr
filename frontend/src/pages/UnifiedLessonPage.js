@@ -712,7 +712,7 @@ function GrammarGame({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ LISTENING ACTIVITY ═══════
-function ListeningActivity({ activity, onComplete }) {
+function ListeningActivity({ activity, onComplete, onSkip }) {
   const [showTranscript, setShowTranscript] = useState(false);
   const [currentQ, setCurrentQ] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
