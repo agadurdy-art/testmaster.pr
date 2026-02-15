@@ -1109,12 +1109,15 @@ function ExitTicket({ activity, onComplete, onSkip }) {
         <div className="text-left mb-6 space-y-2">
           {questions.map((q, i) => {
             const userAnswer = answers[q.question_id] || '';
-            const isCorrect = userAnswer.toLowerCase().trim() === q.correct_answer.toLowerCase().trim();
+            const isCorrect = Array.isArray(q.correct_answer)
+              ? q.correct_answer.some(a => a.toLowerCase().trim() === userAnswer.toLowerCase().trim())
+              : userAnswer.toLowerCase().trim() === q.correct_answer.toLowerCase().trim();
+            const displayCorrect = Array.isArray(q.correct_answer) ? q.correct_answer.join(' / ') : q.correct_answer;
             return (
               <div key={q.question_id} className={`p-3 rounded-lg text-sm ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
                 <p className="font-medium text-gray-800">{i + 1}. {q.question_text}</p>
                 <p className={isCorrect ? 'text-green-700' : 'text-red-700'}>
-                  Your answer: {userAnswer} {isCorrect ? <CheckCircle className="inline w-4 h-4" /> : <span> (Correct: {q.correct_answer})</span>}
+                  Your answer: {userAnswer} {isCorrect ? <CheckCircle className="inline w-4 h-4" /> : <span> (Correct: {displayCorrect})</span>}
                 </p>
               </div>
             );
