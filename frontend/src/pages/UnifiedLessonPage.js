@@ -879,21 +879,32 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
   const [correct, setCorrect] = useState(0);
   const [phase, setPhase] = useState('listen'); // listen -> questions
   const questions = activity?.questions || [];
+  const transcript = activity?.transcript || activity?.audio_script || '';
   const q = questions[currentQ];
 
   const speakText = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.85; speechSynthesis.speak(u); };
+
+  const checkAnswer = (answer, correctAnswer) => {
+    if (Array.isArray(correctAnswer)) return correctAnswer.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
+    return answer.toLowerCase().trim() === correctAnswer.toLowerCase().trim();
+  };
 
   const handleAnswer = (answer) => {
     if (showFeedback) return;
     setSelectedAnswer(answer);
     setShowFeedback(true);
-    if (answer === q.correct_answer) setCorrect(c => c + 1);
+    if (checkAnswer(answer, q.correct_answer)) setCorrect(c => c + 1);
   };
 
   const handleNext = () => {
     setSelectedAnswer(null); setShowFeedback(false);
     if (currentQ < questions.length - 1) setCurrentQ(i => i + 1);
     else onComplete(Math.round((correct / questions.length) * 100));
+  };
+
+  const isCorrectOption = (option) => {
+    if (Array.isArray(q.correct_answer)) return q.correct_answer.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
+    return option === q.correct_answer;
   };
 
   return (
@@ -910,7 +921,7 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-4">Listen carefully</h3>
           <p className="text-gray-600 mb-6 text-sm">Click the play button to hear the audio. You can listen multiple times.</p>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 mb-4" onClick={() => speakText(activity?.transcript || '')} data-testid="listening-play-btn">
+          <Button className="bg-cyan-600 hover:bg-cyan-700 mb-4" onClick={() => speakText(transcript)} data-testid="listening-play-btn">
             <Play className="w-5 h-5 mr-2" /> Play Audio
           </Button>
           <div>
@@ -919,7 +930,7 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
             </button>
             {showTranscript && (
               <div className="mt-3 bg-gray-50 rounded-xl p-4 text-left">
-                <p className="text-sm text-gray-700">{activity?.transcript}</p>
+                <p className="text-sm text-gray-700">{transcript}</p>
               </div>
             )}
           </div>
@@ -942,10 +953,10 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           <div className="space-y-2.5">
             {(q.options || []).map(option => {
               const isSelected = selectedAnswer === option;
-              const isCorrectOption = option === q.correct_answer;
+              const optionIsCorrect = isCorrectOption(option);
               let cls = 'border-gray-200 hover:border-cyan-300';
               if (showFeedback) {
-                if (isCorrectOption) cls = 'border-green-500 bg-green-50';
+                if (optionIsCorrect) cls = 'border-green-500 bg-green-50';
                 else if (isSelected) cls = 'border-red-500 bg-red-50';
                 else cls = 'border-gray-200 opacity-50';
               }
