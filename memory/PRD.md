@@ -47,16 +47,24 @@ Transform the IELTS test preparation application from a fragmented multi-course 
 - Dashboard "Complete Learning Path" CTA now routes to `/unified` instead of old `/learning`
 - Mobile menu includes "Learning Path" shortcut
 
+### Bug Fixes (Feb 15, 2026)
+- **ErrorHunterGame**: Fixed feedback display - now tracks `userChoice` instead of boolean `answered` for correct visual feedback
+- **ExitTicket**: Fixed stuck-on-failure bug - added `handleRetry` to reset quiz state, shows per-question feedback with correct/incorrect markers, results page shows full answer review
+- **MatchingGame**: Fixed stale closure - uses functional state updater for matchedPairs, added visual feedback (green/red) for match attempts
+- **auto_review**: Added proper "Lesson Complete!" card instead of generic placeholder
+
 ## P1 - High Priority (Next)
-- Integrate image generation for vocabulary (OpenAI GPT-4o)
-- Build first Micro-Game components
-- Add more review items to Daily Habit via spaced repetition queue
+- UI/UX overhaul - iSmart/Cambridge-style design
+- Vocabulary "Record and Check" feature (OpenAI Whisper integration)
+- Listening section audio improvement (ElevenLabs v3 integration)
+- Refactor LessonPage.js into separate component files
 
 ## P2 - Medium Priority
 - Build Stages 2-8 content
 - Adaptive UI that changes with user level
 - Certification Gate between stages
 - Booster Mode for weak areas
+- Daily Habit Mode backend logic
 
 ## P3 - Future
 - Teacher Control Panel with analytics
