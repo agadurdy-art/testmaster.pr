@@ -62,6 +62,13 @@ Transform the IELTS test preparation application from a fragmented multi-course 
   - Questions from all 3 types are shuffled and mixed
 - **Grammar game data for all 4 lessons** (12-13 questions each)
 
+### UI/UX Overhaul & Vocabulary Record (Feb 15, 2026)
+- **Stage Theming**: Dynamic color themes per stage (Stage 1=amber/orange, Stage 2=emerald, Stage 3=blue, Stage 4=violet, Stage 5=rose). Applied to lesson background, sidebar, badges, buttons
+- **Lesson Path redesign**: iSmart-inspired visual path with SVG lines, themed colors, animated current step indicator
+- **Vocabulary module redesign**: iSmart-style layout with emoji word cards, IPA pronunciation, audio buttons, example sentences
+- **Vocabulary Record & Check**: OpenAI Whisper integration for pronunciation checking. Record button, transcription comparison, similarity score, feedback
+- **Backend endpoint**: POST /api/unified/pronunciation/check - accepts audio file + target word, returns transcription, similarity score, and feedback
+
 ## P1 - High Priority (Next)
 - UI/UX overhaul - iSmart/Cambridge-style design
 - Vocabulary "Record and Check" feature (OpenAI Whisper integration)
