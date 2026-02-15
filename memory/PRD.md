@@ -53,6 +53,15 @@ Transform the IELTS test preparation application from a fragmented multi-course 
 - **MatchingGame**: Fixed stale closure - uses functional state updater for matchedPairs, added visual feedback (green/red) for match attempts
 - **auto_review**: Added proper "Lesson Complete!" card instead of generic placeholder
 
+### New Features (Feb 15, 2026)
+- **Skip Button on All Steps**: Every activity step now has a Skip button (top-right). No more auto-skipping - all 10 steps visible in sidebar
+- **Rich Grammar Game (3 game types)**: Replaced basic Error Hunter with multi-type grammar game:
+  - Error Hunter: "Is this sentence correct?" (Correct/Has Error)
+  - Word Order: Build sentence from shuffled words (drag-to-build)
+  - Fill-in-the-Blank: Choose correct word for blank in sentence
+  - Questions from all 3 types are shuffled and mixed
+- **Grammar game data for all 4 lessons** (12-13 questions each)
+
 ## P1 - High Priority (Next)
 - UI/UX overhaul - iSmart/Cambridge-style design
 - Vocabulary "Record and Check" feature (OpenAI Whisper integration)
