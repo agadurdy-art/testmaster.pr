@@ -1566,6 +1566,122 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
     'micro_game_grammar': 'Grammar Game', 'listening': 'Listening', 'production': 'Speaking', 'exit_ticket': 'Exit Quiz'
   };
 
+  const generatePDF = async () => {
+    const { jsPDF } = await import('jspdf');
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const pw = 210; // page width
+    let y = 15;
+
+    // Header
+    doc.setFillColor(245, 158, 11);
+    doc.rect(0, 0, pw, 30, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Testmaster Worksheet', pw / 2, 12, { align: 'center' });
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${lesson?.title || 'Lesson'} - Lesson ${lesson?.number || ''}`, pw / 2, 22, { align: 'center' });
+    y = 40;
+
+    doc.setTextColor(0, 0, 0);
+
+    // Section: Vocabulary Review
+    if (words.length > 0) {
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Vocabulary Review', 15, y);
+      y += 8;
+
+      // Word list with definitions
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      words.forEach((w) => {
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${w.word}`, 18, y);
+        doc.setFont('helvetica', 'normal');
+        doc.text(` - ${w.definition || ''}`, 18 + doc.getTextWidth(`${w.word}`) + 2, y);
+        y += 6;
+      });
+      y += 4;
+
+      // Activity 1: Match the word to its definition
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Activity 1: Match the Word', 15, y);
+      y += 7;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Draw a line from each word to its meaning:', 18, y);
+      y += 8;
+      const shuffledDefs = [...words].sort(() => Math.random() - 0.5);
+      words.forEach((w, i) => {
+        doc.text(`${w.word}`, 22, y);
+        doc.text(`${shuffledDefs[i]?.definition || ''}`, 120, y);
+        y += 7;
+      });
+      y += 6;
+
+      // Activity 2: Fill in the blank
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Activity 2: Fill in the Blank', 15, y);
+      y += 7;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      words.forEach((w) => {
+        const sentence = w.example_sentence || `This is a ${w.word}.`;
+        const blanked = sentence.replace(new RegExp(w.word, 'i'), '________');
+        doc.text(`${blanked}`, 18, y);
+        y += 7;
+      });
+      y += 4;
+    }
+
+    // Section: Grammar Practice
+    if (grammarRules.length > 0 && y < 240) {
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Grammar Practice', 15, y);
+      y += 8;
+
+      grammarRules.forEach((r) => {
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`Pattern: ${r.pattern}`, 18, y);
+        y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.text(`${r.explanation || r.rule_text || ''}`, 18, y, { maxWidth: 170 });
+        y += 8;
+      });
+      y += 4;
+
+      // Activity 3: Write sentences
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Activity 3: Write Your Own Sentences', 15, y);
+      y += 7;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Use the grammar patterns above to write 3 sentences:', 18, y);
+      y += 8;
+      for (let i = 1; i <= 3; i++) {
+        doc.text(`${i}. _______________________________________________`, 18, y);
+        y += 10;
+      }
+    }
+
+    // Footer
+    const pageH = 297;
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.text('Testmaster - Practice makes perfect!', pw / 2, pageH - 10, { align: 'center' });
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, pw / 2, pageH - 6, { align: 'center' });
+
+    doc.save(`Testmaster_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}_L${lesson?.number || ''}.pdf`);
+    toast.success('Worksheet downloaded!');
+  };
+
   return (
     <div className="max-w-2xl mx-auto space-y-5" data-testid="lesson-summary">
       {/* Header */}
