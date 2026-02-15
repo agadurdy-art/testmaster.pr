@@ -16,12 +16,12 @@ EMOJI_MAP = {
 async def update():
     client = AsyncIOMotorClient(os.environ.get('MONGO_URL'))
     db = client[os.environ.get('DB_NAME', 'ielts_ace')]
-    vocabs = await db.unified_vocab_activities.find({}).to_list(20)
+    vocabs = await db.unified_vocabulary_activities.find({}).to_list(20)
     for vocab in vocabs:
         for w in vocab.get('words', []):
             word_lower = w['word'].lower()
             w['image_emoji'] = EMOJI_MAP.get(word_lower, '📖')
-        await db.unified_vocab_activities.update_one(
+        await db.unified_vocabulary_activities.update_one(
             {'_id': vocab['_id']},
             {'$set': {'words': vocab['words']}}
         )
