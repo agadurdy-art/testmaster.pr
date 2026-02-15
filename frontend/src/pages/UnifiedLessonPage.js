@@ -1265,6 +1265,9 @@ export default function UnifiedLessonPage({ user }) {
     if (!completedActivities.includes(currentActivityType)) {
       setCompletedActivities(prev => [...prev, currentActivityType]);
     }
+    if (typeof score === 'number') {
+      setActivityScores(prev => ({ ...prev, [currentActivityType]: score }));
+    }
     if (user?.id) {
       try {
         await fetch(`${API_URL}/api/unified/progress/activity`, {
