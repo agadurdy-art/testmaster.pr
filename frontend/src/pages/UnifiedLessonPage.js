@@ -24,6 +24,101 @@ const STAGE_THEMES = {
 };
 const getTheme = (stageId) => STAGE_THEMES[stageId] || STAGE_THEMES.stage_1;
 
+// Grouped roadmap steps for the visual roadmap
+const ROADMAP_STEPS = [
+  { key: 'warmup_vocab', label: 'Vocabulary', icon: BookOpen, activities: ['retrieval_warmup', 'vocabulary'], color: '#3B82F6' },
+  { key: 'vocab_game', label: 'Practice', icon: Gamepad2, activities: ['micro_game_vocab'], color: '#8B5CF6' },
+  { key: 'reading_grammar', label: 'Lesson', icon: FileText, activities: ['micro_reading', 'grammar_focus'], color: '#10B981' },
+  { key: 'grammar_game', label: 'Practice', icon: Gamepad2, activities: ['micro_game_grammar'], color: '#F59E0B' },
+  { key: 'listen_speak', label: 'Skills', icon: Headphones, activities: ['listening', 'production'], color: '#06B6D4' },
+  { key: 'exit_review', label: 'Review', icon: Trophy, activities: ['exit_ticket', 'auto_review'], color: '#EF4444' },
+];
+
+// ═══════ LESSON ROADMAP (Winding Path) ═══════
+function LessonRoadmap({ lesson, completedActivities, onStartActivity, onStartLesson, theme }) {
+  const t = theme || STAGE_THEMES.stage_1;
+
+  const isStepCompleted = (step) => step.activities.every(a => completedActivities.includes(a));
+  const isStepPartial = (step) => step.activities.some(a => completedActivities.includes(a));
+
+  return (
+    <div className="min-h-[70vh] flex flex-col items-center justify-center px-4" data-testid="lesson-roadmap">
+      {/* Title */}
+      <div className="text-center mb-10">
+        <Badge className="mb-3" style={{ background: t.accentLight, color: t.accent }}>
+          <Map className="w-3 h-3 mr-1" /> Lesson Roadmap
+        </Badge>
+        <h2 className="text-2xl font-bold text-gray-900">{lesson?.title}</h2>
+        <p className="text-sm text-gray-500 mt-1">Lesson {lesson?.number} — Choose where to begin</p>
+      </div>
+
+      {/* Winding Path */}
+      <div className="relative w-full max-w-xl">
+        {ROADMAP_STEPS.map((step, index) => {
+          const completed = isStepCompleted(step);
+          const partial = isStepPartial(step);
+          const Icon = step.icon;
+          const isLeft = index % 2 === 0;
+          const firstActivity = step.activities[0];
+
+          return (
+            <div key={step.key} className="relative" style={{ marginBottom: index < ROADMAP_STEPS.length - 1 ? '8px' : 0 }}>
+              {/* Connector line */}
+              {index < ROADMAP_STEPS.length - 1 && (
+                <div className={`absolute ${isLeft ? 'left-1/4' : 'right-1/4'} w-px h-10 bottom-[-36px] z-0`}
+                  style={{ background: completed ? t.accent : '#E5E7EB' }} />
+              )}
+              {/* Curved connector between left/right */}
+              {index < ROADMAP_STEPS.length - 1 && (
+                <svg className="absolute w-full" style={{ height: '40px', bottom: '-36px', zIndex: 0 }} viewBox="0 0 400 40" preserveAspectRatio="none">
+                  <path
+                    d={isLeft ? 'M 100 0 Q 200 40 300 40' : 'M 300 0 Q 200 40 100 40'}
+                    fill="none"
+                    stroke={completed ? t.accent : '#E5E7EB'}
+                    strokeWidth="2"
+                    strokeDasharray={completed ? '0' : '6 4'}
+                  />
+                </svg>
+              )}
+
+              {/* Step node */}
+              <div className={`flex items-center gap-4 ${isLeft ? 'justify-start pl-4' : 'justify-end pr-4'}`}>
+                {!isLeft && <span className="text-sm font-semibold text-gray-700">{step.label}</span>}
+                <button
+                  onClick={() => onStartActivity(firstActivity)}
+                  className={`relative w-16 h-16 rounded-2xl flex items-center justify-center transition-all hover:scale-110 shadow-lg ${
+                    completed ? 'text-white' : partial ? 'text-white opacity-90' : 'bg-white border-2 border-gray-200 text-gray-400 hover:border-gray-300'
+                  }`}
+                  style={completed || partial ? { backgroundColor: step.color } : {}}
+                  data-testid={`roadmap-step-${step.key}`}
+                >
+                  <Icon className="w-7 h-7" />
+                  {completed && (
+                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                      <CheckCircle className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </button>
+                {isLeft && <span className="text-sm font-semibold text-gray-700">{step.label}</span>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Start button */}
+      <Button
+        className="mt-10 px-8 py-3 text-base shadow-lg"
+        style={{ backgroundColor: t.accent }}
+        onClick={onStartLesson}
+        data-testid="roadmap-start-btn"
+      >
+        <Play className="w-5 h-5 mr-2" /> Start Lesson
+      </Button>
+    </div>
+  );
+}
+
 const ACTIVITY_ICONS = {
   'retrieval_warmup': RefreshCw, 'vocabulary': BookOpen, 'micro_game_vocab': Gamepad2,
   'micro_reading': FileText, 'grammar_focus': Edit3, 'micro_game_grammar': Gamepad2,
