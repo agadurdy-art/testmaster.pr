@@ -186,7 +186,10 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
     <div data-testid="vocabulary-module">
       <div className="flex items-center justify-between mb-4">
         <Badge className="bg-blue-100 text-blue-700 border-0"><BookOpen className="w-3 h-3 mr-1" /> Vocabulary</Badge>
-        <span className="text-sm text-gray-500">Word {idx + 1} of {words.length}</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-500">Word {idx + 1} of {words.length}</span>
+          <SkipButton onSkip={onSkip} />
+        </div>
       </div>
       <Progress value={(idx / words.length) * 100} className="mb-6" />
 
