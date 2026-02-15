@@ -1117,32 +1117,32 @@ export default function UnifiedLessonPage({ user }) {
 
     switch (currentActivityType) {
       case 'retrieval_warmup':
-        return currentActivityData ? <RetrievalWarmup activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <RetrievalWarmup activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'vocabulary':
-        return currentActivityData ? <VocabularyModule activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <VocabularyModule activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'micro_game_vocab':
-        return currentActivityData ? <MatchingGame activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <MatchingGame activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'micro_reading':
-        return currentActivityData ? <MicroReading activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <MicroReading activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'grammar_focus':
-        return currentActivityData ? <GrammarFocus activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <GrammarFocus activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'micro_game_grammar':
-        return currentActivityData ? <ErrorHunterGame activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <GrammarGame activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'listening':
-        return currentActivityData ? <ListeningActivity activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <ListeningActivity activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'production':
-        return currentActivityData ? <ProductionActivity activity={currentActivityData} onComplete={handleActivityComplete} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <ProductionActivity activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'exit_ticket':
-        return currentActivityData ? <ExitTicket activity={currentActivityData} onComplete={(score) => handleActivityComplete(score)} /> :
-          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+        return currentActivityData ? <ExitTicket activity={currentActivityData} onComplete={(score) => handleActivityComplete(score)} onSkip={handleActivitySkip} /> :
+          <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'auto_review':
         return (
           <Card className="p-12 text-center max-w-lg mx-auto" data-testid="auto-review-complete">
