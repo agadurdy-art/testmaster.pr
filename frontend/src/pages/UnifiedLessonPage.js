@@ -877,7 +877,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ EXIT TICKET ═══════
-function ExitTicket({ activity, onComplete }) {
+function ExitTicket({ activity, onComplete, onSkip }) {
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
