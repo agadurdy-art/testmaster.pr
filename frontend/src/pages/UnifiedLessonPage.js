@@ -410,7 +410,7 @@ function MicroReading({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ GRAMMAR FOCUS ═══════
-function GrammarFocus({ activity, onComplete }) {
+function GrammarFocus({ activity, onComplete, onSkip }) {
   const [ruleIdx, setRuleIdx] = useState(0);
   const rules = activity?.rules || [];
   const rule = rules[ruleIdx];
