@@ -1033,10 +1033,10 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
                 <h4 className="font-semibold text-green-800">Nice work!</h4>
               </div>
               <p className="text-sm text-green-700 mb-3">Your response has been recorded.</p>
-              {activity?.example_response && (
+              {exampleResponse && (
                 <div className="bg-white rounded-lg p-3 border border-green-200">
                   <h5 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Example response</h5>
-                  <p className="text-sm text-gray-700 italic">"{activity.example_response}"</p>
+                  <p className="text-sm text-gray-700 italic">"{exampleResponse}"</p>
                 </div>
               )}
             </div>
