@@ -36,7 +36,6 @@ function LessonPath({ activities, currentActivity, completedActivities, onActivi
           const isCompleted = completedActivities.includes(activity.type);
           const isCurrent = currentActivity === activity.type;
           const isAccessible = index === 0 || completedActivities.includes(activities[index - 1]?.type);
-          if (activity.duration_minutes === 0 && activity.is_skippable) return null;
 
           return (
             <div key={activity.activity_id} className="relative" data-testid={`activity-step-${activity.type}`}>
