@@ -144,7 +144,7 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
         <div className="space-y-3">
           {q.options?.map((option) => {
             const isSelected = selectedAnswer === option;
-            const isCorrectOption = option === q.correct_answer;
+            const isCorrectOption = Array.isArray(q.correct_answer) ? q.correct_answer.includes(option) : option === q.correct_answer;
             let cls = 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/30';
             if (showFeedback) {
               if (isCorrectOption) cls = 'border-green-500 bg-green-50 text-green-800';
