@@ -821,6 +821,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
         <Badge className="bg-rose-100 text-rose-700 border-0">
           <Mic className="w-3 h-3 mr-1" /> {activity?.production_type === 'writing' ? 'Writing' : 'Speaking'}
         </Badge>
+        <SkipButton onSkip={onSkip} />
       </div>
 
       <Card className="p-6 max-w-2xl mx-auto">
