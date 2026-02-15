@@ -1075,7 +1075,14 @@ function ExitTicket({ activity, onComplete, onSkip }) {
 
   const calcScore = () => {
     let c = 0;
-    questions.forEach(q => { if (answers[q.question_id]?.toLowerCase().trim() === q.correct_answer.toLowerCase().trim()) c++; });
+    questions.forEach(q => {
+      const userAns = answers[q.question_id]?.toLowerCase().trim();
+      if (Array.isArray(q.correct_answer)) {
+        if (q.correct_answer.some(a => a.toLowerCase().trim() === userAns)) c++;
+      } else {
+        if (userAns === q.correct_answer.toLowerCase().trim()) c++;
+      }
+    });
     return Math.round((c / questions.length) * 100);
   };
 
