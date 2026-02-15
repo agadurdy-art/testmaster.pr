@@ -730,7 +730,7 @@ function GrammarGame({ activity, onComplete, onSkip }) {
   const handleFillBlank = (option) => {
     if (showFeedback) return;
     setSelectedOption(option);
-    const correct = option === item.correct_answer;
+    const correct = Array.isArray(item.correct_answer) ? item.correct_answer.includes(option) : option === item.correct_answer;
     setIsCorrect(correct);
     if (correct) setScore(s => s + 1);
     setShowFeedback(true);
