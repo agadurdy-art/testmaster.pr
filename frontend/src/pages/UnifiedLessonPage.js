@@ -1313,11 +1313,12 @@ export default function UnifiedLessonPage({ user }) {
 
   const totalActivities = lesson.activity_flow?.length || 0;
   const progressPercent = Math.round((completedActivities.length / totalActivities) * 100);
+  const theme = getTheme(lesson.stage_id);
 
   return (
-    <div className="min-h-screen bg-gray-50" data-testid="unified-lesson-page">
+    <div className={`min-h-screen bg-gradient-to-b ${theme.bg}`} data-testid="unified-lesson-page">
       {/* Header */}
-      <div className="bg-white border-b sticky top-0 z-40">
+      <div className="bg-white/90 backdrop-blur-sm border-b sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -1329,7 +1330,10 @@ export default function UnifiedLessonPage({ user }) {
             </div>
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1 text-xs text-gray-500"><Clock className="w-3.5 h-3.5" />{lesson.estimated_duration_minutes} min</span>
-              <span className="flex items-center gap-1 text-xs text-gray-500"><Zap className="w-3.5 h-3.5" />{lesson.points_reward} pts</span>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full" style={{ background: theme.accentLight }}>
+                <Star className="w-3.5 h-3.5" style={{ color: theme.accent }} />
+                <span className="text-xs font-semibold" style={{ color: theme.accent }}>{lesson.points_reward} pts</span>
+              </div>
               <div className="w-28"><Progress value={progressPercent} /></div>
             </div>
           </div>
@@ -1340,7 +1344,7 @@ export default function UnifiedLessonPage({ user }) {
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-1">
-            <LessonPath activities={lesson.activity_flow || []} currentActivity={currentActivityType} completedActivities={completedActivities} onActivityClick={handleActivityClick} />
+            <LessonPath activities={lesson.activity_flow || []} currentActivity={currentActivityType} completedActivities={completedActivities} onActivityClick={handleActivityClick} theme={theme} />
           </div>
           <div className="lg:col-span-3">{renderActivity()}</div>
         </div>
