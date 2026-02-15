@@ -950,7 +950,7 @@ export default function UnifiedLessonPage({ user }) {
         return currentActivityData ? <ProductionActivity activity={currentActivityData} onComplete={handleActivityComplete} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
       case 'exit_ticket':
-        return currentActivityData ? <ExitTicket activity={currentActivityData} onComplete={(score, passed) => { if (passed) handleActivityComplete(score); }} /> :
+        return currentActivityData ? <ExitTicket activity={currentActivityData} onComplete={(score) => handleActivityComplete(score)} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
       default:
         return <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
