@@ -74,8 +74,17 @@ function LessonPath({ activities, currentActivity, completedActivities, onActivi
   );
 }
 
+// ═══════ SKIP BUTTON ═══════
+function SkipButton({ onSkip, label = 'Skip' }) {
+  return (
+    <button onClick={onSkip} className="text-xs text-gray-400 hover:text-gray-600 transition-colors flex items-center gap-1" data-testid="activity-skip-btn">
+      {label} <ChevronRight className="w-3 h-3" />
+    </button>
+  );
+}
+
 // ═══════ RETRIEVAL WARMUP ═══════
-function RetrievalWarmup({ activity, onComplete }) {
+function RetrievalWarmup({ activity, onComplete, onSkip }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
