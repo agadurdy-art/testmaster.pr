@@ -12,7 +12,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Unit card component
 function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
-  const isUnlocked = unit.number === 1 || checkUnitUnlocked(unit, userProgress);
+  const isUnlocked = true; // All units unlocked for testing
   const completedLessons = lessons.filter(l => 
     userProgress?.lesson_progress?.[l.lesson_id]?.completed
   ).length;
