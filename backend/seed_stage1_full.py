@@ -781,7 +781,9 @@ def make_warmup_activity(unit, lesson_num):
             "question_text": f"What does '{w['definition'].lower()}' mean?",
             "correct_answer": w["word"],
             "options": options[:4],
-            "question_type": "multiple_choice"
+            "question_type": "multiple_choice",
+            "image_emoji": w.get("image_emoji", ""),
+            "hint_word": w["word"]
         })
     return {
         "activity_id": f"warmup_s1u{un:02d}l{lesson_num:02d}",
