@@ -847,7 +847,10 @@ function GrammarGame({ activity, onComplete, onSkip }) {
           <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
             {(item.options || []).map(option => {
               const isSelected = selectedOption === option;
-              const isCorrectOption = Array.isArray(item.correct_answer) ? item.correct_answer.includes(option) : option === item.correct_answer;
+              const optLower = option.toLowerCase().trim();
+              const isCorrectOption = Array.isArray(item.correct_answer)
+                ? item.correct_answer.some(a => a.toLowerCase().trim() === optLower)
+                : optLower === (item.correct_answer || '').toLowerCase().trim();
               let cls = 'border-gray-200 hover:border-amber-400 hover:bg-amber-50';
               if (showFeedback) {
                 if (isCorrectOption) cls = 'border-green-500 bg-green-50 text-green-800';
