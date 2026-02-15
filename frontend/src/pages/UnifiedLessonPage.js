@@ -474,30 +474,42 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const [showFeedback, setShowFeedback] = useState(false);
   const [correct, setCorrect] = useState(0);
   const [showPassage, setShowPassage] = useState(true);
-  const questions = activity?.comprehension_questions || [];
+  const questions = activity?.comprehension_questions || activity?.questions || [];
+  const passageText = activity?.passage_text || activity?.passage || '';
   const q = questions[currentQ];
 
   const highlightText = (text) => {
-    if (!activity?.highlighted_words?.length) return text;
+    const words = activity?.highlighted_words;
+    if (!words?.length) return text;
     let result = text;
-    activity.highlighted_words.forEach(word => {
+    words.forEach(word => {
       const regex = new RegExp(`\\b(${word})\\b`, 'gi');
       result = result.replace(regex, `<mark class="bg-yellow-200 px-0.5 rounded">$1</mark>`);
     });
     return result;
   };
 
+  const checkAnswer = (answer, correctAnswer) => {
+    if (Array.isArray(correctAnswer)) return correctAnswer.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
+    return answer.toLowerCase().trim() === correctAnswer.toLowerCase().trim();
+  };
+
   const handleAnswer = (answer) => {
     if (showFeedback) return;
     setSelectedAnswer(answer);
     setShowFeedback(true);
-    if (answer === q.correct_answer) setCorrect(c => c + 1);
+    if (checkAnswer(answer, q.correct_answer)) setCorrect(c => c + 1);
   };
 
   const handleNext = () => {
     setSelectedAnswer(null); setShowFeedback(false);
     if (currentQ < questions.length - 1) { setCurrentQ(i => i + 1); }
     else onComplete(Math.round((correct / questions.length) * 100));
+  };
+
+  const isCorrectOption = (option) => {
+    if (Array.isArray(q.correct_answer)) return q.correct_answer.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
+    return option === q.correct_answer;
   };
 
   return (
@@ -514,7 +526,7 @@ function MicroReading({ activity, onComplete, onSkip }) {
       {showPassage && (
         <Card className="p-6 mb-6 bg-amber-50/50 border-amber-200">
           <h4 className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-3">Read the passage</h4>
-          <p className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(activity?.passage_text || '') }} />
+          <p className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(passageText) }} />
           {questions.length > 0 && (
             <Button variant="outline" size="sm" className="mt-4" onClick={() => setShowPassage(false)} data-testid="reading-answer-questions-btn">
               Answer Questions <ChevronRight className="w-3 h-3 ml-1" />
