@@ -546,10 +546,10 @@ function MicroReading({ activity, onComplete, onSkip }) {
           <div className="space-y-2.5">
             {(q.options || []).map(option => {
               const isSelected = selectedAnswer === option;
-              const isCorrectOption = option === q.correct_answer;
+              const optionIsCorrect = isCorrectOption(option);
               let cls = 'border-gray-200 hover:border-blue-300';
               if (showFeedback) {
-                if (isCorrectOption) cls = 'border-green-500 bg-green-50';
+                if (optionIsCorrect) cls = 'border-green-500 bg-green-50';
                 else if (isSelected) cls = 'border-red-500 bg-red-50';
                 else cls = 'border-gray-200 opacity-50';
               }
