@@ -1,173 +1,153 @@
 <analysis>**original_problem_statement:**
-The user initiated a major strategic pivot for their IELTS test preparation application. The goal is to discard the old, fragmented course structure and create a **single, unified, step-by-step learning pathway**. This new Hybrid Learning Platform must cater to all levels, from absolute beginner (A1) to IELTS mastery (C2).
+The user is building a Mastery-Based and Retention-Driven English learning platform named Testmaster. The core of the application is a single, unified learning path from Stage 1 (Beginner) to Stage 8 (Advanced). The development is guided by a V2.0 technical and curriculum document provided by the user.
 
-**PRODUCT REQUIREMENTS (New Vision):**
-1.  **Unified Learning Path:** A single, cohesive course structure divided into 8 stages.
-2.  **Pedagogically-Sound Lessons:** Each lesson must follow a specific 10-step flow (e.g., Retrieval, Vocabulary, Micro-Game, Reading, Grammar).
-3.  **Adaptive UI/UX:** The visual tone of the platform should adapt to the user's level. The user has recently provided feedback that the current UI is not good enough and needs to be more like competitors (ismart) and have a Cambridge-ish feel.
-4.  **Retention-Driven Features:** The system must include a Daily Habit Mode.
-5.  **New Feature Requests:**
-    *   Vocabulary section needs a record and check feature.
-    *   Listening section audio needs to be more natural with multiple speakers.
-6.  **Bugs Reported:**
-    *   In-lesson games mark correct answers as incorrect.
-    *   The Exit Quiz evaluation is not working correctly.
+**LATEST PRODUCT REQUIREMENTS & BUGS (from user's last message):**
+1.  **BUG (Recurring):** The evaluation logic is still flawed, sometimes marking correct answers as incorrect. The user questions how multiple-choice answers are validated and suggests adding images to quizzes to provide context.
+2.  **Requirement:** The Warm-up activity should include images.
+3.  **Requirement:** A Roadmap should be displayed when the user enters the main lesson area (the stage/unit dashboard).
+4.  **Requirement:** After the lesson review/summary, a downloadable PDF worksheet should be generated. This worksheet should be cumulative, including topics from previous lessons, and could feature activities like coloring for Stage 1.
 
-**User's preferred language**: The user's messages are in **Turkish**. The next agent MUST respond in Turkish. All code, UI text, and system-generated content must remain in **English**.
+**User's preferred language**: The user's messages are in **Turkish**. The next agent MUST respond in Turkish for all  interactions. All code and application content must be in **English**.
 
 **what currently exists?**
-The initial implementation of the Unified Learning Path is complete. The login/authentication flow is now functional. A user can log in, navigate to the  dashboard from a CTA on the main page, see the 8 stages of the course, and enter a lesson. The  is now fully dynamic, rendering 10 distinct, interactive components based on the lesson's activity data, which is seeded in the database. A placeholder page for Daily Habit Mode also exists.
+The application has a functional login system and a redesigned UI with stage-specific theming (amber for Stage 1). The Stage 1 dashboard correctly displays 12 curriculum units, and all lessons are unlocked for testing purposes. The core lesson page () dynamically renders 10 different activity types. The backend has been seeded with a rich, unique curriculum for the first 12 units of Stage 1, resolving a previous issue of repetitive content. A Lesson Summary card now appears at the end of each lesson, showing the vocabulary and grammar patterns covered.
 
 **Last working item**:
--   **Last item agent was working:** The agent had just fixed the navigation issue where the user couldn't find the new unified course. The fix involved updating the main dashboard's CTA button to link to  and adding a link to the mobile menu. Immediately after confirming the fix, the user tested the new flow and provided a list of five critical feedback points and bugs. The agent's session ended on receiving this new feedback.
--   **Status:** USER VERIFICATION PENDING (The user needs to approve the plan for the new issues).
--   **Agent Testing Done:** Y (for the navigation fix)
--   **Which testing method agent to use?** The new issues are complex and span multiple components. After implementing fixes, use the  to perform regression testing and validate the fixes for the game mechanics, quiz evaluation, and new features.
--   **User Testing Done:** Y (User tested and provided new feedback/bugs).
+-   **Last item agent was working:** The agent implemented a Lesson Summary card that appears at the end of each lesson, showing learned vocabulary (with emojis) and grammar rules. This was an enhancement suggested by the agent and approved by the user.
+-   **Status:** USER VERIFICATION PENDING. The user has seen the feature but immediately reported a new set of bugs and feature requests, which have now become the top priority.
+-   **Agent Testing Done:** Y (Agent performed visual checks with screenshots for multiple lessons to verify the summary card's content.)
+-   **Which testing method agent to use?** Frontend testing agent. The new issues involve recurring evaluation logic flaws and UI/UX changes (adding images, a roadmap, and PDF generation) that require thorough end-to-end verification.
+-   **User Testing Done:** Y (User has tested and provided the new list of issues and requirements.)
 
 **All Pending/In progress Issue list**:
--   **Issue 1: Game mechanics are faulty (P0 - BLOCKER)**
--   **Issue 2: Exit Quiz evaluation is broken (P0 - BLOCKER)**
--   **Issue 3: Vocabulary section lacks a record and check feature (P1)**
--   **Issue 4: Listening section audio is unnatural (P1)**
--   **Issue 5: Overall UI/UX needs significant improvement (P1)**
+-   **Issue 1: Flawed Evaluation Logic in Quizzes (P0 - BLOCKER, RECURRING)**
+-   **Issue 2: Lack of Visuals in Warm-up Activity (P1)**
+-   **Issue 3: Missing Roadmap on Dashboard (P1)**
+-   **Issue 4: Missing PDF Worksheet Feature (P2)**
 
 **Issues Detail:**
--   **Issue 1: Game mechanics are faulty**
-    -   **Attempted fixes:** None. This is a newly reported bug.
+-   **Issue 1: Flawed Evaluation Logic in Quizzes**
+    -   **Attempted fixes:** The agent previously modified the frontend evaluation logic in  to support an array of correct answers instead of a single string. However, the user reports the issue persists.
     -   **Next debug checklist:**
-        1.  Inspect the game components within  (specifically  and ).
-        2.  Check the state management and event handlers that determine if a selected answer is correct or incorrect.
-        3.  Reproduce the issue by playing the games in Lesson 1.
-        4.  Verify the  field in the seeded data for these activities in .
-    -   **Why fix this issue and what will be achieved with the fix?** This is a critical bug that makes the learning games unusable and breaks the user experience.
+        1.  Re-examine the evaluation logic in all interactive components within  (, , , etc.).
+        2.  Verify how the  array from the backend is being compared against the user's selection on the frontend.
+        3.  Implement the user's suggestion: Add image data to quiz activities in .
+        4.  Update the frontend quiz components to display the associated image.
+        5.  Run the seed script and thoroughly test a multi-answer question with the image context.
+    -   **Why fix this issue and what will be achieved with the fix?** This is a critical pedagogical flaw that breaks user trust and the learning experience. Fixing it is essential for the product's viability.
     -   **Status:** NOT STARTED
-    -   **Is recurring issue?** N
-    -   **Should Test frontend/backend/both after fix?** Frontend.
-    -   **Blocked on other issue:** None.
--   **Issue 2: Exit Quiz evaluation is broken**
-    -   **Attempted fixes:** None. This is a newly reported bug.
-    -   **Next debug checklist:**
-        1.  Inspect the  component logic in .
-        2.  Review how answers are collected, submitted, and evaluated against the correct answers.
-        3.  Check the console for any errors during quiz submission.
-    -   **Why fix this issue and what will be achieved with the fix?** The exit quiz is a gate for lesson completion. If it's broken, users cannot progress.
-    -   **Status:** NOT STARTED
-    -   **Is recurring issue?** N
-    -   **Should Test frontend/backend/both after fix?** Frontend.
+    -   **Is recurring issue?** Y
+    -   **Should Test frontend/backend/both after fix?** Both.
     -   **Blocked on other issue:** None.
 
 **In progress Task List**:
--   None. The agent should prioritize the user-reported issues.
+-   None.
 
 **Upcoming and Future Tasks**
 **Upcoming Tasks:**
--   **P1: Implement Vocabulary Record and Check Feature:** This involves integrating a speech-to-text or audio recording library and comparing the user's pronunciation against the target vocabulary. Will likely require a new backend endpoint.
--   **P1: Improve Listening Section Audio:** The user wants more natural, multi-speaker audio. This may involve using a text-to-speech service like ElevenLabs or OpenAI TTS. Call .
--   **P1: Overhaul UI/UX:** Based on user feedback (ismart model, Cambridge-ish). This is a large task that should be broken down. A good first step would be to refactor the activity components out of .
--   **P2:** Design and implement the backend logic for the Daily Habit Mode.
+-   **P1: Add Images to Warm-up Activity:** Modify  and  to include and display images in the warm-up activity.
+-   **P1: Implement Roadmap View:** Design and implement a roadmap/progress visualization on the  or .
+-   **P1: Implement Listening Audio:** Integrate a Text-to-Speech service (e.g., ElevenLabs, OpenAI TTS) for  activities. Use .
+-   **P2: Generate PDF Worksheets:** Implement a feature to generate and download a cumulative PDF worksheet after the lesson summary. This will likely require a new 3rd party library (e.g., jsPDF, react-pdf) and backend logic to assemble the content.
+-   **P2: Implement Daily Habit Mode:** Build the backend logic and frontend UI for the adaptive daily review feature.
+-   **P2: Refactor :** Break down the monolithic file into individual activity components under .
 
 **Future Tasks:**
--   Build out the content and UI for Stages 2-8.
--   Implement the adaptive UI that changes its visual tone based on the user's stage.
--   Develop the Certification Gate and personalized Booster Mode features.
--   Create the Teacher Control Panel with pedagogical analytics.
+-   Implement Booster Mode.
+-   Implement the Certification Gate.
+-   Implement stage-dependent UI themes for Stages 5-8.
+-   Build the Teacher Control Panel.
+-   Integrate ISLCollective and YouTube for Extra Practice.
+-   Build curriculum content for Stages 2-8.
 
 **Completed work in this session**
--   **Critical Bug Fix:** Resolved the user login failure by registering the test user and verifying the complete authentication flow.
--   **Feature Implementation:** Built the fully dynamic  which renders 10 unique, interactive components for each step of a lesson.
--   **Navigation Fix:** Fixed course discoverability by adding a link to the  path on the main dashboard and mobile menu.
--   **Data Seeding:** Enhanced the  script to include data for all 10 activity types, ensuring lessons are complete.
--   **Automated Testing:** Successfully used  to test the new  and its components, and fixed a minor data issue found in the report.
--   **Credential Management:** Saved test user credentials to .
+-   **Feature: Lesson Summary Card:** Added a new component to  that displays a summary of learned vocabulary and grammar at the end of a lesson.
+-   **Fix: Unique Lesson Content:** Completely overhauled  to generate unique, progressively difficult content for each lesson in Unit 1, resolving user complaints about repetitive exercises.
+-   **Fix: Empty Content Sections:** Fixed bugs where , , and  activities were blank by correcting field name mismatches between the frontend and backend data.
+-   **Fix: Multi-Answer Evaluation Logic:** Implemented initial fixes across multiple components (, ) to support questions with multiple correct answers. (Note: This is reported as recurring).
+-   **User Request: Unlock All Courses:** Modified the frontend to unlock all stages, units, and lessons to facilitate user testing.
 
 **Earlier issues found/mentioned but not fixed**
--   These are the new high-priority issues reported by the user in their last message.
--   **Issue 1: Game Mechanics Bug:** Correct answers are marked as wrong in the lesson micro-games.
--   **Issue 2: Exit Quiz Bug:** The evaluation of the exit quiz is not working correctly.
--   **Issue 3: Missing Vocabulary Feature:** The vocabulary practice section lacks a record and check functionality.
--   **Issue 4: Poor Audio Quality:** The audio in the listening section is unnatural and uses a single speaker.
--   **Issue 5: Subpar UI/UX:** The overall look and feel of the platform needs to be improved to be more attractive and professional.
+-   None.
 
 **Known issue recurrence from previous fork**
--   None.
+-   **Issue recurrence in previous fork:** Flawed Evaluation Logic.
+-   **Recurrence count:** 2 (Fixed in the last session, but reported again by the user).
+-   **Status:** NOT STARTED
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Dynamic Component Rendering:** Using a  statement in React to render different components based on  data from an API.
--   **Data Seeding:** Using a Python script to populate a MongoDB database, enabling rapid and consistent frontend development.
--   **User-Feedback-Driven Development:** Pivoting priorities based on direct user testing and feedback.
+-   **Dynamic Component Rendering:** A single React component () renders 10 different activity components based on API data.
+-   **Database Seeding:** A heavily modified Python script () populates MongoDB with a rich, unique curriculum for Stage 1.
+-   **React State Management:** Extensive use of  and  to manage lesson progress, activity data, scores, and summary information within a single component.
 
 **key DB schema**
--   : 
--   : 
--   : 
--   : 
--   : 
+-   **activities:** Polymorphic collection. The  field within the  object for quiz-like activities supports an array of strings . No other schema changes were made, but the data within is now more diverse.
 
 **All files of reference**
--   : Contains all 10 activity components and is the source of the new bugs.
--   : Defines the content and correct answers for the activities; may need to be checked for the game/quiz bugs.
--   : The last successful test report before the user found new bugs.
--   : Contains the credentials for logging in.
--   : The product requirements document.
+-   : The monolithic component containing all lesson activities. The recurring evaluation logic bug is here. This is also where the new summary card was added.
+-   : The script for populating all Stage 1 data. It will need to be modified to add image URLs for warm-ups and quizzes.
+-   : The entry point for lessons. A Roadmap feature will likely be added here.
+-   : The product requirements document, which needs to be updated with the new user requests.
 
 **Areas that need refactoring**:
--   The  file currently contains the implementation for all 10 activity components, making it over 500 lines long. These components (, , , etc.) should be extracted into their own files under a new directory like  to improve maintainability and code organization.
+-   ** Monolith:** This file is extremely large and complex. It contains the logic for all 10 activity types plus the new summary card. It urgently needs to be broken down into smaller, maintainable components to prevent further bugs and improve development speed. This task's priority should be elevated.
 
 **key api endpoints**
--   
--   
--   
--   
+-   : Gets all units for a stage.
+-   : Gets all activities for a lesson.
+-   : Endpoint for the Whisper-based pronunciation check.
 
 **Critical Info for New Agent**
--   **Top Priority:** Address the five points of feedback from the user's last message. The two bugs (Game Mechanics, Exit Quiz) are P0 blockers.
--   **Plan First:** Before coding, present a plan to the user (in Turkish) that outlines how you will address their five feedback points, starting with the P0 bugs.
--   **UI/UX Overhaul:** The user is unhappy with the current design. Be prepared for a significant refactoring and redesign task. Start by breaking down the monolithic .
--   **Communicate in Turkish:** All  interactions must be in Turkish.
+-   **Top Priority:** Address the user's latest feedback from message #183. The recurring evaluation logic bug is a P0 blocker.
+-   **New Features:** Plan the implementation for the four new requests: quiz images, warm-up images, a roadmap, and PDF worksheets. Propose this plan to the user in Turkish.
+-   **PDF Generation:** The request for downloadable PDF worksheets will require a new integration. Research and propose a suitable library (e.g.,  for frontend or a Python library for backend generation) and use  if it's a managed service.
+-   **Refactor Monolith:** The  file is a significant source of technical debt. After fixing the P0 bug, strongly advocate for prioritizing its refactoring.
 
 **documents and test reports created in this job**
 -   
--    (updated)
+-    (latest test report)
 -   
 
 **Last 10 User Messages and any pending HUMAN messages**
--   **Pending:** The user has provided a detailed list of 5 bugs and feature requests after testing the newly implemented lesson page. This is the most critical message and defines the immediate work plan.
-    1.  Games mark correct answers as wrong. (BUG)
-    2.  Exit quiz evaluation is broken. (BUG)
-    3.  UI/UX is not good enough. (IMPROVEMENT)
-    4.  Vocabulary needs a record and check feature. (FEATURE)
-    5.  Listening audio is unnatural. (IMPROVEMENT/FEATURE)
--   User asked where the course was (RESOLVED).
--   User asked to prioritize P0 and P1 tasks (ACKNOWLEDGED).
+-   **Pending Human Message (Most Recent & Critical):**
+    1.  Reports that the evaluation logic is still failing (recurring bug).
+    2.  Requests images be added to quizzes to provide context.
+    3.  Requests images for the Warm-up activity.
+    4.  Requests a Roadmap on the main dashboard.
+    5.  Requests a downloadable, cumulative PDF worksheet after each lesson.
+-   **User approved** the idea of a Lesson Summary card.
+-   **User reported** that lessons were becoming repetitive, which triggered the major content update.
+-   **User requested** all courses and lessons be unlocked for testing.
 
 **Project Health Check:**
 -   **Broken:**
-    -   In-lesson game mechanics.
-    -   Exit quiz evaluation.
+    -   Core lesson evaluation logic (recurring user-reported bug).
 -   **Needs Improvement:**
-    -   Overall UI/UX design and aesthetic.
-    -   Vocabulary feature set (missing record/check).
-    -   Listening activity audio quality.
--   **Mocked:** None
+    -    monolith architecture.
+    -   Lack of visual content in activities (warm-ups, quizzes).
+-   **Mocked:**
+    -   Listening activity audio (transcript exists, but no generated audio).
+    -   PDF worksheet generation (newly requested feature, not implemented).
 
 **3rd Party Integrations**
--   **OpenAI GPT-4o:** Planned for content generation but not yet integrated.
--   **Speech-to-Text/TTS:** Will likely be needed for the new vocabulary and listening feature requests. Agent must use  to select and implement a service (e.g., ElevenLabs, OpenAI TTS/Whisper).
+-   **OpenAI Whisper:** Integrated for pronunciation check. Uses Emergent LLM Key.
+-   **PDF Generation Library (Planned):** A new integration (e.g., , ) will be required for the worksheet feature.
+-   **ElevenLabs / OpenAI TTS (Planned):** For generating audio in listening tasks.
+-   **YouTube / ISLCollective (Planned):** For Extra Practice content.
 
 **Testing status**
--   **Testing agent used after significant changes:** YES
+-   **Testing agent used after significant changes:** YES (used twice in the last session).
 -   **Troubleshoot agent used after agent stuck in loop:** NO
 -   **Test files created:** None.
--   **Known regressions:** Game mechanics and quiz evaluation are now broken, as reported by the user.
+-   **Known regressions:** The core evaluation logic has regressed, or the previous fix was incomplete.
 
 **Credentials to test flow:**
--   **email:** 
--   **password:** 
--   (These are stored in )
+-   User credentials are saved in .
 
 **What agent forgot to execute**
--   The agent did not break down the monolithic  file into smaller, reusable components. This has led to a large, hard-to-maintain file and should be addressed as part of the UI/UX overhaul.</analysis>
+-   **Root Cause Analysis:** The agent's fix for the evaluation logic was insufficient, failing to prevent a recurrence of the bug. A deeper investigation is needed.
+-   **Prioritize Refactoring:** The agent continued to add features to the  monolith instead of addressing the technical debt, which likely makes bug-fixing more difficult.
+-   **Proactive Visuals:** The agent did not proactively suggest adding visual elements like images to activities, which is a clear user need.</analysis>
