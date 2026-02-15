@@ -1227,6 +1227,8 @@ export default function UnifiedLessonPage({ user }) {
   const [currentActivityType, setCurrentActivityType] = useState(null);
   const [currentActivityData, setCurrentActivityData] = useState(null);
   const [completedActivities, setCompletedActivities] = useState([]);
+  const [activityScores, setActivityScores] = useState({});
+  const [lessonSummaryData, setLessonSummaryData] = useState({ words: [], grammarRules: [] });
   const [loading, setLoading] = useState(true);
   const [activityLoading, setActivityLoading] = useState(false);
 
