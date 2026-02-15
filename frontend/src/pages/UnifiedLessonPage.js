@@ -719,8 +719,10 @@ function GrammarGame({ activity, onComplete, onSkip }) {
   };
 
   const checkWordOrder = () => {
-    const userSentence = selectedWords.join(' ');
-    const correct = userSentence === item.correct_sentence;
+    const normalize = (s) => s.replace(/[.!?,;:]+$/g, '').trim().toLowerCase();
+    const userSentence = normalize(selectedWords.join(' '));
+    const correctSentence = normalize(item.correct_sentence || '');
+    const correct = userSentence === correctSentence;
     setIsCorrect(correct);
     if (correct) setScore(s => s + 1);
     setShowFeedback(true);
