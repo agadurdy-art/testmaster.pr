@@ -236,6 +236,14 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
       </div>
       <Progress value={((currentIndex + 1) / questions.length) * 100} className="mb-8" />
       <Card className="p-8">
+        {/* Image hint */}
+        {q.image_emoji && (
+          <div className="flex justify-center mb-5">
+            <div className="w-24 h-24 bg-gradient-to-br from-orange-100 to-amber-50 rounded-2xl flex items-center justify-center border border-orange-200 shadow-sm">
+              <span className="text-5xl">{q.image_emoji}</span>
+            </div>
+          </div>
+        )}
         <h3 className="text-xl font-bold text-gray-900 mb-6">{q.question_text}</h3>
         <div className="space-y-3">
           {q.options?.map((option) => {
