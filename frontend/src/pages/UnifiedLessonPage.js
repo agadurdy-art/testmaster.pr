@@ -419,7 +419,10 @@ function GrammarFocus({ activity, onComplete, onSkip }) {
     <div data-testid="grammar-focus">
       <div className="flex items-center justify-between mb-4">
         <Badge className="bg-violet-100 text-violet-700 border-0"><Edit3 className="w-3 h-3 mr-1" /> Grammar</Badge>
-        <span className="text-sm text-gray-500">Rule {ruleIdx + 1}/{rules.length}</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-500">Rule {ruleIdx + 1}/{rules.length}</span>
+          <SkipButton onSkip={onSkip} />
+        </div>
       </div>
       <Progress value={((ruleIdx + 1) / rules.length) * 100} className="mb-6" />
 
