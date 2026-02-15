@@ -806,7 +806,7 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ PRODUCTION (Speaking/Writing) ═══════
-function ProductionActivity({ activity, onComplete }) {
+function ProductionActivity({ activity, onComplete, onSkip }) {
   const [response, setResponse] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
