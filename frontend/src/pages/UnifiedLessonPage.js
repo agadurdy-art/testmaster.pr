@@ -1160,7 +1160,7 @@ export default function UnifiedLessonPage({ user }) {
   if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" /></div>;
   if (!lesson) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-600">Lesson not found</p></div>;
 
-  const totalActivities = lesson.activity_flow?.filter(a => !a.is_skippable || a.duration_minutes > 0).length || 0;
+  const totalActivities = lesson.activity_flow?.length || 0;
   const progressPercent = Math.round((completedActivities.length / totalActivities) * 100);
 
   return (
