@@ -1477,6 +1477,16 @@ export default function UnifiedLessonPage({ user }) {
   const progressPercent = Math.round((completedActivities.length / totalActivities) * 100);
   const theme = getTheme(lesson.stage_id);
 
+  const handleRoadmapStart = () => {
+    setShowRoadmap(false);
+  };
+
+  const handleRoadmapActivity = (activityType) => {
+    setShowRoadmap(false);
+    setCurrentActivityType(activityType);
+    loadActivityData(activityType);
+  };
+
   return (
     <div className={`min-h-screen bg-gradient-to-b ${theme.bg}`} data-testid="unified-lesson-page">
       {/* Header */}
@@ -1496,21 +1506,31 @@ export default function UnifiedLessonPage({ user }) {
                 <Star className="w-3.5 h-3.5" style={{ color: theme.accent }} />
                 <span className="text-xs font-semibold" style={{ color: theme.accent }}>{lesson.points_reward} pts</span>
               </div>
-              <div className="w-28"><Progress value={progressPercent} /></div>
+              {!showRoadmap && <div className="w-28"><Progress value={progressPercent} /></div>}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1">
-            <LessonPath activities={lesson.activity_flow || []} currentActivity={currentActivityType} completedActivities={completedActivities} onActivityClick={handleActivityClick} theme={theme} />
+      {/* Roadmap or Activity Content */}
+      {showRoadmap ? (
+        <LessonRoadmap
+          lesson={lesson}
+          completedActivities={completedActivities}
+          onStartActivity={handleRoadmapActivity}
+          onStartLesson={handleRoadmapStart}
+          theme={theme}
+        />
+      ) : (
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div className="lg:col-span-1">
+              <LessonPath activities={lesson.activity_flow || []} currentActivity={currentActivityType} completedActivities={completedActivities} onActivityClick={handleActivityClick} theme={theme} />
+            </div>
+            <div className="lg:col-span-3">{renderActivity()}</div>
           </div>
-          <div className="lg:col-span-3">{renderActivity()}</div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
