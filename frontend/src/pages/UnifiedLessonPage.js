@@ -1194,7 +1194,7 @@ function ExitTicket({ activity, onComplete, onSkip }) {
               <Button onClick={() => handleAnswer(fillBlankValue.trim())} size="sm" data-testid="exit-fill-blank-submit">Submit</Button>
             )}
             {showFeedback && !isCurrentCorrect && (
-              <p className="text-sm text-red-600">Correct answer: <strong>{q.correct_answer}</strong></p>
+              <p className="text-sm text-red-600">Correct answer: <strong>{Array.isArray(q.correct_answer) ? q.correct_answer.join(' / ') : q.correct_answer}</strong></p>
             )}
           </div>
         )}
