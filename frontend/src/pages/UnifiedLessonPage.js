@@ -158,7 +158,7 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ VOCABULARY MODULE ═══════
-function VocabularyModule({ activity, onComplete }) {
+function VocabularyModule({ activity, onComplete, onSkip }) {
   const [idx, setIdx] = useState(0);
   const [done, setDone] = useState([]);
   const [input, setInput] = useState('');
