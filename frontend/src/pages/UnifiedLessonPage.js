@@ -960,6 +960,20 @@ export default function UnifiedLessonPage({ user }) {
       case 'exit_ticket':
         return currentActivityData ? <ExitTicket activity={currentActivityData} onComplete={(score) => handleActivityComplete(score)} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
+      case 'auto_review':
+        return (
+          <Card className="p-12 text-center max-w-lg mx-auto" data-testid="auto-review-complete">
+            <div className="w-20 h-20 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <CheckCircle className="w-10 h-10 text-green-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Lesson Complete!</h3>
+            <p className="text-gray-500 mb-2 text-sm">Your vocabulary has been added to your review queue.</p>
+            <p className="text-gray-400 text-xs mb-6">Spaced repetition will help you remember these words.</p>
+            <Button onClick={() => handleActivityComplete(100)} data-testid="auto-review-finish-btn">
+              <Star className="w-4 h-4 mr-2" /> Finish Lesson
+            </Button>
+          </Card>
+        );
       default:
         return <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable={activity?.is_skippable} />;
     }
