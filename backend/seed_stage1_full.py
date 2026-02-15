@@ -782,7 +782,7 @@ def make_warmup_activity(unit, lesson_num):
             "correct_answer": w["word"],
             "options": options[:4],
             "question_type": "multiple_choice",
-            "image_emoji": w.get("image_emoji", ""),
+            "image_emoji": w.get("emoji", w.get("image_emoji", "")),
             "hint_word": w["word"]
         })
     return {
