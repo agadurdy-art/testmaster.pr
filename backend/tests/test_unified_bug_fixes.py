@@ -11,7 +11,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://unified-english-prep.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://testmaster-learn.preview.emergentagent.com')
 
 class TestUnifiedLearningAPIs:
     """Test API endpoints for lesson activities"""
