@@ -236,7 +236,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ MATCHING GAME (Vocab) ═══════
-function MatchingGame({ activity, onComplete }) {
+function MatchingGame({ activity, onComplete, onSkip }) {
   const [items] = useState(() => [...(activity?.items || [])].sort(() => Math.random() - 0.5));
   const [shuffledMatches] = useState(() => [...(activity?.items || [])].sort(() => Math.random() - 0.5));
   const [selectedWord, setSelectedWord] = useState(null);
