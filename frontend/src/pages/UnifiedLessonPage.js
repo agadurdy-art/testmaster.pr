@@ -1764,10 +1764,15 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
       )}
 
       {/* Finish Button */}
-      <div className="text-center pt-2">
-        <Button size="lg" onClick={onFinish} className="px-8" data-testid="lesson-summary-finish-btn">
-          <Star className="w-5 h-5 mr-2" /> Finish Lesson
+      <div className="text-center pt-2 space-y-3">
+        <Button variant="outline" onClick={generatePDF} className="px-6" data-testid="download-worksheet-btn">
+          <Download className="w-4 h-4 mr-2" /> Download Worksheet (PDF)
         </Button>
+        <div>
+          <Button size="lg" onClick={onFinish} className="px-8" data-testid="lesson-summary-finish-btn">
+            <Star className="w-5 h-5 mr-2" /> Finish Lesson
+          </Button>
+        </div>
         <p className="text-xs text-gray-400 mt-2">Your vocabulary has been added to your review queue.</p>
       </div>
     </div>
