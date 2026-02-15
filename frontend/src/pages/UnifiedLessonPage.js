@@ -269,7 +269,10 @@ function MatchingGame({ activity, onComplete, onSkip }) {
     <div data-testid="matching-game">
       <div className="flex items-center justify-between mb-6">
         <Badge className="bg-purple-100 text-purple-700 border-0"><Gamepad2 className="w-3 h-3 mr-1" /> Vocab Game</Badge>
-        <span className="text-sm text-gray-500">{matchedPairs.length} / {items.length} matched</span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-500">{matchedPairs.length} / {items.length} matched</span>
+          <SkipButton onSkip={onSkip} />
+        </div>
       </div>
       <div className="text-center mb-6">
         <h3 className="text-lg font-bold text-gray-900">Match the Words</h3>
