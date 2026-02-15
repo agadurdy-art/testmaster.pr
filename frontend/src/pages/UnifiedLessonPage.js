@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { 
   ArrowLeft, ChevronRight, CheckCircle, Clock, Zap, X,
   RefreshCw, BookOpen, Gamepad2, FileText, Edit3, Headphones, 
-  Mic, MicOff, Repeat, Play, Star, Lock, Volume2, AlertCircle, ThumbsUp, ThumbsDown, Square
+  Mic, MicOff, Repeat, Play, Star, Lock, Volume2, AlertCircle, ThumbsUp, ThumbsDown, Square, Trophy
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
