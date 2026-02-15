@@ -58,8 +58,7 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
       {/* Lesson list */}
       <div className="divide-y">
         {lessons.map((lesson, index) => {
-          const isLessonUnlocked = isUnlocked && (index === 0 || 
-            userProgress?.lesson_progress?.[lessons[index - 1]?.lesson_id]?.completed);
+          const isLessonUnlocked = true; // All lessons unlocked for testing
           const isCompleted = userProgress?.lesson_progress?.[lesson.lesson_id]?.completed;
           const lessonProgress = userProgress?.lesson_progress?.[lesson.lesson_id];
           
