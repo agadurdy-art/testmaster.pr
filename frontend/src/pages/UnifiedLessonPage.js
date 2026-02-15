@@ -1249,7 +1249,15 @@ export default function UnifiedLessonPage({ user }) {
     try {
       setActivityLoading(true);
       const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/${activityType}`);
-      setCurrentActivityData(res.ok ? await res.json() : null);
+      const data = res.ok ? await res.json() : null;
+      setCurrentActivityData(data);
+      // Cache data for lesson summary
+      if (data && activityType === 'vocabulary' && data.words?.length) {
+        setLessonSummaryData(prev => ({ ...prev, words: data.words }));
+      }
+      if (data && activityType === 'grammar_focus' && data.rules?.length) {
+        setLessonSummaryData(prev => ({ ...prev, grammarRules: data.rules }));
+      }
     } catch { setCurrentActivityData(null); } finally { setActivityLoading(false); }
   };
 
