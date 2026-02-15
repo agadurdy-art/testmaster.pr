@@ -741,6 +741,7 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
     <div data-testid="listening-activity">
       <div className="flex items-center justify-between mb-4">
         <Badge className="bg-cyan-100 text-cyan-700 border-0"><Headphones className="w-3 h-3 mr-1" /> Listening</Badge>
+        <SkipButton onSkip={onSkip} />
       </div>
 
       {phase === 'listen' && (
