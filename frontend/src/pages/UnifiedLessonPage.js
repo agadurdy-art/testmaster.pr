@@ -1049,7 +1049,7 @@ export default function UnifiedLessonPage({ user }) {
       const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}`);
       const data = await res.json();
       setLesson(data);
-      const first = data.activity_flow?.find(a => !a.is_skippable || a.duration_minutes > 0);
+      const first = data.activity_flow?.[0];
       if (first) { setCurrentActivityType(first.type); await loadActivityData(first.type); }
     } catch (error) { console.error('Error loading lesson:', error); } finally { setLoading(false); }
   };
