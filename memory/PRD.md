@@ -70,9 +70,9 @@ Transform the IELTS test preparation application from a fragmented multi-course 
 - **Backend endpoint**: POST /api/unified/pronunciation/check - accepts audio file + target word, returns transcription, similarity score, and feedback
 
 ## P1 - High Priority (Next)
-- UI/UX overhaul - iSmart/Cambridge-style design
-- Vocabulary "Record and Check" feature (OpenAI Whisper integration)
 - Listening section audio improvement (ElevenLabs v3 integration)
+- Build Stage 1 full curriculum (12 units, 2 substages as per curriculum doc)
+- Daily Habit Mode backend logic + UI
 - Refactor LessonPage.js into separate component files
 
 ## P2 - Medium Priority
