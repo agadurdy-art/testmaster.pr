@@ -69,11 +69,18 @@ Transform the IELTS test preparation application from a fragmented multi-course 
 - **Vocabulary Record & Check**: OpenAI Whisper integration for pronunciation checking. Record button, transcription comparison, similarity score, feedback
 - **Backend endpoint**: POST /api/unified/pronunciation/check - accepts audio file + target word, returns transcription, similarity score, and feedback
 
+### Stage 1 Full Curriculum (Feb 15, 2026)
+- **12 Units seeded**: Hello!, Friends, Numbers, Colors, My Family, My Face, My Body, The Farm, My Pets, At School, Feelings, Big Review!
+- **48 Lessons** (4 per unit) with 10-step activity flows
+- **480 activity records**: vocabulary, warmup, vocab games, grammar, grammar games (3 types), reading, listening, production, exit quiz
+- Each unit has unique theme color and emoji-based vocabulary
+- Substage A (U1-U6) and Substage B (U7-U12) structure
+
 ## P1 - High Priority (Next)
 - Listening section audio improvement (ElevenLabs v3 integration)
-- Build Stage 1 full curriculum (12 units, 2 substages as per curriculum doc)
-- Daily Habit Mode backend logic + UI
+- Daily Habit Mode (spaced repetition, interleaving, daily mix)
 - Refactor LessonPage.js into separate component files
+- Mastery-based progression (%80 threshold gate)
 
 ## P2 - Medium Priority
 - Build Stages 2-8 content
