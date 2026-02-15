@@ -1136,7 +1136,12 @@ function ExitTicket({ activity, onComplete, onSkip }) {
   if (!q) return null;
 
   const currentAnswer = answers[q.question_id];
-  const isCurrentCorrect = currentAnswer?.toLowerCase().trim() === q.correct_answer.toLowerCase().trim();
+  const checkCorrect = (ans, correctAns) => {
+    if (!ans) return false;
+    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === ans.toLowerCase().trim());
+    return ans.toLowerCase().trim() === correctAns.toLowerCase().trim();
+  };
+  const isCurrentCorrect = checkCorrect(currentAnswer, q.correct_answer);
 
   return (
     <div className="max-w-2xl mx-auto" data-testid="exit-ticket">
