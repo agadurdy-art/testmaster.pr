@@ -56,7 +56,7 @@ function LessonPath({ activities, currentActivity, completedActivities, onActivi
             const Icon = ACTIVITY_ICONS[activity.type] || Play;
             const isCompleted = completedActivities.includes(activity.type);
             const isCurrent = currentActivity === activity.type;
-            const isAccessible = index === 0 || completedActivities.includes(activities[index - 1]?.type);
+            const isAccessible = true; // All activities accessible
 
             return (
               <div key={activity.activity_id} data-testid={`activity-step-${activity.type}`}>
