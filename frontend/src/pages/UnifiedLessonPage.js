@@ -1162,7 +1162,7 @@ function ExitTicket({ activity, onComplete, onSkip }) {
           <div className="space-y-2.5">
             {q.options?.map(option => {
               const isSelected = currentAnswer === option;
-              const isCorrectOption = option === q.correct_answer;
+              const isCorrectOption = Array.isArray(q.correct_answer) ? q.correct_answer.includes(option) : option === q.correct_answer;
               let cls = 'border-gray-200 hover:border-blue-300';
               if (showFeedback) {
                 if (isCorrectOption) cls = 'border-green-500 bg-green-50 text-green-800';
