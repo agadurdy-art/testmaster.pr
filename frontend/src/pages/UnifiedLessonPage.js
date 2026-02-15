@@ -317,7 +317,7 @@ function MatchingGame({ activity, onComplete, onSkip }) {
 }
 
 // ═══════ MICRO READING ═══════
-function MicroReading({ activity, onComplete }) {
+function MicroReading({ activity, onComplete, onSkip }) {
   const [currentQ, setCurrentQ] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
