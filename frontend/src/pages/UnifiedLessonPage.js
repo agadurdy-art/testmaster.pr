@@ -113,7 +113,8 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
     if (showFeedback) return;
     setSelectedAnswer(option);
     setShowFeedback(true);
-    if (option === q.correct_answer) setCorrect(c => c + 1);
+    const isRight = Array.isArray(q.correct_answer) ? q.correct_answer.includes(option) : option === q.correct_answer;
+    if (isRight) setCorrect(c => c + 1);
   };
 
   const handleNext = () => {
