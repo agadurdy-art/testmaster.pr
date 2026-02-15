@@ -459,18 +459,18 @@ function GrammarFocus({ activity, onComplete }) {
 function ErrorHunterGame({ activity, onComplete }) {
   const [idx, setIdx] = useState(0);
   const [score, setScore] = useState(0);
-  const [answered, setAnswered] = useState(false);
+  const [userChoice, setUserChoice] = useState(null); // null | true (has error) | false (correct)
   const items = activity?.items || [];
   const item = items[idx];
 
   const handleAnswer = (hasError) => {
-    if (answered) return;
-    setAnswered(true);
+    if (userChoice !== null) return;
+    setUserChoice(hasError);
     if (hasError === item.has_error) setScore(s => s + 1);
   };
 
   const next = () => {
-    setAnswered(false);
+    setUserChoice(null);
     if (idx < items.length - 1) setIdx(i => i + 1);
     else {
       const pct = Math.round((score / items.length) * 100);
@@ -480,6 +480,8 @@ function ErrorHunterGame({ activity, onComplete }) {
   };
 
   if (!item) return null;
+
+  const isCorrectAnswer = userChoice === item.has_error;
 
   return (
     <div data-testid="error-hunter-game">
@@ -495,7 +497,7 @@ function ErrorHunterGame({ activity, onComplete }) {
           <p className="text-2xl font-bold text-gray-900">{item.sentence}</p>
         </div>
 
-        {!answered ? (
+        {userChoice === null ? (
           <div className="flex justify-center gap-4">
             <Button className="bg-green-600 hover:bg-green-700 px-8" onClick={() => handleAnswer(false)} data-testid="error-correct-btn">
               <ThumbsUp className="w-5 h-5 mr-2" /> Correct
@@ -506,15 +508,14 @@ function ErrorHunterGame({ activity, onComplete }) {
           </div>
         ) : (
           <div>
-            <div className={`p-4 rounded-xl mb-4 ${(item.has_error === (answered && true)) || (!item.has_error && !answered) ? '' : ''} ${
-              ((item.has_error && answered) || (!item.has_error && !answered)) ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
-            }`}>
+            <div className={`p-4 rounded-xl mb-4 ${isCorrectAnswer ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+              <p className="font-semibold mb-1">{isCorrectAnswer ? 'You got it right!' : 'Not quite!'}</p>
               {item.has_error ? (
                 <div>
-                  <p className="font-medium mb-1">This sentence has an error!</p>
+                  <p className="text-sm">This sentence has an error.</p>
                   <p className="text-sm">Correct: <strong>{item.correct_sentence}</strong></p>
                 </div>
-              ) : <p className="font-medium">This sentence is correct!</p>}
+              ) : <p className="text-sm">This sentence is correct!</p>}
             </div>
             <Button onClick={next} data-testid="error-next-btn">{idx < items.length - 1 ? 'Next' : 'See Results'} <ChevronRight className="w-4 h-4 ml-1" /></Button>
           </div>
