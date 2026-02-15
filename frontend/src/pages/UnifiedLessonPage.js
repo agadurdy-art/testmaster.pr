@@ -228,21 +228,27 @@ function MatchingGame({ activity, onComplete }) {
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [wrongPair, setWrongPair] = useState(false);
+  const [lastCorrect, setLastCorrect] = useState(null);
 
   useEffect(() => {
-    if (selectedWord && selectedMatch) {
-      const item = items.find(i => i.word === selectedWord);
-      if (item && item.match === selectedMatch) {
-        const newMatched = [...matchedPairs, selectedWord];
-        setMatchedPairs(newMatched);
-        setSelectedWord(null); setSelectedMatch(null);
-        if (newMatched.length === items.length) onComplete(100, 3);
-      } else {
-        setWrongPair(true);
-        setTimeout(() => { setWrongPair(false); setSelectedWord(null); setSelectedMatch(null); }, 500);
-      }
+    if (!selectedWord || !selectedMatch) return;
+    const item = items.find(i => i.word === selectedWord);
+    if (item && item.match === selectedMatch) {
+      setLastCorrect(true);
+      setMatchedPairs(prev => {
+        const newMatched = [...prev, selectedWord];
+        if (newMatched.length === items.length) {
+          setTimeout(() => onComplete(100, 3), 400);
+        }
+        return newMatched;
+      });
+      setTimeout(() => { setSelectedWord(null); setSelectedMatch(null); setLastCorrect(null); }, 400);
+    } else {
+      setWrongPair(true);
+      setLastCorrect(false);
+      setTimeout(() => { setWrongPair(false); setSelectedWord(null); setSelectedMatch(null); setLastCorrect(null); }, 600);
     }
-  }, [selectedWord, selectedMatch]);
+  }, [selectedWord, selectedMatch, items, onComplete]);
 
   return (
     <div data-testid="matching-game">
@@ -253,6 +259,8 @@ function MatchingGame({ activity, onComplete }) {
       <div className="text-center mb-6">
         <h3 className="text-lg font-bold text-gray-900">Match the Words</h3>
         <p className="text-sm text-gray-500">Connect words with their definitions</p>
+        {lastCorrect === true && <p className="text-green-600 font-semibold text-sm mt-1">Correct match!</p>}
+        {lastCorrect === false && <p className="text-red-600 font-semibold text-sm mt-1">Try again!</p>}
       </div>
       <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
         <div className="space-y-2">
@@ -261,9 +269,9 @@ function MatchingGame({ activity, onComplete }) {
             <button key={item.word} disabled={matchedPairs.includes(item.word)}
               className={`w-full p-3.5 rounded-xl text-left font-medium transition-all text-sm ${
                 matchedPairs.includes(item.word) ? 'bg-green-100 text-green-700' :
-                selectedWord === item.word ? 'bg-blue-500 text-white shadow-md' :
+                selectedWord === item.word ? (wrongPair ? 'bg-red-100 border-2 border-red-400' : 'bg-blue-500 text-white shadow-md') :
                 'bg-white border-2 border-gray-200 hover:border-blue-300'
-              } ${wrongPair && selectedWord === item.word ? 'bg-red-100 border-red-400' : ''}`}
+              }`}
               onClick={() => !matchedPairs.includes(item.word) && setSelectedWord(item.word)}
               data-testid={`match-word-${item.word}`}>
               {item.word} {matchedPairs.includes(item.word) && <CheckCircle className="inline w-4 h-4 ml-1" />}
@@ -276,9 +284,9 @@ function MatchingGame({ activity, onComplete }) {
             <button key={item.match} disabled={matchedPairs.includes(item.word)}
               className={`w-full p-3.5 rounded-xl text-left text-sm transition-all ${
                 matchedPairs.includes(item.word) ? 'bg-green-100 text-green-700' :
-                selectedMatch === item.match ? 'bg-blue-500 text-white shadow-md' :
+                selectedMatch === item.match ? (wrongPair ? 'bg-red-100 border-2 border-red-400' : 'bg-blue-500 text-white shadow-md') :
                 'bg-white border-2 border-gray-200 hover:border-blue-300'
-              } ${wrongPair && selectedMatch === item.match ? 'bg-red-100 border-red-400' : ''}`}
+              }`}
               onClick={() => !matchedPairs.includes(item.word) && setSelectedMatch(item.match)}
               data-testid={`match-def-${item.word}`}>
               {item.match} {matchedPairs.includes(item.word) && <CheckCircle className="inline w-4 h-4 ml-1" />}
