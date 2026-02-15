@@ -578,6 +578,15 @@ function GrammarFocus({ activity, onComplete, onSkip }) {
   const rules = activity?.rules || [];
   const rule = rules[ruleIdx];
 
+  // Normalize examples: handle both [{correct, incorrect}] and plain string arrays
+  const normalizeExamples = (examples) => {
+    if (!examples?.length) return [];
+    if (typeof examples[0] === 'string') {
+      return examples.map(ex => ({ correct: ex, incorrect: null }));
+    }
+    return examples;
+  };
+
   return (
     <div data-testid="grammar-focus">
       <div className="flex items-center justify-between mb-4">
@@ -592,49 +601,36 @@ function GrammarFocus({ activity, onComplete, onSkip }) {
       {rule && (
         <Card className="p-8">
           {/* Pattern highlight */}
-          {activity?.pattern_highlight && (
-            <div className="text-center mb-6">
-              <div className="inline-block bg-violet-100 text-violet-800 font-mono text-lg px-6 py-3 rounded-xl font-bold">
-                {activity.pattern_highlight}
-              </div>
+          <div className="text-center mb-6">
+            <div className="inline-block bg-violet-100 text-violet-800 font-mono text-lg px-6 py-3 rounded-xl font-bold">
+              {rule.pattern || activity?.pattern_highlight || ''}
             </div>
-          )}
+          </div>
 
           {/* Rule */}
           <div className="bg-blue-50 rounded-xl p-5 mb-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">{rule.rule_text}</h3>
+            <h3 className="text-lg font-bold text-gray-900 mb-2">{rule.rule_text || rule.title}</h3>
+            <p className="text-sm text-gray-600 mb-2">{rule.explanation}</p>
             <code className="text-sm text-blue-700 bg-blue-100 px-2 py-1 rounded">{rule.pattern}</code>
           </div>
 
           {/* Examples */}
           <div className="space-y-3 mb-6">
-            {rule.examples?.map((ex, i) => (
-              <div key={i} className="grid grid-cols-2 gap-3">
+            {normalizeExamples(rule.examples).map((ex, i) => (
+              <div key={i} className={ex.incorrect ? 'grid grid-cols-2 gap-3' : ''}>
                 <div className="flex items-center gap-2 bg-green-50 p-3 rounded-xl">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
                   <span className="text-sm font-medium text-green-800">{ex.correct}</span>
                 </div>
-                <div className="flex items-center gap-2 bg-red-50 p-3 rounded-xl">
-                  <X className="w-5 h-5 text-red-500 shrink-0" />
-                  <span className="text-sm font-medium text-red-800 line-through">{ex.incorrect}</span>
-                </div>
+                {ex.incorrect && (
+                  <div className="flex items-center gap-2 bg-red-50 p-3 rounded-xl">
+                    <X className="w-5 h-5 text-red-500 shrink-0" />
+                    <span className="text-sm font-medium text-red-800 line-through">{ex.incorrect}</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
-
-          {/* Example sentences */}
-          {ruleIdx === rules.length - 1 && activity?.example_sentences && (
-            <div className="bg-gray-50 rounded-xl p-4 mb-6">
-              <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Practice sentences</h4>
-              <ul className="space-y-1.5">
-                {activity.example_sentences.map((s, i) => (
-                  <li key={i} className="text-sm text-gray-700 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 shrink-0" />{s}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
 
           <div className="flex justify-end gap-3">
             {ruleIdx > 0 && <Button variant="outline" onClick={() => setRuleIdx(i => i - 1)}>Previous</Button>}
