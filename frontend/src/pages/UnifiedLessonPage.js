@@ -385,11 +385,6 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
     </div>
   );
 }
-        </Card>
-      </div>
-    </div>
-  );
-}
 
 // ═══════ MATCHING GAME (Vocab) ═══════
 function MatchingGame({ activity, onComplete, onSkip }) {
