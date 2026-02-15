@@ -353,7 +353,10 @@ function MicroReading({ activity, onComplete, onSkip }) {
     <div data-testid="micro-reading">
       <div className="flex items-center justify-between mb-4">
         <Badge className="bg-emerald-100 text-emerald-700 border-0"><FileText className="w-3 h-3 mr-1" /> Reading</Badge>
-        {questions.length > 0 && <span className="text-sm text-gray-500">Question {currentQ + 1}/{questions.length}</span>}
+        <div className="flex items-center gap-3">
+          {questions.length > 0 && <span className="text-sm text-gray-500">Question {currentQ + 1}/{questions.length}</span>}
+          <SkipButton onSkip={onSkip} />
+        </div>
       </div>
 
       {/* Passage */}
