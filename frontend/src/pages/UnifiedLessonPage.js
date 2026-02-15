@@ -732,7 +732,10 @@ function GrammarGame({ activity, onComplete, onSkip }) {
   const handleFillBlank = (option) => {
     if (showFeedback) return;
     setSelectedOption(option);
-    const correct = Array.isArray(item.correct_answer) ? item.correct_answer.includes(option) : option === item.correct_answer;
+    const optLower = option.toLowerCase().trim();
+    const correct = Array.isArray(item.correct_answer)
+      ? item.correct_answer.some(a => a.toLowerCase().trim() === optLower)
+      : optLower === (item.correct_answer || '').toLowerCase().trim();
     setIsCorrect(correct);
     if (correct) setScore(s => s + 1);
     setShowFeedback(true);
