@@ -735,7 +735,7 @@ function MicroReading({ activity, onComplete, onSkip }) {
   const [correct, setCorrect] = useState(0);
   const [showPassage, setShowPassage] = useState(true);
   const questions = activity?.comprehension_questions || activity?.questions || [];
-  const passageText = activity?.passage_text || activity?.passage || '';
+  const passageText = activity?.passage_text || activity?.passage || activity?.text || '';
   const q = questions[currentQ];
 
   const highlightText = (text) => {
