@@ -61,7 +61,7 @@ async def get_stage_units(stage_id: str):
     """Get all units in a stage"""
     units = await db.unified_units.find(
         {"stage_id": stage_id}, {"_id": 0}
-    ).sort("order", 1).to_list(20)
+    ).sort("unit_number", 1).to_list(20)
     return {"units": units, "total": len(units)}
 
 
