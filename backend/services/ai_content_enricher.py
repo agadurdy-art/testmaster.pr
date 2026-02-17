@@ -385,33 +385,60 @@ Respond with ONLY valid JSON:
     async def _enrich_grammar_game(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich grammar game with better exercises"""
+        """Enrich grammar games - generate multiple game types"""
         
         grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'grammar_focus'), {})
         pattern = grammar_step.get('rule_pattern', step.get('rule_pattern', ''))
+        examples = grammar_step.get('examples', [])
         
-        prompt = f"""Create an engaging grammar game for young ESL learners (ages 4-7).
+        prompt = f"""Create grammar games for young ESL learners (ages 4-7).
 
 GRAMMAR PATTERN: {pattern}
+EXAMPLES: {examples}
 
-ORIGINAL CONTENT:
-{json.dumps(step, indent=2)}
+Create 3 different grammar game activities, each with 2-3 exercises.
 
-Create a game that practices the grammar pattern. Choose the best mode:
-- "word_order": Arrange words to make a sentence
-- "fill_blank": Fill in the missing word
+GAME TYPES TO CREATE:
+1. word_order: Arrange words to make correct sentences
+2. fill_blank: Choose correct word to complete sentence
+3. error_hunter: Find the grammar mistake in sentence
 
 Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
-    "type": "grammar_game",
-    "mode": "word_order" or "fill_blank",
-    "words": ["word1", "word2", "word3", "word4"] (for word_order),
-    "sentence": "Sentence with ____ blank." (for fill_blank),
-    "correct_sentence": "Complete correct sentence.",
-    "correct_answer": "missing word" (for fill_blank),
-    "options": ["option1", "option2", "option3"] (for fill_blank),
-    "hint": "Helpful hint"
+    "type": "grammar_games",
+    "games": [
+        {{
+            "game_type": "word_order",
+            "items": [
+                {{
+                    "words": ["I", "like", "cats"],
+                    "correctSentence": "I like cats"
+                }}
+            ]
+        }},
+        {{
+            "game_type": "fill_blank",
+            "items": [
+                {{
+                    "sentence": "He ___ a cat.",
+                    "answer": "has",
+                    "options": ["has", "have", "is", "are"]
+                }}
+            ]
+        }},
+        {{
+            "game_type": "error_hunter",
+            "items": [
+                {{
+                    "sentence": "He have a cat.",
+                    "errorWord": "have",
+                    "correctWord": "has"
+                }}
+            ]
+        }}
+    ],
+    "total_exercises": 8
 }}"""
 
         try:
