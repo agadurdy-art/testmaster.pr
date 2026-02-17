@@ -19,8 +19,9 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 - [x] **Unit 1**: Hello & My Sounds (4 lessons, phonics A-E)
 - [x] **Unit 2**: My Name & Friends (4 lessons, phonics F-J)
 - [x] **Unit 3**: Numbers 1-10 (4 lessons, phonics K-O)
-- [x] **Unit 4**: Colors Everywhere (4 lessons, phonics P-T) -- ADDED Feb 17, 2026
-- [ ] Units 5-12: Awaiting user content
+- [x] **Unit 4**: Colors Everywhere (4 lessons, phonics P-T)
+- [x] **Unit 5**: My Family (4 lessons, phonics U-Z) -- ADDED Feb 17, 2026 -- ALPHABET COMPLETE A-Z
+- [ ] Units 6-12: Awaiting user content
 
 ## Features Implemented
 - [x] 10-step lesson flow (warm_up -> vocabulary -> vocab_game -> reading -> grammar -> grammar_game -> listening -> production -> exit_ticket -> auto_review)
@@ -34,15 +35,19 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 - [x] PDF Worksheet (current + cumulative)
 - [x] Acceptable answers for fill-blank
 
+## Pending Feature Requests (from User)
+- [ ] "Alphabet Master" badge after completing Unit 5 (A-Z complete)
+- [ ] Daily Habit Mode should include all Units 1-5 vocabulary after Unit 5 completion
+
 ## Prioritized Backlog
 ### P0 (Next)
-- Units 5-12 content from user
-- Daily Habit Mode (spaced repetition)
+- Units 6-12 content from user
+- Daily Habit Mode (spaced repetition) with Units 1-5 interleaving
 
 ### P1
 - TTS for listening activities (ElevenLabs or OpenAI TTS)
+- Alphabet Master badge system
 - Refactor UnifiedLessonPage.js into smaller components
-- Teacher vs Student mode
 
 ### P2
 - Booster Mode (remedial for <80% scores)
