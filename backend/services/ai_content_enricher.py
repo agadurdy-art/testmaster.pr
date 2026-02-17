@@ -7,6 +7,7 @@ Acts as a Master Primary Native English ESL Teacher
 import os
 import json
 import asyncio
+import re
 from typing import Dict, List, Any, Optional
 from dotenv import load_dotenv
 
@@ -31,7 +32,32 @@ Your teaching philosophy:
 4. Grammar patterns should emerge naturally from context
 5. All content should be achievable but slightly challenging (i+1)
 
-You always respond in valid JSON format as specified."""
+CRITICAL: You MUST respond with ONLY valid JSON. No explanations, no markdown, just pure JSON."""
+
+
+def extract_json_from_response(response: str) -> dict:
+    """Extract JSON from LLM response, handling markdown code blocks"""
+    # Remove markdown code blocks if present
+    response = response.strip()
+    
+    # Try to find JSON in code block
+    code_block_match = re.search(r'```(?:json)?\s*([\s\S]*?)\s*```', response)
+    if code_block_match:
+        response = code_block_match.group(1).strip()
+    
+    # Try to find JSON object directly
+    json_match = re.search(r'\{[\s\S]*\}', response)
+    if json_match:
+        try:
+            return json.loads(json_match.group())
+        except json.JSONDecodeError:
+            pass
+    
+    # Try direct parsing
+    try:
+        return json.loads(response)
+    except json.JSONDecodeError:
+        raise ValueError(f"Could not parse JSON from response: {response[:200]}...")
 
 
 class AIContentEnricher:
