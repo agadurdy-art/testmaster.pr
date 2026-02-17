@@ -66,21 +66,22 @@ class TestStageCertificateBackend:
         print(f"✅ Warmup question: {q.get('question_text')}")
 
     def test_final_gate_vocabulary_review(self):
-        """Final Gate vocabulary has comprehensive review words"""
+        """Final Gate vocabulary has comprehensive review words (review_words field for review lessons)"""
         response = requests.get(f"{BASE_URL}/api/unified/lessons/stage_1_unit_12_lesson_04/activity/vocabulary")
         assert response.status_code == 200
         
         data = response.json()
-        words = data.get('words', [])
-        assert len(words) >= 10, f"Expected at least 10 vocabulary words for review, got {len(words)}"
+        # For review lessons, words are in review_words field (strings) not words field (objects)
+        review_words = data.get('review_words', [])
+        assert data.get('is_review') == True, "Expected is_review=true for Final Gate vocabulary"
+        assert len(review_words) >= 10, f"Expected at least 10 review_words, got {len(review_words)}"
         
-        # Check for some expected review words
-        word_list = [w.get('word', '').lower() for w in words]
+        # Check for some expected review words (they are strings, not objects)
         expected_words = ['hello', 'mother', 'father', 'eye', 'hand']
         for exp_word in expected_words[:3]:  # Check at least 3
-            assert exp_word in word_list, f"Expected '{exp_word}' in vocabulary review"
+            assert exp_word in review_words, f"Expected '{exp_word}' in review_words"
         
-        print(f"✅ Final Gate vocabulary has {len(words)} review words")
+        print(f"✅ Final Gate vocabulary has {len(review_words)} review words: {review_words[:5]}...")
 
     def test_final_gate_exit_ticket(self):
         """Final Gate exit ticket has 'good morning' question"""
