@@ -13,6 +13,25 @@ import { Badge } from '../components/ui/badge';
 import { Progress } from '../components/ui/progress';
 import { toast } from 'sonner';
 
+// Import Game Components
+import {
+  ListenChooseWord,
+  ListenChoosePicture,
+  ReadChoosePicture,
+  LookWrite,
+  ListenWrite,
+  UnscrambleLetters,
+  FlashcardMatch,
+  MemoryGame,
+  FillTheGap,
+  AnimalSounds
+} from '../components/games/vocab';
+import {
+  WordOrder,
+  FillTheBlank,
+  ErrorHunter
+} from '../components/games/grammar';
+
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // ═══════ STAGE THEMES ═══════
