@@ -991,25 +991,18 @@ def make_production_activity(unit, lesson_num):
 
 
 async def make_exit_ticket_ai(unit, lesson_num):
+    """Exit ticket from AI cache"""
     un = unit["num"]
     words = unit["words"]
-    half = len(words) // 2
-    rules = unit["grammar_rules"]
 
-    if lesson_num == 1:
-        vocab_words = words[:2]
-    elif lesson_num == 2:
-        vocab_words = words[half:half + 2]
-    elif lesson_num == 3:
-        vocab_words = [words[0], words[-1]]
-    else:
-        vocab_words = [words[2], words[4]] if len(words) > 4 else words[:2]
+    cache = load_ai_cache()
+    cache_key = f"unit_{un:02d}"
+    lesson_key = f"lesson_{lesson_num:02d}"
+    cached = cache.get(cache_key, {}).get(lesson_key, {}).get("exit_ticket")
 
-    try:
-        from ai_content_generator import generate_exit_questions
-        result = await generate_exit_questions(unit, lesson_num, vocab_words)
+    if cached and cached.get("questions"):
         questions = []
-        for i, q in enumerate(result.get("questions", [])):
+        for i, q in enumerate(cached["questions"]):
             qdata = {
                 "question_id": f"eq_{un}_{lesson_num}_{i}",
                 "question_text": q["question_text"],
@@ -1023,10 +1016,16 @@ async def make_exit_ticket_ai(unit, lesson_num):
             if q.get("acceptable_answers"):
                 qdata["acceptable_answers"] = q["acceptable_answers"]
             questions.append(qdata)
-        if not questions:
-            raise ValueError("No questions generated")
-    except Exception as e:
-        print(f"  AI exit ticket failed for U{un}L{lesson_num}: {e}, using fallback")
+    else:
+        half = len(words) // 2
+        if lesson_num == 1:
+            vocab_words = words[:2]
+        elif lesson_num == 2:
+            vocab_words = words[half:half + 2]
+        elif lesson_num == 3:
+            vocab_words = [words[0], words[-1]]
+        else:
+            vocab_words = [words[2], words[4]] if len(words) > 4 else words[:2]
         questions = []
         for i, w in enumerate(vocab_words):
             others = [x["word"] for x in words if x != w]
