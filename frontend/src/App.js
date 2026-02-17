@@ -70,6 +70,7 @@ import UnifiedCoursePage from './pages/UnifiedCoursePage';
 import UnifiedStagePage from './pages/UnifiedStagePage';
 import UnifiedLessonPage from './pages/UnifiedLessonPage';
 import DailyHabitPage from './pages/DailyHabitPage';
+import GameDemo from './pages/GameDemo';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
