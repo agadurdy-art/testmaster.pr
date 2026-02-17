@@ -1256,8 +1256,18 @@ function ExitTicket({ activity, onComplete, onSkip }) {
   const currentAnswer = answers[q.question_id];
   const checkCorrect = (ans, correctAns) => {
     if (!ans) return false;
-    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === ans.toLowerCase().trim());
-    return ans.toLowerCase().trim() === correctAns.toLowerCase().trim();
+    const ansLower = ans.toLowerCase().trim();
+    // Check main correct answer(s)
+    if (Array.isArray(correctAns)) {
+      if (correctAns.some(a => a.toLowerCase().trim() === ansLower)) return true;
+    } else {
+      if (ansLower === correctAns.toLowerCase().trim()) return true;
+    }
+    // Check acceptable_answers for fill-blank
+    if (q.acceptable_answers && Array.isArray(q.acceptable_answers)) {
+      if (q.acceptable_answers.some(a => a.toLowerCase().trim() === ansLower)) return true;
+    }
+    return false;
   };
   const isCurrentCorrect = checkCorrect(currentAnswer, q.correct_answer);
 
