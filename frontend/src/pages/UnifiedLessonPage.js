@@ -556,6 +556,186 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
   );
 }
 
+// ═══════ VOCAB GAMES PLAYER (Multiple Games in Sequence) ═══════
+function VocabGamesPlayer({ activity, onComplete, onSkip }) {
+  const games = activity?.games || [];
+  const [currentGameIdx, setCurrentGameIdx] = useState(0);
+  const [gameScores, setGameScores] = useState([]);
+  const [isAllComplete, setIsAllComplete] = useState(false);
+
+  // Fallback to old format if no games array
+  if (!games.length && activity?.items) {
+    return <MatchingGame activity={activity} onComplete={onComplete} onSkip={onSkip} />;
+  }
+
+  if (games.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-500">No games available</p>
+        <Button className="mt-4" onClick={() => onComplete(100)}>Continue</Button>
+      </div>
+    );
+  }
+
+  const currentGame = games[currentGameIdx];
+
+  const handleGameComplete = (score) => {
+    const newScores = [...gameScores, score];
+    setGameScores(newScores);
+    
+    if (currentGameIdx < games.length - 1) {
+      setCurrentGameIdx(i => i + 1);
+    } else {
+      // All games complete
+      const avgScore = Math.round(newScores.reduce((a, b) => a + b, 0) / newScores.length);
+      setIsAllComplete(true);
+      setTimeout(() => onComplete(avgScore), 1500);
+    }
+  };
+
+  const handleSkip = () => {
+    if (currentGameIdx < games.length - 1) {
+      setCurrentGameIdx(i => i + 1);
+    } else {
+      onSkip();
+    }
+  };
+
+  if (isAllComplete) {
+    const avgScore = Math.round(gameScores.reduce((a, b) => a + b, 0) / gameScores.length);
+    return (
+      <Card className="p-8 text-center max-w-md mx-auto">
+        <Sparkles className="w-16 h-16 mx-auto text-yellow-500 mb-4" />
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">All Games Complete!</h2>
+        <p className="text-gray-600">Average Score: {avgScore}%</p>
+        <div className="flex justify-center gap-1 mt-4">
+          {[1, 2, 3].map(i => (
+            <Star key={i} className={`w-8 h-8 ${avgScore >= i * 30 ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} />
+          ))}
+        </div>
+      </Card>
+    );
+  }
+
+  // Render game based on type
+  const renderGame = () => {
+    const gameType = currentGame?.game_type;
+    const items = currentGame?.items || [];
+
+    switch (gameType) {
+      case 'listen_choose_word':
+        return <ListenChooseWord items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'listen_choose_picture':
+        return <ListenChoosePicture items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'read_choose_picture':
+        return <ReadChoosePicture items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'look_write':
+        return <LookWrite items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'listen_write':
+        return <ListenWrite items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'unscramble':
+        return <UnscrambleLetters items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'flashcard_match':
+        return <FlashcardMatch items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'memory_game':
+        return <MemoryGame items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'fill_gap':
+        return <FillTheGap items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'animal_sounds':
+        return <AnimalSounds items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      default:
+        // Fallback to MCQ game
+        return <MatchingGame activity={{ items }} onComplete={handleGameComplete} onSkip={handleSkip} />;
+    }
+  };
+
+  return (
+    <div data-testid="vocab-games-player">
+      {/* Game Progress Header */}
+      <div className="mb-4 text-center">
+        <Badge className="bg-purple-100 text-purple-700 border-0">
+          <Gamepad2 className="w-3 h-3 mr-1" /> Game {currentGameIdx + 1} of {games.length}
+        </Badge>
+      </div>
+      {renderGame()}
+    </div>
+  );
+}
+
+// ═══════ GRAMMAR GAMES PLAYER ═══════
+function GrammarGamesPlayer({ activity, onComplete, onSkip }) {
+  const games = activity?.games || [];
+  const [currentGameIdx, setCurrentGameIdx] = useState(0);
+  const [gameScores, setGameScores] = useState([]);
+  const [isAllComplete, setIsAllComplete] = useState(false);
+
+  // Fallback to old format
+  if (!games.length) {
+    return <GrammarGame activity={activity} onComplete={onComplete} onSkip={onSkip} />;
+  }
+
+  const currentGame = games[currentGameIdx];
+
+  const handleGameComplete = (score) => {
+    const newScores = [...gameScores, score];
+    setGameScores(newScores);
+    
+    if (currentGameIdx < games.length - 1) {
+      setCurrentGameIdx(i => i + 1);
+    } else {
+      const avgScore = Math.round(newScores.reduce((a, b) => a + b, 0) / newScores.length);
+      setIsAllComplete(true);
+      setTimeout(() => onComplete(avgScore), 1500);
+    }
+  };
+
+  const handleSkip = () => {
+    if (currentGameIdx < games.length - 1) {
+      setCurrentGameIdx(i => i + 1);
+    } else {
+      onSkip();
+    }
+  };
+
+  if (isAllComplete) {
+    const avgScore = Math.round(gameScores.reduce((a, b) => a + b, 0) / gameScores.length);
+    return (
+      <Card className="p-8 text-center max-w-md mx-auto">
+        <Trophy className="w-16 h-16 mx-auto text-yellow-500 mb-4" />
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Grammar Games Complete!</h2>
+        <p className="text-gray-600">Average Score: {avgScore}%</p>
+      </Card>
+    );
+  }
+
+  const renderGame = () => {
+    const gameType = currentGame?.game_type;
+    const items = currentGame?.items || [];
+
+    switch (gameType) {
+      case 'word_order':
+        return <WordOrder items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'fill_blank':
+        return <FillTheBlank items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'error_hunter':
+        return <ErrorHunter items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      default:
+        return <GrammarGame activity={{ items }} onComplete={handleGameComplete} onSkip={handleSkip} />;
+    }
+  };
+
+  return (
+    <div data-testid="grammar-games-player">
+      <div className="mb-4 text-center">
+        <Badge className="bg-orange-100 text-orange-700 border-0">
+          <Edit3 className="w-3 h-3 mr-1" /> Grammar Game {currentGameIdx + 1} of {games.length}
+        </Badge>
+      </div>
+      {renderGame()}
+    </div>
+  );
+}
+
 // ═══════ VOCAB GAME (Multiple Choice or Matching) ═══════
 function MatchingGame({ activity, onComplete, onSkip }) {
   const items = activity?.items || [];
