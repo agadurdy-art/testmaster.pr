@@ -379,6 +379,10 @@ function AppWithSessionHandler() {
           path="/unified/daily-habit" 
           element={user ? <DailyHabitPage user={user} /> : <Navigate to="/" />} 
         />
+        <Route 
+          path="/game-demo" 
+          element={<GameDemo />} 
+        />
         
         <Route 
           path="/game-bank" 
