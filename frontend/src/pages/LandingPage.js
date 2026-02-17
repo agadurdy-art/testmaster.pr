@@ -422,6 +422,7 @@ export default function LandingPage({ onLogin, user, showLogin }) {
           </div>
           <div className="flex items-center gap-3">
             <ThemeToggle />
+            <LanguageSwitcher compact />
             <Button variant="ghost" className={`${textSecondary} hover:text-violet-600 hidden sm:flex`} onClick={() => { setAuthMode('signin'); setShowAuth(true); }}>
               {t('landingSignIn')}
             </Button>
