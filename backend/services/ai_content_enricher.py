@@ -55,7 +55,7 @@ def extract_json_from_response(response: str) -> dict:
     
     # Try direct parsing
     try:
-        return json.loads(response)
+        return extract_json_from_response(response)
     except json.JSONDecodeError:
         raise ValueError(f"Could not parse JSON from response: {response[:200]}...")
 
@@ -173,7 +173,7 @@ Respond with ONLY valid JSON in this exact format:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Warmup enrichment failed: {e}")
             return step
@@ -222,7 +222,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Vocabulary enrichment failed: {e}")
             return step
@@ -260,7 +260,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Vocab game enrichment failed: {e}")
             return step
@@ -306,7 +306,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Reading enrichment failed: {e}")
             return step
@@ -341,7 +341,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Grammar enrichment failed: {e}")
             return step
@@ -380,7 +380,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Grammar game enrichment failed: {e}")
             return step
@@ -475,7 +475,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Production enrichment failed: {e}")
             return step
@@ -512,7 +512,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return json.loads(response)
+            return extract_json_from_response(response)
         except Exception as e:
             print(f"Exit ticket enrichment failed: {e}")
             return step
