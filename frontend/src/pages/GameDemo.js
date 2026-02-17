@@ -122,11 +122,11 @@ const GameDemo = () => {
 
   if (selectedGame) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-6">
+      <div className="min-h-screen bg-mesh p-6">
         <div className="max-w-2xl mx-auto">
           <button 
             onClick={() => setSelectedGame(null)}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+            className="flex items-center gap-2 text-slate-500 hover:text-slate-700 mb-6 font-semibold transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Games
           </button>
@@ -137,57 +137,59 @@ const GameDemo = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-6">
+    <div className="min-h-screen bg-mesh p-6">
       <div className="max-w-4xl mx-auto">
         <button 
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+          className="flex items-center gap-2 text-slate-500 hover:text-slate-700 mb-6 font-semibold transition-colors"
         >
           <ArrowLeft className="w-4 h-4" /> Back
         </button>
 
-        <div className="text-center mb-8">
-          <Gamepad2 className="w-16 h-16 mx-auto text-blue-500 mb-4" />
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Game Demo</h1>
-          <p className="text-gray-600">Test all vocabulary and grammar games</p>
+        <div className="text-center mb-10">
+          <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-emerald">
+            <Gamepad2 className="w-10 h-10 text-white" />
+          </div>
+          <h1 className="text-4xl font-bold text-slate-800 mb-2">Game Demo</h1>
+          <p className="text-slate-500 text-lg">Test all vocabulary and grammar games</p>
         </div>
 
         {lastScore !== null && (
-          <Card className="p-4 mb-6 bg-green-50 border-green-200">
-            <p className="text-center text-green-700 font-semibold">
+          <div className="glass-card p-4 mb-8 text-center">
+            <p className="text-emerald-700 font-bold text-lg">
               Last Score: {lastScore}%
             </p>
-          </Card>
+          </div>
         )}
 
         {/* Vocabulary Games */}
-        <div className="mb-8">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Vocabulary Games</h2>
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-slate-700 mb-5">Vocabulary Games</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {GAMES.filter(g => g.category === 'vocab').map(game => (
-              <Card 
+              <div 
                 key={game.id}
-                className="p-4 cursor-pointer hover:shadow-lg transition-all hover:scale-105 hover:border-blue-300"
+                className="glass-card p-5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1"
                 onClick={() => setSelectedGame(game.id)}
               >
-                <h3 className="font-semibold text-gray-800">{game.name}</h3>
-              </Card>
+                <h3 className="font-bold text-slate-700">{game.name}</h3>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Grammar Games */}
         <div>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Grammar Games</h2>
+          <h2 className="text-2xl font-bold text-slate-700 mb-5">Grammar Games</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {GAMES.filter(g => g.category === 'grammar').map(game => (
-              <Card 
+              <div 
                 key={game.id}
-                className="p-4 cursor-pointer hover:shadow-lg transition-all hover:scale-105 hover:border-purple-300"
+                className="glass-card p-5 cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 hover:-translate-y-1 hover:border-violet-200"
                 onClick={() => setSelectedGame(game.id)}
               >
-                <h3 className="font-semibold text-gray-800">{game.name}</h3>
-              </Card>
+                <h3 className="font-bold text-slate-700">{game.name}</h3>
+              </div>
             ))}
           </div>
         </div>
