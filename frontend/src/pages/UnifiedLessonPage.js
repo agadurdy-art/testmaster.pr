@@ -367,7 +367,8 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
       if (!res.ok) throw new Error('Failed');
       const data = await res.json();
       setPronResult(data);
-      if (data.is_correct && !done.includes(w.word_id)) setDone(prev => [...prev, w.word_id]);
+      // Use word string instead of word_id
+      if (data.is_correct && !done.includes(w.word)) setDone(prev => [...prev, w.word]);
     } catch {
       toast.error('Pronunciation check failed. Try again.');
     } finally {
