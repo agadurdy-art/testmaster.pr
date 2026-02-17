@@ -9,14 +9,15 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 - **Content System**: User-authored JSON -> `/app/backend/content/` -> `seed_content_v4.py` -> MongoDB
 - **3rd Party**: OpenAI Whisper (pronunciation), Browser TTS (listening - MOCKED), jsPDF (PDF worksheets)
 
-## Implemented Content
+## Implemented Content (Stage 1 - Foundations)
 - [x] **Unit 1**: Hello & My Sounds (phonics A-E)
 - [x] **Unit 2**: My Name & Friends (phonics F-J)
 - [x] **Unit 3**: Numbers 1-10 (phonics K-O)
 - [x] **Unit 4**: Colors Everywhere (phonics P-T)
 - [x] **Unit 5**: My Family (phonics U-Z) -- ALPHABET COMPLETE
-- [x] **Unit 6**: My Body - Part 1 (face/head, big/small, plurals) -- Feb 17, 2026
-- [ ] Units 7-12: Awaiting user content
+- [x] **Unit 6**: My Body Part 1 (face/head, big/small, plurals)
+- [x] **Unit 7**: My Body Part 2 (arms/legs/hands, imperatives) -- Feb 17, 2026
+- [ ] Units 8-12: Awaiting user content
 
 ## Features Implemented
 - [x] 10-step lesson flow with all activity types
@@ -28,11 +29,11 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 ## Pending Feature Requests
 - [ ] "Alphabet Master" badge (Unit 5 completion)
 - [ ] "First Half Complete" badge (Unit 6 completion)
-- [ ] Daily Habit Mode with Units 1-6 interleaving
-- [ ] Monster Face AI visual for Unit 6 L4 reading
+- [ ] Daily Habit Mode with Units 1-7 interleaving
+- [ ] Imperative visual cues for "Touch your..." commands
 
 ## Prioritized Backlog
-### P0: Units 7-12 content, Daily Habit SRS
+### P0: Units 8-12 content, Daily Habit SRS
 ### P1: TTS audio, Badge system, UnifiedLessonPage refactor
 ### P2: Booster Mode, Certification Gate, Stage 2-8 themes
 
