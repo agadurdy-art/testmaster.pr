@@ -1,0 +1,565 @@
+"""
+AI Content Enricher Service
+Enhances user-provided curriculum content using GPT-4o
+Acts as a Master Primary Native English ESL Teacher
+"""
+
+import os
+import json
+import asyncio
+from typing import Dict, List, Any, Optional
+from dotenv import load_dotenv
+
+load_dotenv()
+
+from emergentintegrations.llm.chat import LlmChat, UserMessage
+
+# System prompt for the AI teacher
+ESL_TEACHER_SYSTEM_PROMPT = """You are Master Emma, a highly experienced Native English ESL Teacher with 20+ years of experience teaching young learners (ages 4-8). You specialize in:
+
+- Cambridge Young Learners methodology
+- TPR (Total Physical Response) teaching
+- Phonics-based instruction
+- Scaffolded learning progressions
+- Age-appropriate vocabulary introduction
+- Engaging, playful lesson delivery
+
+Your teaching philosophy:
+1. Every word and sentence must be meaningful and contextual
+2. Questions must be logical and test actual comprehension
+3. Audio scripts should be natural, conversational English
+4. Grammar patterns should emerge naturally from context
+5. All content should be achievable but slightly challenging (i+1)
+
+You always respond in valid JSON format as specified."""
+
+
+class AIContentEnricher:
+    """Service to enrich lesson content with AI-generated pedagogical content"""
+    
+    def __init__(self):
+        self.api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not self.api_key:
+            raise ValueError("EMERGENT_LLM_KEY not found in environment")
+    
+    def _create_chat(self, session_id: str) -> LlmChat:
+        """Create a new LLM chat instance"""
+        return LlmChat(
+            api_key=self.api_key,
+            session_id=session_id,
+            system_message=ESL_TEACHER_SYSTEM_PROMPT
+        ).with_model("openai", "gpt-4o")
+    
+    async def enrich_lesson(self, lesson_data: Dict[str, Any], unit_context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Enrich a complete lesson with AI-generated pedagogical content
+        
+        Args:
+            lesson_data: The original lesson data from user content
+            unit_context: Unit-level context (theme, grammar focus, phonics focus)
+        
+        Returns:
+            Enriched lesson data with improved content
+        """
+        chat = self._create_chat(f"lesson_{lesson_data.get('lesson_id', 'unknown')}")
+        
+        enriched_steps = []
+        
+        for step in lesson_data.get('steps', []):
+            enriched_step = await self._enrich_step(chat, step, lesson_data, unit_context)
+            enriched_steps.append(enriched_step)
+        
+        # Create enriched lesson
+        enriched_lesson = {
+            **lesson_data,
+            'steps': enriched_steps,
+            'ai_enriched': True,
+            'enrichment_version': '1.0'
+        }
+        
+        return enriched_lesson
+    
+    async def _enrich_step(
+        self, 
+        chat: LlmChat, 
+        step: Dict[str, Any], 
+        lesson_data: Dict[str, Any],
+        unit_context: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Enrich a single lesson step based on its type"""
+        
+        step_type = step.get('type')
+        
+        if step_type == 'warm_up':
+            return await self._enrich_warmup(chat, step, lesson_data, unit_context)
+        elif step_type == 'vocabulary':
+            return await self._enrich_vocabulary(chat, step, lesson_data, unit_context)
+        elif step_type == 'micro_game_vocab':
+            return await self._enrich_vocab_game(chat, step, lesson_data, unit_context)
+        elif step_type == 'micro_reading':
+            return await self._enrich_reading(chat, step, lesson_data, unit_context)
+        elif step_type == 'grammar_focus':
+            return await self._enrich_grammar(chat, step, lesson_data, unit_context)
+        elif step_type == 'grammar_game':
+            return await self._enrich_grammar_game(chat, step, lesson_data, unit_context)
+        elif step_type == 'listening':
+            return await self._enrich_listening(chat, step, lesson_data, unit_context)
+        elif step_type == 'production':
+            return await self._enrich_production(chat, step, lesson_data, unit_context)
+        elif step_type == 'exit_ticket':
+            return await self._enrich_exit_ticket(chat, step, lesson_data, unit_context)
+        else:
+            return step  # Return unchanged if unknown type
+    
+    async def _enrich_warmup(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich warm-up activity"""
+        
+        prompt = f"""Enhance this warm-up activity for young learners (ages 4-7).
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+LESSON CONTEXT:
+- Title: {lesson.get('title')}
+- Topic: {lesson.get('topic')}
+- Unit Theme: {unit.get('title')}
+
+Create an improved warm-up that:
+1. Has a clear, engaging question related to the video/image
+2. Provides 4 logical answer options (one correct, three plausible distractors)
+3. Includes a helpful hint that guides without giving away the answer
+4. Uses simple, age-appropriate language
+
+Respond with ONLY valid JSON in this exact format:
+{{
+    "step": {step.get('step')},
+    "type": "warm_up",
+    "video_url": "{step.get('video_url', '')}",
+    "instruction": "engaging instruction for the child",
+    "question_text": "clear, simple question",
+    "correct_answer": "the correct answer",
+    "options": ["option1", "option2", "option3", "option4"],
+    "image_emoji": "relevant emoji",
+    "hint": "helpful hint"
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Warmup enrichment failed: {e}")
+            return step
+    
+    async def _enrich_vocabulary(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich vocabulary activity with better definitions and examples"""
+        
+        items = step.get('items', [])
+        words_info = "\n".join([
+            f"- {item.get('word')}: {item.get('definition', '')}" 
+            for item in items
+        ])
+        
+        prompt = f"""Enhance these vocabulary words for young ESL learners (ages 4-7).
+
+ORIGINAL WORDS:
+{words_info}
+
+LESSON CONTEXT:
+- Title: {lesson.get('title')}
+- Topic: {lesson.get('topic')}
+- Grammar Focus: {unit.get('grammar_focus', [])}
+
+For each word, create:
+1. A child-friendly definition (max 6 words, simple vocabulary)
+2. A natural example sentence using the target grammar pattern
+3. An appropriate emoji
+4. IPA pronunciation
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "vocabulary",
+    "items": [
+        {{
+            "word": "word1",
+            "ipa": "/phonetic/",
+            "definition": "simple child-friendly definition",
+            "example": "Natural example sentence.",
+            "image_emoji": "emoji"
+        }}
+    ]
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Vocabulary enrichment failed: {e}")
+            return step
+    
+    async def _enrich_vocab_game(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich vocabulary game with better questions"""
+        
+        # Get vocabulary from the lesson for context
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
+        
+        prompt = f"""Create an engaging vocabulary game question for young learners (ages 4-7).
+
+VOCABULARY WORDS IN THIS LESSON: {vocab_words}
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+Create a fun, interactive question that:
+1. Tests recognition of one vocabulary word
+2. Uses an emoji or visual cue
+3. Has 4 clear options (1 correct, 3 distractors from lesson vocabulary or related words)
+4. Is playful and encouraging
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "micro_game_vocab",
+    "question_text": "Fun question with emoji visual cue",
+    "correct_answer": "correct_word",
+    "options": ["word1", "word2", "word3", "word4"]
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Vocab game enrichment failed: {e}")
+            return step
+    
+    async def _enrich_reading(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich reading passage and comprehension questions"""
+        
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
+        grammar_pattern = unit.get('grammar_focus', [])
+        
+        prompt = f"""Create an engaging micro-reading activity for young ESL learners (ages 4-7).
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+VOCABULARY TO INCLUDE: {vocab_words}
+GRAMMAR PATTERNS: {grammar_pattern}
+LESSON TOPIC: {lesson.get('topic')}
+
+Create:
+1. A short, engaging story (3-5 simple sentences)
+2. Uses the target vocabulary naturally
+3. Includes the grammar pattern
+4. 1-2 comprehension questions with logical multiple-choice options
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "micro_reading",
+    "title": "Story Title",
+    "text": "Short engaging story using vocabulary and grammar patterns.",
+    "questions": [
+        {{
+            "question": "Clear comprehension question",
+            "answer": "correct answer",
+            "options": ["option1", "option2", "option3"]
+        }}
+    ]
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Reading enrichment failed: {e}")
+            return step
+    
+    async def _enrich_grammar(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich grammar focus with clear explanations"""
+        
+        prompt = f"""Create a clear grammar explanation for young ESL learners (ages 4-7).
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+LESSON CONTEXT:
+- Title: {lesson.get('title')}
+- Topic: {lesson.get('topic')}
+
+Create:
+1. A simple, visual pattern (using blanks like "I like ___s.")
+2. A child-friendly explanation (one simple sentence)
+3. 2-3 clear examples that children can relate to
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "grammar_focus",
+    "rule_pattern": "Pattern with ___",
+    "explanation": "Simple one-sentence explanation",
+    "examples": ["Example 1.", "Example 2.", "Example 3."]
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Grammar enrichment failed: {e}")
+            return step
+    
+    async def _enrich_grammar_game(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich grammar game with better exercises"""
+        
+        grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'grammar_focus'), {})
+        pattern = grammar_step.get('rule_pattern', step.get('rule_pattern', ''))
+        
+        prompt = f"""Create an engaging grammar game for young ESL learners (ages 4-7).
+
+GRAMMAR PATTERN: {pattern}
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+Create a game that practices the grammar pattern. Choose the best mode:
+- "word_order": Arrange words to make a sentence
+- "fill_blank": Fill in the missing word
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "grammar_game",
+    "mode": "word_order" or "fill_blank",
+    "words": ["word1", "word2", "word3", "word4"] (for word_order),
+    "sentence": "Sentence with ____ blank." (for fill_blank),
+    "correct_sentence": "Complete correct sentence.",
+    "correct_answer": "missing word" (for fill_blank),
+    "options": ["option1", "option2", "option3"] (for fill_blank),
+    "hint": "Helpful hint"
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Grammar game enrichment failed: {e}")
+            return step
+    
+    async def _enrich_listening(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich listening activity with natural audio script and logical questions"""
+        
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
+        grammar_pattern = unit.get('grammar_focus', [])
+        
+        prompt = f"""Create a listening activity for young ESL learners (ages 4-7).
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+VOCABULARY: {vocab_words}
+GRAMMAR PATTERNS: {grammar_pattern}
+LESSON TOPIC: {lesson.get('topic')}
+
+CRITICAL: The questions must be LOGICAL and match the audio content!
+- If asking "How many?", options should be NUMBERS
+- If asking "What color?", options should be COLORS
+- If asking "Does he like...?", options should be "Yes" / "No"
+
+Create:
+1. A natural, conversational audio script (2-3 sentences, using vocabulary)
+2. 1-2 comprehension questions with LOGICAL multiple-choice options
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "listening",
+    "audio_text": "Natural conversational script for TTS.",
+    "questions": [
+        {{
+            "question": "Clear listening comprehension question",
+            "answer": "correct answer (must match question type)",
+            "options": ["logical option 1", "logical option 2", "logical option 3"]
+        }}
+    ]
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            result = json.loads(response)
+            # Ensure questions have proper options
+            for q in result.get('questions', []):
+                if not q.get('options') or len(q.get('options', [])) < 2:
+                    # Add default options based on answer type
+                    answer = q.get('answer', '').lower()
+                    if answer in ['yes', 'no']:
+                        q['options'] = ['Yes', 'No']
+                    elif answer.isdigit():
+                        q['options'] = ['one', 'two', 'three', 'four']
+            return result
+        except Exception as e:
+            print(f"Listening enrichment failed: {e}")
+            return step
+    
+    async def _enrich_production(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich production (speaking/writing) activity"""
+        
+        grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'grammar_focus'), {})
+        pattern = grammar_step.get('rule_pattern', '')
+        
+        prompt = f"""Create a speaking practice activity for young ESL learners (ages 4-7).
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+GRAMMAR PATTERN: {pattern}
+LESSON TOPIC: {lesson.get('topic')}
+
+Create a simple, encouraging speaking prompt that:
+1. Uses the target grammar pattern
+2. Is achievable for beginners
+3. Has a clear expected response
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "production",
+    "prompt": "Say: [Simple sentence using pattern]",
+    "expected_text": "expected response in lowercase",
+    "mode": "speaking"
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Production enrichment failed: {e}")
+            return step
+    
+    async def _enrich_exit_ticket(
+        self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
+    ) -> Dict[str, Any]:
+        """Enrich exit ticket with comprehensive review question"""
+        
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
+        
+        prompt = f"""Create an exit quiz question for young ESL learners (ages 4-7).
+
+ORIGINAL CONTENT:
+{json.dumps(step, indent=2)}
+
+VOCABULARY LEARNED: {vocab_words}
+LESSON TOPIC: {lesson.get('topic')}
+
+Create a fun, visual quiz question that:
+1. Tests one vocabulary word with an emoji cue
+2. Has 3-4 clear options
+3. Is encouraging and playful
+
+Respond with ONLY valid JSON:
+{{
+    "step": {step.get('step')},
+    "type": "exit_ticket",
+    "question_text": "Fun question with emoji: Pick the ___!",
+    "correct_answer": "correct_word",
+    "options": ["option1", "option2", "option3"]
+}}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return json.loads(response)
+        except Exception as e:
+            print(f"Exit ticket enrichment failed: {e}")
+            return step
+
+
+async def enrich_unit_content(unit_file_path: str, output_path: str) -> Dict[str, Any]:
+    """
+    Enrich an entire unit's content file
+    
+    Args:
+        unit_file_path: Path to the original JSON content file
+        output_path: Path to save the enriched content
+    
+    Returns:
+        Enriched unit data
+    """
+    enricher = AIContentEnricher()
+    
+    with open(unit_file_path, 'r') as f:
+        unit_data = json.load(f)
+    
+    stage = unit_data.get('stage')
+    stage_title = unit_data.get('stage_title')
+    
+    enriched_units = []
+    
+    for unit in unit_data.get('units', []):
+        unit_context = {
+            'title': unit.get('title'),
+            'subtitle': unit.get('subtitle'),
+            'grammar_focus': unit.get('grammar_focus', []),
+            'phonics_focus': unit.get('phonics_focus', [])
+        }
+        
+        enriched_lessons = []
+        
+        for lesson in unit.get('lessons', []):
+            print(f"  Enriching: {lesson.get('title')}...")
+            enriched_lesson = await enricher.enrich_lesson(lesson, unit_context)
+            enriched_lessons.append(enriched_lesson)
+            # Small delay to avoid rate limiting
+            await asyncio.sleep(1)
+        
+        enriched_unit = {
+            **unit,
+            'lessons': enriched_lessons
+        }
+        enriched_units.append(enriched_unit)
+    
+    enriched_data = {
+        'stage': stage,
+        'stage_title': stage_title,
+        'units': enriched_units,
+        'ai_enriched': True
+    }
+    
+    # Save enriched content
+    with open(output_path, 'w') as f:
+        json.dump(enriched_data, f, indent=2, ensure_ascii=False)
+    
+    print(f"Enriched content saved to: {output_path}")
+    return enriched_data
+
+
+# CLI for running enrichment
+if __name__ == "__main__":
+    import sys
+    
+    if len(sys.argv) < 3:
+        print("Usage: python ai_content_enricher.py <input_file> <output_file>")
+        sys.exit(1)
+    
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+    
+    asyncio.run(enrich_unit_content(input_file, output_file))
