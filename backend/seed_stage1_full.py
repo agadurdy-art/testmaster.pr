@@ -867,9 +867,13 @@ def make_grammar_game(unit, lesson_num):
     fill_blank = []
     start = (lesson_num - 1) * 2
     for w in words[start:start + 3]:
-        pattern = r["pattern"]
-        if "___" in pattern:
-            sentence = pattern.replace("___", "______", 1)
+        # Use the word's OWN example sentence for pedagogically correct fill-blank
+        example = w.get("example", "")
+        word_lower = w["word"].lower()
+        if example and word_lower in example.lower():
+            # Replace the word in the example with a blank
+            import re
+            sentence = re.sub(r'\b' + re.escape(w["word"]) + r'\b', '______', example, count=1, flags=re.IGNORECASE)
             others = [x["word"] for x in words if x != w][:3]
             options = [w["word"]] + others
             random.shuffle(options)
