@@ -1003,7 +1003,6 @@ def make_exit_ticket(unit, lesson_num):
         correct_grammar_word = next((w for w in words if w["word"].lower() == last_w.lower()), words[0])
     
     # Create the fill-blank from the example sentence
-    import re
     grammar_sentence = re.sub(r'\b' + re.escape(correct_grammar_word["word"]) + r'\b', '______', example_for_pattern, count=1, flags=re.IGNORECASE).rstrip('.!?')
     others = [x["word"] for x in words if x != correct_grammar_word]
     random.shuffle(others)
