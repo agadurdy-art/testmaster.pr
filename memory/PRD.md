@@ -9,50 +9,32 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 - **Content System**: User-authored JSON -> `/app/backend/content/` -> `seed_content_v4.py` -> MongoDB
 - **3rd Party**: OpenAI Whisper (pronunciation), Browser TTS (listening - MOCKED), jsPDF (PDF worksheets)
 
-## Content Workflow
-1. User authors content per unit (JSON)
-2. Save as `/app/backend/content/stage1_unitXX.json`
-3. Run `python seed_content_v4.py`
-4. Frontend reads from MongoDB APIs
-
 ## Implemented Content
-- [x] **Unit 1**: Hello & My Sounds (4 lessons, phonics A-E)
-- [x] **Unit 2**: My Name & Friends (4 lessons, phonics F-J)
-- [x] **Unit 3**: Numbers 1-10 (4 lessons, phonics K-O)
-- [x] **Unit 4**: Colors Everywhere (4 lessons, phonics P-T)
-- [x] **Unit 5**: My Family (4 lessons, phonics U-Z) -- ADDED Feb 17, 2026 -- ALPHABET COMPLETE A-Z
-- [ ] Units 6-12: Awaiting user content
+- [x] **Unit 1**: Hello & My Sounds (phonics A-E)
+- [x] **Unit 2**: My Name & Friends (phonics F-J)
+- [x] **Unit 3**: Numbers 1-10 (phonics K-O)
+- [x] **Unit 4**: Colors Everywhere (phonics P-T)
+- [x] **Unit 5**: My Family (phonics U-Z) -- ALPHABET COMPLETE
+- [x] **Unit 6**: My Body - Part 1 (face/head, big/small, plurals) -- Feb 17, 2026
+- [ ] Units 7-12: Awaiting user content
 
 ## Features Implemented
-- [x] 10-step lesson flow (warm_up -> vocabulary -> vocab_game -> reading -> grammar -> grammar_game -> listening -> production -> exit_ticket -> auto_review)
+- [x] 10-step lesson flow with all activity types
 - [x] YouTube video embed in warm-up
-- [x] Spiral recall (hints reference previous lessons)
-- [x] Single-mode grammar games (word_order, fill_blank, error_hunter)
-- [x] Extra Fun links (YouTube/ISLCollective)
-- [x] Vocabulary Review + Grammar Review (mastery check lessons)
-- [x] Hints throughout all quiz activities
-- [x] Lesson Roadmap (winding path)
-- [x] PDF Worksheet (current + cumulative)
-- [x] Acceptable answers for fill-blank
+- [x] Grammar games (word_order, fill_blank, error_hunter)
+- [x] Vocabulary Review + Grammar Review (mastery lessons)
+- [x] Lesson Roadmap, PDF Worksheets, Hints, Extra Links
 
-## Pending Feature Requests (from User)
-- [ ] "Alphabet Master" badge after completing Unit 5 (A-Z complete)
-- [ ] Daily Habit Mode should include all Units 1-5 vocabulary after Unit 5 completion
+## Pending Feature Requests
+- [ ] "Alphabet Master" badge (Unit 5 completion)
+- [ ] "First Half Complete" badge (Unit 6 completion)
+- [ ] Daily Habit Mode with Units 1-6 interleaving
+- [ ] Monster Face AI visual for Unit 6 L4 reading
 
 ## Prioritized Backlog
-### P0 (Next)
-- Units 6-12 content from user
-- Daily Habit Mode (spaced repetition) with Units 1-5 interleaving
-
-### P1
-- TTS for listening activities (ElevenLabs or OpenAI TTS)
-- Alphabet Master badge system
-- Refactor UnifiedLessonPage.js into smaller components
-
-### P2
-- Booster Mode (remedial for <80% scores)
-- Certification Gate
-- Stage 2-8 themes, Teacher Control Panel
+### P0: Units 7-12 content, Daily Habit SRS
+### P1: TTS audio, Badge system, UnifiedLessonPage refactor
+### P2: Booster Mode, Certification Gate, Stage 2-8 themes
 
 ## Test Credentials
 - Email: tester@test.com / Password: tester123
