@@ -770,7 +770,7 @@ def make_vocab_activity(unit, lesson_num):
 
 
 async def make_warmup_activity_ai(unit, lesson_num):
-    """AI-powered warmup generation"""
+    """Warmup from AI cache"""
     un = unit["num"]
     words = unit["words"]
     half = len(words) // 2
@@ -783,25 +783,26 @@ async def make_warmup_activity_ai(unit, lesson_num):
     else:
         sel = [words[1], words[3], words[5]] if len(words) > 5 else words[:3]
     
-    try:
-        from ai_content_generator import generate_warmup_questions
-        result = await generate_warmup_questions(unit, lesson_num, sel)
+    cache = load_ai_cache()
+    cache_key = f"unit_{un:02d}"
+    lesson_key = f"lesson_{lesson_num:02d}"
+    cached = cache.get(cache_key, {}).get(lesson_key, {}).get("warmup")
+    
+    if cached and cached.get("questions"):
         questions = []
-        for i, q in enumerate(result.get("questions", [])):
+        for i, q in enumerate(cached["questions"]):
+            w = sel[i] if i < len(sel) else sel[0]
             questions.append({
                 "question_id": f"wq_{un}_{lesson_num}_{i}",
-                "question_text": q.get("question_text", f"What does '{sel[i]['definition'].lower()}' mean?"),
-                "correct_answer": q.get("correct_answer", sel[i]["word"]),
-                "options": q.get("options", [sel[i]["word"]])[:4],
+                "question_text": q.get("question_text", f"What does '{w['definition'].lower()}' mean?"),
+                "correct_answer": q.get("correct_answer", w["word"]),
+                "options": q.get("options", [w["word"]])[:4],
                 "question_type": "multiple_choice",
-                "image_emoji": q.get("image_emoji", sel[i].get("emoji", "")),
+                "image_emoji": q.get("image_emoji", w.get("emoji", "")),
                 "hint": q.get("hint", ""),
-                "hint_word": sel[i]["word"]
+                "hint_word": w["word"]
             })
-        if not questions:
-            raise ValueError("No questions generated")
-    except Exception as e:
-        print(f"  AI warmup failed for U{un}L{lesson_num}: {e}, using fallback")
+    else:
         questions = []
         for i, w in enumerate(sel):
             others = [x["word"] for x in words if x != w]
