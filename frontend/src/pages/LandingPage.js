@@ -248,12 +248,8 @@ export default function LandingPage({ onLogin, user, showLogin }) {
   const isDark = activeTheme === THEME_MODES.DARK;
   const isNightShift = activeTheme === THEME_MODES.NIGHT_SHIFT;
   
-  // Trilingual helper
-  const getText = (en, vi, tr) => {
-    if (language === 'vi') return vi;
-    if (language === 'tr') return tr;
-    return en;
-  };
+  // English only - getText returns first parameter
+  const getText = (en) => en;
   
   // Theme-aware classes
   const bgMain = isDark ? 'bg-gray-900' : isNightShift ? 'bg-amber-50' : 'bg-gradient-to-b from-slate-50 via-violet-50/20 to-white';
