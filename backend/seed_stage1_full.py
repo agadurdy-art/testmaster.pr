@@ -873,7 +873,6 @@ def make_grammar_game(unit, lesson_num):
         word_lower = w["word"].lower()
         if example and word_lower in example.lower():
             # Replace the word in the example with a blank
-            import re
             sentence = re.sub(r'\b' + re.escape(w["word"]) + r'\b', '______', example, count=1, flags=re.IGNORECASE)
             others = [x["word"] for x in words if x != w][:3]
             options = [w["word"]] + others
