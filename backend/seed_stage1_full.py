@@ -758,11 +758,11 @@ def make_vocab_activity(unit, lesson_num):
     }
 
 
-def make_warmup_activity(unit, lesson_num):
+async def make_warmup_activity_ai(unit, lesson_num):
+    """AI-powered warmup generation"""
     un = unit["num"]
     words = unit["words"]
     half = len(words) // 2
-    # Different words for different lessons
     if lesson_num == 1:
         sel = words[:half]
     elif lesson_num == 2:
@@ -771,21 +771,42 @@ def make_warmup_activity(unit, lesson_num):
         sel = [words[0], words[2], words[4]] if len(words) > 4 else words[:3]
     else:
         sel = [words[1], words[3], words[5]] if len(words) > 5 else words[:3]
-    questions = []
-    for i, w in enumerate(sel):
-        others = [x["word"] for x in words if x != w]
-        random.shuffle(others)
-        options = [w["word"]] + others[:3]
-        random.shuffle(options)
-        questions.append({
-            "question_id": f"wq_{un}_{lesson_num}_{i}",
-            "question_text": f"What does '{w['definition'].lower()}' mean?",
-            "correct_answer": w["word"],
-            "options": options[:4],
-            "question_type": "multiple_choice",
-            "image_emoji": w.get("emoji", w.get("image_emoji", "")),
-            "hint_word": w["word"]
-        })
+    
+    try:
+        from ai_content_generator import generate_warmup_questions
+        result = await generate_warmup_questions(unit, lesson_num, sel)
+        questions = []
+        for i, q in enumerate(result.get("questions", [])):
+            questions.append({
+                "question_id": f"wq_{un}_{lesson_num}_{i}",
+                "question_text": q.get("question_text", f"What does '{sel[i]['definition'].lower()}' mean?"),
+                "correct_answer": q.get("correct_answer", sel[i]["word"]),
+                "options": q.get("options", [sel[i]["word"]])[:4],
+                "question_type": "multiple_choice",
+                "image_emoji": q.get("image_emoji", sel[i].get("emoji", "")),
+                "hint": q.get("hint", ""),
+                "hint_word": sel[i]["word"]
+            })
+        if not questions:
+            raise ValueError("No questions generated")
+    except Exception as e:
+        print(f"  AI warmup failed for U{un}L{lesson_num}: {e}, using fallback")
+        questions = []
+        for i, w in enumerate(sel):
+            others = [x["word"] for x in words if x != w]
+            random.shuffle(others)
+            options = [w["word"]] + others[:3]
+            random.shuffle(options)
+            questions.append({
+                "question_id": f"wq_{un}_{lesson_num}_{i}",
+                "question_text": f"What does '{w['definition'].lower()}' mean?",
+                "correct_answer": w["word"],
+                "options": options[:4],
+                "question_type": "multiple_choice",
+                "image_emoji": w.get("emoji", ""),
+                "hint_word": w["word"]
+            })
+    
     return {
         "activity_id": f"warmup_s1u{un:02d}l{lesson_num:02d}",
         "lesson_id": f"stage_1_unit_{un:02d}_lesson_{lesson_num:02d}",
