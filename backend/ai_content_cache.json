@@ -3479,5 +3479,1747 @@
         ]
       }
     }
+  },
+  "unit_07": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Raise your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "car",
+              "tree",
+              "book"
+            ],
+            "hint": "The long part between your shoulder and hand"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "legs",
+            "options": [
+              "legs",
+              "dogs",
+              "balls",
+              "chairs"
+            ],
+            "hint": "You use these to walk"
+          },
+          {
+            "sentence": "Clap your ______.",
+            "correct_answer": "hands",
+            "options": [
+              "hands",
+              "feet",
+              "eyes",
+              "books"
+            ],
+            "hint": "The part at the end of your arm"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Can",
+              "you",
+              "touch",
+              "your",
+              "arm"
+            ],
+            "correct_sentence": "Can you touch your arm?"
+          },
+          {
+            "words": [
+              "Touch",
+              "your",
+              "hands"
+            ],
+            "correct_sentence": "Touch your hands."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the long part of your body between shoulder and hand'?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "car",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the long part of your body used for walking'?",
+            "correct_answer": "leg",
+            "options": [
+              "leg",
+              "tree",
+              "book",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "run",
+              "jump",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "part of your body between shoulder and hand"
+          },
+          {
+            "question_text": "Write the missing word: Can you ______?",
+            "correct_answer": "jump",
+            "acceptable_answers": [
+              "jump"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The long part of your body between shoulder and hand' mean?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "banana",
+              "car",
+              "blue"
+            ],
+            "hint": "You use this to lift or carry things",
+            "image_emoji": "💪"
+          },
+          {
+            "question_text": "What does 'The long part of your body used for walking' mean?",
+            "correct_answer": "leg",
+            "options": [
+              "leg",
+              "computer",
+              "happy",
+              "tree"
+            ],
+            "hint": "You use this to stand and walk",
+            "image_emoji": "🦵"
+          },
+          {
+            "question_text": "What does 'The part at the end of your arm' mean?",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "dog",
+              "fast",
+              "cloud"
+            ],
+            "hint": "You use this to grab and hold things",
+            "image_emoji": "✋"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have ten ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "apples",
+              "cars",
+              "dogs"
+            ],
+            "hint": "You use these to hold things"
+          },
+          {
+            "sentence": "Touch your ______.",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "window",
+              "table",
+              "cloud"
+            ],
+            "hint": "It's where your arm connects to your body"
+          },
+          {
+            "sentence": "My ______ is small.",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "book",
+              "phone",
+              "chair"
+            ],
+            "hint": "The part at the end of your leg"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Touch",
+              "your",
+              "foot"
+            ],
+            "correct_sentence": "Touch your foot."
+          },
+          {
+            "words": [
+              "Can",
+              "you",
+              "touch",
+              "your",
+              "shoulder"
+            ],
+            "correct_sentence": "Can you touch your shoulder?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part at the end of your leg'?",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "finger",
+              "chair",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What are 'the thin parts at the end of your hand'?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "nose",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "jump",
+              "run",
+              "green"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Part used to walk and stand"
+          },
+          {
+            "question_text": "Write the missing word: Can you touch your ______?",
+            "correct_answer": "finger",
+            "acceptable_answers": [
+              "finger"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'the part at the end of your leg' mean?",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "book",
+              "happy",
+              "tree"
+            ],
+            "hint": "You use this to walk",
+            "image_emoji": "🦶"
+          },
+          {
+            "question_text": "What does 'the thin parts at the end of your hand' mean?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "car",
+              "blue",
+              "run"
+            ],
+            "hint": "You use these to touch and grab things",
+            "image_emoji": "☝️"
+          },
+          {
+            "question_text": "What does 'the top part of your arm where it connects to your body' mean?",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "cat",
+              "jump",
+              "sun"
+            ],
+            "hint": "Your arm moves here at the body",
+            "image_emoji": "🤷"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Raise your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "car",
+              "apple",
+              "tree"
+            ],
+            "hint": "It connects your shoulder and hand"
+          },
+          {
+            "sentence": "Touch your ______.",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "dog",
+              "book",
+              "shoe"
+            ],
+            "hint": "You use it to hold things"
+          },
+          {
+            "sentence": "I have ten ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "chairs",
+              "clouds",
+              "animals"
+            ],
+            "hint": "These are on your hand"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Touch",
+              "your",
+              "hand"
+            ],
+            "correct_sentence": "Touch your hand."
+          },
+          {
+            "words": [
+              "Can",
+              "you",
+              "clap",
+              "your",
+              "hands"
+            ],
+            "correct_sentence": "Can you clap your hands?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the long part of your body between shoulder and hand'?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "table",
+              "dog",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the top part of your arm where it connects to your body'?",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "book",
+              "car",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "hat",
+              "ball",
+              "sing"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Body part above your arm"
+          },
+          {
+            "question_text": "Write the missing word: Can you raise your ______?",
+            "correct_answer": "arm",
+            "acceptable_answers": [
+              "arm"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The long part of your body between shoulder and hand' mean?",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "dog",
+              "book",
+              "happy"
+            ],
+            "hint": "You use this to lift things",
+            "image_emoji": "💪"
+          },
+          {
+            "question_text": "What does 'The part at the end of your arm' mean?",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "car",
+              "blue",
+              "fast"
+            ],
+            "hint": "You use this to hold or touch things",
+            "image_emoji": "✋"
+          },
+          {
+            "question_text": "What does 'The thin parts at the end of your hand' mean?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "tree",
+              "run",
+              "hot"
+            ],
+            "hint": "You use these to point or pick up small things",
+            "image_emoji": "☝️"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Raise your ______.",
+            "correct_answer": "arm",
+            "options": [
+              "arm",
+              "cat",
+              "book",
+              "apple"
+            ],
+            "hint": "The long part between shoulder and hand"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "legs",
+            "options": [
+              "legs",
+              "shirts",
+              "balls",
+              "trees"
+            ],
+            "hint": "You use these to walk"
+          },
+          {
+            "sentence": "Clap your ______.",
+            "correct_answer": "hands",
+            "options": [
+              "hands",
+              "keys",
+              "shirts",
+              "cars"
+            ],
+            "hint": "At the end of your arm"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Touch",
+              "your",
+              "arm"
+            ],
+            "correct_sentence": "Touch your arm."
+          },
+          {
+            "words": [
+              "Can",
+              "you",
+              "clap",
+              "your",
+              "hands"
+            ],
+            "correct_sentence": "Can you clap your hands?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part at the end of your arm you use to hold things'?",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "foot",
+              "head",
+              "eye"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What are 'the thin parts at the end of your hand'?",
+            "correct_answer": "finger",
+            "options": [
+              "finger",
+              "toe",
+              "nose",
+              "ear"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: Touch your ______.",
+            "correct_answer": "hand",
+            "options": [
+              "hand",
+              "ball",
+              "cat",
+              "tree"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Part at end of your arm"
+          },
+          {
+            "question_text": "Write the missing word: Can you clap your ______",
+            "correct_answer": "hands",
+            "acceptable_answers": [
+              "hands"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the long part of your body used for walking?",
+            "correct_answer": "leg",
+            "options": [
+              "leg",
+              "book",
+              "sky",
+              "car"
+            ],
+            "hint": "You use it to move and stand",
+            "image_emoji": "🦵"
+          },
+          {
+            "question_text": "What do you call the part at the end of your leg?",
+            "correct_answer": "foot",
+            "options": [
+              "foot",
+              "tree",
+              "pen",
+              "hat"
+            ],
+            "hint": "It touches the ground when you stand",
+            "image_emoji": "🦶"
+          },
+          {
+            "question_text": "What is the top part of your arm where it connects to your body?",
+            "correct_answer": "shoulder",
+            "options": [
+              "shoulder",
+              "apple",
+              "computer",
+              "river"
+            ],
+            "hint": "You can shrug this part",
+            "image_emoji": "🤷"
+          }
+        ]
+      }
+    }
+  },
+  "unit_08": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "apple",
+              "car",
+              "tree"
+            ],
+            "hint": "A large farm animal that gives milk"
+          },
+          {
+            "sentence": "The ______ runs fast.",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "book",
+              "phone",
+              "shoe"
+            ],
+            "hint": "A large animal you can ride"
+          },
+          {
+            "sentence": "The ______ has soft wool.",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "table",
+              "clock",
+              "cup"
+            ],
+            "hint": "A farm animal with soft wool"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "cow"
+            ],
+            "correct_sentence": "That is a cow."
+          },
+          {
+            "words": [
+              "The",
+              "sheep",
+              "is",
+              "white"
+            ],
+            "correct_sentence": "The sheep is white."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a large farm animal that gives milk'?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "blue",
+              "sing"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a large animal you can ride'?",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "tree",
+              "eat",
+              "soft"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: That is a ______.",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "fast",
+              "moo",
+              "duck"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used to say the animal you can ride"
+          },
+          {
+            "question_text": "Write the missing word: The cow says ______.",
+            "correct_answer": "moo",
+            "acceptable_answers": [
+              "moo"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a large farm animal that gives milk' mean?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "table",
+              "run"
+            ],
+            "hint": "This animal produces milk",
+            "image_emoji": "🐄"
+          },
+          {
+            "question_text": "What does 'a large animal you can ride' mean?",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "shoe",
+              "river",
+              "jump"
+            ],
+            "hint": "You can ride this animal",
+            "image_emoji": "🐴"
+          },
+          {
+            "question_text": "What does 'a farm animal with soft wool' mean?",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "book",
+              "carrot",
+              "fast"
+            ],
+            "hint": "This animal has soft wool",
+            "image_emoji": "🐑"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "run",
+              "blue",
+              "happy"
+            ],
+            "hint": "A pink farm animal"
+          },
+          {
+            "sentence": "The ______ swims in the pond.",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "table",
+              "car",
+              "cloud"
+            ],
+            "hint": "A bird that swims"
+          },
+          {
+            "sentence": "The ______ has eggs.",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "book",
+              "shoe",
+              "glass"
+            ],
+            "hint": "A farm bird for eggs"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "pig"
+            ],
+            "correct_sentence": "That is a pig."
+          },
+          {
+            "words": [
+              "The",
+              "duck",
+              "swims"
+            ],
+            "correct_sentence": "The duck swims."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a bird that swims in water'?",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "car",
+              "tree",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a pink farm animal'?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "chair",
+              "rain",
+              "shoe"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: That is a ______.",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "fast",
+              "happy",
+              "run"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used for the sentence 'That is a ___.'"
+          },
+          {
+            "question_text": "Write the missing word: The pig is ______.",
+            "correct_answer": "big",
+            "acceptable_answers": [
+              "big"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "A bird that swims in water is called a?",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "table",
+              "car",
+              "book"
+            ],
+            "hint": "It has webbed feet and quacks",
+            "image_emoji": "🦆"
+          },
+          {
+            "question_text": "A pink farm animal is called a?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "river",
+              "computer",
+              "hat"
+            ],
+            "hint": "It likes to roll in mud",
+            "image_emoji": "🐷"
+          },
+          {
+            "question_text": "A bird kept on farms for eggs is called a?",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "phone",
+              "shoe",
+              "lamp"
+            ],
+            "hint": "It says 'cluck cluck'",
+            "image_emoji": "🐔"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "table",
+              "blue",
+              "run"
+            ],
+            "hint": "A large farm animal that gives milk"
+          },
+          {
+            "sentence": "The ______ says oink.",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "car",
+              "shoe",
+              "happy"
+            ],
+            "hint": "A pink farm animal"
+          },
+          {
+            "sentence": "The ______ is white.",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "book",
+              "tree",
+              "fast"
+            ],
+            "hint": "A farm animal with soft wool"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "sheep"
+            ],
+            "correct_sentence": "That is a sheep."
+          },
+          {
+            "words": [
+              "The",
+              "cow",
+              "says",
+              "moo"
+            ],
+            "correct_sentence": "The cow says moo."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a large farm animal that gives milk'?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "tree",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a bird kept on farms for eggs'?",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "ball",
+              "shirt",
+              "train"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: That is a ______.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "fast",
+              "happy",
+              "chair"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "It is a farm animal that gives milk"
+          },
+          {
+            "question_text": "Complete: The chicken ______.",
+            "correct_answer": "has eggs",
+            "acceptable_answers": [
+              "has eggs"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a large farm animal that gives milk' mean?",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "car",
+              "book",
+              "fast"
+            ],
+            "hint": "This animal says 'moo' and gives us milk",
+            "image_emoji": "🐄"
+          },
+          {
+            "question_text": "What does 'a farm animal with soft wool' mean?",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "table",
+              "song",
+              "blue"
+            ],
+            "hint": "This animal says 'baa' and gives wool",
+            "image_emoji": "🐑"
+          },
+          {
+            "question_text": "What does 'a pink farm animal' mean?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "shoe",
+              "tree",
+              "cold"
+            ],
+            "hint": "This animal loves mud and says 'oink'",
+            "image_emoji": "🐷"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "That is a ______.",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "apple",
+              "car",
+              "book"
+            ],
+            "hint": "A animal you can ride"
+          },
+          {
+            "sentence": "The ______ says moo.",
+            "correct_answer": "cow",
+            "options": [
+              "cow",
+              "pen",
+              "shoe",
+              "door"
+            ],
+            "hint": "A farm animal that gives milk"
+          },
+          {
+            "sentence": "The ______ is white.",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "tree",
+              "ball",
+              "hat"
+            ],
+            "hint": "A farm animal with soft wool"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "That",
+              "is",
+              "a",
+              "sheep"
+            ],
+            "correct_sentence": "That is a sheep."
+          },
+          {
+            "words": [
+              "The",
+              "cow",
+              "says",
+              "moo"
+            ],
+            "correct_sentence": "The cow says moo."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a farm animal with soft wool'?",
+            "correct_answer": "sheep",
+            "options": [
+              "sheep",
+              "pig",
+              "tree",
+              "car"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a pink farm animal'?",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "sheep",
+              "dog",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: That is a ______.",
+            "correct_answer": "pig",
+            "options": [
+              "pig",
+              "run",
+              "blue",
+              "quick"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used to name a farm animal"
+          },
+          {
+            "question_text": "Write the missing word: The ______ says baa.",
+            "correct_answer": "sheep",
+            "acceptable_answers": [
+              "sheep"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is a large animal you can ride on a farm?",
+            "correct_answer": "horse",
+            "options": [
+              "horse",
+              "car",
+              "book",
+              "tree"
+            ],
+            "hint": "It has four legs and you can sit on it.",
+            "image_emoji": "🐴"
+          },
+          {
+            "question_text": "What is a bird that swims in water?",
+            "correct_answer": "duck",
+            "options": [
+              "duck",
+              "pen",
+              "shirt",
+              "banana"
+            ],
+            "hint": "It quacks and likes ponds.",
+            "image_emoji": "🦆"
+          },
+          {
+            "question_text": "What is a bird kept on farms for eggs?",
+            "correct_answer": "chicken",
+            "options": [
+              "chicken",
+              "carpet",
+              "phone",
+              "shoe"
+            ],
+            "hint": "It says 'cluck' and lays eggs.",
+            "image_emoji": "🐔"
+          }
+        ]
+      }
+    }
+  },
+  "unit_09": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I like my ______ because it barks.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "tree",
+              "book"
+            ],
+            "hint": "It is a pet that barks"
+          },
+          {
+            "sentence": "The ______ has long ears and likes carrots.",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "chair",
+              "apple",
+              "phone"
+            ],
+            "hint": "A small animal with long ears"
+          },
+          {
+            "sentence": "I do not like the ______ in my house.",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "dog",
+              "bird",
+              "rabbit"
+            ],
+            "hint": "A small animal some people don’t like indoors"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "birds"
+            ],
+            "correct_sentence": "I like birds."
+          },
+          {
+            "words": [
+              "The",
+              "rabbit",
+              "is",
+              "soft"
+            ],
+            "correct_sentence": "The rabbit is soft."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a common pet animal that barks'?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "tree",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a small animal with long ears'?",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "chair",
+              "cloud",
+              "shoe"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "dogs",
+            "options": [
+              "dogs",
+              "runs",
+              "blue",
+              "books"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A pet animal that barks"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "spiders",
+            "acceptable_answers": [
+              "spiders"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "book",
+              "fast"
+            ],
+            "hint": "This animal says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'a small animal with long ears' mean?",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "chair",
+              "tree",
+              "blue"
+            ],
+            "hint": "This animal hops and has big ears",
+            "image_emoji": "🐰"
+          },
+          {
+            "question_text": "What does 'an animal with wings that can fly' mean?",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "shoe",
+              "lamp",
+              "sweet"
+            ],
+            "hint": "This animal sings and flies",
+            "image_emoji": "🐦"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The ______ has a hard shell.",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "apple",
+              "car",
+              "shoe"
+            ],
+            "hint": "A slow animal with a shell"
+          },
+          {
+            "sentence": "I like my little ______ in the tank.",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "table",
+              "cup",
+              "pencil"
+            ],
+            "hint": "A small orange fish"
+          },
+          {
+            "sentence": "The ______ is very small and has a long tail.",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "flower",
+              "book",
+              "hat"
+            ],
+            "hint": "A tiny animal that squeaks"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "the",
+              "turtle"
+            ],
+            "correct_sentence": "I like the turtle."
+          },
+          {
+            "words": [
+              "The",
+              "goldfish",
+              "is",
+              "small"
+            ],
+            "correct_sentence": "The goldfish is small."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a very small animal with a long tail'?",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "car",
+              "book",
+              "flower"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a slow animal with a hard shell'?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "bird",
+              "computer",
+              "milk"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "mice",
+            "options": [
+              "mice",
+              "cars",
+              "trees",
+              "runs"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Plural of mouse, an animal"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "spiders",
+            "acceptable_answers": [
+              "spiders"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a very small animal with a long tail' mean?",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "car",
+              "book",
+              "happy"
+            ],
+            "hint": "This small animal likes cheese 🧀",
+            "image_emoji": "🐭"
+          },
+          {
+            "question_text": "What does 'a slow animal with a hard shell' mean?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "computer",
+              "dress",
+              "jump"
+            ],
+            "hint": "This animal carries its home on its back",
+            "image_emoji": "🐢"
+          },
+          {
+            "question_text": "What does 'a small orange fish kept as a pet' mean?",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "ball",
+              "chair",
+              "tree"
+            ],
+            "hint": "This pet swims in a bowl or tank",
+            "image_emoji": "🐠"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I like to play with my ______.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "book",
+              "tree"
+            ],
+            "hint": "A pet that barks"
+          },
+          {
+            "sentence": "The ______ can fly high in the sky.",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "table",
+              "shoe",
+              "phone"
+            ],
+            "hint": "An animal with wings"
+          },
+          {
+            "sentence": "A ______ moves slowly and has a hard shell.",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "ball",
+              "hat",
+              "cup"
+            ],
+            "hint": "A slow animal with a shell"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "birds"
+            ],
+            "correct_sentence": "I like birds."
+          },
+          {
+            "words": [
+              "The",
+              "turtle",
+              "is",
+              "slow"
+            ],
+            "correct_sentence": "The turtle is slow."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a common pet animal that barks'?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a small orange fish kept as a pet'?",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "table",
+              "book",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "dogs",
+            "options": [
+              "dogs",
+              "books",
+              "chairs",
+              "rivers"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A plural form of a pet that barks"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "mice",
+            "acceptable_answers": [
+              "mice"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "red",
+              "chair"
+            ],
+            "hint": "This animal says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'an animal with wings that can fly' mean?",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "book",
+              "green",
+              "table"
+            ],
+            "hint": "This animal can sing and fly",
+            "image_emoji": "🐦"
+          },
+          {
+            "question_text": "What does 'a slow animal with a hard shell' mean?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "phone",
+              "hot",
+              "chair"
+            ],
+            "hint": "This animal carries its home on its back",
+            "image_emoji": "🐢"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I like my pet ______.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "apple",
+              "chair"
+            ],
+            "hint": "This animal barks"
+          },
+          {
+            "sentence": "The ______ has long ears.",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "table",
+              "shoe",
+              "book"
+            ],
+            "hint": "This pet hops"
+          },
+          {
+            "sentence": "I do not like ______ because it is small.",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "tree",
+              "phone",
+              "hat"
+            ],
+            "hint": "A tiny animal, often scared of cats"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "like",
+              "dogs"
+            ],
+            "correct_sentence": "I like dogs."
+          },
+          {
+            "words": [
+              "The",
+              "bird",
+              "can",
+              "fly"
+            ],
+            "correct_sentence": "The bird can fly."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'an animal with wings that can fly'?",
+            "correct_answer": "bird",
+            "options": [
+              "bird",
+              "car",
+              "desk",
+              "shoe"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a slow animal with a hard shell'?",
+            "correct_answer": "turtle",
+            "options": [
+              "turtle",
+              "tree",
+              "phone",
+              "shirt"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I like ______.",
+            "correct_answer": "birds",
+            "options": [
+              "birds",
+              "books",
+              "colors",
+              "cars"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Animals that can fly"
+          },
+          {
+            "question_text": "Write the missing word: I do not like ______.",
+            "correct_answer": "spiders",
+            "acceptable_answers": [
+              "spiders"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a small animal with long ears' mean?",
+            "correct_answer": "rabbit",
+            "options": [
+              "rabbit",
+              "guitar",
+              "mountain",
+              "flower"
+            ],
+            "hint": "This animal hops and has long ears",
+            "image_emoji": "🐰"
+          },
+          {
+            "question_text": "What does 'a very small animal with a long tail' mean?",
+            "correct_answer": "mouse",
+            "options": [
+              "mouse",
+              "car",
+              "cloud",
+              "pen"
+            ],
+            "hint": "This tiny animal likes cheese",
+            "image_emoji": "🐭"
+          },
+          {
+            "question_text": "What does 'a small orange fish kept as a pet' mean?",
+            "correct_answer": "goldfish",
+            "options": [
+              "goldfish",
+              "book",
+              "shirt",
+              "tree"
+            ],
+            "hint": "This pet swims in a bowl or aquarium",
+            "image_emoji": "🐠"
+          }
+        ]
+      }
+    }
   }
 }
