@@ -1,0 +1,276 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_06",
+      "unit_num": 6,
+      "title": "My Body - Part 1",
+      "subtitle": "Face and Head Parts",
+      "phonics_focus": [],
+      "grammar_focus": ["I have...", "This is my...", "Plurals (eyes, ears)", "Adjectives (big/small)"],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_06_lesson_01",
+          "title": "This is my Face",
+          "topic": "Core face parts (Eyes, Nose, Mouth)",
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=lM66GXud69g",
+              "source_channel": "Super Simple Songs",
+              "instruction": "Watch 'This is Me!' and answer:",
+              "question_text": "Which one is on your face?",
+              "correct_answer": "nose", "options": ["nose", "apple", "zebra", "van"],
+              "image_emoji": "👃", "hint": "You breathe with this."
+            },
+            {
+              "step": 2, "type": "vocabulary",
+              "items": [
+                {"word": "face", "ipa": "/feɪs/", "definition": "The front of your head", "example": "This is my face.", "image_emoji": "👤"},
+                {"word": "eye", "ipa": "/aɪ/", "definition": "What you see with", "example": "I have two eyes.", "image_emoji": "👁️"},
+                {"word": "nose", "ipa": "/noʊz/", "definition": "What you smell with", "example": "This is my nose.", "image_emoji": "👃"},
+                {"word": "mouth", "ipa": "/maʊθ/", "definition": "What you speak with", "example": "I have one mouth.", "image_emoji": "👄"}
+              ]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Match what you see with: 👁️",
+              "correct_answer": "eye", "options": ["eye", "nose", "mouth", "face"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "My Face",
+              "text": "Look at my face. I have two eyes. I have one nose. I have one mouth. I am happy!",
+              "questions": [
+                {"question": "How many eyes?", "answer": "two", "options": ["one", "two", "ten"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_focus",
+              "rule_pattern": "I have [Number] [Object]s.",
+              "explanation": "Use 's' for more than one (two eyes).",
+              "examples": ["I have two eyes.", "I have two ears."]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "I have two ______.",
+              "correct_answer": "eyes", "options": ["eyes", "eye", "am", "the"],
+              "hint": "Look at the number 'two'."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "This is my face. I have a red nose.",
+              "questions": [{"question": "What color is the nose?", "answer": "red"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Point and Say: I have two eyes.",
+              "expected_text": "I have two eyes",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "Match 👄:",
+              "correct_answer": "mouth", "options": ["mouth", "eye", "nose"]
+            }
+          ],
+          "extra_links": [
+            {"label": "This is Me! Song", "url": "https://www.youtube.com/watch?v=lM66GXud69g", "type": "youtube"}
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_06_lesson_02",
+          "title": "Listen and Look",
+          "topic": "Auditory and decorative parts of the head",
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "question_text": "Recall Lesson 1: Match 👁️",
+              "correct_answer": "eye", "options": ["eye", "mouth", "face"],
+              "hint": "You see with this."
+            },
+            {
+              "step": 2, "type": "vocabulary",
+              "items": [
+                {"word": "ear", "ipa": "/ɪər/", "definition": "What you hear with", "example": "I have two ears.", "image_emoji": "👂"},
+                {"word": "hair", "ipa": "/heər/", "definition": "On top of your head", "example": "My hair is black.", "image_emoji": "💇"},
+                {"word": "head", "ipa": "/hed/", "definition": "Top part of body", "example": "This is my head.", "image_emoji": "🧠"},
+                {"word": "look", "ipa": "/lʊk/", "definition": "To see something", "example": "Look at my hair!", "image_emoji": "👀"}
+              ]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Match what you hear with: 👂",
+              "correct_answer": "ear", "options": ["ear", "hair", "head", "eye"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "My Hair",
+              "text": "Look! I have black hair. This is my head. I have two ears. I can hear you!",
+              "questions": [
+                {"question": "What color is the hair?", "answer": "black", "options": ["black", "red", "blue"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_focus",
+              "rule_pattern": "My [Body Part] is [Color].",
+              "explanation": "Describe your body parts.",
+              "examples": ["My hair is black.", "My nose is red."]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "word_order",
+              "words": ["My", "hair", "is", "black"],
+              "correct_sentence": "My hair is black."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "Look at my head! I have two ears.",
+              "questions": [{"question": "How many ears?", "answer": "two"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Say: My hair is [Color].",
+              "expected_text": "My hair is",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "Choose 👂:",
+              "correct_answer": "ear", "options": ["ear", "eye", "head"]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_06_lesson_03",
+          "title": "My Whole Head",
+          "topic": "Reviewing the head as a whole",
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "question_text": "Which one is for hair? 💇",
+              "correct_answer": "hair", "options": ["hair", "ear", "mouth"]
+            },
+            {
+              "step": 2, "type": "vocabulary",
+              "items": [
+                {"word": "smile", "ipa": "/smaɪl/", "definition": "Happy face", "example": "Look at my smile.", "image_emoji": "😊"},
+                {"word": "big", "ipa": "/bɪɡ/", "definition": "Large size", "example": "I have big eyes.", "image_emoji": "🐘"},
+                {"word": "small", "ipa": "/smɔːl/", "definition": "Little size", "example": "I have a small nose.", "image_emoji": "🐭"}
+              ]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Match the small mouse: 🐭",
+              "correct_answer": "small", "options": ["small", "big", "smile", "head"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "Big and Small",
+              "text": "Look at the elephant. It has big ears. Look at the mouse. It has a small nose. I have a big smile!",
+              "questions": [
+                {"question": "Does the mouse have a big nose?", "answer": "no", "options": ["yes", "no"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_focus",
+              "rule_pattern": "I have [Adjective] [Body Part].",
+              "explanation": "Use big or small to describe.",
+              "examples": ["I have big eyes.", "I have a small mouth."]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "error_hunter",
+              "sentence": "I have eyes big.",
+              "has_error": true,
+              "correct_sentence": "I have big eyes."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "I have big blue eyes and a small mouth.",
+              "questions": [{"question": "Are the eyes big?", "answer": "yes"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Describe yourself: Say 'I have big eyes'.",
+              "expected_text": "I have big eyes",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "🐘 is ___:",
+              "correct_answer": "big", "options": ["big", "small", "smile"]
+            }
+          ],
+          "extra_links": []
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_06_lesson_04",
+          "title": "Unit 6 Mastery Check",
+          "topic": "Cumulative Review (Face Parts, Big/Small)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1, "type": "warm_up",
+              "question_text": "Recall All: What is 👃?",
+              "correct_answer": "nose", "options": ["nose", "ear", "mouth", "eye"]
+            },
+            {
+              "step": 2, "type": "vocabulary_review",
+              "items": ["face", "eye", "nose", "mouth", "ear", "hair", "head", "look", "smile", "big", "small"]
+            },
+            {
+              "step": 3, "type": "micro_game_vocab",
+              "question_text": "Match the happy face: 😊",
+              "correct_answer": "smile", "options": ["smile", "hair", "ear", "big"]
+            },
+            {
+              "step": 4, "type": "micro_reading",
+              "title": "Monster Face",
+              "text": "Look at the monster! It has three green eyes. It has two big ears and a small red nose. It has a big smile. I like the monster!",
+              "questions": [
+                {"question": "How many eyes does it have?", "answer": "three", "options": ["two", "three", "ten"]}
+              ]
+            },
+            {
+              "step": 5, "type": "grammar_review",
+              "patterns": ["I have...", "My ___ is ___.", "Adjectives (Big/Small)"]
+            },
+            {
+              "step": 6, "type": "grammar_game",
+              "mode": "word_order",
+              "words": ["I", "have", "small", "ears"],
+              "correct_sentence": "I have small ears."
+            },
+            {
+              "step": 7, "type": "listening",
+              "audio_text": "My head is big. My hair is black. I have two eyes.",
+              "questions": [{"question": "What color is the hair?", "answer": "black"}]
+            },
+            {
+              "step": 8, "type": "production",
+              "prompt": "Full Face Intro: Say 'I have two eyes, one nose and a big smile.'",
+              "expected_text": "I have two eyes one nose and a big smile",
+              "mode": "speaking"
+            },
+            {
+              "step": 9, "type": "exit_ticket",
+              "question_text": "Final Check: Choose the part for listening.",
+              "correct_answer": "ear", "options": ["ear", "eye", "nose"]
+            }
+          ],
+          "extra_links": [
+            {"label": "Head Shoulders Knees Toes", "url": "https://www.youtube.com/watch?v=ZanHgPprl-0", "type": "youtube"}
+          ]
+        }
+      ]
+    }
+  ]
+}
