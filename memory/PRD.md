@@ -18,11 +18,12 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 - [x] Unit 7: My Body Part 2 (arms/legs, imperatives)
 - [x] Unit 8: Animals - Farm
 - [x] Unit 9: Animals - Pets
-- [x] Unit 10: My School Bag (bag/book/pen/pencil/eraser/ruler/desk) -- Feb 17, 2026
-- [ ] Units 11-12: Awaiting user content (Son 2 ünite!)
+- [x] Unit 10: My School Bag
+- [x] Unit 11: Feelings & Emotions (happy/sad/hungry/thirsty/angry/sleepy) -- Feb 17, 2026
+- [ ] Unit 12: Big Review (Son ünite!)
 
 ## Prioritized Backlog
-### P0: Units 11-12 content, Daily Habit SRS
+### P0: Unit 12 content (Stage 1 finale!), Daily Habit SRS
 ### P1: TTS audio, Badge system, UnifiedLessonPage refactor
 ### P2: Booster Mode, Certification Gate, Stage 2-8 themes
 
