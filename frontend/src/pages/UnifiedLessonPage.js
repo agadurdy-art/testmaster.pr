@@ -1851,7 +1851,8 @@ export default function UnifiedLessonPage({ user }) {
         return currentActivityData ? <VocabularyModule activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'micro_game_vocab':
-        return currentActivityData ? <MatchingGame activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+      case 'vocab_games':
+        return currentActivityData ? <VocabGamesPlayer activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'micro_reading':
         return currentActivityData ? <MicroReading activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
