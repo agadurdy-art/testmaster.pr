@@ -1113,14 +1113,19 @@ async def seed_full_stage_1():
         all_lessons.extend(lessons)
         for ln in range(1, 5):
             all_vocab.append(make_vocab_activity(u, ln))
-            all_warmup.append(make_warmup_activity(u, ln))
             all_vocab_games.append(make_vocab_game(u, ln))
             all_grammar.append(make_grammar_activity(u, ln))
-            all_grammar_games.append(make_grammar_game(u, ln))
             all_reading.append(make_reading_activity(u, ln))
             all_listening.append(make_listening_activity(u, ln))
             all_production.append(make_production_activity(u, ln))
-            all_exit.append(make_exit_ticket(u, ln))
+            # AI-powered generation
+            print(f"  AI generating Unit {u['num']} Lesson {ln}...")
+            warmup = await make_warmup_activity_ai(u, ln)
+            all_warmup.append(warmup)
+            grammar_game = await make_grammar_game_ai(u, ln)
+            all_grammar_games.append(grammar_game)
+            exit_ticket = await make_exit_ticket_ai(u, ln)
+            all_exit.append(exit_ticket)
 
     await db.unified_lessons.insert_many(all_lessons)
     print(f"Inserted {len(all_lessons)} lessons")
