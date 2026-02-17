@@ -5221,5 +5221,1744 @@
         ]
       }
     }
+  },
+  "unit_10": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a blue ______.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "cat",
+              "tree",
+              "chair"
+            ],
+            "hint": "You carry your books in it"
+          },
+          {
+            "sentence": "Do you have a ______ to write with?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "apple",
+              "door",
+              "shoe"
+            ],
+            "hint": "It uses ink and writes on paper"
+          },
+          {
+            "sentence": "She draws with a yellow ______.",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "car",
+              "ball",
+              "hat"
+            ],
+            "hint": "It can be erased and is used for drawing"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "bag"
+            ],
+            "correct_sentence": "I have a bag."
+          },
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "pen"
+            ],
+            "correct_sentence": "Do you have a pen?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'something you carry your things in'?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "pen",
+              "chair",
+              "tree"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used for writing with ink'?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "book",
+              "table",
+              "window"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "chair",
+              "dog",
+              "computer"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You write with this"
+          },
+          {
+            "question_text": "Write the missing word: I have a ______.",
+            "correct_answer": "bag",
+            "acceptable_answers": [
+              "bag"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Something you carry your things in' mean?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "cat",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to hold books and lunch",
+            "image_emoji": "🎒"
+          },
+          {
+            "question_text": "What does 'A tool used for writing with ink' mean?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "tree",
+              "happy",
+              "jump"
+            ],
+            "hint": "You use this to write letters or notes",
+            "image_emoji": "🖊️"
+          },
+          {
+            "question_text": "What does 'A tool used for writing and drawing' mean?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "car",
+              "cold",
+              "swim"
+            ],
+            "hint": "You can erase your mistakes with this",
+            "image_emoji": "✏️"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a ______ to erase my mistakes.",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "apple",
+              "car",
+              "tree"
+            ],
+            "hint": "This tool removes pencil marks"
+          },
+          {
+            "sentence": "Do you have a ______ to draw a straight line?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "dog",
+              "shoe",
+              "hat"
+            ],
+            "hint": "You use this to draw straight lines"
+          },
+          {
+            "sentence": "I read a ______ every day.",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "ball",
+              "chair",
+              "window"
+            ],
+            "hint": "Pages with words to read"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "ruler"
+            ],
+            "correct_sentence": "Do you have a ruler?"
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "book"
+            ],
+            "correct_sentence": "I have a book."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'pages with words to read'?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "eraser",
+              "chair",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used to remove pencil marks'?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "pen",
+              "window",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "chair",
+              "run",
+              "apple"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "It's something you read"
+          },
+          {
+            "question_text": "Write the missing word: Do you have an ______?",
+            "correct_answer": "eraser",
+            "acceptable_answers": [
+              "eraser"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "table",
+              "jump",
+              "happy"
+            ],
+            "hint": "You read this to learn stories.",
+            "image_emoji": "📖"
+          },
+          {
+            "question_text": "What does 'A tool used to remove pencil marks' mean?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "dog",
+              "car",
+              "smile"
+            ],
+            "hint": "You use this when you want to fix a mistake on paper.",
+            "image_emoji": "🧹"
+          },
+          {
+            "question_text": "What does 'A tool used to draw straight lines' mean?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "flower",
+              "run",
+              "yellow"
+            ],
+            "hint": "You measure or draw straight lines with this.",
+            "image_emoji": "📏"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a yellow ______.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "chair",
+              "apple",
+              "sun"
+            ],
+            "hint": "You carry your books in it"
+          },
+          {
+            "sentence": "Do you have a blue ______?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "table",
+              "dog",
+              "shoe"
+            ],
+            "hint": "You use it to write or draw"
+          },
+          {
+            "sentence": "I need an ______ to fix my mistake.",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "ball",
+              "hat",
+              "car"
+            ],
+            "hint": "It removes pencil marks"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "bag"
+            ],
+            "correct_sentence": "I have a bag."
+          },
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "pencil"
+            ],
+            "correct_sentence": "Do you have a pencil?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'something you carry your things in'?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "ruler",
+              "desk",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used to draw straight lines'?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "pen",
+              "apple",
+              "happy"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "fast",
+              "blue",
+              "cat"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You carry your books in it"
+          },
+          {
+            "question_text": "Write the missing word: Do you have a ______?",
+            "correct_answer": "ruler",
+            "acceptable_answers": [
+              "ruler"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Something you carry your things in' mean?",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "tree",
+              "fast",
+              "blue"
+            ],
+            "hint": "You use it to hold your books and supplies",
+            "image_emoji": "🎒"
+          },
+          {
+            "question_text": "What does 'A tool used for writing and drawing' mean?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "car",
+              "soft",
+              "jump"
+            ],
+            "hint": "You use it to write on paper",
+            "image_emoji": "✏️"
+          },
+          {
+            "question_text": "What does 'A tool used to remove pencil marks' mean?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "dog",
+              "run",
+              "cold"
+            ],
+            "hint": "You use it to fix mistakes on paper",
+            "image_emoji": "🧹"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have a ______ to write.",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "apple",
+              "car",
+              "dog"
+            ],
+            "hint": "You use it to write words"
+          },
+          {
+            "sentence": "My ______ is heavy with books.",
+            "correct_answer": "bag",
+            "options": [
+              "bag",
+              "shoe",
+              "tree",
+              "ball"
+            ],
+            "hint": "You carry this on your back"
+          },
+          {
+            "sentence": "I draw pictures with a ______.",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "hat",
+              "chair",
+              "clock"
+            ],
+            "hint": "You use this to draw and it can be erased"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "a",
+              "pen"
+            ],
+            "correct_sentence": "I have a pen."
+          },
+          {
+            "words": [
+              "Do",
+              "you",
+              "have",
+              "a",
+              "bag"
+            ],
+            "correct_sentence": "Do you have a bag?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a tool used for writing and drawing'?",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "eraser",
+              "chair",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a tool used to remove pencil marks'?",
+            "correct_answer": "eraser",
+            "options": [
+              "eraser",
+              "ruler",
+              "book",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have a ______.",
+            "correct_answer": "pencil",
+            "options": [
+              "pencil",
+              "dog",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You write or draw with it"
+          },
+          {
+            "question_text": "Write the missing word: Do you have a ______?",
+            "correct_answer": "pencil",
+            "acceptable_answers": [
+              "pencil"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'A tool used for writing with ink' mean?",
+            "correct_answer": "pen",
+            "options": [
+              "pen",
+              "tree",
+              "dog",
+              "happy"
+            ],
+            "hint": "You use this to write on paper",
+            "image_emoji": "🖊️"
+          },
+          {
+            "question_text": "What does 'Pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "car",
+              "phone",
+              "big"
+            ],
+            "hint": "You read it for stories or information",
+            "image_emoji": "📖"
+          },
+          {
+            "question_text": "What does 'A tool used to draw straight lines' mean?",
+            "correct_answer": "ruler",
+            "options": [
+              "ruler",
+              "chair",
+              "apple",
+              "cold"
+            ],
+            "hint": "You use this to measure or draw lines",
+            "image_emoji": "📏"
+          }
+        ]
+      }
+    }
+  },
+  "unit_11": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am ______ today!",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "table",
+              "blue",
+              "jump"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "She is ______ because she lost her toy.",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "car",
+              "fast",
+              "apple"
+            ],
+            "hint": "Feeling unhappy or upset"
+          },
+          {
+            "sentence": "He is ______ when he can't find his book.",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "yellow",
+              "run",
+              "chair"
+            ],
+            "hint": "Feeling very upset or mad"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "sad"
+            ],
+            "correct_sentence": "Are you sad?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What word means 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "apple",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What word means 'feeling unhappy or upset'?",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "table",
+              "fast",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "eat",
+              "blue",
+              "apple"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A feeling when you smile"
+          },
+          {
+            "question_text": "Write the missing word: I am ______.",
+            "correct_answer": "sad",
+            "acceptable_answers": [
+              "sad"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Feeling good and pleased' mean?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "hint": "You smile when you feel this way",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What does 'Feeling unhappy or upset' mean?",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "cat",
+              "jump",
+              "yellow"
+            ],
+            "hint": "You might cry when feeling this way",
+            "image_emoji": "😢"
+          },
+          {
+            "question_text": "What does 'Feeling very upset or mad' mean?",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "table",
+              "sing",
+              "green"
+            ],
+            "hint": "You might shout or frown when feeling this way",
+            "image_emoji": "😠"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am very ______ because I want to eat.",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "blue",
+              "fast",
+              "tall"
+            ],
+            "hint": "You feel this when your stomach rumbles"
+          },
+          {
+            "sentence": "She is ______ because it is late and she wants to sleep.",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "cold",
+              "loud",
+              "happy"
+            ],
+            "hint": "You feel this when you want to rest your eyes"
+          },
+          {
+            "sentence": "The dog is ______; it hears a strange noise.",
+            "correct_answer": "scared",
+            "options": [
+              "scared",
+              "hungry",
+              "bright",
+              "slow"
+            ],
+            "hint": "You feel this when you are afraid"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "hungry"
+            ],
+            "correct_sentence": "I am hungry."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "sleepy"
+            ],
+            "correct_sentence": "Are you sleepy?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'feeling like you want to sleep'?",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "hungry",
+              "happy",
+              "cold"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'feeling like you want to eat'?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "thirsty",
+              "tired",
+              "angry"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "run",
+              "blue",
+              "table"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You feel this when you want to sleep"
+          },
+          {
+            "question_text": "Write the missing word: I am ______.",
+            "correct_answer": "hungry",
+            "acceptable_answers": [
+              "hungry"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Feeling like you want to sleep' mean?",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "blue",
+              "fast",
+              "chair"
+            ],
+            "hint": "You feel this when it's bedtime",
+            "image_emoji": "😴"
+          },
+          {
+            "question_text": "What does 'Feeling like you want to eat' mean?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "loud",
+              "round",
+              "yellow"
+            ],
+            "hint": "You feel this before a meal",
+            "image_emoji": "🤤"
+          },
+          {
+            "question_text": "What does 'Feeling afraid' mean?",
+            "correct_answer": "scared",
+            "options": [
+              "scared",
+              "quiet",
+              "big",
+              "shiny"
+            ],
+            "hint": "You feel this when something frightens you",
+            "image_emoji": "😨"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am feeling very ______ today.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "chair",
+              "blue",
+              "run"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "She is ______ because she lost her toy.",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "apple",
+              "book",
+              "car"
+            ],
+            "hint": "Feeling very upset or mad"
+          },
+          {
+            "sentence": "Are you ______? Let's eat some food.",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "green",
+              "jump",
+              "dog"
+            ],
+            "hint": "Feeling like you want to eat"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "hungry"
+            ],
+            "correct_sentence": "Are you hungry?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What does 'happy' mean?",
+            "correct_answer": "feeling good and pleased",
+            "options": [
+              "feeling good and pleased",
+              "feeling afraid",
+              "a type of food",
+              "a place to sleep"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What does 'scared' mean?",
+            "correct_answer": "feeling afraid",
+            "options": [
+              "feeling afraid",
+              "feeling tired",
+              "a kind of animal",
+              "a color"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "run",
+              "blue",
+              "cat"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A feeling when you feel good"
+          },
+          {
+            "question_text": "Write the missing word: Are you ______?",
+            "correct_answer": "happy",
+            "acceptable_answers": [
+              "happy"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "table",
+              "run",
+              "blue"
+            ],
+            "hint": "You smile when you feel this way",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What word means 'feeling very upset or mad'?",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "car",
+              "sing",
+              "green"
+            ],
+            "hint": "You might frown or shout when feeling this",
+            "image_emoji": "😠"
+          },
+          {
+            "question_text": "What word means 'feeling like you want to eat'?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "book",
+              "jump",
+              "yellow"
+            ],
+            "hint": "You feel this before mealtime",
+            "image_emoji": "🤤"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I am feeling very ______ today.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "chair",
+              "pizza",
+              "car"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "She is ______ because her toy broke.",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "jump",
+              "blue",
+              "table"
+            ],
+            "hint": "Feeling unhappy or upset"
+          },
+          {
+            "sentence": "He is ______ when he loses a game.",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "soft",
+              "eat",
+              "fast"
+            ],
+            "hint": "Feeling very upset or mad"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "Are",
+              "you",
+              "sad"
+            ],
+            "correct_sentence": "Are you sad?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'feeling very upset or mad'?",
+            "correct_answer": "angry",
+            "options": [
+              "angry",
+              "blue",
+              "run",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'feeling like you want to eat'?",
+            "correct_answer": "hungry",
+            "options": [
+              "hungry",
+              "fast",
+              "chair",
+              "cold"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "quickly",
+              "dog",
+              "red"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A feeling when you smile"
+          },
+          {
+            "question_text": "Write the missing word: Are you ______?",
+            "correct_answer": "angry",
+            "acceptable_answers": [
+              "angry",
+              "hungry"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'feeling unhappy or upset' mean?",
+            "correct_answer": "sad",
+            "options": [
+              "sad",
+              "table",
+              "run",
+              "yellow"
+            ],
+            "hint": "You feel this when something bad happens",
+            "image_emoji": "😢"
+          },
+          {
+            "question_text": "What does 'feeling like you want to sleep' mean?",
+            "correct_answer": "sleepy",
+            "options": [
+              "sleepy",
+              "book",
+              "quick",
+              "green"
+            ],
+            "hint": "You feel this when it is bedtime",
+            "image_emoji": "😴"
+          },
+          {
+            "question_text": "What does 'feeling afraid' mean?",
+            "correct_answer": "scared",
+            "options": [
+              "scared",
+              "car",
+              "jump",
+              "red"
+            ],
+            "hint": "You feel this when you see something frightening",
+            "image_emoji": "😨"
+          }
+        ]
+      }
+    }
+  },
+  "unit_12": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I say ______ when I meet my friend.",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "family",
+              "happy",
+              "dog"
+            ],
+            "hint": "A greeting word"
+          },
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "red",
+              "book",
+              "hello"
+            ],
+            "hint": "A group of related people"
+          },
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "happy",
+              "family"
+            ],
+            "hint": "Color of an apple"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a group of related people'?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "car",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "table",
+              "dog",
+              "green"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "An emotion"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "family",
+            "acceptable_answers": [
+              "family"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means 'A greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "run",
+              "dog",
+              "book"
+            ],
+            "hint": "You say this when you meet someone",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What word means 'A group of related people'?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "car",
+              "jump",
+              "sky"
+            ],
+            "hint": "They live and love together",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          },
+          {
+            "question_text": "What word means 'The color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "cold",
+              "fast",
+              "table"
+            ],
+            "hint": "It is a color you see in apples",
+            "image_emoji": "🔴"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "happy",
+              "book",
+              "red"
+            ],
+            "hint": "A pet animal that barks"
+          },
+          {
+            "sentence": "I am very ______ today.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "dog",
+              "family",
+              "hello"
+            ],
+            "hint": "Feeling good and pleased"
+          },
+          {
+            "sentence": "I like to read a ______.",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "dog",
+              "red",
+              "happy"
+            ],
+            "hint": "Pages with words to read"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a common pet animal that barks'?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "cat",
+              "car",
+              "tree"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What means 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "sad",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "dog",
+              "blue",
+              "jump"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "How you feel when you smile"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "dog",
+            "acceptable_answers": [
+              "dog"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "book",
+              "chair",
+              "happy"
+            ],
+            "hint": "It is a pet and says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'feeling good and pleased' mean?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "dog",
+              "table",
+              "run"
+            ],
+            "hint": "When you smile a lot",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What does 'pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "hat",
+              "jump",
+              "happy"
+            ],
+            "hint": "You read it",
+            "image_emoji": "📖"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Say ______ when you meet a new friend.",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "run",
+              "blue",
+              "dog"
+            ],
+            "hint": "A greeting word"
+          },
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "happy",
+              "jump",
+              "book"
+            ],
+            "hint": "The color of fire"
+          },
+          {
+            "sentence": "I am ______ today because I got a new toy.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "green",
+              "talk",
+              "cat"
+            ],
+            "hint": "Feeling good and pleased"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'pages with words to read'?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "table",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "apple",
+              "walk",
+              "yellow"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Feeling good and smile"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "dog",
+            "acceptable_answers": [
+              "dog"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'A greeting when you meet someone' mean?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "table",
+              "run",
+              "yellow"
+            ],
+            "hint": "You say this when you see someone",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What does 'The color of an apple or fire' mean?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "cold",
+              "smile"
+            ],
+            "hint": "This color is bright and warm",
+            "image_emoji": "🔴"
+          },
+          {
+            "question_text": "What does 'Feeling good and pleased' mean?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "tree",
+              "run",
+              "loud"
+            ],
+            "hint": "You feel this when you smile",
+            "image_emoji": "😊"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "______! How are you today?",
+            "correct_answer": "Hello",
+            "options": [
+              "Hello",
+              "Family",
+              "Red",
+              "Dog"
+            ],
+            "hint": "A greeting word"
+          },
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "happy",
+              "book",
+              "red"
+            ],
+            "hint": "People related to you"
+          },
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "hello",
+              "family"
+            ],
+            "hint": "The color of a fire"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "happy"
+            ],
+            "correct_sentence": "I am happy."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "dog"
+            ],
+            "correct_sentence": "This is my dog."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "slow",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'feeling good and pleased'?",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "cat",
+              "jump",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "happy",
+            "options": [
+              "happy",
+              "apple",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Use this word to say your feeling when you feel good"
+          },
+          {
+            "question_text": "Write the missing word: This is my ______.",
+            "correct_answer": "family",
+            "acceptable_answers": [
+              "family"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a group of related people' mean?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "table",
+              "run",
+              "blue"
+            ],
+            "hint": "This is made up of parents and children",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          },
+          {
+            "question_text": "What does 'a common pet animal that barks' mean?",
+            "correct_answer": "dog",
+            "options": [
+              "dog",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "hint": "This animal says 'woof'",
+            "image_emoji": "🐕"
+          },
+          {
+            "question_text": "What does 'pages with words to read' mean?",
+            "correct_answer": "book",
+            "options": [
+              "book",
+              "red",
+              "jump",
+              "shoe"
+            ],
+            "hint": "You turn pages to read it",
+            "image_emoji": "📖"
+          }
+        ]
+      }
+    }
   }
 }
