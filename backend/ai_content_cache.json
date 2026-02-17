@@ -1733,5 +1733,1751 @@
         ]
       }
     }
+  },
+  "unit_04": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "tree",
+              "run"
+            ],
+            "hint": "It's the color of fire"
+          },
+          {
+            "sentence": "The sky is ______.",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "fast",
+              "book",
+              "happy"
+            ],
+            "hint": "The color of the sky"
+          },
+          {
+            "sentence": "The grass is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "blue",
+              "jump",
+              "cat"
+            ],
+            "hint": "The color of trees and grass"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "tree",
+              "is",
+              "green"
+            ],
+            "correct_sentence": "The tree is green."
+          },
+          {
+            "words": [
+              "What",
+              "color",
+              "is",
+              "it"
+            ],
+            "correct_sentence": "What color is it?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "dog",
+              "quick",
+              "table"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the color of the sky'?",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "run",
+              "apple",
+              "cold"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "jump",
+              "slow",
+              "book"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "It's the color of fire and apples"
+          },
+          {
+            "question_text": "Write the missing word: The sky is ______.",
+            "correct_answer": "blue",
+            "acceptable_answers": [
+              "blue"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the color of an apple or fire?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "fast",
+              "tree",
+              "run"
+            ],
+            "hint": "It is a primary color and looks like a stop sign",
+            "image_emoji": "🔴"
+          },
+          {
+            "question_text": "What is the color of the sky?",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "chair",
+              "bright",
+              "jump"
+            ],
+            "hint": "It is often seen on a clear day above",
+            "image_emoji": "🔵"
+          },
+          {
+            "question_text": "What is the color of grass and trees?",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "door",
+              "fast",
+              "write"
+            ],
+            "hint": "This color is often seen in nature and means go in traffic lights",
+            "image_emoji": "🟢"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The sun is ______.",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "fast",
+              "tall",
+              "loud"
+            ],
+            "hint": "The color of the sun"
+          },
+          {
+            "sentence": "The cloud is ______.",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "soft",
+              "heavy",
+              "round"
+            ],
+            "hint": "The color of snow"
+          },
+          {
+            "sentence": "The orange is ______.",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "sweet",
+              "cold",
+              "bright"
+            ],
+            "hint": "A color between red and yellow"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "sun",
+              "is",
+              "yellow"
+            ],
+            "correct_sentence": "The sun is yellow."
+          },
+          {
+            "words": [
+              "The",
+              "cloud",
+              "is",
+              "white"
+            ],
+            "correct_sentence": "The cloud is white."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What color is the sun?",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "orange",
+              "blue",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What color is between red and yellow?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "green",
+              "circle",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: The sun is ______.",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "cat",
+              "blue",
+              "run"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "The color of the sun"
+          },
+          {
+            "question_text": "Write the missing word: The orange is ______.",
+            "correct_answer": "orange",
+            "acceptable_answers": [
+              "orange"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The color of the sun' mean?",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "run",
+              "dog",
+              "chair"
+            ],
+            "hint": "It is a bright color often seen in sunlight",
+            "image_emoji": "🟡"
+          },
+          {
+            "question_text": "What does 'A color between red and yellow' mean?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "happy",
+              "book",
+              "jump"
+            ],
+            "hint": "This color is also a fruit",
+            "image_emoji": "🟠"
+          },
+          {
+            "question_text": "What does 'The color of snow' mean?",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "cold",
+              "table",
+              "music"
+            ],
+            "hint": "It is the opposite of black",
+            "image_emoji": "⚪"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "run",
+              "big",
+              "fast"
+            ],
+            "hint": "The color of an apple"
+          },
+          {
+            "sentence": "The tree is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "jump",
+              "cold",
+              "soft"
+            ],
+            "hint": "The color of grass"
+          },
+          {
+            "sentence": "The orange is ______.",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "happy",
+              "three",
+              "blue"
+            ],
+            "hint": "A color between red and yellow"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "apple",
+              "is",
+              "red"
+            ],
+            "correct_sentence": "The apple is red."
+          },
+          {
+            "words": [
+              "The",
+              "tree",
+              "is",
+              "green"
+            ],
+            "correct_sentence": "The tree is green."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of an apple or fire'?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the color of snow'?",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "banana",
+              "happy",
+              "slow"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "cat",
+              "jump",
+              "table"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "The color of fire"
+          },
+          {
+            "question_text": "Write the missing word: The cloud is ______.",
+            "correct_answer": "white",
+            "acceptable_answers": [
+              "white"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The color of an apple or fire' mean?",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "run",
+              "book",
+              "happy"
+            ],
+            "hint": "Look for the color associated with fire",
+            "image_emoji": "🔴"
+          },
+          {
+            "question_text": "What does 'The color of grass and trees' mean?",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "dog",
+              "jump",
+              "slow"
+            ],
+            "hint": "This color is often seen in nature and leaves",
+            "image_emoji": "🟢"
+          },
+          {
+            "question_text": "What does 'A color between red and yellow' mean?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "table",
+              "fly",
+              "cold"
+            ],
+            "hint": "This color is named after a fruit",
+            "image_emoji": "🟠"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "The apple is ______.",
+            "correct_answer": "red",
+            "options": [
+              "red",
+              "happy",
+              "fast",
+              "cold"
+            ],
+            "hint": "The color of fire and apples"
+          },
+          {
+            "sentence": "The sky is ______.",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "loud",
+              "round",
+              "big"
+            ],
+            "hint": "The color of the sky on a clear day"
+          },
+          {
+            "sentence": "The tree is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "sweet",
+              "hot",
+              "soft"
+            ],
+            "hint": "The color of grass and leaves"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "The",
+              "apple",
+              "is",
+              "red"
+            ],
+            "correct_sentence": "The apple is red."
+          },
+          {
+            "words": [
+              "What",
+              "color",
+              "is",
+              "the",
+              "sky"
+            ],
+            "correct_sentence": "What color is the sky?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the color of grass and trees'?",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "orange",
+              "run",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a color between red and yellow'?",
+            "correct_answer": "orange",
+            "options": [
+              "orange",
+              "blue",
+              "sing",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: The tree is ______.",
+            "correct_answer": "green",
+            "options": [
+              "green",
+              "orange",
+              "fast",
+              "chair"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "The color of grass"
+          },
+          {
+            "question_text": "Write the missing word: The orange is ______.",
+            "correct_answer": "orange",
+            "acceptable_answers": [
+              "orange"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'the color of the sky' mean?",
+            "correct_answer": "blue",
+            "options": [
+              "blue",
+              "car",
+              "tall",
+              "chair"
+            ],
+            "hint": "It is a primary color often seen on a clear day",
+            "image_emoji": "🔵"
+          },
+          {
+            "question_text": "What does 'the color of the sun' mean?",
+            "correct_answer": "yellow",
+            "options": [
+              "yellow",
+              "run",
+              "book",
+              "circle"
+            ],
+            "hint": "This color is bright and warm like sunlight",
+            "image_emoji": "🟡"
+          },
+          {
+            "question_text": "What does 'the color of snow' mean?",
+            "correct_answer": "white",
+            "options": [
+              "white",
+              "dog",
+              "happy",
+              "jump"
+            ],
+            "hint": "The color is the absence of dark; often means clean or pure",
+            "image_emoji": "⚪"
+          }
+        ]
+      }
+    }
+  },
+  "unit_05": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "dog",
+              "car"
+            ],
+            "hint": "Your female parent"
+          },
+          {
+            "sentence": "He is my ______.",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "book",
+              "tree",
+              "chair"
+            ],
+            "hint": "Your male parent"
+          },
+          {
+            "sentence": "My ______ is tall.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "apple",
+              "shoe",
+              "window"
+            ],
+            "hint": "A boy with the same parents as you"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "father"
+            ],
+            "correct_sentence": "This is my father."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "brother"
+            ],
+            "correct_sentence": "He is my brother."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "Who is your female parent?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "car",
+              "jump",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Who is your male parent?",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "table",
+              "run",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "apple",
+              "fast",
+              "sing"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A female parent"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______.",
+            "correct_answer": "mother",
+            "acceptable_answers": [
+              "mother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "Who is your female parent?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "car",
+              "jump",
+              "yellow"
+            ],
+            "hint": "She takes care of you and loves you",
+            "image_emoji": "👩"
+          },
+          {
+            "question_text": "Who is your male parent?",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "apple",
+              "run",
+              "green"
+            ],
+            "hint": "He is a man who is also your parent",
+            "image_emoji": "👨"
+          },
+          {
+            "question_text": "What do you call a boy with the same parents as you?",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "book",
+              "sing",
+              "blue"
+            ],
+            "hint": "He is your male sibling",
+            "image_emoji": "👦"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "table",
+              "run",
+              "apple"
+            ],
+            "hint": "A girl with the same parents as you"
+          },
+          {
+            "sentence": "The ______ is sleeping.",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "car",
+              "dog",
+              "book"
+            ],
+            "hint": "A very young child"
+          },
+          {
+            "sentence": "I love my ______.",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "chair",
+              "school",
+              "toy"
+            ],
+            "hint": "A group of related people"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "She",
+              "is",
+              "my",
+              "sister"
+            ],
+            "correct_sentence": "She is my sister."
+          },
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "baby"
+            ],
+            "correct_sentence": "This is my baby."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a girl with the same parents as you'?",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "baby",
+              "table",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a very young child'?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "brother",
+              "book",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "dog",
+              "chair",
+              "read"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "She is your female parent"
+          },
+          {
+            "question_text": "Write the missing word: He is my ______.",
+            "correct_answer": "brother",
+            "acceptable_answers": [
+              "brother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a girl with the same parents as you' mean?",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "banana",
+              "car",
+              "happy"
+            ],
+            "hint": "She is your sibling",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'a very young child' mean?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "book",
+              "dog",
+              "run"
+            ],
+            "hint": "This child is just born or very small",
+            "image_emoji": "👶"
+          },
+          {
+            "question_text": "What does 'a group of related people' mean?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "table",
+              "music",
+              "jump"
+            ],
+            "hint": "They live together or care for each other",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "dog",
+              "car",
+              "book"
+            ],
+            "hint": "Your female parent"
+          },
+          {
+            "sentence": "He is my ______.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "apple",
+              "pen",
+              "chair"
+            ],
+            "hint": "A boy with the same parents as you"
+          },
+          {
+            "sentence": "The ______ is sleeping.",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "tree",
+              "table",
+              "shoe"
+            ],
+            "hint": "A very young child"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "mother"
+            ],
+            "correct_sentence": "This is my mother."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "brother"
+            ],
+            "correct_sentence": "He is my brother."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'your female parent'?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a group of related people'?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "car",
+              "happy",
+              "sing"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "dog",
+              "jump",
+              "yellow"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A female parent"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______.",
+            "correct_answer": "mother",
+            "acceptable_answers": [
+              "mother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "Who is your female parent?",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "run",
+              "blue"
+            ],
+            "hint": "She takes care of you at home",
+            "image_emoji": "👩"
+          },
+          {
+            "question_text": "What do you call a boy with the same parents as you?",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "hint": "He is your male sibling",
+            "image_emoji": "👦"
+          },
+          {
+            "question_text": "What is a very young child called?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "dog",
+              "jump",
+              "chair"
+            ],
+            "hint": "They are very small and often cry",
+            "image_emoji": "👶"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "This is my ______.",
+            "correct_answer": "mother",
+            "options": [
+              "mother",
+              "table",
+              "apple",
+              "car"
+            ],
+            "hint": "She is your female parent"
+          },
+          {
+            "sentence": "He is my ______.",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "dog",
+              "book",
+              "chair"
+            ],
+            "hint": "He is your male parent"
+          },
+          {
+            "sentence": "My ______ is tall.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "flower",
+              "toy",
+              "shoe"
+            ],
+            "hint": "A boy with the same parents as you"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "This",
+              "is",
+              "my",
+              "mother"
+            ],
+            "correct_sentence": "This is my mother."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "father"
+            ],
+            "correct_sentence": "He is my father."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a boy with the same parents as you'?",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "baby",
+              "school",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a very young child'?",
+            "correct_answer": "baby",
+            "options": [
+              "baby",
+              "chair",
+              "jump",
+              "happy"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: This is my ______.",
+            "correct_answer": "brother",
+            "options": [
+              "brother",
+              "car",
+              "blue",
+              "read"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Used to show a family boy"
+          },
+          {
+            "question_text": "Write the missing word: He is my ______.",
+            "correct_answer": "brother",
+            "acceptable_answers": [
+              "brother"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'Your male parent' mean?",
+            "correct_answer": "father",
+            "options": [
+              "father",
+              "cat",
+              "run",
+              "table"
+            ],
+            "hint": "He is your dad",
+            "image_emoji": "👨"
+          },
+          {
+            "question_text": "What does 'A girl with the same parents as you' mean?",
+            "correct_answer": "sister",
+            "options": [
+              "sister",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "hint": "She is your female sibling",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'A group of related people' mean?",
+            "correct_answer": "family",
+            "options": [
+              "family",
+              "book",
+              "jump",
+              "cold"
+            ],
+            "hint": "They live together and love each other",
+            "image_emoji": "👨‍👩‍👧‍👦"
+          }
+        ]
+      }
+    }
+  },
+  "unit_06": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "ears",
+            "options": [
+              "ears",
+              "tables",
+              "shoes",
+              "dogs"
+            ],
+            "hint": "We hear with these"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "ball",
+              "car",
+              "bird"
+            ],
+            "hint": "We smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "have",
+              "two",
+              "ears"
+            ],
+            "correct_sentence": "I have two ears."
+          },
+          {
+            "words": [
+              "My",
+              "nose",
+              "is",
+              "small"
+            ],
+            "correct_sentence": "My nose is small."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your body used for seeing'?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "car",
+              "run",
+              "apple"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the part of your body used for hearing'?",
+            "correct_answer": "ear",
+            "options": [
+              "ear",
+              "book",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "chairs",
+              "songs",
+              "pants"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "We see with these"
+          },
+          {
+            "question_text": "Write the missing word: I have one ______.",
+            "correct_answer": "nose",
+            "acceptable_answers": [
+              "nose"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the part of your body used for seeing?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "dog",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to look at things",
+            "image_emoji": "👁️"
+          },
+          {
+            "question_text": "What is the part of your body used for hearing?",
+            "correct_answer": "ear",
+            "options": [
+              "ear",
+              "book",
+              "jump",
+              "red"
+            ],
+            "hint": "You use this to listen to sounds",
+            "image_emoji": "👂"
+          },
+          {
+            "question_text": "What is the part of your face used for smelling?",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "car",
+              "dance",
+              "green"
+            ],
+            "hint": "You use this to smell flowers",
+            "image_emoji": "👃"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "My ______ is long.",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "table",
+              "dog",
+              "shoe"
+            ],
+            "hint": "It grows on your head"
+          },
+          {
+            "sentence": "Open your ______.",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "window",
+              "door",
+              "box"
+            ],
+            "hint": "You eat and talk with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "hair",
+              "is",
+              "long"
+            ],
+            "correct_sentence": "My hair is long."
+          },
+          {
+            "words": [
+              "Wash",
+              "your",
+              "face"
+            ],
+            "correct_sentence": "Wash your face."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your face used for eating and talking'?",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the front part of your head'?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "banana",
+              "jump",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "songs",
+              "shoes"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "We see with these"
+          },
+          {
+            "question_text": "Write the missing word: My ______ is brown.",
+            "correct_answer": "hair",
+            "acceptable_answers": [
+              "hair"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The front part of your head' mean?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "book",
+              "car",
+              "tree"
+            ],
+            "hint": "It shows your eyes and nose",
+            "image_emoji": "😊"
+          },
+          {
+            "question_text": "What does 'The part of your face used for eating and talking' mean?",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "phone",
+              "shoe",
+              "desk"
+            ],
+            "hint": "You use it to speak and eat",
+            "image_emoji": "👄"
+          },
+          {
+            "question_text": "What does 'The thin strands that grow on your head' mean?",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "water",
+              "bird",
+              "table"
+            ],
+            "hint": "You can comb and cut it",
+            "image_emoji": "💇"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "apples",
+              "shoes",
+              "cars"
+            ],
+            "hint": "You smell with this"
+          },
+          {
+            "sentence": "Wash your ______ every day.",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "table",
+              "pen",
+              "bag"
+            ],
+            "hint": "The front part of your head"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "eyes",
+              "are",
+              "brown"
+            ],
+            "correct_sentence": "My eyes are brown."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "nose"
+            ],
+            "correct_sentence": "I have one nose."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your body used for seeing'?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the thin strands that grow on your head'?",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "book",
+              "happy",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "tables",
+              "songs",
+              "colors"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "We see with these"
+          },
+          {
+            "question_text": "Write the missing word: My ______ is brown.",
+            "correct_answer": "hair",
+            "acceptable_answers": [
+              "hair"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The part of your body used for seeing' mean?",
+            "correct_answer": "eye",
+            "options": [
+              "eye",
+              "dog",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to see things around you",
+            "image_emoji": "👁️"
+          },
+          {
+            "question_text": "What does 'The part of your face used for smelling' mean?",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "car",
+              "box",
+              "quick"
+            ],
+            "hint": "You use this to smell flowers",
+            "image_emoji": "👃"
+          },
+          {
+            "question_text": "What does 'The front part of your head' mean?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "book",
+              "run",
+              "soft"
+            ],
+            "hint": "You show expressions with this part",
+            "image_emoji": "😊"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "eyes",
+            "options": [
+              "eyes",
+              "books",
+              "chairs",
+              "cats"
+            ],
+            "hint": "We see with these"
+          },
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "ears",
+            "options": [
+              "ears",
+              "shoes",
+              "stars",
+              "cars"
+            ],
+            "hint": "We hear with these"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "finger",
+              "hat",
+              "ball"
+            ],
+            "hint": "We smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "nose",
+              "is",
+              "small"
+            ],
+            "correct_sentence": "My nose is small."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "nose"
+            ],
+            "correct_sentence": "I have one nose."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the part of your face used for smelling'?",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "tree",
+              "car",
+              "book"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the front part of your head'?",
+            "correct_answer": "face",
+            "options": [
+              "face",
+              "shoe",
+              "dog",
+              "chair"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "apple",
+              "chair",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You smell with this part"
+          },
+          {
+            "question_text": "Write the missing word: Wash your ______.",
+            "correct_answer": "face",
+            "acceptable_answers": [
+              "face"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'The part of your body used for hearing' mean?",
+            "correct_answer": "ear",
+            "options": [
+              "ear",
+              "table",
+              "happy",
+              "blue"
+            ],
+            "hint": "You use it to listen",
+            "image_emoji": "👂"
+          },
+          {
+            "question_text": "What does 'The part of your face used for eating and talking' mean?",
+            "correct_answer": "mouth",
+            "options": [
+              "mouth",
+              "car",
+              "green",
+              "tall"
+            ],
+            "hint": "You open it to eat",
+            "image_emoji": "👄"
+          },
+          {
+            "question_text": "What does 'The thin strands that grow on your head' mean?",
+            "correct_answer": "hair",
+            "options": [
+              "hair",
+              "book",
+              "slow",
+              "cold"
+            ],
+            "hint": "You can comb it",
+            "image_emoji": "💇"
+          }
+        ]
+      }
+    }
   }
 }
