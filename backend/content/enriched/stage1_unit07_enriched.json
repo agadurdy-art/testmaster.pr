@@ -1,0 +1,1586 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_07",
+      "unit_num": 7,
+      "title": "My Body - Part 2",
+      "subtitle": "Arms, Legs, Hands, Feet and Actions",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "Touch your...",
+        "I have...",
+        "Plurals review",
+        "Imperatives (Clap/Stomp)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_07_lesson_01",
+          "title": "Move Your Body",
+          "topic": "Main limbs and the grammar of commands",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=WX8HmogNyCY",
+              "instruction": "Let's move, sing, and play along with 'Head Shoulders Knees & Toes'! Can you find the right body part?",
+              "question_text": "Which body part is mentioned in the song?",
+              "correct_answer": "toes",
+              "options": [
+                "toes",
+                "elbow",
+                "finger",
+                "nose"
+              ],
+              "image_emoji": "👟",
+              "hint": "It is at the end of your foot."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "arm",
+                  "ipa": "/ɑːrm/",
+                  "definition": "From shoulder to hand",
+                  "example": "I have strong arms.",
+                  "image_emoji": "🤛"
+                },
+                {
+                  "word": "leg",
+                  "ipa": "/lɛɡ/",
+                  "definition": "Helps you walk and run",
+                  "example": "Touch your legs.",
+                  "image_emoji": "🥾"
+                },
+                {
+                  "word": "hand",
+                  "ipa": "/hænd/",
+                  "definition": "At the end of your arm",
+                  "example": "Clap your hands.",
+                  "image_emoji": "👋"
+                },
+                {
+                  "word": "foot",
+                  "ipa": "/fʊt/",
+                  "definition": "Bottom of your leg",
+                  "example": "Stop with your feet.",
+                  "image_emoji": "🥾"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "arm",
+                      "emoji": "💪",
+                      "distractors": [
+                        {
+                          "word": "leg",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "hand",
+                          "emoji": "✋"
+                        },
+                        {
+                          "word": "foot",
+                          "emoji": "🦶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "leg",
+                      "emoji": "🦵",
+                      "distractors": [
+                        {
+                          "word": "arm",
+                          "emoji": "💪"
+                        },
+                        {
+                          "word": "hand",
+                          "emoji": "✋"
+                        },
+                        {
+                          "word": "foot",
+                          "emoji": "🦶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hand",
+                      "emoji": "✋",
+                      "distractors": [
+                        {
+                          "word": "arm",
+                          "emoji": "💪"
+                        },
+                        {
+                          "word": "leg",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "foot",
+                          "emoji": "🦶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "foot",
+                      "emoji": "🦶",
+                      "distractors": [
+                        {
+                          "word": "arm",
+                          "emoji": "💪"
+                        },
+                        {
+                          "word": "leg",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "hand",
+                          "emoji": "✋"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "arm",
+                      "emoji": "💪",
+                      "distractors": [
+                        {
+                          "word": "leg",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "hand",
+                          "emoji": "✋"
+                        },
+                        {
+                          "word": "foot",
+                          "emoji": "🦶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "leg",
+                      "emoji": "🦵",
+                      "distractors": [
+                        {
+                          "word": "arm",
+                          "emoji": "💪"
+                        },
+                        {
+                          "word": "hand",
+                          "emoji": "✋"
+                        },
+                        {
+                          "word": "foot",
+                          "emoji": "🦶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hand",
+                      "emoji": "✋",
+                      "distractors": [
+                        {
+                          "word": "arm",
+                          "emoji": "💪"
+                        },
+                        {
+                          "word": "leg",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "foot",
+                          "emoji": "🦶"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "foot",
+                      "emoji": "🦶",
+                      "distractors": [
+                        {
+                          "word": "arm",
+                          "emoji": "💪"
+                        },
+                        {
+                          "word": "leg",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "hand",
+                          "emoji": "✋"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "arm",
+                      "emoji": "💪"
+                    },
+                    {
+                      "word": "leg",
+                      "emoji": "🦵"
+                    },
+                    {
+                      "word": "hand",
+                      "emoji": "✋"
+                    },
+                    {
+                      "word": "foot",
+                      "emoji": "🦶"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Ella's Fun Day",
+              "text": "Hi! I am Ella. I have two strong legs. I can stomp my feet. Clap your hands with me. Let's play!",
+              "questions": [
+                {
+                  "question": "What does Ella clap?",
+                  "answer": "hands",
+                  "options": [
+                    "feet",
+                    "hands",
+                    "head"
+                  ]
+                },
+                {
+                  "question": "How many legs does Ella have?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Clap your ___s.",
+              "explanation": "Use 'Clap your' to ask for clapping.",
+              "examples": [
+                "Clap your hands.",
+                "Clap your feet.",
+                "Clap your legs."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Touch",
+                        "your",
+                        "nose"
+                      ],
+                      "correctSentence": "Touch your nose."
+                    },
+                    {
+                      "words": [
+                        "your",
+                        "hand",
+                        "Touch"
+                      ],
+                      "correctSentence": "Touch your hand."
+                    },
+                    {
+                      "words": [
+                        "ear",
+                        "your",
+                        "Touch"
+                      ],
+                      "correctSentence": "Touch your ear."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Touch your ___.",
+                      "answer": "foot",
+                      "options": [
+                        "foot",
+                        "sky",
+                        "tree",
+                        "cloud"
+                      ]
+                    },
+                    {
+                      "sentence": "Touch your ___.",
+                      "answer": "head",
+                      "options": [
+                        "head",
+                        "car",
+                        "ball",
+                        "window"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Touch you're hand.",
+                      "errorWord": "you're",
+                      "correctWord": "your"
+                    },
+                    {
+                      "sentence": "Touch your are foot.",
+                      "errorWord": "are",
+                      "correctWord": "your"
+                    },
+                    {
+                      "sentence": "Touch hands your.",
+                      "errorWord": "hands",
+                      "correctWord": "hand"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hi there! Let's play a game. Touch your leg and stomp your foot. Can you do it?",
+              "questions": [
+                {
+                  "question": "What should you stomp?",
+                  "answer": "foot",
+                  "options": [
+                    "foot",
+                    "hand",
+                    "leg"
+                  ]
+                },
+                {
+                  "question": "What should you touch?",
+                  "answer": "leg",
+                  "options": [
+                    "arm",
+                    "leg",
+                    "head"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Action: Can you say 'Touch your arm'?",
+              "expected_text": "touch your arm",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Match the picture 🤛: Who can do it?",
+              "correct_answer": "arm",
+              "options": [
+                "arm",
+                "leg",
+                "foot",
+                "hand"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Head Shoulders Knees Toes",
+              "url": "https://www.youtube.com/watch?v=WX8HmogNyCY",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_07_lesson_02",
+          "title": "Ten Fingers",
+          "topic": "Small body parts and plural review",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/mybodyvideo",
+              "instruction": "Watch the video and look at the pictures.",
+              "question_text": "What do you use to wave hello?",
+              "correct_answer": "hand",
+              "options": [
+                "hand",
+                "foot",
+                "ear",
+                "nose"
+              ],
+              "image_emoji": "✋",
+              "hint": "You have one at the end of each arm."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "finger",
+                  "ipa": "/ˈfɪŋɡər/",
+                  "definition": "On your hand",
+                  "example": "Touch your finger to your nose.",
+                  "image_emoji": "✌"
+                },
+                {
+                  "word": "toe",
+                  "ipa": "/toʊ/",
+                  "definition": "On your foot",
+                  "example": "Wiggle your toes!",
+                  "image_emoji": "ᾛ5"
+                },
+                {
+                  "word": "long",
+                  "ipa": "/lɔːŋ/",
+                  "definition": "Big from end to end",
+                  "example": "I have a long jump rope.",
+                  "image_emoji": "ᾟ7"
+                },
+                {
+                  "word": "short",
+                  "ipa": "/ʃɔːrt/",
+                  "definition": "Not big from end to end",
+                  "example": "The pencil is short.",
+                  "image_emoji": "Ὅ0"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "finger",
+                      "emoji": "☝️",
+                      "distractors": [
+                        {
+                          "word": "toe",
+                          "emoji": "🦶"
+                        },
+                        {
+                          "word": "long",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "short",
+                          "emoji": "🤏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "toe",
+                      "emoji": "🦶",
+                      "distractors": [
+                        {
+                          "word": "finger",
+                          "emoji": "☝️"
+                        },
+                        {
+                          "word": "long",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "short",
+                          "emoji": "🤏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "long",
+                      "emoji": "📏",
+                      "distractors": [
+                        {
+                          "word": "finger",
+                          "emoji": "☝️"
+                        },
+                        {
+                          "word": "toe",
+                          "emoji": "🦶"
+                        },
+                        {
+                          "word": "short",
+                          "emoji": "🤏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "short",
+                      "emoji": "🤏",
+                      "distractors": [
+                        {
+                          "word": "finger",
+                          "emoji": "☝️"
+                        },
+                        {
+                          "word": "toe",
+                          "emoji": "🦶"
+                        },
+                        {
+                          "word": "long",
+                          "emoji": "📏"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "finger",
+                      "emoji": "☝️",
+                      "distractors": [
+                        {
+                          "word": "toe",
+                          "emoji": "🦶"
+                        },
+                        {
+                          "word": "long",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "short",
+                          "emoji": "🤏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "toe",
+                      "emoji": "🦶",
+                      "distractors": [
+                        {
+                          "word": "finger",
+                          "emoji": "☝️"
+                        },
+                        {
+                          "word": "long",
+                          "emoji": "📏"
+                        },
+                        {
+                          "word": "short",
+                          "emoji": "🤏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "long",
+                      "emoji": "📏",
+                      "distractors": [
+                        {
+                          "word": "finger",
+                          "emoji": "☝️"
+                        },
+                        {
+                          "word": "toe",
+                          "emoji": "🦶"
+                        },
+                        {
+                          "word": "short",
+                          "emoji": "🤏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "short",
+                      "emoji": "🤏",
+                      "distractors": [
+                        {
+                          "word": "finger",
+                          "emoji": "☝️"
+                        },
+                        {
+                          "word": "toe",
+                          "emoji": "🦶"
+                        },
+                        {
+                          "word": "long",
+                          "emoji": "📏"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "finger",
+                      "emoji": "☝️"
+                    },
+                    {
+                      "word": "toe",
+                      "emoji": "🦶"
+                    },
+                    {
+                      "word": "long",
+                      "emoji": "📏"
+                    },
+                    {
+                      "word": "short",
+                      "emoji": "🤏"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Wiggle and Clap!",
+              "text": "Wiggle your fingers! I have ten fingers. Clap your hands! I have ten toes. My toes are short. Touch your toes and smile.",
+              "questions": [
+                {
+                  "question": "How many fingers do they have?",
+                  "answer": "ten",
+                  "options": [
+                    "ten",
+                    "five",
+                    "two"
+                  ]
+                },
+                {
+                  "question": "What should you do after touching your toes?",
+                  "answer": "smile",
+                  "options": [
+                    "clap",
+                    "smile",
+                    "jump"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "My ___s are ___.",
+              "explanation": "We say \"are\" for more than one.",
+              "examples": [
+                "My fingers are wiggly.",
+                "My legs are strong.",
+                "My toes are tiny."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "fingers",
+                        "short",
+                        "are",
+                        "My"
+                      ],
+                      "correctSentence": "My fingers are short."
+                    },
+                    {
+                      "words": [
+                        "are",
+                        "My",
+                        "big",
+                        "eyes"
+                      ],
+                      "correctSentence": "My eyes are big."
+                    },
+                    {
+                      "words": [
+                        "ears",
+                        "long",
+                        "are",
+                        "His"
+                      ],
+                      "correctSentence": "His ears are long."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "My fingers ___ tiny.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "was"
+                      ]
+                    },
+                    {
+                      "sentence": "Her legs ___ fast.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "was"
+                      ]
+                    },
+                    {
+                      "sentence": "The toes ___ pink.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "was"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Their arms is strong.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    },
+                    {
+                      "sentence": "Our hands am clean.",
+                      "errorWord": "am",
+                      "correctWord": "are"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have long arms and short fingers. Touch your toes and clap your hands.",
+              "questions": [
+                {
+                  "question": "What are short?",
+                  "answer": "fingers",
+                  "options": [
+                    "fingers",
+                    "arms",
+                    "toes"
+                  ]
+                },
+                {
+                  "question": "What should you do after touching your toes?",
+                  "answer": "clap your hands",
+                  "options": [
+                    "stomp your feet",
+                    "clap your hands",
+                    "wave goodbye"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My toes are short.",
+              "expected_text": "my toes are short",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What is 🦶? Pick the right word!",
+              "correct_answer": "toe",
+              "options": [
+                "finger",
+                "toe",
+                "hand",
+                "leg"
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_07_lesson_03",
+          "title": "Up and Down",
+          "topic": "Joints and full body actions",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "http://example.com/body-movement-video.mp4",
+              "instruction": "Watch the fun video and then answer the question!",
+              "question_text": "Which one helps you walk?",
+              "correct_answer": "knee",
+              "options": [
+                "knee",
+                "elbow",
+                "finger",
+                "ear"
+              ],
+              "image_emoji": "👣",
+              "hint": "Think about what moves when you walk."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "shoulder",
+                  "ipa": "/ˈʃəʊl.dər/",
+                  "definition": "Where arm joins body",
+                  "example": "Touch your shoulder.",
+                  "image_emoji": "👌"
+                },
+                {
+                  "word": "knee",
+                  "ipa": "/niː/",
+                  "definition": "Bend in your leg",
+                  "example": "I have two knees.",
+                  "image_emoji": "🦱"
+                },
+                {
+                  "word": "clap",
+                  "ipa": "/klæp/",
+                  "definition": "Hands hit together",
+                  "example": "Clap your hands.",
+                  "image_emoji": "👏"
+                },
+                {
+                  "word": "stomp",
+                  "ipa": "/stɒmp/",
+                  "definition": "Foot hits ground hard",
+                  "example": "Stomp your feet.",
+                  "image_emoji": "👢"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "shoulder",
+                      "emoji": "🤷",
+                      "distractors": [
+                        {
+                          "word": "knee",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "clap",
+                          "emoji": "👏"
+                        },
+                        {
+                          "word": "stomp",
+                          "emoji": "👣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "knee",
+                      "emoji": "🦵",
+                      "distractors": [
+                        {
+                          "word": "shoulder",
+                          "emoji": "🤷"
+                        },
+                        {
+                          "word": "clap",
+                          "emoji": "👏"
+                        },
+                        {
+                          "word": "stomp",
+                          "emoji": "👣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "clap",
+                      "emoji": "👏",
+                      "distractors": [
+                        {
+                          "word": "shoulder",
+                          "emoji": "🤷"
+                        },
+                        {
+                          "word": "knee",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "stomp",
+                          "emoji": "👣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "stomp",
+                      "emoji": "👣",
+                      "distractors": [
+                        {
+                          "word": "shoulder",
+                          "emoji": "🤷"
+                        },
+                        {
+                          "word": "knee",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "clap",
+                          "emoji": "👏"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "shoulder",
+                      "emoji": "🤷",
+                      "distractors": [
+                        {
+                          "word": "knee",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "clap",
+                          "emoji": "👏"
+                        },
+                        {
+                          "word": "stomp",
+                          "emoji": "👣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "knee",
+                      "emoji": "🦵",
+                      "distractors": [
+                        {
+                          "word": "shoulder",
+                          "emoji": "🤷"
+                        },
+                        {
+                          "word": "clap",
+                          "emoji": "👏"
+                        },
+                        {
+                          "word": "stomp",
+                          "emoji": "👣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "clap",
+                      "emoji": "👏",
+                      "distractors": [
+                        {
+                          "word": "shoulder",
+                          "emoji": "🤷"
+                        },
+                        {
+                          "word": "knee",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "stomp",
+                          "emoji": "👣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "stomp",
+                      "emoji": "👣",
+                      "distractors": [
+                        {
+                          "word": "shoulder",
+                          "emoji": "🤷"
+                        },
+                        {
+                          "word": "knee",
+                          "emoji": "🦵"
+                        },
+                        {
+                          "word": "clap",
+                          "emoji": "👏"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "shoulder",
+                      "emoji": "🤷"
+                    },
+                    {
+                      "word": "knee",
+                      "emoji": "🦵"
+                    },
+                    {
+                      "word": "clap",
+                      "emoji": "👏"
+                    },
+                    {
+                      "word": "stomp",
+                      "emoji": "👣"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Dance with Me!",
+              "text": "Clap your hands and say, 'I have two hands!' Stomp your feet and shout, 'I have two feet!' Touch your knees and shoulders. Great job, everyone!",
+              "questions": [
+                {
+                  "question": "What do you do with your feet?",
+                  "answer": "stomp",
+                  "options": [
+                    "stomp",
+                    "clap",
+                    "touch"
+                  ]
+                },
+                {
+                  "question": "How many hands do you have?",
+                  "answer": "two",
+                  "options": [
+                    "two",
+                    "four",
+                    "eight"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Touch your ___.",
+              "explanation": "Use actions with body parts.",
+              "examples": [
+                "Touch your nose.",
+                "Touch your toes.",
+                "Touch your ears."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Clap",
+                        "hands",
+                        "your"
+                      ],
+                      "correctSentence": "Clap your hands."
+                    },
+                    {
+                      "words": [
+                        "Stomp",
+                        "feet",
+                        "your"
+                      ],
+                      "correctSentence": "Stomp your feet."
+                    },
+                    {
+                      "words": [
+                        "Touch",
+                        "knees",
+                        "your"
+                      ],
+                      "correctSentence": "Touch your knees."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "___ your shoulders.",
+                      "answer": "Touch",
+                      "options": [
+                        "Clap",
+                        "Stomp",
+                        "Touch",
+                        "Run"
+                      ]
+                    },
+                    {
+                      "sentence": "Stomp your ___.",
+                      "answer": "feet",
+                      "options": [
+                        "hands",
+                        "feet",
+                        "head",
+                        "ears"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Clap you hands.",
+                      "errorWord": "you",
+                      "correctWord": "your"
+                    },
+                    {
+                      "sentence": "Stomp your hand.",
+                      "errorWord": "hand",
+                      "correctWord": "feet"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Touch your shoulders and clap your hands. Then, stomp your feet and say, 'I have two knees!'",
+              "questions": [
+                {
+                  "question": "What do you touch first?",
+                  "answer": "shoulders",
+                  "options": [
+                    "shoulders",
+                    "knees",
+                    "feet"
+                  ]
+                },
+                {
+                  "question": "How many knees do you have?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: Touch your knees.",
+              "expected_text": "touch your knees",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What do you 👏? Pick the action!",
+              "correct_answer": "clap",
+              "options": [
+                "clap",
+                "stomp",
+                "touch"
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_07_lesson_04",
+          "title": "Body Master",
+          "topic": "Mastery Check (Full Body & Actions)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the fun video and try to answer the question!",
+              "question_text": "What do you use to listen to music?",
+              "correct_answer": "ears",
+              "options": [
+                "ears",
+                "eyes",
+                "nose",
+                "mouth"
+              ],
+              "image_emoji": "🎶",
+              "hint": "Think about what you use to hear sounds."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "arm",
+                "leg",
+                "hand",
+                "foot",
+                "finger",
+                "toe",
+                "shoulder",
+                "knee",
+                "clap",
+                "stomp",
+                "long",
+                "short"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grapes",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "cherry",
+                          "emoji": "🍒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐕",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐇"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "airplane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "banana",
+                      "emoji": "🍌",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "grapes",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "cherry",
+                          "emoji": "🍒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rabbit",
+                      "emoji": "🐇",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bus",
+                      "emoji": "🚌",
+                      "distractors": [
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "airplane",
+                          "emoji": "✈️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cherry",
+                      "emoji": "🍒"
+                    },
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "train",
+                      "emoji": "🚆"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 9
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Super Day with My Body",
+              "text": "I have two eyes and a nose. I can see the sky. Touch your nose! I have ten toes. I can stomp my feet. My hands can clap. Touch your shoulders!",
+              "questions": [
+                {
+                  "question": "How many toes does the character have?",
+                  "answer": "ten",
+                  "options": [
+                    "ten",
+                    "five",
+                    "two"
+                  ]
+                },
+                {
+                  "question": "What can the character do with hands?",
+                  "answer": "clap",
+                  "options": [
+                    "clap",
+                    "jump",
+                    "nod"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "Touch your...",
+                "Clap your...",
+                "My ___ are ___."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "See",
+                        "I",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "I see a dog"
+                    },
+                    {
+                      "words": [
+                        "is",
+                        "He",
+                        "running"
+                      ],
+                      "correctSentence": "He is running"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ a friend.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "have",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ happy.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "was",
+                        "has"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "They is playing.",
+                      "errorWord": "is",
+                      "correctWord": "are"
+                    },
+                    {
+                      "sentence": "I has a dog.",
+                      "errorWord": "has",
+                      "correctWord": "have"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 7
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have two big eyes and a small nose. I can clap my hands and stomp my feet.",
+              "questions": [
+                {
+                  "question": "How many eyes does he have?",
+                  "answer": "two",
+                  "options": [
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                },
+                {
+                  "question": "Can he clap his hands?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: 'I have two feet and two legs.'",
+              "expected_text": "i have two feet and two legs",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Fun question with emoji: Pick the 🦶(foot)!",
+              "correct_answer": "foot",
+              "options": [
+                "hand",
+                "foot",
+                "eye"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Head Shoulders Knees Toes",
+              "url": "https://www.youtube.com/watch?v=WX8HmogNyCY",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T18:00:30.845277+00:00"
+}
