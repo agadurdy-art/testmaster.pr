@@ -750,15 +750,20 @@ function MicroReading({ activity, onComplete, onSkip }) {
   };
 
   const checkAnswer = (answer, correctAnswer) => {
-    if (Array.isArray(correctAnswer)) return correctAnswer.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
-    return answer.toLowerCase().trim() === correctAnswer.toLowerCase().trim();
+    // Handle both 'correct_answer' and 'answer' field names from different content formats
+    const correctAns = correctAnswer || q?.answer;
+    if (!correctAns) return false;
+    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
+    return answer.toLowerCase().trim() === correctAns.toLowerCase().trim();
   };
 
   const handleAnswer = (answer) => {
     if (showFeedback) return;
     setSelectedAnswer(answer);
     setShowFeedback(true);
-    if (checkAnswer(answer, q.correct_answer)) setCorrect(c => c + 1);
+    // Support both 'correct_answer' and 'answer' field names
+    const correctAns = q.correct_answer || q.answer;
+    if (checkAnswer(answer, correctAns)) setCorrect(c => c + 1);
   };
 
   const handleNext = () => {
@@ -768,8 +773,10 @@ function MicroReading({ activity, onComplete, onSkip }) {
   };
 
   const isCorrectOption = (option) => {
-    if (Array.isArray(q.correct_answer)) return q.correct_answer.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
-    return option === q.correct_answer;
+    // Support both 'correct_answer' and 'answer' field names
+    const correctAns = q.correct_answer || q.answer;
+    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
+    return option.toLowerCase().trim() === (correctAns || '').toLowerCase().trim();
   };
 
   return (
