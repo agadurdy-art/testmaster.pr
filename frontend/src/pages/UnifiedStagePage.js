@@ -198,8 +198,13 @@ export default function UnifiedStagePage({ user }) {
   }
   
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+    <div 
+      className="min-h-screen"
+      style={{
+        background: 'radial-gradient(at 0% 0%, hsla(152,100%,90%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(190,100%,92%,1) 0, transparent 50%), radial-gradient(at 100% 100%, hsla(37,100%,91%,1) 0, transparent 50%), #F8FAFC'
+      }}
+    >
+      {/* Header - Glass Style */}
       <div 
         className="text-white py-8"
         style={{ backgroundColor: stage.color }}
@@ -207,7 +212,7 @@ export default function UnifiedStagePage({ user }) {
         <div className="max-w-7xl mx-auto px-4">
           <Button 
             variant="ghost" 
-            className="text-white hover:bg-white/20 mb-4"
+            className="text-white hover:bg-white/20 mb-4 rounded-full"
             onClick={() => navigate('/unified')}
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -215,10 +220,10 @@ export default function UnifiedStagePage({ user }) {
           </Button>
           
           <div className="flex items-center gap-4">
-            <Badge variant="secondary" className="bg-white/20 text-white text-lg px-4 py-2">
+            <Badge variant="secondary" className="bg-white/20 text-white text-lg px-4 py-2 rounded-full border-0">
               Stage {stage.number}
             </Badge>
-            <Badge variant="outline" className="border-white/50 text-white">
+            <Badge variant="outline" className="border-white/50 text-white rounded-full">
               {stage.cefr_level}
             </Badge>
           </div>
@@ -251,13 +256,20 @@ export default function UnifiedStagePage({ user }) {
         </div>
         
         {(!stage.units || stage.units.length === 0) && (
-          <Card className="p-12 text-center">
+          <div 
+            className="p-12 text-center rounded-3xl"
+            style={{
+              background: 'rgba(255, 255, 255, 0.70)',
+              backdropFilter: 'blur(24px)',
+              border: '1px solid rgba(255, 255, 255, 0.50)'
+            }}
+          >
             <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-900 mb-2">Coming Soon</h3>
             <p className="text-gray-600">
               Content for this stage is being prepared. Check back soon!
             </p>
-          </Card>
+          </div>
         )}
       </div>
     </div>
