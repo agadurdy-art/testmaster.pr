@@ -107,6 +107,7 @@ async def get_activity_content(lesson_id: str, activity_type: str):
         "grammar_focus": "unified_grammar_activities",
         "micro_game_grammar": "unified_game_activities",
         "listening": "unified_listening_activities",
+        "listening_task": "unified_listening_activities",
         "production": "unified_production_activities",
         "exit_ticket": "unified_exit_activities",
     }
