@@ -875,6 +875,7 @@ def make_grammar_activity(unit, lesson_num):
 
 
 async def make_grammar_game_ai(unit, lesson_num):
+    """Grammar game from AI cache"""
     un = unit["num"]
     rules = unit["grammar_rules"]
     words = unit["words"]
@@ -883,7 +884,6 @@ async def make_grammar_game_ai(unit, lesson_num):
     else:
         r = rules[lesson_num % len(rules)]
 
-    # Error hunter items (keep as-is - these are simple)
     error_items = []
     for ex in r["examples"]:
         error_items.append({"sentence": ex, "has_error": False, "correct_sentence": ex})
@@ -894,28 +894,18 @@ async def make_grammar_game_ai(unit, lesson_num):
             "correct_sentence": f"I am a {words[lesson_num % len(words)]['word']}."
         })
 
-    # AI-generated fill-blank and word-order
-    half = len(words) // 2
-    if lesson_num == 1:
-        sel = words[:half]
-    elif lesson_num == 2:
-        sel = words[half:]
-    elif lesson_num == 3:
-        sel = [words[0], words[2], words[4]] if len(words) > 4 else words[:3]
-    else:
-        sel = words[:3]
+    cache = load_ai_cache()
+    cache_key = f"unit_{un:02d}"
+    lesson_key = f"lesson_{lesson_num:02d}"
+    cached = cache.get(cache_key, {}).get(lesson_key, {}).get("grammar_game")
 
-    try:
-        from ai_content_generator import generate_grammar_exercises
-        result = await generate_grammar_exercises(unit, lesson_num, sel)
-        fill_blank = result.get("fill_blank_items", [])
-        word_order = result.get("word_order_items", [])
-        # Add hint from grammar rule if not present
+    if cached:
+        fill_blank = cached.get("fill_blank_items", [])
+        word_order = cached.get("word_order_items", [])
         for wo in word_order:
             if "hint" not in wo:
                 wo["hint"] = r.get("explanation", "")
-    except Exception as e:
-        print(f"  AI grammar game failed for U{un}L{lesson_num}: {e}, using fallback")
+    else:
         fill_blank = []
         word_order = []
         for ex in r["examples"][:2]:
