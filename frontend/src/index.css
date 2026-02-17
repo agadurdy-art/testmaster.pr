@@ -48,7 +48,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217 33% 25%;
     --input: 217 33% 25%;
-    --ring: 199 89% 48%;
+    --ring: 160 84% 39%;
   }
 
   /* Night Shift Mode - Warm colors, less blue light */
@@ -81,11 +81,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
   }
   
   /* Night shift filter for images */
@@ -96,5 +96,46 @@
   /* Smooth transitions for theme changes */
   .dark, .night-shift {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+}
+
+/* Glass Nature Theme - iOS 26 Style */
+@layer utilities {
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-2xl border border-white/50 rounded-3xl;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  }
+  
+  .glass-panel {
+    @apply bg-white/40 backdrop-blur-xl border-r border-white/30;
+  }
+  
+  .glass-button {
+    @apply bg-white/80 hover:bg-white backdrop-blur-sm border border-emerald-100 rounded-full transition-all;
+  }
+  
+  .bg-mesh {
+    background: 
+      radial-gradient(at 0% 0%, hsla(152,100%,90%,1) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, hsla(190,100%,92%,1) 0, transparent 50%), 
+      radial-gradient(at 100% 100%, hsla(37,100%,91%,1) 0, transparent 50%),
+      #F8FAFC;
+  }
+  
+  .text-gradient-emerald {
+    @apply bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent;
+  }
+  
+  .shadow-emerald {
+    box-shadow: 0 10px 20px -10px rgba(16, 185, 129, 0.4);
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
 }
