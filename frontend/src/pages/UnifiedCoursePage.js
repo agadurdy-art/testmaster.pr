@@ -251,14 +251,19 @@ export default function UnifiedCoursePage({ user }) {
   }
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div 
+      className="min-h-screen"
+      style={{
+        background: 'radial-gradient(at 0% 0%, hsla(152,100%,90%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(190,100%,92%,1) 0, transparent 50%), radial-gradient(at 100% 100%, hsla(37,100%,91%,1) 0, transparent 50%), #F8FAFC'
+      }}
+    >
       <GamificationHeader userProgress={userProgress} />
       
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Back button */}
         <Button 
           variant="ghost" 
-          className="mb-6"
+          className="mb-6 rounded-full"
           onClick={() => navigate('/dashboard')}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -276,11 +281,18 @@ export default function UnifiedCoursePage({ user }) {
           </p>
         </div>
         
-        {/* Daily Habit CTA */}
-        <Card className="mb-8 p-6 bg-gradient-to-r from-orange-500 to-red-500 text-white">
+        {/* Daily Habit CTA - Glass Style */}
+        <div 
+          className="mb-8 p-6 rounded-3xl text-white"
+          style={{
+            background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.95) 0%, rgba(239, 68, 68, 0.95) 100%)',
+            backdropFilter: 'blur(10px)',
+            boxShadow: '0 10px 40px rgba(249, 115, 22, 0.3)'
+          }}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center">
+              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                 <Flame className="w-8 h-8" />
               </div>
               <div>
@@ -289,13 +301,13 @@ export default function UnifiedCoursePage({ user }) {
               </div>
             </div>
             <Button 
-              className="bg-white text-orange-600 hover:bg-white/90"
+              className="bg-white text-orange-600 hover:bg-white/90 rounded-full shadow-lg"
               onClick={() => navigate('/unified/daily-habit')}
             >
               Start Daily Practice
             </Button>
           </div>
-        </Card>
+        </div>
         
         {/* Stage grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
