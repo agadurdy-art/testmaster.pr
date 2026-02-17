@@ -6,7 +6,7 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 ## Architecture
 - **Frontend**: React + TailwindCSS + Shadcn/UI
 - **Backend**: FastAPI + MongoDB
-- **Content System**: User-authored JSON → `/app/backend/content/` → `seed_content_v4.py` → MongoDB
+- **Content System**: User-authored JSON -> `/app/backend/content/` -> `seed_content_v4.py` -> MongoDB
 - **3rd Party**: OpenAI Whisper (pronunciation), Browser TTS (listening - MOCKED), jsPDF (PDF worksheets)
 
 ## Content Workflow
@@ -18,10 +18,12 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 ## Implemented Content
 - [x] **Unit 1**: Hello & My Sounds (4 lessons, phonics A-E)
 - [x] **Unit 2**: My Name & Friends (4 lessons, phonics F-J)
-- [ ] Units 3-12: Awaiting user content
+- [x] **Unit 3**: Numbers 1-10 (4 lessons, phonics K-O)
+- [x] **Unit 4**: Colors Everywhere (4 lessons, phonics P-T) -- ADDED Feb 17, 2026
+- [ ] Units 5-12: Awaiting user content
 
 ## Features Implemented
-- [x] 10-step lesson flow (warm_up → vocabulary → vocab_game → reading → grammar → grammar_game → listening → production → exit_ticket → auto_review)
+- [x] 10-step lesson flow (warm_up -> vocabulary -> vocab_game -> reading -> grammar -> grammar_game -> listening -> production -> exit_ticket -> auto_review)
 - [x] YouTube video embed in warm-up
 - [x] Spiral recall (hints reference previous lessons)
 - [x] Single-mode grammar games (word_order, fill_blank, error_hunter)
@@ -34,17 +36,18 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 
 ## Prioritized Backlog
 ### P0 (Next)
-- Units 3-12 content from user
+- Units 5-12 content from user
 - Daily Habit Mode (spaced repetition)
 
 ### P1
-- TTS for listening activities
-- Refactor UnifiedLessonPage.js
+- TTS for listening activities (ElevenLabs or OpenAI TTS)
+- Refactor UnifiedLessonPage.js into smaller components
 - Teacher vs Student mode
 
 ### P2
-- Booster Mode, Certification Gate
-- Stage 2-8, Teacher Control Panel
+- Booster Mode (remedial for <80% scores)
+- Certification Gate
+- Stage 2-8 themes, Teacher Control Panel
 
 ## Test Credentials
 - Email: tester@test.com / Password: tester123
