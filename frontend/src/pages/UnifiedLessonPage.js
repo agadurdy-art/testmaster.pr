@@ -1157,21 +1157,25 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
   const [correct, setCorrect] = useState(0);
   const [phase, setPhase] = useState('listen'); // listen -> questions
   const questions = activity?.questions || [];
-  const transcript = activity?.transcript || activity?.audio_script || '';
+  const transcript = activity?.transcript || activity?.audio_script || activity?.audio_text || '';
   const q = questions[currentQ];
 
   const speakText = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.85; speechSynthesis.speak(u); };
 
   const checkAnswer = (answer, correctAnswer) => {
-    if (Array.isArray(correctAnswer)) return correctAnswer.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
-    return answer.toLowerCase().trim() === correctAnswer.toLowerCase().trim();
+    // Support both 'correct_answer' and 'answer' field names
+    const correctAns = correctAnswer || q?.answer;
+    if (!correctAns) return false;
+    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
+    return answer.toLowerCase().trim() === correctAns.toLowerCase().trim();
   };
 
   const handleAnswer = (answer) => {
     if (showFeedback) return;
     setSelectedAnswer(answer);
     setShowFeedback(true);
-    if (checkAnswer(answer, q.correct_answer)) setCorrect(c => c + 1);
+    const correctAns = q.correct_answer || q.answer;
+    if (checkAnswer(answer, correctAns)) setCorrect(c => c + 1);
   };
 
   const handleNext = () => {
@@ -1181,8 +1185,9 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
   };
 
   const isCorrectOption = (option) => {
-    if (Array.isArray(q.correct_answer)) return q.correct_answer.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
-    return option === q.correct_answer;
+    const correctAns = q.correct_answer || q.answer;
+    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
+    return option.toLowerCase().trim() === (correctAns || '').toLowerCase().trim();
   };
 
   return (
