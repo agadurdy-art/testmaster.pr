@@ -230,33 +230,69 @@ Respond with ONLY valid JSON:
     async def _enrich_vocab_game(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich vocabulary game with better questions"""
+        """Enrich vocabulary games - generate multiple game types"""
         
         # Get vocabulary from the lesson for context
         vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
-        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
+        vocab_items = vocab_step.get('items', [])
+        vocab_words = [item.get('word') for item in vocab_items]
         
-        prompt = f"""Create an engaging vocabulary game question for young learners (ages 4-7).
+        # Determine which games to generate based on lesson number
+        lesson_num = lesson.get('lesson_num', 1)
+        
+        prompt = f"""Create vocabulary games for young ESL learners (ages 4-7).
 
-VOCABULARY WORDS IN THIS LESSON: {vocab_words}
+VOCABULARY WORDS: {vocab_words}
+VOCABULARY WITH EMOJIS: {json.dumps([{'word': v.get('word'), 'emoji': v.get('image_emoji', '📝')} for v in vocab_items], ensure_ascii=False)}
 
-ORIGINAL CONTENT:
-{json.dumps(step, indent=2)}
+Create 3 different game activities using these words. Each game should have 3-4 questions.
 
-Create a fun, interactive question that:
-1. Tests recognition of one vocabulary word
-2. Uses an emoji or visual cue
-3. Has 4 clear options (1 correct, 3 distractors from lesson vocabulary or related words)
-4. Is playful and encouraging
+GAME TYPES TO CREATE:
+1. listen_choose_picture: Listen to word, choose emoji
+2. read_choose_picture: Read word, choose emoji  
+3. unscramble: Arrange letters to spell word
+
+For each word, also add distractors (3 other vocab words with emojis).
 
 Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
-    "type": "micro_game_vocab",
-    "question_text": "Fun question with emoji visual cue",
-    "correct_answer": "correct_word",
-    "options": ["word1", "word2", "word3", "word4"]
+    "type": "vocab_games",
+    "games": [
+        {{
+            "game_type": "listen_choose_picture",
+            "items": [
+                {{
+                    "word": "cat",
+                    "emoji": "🐱",
+                    "distractors": [
+                        {{"word": "dog", "emoji": "🐕"}},
+                        {{"word": "bird", "emoji": "🐦"}},
+                        {{"word": "fish", "emoji": "🐟"}}
+                    ]
+                }}
+            ]
+        }},
+        {{
+            "game_type": "read_choose_picture",
+            "items": [...]
+        }},
+        {{
+            "game_type": "unscramble",
+            "items": [
+                {{"word": "cat", "emoji": "🐱"}}
+            ]
+        }}
+    ],
+    "total_exercises": 10
 }}"""
+
+        try:
+            response = await chat.send_message(UserMessage(text=prompt))
+            return extract_json_from_response(response)
+        except Exception as e:
+            print(f"Vocab game enrichment failed: {e}")
+            return step
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
