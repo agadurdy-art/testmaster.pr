@@ -120,15 +120,23 @@ function StageCard({ stage, isUnlocked, progress, onClick }) {
   );
 }
 
-// Header with gamification
+// Header with gamification - iOS 26 Glass Style
 function GamificationHeader({ userProgress }) {
   return (
-    <div className="bg-white border-b sticky top-0 z-40">
+    <div 
+      className="sticky top-0 z-40"
+      style={{
+        background: 'rgba(255, 255, 255, 0.80)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.50)'
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
               <BookOpen className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -141,7 +149,10 @@ function GamificationHeader({ userProgress }) {
           <div className="flex items-center gap-6">
             {/* Streak */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+              <div 
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ background: 'rgba(251, 146, 60, 0.15)' }}
+              >
                 <Flame className="w-5 h-5 text-orange-500" />
               </div>
               <span className="font-bold text-gray-900">{userProgress?.daily_streak || 0}</span>
@@ -149,7 +160,10 @@ function GamificationHeader({ userProgress }) {
             
             {/* Points */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+              <div 
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ background: 'rgba(139, 92, 246, 0.15)' }}
+              >
                 <Zap className="w-5 h-5 text-purple-500" />
               </div>
               <span className="font-bold text-gray-900">
@@ -159,7 +173,10 @@ function GamificationHeader({ userProgress }) {
             
             {/* Rank */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+              <div 
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ background: 'rgba(250, 204, 21, 0.15)' }}
+              >
                 <Trophy className="w-5 h-5 text-yellow-500" />
               </div>
               <span className="font-bold text-gray-900">
