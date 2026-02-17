@@ -23,21 +23,25 @@ const STAGE_ICONS = {
   'crown': Crown
 };
 
-// Stage card component
+// Stage card component - iOS 26 Glass Style
 function StageCard({ stage, isUnlocked, progress, onClick }) {
   const Icon = STAGE_ICONS[stage.icon] || Rocket;
   const completionPercent = progress ? Math.round((progress.lessons_completed / progress.total_lessons) * 100) : 0;
   
   return (
-    <Card 
-      className={`relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl ${
+    <div 
+      className={`relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl rounded-3xl ${
         isUnlocked ? 'opacity-100' : 'opacity-60'
       }`}
       style={{ 
-        borderColor: stage.color,
-        borderWidth: '2px'
+        background: 'rgba(255, 255, 255, 0.70)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        border: `2px solid ${stage.color}40`,
+        boxShadow: '0 8px 32px rgba(31, 38, 135, 0.07)'
       }}
       onClick={() => isUnlocked && onClick(stage)}
+      data-testid={`stage-card-${stage.number}`}
     >
       {/* Background gradient */}
       <div 
@@ -48,7 +52,7 @@ function StageCard({ stage, isUnlocked, progress, onClick }) {
       <div className="relative p-6">
         {/* Lock overlay */}
         {!isUnlocked && (
-          <div className="absolute inset-0 bg-gray-900/50 flex items-center justify-center z-10 rounded-lg">
+          <div className="absolute inset-0 bg-gray-900/50 flex items-center justify-center z-10 rounded-3xl backdrop-blur-sm">
             <Lock className="w-12 h-12 text-white" />
           </div>
         )}
@@ -56,15 +60,15 @@ function StageCard({ stage, isUnlocked, progress, onClick }) {
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div 
-            className="w-14 h-14 rounded-2xl flex items-center justify-center"
+            className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg"
             style={{ backgroundColor: stage.color }}
           >
             <Icon className="w-7 h-7 text-white" />
           </div>
           <Badge 
             variant="outline" 
-            className="text-xs font-medium"
-            style={{ borderColor: stage.color, color: stage.color }}
+            className="text-xs font-medium rounded-full px-3"
+            style={{ borderColor: stage.color, color: stage.color, background: `${stage.color}10` }}
           >
             {stage.cefr_level}
           </Badge>
@@ -92,7 +96,7 @@ function StageCard({ stage, isUnlocked, progress, onClick }) {
               <span className="text-gray-600">Progress</span>
               <span className="font-medium" style={{ color: stage.color }}>{completionPercent}%</span>
             </div>
-            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+            <div className="h-2 bg-gray-100/80 rounded-full overflow-hidden">
               <div 
                 className="h-full rounded-full transition-all duration-500"
                 style={{ 
@@ -112,7 +116,7 @@ function StageCard({ stage, isUnlocked, progress, onClick }) {
           <ChevronRight className="w-5 h-5" style={{ color: stage.color }} />
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
 
