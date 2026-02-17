@@ -1861,7 +1861,8 @@ export default function UnifiedLessonPage({ user }) {
         return currentActivityData ? <GrammarFocus activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'micro_game_grammar':
-        return currentActivityData ? <GrammarGame activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
+      case 'grammar_games':
+        return currentActivityData ? <GrammarGamesPlayer activity={currentActivityData} onComplete={handleActivityComplete} onSkip={handleActivitySkip} /> :
           <PlaceholderActivity type={currentActivityType} onComplete={handleActivityComplete} onSkip={handleActivitySkip} isSkippable />;
       case 'listening':
       case 'listening_task':
