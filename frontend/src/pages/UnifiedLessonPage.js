@@ -1566,10 +1566,10 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
     'micro_game_grammar': 'Grammar Game', 'listening': 'Listening', 'production': 'Speaking', 'exit_ticket': 'Exit Quiz'
   };
 
-  const generatePDF = async () => {
-    const { jsPDF } = await import('jspdf');
-    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-    const pw = 210; // page width
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  const buildPDFContent = (doc, pdfWords, pdfRules, title, subtitle) => {
+    const pw = 210;
     let y = 15;
 
     // Header
@@ -1578,34 +1578,37 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Testmaster Worksheet', pw / 2, 12, { align: 'center' });
+    doc.text(title, pw / 2, 12, { align: 'center' });
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
-    doc.text(`${lesson?.title || 'Lesson'} - Lesson ${lesson?.number || ''}`, pw / 2, 22, { align: 'center' });
+    doc.text(subtitle, pw / 2, 22, { align: 'center' });
     y = 40;
-
     doc.setTextColor(0, 0, 0);
 
-    // Section: Vocabulary Review
-    if (words.length > 0) {
+    const checkPage = (needed) => {
+      if (y + needed > 280) { doc.addPage(); y = 20; }
+    };
+
+    // Vocabulary Review
+    if (pdfWords.length > 0) {
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.text('Vocabulary Review', 15, y);
       y += 8;
-
-      // Word list with definitions
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
-      words.forEach((w) => {
+      pdfWords.forEach((w) => {
+        checkPage(8);
         doc.setFont('helvetica', 'bold');
         doc.text(`${w.word}`, 18, y);
         doc.setFont('helvetica', 'normal');
         doc.text(` - ${w.definition || ''}`, 18 + doc.getTextWidth(`${w.word}`) + 2, y);
         y += 6;
       });
-      y += 4;
+      y += 6;
 
-      // Activity 1: Match the word to its definition
+      // Activity 1: Match the word
+      checkPage(20);
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.text('Activity 1: Match the Word', 15, y);
@@ -1614,22 +1617,27 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
       doc.setFont('helvetica', 'normal');
       doc.text('Draw a line from each word to its meaning:', 18, y);
       y += 8;
-      const shuffledDefs = [...words].sort(() => Math.random() - 0.5);
-      words.forEach((w, i) => {
+      const shuffled = [...pdfWords].sort(() => Math.random() - 0.5);
+      const matchWords = pdfWords.slice(0, 8);
+      const matchDefs = shuffled.slice(0, 8);
+      matchWords.forEach((w, i) => {
+        checkPage(9);
         doc.text(`${w.word}`, 22, y);
-        doc.text(`${shuffledDefs[i]?.definition || ''}`, 120, y);
+        doc.text(`${matchDefs[i]?.definition || ''}`, 120, y);
         y += 7;
       });
       y += 6;
 
       // Activity 2: Fill in the blank
+      checkPage(20);
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.text('Activity 2: Fill in the Blank', 15, y);
       y += 7;
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
-      words.forEach((w) => {
+      pdfWords.slice(0, 8).forEach((w) => {
+        checkPage(9);
         const sentence = w.example_sentence || `This is a ${w.word}.`;
         const blanked = sentence.replace(new RegExp(w.word, 'i'), '________');
         doc.text(`${blanked}`, 18, y);
@@ -1638,14 +1646,15 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
       y += 4;
     }
 
-    // Section: Grammar Practice
-    if (grammarRules.length > 0 && y < 240) {
+    // Grammar Practice
+    if (pdfRules.length > 0) {
+      checkPage(30);
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bold');
       doc.text('Grammar Practice', 15, y);
       y += 8;
-
-      grammarRules.forEach((r) => {
+      pdfRules.forEach((r) => {
+        checkPage(16);
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold');
         doc.text(`Pattern: ${r.pattern}`, 18, y);
@@ -1655,8 +1664,7 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
         y += 8;
       });
       y += 4;
-
-      // Activity 3: Write sentences
+      checkPage(40);
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.text('Activity 3: Write Your Own Sentences', 15, y);
@@ -1665,21 +1673,47 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
       doc.setFont('helvetica', 'normal');
       doc.text('Use the grammar patterns above to write 3 sentences:', 18, y);
       y += 8;
-      for (let i = 1; i <= 3; i++) {
-        doc.text(`${i}. _______________________________________________`, 18, y);
-        y += 10;
-      }
+      for (let i = 1; i <= 3; i++) { doc.text(`${i}. _______________________________________________`, 18, y); y += 10; }
     }
 
-    // Footer
-    const pageH = 297;
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text('Testmaster - Practice makes perfect!', pw / 2, pageH - 10, { align: 'center' });
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, pw / 2, pageH - 6, { align: 'center' });
+    // Footer on each page
+    const pages = doc.getNumberOfPages();
+    for (let p = 1; p <= pages; p++) {
+      doc.setPage(p);
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text('Testmaster - Practice makes perfect!', pw / 2, 290, { align: 'center' });
+      doc.text(`Date: ${new Date().toLocaleDateString()}  |  Page ${p}/${pages}`, pw / 2, 294, { align: 'center' });
+    }
+  };
 
-    doc.save(`Testmaster_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}_L${lesson?.number || ''}.pdf`);
-    toast.success('Worksheet downloaded!');
+  const generatePDF = async (mode = 'current') => {
+    setPdfLoading(true);
+    try {
+      const { jsPDF } = await import('jspdf');
+      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+      if (mode === 'cumulative') {
+        // Fetch cumulative vocab from all previous lessons
+        const res = await fetch(`${API_URL}/api/unified/cumulative-vocab/${lesson.lesson_id}`);
+        const data = await res.json();
+        buildPDFContent(doc, data.words || [], data.grammar_rules || [],
+          'Testmaster Cumulative Worksheet',
+          `All vocabulary up to ${lesson?.title || 'Lesson'} (${data.total_lessons} lessons)`
+        );
+        doc.save(`Testmaster_Cumulative_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}.pdf`);
+      } else {
+        buildPDFContent(doc, words, grammarRules,
+          'Testmaster Worksheet',
+          `${lesson?.title || 'Lesson'} - Lesson ${lesson?.number || ''}`
+        );
+        doc.save(`Testmaster_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}_L${lesson?.number || ''}.pdf`);
+      }
+      toast.success(mode === 'cumulative' ? 'Cumulative worksheet downloaded!' : 'Worksheet downloaded!');
+    } catch (err) {
+      toast.error('Failed to generate PDF');
+    }
+    setPdfLoading(false);
   };
 
   return (
