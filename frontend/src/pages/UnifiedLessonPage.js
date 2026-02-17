@@ -1192,11 +1192,17 @@ function ExitTicket({ activity, onComplete, onSkip }) {
     let c = 0;
     questions.forEach(q => {
       const userAns = answers[q.question_id]?.toLowerCase().trim();
+      if (!userAns) return;
+      let correct = false;
       if (Array.isArray(q.correct_answer)) {
-        if (q.correct_answer.some(a => a.toLowerCase().trim() === userAns)) c++;
+        correct = q.correct_answer.some(a => a.toLowerCase().trim() === userAns);
       } else {
-        if (userAns === q.correct_answer.toLowerCase().trim()) c++;
+        correct = userAns === q.correct_answer.toLowerCase().trim();
       }
+      if (!correct && q.acceptable_answers && Array.isArray(q.acceptable_answers)) {
+        correct = q.acceptable_answers.some(a => a.toLowerCase().trim() === userAns);
+      }
+      if (correct) c++;
     });
     return Math.round((c / questions.length) * 100);
   };
