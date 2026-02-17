@@ -10,7 +10,7 @@ import { Badge } from '../components/ui/badge';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Unit card component
+// Unit card component - iOS 26 Glass Style
 function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
   const isUnlocked = true; // All units unlocked for testing
   const completedLessons = lessons.filter(l => 
@@ -19,14 +19,24 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
   const completionPercent = Math.round((completedLessons / lessons.length) * 100);
   
   return (
-    <Card className={`overflow-hidden ${!isUnlocked ? 'opacity-60' : ''}`}>
+    <div 
+      className={`overflow-hidden rounded-3xl ${!isUnlocked ? 'opacity-60' : ''}`}
+      style={{
+        background: 'rgba(255, 255, 255, 0.70)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        border: '1px solid rgba(255, 255, 255, 0.50)',
+        boxShadow: '0 8px 32px rgba(31, 38, 135, 0.07)'
+      }}
+      data-testid={`unit-card-${unit.number}`}
+    >
       {/* Unit header */}
       <div 
         className="p-4 text-white"
         style={{ backgroundColor: unit.theme_color || '#FF6B6B' }}
       >
         <div className="flex items-center justify-between">
-          <Badge variant="secondary" className="bg-white/20 text-white">
+          <Badge variant="secondary" className="bg-white/20 text-white border-0 rounded-full">
             Unit {unit.number}
           </Badge>
           {!isUnlocked && <Lock className="w-5 h-5" />}
@@ -39,12 +49,12 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
       </div>
       
       {/* Progress bar */}
-      <div className="px-4 py-2 bg-gray-50">
+      <div className="px-4 py-2" style={{ background: 'rgba(249, 250, 251, 0.5)' }}>
         <div className="flex justify-between text-xs mb-1">
           <span className="text-gray-600">{completedLessons}/{lessons.length} Lessons</span>
           <span className="font-medium text-gray-900">{completionPercent}%</span>
         </div>
-        <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-gray-200/80 rounded-full overflow-hidden">
           <div 
             className="h-full rounded-full transition-all duration-500"
             style={{ 
@@ -56,7 +66,7 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
       </div>
       
       {/* Lesson list */}
-      <div className="divide-y">
+      <div className="divide-y divide-gray-100/50">
         {lessons.map((lesson, index) => {
           const isLessonUnlocked = true; // All lessons unlocked for testing
           const isCompleted = userProgress?.lesson_progress?.[lesson.lesson_id]?.completed;
@@ -65,15 +75,16 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
           return (
             <div 
               key={lesson.lesson_id}
-              className={`p-4 flex items-center justify-between cursor-pointer transition-colors ${
-                isLessonUnlocked ? 'hover:bg-gray-50' : 'opacity-50 cursor-not-allowed'
+              className={`p-4 flex items-center justify-between cursor-pointer transition-all ${
+                isLessonUnlocked ? 'hover:bg-white/50' : 'opacity-50 cursor-not-allowed'
               }`}
               onClick={() => isLessonUnlocked && onLessonClick(lesson)}
+              data-testid={`lesson-${lesson.lesson_id}`}
             >
               <div className="flex items-center gap-3">
                 {/* Status indicator */}
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  isCompleted ? 'bg-green-100' : isLessonUnlocked ? 'bg-gray-100' : 'bg-gray-100'
+                  isCompleted ? 'bg-green-100' : isLessonUnlocked ? 'bg-gray-100/80' : 'bg-gray-100/80'
                 }`}>
                   {isCompleted ? (
                     <CheckCircle className="w-5 h-5 text-green-600" />
@@ -114,7 +125,7 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
           );
         })}
       </div>
-    </Card>
+    </div>
   );
 }
 
