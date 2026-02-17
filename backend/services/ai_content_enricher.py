@@ -428,7 +428,7 @@ Respond with ONLY valid JSON:
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            result = json.loads(response)
+            result = extract_json_from_response(response)
             # Ensure questions have proper options
             for q in result.get('questions', []):
                 if not q.get('options') or len(q.get('options', [])) < 2:
