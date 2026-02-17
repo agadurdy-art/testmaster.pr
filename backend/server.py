@@ -494,6 +494,16 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+# AI Content Enrichment routes
+try:
+    from routes.content_enrichment import router as content_enrichment_router
+    app.include_router(content_enrichment_router)
+    print("✅ Content Enrichment routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Content Enrichment routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 
 # ============ Models ============
 
