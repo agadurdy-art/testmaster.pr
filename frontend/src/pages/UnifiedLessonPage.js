@@ -1234,7 +1234,8 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           <Progress value={((currentQ + 1) / questions.length) * 100} className="mb-5" />
           <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
           <div className="space-y-2.5">
-            {(q.options || []).map(option => {
+            {/* If options provided, show them; otherwise default to yes/no */}
+            {((q.options && q.options.length > 0) ? q.options : ['yes', 'no']).map(option => {
               const isSelected = selectedAnswer === option;
               const optionIsCorrect = isCorrectOption(option);
               let cls = 'border-gray-200 hover:border-cyan-300';
@@ -1244,8 +1245,9 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
                 else cls = 'border-gray-200 opacity-50';
               }
               return (
-                <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium ${cls}`}
-                  onClick={() => handleAnswer(option)} disabled={showFeedback}>
+                <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium capitalize ${cls}`}
+                  onClick={() => handleAnswer(option)} disabled={showFeedback}
+                  data-testid={`listening-option-${option}`}>
                   {option}
                 </button>
               );
