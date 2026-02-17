@@ -1905,13 +1905,27 @@ export default function UnifiedLessonPage({ user }) {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b ${theme.bg}`} data-testid="unified-lesson-page">
-      {/* Header */}
-      <div className="bg-white/90 backdrop-blur-sm border-b sticky top-0 z-40">
+    <div 
+      className="min-h-screen" 
+      style={{
+        background: `radial-gradient(at 0% 0%, ${theme.accentLight}90 0, transparent 50%), radial-gradient(at 100% 0%, hsla(190,100%,92%,1) 0, transparent 50%), radial-gradient(at 100% 100%, hsla(37,100%,91%,1) 0, transparent 50%), #F8FAFC`
+      }}
+      data-testid="unified-lesson-page"
+    >
+      {/* Header - iOS 26 Glass Style */}
+      <div 
+        className="sticky top-0 z-40"
+        style={{
+          background: 'rgba(255, 255, 255, 0.85)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.50)'
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" onClick={() => navigate(`/unified/stage/${lesson.stage_id}`)} data-testid="lesson-back-btn"><X className="w-5 h-5" /></Button>
+              <Button variant="ghost" size="sm" className="rounded-full" onClick={() => navigate(`/unified/stage/${lesson.stage_id}`)} data-testid="lesson-back-btn"><X className="w-5 h-5" /></Button>
               <div>
                 <h1 className="font-bold text-gray-900 text-sm">{lesson.title}</h1>
                 <p className="text-xs text-gray-500">Lesson {lesson.number}</p>
