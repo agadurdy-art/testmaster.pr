@@ -1474,6 +1474,12 @@ export default function UnifiedLessonPage({ user }) {
         toast.success('Lesson completed! Points awarded.');
       } catch (e) { console.error('Error completing lesson:', e); }
     }
+    // Check if this is a Final Gate lesson
+    const isFinalGate = lesson?.title?.toLowerCase().includes('final gate') || lessonId?.includes('unit_12_lesson_04');
+    if (isFinalGate) {
+      setShowCertificate(true);
+      return;
+    }
     navigate(`/unified/stage/${lesson?.stage_id}`);
   };
 
