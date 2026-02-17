@@ -947,6 +947,9 @@ function GrammarGame({ activity, onComplete, onSkip }) {
           </div>
           <div className="bg-gray-50 rounded-2xl p-6 mb-6">
             <p className="text-xl font-bold text-gray-900">{item.sentence}</p>
+            {item.hint && !showFeedback && (
+              <p className="text-sm text-amber-600 mt-2 italic">Hint: {item.hint}</p>
+            )}
           </div>
           <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
             {(item.options || []).map(option => {
