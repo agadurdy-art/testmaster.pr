@@ -1,0 +1,1549 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_08",
+      "unit_num": 8,
+      "title": "Animals - Farm",
+      "subtitle": "Farm Animals and Sounds",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "That is a...",
+        "Is that a...?",
+        "It says [Sound]."
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_08_lesson_01",
+          "title": "On the Farm",
+          "topic": "Big animals and distance grammar",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=5oYKonuEJKM",
+              "instruction": "Let's watch and listen for a big farm animal!",
+              "question_text": "What is the first animal you meet on the farm?",
+              "correct_answer": "cow",
+              "options": [
+                "cow",
+                "sheep",
+                "chicken",
+                "horse"
+              ],
+              "image_emoji": "🐄",
+              "hint": "It has big black and white spots and says Moo!"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "farm",
+                  "ipa": "/fɑːm/",
+                  "definition": "A big place with animals",
+                  "example": "That is a farm.",
+                  "image_emoji": "🏡"
+                },
+                {
+                  "word": "farmer",
+                  "ipa": "/ˈfɑːrmər/",
+                  "definition": "Person who takes care of animals",
+                  "example": "Is that a farmer?",
+                  "image_emoji": "🧛"
+                },
+                {
+                  "word": "cow",
+                  "ipa": "/kaʊ/",
+                  "definition": "Big animal that says Moo",
+                  "example": "That is a cow. It says Moo!",
+                  "image_emoji": "🐮"
+                },
+                {
+                  "word": "horse",
+                  "ipa": "/hɔːrs/",
+                  "definition": "Big animal you can ride",
+                  "example": "Is that a horse?",
+                  "image_emoji": "🐴"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "farm",
+                      "emoji": "🚜",
+                      "distractors": [
+                        {
+                          "word": "farmer",
+                          "emoji": "👨‍🌾"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "farmer",
+                      "emoji": "👨‍🌾",
+                      "distractors": [
+                        {
+                          "word": "farm",
+                          "emoji": "🚜"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cow",
+                      "emoji": "🐄",
+                      "distractors": [
+                        {
+                          "word": "farm",
+                          "emoji": "🚜"
+                        },
+                        {
+                          "word": "farmer",
+                          "emoji": "👨‍🌾"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "horse",
+                      "emoji": "🐎",
+                      "distractors": [
+                        {
+                          "word": "farm",
+                          "emoji": "🚜"
+                        },
+                        {
+                          "word": "farmer",
+                          "emoji": "👨‍🌾"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "farm",
+                      "emoji": "🚜",
+                      "distractors": [
+                        {
+                          "word": "farmer",
+                          "emoji": "👨‍🌾"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "farmer",
+                      "emoji": "👨‍🌾",
+                      "distractors": [
+                        {
+                          "word": "farm",
+                          "emoji": "🚜"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "cow",
+                      "emoji": "🐄",
+                      "distractors": [
+                        {
+                          "word": "farm",
+                          "emoji": "🚜"
+                        },
+                        {
+                          "word": "farmer",
+                          "emoji": "👨‍🌾"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "horse",
+                      "emoji": "🐎",
+                      "distractors": [
+                        {
+                          "word": "farm",
+                          "emoji": "🚜"
+                        },
+                        {
+                          "word": "farmer",
+                          "emoji": "👨‍🌾"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐄"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "farm",
+                      "emoji": "🚜"
+                    },
+                    {
+                      "word": "farmer",
+                      "emoji": "👨‍🌾"
+                    },
+                    {
+                      "word": "cow",
+                      "emoji": "🐄"
+                    },
+                    {
+                      "word": "horse",
+                      "emoji": "🐎"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "On the Farm",
+              "text": "Look at the big farm. That is a cow. It says Moo. Is that a horse? Yes, it is! The farmer smiles.",
+              "questions": [
+                {
+                  "question": "What does the cow say?",
+                  "answer": "Moo",
+                  "options": [
+                    "Moo",
+                    "Baa",
+                    "Neigh"
+                  ]
+                },
+                {
+                  "question": "Who smiles on the farm?",
+                  "answer": "The farmer",
+                  "options": [
+                    "The farmer",
+                    "The cow",
+                    "The horse"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "That is a ___",
+              "explanation": "Use 'That is' for something far away.",
+              "examples": [
+                "That is a cow.",
+                "That is a horse.",
+                "That is a farm."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "That",
+                        "a",
+                        "cow",
+                        "is"
+                      ],
+                      "correctSentence": "That is a cow."
+                    },
+                    {
+                      "words": [
+                        "That",
+                        "is",
+                        "horse",
+                        "a"
+                      ],
+                      "correctSentence": "That is a horse."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "___ is a cow.",
+                      "answer": "That",
+                      "options": [
+                        "That",
+                        "This",
+                        "Those",
+                        "These"
+                      ]
+                    },
+                    {
+                      "sentence": "That is a ___.",
+                      "answer": "horse",
+                      "options": [
+                        "dog",
+                        "cat",
+                        "horse",
+                        "chicken"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "The is a cow.",
+                      "errorWord": "The",
+                      "correctWord": "That"
+                    },
+                    {
+                      "sentence": "That am a horse.",
+                      "errorWord": "am",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Look over there! That is a big cow. It says Moo! Is that a horse near the farmer?",
+              "questions": [
+                {
+                  "question": "What sound does the cow make?",
+                  "answer": "Moo",
+                  "options": [
+                    "Moo",
+                    "Neigh",
+                    "Baa"
+                  ]
+                },
+                {
+                  "question": "Who is near the horse?",
+                  "answer": "the farmer",
+                  "options": [
+                    "the farmer",
+                    "the cow",
+                    "the sheep"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Point and Say: That is a horse.",
+              "expected_text": "that is a horse",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What does the 🐎 say? Pick the sound!",
+              "correct_answer": "neigh",
+              "options": [
+                "neigh",
+                "moo",
+                "quack"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Animals On The Farm",
+              "url": "https://www.youtube.com/watch?v=5oYKonuEJKM",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_08_lesson_02",
+          "title": "Sheep and Ducks",
+          "topic": "Small animals and colors",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video_sheep_and_ducks",
+              "instruction": "Watch the video and find the animal helping on the farm.",
+              "question_text": "Who is taking care of the sheep and ducks? 🐑🦆",
+              "correct_answer": "farmer",
+              "options": [
+                "farmer",
+                "duck",
+                "sheep",
+                "horse"
+              ],
+              "image_emoji": "👨‍🌾",
+              "hint": "It's the person who wears a hat and works with the animals."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "sheep",
+                  "ipa": "/ʃiːp/",
+                  "definition": "Fluffy, white farm animal",
+                  "example": "That is a sheep. It says baa.",
+                  "image_emoji": "🐑"
+                },
+                {
+                  "word": "duck",
+                  "ipa": "/dʌk/",
+                  "definition": "Quacks and swims in water",
+                  "example": "Is that a duck? It says quack.",
+                  "image_emoji": "🦆"
+                },
+                {
+                  "word": "white",
+                  "ipa": "/waɪt/",
+                  "definition": "Color like a cloud",
+                  "example": "That is a white sheep.",
+                  "image_emoji": "⬜"
+                },
+                {
+                  "word": "swim",
+                  "ipa": "/swɪm/",
+                  "definition": "Move in water like fish",
+                  "example": "The duck can swim.",
+                  "image_emoji": "🌊"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "sheep",
+                      "emoji": "🐑",
+                      "distractors": [
+                        {
+                          "word": "duck",
+                          "emoji": "🦆"
+                        },
+                        {
+                          "word": "white",
+                          "emoji": "⚪"
+                        },
+                        {
+                          "word": "swim",
+                          "emoji": "🏊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "duck",
+                      "emoji": "🦆",
+                      "distractors": [
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        },
+                        {
+                          "word": "white",
+                          "emoji": "⚪"
+                        },
+                        {
+                          "word": "swim",
+                          "emoji": "🏊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "white",
+                      "emoji": "⚪",
+                      "distractors": [
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        },
+                        {
+                          "word": "duck",
+                          "emoji": "🦆"
+                        },
+                        {
+                          "word": "swim",
+                          "emoji": "🏊"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "swim",
+                      "emoji": "🏊",
+                      "distractors": [
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        },
+                        {
+                          "word": "duck",
+                          "emoji": "🦆"
+                        },
+                        {
+                          "word": "white",
+                          "emoji": "⚪"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sheep",
+                      "emoji": "🐑",
+                      "distractors": [
+                        {
+                          "word": "duck",
+                          "emoji": "🦆"
+                        },
+                        {
+                          "word": "white",
+                          "emoji": "⚪"
+                        },
+                        {
+                          "word": "swim",
+                          "emoji": "🏊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "duck",
+                      "emoji": "🦆",
+                      "distractors": [
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        },
+                        {
+                          "word": "white",
+                          "emoji": "⚪"
+                        },
+                        {
+                          "word": "swim",
+                          "emoji": "🏊"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "sheep",
+                      "emoji": "🐑"
+                    },
+                    {
+                      "word": "duck",
+                      "emoji": "🦆"
+                    },
+                    {
+                      "word": "white",
+                      "emoji": "⚪"
+                    },
+                    {
+                      "word": "swim",
+                      "emoji": "🏊"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Fun on the Farm",
+              "text": "That is a white sheep. Is that a duck? Yes, the duck can swim. It says quack! I love animals.",
+              "questions": [
+                {
+                  "question": "What color is the sheep?",
+                  "answer": "white",
+                  "options": [
+                    "yellow",
+                    "white",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "Can the duck swim?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "That is a ___!",
+              "explanation": "Use to say what an animal is.",
+              "examples": [
+                "That is a sheep!",
+                "That is a duck!",
+                "That is a cat!"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Is",
+                        "that",
+                        "a",
+                        "sheep?"
+                      ],
+                      "correctSentence": "Is that a sheep?"
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "that",
+                        "a",
+                        "duck?"
+                      ],
+                      "correctSentence": "Is that a duck?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Is ___ a sheep?",
+                      "answer": "that",
+                      "options": [
+                        "this",
+                        "that",
+                        "it",
+                        "a"
+                      ]
+                    },
+                    {
+                      "sentence": "Is that a ___?",
+                      "answer": "duck",
+                      "options": [
+                        "duck",
+                        "jump",
+                        "run",
+                        "fly"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Is that a sheeps?",
+                      "errorWord": "sheeps",
+                      "correctWord": "sheep"
+                    },
+                    {
+                      "sentence": "Is those a duck?",
+                      "errorWord": "those",
+                      "correctWord": "that"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Is that a duck swimming in the pond? Yes, it is! The duck is white.",
+              "questions": [
+                {
+                  "question": "What color is the duck?",
+                  "answer": "white",
+                  "options": [
+                    "white",
+                    "yellow",
+                    "blue"
+                  ]
+                },
+                {
+                  "question": "Is the duck swimming?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: Is that a sheep?",
+              "expected_text": "is that a sheep",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Look at the emoji 🐑: Pick the animal!",
+              "correct_answer": "sheep",
+              "options": [
+                "sheep",
+                "duck",
+                "cat"
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_08_lesson_03",
+          "title": "Pig and Chicken",
+          "topic": "Birds, pigs and animal sound recognition",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/farm_animals_video",
+              "instruction": "Watch the video carefully and listen to the sounds.",
+              "question_text": "Which animal on the farm says Quack?",
+              "correct_answer": "Duck",
+              "options": [
+                "Duck",
+                "Chicken",
+                "Pig",
+                "Cow"
+              ],
+              "image_emoji": "🦆",
+              "hint": "This animal loves water and has webbed feet."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "pig",
+                  "ipa": "/pɪɡ/",
+                  "definition": "Pink animal on the farm",
+                  "example": "That is a pig. It says Oink.",
+                  "image_emoji": "🐷"
+                },
+                {
+                  "word": "chicken",
+                  "ipa": "/ˈtʃɪk.ɪn/",
+                  "definition": "Farm bird with feathers",
+                  "example": "Is that a chicken? It says Cluck.",
+                  "image_emoji": "🐔"
+                },
+                {
+                  "word": "egg",
+                  "ipa": "/ɛɡ/",
+                  "definition": "Round thing from a chicken",
+                  "example": "That is an egg from a chicken.",
+                  "image_emoji": "🥚"
+                },
+                {
+                  "word": "mud",
+                  "ipa": "/mʌd/",
+                  "definition": "Wet soil on the ground",
+                  "example": "Look at the mud! Is that a pig in it?",
+                  "image_emoji": "🪵"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "pig",
+                      "emoji": "🐷",
+                      "distractors": [
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        },
+                        {
+                          "word": "mud",
+                          "emoji": "💩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "chicken",
+                      "emoji": "🐔",
+                      "distractors": [
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        },
+                        {
+                          "word": "mud",
+                          "emoji": "💩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "egg",
+                      "emoji": "🥚",
+                      "distractors": [
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        },
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        },
+                        {
+                          "word": "mud",
+                          "emoji": "💩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mud",
+                      "emoji": "💩",
+                      "distractors": [
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        },
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "pig",
+                      "emoji": "🐷",
+                      "distractors": [
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        },
+                        {
+                          "word": "mud",
+                          "emoji": "💩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "chicken",
+                      "emoji": "🐔",
+                      "distractors": [
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        },
+                        {
+                          "word": "mud",
+                          "emoji": "💩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "egg",
+                      "emoji": "🥚",
+                      "distractors": [
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        },
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        },
+                        {
+                          "word": "mud",
+                          "emoji": "💩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "mud",
+                      "emoji": "💩",
+                      "distractors": [
+                        {
+                          "word": "pig",
+                          "emoji": "🐷"
+                        },
+                        {
+                          "word": "chicken",
+                          "emoji": "🐔"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "pig",
+                      "emoji": "🐷"
+                    },
+                    {
+                      "word": "chicken",
+                      "emoji": "🐔"
+                    },
+                    {
+                      "word": "egg",
+                      "emoji": "🥚"
+                    },
+                    {
+                      "word": "mud",
+                      "emoji": "💩"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Farm Friends",
+              "text": "Look at the pig. It is very pink. The pig is in the mud. That is a chicken. Is that a chicken egg? The egg is big!",
+              "questions": [
+                {
+                  "question": "Where is the pig?",
+                  "answer": "in the mud",
+                  "options": [
+                    "in the mud",
+                    "in the barn",
+                    "in the water"
+                  ]
+                },
+                {
+                  "question": "What is big?",
+                  "answer": "the egg",
+                  "options": [
+                    "the pig",
+                    "the egg",
+                    "the mud"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "The ___ says ___.",
+              "explanation": "Say what sound an animal makes.",
+              "examples": [
+                "The duck says quack.",
+                "The chicken says cluck.",
+                "The horse says neigh."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "The",
+                        "cow",
+                        "says",
+                        "moo"
+                      ],
+                      "correctSentence": "The cow says moo."
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "duck",
+                        "says",
+                        "quack"
+                      ],
+                      "correctSentence": "The duck says quack."
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "cat",
+                        "says",
+                        "meow"
+                      ],
+                      "correctSentence": "The cat says meow."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "The pig says ___.",
+                      "answer": "oink",
+                      "options": [
+                        "woof",
+                        "meow",
+                        "oink",
+                        "quack"
+                      ]
+                    },
+                    {
+                      "sentence": "The sheep says ___.",
+                      "answer": "baa",
+                      "options": [
+                        "moo",
+                        "baa",
+                        "neigh",
+                        "cluck"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "The cat say meow.",
+                      "errorWord": "say",
+                      "correctWord": "says"
+                    },
+                    {
+                      "sentence": "The horse says bark.",
+                      "errorWord": "bark",
+                      "correctWord": "neigh"
+                    },
+                    {
+                      "sentence": "The duck say quack.",
+                      "errorWord": "say",
+                      "correctWord": "says"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Cluck cluck! That is a brown chicken. Look at the white egg in the mud.",
+              "questions": [
+                {
+                  "question": "What color is the chicken?",
+                  "answer": "brown",
+                  "options": [
+                    "brown",
+                    "white",
+                    "pink"
+                  ]
+                },
+                {
+                  "question": "Where is the egg?",
+                  "answer": "in the mud",
+                  "options": [
+                    "in the mud",
+                    "in the nest",
+                    "in the barn"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: The pig says oink.",
+              "expected_text": "the pig says oink",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Who says 🐷 oink?",
+              "correct_answer": "pig",
+              "options": [
+                "pig",
+                "chicken",
+                "cow",
+                "duck"
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_08_lesson_04",
+          "title": "Farm Master",
+          "topic": "Mastery Check (All Farm Animals)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.example.com/farm-animals",
+              "instruction": "Watch the video and listen carefully to the sounds!",
+              "question_text": "Which animal goes 'moo' on the farm?",
+              "correct_answer": "cow",
+              "options": [
+                "cow",
+                "pig",
+                "sheep",
+                "goat"
+              ],
+              "image_emoji": "🐮",
+              "hint": "This animal is black and white and gives us milk!"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "farm",
+                "farmer",
+                "cow",
+                "horse",
+                "sheep",
+                "duck",
+                "pig",
+                "chicken",
+                "egg",
+                "white",
+                "mud",
+                "swim"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐶",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        },
+                        {
+                          "word": "cow",
+                          "emoji": "🐮"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bird",
+                      "emoji": "🐦",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "frog",
+                          "emoji": "🐸"
+                        },
+                        {
+                          "word": "lion",
+                          "emoji": "🦁"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "fish",
+                      "emoji": "🐟",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "frog",
+                      "emoji": "🐸",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "horse",
+                          "emoji": "🐎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "lion",
+                      "emoji": "🦁",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "frog",
+                          "emoji": "🐸"
+                        },
+                        {
+                          "word": "sheep",
+                          "emoji": "🐑"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐶"
+                    },
+                    {
+                      "word": "frog",
+                      "emoji": "🐸"
+                    },
+                    {
+                      "word": "lion",
+                      "emoji": "🦁"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Morning on the Farm",
+              "text": "Good morning! I see the sun. That is a rooster. Is that a cow? It says Moo! The hen is laying eggs. I love my animals!",
+              "questions": [
+                {
+                  "question": "What does the cow say?",
+                  "answer": "Moo",
+                  "options": [
+                    "Moo",
+                    "Cluck",
+                    "Baa"
+                  ]
+                },
+                {
+                  "question": "What animal is laying eggs?",
+                  "answer": "hen",
+                  "options": [
+                    "hen",
+                    "rooster",
+                    "cow"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "That is a...",
+                "Is that a...?",
+                "It says..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats"
+                    },
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "a",
+                        "dog"
+                      ],
+                      "correctSentence": "This is a dog"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "a",
+                        "ball"
+                      ],
+                      "correctSentence": "She has a ball"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ playing.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "has",
+                        "have"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ a book.",
+                      "answer": "have",
+                      "options": [
+                        "is",
+                        "have",
+                        "has",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "She are happy.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Look at the farm! That is a big cow. It says moo. Is that a duck? It says quack!",
+              "questions": [
+                {
+                  "question": "What sound does the cow make?",
+                  "answer": "moo",
+                  "options": [
+                    "moo",
+                    "quack",
+                    "oink"
+                  ]
+                },
+                {
+                  "question": "Is that a duck?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: That is a cow. What does it say?",
+              "expected_text": "that is a cow it says moo",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Pick the animal that says moo! 🐮",
+              "correct_answer": "cow",
+              "options": [
+                "cow",
+                "sheep",
+                "chicken"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Farm Animals Song",
+              "url": "https://www.youtube.com/watch?v=5oYKonuEJKM",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T18:02:50.469644+00:00"
+}
