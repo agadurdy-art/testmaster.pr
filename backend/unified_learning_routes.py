@@ -127,6 +127,55 @@ async def get_activity_content(lesson_id: str, activity_type: str):
     return activity
 
 
+@router.get("/cumulative-vocab/{lesson_id}")
+async def get_cumulative_vocabulary(lesson_id: str):
+    """Get vocabulary from all lessons up to and including the given lesson_id"""
+    # Parse the lesson_id to get stage, unit, lesson numbers
+    # Format: stage_1_unit_01_lesson_01
+    parts = lesson_id.split('_')
+    stage_id = f"{parts[0]}_{parts[1]}"
+    unit_num = int(parts[3])
+    lesson_num = int(parts[5])
+    
+    # Build list of all lesson IDs up to and including current
+    lesson_ids = []
+    for u in range(1, unit_num + 1):
+        max_l = lesson_num if u == unit_num else 4
+        for l in range(1, max_l + 1):
+            lid = f"{stage_id}_unit_{u:02d}_lesson_{l:02d}"
+            lesson_ids.append(lid)
+    
+    # Fetch vocab and grammar from all those lessons
+    vocab_docs = await db.unified_vocabulary_activities.find(
+        {"lesson_id": {"$in": lesson_ids}},
+        {"_id": 0, "words": 1, "lesson_id": 1}
+    ).to_list(length=200)
+    
+    grammar_docs = await db.unified_grammar_activities.find(
+        {"lesson_id": {"$in": lesson_ids}},
+        {"_id": 0, "rules": 1, "lesson_id": 1}
+    ).to_list(length=200)
+    
+    all_words = []
+    seen_words = set()
+    for doc in vocab_docs:
+        for w in doc.get("words", []):
+            if w["word"] not in seen_words:
+                seen_words.add(w["word"])
+                all_words.append(w)
+    
+    all_rules = []
+    seen_patterns = set()
+    for doc in grammar_docs:
+        for r in doc.get("rules", []):
+            p = r.get("pattern", "")
+            if p not in seen_patterns:
+                seen_patterns.add(p)
+                all_rules.append(r)
+    
+    return {"words": all_words, "grammar_rules": all_rules, "total_lessons": len(lesson_ids)}
+
+
 # ============ PROGRESS ROUTES ============
 
 @router.get("/progress/{user_id}")
