@@ -319,7 +319,8 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
   const check = () => {
     const ok = input.toLowerCase().trim() === w.word.toLowerCase();
     setFeedback(ok ? 'correct' : 'wrong');
-    if (ok && !done.includes(w.word_id)) setDone([...done, w.word_id]);
+    // Use word string instead of word_id since content may not have word_id
+    if (ok && !done.includes(w.word)) setDone([...done, w.word]);
   };
 
   const next = () => {
