@@ -1,0 +1,1737 @@
+{
+  "unit_01": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Hello, ______!",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "cat",
+              "ball"
+            ],
+            "hint": "This person helps you learn"
+          },
+          {
+            "sentence": "I am a ______.",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "teacher",
+              "apple",
+              "ball"
+            ],
+            "hint": "A person who learns at school"
+          },
+          {
+            "sentence": "Say ______ when you meet someone.",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "teacher",
+              "cat",
+              "apple"
+            ],
+            "hint": "A greeting word"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Hello",
+              "teacher"
+            ],
+            "correct_sentence": "Hello, teacher!"
+          },
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a person who teaches'?",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "fast",
+              "green"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "Tom",
+            "options": [
+              "Tom",
+              "tables",
+              "songs",
+              "colors"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A name"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "teacher",
+            "acceptable_answers": [
+              "teacher"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a greeting when you meet someone' mean?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "dog",
+              "blue",
+              "run"
+            ],
+            "hint": "You say this when you meet someone",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What does 'a person who teaches students' mean?",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "book",
+              "happy",
+              "car"
+            ],
+            "hint": "This person helps you learn",
+            "image_emoji": "👨‍🏫"
+          },
+          {
+            "question_text": "What does 'a person who learns at school' mean?",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "chair",
+              "run",
+              "yellow"
+            ],
+            "hint": "This person studies in class",
+            "image_emoji": "🎒"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have an ______.",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "teacher",
+              "ball",
+              "student"
+            ],
+            "hint": "A round fruit you can eat"
+          },
+          {
+            "sentence": "The ______ is red.",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "cat",
+              "apple",
+              "teacher"
+            ],
+            "hint": "You can play catch with it"
+          },
+          {
+            "sentence": "The ______ is sleeping.",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "ball",
+              "student",
+              "apple"
+            ],
+            "hint": "A small furry pet"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          },
+          {
+            "words": [
+              "Hello",
+              "teacher"
+            ],
+            "correct_sentence": "Hello, teacher!"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a round red or green fruit'?",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "ball",
+              "car",
+              "happy"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a round object used in games'?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "book",
+              "tree",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete the sentence: I am ______.",
+            "correct_answer": "Tom",
+            "options": [
+              "Tom",
+              "red",
+              "jump",
+              "apple"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Use a name here"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a round red fruit' mean?",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "chair",
+              "fast",
+              "blue"
+            ],
+            "hint": "You can eat this fruit",
+            "image_emoji": "🍎"
+          },
+          {
+            "question_text": "What does 'a round object used in games' mean?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "tree",
+              "book",
+              "happy"
+            ],
+            "hint": "You can throw or kick this",
+            "image_emoji": "⚽"
+          },
+          {
+            "question_text": "What does 'a small furry pet animal' mean?",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "car",
+              "chair",
+              "blue"
+            ],
+            "hint": "This animal says 'meow'",
+            "image_emoji": "🐱"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Hello, ______!",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "cat",
+              "run"
+            ],
+            "hint": "You say this to a teacher"
+          },
+          {
+            "sentence": "I am a ______.",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "ball",
+              "cat",
+              "jump"
+            ],
+            "hint": "A person who learns at school"
+          },
+          {
+            "sentence": "The red ______ is round.",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "teacher",
+              "apple",
+              "book"
+            ],
+            "hint": "You can play games with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Hello",
+              "student"
+            ],
+            "correct_sentence": "Hello, student!"
+          },
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a greeting when you meet someone'?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "chair",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a small furry pet animal'?",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "book",
+              "happy",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "Tom",
+            "options": [
+              "Tom",
+              "table",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A name of a person"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "teacher",
+            "acceptable_answers": [
+              "teacher"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a greeting when you meet someone' mean?",
+            "correct_answer": "hello",
+            "options": [
+              "hello",
+              "run",
+              "blue",
+              "dog"
+            ],
+            "hint": "You say this to greet people",
+            "image_emoji": "👋"
+          },
+          {
+            "question_text": "What does 'a person who learns at school' mean?",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "table",
+              "fast",
+              "red"
+            ],
+            "hint": "This person studies at school",
+            "image_emoji": "🎒"
+          },
+          {
+            "question_text": "What does 'a round object used in games' mean?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "chair",
+              "jump",
+              "hot"
+            ],
+            "hint": "You can throw or kick this",
+            "image_emoji": "⚽"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "Hello, ______!",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "apple",
+              "ball",
+              "cat"
+            ],
+            "hint": "A person who teaches"
+          },
+          {
+            "sentence": "I am a ______.",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "apple",
+              "ball",
+              "cat"
+            ],
+            "hint": "A person who learns at school"
+          },
+          {
+            "sentence": "______! How are you?",
+            "correct_answer": "Hello",
+            "options": [
+              "Hello",
+              "Teacher",
+              "Student",
+              "Apple"
+            ],
+            "hint": "A greeting word"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "Hello",
+              "teacher"
+            ],
+            "correct_sentence": "Hello teacher!"
+          },
+          {
+            "words": [
+              "I",
+              "am",
+              "a",
+              "student"
+            ],
+            "correct_sentence": "I am a student."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a person who learns at school'?",
+            "correct_answer": "student",
+            "options": [
+              "student",
+              "ball",
+              "teacher",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a round object used in games'?",
+            "correct_answer": "ball",
+            "options": [
+              "ball",
+              "apple",
+              "chair",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: I am ______.",
+            "correct_answer": "a student",
+            "options": [
+              "a student",
+              "a teacher",
+              "a ball",
+              "fast"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Say who you are"
+          },
+          {
+            "question_text": "Write the missing word: Hello, ______!",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a person who teaches students' mean?",
+            "correct_answer": "teacher",
+            "options": [
+              "teacher",
+              "river",
+              "cloud",
+              "book"
+            ],
+            "hint": "This person helps you learn",
+            "image_emoji": "👨‍🏫"
+          },
+          {
+            "question_text": "What does 'a round red or green fruit' mean?",
+            "correct_answer": "apple",
+            "options": [
+              "apple",
+              "car",
+              "table",
+              "shoe"
+            ],
+            "hint": "You can eat this fruit",
+            "image_emoji": "🍎"
+          },
+          {
+            "question_text": "What does 'a small furry pet animal' mean?",
+            "correct_answer": "cat",
+            "options": [
+              "cat",
+              "pen",
+              "hat",
+              "door"
+            ],
+            "hint": "A pet that says meow",
+            "image_emoji": "🐱"
+          }
+        ]
+      }
+    }
+  },
+  "unit_02": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "book",
+              "tree",
+              "dog"
+            ],
+            "hint": "It is what you are called"
+          },
+          {
+            "sentence": "She is my ______.",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "car",
+              "apple",
+              "house"
+            ],
+            "hint": "A person you like and trust"
+          },
+          {
+            "sentence": "The ______ is happy.",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "desk",
+              "flower",
+              "ball"
+            ],
+            "hint": "A male child"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Sara"
+            ],
+            "correct_sentence": "My name is Sara."
+          },
+          {
+            "words": [
+              "She",
+              "is",
+              "my",
+              "friend"
+            ],
+            "correct_sentence": "She is my friend."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the word we use to ask someone for their identity'?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "shoe",
+              "jump",
+              "red"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'a person you like and trust'?",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "dog",
+              "run",
+              "yellow"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "apple",
+              "blue",
+              "car"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You answer this question with 'My ____ is...'"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______...",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'What someone is called' mean?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "run",
+              "blue",
+              "dog"
+            ],
+            "hint": "You use it to say who you are",
+            "image_emoji": "📛"
+          },
+          {
+            "question_text": "What does 'A person you like and trust' mean?",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "car",
+              "jump",
+              "happy"
+            ],
+            "hint": "Someone you enjoy spending time with",
+            "image_emoji": "🤝"
+          },
+          {
+            "question_text": "What does 'A male child' mean?",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "apple",
+              "run",
+              "chair"
+            ],
+            "hint": "A young male person",
+            "image_emoji": "👦"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "cat",
+              "run",
+              "blue"
+            ],
+            "hint": "You use this to introduce yourself"
+          },
+          {
+            "sentence": "The ______ is wearing a blue hat.",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "table",
+              "jump",
+              "star"
+            ],
+            "hint": "A female child"
+          },
+          {
+            "sentence": "I have a pet ______ in my tank.",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "car",
+              "book",
+              "tree"
+            ],
+            "hint": "An animal that swims"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Ali"
+            ],
+            "correct_sentence": "My name is Ali."
+          },
+          {
+            "words": [
+              "The",
+              "girl",
+              "has",
+              "a",
+              "hat"
+            ],
+            "correct_sentence": "The girl has a hat."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a female child'?",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "car",
+              "happy",
+              "tree"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'an animal that lives in water'?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "shoe",
+              "fast",
+              "chair"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "color",
+              "game",
+              "book"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You ask this to know someone's identity"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______.",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a female child' mean?",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "car",
+              "tree",
+              "run"
+            ],
+            "hint": "A young human who is feminine",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'an animal that lives in water' mean?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "table",
+              "cloud",
+              "happy"
+            ],
+            "hint": "This animal swims in water",
+            "image_emoji": "🐟"
+          },
+          {
+            "question_text": "What does 'something you wear on your head' mean?",
+            "correct_answer": "hat",
+            "options": [
+              "hat",
+              "pen",
+              "shoe",
+              "loud"
+            ],
+            "hint": "You put this on top of your head",
+            "image_emoji": "🎩"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "fish",
+              "hat",
+              "book"
+            ],
+            "hint": "You use this to tell someone who you are"
+          },
+          {
+            "sentence": "The ______ is playing.",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "hat",
+              "fish",
+              "apple"
+            ],
+            "hint": "A male child"
+          },
+          {
+            "sentence": "I see a colorful ______ in the water.",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "boy",
+              "girl",
+              "car"
+            ],
+            "hint": "An animal that lives in water"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Tom"
+            ],
+            "correct_sentence": "My name is Tom."
+          },
+          {
+            "words": [
+              "What",
+              "is",
+              "your",
+              "name"
+            ],
+            "correct_sentence": "What is your name?"
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'what someone is called'?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "hat",
+              "run",
+              "blue"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'something you wear on your head'?",
+            "correct_answer": "hat",
+            "options": [
+              "hat",
+              "book",
+              "apple",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "hat",
+              "dog",
+              "fish"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You answer this when someone asks 'What is your ___?'"
+          },
+          {
+            "question_text": "Write the missing word: My _____ is Sara.",
+            "correct_answer": "name",
+            "acceptable_answers": [
+              "name"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'What someone is called' mean?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "run",
+              "table",
+              "blue"
+            ],
+            "hint": "It's how you identify a person",
+            "image_emoji": "📛"
+          },
+          {
+            "question_text": "What does 'A male child' mean?",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "cat",
+              "fast",
+              "yellow"
+            ],
+            "hint": "He is a young male person",
+            "image_emoji": "👦"
+          },
+          {
+            "question_text": "What does 'An animal that lives in water' mean?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "book",
+              "run",
+              "hot"
+            ],
+            "hint": "It swims in the sea or a pond",
+            "image_emoji": "🐟"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "door",
+              "car",
+              "shoe"
+            ],
+            "hint": "You answer this when someone asks 'What is your ___?'"
+          },
+          {
+            "sentence": "She is my ______.",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "table",
+              "apple",
+              "cloud"
+            ],
+            "hint": "A person you like and trust"
+          },
+          {
+            "sentence": "The ______ is happy.",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "dog",
+              "tree",
+              "house"
+            ],
+            "hint": "A male child"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "My",
+              "name",
+              "is",
+              "Sara"
+            ],
+            "correct_sentence": "My name is Sara."
+          },
+          {
+            "words": [
+              "He",
+              "is",
+              "my",
+              "friend"
+            ],
+            "correct_sentence": "He is my friend."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'a male child'?",
+            "correct_answer": "boy",
+            "options": [
+              "boy",
+              "cat",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'an animal that lives in water'?",
+            "correct_answer": "fish",
+            "options": [
+              "fish",
+              "dog",
+              "car",
+              "chair"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: What is your ______?",
+            "correct_answer": "name",
+            "options": [
+              "name",
+              "color",
+              "food",
+              "place"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "You tell this to introduce yourself"
+          },
+          {
+            "question_text": "Write the missing word: She is my ______...",
+            "correct_answer": "friend",
+            "acceptable_answers": [
+              "friend"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What does 'a person you like and trust' mean?",
+            "correct_answer": "friend",
+            "options": [
+              "friend",
+              "table",
+              "sleep",
+              "yellow"
+            ],
+            "hint": "This is someone you like to spend time with",
+            "image_emoji": "🤝"
+          },
+          {
+            "question_text": "What does 'a female child' mean?",
+            "correct_answer": "girl",
+            "options": [
+              "girl",
+              "car",
+              "run",
+              "green"
+            ],
+            "hint": "This is a young female person",
+            "image_emoji": "👧"
+          },
+          {
+            "question_text": "What does 'something you wear on your head' mean?",
+            "correct_answer": "hat",
+            "options": [
+              "hat",
+              "book",
+              "jump",
+              "red"
+            ],
+            "hint": "You put this on your head to keep warm or for style",
+            "image_emoji": "🎩"
+          }
+        ]
+      }
+    }
+  },
+  "unit_03": {
+    "lesson_01": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "ears",
+            "options": [
+              "ears",
+              "books",
+              "cups",
+              "trees"
+            ],
+            "hint": "You listen with these"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "apple",
+              "happy",
+              "run"
+            ],
+            "hint": "The number after two"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "chairs",
+              "dogs",
+              "balls"
+            ],
+            "hint": "You smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "three"
+            ],
+            "correct_sentence": "It is three."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "apple"
+            ],
+            "correct_sentence": "I have one apple."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number 1'?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "apple",
+              "blue",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number 2'?",
+            "correct_answer": "two",
+            "options": [
+              "two",
+              "dog",
+              "happy",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "book",
+              "run",
+              "happy"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A number between zero and two"
+          },
+          {
+            "question_text": "Write the missing word: I have two ______.",
+            "correct_answer": "hands",
+            "acceptable_answers": [
+              "hands"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means the number that comes after zero and before two?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "cat",
+              "jump",
+              "blue"
+            ],
+            "hint": "It is the first number you count",
+            "image_emoji": "1️⃣"
+          },
+          {
+            "question_text": "What word means the number that comes after one and before three?",
+            "correct_answer": "two",
+            "options": [
+              "two",
+              "dog",
+              "run",
+              "yellow"
+            ],
+            "hint": "It is the number of shoes you wear",
+            "image_emoji": "2️⃣"
+          },
+          {
+            "question_text": "What word means the number that comes after two and before four?",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "bird",
+              "swim",
+              "red"
+            ],
+            "hint": "It is how many wheels a tricycle has",
+            "image_emoji": "3️⃣"
+          }
+        ]
+      }
+    },
+    "lesson_02": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have five ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "dogs",
+              "colors",
+              "trees"
+            ],
+            "hint": "You use these to hold things"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "cat",
+              "blue",
+              "run"
+            ],
+            "hint": "The number after three"
+          },
+          {
+            "sentence": "I count to ______.",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "apple",
+              "happy",
+              "jump"
+            ],
+            "hint": "The number after nine"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "four"
+            ],
+            "correct_sentence": "It is four."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "five",
+              "fingers"
+            ],
+            "correct_sentence": "I have five fingers."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number 4'?",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "five",
+              "apple",
+              "fast"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number 5'?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "table",
+              "blue",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "chair",
+              "play",
+              "fast"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A number after four"
+          },
+          {
+            "question_text": "Write the missing word: I have ______ fingers.",
+            "correct_answer": "five",
+            "acceptable_answers": [
+              "five"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the number that comes after three?",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "cat",
+              "blue",
+              "run"
+            ],
+            "hint": "It is one more than three",
+            "image_emoji": "4️⃣"
+          },
+          {
+            "question_text": "What is the number that comes after four?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "dog",
+              "happy",
+              "tree"
+            ],
+            "hint": "It is one more than four",
+            "image_emoji": "5️⃣"
+          },
+          {
+            "question_text": "What is the number that is double five?",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "chair",
+              "cold",
+              "seven"
+            ],
+            "hint": "It is five plus five",
+            "image_emoji": "🔟"
+          }
+        ]
+      }
+    },
+    "lesson_03": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "apple",
+              "blue",
+              "run"
+            ],
+            "hint": "The number 3"
+          },
+          {
+            "sentence": "I have five ______.",
+            "correct_answer": "fingers",
+            "options": [
+              "fingers",
+              "books",
+              "plants",
+              "dogs"
+            ],
+            "hint": "On your hand"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "table",
+              "fast",
+              "jump"
+            ],
+            "hint": "The number 1"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "five"
+            ],
+            "correct_sentence": "It is five."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "five",
+              "fingers"
+            ],
+            "correct_sentence": "I have five fingers."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number one'?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "blue",
+              "cat",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number ten'?",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "dog",
+              "happy",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "apple",
+              "fast",
+              "brown"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "Number after zero"
+          },
+          {
+            "question_text": "Write the missing word: I have two ______.",
+            "correct_answer": "hands",
+            "acceptable_answers": [
+              "hands"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What is the word for the number 1?",
+            "correct_answer": "one",
+            "options": [
+              "one",
+              "blue",
+              "cat",
+              "run"
+            ],
+            "hint": "It comes before two",
+            "image_emoji": "1️⃣"
+          },
+          {
+            "question_text": "What is the word for the number 3?",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "happy",
+              "dog",
+              "jump"
+            ],
+            "hint": "It comes after two and before four",
+            "image_emoji": "3️⃣"
+          },
+          {
+            "question_text": "What is the word for the number 5?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "green",
+              "ball",
+              "sing"
+            ],
+            "hint": "It is one more than four",
+            "image_emoji": "5️⃣"
+          }
+        ]
+      }
+    },
+    "lesson_04": {
+      "grammar_game": {
+        "fill_blank_items": [
+          {
+            "sentence": "I have two ______.",
+            "correct_answer": "hands",
+            "options": [
+              "hands",
+              "dogs",
+              "books",
+              "cars"
+            ],
+            "hint": "You use them to hold things"
+          },
+          {
+            "sentence": "It is ______.",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "apple",
+              "blue",
+              "run"
+            ],
+            "hint": "A number after two"
+          },
+          {
+            "sentence": "I have one ______.",
+            "correct_answer": "nose",
+            "options": [
+              "nose",
+              "cats",
+              "trees",
+              "chairs"
+            ],
+            "hint": "You smell with this"
+          }
+        ],
+        "word_order_items": [
+          {
+            "words": [
+              "It",
+              "is",
+              "three"
+            ],
+            "correct_sentence": "It is three."
+          },
+          {
+            "words": [
+              "I",
+              "have",
+              "one",
+              "apple"
+            ],
+            "correct_sentence": "I have one apple."
+          }
+        ]
+      },
+      "exit_ticket": {
+        "questions": [
+          {
+            "question_text": "What is 'the number 3'?",
+            "correct_answer": "three",
+            "options": [
+              "three",
+              "green",
+              "apple",
+              "run"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "What is 'the number 5'?",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "dog",
+              "happy",
+              "jump"
+            ],
+            "question_type": "multiple_choice"
+          },
+          {
+            "question_text": "Complete: It is ______.",
+            "correct_answer": "five",
+            "options": [
+              "five",
+              "blue",
+              "sing",
+              "table"
+            ],
+            "question_type": "multiple_choice",
+            "hint": "A number after four"
+          },
+          {
+            "question_text": "Write the missing word: I have ______ fingers.",
+            "correct_answer": "five",
+            "acceptable_answers": [
+              "five"
+            ],
+            "question_type": "fill_blank"
+          }
+        ]
+      },
+      "warmup": {
+        "questions": [
+          {
+            "question_text": "What word means the number 2?",
+            "correct_answer": "two",
+            "options": [
+              "two",
+              "cat",
+              "happy",
+              "blue"
+            ],
+            "hint": "It's the number after one",
+            "image_emoji": "2️⃣"
+          },
+          {
+            "question_text": "What word means the number 4?",
+            "correct_answer": "four",
+            "options": [
+              "four",
+              "dog",
+              "fast",
+              "green"
+            ],
+            "hint": "It's the number after three",
+            "image_emoji": "4️⃣"
+          },
+          {
+            "question_text": "What word means the number 10?",
+            "correct_answer": "ten",
+            "options": [
+              "ten",
+              "table",
+              "sleep",
+              "red"
+            ],
+            "hint": "It's the number after nine",
+            "image_emoji": "🔟"
+          }
+        ]
+      }
+    }
+  }
+}
