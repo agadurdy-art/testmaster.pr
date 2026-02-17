@@ -205,7 +205,8 @@ class TestLessonRoadmapAPI:
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
         
         data = response.json()
-        activities = data.get('activities', [])
+        # activities are in activity_flow field
+        activities = data.get('activity_flow', [])
         
         required_activity_types = [
             'retrieval_warmup', 'vocabulary', 'micro_game_vocab',
