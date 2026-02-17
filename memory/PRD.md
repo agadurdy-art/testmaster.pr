@@ -12,33 +12,30 @@ A "Mastery-Based" and "Retention-Driven" English learning platform named "Testma
 ## What's Been Implemented
 - [x] Authentication system (login/register)
 - [x] Stage 1 full curriculum seeded (12 units x 4 lessons = 48 lessons)
-- [x] 10-step lesson activity flow (Warm-up -> Vocabulary -> Vocab Game -> Reading -> Grammar -> Grammar Game -> Listening -> Speaking -> Exit Quiz -> Review)
+- [x] 10-step lesson activity flow
 - [x] Stage-specific theming (Stage 1 = amber/orange)
 - [x] Vocabulary module with Record & Check (Whisper)
 - [x] Grammar Game (multi-format: error hunter, word order, fill blank)
-- [x] Skip buttons on all activities
-- [x] Multi-answer evaluation support (Array correct_answer)
-- [x] All units/lessons/activities unlocked for testing
-- [x] Unique content per lesson (V3 seed)
+- [x] All units/lessons unlocked for testing
+- [x] Unique content per lesson
 - [x] Lesson Summary card with vocab, grammar, scores
-- [x] **FIXED (Feb 16)**: Grammar Game "Build the Sentence" evaluation - punctuation normalization fix
-- [x] **FIXED (Feb 16)**: Grammar Game "Fill in the Blank" - case-insensitive comparison
-- [x] **NEW (Feb 16)**: Lesson Roadmap - visual winding path on lesson entry
-- [x] **NEW (Feb 16)**: Warm-up images - emoji displayed above questions
-- [x] **NEW (Feb 16)**: PDF Worksheet download (jsPDF) - vocabulary, matching, fill-blank, grammar practice
+- [x] **FIXED (Feb 16)**: Grammar Game word_order evaluation - punctuation normalization
+- [x] **FIXED (Feb 16)**: Grammar Game fill_blank - case-insensitive comparison
+- [x] **FIXED (Feb 17)**: Seed data pedagogical correctness - fill_blank uses word's OWN example sentence (not pattern blindly filled)
+- [x] **FIXED (Feb 17)**: Exit quiz grammar question uses correct word from rule example
+- [x] **NEW (Feb 16)**: Lesson Roadmap - winding path before lesson starts
+- [x] **NEW (Feb 16)**: Warm-up images - emoji above questions
+- [x] **NEW (Feb 16)**: PDF Worksheet (jsPDF) - vocabulary, matching, fill-blank, grammar
+- [x] **NEW (Feb 17)**: Cumulative PDF option - "This Lesson" vs "All Lessons" download
+- [x] **NEW (Feb 17)**: Backend API: GET /api/unified/cumulative-vocab/{lesson_id}
 
 ## Key Files
 - `/app/frontend/src/pages/UnifiedLessonPage.js` - All 10 activity components + Roadmap + PDF
 - `/app/frontend/src/pages/UnifiedStagePage.js` - Stage/unit/lesson navigation
-- `/app/backend/unified_learning_routes.py` - API endpoints
-- `/app/backend/seed_stage1_full.py` - Stage 1 curriculum data
+- `/app/backend/unified_learning_routes.py` - API endpoints (incl. cumulative-vocab)
+- `/app/backend/seed_stage1_full.py` - Stage 1 curriculum data (V3 with pedagogical fix)
 
 ## Prioritized Backlog
-### P0 (Completed)
-- ~~Flawed evaluation logic~~ (FIXED - punctuation normalization)
-- ~~Empty content sections~~ 
-- ~~Unlock all courses~~
-
 ### P1 (Upcoming)
 - Listening audio via TTS integration (ElevenLabs/OpenAI TTS)
 - Daily Habit Mode
@@ -46,11 +43,10 @@ A "Mastery-Based" and "Retention-Driven" English learning platform named "Testma
 
 ### P2 (Future)
 - Booster Mode
-- Certification Gate at end of each Stage
-- Stage-dependent theme (Stages 5-8 = serious/academic)
+- Certification Gate
+- Stage 2-8 curriculum
 - Teacher Control Panel
-- ISLCollective/YouTube integration for Extra Practice
-- Curriculum for Stages 2-8
+- ISLCollective/YouTube Extra Practice
 
 ## Test Credentials
 - Email: tester@test.com / Password: tester123
