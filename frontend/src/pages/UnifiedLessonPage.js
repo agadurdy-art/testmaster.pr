@@ -306,7 +306,12 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
   const [pronLoading, setPronLoading] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
-  const words = activity?.words || [];
+
+  // Handle both normal words and review_words (string array)
+  const rawWords = activity?.words || [];
+  const reviewWords = activity?.review_words || [];
+  const words = rawWords.length > 0 ? rawWords : reviewWords.map(w => ({ word: w, ipa: '', definition: '', example: '', image_emoji: '' }));
+  const isReview = activity?.is_review === true && rawWords.length === 0;
   const w = words[idx];
 
   const speakWord = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u); };
