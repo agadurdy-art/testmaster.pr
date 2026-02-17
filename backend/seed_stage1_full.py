@@ -987,17 +987,32 @@ def make_exit_ticket(unit, lesson_num):
             "question_type": "multiple_choice"
         })
 
-    # Grammar question - different per lesson
+    # Grammar question - use a pedagogically correct sentence from the rule's examples
     r = rules[min(lesson_num - 1, len(rules) - 1)]
-    target_word = words[lesson_num % len(words)]
-    others = [x["word"] for x in words if x != target_word]
+    # Find the vocabulary word that actually fits the grammar pattern
+    # by checking which word appears in the rule's first example
+    example_for_pattern = r["examples"][0] if r["examples"] else ""
+    correct_grammar_word = None
+    for w_candidate in words:
+        if w_candidate["word"].lower() in example_for_pattern.lower():
+            correct_grammar_word = w_candidate
+            break
+    # Fallback: use the last word of the example
+    if not correct_grammar_word:
+        last_w = example_for_pattern.split()[-1].rstrip('.!?') if example_for_pattern else words[0]["word"]
+        correct_grammar_word = next((w for w in words if w["word"].lower() == last_w.lower()), words[0])
+    
+    # Create the fill-blank from the example sentence
+    import re
+    grammar_sentence = re.sub(r'\b' + re.escape(correct_grammar_word["word"]) + r'\b', '______', example_for_pattern, count=1, flags=re.IGNORECASE).rstrip('.!?')
+    others = [x["word"] for x in words if x != correct_grammar_word]
     random.shuffle(others)
-    options = [target_word["word"]] + others[:3]
+    options = [correct_grammar_word["word"]] + others[:3]
     random.shuffle(options)
     questions.append({
         "question_id": f"eq_{un}_{lesson_num}_g1",
-        "question_text": f"Complete: {r['pattern'].replace('___', '______')}",
-        "correct_answer": target_word["word"],
+        "question_text": f"Complete: {grammar_sentence}",
+        "correct_answer": correct_grammar_word["word"],
         "options": options,
         "question_type": "multiple_choice"
     })
