@@ -1137,12 +1137,12 @@ export function I18nProvider({ children }) {
     return ['en', 'vi', 'tr'].includes(stored) ? stored : 'en';
   });
 
-  // Always use English translations regardless of selected language
   const t = React.useCallback(
     (key) => {
-      return translations.en[key] || key;
+      const dict = translations[language] || translations.en;
+      return dict[key] || translations.en[key] || key;
     },
-    []
+    [language]
   );
 
   const value = React.useMemo(
