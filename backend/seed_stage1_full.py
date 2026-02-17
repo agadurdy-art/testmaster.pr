@@ -988,14 +988,12 @@ def make_production_activity(unit, lesson_num):
     }
 
 
-def make_exit_ticket(unit, lesson_num):
+async def make_exit_ticket_ai(unit, lesson_num):
     un = unit["num"]
     words = unit["words"]
     half = len(words) // 2
     rules = unit["grammar_rules"]
-    questions = []
 
-    # Pick different vocab words per lesson
     if lesson_num == 1:
         vocab_words = words[:2]
     elif lesson_num == 2:
@@ -1005,64 +1003,48 @@ def make_exit_ticket(unit, lesson_num):
     else:
         vocab_words = [words[2], words[4]] if len(words) > 4 else words[:2]
 
-    for i, w in enumerate(vocab_words):
-        others = [x["word"] for x in words if x != w]
-        random.shuffle(others)
-        options = [w["word"]] + others[:3]
-        random.shuffle(options)
-        questions.append({
-            "question_id": f"eq_{un}_{lesson_num}_{i}",
-            "question_text": f"What is '{w['definition'].lower()}'?",
-            "correct_answer": w["word"],
-            "options": options,
-            "question_type": "multiple_choice"
-        })
-
-    # Grammar question - use a pedagogically correct sentence from the rule's examples
-    r = rules[min(lesson_num - 1, len(rules) - 1)]
-    # Find the vocabulary word that actually fits the grammar pattern
-    # by checking which word appears in the rule's first example
-    example_for_pattern = r["examples"][0] if r["examples"] else ""
-    correct_grammar_word = None
-    for w_candidate in words:
-        if w_candidate["word"].lower() in example_for_pattern.lower():
-            correct_grammar_word = w_candidate
-            break
-    # Fallback: use the last word of the example
-    if not correct_grammar_word:
-        last_w = example_for_pattern.split()[-1].rstrip('.!?') if example_for_pattern else words[0]["word"]
-        correct_grammar_word = next((w for w in words if w["word"].lower() == last_w.lower()), words[0])
-    
-    # Create the fill-blank from the example sentence
-    grammar_sentence = re.sub(r'\b' + re.escape(correct_grammar_word["word"]) + r'\b', '______', example_for_pattern, count=1, flags=re.IGNORECASE).rstrip('.!?')
-    others = [x["word"] for x in words if x != correct_grammar_word]
-    random.shuffle(others)
-    options = [correct_grammar_word["word"]] + others[:3]
-    random.shuffle(options)
-    questions.append({
-        "question_id": f"eq_{un}_{lesson_num}_g1",
-        "question_text": f"Complete: {grammar_sentence}",
-        "correct_answer": correct_grammar_word["word"],
-        "options": options,
-        "question_type": "multiple_choice"
-    })
-
-    # Fill blank - different example per lesson
-    ex_idx = min(lesson_num - 1, len(r["examples"]) - 1)
-    example = r["examples"][ex_idx]
-    last_word = example.split()[-1].rstrip('.!?')
-    questions.append({
-        "question_id": f"eq_{un}_{lesson_num}_fb",
-        "question_text": f"Write the missing word: {example.replace(last_word, '______').rstrip('.!?') + '...'}",
-        "correct_answer": last_word,
-        "question_type": "fill_blank"
-    })
+    try:
+        from ai_content_generator import generate_exit_questions
+        result = await generate_exit_questions(unit, lesson_num, vocab_words)
+        questions = []
+        for i, q in enumerate(result.get("questions", [])):
+            qdata = {
+                "question_id": f"eq_{un}_{lesson_num}_{i}",
+                "question_text": q["question_text"],
+                "correct_answer": q["correct_answer"],
+                "question_type": q.get("question_type", "multiple_choice"),
+            }
+            if q.get("options"):
+                qdata["options"] = q["options"][:4]
+            if q.get("hint"):
+                qdata["hint"] = q["hint"]
+            if q.get("acceptable_answers"):
+                qdata["acceptable_answers"] = q["acceptable_answers"]
+            questions.append(qdata)
+        if not questions:
+            raise ValueError("No questions generated")
+    except Exception as e:
+        print(f"  AI exit ticket failed for U{un}L{lesson_num}: {e}, using fallback")
+        questions = []
+        for i, w in enumerate(vocab_words):
+            others = [x["word"] for x in words if x != w]
+            random.shuffle(others)
+            options = [w["word"]] + others[:3]
+            random.shuffle(options)
+            questions.append({
+                "question_id": f"eq_{un}_{lesson_num}_{i}",
+                "question_text": f"What is '{w['definition'].lower()}'?",
+                "correct_answer": w["word"],
+                "options": options,
+                "question_type": "multiple_choice"
+            })
 
     return {
         "activity_id": f"exit_s1u{un:02d}l{lesson_num:02d}",
         "lesson_id": f"stage_1_unit_{un:02d}_lesson_{lesson_num:02d}",
         "questions": questions,
-        "pass_threshold": 70,
+        "time_limit_seconds": 120,
+        "scoring": {"perfect": 100, "good": 75, "pass": 50},
         "created_at": TS
     }
 
