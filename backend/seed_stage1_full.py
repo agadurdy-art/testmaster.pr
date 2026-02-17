@@ -10,6 +10,7 @@ Each lesson has a pedagogical progression:
 import asyncio
 import os
 import random
+import re
 from datetime import datetime, timezone
 from motor.motor_asyncio import AsyncIOMotorClient
 from pathlib import Path
