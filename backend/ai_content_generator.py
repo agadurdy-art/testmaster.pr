@@ -41,7 +41,8 @@ async def generate_grammar_exercises(unit_data, lesson_num, words_for_lesson):
     
     rules_info = "\n".join([
         f"- Pattern: {r['pattern']}, Examples: {', '.join(r['examples'][:2])}"
-        for r in unit_data.get("grammar", [])
+        for r in unit_data.get("grammar_rules", unit_data.get("grammar", []))
+        if isinstance(r, dict)
     ])
     
     all_unit_words = "\n".join([f"- {w['word']}" for w in unit_data.get("words", [])])
@@ -114,7 +115,8 @@ async def generate_exit_questions(unit_data, lesson_num, words_for_lesson):
     
     rules_info = "\n".join([
         f"- Pattern: {r['pattern']}, Examples: {', '.join(r['examples'][:2])}"
-        for r in unit_data.get("grammar", [])
+        for r in unit_data.get("grammar_rules", unit_data.get("grammar", []))
+        if isinstance(r, dict)
     ])
 
     prompt = f"""Generate exit quiz questions for an English lesson.
