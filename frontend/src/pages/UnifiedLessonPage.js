@@ -244,7 +244,10 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
             </div>
           </div>
         )}
-        <h3 className="text-xl font-bold text-gray-900 mb-6">{q.question_text}</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">{q.question_text}</h3>
+        {q.hint && !showFeedback && (
+          <p className="text-sm text-amber-600 italic mb-4">Hint: {q.hint}</p>
+        )}
         <div className="space-y-3">
           {q.options?.map((option) => {
             const isSelected = selectedAnswer === option;
