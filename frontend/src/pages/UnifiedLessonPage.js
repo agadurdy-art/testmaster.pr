@@ -416,12 +416,12 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
         <div className="w-48 bg-white rounded-2xl border border-gray-100 p-3 hidden md:block shadow-sm">
           <h4 className="text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wider px-1">Words</h4>
           {words.map((word, i) => (
-            <button key={word.word_id} onClick={() => { if (done.includes(word.word_id) || i === idx) { setIdx(i); setFeedback(null); setInput(''); setPronResult(null); } }}
+            <button key={word.word || i} onClick={() => { if (done.includes(word.word) || i === idx) { setIdx(i); setFeedback(null); setInput(''); setPronResult(null); } }}
               className={`w-full flex items-center gap-2 py-2 px-2.5 text-sm rounded-lg mb-1 transition-all text-left ${
                 i === idx ? 'bg-blue-50 text-blue-700 font-semibold border border-blue-200' :
-                done.includes(word.word_id) ? 'text-green-600 hover:bg-green-50' : 'text-gray-400'
+                done.includes(word.word) ? 'text-green-600 hover:bg-green-50' : 'text-gray-400'
               }`}>
-              {done.includes(word.word_id) ? <CheckCircle className="w-4 h-4 text-green-500 shrink-0" /> :
+              {done.includes(word.word) ? <CheckCircle className="w-4 h-4 text-green-500 shrink-0" /> :
                i === idx ? <div className="w-4 h-4 rounded-full bg-blue-500 shrink-0" /> :
                <div className="w-4 h-4 rounded-full border-2 border-gray-300 shrink-0" />}
               <span className="truncate">{word.word}</span>
