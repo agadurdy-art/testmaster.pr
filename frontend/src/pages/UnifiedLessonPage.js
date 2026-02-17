@@ -2002,9 +2002,15 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
           </Button>
         </div>
         <div>
-          <Button size="lg" onClick={onFinish} className="px-8" data-testid="lesson-summary-finish-btn">
-            <Star className="w-5 h-5 mr-2" /> Finish Lesson
-          </Button>
+          {lesson?.title?.toLowerCase().includes('final gate') || lesson?.lesson_id?.includes('unit_12_lesson_04') ? (
+            <Button size="lg" onClick={onFinish} className="px-8 bg-amber-500 hover:bg-amber-600 text-white shadow-lg" data-testid="lesson-summary-finish-btn">
+              <Trophy className="w-5 h-5 mr-2" /> Claim Your Certificate
+            </Button>
+          ) : (
+            <Button size="lg" onClick={onFinish} className="px-8" data-testid="lesson-summary-finish-btn">
+              <Star className="w-5 h-5 mr-2" /> Finish Lesson
+            </Button>
+          )}
         </div>
         <p className="text-xs text-gray-400 mt-2">Your vocabulary has been added to your review queue.</p>
       </div>
