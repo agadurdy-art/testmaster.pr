@@ -862,7 +862,7 @@ def make_grammar_activity(unit, lesson_num):
     }
 
 
-def make_grammar_game(unit, lesson_num):
+async def make_grammar_game_ai(unit, lesson_num):
     un = unit["num"]
     rules = unit["grammar_rules"]
     words = unit["words"]
@@ -871,6 +871,7 @@ def make_grammar_game(unit, lesson_num):
     else:
         r = rules[lesson_num % len(rules)]
 
+    # Error hunter items (keep as-is - these are simple)
     error_items = []
     for ex in r["examples"]:
         error_items.append({"sentence": ex, "has_error": False, "correct_sentence": ex})
@@ -881,24 +882,33 @@ def make_grammar_game(unit, lesson_num):
             "correct_sentence": f"I am a {words[lesson_num % len(words)]['word']}."
         })
 
-    word_order = []
-    for ex in r["examples"][:2]:
-        w_list = ex.rstrip('.!?').split()
-        word_order.append({"words": w_list, "correct_sentence": ex, "hint": r["explanation"]})
+    # AI-generated fill-blank and word-order
+    half = len(words) // 2
+    if lesson_num == 1:
+        sel = words[:half]
+    elif lesson_num == 2:
+        sel = words[half:]
+    elif lesson_num == 3:
+        sel = [words[0], words[2], words[4]] if len(words) > 4 else words[:3]
+    else:
+        sel = words[:3]
 
-    fill_blank = []
-    start = (lesson_num - 1) * 2
-    for w in words[start:start + 3]:
-        # Use the word's OWN example sentence for pedagogically correct fill-blank
-        example = w.get("example", "")
-        word_lower = w["word"].lower()
-        if example and word_lower in example.lower():
-            # Replace the word in the example with a blank
-            sentence = re.sub(r'\b' + re.escape(w["word"]) + r'\b', '______', example, count=1, flags=re.IGNORECASE)
-            others = [x["word"] for x in words if x != w][:3]
-            options = [w["word"]] + others
-            random.shuffle(options)
-            fill_blank.append({"sentence": sentence, "options": options, "correct_answer": w["word"]})
+    try:
+        from ai_content_generator import generate_grammar_exercises
+        result = await generate_grammar_exercises(unit, lesson_num, sel)
+        fill_blank = result.get("fill_blank_items", [])
+        word_order = result.get("word_order_items", [])
+        # Add hint from grammar rule if not present
+        for wo in word_order:
+            if "hint" not in wo:
+                wo["hint"] = r.get("explanation", "")
+    except Exception as e:
+        print(f"  AI grammar game failed for U{un}L{lesson_num}: {e}, using fallback")
+        fill_blank = []
+        word_order = []
+        for ex in r["examples"][:2]:
+            w_list = ex.rstrip('.!?').split()
+            word_order.append({"words": w_list, "correct_sentence": ex, "hint": r["explanation"]})
 
     return {
         "activity_id": f"game_grammar_s1u{un:02d}l{lesson_num:02d}",
