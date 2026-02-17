@@ -236,6 +236,18 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
       </div>
       <Progress value={((currentIndex + 1) / questions.length) * 100} className="mb-8" />
       <Card className="p-8">
+        {/* Video embed */}
+        {q.video_url && (
+          <div className="mb-5 rounded-xl overflow-hidden aspect-video max-w-md mx-auto">
+            <iframe
+              src={q.video_url.replace('watch?v=', 'embed/')}
+              title="Lesson Video"
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
+              allowFullScreen
+            />
+          </div>
+        )}
         {/* Image hint */}
         {q.image_emoji && (
           <div className="flex justify-center mb-5">
