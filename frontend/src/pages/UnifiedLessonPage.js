@@ -1314,6 +1314,9 @@ function ExitTicket({ activity, onComplete, onSkip }) {
         )}
         {q.question_type === 'fill_blank' && (
           <div className="space-y-3">
+            {q.hint && !showFeedback && (
+              <p className="text-sm text-amber-600 italic">Hint: {q.hint}</p>
+            )}
             <input type="text" value={fillBlankValue}
               onChange={e => setFillBlankValue(e.target.value)}
               className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none text-sm ${showFeedback ? (isCurrentCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50') : 'focus:border-blue-500 border-gray-200'}`}
