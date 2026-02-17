@@ -1394,16 +1394,23 @@ export default function UnifiedLessonPage({ user }) {
       if (first) { setCurrentActivityType(first.type); await loadActivityData(first.type); }
       // Pre-fetch vocab and grammar for summary card
       try {
-        const [vocabRes, grammarRes] = await Promise.all([
-          fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/vocabulary`),
-          fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/grammar_focus`)
-        ]);
-        const vocabData = vocabRes.ok ? await vocabRes.json() : null;
-        const grammarData = grammarRes.ok ? await grammarRes.json() : null;
-        setLessonSummaryData({
-          words: vocabData?.words || [],
-          grammarRules: grammarData?.rules || []
-        });
+        if (lessonData.summary_data?.words?.length) {
+          setLessonSummaryData({
+            words: lessonData.summary_data.words,
+            grammarRules: lessonData.summary_data.grammar_rules || []
+          });
+        } else {
+          const [vocabRes, grammarRes] = await Promise.all([
+            fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/vocabulary`),
+            fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/grammar_focus`)
+          ]);
+          const vocabData = vocabRes.ok ? await vocabRes.json() : null;
+          const grammarData = grammarRes.ok ? await grammarRes.json() : null;
+          setLessonSummaryData({
+            words: vocabData?.words || [],
+            grammarRules: grammarData?.rules || []
+          });
+        }
       } catch { /* summary data is optional */ }
     } catch (error) { console.error('Error loading lesson:', error); } finally { setLoading(false); }
   };
