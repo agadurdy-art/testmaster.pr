@@ -11,9 +11,20 @@ import asyncio
 import os
 import random
 import re
+import json
 from datetime import datetime, timezone
 from motor.motor_asyncio import AsyncIOMotorClient
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
+
+CACHE_FILE = "/app/backend/ai_content_cache.json"
+
+def load_ai_cache():
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, 'r') as f:
+            return json.load(f)
+    return {}
 from dotenv import load_dotenv
 
 ROOT_DIR = Path(__file__).parent
