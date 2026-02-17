@@ -16,24 +16,23 @@ A "Mastery-Based" and "Retention-Driven" English learning platform. Single unifi
 - [x] **Unit 4**: Colors Everywhere (phonics P-T)
 - [x] **Unit 5**: My Family (phonics U-Z) -- ALPHABET COMPLETE
 - [x] **Unit 6**: My Body Part 1 (face/head, big/small, plurals)
-- [x] **Unit 7**: My Body Part 2 (arms/legs/hands, imperatives) -- Feb 17, 2026
-- [ ] Units 8-12: Awaiting user content
+- [x] **Unit 7**: My Body Part 2 (arms/legs, imperatives)
+- [x] **Unit 8**: Animals - Farm (cow/horse/sheep/duck/pig/chicken) -- Feb 17, 2026
+- [ ] Units 9-12: Awaiting user content
 
 ## Features Implemented
 - [x] 10-step lesson flow with all activity types
-- [x] YouTube video embed in warm-up
-- [x] Grammar games (word_order, fill_blank, error_hunter)
-- [x] Vocabulary Review + Grammar Review (mastery lessons)
+- [x] YouTube video embed, Grammar games, Vocabulary/Grammar Review
 - [x] Lesson Roadmap, PDF Worksheets, Hints, Extra Links
 
 ## Pending Feature Requests
-- [ ] "Alphabet Master" badge (Unit 5 completion)
-- [ ] "First Half Complete" badge (Unit 6 completion)
-- [ ] Daily Habit Mode with Units 1-7 interleaving
+- [ ] Badges: Alphabet Master, First Half Complete
+- [ ] Daily Habit Mode with Units 1-8 interleaving
+- [ ] Animal sound effects for "It says..." grammar
 - [ ] Imperative visual cues for "Touch your..." commands
 
 ## Prioritized Backlog
-### P0: Units 8-12 content, Daily Habit SRS
+### P0: Units 9-12 content, Daily Habit SRS
 ### P1: TTS audio, Badge system, UnifiedLessonPage refactor
 ### P2: Booster Mode, Certification Gate, Stage 2-8 themes
 
