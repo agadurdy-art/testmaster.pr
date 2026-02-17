@@ -31,7 +31,7 @@ const ROADMAP_STEPS = [
   { key: 'vocab_game', label: 'Practice', icon: Gamepad2, activities: ['micro_game_vocab'], color: '#8B5CF6' },
   { key: 'reading_grammar', label: 'Lesson', icon: FileText, activities: ['micro_reading', 'grammar_focus'], color: '#10B981' },
   { key: 'grammar_game', label: 'Practice', icon: Gamepad2, activities: ['micro_game_grammar'], color: '#F59E0B' },
-  { key: 'listen_speak', label: 'Skills', icon: Headphones, activities: ['listening', 'production'], color: '#06B6D4' },
+  { key: 'listen_speak', label: 'Skills', icon: Headphones, activities: ['listening', 'listening_task', 'production'], color: '#06B6D4' },
   { key: 'exit_review', label: 'Review', icon: Trophy, activities: ['exit_ticket', 'auto_review'], color: '#EF4444' },
 ];
 
