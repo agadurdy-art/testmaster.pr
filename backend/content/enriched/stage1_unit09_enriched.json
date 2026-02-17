@@ -1,0 +1,679 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_09",
+      "unit_num": 9,
+      "title": "Animals - Pets",
+      "subtitle": "Pets and Likes/Dislikes",
+      "phonics_focus": [],
+      "grammar_focus": [
+        "I like...",
+        "I don't like...",
+        "Do you like...?"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_09_lesson_01",
+          "title": "I Have a Pet",
+          "topic": "Cat, Dog, Bird and the I like pattern",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=pWepfJ-8XU0",
+              "instruction": "Let's watch and find the pet in the song!",
+              "question_text": "What pet makes a funny sound in the song?",
+              "correct_answer": "cat",
+              "options": [
+                "cat",
+                "elephant",
+                "giraffe",
+                "tiger"
+              ],
+              "image_emoji": "🐱",
+              "hint": "It says Meow!"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "pet",
+                  "ipa": "/pɛt/",
+                  "definition": "Animal friend at home",
+                  "example": "I like my pet.",
+                  "image_emoji": "🐶"
+                },
+                {
+                  "word": "cat",
+                  "ipa": "/kæt/",
+                  "definition": "Small furry friend",
+                  "example": "I like the cat.",
+                  "image_emoji": "🐱"
+                },
+                {
+                  "word": "dog",
+                  "ipa": "/dɔːɡ/",
+                  "definition": "Barks and wags tail",
+                  "example": "Do you like the dog?",
+                  "image_emoji": "🐶"
+                },
+                {
+                  "word": "bird",
+                  "ipa": "/bɜːrd/",
+                  "definition": "Flies and sings songs",
+                  "example": "I don't like birds.",
+                  "image_emoji": "🐦"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Who says Meow? 🐱",
+              "correct_answer": "cat",
+              "options": [
+                "cat",
+                "dog",
+                "bird",
+                "fish"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Happy Pets",
+              "text": "I have a pet cat. My cat is white. I like my cat. I have a little dog too. Do you like dogs?",
+              "questions": [
+                {
+                  "question": "What color is the cat?",
+                  "answer": "white",
+                  "options": [
+                    "white",
+                    "black",
+                    "brown"
+                  ]
+                },
+                {
+                  "question": "Does the story ask if you like an animal?",
+                  "answer": "dog",
+                  "options": [
+                    "dog",
+                    "cat",
+                    "bird"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___s.",
+              "explanation": "Say 'I like' to talk about your favorite pets.",
+              "examples": [
+                "I like dogs.",
+                "I like cats.",
+                "I like birds."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "I like ____ cats.",
+              "correct_sentence": "I like big cats.",
+              "correct_answer": "big",
+              "options": [
+                "big",
+                "small",
+                "blue"
+              ],
+              "hint": "Think of a size word."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have a cat and a bird. I like my cat very much.",
+              "questions": [
+                {
+                  "question": "Does he like the cat?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                },
+                {
+                  "question": "How many pets does he have?",
+                  "answer": "2",
+                  "options": [
+                    "1",
+                    "2",
+                    "3"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I like dogs.",
+              "expected_text": "i like dogs",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Pick the 🐶!",
+              "correct_answer": "dog",
+              "options": [
+                "dog",
+                "cat",
+                "bird"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "I Have A Pet Song",
+              "url": "https://www.youtube.com/watch?v=pWepfJ-8XU0",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_09_lesson_02",
+          "title": "I Don't Like...",
+          "topic": "Rabbit, Mouse, Turtle and negative preference",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "http://example.com/animal_video",
+              "instruction": "Watch the video and answer the question.",
+              "question_text": "Which animal is a pet?",
+              "correct_answer": "rabbit",
+              "options": [
+                "rabbit",
+                "cow",
+                "horse",
+                "sheep"
+              ],
+              "image_emoji": "🐇",
+              "hint": "This pet likes to hop and has long ears."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "rabbit",
+                  "ipa": "/ˈræbɪt/",
+                  "definition": "Pet with big ears",
+                  "example": "I like my rabbit.",
+                  "image_emoji": "🐇"
+                },
+                {
+                  "word": "mouse",
+                  "ipa": "/maʊs/",
+                  "definition": "Tiny pet",
+                  "example": "I don't like mice.",
+                  "image_emoji": "🐁"
+                },
+                {
+                  "word": "turtle",
+                  "ipa": "/ˈtɜːrtl/",
+                  "definition": "Pet that moves slow",
+                  "example": "Do you like turtles?",
+                  "image_emoji": "🐢"
+                },
+                {
+                  "word": "no",
+                  "ipa": "/noʊ/",
+                  "definition": "Opposite of yes",
+                  "example": "No, I don't like it.",
+                  "image_emoji": "🚫"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Find the pet with big ears! 🐇",
+              "correct_answer": "rabbit",
+              "options": [
+                "rabbit",
+                "mouse",
+                "turtle",
+                "cat"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Pet Friends",
+              "text": "I have a turtle. I like my turtle. Look! A mouse. I don't like the mouse. The rabbit is cute. Do you like rabbits?",
+              "questions": [
+                {
+                  "question": "Does he like the turtle?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "question": "Do you like rabbits?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___s.",
+              "explanation": "Use 'I like' for things you love.",
+              "examples": [
+                "I like rabbits.",
+                "I like apples.",
+                "I like trains."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "I ______ like the rabbit.",
+              "correct_answer": "don't",
+              "options": [
+                "don't",
+                "is",
+                "are"
+              ],
+              "hint": "Use this for things you don't love."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Do you like turtles? I like turtles, but I don't like mice.",
+              "questions": [
+                {
+                  "question": "Does he like mice?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                },
+                {
+                  "question": "What animal does he like?",
+                  "answer": "turtles",
+                  "options": [
+                    "rabbits",
+                    "turtles",
+                    "snakes"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: I don't like the turtle.",
+              "expected_text": "i don't like the turtle",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Pick the animal with long ears! 🐇",
+              "correct_answer": "rabbit",
+              "options": [
+                "rabbit",
+                "turtle",
+                "mouse",
+                "cat"
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_09_lesson_03",
+          "title": "Do you like pets?",
+          "topic": "Fish and Do you like...?",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/pets_video",
+              "instruction": "Can you find the small pet? Watch the video!",
+              "question_text": "Which pet is small and squeaks?",
+              "correct_answer": "hamster",
+              "options": [
+                "hamster",
+                "dog",
+                "cat",
+                "parrot"
+              ],
+              "image_emoji": "🐹",
+              "hint": "This pet likes to run in a tiny wheel!"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "fish",
+                  "ipa": "/fɪʃ/",
+                  "definition": "Swims in a pond.",
+                  "example": "I like the fish in water.",
+                  "image_emoji": "🐠"
+                },
+                {
+                  "word": "water",
+                  "ipa": "/ˈwɔː.tər/",
+                  "definition": "Liquid for swimming.",
+                  "example": "I don't like the cold water.",
+                  "image_emoji": "💧"
+                },
+                {
+                  "word": "yes",
+                  "ipa": "/jɛs/",
+                  "definition": "Means okay or sure.",
+                  "example": "Yes, I like dogs!",
+                  "image_emoji": "👍"
+                },
+                {
+                  "word": "cute",
+                  "ipa": "/kjuːt/",
+                  "definition": "Very sweet looking.",
+                  "example": "Do you like cute cats?",
+                  "image_emoji": "😊"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Who splashes in the pond? 🐟",
+              "correct_answer": "fish",
+              "options": [
+                "fish",
+                "cute",
+                "yes",
+                "water"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Cute Fish",
+              "text": "Do you like fish? I like the cute fish. The fish is in the blue water. It swims happily. Yes, it is very cute!",
+              "questions": [
+                {
+                  "question": "What color is the water?",
+                  "answer": "blue",
+                  "options": [
+                    "blue",
+                    "green",
+                    "red"
+                  ]
+                },
+                {
+                  "question": "Where is the fish?",
+                  "answer": "in the water",
+                  "options": [
+                    "on the land",
+                    "in the water",
+                    "in the sky"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I like ___s.",
+              "explanation": "Use this to say what you like.",
+              "examples": [
+                "I like dogs.",
+                "I like apples.",
+                "I like fish."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "____ you like cats?",
+              "correct_sentence": "Do you like cats?",
+              "correct_answer": "Do",
+              "options": [
+                "Do",
+                "Is",
+                "Are"
+              ],
+              "hint": "Use the word to ask a question."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Do you like fish? Yes, I like fish. They swim in the water and are very cute.",
+              "questions": [
+                {
+                  "question": "Do they like fish?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                },
+                {
+                  "question": "Where do fish swim?",
+                  "answer": "in the water",
+                  "options": [
+                    "in the water",
+                    "on the land",
+                    "in the sky"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Ask: Do you like fish?",
+              "expected_text": "do you like fish",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Fun question with emoji: Pick the 🐟!",
+              "correct_answer": "fish",
+              "options": [
+                "fish",
+                "water",
+                "cute"
+              ]
+            }
+          ],
+          "extra_links": [],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_09_lesson_04",
+          "title": "Pet Master",
+          "topic": "Mastery Check (All Pets & Preferences)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's look at the picture and choose which pet it is!",
+              "question_text": "Which of these pets can hop and has long ears?",
+              "correct_answer": "rabbit",
+              "options": [
+                "rabbit",
+                "dog",
+                "cat",
+                "hamster"
+              ],
+              "image_emoji": "🐇",
+              "hint": "This pet likes to hop around and munch on carrots!"
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "pet",
+                "cat",
+                "dog",
+                "bird",
+                "rabbit",
+                "mouse",
+                "turtle",
+                "fish",
+                "water",
+                "cute",
+                "yes",
+                "no"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Find the 🐢! Which word is a turtle?",
+              "correct_answer": "turtle",
+              "options": [
+                "turtle",
+                "dog",
+                "fish",
+                "rabbit"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Fun Pets",
+              "text": "Hello, I'm Abby. I have a cute puppy and a funny parrot. I like my puppy because he plays with me. I don't like snakes. Do you like parrots? Yes, I do!",
+              "questions": [
+                {
+                  "question": "What pet does Abby like?",
+                  "answer": "puppy",
+                  "options": [
+                    "puppy",
+                    "snake",
+                    "cat"
+                  ]
+                },
+                {
+                  "question": "Does Abby have a parrot?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "I like...",
+                "I don't like...",
+                "Do you like...?"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "I ____ cats.",
+              "correct_sentence": "I like cats.",
+              "correct_answer": "like",
+              "options": [
+                "like",
+                "no",
+                "do"
+              ],
+              "hint": "It's what you might say if you enjoy something."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "I have two cats. One is black and the other is white. I like the white cat.",
+              "questions": [
+                {
+                  "question": "How many cats does the speaker have?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                },
+                {
+                  "question": "What color cat does the speaker like?",
+                  "answer": "white",
+                  "options": [
+                    "black",
+                    "white",
+                    "brown"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: What is one pet you like and one you don't like?",
+              "expected_text": "i like cats i don't like snakes",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Fun question with emoji: Pick the 🐶!",
+              "correct_answer": "dog",
+              "options": [
+                "dog",
+                "elephant",
+                "shark"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "I Have A Pet Song",
+              "url": "https://www.youtube.com/watch?v=pWepfJ-8XU0",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T16:23:33.258911+00:00"
+}
