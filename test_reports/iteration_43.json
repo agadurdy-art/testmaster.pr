@@ -17,7 +17,7 @@
     "login_flow": {
       "status": "VERIFIED",
       "description": "Login with email=geldiaga67@gmail.com, password=geldiaga67 redirects to /dashboard",
-      "evidence": "Playwright test: URL after login is https://lesson-path.preview.emergentagent.com/dashboard"
+      "evidence": "Playwright test: URL after login is https://testmaster-vocab.preview.emergentagent.com/dashboard"
     },
     "stage_1_returns_12_units": {
       "status": "VERIFIED",
