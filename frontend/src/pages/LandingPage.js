@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { registerUser, loginUser } from '../lib/api';
 import { toast } from 'sonner';
-import LanguageSwitcher from '../components/LanguageSwitcher'; // Kept for potential future use
+import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
 import ThemeToggle from '../components/ThemeToggle';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
