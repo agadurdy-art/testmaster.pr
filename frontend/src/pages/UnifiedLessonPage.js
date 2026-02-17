@@ -376,6 +376,29 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
 
   if (!w) return <div className="text-center text-gray-500 py-12">No vocabulary data</div>;
 
+  // Review mode: show word grid for quick review
+  if (isReview) {
+    return (
+      <div data-testid="vocabulary-review-module" className="space-y-4">
+        <h3 className="text-lg font-bold text-center">Vocabulary Review</h3>
+        <p className="text-sm text-gray-500 text-center">Review all words from this unit</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {words.map((word, i) => (
+            <button key={i} onClick={() => speakWord(word.word)} className="p-3 bg-white rounded-xl border-2 border-gray-100 hover:border-amber-300 hover:shadow-md transition-all text-center cursor-pointer" data-testid={`review-word-${i}`}>
+              <span className="text-2xl block mb-1">{word.image_emoji || '📝'}</span>
+              <span className="font-bold text-gray-800">{word.word}</span>
+            </button>
+          ))}
+        </div>
+        <div className="text-center pt-4">
+          <Button onClick={() => onComplete(100)} data-testid="review-vocab-continue-btn">
+            <CheckCircle className="w-4 h-4 mr-2" /> Continue
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div data-testid="vocabulary-module">
       <div className="flex items-center justify-between mb-4">
