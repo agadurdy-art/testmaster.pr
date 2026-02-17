@@ -1131,19 +1131,28 @@ export const I18nContext = React.createContext({
 });
 
 export function I18nProvider({ children }) {
-  // Force English only - no language switching
-  const [language] = React.useState('en');
+  const [language, setLanguage] = React.useState(() => {
+    if (typeof window === 'undefined') return 'en';
+    const stored = window.localStorage.getItem('ieltsace_language');
+    return ['en', 'vi', 'tr'].includes(stored) ? stored : 'en';
+  });
 
+  // Always use English translations regardless of selected language
   const t = React.useCallback(
     (key) => {
-      const dict = translations.en;
-      return dict[key] || key;
+      return translations.en[key] || key;
     },
     []
   );
 
   const value = React.useMemo(
-    () => ({ language, setLanguage: () => {}, t }),
+    () => ({ language, setLanguage: (lng) => {
+      const next = ['en', 'vi', 'tr'].includes(lng) ? lng : 'en';
+      setLanguage(next);
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('ieltsace_language', next);
+      }
+    }, t }),
     [language, t]
   );
 
