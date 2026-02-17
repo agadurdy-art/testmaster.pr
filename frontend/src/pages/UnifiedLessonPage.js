@@ -1382,6 +1382,7 @@ export default function UnifiedLessonPage({ user }) {
   const [loading, setLoading] = useState(true);
   const [activityLoading, setActivityLoading] = useState(false);
   const [showRoadmap, setShowRoadmap] = useState(true);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   useEffect(() => { loadLesson(); }, [lessonId]);
 
