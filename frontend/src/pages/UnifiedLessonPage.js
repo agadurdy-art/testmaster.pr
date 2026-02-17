@@ -140,14 +140,14 @@ function LessonRoadmap({ lesson, completedActivities, onStartActivity, onStartLe
 }
 
 const ACTIVITY_ICONS = {
-  'retrieval_warmup': RefreshCw, 'vocabulary': BookOpen, 'micro_game_vocab': Gamepad2,
-  'micro_reading': FileText, 'grammar_focus': Edit3, 'micro_game_grammar': Gamepad2,
+  'retrieval_warmup': RefreshCw, 'vocabulary': BookOpen, 'micro_game_vocab': Gamepad2, 'vocab_games': Gamepad2,
+  'micro_reading': FileText, 'grammar_focus': Edit3, 'micro_game_grammar': Gamepad2, 'grammar_games': Gamepad2,
   'listening': Headphones, 'listening_task': Headphones, 'production': Mic, 'exit_ticket': CheckCircle, 'auto_review': Repeat
 };
 
 const ACTIVITY_LABELS = {
-  'retrieval_warmup': 'Warm-up', 'vocabulary': 'Vocabulary', 'micro_game_vocab': 'Vocab Game',
-  'micro_reading': 'Reading', 'grammar_focus': 'Grammar', 'micro_game_grammar': 'Grammar Game',
+  'retrieval_warmup': 'Warm-up', 'vocabulary': 'Vocabulary', 'micro_game_vocab': 'Vocab Games', 'vocab_games': 'Vocab Games',
+  'micro_reading': 'Reading', 'grammar_focus': 'Grammar', 'micro_game_grammar': 'Grammar Games', 'grammar_games': 'Grammar Games',
   'listening': 'Listening', 'listening_task': 'Listening', 'production': 'Speaking', 'exit_ticket': 'Exit Quiz', 'auto_review': 'Review'
 };
 
