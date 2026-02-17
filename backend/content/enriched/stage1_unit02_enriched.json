@@ -1,0 +1,1607 @@
+{
+  "stage": 1,
+  "stage_title": "Foundations",
+  "units": [
+    {
+      "unit_id": "stage_1_unit_02",
+      "unit_num": 2,
+      "title": "My Name & Friends",
+      "subtitle": "Identity and Phonics F-J",
+      "phonics_focus": [
+        "F",
+        "G",
+        "H",
+        "I",
+        "J"
+      ],
+      "grammar_focus": [
+        "My name is...",
+        "He is / She is",
+        "This is my..."
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_1_unit_02_lesson_01",
+          "title": "What is your name?",
+          "topic": "Identity and the sounds of F and G",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://www.youtube.com/watch?v=u2T7S7mX0oM",
+              "instruction": "Watch the video and think about what you say when you want to know someone's name.",
+              "question_text": "What do you say to find out a friend's name?",
+              "correct_answer": "What is your name?",
+              "options": [
+                "What is your name?",
+                "How are you?",
+                "Do you like apples?",
+                "Is it sunny today?"
+              ],
+              "image_emoji": "👤",
+              "hint": "It's the question you ask when you meet someone new."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "name",
+                  "ipa": "/neɪm/",
+                  "definition": "What you are called",
+                  "example": "My name is Emma.",
+                  "image_emoji": "👤"
+                },
+                {
+                  "word": "boy",
+                  "ipa": "/bɔɪ/",
+                  "definition": "A young male child",
+                  "example": "He is a boy.",
+                  "image_emoji": "👦"
+                },
+                {
+                  "word": "fish",
+                  "ipa": "/fɪʃ/",
+                  "definition": "An animal that swims",
+                  "example": "This is my fish.",
+                  "image_emoji": "🐟"
+                },
+                {
+                  "word": "goat",
+                  "ipa": "/ɡoʊt/",
+                  "definition": "A farm animal",
+                  "example": "She is my goat.",
+                  "image_emoji": "🐐"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "name",
+                      "emoji": "🆔",
+                      "distractors": [
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "goat",
+                          "emoji": "🐐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "boy",
+                      "emoji": "👦",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "🆔"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "goat",
+                          "emoji": "🐐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "fish",
+                      "emoji": "🐟",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "🆔"
+                        },
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "goat",
+                          "emoji": "🐐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "goat",
+                      "emoji": "🐐",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "🆔"
+                        },
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "name",
+                      "emoji": "🆔",
+                      "distractors": [
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "goat",
+                          "emoji": "🐐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "boy",
+                      "emoji": "👦",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "🆔"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "goat",
+                          "emoji": "🐐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "fish",
+                      "emoji": "🐟",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "🆔"
+                        },
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "goat",
+                          "emoji": "🐐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "goat",
+                      "emoji": "🐐",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "🆔"
+                        },
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "name",
+                      "emoji": "🆔"
+                    },
+                    {
+                      "word": "boy",
+                      "emoji": "👦"
+                    },
+                    {
+                      "word": "fish",
+                      "emoji": "🐟"
+                    },
+                    {
+                      "word": "goat",
+                      "emoji": "🐐"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Funny Goat",
+              "text": "Hello! My name is Anna. I am a girl. This is my goat. He is a funny goat. I have a fish too.",
+              "questions": [
+                {
+                  "question": "Who is Anna's pet?",
+                  "answer": "goat",
+                  "options": [
+                    "goat",
+                    "dog",
+                    "cat"
+                  ]
+                },
+                {
+                  "question": "What else does Anna have?",
+                  "answer": "fish",
+                  "options": [
+                    "fish",
+                    "bird",
+                    "turtle"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "This is my ___.",
+              "explanation": "Use 'This is my' to show what you have.",
+              "examples": [
+                "This is my fish.",
+                "This is my goat.",
+                "This is my toy."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "name",
+                        "My",
+                        "is",
+                        "Ben"
+                      ],
+                      "correctSentence": "My name is Ben."
+                    },
+                    {
+                      "words": [
+                        "name",
+                        "is",
+                        "Sam",
+                        "My"
+                      ],
+                      "correctSentence": "My name is Sam."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "My name is ___.",
+                      "answer": "Ben",
+                      "options": [
+                        "Ben",
+                        "have",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "My name is ___.",
+                      "answer": "Sam",
+                      "options": [
+                        "dog",
+                        "Sam",
+                        "go"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "My names is Ben.",
+                      "errorWord": "names",
+                      "correctWord": "name"
+                    },
+                    {
+                      "sentence": "My name are Sam.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello! My name is Emma. This is my goat. He is very funny.",
+              "questions": [
+                {
+                  "question": "What is Emma's pet?",
+                  "answer": "goat",
+                  "options": [
+                    "goat",
+                    "fish",
+                    "cat"
+                  ]
+                },
+                {
+                  "question": "Is the goat funny?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My name is [Your Name] and I have a goat.",
+              "expected_text": "my name is [your name] and i have a goat",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Pick the animal for 🐟:",
+              "correct_answer": "fish",
+              "options": [
+                "fish",
+                "goat",
+                "bird"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "What's Your Name? Song",
+              "url": "https://www.youtube.com/watch?v=u2T7S7mX0oM",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics F",
+              "url": "https://www.youtube.com/watch?v=kq3cSbz8vRc",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics G",
+              "url": "https://www.youtube.com/watch?v=gEGREuCjFLM",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_1_unit_02_lesson_02",
+          "title": "He and She",
+          "topic": "Gender pronouns and the sound of H",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/lesson1video",
+              "instruction": "Watch the video and choose the right answer.",
+              "question_text": "In the video, is 👦 a...",
+              "correct_answer": "boy",
+              "options": [
+                "boy",
+                "girl",
+                "dog",
+                "cat"
+              ],
+              "image_emoji": "👦",
+              "hint": "Think about what boys are called."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "girl",
+                  "ipa": "/ɡɜːrl/",
+                  "definition": "A young female child",
+                  "example": "She is a nice girl.",
+                  "image_emoji": "👧"
+                },
+                {
+                  "word": "he",
+                  "ipa": "/hiː/",
+                  "definition": "Says a boy",
+                  "example": "He is my friend.",
+                  "image_emoji": "👦"
+                },
+                {
+                  "word": "she",
+                  "ipa": "/ʃiː/",
+                  "definition": "Says a girl",
+                  "example": "She is my friend.",
+                  "image_emoji": "👧"
+                },
+                {
+                  "word": "hat",
+                  "ipa": "/hæt/",
+                  "definition": "A cap for your head",
+                  "example": "This is my hat.",
+                  "image_emoji": "🎩"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "girl",
+                      "emoji": "👧",
+                      "distractors": [
+                        {
+                          "word": "he",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "she",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "👒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "he",
+                      "emoji": "👨",
+                      "distractors": [
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "she",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "👒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "she",
+                      "emoji": "👩",
+                      "distractors": [
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "he",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "👒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hat",
+                      "emoji": "👒",
+                      "distractors": [
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "he",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "she",
+                          "emoji": "👩"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "girl",
+                      "emoji": "👧",
+                      "distractors": [
+                        {
+                          "word": "he",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "she",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "👒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "he",
+                      "emoji": "👨",
+                      "distractors": [
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "she",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "👒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "she",
+                      "emoji": "👩",
+                      "distractors": [
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "he",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "👒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hat",
+                      "emoji": "👒",
+                      "distractors": [
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "he",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "she",
+                          "emoji": "👩"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "girl",
+                      "emoji": "👧"
+                    },
+                    {
+                      "word": "he",
+                      "emoji": "👨"
+                    },
+                    {
+                      "word": "she",
+                      "emoji": "👩"
+                    },
+                    {
+                      "word": "hat",
+                      "emoji": "👒"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Park",
+              "text": "My name is Tom. He is Jack. He is my friend. She is Lily. She has a red hat. This is my favorite park.",
+              "questions": [
+                {
+                  "question": "Who has a red hat?",
+                  "answer": "Lily",
+                  "options": [
+                    "Tom",
+                    "Jack",
+                    "Lily"
+                  ]
+                },
+                {
+                  "question": "Who is Tom's friend?",
+                  "answer": "Jack",
+                  "options": [
+                    "Jack",
+                    "Lily",
+                    "Kim"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "___ is a ___",
+              "explanation": "Use 'He' for boys and 'She' for girls.",
+              "examples": [
+                "He is a firefighter.",
+                "She is a doctor.",
+                "He is a dad."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "He",
+                        "student",
+                        "is",
+                        "a"
+                      ],
+                      "correctSentence": "He is a student."
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "a",
+                        "teacher",
+                        "is"
+                      ],
+                      "correctSentence": "She is a teacher."
+                    },
+                    {
+                      "words": [
+                        "Is",
+                        "he",
+                        "my",
+                        "friend"
+                      ],
+                      "correctSentence": "He is my friend."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ a doctor.",
+                      "answer": "is",
+                      "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "have"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ happy.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "are",
+                        "is",
+                        "has"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are a girl.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "He is happy boy.",
+                      "errorWord": "happy",
+                      "correctWord": "a happy"
+                    },
+                    {
+                      "sentence": "She is teacher.",
+                      "errorWord": "teacher",
+                      "correctWord": "a teacher"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "He is a boy. His name is Tom. This is his hat.",
+              "questions": [
+                {
+                  "question": "Is Tom a boy?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                },
+                {
+                  "question": "What does Tom have?",
+                  "answer": "Hat",
+                  "options": [
+                    "Cat",
+                    "Hat",
+                    "Book"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: He is a boy.",
+              "expected_text": "he is a boy",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Pick the 👦! Who is he?",
+              "correct_answer": "boy",
+              "options": [
+                "girl",
+                "boy",
+                "hat"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics H",
+              "url": "https://www.youtube.com/watch?v=WR0gS4JxaYU",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_1_unit_02_lesson_03",
+          "title": "Meet My Friend",
+          "topic": "Introduction of others and sounds of I and J",
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video-intro-to-ij",
+              "instruction": "Watch the video and listen carefully.",
+              "question_text": "What sound does the 🌸 make at the start?",
+              "correct_answer": "I",
+              "options": [
+                "I",
+                "J",
+                "L",
+                "F"
+              ],
+              "image_emoji": "🌸",
+              "hint": "It starts like in 'ice cream'."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "friend",
+                  "ipa": "/frɛnd/",
+                  "definition": "A person you play with",
+                  "example": "This is my friend, Anna.",
+                  "image_emoji": "👫"
+                },
+                {
+                  "word": "igloo",
+                  "ipa": "/ˈɪɡluː/",
+                  "definition": "A house made of snow",
+                  "example": "He is in an igloo.",
+                  "image_emoji": "⛄"
+                },
+                {
+                  "word": "jet",
+                  "ipa": "/dʒɛt/",
+                  "definition": "A big fast airplane",
+                  "example": "That jet is very fast.",
+                  "image_emoji": "✈️"
+                },
+                {
+                  "word": "happy",
+                  "ipa": "/ˈhæpi/",
+                  "definition": "Feeling very good",
+                  "example": "She is happy today.",
+                  "image_emoji": "😃"
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "friend",
+                      "emoji": "🤝",
+                      "distractors": [
+                        {
+                          "word": "igloo",
+                          "emoji": "❄️"
+                        },
+                        {
+                          "word": "jet",
+                          "emoji": "🛩️"
+                        },
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "igloo",
+                      "emoji": "❄️",
+                      "distractors": [
+                        {
+                          "word": "friend",
+                          "emoji": "🤝"
+                        },
+                        {
+                          "word": "jet",
+                          "emoji": "🛩️"
+                        },
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "jet",
+                      "emoji": "🛩️",
+                      "distractors": [
+                        {
+                          "word": "friend",
+                          "emoji": "🤝"
+                        },
+                        {
+                          "word": "igloo",
+                          "emoji": "❄️"
+                        },
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "happy",
+                      "emoji": "😊",
+                      "distractors": [
+                        {
+                          "word": "friend",
+                          "emoji": "🤝"
+                        },
+                        {
+                          "word": "igloo",
+                          "emoji": "❄️"
+                        },
+                        {
+                          "word": "jet",
+                          "emoji": "🛩️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "friend",
+                      "emoji": "🤝",
+                      "distractors": [
+                        {
+                          "word": "igloo",
+                          "emoji": "❄️"
+                        },
+                        {
+                          "word": "jet",
+                          "emoji": "🛩️"
+                        },
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "igloo",
+                      "emoji": "❄️",
+                      "distractors": [
+                        {
+                          "word": "friend",
+                          "emoji": "🤝"
+                        },
+                        {
+                          "word": "jet",
+                          "emoji": "🛩️"
+                        },
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "jet",
+                      "emoji": "🛩️",
+                      "distractors": [
+                        {
+                          "word": "friend",
+                          "emoji": "🤝"
+                        },
+                        {
+                          "word": "igloo",
+                          "emoji": "❄️"
+                        },
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "happy",
+                      "emoji": "😊",
+                      "distractors": [
+                        {
+                          "word": "friend",
+                          "emoji": "🤝"
+                        },
+                        {
+                          "word": "igloo",
+                          "emoji": "❄️"
+                        },
+                        {
+                          "word": "jet",
+                          "emoji": "🛩️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "friend",
+                      "emoji": "🤝"
+                    },
+                    {
+                      "word": "igloo",
+                      "emoji": "❄️"
+                    },
+                    {
+                      "word": "jet",
+                      "emoji": "🛩️"
+                    },
+                    {
+                      "word": "happy",
+                      "emoji": "😊"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 12
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Leo and the Jet",
+              "text": "This is my friend. His name is Leo. He is happy in an igloo! Look at the jet! It flies fast.",
+              "questions": [
+                {
+                  "question": "Who is my friend?",
+                  "answer": "Leo",
+                  "options": [
+                    "Leo",
+                    "Igloo",
+                    "Jet"
+                  ]
+                },
+                {
+                  "question": "Where is Leo?",
+                  "answer": "In an igloo",
+                  "options": [
+                    "In an igloo",
+                    "In a jet",
+                    "In a house"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "He is my ___.",
+              "explanation": "Use 'He is my' to introduce a boy.",
+              "examples": [
+                "He is my friend.",
+                "He is my brother.",
+                "He is my cousin."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "my",
+                        "friend",
+                        "This",
+                        "is"
+                      ],
+                      "correctSentence": "This is my friend."
+                    },
+                    {
+                      "words": [
+                        "my",
+                        "teacher",
+                        "is",
+                        "This"
+                      ],
+                      "correctSentence": "This is my teacher."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "This is my ___.",
+                      "answer": "friend",
+                      "options": [
+                        "friend",
+                        "teacher",
+                        "brother",
+                        "sister"
+                      ]
+                    },
+                    {
+                      "sentence": "This is my ___.",
+                      "answer": "teacher",
+                      "options": [
+                        "cat",
+                        "house",
+                        "ball",
+                        "teacher"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "This are my friend.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "This is my teachers.",
+                      "errorWord": "teachers",
+                      "correctWord": "teacher"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 7
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is my friend Leo. He is happy. Look, he has a big igloo!",
+              "questions": [
+                {
+                  "question": "What does Leo have?",
+                  "answer": "Igloo",
+                  "options": [
+                    "Jet",
+                    "Igloo",
+                    "Kite"
+                  ]
+                },
+                {
+                  "question": "Is Leo happy?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: This is my igloo.",
+              "expected_text": "this is my igloo",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Who is 🙂?",
+              "correct_answer": "happy",
+              "options": [
+                "friend",
+                "igloo",
+                "happy"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics I",
+              "url": "https://www.youtube.com/watch?v=xIbGWBMSaJ8",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics J",
+              "url": "https://www.youtube.com/watch?v=HwZbcSGliIc",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_1_unit_02_lesson_04",
+          "title": "Unit 2 Mastery Check",
+          "topic": "Cumulative Review (F-J & Identity)",
+          "is_review": true,
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "https://example.com/video_h_start.mp4",
+              "instruction": "Watch the video and think about what you see.",
+              "question_text": "Which picture begins with the sound 'H'?",
+              "correct_answer": "hat",
+              "options": [
+                "hat",
+                "apple",
+                "cat",
+                "lobster"
+              ],
+              "image_emoji": "🎩",
+              "hint": "Listen for the 'hur' sound at the start."
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "name",
+                "boy",
+                "girl",
+                "he",
+                "she",
+                "friend",
+                "fish",
+                "goat",
+                "hat",
+                "igloo",
+                "jet",
+                "happy"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grapes",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "lemon",
+                          "emoji": "🍋"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐕"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "grapes",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "lemon",
+                          "emoji": "🍋"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗",
+                      "distractors": [
+                        {
+                          "word": "bus",
+                          "emoji": "🚌"
+                        },
+                        {
+                          "word": "train",
+                          "emoji": "🚆"
+                        },
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "cat",
+                      "emoji": "🐱"
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "car",
+                      "emoji": "🚗"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 10
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Name is Ben",
+              "text": "Hello! My name is Ben. I am a boy. This is Lily. She is my friend. We see a frog and a cat.",
+              "questions": [
+                {
+                  "question": "Is Lily Ben's friend?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                },
+                {
+                  "question": "What do Ben and Lily see?",
+                  "answer": "frog and cat",
+                  "options": [
+                    "frog and dog",
+                    "frog and cat",
+                    "fish and cat"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "My name is...",
+                "He is / She is...",
+                "This is my..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cats"
+                      ],
+                      "correctSentence": "I like cats"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "happy"
+                      ],
+                      "correctSentence": "She is happy"
+                    },
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "my",
+                        "dog"
+                      ],
+                      "correctSentence": "This is my dog"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "He ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ a happy girl.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "This ___ my book.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "have"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has"
+                    },
+                    {
+                      "sentence": "She are my friend.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    }
+                  ]
+                }
+              ],
+              "total_exercises": 8
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello! My name is Anna. This is my brother, Tom. He is a happy boy.",
+              "questions": [
+                {
+                  "question": "Who is happy?",
+                  "answer": "Tom",
+                  "options": [
+                    "Anna",
+                    "Tom",
+                    "Sally"
+                  ]
+                },
+                {
+                  "question": "What is Anna's brother's name?",
+                  "answer": "Tom",
+                  "options": [
+                    "Ben",
+                    "Kim",
+                    "Tom"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say: My name is Emma and this is my friend Jack.",
+              "expected_text": "my name is emma and this is my friend jack",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "Fun question with emoji: Pick the 🐱!",
+              "correct_answer": "cat",
+              "options": [
+                "cat",
+                "dog",
+                "fish"
+              ]
+            }
+          ],
+          "extra_links": [
+            {
+              "label": "Phonics F-J Review",
+              "url": "https://www.youtube.com/watch?v=u2T7S7mX0oM",
+              "type": "youtube"
+            }
+          ],
+          "ai_enriched": true,
+          "enrichment_version": "1.0"
+        }
+      ]
+    }
+  ],
+  "ai_enriched": true,
+  "enriched_at": "2026-02-17T17:51:35.218359+00:00"
+}
