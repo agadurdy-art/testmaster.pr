@@ -1789,9 +1789,6 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
       </Card>
     </div>
   );
-      </Card>
-    </div>
-  );
 }
 
 // ═══════ EXIT TICKET ═══════
