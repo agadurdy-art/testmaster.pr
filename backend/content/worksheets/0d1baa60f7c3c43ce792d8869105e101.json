@@ -1,0 +1,511 @@
+{
+  "lesson_id": "stage_1_unit_06_lesson_04",
+  "lesson_title": "Unit 6 Mastery Check",
+  "mode": "cumulative",
+  "words": [
+    {
+      "word": "hat",
+      "ipa": "/hæt/",
+      "definition": "Something for your head (Sound H)",
+      "example": "I have a hat.",
+      "image_emoji": "👒"
+    },
+    {
+      "word": "dog",
+      "ipa": "/dɔːɡ/",
+      "definition": "A pet (Sound D)",
+      "example": "This is a dog.",
+      "image_emoji": "🐶"
+    },
+    {
+      "word": "black",
+      "ipa": "/blæk/",
+      "definition": "The color of night",
+      "example": "The cat is black.",
+      "image_emoji": "⚫"
+    },
+    {
+      "word": "name",
+      "ipa": "/neɪm/",
+      "definition": "What people call you",
+      "example": "My name is Ben.",
+      "image_emoji": "🆔"
+    },
+    {
+      "word": "blue",
+      "ipa": "/bluː/",
+      "definition": "Color of the sky",
+      "example": "The fish is blue.",
+      "image_emoji": "🔵"
+    },
+    {
+      "word": "monkey",
+      "ipa": "/ˈmʌŋki/",
+      "definition": "An animal (Sound M)",
+      "example": "It is a monkey.",
+      "image_emoji": "🐒"
+    },
+    {
+      "word": "ten",
+      "ipa": "/ten/",
+      "definition": "Number 10",
+      "example": "It is ten.",
+      "image_emoji": "🔟"
+    },
+    {
+      "word": "queen",
+      "ipa": "/kwiːn/",
+      "definition": "A royal lady (Sound Q)",
+      "example": "She is a queen.",
+      "image_emoji": "👸"
+    },
+    {
+      "word": "mother",
+      "ipa": "/ˈmʌðər/",
+      "definition": "A female parent",
+      "example": "This is my mother.",
+      "image_emoji": "👩"
+    },
+    {
+      "word": "igloo",
+      "ipa": "/ˈɪɡluː/",
+      "definition": "A house made of ice (Sound I)",
+      "example": "It is an igloo.",
+      "image_emoji": "❄️"
+    },
+    {
+      "word": "happy",
+      "ipa": "/ˈhæpi/",
+      "definition": "Feeling good",
+      "example": "I am happy.",
+      "image_emoji": "😊"
+    },
+    {
+      "word": "goat",
+      "ipa": "/ɡoʊt/",
+      "definition": "A farm animal (Sound G)",
+      "example": "The goat is white.",
+      "image_emoji": "🐐"
+    },
+    {
+      "word": "morning",
+      "ipa": "/ˈmɔːrnɪŋ/",
+      "definition": "The start of the day",
+      "example": "Good morning!",
+      "image_emoji": "🌅"
+    },
+    {
+      "word": "eye",
+      "ipa": "/aɪ/",
+      "definition": "What you see with",
+      "example": "I have two eyes.",
+      "image_emoji": "👁️"
+    },
+    {
+      "word": "smile",
+      "ipa": "/smaɪl/",
+      "definition": "Happy face",
+      "example": "Look at my smile.",
+      "image_emoji": "😊"
+    },
+    {
+      "word": "green",
+      "ipa": "/ɡriːn/",
+      "definition": "Color of grass",
+      "example": "The frog is green.",
+      "image_emoji": "🟢"
+    },
+    {
+      "word": "grandpa",
+      "ipa": "/ˈɡrænpɑː/",
+      "definition": "Father of a parent",
+      "example": "He is my grandpa.",
+      "image_emoji": "👴"
+    },
+    {
+      "word": "ball",
+      "ipa": "/bɔːl/",
+      "definition": "A round toy (Sound B)",
+      "example": "I have a ball.",
+      "image_emoji": "⚽"
+    },
+    {
+      "word": "six",
+      "ipa": "/sɪks/",
+      "definition": "Number 6",
+      "example": "It is six.",
+      "image_emoji": "6️⃣"
+    },
+    {
+      "word": "umbrella",
+      "ipa": "/ʌmˈbrelə/",
+      "definition": "Protects from rain (Sound U)",
+      "example": "It is an umbrella.",
+      "image_emoji": "☂️"
+    }
+  ],
+  "grammar_rules": [
+    {
+      "pattern": "I am a ___.",
+      "explanation": "Use 'I am' to tell who you are.",
+      "examples": [
+        "I am a student.",
+        "I am a teacher."
+      ]
+    },
+    {
+      "pattern": "I have a ___.",
+      "explanation": "Use 'I have' for things you own.",
+      "examples": [
+        "I have a ball.",
+        "I have a cat."
+      ]
+    },
+    {
+      "pattern": "This is my ___.",
+      "explanation": "Use 'This is my' to introduce someone.",
+      "examples": [
+        "This is my friend.",
+        "This is my teacher."
+      ]
+    },
+    {
+      "pattern": "My name is ___.",
+      "explanation": "Use 'My name is' to tell your name.",
+      "examples": [
+        "My name is Ben.",
+        "My name is Sam."
+      ]
+    },
+    {
+      "pattern": "He is... / She is...",
+      "explanation": "Use 'He' for boys and 'She' for girls.",
+      "examples": [
+        "He is a student.",
+        "She is a teacher."
+      ]
+    },
+    {
+      "pattern": "It is ___.",
+      "explanation": "Use 'It is' to name a number or object.",
+      "examples": [
+        "It is one.",
+        "It is a kite."
+      ]
+    },
+    {
+      "pattern": "I see ___.",
+      "explanation": "Use 'I see' to tell what is in front of you.",
+      "examples": [
+        "I see ten.",
+        "I see a monkey."
+      ]
+    },
+    {
+      "pattern": "How many ___?",
+      "explanation": "Use 'How many' to ask for a number.",
+      "examples": [
+        "How many monkeys?",
+        "How many fish?"
+      ]
+    },
+    {
+      "pattern": "The ___ is ___.",
+      "explanation": "Use this to tell the color of something.",
+      "examples": [
+        "The pig is pink.",
+        "The fish is blue."
+      ]
+    },
+    {
+      "pattern": "I like ___.",
+      "explanation": "Use 'I like' to tell your favorite color.",
+      "examples": [
+        "I like green.",
+        "I like yellow."
+      ]
+    },
+    {
+      "pattern": "Is it ___?",
+      "explanation": "Use this to ask a question about color.",
+      "examples": [
+        "Is it red?",
+        "Is it black?"
+      ]
+    },
+    {
+      "pattern": "My [Member] is [Name/Feeling].",
+      "explanation": "Use this to describe a family member.",
+      "examples": [
+        "My mother is happy.",
+        "My brother is Ben."
+      ]
+    },
+    {
+      "pattern": "I have [Number] [Object]s.",
+      "explanation": "Use 's' for more than one (two eyes).",
+      "examples": [
+        "I have two eyes.",
+        "I have two ears."
+      ]
+    },
+    {
+      "pattern": "My [Body Part] is [Color].",
+      "explanation": "Describe your body parts.",
+      "examples": [
+        "My hair is black.",
+        "My nose is red."
+      ]
+    },
+    {
+      "pattern": "I have [Adjective] [Body Part].",
+      "explanation": "Use big or small to describe.",
+      "examples": [
+        "I have big eyes.",
+        "I have a small mouth."
+      ]
+    }
+  ],
+  "exercises": {
+    "vocabulary_section": {
+      "matching": [
+        {
+          "word": "hat",
+          "definition": "something you wear on your head",
+          "distractor_definitions": [
+            "an animal",
+            "a place to live"
+          ]
+        },
+        {
+          "word": "dog",
+          "definition": "a pet that barks",
+          "distractor_definitions": [
+            "a fruit",
+            "a game to play"
+          ]
+        },
+        {
+          "word": "black",
+          "definition": "the color of the night sky",
+          "distractor_definitions": [
+            "a feeling",
+            "a type of food"
+          ]
+        },
+        {
+          "word": "queen",
+          "definition": "a royal lady",
+          "distractor_definitions": [
+            "a type of fruit",
+            "a household item"
+          ]
+        },
+        {
+          "word": "umbrella",
+          "definition": "something used in the rain",
+          "distractor_definitions": [
+            "a sunny day",
+            "a type of animal"
+          ]
+        }
+      ],
+      "fill_blank": [
+        {
+          "sentence": "I see a ___.",
+          "answer": "dog",
+          "hint": "an animal"
+        },
+        {
+          "sentence": "The ___ is black.",
+          "answer": "hat",
+          "hint": "something you wear"
+        },
+        {
+          "sentence": "He is my ___.",
+          "answer": "grandpa",
+          "hint": "family member"
+        },
+        {
+          "sentence": "This is my ___.",
+          "answer": "ball",
+          "hint": "round and used for sports"
+        },
+        {
+          "sentence": "I like the color ___.",
+          "answer": "blue",
+          "hint": "a color like the sky"
+        }
+      ],
+      "true_false": [
+        {
+          "statement": "A 'monkey' is a type of fruit.",
+          "answer": false
+        },
+        {
+          "statement": "The word 'name' refers to what people call you.",
+          "answer": true
+        },
+        {
+          "statement": "Six is a number.",
+          "answer": true
+        },
+        {
+          "statement": "An igloo is usually found in warm places.",
+          "answer": false
+        },
+        {
+          "statement": "A 'goat' is a type of vegetable.",
+          "answer": false
+        }
+      ]
+    },
+    "grammar_section": {
+      "reorder": [
+        {
+          "scrambled": "He / my / is / grandpa",
+          "answer": "He is my grandpa."
+        },
+        {
+          "scrambled": "dog / a / It / is",
+          "answer": "It is a dog."
+        },
+        {
+          "scrambled": "I / blue / like",
+          "answer": "I like blue."
+        },
+        {
+          "scrambled": "my / This / is / hat",
+          "answer": "This is my hat."
+        },
+        {
+          "scrambled": "I / happy / am",
+          "answer": "I am happy."
+        }
+      ],
+      "correct_mistake": [
+        {
+          "sentence": "This my ball is.",
+          "corrected": "This is my ball."
+        },
+        {
+          "sentence": "She is queen a.",
+          "corrected": "She is a queen."
+        },
+        {
+          "sentence": "I like green color.",
+          "corrected": "I like the color green."
+        },
+        {
+          "sentence": "My eye color black is.",
+          "corrected": "My eye color is black."
+        },
+        {
+          "sentence": "Have I an umbrella.",
+          "corrected": "I have an umbrella."
+        }
+      ],
+      "complete_pattern": [
+        {
+          "pattern": "I am a ___.",
+          "answer": "queen",
+          "options": [
+            "queen",
+            "happy",
+            "ball"
+          ]
+        },
+        {
+          "pattern": "I have a ___.",
+          "answer": "dog",
+          "options": [
+            "dog",
+            "blue",
+            "morning"
+          ]
+        },
+        {
+          "pattern": "This is my ___.",
+          "answer": "mother",
+          "options": [
+            "morning",
+            "mother",
+            "umbrella"
+          ]
+        },
+        {
+          "pattern": "The ___ is ___.",
+          "answer": "ball",
+          "options": [
+            "ball",
+            "six",
+            "happy"
+          ]
+        },
+        {
+          "pattern": "My name is ___.",
+          "answer": "Sam",
+          "options": [
+            "Sam",
+            "blue",
+            "goat"
+          ]
+        }
+      ]
+    },
+    "mixed_review": [
+      {
+        "type": "multiple_choice",
+        "question": "What is a 'hat'?",
+        "options": [
+          "Something to wear",
+          "A type of animal",
+          "A number"
+        ],
+        "answer": "Something to wear"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "How many colors do you see?",
+        "options": [
+          "Ten",
+          "Green",
+          "Six"
+        ],
+        "answer": "Six"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "What does 'happy' mean?",
+        "options": [
+          "Feeling good",
+          "A type of weather",
+          "A number"
+        ],
+        "answer": "Feeling good"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "Is a 'dog' an animal?",
+        "options": [
+          "Yes",
+          "No",
+          "Maybe"
+        ],
+        "answer": "Yes"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "What does 'my name is' tell?",
+        "options": [
+          "Who I am",
+          "The time",
+          "A place"
+        ],
+        "answer": "Who I am"
+      }
+    ]
+  },
+  "total_lessons": 24,
+  "word_count": 20
+}
