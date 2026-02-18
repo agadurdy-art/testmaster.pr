@@ -1043,7 +1043,15 @@ function MicroReading({ activity, onComplete, onSkip }) {
 // ═══════ GRAMMAR FOCUS ═══════
 function GrammarFocus({ activity, onComplete, onSkip }) {
   const [ruleIdx, setRuleIdx] = useState(0);
-  const rules = activity?.rules || [];
+  
+  // Support both 'rules' array (old format) and single rule (enriched format)
+  const rules = activity?.rules || (activity?.rule ? [{
+    pattern: activity.rule,
+    rule_text: activity.rule,
+    explanation: activity.explanation || '',
+    examples: activity.examples || []
+  }] : []);
+  
   const rule = rules[ruleIdx];
 
   // Normalize examples: handle both [{correct, incorrect}] and plain string arrays
