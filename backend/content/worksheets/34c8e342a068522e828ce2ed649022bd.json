@@ -1,0 +1,124 @@
+{
+  "lesson_id": "stage_1_unit_03_lesson_01",
+  "lesson_title": "One to Five",
+  "mode": "current",
+  "words": [
+    {
+      "word": "one",
+      "ipa": "/wʌn/",
+      "definition": "The number 1",
+      "example": "It is one.",
+      "image_emoji": "1️⃣"
+    },
+    {
+      "word": "two",
+      "ipa": "/tuː/",
+      "definition": "The number 2",
+      "example": "It is two.",
+      "image_emoji": "2️⃣"
+    },
+    {
+      "word": "three",
+      "ipa": "/θriː/",
+      "definition": "The number 3",
+      "example": "It is three.",
+      "image_emoji": "3️⃣"
+    },
+    {
+      "word": "kite",
+      "ipa": "/kaɪt/",
+      "definition": "A flying toy (Sound K)",
+      "example": "I have one kite.",
+      "image_emoji": "🪁"
+    },
+    {
+      "word": "lion",
+      "ipa": "/ˈlaɪən/",
+      "definition": "A big cat (Sound L)",
+      "example": "It is a lion.",
+      "image_emoji": "🦁"
+    }
+  ],
+  "grammar_rules": [
+    {
+      "pattern": "It is ___.",
+      "explanation": "Use 'It is' to name a number or object.",
+      "examples": [
+        "It is one.",
+        "It is a kite."
+      ]
+    }
+  ],
+  "exercises": {
+    "vocabulary_section": {
+      "matching": [
+        {
+          "word": "one",
+          "definition": "The number 1",
+          "distractor_definitions": []
+        },
+        {
+          "word": "two",
+          "definition": "The number 2",
+          "distractor_definitions": []
+        },
+        {
+          "word": "three",
+          "definition": "The number 3",
+          "distractor_definitions": []
+        },
+        {
+          "word": "kite",
+          "definition": "A flying toy (Sound K)",
+          "distractor_definitions": []
+        },
+        {
+          "word": "lion",
+          "definition": "A big cat (Sound L)",
+          "distractor_definitions": []
+        }
+      ],
+      "fill_blank": [
+        {
+          "sentence": "It is ___.",
+          "answer": "one",
+          "hint": ""
+        },
+        {
+          "sentence": "It is ___.",
+          "answer": "two",
+          "hint": ""
+        },
+        {
+          "sentence": "It is ___.",
+          "answer": "three",
+          "hint": ""
+        },
+        {
+          "sentence": "I have one ___.",
+          "answer": "kite",
+          "hint": ""
+        },
+        {
+          "sentence": "It is a ___.",
+          "answer": "lion",
+          "hint": ""
+        }
+      ],
+      "true_false": []
+    },
+    "grammar_section": {
+      "reorder": [
+        {
+          "scrambled": "student. / is / It",
+          "answer": "It is student."
+        }
+      ],
+      "correct_mistake": [],
+      "complete_pattern": []
+    },
+    "mixed_review": []
+  },
+  "total_lessons": 1,
+  "word_count": 5
+}
