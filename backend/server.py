@@ -514,6 +514,16 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+# Worksheet generation routes
+try:
+    from routes.worksheet_routes import router as worksheet_router
+    app.include_router(worksheet_router)
+    print("✅ Worksheet routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Worksheet routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 
 
 # ============ Models ============
