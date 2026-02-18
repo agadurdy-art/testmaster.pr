@@ -1782,23 +1782,6 @@ export default function UnifiedLessonPage({ user }) {
   const loadActivityData = async (activityType) => {
     try {
       setActivityLoading(true);
-      
-      // First check if data is embedded in activity_flow
-      const activityFromFlow = lesson?.activity_flow?.find(a => a.type === activityType);
-      if (activityFromFlow?.data && Object.keys(activityFromFlow.data).length > 0) {
-        // Use embedded data from enriched content
-        setCurrentActivityData(activityFromFlow.data);
-        // Cache data for lesson summary
-        if (activityType === 'vocabulary' && activityFromFlow.data.items?.length) {
-          setLessonSummaryData(prev => ({ ...prev, words: activityFromFlow.data.items }));
-        }
-        if (activityType === 'grammar_focus' && activityFromFlow.data.rule) {
-          setLessonSummaryData(prev => ({ ...prev, grammarRules: [activityFromFlow.data] }));
-        }
-        return;
-      }
-      
-      // Fallback to API call for non-enriched content
       const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/${activityType}`);
       const data = res.ok ? await res.json() : null;
       setCurrentActivityData(data);
