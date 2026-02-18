@@ -1443,8 +1443,14 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           <Progress value={((currentQ + 1) / questions.length) * 100} className="mb-5" />
           <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
           <div className="space-y-2.5">
-            {/* If options provided, show them; otherwise default to yes/no */}
-            {((q.options && q.options.length > 0) ? q.options : ['yes', 'no']).map(option => {
+            {/* If options provided, show them; otherwise generate from answer */}
+            {((q.options && q.options.length > 0) ? q.options : (() => {
+              const ans = (q.answer || q.correct_answer || '').toLowerCase();
+              if (ans === 'yes' || ans === 'no') return ['Yes', 'No'];
+              if (['one','two','three','four','five','six','seven','eight','nine','ten','1','2','3','4','5'].includes(ans))
+                return ['one', 'two', 'three', 'four', 'five'].filter(x => x !== ans).slice(0, 3).concat([ans]).sort(() => Math.random() - 0.5);
+              return [ans, 'yes', 'no'].filter((v, i, a) => a.indexOf(v) === i);
+            })()).map(option => {
               const isSelected = selectedAnswer === option;
               const optionIsCorrect = isCorrectOption(option);
               let cls = 'border-gray-200 hover:border-cyan-300';

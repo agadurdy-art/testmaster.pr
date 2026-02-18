@@ -60,8 +60,9 @@ const WordOrder = ({
   };
 
   const handleCheck = () => {
-    const answer = selectedWords.map(w => w.word).join(' ');
-    const correct = answer.toLowerCase() === currentItem.correctSentence.toLowerCase();
+    const normalize = (s) => s.replace(/[.!?,;:]+$/g, '').trim().toLowerCase();
+    const answer = normalize(selectedWords.map(w => w.word).join(' '));
+    const correct = answer === normalize(currentItem.correctSentence || '');
     setIsCorrect(correct);
     setShowFeedback(true);
     
