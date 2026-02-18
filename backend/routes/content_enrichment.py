@@ -139,16 +139,8 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
     """
     MERGE original content with enriched content and seed to database.
     
-    Merge logic:
-    - warm_up: FROM ENRICHER (3 questions)
-    - vocabulary: FROM ORIGINAL
-    - vocab_games: FROM ENRICHER (3 games × 10-12 items)
-    - micro_reading: FROM ORIGINAL
-    - grammar_focus: FROM ORIGINAL
-    - grammar_games: FROM ENRICHER (3 games × 4-5 items)
-    - listening: FROM ORIGINAL
-    - production: FROM ORIGINAL
-    - exit_ticket: FROM ENRICHER (3-5 summary questions)
+    Walks original lesson steps, selectively replaces game/quiz sections
+    with enriched AI content, and saves merged activity_flow to DB.
     """
     from motor.motor_asyncio import AsyncIOMotorClient
     from services.content_merger import ContentMerger
@@ -168,18 +160,116 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
     seeded_count = 0
     TS = datetime.now(timezone.utc).isoformat()
     
-    # Activity type mapping
+    # Map step types -> activity_flow types used by frontend
     STEP_TO_ACTIVITY = {
         "warm_up": "retrieval_warmup",
         "vocabulary": "vocabulary",
+        "vocabulary_review": "vocabulary",
         "vocab_games": "micro_game_vocab",
+        "micro_game_vocab": "micro_game_vocab",
         "micro_reading": "micro_reading",
         "grammar_focus": "grammar_focus",
+        "grammar_review": "grammar_focus",
         "grammar_games": "micro_game_grammar",
+        "grammar_game": "micro_game_grammar",
         "listening": "listening_task",
         "production": "production",
         "exit_ticket": "exit_ticket",
     }
+    
+    def build_activity_data(step):
+        """Convert a content step into frontend-ready activity data dict"""
+        step_type = step.get('type')
+        
+        if step_type == "warm_up":
+            if step.get('questions') and len(step['questions']) > 0:
+                qs = step['questions']
+                for qi, q in enumerate(qs):
+                    if not q.get('question_id'):
+                        q['question_id'] = f"warmup_q{qi+1}"
+                return {"video_url": step.get("video_url", ""), "instruction": step.get("instruction", ""), "questions": qs}
+            return {
+                "video_url": step.get("video_url", ""),
+                "instruction": step.get("instruction", ""),
+                "questions": [{
+                    "question_id": "warmup_q1",
+                    "question_text": step.get("question_text", ""),
+                    "correct_answer": step.get("correct_answer", ""),
+                    "options": step.get("options", []),
+                    "image_emoji": step.get("image_emoji", ""),
+                    "hint": step.get("hint", "")
+                }]
+            }
+        
+        if step_type == "vocabulary":
+            return {"words": step.get("items", [])}
+        
+        if step_type == "vocabulary_review":
+            # items may be plain strings or word objects
+            items = step.get("items", [])
+            if items and isinstance(items[0], str):
+                words = [{"word": w, "ipa": "", "definition": "", "example": "", "image_emoji": ""} for w in items]
+            else:
+                words = items
+            return {"words": words, "is_review": True, "review_words": step.get("items", [])}
+        
+        if step_type in ("vocab_games", "micro_game_vocab"):
+            if step.get("games"):
+                return {"games": step.get("games", [])}
+            # Old single-question format
+            return {"games": [], "question_text": step.get("question_text", ""), "correct_answer": step.get("correct_answer", ""), "options": step.get("options", [])}
+        
+        if step_type == "micro_reading":
+            passage = step.get("text", "") or step.get("passage", "")
+            return {"passage": passage, "passage_text": passage, "questions": step.get("questions", [])}
+        
+        if step_type == "grammar_focus":
+            return {
+                "rule": step.get("rule_pattern", "") or step.get("rule", ""),
+                "explanation": step.get("explanation", ""),
+                "examples": step.get("examples", [])
+            }
+        
+        if step_type == "grammar_review":
+            patterns = step.get("patterns", [])
+            return {
+                "rules": [{"pattern": p, "rule_text": p, "explanation": "", "examples": []} for p in patterns] if patterns else [],
+                "is_review": True
+            }
+        
+        if step_type in ("grammar_games", "grammar_game"):
+            if step.get("games"):
+                return {"games": step.get("games", [])}
+            # Old single-exercise format
+            return {"games": [], "mode": step.get("mode", ""), "words": step.get("words", []), "correct_sentence": step.get("correct_sentence", "")}
+        
+        if step_type == "listening":
+            return {"audio_text": step.get("audio_text", ""), "transcript": step.get("audio_text", ""), "questions": step.get("questions", [])}
+        
+        if step_type == "production":
+            return {
+                "prompt": step.get("prompt", ""),
+                "expected_text": step.get("expected_text", ""),
+                "example_response": step.get("expected_text", ""),
+                "production_type": step.get("mode", "speaking")
+            }
+        
+        if step_type == "exit_ticket":
+            if step.get('questions') and len(step['questions']) > 0:
+                qs = step['questions']
+                for qi, q in enumerate(qs):
+                    if not q.get('question_id'):
+                        q['question_id'] = f"exit_q{qi+1}"
+                return {"questions": qs}
+            return {"questions": [{
+                "question_id": "exit_q1",
+                "question_text": step.get("question_text", ""),
+                "correct_answer": step.get("correct_answer", ""),
+                "options": step.get("options", [])
+            }]}
+        
+        # Unknown step type - pass through all data
+        return {k: v for k, v in step.items() if k not in ('step', 'type')}
     
     for unit_num in unit_numbers:
         unit_str = str(unit_num).zfill(2)
@@ -189,11 +279,9 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
         if not os.path.exists(original_path):
             continue
         
-        # Load original
         with open(original_path, 'r') as f:
             original_data = json.load(f)
         
-        # Load enriched (if exists)
         enriched_data = None
         if os.path.exists(enriched_path):
             with open(enriched_path, 'r') as f:
@@ -202,7 +290,6 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
         for orig_unit in original_data.get('units', []):
             unit_id = orig_unit.get('unit_id')
             
-            # Find matching enriched unit
             enrich_unit = None
             if enriched_data:
                 enrich_unit = next(
@@ -213,7 +300,6 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
             for orig_lesson in orig_unit.get('lessons', []):
                 lesson_id = orig_lesson.get('lesson_id')
                 
-                # Find matching enriched lesson
                 enrich_lesson = None
                 if enrich_unit:
                     enrich_lesson = next(
@@ -221,118 +307,26 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                         None
                     )
                 
-                # Merge lessons
+                # Merge lessons (original base + enriched games)
                 if enrich_lesson:
                     merged_lesson = merger.merge_lesson(orig_lesson, enrich_lesson)
                 else:
                     merged_lesson = orig_lesson
                 
-                # Build activity_flow with embedded data
+                # Build activity_flow from merged steps
                 activity_flow = []
                 for i, step in enumerate(merged_lesson.get('steps', [])):
                     step_type = step.get('type')
                     activity_type = STEP_TO_ACTIVITY.get(step_type, step_type)
                     
-                    activity = {
+                    activity_flow.append({
                         "order": i + 1,
                         "type": activity_type,
                         "activity_id": f"step_{i+1}",
-                        "data": {}
-                    }
-                    
-                    # Embed data based on step type
-                    if step_type == "warm_up":
-                        if step.get('questions') and len(step['questions']) > 0:
-                            qs = step['questions']
-                            for qi, q in enumerate(qs):
-                                if not q.get('question_id'):
-                                    q['question_id'] = f"warmup_q{qi+1}"
-                            activity["data"] = {
-                                "video_url": step.get("video_url", ""),
-                                "instruction": step.get("instruction", ""),
-                                "questions": qs
-                            }
-                        else:
-                            activity["data"] = {
-                                "video_url": step.get("video_url", ""),
-                                "instruction": step.get("instruction", ""),
-                                "questions": [{
-                                    "question_id": "warmup_q1",
-                                    "question_text": step.get("question_text", ""),
-                                    "correct_answer": step.get("correct_answer", ""),
-                                    "options": step.get("options", []),
-                                    "image_emoji": step.get("image_emoji", ""),
-                                    "hint": step.get("hint", "")
-                                }]
-                            }
-                    
-                    elif step_type == "vocabulary":
-                        # Component expects 'words', not 'items'
-                        activity["data"] = {
-                            "words": step.get("items", [])
-                        }
-                    
-                    elif step_type == "vocab_games":
-                        activity["data"] = {
-                            "games": step.get("games", [])
-                        }
-                    
-                    elif step_type == "micro_reading":
-                        activity["data"] = {
-                            "passage": step.get("text", "") or step.get("passage", ""),
-                            "passage_text": step.get("text", "") or step.get("passage", ""),
-                            "questions": step.get("questions", [])
-                        }
-                    
-                    elif step_type == "grammar_focus":
-                        activity["data"] = {
-                            "rule": step.get("rule_pattern", "") or step.get("rule", ""),
-                            "explanation": step.get("explanation", ""),
-                            "examples": step.get("examples", [])
-                        }
-                    
-                    elif step_type == "grammar_games":
-                        activity["data"] = {
-                            "games": step.get("games", [])
-                        }
-                    
-                    elif step_type == "listening":
-                        activity["data"] = {
-                            "audio_text": step.get("audio_text", ""),
-                            "transcript": step.get("audio_text", ""),
-                            "questions": step.get("questions", [])
-                        }
-                    
-                    elif step_type == "production":
-                        activity["data"] = {
-                            "prompt": step.get("prompt", ""),
-                            "expected_text": step.get("expected_text", ""),
-                            "example_response": step.get("expected_text", ""),
-                            "production_type": step.get("mode", "speaking")
-                        }
-                    
-                    elif step_type == "exit_ticket":
-                        if step.get('questions') and len(step['questions']) > 0:
-                            qs = step['questions']
-                            for qi, q in enumerate(qs):
-                                if not q.get('question_id'):
-                                    q['question_id'] = f"exit_q{qi+1}"
-                            activity["data"] = {
-                                "questions": qs
-                            }
-                        else:
-                            activity["data"] = {
-                                "questions": [{
-                                    "question_id": "exit_q1",
-                                    "question_text": step.get("question_text", ""),
-                                    "correct_answer": step.get("correct_answer", ""),
-                                    "options": step.get("options", [])
-                                }]
-                            }
-                    
-                    activity_flow.append(activity)
+                        "data": build_activity_data(step)
+                    })
                 
-                # Add auto_review
+                # Add auto_review at end
                 activity_flow.append({
                     "order": len(activity_flow) + 1,
                     "type": "auto_review",
@@ -340,7 +334,6 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                     "data": {}
                 })
                 
-                # Update lesson with merged activity_flow
                 await db.unified_lessons.update_one(
                     {"lesson_id": lesson_id},
                     {"$set": {
@@ -349,18 +342,13 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                         "merged_at": TS
                     }}
                 )
-                
                 seeded_count += 1
     
     client.close()
     
     return {
         "message": f"Merged and seeded {seeded_count} lessons",
-        "status": "success",
-        "merge_logic": {
-            "from_enricher": ["warm_up", "vocab_games", "grammar_games", "exit_ticket"],
-            "from_original": ["vocabulary", "micro_reading", "grammar_focus", "listening", "production"]
-        }
+        "status": "success"
     }
 
 
