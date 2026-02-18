@@ -37,7 +37,6 @@ CRITICAL: You MUST respond with ONLY valid JSON. No explanations, no markdown, j
 
 def extract_json_from_response(response: str) -> dict:
     """Extract JSON from LLM response, handling markdown code blocks"""
-    # Remove markdown code blocks if present
     response = response.strip()
     
     # Try to find JSON in code block
@@ -55,7 +54,7 @@ def extract_json_from_response(response: str) -> dict:
     
     # Try direct parsing
     try:
-        return extract_json_from_response(response)
+        return json.loads(response)
     except json.JSONDecodeError:
         raise ValueError(f"Could not parse JSON from response: {response[:200]}...")
 
