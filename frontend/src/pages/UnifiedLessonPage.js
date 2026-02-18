@@ -2567,24 +2567,19 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
       const { jsPDF } = await import('jspdf');
       const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-      if (mode === 'cumulative') {
-        // Fetch cumulative vocab from all previous lessons
-        const res = await fetch(`${API_URL}/api/unified/cumulative-vocab/${lesson.lesson_id}`);
-        const data = await res.json();
-        buildPDFContent(doc, data.words || [], data.grammar_rules || [],
-          'Testmaster Cumulative Worksheet',
-          `All vocabulary up to ${lesson?.title || 'Lesson'} (${data.total_lessons} lessons)`
-        );
-        doc.save(`Testmaster_Cumulative_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}.pdf`);
-      } else {
-        buildPDFContent(doc, words, grammarRules,
-          'Testmaster Worksheet',
-          `${lesson?.title || 'Lesson'} - Lesson ${lesson?.number || ''}`
-        );
-        doc.save(`Testmaster_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}_L${lesson?.number || ''}.pdf`);
-      }
-      toast.success(mode === 'cumulative' ? 'Cumulative worksheet downloaded!' : 'Worksheet downloaded!');
+      // Fetch GPT-4o generated worksheet from backend (cached after first call)
+      const res = await fetch(`${API_URL}/api/worksheet/generate/${lesson?.lesson_id}?mode=${mode}&max_words=20`);
+      if (!res.ok) throw new Error('Failed to generate worksheet');
+      const worksheetData = await res.json();
+
+      buildPDFContent(doc, worksheetData);
+      const filename = mode === 'cumulative'
+        ? `Testmaster_Review_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}.pdf`
+        : `Testmaster_${lesson?.title?.replace(/\s+/g, '_') || 'Worksheet'}_L${lesson?.number || ''}.pdf`;
+      doc.save(filename);
+      toast.success(mode === 'cumulative' ? 'Cumulative review worksheet downloaded!' : 'Worksheet downloaded!');
     } catch (err) {
+      console.error('PDF generation failed:', err);
       toast.error('Failed to generate PDF');
     }
     setPdfLoading(false);
