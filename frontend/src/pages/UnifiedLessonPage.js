@@ -1477,72 +1477,318 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
 
 // ═══════ PRODUCTION (Speaking/Writing) ═══════
 function ProductionActivity({ activity, onComplete, onSkip }) {
-  const [response, setResponse] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const criteria = activity?.evaluation_criteria || activity?.rubric || [];
-  const exampleResponse = activity?.example_response || activity?.example_answer || '';
+  const [phase, setPhase] = useState('ready'); // ready, recording, processing, result
+  const [transcription, setTranscription] = useState('');
+  const [browserTranscript, setBrowserTranscript] = useState('');
+  const [score, setScore] = useState(0);
+  const [matchedWords, setMatchedWords] = useState([]);
+  const [missingWords, setMissingWords] = useState([]);
+  const [error, setError] = useState('');
+  const [recordingTime, setRecordingTime] = useState(0);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  const recognitionRef = useRef(null);
+  const timerRef = useRef(null);
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-  const handleSubmit = () => {
-    if (!response.trim()) return;
-    setSubmitted(true);
+  const expectedText = activity?.expected_text || activity?.example_response || '';
+  const promptText = activity?.prompt || 'Practice speaking';
+  const isWriting = activity?.production_type === 'writing';
+
+  // Writing mode fallback
+  const [writtenResponse, setWrittenResponse] = useState('');
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch {}
+      }
+    };
+  }, []);
+
+  const startRecording = async () => {
+    setError('');
+    setTranscription('');
+    setBrowserTranscript('');
+    audioChunksRef.current = [];
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+      mediaRecorderRef.current = recorder;
+      recorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunksRef.current.push(e.data); };
+      recorder.start();
+      setPhase('recording');
+      setRecordingTime(0);
+      timerRef.current = setInterval(() => setRecordingTime(t => t + 1), 1000);
+
+      // Browser SpeechRecognition for live feedback
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SR) {
+        const recognition = new SR();
+        recognition.lang = 'en-US';
+        recognition.interimResults = true;
+        recognition.continuous = true;
+        recognition.onresult = (e) => {
+          let t = '';
+          for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
+          setBrowserTranscript(t);
+        };
+        recognition.onerror = () => {};
+        recognition.start();
+        recognitionRef.current = recognition;
+      }
+    } catch (err) {
+      setError('Mikrofon erişimi reddedildi. Lütfen tarayıcı ayarlarından izin verin.');
+      setPhase('ready');
+    }
   };
+
+  const stopRecording = () => {
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+    if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch {} }
+
+    return new Promise((resolve) => {
+      const recorder = mediaRecorderRef.current;
+      if (!recorder || recorder.state === 'inactive') { resolve(null); return; }
+      recorder.onstop = () => {
+        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        recorder.stream?.getTracks().forEach(t => t.stop());
+        resolve(blob);
+      };
+      recorder.stop();
+    });
+  };
+
+  const handleStopAndEvaluate = async () => {
+    setPhase('processing');
+    const blob = await stopRecording();
+    if (!blob || blob.size < 1000) {
+      // Too short, use browser transcript
+      if (browserTranscript.trim()) {
+        evaluateLocally(browserTranscript);
+      } else {
+        setError('Ses kaydı çok kısa. Lütfen tekrar deneyin.');
+        setPhase('ready');
+      }
+      return;
+    }
+
+    // Send to Whisper
+    try {
+      const formData = new FormData();
+      formData.append('audio', blob, 'recording.webm');
+      formData.append('expected_text', expectedText);
+      formData.append('prompt_text', promptText);
+
+      const res = await fetch(`${API_URL}/api/speech/evaluate`, { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.error && !data.transcription) {
+        // Whisper failed, use browser transcript as fallback
+        if (browserTranscript.trim()) {
+          evaluateLocally(browserTranscript);
+        } else {
+          setError('Ses değerlendirilemedi. Lütfen tekrar deneyin.');
+          setPhase('ready');
+        }
+        return;
+      }
+
+      setTranscription(data.transcription || browserTranscript);
+      setScore(data.score || 0);
+      setMatchedWords(data.matched_words || []);
+      setMissingWords(data.missing_words || []);
+      setPhase('result');
+    } catch {
+      if (browserTranscript.trim()) {
+        evaluateLocally(browserTranscript);
+      } else {
+        setError('Bağlantı hatası. Lütfen tekrar deneyin.');
+        setPhase('ready');
+      }
+    }
+  };
+
+  const evaluateLocally = (text) => {
+    setTranscription(text);
+    const tWords = new Set(text.toLowerCase().trim().split(/\s+/));
+    const eWords = new Set(expectedText.toLowerCase().trim().split(/\s+/));
+    const matched = [...tWords].filter(w => eWords.has(w));
+    const missing = [...eWords].filter(w => !tWords.has(w));
+    const s = eWords.size > 0 ? Math.min(Math.round((matched.length / eWords.size) * 100), 100) : 100;
+    setScore(s);
+    setMatchedWords(matched);
+    setMissingWords(missing);
+    setPhase('result');
+  };
+
+  const handleWrittenSubmit = () => {
+    if (!writtenResponse.trim()) return;
+    evaluateLocally(writtenResponse);
+  };
+
+  const handleRetry = () => {
+    setPhase('ready');
+    setTranscription('');
+    setBrowserTranscript('');
+    setScore(0);
+    setMatchedWords([]);
+    setMissingWords([]);
+    setRecordingTime(0);
+    setError('');
+  };
+
+  const formatTime = (s) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
 
   return (
     <div data-testid="production-activity">
       <div className="flex items-center justify-between mb-4">
         <Badge className="bg-rose-100 text-rose-700 border-0">
-          <Mic className="w-3 h-3 mr-1" /> {activity?.production_type === 'writing' ? 'Writing' : 'Speaking'}
+          <Mic className="w-3 h-3 mr-1" /> {isWriting ? 'Writing' : 'Speaking'}
         </Badge>
         <SkipButton onSkip={onSkip} />
       </div>
 
       <Card className="p-6 max-w-2xl mx-auto">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">{activity?.prompt || 'Practice task'}</h3>
+        {/* Prompt */}
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-1.5 bg-rose-50 text-rose-600 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+            <Volume2 className="w-3 h-3" /> Action
+          </div>
+          <h3 className="text-lg font-bold text-gray-900" data-testid="production-prompt">{promptText}</h3>
+          {expectedText && (
+            <button onClick={() => { const u = new SpeechSynthesisUtterance(expectedText); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u); }}
+              className="mt-2 text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 mx-auto" data-testid="listen-example-btn">
+              <Volume2 className="w-3.5 h-3.5" /> Listen to example
+            </button>
+          )}
+        </div>
 
-        {criteria.length > 0 && (
-          <div className="bg-gray-50 rounded-xl p-4 mb-5">
-            <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">What to include</h4>
-            <ul className="space-y-1">
-              {criteria.map((c, i) => (
-                <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
-                  <CheckCircle className="w-3.5 h-3.5 text-gray-400 shrink-0" />{c}
-                </li>
-              ))}
-            </ul>
+        {error && (
+          <div className="bg-red-50 text-red-700 text-sm p-3 rounded-xl mb-4 text-center">{error}</div>
+        )}
+
+        {/* READY PHASE */}
+        {phase === 'ready' && !isWriting && (
+          <div className="text-center space-y-4">
+            <button onClick={startRecording}
+              className="w-24 h-24 rounded-full bg-gradient-to-br from-rose-500 to-red-600 text-white flex items-center justify-center mx-auto shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+              data-testid="start-recording-btn">
+              <Mic className="w-10 h-10" />
+            </button>
+            <p className="text-sm text-gray-500">Tap to start recording</p>
           </div>
         )}
 
-        {!submitted ? (
-          <div className="space-y-4">
-            <textarea
-              value={response} onChange={e => setResponse(e.target.value)}
-              className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 min-h-[120px] text-sm"
-              placeholder={activity?.production_type === 'writing' ? 'Write your answer here...' : 'Type what you would say...'}
-              data-testid="production-textarea"
-            />
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-400">{response.split(/\s+/).filter(Boolean).length} words</span>
-              <Button onClick={handleSubmit} disabled={!response.trim()} data-testid="production-submit-btn">Submit</Button>
+        {/* RECORDING PHASE */}
+        {phase === 'recording' && (
+          <div className="text-center space-y-4">
+            <div className="relative">
+              <button onClick={handleStopAndEvaluate}
+                className="w-24 h-24 rounded-full bg-red-600 text-white flex items-center justify-center mx-auto shadow-lg animate-pulse"
+                data-testid="stop-recording-btn">
+                <div className="w-8 h-8 bg-white rounded-sm" />
+              </button>
+              <div className="absolute inset-0 w-24 h-24 rounded-full border-4 border-red-300 animate-ping mx-auto" style={{animationDuration:'1.5s'}} />
             </div>
-          </div>
-        ) : (
-          <div>
-            <div className="bg-green-50 rounded-xl p-5 mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <CheckCircle className="w-5 h-5 text-green-600" />
-                <h4 className="font-semibold text-green-800">Nice work!</h4>
+            <div className="text-red-600 font-mono font-bold text-lg" data-testid="recording-timer">{formatTime(recordingTime)}</div>
+            {browserTranscript && (
+              <div className="bg-gray-50 rounded-xl p-3 max-w-md mx-auto">
+                <p className="text-sm text-gray-600 italic">"{browserTranscript}"</p>
               </div>
-              <p className="text-sm text-green-700 mb-3">Your response has been recorded.</p>
-              {exampleResponse && (
-                <div className="bg-white rounded-lg p-3 border border-green-200">
-                  <h5 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Example response</h5>
-                  <p className="text-sm text-gray-700 italic">"{exampleResponse}"</p>
-                </div>
-              )}
-            </div>
-            <Button onClick={() => onComplete(80)} data-testid="production-continue-btn">Continue</Button>
+            )}
+            <p className="text-sm text-gray-500">Tap to stop and evaluate</p>
           </div>
         )}
+
+        {/* PROCESSING PHASE */}
+        {phase === 'processing' && (
+          <div className="text-center py-8 space-y-3">
+            <div className="w-12 h-12 border-4 border-rose-200 border-t-rose-600 rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-gray-500">Evaluating your speech...</p>
+          </div>
+        )}
+
+        {/* RESULT PHASE */}
+        {phase === 'result' && (
+          <div className="space-y-4" data-testid="speech-result">
+            {/* Score Circle */}
+            <div className="text-center mb-4">
+              <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto text-2xl font-bold text-white ${score >= 80 ? 'bg-green-500' : score >= 50 ? 'bg-yellow-500' : 'bg-red-500'}`}
+                data-testid="speech-score">
+                {score}%
+              </div>
+              <p className="mt-2 font-semibold text-gray-800">
+                {score >= 80 ? 'Excellent!' : score >= 50 ? 'Good try!' : 'Keep practicing!'}
+              </p>
+            </div>
+
+            {/* What you said */}
+            <div className="bg-gray-50 rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">What you said</h4>
+              <p className="text-sm text-gray-800" data-testid="speech-transcription">"{transcription || '(no speech detected)'}"</p>
+            </div>
+
+            {/* Expected */}
+            {expectedText && (
+              <div className="bg-blue-50 rounded-xl p-4">
+                <h4 className="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-1">Expected</h4>
+                <p className="text-sm text-blue-800">"{expectedText}"</p>
+              </div>
+            )}
+
+            {/* Word breakdown */}
+            {(matchedWords.length > 0 || missingWords.length > 0) && (
+              <div className="flex gap-3">
+                {matchedWords.length > 0 && (
+                  <div className="flex-1 bg-green-50 rounded-xl p-3">
+                    <h5 className="text-xs font-semibold text-green-600 mb-1">Matched</h5>
+                    <div className="flex flex-wrap gap-1">
+                      {matchedWords.map((w, i) => <span key={i} className="bg-green-200 text-green-800 text-xs px-2 py-0.5 rounded-full">{w}</span>)}
+                    </div>
+                  </div>
+                )}
+                {missingWords.length > 0 && (
+                  <div className="flex-1 bg-orange-50 rounded-xl p-3">
+                    <h5 className="text-xs font-semibold text-orange-600 mb-1">Missing</h5>
+                    <div className="flex flex-wrap gap-1">
+                      {missingWords.map((w, i) => <span key={i} className="bg-orange-200 text-orange-800 text-xs px-2 py-0.5 rounded-full">{w}</span>)}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex gap-3 justify-center pt-2">
+              <Button variant="outline" onClick={handleRetry} data-testid="retry-speaking-btn">
+                <RotateCcw className="w-4 h-4 mr-1" /> Try Again
+              </Button>
+              <Button onClick={() => onComplete(score)} data-testid="production-continue-btn">
+                Continue <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* WRITING FALLBACK */}
+        {isWriting && phase === 'ready' && (
+          <div className="space-y-4">
+            <textarea value={writtenResponse} onChange={e => setWrittenResponse(e.target.value)}
+              className="w-full p-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 min-h-[120px] text-sm"
+              placeholder="Write your answer here..."
+              data-testid="production-textarea" />
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-gray-400">{writtenResponse.split(/\s+/).filter(Boolean).length} words</span>
+              <Button onClick={handleWrittenSubmit} disabled={!writtenResponse.trim()} data-testid="production-submit-btn">Submit</Button>
+            </div>
+          </div>
+        )}
+      </Card>
+    </div>
+  );
       </Card>
     </div>
   );
