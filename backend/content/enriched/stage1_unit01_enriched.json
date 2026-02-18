@@ -33,40 +33,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do we say when we are happy to see a friend?",
-                  "correct_answer": "hello",
+                  "question_text": "What do we say when we leave someone?",
+                  "correct_answer": "bye",
                   "options": [
+                    "bye",
                     "hello",
                     "sorry",
-                    "bye",
                     "yes"
                   ],
-                  "image_emoji": "😊",
-                  "hint": "It's a friendly greeting word!"
+                  "image_emoji": "👋",
+                  "hint": "It's a word for saying goodbye."
                 },
                 {
-                  "question_text": "What is a word that starts with the letter 'A'?",
-                  "correct_answer": "ant",
+                  "question_text": "Which of these is a type of fruit?",
+                  "correct_answer": "apple",
                   "options": [
-                    "ant",
-                    "ball",
+                    "apple",
+                    "cat",
                     "sun",
-                    "cat"
-                  ],
-                  "image_emoji": "🐜",
-                  "hint": "Think of a small insect."
-                },
-                {
-                  "question_text": "What does an apple sound like when you start saying its name?",
-                  "correct_answer": "ah",
-                  "options": [
-                    "ah",
-                    "oh",
-                    "ee",
-                    "oo"
+                    "ball"
                   ],
                   "image_emoji": "🍎",
-                  "hint": "It's the first sound in 'apple'."
+                  "hint": "It's red and keeps the doctor away!"
+                },
+                {
+                  "question_text": "What sound do you hear at the beginning of an airplane?",
+                  "correct_answer": "ay",
+                  "options": [
+                    "ay",
+                    "ee",
+                    "oh",
+                    "oo"
+                  ],
+                  "image_emoji": "✈️",
+                  "hint": "It's like saying 'A' in the word 'airplane'."
                 }
               ]
             },
@@ -397,24 +397,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! I am a student. I have a big apple for my teacher!",
+              "audio_text": "Hello! My name is Anna. This is my teacher. I have an apple for her.",
               "questions": [
                 {
-                  "question": "What is the student bringing?",
+                  "question": "What fruit does Anna have?",
                   "answer": "apple",
                   "options": [
                     "apple",
-                    "orange",
-                    "banana"
+                    "banana",
+                    "orange"
                   ]
                 },
                 {
-                  "question": "Who is the student with?",
+                  "question": "Who is Anna with?",
                   "answer": "teacher",
                   "options": [
                     "teacher",
                     "parent",
-                    "sibling"
+                    "friend"
                   ]
                 }
               ]
@@ -438,22 +438,23 @@
                   "options": [
                     "am",
                     "is",
-                    "are"
+                    "are",
+                    "be"
                   ]
                 },
                 {
-                  "question_text": "Which picture shows 'apple'? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'apple'? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "🍎",
                   "options": [
                     "🍎",
-                    "📚",
-                    "✏️",
-                    "🍌"
+                    "👩‍🏫",
+                    "👋",
+                    "🙋"
                   ]
                 },
                 {
-                  "question_text": "True or False: 'Hello' is a greeting word.",
+                  "question_text": "True or False: An apple starts with the sound 'A'.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -462,23 +463,14 @@
                   ]
                 },
                 {
-                  "question_text": "What sounds does 'apple' start with?",
+                  "question_text": "What do we say to our teacher to say 'hi'? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "ah",
+                  "correct_answer": "hello",
                   "options": [
-                    "ah",
-                    "bee",
-                    "see"
-                  ]
-                },
-                {
-                  "question_text": "Who is in the classroom?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "teacher and student",
-                  "options": [
-                    "teacher and student",
-                    "dog and cat",
-                    "mom and dad"
+                    "bye",
+                    "hello",
+                    "sorry",
+                    "no"
                   ]
                 }
               ]
@@ -512,40 +504,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Who says 'Hello' in the video?",
-                  "correct_answer": "teacher",
+                  "question_text": "Who brings an apple for the teacher?",
+                  "correct_answer": "child",
                   "options": [
+                    "child",
                     "cat",
-                    "teacher",
                     "bird",
                     "dog"
                   ],
-                  "image_emoji": "👋",
-                  "hint": "This person welcomes you at school every day."
+                  "image_emoji": "🍎",
+                  "hint": "This person is small and ready to learn."
                 },
                 {
-                  "question_text": "Which pet is making a 'Woof' sound?",
-                  "correct_answer": "dog",
+                  "question_text": "What does the bird say in the video?",
+                  "correct_answer": "Tweet",
                   "options": [
-                    "cat",
-                    "duck",
-                    "dog",
-                    "bird"
-                  ],
-                  "image_emoji": "🐶",
-                  "hint": "This pet loves to wag its tail when it sees you."
-                },
-                {
-                  "question_text": "What sound does a cat make in the video?",
-                  "correct_answer": "Meow",
-                  "options": [
-                    "Roar",
+                    "Woof",
                     "Quack",
-                    "Tweet",
-                    "Meow"
+                    "Meow",
+                    "Tweet"
                   ],
-                  "image_emoji": "🐱",
-                  "hint": "It's a soft sound that a furry pet makes."
+                  "image_emoji": "🐦",
+                  "hint": "It's a chirpy sound."
+                },
+                {
+                  "question_text": "What does the teacher do in the video?",
+                  "correct_answer": "waves hello",
+                  "options": [
+                    "waves hello",
+                    "barks",
+                    "meows",
+                    "quacks"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "It's a friendly gesture you do with your hand."
                 }
               ]
             },
@@ -894,23 +886,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Good morning! I have a blue ball and a friendly cat. How are you today?",
+              "audio_text": "Hello, this is my big, brown bear. I am fine today. What about you?",
               "questions": [
                 {
-                  "question": "What color is the ball?",
-                  "answer": "blue",
+                  "question": "What color is the bear?",
+                  "answer": "brown",
                   "options": [
-                    "blue",
+                    "brown",
                     "red",
                     "green"
                   ]
                 },
                 {
-                  "question": "Does he have a cat?",
-                  "answer": "Yes",
+                  "question": "How is she feeling today?",
+                  "answer": "fine",
                   "options": [
-                    "Yes",
-                    "No"
+                    "fine",
+                    "sad",
+                    "angry"
                   ]
                 }
               ]
@@ -930,54 +923,54 @@
                 {
                   "question_text": "I have a ___ cat. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "cute",
+                  "correct_answer": "fine",
                   "options": [
-                    "cute",
-                    "big",
                     "fine",
-                    "blue"
+                    "morning",
+                    "ball",
+                    "cat"
                   ]
                 },
                 {
-                  "question_text": "What do we say in the morning?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "Good morning",
-                  "options": [
-                    "Good night",
-                    "Good morning",
-                    "Goodbye",
-                    "Hello"
-                  ]
-                },
-                {
-                  "question_text": "Which word starts with 'B'? (Vocabulary question)",
+                  "question_text": "Which word means 'a round toy'? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "ball",
                   "options": [
+                    "ball",
                     "cat",
-                    "fine",
                     "morning",
-                    "ball"
+                    "fine"
                   ]
                 },
                 {
-                  "question_text": "True or False: A cat is a pet.",
+                  "question_text": "True or False: We use 'Good night' in the morning.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What sound does 'C' make in 'cat'?",
+                  "question_text": "What sound does the letter 'B' make?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "/k/",
+                  "correct_answer": "buh",
                   "options": [
-                    "/b/",
-                    "/k/",
-                    "/s/",
-                    "/m/"
+                    "buh",
+                    "cuh",
+                    "muh",
+                    "duh"
+                  ]
+                },
+                {
+                  "question_text": "In the morning, we say ___.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Good morning",
+                  "options": [
+                    "Good morning",
+                    "Good night",
+                    "Goodbye",
+                    "Hello"
                   ]
                 }
               ]
@@ -1011,40 +1004,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What animal goes 'buzz' and makes honey?",
+                  "question_text": "Which animal makes a buzzing sound and loves flowers?",
                   "correct_answer": "bee",
                   "options": [
                     "bee",
-                    "cat",
-                    "dog",
-                    "cow"
+                    "butterfly",
+                    "fly",
+                    "ant"
                   ],
                   "image_emoji": "🐝",
-                  "hint": "It flies and loves flowers."
+                  "hint": "It makes honey."
                 },
                 {
-                  "question_text": "What makes a woof sound and loves bones?",
+                  "question_text": "Which pet loves to play fetch and says 'woof'?",
                   "correct_answer": "dog",
                   "options": [
                     "dog",
+                    "cat",
                     "frog",
-                    "cow",
-                    "cat"
+                    "lizard"
                   ],
                   "image_emoji": "🐶",
-                  "hint": "It's man's best friend."
+                  "hint": "It wags its tail when happy."
                 },
                 {
-                  "question_text": "Who loves to eat bamboo and says 'meow'?",
+                  "question_text": "Which big black and white animal loves bamboo?",
                   "correct_answer": "panda",
                   "options": [
                     "panda",
+                    "koala",
                     "cat",
-                    "ant",
-                    "bird"
+                    "racoon"
                   ],
                   "image_emoji": "🐼",
-                  "hint": "This black and white bear lives in China."
+                  "hint": "This bear comes from China."
                 }
               ]
             },
@@ -1343,24 +1336,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! My name is Emily. I have a friend. This is my dog and he loves his new egg.",
+              "audio_text": "Hi! I am David. This is my friend Ella. We like to play with Ella's dog who loves his red egg.",
               "questions": [
                 {
-                  "question": "What is the girl's name?",
-                  "answer": "Emily",
+                  "question": "Who is David's friend?",
+                  "answer": "Ella",
                   "options": [
-                    "Emily",
-                    "Jacob",
-                    "Lily"
+                    "Ella",
+                    "Sam",
+                    "Emily"
                   ]
                 },
                 {
-                  "question": "What does the dog love?",
-                  "answer": "egg",
+                  "question": "What color is the egg?",
+                  "answer": "red",
                   "options": [
-                    "egg",
-                    "ball",
-                    "stick"
+                    "red",
+                    "blue",
+                    "green"
                   ]
                 }
               ]
@@ -1378,29 +1371,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "This is my ___. (Grammar question)",
+                  "question_text": "I ___ Ben. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which word is a type of animal? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "dog",
+                  "options": [
+                    "friend",
+                    "girl",
+                    "dog",
+                    "egg"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: This is my ___. (Grammar pattern)",
                   "question_type": "fill_blank",
                   "correct_answer": "friend",
                   "options": [
+                    "boy",
+                    "girl",
                     "friend",
-                    "apple",
-                    "car",
-                    "house"
+                    "dog"
                   ]
                 },
                 {
-                  "question_text": "Which word is a boy's friend? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "girl",
-                  "options": [
-                    "banana",
-                    "dog",
-                    "sea",
-                    "girl"
-                  ]
-                },
-                {
-                  "question_text": "True or False: Dogs can lay eggs.",
+                  "question_text": "True or False: An egg can be called a friend. (Reading comprehension)",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -1409,25 +1413,14 @@
                   ]
                 },
                 {
-                  "question_text": "What sound does 'dog' start with?",
+                  "question_text": "Which letter sounds like 'd' for dog? (Reading comprehension)",
                   "question_type": "multiple_choice",
                   "correct_answer": "D",
                   "options": [
                     "E",
-                    "A",
+                    "F",
                     "D",
-                    "C"
-                  ]
-                },
-                {
-                  "question_text": "What do we say when meeting someone new? (Reading comprehension)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "Hello",
-                  "options": [
-                    "Goodbye",
-                    "Hello",
-                    "Thanks",
-                    "Sorry"
+                    "B"
                   ]
                 }
               ]
@@ -1462,40 +1455,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which word starts with the same sound as 'Ant'?",
-                  "correct_answer": "apple",
+                  "question_text": "Which word starts with the same sound as 'Elephant'?",
+                  "correct_answer": "egg",
                   "options": [
-                    "apple",
+                    "fish",
+                    "banana",
+                    "egg",
+                    "cat"
+                  ],
+                  "image_emoji": "🥚",
+                  "hint": "Listen for the 'e' sound like in 'elephant'."
+                },
+                {
+                  "question_text": "Which word starts with the same sound as 'Cat'?",
+                  "correct_answer": "car",
+                  "options": [
                     "dog",
                     "car",
-                    "fish"
+                    "umbrella",
+                    "apple"
                   ],
-                  "image_emoji": "🍎",
-                  "hint": "Listen for the 'a' sound like in 'ant'."
+                  "image_emoji": "🚗",
+                  "hint": "Listen for the 'c' sound like in 'cat'."
                 },
                 {
-                  "question_text": "Which word starts with the same sound as 'Frog'?",
-                  "correct_answer": "fish",
+                  "question_text": "Which word starts with the same sound as 'Apple'?",
+                  "correct_answer": "ant",
                   "options": [
-                    "banana",
-                    "car",
-                    "fish",
-                    "ant"
-                  ],
-                  "image_emoji": "🐟",
-                  "hint": "Listen for the 'f' sound like in 'frog'."
-                },
-                {
-                  "question_text": "Which word starts with the same sound as 'Dog'?",
-                  "correct_answer": "duck",
-                  "options": [
-                    "cat",
-                    "elephant",
                     "tiger",
-                    "duck"
+                    "mouse",
+                    "ant",
+                    "frog"
                   ],
-                  "image_emoji": "🦆",
-                  "hint": "Listen for the 'd' sound like in 'dog'."
+                  "image_emoji": "🐜",
+                  "hint": "Listen for the 'a' sound like in 'apple'."
                 }
               ]
             },
@@ -1789,23 +1782,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello, I'm Ben. I have a blue car. It's really fast.",
+              "audio_text": "Hi, I'm Anna. I have a yellow umbrella. It's big and keeps me dry.",
               "questions": [
                 {
-                  "question": "What color is Ben's car?",
-                  "answer": "blue",
+                  "question": "What color is Anna's umbrella?",
+                  "answer": "yellow",
                   "options": [
                     "red",
-                    "blue",
-                    "green"
+                    "yellow",
+                    "blue"
                   ]
                 },
                 {
-                  "question": "Is Ben's car fast or slow?",
-                  "answer": "fast",
+                  "question": "Is Anna's umbrella big or small?",
+                  "answer": "big",
                   "options": [
-                    "fast",
-                    "slow"
+                    "big",
+                    "small"
                   ]
                 }
               ]
@@ -1854,14 +1847,25 @@
                   ]
                 },
                 {
-                  "question_text": "This is my ___ elephant. (Reading comprehension question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "big",
+                  "question_text": "This is my ___ car. (Choose the right word)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "blue",
                   "options": [
-                    "small",
-                    "big",
+                    "blue",
                     "fast",
-                    "blue"
+                    "happy",
+                    "big"
+                  ]
+                },
+                {
+                  "question_text": "What color is the sky, usually?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "blue",
+                  "options": [
+                    "red",
+                    "green",
+                    "blue",
+                    "yellow"
                   ]
                 }
               ]
