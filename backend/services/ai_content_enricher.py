@@ -140,7 +140,7 @@ class AIContentEnricher:
     async def _enrich_warmup(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich warm-up activity"""
+        """Enrich warm-up activity with 3 engaging questions"""
         
         prompt = f"""Enhance this warm-up activity for young learners (ages 4-7).
 
@@ -152,23 +152,43 @@ LESSON CONTEXT:
 - Topic: {lesson.get('topic')}
 - Unit Theme: {unit.get('title')}
 
-Create an improved warm-up that:
-1. Has a clear, engaging question related to the video/image
-2. Provides 4 logical answer options (one correct, three plausible distractors)
-3. Includes a helpful hint that guides without giving away the answer
-4. Uses simple, age-appropriate language
+IMPORTANT: Create 3 warm-up questions to activate prior knowledge and engage the child.
 
-Respond with ONLY valid JSON in this exact format:
+Create questions that:
+1. Are related to the video/image topic
+2. Have 4 logical answer options each (one correct, three plausible distractors)
+3. Include helpful hints
+4. Use simple, age-appropriate language
+
+Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
     "type": "warm_up",
     "video_url": "{step.get('video_url', '')}",
-    "instruction": "engaging instruction for the child",
-    "question_text": "clear, simple question",
-    "correct_answer": "the correct answer",
-    "options": ["option1", "option2", "option3", "option4"],
-    "image_emoji": "relevant emoji",
-    "hint": "helpful hint"
+    "instruction": "Watch the video and answer these questions!",
+    "questions": [
+        {{
+            "question_text": "First engaging question about the topic",
+            "correct_answer": "correct answer",
+            "options": ["option1", "option2", "option3", "option4"],
+            "image_emoji": "relevant emoji",
+            "hint": "helpful hint for question 1"
+        }},
+        {{
+            "question_text": "Second question, slightly different angle",
+            "correct_answer": "correct answer",
+            "options": ["option1", "option2", "option3", "option4"],
+            "image_emoji": "relevant emoji",
+            "hint": "helpful hint for question 2"
+        }},
+        {{
+            "question_text": "Third question to check understanding",
+            "correct_answer": "correct answer",
+            "options": ["option1", "option2", "option3", "option4"],
+            "image_emoji": "relevant emoji",
+            "hint": "helpful hint for question 3"
+        }}
+    ]
 }}"""
 
         try:
