@@ -1,0 +1,115 @@
+{
+  "iteration": 53,
+  "timestamp": "2026-02-18T10:52:00Z",
+  "test_type": "BUG_FIX_VERIFICATION",
+  "target": "Verify 4 specific bug fixes: Word Order, Listening options, Warm-up 3 questions, Exit Ticket 5 questions",
+  "summary": "ALL 4 BUG FIXES VERIFIED. Backend: 15/15 tests passed. Frontend UI: All fixes confirmed via Playwright screenshots.",
+
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+
+  "bug_fixes_verified": {
+    "BUG_1_WORD_ORDER": {
+      "status": "VERIFIED",
+      "description": "Word Order game now correctly compares sentences by stripping trailing punctuation",
+      "evidence": "Code fix in /app/frontend/src/components/games/grammar/WordOrder.js line 63: normalize function uses regex /[.!?,;:]+$/g to strip trailing punctuation before comparison",
+      "before": "'It is a kite' vs 'It is a kite.' would show 'Not quite!' (false negative)",
+      "after": "Both compare as 'it is a kite' after normalization - shows 'Perfect!'"
+    },
+    "BUG_2_LISTENING_OPTIONS": {
+      "status": "VERIFIED",
+      "description": "Listening questions now have proper options instead of defaulting to Yes/No",
+      "evidence": "API returns options like ['two', 'three', 'four'] for 'How many lions?' questions",
+      "screenshot": ".screenshots/listening_with_options.png shows 'Two', 'Three', 'Four' options",
+      "api_test": "GET /api/unified/lessons/stage_1_unit_03_lesson_01/activity/listening_task returns questions with proper options"
+    },
+    "BUG_3_WARMUP_3_QUESTIONS": {
+      "status": "VERIFIED",
+      "description": "Warm-up now has 3 questions instead of 1",
+      "evidence": "API returns questions array with 3 items, Frontend shows '1 / 3' counter",
+      "screenshot": ".screenshots/warmup_1of3.png shows '1 / 3' in top right",
+      "api_test": "GET /api/unified/lessons/stage_1_unit_03_lesson_01/activity/retrieval_warmup returns 3 questions"
+    },
+    "BUG_4_EXIT_TICKET_5_QUESTIONS": {
+      "status": "VERIFIED",
+      "description": "Exit Ticket now has 5 questions instead of 1",
+      "evidence": "API returns questions array with 5 items, Frontend shows '1 / 5' counter",
+      "screenshot": ".screenshots/exit_quiz.png shows '1 / 5' in top right",
+      "api_test": "GET /api/unified/lessons/stage_1_unit_03_lesson_01/activity/exit_ticket returns 5 questions"
+    }
+  },
+
+  "api_test_results": {
+    "test_unit03_warmup_has_3_questions": "PASS",
+    "test_unit01_warmup_has_3_questions": "PASS",
+    "test_unit03_exit_ticket_has_5_questions": "PASS",
+    "test_unit06_exit_ticket_has_at_least_4_questions": "PASS",
+    "test_unit03_listening_has_proper_options": "PASS",
+    "test_grammar_games_word_order_data_structure": "PASS",
+    "test_activity_returns_data_retrieval_warmup": "PASS",
+    "test_activity_returns_data_vocabulary": "PASS",
+    "test_activity_returns_data_micro_game_vocab": "PASS",
+    "test_activity_returns_data_micro_reading": "PASS",
+    "test_activity_returns_data_grammar_focus": "PASS",
+    "test_activity_returns_data_micro_game_grammar": "PASS",
+    "test_activity_returns_data_listening_task": "PASS",
+    "test_activity_returns_data_production": "PASS",
+    "test_activity_returns_data_exit_ticket": "PASS"
+  },
+
+  "frontend_ui_verification": {
+    "warmup_counter_1_of_3": "VERIFIED - Screenshot shows '1 / 3' counter",
+    "exit_quiz_counter_1_of_5": "VERIFIED - Screenshot shows '1 / 5' counter",
+    "listening_options_not_yes_no": "VERIFIED - Screenshot shows 'Two', 'Three', 'Four' options",
+    "grammar_games_word_order": "VERIFIED - Screenshot shows word chips: It, a, is, kite",
+    "all_sidebar_activities_clickable": "VERIFIED - All 10 activities accessible"
+  },
+
+  "test_report_links": [
+    "/app/backend/tests/test_bug_fixes_iter53.py",
+    "/app/test_reports/pytest/bug_fixes_iter53_results.xml"
+  ],
+
+  "action_items": [],
+
+  "critical_code_review_comments": [
+    "Word Order normalize fix is correct: s.replace(/[.!?,;:]+$/g, '') strips trailing punctuation",
+    "Listening options fix in content_merger.py correctly includes 'listening' in ENRICH_MAP",
+    "AI enricher _enrich_warmup now generates 3 questions per spec",
+    "AI enricher _enrich_exit_ticket now generates 5 questions per spec"
+  ],
+
+  "updated_files": [
+    "/app/backend/tests/test_bug_fixes_iter53.py"
+  ],
+
+  "success_rate": {
+    "backend": "100% - 15/15 tests passed",
+    "frontend": "100% - All 4 bug fixes verified via UI"
+  },
+
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123"
+  },
+
+  "seed_data_creation": "Re-enriched content with 144 GPT-4o calls verified",
+
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+
+  "context_for_next_testing_agent": "All 4 bug fixes verified: (1) Word Order normalize strips punctuation, (2) Listening has proper options, (3) Warm-up has 3 questions, (4) Exit Ticket has 5 questions. Backend API tests in test_bug_fixes_iter53.py. Frontend UI confirmed via Playwright. All sidebar activities accessible.",
+
+  "mocked_api": {
+    "has_mocked_apis": false,
+    "mocked_apis_list": []
+  }
+}
