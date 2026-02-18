@@ -237,14 +237,17 @@ async def seed_enriched_content(unit_numbers: Optional[List[int]] = None):
                         }
                     
                     elif step_type == "micro_reading":
+                        # Enricher produces 'text', map to 'passage'
                         activity["data"] = {
-                            "passage": step.get("passage", ""),
+                            "passage": step.get("text", "") or step.get("passage", ""),
                             "questions": step.get("questions", [])
                         }
                     
                     elif step_type == "grammar_focus":
+                        # Enricher produces 'rule_pattern' and 'explanation'
                         activity["data"] = {
-                            "rule": step.get("rule", ""),
+                            "rule": step.get("rule_pattern", "") or step.get("rule", ""),
+                            "explanation": step.get("explanation", ""),
                             "examples": step.get("examples", []),
                             "exercises": step.get("exercises", [])
                         }
