@@ -504,6 +504,17 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+# Speech evaluation routes
+try:
+    from routes.speech_routes import router as speech_router
+    app.include_router(speech_router)
+    print("✅ Speech evaluation routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Speech routes: {e}")
+    import traceback
+    traceback.print_exc()
+
+
 
 # ============ Models ============
 
