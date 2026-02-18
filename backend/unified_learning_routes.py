@@ -142,16 +142,16 @@ async def get_activity_content(lesson_id: str, activity_type: str):
 
 
 @router.get("/cumulative-vocab/{lesson_id}")
-async def get_cumulative_vocabulary(lesson_id: str):
-    """Get vocabulary from all lessons up to and including the given lesson_id"""
-    # Parse the lesson_id to get stage, unit, lesson numbers
-    # Format: stage_1_unit_01_lesson_01
+async def get_cumulative_vocabulary(lesson_id: str, max_words: int = 20, max_rules: int = 10):
+    """Get vocabulary from all lessons up to and including the given lesson_id.
+    Randomly selects max_words from previous units for review diversity."""
+    import random
+    
     parts = lesson_id.split('_')
     stage_id = f"{parts[0]}_{parts[1]}"
     unit_num = int(parts[3])
     lesson_num = int(parts[5])
     
-    # Build list of all lesson IDs up to and including current
     lesson_ids = []
     for u in range(1, unit_num + 1):
         max_l = lesson_num if u == unit_num else 4
@@ -159,35 +159,50 @@ async def get_cumulative_vocabulary(lesson_id: str):
             lid = f"{stage_id}_unit_{u:02d}_lesson_{l:02d}"
             lesson_ids.append(lid)
     
-    # Fetch vocab and grammar from all those lessons
-    vocab_docs = await db.unified_vocabulary_activities.find(
+    # Read from embedded activity_flow data
+    lessons = await db.unified_lessons.find(
         {"lesson_id": {"$in": lesson_ids}},
-        {"_id": 0, "words": 1, "lesson_id": 1}
-    ).to_list(length=200)
-    
-    grammar_docs = await db.unified_grammar_activities.find(
-        {"lesson_id": {"$in": lesson_ids}},
-        {"_id": 0, "rules": 1, "lesson_id": 1}
+        {"_id": 0, "lesson_id": 1, "activity_flow": 1}
     ).to_list(length=200)
     
     all_words = []
     seen_words = set()
-    for doc in vocab_docs:
-        for w in doc.get("words", []):
-            if w["word"] not in seen_words:
-                seen_words.add(w["word"])
-                all_words.append(w)
-    
     all_rules = []
     seen_patterns = set()
-    for doc in grammar_docs:
-        for r in doc.get("rules", []):
-            p = r.get("pattern", "")
-            if p not in seen_patterns:
-                seen_patterns.add(p)
-                all_rules.append(r)
     
-    return {"words": all_words, "grammar_rules": all_rules, "total_lessons": len(lesson_ids)}
+    for lesson_doc in lessons:
+        for act in lesson_doc.get("activity_flow", []):
+            if act.get("type") == "vocabulary":
+                for w in act.get("data", {}).get("words", []):
+                    word_key = w.get("word", "").lower()
+                    if word_key and word_key not in seen_words:
+                        seen_words.add(word_key)
+                        all_words.append(w)
+            elif act.get("type") == "grammar_focus":
+                data = act.get("data", {})
+                rule = data.get("rule", "")
+                if rule and rule not in seen_patterns:
+                    seen_patterns.add(rule)
+                    all_rules.append({
+                        "pattern": rule,
+                        "explanation": data.get("explanation", ""),
+                        "examples": data.get("examples", [])
+                    })
+    
+    # Randomly select max_words for review diversity
+    total_available = len(all_words)
+    if len(all_words) > max_words:
+        all_words = random.sample(all_words, max_words)
+    if len(all_rules) > max_rules:
+        all_rules = random.sample(all_rules, max_rules)
+    
+    return {
+        "words": all_words,
+        "grammar_rules": all_rules,
+        "total_lessons": len(lesson_ids),
+        "total_vocab_available": total_available,
+        "selected_count": len(all_words)
+    }
 
 
 # ============ PROGRESS ROUTES ============
