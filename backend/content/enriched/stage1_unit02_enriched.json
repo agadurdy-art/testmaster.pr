@@ -33,40 +33,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you ask if you want to know a new friend's name?",
-                  "correct_answer": "What is your name?",
-                  "options": [
-                    "What is your name?",
-                    "What is your favorite color?",
-                    "Do you like pizza?",
-                    "Is it raining?"
-                  ],
-                  "image_emoji": "👤",
-                  "hint": "It's a question you use when meeting someone for the first time."
-                },
-                {
-                  "question_text": "How do you greet a friend when you meet them?",
+                  "question_text": "What is the first thing you say when you meet a friend?",
                   "correct_answer": "Hello!",
                   "options": [
                     "Hello!",
-                    "Goodbye!",
-                    "Thank you!",
-                    "Please!"
+                    "Goodnight!",
+                    "See you!",
+                    "Thank you!"
                   ],
                   "image_emoji": "👋",
-                  "hint": "It's something you say when you start talking to someone."
+                  "hint": "It's the word you use to start a conversation."
                 },
                 {
-                  "question_text": "If someone asks, 'What is your name?', what do you say?",
-                  "correct_answer": "My name is [Your Name].",
+                  "question_text": "Which word starts with the 'F' sound?",
+                  "correct_answer": "Friend",
                   "options": [
-                    "My name is [Your Name].",
-                    "I like ice cream.",
-                    "The sky is blue.",
-                    "I'm four years old."
+                    "Friend",
+                    "Goodbye",
+                    "Pizza",
+                    "Rain"
                   ],
-                  "image_emoji": "👨",
-                  "hint": "You tell them something personal about you."
+                  "image_emoji": "💪",
+                  "hint": "Think of something you like to be with."
+                },
+                {
+                  "question_text": "If you see someone you know, what can you say?",
+                  "correct_answer": "Hi!",
+                  "options": [
+                    "Hi!",
+                    "Yes!",
+                    "No!",
+                    "Later!"
+                  ],
+                  "image_emoji": "👍",
+                  "hint": "A short word for greeting a friend."
                 }
               ]
             },
@@ -394,19 +394,19 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi! I'm Jake. This is my fish. He is happy and swims a lot.",
+              "audio_text": "Hello! My name is Anna. This is my goat. He is funny and jumps around a lot.",
               "questions": [
                 {
-                  "question": "What is Jake's pet?",
-                  "answer": "fish",
+                  "question": "What is Anna's pet?",
+                  "answer": "goat",
                   "options": [
-                    "fish",
                     "goat",
-                    "boy"
+                    "fish",
+                    "dog"
                   ]
                 },
                 {
-                  "question": "Is the fish happy?",
+                  "question": "Does the goat jump?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
@@ -428,29 +428,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ Ben. (Grammar question)",
+                  "question_text": "My name is ___.",
                   "question_type": "fill_blank",
-                  "correct_answer": "am",
+                  "correct_answer": "Anna",
                   "options": [
-                    "am",
-                    "is",
-                    "are",
-                    "be"
+                    "Anna",
+                    "boy",
+                    "fish",
+                    "goat"
                   ]
                 },
                 {
-                  "question_text": "Which is an animal? (Vocabulary question)",
+                  "question_text": "Which word starts with a 'G' sound? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "goat",
                   "options": [
-                    "name",
-                    "boy",
                     "goat",
-                    "fish"
+                    "fish",
+                    "name",
+                    "boy"
                   ]
                 },
                 {
-                  "question_text": "True or False: A goat can swim.",
+                  "question_text": "Complete the sentence: My name is ___.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Emma",
+                  "options": [
+                    "Emma",
+                    "fish",
+                    "goat",
+                    "name"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A boy is a type of animal.",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -459,14 +470,14 @@
                   ]
                 },
                 {
-                  "question_text": "What is the boy's name in the story? (Reading comprehension)",
+                  "question_text": "How does a fish move?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Jake",
+                  "correct_answer": "swimming",
                   "options": [
-                    "Emma",
-                    "Jake",
-                    "Lily",
-                    "Max"
+                    "swimming",
+                    "jumping",
+                    "flying",
+                    "walking"
                   ]
                 }
               ]
@@ -505,40 +516,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Is the person in the video a boy or a girl?",
+                  "question_text": "Who is the main character in the video?",
                   "correct_answer": "boy",
                   "options": [
                     "boy",
                     "girl",
-                    "dog",
-                    "cat"
+                    "cat",
+                    "dog"
                   ],
                   "image_emoji": "👦",
-                  "hint": "Think about what boys are called."
+                  "hint": "Look at the clothes and haircut."
                 },
                 {
-                  "question_text": "What sound do you hear at the start of 'he'?",
-                  "correct_answer": "h",
+                  "question_text": "What is the boy doing at the start of the video?",
+                  "correct_answer": "playing with toys",
                   "options": [
-                    "h",
-                    "b",
-                    "g",
-                    "d"
+                    "playing with toys",
+                    "eating a snack",
+                    "reading a book",
+                    "dancing"
                   ],
-                  "image_emoji": "🅰️",
-                  "hint": "It's the first letter in 'hello'."
+                  "image_emoji": "🎉",
+                  "hint": "Think about what kids like to do with colorful blocks."
                 },
                 {
-                  "question_text": "What word can describe a girl?",
+                  "question_text": "Which word means a girl in the video?",
                   "correct_answer": "she",
                   "options": [
                     "she",
                     "he",
                     "it",
-                    "we"
+                    "they"
                   ],
                   "image_emoji": "👩",
-                  "hint": "Starts with the same sound as 'shoe'."
+                  "hint": "It starts with the same letter as 'shoe'."
                 }
               ]
             },
@@ -882,23 +893,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "This is Lisa. She is a girl. She has a pink hat.",
+              "audio_text": "This is Tom. He has a blue hat. He is playing with his friends.",
               "questions": [
                 {
-                  "question": "Is Lisa a girl?",
+                  "question": "What color is Tom's hat?",
+                  "answer": "Blue",
+                  "options": [
+                    "Blue",
+                    "Red",
+                    "Green"
+                  ]
+                },
+                {
+                  "question": "Is Tom playing with his friends?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
                     "No"
-                  ]
-                },
-                {
-                  "question": "What color is Lisa's hat?",
-                  "answer": "Pink",
-                  "options": [
-                    "Pink",
-                    "Blue",
-                    "Green"
                   ]
                 }
               ]
@@ -916,56 +927,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Fill in the blank: He ___ a hat. (Grammar question)",
+                  "question_text": "She ___ a girl. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "has",
+                  "correct_answer": "is",
                   "options": [
-                    "has",
-                    "have",
                     "is",
-                    "are"
+                    "am",
+                    "are",
+                    "be"
                   ]
                 },
                 {
-                  "question_text": "What word matches the emoji 👒? (Vocabulary question)",
+                  "question_text": "Which word is a gender pronoun? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "hat",
+                  "correct_answer": "he",
                   "options": [
                     "hat",
-                    "shoe",
-                    "bag",
-                    "dress"
+                    "he",
+                    "green",
+                    "jump"
                   ]
                 },
                 {
-                  "question_text": "True or False: She is a girl means the person is a boy.",
+                  "question_text": "True or False: 'Pink' is a color.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Who is she? She is ___. (Reading comprehension question)",
+                  "question_text": "What does 'He is wearing a hat' mean? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "a girl",
+                  "correct_answer": "He has a hat on his head.",
                   "options": [
-                    "a boy",
-                    "a girl",
-                    "a teacher",
-                    "a cat"
+                    "He is holding a hat",
+                    "He has a hat on his head",
+                    "He is selling hats",
+                    "He lost his hat"
                   ]
                 },
                 {
-                  "question_text": "What is the first sound in 'hat'? (Phonics question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "H",
+                  "question_text": "Fill in the blank: ___ is a boy.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "He",
                   "options": [
-                    "H",
-                    "S",
-                    "T",
-                    "R"
+                    "He",
+                    "She",
+                    "It",
+                    "They"
                   ]
                 }
               ]
@@ -994,40 +1005,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What sound does the 🎨 brush make when it starts?",
+                  "question_text": "What sound do we hear at the start of 'ice cream'?",
                   "correct_answer": "I",
                   "options": [
                     "I",
-                    "T",
-                    "B",
-                    "S"
+                    "K",
+                    "S",
+                    "B"
                   ],
-                  "image_emoji": "🎨",
-                  "hint": "It starts like in 'igloo'."
+                  "image_emoji": "🍦",
+                  "hint": "Think of the sound in 'igloo'."
                 },
                 {
-                  "question_text": "What is the first sound in the word ‘juice’?",
+                  "question_text": "Which letter sounds like the beginning of 'jump'?",
                   "correct_answer": "J",
                   "options": [
                     "J",
-                    "R",
-                    "M",
-                    "P"
+                    "D",
+                    "G",
+                    "H"
                   ],
-                  "image_emoji": "🥤",
-                  "hint": "Think of ‘jump’."
+                  "image_emoji": "🔲",
+                  "hint": "It's the sound in 'jelly'."
                 },
                 {
-                  "question_text": "Which letter sounds like the start of ‘ice cream’?",
+                  "question_text": "Which letter do we start with in the word 'iguana'?",
                   "correct_answer": "I",
                   "options": [
                     "I",
                     "A",
-                    "O",
+                    "E",
                     "U"
                   ],
-                  "image_emoji": "🍦",
-                  "hint": "It's the sound at the start of 'igloo'."
+                  "image_emoji": "🐢",
+                  "hint": "It sounds like the start of 'ice cream'."
                 }
               ]
             },
@@ -1357,19 +1368,19 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello, this is my friend Jack! He is smiling because he is flying a jet.",
+              "audio_text": "Hi, my name is Isla. This is my igloo. My friend Julia is coming over to play.",
               "questions": [
                 {
-                  "question": "What is Jack flying?",
-                  "answer": "Jet",
+                  "question": "Where is Isla?",
+                  "answer": "Igloo",
                   "options": [
-                    "Jet",
-                    "Kite",
-                    "Balloon"
+                    "Igloo",
+                    "House",
+                    "School"
                   ]
                 },
                 {
-                  "question": "Is Jack smiling?",
+                  "question": "Is Julia coming over?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
@@ -1391,40 +1402,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "This is my ___ igloo. (Vocabulary question)",
+                  "question_text": "This is my ___. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "friend's",
+                  "correct_answer": "friend",
                   "options": [
-                    "friend's",
+                    "friend",
                     "happy",
                     "jet",
-                    "teacher"
+                    "igloo"
                   ]
                 },
                 {
-                  "question_text": "Which word starts with the same sound as 'igloo'? (Phonics question)",
+                  "question_text": "Which word starts with J? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "ice",
+                  "correct_answer": "jet",
                   "options": [
-                    "ice",
-                    "jam",
-                    "kite",
-                    "dog"
+                    "jet",
+                    "igloo",
+                    "happy",
+                    "friend"
                   ]
                 },
                 {
-                  "question_text": "What does 'This is my friend' mean? (Reading comprehension)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "You are showing your friend.",
-                  "options": [
-                    "You are showing your friend.",
-                    "You are sad.",
-                    "You are hiding.",
-                    "You are eating."
-                  ]
-                },
-                {
-                  "question_text": "True or False: A jet can fly.",
+                  "question_text": "True or False: An igloo is a type of house.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1433,14 +1433,14 @@
                   ]
                 },
                 {
-                  "question_text": "He is ___ happy. (Grammar question)",
+                  "question_text": "This is my ___. (Reading comprehension question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "very",
+                  "correct_answer": "friend",
                   "options": [
-                    "very",
-                    "are",
-                    "is",
-                    "my"
+                    "friend",
+                    "jet",
+                    "igloo",
+                    "happy"
                   ]
                 }
               ]
@@ -1475,40 +1475,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you wear on your head that starts with 'H'?",
-                  "correct_answer": "Hat",
+                  "question_text": "What do you see in the sky that starts with 'S'?",
+                  "correct_answer": "Sun",
                   "options": [
-                    "Hat",
-                    "Coat",
-                    "Shoe",
-                    "Sock"
+                    "Sun",
+                    "Moon",
+                    "Star",
+                    "Cloud"
                   ],
-                  "image_emoji": "🎩",
-                  "hint": "You put it on your head to keep it warm."
+                  "image_emoji": "☀️",
+                  "hint": "It's bright and we see it during the day."
                 },
                 {
-                  "question_text": "Which animal name starts with 'F'?",
-                  "correct_answer": "Fish",
+                  "question_text": "Which creature loves to build webs and starts with 'S'?",
+                  "correct_answer": "Spider",
                   "options": [
-                    "Dog",
-                    "Horse",
-                    "Fish",
-                    "Cat"
-                  ],
-                  "image_emoji": "🐟",
-                  "hint": "It swims in water."
-                },
-                {
-                  "question_text": "Which picture shows something that jumps and starts with 'F'?",
-                  "correct_answer": "Frog",
-                  "options": [
-                    "Bird",
-                    "Frog",
                     "Ant",
-                    "Snake"
+                    "Spider",
+                    "Bee",
+                    "Butterfly"
                   ],
-                  "image_emoji": "🐸",
-                  "hint": "It likes to be near water and hops."
+                  "image_emoji": "🕷️",
+                  "hint": "It has eight legs and spins webs."
+                },
+                {
+                  "question_text": "Which food is green and shaped like a tree that starts with 'B'?",
+                  "correct_answer": "Broccoli",
+                  "options": [
+                    "Carrot",
+                    "Broccoli",
+                    "Apple",
+                    "Grape"
+                  ],
+                  "image_emoji": "🥦",
+                  "hint": "You can find it in a salad and it looks like a tiny tree."
                 }
               ]
             },
@@ -1796,24 +1796,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi there! My name is Ben, and I have a sister named Lisa. She loves playing with dolls.",
+              "audio_text": "Hello! I am Jack. This is my friend, Grace. She loves jumping rope and playing outside.",
               "questions": [
                 {
-                  "question": "Who loves playing with dolls?",
-                  "answer": "Lisa",
+                  "question": "What does Grace love to do?",
+                  "answer": "Jumping rope",
                   "options": [
-                    "Ben",
-                    "Tom",
-                    "Lisa"
+                    "Drawing",
+                    "Jumping rope",
+                    "Playing the piano"
                   ]
                 },
                 {
-                  "question": "What is Ben's sister's name?",
-                  "answer": "Lisa",
+                  "question": "Who is Jack's friend?",
+                  "answer": "Grace",
                   "options": [
-                    "Anna",
-                    "Lisa",
-                    "Sarah"
+                    "Grace",
+                    "Ella",
+                    "Mia"
                   ]
                 }
               ]
@@ -1862,25 +1862,25 @@
                   ]
                 },
                 {
-                  "question_text": "What comes after 'F' in the alphabet? (Reading comprehension question)",
+                  "question_text": "This is my ___, and her name is Anna. (Comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "G",
+                  "correct_answer": "friend",
                   "options": [
-                    "E",
-                    "G",
-                    "H",
-                    "J"
+                    "hat",
+                    "friend",
+                    "dog",
+                    "house"
                   ]
                 },
                 {
-                  "question_text": "This is my ____. He is my brother. (Grammar question)",
+                  "question_text": "Fill in the blank: He ___ happy to see you.",
                   "question_type": "fill_blank",
-                  "correct_answer": "Tom",
+                  "correct_answer": "is",
                   "options": [
-                    "Tom",
-                    "Anna",
-                    "Lisa",
-                    "Ben"
+                    "is",
+                    "are",
+                    "am",
+                    "be"
                   ]
                 }
               ]

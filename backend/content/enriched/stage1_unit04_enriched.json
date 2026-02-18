@@ -33,40 +33,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What color is the sky usually?",
-                  "correct_answer": "blue",
-                  "options": [
-                    "green",
-                    "blue",
-                    "red",
-                    "purple"
-                  ],
-                  "image_emoji": "🌅",
-                  "hint": "It's the color you see when it's sunny outside."
-                },
-                {
-                  "question_text": "Which color is used for an apple?",
+                  "question_text": "What color is a ripe strawberry?",
                   "correct_answer": "red",
                   "options": [
-                    "red",
                     "blue",
-                    "yellow",
-                    "black"
+                    "green",
+                    "red",
+                    "yellow"
                   ],
-                  "image_emoji": "🍎",
-                  "hint": "Think of the color of a shiny apple!"
+                  "image_emoji": "🍓",
+                  "hint": "It's the same color as a stop sign!"
                 },
                 {
-                  "question_text": "What color are leaves on a tree in the summer?",
-                  "correct_answer": "green",
+                  "question_text": "What sound does the letter 'P' make?",
+                  "correct_answer": "/p/",
                   "options": [
-                    "orange",
-                    "green",
-                    "purple",
-                    "pink"
+                    "/b/",
+                    "/m/",
+                    "/p/",
+                    "/t/"
                   ],
-                  "image_emoji": "🌳",
-                  "hint": "Think about the color of grass too."
+                  "image_emoji": "🍍",
+                  "hint": "Think of the start sound of 'pizza'."
+                },
+                {
+                  "question_text": "Which of these is a color of a cloudy sky?",
+                  "correct_answer": "gray",
+                  "options": [
+                    "purple",
+                    "gray",
+                    "brown",
+                    "orange"
+                  ],
+                  "image_emoji": "☁️",
+                  "hint": "It's a dull color you see on rainy days."
                 }
               ]
             },
@@ -382,24 +382,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "In the garden, the pig is playing. It's pink and very happy. The queen waves and says, 'I like your pink skin!'",
+              "audio_text": "There is a blue bird in the garden. The queen smiles and says, 'I see a pretty bird!'",
               "questions": [
                 {
-                  "question": "What color is the pig?",
-                  "answer": "pink",
+                  "question": "What color is the bird?",
+                  "answer": "blue",
                   "options": [
-                    "pink",
                     "red",
+                    "pink",
                     "blue"
                   ]
                 },
                 {
-                  "question": "What does the queen say to the pig?",
-                  "answer": "I like your pink skin!",
+                  "question": "What does the queen say to the bird?",
+                  "answer": "I see a pretty bird!",
                   "options": [
-                    "I like your pink skin!",
-                    "I like your red dress!",
-                    "I like your blue hat!"
+                    "I see a pretty bird!",
+                    "I like your blue hat!",
+                    "I like your pink coat!"
                   ]
                 }
               ]
@@ -417,40 +417,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "The pig is ___. (Fill in the blank with the correct color)",
-                  "question_type": "fill_blank",
+                  "question_text": "What color is the pig?",
+                  "question_type": "multiple_choice",
                   "correct_answer": "pink",
                   "options": [
-                    "pink",
                     "blue",
                     "red",
+                    "pink",
                     "green"
                   ]
                 },
                 {
-                  "question_text": "What color is the queen's dress in the story?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "red",
+                  "question_text": "The queen is ___. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "happy",
                   "options": [
-                    "red",
+                    "happy",
+                    "sad",
                     "blue",
-                    "pink",
-                    "yellow"
+                    "tall"
                   ]
                 },
                 {
-                  "question_text": "Which word starts with the letter P?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "pig",
-                  "options": [
-                    "queen",
-                    "red",
-                    "pig",
-                    "blue"
-                  ]
-                },
-                {
-                  "question_text": "True or False: The queen is wearing blue.",
+                  "question_text": "True or False: The pig in the story is blue.",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -459,14 +448,25 @@
                   ]
                 },
                 {
-                  "question_text": "The ___ is red. (Complete the sentence with a correct noun)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "queen",
+                  "question_text": "What letter does 'queen' start with?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Q",
                   "options": [
-                    "queen",
-                    "pig",
-                    "sky",
-                    "grass"
+                    "P",
+                    "B",
+                    "Q",
+                    "R"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: The sky is ___.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "blue",
+                  "options": [
+                    "red",
+                    "pink",
+                    "blue",
+                    "yellow"
                   ]
                 }
               ]
@@ -505,40 +505,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What color are the leaves on the tree?",
-                  "correct_answer": "green",
+                  "question_text": "What do we call the color of the sky on a sunny day?",
+                  "correct_answer": "blue",
                   "options": [
-                    "green",
                     "blue",
-                    "purple",
-                    "red"
-                  ],
-                  "image_emoji": "🌲",
-                  "hint": "Think of the color of grass."
-                },
-                {
-                  "question_text": "What color is the flower in the garden?",
-                  "correct_answer": "yellow",
-                  "options": [
+                    "green",
                     "yellow",
-                    "pink",
-                    "brown",
-                    "black"
+                    "purple"
                   ],
-                  "image_emoji": "🌻",
-                  "hint": "It's bright like the sun."
+                  "image_emoji": "☀️",
+                  "hint": "It's the color of the ocean too."
                 },
                 {
-                  "question_text": "What sound does the frog begin with?",
-                  "correct_answer": "R",
+                  "question_text": "Which animal makes a buzzing sound?",
+                  "correct_answer": "bee",
                   "options": [
-                    "R",
-                    "F",
-                    "B",
-                    "S"
+                    "bee",
+                    "frog",
+                    "cat",
+                    "bird"
                   ],
-                  "image_emoji": "🐸",
-                  "hint": "Listen to the ribbit!"
+                  "image_emoji": "🐝",
+                  "hint": "This animal loves flowers and makes honey."
+                },
+                {
+                  "question_text": "Which fruit is round and red?",
+                  "correct_answer": "apple",
+                  "options": [
+                    "lemon",
+                    "banana",
+                    "apple",
+                    "grape"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "It's often associated with teachers."
                 }
               ]
             },
@@ -874,11 +874,11 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "The green rabbit is in the garden. It likes to run in the sunshine.",
+              "audio_text": "The yellow rabbit hops under the sunny sky. It loves the bright sunshine.",
               "questions": [
                 {
                   "question": "What color is the rabbit?",
-                  "answer": "green",
+                  "answer": "yellow",
                   "options": [
                     "green",
                     "yellow",
@@ -886,7 +886,7 @@
                   ]
                 },
                 {
-                  "question": "Does the rabbit like to run?",
+                  "question": "Does the rabbit love the sunshine?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
@@ -908,45 +908,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What color is the frog?",
+                  "question_text": "What color is the grass? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "green",
                   "options": [
-                    "green",
-                    "yellow",
                     "red",
-                    "blue"
+                    "blue",
+                    "green",
+                    "yellow"
                   ]
                 },
                 {
                   "question_text": "I like ___. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "rabbits",
+                  "correct_answer": "yellow",
                   "options": [
-                    "rabbits",
-                    "green",
                     "yellow",
-                    "run"
+                    "run",
+                    "rabbit",
+                    "sky"
                   ]
                 },
                 {
-                  "question_text": "The rabbit can run fast. Is this sentence true or false?",
+                  "question_text": "Which word starts with the sound 'R'? (Phonics question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "rabbit",
+                  "options": [
+                    "yellow",
+                    "green",
+                    "rabbit",
+                    "color"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A rabbit likes to swim.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What sound does 'rabbit' start with?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "R",
+                  "question_text": "The __ rabbit hops under the sun. (Reading comprehension question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "yellow",
                   "options": [
-                    "R",
-                    "L",
-                    "B",
-                    "T"
+                    "green",
+                    "yellow",
+                    "blue",
+                    "white"
                   ]
                 }
               ]
@@ -975,40 +986,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which animal is black and white and loves bamboo?",
-                  "correct_answer": "panda",
+                  "question_text": "Which animal is orange and has black stripes?",
+                  "correct_answer": "tiger",
                   "options": [
-                    "panda",
-                    "zebra",
-                    "horse",
-                    "cow"
-                  ],
-                  "image_emoji": "🐼",
-                  "hint": "This animal is a gentle giant from China."
-                },
-                {
-                  "question_text": "What animal makes a loud roar and has a mane?",
-                  "correct_answer": "lion",
-                  "options": [
-                    "lion",
                     "tiger",
-                    "elephant",
-                    "monkey"
+                    "lion",
+                    "giraffe",
+                    "elephant"
                   ],
-                  "image_emoji": "🦁",
-                  "hint": "The king of the jungle with a fluffy mane."
+                  "image_emoji": "🐯",
+                  "hint": "This big cat loves to swim."
                 },
                 {
-                  "question_text": "Can you find the bird that is small and chirps sweetly?",
-                  "correct_answer": "sparrow",
+                  "question_text": "Which animal says 'meow' and has soft fur?",
+                  "correct_answer": "cat",
                   "options": [
-                    "sparrow",
-                    "eagle",
-                    "parrot",
-                    "owl"
+                    "cat",
+                    "dog",
+                    "rabbit",
+                    "hamster"
                   ],
-                  "image_emoji": "🐦",
-                  "hint": "This tiny bird loves to sing in the morning."
+                  "image_emoji": "🐱",
+                  "hint": "It's a common pet that likes to chase mice."
+                },
+                {
+                  "question_text": "What do we call a baby dog that barks a lot?",
+                  "correct_answer": "puppy",
+                  "options": [
+                    "puppy",
+                    "kitten",
+                    "fawn",
+                    "cub"
+                  ],
+                  "image_emoji": "🐶",
+                  "hint": "This small animal loves to play with a ball."
                 }
               ]
             },
@@ -1307,24 +1318,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Listen! The sun is bright and orange. Do you see the big tiger? It has black stripes.",
+              "audio_text": "Listen carefully! The tiger is resting under the sun. Its stripes are black and orange.",
               "questions": [
                 {
-                  "question": "What color is the tiger's stripes?",
-                  "answer": "black",
+                  "question": "Where is the tiger resting?",
+                  "answer": "under the sun",
                   "options": [
-                    "black",
-                    "orange",
-                    "green"
+                    "under the sun",
+                    "in the water",
+                    "on the grass"
                   ]
                 },
                 {
-                  "question": "How many objects are mentioned?",
-                  "answer": "two",
+                  "question": "What colors are the tiger's stripes?",
+                  "answer": "black and orange",
                   "options": [
-                    "one",
-                    "two",
-                    "three"
+                    "black and orange",
+                    "green and yellow",
+                    "red and blue"
                   ]
                 }
               ]
@@ -1346,13 +1357,33 @@
                   "question_type": "multiple_choice",
                   "correct_answer": "orange",
                   "options": [
-                    "orange",
                     "black",
+                    "orange",
                     "green"
                   ]
                 },
                 {
-                  "question_text": "Is it bright today? (Grammar question)",
+                  "question_text": "Is it a tiger? (Grammar question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe"
+                  ]
+                },
+                {
+                  "question_text": "How many stripes does a tiger have? Choose 'ten' if you think so. (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "ten",
+                  "options": [
+                    "five",
+                    "ten",
+                    "one"
+                  ]
+                },
+                {
+                  "question_text": "Is the color black dark? (Vocabulary question)",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1361,23 +1392,14 @@
                   ]
                 },
                 {
-                  "question_text": "How many tigers are mentioned in the story? (Reading comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "one",
-                  "options": [
-                    "one",
-                    "two",
-                    "ten"
-                  ]
-                },
-                {
-                  "question_text": "Fill in the blank: The tiger is ______. (Vocabulary question)",
+                  "question_text": "Fill in the blank: The sun is ___ and shiny. (Vocabulary question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "black and orange",
+                  "correct_answer": "orange",
                   "options": [
-                    "black and orange",
-                    "green",
-                    "yellow and blue"
+                    "black",
+                    "orange",
+                    "blue",
+                    "purple"
                   ]
                 }
               ]
@@ -1412,40 +1434,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do turtles love to do in water?",
-                  "correct_answer": "swim",
-                  "options": [
-                    "sleep",
-                    "run",
-                    "swim",
-                    "jump"
-                  ],
-                  "image_emoji": "🐢",
-                  "hint": "Turtles move fast when they are in water."
-                },
-                {
-                  "question_text": "Which of these is a big animal that roars and starts with 'T'?",
-                  "correct_answer": "tiger",
-                  "options": [
-                    "turtle",
-                    "tiger",
-                    "trout",
-                    "tarantula"
-                  ],
-                  "image_emoji": "🐯",
-                  "hint": "This animal has stripes and can be found in a jungle."
-                },
-                {
-                  "question_text": "What color is usually seen on a turtle's shell?",
+                  "question_text": "What color does a parrot often have?",
                   "correct_answer": "green",
                   "options": [
                     "red",
                     "green",
                     "blue",
-                    "purple"
+                    "yellow"
                   ],
-                  "image_emoji": "🐢",
-                  "hint": "It is the same color as grass."
+                  "image_emoji": "🐦",
+                  "hint": "This color is the same as leaves."
+                },
+                {
+                  "question_text": "What do pandas like to eat?",
+                  "correct_answer": "bamboo",
+                  "options": [
+                    "fish",
+                    "bamboo",
+                    "carrots",
+                    "apples"
+                  ],
+                  "image_emoji": "🐼",
+                  "hint": "It's a tall, green plant."
+                },
+                {
+                  "question_text": "What color is a pumpkin usually?",
+                  "correct_answer": "orange",
+                  "options": [
+                    "orange",
+                    "green",
+                    "purple",
+                    "yellow"
+                  ],
+                  "image_emoji": "🎃",
+                  "hint": "This color is also seen in the fruit, oranges."
                 }
               ]
             },
@@ -1724,19 +1746,19 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I see a green ball. The ball is bouncing. Do you see the ball? It's my favorite color. Is it red? No, it's not.",
+              "audio_text": "Look at the parrot. The parrot is red and green. Do you like those colors? I like them a lot.",
               "questions": [
                 {
-                  "question": "What color is the ball?",
-                  "answer": "green",
+                  "question": "What colors are the parrot?",
+                  "answer": "red and green",
                   "options": [
-                    "red",
-                    "blue",
-                    "green"
+                    "red and green",
+                    "blue and yellow",
+                    "brown and orange"
                   ]
                 },
                 {
-                  "question": "Is the ball bouncing?",
+                  "question": "Does the speaker like the colors?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
@@ -1758,45 +1780,45 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "The hat ___ red. (Grammar question)",
+                  "question_text": "The apple ___ red. (Grammar question)",
                   "question_type": "fill_blank",
                   "correct_answer": "is",
                   "options": [
-                    "is",
                     "are",
+                    "is",
                     "am",
                     "be"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'pencil'? (Vocabulary question)",
+                  "question_text": "Which of these is a color? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "✏️",
+                  "correct_answer": "blue",
                   "options": [
-                    "✏️",
-                    "📚",
-                    "🎨",
-                    "🔢"
+                    "car",
+                    "blue",
+                    "run",
+                    "jump"
                   ]
                 },
                 {
-                  "question_text": "Is the turtle in the water? (Reading comprehension question)",
+                  "question_text": "True or False: A tiger is purple.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What color is the ball if it's not blue? (Vocabulary and comprehension)",
+                  "question_text": "Is the sky blue? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "green",
+                  "correct_answer": "Yes",
                   "options": [
-                    "red",
-                    "yellow",
-                    "green",
-                    "black"
+                    "Yes",
+                    "No",
+                    "Sometimes",
+                    "Never"
                   ]
                 }
               ]
