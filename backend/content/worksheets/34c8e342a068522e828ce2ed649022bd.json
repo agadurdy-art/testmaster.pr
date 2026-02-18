@@ -54,91 +54,91 @@
       "matching": [
         {
           "word": "one",
-          "definition": "the number after zero",
+          "definition": "The number 1.",
           "distractor_definitions": [
-            "an animal",
-            "a flying toy"
+            "An animal that roars.",
+            "The number 2."
           ]
         },
         {
           "word": "two",
-          "definition": "the number after one",
+          "definition": "The number 2.",
           "distractor_definitions": [
-            "a large cat",
-            "the number after zero"
+            "An animal that roars.",
+            "The number 1."
           ]
         },
         {
           "word": "three",
-          "definition": "the number after two",
+          "definition": "The number 3.",
           "distractor_definitions": [
-            "a flying toy",
-            "a large cat"
+            "A toy that flies.",
+            "An animal that roars."
           ]
         },
         {
           "word": "kite",
-          "definition": "a flying toy",
+          "definition": "A toy that flies.",
           "distractor_definitions": [
-            "the number before three",
-            "a large cat"
+            "The number 3.",
+            "An animal that roars."
           ]
         },
         {
           "word": "lion",
-          "definition": "a large cat",
+          "definition": "An animal that roars.",
           "distractor_definitions": [
-            "the number before one",
-            "a flying toy"
+            "A toy that flies.",
+            "The number 1."
           ]
         }
       ],
       "fill_blank": [
         {
-          "sentence": "I see a ___.",
-          "answer": "lion",
-          "hint": "an animal"
+          "sentence": "I have ___ ball.",
+          "answer": "one",
+          "hint": "a single item"
         },
         {
-          "sentence": "We fly a ___.",
+          "sentence": "She sees ___ kites.",
+          "answer": "two",
+          "hint": "more than one"
+        },
+        {
+          "sentence": "We have ___ books.",
+          "answer": "three",
+          "hint": "more than two"
+        },
+        {
+          "sentence": "The ___ flies in the sky.",
           "answer": "kite",
           "hint": "a toy"
         },
         {
-          "sentence": "I have ___ cookies.",
-          "answer": "two",
-          "hint": "number after one"
-        },
-        {
-          "sentence": "There is ___ sun.",
-          "answer": "one",
-          "hint": "number before two"
-        },
-        {
-          "sentence": "Can you see ___ stars?",
-          "answer": "three",
-          "hint": "number after two"
+          "sentence": "The ___ is a big cat.",
+          "answer": "lion",
+          "hint": "it roars"
         }
       ],
       "true_false": [
         {
-          "statement": "Two comes after one.",
-          "answer": true
-        },
-        {
-          "statement": "A kite is a flying toy.",
-          "answer": true
-        },
-        {
-          "statement": "A lion is a small cat.",
+          "statement": "A 'lion' is a bird.",
           "answer": false
         },
         {
-          "statement": "Three is less than two.",
+          "statement": "A 'kite' can fly.",
+          "answer": true
+        },
+        {
+          "statement": "The number after 'one' is 'three'.",
           "answer": false
         },
         {
-          "statement": "One is more than two.",
+          "statement": "'Three' is more than 'two'.",
+          "answer": true
+        },
+        {
+          "statement": "A 'kite' is a type of animal.",
           "answer": false
         }
       ]
@@ -146,46 +146,46 @@
     "grammar_section": {
       "reorder": [
         {
-          "scrambled": "It / is / one / day",
-          "answer": "It is one day."
+          "scrambled": "is / It / the / kite",
+          "answer": "It is the kite."
         },
         {
-          "scrambled": "the / It / is / lion",
-          "answer": "It is the lion."
+          "scrambled": "lion / is / it / a",
+          "answer": "It is a lion."
         },
         {
-          "scrambled": "a / is / It / kite",
-          "answer": "It is a kite."
-        },
-        {
-          "scrambled": "It / is / two / o'clock",
-          "answer": "It is two o'clock."
-        },
-        {
-          "scrambled": "a / three / is / It",
+          "scrambled": "is / It / three",
           "answer": "It is three."
+        },
+        {
+          "scrambled": "one / it / is",
+          "answer": "It is one."
+        },
+        {
+          "scrambled": "It / two / is",
+          "answer": "It is two."
         }
       ],
       "correct_mistake": [
         {
-          "sentence": "It a kite is.",
-          "corrected": "It is a kite."
-        },
-        {
-          "sentence": "Is it three.",
-          "corrected": "It is three."
-        },
-        {
-          "sentence": "It two is.",
-          "corrected": "It is two."
-        },
-        {
-          "sentence": "Lion is a it.",
+          "sentence": "It a lion is.",
           "corrected": "It is a lion."
         },
         {
-          "sentence": "Is one it.",
+          "sentence": "Is it a kite.",
+          "corrected": "It is a kite."
+        },
+        {
+          "sentence": "Three is it.",
+          "corrected": "It is three."
+        },
+        {
+          "sentence": "One it is.",
           "corrected": "It is one."
+        },
+        {
+          "sentence": "Two it is.",
+          "corrected": "It is two."
         }
       ],
       "complete_pattern": [
@@ -195,25 +195,7 @@
           "options": [
             "kite",
             "three",
-            "am"
-          ]
-        },
-        {
-          "pattern": "It is ___.",
-          "answer": "two",
-          "options": [
-            "two",
-            "kite",
-            "is"
-          ]
-        },
-        {
-          "pattern": "It is ___.",
-          "answer": "one",
-          "options": [
-            "one",
-            "am",
-            "is"
+            "two"
           ]
         },
         {
@@ -221,8 +203,26 @@
           "answer": "lion",
           "options": [
             "lion",
-            "three",
-            "the"
+            "one",
+            "two"
+          ]
+        },
+        {
+          "pattern": "It is ___.",
+          "answer": "one",
+          "options": [
+            "one",
+            "kite",
+            "lion"
+          ]
+        },
+        {
+          "pattern": "It is ___.",
+          "answer": "two",
+          "options": [
+            "two",
+            "lion",
+            "kite"
           ]
         },
         {
@@ -230,8 +230,8 @@
           "answer": "three",
           "options": [
             "three",
-            "two",
-            "a"
+            "kite",
+            "lion"
           ]
         }
       ]
@@ -239,53 +239,53 @@
     "mixed_review": [
       {
         "type": "multiple_choice",
-        "question": "What comes after one?",
+        "question": "What is a 'lion'?",
         "options": [
-          "Two",
+          "A toy that flies",
+          "An animal that roars",
+          "A number"
+        ],
+        "answer": "An animal that roars"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "Complete: It is a ___",
+        "options": [
+          "kite",
+          "three",
+          "two"
+        ],
+        "answer": "kite"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "What is 'two'?",
+        "options": [
+          "A number",
+          "An animal",
+          "A toy"
+        ],
+        "answer": "A number"
+      },
+      {
+        "type": "multiple_choice",
+        "question": "What flies in the sky?",
+        "options": [
           "Three",
+          "Kite",
           "Lion"
-        ],
-        "answer": "Two"
-      },
-      {
-        "type": "multiple_choice",
-        "question": "Which is a large cat?",
-        "options": [
-          "Lion",
-          "Kite",
-          "One"
-        ],
-        "answer": "Lion"
-      },
-      {
-        "type": "multiple_choice",
-        "question": "What is a flying toy?",
-        "options": [
-          "Kite",
-          "Lion",
-          "Three"
         ],
         "answer": "Kite"
       },
       {
         "type": "multiple_choice",
-        "question": "It is ___ sun.",
+        "question": "Complete: It is ___",
         "options": [
-          "one",
           "three",
-          "two"
+          "lion",
+          "kite"
         ],
-        "answer": "one"
-      },
-      {
-        "type": "multiple_choice",
-        "question": "What does 'hello' mean?",
-        "options": [
-          "A greeting",
-          "A food",
-          "A color"
-        ],
-        "answer": "A greeting"
+        "answer": "three"
       }
     ]
   },
