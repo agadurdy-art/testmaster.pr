@@ -6,33 +6,20 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 ## Architecture
 ```
 /app/backend/
-├── content/                          # Original human-authored content (SOURCE OF TRUTH)
-│   ├── stage1_unit01.json ... stage1_unit12.json
-│   └── enriched/                     # AI-enriched content
-│       └── stage1_unit01_enriched.json ... stage1_unit12_enriched.json
+├── content/
+│   ├── stage1_unit01.json ... stage1_unit12.json    # Original content
+│   ├── enriched/                                     # AI-enriched content
+│   └── worksheets/                                   # Cached GPT-4o worksheets
 ├── services/
-│   ├── ai_content_enricher.py        # GPT-4o enrichment (fixed JSON parser)
-│   └── content_merger.py             # Merges original + enriched
+│   ├── ai_content_enricher.py                        # GPT-4o enrichment
+│   └── content_merger.py                             # Merge original + enriched
 ├── routes/
-│   ├── content_enrichment.py         # /api/admin/content/* endpoints
-│   └── speech_routes.py              # /api/speech/evaluate (Whisper STT)
-├── scripts/
-│   └── re_enrich_targeted.py         # Targeted re-enrichment
-├── unified_learning_routes.py        # /api/unified/* endpoints
+│   ├── content_enrichment.py                         # merge-and-seed
+│   ├── speech_routes.py                              # Whisper STT
+│   └── worksheet_routes.py                           # GPT-4o worksheet generator
+├── unified_learning_routes.py                        # Lesson + activity endpoints
 └── server.py
-
-/app/frontend/src/
-├── pages/
-│   └── UnifiedLessonPage.js          # 10 activity components + Speaking Record & Evaluate
-└── components/games/
-    ├── vocab/ (10 game types)
-    └── grammar/ (WordOrder [fixed], FillTheBlank, ErrorHunter)
 ```
-
-## Hybrid Content Model
-- **Original (human-authored)**: vocabulary, micro_reading, grammar_focus, production
-- **Enriched (AI-generated)**: vocab_games, grammar_games, warm_up (3 qs), exit_ticket (5 qs), listening (with options)
-- **Merge logic**: Original structure preserved, specific sections swapped with enriched
 
 ## Current State (February 18, 2026)
 
@@ -40,60 +27,56 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 - [x] Stage 1: 12 units, 48 lessons - ALL MERGED & SEEDED
 - [x] AI Content Enrichment (GPT-4o) for all 12 units
 - [x] Data merge pipeline: original + enriched -> unified activity_flow
-- [x] 10 Vocabulary Games + 3 Grammar Games (all functional)
+- [x] 10 Vocabulary Games + 3 Grammar Games
 - [x] iOS 26 Glassmorphism UI
 - [x] Browser TTS (SpeechSynthesis API)
 - [x] Stage 1 Certificate with confetti
-- [x] Embedded activity data in lesson documents
 - [x] Review lessons support
-- [x] Word Order game - punctuation-safe comparison (FIX)
-- [x] Listening - proper options generation (FIX)
-- [x] Warm-up - 3 questions per lesson (ENRICHED)
-- [x] Exit Ticket - 5 questions per lesson (ENRICHED)
-- [x] Speaking: Record & Evaluate with Whisper + Browser SpeechRecognition (NEW)
-- [x] JSON parser infinite recursion fix
+- [x] Word Order game punctuation fix
+- [x] Listening proper options
+- [x] Warm-up 3 questions per lesson
+- [x] Exit Ticket 5 questions per lesson
+- [x] Speaking: Record & Evaluate (Whisper + Browser SpeechRecognition)
+- [x] PDF Worksheet: GPT-4o teacher-quality (6 exercise types + mixed review)
+- [x] PDF Cumulative: Max 20 random words, locally cached
 
 ### Key API Endpoints
-- `POST /api/admin/content/merge-and-seed` - Merge original + enriched and seed DB
-- `GET /api/unified/lessons/{lesson_id}` - Get lesson with activity_flow
-- `GET /api/unified/lessons/{lesson_id}/activity/{type}` - Get activity data
-- `POST /api/speech/evaluate` - Speech evaluation (Whisper + word similarity)
+- `POST /api/admin/content/merge-and-seed`
+- `GET /api/unified/lessons/{lesson_id}`
+- `GET /api/unified/lessons/{lesson_id}/activity/{type}`
+- `GET /api/unified/cumulative-vocab/{lesson_id}?max_words=20`
+- `POST /api/speech/evaluate`
+- `GET /api/worksheet/generate/{lesson_id}?mode=current|cumulative&max_words=20`
 
 ## Priority Backlog
 
-### P0 (Critical) - ALL COMPLETED
+### P0 - ALL COMPLETED
 - [x] Data merge pipeline
-- [x] Word Order game logic fix
-- [x] Listening options fix
-- [x] Warm-up multi-question enrichment
-- [x] Exit Ticket multi-question enrichment
+- [x] All game logic fixes
+- [x] Multi-question enrichments
 - [x] Speaking Record & Evaluate
+- [x] PDF Worksheet Generator
 
 ### P1 (High Priority)
-- [ ] Vocabulary Word Completion bug verification
-- [ ] Achievement System (badges: "Alphabet Master", "First Half Complete")
-- [ ] Daily Habit SRS Integration
+- [ ] Stage 2-8 content generation (user provides vocab/grammar, GPT-4o generates full lessons)
+- [ ] Achievement System (badges)
+- [ ] Daily Habit SRS
 
 ### P2 (Medium Priority)
-- [ ] Booster Mode (<80% remedial)
-- [ ] More game items per game (10-15 instead of 2-5)
+- [ ] Booster Mode
+- [ ] More game items (10-15 per game)
 - [ ] Teacher Control Panel
-- [ ] Animal sounds for Unit 9 games
-- [ ] Blinking visual cues for imperative commands
 
 ### P3 (Future)
-- [ ] Stage 2-4 curriculum
 - [ ] Certification Gate system
-- [ ] Spaced Repetition System (SRS)
+- [ ] Spaced Repetition System
 
 ## Test Credentials
 - Email: tester@test.com
 - Password: tester123
 
 ## Third Party Integrations
-- OpenAI GPT-4o (content enrichment) - Emergent LLM Key
+- OpenAI GPT-4o (content enrichment + worksheets) - Emergent LLM Key
 - OpenAI Whisper (speech-to-text) - Emergent LLM Key
-- Browser SpeechRecognition API (fallback STT)
-- Browser SpeechSynthesis API (TTS)
-- jsPDF (worksheet generation)
-- canvas-confetti (celebrations)
+- Browser SpeechRecognition/SpeechSynthesis APIs
+- jsPDF, canvas-confetti
