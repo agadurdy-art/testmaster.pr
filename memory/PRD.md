@@ -8,65 +8,66 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 /app/backend/
 ├── content/                          # Original human-authored content (SOURCE OF TRUTH)
 │   ├── stage1_unit01.json ... stage1_unit12.json
-│   └── enriched/                     # AI-enriched content (games, quizzes, warm-ups)
+│   └── enriched/                     # AI-enriched content
 │       └── stage1_unit01_enriched.json ... stage1_unit12_enriched.json
 ├── services/
-│   ├── ai_content_enricher.py        # GPT-4o enrichment service (fixed JSON parser)
-│   └── content_merger.py             # Merges original + enriched content
+│   ├── ai_content_enricher.py        # GPT-4o enrichment (fixed JSON parser)
+│   └── content_merger.py             # Merges original + enriched
 ├── routes/
-│   └── content_enrichment.py         # /api/admin/content/* endpoints
+│   ├── content_enrichment.py         # /api/admin/content/* endpoints
+│   └── speech_routes.py              # /api/speech/evaluate (Whisper STT)
 ├── scripts/
-│   └── re_enrich_targeted.py         # Targeted re-enrichment for specific step types
+│   └── re_enrich_targeted.py         # Targeted re-enrichment
 ├── unified_learning_routes.py        # /api/unified/* endpoints
 └── server.py
 
 /app/frontend/src/
 ├── pages/
-│   ├── UnifiedCoursePage.js
-│   ├── UnifiedStagePage.js
-│   └── UnifiedLessonPage.js          # Main lesson page (10 activity components)
+│   └── UnifiedLessonPage.js          # 10 activity components + Speaking Record & Evaluate
 └── components/games/
     ├── vocab/ (10 game types)
-    ├── grammar/ (WordOrder, FillTheBlank, ErrorHunter)
-    └── shared/index.js
+    └── grammar/ (WordOrder [fixed], FillTheBlank, ErrorHunter)
 ```
 
 ## Hybrid Content Model
 - **Original (human-authored)**: vocabulary, micro_reading, grammar_focus, production
-- **Enriched (AI-generated)**: vocab_games (3 types), grammar_games (3 types), warm_up (3 qs), exit_ticket (5 qs), listening (with proper options)
-- **Merge logic**: Original lesson structure preserved, game/quiz/warm-up/exit sections swapped with enriched
+- **Enriched (AI-generated)**: vocab_games, grammar_games, warm_up (3 qs), exit_ticket (5 qs), listening (with options)
+- **Merge logic**: Original structure preserved, specific sections swapped with enriched
 
 ## Current State (February 18, 2026)
 
 ### Implemented Features
-- [x] Stage 1 complete content (12 units, 48 lessons) - ALL MERGED & SEEDED
-- [x] AI Content Enrichment (GPT-4o) for all 12 units - INCLUDING warm_up, exit_ticket, listening
+- [x] Stage 1: 12 units, 48 lessons - ALL MERGED & SEEDED
+- [x] AI Content Enrichment (GPT-4o) for all 12 units
 - [x] Data merge pipeline: original + enriched -> unified activity_flow
 - [x] 10 Vocabulary Games + 3 Grammar Games (all functional)
 - [x] iOS 26 Glassmorphism UI
 - [x] Browser TTS (SpeechSynthesis API)
 - [x] Stage 1 Certificate with confetti
 - [x] Embedded activity data in lesson documents
-- [x] Review lessons (vocabulary_review + grammar_review) support
-- [x] Word Order game - punctuation-safe comparison
-- [x] Listening - proper options (no more Yes/No fallback)
-- [x] Warm-up - 3 questions per lesson
-- [x] Exit Ticket - 5 questions per lesson (vocabulary + grammar + comprehension mix)
+- [x] Review lessons support
+- [x] Word Order game - punctuation-safe comparison (FIX)
+- [x] Listening - proper options generation (FIX)
+- [x] Warm-up - 3 questions per lesson (ENRICHED)
+- [x] Exit Ticket - 5 questions per lesson (ENRICHED)
+- [x] Speaking: Record & Evaluate with Whisper + Browser SpeechRecognition (NEW)
+- [x] JSON parser infinite recursion fix
 
 ### Key API Endpoints
 - `POST /api/admin/content/merge-and-seed` - Merge original + enriched and seed DB
 - `GET /api/unified/lessons/{lesson_id}` - Get lesson with activity_flow
 - `GET /api/unified/lessons/{lesson_id}/activity/{type}` - Get activity data
+- `POST /api/speech/evaluate` - Speech evaluation (Whisper + word similarity)
 
 ## Priority Backlog
 
-### P0 (Critical) - COMPLETED
+### P0 (Critical) - ALL COMPLETED
 - [x] Data merge pipeline
 - [x] Word Order game logic fix
 - [x] Listening options fix
 - [x] Warm-up multi-question enrichment
 - [x] Exit Ticket multi-question enrichment
-- [x] JSON parser infinite recursion fix
+- [x] Speaking Record & Evaluate
 
 ### P1 (High Priority)
 - [ ] Vocabulary Word Completion bug verification
@@ -75,7 +76,7 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 
 ### P2 (Medium Priority)
 - [ ] Booster Mode (<80% remedial)
-- [ ] More game items (10-15 per game instead of 2-5)
+- [ ] More game items per game (10-15 instead of 2-5)
 - [ ] Teacher Control Panel
 - [ ] Animal sounds for Unit 9 games
 - [ ] Blinking visual cues for imperative commands
@@ -91,6 +92,8 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 
 ## Third Party Integrations
 - OpenAI GPT-4o (content enrichment) - Emergent LLM Key
+- OpenAI Whisper (speech-to-text) - Emergent LLM Key
+- Browser SpeechRecognition API (fallback STT)
 - Browser SpeechSynthesis API (TTS)
 - jsPDF (worksheet generation)
 - canvas-confetti (celebrations)
