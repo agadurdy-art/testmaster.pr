@@ -28,40 +28,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What does the boy do when he is feeling sad?",
-                  "correct_answer": "sit quietly",
+                  "question_text": "How does the boy feel when he hears the birds?",
+                  "correct_answer": "happy",
                   "options": [
-                    "sit quietly",
-                    "dance",
-                    "laugh out loud",
-                    "clap his hands"
+                    "happy",
+                    "sad",
+                    "angry",
+                    "scared"
                   ],
-                  "image_emoji": "💔",
-                  "hint": "It's something you do when you're not feeling happy."
+                  "image_emoji": "😄",
+                  "hint": "It's a sunny feeling!"
                 },
                 {
-                  "question_text": "What sound does the boy hear when he's outside?",
-                  "correct_answer": "birds singing",
+                  "question_text": "What does the boy do when he's happy?",
+                  "correct_answer": "smile",
                   "options": [
-                    "birds singing",
-                    "cars honking",
-                    "dogs barking",
-                    "people talking"
+                    "smile",
+                    "cry",
+                    "sleep",
+                    "frown"
                   ],
-                  "image_emoji": "🔊",
-                  "hint": "Listen for a happy morning sound!"
+                  "image_emoji": "😊",
+                  "hint": "It's something you do with your mouth!"
                 },
                 {
-                  "question_text": "What makes the boy smile in the video?",
-                  "correct_answer": "playing with friends",
+                  "question_text": "What makes the boy feel better when he is sad?",
+                  "correct_answer": "friends coming over",
                   "options": [
-                    "playing with friends",
-                    "eating alone",
-                    "reading a book",
-                    "looking at the rain"
+                    "friends coming over",
+                    "watching TV alone",
+                    "eating candy",
+                    "sleeping"
                   ],
-                  "image_emoji": "🙂",
-                  "hint": "It's an activity you enjoy with others!"
+                  "image_emoji": "👫",
+                  "hint": "It's something you do with others!"
                 }
               ]
             },
@@ -399,15 +399,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi! How are you feeling today? I am sad because it is raining outside.",
+              "audio_text": "Hello! How do you feel today? I am happy because the sun is shining.",
               "questions": [
                 {
-                  "question": "Why is she feeling sad?",
-                  "answer": "it is raining",
+                  "question": "Why is she happy?",
+                  "answer": "the sun is shining",
                   "options": [
-                    "it is sunny",
                     "it is raining",
+                    "the sun is shining",
                     "it is snowing"
+                  ]
+                },
+                {
+                  "question": "How does she feel?",
+                  "answer": "happy",
+                  "options": [
+                    "happy",
+                    "sad",
+                    "angry"
                   ]
                 }
               ]
@@ -431,22 +440,22 @@
                   "options": [
                     "am",
                     "is",
-                    "are",
-                    "be"
+                    "are"
                   ]
                 },
                 {
                   "question_text": "What does 'sad' mean? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "unhappy",
+                  "correct_answer": "not happy",
                   "options": [
-                    "happy",
-                    "unhappy",
-                    "angry"
+                    "not happy",
+                    "sleepy",
+                    "hungry",
+                    "excited"
                   ]
                 },
                 {
-                  "question_text": "True or False: 'How are you?' asks about feelings.",
+                  "question_text": "True or False: 'How are you?' is asking about feelings.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -455,14 +464,14 @@
                   ]
                 },
                 {
-                  "question_text": "What might you say if you are feeling good? (Reading comprehension question)",
+                  "question_text": "Which sentence is correct? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "I am happy",
+                  "correct_answer": "I am happy.",
                   "options": [
-                    "I am happy",
-                    "I am sad",
-                    "I am afraid",
-                    "I am angry"
+                    "I am happy.",
+                    "Am I happy.",
+                    "I happy am.",
+                    "Happy I am."
                   ]
                 }
               ]
@@ -491,40 +500,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you feel when you need water?",
+                  "question_text": "How do you feel when you don't have enough water?",
                   "correct_answer": "thirsty",
                   "options": [
                     "thirsty",
-                    "hungry",
-                    "sleepy",
-                    "tired"
+                    "happy",
+                    "excited",
+                    "angry"
                   ],
-                  "image_emoji": "🍶",
-                  "hint": "It's when your mouth is dry."
+                  "image_emoji": "😵",
+                  "hint": "Your throat feels dry."
                 },
                 {
-                  "question_text": "What is something you drink every day?",
+                  "question_text": "What do we need to drink to stay healthy?",
                   "correct_answer": "water",
                   "options": [
                     "water",
-                    "juice",
-                    "soda",
-                    "milk"
+                    "lemonade",
+                    "chocolate milk",
+                    "tea"
                   ],
                   "image_emoji": "💧",
-                  "hint": "It's clear and comes from the tap."
+                  "hint": "It's in lakes and rivers."
                 },
                 {
-                  "question_text": "Where do you play with a slide and swing?",
+                  "question_text": "Where do kids have fun swinging and sliding?",
                   "correct_answer": "playground",
                   "options": [
                     "playground",
-                    "classroom",
-                    "library",
-                    "kitchen"
+                    "living room",
+                    "bathroom",
+                    "attic"
                   ],
-                  "image_emoji": "🏊",
-                  "hint": "You can play outside in this place."
+                  "image_emoji": "🌿",
+                  "hint": "It's a fun place outside."
                 }
               ]
             },
@@ -837,23 +846,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Are you hungry, Tom? No, I am thirsty. Can I drink some water, please?",
+              "audio_text": "Hi Lucy, how are you feeling? I'm a little thirsty. Can we have some juice?",
               "questions": [
                 {
-                  "question": "Is Tom hungry or thirsty?",
+                  "question": "Is Lucy thirsty or hungry?",
                   "answer": "thirsty",
                   "options": [
-                    "hungry",
-                    "thirsty"
+                    "thirsty",
+                    "hungry"
                   ]
                 },
                 {
-                  "question": "What does Tom want to drink?",
-                  "answer": "water",
+                  "question": "What does Lucy want to drink?",
+                  "answer": "juice",
                   "options": [
                     "juice",
-                    "milk",
-                    "water"
+                    "water",
+                    "soda"
                   ]
                 }
               ]
@@ -871,51 +880,55 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Choose the right word: I ___ hungry. (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "am",
-                  "options": [
-                    "am",
-                    "is",
-                    "are"
-                  ]
-                },
-                {
-                  "question_text": "What word means you need something to drink? (Vocabulary question)",
+                  "question_text": "Are you ___? (Grammar question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "thirsty",
                   "options": [
-                    "hungry",
                     "thirsty",
                     "tired",
                     "happy"
                   ]
                 },
                 {
-                  "question_text": "Fill in the blank: Are you ___? Yes, I am thirsty.",
-                  "question_type": "fill_blank",
-                  "correct_answer": "thirsty",
+                  "question_text": "What do you drink when you are thirsty? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "water",
                   "options": [
-                    "hungry",
-                    "thirsty"
+                    "water",
+                    "bread",
+                    "apple",
+                    "pasta"
                   ]
                 },
                 {
-                  "question_text": "True or False: You say 'No, I am not' if you are thirsty. (Reading comprehension)",
-                  "question_type": "true_false",
-                  "correct_answer": "False",
-                  "options": [
-                    "True",
-                    "False"
-                  ]
-                },
-                {
-                  "question_text": "True or False: You ask 'Are you hungry?' to check if someone wants to eat. (Reading comprehension)",
+                  "question_text": "The boy asks, 'Are you hungry?' She says 'No, I am not.' (Reading question)",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
+                  ]
+                },
+                {
+                  "question_text": "Fill in the blank: 'Are you ___?' 'Yes, I __.'",
+                  "question_type": "fill_blank",
+                  "correct_answer": "hungry, am",
+                  "options": [
+                    "hungry, am",
+                    "sleepy, are",
+                    "happy, is",
+                    "tall, be"
+                  ]
+                },
+                {
+                  "question_text": "Choose what you need if you want water. (Comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "drink",
+                  "options": [
+                    "dance",
+                    "drink",
+                    "eat",
+                    "play"
                   ]
                 }
               ]
@@ -938,40 +951,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "How is the cat feeling after eating?",
-                  "correct_answer": "full",
+                  "question_text": "What does the little boy feel after playing all day?",
+                  "correct_answer": "tired",
                   "options": [
-                    "happy",
-                    "full",
-                    "angry",
-                    "sleepy"
-                  ],
-                  "image_emoji": "😋",
-                  "hint": "Think about how you feel after eating food."
-                },
-                {
-                  "question_text": "What do you do when you are tired?",
-                  "correct_answer": "go to sleep",
-                  "options": [
-                    "go to sleep",
-                    "run around",
-                    "eat ice cream",
-                    "watch TV"
+                    "tired",
+                    "hungry",
+                    "excited",
+                    "sad"
                   ],
                   "image_emoji": "😴",
-                  "hint": "It helps your body rest."
+                  "hint": "You need to sleep when you feel this way."
                 },
                 {
-                  "question_text": "What sound does a happy cat make?",
-                  "correct_answer": "purr",
+                  "question_text": "What do you feel when you eat your favorite food?",
+                  "correct_answer": "happy",
                   "options": [
-                    "bark",
-                    "quack",
-                    "purr",
-                    "moo"
+                    "happy",
+                    "bored",
+                    "angry",
+                    "scared"
                   ],
-                  "image_emoji": "😻",
-                  "hint": "It sounds like a soft engine."
+                  "image_emoji": "🥰",
+                  "hint": "It makes you smile and feel good inside."
+                },
+                {
+                  "question_text": "What do you do when you feel hungry?",
+                  "correct_answer": "eat some food",
+                  "options": [
+                    "eat some food",
+                    "go to sleep",
+                    "jump around",
+                    "read a book"
+                  ],
+                  "image_emoji": "🍴",
+                  "hint": "Your tummy wants this to stop rumbling."
                 }
               ]
             },
@@ -1300,24 +1313,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Are you angry, Tom? No, I am not angry. I am just sleepy. It's time for bed now.",
+              "audio_text": "Maria, are you mad? No, I am not mad. I am just sleepy because it's already night.",
               "questions": [
                 {
-                  "question": "How is Tom feeling?",
+                  "question": "How is Maria feeling?",
                   "answer": "sleepy",
                   "options": [
-                    "angry",
+                    "mad",
                     "happy",
                     "sleepy"
                   ]
                 },
                 {
-                  "question": "Is it time for breakfast or bedtime?",
-                  "answer": "bedtime",
+                  "question": "Is it daytime or nighttime?",
+                  "answer": "nighttime",
                   "options": [
-                    "breakfast",
+                    "daytime",
                     "lunchtime",
-                    "bedtime"
+                    "nighttime"
                   ]
                 }
               ]
@@ -1335,56 +1348,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What is another word for 'mad'? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "angry",
-                  "options": [
-                    "happy",
-                    "angry",
-                    "sleepy",
-                    "night"
-                  ]
-                },
-                {
-                  "question_text": "My face is ___. I am sleepy. (Grammar question)",
+                  "question_text": "My face is [____]. I am angry. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "color",
+                  "correct_answer": "red",
                   "options": [
-                    "color",
-                    "fast",
-                    "night",
-                    "face"
+                    "red",
+                    "blue",
+                    "green",
+                    "yellow"
                   ]
                 },
                 {
-                  "question_text": "What time is it if you feel sleepy? (Reading comprehension question)",
+                  "question_text": "What does 'sleepy' mean? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "night",
+                  "correct_answer": "feeling tired",
                   "options": [
-                    "morning",
-                    "afternoon",
-                    "night",
-                    "lunch"
+                    "feeling tired",
+                    "feeling angry",
+                    "feeling happy",
+                    "feeling hungry"
                   ]
                 },
                 {
-                  "question_text": "True or False: If someone is 'sleepy', they want to play.",
+                  "question_text": "Is it time to sleep at night? (Comprehension question)",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What comes next: 'I am [feeling]. My face is [___].'",
-                  "question_type": "fill_blank",
-                  "correct_answer": "Color",
+                  "question_text": "Which feeling is the opposite of 'angry'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "happy",
                   "options": [
-                    "Place",
-                    "Thing",
-                    "Color",
-                    "Feeling"
+                    "mad",
+                    "happy",
+                    "night",
+                    "sleepy"
+                  ]
+                },
+                {
+                  "question_text": "When you say 'I am mad', what does 'mad' mean? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "angry",
+                  "options": [
+                    "angry",
+                    "tired",
+                    "hungry",
+                    "excited"
                   ]
                 }
               ]
@@ -1408,40 +1421,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What does your body need when you feel thirsty?",
-                  "correct_answer": "water",
+                  "question_text": "What is the best drink when you are very thirsty?",
+                  "correct_answer": "Water",
                   "options": [
-                    "water",
-                    "a toy",
-                    "a hug",
-                    "a nap"
+                    "Water",
+                    "Juice",
+                    "Soda",
+                    "Milk"
                   ],
                   "image_emoji": "💧",
-                  "hint": "It's something you drink when you're thirsty."
+                  "hint": "It's clear and helps the most."
                 },
                 {
-                  "question_text": "What feeling do you get after playing in the sun?",
-                  "correct_answer": "thirsty",
+                  "question_text": "What do you feel after running a lot on a sunny day?",
+                  "correct_answer": "Thirsty",
                   "options": [
-                    "thirsty",
-                    "sleepy",
-                    "bored",
-                    "happy"
+                    "Thirsty",
+                    "Hungry",
+                    "Scared",
+                    "Excited"
                   ],
                   "image_emoji": "🌞",
-                  "hint": "You need to drink after this feeling."
+                  "hint": "Your mouth feels dry and you really need a drink."
                 },
                 {
-                  "question_text": "Which of these is the best choice for feeling refreshed?",
-                  "correct_answer": "A glass of water",
+                  "question_text": "If you want to cool down quickly, what should you have?",
+                  "correct_answer": "Cold water",
                   "options": [
-                    "A glass of water",
-                    "A candy",
-                    "A book",
-                    "A fluffy pillow"
+                    "Cold water",
+                    "A warm blanket",
+                    "A hot drink",
+                    "A cookie"
                   ],
                   "image_emoji": "🥤",
-                  "hint": "It's something wet that you can drink."
+                  "hint": "It's something cold and refreshing that you drink."
                 }
               ]
             },
@@ -1733,24 +1746,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi there! How do you feel today? I feel excited because I'm going to the park. Do you like going to the park?",
+              "audio_text": "Hello! How are you feeling today? I'm feeling happy because I'm going to see my friends. Do you like playing with friends?",
               "questions": [
                 {
-                  "question": "How does the speaker feel?",
-                  "answer": "excited",
+                  "question": "How is the speaker feeling?",
+                  "answer": "happy",
                   "options": [
-                    "excited",
-                    "bored",
-                    "tired"
+                    "happy",
+                    "sad",
+                    "angry"
                   ]
                 },
                 {
-                  "question": "Why is the speaker excited?",
-                  "answer": "going to the park",
+                  "question": "Why is the speaker happy?",
+                  "answer": "going to see friends",
                   "options": [
-                    "going to the park",
+                    "going to see friends",
                     "staying at home",
-                    "eating dinner"
+                    "doing homework"
                   ]
                 }
               ]
@@ -1765,10 +1778,10 @@
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Lesson Review Quiz",
+              "title": "Feeling Master Review Quiz",
               "questions": [
                 {
-                  "question_text": "How are you? I ___ happy.",
+                  "question_text": "I ___ happy today. (Grammar question)",
                   "question_type": "fill_blank",
                   "correct_answer": "am",
                   "options": [
@@ -1790,7 +1803,7 @@
                   ]
                 },
                 {
-                  "question_text": "True or False: 'No, I am not.' answers 'Are you sad?'",
+                  "question_text": "True or False: 'Are you sad?' asks about feelings.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1799,25 +1812,14 @@
                   ]
                 },
                 {
-                  "question_text": "What do you say if you are not feeling well?",
+                  "question_text": "What do you say if you feel good? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "I am not well.",
+                  "correct_answer": "I am happy.",
                   "options": [
-                    "I am well.",
-                    "I am not well.",
-                    "I am thirsty.",
-                    "I am sleepy."
-                  ]
-                },
-                {
-                  "question_text": "Fill in the blank: Are you ____(feeling)?",
-                  "question_type": "fill_blank",
-                  "correct_answer": "happy",
-                  "options": [
-                    "happy",
-                    "am",
-                    "is",
-                    "not"
+                    "I am happy.",
+                    "I am hungry.",
+                    "I am tired.",
+                    "I am cold."
                   ]
                 }
               ]

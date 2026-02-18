@@ -28,40 +28,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you use to hear music?",
-                  "correct_answer": "ears",
+                  "question_text": "What do you use to see your favorite cartoon?",
+                  "correct_answer": "eyes",
                   "options": [
-                    "ears",
-                    "nose",
-                    "mouth",
-                    "eyes"
-                  ],
-                  "image_emoji": "🎧",
-                  "hint": "On each side of your head they are."
-                },
-                {
-                  "question_text": "Which part of your face is above your lips?",
-                  "correct_answer": "nose",
-                  "options": [
-                    "nose",
                     "eyes",
+                    "nose",
                     "ears",
-                    "chin"
+                    "mouth"
                   ],
-                  "image_emoji": "👃",
-                  "hint": "It helps you smell flowers."
+                  "image_emoji": "👁",
+                  "hint": "You blink them."
                 },
                 {
-                  "question_text": "What do you use to smile?",
+                  "question_text": "Which part of your body do you use to eat ice cream?",
                   "correct_answer": "mouth",
                   "options": [
                     "mouth",
-                    "eyes",
                     "nose",
+                    "eyes",
                     "ears"
                   ],
-                  "image_emoji": "😀",
-                  "hint": "You show your teeth with it."
+                  "image_emoji": "🍦",
+                  "hint": "You lick with it."
+                },
+                {
+                  "question_text": "What helps you hear your mom's voice?",
+                  "correct_answer": "ears",
+                  "options": [
+                    "ears",
+                    "eyes",
+                    "nose",
+                    "mouth"
+                  ],
+                  "image_emoji": "👂",
+                  "hint": "They are on the side of your head."
                 }
               ]
             },
@@ -410,11 +410,11 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! I am Tom. I have two blue eyes and a small nose. My mouth is laughing.",
+              "audio_text": "Hi! I am Anna. This is my face. I have two green eyes and a big smile.",
               "questions": [
                 {
-                  "question": "What color are Tom's eyes?",
-                  "answer": "blue",
+                  "question": "What color are Anna's eyes?",
+                  "answer": "green",
                   "options": [
                     "blue",
                     "green",
@@ -422,12 +422,12 @@
                   ]
                 },
                 {
-                  "question": "What size is Tom's nose?",
-                  "answer": "small",
+                  "question": "How many eyes does Anna have?",
+                  "answer": "two",
                   "options": [
-                    "big",
-                    "small",
-                    "medium"
+                    "one",
+                    "two",
+                    "three"
                   ]
                 }
               ]
@@ -445,45 +445,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I have two ___ to see with. (Vocabulary question)",
-                  "question_type": "multiple_choice",
+                  "question_text": "I have two ___ on my face. (Fill in the blank)",
+                  "question_type": "fill_blank",
                   "correct_answer": "eyes",
                   "options": [
-                    "noses",
                     "eyes",
-                    "mouths",
+                    "nose",
+                    "mouth",
                     "ears"
                   ]
                 },
                 {
-                  "question_text": "I have one ___ . (Reading comprehension question)",
-                  "question_type": "fill_blank",
+                  "question_text": "Which part helps you smell? (Vocabulary question)",
+                  "question_type": "multiple_choice",
                   "correct_answer": "nose",
                   "options": [
-                    "eye",
-                    "nose",
                     "mouth",
-                    "hand"
+                    "nose",
+                    "eyebrow",
+                    "chin"
                   ]
                 },
                 {
-                  "question_text": "How many mouths do you have?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "one",
-                  "options": [
-                    "one",
-                    "two",
-                    "three",
-                    "four"
-                  ]
-                },
-                {
-                  "question_text": "True or False: Your face has a nose.",
+                  "question_text": "True or False: I have one mouth.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
+                  ]
+                },
+                {
+                  "question_text": "I have one ___ and two ___. (Grammar question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "mouth, eyes",
+                  "options": [
+                    "nose, noses",
+                    "mouth, eyes",
+                    "eye, mouths",
+                    "ear, ears"
+                  ]
+                },
+                {
+                  "question_text": "What does Anna have? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "green eyes",
+                  "options": [
+                    "blue eyes",
+                    "green eyes",
+                    "brown eyes",
+                    "red eyes"
                   ]
                 }
               ]
@@ -512,40 +523,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do we use to listen to music?",
-                  "correct_answer": "ears",
+                  "question_text": "What do we use to see colors and shapes?",
+                  "correct_answer": "eyes",
                   "options": [
-                    "ears",
                     "eyes",
-                    "hand",
-                    "feet"
+                    "ears",
+                    "nose",
+                    "tongue"
                   ],
-                  "image_emoji": "🎶",
-                  "hint": "We have one on each side of our head."
+                  "image_emoji": "👁",
+                  "hint": "They are on your face and help you see."
                 },
                 {
-                  "question_text": "What do we see in the mirror on our head?",
-                  "correct_answer": "hair",
-                  "options": [
-                    "hair",
-                    "ears",
-                    "eyes",
-                    "nose"
-                  ],
-                  "image_emoji": "💄",
-                  "hint": "It grows and you can brush it."
-                },
-                {
-                  "question_text": "What opens wide when we smile?",
+                  "question_text": "What part of our head can we open and close?",
                   "correct_answer": "mouth",
                   "options": [
                     "mouth",
                     "eyes",
-                    "nose",
-                    "ears"
+                    "ears",
+                    "nose"
                   ],
                   "image_emoji": "😁",
-                  "hint": "We use it to talk and eat."
+                  "hint": "We open it to eat and talk."
+                },
+                {
+                  "question_text": "What helps us smell flowers?",
+                  "correct_answer": "nose",
+                  "options": [
+                    "nose",
+                    "eyes",
+                    "ears",
+                    "mouth"
+                  ],
+                  "image_emoji": "🌹",
+                  "hint": "It's in the middle of your face and sniffs."
                 }
               ]
             },
@@ -873,19 +884,19 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Look at my head! I have two big ears and short hair. My eyes are small.",
+              "audio_text": "This is my head! I have short hair and two little ears. My eyes are blue.",
               "questions": [
                 {
-                  "question": "What size are the eyes?",
-                  "answer": "small",
+                  "question": "What color are the eyes?",
+                  "answer": "blue",
                   "options": [
-                    "big",
-                    "small",
-                    "medium"
+                    "blue",
+                    "green",
+                    "brown"
                   ]
                 },
                 {
-                  "question": "How many ears are there?",
+                  "question": "How many ears does the head have?",
                   "answer": "two",
                   "options": [
                     "one",
@@ -908,29 +919,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Which word means the top part of your body? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "head",
-                  "options": [
-                    "hair",
-                    "ear",
-                    "head",
-                    "look"
-                  ]
-                },
-                {
-                  "question_text": "My ___ is brown. (Grammar question)",
+                  "question_text": "Fill in: My _____ is short. (Vocabulary question)",
                   "question_type": "fill_blank",
                   "correct_answer": "hair",
                   "options": [
                     "hair",
                     "ear",
                     "head",
-                    "look"
+                    "nose"
                   ]
                 },
                 {
-                  "question_text": "True or False: We see with our ears.",
+                  "question_text": "How many ears do you have? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ]
+                },
+                {
+                  "question_text": "Is this sentence correct? My eyes is blue. (Grammar question)",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -939,14 +950,14 @@
                   ]
                 },
                 {
-                  "question_text": "What do you use to listen? (Reading comprehension question)",
+                  "question_text": "Look at the picture. What color is the hair? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "ear",
+                  "correct_answer": "yellow",
                   "options": [
-                    "hair",
-                    "eye",
-                    "ear",
-                    "mouth"
+                    "black",
+                    "yellow",
+                    "brown",
+                    "red"
                   ]
                 }
               ]
@@ -969,40 +980,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you use to hear sounds?",
-                  "correct_answer": "ears",
+                  "question_text": "What is used to see colorful rainbows?",
+                  "correct_answer": "eyes",
                   "options": [
-                    "ears",
                     "eyes",
+                    "ears",
                     "nose",
                     "mouth"
                   ],
-                  "image_emoji": "👂",
-                  "hint": "They are on the side of your head."
+                  "image_emoji": "👁",
+                  "hint": "You close them when you sleep."
                 },
                 {
-                  "question_text": "What lets you smell yummy cookies?",
-                  "correct_answer": "nose",
-                  "options": [
-                    "nose",
-                    "mouth",
-                    "ear",
-                    "eye"
-                  ],
-                  "image_emoji": "👃",
-                  "hint": "It's in the middle of your face."
-                },
-                {
-                  "question_text": "Which body part helps you talk and eat?",
+                  "question_text": "Which part do you use to taste ice cream?",
                   "correct_answer": "mouth",
                   "options": [
                     "mouth",
-                    "eye",
+                    "nose",
                     "ear",
-                    "nose"
+                    "eye"
                   ],
-                  "image_emoji": "👄",
-                  "hint": "You use it to say 'hello!'"
+                  "image_emoji": "👅",
+                  "hint": "It's also for talking."
+                },
+                {
+                  "question_text": "Which part helps you nod up and down?",
+                  "correct_answer": "head",
+                  "options": [
+                    "head",
+                    "shoulder",
+                    "knee",
+                    "toe"
+                  ],
+                  "image_emoji": "👨",
+                  "hint": "It's at the top of your body."
                 }
               ]
             },
@@ -1286,23 +1297,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi there! Look, this is my brother. He has a big nose and tiny ears. His eyes are green!",
+              "audio_text": "Hello! This is my sister. She has a big smile with small eyes. Her ears are very tiny!",
               "questions": [
                 {
-                  "question": "What color are his eyes?",
-                  "answer": "green",
+                  "question": "What size are her eyes?",
+                  "answer": "small",
                   "options": [
-                    "blue",
-                    "green",
-                    "brown"
+                    "big",
+                    "small",
+                    "tiny"
                   ]
                 },
                 {
-                  "question": "Are his ears big or tiny?",
-                  "answer": "tiny",
+                  "question": "Does she have a big smile?",
+                  "answer": "Yes",
                   "options": [
-                    "big",
-                    "tiny"
+                    "Yes",
+                    "No"
                   ]
                 }
               ]
@@ -1320,55 +1331,45 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I have a ___ smile. (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "big",
-                  "options": [
-                    "big",
-                    "small",
-                    "tiny"
-                  ]
-                },
-                {
-                  "question_text": "He ___ small ears. (Grammar question)",
+                  "question_text": "I have a big ___. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "has",
+                  "correct_answer": "smile",
                   "options": [
-                    "has",
-                    "have",
-                    "is",
-                    "are"
-                  ]
-                },
-                {
-                  "question_text": "What part is used to hear sound? (Reading comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "ears",
-                  "options": [
-                    "eyes",
-                    "ears",
+                    "smile",
                     "nose",
-                    "mouth"
+                    "ear",
+                    "eye"
                   ]
                 },
                 {
-                  "question_text": "What word describes something not big? (Vocabulary question)",
+                  "question_text": "Which is a 'big'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "small",
+                  "correct_answer": "🐘",
                   "options": [
-                    "big",
-                    "small",
-                    "happy",
-                    "long"
+                    "🐘",
+                    "🐜",
+                    "🐦",
+                    "🍐"
                   ]
                 },
                 {
-                  "question_text": "True or False: 'This is my head.' is a complete sentence.",
+                  "question_text": "True or False: A 'small' head is bigger than a 'big' head.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
+                  ]
+                },
+                {
+                  "question_text": "What do you use to say 'hello'? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "mouth",
+                  "options": [
+                    "mouth",
+                    "ear",
+                    "eye",
+                    "nose"
                   ]
                 }
               ]
@@ -1392,40 +1393,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What part of your body lets you see the stars at night?",
-                  "correct_answer": "eyes",
+                  "question_text": "What part of your body do you use to taste yummy foods?",
+                  "correct_answer": "mouth",
                   "options": [
-                    "eyes",
-                    "ears",
+                    "mouth",
                     "nose",
-                    "mouth"
+                    "eyes",
+                    "hands"
                   ],
-                  "image_emoji": "👀",
-                  "hint": "You close them when you sleep!"
+                  "image_emoji": "👄",
+                  "hint": "You open it to say 'ahh'!"
                 },
                 {
-                  "question_text": "Which body part helps you hear a bird sing?",
-                  "correct_answer": "ears",
+                  "question_text": "Which body part can you wave hello with?",
+                  "correct_answer": "hands",
                   "options": [
+                    "hands",
+                    "feet",
                     "ears",
+                    "nose"
+                  ],
+                  "image_emoji": "👋",
+                  "hint": "You have two of them, one on each side!"
+                },
+                {
+                  "question_text": "What do you use to kick a ball?",
+                  "correct_answer": "feet",
+                  "options": [
+                    "feet",
+                    "hands",
                     "nose",
-                    "mouth",
                     "eyes"
                   ],
-                  "image_emoji": "👂",
-                  "hint": "They are on the sides of your head."
-                },
-                {
-                  "question_text": "What part of your face do you use to wiggle and sniff?",
-                  "correct_answer": "nose",
-                  "options": [
-                    "nose",
-                    "mouth",
-                    "eyes",
-                    "ears"
-                  ],
-                  "image_emoji": "👃",
-                  "hint": "It's in the middle of your face!"
+                  "image_emoji": "👟",
+                  "hint": "They are at the bottom of your legs!"
                 }
               ]
             },
@@ -1713,23 +1714,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "This is my playful dog. He has big, floppy ears and a cute, little nose. I love his wagging tail.",
+              "audio_text": "Look at my funny cat. She has two big eyes and a tiny, pink nose. Her fur is soft like a cloud.",
               "questions": [
                 {
-                  "question": "What kind of ears does the dog have?",
-                  "answer": "floppy",
+                  "question": "How many eyes does the cat have?",
+                  "answer": "two",
                   "options": [
-                    "floppy",
-                    "pointy",
-                    "round"
+                    "one",
+                    "two",
+                    "three"
                   ]
                 },
                 {
-                  "question": "Does he have a wagging tail?",
-                  "answer": "Yes",
+                  "question": "What color is her nose?",
+                  "answer": "pink",
                   "options": [
-                    "Yes",
-                    "No"
+                    "blue",
+                    "pink",
+                    "green"
                   ]
                 }
               ]
@@ -1747,29 +1749,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ a big smile. (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "have",
-                  "options": [
-                    "have",
-                    "has",
-                    "am",
-                    "is"
-                  ]
-                },
-                {
-                  "question_text": "Which part of your face helps you see? (Vocabulary question)",
+                  "question_text": "What do you use to see with? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "eyes",
                   "options": [
-                    "nose",
-                    "mouth",
                     "eyes",
-                    "ears"
+                    "ears",
+                    "nose",
+                    "mouth"
                   ]
                 },
                 {
-                  "question_text": "True or False: You use your ears to listen.",
+                  "question_text": "This is my ___. (Grammar pattern question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "friend",
+                  "options": [
+                    "friend",
+                    "am",
+                    "is",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Noses' is a plural word. (Grammar pattern question)",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1778,14 +1780,25 @@
                   ]
                 },
                 {
-                  "question_text": "This is my ___ cat. (small, pink nose) (Reading comprehension question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "small",
+                  "question_text": "Read: 'The big cat is happy.' How is the cat? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "happy",
                   "options": [
-                    "big",
-                    "small",
-                    "blue",
-                    "noisy"
+                    "sad",
+                    "happy",
+                    "angry",
+                    "small"
+                  ]
+                },
+                {
+                  "question_text": "Which is larger? A small dog or a big cat? (Vocabulary and adjectives question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "big cat",
+                  "options": [
+                    "small dog",
+                    "big cat",
+                    "both same",
+                    "not sure"
                   ]
                 }
               ]
