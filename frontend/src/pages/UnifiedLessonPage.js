@@ -2370,9 +2370,14 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
 
   const [pdfLoading, setPdfLoading] = useState(false);
 
-  const buildPDFContent = (doc, pdfWords, pdfRules, title, subtitle) => {
+  const buildPDFContent = (doc, worksheetData) => {
     const pw = 210;
     let y = 15;
+    const pdfWords = worksheetData.words || [];
+    const pdfRules = worksheetData.grammar_rules || [];
+    const exercises = worksheetData.exercises || {};
+    const title = worksheetData.mode === 'cumulative' ? 'Cumulative Review Worksheet' : 'Lesson Worksheet';
+    const subtitle = worksheetData.lesson_title || '';
 
     // Header
     doc.setFillColor(245, 158, 11);
@@ -2383,7 +2388,7 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
     doc.text(title, pw / 2, 12, { align: 'center' });
     doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
-    doc.text(subtitle, pw / 2, 22, { align: 'center' });
+    doc.text(subtitle + (worksheetData.word_count ? ` (${worksheetData.word_count} words)` : ''), pw / 2, 22, { align: 'center' });
     y = 40;
     doc.setTextColor(0, 0, 0);
 
@@ -2391,94 +2396,161 @@ function LessonSummary({ lesson, activityScores, summaryData, completedActivitie
       if (y + needed > 280) { doc.addPage(); y = 20; }
     };
 
-    // Vocabulary Review
+    // === VOCABULARY SECTION ===
+    const vocabExercises = exercises.vocabulary_section || {};
+
     if (pdfWords.length > 0) {
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Vocabulary Review', 15, y);
-      y += 8;
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(14); doc.setFont('helvetica', 'bold');
+      doc.text('Part A: Vocabulary', 15, y); y += 8;
+
+      // Word list
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
       pdfWords.forEach((w) => {
         checkPage(8);
         doc.setFont('helvetica', 'bold');
-        doc.text(`${w.word}`, 18, y);
+        doc.text(w.word || '', 18, y);
         doc.setFont('helvetica', 'normal');
-        doc.text(` - ${w.definition || ''}`, 18 + doc.getTextWidth(`${w.word}`) + 2, y);
+        const def = w.definition || w.meaning || '';
+        if (def) doc.text(` - ${def}`, 18 + doc.getTextWidth(w.word || '') + 2, y);
         y += 6;
       });
       y += 6;
+    }
 
-      // Activity 1: Match the word
+    // Activity 1: Matching
+    const matching = vocabExercises.matching || [];
+    if (matching.length > 0) {
       checkPage(20);
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Activity 1: Match the Word', 15, y);
-      y += 7;
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Draw a line from each word to its meaning:', 18, y);
-      y += 8;
-      const shuffled = [...pdfWords].sort(() => Math.random() - 0.5);
-      const matchWords = pdfWords.slice(0, 8);
-      const matchDefs = shuffled.slice(0, 8);
-      matchWords.forEach((w, i) => {
-        checkPage(9);
-        doc.text(`${w.word}`, 22, y);
-        doc.text(`${matchDefs[i]?.definition || ''}`, 120, y);
+      doc.setFontSize(12); doc.setFont('helvetica', 'bold');
+      doc.text('Activity 1: Match the Word to Its Meaning', 15, y); y += 7;
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+      const shuffledDefs = [...matching].sort(() => Math.random() - 0.5);
+      matching.forEach((item, i) => {
+        checkPage(8);
+        doc.text(`${i + 1}. ${item.word}`, 20, y);
+        doc.text(`___  ${String.fromCharCode(97 + i)}) ${shuffledDefs[i]?.definition || ''}`, 80, y);
         y += 7;
       });
       y += 6;
-
-      // Activity 2: Fill in the blank
-      checkPage(20);
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Activity 2: Fill in the Blank', 15, y);
-      y += 7;
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      pdfWords.slice(0, 8).forEach((w) => {
-        checkPage(9);
-        const sentence = w.example_sentence || `This is a ${w.word}.`;
-        const blanked = sentence.replace(new RegExp(w.word, 'i'), '________');
-        doc.text(`${blanked}`, 18, y);
-        y += 7;
-      });
-      y += 4;
     }
 
-    // Grammar Practice
+    // Activity 2: Fill in the blank
+    const fillBlank = vocabExercises.fill_blank || [];
+    if (fillBlank.length > 0) {
+      checkPage(20);
+      doc.setFontSize(12); doc.setFont('helvetica', 'bold');
+      doc.text('Activity 2: Fill in the Blank', 15, y); y += 7;
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+      fillBlank.forEach((item, i) => {
+        checkPage(8);
+        doc.text(`${i + 1}. ${item.sentence}`, 20, y);
+        if (item.hint) { doc.setTextColor(150, 150, 150); doc.text(`  (Hint: ${item.hint})`, 20, y + 5); doc.setTextColor(0, 0, 0); y += 5; }
+        y += 7;
+      });
+      y += 6;
+    }
+
+    // Activity 3: True/False
+    const trueFalse = vocabExercises.true_false || [];
+    if (trueFalse.length > 0) {
+      checkPage(20);
+      doc.setFontSize(12); doc.setFont('helvetica', 'bold');
+      doc.text('Activity 3: True or False?', 15, y); y += 7;
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+      trueFalse.forEach((item, i) => {
+        checkPage(8);
+        doc.text(`${i + 1}. ${item.statement}   T / F`, 20, y);
+        y += 7;
+      });
+      y += 6;
+    }
+
+    // === GRAMMAR SECTION ===
+    const grammarExercises = exercises.grammar_section || {};
+
     if (pdfRules.length > 0) {
       checkPage(30);
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Grammar Practice', 15, y);
-      y += 8;
+      doc.setFontSize(14); doc.setFont('helvetica', 'bold');
+      doc.text('Part B: Grammar', 15, y); y += 8;
+      doc.setFontSize(10);
       pdfRules.forEach((r) => {
-        checkPage(16);
-        doc.setFontSize(10);
+        checkPage(14);
         doc.setFont('helvetica', 'bold');
-        doc.text(`Pattern: ${r.pattern}`, 18, y);
-        y += 6;
+        doc.text(`Pattern: ${r.pattern}`, 18, y); y += 5;
         doc.setFont('helvetica', 'normal');
-        doc.text(`${r.explanation || r.rule_text || ''}`, 18, y, { maxWidth: 170 });
-        y += 8;
+        if (r.explanation) { doc.text(r.explanation, 22, y, { maxWidth: 165 }); y += 6; }
+        y += 3;
       });
       y += 4;
-      checkPage(40);
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'bold');
-      doc.text('Activity 3: Write Your Own Sentences', 15, y);
-      y += 7;
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Use the grammar patterns above to write 3 sentences:', 18, y);
-      y += 8;
-      for (let i = 1; i <= 3; i++) { doc.text(`${i}. _______________________________________________`, 18, y); y += 10; }
     }
 
-    // Footer on each page
+    // Activity 4: Reorder words
+    const reorder = grammarExercises.reorder || [];
+    if (reorder.length > 0) {
+      checkPage(20);
+      doc.setFontSize(12); doc.setFont('helvetica', 'bold');
+      doc.text('Activity 4: Put the Words in Order', 15, y); y += 7;
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+      reorder.forEach((item, i) => {
+        checkPage(10);
+        doc.text(`${i + 1}. ${item.scrambled}`, 20, y); y += 5;
+        doc.text('   ________________________________________________', 20, y); y += 7;
+      });
+      y += 4;
+    }
+
+    // Activity 5: Correct the mistake
+    const correctMistake = grammarExercises.correct_mistake || [];
+    if (correctMistake.length > 0) {
+      checkPage(20);
+      doc.setFontSize(12); doc.setFont('helvetica', 'bold');
+      doc.text('Activity 5: Find and Fix the Mistake', 15, y); y += 7;
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+      correctMistake.forEach((item, i) => {
+        checkPage(10);
+        doc.text(`${i + 1}. ${item.sentence}`, 20, y); y += 5;
+        doc.text('   Correct: ________________________________________', 20, y); y += 7;
+      });
+      y += 4;
+    }
+
+    // Activity 6: Complete the pattern
+    const completePattern = grammarExercises.complete_pattern || [];
+    if (completePattern.length > 0) {
+      checkPage(20);
+      doc.setFontSize(12); doc.setFont('helvetica', 'bold');
+      doc.text('Activity 6: Complete the Sentence', 15, y); y += 7;
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+      completePattern.forEach((item, i) => {
+        checkPage(10);
+        const opts = (item.options || []).join('  /  ');
+        doc.text(`${i + 1}. ${item.pattern}`, 20, y);
+        if (opts) { doc.setTextColor(100, 100, 100); doc.text(`  [ ${opts} ]`, 20, y + 5); doc.setTextColor(0, 0, 0); y += 5; }
+        y += 7;
+      });
+      y += 4;
+    }
+
+    // === MIXED REVIEW ===
+    const mixedReview = exercises.mixed_review || [];
+    if (mixedReview.length > 0) {
+      checkPage(20);
+      doc.setFontSize(14); doc.setFont('helvetica', 'bold');
+      doc.text('Part C: Mixed Review', 15, y); y += 8;
+      doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+      mixedReview.forEach((item, i) => {
+        checkPage(16);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${i + 1}. ${item.question}`, 20, y); y += 6;
+        doc.setFont('helvetica', 'normal');
+        (item.options || []).forEach((opt, oi) => {
+          doc.text(`   ${String.fromCharCode(65 + oi)}) ${opt}`, 24, y); y += 5;
+        });
+        y += 3;
+      });
+    }
+
+    // Footer
     const pages = doc.getNumberOfPages();
     for (let p = 1; p <= pages; p++) {
       doc.setPage(p);
