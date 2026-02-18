@@ -27,40 +27,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What color is the farm animal?",
-                  "correct_answer": "White and black",
+                  "question_text": "What sound does the big animal make?",
+                  "correct_answer": "Moo",
                   "options": [
-                    "White and black",
-                    "Brown and white",
-                    "Grey and white",
-                    "Red and white"
+                    "Moo",
+                    "Oink",
+                    "Meow",
+                    "Bark"
+                  ],
+                  "image_emoji": "🐮",
+                  "hint": "This animal's sound rhymes with 'boo'!"
+                },
+                {
+                  "question_text": "What does the animal like to eat?",
+                  "correct_answer": "Grass",
+                  "options": [
+                    "Grass",
+                    "Fish",
+                    "Berries",
+                    "Leaves"
                   ],
                   "image_emoji": "🐄",
-                  "hint": "The animal has two colors, one is black!"
+                  "hint": "It's green and grows in fields!"
                 },
                 {
-                  "question_text": "What does the animal do in the field?",
-                  "correct_answer": "Walks and eats grass",
+                  "question_text": "What is a baby animal called?",
+                  "correct_answer": "Calf",
                   "options": [
-                    "Swims in a pond",
-                    "Flies in the sky",
-                    "Walks and eats grass",
-                    "Digs in the mud"
+                    "Calf",
+                    "Puppy",
+                    "Kitten",
+                    "Chick"
                   ],
-                  "image_emoji": "🌿",
-                  "hint": "The animal moves slowly and likes to eat something green!"
-                },
-                {
-                  "question_text": "Where does the big animal live?",
-                  "correct_answer": "Farm",
-                  "options": [
-                    "Farm",
-                    "Jungle",
-                    "Ocean",
-                    "Desert"
-                  ],
-                  "image_emoji": "🏡",
-                  "hint": "You find this place in the countryside with lots of animals!"
+                  "image_emoji": "🤝",
+                  "hint": "It starts with 'C' and is not a baby dog!"
                 }
               ]
             },
@@ -390,24 +390,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "See the farmer? He is with a brown horse and a big cow. Listen to the cow! It says Moo!",
+              "audio_text": "Look at the big cow on the farm. The farmer is giving it some grass. Listen, the horse nearby is eating too!",
               "questions": [
                 {
-                  "question": "What color is the horse with the farmer?",
-                  "answer": "Brown",
+                  "question": "What is the farmer giving to the cow?",
+                  "answer": "Grass",
                   "options": [
-                    "Brown",
-                    "Black",
-                    "White"
+                    "Grass",
+                    "Water",
+                    "Corn"
                   ]
                 },
                 {
-                  "question": "What sound does the cow make?",
-                  "answer": "Moo",
+                  "question": "What is the horse doing?",
+                  "answer": "Eating",
                   "options": [
-                    "Moo",
-                    "Neigh",
-                    "Baa"
+                    "Eating",
+                    "Sleeping",
+                    "Running"
                   ]
                 }
               ]
@@ -425,29 +425,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Which word is a farm animal? (Vocabulary question)",
+                  "question_text": "What animal makes the sound Moo? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "Cow",
                   "options": [
-                    "Tree",
                     "Cow",
-                    "Cloud",
-                    "Car"
+                    "Horse",
+                    "Duck",
+                    "Sheep"
                   ]
                 },
                 {
-                  "question_text": "That is a ___. (Grammar question)",
+                  "question_text": "That is a ___. (Fill in the blank grammar)",
                   "question_type": "fill_blank",
                   "correct_answer": "horse",
                   "options": [
                     "horse",
-                    "farmer",
-                    "farm",
-                    "big"
+                    "dog",
+                    "cat",
+                    "fish"
                   ]
                 },
                 {
-                  "question_text": "True or False: The farmer is on the farm. (Reading comprehension)",
+                  "question_text": "True or False: The farmer works on the farm.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -456,14 +456,14 @@
                   ]
                 },
                 {
-                  "question_text": "What animal says Moo on the farm? (Reading comprehension)",
+                  "question_text": "What does the farmer give to the cow? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Cow",
+                  "correct_answer": "Grass",
                   "options": [
-                    "Horse",
-                    "Sheep",
-                    "Cow",
-                    "Pig"
+                    "Grass",
+                    "Milk",
+                    "Water",
+                    "Hay"
                   ]
                 }
               ]
@@ -492,40 +492,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What animal does the farmer help on the farm? 🐑",
-                  "correct_answer": "sheep",
+                  "question_text": "What color are the sheep on the farm? 🐑",
+                  "correct_answer": "white",
                   "options": [
-                    "sheep",
-                    "dog",
-                    "cat",
-                    "bird"
+                    "white",
+                    "black",
+                    "brown",
+                    "yellow"
                   ],
                   "image_emoji": "🐑",
-                  "hint": "This animal is fluffy and goes 'baa'."
+                  "hint": "They look like fluffy clouds!"
                 },
                 {
-                  "question_text": "What do ducklings do in the water? 🦆",
-                  "correct_answer": "swim",
+                  "question_text": "What sound do ducks make? 🦆",
+                  "correct_answer": "quack",
                   "options": [
-                    "swim",
-                    "run",
-                    "fly",
-                    "hop"
+                    "quack",
+                    "meow",
+                    "bark",
+                    "roar"
                   ],
                   "image_emoji": "🦆",
-                  "hint": "They move like little boats on the water."
+                  "hint": "It rhymes with back and sack!"
                 },
                 {
-                  "question_text": "What do sheep eat on the farm? 🌾",
-                  "correct_answer": "grass",
+                  "question_text": "What do you see in a pond with ducks? 🐦⛵",
+                  "correct_answer": "water",
                   "options": [
-                    "grass",
-                    "fish",
-                    "bread",
-                    "cookies"
+                    "water",
+                    "sand",
+                    "trees",
+                    "rocks"
                   ],
-                  "image_emoji": "🌾",
-                  "hint": "It's green and grows in the fields."
+                  "image_emoji": "🐦⛵",
+                  "hint": "It's something you can swim in and drink!"
                 }
               ]
             },
@@ -819,15 +819,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Look, there's a duck in the pond. Is that duck swimming? Yes, it is swimming!",
+              "audio_text": "Look, there's a white sheep under the tree. Is that sheep saying baa? Yes, it says baa!",
               "questions": [
                 {
-                  "question": "What is the duck doing?",
-                  "answer": "swimming",
+                  "question": "What color is the sheep?",
+                  "answer": "white",
                   "options": [
-                    "swimming",
-                    "flying",
-                    "eating grass"
+                    "white",
+                    "black",
+                    "brown"
+                  ]
+                },
+                {
+                  "question": "What sound does the sheep make?",
+                  "answer": "baa",
+                  "options": [
+                    "baa",
+                    "quack",
+                    "moo"
                   ]
                 }
               ]
@@ -845,45 +854,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What color is the sheep? (Vocabulary question)",
+                  "question_text": "Is that a ___? (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "duck",
+                  "options": [
+                    "duck",
+                    "cat",
+                    "fish",
+                    "dog"
+                  ]
+                },
+                {
+                  "question_text": "What color are sheep usually? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "white",
                   "options": [
                     "white",
-                    "black",
-                    "brown",
-                    "blue"
+                    "blue",
+                    "red",
+                    "green"
                   ]
                 },
                 {
-                  "question_text": "Is that a sheep? ___ (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "Yes, it is.",
-                  "options": [
-                    "Yes, it is.",
-                    "No, it isn't.",
-                    "Maybe",
-                    "I don't know"
-                  ]
-                },
-                {
-                  "question_text": "Which animal can swim? (Reading comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "duck",
-                  "options": [
-                    "sheep",
-                    "duck",
-                    "cat",
-                    "cow"
-                  ]
-                },
-                {
-                  "question_text": "True or False: A duck is black. (True/False question)",
+                  "question_text": "True or False: Ducks can swim.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
+                  ]
+                },
+                {
+                  "question_text": "Which animal says 'baa'? (Comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "sheep",
+                  "options": [
+                    "sheep",
+                    "duck",
+                    "cow",
+                    "dog"
+                  ]
+                },
+                {
+                  "question_text": "What do ducks do in the water?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "swim",
+                  "options": [
+                    "swim",
+                    "hop",
+                    "fly",
+                    "run"
                   ]
                 }
               ]
@@ -906,40 +926,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which animal says Cluck on the farm?",
-                  "correct_answer": "Chicken",
+                  "question_text": "Which animal on the farm is pink and loves mud?",
+                  "correct_answer": "Pig",
                   "options": [
+                    "Pig",
                     "Chicken",
-                    "Cow",
                     "Sheep",
-                    "Pig"
+                    "Cow"
                   ],
-                  "image_emoji": "🐔",
-                  "hint": "This bird loves to lay eggs."
+                  "image_emoji": "🐖",
+                  "hint": "This animal rolls in the mud to stay cool."
                 },
                 {
-                  "question_text": "What animal has woolly coat and says Baa?",
-                  "correct_answer": "Sheep",
+                  "question_text": "Which bird makes a sound and wakes up the farmer?",
+                  "correct_answer": "Rooster",
                   "options": [
-                    "Sheep",
+                    "Rooster",
                     "Duck",
-                    "Goat",
-                    "Rabbit"
+                    "Turkey",
+                    "Owl"
                   ],
-                  "image_emoji": "🐑",
-                  "hint": "This animal gives us wool."
+                  "image_emoji": "🐓",
+                  "hint": "This bird says Cock-a-doodle-doo!"
                 },
                 {
-                  "question_text": "Which animal is small, fluffy, and hops?",
-                  "correct_answer": "Rabbit",
+                  "question_text": "What does a cow say on the farm?",
+                  "correct_answer": "Moo",
                   "options": [
-                    "Rabbit",
-                    "Chicken",
-                    "Dog",
-                    "Goat"
+                    "Moo",
+                    "Baa",
+                    "Cluck",
+                    "Oink"
                   ],
-                  "image_emoji": "🐇",
-                  "hint": "This animal loves carrots."
+                  "image_emoji": "🐮",
+                  "hint": "This sound is much louder than a cluck."
                 }
               ]
             },
@@ -1283,24 +1303,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Quack quack! The duck is swimming in the pond. Look, the pig is playing in the mud.",
+              "audio_text": "Look at the chicken! That is a chicken laying an egg. The pig is happy playing in the mud.",
               "questions": [
                 {
-                  "question": "What sound does the duck make?",
-                  "answer": "Quack quack",
+                  "question": "What is the chicken doing?",
+                  "answer": "laying an egg",
                   "options": [
-                    "Quack quack",
-                    "Oink oink",
-                    "Cluck cluck"
+                    "laying an egg",
+                    "playing in the mud",
+                    "swimming in the pond"
                   ]
                 },
                 {
-                  "question": "Where is the pig playing?",
-                  "answer": "in the mud",
+                  "question": "Is the pig happy?",
+                  "answer": "Yes",
                   "options": [
-                    "in the mud",
-                    "in the pond",
-                    "in the barn"
+                    "Yes",
+                    "No",
+                    "Maybe"
                   ]
                 }
               ]
@@ -1318,25 +1338,34 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What animal lays eggs? (Vocabulary question)",
+                  "question_text": "Which one lays eggs on the farm? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "Chicken",
                   "options": [
                     "Pig",
                     "Chicken",
-                    "Cow",
-                    "Sheep"
+                    "Duck",
+                    "Cow"
                   ]
                 },
                 {
-                  "question_text": "It says ___: Pig (Grammar question)",
+                  "question_text": "Fill in the blank: It says ___. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "Oink",
+                  "correct_answer": "oink oink",
                   "options": [
-                    "Oink",
-                    "Quack",
-                    "Cluck",
-                    "Moo"
+                    "quack quack",
+                    "oink oink",
+                    "baa baa",
+                    "cluck cluck"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A pig can fly. (Reading comprehension)",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
                   ]
                 },
                 {
@@ -1344,19 +1373,10 @@
                   "question_type": "multiple_choice",
                   "correct_answer": "in the mud",
                   "options": [
+                    "in the pond",
+                    "in the barn",
                     "in the mud",
-                    "in the grass",
-                    "in the water",
-                    "in the sky"
-                  ]
-                },
-                {
-                  "question_text": "True or False: An egg comes from a chicken.",
-                  "question_type": "true_false",
-                  "correct_answer": "True",
-                  "options": [
-                    "True",
-                    "False"
+                    "on the grass"
                   ]
                 }
               ]
@@ -1380,40 +1400,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which animal says 'moo' on the farm?",
-                  "correct_answer": "cow",
+                  "question_text": "Which animal has feathers and lays eggs?",
+                  "correct_answer": "chicken",
                   "options": [
-                    "pig",
                     "chicken",
                     "cow",
-                    "sheep"
+                    "sheep",
+                    "goat"
                   ],
-                  "image_emoji": "🐮",
-                  "hint": "This animal is big and loves to eat grass!"
+                  "image_emoji": "🐤",
+                  "hint": "This animal can cluck!"
                 },
                 {
-                  "question_text": "Which animal loves to roll in the mud?",
-                  "correct_answer": "pig",
+                  "question_text": "Which animal is known for hopping?",
+                  "correct_answer": "rabbit",
+                  "options": [
+                    "rabbit",
+                    "duck",
+                    "pig",
+                    "horse"
+                  ],
+                  "image_emoji": "🐇",
+                  "hint": "This animal loves carrots!"
+                },
+                {
+                  "question_text": "Which animal has webbed feet and likes to swim?",
+                  "correct_answer": "duck",
                   "options": [
                     "duck",
-                    "cow",
                     "sheep",
-                    "pig"
+                    "horse",
+                    "cat"
                   ],
-                  "image_emoji": "🐷",
-                  "hint": "This animal says 'oink' and has a curly tail!"
-                },
-                {
-                  "question_text": "Which animal has a woolly coat?",
-                  "correct_answer": "sheep",
-                  "options": [
-                    "cat",
-                    "goat",
-                    "sheep",
-                    "dog"
-                  ],
-                  "image_emoji": "🐑",
-                  "hint": "This animal is soft and says 'baa'!"
+                  "image_emoji": "🦆",
+                  "hint": "This animal says 'quack'!"
                 }
               ]
             },
@@ -1707,11 +1727,11 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Is that a cow? Yes, it is! The cow says moo. And look, there’s a little brown goat. It loves to eat grass.",
+              "audio_text": "Look, is that a sheep? Yes, it is! The sheep says baa. And over there is a black horse. It runs very fast.",
               "questions": [
                 {
-                  "question": "What sound does the cow make?",
-                  "answer": "moo",
+                  "question": "What sound does the sheep make?",
+                  "answer": "baa",
                   "options": [
                     "moo",
                     "baa",
@@ -1719,12 +1739,12 @@
                   ]
                 },
                 {
-                  "question": "What color is the goat?",
-                  "answer": "brown",
+                  "question": "What color is the horse?",
+                  "answer": "black",
                   "options": [
-                    "white",
+                    "black",
                     "brown",
-                    "black"
+                    "white"
                   ]
                 }
               ]
@@ -1739,32 +1759,43 @@
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Farm Master Review Quiz",
+              "title": "Farm Master Quiz",
               "questions": [
                 {
-                  "question_text": "What sound does a cow make? (Vocabulary question)",
+                  "question_text": "Which animal says 'quack'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "moo",
+                  "correct_answer": "duck",
+                  "options": [
+                    "duck",
+                    "cow",
+                    "horse",
+                    "sheep"
+                  ]
+                },
+                {
+                  "question_text": "Complete the sentence: That is a ___. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "cow",
                   "options": [
                     "moo",
-                    "baa",
-                    "neigh",
-                    "quack"
-                  ]
-                },
-                {
-                  "question_text": "Complete the sentence: 'That is a ___.' (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "sheep",
-                  "options": [
-                    "sheep",
                     "cow",
-                    "chicken",
-                    "pig"
+                    "quack",
+                    "baa"
                   ]
                 },
                 {
-                  "question_text": "Is that a horse? It says neigh!",
+                  "question_text": "What color is the goat mentioned in the lesson? (Reading comprehension)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "brown",
+                  "options": [
+                    "white",
+                    "brown",
+                    "black",
+                    "grey"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The sheep says 'baa'.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1773,14 +1804,14 @@
                   ]
                 },
                 {
-                  "question_text": "What does a chicken say? (Reading comprehension question)",
+                  "question_text": "How many legs does a cow have? (General farm animal knowledge)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "cluck",
+                  "correct_answer": "4",
                   "options": [
-                    "cluck",
-                    "woof",
-                    "meow",
-                    "moo"
+                    "2",
+                    "3",
+                    "4",
+                    "5"
                   ]
                 }
               ]
