@@ -384,12 +384,14 @@ Respond with ONLY valid JSON:
 GRAMMAR PATTERN: {pattern}
 EXAMPLES: {examples}
 
-Create 3 different grammar game activities, each with 2-3 exercises.
+IMPORTANT: Create 3 different grammar game activities. EACH game must have 4-5 items for a total of 12-15 exercises.
 
 GAME TYPES TO CREATE:
-1. word_order: Arrange words to make correct sentences
-2. fill_blank: Choose correct word to complete sentence
-3. error_hunter: Find the grammar mistake in sentence
+1. word_order: Arrange scrambled words to make correct sentences (4-5 items)
+2. fill_blank: Choose correct word to complete sentence (4-5 items)  
+3. error_hunter: Find and identify the grammar mistake in sentence (4-5 items)
+
+Use variations of the grammar pattern to create enough items.
 
 Respond with ONLY valid JSON:
 {{
@@ -399,34 +401,31 @@ Respond with ONLY valid JSON:
         {{
             "game_type": "word_order",
             "items": [
-                {{
-                    "words": ["I", "like", "cats"],
-                    "correctSentence": "I like cats"
-                }}
+                {{"words": ["I", "am", "Ben"], "correctSentence": "I am Ben"}},
+                {{"words": ["She", "is", "my", "teacher"], "correctSentence": "She is my teacher"}},
+                {{"words": ["Hello", "I", "am", "happy"], "correctSentence": "Hello I am happy"}},
+                {{"words": ["This", "is", "an", "apple"], "correctSentence": "This is an apple"}},
+                {{"words": ["He", "is", "a", "student"], "correctSentence": "He is a student"}}
             ]
         }},
         {{
             "game_type": "fill_blank",
             "items": [
-                {{
-                    "sentence": "He ___ a cat.",
-                    "answer": "has",
-                    "options": ["has", "have", "is", "are"]
-                }}
+                {{"sentence": "I ___ Ben.", "answer": "am", "options": ["am", "is", "are", "be"]}},
+                {{"sentence": "She ___ a teacher.", "answer": "is", "options": ["am", "is", "are", "be"]}},
+                ... (4-5 items total)
             ]
         }},
         {{
             "game_type": "error_hunter",
             "items": [
-                {{
-                    "sentence": "He have a cat.",
-                    "errorWord": "have",
-                    "correctWord": "has"
-                }}
+                {{"sentence": "I is Ben.", "errorWord": "is", "correctWord": "am"}},
+                {{"sentence": "She am a teacher.", "errorWord": "am", "correctWord": "is"}},
+                ... (4-5 items total)
             ]
         }}
     ],
-    "total_exercises": 8
+    "total_exercises": 14
 }}"""
 
         try:
