@@ -96,9 +96,23 @@ async def get_lesson(lesson_id: str):
 
 @router.get("/lessons/{lesson_id}/activity/{activity_type}")
 async def get_activity_content(lesson_id: str, activity_type: str):
-    """Get content for a specific activity in a lesson"""
+    """Get content for a specific activity in a lesson.
+    First checks embedded data in activity_flow, then falls back to separate collections."""
     
-    # Map activity type to collection
+    # 1) Try embedded data from lesson's activity_flow
+    lesson = await db.unified_lessons.find_one(
+        {"lesson_id": lesson_id}, 
+        {"_id": 0, "activity_flow": 1}
+    )
+    if lesson and lesson.get("activity_flow"):
+        for act in lesson["activity_flow"]:
+            if act.get("type") == activity_type and act.get("data"):
+                data = act["data"]
+                # Check data has actual content (not all empty)
+                if any(v for v in data.values() if v):
+                    return data
+    
+    # 2) Fallback: read from separate collections
     collection_map = {
         "retrieval_warmup": "unified_warmup_activities",
         "vocabulary": "unified_vocabulary_activities",
@@ -116,7 +130,6 @@ async def get_activity_content(lesson_id: str, activity_type: str):
     if not collection_name:
         raise HTTPException(status_code=400, detail=f"Unknown activity type: {activity_type}")
     
-    # Build query
     query = {"lesson_id": lesson_id}
     if activity_type in ["micro_game_vocab", "micro_game_grammar"]:
         query["type"] = activity_type
