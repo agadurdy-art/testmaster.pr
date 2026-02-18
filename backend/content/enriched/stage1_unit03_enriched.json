@@ -33,40 +33,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What comes after one?",
-                  "correct_answer": "two",
+                  "question_text": "What comes after three?",
+                  "correct_answer": "four",
                   "options": [
-                    "three",
                     "two",
                     "four",
-                    "five"
+                    "five",
+                    "three"
                   ],
-                  "image_emoji": "2️⃣",
-                  "hint": "It's the next number after one."
+                  "image_emoji": "4️⃣",
+                  "hint": "It's one more than three."
                 },
                 {
-                  "question_text": "What is the first letter in 'cat'?",
-                  "correct_answer": "C",
+                  "question_text": "What is the first letter in 'kite'?",
+                  "correct_answer": "K",
                   "options": [
+                    "C",
                     "L",
                     "K",
-                    "C",
-                    "A"
+                    "T"
                   ],
-                  "image_emoji": "😺",
-                  "hint": "It's the letter that sounds like 'kuh'."
+                  "image_emoji": "🚀",
+                  "hint": "It sounds like 'kuh'."
                 },
                 {
-                  "question_text": "What sound does a lion make?",
-                  "correct_answer": "roar",
+                  "question_text": "What sound does a cat make?",
+                  "correct_answer": "meow",
                   "options": [
-                    "woof",
                     "roar",
+                    "woof",
                     "quack",
                     "meow"
                   ],
-                  "image_emoji": "🦁",
-                  "hint": "It's a loud sound made by big cats."
+                  "image_emoji": "🐈",
+                  "hint": "It's a gentle sound made by small cats."
                 }
               ]
             },
@@ -366,24 +366,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Wow! I see two lions sitting under a big kite. Look, over there, four kites are flying high!",
+              "audio_text": "Look! I see one lion playing with three kites. Oh, and now, two more lions are joining the fun!",
               "questions": [
                 {
-                  "question": "How many lions are there?",
-                  "answer": "two",
+                  "question": "How many lions are playing?",
+                  "answer": "three",
+                  "options": [
+                    "one",
+                    "two",
+                    "three"
+                  ]
+                },
+                {
+                  "question": "How many kites are there?",
+                  "answer": "three",
                   "options": [
                     "two",
                     "three",
                     "four"
-                  ]
-                },
-                {
-                  "question": "How many kites are flying?",
-                  "answer": "four",
-                  "options": [
-                    "three",
-                    "four",
-                    "five"
                   ]
                 }
               ]
@@ -408,33 +408,22 @@
                     "a",
                     "an",
                     "the",
-                    "this"
+                    "some"
                   ]
                 },
                 {
-                  "question_text": "Which word means 'a big cat with a mane'? (Vocabulary question)",
+                  "question_text": "What animal makes the sound 'roar'? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "lion",
                   "options": [
-                    "kite",
                     "lion",
-                    "two",
-                    "one"
+                    "kite",
+                    "dog",
+                    "cat"
                   ]
                 },
                 {
-                  "question_text": "What comes after three?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "four",
-                  "options": [
-                    "two",
-                    "three",
-                    "four",
-                    "one"
-                  ]
-                },
-                {
-                  "question_text": "True or False: A kite can fly.",
+                  "question_text": "True or False: There are five fingers on one hand.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -443,14 +432,14 @@
                   ]
                 },
                 {
-                  "question_text": "In the story, how many kites were flying?",
+                  "question_text": "How many kites are there if I have two more than three? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "four",
+                  "correct_answer": "five",
                   "options": [
-                    "one",
-                    "two",
                     "three",
-                    "four"
+                    "four",
+                    "five",
+                    "six"
                   ]
                 }
               ]
@@ -489,40 +478,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "How many lions are playing with a ball?",
-                  "correct_answer": "three",
+                  "question_text": "How many lions do you see at the start?",
+                  "correct_answer": "six",
                   "options": [
-                    "one",
-                    "three",
+                    "two",
                     "four",
-                    "five"
-                  ],
-                  "image_emoji": "🎾",
-                  "hint": "Look for the lions chasing the red ball."
-                },
-                {
-                  "question_text": "Which animal is sleeping under the tree?",
-                  "correct_answer": "lion",
-                  "options": [
-                    "cat",
-                    "dog",
-                    "lion",
-                    "bear"
+                    "six",
+                    "eight"
                   ],
                   "image_emoji": "🦁",
-                  "hint": "Find the animal with a fluffy mane resting."
+                  "hint": "Count the lions at the very beginning."
                 },
                 {
-                  "question_text": "What do lions like to eat?",
-                  "correct_answer": "meat",
+                  "question_text": "What color is the ball the lions are playing with?",
+                  "correct_answer": "red",
                   "options": [
-                    "grapes",
-                    "bananas",
-                    "meat",
-                    "carrots"
+                    "blue",
+                    "red",
+                    "green",
+                    "yellow"
                   ],
-                  "image_emoji": "🍖",
-                  "hint": "Think about what big, strong animals like."
+                  "image_emoji": "🎾",
+                  "hint": "Look for the bright color in their game."
+                },
+                {
+                  "question_text": "What sound does the word 'lions' start with?",
+                  "correct_answer": "L",
+                  "options": [
+                    "M",
+                    "S",
+                    "L",
+                    "B"
+                  ],
+                  "image_emoji": "🦁",
+                  "hint": "Think about the first letter in 'lions'."
                 }
               ]
             },
@@ -860,24 +849,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Look, there are six small monkeys. They are jumping and making funny faces!",
+              "audio_text": "Listen! There are ten monkeys playing in the tree. One monkey is eating a big banana!",
               "questions": [
                 {
-                  "question": "How many small monkeys are there?",
-                  "answer": "six",
+                  "question": "How many monkeys are in the tree?",
+                  "answer": "ten",
                   "options": [
                     "six",
-                    "eight",
-                    "ten"
+                    "ten",
+                    "eight"
                   ]
                 },
                 {
-                  "question": "What are the monkeys doing?",
-                  "answer": "jumping",
+                  "question": "What is one monkey eating?",
+                  "answer": "banana",
                   "options": [
-                    "jumping",
-                    "running",
-                    "sleeping"
+                    "banana",
+                    "apple",
+                    "grapes"
                   ]
                 }
               ]
@@ -895,40 +884,28 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "How many is 'six'?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "6",
-                  "options": [
-                    "6",
-                    "10",
-                    "5",
-                    "8"
-                  ]
-                },
-                {
-                  "question_text": "I see ___ monkeys. (Grammar question)",
+                  "question_text": "I see ___ monkeys. (Fill in the blank)",
                   "question_type": "fill_blank",
                   "correct_answer": "ten",
                   "options": [
-                    "three",
+                    "six",
+                    "seven",
                     "ten",
-                    "two",
-                    "five"
+                    "one"
                   ]
                 },
                 {
-                  "question_text": "What sound does 'monkey' start with?",
+                  "question_text": "Which word is something you speak with? (Vocabulary)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "M",
+                  "correct_answer": "mouth",
                   "options": [
-                    "M",
-                    "T",
-                    "R",
-                    "D"
+                    "monkey",
+                    "mouth",
+                    "ten"
                   ]
                 },
                 {
-                  "question_text": "True or False: Monkeys can have big mouths.",
+                  "question_text": "True or False: A monkey has a tail.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -937,14 +914,13 @@
                   ]
                 },
                 {
-                  "question_text": "How do we write 'mouth' starting with M?",
+                  "question_text": "How do you say the number after nine? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "mouth",
+                  "correct_answer": "ten",
                   "options": [
-                    "mouth",
-                    "moth",
-                    "math",
-                    "moss"
+                    "ten",
+                    "six",
+                    "four"
                   ]
                 }
               ]
@@ -973,7 +949,7 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What begins with the letter 'O' and lives in the ocean?",
+                  "question_text": "What animal lives in the ocean and has eight legs?",
                   "correct_answer": "Octopus",
                   "options": [
                     "Octopus",
@@ -982,31 +958,31 @@
                     "Owl"
                   ],
                   "image_emoji": "🐙",
-                  "hint": "It has eight legs."
+                  "hint": "Think of the ocean and eight arms."
                 },
                 {
-                  "question_text": "Which number comes before ten?",
-                  "correct_answer": "Nine",
+                  "question_text": "How many eyes does an octopus have?",
+                  "correct_answer": "Two",
                   "options": [
-                    "Nine",
-                    "Seven",
-                    "Eleven",
-                    "Eight"
+                    "Two",
+                    "Eight",
+                    "Six",
+                    "Three"
                   ],
-                  "image_emoji": "9⃣",
-                  "hint": "Count backwards from ten."
+                  "image_emoji": "👀",
+                  "hint": "Count your own eyes."
                 },
                 {
-                  "question_text": "What letter does 'Nest' start with?",
-                  "correct_answer": "N",
+                  "question_text": "What sound does the letter 'O' make in octopus?",
+                  "correct_answer": "Ahhh",
                   "options": [
-                    "N",
-                    "M",
-                    "L",
-                    "O"
+                    "Ahhh",
+                    "Ohhh",
+                    "Eee",
+                    "Uh"
                   ],
-                  "image_emoji": "🏠",
-                  "hint": "Think of night or nap."
+                  "image_emoji": "🔊",
+                  "hint": "Think about the sound in 'on'."
                 }
               ]
             },
@@ -1347,19 +1323,19 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Oh look, I have a big orange and a tiny nose. The orange sits on my table next to a friendly octopus.",
+              "audio_text": "I see nine oranges on the table. Oh look, a cute octopus is playing next to them. Do you like oranges?",
               "questions": [
                 {
-                  "question": "What is big and sits on the table?",
-                  "answer": "orange",
+                  "question": "How many oranges are on the table?",
+                  "answer": "nine",
                   "options": [
-                    "orange",
-                    "nose",
-                    "apple"
+                    "nine",
+                    "seven",
+                    "ten"
                   ]
                 },
                 {
-                  "question": "What is next to the orange?",
+                  "question": "What is playing next to the oranges?",
                   "answer": "octopus",
                   "options": [
                     "octopus",
@@ -1382,39 +1358,39 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What sound does 'N' make? (Vocabulary question)",
+                  "question_text": "How many legs does an octopus have? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Nnn",
+                  "correct_answer": "eight",
                   "options": [
-                    "Nnn",
-                    "Ooo",
-                    "Mmm"
+                    "eight",
+                    "nine",
+                    "six"
                   ]
                 },
                 {
-                  "question_text": "How many __ are there? Fill in the blank. (Grammar question)",
+                  "question_text": "What letter does 'nose' start with? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "N",
+                  "options": [
+                    "N",
+                    "O",
+                    "M",
+                    "P"
+                  ]
+                },
+                {
+                  "question_text": "How many oranges are there if I have nine? (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "oranges",
+                  "correct_answer": "nine",
                   "options": [
-                    "octopus",
-                    "nose",
-                    "oranges",
-                    "nine"
+                    "seven",
+                    "eight",
+                    "nine",
+                    "ten"
                   ]
                 },
                 {
-                  "question_text": "What fruit is orange and round? (Reading comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "orange",
-                  "options": [
-                    "orange",
-                    "apple",
-                    "banana",
-                    "grape"
-                  ]
-                },
-                {
-                  "question_text": "True or False: An octopus has three arms.",
+                  "question_text": "True or False: An octopus has nine legs. (True/False question)",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -1423,13 +1399,14 @@
                   ]
                 },
                 {
-                  "question_text": "Which word starts with 'O'? (Vocabulary question)",
+                  "question_text": "Which word sounds like 'orange'? (Phonics comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "octopus",
+                  "correct_answer": "Origin",
                   "options": [
-                    "nose",
-                    "nine",
-                    "octopus"
+                    "Origin",
+                    "Nice",
+                    "Open",
+                    "Apple"
                   ]
                 }
               ]
@@ -1464,40 +1441,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which number comes before 7?",
+                  "question_text": "What sound does the letter 'K' make?",
+                  "correct_answer": "Kuh",
+                  "options": [
+                    "Sss",
+                    "Muh",
+                    "Kuh",
+                    "Luh"
+                  ],
+                  "image_emoji": "🐱",
+                  "hint": "Think of the first sound in 'kitten'."
+                },
+                {
+                  "question_text": "Which number is between 5 and 7?",
                   "correct_answer": "6",
                   "options": [
                     "5",
                     "6",
-                    "7",
+                    "4",
                     "8"
                   ],
                   "image_emoji": "6️⃣",
-                  "hint": "It's just one less than seven!"
+                  "hint": "Count one more after five."
                 },
                 {
-                  "question_text": "Which letter is the first letter in the word 'lemon'?",
-                  "correct_answer": "L",
+                  "question_text": "What fruit is yellow and starts with 'L'?",
+                  "correct_answer": "Lemon",
                   "options": [
-                    "J",
-                    "K",
-                    "L",
-                    "M"
+                    "Lemon",
+                    "Apple",
+                    "Grape",
+                    "Orange"
                   ],
                   "image_emoji": "🍋",
-                  "hint": "It's the first sound you hear when you say 'lemon'."
-                },
-                {
-                  "question_text": "Which animal is small, fluffy, and starts with 'K'?",
-                  "correct_answer": "kitten",
-                  "options": [
-                    "koala",
-                    "kangaroo",
-                    "kitten",
-                    "kite"
-                  ],
-                  "image_emoji": "🐱",
-                  "hint": "This animal is a baby cat and loves to play!"
+                  "hint": "This fruit is sour and starts with 'L'."
                 }
               ]
             },
@@ -1788,24 +1765,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "There are five red apples on the table. My friend ate three apples. How many apples are left for me?",
+              "audio_text": "I have a big orange ball and a small red car. I went to the park with my little brother. He played with the car. What toy did I bring?",
               "questions": [
                 {
-                  "question": "How many apples did my friend eat?",
-                  "answer": "three",
+                  "question": "What toy did my brother play with?",
+                  "answer": "small red car",
                   "options": [
-                    "two",
-                    "three",
-                    "five"
+                    "big orange ball",
+                    "small red car",
+                    "toy airplane"
                   ]
                 },
                 {
-                  "question": "What color are the apples?",
+                  "question": "What color is the car?",
                   "answer": "red",
                   "options": [
+                    "blue",
                     "green",
-                    "red",
-                    "yellow"
+                    "red"
                   ]
                 }
               ]
@@ -1820,59 +1797,59 @@
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Unit 3 Mastery Check: Lesson Review Quiz",
+              "title": "Unit 3 Mastery Check",
               "questions": [
                 {
-                  "question_text": "How many ducks are there? It is ___.",
+                  "question_text": "How many apples are there? It is ___ apples.",
                   "question_type": "fill_blank",
-                  "correct_answer": "three",
+                  "correct_answer": "5",
                   "options": [
-                    "three",
-                    "ten",
-                    "five",
-                    "one"
+                    "5",
+                    "6",
+                    "7",
+                    "8"
                   ]
                 },
                 {
-                  "question_text": "Which letter comes after 'K'?",
+                  "question_text": "Which picture shows a 'kitten'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "L",
+                  "correct_answer": "🐱",
                   "options": [
-                    "J",
-                    "K",
-                    "L",
-                    "M"
+                    "🦁",
+                    "🐱",
+                    "🐶",
+                    "🐰"
                   ]
                 },
                 {
-                  "question_text": "True or False: Cats can fly like birds.",
+                  "question_text": "True or False: 'Seven' comes after 'six'.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Choose the correct sentence: __ books are in the bag.",
+                  "question_text": "What color is a lemon?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Five",
+                  "correct_answer": "Yellow",
                   "options": [
-                    "Five",
-                    "It is",
-                    "Happy",
-                    "Big"
+                    "Green",
+                    "Yellow",
+                    "Red",
+                    "Blue"
                   ]
                 },
                 {
-                  "question_text": "What color is the sun? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "yellow",
+                  "question_text": "Complete the sentence: There are five red ___ on the table.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "apples",
                   "options": [
-                    "red",
-                    "green",
-                    "yellow",
-                    "blue"
+                    "apples",
+                    "oranges",
+                    "bananas",
+                    "lemons"
                   ]
                 }
               ]
