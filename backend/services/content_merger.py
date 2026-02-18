@@ -28,6 +28,7 @@ ENRICH_MAP = {
     'grammar_games': 'grammar_games',
     'warm_up': 'warm_up',
     'exit_ticket': 'exit_ticket',
+    'listening': 'listening',
 }
 
 
@@ -39,6 +40,9 @@ def _enriched_has_content(step: Dict, step_type: str) -> bool:
         return total_items >= 4
     if step_type in ('warm_up', 'exit_ticket'):
         return len(step.get('questions', [])) >= 2
+    if step_type == 'listening':
+        qs = step.get('questions', [])
+        return len(qs) >= 1 and all(q.get('options') and len(q['options']) >= 2 for q in qs)
     return False
 
 
