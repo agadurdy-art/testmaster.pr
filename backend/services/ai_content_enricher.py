@@ -230,29 +230,27 @@ Respond with ONLY valid JSON:
     async def _enrich_vocab_game(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich vocabulary games - generate multiple game types"""
+        """Enrich vocabulary games - generate 3 game types with 10-12 items each"""
         
         # Get vocabulary from the lesson for context
         vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
         vocab_items = vocab_step.get('items', [])
         vocab_words = [item.get('word') for item in vocab_items]
         
-        # Determine which games to generate based on lesson number
-        lesson_num = lesson.get('lesson_num', 1)
-        
         prompt = f"""Create vocabulary games for young ESL learners (ages 4-7).
 
 VOCABULARY WORDS: {vocab_words}
-VOCABULARY WITH EMOJIS: {json.dumps([{'word': v.get('word'), 'emoji': v.get('image_emoji', '📝')} for v in vocab_items], ensure_ascii=False)}
+VOCABULARY WITH EMOJIS: {json.dumps([{{'word': v.get('word'), 'emoji': v.get('image_emoji', '📝')}} for v in vocab_items], ensure_ascii=False)}
 
-Create 3 different game activities using these words. Each game should have 3-4 questions.
+IMPORTANT: Create 3 different game activities. EACH game must have 10-12 items (use each vocabulary word 2-3 times with variations).
 
 GAME TYPES TO CREATE:
-1. listen_choose_picture: Listen to word, choose emoji
-2. read_choose_picture: Read word, choose emoji  
-3. unscramble: Arrange letters to spell word
+1. listen_choose_picture: Student hears word, selects correct emoji (10-12 items)
+2. read_choose_picture: Student reads word, selects correct emoji (10-12 items)
+3. unscramble: Student arranges scrambled letters to spell word (10-12 items)
 
-For each word, also add distractors (3 other vocab words with emojis).
+For listen_choose_picture and read_choose_picture, include 3 distractor options per item.
+Repeat vocabulary words multiple times to reach 10-12 items per game.
 
 Respond with ONLY valid JSON:
 {{
@@ -262,29 +260,24 @@ Respond with ONLY valid JSON:
         {{
             "game_type": "listen_choose_picture",
             "items": [
-                {{
-                    "word": "cat",
-                    "emoji": "🐱",
-                    "distractors": [
-                        {{"word": "dog", "emoji": "🐕"}},
-                        {{"word": "bird", "emoji": "🐦"}},
-                        {{"word": "fish", "emoji": "🐟"}}
-                    ]
-                }}
+                {{"word": "hello", "emoji": "👋", "distractors": [{{"word": "apple", "emoji": "🍎"}}, {{"word": "teacher", "emoji": "👩‍🏫"}}, {{"word": "student", "emoji": "🙋"}}]}},
+                {{"word": "teacher", "emoji": "👩‍🏫", "distractors": [...]}},
+                ... (10-12 items total)
             ]
         }},
         {{
             "game_type": "read_choose_picture",
-            "items": [...]
+            "items": [...] (10-12 items)
         }},
         {{
             "game_type": "unscramble",
             "items": [
-                {{"word": "cat", "emoji": "🐱"}}
+                {{"word": "hello", "emoji": "👋"}},
+                ... (10-12 items)
             ]
         }}
     ],
-    "total_exercises": 10
+    "total_exercises": 32
 }}"""
 
         try:
@@ -293,11 +286,6 @@ Respond with ONLY valid JSON:
         except Exception as e:
             print(f"Vocab game enrichment failed: {e}")
             return step
-
-        try:
-            response = await chat.send_message(UserMessage(text=prompt))
-            return extract_json_from_response(response)
-        except Exception as e:
             print(f"Vocab game enrichment failed: {e}")
             return step
     
