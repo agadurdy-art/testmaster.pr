@@ -27,40 +27,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which pet chases the ball and barks?",
-                  "correct_answer": "dog",
+                  "question_text": "Which pet loves to swim in water?",
+                  "correct_answer": "fish",
                   "options": [
+                    "fish",
                     "dog",
                     "cat",
-                    "fish",
                     "bird"
                   ],
-                  "image_emoji": "🐶",
-                  "hint": "This pet says Woof!"
+                  "image_emoji": "🐠",
+                  "hint": "This pet has fins and swims."
                 },
                 {
-                  "question_text": "Which pet likes to sing and tweet?",
-                  "correct_answer": "bird",
+                  "question_text": "Which pet wiggles its nose and hops?",
+                  "correct_answer": "rabbit",
                   "options": [
-                    "bird",
+                    "rabbit",
+                    "dog",
                     "cat",
-                    "fish",
-                    "dog"
+                    "bird"
+                  ],
+                  "image_emoji": "🐇",
+                  "hint": "This pet loves to eat carrots!"
+                },
+                {
+                  "question_text": "Which pet has feathers and likes to say Polly?",
+                  "correct_answer": "parrot",
+                  "options": [
+                    "parrot",
+                    "dog",
+                    "cat",
+                    "fish"
                   ],
                   "image_emoji": "🐦",
-                  "hint": "This pet loves to fly!"
-                },
-                {
-                  "question_text": "Which pet purrs and loves milk?",
-                  "correct_answer": "cat",
-                  "options": [
-                    "cat",
-                    "dog",
-                    "fish",
-                    "bird"
-                  ],
-                  "image_emoji": "🐱",
-                  "hint": "This pet says Meow!"
+                  "hint": "This pet is colorful and can talk!"
                 }
               ]
             },
@@ -365,23 +365,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I have a cat. She likes to sleep. Do you like cats?",
+              "audio_text": "I have a dog. He loves to run in the park. Do you like dogs?",
               "questions": [
                 {
-                  "question": "Does she like her cat?",
+                  "question": "What does her dog like to do?",
+                  "answer": "Run",
+                  "options": [
+                    "Run",
+                    "Sleep",
+                    "Swim"
+                  ]
+                },
+                {
+                  "question": "Does she like dogs?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
                     "No"
-                  ]
-                },
-                {
-                  "question": "What animal does she have?",
-                  "answer": "Cat",
-                  "options": [
-                    "Cat",
-                    "Dog",
-                    "Bird"
                   ]
                 }
               ]
@@ -399,56 +399,45 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What is a pet you keep at home?",
+                  "question_text": "Which word is a pet?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Dog",
+                  "correct_answer": "cat",
                   "options": [
-                    "Lion",
-                    "Elephant",
-                    "Dog",
-                    "Shark"
+                    "tree",
+                    "car",
+                    "cat",
+                    "sun"
                   ]
                 },
                 {
-                  "question_text": "I like ___. (Vocabulary question)",
+                  "question_text": "I like ___s. (Grammar question)",
                   "question_type": "fill_blank",
                   "correct_answer": "dogs",
                   "options": [
+                    "tree",
                     "dogs",
-                    "fly",
-                    "apple",
-                    "books"
+                    "sun",
+                    "cakes"
                   ]
                 },
                 {
-                  "question_text": "Which animal can fly?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "Bird",
-                  "options": [
-                    "Cat",
-                    "Dog",
-                    "Bird",
-                    "Fish"
-                  ]
-                },
-                {
-                  "question_text": "True or False: I like cats.",
+                  "question_text": "Does she have a bird?",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Which sentence is correct?",
+                  "question_text": "What pattern is used in 'I like dogs'?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "I like cats.",
+                  "correct_answer": "'I like ___s.'",
                   "options": [
-                    "I like run.",
-                    "I like cats.",
-                    "I likes dogs.",
-                    "I cat like."
+                    "'I am ___.'",
+                    "'I like ___s.'",
+                    "'Are you ___?'",
+                    "'Is it ___?'"
                   ]
                 }
               ]
@@ -477,40 +466,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which pet likes to hop and eat carrots?",
+                  "question_text": "Which pet has long ears and loves to hop?",
                   "correct_answer": "rabbit",
                   "options": [
                     "rabbit",
-                    "dog",
+                    "hamster",
                     "cat",
-                    "fish"
+                    "snake"
                   ],
                   "image_emoji": "🐰",
-                  "hint": "It hops and has long ears!"
+                  "hint": "This pet loves to eat carrots!"
                 },
                 {
-                  "question_text": "What small pet makes a squeaky sound and likes cheese?",
+                  "question_text": "Which pet is tiny, loves cheese, and squeaks?",
                   "correct_answer": "mouse",
                   "options": [
                     "mouse",
-                    "squirrel",
-                    "bird",
-                    "frog"
+                    "puppy",
+                    "parrot",
+                    "goldfish"
                   ],
                   "image_emoji": "🐭",
-                  "hint": "It's small and often seen in cartoons!"
+                  "hint": "It is a common cartoon character!"
                 },
                 {
-                  "question_text": "Which animal carries its home on its back?",
+                  "question_text": "Which animal moves slowly and has a shell on its back?",
                   "correct_answer": "turtle",
                   "options": [
                     "turtle",
                     "snail",
-                    "crab",
+                    "hedgehog",
                     "armadillo"
                   ],
                   "image_emoji": "🐢",
-                  "hint": "It has a hard shell and moves slowly!"
+                  "hint": "It carries its home like a backpack!"
                 }
               ]
             },
@@ -803,19 +792,19 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I like turtles and rabbits, but I don't like mice. Does your sister like rabbits?",
+              "audio_text": "I don't like mice, but I like turtles and rabbits. Does your brother like turtles too?",
               "questions": [
                 {
-                  "question": "What animal does she not like?",
-                  "answer": "mice",
+                  "question": "What animals does she like?",
+                  "answer": "turtles and rabbits",
                   "options": [
                     "mice",
-                    "turtles",
-                    "rabbits"
+                    "rabbits",
+                    "turtles and rabbits"
                   ]
                 },
                 {
-                  "question": "Does her sister like rabbits?",
+                  "question": "Does her brother like turtles?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
@@ -837,45 +826,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Which animal hops and likes carrots? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "rabbit",
-                  "options": [
-                    "rabbit",
-                    "mouse",
-                    "turtle",
-                    "dog"
-                  ]
-                },
-                {
-                  "question_text": "I don't like ___. (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "mice",
-                  "options": [
-                    "mice",
-                    "turtle",
-                    "rabbit",
-                    "book"
-                  ]
-                },
-                {
-                  "question_text": "What animal does John say he doesn't like? (Reading comprehension question)",
+                  "question_text": "Which word means a small animal that squeaks? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "mouse",
                   "options": [
                     "rabbit",
                     "mouse",
                     "turtle",
-                    "fish"
+                    "elephant"
                   ]
                 },
                 {
-                  "question_text": "True or False: A turtle can hop. (Comprehension question)",
+                  "question_text": "I don't like ___. (Fill in the blank with a grammar pattern)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "mice",
+                  "options": [
+                    "mice",
+                    "fish",
+                    "birds",
+                    "cars"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Rabbits have long ears.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
+                  ]
+                },
+                {
+                  "question_text": "Which animal carries its home on its back?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "turtle",
+                  "options": [
+                    "mouse",
+                    "rabbit",
+                    "turtle",
+                    "dog"
+                  ]
+                },
+                {
+                  "question_text": "Does she like turtles? Choose 'Yes' or 'No'.",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe",
+                    "I don't know"
                   ]
                 }
               ]
@@ -898,7 +898,7 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which animal can you hear barking? 🐶",
+                  "question_text": "Which animal likes to wag its tail when happy? 🐶",
                   "correct_answer": "dog",
                   "options": [
                     "cat",
@@ -907,10 +907,10 @@
                     "dog"
                   ],
                   "image_emoji": "🐶",
-                  "hint": "This pet loves to fetch and has a wagging tail!"
+                  "hint": "This animal loves to play fetch."
                 },
                 {
-                  "question_text": "Which pet loves to swim in a small tank? 🐡",
+                  "question_text": "Which pet swims and has colorful scales? 🐟",
                   "correct_answer": "fish",
                   "options": [
                     "rabbit",
@@ -918,11 +918,11 @@
                     "dog",
                     "fish"
                   ],
-                  "image_emoji": "🐡",
-                  "hint": "It's a small, colorful animal that swims a lot!"
+                  "image_emoji": "🐟",
+                  "hint": "It swims in water and can be different colors."
                 },
                 {
-                  "question_text": "Which animal loves to purr when you pet it? 🐱",
+                  "question_text": "Which furry animal purrs when you pet it? 🐱",
                   "correct_answer": "cat",
                   "options": [
                     "fish",
@@ -931,7 +931,7 @@
                     "cat"
                   ],
                   "image_emoji": "🐱",
-                  "hint": "It has soft fur and sleek whiskers, and loves to nap!"
+                  "hint": "This animal likes to curl up and nap."
                 }
               ]
             },
@@ -1261,10 +1261,10 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Do you like cute, colorful fish? Yes, I think they are very pretty swimming in the water!",
+              "audio_text": "Do you like fish swimming in the water? Yes, they are very colorful and fun to watch!",
               "questions": [
                 {
-                  "question": "Are the fish in the water?",
+                  "question": "Do you like colorful fish?",
                   "answer": "Yes",
                   "options": [
                     "Yes",
@@ -1272,12 +1272,12 @@
                   ]
                 },
                 {
-                  "question": "Why do I like the fish?",
-                  "answer": "They are colorful",
+                  "question": "Where are the fish swimming?",
+                  "answer": "In the water",
                   "options": [
-                    "They are colorful",
-                    "They are loud",
-                    "They fly"
+                    "On the grass",
+                    "In the water",
+                    "In the sky"
                   ]
                 }
               ]
@@ -1295,45 +1295,45 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Fill in the blank: Do you like ___ fish?",
+                  "question_text": "Do you like ___ fish? (Grammar question)",
                   "question_type": "fill_blank",
                   "correct_answer": "cute",
                   "options": [
                     "cute",
                     "loud",
-                    "big",
-                    "small"
+                    "fast",
+                    "big"
                   ]
                 },
                 {
-                  "question_text": "What can fish do?",
+                  "question_text": "What swims in the water? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Swim in water",
+                  "correct_answer": "fish",
                   "options": [
-                    "Fly in the sky",
-                    "Walk on land",
-                    "Swim in water",
-                    "Chirp on trees"
+                    "cat",
+                    "dog",
+                    "fish",
+                    "bird"
                   ]
                 },
                 {
-                  "question_text": "True or False: Fish live in water.",
+                  "question_text": "True or False: Water is dry.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What question can you ask about likes?",
+                  "question_text": "What do you say if you like apples? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Do you like ___?",
+                  "correct_answer": "Yes, I like apples.",
                   "options": [
-                    "Are you like ___?",
-                    "Do you love ___?",
-                    "Do you like ___?",
-                    "Can you like ___?"
+                    "No, I don't like apples.",
+                    "Yes, I like apples.",
+                    "I don't know.",
+                    "Do you like apples?"
                   ]
                 }
               ]
@@ -1357,40 +1357,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which pet has long ears and hops?",
-                  "correct_answer": "rabbit",
+                  "question_text": "Which pet can fly and sing?",
+                  "correct_answer": "parrot",
                   "options": [
-                    "rabbit",
-                    "cat",
-                    "dog",
-                    "parrot"
-                  ],
-                  "image_emoji": "🐇",
-                  "hint": "This pet loves to chew carrots!"
-                },
-                {
-                  "question_text": "Which pet purrs and likes to climb trees?",
-                  "correct_answer": "cat",
-                  "options": [
+                    "parrot",
                     "cat",
                     "hamster",
+                    "rabbit"
+                  ],
+                  "image_emoji": "🦜",
+                  "hint": "This pet has feathers and loves to talk!"
+                },
+                {
+                  "question_text": "Which pet has a shell and moves very slowly?",
+                  "correct_answer": "turtle",
+                  "options": [
                     "turtle",
-                    "dog"
+                    "dog",
+                    "hamster",
+                    "cat"
                   ],
-                  "image_emoji": "🐈",
-                  "hint": "This pet loves to play with yarn!"
+                  "image_emoji": "🐢",
+                  "hint": "This pet can live in water or on land!"
                 },
                 {
-                  "question_text": "Which pet runs on a wheel for exercise?",
-                  "correct_answer": "hamster",
+                  "question_text": "Which pet is known for barking?",
+                  "correct_answer": "dog",
                   "options": [
-                    "hamster",
+                    "dog",
                     "parrot",
                     "rabbit",
-                    "turtle"
+                    "cat"
                   ],
-                  "image_emoji": "🐹",
-                  "hint": "This pet is small and loves to nibble seeds!"
+                  "image_emoji": "🐶",
+                  "hint": "This pet loves to wag its tail and play fetch!"
                 }
               ]
             },
@@ -1682,24 +1682,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I have a big orange cat. His name is Whiskers. I like feeding him fish.",
+              "audio_text": "I have a small brown dog named Buddy. Buddy loves playing with his red ball in the park. I like watching him run.",
               "questions": [
                 {
-                  "question": "What is the cat's name?",
-                  "answer": "Whiskers",
+                  "question": "What color is Buddy's ball?",
+                  "answer": "red",
                   "options": [
-                    "Whiskers",
-                    "Fluffy",
-                    "Max"
+                    "red",
+                    "blue",
+                    "green"
                   ]
                 },
                 {
-                  "question": "What color is the cat?",
-                  "answer": "orange",
+                  "question": "Does Buddy like playing in the park?",
+                  "answer": "Yes",
                   "options": [
-                    "orange",
-                    "black",
-                    "white"
+                    "Yes",
+                    "No"
                   ]
                 }
               ]
@@ -1717,55 +1716,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ like dogs. (Grammar question)",
+                  "question_text": "I ___ fish. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "don't",
+                  "correct_answer": "like",
                   "options": [
                     "like",
-                    "don't",
-                    "doesn't",
-                    "am"
+                    "likes",
+                    "liked",
+                    "liking"
                   ]
                 },
                 {
-                  "question_text": "What pet can fly? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'dog'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "parrot",
+                  "correct_answer": "🐶",
                   "options": [
-                    "parrot",
-                    "rabbit",
-                    "dog",
-                    "fish"
+                    "🐶",
+                    "🐱",
+                    "🐦",
+                    "🐢"
                   ]
                 },
                 {
-                  "question_text": "True or False: Dogs can swim. (Reading comprehension question)",
+                  "question_text": "True or False: Cats can fly.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What does Ben like? 'I like cats.'",
+                  "question_text": "What does 'Buddy loves to play' mean? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "cats",
+                  "correct_answer": "Buddy likes playing.",
                   "options": [
-                    "dogs",
-                    "fish",
-                    "cats",
-                    "birds"
+                    "Buddy likes sleeping.",
+                    "Buddy likes playing.",
+                    "Buddy is sleeping.",
+                    "Buddy doesn't play."
                   ]
                 },
                 {
-                  "question_text": "Do you like turtles? (Grammar pattern question)",
+                  "question_text": "Do you like pets? (Grammar question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "Yes",
                   "options": [
                     "Yes",
                     "No",
-                    "Maybe"
+                    "Maybe",
+                    "Sometimes"
                   ]
                 }
               ]
