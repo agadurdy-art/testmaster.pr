@@ -242,18 +242,22 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                     
                     # Embed data based on step type
                     if step_type == "warm_up":
-                        # Support both old format (single question) and new format (questions array)
-                        if step.get('questions'):
+                        if step.get('questions') and len(step['questions']) > 0:
+                            qs = step['questions']
+                            for qi, q in enumerate(qs):
+                                if not q.get('question_id'):
+                                    q['question_id'] = f"warmup_q{qi+1}"
                             activity["data"] = {
                                 "video_url": step.get("video_url", ""),
                                 "instruction": step.get("instruction", ""),
-                                "questions": step.get("questions", [])
+                                "questions": qs
                             }
                         else:
                             activity["data"] = {
                                 "video_url": step.get("video_url", ""),
                                 "instruction": step.get("instruction", ""),
                                 "questions": [{
+                                    "question_id": "warmup_q1",
                                     "question_text": step.get("question_text", ""),
                                     "correct_answer": step.get("correct_answer", ""),
                                     "options": step.get("options", []),
@@ -263,8 +267,9 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                             }
                     
                     elif step_type == "vocabulary":
+                        # Component expects 'words', not 'items'
                         activity["data"] = {
-                            "items": step.get("items", [])
+                            "words": step.get("items", [])
                         }
                     
                     elif step_type == "vocab_games":
@@ -275,6 +280,7 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                     elif step_type == "micro_reading":
                         activity["data"] = {
                             "passage": step.get("text", "") or step.get("passage", ""),
+                            "passage_text": step.get("text", "") or step.get("passage", ""),
                             "questions": step.get("questions", [])
                         }
                     
@@ -293,24 +299,31 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                     elif step_type == "listening":
                         activity["data"] = {
                             "audio_text": step.get("audio_text", ""),
+                            "transcript": step.get("audio_text", ""),
                             "questions": step.get("questions", [])
                         }
                     
                     elif step_type == "production":
                         activity["data"] = {
                             "prompt": step.get("prompt", ""),
-                            "expected_text": step.get("expected_text", "")
+                            "expected_text": step.get("expected_text", ""),
+                            "example_response": step.get("expected_text", ""),
+                            "production_type": step.get("mode", "speaking")
                         }
                     
                     elif step_type == "exit_ticket":
-                        # Support both old format (single question) and new format (questions array)
-                        if step.get('questions'):
+                        if step.get('questions') and len(step['questions']) > 0:
+                            qs = step['questions']
+                            for qi, q in enumerate(qs):
+                                if not q.get('question_id'):
+                                    q['question_id'] = f"exit_q{qi+1}"
                             activity["data"] = {
-                                "questions": step.get("questions", [])
+                                "questions": qs
                             }
                         else:
                             activity["data"] = {
                                 "questions": [{
+                                    "question_id": "exit_q1",
                                     "question_text": step.get("question_text", ""),
                                     "correct_answer": step.get("correct_answer", ""),
                                     "options": step.get("options", [])
