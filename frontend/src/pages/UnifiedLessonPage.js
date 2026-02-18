@@ -1758,10 +1758,10 @@ export default function UnifiedLessonPage({ user }) {
       if (first) { setCurrentActivityType(first.type); await loadActivityData(first.type); }
       // Pre-fetch vocab and grammar for summary card
       try {
-        if (lessonData.summary_data?.words?.length) {
+        if (data.summary_data?.words?.length) {
           setLessonSummaryData({
-            words: lessonData.summary_data.words,
-            grammarRules: lessonData.summary_data.grammar_rules || []
+            words: data.summary_data.words,
+            grammarRules: data.summary_data.grammar_rules || []
           });
         } else {
           const [vocabRes, grammarRes] = await Promise.all([
