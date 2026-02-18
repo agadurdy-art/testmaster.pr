@@ -137,9 +137,14 @@ Rules:
 - Return ONLY valid JSON, no markdown"""
 
     try:
-        chat = LlmChat(api_key=api_key, model="gpt-4o")
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"worksheet_{lesson_title}",
+            system_message="You are an expert ESL teacher. Return ONLY valid JSON."
+        ).with_model("openai", "gpt-4o")
+
         response = await chat.send_message(UserMessage(text=prompt))
-        text = response.text.strip()
+        text = response.strip() if isinstance(response, str) else str(response)
 
         # Parse JSON
         import re
