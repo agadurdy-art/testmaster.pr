@@ -553,31 +553,64 @@ Respond with ONLY valid JSON:
     async def _enrich_exit_ticket(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich exit ticket with comprehensive review question"""
+        """Enrich exit ticket with 3-5 comprehensive review questions"""
         
         vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
         vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
         
-        prompt = f"""Create an exit quiz question for young ESL learners (ages 4-7).
+        grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'grammar_focus'), {})
+        grammar_pattern = grammar_step.get('rule_pattern', unit.get('grammar_focus', []))
+        
+        prompt = f"""Create an exit quiz for young ESL learners (ages 4-7) that summarizes the ENTIRE lesson.
 
-ORIGINAL CONTENT:
-{json.dumps(step, indent=2)}
+LESSON CONTENT COVERED:
+- Vocabulary: {vocab_words}
+- Grammar Pattern: {grammar_pattern}
+- Lesson Topic: {lesson.get('topic')}
+- Lesson Title: {lesson.get('title')}
 
-VOCABULARY LEARNED: {vocab_words}
-LESSON TOPIC: {lesson.get('topic')}
+IMPORTANT: Create 3-5 questions that test ALL aspects of the lesson:
+1. At least 1 vocabulary question
+2. At least 1 grammar question  
+3. At least 1 reading comprehension question
+4. Mix of question types (fill-blank, multiple choice, true/false)
 
-Create a fun, visual quiz question that:
-1. Tests one vocabulary word with an emoji cue
-2. Has 3-4 clear options
-3. Is encouraging and playful
+Each question should:
+- Be age-appropriate and clear
+- Have 3-4 options
+- Test real understanding, not just memory
 
 Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
     "type": "exit_ticket",
-    "question_text": "Fun question with emoji: Pick the ___!",
-    "correct_answer": "correct_word",
-    "options": ["option1", "option2", "option3"]
+    "title": "Lesson Review Quiz",
+    "questions": [
+        {{
+            "question_text": "I ___ Ben. (Grammar question)",
+            "question_type": "fill_blank",
+            "correct_answer": "am",
+            "options": ["am", "is", "are", "be"]
+        }},
+        {{
+            "question_text": "Which emoji shows 'teacher'? (Vocabulary question)",
+            "question_type": "multiple_choice",
+            "correct_answer": "👩‍🏫",
+            "options": ["👩‍🏫", "🍎", "👋", "🙋"]
+        }},
+        {{
+            "question_text": "True or False: 'Hello' is a greeting.",
+            "question_type": "true_false",
+            "correct_answer": "True",
+            "options": ["True", "False"]
+        }},
+        {{
+            "question_text": "Another review question...",
+            "question_type": "multiple_choice",
+            "correct_answer": "correct",
+            "options": ["option1", "option2", "option3", "correct"]
+        }}
+    ]
 }}"""
 
         try:
