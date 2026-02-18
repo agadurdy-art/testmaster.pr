@@ -28,40 +28,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which body part do you clap with in the song?",
-                  "correct_answer": "hands",
+                  "question_text": "What body part do you shake in the song?",
+                  "correct_answer": "hips",
                   "options": [
-                    "nose",
-                    "feet",
-                    "hands",
-                    "ears"
+                    "hips",
+                    "elbows",
+                    "fingers",
+                    "neck"
                   ],
-                  "image_emoji": "🖐",
-                  "hint": "You have two of them and use them to hold things."
+                  "image_emoji": "🕴",
+                  "hint": "It's between your stomach and legs."
                 },
                 {
-                  "question_text": "Where do you wear your shoes?",
+                  "question_text": "Which body part do you stomp with?",
                   "correct_answer": "feet",
                   "options": [
-                    "head",
                     "hands",
                     "feet",
-                    "shoulders"
+                    "head",
+                    "arms"
                   ],
-                  "image_emoji": "👞",
-                  "hint": "You use them to walk and run."
+                  "image_emoji": "👣",
+                  "hint": "You put shoes on them."
                 },
                 {
-                  "question_text": "What do you nod with when you say yes?",
-                  "correct_answer": "head",
+                  "question_text": "What do you wave with to say hello?",
+                  "correct_answer": "hand",
                   "options": [
-                    "knees",
-                    "toes",
-                    "head",
-                    "eyes"
+                    "ear",
+                    "hand",
+                    "knee",
+                    "shoulder"
                   ],
-                  "image_emoji": "💪",
-                  "hint": "It's at the top of your body."
+                  "image_emoji": "👋",
+                  "hint": "You can wear a glove on it."
                 }
               ]
             },
@@ -402,24 +402,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello, friends! Let's have fun today. Touch your legs and jump up high. Can you do it?",
+              "audio_text": "Hi kids! Let's play a game. Touch your arms and then clap your hands. Can you do that with me?",
               "questions": [
                 {
-                  "question": "What should you touch?",
-                  "answer": "legs",
+                  "question": "What do you touch first?",
+                  "answer": "arms",
                   "options": [
+                    "hands",
                     "arms",
-                    "legs",
-                    "feet"
+                    "legs"
                   ]
                 },
                 {
-                  "question": "What should you do after touching your legs?",
-                  "answer": "jump",
+                  "question": "What should you do after touching your arms?",
+                  "answer": "clap",
                   "options": [
-                    "sit",
-                    "jump",
-                    "run"
+                    "clap",
+                    "stomp",
+                    "sit"
                   ]
                 }
               ]
@@ -437,56 +437,45 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Fill in the blank: Touch your ___. (Grammar question)",
+                  "question_text": "Touch your ___ to wave hello. (Grammar question)",
                   "question_type": "fill_blank",
                   "correct_answer": "hand",
                   "options": [
-                    "leg",
-                    "foot",
-                    "hand",
-                    "eye"
-                  ]
-                },
-                {
-                  "question_text": "What part of the body helps you wave hello? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "arm",
-                  "options": [
                     "foot",
                     "head",
-                    "arm",
-                    "nose"
+                    "hand",
+                    "leg"
                   ]
                 },
                 {
-                  "question_text": "True or False: We use our legs to jump.",
+                  "question_text": "Which picture shows a foot? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "👣",
+                  "options": [
+                    "👣",
+                    "🖐",
+                    "👋",
+                    "👨"
+                  ]
+                },
+                {
+                  "question_text": "True or False: You can clap with your feet.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Choose the command that matches: 'Touch your...'",
+                  "question_text": "What do you do with your legs? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Touch your foot.",
+                  "correct_answer": "Walk",
                   "options": [
-                    "Touch your foot.",
-                    "Stomp your hands.",
-                    "Eat your shoe.",
-                    "Clap your nose."
-                  ]
-                },
-                {
-                  "question_text": "Which sentence is a command?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "Touch your head.",
-                  "options": [
-                    "I like apples.",
-                    "The dog runs fast.",
-                    "Touch your head.",
-                    "It is sunny."
+                    "Clap",
+                    "Wave",
+                    "Walk",
+                    "Write"
                   ]
                 }
               ]
@@ -515,40 +504,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you use to clap your hands?",
-                  "correct_answer": "hands",
+                  "question_text": "What do you use to hear music?",
+                  "correct_answer": "ears",
                   "options": [
-                    "hands",
-                    "feet",
                     "ears",
-                    "nose"
-                  ],
-                  "image_emoji": "👏",
-                  "hint": "You have five fingers on each."
-                },
-                {
-                  "question_text": "What part helps you see the world around you?",
-                  "correct_answer": "eyes",
-                  "options": [
                     "eyes",
-                    "ears",
-                    "mouth",
-                    "nose"
+                    "nose",
+                    "mouth"
                   ],
-                  "image_emoji": "👁",
-                  "hint": "They are usually above your nose and below your forehead."
+                  "image_emoji": "🎧",
+                  "hint": "They are on the side of your head."
                 },
                 {
-                  "question_text": "What do you use to taste yummy food?",
-                  "correct_answer": "tongue",
+                  "question_text": "Which part helps you smell flowers?",
+                  "correct_answer": "nose",
                   "options": [
-                    "tongue",
-                    "teeth",
                     "nose",
-                    "ear"
+                    "eyes",
+                    "mouth",
+                    "chin"
                   ],
-                  "image_emoji": "🍽",
-                  "hint": "It's inside your mouth and helps you taste."
+                  "image_emoji": "🌺",
+                  "hint": "It's in the middle of your face."
+                },
+                {
+                  "question_text": "What do you use to kick a ball?",
+                  "correct_answer": "feet",
+                  "options": [
+                    "feet",
+                    "hands",
+                    "elbows",
+                    "knees"
+                  ],
+                  "image_emoji": "🏉",
+                  "hint": "They are at the end of your legs."
                 }
               ]
             },
@@ -897,24 +886,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Look at your hands and feet. You have ten fingers and ten small toes. Can you touch your nose with a finger?",
+              "audio_text": "Clap your hands and wiggle your toes. Can you count how many fingers are on one hand?",
               "questions": [
                 {
-                  "question": "How many toes do you have?",
-                  "answer": "ten",
+                  "question": "How many fingers are on one hand?",
+                  "answer": "five",
                   "options": [
-                    "ten",
                     "five",
+                    "ten",
                     "four"
                   ]
                 },
                 {
-                  "question": "What should you touch with your finger?",
-                  "answer": "nose",
+                  "question": "What should you wiggle?",
+                  "answer": "toes",
                   "options": [
-                    "nose",
-                    "ear",
-                    "knee"
+                    "toes",
+                    "fingers",
+                    "ears"
                   ]
                 }
               ]
@@ -932,14 +921,25 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What do you have ten of on your feet? (Vocabulary question)",
+                  "question_text": "How many fingers do you have on both hands? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "toes",
+                  "correct_answer": "Ten",
                   "options": [
-                    "toes",
-                    "fingers",
-                    "hands",
-                    "ears"
+                    "Ten",
+                    "Five",
+                    "Eight",
+                    "Twelve"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'short'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Short",
+                  "options": [
+                    "Long",
+                    "Tall",
+                    "Short",
+                    "Wide"
                   ]
                 },
                 {
@@ -949,28 +949,28 @@
                   "options": [
                     "long",
                     "short",
-                    "round",
-                    "wide"
+                    "heavy",
+                    "light"
                   ]
                 },
                 {
-                  "question_text": "Which sentence is correct? (Reading comprehension)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "Fingers are long.",
-                  "options": [
-                    "Fingers are long.",
-                    "Fingers is long.",
-                    "Finger are long.",
-                    "Fingers are short."
-                  ]
-                },
-                {
-                  "question_text": "True or False: Toes are on your head.",
+                  "question_text": "True or False: A toe is on your hand.",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
+                  ]
+                },
+                {
+                  "question_text": "Which body part is not mentioned in the lesson? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Nose",
+                  "options": [
+                    "Finger",
+                    "Toe",
+                    "Nose",
+                    "Hand"
                   ]
                 }
               ]
@@ -993,40 +993,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you bend when you wave hello?",
-                  "correct_answer": "elbow",
+                  "question_text": "What do you use to clap your hands together?",
+                  "correct_answer": "hands",
                   "options": [
+                    "hands",
+                    "feet",
+                    "knees",
+                    "ears"
+                  ],
+                  "image_emoji": "👏",
+                  "hint": "You wave hello with these!"
+                },
+                {
+                  "question_text": "Which helps you run fast and jump high?",
+                  "correct_answer": "legs",
+                  "options": [
+                    "legs",
+                    "arms",
+                    "ears",
+                    "nose"
+                  ],
+                  "image_emoji": "👣",
+                  "hint": "They're below your waist!"
+                },
+                {
+                  "question_text": "What part of your body lets you nod up and down?",
+                  "correct_answer": "head",
+                  "options": [
+                    "head",
                     "elbow",
-                    "knee",
-                    "toe",
+                    "shoulder",
                     "ankle"
                   ],
-                  "image_emoji": "👋",
-                  "hint": "It's in the middle of your arm!"
-                },
-                {
-                  "question_text": "What part of your body helps you kick a ball?",
-                  "correct_answer": "foot",
-                  "options": [
-                    "foot",
-                    "hand",
-                    "nose",
-                    "eye"
-                  ],
-                  "image_emoji": "🥾",
-                  "hint": "Think of what you wear shoes on."
-                },
-                {
-                  "question_text": "Which helps you turn your head to see left and right?",
-                  "correct_answer": "neck",
-                  "options": [
-                    "neck",
-                    "waist",
-                    "elbow",
-                    "knee"
-                  ],
-                  "image_emoji": "🧍",
-                  "hint": "It's right under your head!"
+                  "image_emoji": "🧐",
+                  "hint": "It's on top of your neck!"
                 }
               ]
             },
@@ -1362,24 +1362,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Let's have some fun! First, stand up and touch your shoulders. Now, stomp your feet and say, 'I have knees!'",
+              "audio_text": "Hello children! Let’s get moving! Clap your hands three times. Now jump up high and shout, 'I have feet!'",
               "questions": [
                 {
-                  "question": "What do you touch first?",
-                  "answer": "shoulders",
+                  "question": "How many times do you clap your hands?",
+                  "answer": 3,
                   "options": [
-                    "shoulders",
-                    "knees",
-                    "feet"
+                    2,
+                    3,
+                    4
                   ]
                 },
                 {
-                  "question": "What do you have after stomping?",
-                  "answer": "knees",
+                  "question": "What do you shout after jumping?",
+                  "answer": "I have feet!",
                   "options": [
-                    "shoulders",
-                    "knees",
-                    "elbows"
+                    "I have feet!",
+                    "I have hands!",
+                    "I have elbows!"
                   ]
                 }
               ]
@@ -1397,29 +1397,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Touch your ___. (Grammar question)",
+                  "question_text": "Touch your ______. (Vocabulary question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "knee",
+                  "correct_answer": "shoulder",
                   "options": [
-                    "knee",
                     "shoulder",
-                    "elbow",
-                    "foot"
+                    "nose",
+                    "ear",
+                    "finger"
                   ]
                 },
                 {
-                  "question_text": "Which action is 'clap'? (Vocabulary question)",
+                  "question_text": "What do you 'clap' together? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "👏",
+                  "correct_answer": "hands",
                   "options": [
-                    "👏",
-                    "👟",
-                    "✋",
-                    "👂"
+                    "hands",
+                    "feet",
+                    "knees",
+                    "ears"
                   ]
                 },
                 {
-                  "question_text": "True or False: You stomp with your ears.",
+                  "question_text": "'Stomp your feet.' What does 'stomp' mean? (Grammar question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "to step heavily",
+                  "options": [
+                    "to step heavily",
+                    "to whisper",
+                    "to sit down",
+                    "to clap"
+                  ]
+                },
+                {
+                  "question_text": "Is it correct: 'Jump your knees.'? (Grammar question)",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -1428,14 +1439,14 @@
                   ]
                 },
                 {
-                  "question_text": "What do you say after stomping? (Reading comprehension)",
+                  "question_text": "Reading: Find the action - 'She claps and stomps.' What is she doing?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "I have knees!",
+                  "correct_answer": "Moving her body",
                   "options": [
-                    "I have knees!",
-                    "I can jump!",
-                    "I can fly!",
-                    "I love cookies!"
+                    "Sleeping",
+                    "Drawing",
+                    "Eating",
+                    "Moving her body"
                   ]
                 }
               ]
@@ -1459,40 +1470,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What body part helps you hear music?",
-                  "correct_answer": "ears",
+                  "question_text": "What body part lets you see pretty colors?",
+                  "correct_answer": "eyes",
                   "options": [
-                    "ears",
                     "eyes",
-                    "mouth",
+                    "nose",
+                    "ears",
+                    "mouth"
+                  ],
+                  "image_emoji": "👀",
+                  "hint": "You open these to look at the world."
+                },
+                {
+                  "question_text": "Which body part do you use to jump high?",
+                  "correct_answer": "legs",
+                  "options": [
+                    "legs",
+                    "arms",
+                    "head",
+                    "back"
+                  ],
+                  "image_emoji": "🤸",
+                  "hint": "You find these at the bottom of your body."
+                },
+                {
+                  "question_text": "What body part helps you smell flowers?",
+                  "correct_answer": "nose",
+                  "options": [
+                    "nose",
+                    "eyes",
+                    "ears",
                     "hands"
                   ],
-                  "image_emoji": "🎙",
-                  "hint": "Think about what you use when listening to your favorite song."
-                },
-                {
-                  "question_text": "Which body part do you use to clap your hands?",
-                  "correct_answer": "hands",
-                  "options": [
-                    "hands",
-                    "feet",
-                    "nose",
-                    "ears"
-                  ],
-                  "image_emoji": "👏",
-                  "hint": "These are on your arms and have fingers."
-                },
-                {
-                  "question_text": "What do you use to taste yummy food?",
-                  "correct_answer": "mouth",
-                  "options": [
-                    "mouth",
-                    "nose",
-                    "eyes",
-                    "ears"
-                  ],
-                  "image_emoji": "🍜",
-                  "hint": "It's the part of your face where you eat and talk."
+                  "image_emoji": "🌺",
+                  "hint": "It's in the middle of your face and helps you breathe."
                 }
               ]
             },
@@ -1763,23 +1774,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I have two blue eyes and a big red hat. Watch me clap my hands and stomp my feet!",
+              "audio_text": "Hello! I have a shiny green jacket and I love to jump around. Watch me touch my nose and wiggle my fingers!",
               "questions": [
                 {
-                  "question": "What color are his eyes?",
-                  "answer": "blue",
+                  "question": "What color is his jacket?",
+                  "answer": "green",
                   "options": [
-                    "blue",
                     "green",
-                    "brown"
+                    "blue",
+                    "red"
                   ]
                 },
                 {
-                  "question": "Does he have a red hat?",
-                  "answer": "Yes",
+                  "question": "What does he love to do?",
+                  "answer": "jump around",
                   "options": [
-                    "Yes",
-                    "No"
+                    "jump around",
+                    "sit still",
+                    "dance"
                   ]
                 }
               ]
@@ -1797,18 +1809,39 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Touch your ___ when you hear a sound. (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "ears",
+                  "question_text": "Touch your ___ - It's where you smell flowers. (Vocabulary question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "nose",
                   "options": [
+                    "nose",
                     "ears",
                     "eyes",
-                    "nose",
-                    "hands"
+                    "mouth"
                   ]
                 },
                 {
-                  "question_text": "True or False: We say 'I have two foots.'",
+                  "question_text": "I ___ two hands and two feet. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "have",
+                  "options": [
+                    "have",
+                    "has",
+                    "am",
+                    "is"
+                  ]
+                },
+                {
+                  "question_text": "Which action means to clap? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "👏",
+                  "options": [
+                    "👏",
+                    "👟",
+                    "👐"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Stomp your feet' means to jump.",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -1817,25 +1850,14 @@
                   ]
                 },
                 {
-                  "question_text": "Can you clap your ___? (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "hands",
+                  "question_text": "Where do you wear a hat? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "head",
                   "options": [
-                    "feet",
                     "head",
+                    "feet",
                     "hands",
-                    "nose"
-                  ]
-                },
-                {
-                  "question_text": "I ___ a big red ball. (Reading comprehension question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "have",
-                  "options": [
-                    "have",
-                    "has",
-                    "am",
-                    "is"
+                    "knees"
                   ]
                 }
               ]
