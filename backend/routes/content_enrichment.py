@@ -136,7 +136,7 @@ async def get_enrichment_status():
 
 @router.post("/seed-enriched")
 async def seed_enriched_content(unit_numbers: Optional[List[int]] = None):
-    """Seed the database with enriched content"""
+    """Seed the database with enriched content - NEW FORMAT"""
     from motor.motor_asyncio import AsyncIOMotorClient
     
     mongo_url = os.environ.get('MONGO_URL')
@@ -160,15 +160,20 @@ async def seed_enriched_content(unit_numbers: Optional[List[int]] = None):
         raise HTTPException(status_code=400, detail="No enriched content files found")
     
     seeded_count = 0
-    
-    # Import seed logic (reuse existing)
-    from seed_content_v4 import (
-        build_activity_flow, build_warmup, build_vocabulary, build_vocab_game,
-        build_reading, build_grammar, build_grammar_game, build_listening,
-        build_production, build_exit_ticket, COLLECTION_MAP, BUILDERS
-    )
-    
     TS = datetime.now(timezone.utc).isoformat()
+    
+    # Type mapping for activity_flow
+    STEP_TO_ACTIVITY = {
+        "warm_up": "retrieval_warmup",
+        "vocabulary": "vocabulary",
+        "vocab_games": "micro_game_vocab",
+        "micro_reading": "micro_reading",
+        "grammar_focus": "grammar_focus",
+        "grammar_games": "micro_game_grammar",
+        "listening": "listening_task",
+        "production": "production",
+        "exit_ticket": "exit_ticket",
+    }
     
     for file_path in files:
         if not os.path.exists(file_path):
@@ -194,14 +199,89 @@ async def seed_enriched_content(unit_numbers: Optional[List[int]] = None):
                 lesson_id = lesson_data['lesson_id']
                 lesson_num = lesson_data['lesson_num']
                 
-                # Clear old activities
-                for coll_name in set(COLLECTION_MAP.values()):
-                    await db[coll_name].delete_many({"lesson_id": lesson_id})
+                # Build activity_flow with enriched data embedded
+                activity_flow = []
+                for i, step in enumerate(lesson_data.get('steps', [])):
+                    step_type = step.get('type')
+                    activity_type = STEP_TO_ACTIVITY.get(step_type, step_type)
+                    
+                    activity = {
+                        "order": i + 1,
+                        "type": activity_type,
+                        "activity_id": f"step_{i+1}",
+                        "data": {}
+                    }
+                    
+                    # Embed data based on step type
+                    if step_type == "warm_up":
+                        activity["data"] = {
+                            "video_url": step.get("video_url", ""),
+                            "instruction": step.get("instruction", ""),
+                            "questions": [{
+                                "question_text": step.get("question_text", ""),
+                                "correct_answer": step.get("correct_answer", ""),
+                                "options": step.get("options", []),
+                                "image_emoji": step.get("image_emoji", ""),
+                                "hint": step.get("hint", "")
+                            }]
+                        }
+                    
+                    elif step_type == "vocabulary":
+                        activity["data"] = {
+                            "items": step.get("items", [])
+                        }
+                    
+                    elif step_type == "vocab_games":
+                        activity["data"] = {
+                            "games": step.get("games", [])
+                        }
+                    
+                    elif step_type == "micro_reading":
+                        activity["data"] = {
+                            "passage": step.get("passage", ""),
+                            "questions": step.get("questions", [])
+                        }
+                    
+                    elif step_type == "grammar_focus":
+                        activity["data"] = {
+                            "rule": step.get("rule", ""),
+                            "examples": step.get("examples", []),
+                            "exercises": step.get("exercises", [])
+                        }
+                    
+                    elif step_type == "grammar_games":
+                        activity["data"] = {
+                            "games": step.get("games", [])
+                        }
+                    
+                    elif step_type == "listening":
+                        activity["data"] = {
+                            "audio_text": step.get("audio_text", ""),
+                            "questions": step.get("questions", [])
+                        }
+                    
+                    elif step_type == "production":
+                        activity["data"] = {
+                            "task": step.get("task", ""),
+                            "prompts": step.get("prompts", [])
+                        }
+                    
+                    elif step_type == "exit_ticket":
+                        activity["data"] = {
+                            "questions": step.get("questions", [])
+                        }
+                    
+                    activity_flow.append(activity)
                 
-                # Build and insert enriched activities
-                activity_flow = build_activity_flow(lesson_data['steps'])
+                # Add auto_review
+                activity_flow.append({
+                    "order": len(activity_flow) + 1,
+                    "type": "auto_review",
+                    "activity_id": "auto_review",
+                    "data": {}
+                })
                 
-                # Update lesson
+                # Update lesson with enriched activity_flow
                 await db.unified_lessons.update_one(
                     {"lesson_id": lesson_id},
                     {"$set": {
@@ -211,26 +291,12 @@ async def seed_enriched_content(unit_numbers: Optional[List[int]] = None):
                     }}
                 )
                 
-                # Insert activities
-                for step in lesson_data['steps']:
-                    step_type = step['type']
-                    builder = BUILDERS.get(step_type)
-                    collection = COLLECTION_MAP.get(step_type)
-                    
-                    if builder and collection:
-                        if step_type in ("warm_up", "micro_game_vocab", "grammar_game", "exit_ticket"):
-                            doc = builder(step, lesson_id, lesson_num, unit_num)
-                        else:
-                            doc = builder(step, lesson_id)
-                        
-                        await db[collection].insert_one(doc)
-                
                 seeded_count += 1
     
     client.close()
     
     return {
-        "message": f"Seeded {seeded_count} enriched lessons",
+        "message": f"Seeded {seeded_count} enriched lessons with embedded data",
         "status": "success"
     }
 
