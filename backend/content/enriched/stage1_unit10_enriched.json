@@ -28,40 +28,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you use to write on paper?",
-                  "correct_answer": "pencil",
+                  "question_text": "What do you use to draw with colors?",
+                  "correct_answer": "crayons",
+                  "options": [
+                    "markers",
+                    "crayons",
+                    "pencil case",
+                    "eraser"
+                  ],
+                  "image_emoji": "🖍",
+                  "hint": "They are colorful and used for drawing."
+                },
+                {
+                  "question_text": "What item keeps all your pens and pencils together?",
+                  "correct_answer": "pencil case",
                   "options": [
                     "pencil",
-                    "scissors",
-                    "glue",
-                    "crayons"
-                  ],
-                  "image_emoji": "✏️",
-                  "hint": "It's something you hold and writes in gray."
-                },
-                {
-                  "question_text": "What helps you cut paper in a straight line?",
-                  "correct_answer": "scissors",
-                  "options": [
-                    "scissors",
-                    "ruler",
-                    "crayons",
-                    "pencil case"
-                  ],
-                  "image_emoji": "✂️",
-                  "hint": "It has two sharp blades that open and close."
-                },
-                {
-                  "question_text": "What binds your papers and helps you carry them?",
-                  "correct_answer": "notebook",
-                  "options": [
-                    "notebook",
                     "pencil case",
-                    "glue",
-                    "sharpener"
+                    "notebook",
+                    "glue"
                   ],
-                  "image_emoji": "📓",
-                  "hint": "You open it to find lots of pages inside."
+                  "image_emoji": "🐿",
+                  "hint": "You store your writing tools inside it."
+                },
+                {
+                  "question_text": "What sticky thing helps you attach paper together?",
+                  "correct_answer": "glue",
+                  "options": [
+                    "ruler",
+                    "glue",
+                    "scissors",
+                    "pencil"
+                  ],
+                  "image_emoji": "🧺",
+                  "hint": "It's sticky and helps things stick together."
                 }
               ]
             },
@@ -407,24 +407,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! In my bag, I have a blue book and a yellow pencil. I use them every day at school.",
+              "audio_text": "In my bag, there is a big red book and two pencils. I open the book at school to read every day.",
               "questions": [
                 {
                   "question": "What color is the book?",
-                  "answer": "blue",
+                  "answer": "red",
                   "options": [
+                    "red",
                     "blue",
-                    "green",
-                    "red"
+                    "yellow"
                   ]
                 },
                 {
-                  "question": "Where do I use my pencil?",
-                  "answer": "at school",
+                  "question": "How many pencils are in the bag?",
+                  "answer": "two",
                   "options": [
-                    "at school",
-                    "at home",
-                    "in the park"
+                    "one",
+                    "two",
+                    "three"
                   ]
                 }
               ]
@@ -442,40 +442,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What does 'bag' mean?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "A thing to carry books",
-                  "options": [
-                    "A thing to carry books",
-                    "A place to sit",
-                    "A book for reading",
-                    "A game to play"
-                  ]
-                },
-                {
-                  "question_text": "Red ___ is on the desk. (Grammar question)",
+                  "question_text": "I have a blue ___. (Fill in the blank with the correct object)",
                   "question_type": "fill_blank",
-                  "correct_answer": "book",
+                  "correct_answer": "bag",
                   "options": [
-                    "book",
-                    "school",
                     "bag",
-                    "open"
+                    "pencil",
+                    "school",
+                    "book"
                   ]
                 },
                 {
-                  "question_text": "What color is the bag in 'My Blue Bag'?",
+                  "question_text": "What color is the book?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "blue",
+                  "correct_answer": "red",
                   "options": [
-                    "blue",
                     "red",
+                    "blue",
                     "green",
                     "yellow"
                   ]
                 },
                 {
-                  "question_text": "True or False: You can open a book to read it.",
+                  "question_text": "Which word means a place you go to learn?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "school",
+                  "options": [
+                    "school",
+                    "bag",
+                    "pencil",
+                    "book"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The book is open.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -484,14 +484,14 @@
                   ]
                 },
                 {
-                  "question_text": "What do you do at school? (Reading comprehension)",
+                  "question_text": "What do you do at school with a book? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Learn and play",
+                  "correct_answer": "read",
                   "options": [
-                    "Learn and play",
-                    "Sleep",
-                    "Sing all day",
-                    "Eat only"
+                    "read",
+                    "open",
+                    "throw",
+                    "carry"
                   ]
                 }
               ]
@@ -520,40 +520,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What tool do I use to draw lines?",
-                  "correct_answer": "ruler",
+                  "question_text": "What do we use to write letters and numbers?",
+                  "correct_answer": "pencil",
                   "options": [
-                    "pencil",
-                    "ruler",
-                    "eraser",
-                    "glue"
-                  ],
-                  "image_emoji": "🔹",
-                  "hint": "It's long and straight!"
-                },
-                {
-                  "question_text": "Which one sticks paper together?",
-                  "correct_answer": "glue",
-                  "options": [
-                    "scissors",
                     "pencil",
                     "glue",
+                    "scissors",
                     "ruler"
                   ],
-                  "image_emoji": "🤌",
-                  "hint": "It's sticky!"
+                  "image_emoji": "✏",
+                  "hint": "It's sharp and made of wood!"
                 },
                 {
-                  "question_text": "What do we use to cut paper?",
-                  "correct_answer": "scissors",
+                  "question_text": "Which tool can help us erase mistakes?",
+                  "correct_answer": "eraser",
                   "options": [
-                    "crayon",
+                    "eraser",
+                    "pen",
                     "marker",
-                    "scissors",
-                    "glue"
+                    "crayon"
                   ],
-                  "image_emoji": "✂",
-                  "hint": "It has sharp edges and handles!"
+                  "image_emoji": "🔫",
+                  "hint": "It's small and rubbery!"
+                },
+                {
+                  "question_text": "What do we use to color pictures?",
+                  "correct_answer": "crayon",
+                  "options": [
+                    "glue",
+                    "scissors",
+                    "crayon",
+                    "ruler"
+                  ],
+                  "image_emoji": "🖍",
+                  "hint": "It comes in many colors and is waxy!"
                 }
               ]
             },
@@ -885,24 +885,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I have a green pen and a red pencil. I like to draw pictures on my paper.",
+              "audio_text": "I have a yellow marker and a blue eraser. I love to write my name on my notebook.",
               "questions": [
                 {
-                  "question": "What color is the pen?",
-                  "answer": "green",
+                  "question": "What color is the marker?",
+                  "answer": "yellow",
                   "options": [
-                    "green",
-                    "blue",
-                    "yellow"
+                    "yellow",
+                    "red",
+                    "green"
                   ]
                 },
                 {
-                  "question": "What does he like to draw?",
-                  "answer": "pictures",
+                  "question": "Does he like to write his name?",
+                  "answer": "Yes",
                   "options": [
-                    "letters",
-                    "numbers",
-                    "pictures"
+                    "Yes",
+                    "No"
                   ]
                 }
               ]
@@ -917,48 +916,48 @@
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Lesson Review Quiz",
+              "title": "I Can Write - Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What do you use to write?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "pencil",
-                  "options": [
-                    "scissors",
-                    "pencil",
-                    "ruler",
-                    "glue"
-                  ]
-                },
-                {
-                  "question_text": "What is in your bag?",
+                  "question_text": "What is in your bag? A blue ___. (Vocabulary question)",
                   "question_type": "fill_blank",
                   "correct_answer": "pen",
                   "options": [
                     "pen",
-                    "paint",
-                    "plate",
-                    "panda"
+                    "pencil",
+                    "book",
+                    "ruler"
                   ]
                 },
                 {
-                  "question_text": "True or False: You can write with scissors.",
+                  "question_text": "What do you use to write? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "pencil",
+                  "options": [
+                    "scissors",
+                    "gluestick",
+                    "pencil",
+                    "eraser"
+                  ]
+                },
+                {
+                  "question_text": "Is 'draw' an action verb? (Vocabulary question)",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What can I do with a pencil?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "draw",
+                  "question_text": "Fill in the blank: I have a red ___. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "pencil",
                   "options": [
-                    "dance",
-                    "swim",
-                    "draw",
-                    "sleep"
+                    "pencil",
+                    "pen",
+                    "crayon",
+                    "marker"
                   ]
                 }
               ]
@@ -981,40 +980,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What can you use to draw a straight, long line?",
-                  "correct_answer": "ruler",
+                  "question_text": "What tool helps you make things colorful?",
+                  "correct_answer": "crayons",
                   "options": [
-                    "stick",
-                    "ruler",
-                    "pencil",
-                    "crayon"
+                    "crayons",
+                    "scissors",
+                    "tape",
+                    "eraser"
                   ],
-                  "image_emoji": "🔬",
-                  "hint": "It's usually hard and straight!"
+                  "image_emoji": "🖍️",
+                  "hint": "You can use different colors!"
                 },
                 {
-                  "question_text": "What do you use to take away your drawing mistakes?",
-                  "correct_answer": "eraser",
+                  "question_text": "Which tool can cut paper but is safe for kids?",
+                  "correct_answer": "child scissors",
                   "options": [
-                    "eraser",
-                    "paintbrush",
+                    "child scissors",
                     "marker",
-                    "chalk"
+                    "ruler",
+                    "glue"
                   ],
-                  "image_emoji": "🖌️",
-                  "hint": "It's small and soft!"
+                  "image_emoji": "✂️",
+                  "hint": "They are small and have round edges."
                 },
                 {
-                  "question_text": "Which tool do you use to see how long something is?",
-                  "correct_answer": "ruler",
+                  "question_text": "What do you use to put two pieces of paper together?",
+                  "correct_answer": "glue",
                   "options": [
                     "glue",
-                    "scissors",
-                    "ruler",
-                    "pen"
+                    "crayon",
+                    "chalk",
+                    "eraser"
                   ],
-                  "image_emoji": "🎓",
-                  "hint": "You can find numbers on it!"
+                  "image_emoji": "🖇️",
+                  "hint": "It feels sticky!"
                 }
               ]
             },
@@ -1309,20 +1308,20 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I have a green ruler on my desk. The eraser is pink and it's inside the bag.",
+              "audio_text": "In my school bag, I have a blue eraser and a yellow ruler. The ruler is on the desk while the eraser stays in the bag.",
               "questions": [
                 {
-                  "question": "What color is the eraser?",
-                  "answer": "pink",
+                  "question": "What color is the ruler?",
+                  "answer": "yellow",
                   "options": [
                     "blue",
-                    "red",
-                    "pink"
+                    "yellow",
+                    "green"
                   ]
                 },
                 {
-                  "question": "Where is the ruler?",
-                  "answer": "on the desk",
+                  "question": "Where is the eraser?",
+                  "answer": "in the bag",
                   "options": [
                     "on the desk",
                     "in the bag",
@@ -1344,29 +1343,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What color is a ruler often? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "yellow",
-                  "options": [
-                    "yellow",
-                    "pink",
-                    "purple",
-                    "orange"
-                  ]
-                },
-                {
-                  "question_text": "Fill in the blank: It is ___ the desk. (Grammar question)",
+                  "question_text": "Where is the ruler? It is ___ the desk.",
                   "question_type": "fill_blank",
                   "correct_answer": "on",
                   "options": [
+                    "under",
                     "in",
                     "on",
-                    "under",
-                    "over"
+                    "beside"
                   ]
                 },
                 {
-                  "question_text": "True or False: An eraser is used for writing. (Comprehension question)",
+                  "question_text": "Which tool helps you erase mistakes? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "eraser",
+                  "options": [
+                    "ruler",
+                    "eraser",
+                    "desk",
+                    "chair"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A desk is used for sitting.",
                   "question_type": "true_false",
                   "correct_answer": "False",
                   "options": [
@@ -1375,25 +1374,14 @@
                   ]
                 },
                 {
-                  "question_text": "What do you use to draw straight lines? (Comprehension question)",
+                  "question_text": "Which sentence uses the correct grammar? (Grammar question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "ruler",
+                  "correct_answer": "It is on the desk.",
                   "options": [
-                    "eraser",
-                    "ruler",
-                    "desk",
-                    "pencil"
-                  ]
-                },
-                {
-                  "question_text": "What is usually ON the desk? (Comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "books",
-                  "options": [
-                    "books",
-                    "water",
-                    "shoes",
-                    "flowers"
+                    "It is on desk.",
+                    "It on the desk.",
+                    "It is on a desk.",
+                    "It is on the desk."
                   ]
                 }
               ]
@@ -1417,40 +1405,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What object helps you see when it's dark in the classroom?",
-                  "correct_answer": "lamp",
+                  "question_text": "What do you use to write on the board in the classroom?",
+                  "correct_answer": "marker",
                   "options": [
-                    "lamp",
-                    "compass",
-                    "book",
-                    "eraser"
+                    "marker",
+                    "crayon",
+                    "tape",
+                    "cup"
                   ],
-                  "image_emoji": "💡",
-                  "hint": "It's bright and gives light."
+                  "image_emoji": "📝",
+                  "hint": "It writes on whiteboards in different colors."
                 },
                 {
-                  "question_text": "Which tool do you use to make straight lines?",
-                  "correct_answer": "ruler",
+                  "question_text": "What do you call the big board you write on in front of the class?",
+                  "correct_answer": "whiteboard",
                   "options": [
-                    "ruler",
-                    "marker",
+                    "whiteboard",
+                    "door",
+                    "window",
+                    "floor"
+                  ],
+                  "image_emoji": "📝",
+                  "hint": "You can erase writing on it."
+                },
+                {
+                  "question_text": "What do you use in school to cut paper?",
+                  "correct_answer": "scissors",
+                  "options": [
                     "scissors",
+                    "pencil",
+                    "ruler",
                     "glue"
                   ],
-                  "image_emoji": "📎",
-                  "hint": "It is long, flat, and often made of plastic or wood."
-                },
-                {
-                  "question_text": "Where do you store your pencils and erasers?",
-                  "correct_answer": "pencil case",
-                  "options": [
-                    "pencil case",
-                    "shoe",
-                    "cup",
-                    "sandwich"
-                  ],
-                  "image_emoji": "📑",
-                  "hint": "It's a small bag you have in your school bag."
+                  "image_emoji": "✂️",
+                  "hint": "They are sharp and have two handles."
                 }
               ]
             },
@@ -1737,24 +1725,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "I have a big red backpack. Inside, there's a blue lunchbox and four yellow markers. The lunchbox is ready for school!",
+              "audio_text": "In my school bag, I have a green water bottle. Next to it, there's a red book and a tiny orange apple. They are ready for lunch!",
               "questions": [
                 {
-                  "question": "What color is the lunchbox?",
-                  "answer": "blue",
+                  "question": "What color is the water bottle?",
+                  "answer": "green",
                   "options": [
-                    "blue",
                     "green",
-                    "yellow"
+                    "red",
+                    "blue"
                   ]
                 },
                 {
-                  "question": "How many markers are there?",
-                  "answer": 4,
+                  "question": "What is next to the book?",
+                  "answer": "a tiny orange apple",
                   "options": [
-                    3,
-                    4,
-                    5
+                    "a tiny orange apple",
+                    "a big blue pen",
+                    "a small yellow pencil"
                   ]
                 }
               ]
@@ -1772,56 +1760,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "What is in your backpack? (Grammar question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "A lunchbox",
+                  "question_text": "What is in your school bag? (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "inside",
                   "options": [
-                    "A lunchbox",
-                    "A tree",
-                    "A lion",
-                    "A car"
+                    "next to",
+                    "inside",
+                    "on",
+                    "under"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'pencil'? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "✏️",
+                  "question_text": "What is in the bag? It is _ big red apple. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "a",
                   "options": [
-                    "✏️",
+                    "a",
+                    "an",
+                    "the",
+                    "no word"
+                  ]
+                },
+                {
+                  "question_text": "Which picture shows 'backpack'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "🎒",
+                  "options": [
+                    "🎒",
+                    "🖍️",
                     "📚",
-                    "🍏",
-                    "🚗"
+                    "📏"
                   ]
                 },
                 {
-                  "question_text": "True or False: A desk is a type of fruit.",
+                  "question_text": "True or False: A pencil is used for writing.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Read: It is on the table. What is on the table?",
+                  "question_text": "Read: 'There is a blue book on the desk.' What color is the book? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "A book",
+                  "correct_answer": "blue",
                   "options": [
-                    "A book",
-                    "A shoe",
-                    "A dog",
-                    "A toy"
-                  ]
-                },
-                {
-                  "question_text": "Complete: I have a ___ pencil case.",
-                  "question_type": "fill_blank",
-                  "correct_answer": "yellow",
-                  "options": [
-                    "yellow",
+                    "red",
                     "blue",
                     "green",
-                    "purple"
+                    "yellow"
                   ]
                 }
               ]
