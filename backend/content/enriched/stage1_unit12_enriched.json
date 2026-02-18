@@ -31,40 +31,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What letter do you hear when you say 'umbrella'?",
-                  "correct_answer": "U",
+                  "question_text": "What letter does the word 'apple' start with?",
+                  "correct_answer": "A",
                   "options": [
-                    "U",
                     "A",
+                    "P",
                     "E",
-                    "I"
+                    "L"
                   ],
-                  "image_emoji": "☂️",
-                  "hint": "Think of rain cover."
+                  "image_emoji": "🍎",
+                  "hint": "Think of the first bite."
                 },
                 {
-                  "question_text": "When you say 'dog', which letter makes the 'd' sound?",
-                  "correct_answer": "D",
+                  "question_text": "Which letter sounds like 'mmm', like in 'moon'?",
+                  "correct_answer": "M",
                   "options": [
-                    "D",
-                    "B",
-                    "T",
-                    "G"
+                    "M",
+                    "N",
+                    "V",
+                    "W"
                   ],
-                  "image_emoji": "🐶",
-                  "hint": "Friendly bark sound."
+                  "image_emoji": "🌕",
+                  "hint": "Think of midnight sky."
                 },
                 {
-                  "question_text": "Which letter says 'ssss' like a snake?",
-                  "correct_answer": "S",
+                  "question_text": "When counting, which number comes after 5?",
+                  "correct_answer": "6",
                   "options": [
-                    "S",
-                    "Z",
-                    "X",
-                    "C"
+                    "4",
+                    "5",
+                    "6",
+                    "7"
                   ],
-                  "image_emoji": "🐍",
-                  "hint": "Hissing sound."
+                  "image_emoji": "6️⃣",
+                  "hint": "One more than five."
                 }
               ]
             },
@@ -333,24 +333,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! I'm Alex. I have two cats. They love to play with the yellow yarn.",
+              "audio_text": "Hi! I'm Lily. I have a red ball. My dog loves to chase it in the garden.",
               "questions": [
                 {
-                  "question": "How many cats does Alex have?",
-                  "answer": "2",
+                  "question": "What color is Lily's ball?",
+                  "answer": "red",
                   "options": [
-                    "1",
-                    "2",
-                    "3"
+                    "red",
+                    "green",
+                    "blue"
                   ]
                 },
                 {
-                  "question": "What color is the yarn?",
-                  "answer": "yellow",
+                  "question": "Where does the dog chase the ball?",
+                  "answer": "in the garden",
                   "options": [
-                    "yellow",
-                    "blue",
-                    "red"
+                    "in the house",
+                    "in the garden",
+                    "in the park"
                   ]
                 }
               ]
@@ -386,7 +386,7 @@
                     "👩‍🏫",
                     "🍎",
                     "👋",
-                    "👋🤓"
+                    "🙋"
                   ]
                 },
                 {
@@ -399,25 +399,25 @@
                   ]
                 },
                 {
-                  "question_text": "What comes after '9' in counting?",
+                  "question_text": "How many letters are there in the word 'apple'?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "10",
+                  "correct_answer": "5",
                   "options": [
-                    "8",
-                    "9",
-                    "10",
-                    "11"
+                    "4",
+                    "5",
+                    "6",
+                    "7"
                   ]
                 },
                 {
-                  "question_text": "The cat is ___ the box. (Grammar question)",
+                  "question_text": "Fill in: The cat is ___ the table. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "in",
+                  "correct_answer": "on",
                   "options": [
+                    "in",
                     "on",
                     "under",
-                    "in",
-                    "next to"
+                    "near"
                   ]
                 }
               ]
@@ -447,40 +447,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Who helps you with your homework?",
-                  "correct_answer": "father",
+                  "question_text": "Who loves to read you bedtime stories?",
+                  "correct_answer": "mom",
                   "options": [
-                    "father",
-                    "uncle",
-                    "neighbor",
-                    "teacher"
+                    "mom",
+                    "sister",
+                    "teacher",
+                    "neighbor"
                   ],
-                  "image_emoji": "📖",
-                  "hint": "He is a part of your family and loves to help."
+                  "image_emoji": "📚",
+                  "hint": "She tucks you in at night and reads with love."
                 },
                 {
-                  "question_text": "Which body part do you use to listen to music?",
-                  "correct_answer": "ear",
+                  "question_text": "What helps you see things far away?",
+                  "correct_answer": "eyes",
                   "options": [
-                    "ear",
-                    "mouth",
-                    "hand",
-                    "knee"
+                    "eyes",
+                    "ears",
+                    "feet",
+                    "nose"
                   ],
-                  "image_emoji": "🗣",
-                  "hint": "You wear headphones over it."
+                  "image_emoji": "👁",
+                  "hint": "You blink them every day."
                 },
                 {
-                  "question_text": "Who drives you to the park in a car?",
-                  "correct_answer": "father",
+                  "question_text": "Who makes your favorite pancake breakfast?",
+                  "correct_answer": "grandma",
                   "options": [
-                    "father",
-                    "brother",
-                    "neighbor",
+                    "grandma",
+                    "dad",
+                    "cousin",
                     "friend"
                   ],
-                  "image_emoji": "🚗",
-                  "hint": "He has a driver's license and is tall."
+                  "image_emoji": "🍳",
+                  "hint": "She loves baking and giving hugs."
                 }
               ]
             },
@@ -771,23 +771,23 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "My sister has long, brown hair. She loves to draw pictures and paints with bright colors. Her favorite color is blue.",
+              "audio_text": "My brother has big brown eyes and a friendly smile. He loves to play with his toy car and build tall towers with blocks.",
               "questions": [
                 {
-                  "question": "What does she love to do?",
-                  "answer": "draw pictures",
+                  "question": "What does he like to play with?",
+                  "answer": "toy car",
                   "options": [
-                    "draw pictures",
-                    "play soccer",
-                    "read books"
+                    "toy car",
+                    "doll",
+                    "puzzle"
                   ]
                 },
                 {
-                  "question": "What is her favorite color?",
-                  "answer": "blue",
+                  "question": "What are the color of his eyes?",
+                  "answer": "brown",
                   "options": [
+                    "brown",
                     "blue",
-                    "red",
                     "green"
                   ]
                 }
@@ -806,29 +806,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "She ___ two brothers. (Grammar question)",
+                  "question_text": "I ___ a sister. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "has",
+                  "correct_answer": "have",
                   "options": [
-                    "has",
                     "have",
+                    "am",
                     "is",
                     "are"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'mother'? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'brother'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "👩‍👧",
+                  "correct_answer": "👦",
                   "options": [
-                    "👩‍👧",
-                    "🚗",
-                    "🏀",
-                    "📚"
+                    "👦",
+                    "👧",
+                    "👶",
+                    "👩"
                   ]
                 },
                 {
-                  "question_text": "True or False: Your hands help you to hold things.",
+                  "question_text": "My mom is ___ the kitchen. (Reading comprehension)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "in",
+                  "options": [
+                    "on",
+                    "in",
+                    "at",
+                    "by"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Your nose helps you smell.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -837,14 +848,14 @@
                   ]
                 },
                 {
-                  "question_text": "Where does he play football? (Reading comprehension question)",
+                  "question_text": "Which part of the body do you use to kick a ball?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "at the park",
+                  "correct_answer": "foot",
                   "options": [
-                    "at the park",
-                    "in the house",
-                    "at school",
-                    "in the yard"
+                    "hand",
+                    "foot",
+                    "ear",
+                    "eye"
                   ]
                 }
               ]
@@ -868,40 +879,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which animal is known for giving wool?",
-                  "correct_answer": "sheep",
+                  "question_text": "What color is the cat in the video?",
+                  "correct_answer": "orange",
                   "options": [
-                    "sheep",
-                    "cow",
-                    "dog",
-                    "cat"
+                    "orange",
+                    "blue",
+                    "purple",
+                    "green"
                   ],
-                  "image_emoji": "🐑",
-                  "hint": "This animal has a fluffy coat."
+                  "image_emoji": "🐈",
+                  "hint": "This color is also the color of a carrot."
                 },
                 {
-                  "question_text": "What is the farmer doing at the end of the video?",
-                  "correct_answer": "waving goodbye",
+                  "question_text": "Who is carrying a school bag in the video?",
+                  "correct_answer": "the boy",
                   "options": [
-                    "planting seeds",
-                    "feeding animals",
-                    "waving goodbye",
-                    "riding a tractor"
+                    "the boy",
+                    "the farmer",
+                    "the horse",
+                    "the cat"
                   ],
-                  "image_emoji": "👋",
-                  "hint": "The farmer moves his hand to say something."
+                  "image_emoji": "💻",
+                  "hint": "This person is small and likes to play."
                 },
                 {
-                  "question_text": "Which animal is playing in the mud in the video?",
-                  "correct_answer": "pig",
+                  "question_text": "How does the dog feel in the video?",
+                  "correct_answer": "happy",
                   "options": [
-                    "pig",
-                    "horse",
-                    "cat",
-                    "chicken"
+                    "happy",
+                    "sad",
+                    "angry",
+                    "scared"
                   ],
-                  "image_emoji": "🐷",
-                  "hint": "This animal loves to roll in the dirt."
+                  "image_emoji": "😊",
+                  "hint": "The dog is wagging its tail."
                 }
               ]
             },
@@ -1231,20 +1242,20 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "At the farm, the friendly farmer showed me the green field. In the field, I saw three white sheep playing happily.",
+              "audio_text": "The farmer is happy because the sun is shining. In the barn, there are two brown cows eating hay.",
               "questions": [
                 {
-                  "question": "What color is the field?",
-                  "answer": "green",
+                  "question": "Why is the farmer happy?",
+                  "answer": "the sun is shining",
                   "options": [
-                    "green",
-                    "yellow",
-                    "red"
+                    "the sun is shining",
+                    "it is raining",
+                    "it's nighttime"
                   ]
                 },
                 {
-                  "question": "How many sheep are playing in the field?",
-                  "answer": "three",
+                  "question": "How many cows are in the barn?",
+                  "answer": "two",
                   "options": [
                     "three",
                     "two",
@@ -1266,56 +1277,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ a cat at the farm. (Grammar question)",
+                  "question_text": "I ___ a teacher. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "saw",
+                  "correct_answer": "am",
                   "options": [
-                    "saw",
-                    "see",
                     "am",
-                    "is"
+                    "is",
+                    "are",
+                    "has"
                   ]
                 },
                 {
-                  "question_text": "Which animal lives on a farm? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'dog'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "🐄 cow",
+                  "correct_answer": "🐶",
                   "options": [
-                    "🐄 cow",
-                    "🐶 dog",
-                    "🐱 cat",
-                    "🐰 rabbit"
+                    "🐶",
+                    "🐱",
+                    "🐮",
+                    "🐷"
                   ]
                 },
                 {
-                  "question_text": "True or False: The barn is blue.",
+                  "question_text": "True or False: 'Red' is a color.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What color is the big red apple? (Reading comprehension question)",
+                  "question_text": "What do you carry books in?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "red",
+                  "correct_answer": "backpack",
                   "options": [
-                    "red",
-                    "green",
-                    "blue",
-                    "yellow"
+                    "backpack",
+                    "chicken",
+                    "hat",
+                    "shoe"
                   ]
                 },
                 {
-                  "question_text": "Where is the pencil? It's ___ the school bag.",
+                  "question_text": "I __ a book in my bag. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "in",
+                  "correct_answer": "have",
                   "options": [
-                    "in",
-                    "on",
-                    "under",
-                    "next to"
+                    "have",
+                    "is",
+                    "are",
+                    "am"
                   ]
                 }
               ]
@@ -1340,40 +1351,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you use to lock and unlock things?",
-                  "correct_answer": "A key",
+                  "question_text": "What do you open with a key?",
+                  "correct_answer": "A lock",
                   "options": [
-                    "A key",
-                    "A spoon",
-                    "A brush",
-                    "A button"
+                    "A lock",
+                    "A drawer",
+                    "A window",
+                    "A box"
                   ],
-                  "image_emoji": "🔑",
-                  "hint": "It fits into a lock."
+                  "image_emoji": "🔒",
+                  "hint": "It's something that keeps things safe."
                 },
                 {
-                  "question_text": "What do you walk through to enter a house?",
-                  "correct_answer": "A door",
+                  "question_text": "What do you use a doorknob for?",
+                  "correct_answer": "Open a door",
                   "options": [
-                    "A door",
-                    "A tunnel",
-                    "A bridge",
-                    "A fence"
+                    "Open a door",
+                    "Cook food",
+                    "Write a letter",
+                    "Turn on a light"
                   ],
                   "image_emoji": "🚪",
-                  "hint": "It swings open and closed."
+                  "hint": "You turn it to get inside."
                 },
                 {
-                  "question_text": "What should you carry if you want to go into a locked room?",
-                  "correct_answer": "A key",
+                  "question_text": "What can be locked with a key?",
+                  "correct_answer": "A safe",
                   "options": [
-                    "A key",
-                    "A book",
-                    "A shoe",
-                    "A hat"
+                    "A safe",
+                    "A table",
+                    "A lamp",
+                    "A phone"
                   ],
-                  "image_emoji": "🗝",
-                  "hint": "It opens locked things."
+                  "image_emoji": "🔑",
+                  "hint": "It is used to store valuable things."
                 }
               ]
             },
@@ -1676,24 +1687,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi, I am Lily. I have two fluffy rabbits. They love to eat carrots together in the garden.",
+              "audio_text": "Hello, my name is Max. I have a big brown dog. His name is Bruno, and he loves playing in the park.",
               "questions": [
                 {
-                  "question": "How many rabbits does Lily have?",
-                  "answer": "Two",
+                  "question": "What is the color of Max's dog?",
+                  "answer": "Brown",
                   "options": [
-                    "One",
-                    "Two",
-                    "Three"
+                    "Brown",
+                    "Black",
+                    "White"
                   ]
                 },
                 {
-                  "question": "What do the rabbits like to eat?",
-                  "answer": "Carrots",
+                  "question": "Where does Bruno like to play?",
+                  "answer": "In the park",
                   "options": [
-                    "Carrots",
-                    "Apples",
-                    "Bananas"
+                    "In the park",
+                    "In the garden",
+                    "On the beach"
                   ]
                 }
               ]
@@ -1711,29 +1722,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ happy today. (Grammar question)",
+                  "question_text": "I ___ a new toy. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "am",
+                  "correct_answer": "have",
                   "options": [
+                    "have",
+                    "has",
                     "am",
-                    "is",
-                    "are",
-                    "was"
+                    "is"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'cat'? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'apple'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "🐱",
+                  "correct_answer": "🍎",
                   "options": [
-                    "🐱",
-                    "🐶",
-                    "🐥",
-                    "👩‍🏫"
+                    "🎨",
+                    "🚗",
+                    "🍎",
+                    "🐶"
                   ]
                 },
                 {
-                  "question_text": "True or False: A door can open and close.",
+                  "question_text": "Where do rabbits like to eat carrots? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "In the garden",
+                  "options": [
+                    "In the house",
+                    "In the garden",
+                    "On the roof",
+                    "Under the bed"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Is' is used with 'he' or 'she'.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1742,14 +1764,14 @@
                   ]
                 },
                 {
-                  "question_text": "Ben has a small orange ___. (Reading comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "cat",
+                  "question_text": "Fill in the blank: My friend is ___ happy. (Grammar/Vocabulary)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "very",
                   "options": [
-                    "dog",
-                    "cat",
-                    "bird",
-                    "fish"
+                    "very",
+                    "a",
+                    "in",
+                    "on"
                   ]
                 }
               ]
