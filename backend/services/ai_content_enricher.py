@@ -216,13 +216,22 @@ ORIGINAL WORDS:
 LESSON CONTEXT:
 - Title: {lesson.get('title')}
 - Topic: {lesson.get('topic')}
+- Context: {lesson.get('context', '')}
 - Grammar Focus: {unit.get('grammar_focus', [])}
 
 For each word, create:
-1. A child-friendly definition (max 6 words, simple vocabulary)
-2. A natural example sentence using the target grammar pattern
-3. An appropriate emoji
+1. A child-friendly definition (max 8 words, simple vocabulary)
+2. A natural example sentence using the word in context (related to lesson topic)
+3. An appropriate emoji that VISUALLY REPRESENTS the word's meaning
 4. IPA pronunciation
+
+EMOJI SELECTION RULES:
+- Choose emojis that a child would immediately associate with the word
+- For adjectives: show the QUALITY (old=👴 not 📚, new=✨, big=🐘, small=🐜)
+- For verbs: show the ACTION (run=🏃, eat=🍽️, listen=👂)
+- For concrete nouns: show the OBJECT (book=📖, cat=🐱, house=🏠)
+- For abstract concepts: use the closest visual (name=📛, hello=👋, answer=✋)
+- NEVER use 📝 as a generic fallback
 
 Respond with ONLY valid JSON:
 {{
@@ -233,7 +242,7 @@ Respond with ONLY valid JSON:
             "word": "word1",
             "ipa": "/phonetic/",
             "definition": "simple child-friendly definition",
-            "example": "Natural example sentence.",
+            "example": "Natural example sentence related to lesson context.",
             "image_emoji": "emoji"
         }}
     ]
