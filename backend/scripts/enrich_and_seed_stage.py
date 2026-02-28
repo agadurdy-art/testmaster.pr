@@ -63,17 +63,17 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
                         ok = all(q.get('options') and len(q['options']) >= 2 for q in e.get('questions', []))
                         print(f"    listening: {len(e.get('questions',[]))} qs, opts={ok}")
                         enriched_steps.append(e if ok else step)
-                    elif st in ('micro_game_vocab', 'vocabulary'):
+                    elif st in ('micro_game_vocab', 'vocabulary', 'vocabulary_review'):
                         enriched_steps.append(step)
-                        # Generate vocab games from vocabulary
-                        if st == 'vocabulary':
+                        # Generate vocab games from vocabulary (including review)
+                        if st in ('vocabulary', 'vocabulary_review'):
                             vg = await enricher._enrich_vocab_game(chat, step, lesson, unit_context)
                             games = vg.get('games', [])
                             total_items = sum(len(g.get('items', [])) for g in games)
                             print(f"    vocab_games: {len(games)} games, {total_items} items")
                             if total_items >= 3:
                                 enriched_steps.append(vg)
-                    elif st == 'grammar_focus':
+                    elif st in ('grammar_focus', 'grammar_review'):
                         enriched_steps.append(step)
                         # Generate grammar games
                         gg = await enricher._enrich_grammar_game(chat, step, lesson, unit_context)
