@@ -260,8 +260,11 @@ Respond with ONLY valid JSON:
     ) -> Dict[str, Any]:
         """Generate vocab games with rotation per lesson number"""
         
-        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') in ('vocabulary', 'vocabulary_review')), {})
         vocab_items = vocab_step.get('items', [])
+        # Handle string items for review lessons
+        if vocab_items and isinstance(vocab_items[0], str):
+            vocab_items = [{'word': w, 'image_emoji': '?'} for w in vocab_items]
         lesson_num = lesson.get('number', lesson.get('lesson_number', 1))
         
         # Rotate game types per lesson
