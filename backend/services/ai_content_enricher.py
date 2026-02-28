@@ -249,62 +249,101 @@ Respond with ONLY valid JSON:
     async def _enrich_vocab_game(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich vocabulary games - generate 3 game types with 10-12 items each"""
+        """Generate vocab games with rotation per lesson number"""
         
-        # Get vocabulary from the lesson for context
         vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
         vocab_items = vocab_step.get('items', [])
         vocab_words = [item.get('word') for item in vocab_items]
+        lesson_num = lesson.get('number', lesson.get('lesson_number', 1))
         
-        prompt = f"""Create vocabulary games for young ESL learners (ages 4-7).
+        # Rotate game types per lesson
+        game_sets = {
+            1: ['listen_choose_picture', 'read_choose_picture', 'unscramble', 'flashcard_match'],
+            2: ['listen_write', 'look_write', 'fill_gap'],
+            3: ['memory_game', 'listen_choose_word', 'read_choose_picture'],
+            4: ['crossword', 'word_search', 'board_game'],
+        }
+        
+        selected_games = game_sets.get(lesson_num, game_sets[1])
+        
+        # For review lessons (4), use different data format
+        if lesson_num == 4:
+            prompt = f"""Create REVIEW games for young ESL learners. These are consolidation games for a unit review lesson.
 
-VOCABULARY WORDS: {vocab_words}
-VOCABULARY WITH EMOJIS: {json.dumps([{'word': v.get('word'), 'emoji': v.get('image_emoji', '📝')} for v in vocab_items], ensure_ascii=False)}
+VOCABULARY WORDS: {json.dumps([{'word': v.get('word'), 'emoji': v.get('image_emoji', '?'), 'definition': v.get('definition', '')} for v in vocab_items], ensure_ascii=False)}
 
-IMPORTANT: Create 3 different game activities. EACH game must have 10-12 items (use each vocabulary word 2-3 times with variations).
+Create 3 review game activities using ALL vocabulary from the unit.
 
-GAME TYPES TO CREATE:
-1. listen_choose_picture: Student hears word, selects correct emoji (10-12 items)
-2. read_choose_picture: Student reads word, selects correct emoji (10-12 items)
-3. unscramble: Student arranges scrambled letters to spell word (10-12 items)
-
-For listen_choose_picture and read_choose_picture, include 3 distractor options per item.
-Repeat vocabulary words multiple times to reach 10-12 items per game.
+GAME TYPES:
+1. crossword: Items with word, definition (clue), and emoji. 6-8 words.
+2. word_search: Items with word, definition, and emoji. 6-8 words.
+3. board_game: Multiple choice questions about the vocabulary. 6-8 questions with 4 options each.
 
 Respond with ONLY valid JSON:
 {{
-    "step": {step.get('step')},
     "type": "vocab_games",
     "games": [
         {{
-            "game_type": "listen_choose_picture",
-            "items": [
-                {{"word": "hello", "emoji": "👋", "distractors": [{{"word": "apple", "emoji": "🍎"}}, {{"word": "teacher", "emoji": "👩‍🏫"}}, {{"word": "student", "emoji": "🙋"}}]}},
-                {{"word": "teacher", "emoji": "👩‍🏫", "distractors": [...]}},
-                ... (10-12 items total)
-            ]
+            "game_type": "crossword",
+            "items": [{{"word": "hello", "definition": "A greeting", "emoji": "👋"}}, ...]
         }},
         {{
-            "game_type": "read_choose_picture",
-            "items": [...] (10-12 items)
+            "game_type": "word_search",
+            "items": [{{"word": "hello", "definition": "A greeting", "emoji": "👋"}}, ...]
         }},
         {{
-            "game_type": "unscramble",
-            "items": [
-                {{"word": "hello", "emoji": "👋"}},
-                ... (10-12 items)
-            ]
+            "game_type": "board_game",
+            "items": [{{"question": "What does 'hello' mean?", "answer": "A greeting", "options": ["A greeting", "A color", "A number", "A food"]}}, ...]
         }}
-    ],
-    "total_exercises": 32
+    ]
 }}"""
+        else:
+            game_instructions = {
+                'listen_choose_picture': 'listen_choose_picture: Student hears word, selects correct emoji. Items: {word, emoji, distractors: [{word, emoji}, {word, emoji}, {word, emoji}]}',
+                'read_choose_picture': 'read_choose_picture: Student reads word, selects correct emoji. Items: {word, emoji, distractors: [{word, emoji}, {word, emoji}, {word, emoji}]}',
+                'unscramble': 'unscramble: Student arranges scrambled letters. Items: {word, emoji}',
+                'flashcard_match': 'flashcard_match: Match word to emoji/definition. Items: {word, emoji, definition}',
+                'listen_write': 'listen_write: Student hears and types word. Items: {word, emoji}',
+                'look_write': 'look_write: Student sees emoji, types word. Items: {word, emoji, hint}',
+                'fill_gap': 'fill_gap: Complete sentence with correct word. Items: {sentence (with ___), answer, options: [4 choices], emoji}',
+                'memory_game': 'memory_game: Match word-emoji pairs. Items: {word, emoji}',
+                'listen_choose_word': 'listen_choose_word: Student hears word, picks correct spelling. Items: {word, emoji, distractors: ["wrong1", "wrong2", "wrong3"]}',
+            }
+            
+            game_desc = "\n".join([f"{i+1}. {game_instructions.get(g, g)}" for i, g in enumerate(selected_games)])
+            
+            prompt = f"""Create vocabulary games for young ESL learners (ages 4-7).
 
+VOCABULARY: {json.dumps([{'word': v.get('word'), 'emoji': v.get('image_emoji', '?')} for v in vocab_items], ensure_ascii=False)}
+
+Create {len(selected_games)} game activities. Each game MUST have 4-8 items.
+
+GAME TYPES TO CREATE:
+{game_desc}
+
+IMPORTANT RULES:
+- Use ONLY the vocabulary words provided
+- Each game has 4-8 items
+- For distractor emojis, use common objects NOT in the vocabulary list
+- Distractors must be plausible but clearly different from the correct answer
+
+Respond with ONLY valid JSON:
+{{
+    "type": "vocab_games",
+    "games": [
+        {{"game_type": "{selected_games[0]}", "items": [...]}},
+        {{"game_type": "{selected_games[1]}", "items": [...]}},
+        {{"game_type": "{selected_games[2] if len(selected_games) > 2 else selected_games[0]}", "items": [...]}}
+    ]
+}}"""
+        
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return extract_json_from_response(response)
+            result = extract_json_from_response(response)
+            # Ensure step number
+            result['step'] = step.get('step')
+            return result
         except Exception as e:
-            print(f"Vocab game enrichment failed: {e}")
-            return step
             print(f"Vocab game enrichment failed: {e}")
             return step
     
