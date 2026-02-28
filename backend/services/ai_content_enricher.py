@@ -73,7 +73,7 @@ class AIContentEnricher:
             api_key=self.api_key,
             session_id=session_id,
             system_message=ESL_TEACHER_SYSTEM_PROMPT
-        ).with_model("openai", "gpt-4o")
+        ).with_model("anthropic", "claude-sonnet-4-6")
     
     async def enrich_lesson(self, lesson_data: Dict[str, Any], unit_context: Dict[str, Any]) -> Dict[str, Any]:
         """
