@@ -95,13 +95,8 @@ Return this EXACT JSON structure:
   }},
   "vocabulary": {{
     "items": [
-      {{
-        "word": "{vocab_list[0] if vocab_list else 'word'}",
-        "ipa": "/phonetic/",
-        "definition": "Simple definition for a child",
-        "example": "A short example sentence using this word",
-        "image_emoji": "emoji"
-      }}
+      {{"word": "WORD1", "ipa": "/phonetic/", "definition": "Simple definition", "example": "Example sentence", "image_emoji": "emoji"}},
+      {{"word": "WORD2", "ipa": "/phonetic/", "definition": "Simple definition", "example": "Example sentence", "image_emoji": "emoji"}}
     ]
   }},
   "micro_game_vocab": {{
