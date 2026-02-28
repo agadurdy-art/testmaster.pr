@@ -29,8 +29,15 @@ import {
 import {
   WordOrder,
   FillTheBlank,
-  ErrorHunter
+  ErrorHunter,
+  TrueFalseGrammar,
+  MultipleChoiceGrammar
 } from '../components/games/grammar';
+import {
+  Crossword,
+  WordSearch,
+  BoardGame
+} from '../components/games/review';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
