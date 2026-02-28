@@ -23,6 +23,13 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 - [x] Error Hunter grammar game evaluation logic fixed (punctuation-embedded words)
 - [x] Speaking section expanded to 3 prompts per lesson (was 1)
 - [x] Production enrichment added to merger pipeline (ENRICH_MAP + _enriched_has_content)
+- [x] 5 new game components: TrueFalseGrammar, MultipleChoiceGrammar, Crossword, WordSearch, BoardGame
+- [x] Vocab game rotation per lesson (L1:4, L2:3, L3:3, L4:3 review)
+- [x] Grammar games expanded from 3 to 5 types (word_order, fill_blank, error_hunter, true_false, multiple_choice_grammar)
+- [x] Enrichment model switched from GPT-4o to Claude Sonnet 4.5
+- [x] Error Hunter diverse error types (pronoun, article, verb, preposition)
+- [x] Reading updated to Cambridge Starters exam format
+- [x] Review games for L4 (crossword, word_search, board_game)
 
 ### Stage 2 Progress
 - [x] Unit 1: Say Hello! (4 lessons) ✅ - Re-enriched with fixed pipeline (vocab+grammar games working)
