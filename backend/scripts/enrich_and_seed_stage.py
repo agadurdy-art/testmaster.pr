@@ -61,7 +61,7 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
                         enriched_steps.append(step)
                         # Generate vocab games from vocabulary
                         if st == 'vocabulary':
-                            vg = await enricher._enrich_vocab_games(chat, step, lesson, unit_context)
+                            vg = await enricher._enrich_vocab_game(chat, step, lesson, unit_context)
                             games = vg.get('games', [])
                             total_items = sum(len(g.get('items', [])) for g in games)
                             print(f"    vocab_games: {len(games)} games, {total_items} items")
@@ -70,7 +70,7 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
                     elif st == 'grammar_focus':
                         enriched_steps.append(step)
                         # Generate grammar games
-                        gg = await enricher._enrich_grammar_games(chat, step, lesson, unit_context)
+                        gg = await enricher._enrich_grammar_game(chat, step, lesson, unit_context)
                         games = gg.get('games', [])
                         total_items = sum(len(g.get('items', [])) for g in games)
                         print(f"    grammar_games: {len(games)} games, {total_items} items")
