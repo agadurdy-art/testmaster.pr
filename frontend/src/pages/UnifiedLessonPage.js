@@ -1691,7 +1691,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
                 data-testid="stop-recording-btn">
                 <div className="w-8 h-8 bg-white rounded-sm" />
               </button>
-              <div className="absolute inset-0 w-24 h-24 rounded-full border-4 border-red-300 animate-ping mx-auto" style={{animationDuration:'1.5s'}} />
+              <div className="absolute inset-0 w-24 h-24 rounded-full border-4 border-red-300 animate-ping mx-auto pointer-events-none" style={{animationDuration:'1.5s'}} />
             </div>
             <div className="text-red-600 font-mono font-bold text-lg" data-testid="recording-timer">{formatTime(recordingTime)}</div>
             {browserTranscript && (
