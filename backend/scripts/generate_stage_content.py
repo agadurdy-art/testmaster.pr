@@ -140,7 +140,7 @@ Return this EXACT JSON structure:
 }}
 
 RULES:
-- Use ONLY the vocabulary words: {', '.join(vocab_list)}
+- Generate ONE vocabulary item for EACH word: {', '.join(vocab_list)} (total {len(vocab_list)} items required)
 - Grammar pattern: {grammar}
 - Context: {context}
 - All content in English only
