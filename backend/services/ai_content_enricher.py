@@ -259,7 +259,7 @@ Respond with ONLY valid JSON:
         prompt = f"""Create vocabulary games for young ESL learners (ages 4-7).
 
 VOCABULARY WORDS: {vocab_words}
-VOCABULARY WITH EMOJIS: {json.dumps([{{'word': v.get('word'), 'emoji': v.get('image_emoji', '📝')}} for v in vocab_items], ensure_ascii=False)}
+VOCABULARY WITH EMOJIS: {json.dumps([{'word': v.get('word'), 'emoji': v.get('image_emoji', '📝')} for v in vocab_items], ensure_ascii=False)}
 
 IMPORTANT: Create 3 different game activities. EACH game must have 10-12 items (use each vocabulary word 2-3 times with variations).
 
