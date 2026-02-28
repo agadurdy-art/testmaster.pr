@@ -381,7 +381,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
       const formData = new FormData();
       formData.append('audio', blob, 'recording.webm');
       formData.append('target_word', w.word);
-      if (w.example_sentence) formData.append('target_sentence', w.example_sentence);
+      if (w.example_sentence || w.example) formData.append('target_sentence', w.example_sentence || w.example);
       const res = await fetch(`${API_URL}/api/unified/pronunciation/check`, { method: 'POST', body: formData });
       if (!res.ok) throw new Error('Failed');
       const data = await res.json();
