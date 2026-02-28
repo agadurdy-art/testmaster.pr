@@ -17,6 +17,7 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 - [x] All bug fixes: Word Order, Listening options, Warm-up 3 qs, Exit Ticket 5 qs
 - [x] Stage 2 content generation pipeline (GPT-4o from vocab+grammar → full lessons)
 - [x] All stages unlocked for development (isStageUnlocked always returns true)
+- [x] Fixed Stage 2 data visibility (stage_id mismatch: stage_2 → stage_2_starters)
 
 ### Stage 2 Progress
 - [x] Unit 1: Say Hello! (4 lessons) ✅
