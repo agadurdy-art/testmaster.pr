@@ -462,14 +462,14 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
                 <button className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-2 text-base" onClick={() => speakWord(w.word)}>
                   <Volume2 className="w-5 h-5" /><span className="font-medium">{w.ipa}</span>
                 </button>
-                <p className="text-gray-600 text-sm">{w.definition}</p>
+                <p className="text-gray-600 text-base">{w.definition}</p>
               </div>
             </div>
 
             {/* Example sentence */}
             <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-4 mb-5">
               <div className="flex-1">
-                <p className="text-gray-700 italic text-sm">"{w.example_sentence || w.example}"</p>
+                <p className="text-gray-700 italic text-lg">"{w.example_sentence || w.example}"</p>
               </div>
               <button className="shrink-0 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 transition-colors" onClick={() => speakWord(w.example_sentence || w.example)} data-testid="vocab-listen-sentence-btn">
                 <Volume2 className="w-5 h-5" />
