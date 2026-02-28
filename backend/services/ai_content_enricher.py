@@ -515,10 +515,13 @@ Respond with ONLY valid JSON:
     async def _enrich_production(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich production (speaking/writing) activity"""
+        """Enrich production (speaking/writing) activity with 3 prompts"""
         
         grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'grammar_focus'), {})
         pattern = grammar_step.get('rule_pattern', '')
+        
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
         
         prompt = f"""Create a speaking practice activity for young ESL learners (ages 4-7).
 
@@ -527,24 +530,40 @@ ORIGINAL CONTENT:
 
 GRAMMAR PATTERN: {pattern}
 LESSON TOPIC: {lesson.get('topic')}
+VOCABULARY: {', '.join(vocab_words)}
 
-Create a simple, encouraging speaking prompt that:
-1. Uses the target grammar pattern
-2. Is achievable for beginners
-3. Has a clear expected response
+Create 3 different speaking prompts that:
+1. Each uses the target grammar pattern or vocabulary
+2. Are achievable for beginners
+3. Have clear expected responses
+4. Progress from easier to slightly harder
 
 Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
     "type": "production",
-    "prompt": "Say: [Simple sentence using pattern]",
-    "expected_text": "expected response in lowercase",
-    "mode": "speaking"
+    "production_type": "speaking",
+    "prompt": "Main instruction for speaking practice",
+    "expected_text": "expected response for first prompt",
+    "prompts": [
+        {{"prompt": "Say: [Simple sentence 1]", "expected_text": "expected response 1"}},
+        {{"prompt": "Say: [Simple sentence 2]", "expected_text": "expected response 2"}},
+        {{"prompt": "Say: [Simple sentence 3]", "expected_text": "expected response 3"}}
+    ]
 }}"""
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return extract_json_from_response(response)
+            result = extract_json_from_response(response)
+            # Ensure we have at least the prompts array
+            if not result.get('prompts') or len(result.get('prompts', [])) < 2:
+                # Build prompts from single prompt for backwards compat
+                result['prompts'] = [
+                    {"prompt": result.get('prompt', 'Say hello'), "expected_text": result.get('expected_text', 'hello')},
+                    {"prompt": f"Now say: I like {vocab_words[0] if vocab_words else 'it'}", "expected_text": f"i like {vocab_words[0] if vocab_words else 'it'}"},
+                    {"prompt": f"Tell me: {pattern or 'I am happy'}", "expected_text": (pattern or 'i am happy').lower()},
+                ]
+            return result
         except Exception as e:
             print(f"Production enrichment failed: {e}")
             return step
