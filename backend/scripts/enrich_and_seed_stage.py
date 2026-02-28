@@ -138,7 +138,7 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
             if step.get("games"): return {"games": step.get("games", [])}
             return {"games": [], "mode": step.get("mode", ""), "words": step.get("words", []), "correct_sentence": step.get("correct_sentence", "")}
         if st == 'listening': return {"audio_text": step.get("audio_text", ""), "transcript": step.get("audio_text", ""), "questions": step.get("questions", [])}
-        if st == 'production': return {"prompt": step.get("prompt", ""), "expected_text": step.get("expected_text", ""), "example_response": step.get("expected_text", ""), "production_type": step.get("mode", "speaking")}
+        if st == 'production': return {"prompt": step.get("prompt", ""), "expected_text": step.get("expected_text", ""), "example_response": step.get("expected_text", ""), "production_type": step.get("production_type", step.get("mode", "speaking")), "prompts": step.get("prompts", [])}
         if st == 'exit_ticket':
             if step.get('questions') and len(step['questions']) > 0:
                 qs = step['questions']
