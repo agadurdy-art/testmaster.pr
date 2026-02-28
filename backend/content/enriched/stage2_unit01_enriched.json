@@ -28,40 +28,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you say when you meet someone new?",
-                  "correct_answer": "Hello!",
+                  "question_text": "What do you say in the morning?",
+                  "correct_answer": "Good morning!",
                   "options": [
-                    "Hello!",
+                    "Good morning!",
+                    "Good night!",
                     "Goodbye!",
-                    "Thank you!",
+                    "Hello!"
+                  ],
+                  "image_emoji": "🌞",
+                  "hint": "It's what you say when the sun comes up."
+                },
+                {
+                  "question_text": "What do you say when leaving a friend?",
+                  "correct_answer": "Goodbye!",
+                  "options": [
+                    "Goodbye!",
+                    "Hello!",
+                    "See you later!",
                     "Please!"
                   ],
                   "image_emoji": "👋",
-                  "hint": "It's a polite start to talk."
+                  "hint": "It's what you say when you are going."
                 },
                 {
-                  "question_text": "What do you do when you see a new friend?",
-                  "correct_answer": "Wave and say 'Hello!'",
+                  "question_text": "What do you say when someone helps you?",
+                  "correct_answer": "Thank you!",
                   "options": [
-                    "Wave and say 'Hello!'",
-                    "Turn away",
-                    "Say 'Goodbye!'",
-                    "Clap your hands"
-                  ],
-                  "image_emoji": "🗣️",
-                  "hint": "Use your hand and a friendly word."
-                },
-                {
-                  "question_text": "If someone says 'Hello!' to you, what do you say back?",
-                  "correct_answer": "Hello!",
-                  "options": [
+                    "Thank you!",
                     "Hello!",
-                    "Goodnight!",
-                    "Thanks!",
-                    "Sorry!"
+                    "Please!",
+                    "Goodbye!"
                   ],
-                  "image_emoji": "👋",
-                  "hint": "Repeat the friendly word."
+                  "image_emoji": "🙏",
+                  "hint": "It's a kind word to show you are happy for help."
                 }
               ]
             },
@@ -101,37 +101,465 @@
             },
             {
               "step": 2,
-              "type": "vocabulary",
-              "items": [
+              "type": "vocab_games",
+              "games": [
                 {
-                  "word": "hello",
-                  "ipa": "/həˈloʊ/",
-                  "definition": "A greeting word",
-                  "example": "Hello, how are you?",
-                  "image_emoji": "👋"
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👩‍🏫"
+                        },
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👨‍🏫"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👨‍🏫"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "guitar",
+                          "emoji": "🎸"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👩‍🏫"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "carrot",
+                          "emoji": "🥕"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "chalkboard",
+                          "emoji": "🖍️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "football",
+                          "emoji": "🏈"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "eraser",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "basket",
+                          "emoji": "🧺"
+                        },
+                        {
+                          "word": "soccer",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "plate",
+                          "emoji": "🍽️"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "spoon",
+                          "emoji": "🥄"
+                        },
+                        {
+                          "word": "fork",
+                          "emoji": "🍴"
+                        },
+                        {
+                          "word": "listen",
+                          "emoji": "👂"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "word": "hi",
-                  "ipa": "/haɪ/",
-                  "definition": "A casual greeting",
-                  "example": "Hi, I'm Sam.",
-                  "image_emoji": "👋"
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👩‍🏫"
+                        },
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👨‍🏫"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👨‍🏫"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "guitar",
+                          "emoji": "🎸"
+                        },
+                        {
+                          "word": "teacher",
+                          "emoji": "👩‍🏫"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "carrot",
+                          "emoji": "🥕"
+                        },
+                        {
+                          "word": "desk",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "chalkboard",
+                          "emoji": "🖍️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "student",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "football",
+                          "emoji": "🏈"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍏"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "eraser",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "notebook",
+                          "emoji": "📓"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "basket",
+                          "emoji": "🧺"
+                        },
+                        {
+                          "word": "soccer",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂",
+                      "distractors": [
+                        {
+                          "word": "plate",
+                          "emoji": "🍽️"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓",
+                      "distractors": [
+                        {
+                          "word": "spoon",
+                          "emoji": "🥄"
+                        },
+                        {
+                          "word": "fork",
+                          "emoji": "🍴"
+                        },
+                        {
+                          "word": "listen",
+                          "emoji": "👂"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "word": "answer",
-                  "ipa": "/ˈæn.sər/",
-                  "definition": "To reply to a question",
-                  "example": "I answer the question.",
-                  "image_emoji": "❓"
-                },
-                {
-                  "word": "listen",
-                  "ipa": "/ˈlɪs.ən/",
-                  "definition": "To hear attentively",
-                  "example": "Listen to the teacher.",
-                  "image_emoji": "👂"
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓"
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂"
+                    },
+                    {
+                      "word": "hello",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "hi",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓"
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂"
+                    },
+                    {
+                      "word": "hello",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "answer",
+                      "emoji": "❓"
+                    },
+                    {
+                      "word": "listen",
+                      "emoji": "👂"
+                    }
+                  ]
                 }
-              ]
+              ],
+              "total_exercises": 32
             },
             {
               "step": 3,
@@ -182,45 +610,47 @@
                     {
                       "words": [
                         "Who",
+                        "he",
                         "is",
-                        "he?"
+                        "?"
                       ],
                       "correctSentence": "Who is he?"
                     },
                     {
                       "words": [
                         "Who",
-                        "is",
-                        "the",
-                        "teacher?"
-                      ],
-                      "correctSentence": "Who is the teacher?"
-                    },
-                    {
-                      "words": [
-                        "is",
-                        "Who",
-                        "that",
-                        "boy?"
-                      ],
-                      "correctSentence": "Who is that boy?"
-                    },
-                    {
-                      "words": [
-                        "your",
-                        "is",
-                        "Who",
-                        "friend?"
-                      ],
-                      "correctSentence": "Who is your friend?"
-                    },
-                    {
-                      "words": [
-                        "Who",
                         "she",
-                        "is?"
+                        "is",
+                        "?"
                       ],
                       "correctSentence": "Who is she?"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "that",
+                        "is",
+                        "?"
+                      ],
+                      "correctSentence": "Who is that?"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "this",
+                        "is",
+                        "?"
+                      ],
+                      "correctSentence": "Who is this?"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "they",
+                        "are",
+                        "?"
+                      ],
+                      "correctSentence": "Who are they?"
                     }
                   ]
                 },
@@ -231,28 +661,8 @@
                       "sentence": "Who ___ he?",
                       "answer": "is",
                       "options": [
-                        "am",
                         "is",
-                        "are",
-                        "be"
-                      ]
-                    },
-                    {
-                      "sentence": "Who ___ your teacher?",
-                      "answer": "is",
-                      "options": [
                         "am",
-                        "is",
-                        "are",
-                        "be"
-                      ]
-                    },
-                    {
-                      "sentence": "Who ___ that girl?",
-                      "answer": "is",
-                      "options": [
-                        "am",
-                        "is",
                         "are",
                         "be"
                       ]
@@ -261,18 +671,38 @@
                       "sentence": "Who ___ she?",
                       "answer": "is",
                       "options": [
-                        "am",
                         "is",
+                        "am",
                         "are",
                         "be"
                       ]
                     },
                     {
-                      "sentence": "Who ___ their friend?",
+                      "sentence": "Who ___ it?",
                       "answer": "is",
                       "options": [
-                        "am",
                         "is",
+                        "am",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ they?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "am",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ this?",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "am",
                         "are",
                         "be"
                       ]
@@ -283,29 +713,29 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "Who am he?",
-                      "errorWord": "am",
-                      "correctWord": "is"
+                      "sentence": "Who is he.",
+                      "errorWord": ".",
+                      "correctWord": "?"
                     },
                     {
-                      "sentence": "Who are your teacher?",
-                      "errorWord": "are",
-                      "correctWord": "is"
+                      "sentence": "Who is she!",
+                      "errorWord": "!",
+                      "correctWord": "?"
                     },
                     {
-                      "sentence": "Who is she?",
-                      "errorWord": "",
-                      "correctWord": ""
+                      "sentence": "Who are they!",
+                      "errorWord": "!",
+                      "correctWord": "?"
                     },
                     {
-                      "sentence": "Who are he?",
-                      "errorWord": "are",
-                      "correctWord": "is"
+                      "sentence": "Who is this!",
+                      "errorWord": "!",
+                      "correctWord": "?"
                     },
                     {
-                      "sentence": "Who is their friend?",
-                      "errorWord": "",
-                      "correctWord": ""
+                      "sentence": "Who is her?",
+                      "errorWord": "her",
+                      "correctWord": "she"
                     }
                   ]
                 }
@@ -327,11 +757,11 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "He waves and says, 'Hi!' She smiles and listens. They all laugh together.",
+              "audio_text": "He waves and says, 'Hi!' She listens carefully. They are happy to answer.",
               "questions": [
                 {
-                  "question": "Who says 'Hi!'?",
-                  "answer": "He",
+                  "question": "Who listens carefully?",
+                  "answer": "She",
                   "options": [
                     "He",
                     "She",
@@ -339,12 +769,12 @@
                   ]
                 },
                 {
-                  "question": "Who listens and smiles?",
-                  "answer": "She",
+                  "question": "How do they feel?",
+                  "answer": "Happy",
                   "options": [
-                    "She",
-                    "He",
-                    "They"
+                    "Sad",
+                    "Happy",
+                    "Angry"
                   ]
                 }
               ]
@@ -362,29 +792,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Who is ___? (Fill in the blank)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "he",
+                  "question_text": "Who is she? (Grammar question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "She is my teacher.",
                   "options": [
-                    "he",
-                    "she",
-                    "they",
-                    "it"
+                    "She is my teacher.",
+                    "He is my teacher.",
+                    "They are happy.",
+                    "It is blue."
                   ]
                 },
                 {
-                  "question_text": "What do you say to greet someone? (Vocabulary question)",
+                  "question_text": "What do you say when you meet someone new? (Vocabulary question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "Hello",
                   "options": [
-                    "Hello",
                     "Goodbye",
-                    "Thanks",
-                    "Sorry"
+                    "Thank you",
+                    "Hello",
+                    "Please"
                   ]
                 },
                 {
-                  "question_text": "True or False: 'Hi' is a way to say hello.",
+                  "question_text": "True or False: 'Hi' and 'Hello' mean the same thing.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -393,24 +823,14 @@
                   ]
                 },
                 {
-                  "question_text": "Who listens when someone says 'Hi'?",
+                  "question_text": "What do you do when someone is talking? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "She",
+                  "correct_answer": "Listen",
                   "options": [
-                    "He",
-                    "She",
-                    "They"
-                  ]
-                },
-                {
-                  "question_text": "Fill in: They ___ to music. (Reading comprehension)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "listen",
-                  "options": [
-                    "listen",
-                    "answer",
-                    "speak",
-                    "write"
+                    "Run",
+                    "Listen",
+                    "Jump",
+                    "Sleep"
                   ]
                 }
               ]
@@ -431,40 +851,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Who says hello to Ben and Kim first?",
-                  "correct_answer": "Anna",
+                  "question_text": "Who are the friends playing on the playground?",
+                  "correct_answer": "Ben and Kim",
                   "options": [
-                    "Anna",
-                    "Lucy",
-                    "Tom",
-                    "Jack"
+                    "Ben and Kim",
+                    "Anna and Tom",
+                    "Lucy and Jack",
+                    "Mia and Nick"
+                  ],
+                  "image_emoji": "🌈👫",
+                  "hint": "Think about the video and listen for their names."
+                },
+                {
+                  "question_text": "What game are Ben and Kim playing?",
+                  "correct_answer": "Tag",
+                  "options": [
+                    "Tag",
+                    "Hide and Seek",
+                    "Jump Rope",
+                    "Catch"
+                  ],
+                  "image_emoji": "🏐",
+                  "hint": "They run and try to catch each other."
+                },
+                {
+                  "question_text": "How do Ben and Kim greet each other?",
+                  "correct_answer": "Wave and say hello",
+                  "options": [
+                    "Wave and say hello",
+                    "Hug",
+                    "High-five",
+                    "Shake hands"
                   ],
                   "image_emoji": "👋",
-                  "hint": "Think of the person who waves first."
-                },
-                {
-                  "question_text": "What color shirt is Ben wearing?",
-                  "correct_answer": "Blue",
-                  "options": [
-                    "Blue",
-                    "Red",
-                    "Green",
-                    "Yellow"
-                  ],
-                  "image_emoji": "👕",
-                  "hint": "Look for the sky color."
-                },
-                {
-                  "question_text": "What big toy is Kim playing with?",
-                  "correct_answer": "Teddy bear",
-                  "options": [
-                    "Teddy bear",
-                    "Doll",
-                    "Ball",
-                    "Toy car"
-                  ],
-                  "image_emoji": "🧸",
-                  "hint": "It's soft and cuddly."
+                  "hint": "Think about what they say when they first meet."
                 }
               ]
             },
@@ -504,37 +924,433 @@
             },
             {
               "step": 2,
-              "type": "vocabulary",
-              "items": [
+              "type": "vocab_games",
+              "games": [
                 {
-                  "word": "they",
-                  "ipa": "/ðeɪ/",
-                  "definition": "Used to refer to two or more people",
-                  "example": "They are new.",
-                  "image_emoji": "👥"
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "they",
+                      "emoji": "👥",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛",
+                      "distractors": [
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚",
+                      "distractors": [
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "they",
+                      "emoji": "👥",
+                      "distractors": [
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛",
+                      "distractors": [
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "distractors": [
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "they",
+                      "emoji": "👥",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "distractors": [
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "word": "name",
-                  "ipa": "/neɪm/",
-                  "definition": "What someone is called",
-                  "example": "My name is Ben.",
-                  "image_emoji": "📛"
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "they",
+                      "emoji": "👥",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛",
+                      "distractors": [
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "distractors": [
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "distractors": [
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛",
+                      "distractors": [
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "they",
+                      "emoji": "👥",
+                      "distractors": [
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕",
+                      "distractors": [
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        },
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "they",
+                          "emoji": "👥"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "they",
+                      "emoji": "👥",
+                      "distractors": [
+                        {
+                          "word": "name",
+                          "emoji": "📛"
+                        },
+                        {
+                          "word": "new",
+                          "emoji": "🆕"
+                        },
+                        {
+                          "word": "old",
+                          "emoji": "📚"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "word": "new",
-                  "ipa": "/njuː/",
-                  "definition": "Not old or not known before",
-                  "example": "Kim is new.",
-                  "image_emoji": "🆕"
-                },
-                {
-                  "word": "old",
-                  "ipa": "/əʊld/",
-                  "definition": "Having existed for a long time",
-                  "example": "This book is old.",
-                  "image_emoji": "📚"
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "they",
+                      "emoji": "👥"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛"
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕"
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚"
+                    },
+                    {
+                      "word": "they",
+                      "emoji": "👥"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛"
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕"
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚"
+                    },
+                    {
+                      "word": "they",
+                      "emoji": "👥"
+                    },
+                    {
+                      "word": "name",
+                      "emoji": "📛"
+                    },
+                    {
+                      "word": "new",
+                      "emoji": "🆕"
+                    },
+                    {
+                      "word": "old",
+                      "emoji": "📚"
+                    }
+                  ]
                 }
-              ]
+              ],
+              "total_exercises": 32
             },
             {
               "step": 3,
@@ -584,45 +1400,44 @@
                   "items": [
                     {
                       "words": [
-                        "I",
-                        "am",
-                        "Ben"
+                        "Ben",
+                        "called",
+                        "is"
                       ],
-                      "correctSentence": "I am Ben"
-                    },
-                    {
-                      "words": [
-                        "She",
-                        "is",
-                        "my",
-                        "friend"
-                      ],
-                      "correctSentence": "She is my friend"
-                    },
-                    {
-                      "words": [
-                        "This",
-                        "is",
-                        "fun"
-                      ],
-                      "correctSentence": "This is fun"
+                      "correctSentence": "Ben is called"
                     },
                     {
                       "words": [
                         "He",
-                        "is",
-                        "new",
-                        "here"
+                        "called",
+                        "is"
                       ],
-                      "correctSentence": "He is new here"
+                      "correctSentence": "He is called"
                     },
                     {
                       "words": [
-                        "They",
-                        "are",
-                        "happy"
+                        "She",
+                        "called",
+                        "is",
+                        "Kim"
                       ],
-                      "correctSentence": "They are happy"
+                      "correctSentence": "She is called Kim"
+                    },
+                    {
+                      "words": [
+                        "is",
+                        "This",
+                        "new"
+                      ],
+                      "correctSentence": "This is new"
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "new",
+                        "is"
+                      ],
+                      "correctSentence": "It is new"
                     }
                   ]
                 },
@@ -630,53 +1445,53 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "I ___ Ben.",
-                      "answer": "am",
+                      "sentence": "___ is called Ben.",
+                      "answer": "He",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "He",
+                        "They",
+                        "She",
+                        "It"
                       ]
                     },
                     {
-                      "sentence": "He ___ my brother.",
-                      "answer": "is",
+                      "sentence": "___ is new.",
+                      "answer": "He",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "He",
+                        "This",
+                        "They",
+                        "We"
                       ]
                     },
                     {
-                      "sentence": "They ___ new students.",
-                      "answer": "are",
+                      "sentence": "___ is new.",
+                      "answer": "She",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "She",
+                        "He",
+                        "They",
+                        "We"
                       ]
                     },
                     {
-                      "sentence": "She ___ called Ana.",
-                      "answer": "is",
+                      "sentence": "___ is called Kim.",
+                      "answer": "She",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "She",
+                        "He",
+                        "They",
+                        "It"
                       ]
                     },
                     {
-                      "sentence": "We ___ happy.",
-                      "answer": "are",
+                      "sentence": "___ is Ben.",
+                      "answer": "He",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "He",
+                        "She",
+                        "They",
+                        "It"
                       ]
                     }
                   ]
@@ -685,27 +1500,27 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "He am tall.",
-                      "errorWord": "am",
+                      "sentence": "He are called Ben.",
+                      "errorWord": "are",
                       "correctWord": "is"
                     },
                     {
-                      "sentence": "They is happy.",
+                      "sentence": "She are new.",
+                      "errorWord": "are",
+                      "correctWord": "is"
+                    },
+                    {
+                      "sentence": "They is called Kim.",
                       "errorWord": "is",
                       "correctWord": "are"
                     },
                     {
-                      "sentence": "I are Ben.",
+                      "sentence": "It are new.",
                       "errorWord": "are",
-                      "correctWord": "am"
-                    },
-                    {
-                      "sentence": "She am new.",
-                      "errorWord": "am",
                       "correctWord": "is"
                     },
                     {
-                      "sentence": "We is friends.",
+                      "sentence": "They is new.",
                       "errorWord": "is",
                       "correctWord": "are"
                     }
@@ -728,7 +1543,7 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Kim is new. She says her name is Kim. Ben is old but happy to meet new friends.",
+              "audio_text": "Kim is new and says hello. They are friends now. Ben likes her name.",
               "questions": [
                 {
                   "question": "Who is new?",
@@ -740,12 +1555,11 @@
                   ]
                 },
                 {
-                  "question": "Is Ben old or new?",
-                  "answer": "Old",
+                  "question": "Does Ben like her name?",
+                  "answer": "Yes",
                   "options": [
-                    "Old",
-                    "New",
-                    "Young"
+                    "Yes",
+                    "No"
                   ]
                 }
               ]
@@ -763,9 +1577,9 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ called Kim. (Grammar question)",
+                  "question_text": "She ___ called Kim. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "am",
+                  "correct_answer": "is",
                   "options": [
                     "am",
                     "is",
@@ -774,18 +1588,18 @@
                   ]
                 },
                 {
-                  "question_text": "What does 'old' mean? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'old'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Not new",
+                  "correct_answer": "📚",
                   "options": [
-                    "New",
-                    "Not new",
-                    "Small",
-                    "Happy"
+                    "👥",
+                    "📛",
+                    "🆕",
+                    "📚"
                   ]
                 },
                 {
-                  "question_text": "True or False: They are new friends.",
+                  "question_text": "True or False: Ben and Kim are friends.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -794,14 +1608,25 @@
                   ]
                 },
                 {
-                  "question_text": "Who is called Ben? (Reading comprehension)",
+                  "question_text": "Who is new according to the lesson topic?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "He",
+                  "correct_answer": "Kim",
                   "options": [
-                    "She",
-                    "He",
+                    "Ben",
+                    "Kim",
                     "They",
-                    "We"
+                    "He"
+                  ]
+                },
+                {
+                  "question_text": "They are our ___ friends. (Vocabulary question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "new",
+                  "options": [
+                    "old",
+                    "new",
+                    "name",
+                    "they"
                   ]
                 }
               ]
@@ -822,40 +1647,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What does 'A' sound like?",
-                  "correct_answer": "/æ/",
+                  "question_text": "What letter comes after A in the alphabet?",
+                  "correct_answer": "B",
                   "options": [
-                    "/æ/",
-                    "/b/",
-                    "/k/",
-                    "/d/"
+                    "A",
+                    "B",
+                    "C",
+                    "D"
                   ],
-                  "image_emoji": "🅰️",
-                  "hint": "It sounds like the word 'apple'."
+                  "image_emoji": "🇧",
+                  "hint": "It's the next letter after A!"
                 },
                 {
-                  "question_text": "Can you find the letter 'A' in this sequence: B, C, A, D?",
-                  "correct_answer": "Yes, it's the third one.",
+                  "question_text": "Which letter sounds like 'Bee'?",
+                  "correct_answer": "B",
                   "options": [
-                    "Yes, it's the third one.",
-                    "No, it's not here.",
-                    "Yes, it's the first one.",
-                    "Yes, it's the last one."
+                    "A",
+                    "B",
+                    "C",
+                    "D"
                   ],
-                  "image_emoji": "👀",
-                  "hint": "Look carefully at the third position."
+                  "image_emoji": "🐝",
+                  "hint": "Think of a buzzing bee!"
                 },
                 {
-                  "question_text": "Which word starts with 'A'?",
-                  "correct_answer": "Apple",
+                  "question_text": "What is the last letter of the alphabet?",
+                  "correct_answer": "Z",
                   "options": [
-                    "Apple",
-                    "Ball",
-                    "Cat",
-                    "Dog"
+                    "X",
+                    "Y",
+                    "Z",
+                    "W"
                   ],
-                  "image_emoji": "🍎",
-                  "hint": "It's a fruit and it starts with 'A'."
+                  "image_emoji": "🐚",
+                  "hint": "It's at the very end!"
                 }
               ]
             },
@@ -895,37 +1720,505 @@
             },
             {
               "step": 2,
-              "type": "vocabulary",
-              "items": [
+              "type": "vocab_games",
+              "games": [
                 {
-                  "word": "alphabet",
-                  "ipa": "/ˈælfəˌbɛt/",
-                  "definition": "A set of letters",
-                  "example": "We learn the alphabet.",
-                  "image_emoji": "🔤"
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "word": "spell",
-                  "ipa": "/spɛl/",
-                  "definition": "Say letters in order",
-                  "example": "He can spell 'cat'.",
-                  "image_emoji": "🔠"
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤",
+                      "distractors": [
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "word",
+                          "emoji": "📝"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝",
+                      "distractors": [
+                        {
+                          "word": "alphabet",
+                          "emoji": "🔤"
+                        },
+                        {
+                          "word": "spell",
+                          "emoji": "🔠"
+                        },
+                        {
+                          "word": "letter",
+                          "emoji": "✉️"
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
-                  "word": "letter",
-                  "ipa": "/ˈletər/",
-                  "definition": "A symbol in words",
-                  "example": "A is a letter.",
-                  "image_emoji": "✉️"
-                },
-                {
-                  "word": "word",
-                  "ipa": "/wɜrd/",
-                  "definition": "A group of letters",
-                  "example": "Dog is a word.",
-                  "image_emoji": "📝"
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤"
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠"
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️"
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝"
+                    },
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤"
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠"
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️"
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝"
+                    },
+                    {
+                      "word": "alphabet",
+                      "emoji": "🔤"
+                    },
+                    {
+                      "word": "spell",
+                      "emoji": "🔠"
+                    },
+                    {
+                      "word": "letter",
+                      "emoji": "✉️"
+                    },
+                    {
+                      "word": "word",
+                      "emoji": "📝"
+                    }
+                  ]
                 }
-              ]
+              ],
+              "total_exercises": 36
             },
             {
               "step": 3,
@@ -975,51 +2268,43 @@
                   "items": [
                     {
                       "words": [
-                        "He",
+                        "She",
                         "is",
-                        "playing",
-                        "the",
-                        "game"
+                        "playing"
                       ],
-                      "correctSentence": "He is playing the game"
+                      "correctSentence": "She is playing"
                     },
                     {
                       "words": [
                         "Who",
                         "is",
-                        "she",
-                        "playing",
-                        "with"
+                        "happy"
                       ],
-                      "correctSentence": "Who is she playing with"
+                      "correctSentence": "Who is happy"
                     },
                     {
                       "words": [
                         "They",
                         "are",
-                        "in",
-                        "the",
-                        "park"
+                        "playing"
                       ],
-                      "correctSentence": "They are in the park"
+                      "correctSentence": "They are playing"
                     },
                     {
                       "words": [
-                        "Why",
+                        "Who",
                         "is",
-                        "he",
-                        "happy"
+                        "Ben"
                       ],
-                      "correctSentence": "Why is he happy"
+                      "correctSentence": "Who is Ben"
                     },
                     {
                       "words": [
-                        "Where",
-                        "are",
-                        "they",
-                        "going"
+                        "He",
+                        "is",
+                        "running"
                       ],
-                      "correctSentence": "Where are they going"
+                      "correctSentence": "He is running"
                     }
                   ]
                 },
@@ -1027,17 +2312,17 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "___ is playing with you?",
-                      "answer": "Who",
+                      "sentence": "___ is playing the game.",
+                      "answer": "He",
                       "options": [
-                        "What",
-                        "Who",
-                        "Why",
-                        "Where"
+                        "He",
+                        "She",
+                        "They",
+                        "It"
                       ]
                     },
                     {
-                      "sentence": "She ___ very happy.",
+                      "sentence": "Who ___ it?",
                       "answer": "is",
                       "options": [
                         "am",
@@ -1047,33 +2332,33 @@
                       ]
                     },
                     {
-                      "sentence": "They ___ playing the game.",
-                      "answer": "are",
+                      "sentence": "___ are happy.",
+                      "answer": "They",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "He",
+                        "She",
+                        "They",
+                        "It"
                       ]
                     },
                     {
-                      "sentence": "Who ___ your friend?",
-                      "answer": "is",
+                      "sentence": "Who is ___?",
+                      "answer": "she",
                       "options": [
-                        "am",
-                        "is",
-                        "are",
-                        "be"
+                        "he",
+                        "she",
+                        "they",
+                        "it"
                       ]
                     },
                     {
-                      "sentence": "___ you happy?",
-                      "answer": "Are",
+                      "sentence": "He is ___ the ball.",
+                      "answer": "kicking",
                       "options": [
-                        "Am",
-                        "Is",
-                        "Are",
-                        "Be"
+                        "kicking",
+                        "jumping",
+                        "running",
+                        "walking"
                       ]
                     }
                   ]
@@ -1082,27 +2367,27 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "Who is she are?",
+                      "sentence": "He are playing the game.",
                       "errorWord": "are",
                       "correctWord": "is"
                     },
                     {
-                      "sentence": "They am playing the game.",
-                      "errorWord": "am",
-                      "correctWord": "are"
-                    },
-                    {
-                      "sentence": "Where is they going?",
+                      "sentence": "They is happy.",
                       "errorWord": "is",
                       "correctWord": "are"
                     },
                     {
-                      "sentence": "Why are he happy?",
-                      "errorWord": "are",
+                      "sentence": "She am running fast.",
+                      "errorWord": "am",
                       "correctWord": "is"
                     },
                     {
-                      "sentence": "She are in the park.",
+                      "sentence": "Who is they?",
+                      "errorWord": "they",
+                      "correctWord": "he/she"
+                    },
+                    {
+                      "sentence": "It are a dog.",
                       "errorWord": "are",
                       "correctWord": "is"
                     }
@@ -1127,24 +2412,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "She spells 'word' with the letters W, O, R, and D. He spells 'cat' using C, A, T.",
+              "audio_text": "She says, 'I can spell the word.' He says, 'The alphabet starts with A.'",
               "questions": [
                 {
-                  "question": "What does she spell?",
-                  "answer": "word",
+                  "question": "What does she do?",
+                  "answer": "spell the word",
                   "options": [
-                    "cat",
-                    "book",
-                    "word"
+                    "walk the dog",
+                    "spell the word",
+                    "paint a picture"
                   ]
                 },
                 {
-                  "question": "What letters does he use to spell 'cat'?",
-                  "answer": "C, A, T",
+                  "question": "What does he say starts with A?",
+                  "answer": "The alphabet",
                   "options": [
-                    "C, A, T",
-                    "W, O, R, D",
-                    "B, O, O, K"
+                    "The dog",
+                    "The alphabet",
+                    "The book"
                   ]
                 }
               ]
@@ -1162,56 +2447,56 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Which word means a set of letters in a fixed order? (Vocabulary question)",
+                  "question_text": "What is the first letter of the alphabet?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "alphabet",
+                  "correct_answer": "A",
                   "options": [
-                    "letter",
-                    "alphabet",
-                    "word",
-                    "spell"
+                    "A",
+                    "B",
+                    "C",
+                    "D"
                   ]
                 },
                 {
-                  "question_text": "She ___ playing the game. Who is ___? (Grammar question)",
+                  "question_text": "Who is ___? (Fill in the blank with a pronoun)",
                   "question_type": "fill_blank",
-                  "correct_answer": "is",
+                  "correct_answer": "she",
                   "options": [
-                    "am",
-                    "is",
-                    "are",
-                    "be"
+                    "he",
+                    "she",
+                    "they",
+                    "it"
                   ]
                 },
                 {
-                  "question_text": "Which letters spell 'cat'? (Reading comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "C, A, T",
-                  "options": [
-                    "B, A, T",
-                    "C, A, T",
-                    "C, O, T",
-                    "C, A, N"
-                  ]
-                },
-                {
-                  "question_text": "True or False: 'Spell' means to break something.",
+                  "question_text": "True or False: 'Spell' means to say or write the letters of a word.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Which of these is a letter? (Vocabulary question)",
+                  "question_text": "Which word means a single character in writing?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "A",
+                  "correct_answer": "letter",
                   "options": [
-                    "book",
+                    "alphabet",
+                    "letter",
                     "word",
-                    "A",
                     "spell"
+                  ]
+                },
+                {
+                  "question_text": "___ is playing the game.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "He",
+                  "options": [
+                    "He",
+                    "She",
+                    "They",
+                    "We"
                   ]
                 }
               ]
@@ -1232,40 +2517,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What do you say when you meet someone for the first time?",
-                  "correct_answer": "Hello",
+                  "question_text": "Which word means when you say 'hi' or 'hello'?",
+                  "correct_answer": "greet",
                   "options": [
-                    "Hello",
-                    "Goodbye",
-                    "Thank you",
-                    "Sorry"
+                    "greet",
+                    "listen",
+                    "run",
+                    "jump"
                   ],
                   "image_emoji": "👋",
-                  "hint": "It's a friendly greeting."
+                  "hint": "It's what you do when you first meet someone!"
                 },
                 {
-                  "question_text": "Which word means the opposite of 'goodbye'?",
-                  "correct_answer": "Hello",
+                  "question_text": "What do you say when you meet a friend?",
+                  "correct_answer": "hello",
                   "options": [
-                    "Hello",
-                    "Later",
-                    "Stop",
-                    "Fast"
+                    "goodbye",
+                    "hello",
+                    "quiet",
+                    "thank you"
                   ],
                   "image_emoji": "😊",
-                  "hint": "It's what you say at the start, not the end."
+                  "hint": "It's a friendly word you say first."
                 },
                 {
-                  "question_text": "What is the first thing you do when you see a friend?",
-                  "correct_answer": "Say hello",
+                  "question_text": "If you wave and say something to someone, what is it?",
+                  "correct_answer": "greeting",
                   "options": [
-                    "Say hello",
-                    "Clap hands",
-                    "Sing a song",
-                    "Jump up"
+                    "greeting",
+                    "singing",
+                    "cooking",
+                    "drawing"
                   ],
-                  "image_emoji": "🙋",
-                  "hint": "It's a way to start talking."
+                  "image_emoji": "🖐️",
+                  "hint": "You do it with your hand and voice when you meet someone."
                 }
               ]
             },
@@ -1411,24 +2696,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! My name is Max. I am new here. Let's sing the ABC song and say our names.",
+              "audio_text": "Hi there! My name is Anna. I'm going to spell my name now. A-N-N-A. Do you want to try it too?",
               "questions": [
                 {
-                  "question": "Who is new here?",
-                  "answer": "Max is new.",
+                  "question": "What is Anna doing?",
+                  "answer": "Spelling her name.",
                   "options": [
-                    "Max is new.",
-                    "Sarah is new.",
-                    "Tom is new."
+                    "Spelling her name.",
+                    "Singing a song.",
+                    "Jumping around."
                   ]
                 },
                 {
-                  "question": "What will we sing?",
-                  "answer": "The ABC song",
+                  "question": "How do you spell Anna's name?",
+                  "answer": "A-N-N-A",
                   "options": [
-                    "The ABC song",
-                    "Happy Birthday",
-                    "Twinkle Twinkle"
+                    "A-N-N-A",
+                    "A-M-Y",
+                    "A-V-A"
                   ]
                 }
               ]
@@ -1446,29 +2731,39 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ Max. (Grammar question)",
+                  "question_text": "They ___ new to the class. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "am",
+                  "correct_answer": "are",
                   "options": [
-                    "am",
                     "is",
                     "are",
+                    "am",
                     "be"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'teacher'? (Vocabulary question)",
+                  "question_text": "Who is new in the class? (Reading comprehension question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "👩‍🏫",
+                  "correct_answer": "They are new.",
                   "options": [
-                    "👩‍🏫",
-                    "🍎",
-                    "👋",
-                    "🙋"
+                    "He is new.",
+                    "She is new.",
+                    "They are new."
                   ]
                 },
                 {
-                  "question_text": "True or False: 'Hello' is a greeting.",
+                  "question_text": "Which emoji shows 'pencil'? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "✏️",
+                  "options": [
+                    "📚",
+                    "✏️",
+                    "🎒",
+                    "📁"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The alphabet has 26 letters.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1477,25 +2772,14 @@
                   ]
                 },
                 {
-                  "question_text": "Who is new in the class? (Reading comprehension question)",
+                  "question_text": "What do you say when you see your friend? (Review question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "Max is new.",
+                  "correct_answer": "Hello!",
                   "options": [
-                    "Ben is new.",
-                    "Max is new.",
-                    "Sue is new.",
-                    "Tom is new."
-                  ]
-                },
-                {
-                  "question_text": "What do we sing when learning letters? (Lesson review question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "The ABC song",
-                  "options": [
-                    "The ABC song",
-                    "Happy Birthday",
-                    "Jingle Bells",
-                    "Twinkle Twinkle"
+                    "Goodbye!",
+                    "Hello!",
+                    "Banana!",
+                    "Please!"
                   ]
                 }
               ]
