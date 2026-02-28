@@ -227,15 +227,8 @@ export default function UnifiedCoursePage({ user }) {
   };
   
   const isStageUnlocked = (stage) => {
-    // Stage 1 is always unlocked
-    if (stage.number === 1) return true;
-    
-    // Check if previous stage is completed
-    const prevStage = stages.find(s => s.number === stage.number - 1);
-    if (!prevStage) return false;
-    
-    const prevProgress = userProgress?.stage_progress?.[prevStage.stage_id];
-    return prevProgress?.certification_passed === true;
+    // All stages unlocked during development
+    return true;
   };
   
   const getStageProgress = (stage) => {
