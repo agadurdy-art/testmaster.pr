@@ -2217,7 +2217,7 @@ export default function UnifiedLessonPage({ user }) {
             <div className="lg:col-span-1">
               <LessonPath activities={lesson.activity_flow || []} currentActivity={currentActivityType} completedActivities={completedActivities} onActivityClick={handleActivityClick} theme={theme} />
             </div>
-            <div className="lg:col-span-3">{renderActivity()}</div>
+            <div className="lg:col-span-3 lesson-content-area">{renderActivity()}</div>
           </div>
         </div>
       )}
