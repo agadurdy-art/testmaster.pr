@@ -18,6 +18,11 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 - [x] Stage 2 content generation pipeline (GPT-4o from vocab+grammar → full lessons)
 - [x] All stages unlocked for development (isStageUnlocked always returns true)
 - [x] Fixed Stage 2 data visibility (stage_id mismatch: stage_2 → stage_2_starters)
+- [x] Increased text sizes for interactive board use (text-2xl headings, text-xl passages, text-lg options)
+- [x] Vocab games limited to 2 games (was 3, reduced repetition)
+- [x] Error Hunter grammar game evaluation logic fixed (punctuation-embedded words)
+- [x] Speaking section expanded to 3 prompts per lesson (was 1)
+- [x] Production enrichment added to merger pipeline (ENRICH_MAP + _enriched_has_content)
 
 ### Stage 2 Progress
 - [x] Unit 1: Say Hello! (4 lessons) ✅ - Re-enriched with fixed pipeline (vocab+grammar games working)
