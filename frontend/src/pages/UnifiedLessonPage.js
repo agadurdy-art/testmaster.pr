@@ -1659,7 +1659,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
           <div className="inline-flex items-center gap-1.5 bg-rose-50 text-rose-600 text-xs font-semibold px-3 py-1 rounded-full mb-3">
             <Volume2 className="w-3 h-3" /> Action
           </div>
-          <h3 className="text-lg font-bold text-gray-900" data-testid="production-prompt">{promptText}</h3>
+          <h3 className="text-2xl font-bold text-gray-900" data-testid="production-prompt">{promptText}</h3>
           {expectedText && (
             <button onClick={() => { const u = new SpeechSynthesisUtterance(expectedText); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u); }}
               className="mt-2 text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 mx-auto" data-testid="listen-example-btn">
