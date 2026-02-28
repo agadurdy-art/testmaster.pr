@@ -1088,22 +1088,22 @@ function GrammarFocus({ activity, onComplete, onSkip }) {
           {/* Rule */}
           <div className="bg-blue-50 rounded-xl p-5 mb-6">
             <h3 className="text-xl font-bold text-gray-900 mb-2">{rule.rule_text || rule.title}</h3>
-            <p className="text-sm text-gray-600 mb-2">{rule.explanation}</p>
-            <code className="text-sm text-blue-700 bg-blue-100 px-2 py-1 rounded">{rule.pattern}</code>
+            <p className="text-base text-gray-600 mb-2">{rule.explanation}</p>
+            <code className="text-base text-blue-700 bg-blue-100 px-2 py-1 rounded">{rule.pattern}</code>
           </div>
 
           {/* Examples */}
           <div className="space-y-3 mb-6">
             {normalizeExamples(rule.examples).map((ex, i) => (
               <div key={i} className={ex.incorrect ? 'grid grid-cols-2 gap-3' : ''}>
-                <div className="flex items-center gap-2 bg-green-50 p-3 rounded-xl">
+                <div className="flex items-center gap-2 bg-green-50 p-4 rounded-xl">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span className="text-sm font-medium text-green-800">{ex.correct}</span>
+                  <span className="text-lg font-medium text-green-800">{ex.correct}</span>
                 </div>
                 {ex.incorrect && (
-                  <div className="flex items-center gap-2 bg-red-50 p-3 rounded-xl">
+                  <div className="flex items-center gap-2 bg-red-50 p-4 rounded-xl">
                     <X className="w-5 h-5 text-red-500 shrink-0" />
-                    <span className="text-sm font-medium text-red-800 line-through">{ex.incorrect}</span>
+                    <span className="text-lg font-medium text-red-800 line-through">{ex.incorrect}</span>
                   </div>
                 )}
               </div>
