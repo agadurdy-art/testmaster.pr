@@ -124,7 +124,7 @@ const ErrorHunter = ({
                 (currentItem.errorWord.length <= 2 && word.includes(currentItem.errorWord));
               const isSelected = selectedWord?.index === idx;
               
-              let wordClass = 'px-3 py-2 rounded-lg font-medium text-lg transition-all cursor-pointer ';
+              let wordClass = 'px-4 py-3 rounded-lg font-medium text-xl transition-all cursor-pointer ';
               
               if (showFeedback) {
                 if (isError) {
