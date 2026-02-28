@@ -1479,6 +1479,12 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
 
 // ═══════ PRODUCTION (Speaking/Writing) ═══════
 function ProductionActivity({ activity, onComplete, onSkip }) {
+  // Support multiple prompts (new) or single prompt (legacy)
+  const prompts = activity?.prompts || [
+    { prompt: activity?.prompt || 'Practice speaking', expected_text: activity?.expected_text || activity?.example_response || '' }
+  ];
+  const [currentPromptIdx, setCurrentPromptIdx] = useState(0);
+  const [promptScores, setPromptScores] = useState([]);
   const [phase, setPhase] = useState('ready'); // ready, recording, processing, result
   const [transcription, setTranscription] = useState('');
   const [browserTranscript, setBrowserTranscript] = useState('');
@@ -1493,8 +1499,9 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
   const timerRef = useRef(null);
   const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-  const expectedText = activity?.expected_text || activity?.example_response || '';
-  const promptText = activity?.prompt || 'Practice speaking';
+  const currentPrompt = prompts[currentPromptIdx] || prompts[0];
+  const expectedText = currentPrompt?.expected_text || '';
+  const promptText = currentPrompt?.prompt || 'Practice speaking';
   const isWriting = activity?.production_type === 'writing';
 
   // Writing mode fallback
