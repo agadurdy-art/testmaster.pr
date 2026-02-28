@@ -441,59 +441,65 @@ Respond with ONLY valid JSON:
     async def _enrich_grammar_game(
         self, chat: LlmChat, step: Dict, lesson: Dict, unit: Dict
     ) -> Dict[str, Any]:
-        """Enrich grammar games - generate multiple game types"""
+        """Generate 5 grammar game types with 4-8 items each, diverse error types"""
         
         grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'grammar_focus'), {})
         pattern = grammar_step.get('rule_pattern', step.get('rule_pattern', ''))
         examples = grammar_step.get('examples', [])
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
         
-        prompt = f"""Create grammar games for young ESL learners (ages 4-7).
+        prompt = f"""Create 5 grammar game activities for young ESL learners (ages 4-7).
 
 GRAMMAR PATTERN: {pattern}
 EXAMPLES: {examples}
+VOCABULARY CONTEXT: {vocab_words}
+LESSON TOPIC: {lesson.get('topic')}
 
-IMPORTANT: Create 3 different grammar game activities. EACH game must have 4-5 items for a total of 12-15 exercises.
+Create 5 DIFFERENT game types. Each game MUST have 4-8 items.
 
-GAME TYPES TO CREATE:
-1. word_order: Arrange scrambled words to make correct sentences (4-5 items)
-2. fill_blank: Choose correct word to complete sentence (4-5 items)  
-3. error_hunter: Find and identify the grammar mistake in sentence (4-5 items)
+GAME TYPES:
 
-Use variations of the grammar pattern to create enough items.
+1. word_order (4-6 items): Arrange scrambled words to make correct sentences.
+   Format: {{"words": ["She", "is", "happy"], "correctSentence": "She is happy"}}
+
+2. fill_blank (4-6 items): Choose correct word to complete sentence. 4 options.
+   Format: {{"sentence": "She ___ happy.", "answer": "is", "options": ["am", "is", "are", "be"]}}
+
+3. error_hunter (4-6 items): Find the grammar mistake in the sentence.
+   CRITICAL: Use DIVERSE error types - NOT just is/are. Mix these error categories:
+   - Subject-verb agreement (he go → he goes)
+   - Pronoun errors (Him is happy → He is happy)  
+   - Article errors (I have cat → I have a cat)
+   - Preposition errors (The book is to the table → on the table)
+   - Verb form errors (She can swims → She can swim)
+   - Plural errors (two dog → two dogs)
+   Format: {{"sentence": "Him is happy.", "errorWord": "Him", "correctWord": "He", "explanation": "Use 'He' as subject pronoun"}}
+
+4. true_false (4-6 items): Is this sentence grammatically correct?
+   Mix of correct AND incorrect sentences. About 50/50 split.
+   Format: {{"sentence": "She are happy.", "is_correct": false, "corrected": "She is happy.", "explanation": "Use 'is' with she"}}
+
+5. multiple_choice_grammar (4-6 items): Choose the right word. 4 options.
+   Format: {{"question": "She ___ to school every day.", "answer": "goes", "options": ["go", "goes", "going", "gone"], "explanation": "Use 'goes' with she/he/it"}}
+
+RULES:
+- All sentences must be age-appropriate and use simple vocabulary
+- Sentences should relate to the lesson topic when possible
+- Error Hunter: use AT LEAST 3 different error categories across the items
+- True/False: include both correct AND incorrect sentences
 
 Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
     "type": "grammar_games",
     "games": [
-        {{
-            "game_type": "word_order",
-            "items": [
-                {{"words": ["I", "am", "Ben"], "correctSentence": "I am Ben"}},
-                {{"words": ["She", "is", "my", "teacher"], "correctSentence": "She is my teacher"}},
-                {{"words": ["Hello", "I", "am", "happy"], "correctSentence": "Hello I am happy"}},
-                {{"words": ["This", "is", "an", "apple"], "correctSentence": "This is an apple"}},
-                {{"words": ["He", "is", "a", "student"], "correctSentence": "He is a student"}}
-            ]
-        }},
-        {{
-            "game_type": "fill_blank",
-            "items": [
-                {{"sentence": "I ___ Ben.", "answer": "am", "options": ["am", "is", "are", "be"]}},
-                {{"sentence": "She ___ a teacher.", "answer": "is", "options": ["am", "is", "are", "be"]}},
-                ... (4-5 items total)
-            ]
-        }},
-        {{
-            "game_type": "error_hunter",
-            "items": [
-                {{"sentence": "I is Ben.", "errorWord": "is", "correctWord": "am"}},
-                {{"sentence": "She am a teacher.", "errorWord": "am", "correctWord": "is"}},
-                ... (4-5 items total)
-            ]
-        }}
-    ],
-    "total_exercises": 14
+        {{"game_type": "word_order", "items": [...]}},
+        {{"game_type": "fill_blank", "items": [...]}},
+        {{"game_type": "error_hunter", "items": [...]}},
+        {{"game_type": "true_false", "items": [...]}},
+        {{"game_type": "multiple_choice_grammar", "items": [...]}}
+    ]
 }}"""
 
         try:
