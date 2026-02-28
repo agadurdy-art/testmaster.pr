@@ -262,7 +262,6 @@ Respond with ONLY valid JSON:
         
         vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
         vocab_items = vocab_step.get('items', [])
-        vocab_words = [item.get('word') for item in vocab_items]
         lesson_num = lesson.get('number', lesson.get('lesson_number', 1))
         
         # Rotate game types per lesson
