@@ -24,16 +24,16 @@
             {
               "step": 1,
               "type": "warm_up",
-              "question_text": "What do you say when you meet someone?",
-              "correct_answer": "Hello",
+              "question_text": "What do you say when you meet someone new?",
+              "correct_answer": "Hello!",
               "options": [
-                "Goodbye",
-                "Hello",
-                "Thanks",
-                "Yes"
+                "Hello!",
+                "Goodbye!",
+                "Thank you!",
+                "Please!"
               ],
               "image_emoji": "👋",
-              "hint": "People say this when they greet.",
+              "hint": "It's a polite start to talk.",
               "video_url": ""
             },
             {
@@ -43,9 +43,30 @@
                 {
                   "word": "hello",
                   "ipa": "/həˈloʊ/",
-                  "definition": "A friendly greeting.",
-                  "example": "Hello, my name is Tom.",
+                  "definition": "A greeting word",
+                  "example": "Hello, how are you?",
                   "image_emoji": "👋"
+                },
+                {
+                  "word": "hi",
+                  "ipa": "/haɪ/",
+                  "definition": "A casual greeting",
+                  "example": "Hi, I'm Sam.",
+                  "image_emoji": "👋"
+                },
+                {
+                  "word": "answer",
+                  "ipa": "/ˈæn.sər/",
+                  "definition": "To reply to a question",
+                  "example": "I answer the question.",
+                  "image_emoji": "❓"
+                },
+                {
+                  "word": "listen",
+                  "ipa": "/ˈlɪs.ən/",
+                  "definition": "To hear attentively",
+                  "example": "Listen to the teacher.",
+                  "image_emoji": "👂"
                 }
               ]
             },
@@ -56,24 +77,24 @@
               "correct_answer": "hello",
               "options": [
                 "hello",
-                "goodbye",
-                "please",
-                "thanks"
+                "answer",
+                "listen",
+                "goodbye"
               ]
             },
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Meeting Miss Lily",
-              "text": "Hello! I am Miss Lily. Who is he? He is Sam. Sam says, 'Hi!'",
+              "title": "First Day Greeting",
+              "text": "He says, 'Hello!' She says, 'Hi!' They listen and answer the teacher.",
               "questions": [
                 {
-                  "question": "Who says 'Hi!'?",
-                  "answer": "Sam",
+                  "question": "Who said hello?",
+                  "answer": "He",
                   "options": [
-                    "Miss Lily",
-                    "Sam",
-                    "Tom"
+                    "He",
+                    "She",
+                    "They"
                   ]
                 }
               ]
@@ -82,7 +103,7 @@
               "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "Who is ___?",
-              "explanation": "Ask about someone using 'Who is'.",
+              "explanation": "Use for asking about someone.",
               "examples": [
                 "Who is he?",
                 "Who is she?"
@@ -93,21 +114,21 @@
               "type": "grammar_game",
               "mode": "word_order",
               "words": [
-                "he",
-                "Who",
+                "He",
                 "is",
-                "?"
+                "the",
+                "teacher"
               ],
-              "correct_sentence": "Who is he?"
+              "correct_sentence": "He is the teacher."
             },
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi! They are my friends. She is Anna.",
+              "audio_text": "He says, 'Hello!' She listens. They answer.",
               "questions": [
                 {
-                  "question": "Who is Anna?",
-                  "answer": "She",
+                  "question": "Who says hello?",
+                  "answer": "He",
                   "options": [
                     "He",
                     "She",
@@ -119,19 +140,19 @@
             {
               "step": 8,
               "type": "production",
-              "prompt": "Say: Hello! Who is she?",
-              "expected_text": "Hello! Who is she?",
+              "prompt": "Say: I listen to the teacher.",
+              "expected_text": "I listen to the teacher.",
               "mode": "speaking"
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "question_text": "How do you greet someone?",
-              "correct_answer": "Hello",
+              "question_text": "What is a way to greet?",
+              "correct_answer": "Hi",
               "options": [
-                "Bye",
-                "Hello",
-                "Thanks"
+                "Hi",
+                "Later",
+                "Stop"
               ]
             }
           ]
@@ -146,16 +167,16 @@
             {
               "step": 1,
               "type": "warm_up",
-              "question_text": "Who are the new students?",
+              "question_text": "Who are our new friends today?",
               "correct_answer": "Ben and Kim",
               "options": [
-                "Sam and Tom",
                 "Ben and Kim",
-                "Sue and Tim",
-                "Jack and Lily"
+                "Anna and Tom",
+                "Lucy and Jack",
+                "Mia and Nick"
               ],
-              "image_emoji": "🧑‍🤝‍🧑",
-              "hint": "The students have new names.",
+              "image_emoji": "👫",
+              "hint": "Remember the new students' names.",
               "video_url": ""
             },
             {
@@ -165,37 +186,37 @@
                 {
                   "word": "they",
                   "ipa": "/ðeɪ/",
-                  "definition": "Used for more than one person",
-                  "example": "They are my friends.",
+                  "definition": "Used to refer to two or more people",
+                  "example": "They are new.",
                   "image_emoji": "👥"
                 },
                 {
                   "word": "name",
                   "ipa": "/neɪm/",
                   "definition": "What someone is called",
-                  "example": "His name is Ben.",
-                  "image_emoji": "🏷️"
+                  "example": "My name is Ben.",
+                  "image_emoji": "📛"
                 },
                 {
                   "word": "new",
                   "ipa": "/njuː/",
-                  "definition": "Not old; recently arrived",
-                  "example": "This is a new book.",
+                  "definition": "Not old or not known before",
+                  "example": "Kim is new.",
                   "image_emoji": "🆕"
                 },
                 {
                   "word": "old",
                   "ipa": "/əʊld/",
-                  "definition": "Not new; has been around",
-                  "example": "It is an old story.",
-                  "image_emoji": "🗝️"
+                  "definition": "Having existed for a long time",
+                  "example": "This book is old.",
+                  "image_emoji": "📚"
                 }
               ]
             },
             {
               "step": 3,
               "type": "micro_game_vocab",
-              "question_text": "Match the emoji to the word: 🧑‍🤝‍🧑",
+              "question_text": "Match the emoji to the word: 👥",
               "correct_answer": "they",
               "options": [
                 "they",
@@ -207,16 +228,16 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Ben and Kim Say Hello",
-              "text": "Ben and Kim are new. They are happy. Ben says, 'Hello! My name is Ben.' Kim says, 'Hi! My name is Kim.'",
+              "title": "Ben and Kim",
+              "text": "Today, Ben and Kim join our class. They are new. Ben is happy. Kim is shy.",
               "questions": [
                 {
-                  "question": "Who are new?",
-                  "answer": "Ben and Kim",
+                  "question": "Who is shy?",
+                  "answer": "Kim",
                   "options": [
-                    "Ben and Kim",
-                    "Tom and Sam",
-                    "Lily and Sue"
+                    "Ben",
+                    "Kim",
+                    "They"
                   ]
                 }
               ]
@@ -224,11 +245,11 @@
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "Who is ___? He/She/They ___.",
-              "explanation": "Use He for boys, She for girls, They for more than one.",
+              "rule_pattern": "___ is called Ben. ___ is new.",
+              "explanation": "Use he or she for one person; they for two.",
               "examples": [
-                "Who is he? He is Ben.",
-                "Who are they? They are new."
+                "He is Kim.",
+                "They are Ben and Kim."
               ]
             },
             {
@@ -236,25 +257,24 @@
               "type": "grammar_game",
               "mode": "word_order",
               "words": [
-                "His",
-                "name",
                 "is",
-                "Ben."
+                "new",
+                "Kim"
               ],
-              "correct_sentence": "His name is Ben."
+              "correct_sentence": "Kim is new."
             },
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "This is Ben. He is new. This is Kim. She is new too.",
+              "audio_text": "Ben says hello. Kim waves to us.",
               "questions": [
                 {
-                  "question": "Who is new?",
-                  "answer": "Ben and Kim",
+                  "question": "Who says hello?",
+                  "answer": "Ben",
                   "options": [
-                    "Ben and Kim",
-                    "Tom and Sam",
-                    "Sue and Lily"
+                    "Ben",
+                    "Kim",
+                    "They"
                   ]
                 }
               ]
@@ -262,19 +282,19 @@
             {
               "step": 8,
               "type": "production",
-              "prompt": "Say: They are Ben and Kim.",
-              "expected_text": "They are Ben and Kim.",
+              "prompt": "Say: Hello, my name is [Name].",
+              "expected_text": "Hello, my name is Ben.",
               "mode": "speaking"
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "question_text": "Who is she?",
-              "correct_answer": "Kim",
+              "question_text": "Who is new in the class?",
+              "correct_answer": "They",
               "options": [
-                "Kim",
-                "Ben",
-                "Tom"
+                "He",
+                "She",
+                "They"
               ]
             }
           ]
@@ -289,16 +309,16 @@
             {
               "step": 1,
               "type": "warm_up",
-              "question_text": "What do we use to spell a word?",
-              "correct_answer": "Letters",
+              "question_text": "What is the first letter of the alphabet?",
+              "correct_answer": "A",
               "options": [
-                "Numbers",
-                "Letters",
-                "Colors",
-                "Shapes"
+                "A",
+                "B",
+                "C",
+                "D"
               ],
-              "image_emoji": "🔡",
-              "hint": "We use them to make words.",
+              "image_emoji": "🔤",
+              "hint": "It starts the alphabet!",
               "video_url": ""
             },
             {
@@ -308,29 +328,29 @@
                 {
                   "word": "alphabet",
                   "ipa": "/ˈælfəˌbɛt/",
-                  "definition": "All the letters from A to Z",
-                  "example": "We learn the alphabet in class.",
-                  "image_emoji": "🔠"
+                  "definition": "A set of letters",
+                  "example": "We learn the alphabet.",
+                  "image_emoji": "🔤"
                 },
                 {
                   "word": "spell",
                   "ipa": "/spɛl/",
-                  "definition": "To say or write the letters of a word",
-                  "example": "I can spell my name.",
-                  "image_emoji": "🔤"
+                  "definition": "Say letters in order",
+                  "example": "He can spell 'cat'.",
+                  "image_emoji": "🔠"
                 },
                 {
                   "word": "letter",
-                  "ipa": "/ˈlɛtər/",
-                  "definition": "A symbol in the alphabet",
-                  "example": "A is my favorite letter.",
+                  "ipa": "/ˈletər/",
+                  "definition": "A symbol in words",
+                  "example": "A is a letter.",
                   "image_emoji": "✉️"
                 },
                 {
                   "word": "word",
                   "ipa": "/wɜrd/",
-                  "definition": "A group of letters with a meaning",
-                  "example": "Cat is a small word.",
+                  "definition": "A group of letters",
+                  "example": "Dog is a word.",
                   "image_emoji": "📝"
                 }
               ]
@@ -339,10 +359,10 @@
               "step": 3,
               "type": "micro_game_vocab",
               "question_text": "Match the emoji to the word: 🔤",
-              "correct_answer": "spell",
+              "correct_answer": "alphabet",
               "options": [
-                "spell",
                 "alphabet",
+                "spell",
                 "letter",
                 "word"
               ]
@@ -351,11 +371,11 @@
               "step": 4,
               "type": "micro_reading",
               "title": "The Spelling Game",
-              "text": "In class, they play a game. She has to spell words. They use the alphabet to win.",
+              "text": "In class, they play a spelling game. She spells 'dog'. He spells 'cat'. They clap for the winner!",
               "questions": [
                 {
-                  "question": "Who plays the game?",
-                  "answer": "They",
+                  "question": "Who spells 'dog'?",
+                  "answer": "She",
                   "options": [
                     "He",
                     "She",
@@ -367,11 +387,11 @@
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "___ is playing the game.",
-              "explanation": "Use 'He/She/They' for people.",
+              "rule_pattern": "___ is playing the game. Who is ___?",
+              "explanation": "Use He/She/They for people.",
               "examples": [
-                "He is happy.",
-                "She is smart."
+                "They are happy.",
+                "Who is she?"
               ]
             },
             {
@@ -379,25 +399,26 @@
               "type": "grammar_game",
               "mode": "word_order",
               "words": [
-                "They",
-                "spell",
-                "the",
-                "word"
+                "is",
+                "playing",
+                "She",
+                "game",
+                "the"
               ],
-              "correct_sentence": "They spell the word."
+              "correct_sentence": "She is playing the game."
             },
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "He spells a word. She claps.",
+              "audio_text": "He spells 'book'. She spells 'pen'.",
               "questions": [
                 {
-                  "question": "Who spells the word?",
-                  "answer": "He",
+                  "question": "What does he spell?",
+                  "answer": "book",
                   "options": [
-                    "He",
-                    "She",
-                    "They"
+                    "pen",
+                    "book",
+                    "cat"
                   ]
                 }
               ]
@@ -405,14 +426,14 @@
             {
               "step": 8,
               "type": "production",
-              "prompt": "Say: She can spell a word.",
-              "expected_text": "She can spell a word.",
+              "prompt": "Say: 'He spells a word.'",
+              "expected_text": "He spells a word.",
               "mode": "speaking"
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "question_text": "Who is spelling the word?",
+              "question_text": "Who spells 'dog'?",
               "correct_answer": "She",
               "options": [
                 "He",
@@ -432,16 +453,16 @@
             {
               "step": 1,
               "type": "warm_up",
-              "question_text": "What do you say when you meet someone new?",
-              "correct_answer": "hello",
+              "question_text": "Which word means to respond to a question?",
+              "correct_answer": "answer",
               "options": [
-                "hello",
-                "bye",
-                "thanks",
-                "please"
+                "listen",
+                "new",
+                "answer",
+                "old"
               ],
-              "image_emoji": "👋",
-              "hint": "We say this to start a conversation.",
+              "image_emoji": "🔊",
+              "hint": "This word is what you do when someone asks a question.",
               "video_url": ""
             },
             {
@@ -537,28 +558,28 @@
             {
               "step": 3,
               "type": "micro_game_vocab",
-              "question_text": "Match: 🅰️",
-              "correct_answer": "alphabet",
+              "question_text": "Match: 🐝",
+              "correct_answer": "spell",
               "options": [
-                "alphabet",
-                "word",
-                "sentence",
-                "letter"
+                "spell",
+                "listen",
+                "new",
+                "word"
               ]
             },
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "A New Friend",
-              "text": "Today they met a new friend. They said, \"Hello! What is your name?\" The friend's name is Alex. Alex likes to spell words and listen to stories. He is new at school.",
+              "title": "New Friends",
+              "text": "They are new. Hello! My name is Tim. Who is she? She is Ana. Let's listen and answer.",
               "questions": [
                 {
-                  "question": "Who is new at school?",
-                  "answer": "Alex",
+                  "question": "Who is new?",
+                  "answer": "They are new.",
                   "options": [
-                    "Alex",
-                    "Sam",
-                    "Chris"
+                    "He is new.",
+                    "She is new.",
+                    "They are new."
                   ]
                 }
               ]
@@ -577,24 +598,24 @@
               "type": "grammar_game",
               "mode": "word_order",
               "words": [
-                "She",
+                "who",
                 "is",
-                "new"
+                "he"
               ],
-              "correct_sentence": "She is new."
+              "correct_sentence": "Who is he?"
             },
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Listen to the conversation: Hello! My name is Sara. What is your name? He is Tom. They like to learn the alphabet and spell words.",
+              "audio_text": "Hello! This is Max. They are new. We will say the alphabet and spell our names.",
               "questions": [
                 {
-                  "question": "Who is Sara?",
-                  "answer": "She is the person speaking.",
+                  "question": "Who is new?",
+                  "answer": "They are new.",
                   "options": [
-                    "She is the person speaking.",
-                    "He is the person listening.",
-                    "They are all Sara."
+                    "He is new.",
+                    "She is new.",
+                    "They are new."
                   ]
                 }
               ]
@@ -603,18 +624,18 @@
               "step": 8,
               "type": "production",
               "prompt": "Say a sentence using words from this unit",
-              "expected_text": "Hi! My name is [Student's Name]. I like to listen to stories.",
+              "expected_text": "Hello, my name is Ana and I can spell my name.",
               "mode": "speaking"
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "question_text": "Which word means the opposite of new?",
-              "correct_answer": "old",
+              "question_text": "Which of these is a greeting?",
+              "correct_answer": "hello",
               "options": [
-                "old",
-                "fresh",
-                "young"
+                "spell",
+                "answer",
+                "hello"
               ]
             }
           ]
