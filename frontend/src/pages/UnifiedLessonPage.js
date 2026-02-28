@@ -1657,7 +1657,10 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
         <Badge className="bg-rose-100 text-rose-700 border-0">
           <Mic className="w-3 h-3 mr-1" /> {isWriting ? 'Writing' : 'Speaking'}
         </Badge>
-        <SkipButton onSkip={onSkip} />
+        <div className="flex items-center gap-3">
+          {prompts.length > 1 && <span className="text-sm text-gray-500">{currentPromptIdx + 1}/{prompts.length}</span>}
+          <SkipButton onSkip={onSkip} />
+        </div>
       </div>
 
       <Card className="p-6 max-w-2xl mx-auto">
