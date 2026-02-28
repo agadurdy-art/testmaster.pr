@@ -130,7 +130,7 @@ const WordOrder = ({
                   key={`selected-${idx}`}
                   onClick={() => handleSelectedClick(wordObj, idx)}
                   disabled={showFeedback}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-5 py-3 rounded-lg font-medium text-lg transition-all ${
                     showFeedback
                       ? isCorrect
                         ? 'bg-green-500 text-white'
@@ -142,7 +142,7 @@ const WordOrder = ({
                 </button>
               ))
             ) : (
-              <p className="text-gray-400 text-sm">Tap words below to build your sentence</p>
+              <p className="text-gray-400 text-base">Tap words below to build your sentence</p>
             )}
           </div>
         </div>
@@ -156,7 +156,7 @@ const WordOrder = ({
                   key={wordObj.id}
                   onClick={() => handleWordClick(wordObj)}
                   disabled={wordObj.used}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-5 py-3 rounded-lg font-medium text-lg transition-all ${
                     wordObj.used
                       ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
                       : 'bg-white border-2 border-gray-300 hover:border-blue-400 hover:bg-blue-50'
