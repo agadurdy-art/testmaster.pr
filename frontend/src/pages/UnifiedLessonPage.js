@@ -276,9 +276,9 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
             </div>
           </div>
         )}
-        <h3 className="text-xl font-bold text-gray-900 mb-4">{q.question_text}</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">{q.question_text}</h3>
         {q.hint && !showFeedback && (
-          <p className="text-sm text-amber-600 italic mb-4">Hint: {q.hint}</p>
+          <p className="text-base text-amber-600 italic mb-4">Hint: {q.hint}</p>
         )}
         <div className="space-y-3">
           {q.options?.map((option) => {
@@ -291,7 +291,7 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
               else cls = 'border-gray-200 opacity-50';
             } else if (isSelected) cls = 'border-blue-500 bg-blue-50';
             return (
-              <button key={option} className={`w-full p-4 rounded-xl text-left border-2 transition-all font-medium ${cls}`}
+              <button key={option} className={`w-full p-5 rounded-xl text-left border-2 transition-all font-medium text-lg ${cls}`}
                 onClick={() => handleSelect(option)} disabled={showFeedback}
                 data-testid={`warmup-option-${option.substring(0,10).replace(/\s/g,'-')}`}>
                 {option}
