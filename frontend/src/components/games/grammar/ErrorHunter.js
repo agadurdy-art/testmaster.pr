@@ -116,8 +116,12 @@ const ErrorHunter = ({
         <div className="mb-8 p-6 bg-gray-50 rounded-xl">
           <div className="flex flex-wrap justify-center gap-2">
             {words.map((word, idx) => {
-              const cleanWord = word.toLowerCase().replace(/[.,!?]/g, '');
-              const isError = cleanWord === currentItem.errorWord.toLowerCase();
+              const cleanWord = word.toLowerCase().replace(/[.,!?;:'"]/g, '');
+              const cleanError = currentItem.errorWord.toLowerCase().replace(/[.,!?;:'"]/g, '');
+              const isError = 
+                cleanWord === cleanError ||
+                word.toLowerCase() === currentItem.errorWord.toLowerCase() ||
+                (currentItem.errorWord.length <= 2 && word.includes(currentItem.errorWord));
               const isSelected = selectedWord?.index === idx;
               
               let wordClass = 'px-3 py-2 rounded-lg font-medium text-lg transition-all cursor-pointer ';
