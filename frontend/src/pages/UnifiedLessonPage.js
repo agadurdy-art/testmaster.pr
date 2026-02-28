@@ -1413,8 +1413,8 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           <div className="w-24 h-24 bg-cyan-100 rounded-full mx-auto mb-6 flex items-center justify-center">
             <Headphones className="w-12 h-12 text-cyan-600" />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Listen carefully</h3>
-          <p className="text-gray-600 mb-6 text-sm">Click the play button to hear the audio. You can listen multiple times.</p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">Listen carefully</h3>
+          <p className="text-gray-600 mb-6 text-base">Click the play button to hear the audio. You can listen multiple times.</p>
           <Button className="bg-cyan-600 hover:bg-cyan-700 mb-4" onClick={() => speakText(transcript)} data-testid="listening-play-btn">
             <Play className="w-5 h-5 mr-2" /> Play Audio
           </Button>
@@ -1443,8 +1443,8 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
             <ArrowLeft className="w-3 h-3" /> Listen again
           </button>
           <Progress value={((currentQ + 1) / questions.length) * 100} className="mb-5" />
-          <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
-          <div className="space-y-2.5">
+          <h3 className="text-2xl font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
+          <div className="space-y-3">
             {/* If options provided, show them; otherwise generate from answer */}
             {((q.options && q.options.length > 0) ? q.options : (() => {
               const ans = (q.answer || q.correct_answer || '').toLowerCase();
@@ -1462,7 +1462,7 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
                 else cls = 'border-gray-200 opacity-50';
               }
               return (
-                <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium capitalize ${cls}`}
+                <button key={option} className={`w-full p-5 rounded-xl text-left border-2 transition-all text-lg font-medium capitalize ${cls}`}
                   onClick={() => handleAnswer(option)} disabled={showFeedback}
                   data-testid={`listening-option-${option}`}>
                   {option}
