@@ -20,7 +20,7 @@ Build a "Mastery-Based" and "Retention-Driven" English learning platform. The us
 - [x] Fixed Stage 2 data visibility (stage_id mismatch: stage_2 → stage_2_starters)
 
 ### Stage 2 Progress
-- [x] Unit 1: Say Hello! (4 lessons) ✅
+- [x] Unit 1: Say Hello! (4 lessons) ✅ - Re-enriched with fixed pipeline (vocab+grammar games working)
 - [ ] Unit 2: Numbers & Colors
 - [ ] Unit 3: What's in Your Classroom?
 - [ ] Unit 4: Body & Action
