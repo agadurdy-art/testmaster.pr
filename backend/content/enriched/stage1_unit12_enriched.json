@@ -31,40 +31,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What letter does the word 'apple' start with?",
-                  "correct_answer": "A",
+                  "question_text": "What letter does the word 'banana' start with?",
+                  "correct_answer": "B",
                   "options": [
-                    "A",
-                    "P",
-                    "E",
-                    "L"
-                  ],
-                  "image_emoji": "🍎",
-                  "hint": "Think of the first bite."
-                },
-                {
-                  "question_text": "Which letter sounds like 'mmm', like in 'moon'?",
-                  "correct_answer": "M",
-                  "options": [
-                    "M",
+                    "B",
                     "N",
-                    "V",
-                    "W"
+                    "A",
+                    "D"
                   ],
-                  "image_emoji": "🌕",
-                  "hint": "Think of midnight sky."
+                  "image_emoji": "🍌",
+                  "hint": "It's the same as the beginning of 'brown'."
                 },
                 {
-                  "question_text": "When counting, which number comes after 5?",
-                  "correct_answer": "6",
+                  "question_text": "Which letter sounds like 'sss', like in 'snake'?",
+                  "correct_answer": "S",
                   "options": [
-                    "4",
-                    "5",
-                    "6",
-                    "7"
+                    "S",
+                    "C",
+                    "T",
+                    "D"
                   ],
-                  "image_emoji": "6️⃣",
-                  "hint": "One more than five."
+                  "image_emoji": "🐍",
+                  "hint": "Sounds like the air coming out of a balloon."
+                },
+                {
+                  "question_text": "What comes before the number 4?",
+                  "correct_answer": "3",
+                  "options": [
+                    "2",
+                    "3",
+                    "5",
+                    "6"
+                  ],
+                  "image_emoji": "3️⃣",
+                  "hint": "One less than four."
                 }
               ]
             },
@@ -333,24 +333,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi! I'm Lily. I have a red ball. My dog loves to chase it in the garden.",
+              "audio_text": "Hello! My name is Ben. I have a big green kite. My brother likes to fly it in the park.",
               "questions": [
                 {
-                  "question": "What color is Lily's ball?",
-                  "answer": "red",
+                  "question": "What color is Ben's kite?",
+                  "answer": "green",
                   "options": [
-                    "red",
                     "green",
-                    "blue"
+                    "red",
+                    "yellow"
                   ]
                 },
                 {
-                  "question": "Where does the dog chase the ball?",
-                  "answer": "in the garden",
+                  "question": "Where does Ben's brother like to fly the kite?",
+                  "answer": "in the park",
                   "options": [
+                    "in the park",
                     "in the house",
-                    "in the garden",
-                    "in the park"
+                    "in the garden"
                   ]
                 }
               ]
@@ -1242,24 +1242,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "The farmer is happy because the sun is shining. In the barn, there are two brown cows eating hay.",
+              "audio_text": "The farmer is feeding the animals. He has a big blue school bag with apples inside. The cat likes to sit near him while the dog runs around happily.",
               "questions": [
                 {
-                  "question": "Why is the farmer happy?",
-                  "answer": "the sun is shining",
+                  "question": "What color is the farmer's school bag?",
+                  "answer": "blue",
                   "options": [
-                    "the sun is shining",
-                    "it is raining",
-                    "it's nighttime"
+                    "red",
+                    "blue",
+                    "green"
                   ]
                 },
                 {
-                  "question": "How many cows are in the barn?",
-                  "answer": "two",
+                  "question": "What does the cat like to do?",
+                  "answer": "sit near the farmer",
                   "options": [
-                    "three",
-                    "two",
-                    "four"
+                    "sit near the farmer",
+                    "run around",
+                    "jump over the fence"
                   ]
                 }
               ]
@@ -1277,56 +1277,45 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ a teacher. (Grammar question)",
+                  "question_text": "I ___ a dog. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "am",
+                  "correct_answer": "have",
                   "options": [
                     "am",
                     "is",
-                    "are",
-                    "has"
+                    "have",
+                    "are"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'dog'? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'school'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "🐶",
+                  "correct_answer": "🏫",
                   "options": [
-                    "🐶",
-                    "🐱",
+                    "🏫",
                     "🐮",
-                    "🐷"
+                    "🐶",
+                    "🎒"
                   ]
                 },
                 {
-                  "question_text": "True or False: 'Red' is a color.",
+                  "question_text": "True or False: The farmer is always sad. (Reading comprehension question)",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What do you carry books in?",
+                  "question_text": "What color was the farmer's bag in the story?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "backpack",
+                  "correct_answer": "blue",
                   "options": [
-                    "backpack",
-                    "chicken",
-                    "hat",
-                    "shoe"
-                  ]
-                },
-                {
-                  "question_text": "I __ a book in my bag. (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "have",
-                  "options": [
-                    "have",
-                    "is",
-                    "are",
-                    "am"
+                    "red",
+                    "yellow",
+                    "blue",
+                    "green"
                   ]
                 }
               ]
@@ -1687,24 +1676,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello, my name is Max. I have a big brown dog. His name is Bruno, and he loves playing in the park.",
+              "audio_text": "Hi, I'm Lily. I have a yellow cat. His name is Whiskers and he likes to sleep in my room.",
               "questions": [
                 {
-                  "question": "What is the color of Max's dog?",
-                  "answer": "Brown",
+                  "question": "What is the color of Lily's cat?",
+                  "answer": "Yellow",
                   "options": [
-                    "Brown",
+                    "Yellow",
                     "Black",
-                    "White"
+                    "Orange"
                   ]
                 },
                 {
-                  "question": "Where does Bruno like to play?",
-                  "answer": "In the park",
+                  "question": "Where does Whiskers like to sleep?",
+                  "answer": "In Lily's room",
                   "options": [
-                    "In the park",
+                    "In Lily's room",
                     "In the garden",
-                    "On the beach"
+                    "On the sofa"
                   ]
                 }
               ]
@@ -1722,40 +1711,29 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ a new toy. (Grammar question)",
+                  "question_text": "I ___ Ben. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "have",
+                  "correct_answer": "am",
                   "options": [
-                    "have",
-                    "has",
                     "am",
-                    "is"
+                    "is",
+                    "are",
+                    "be"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'apple'? (Vocabulary question)",
+                  "question_text": "Which emoji shows 'teacher'? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "🍎",
+                  "correct_answer": "👩‍🏫",
                   "options": [
-                    "🎨",
-                    "🚗",
+                    "👩‍🏫",
                     "🍎",
-                    "🐶"
+                    "👋",
+                    "🙋"
                   ]
                 },
                 {
-                  "question_text": "Where do rabbits like to eat carrots? (Reading comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "In the garden",
-                  "options": [
-                    "In the house",
-                    "In the garden",
-                    "On the roof",
-                    "Under the bed"
-                  ]
-                },
-                {
-                  "question_text": "True or False: 'Is' is used with 'he' or 'she'.",
+                  "question_text": "True or False: 'Hello' is a greeting. (Reading comprehension question)",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1764,14 +1742,25 @@
                   ]
                 },
                 {
-                  "question_text": "Fill in the blank: My friend is ___ happy. (Grammar/Vocabulary)",
+                  "question_text": "Max has a dog. His dog likes to play ___. (Reading comprehension question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "very",
+                  "correct_answer": "in the park",
                   "options": [
-                    "very",
-                    "a",
-                    "in",
-                    "on"
+                    "in the park",
+                    "at home",
+                    "on the beach",
+                    "in the garden"
+                  ]
+                },
+                {
+                  "question_text": "Which one is a place to sit? (Vocabulary question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "chair",
+                  "options": [
+                    "chair",
+                    "apple",
+                    "book",
+                    "pen"
                   ]
                 }
               ]
