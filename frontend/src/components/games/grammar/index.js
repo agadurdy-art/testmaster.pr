@@ -6,6 +6,8 @@
 export { default as WordOrder } from './WordOrder';
 export { default as FillTheBlank } from './FillTheBlank';
 export { default as ErrorHunter } from './ErrorHunter';
+export { default as TrueFalseGrammar } from './TrueFalseGrammar';
+export { default as MultipleChoiceGrammar } from './MultipleChoiceGrammar';
 
 // Grammar game metadata
 export const GRAMMAR_GAMES = [
@@ -32,13 +34,28 @@ export const GRAMMAR_GAMES = [
     difficulty: 2,
     description: 'Find and fix grammar mistakes',
     icon: 'Search'
+  },
+  {
+    id: 'true_false',
+    name: 'True or False?',
+    component: 'TrueFalseGrammar',
+    difficulty: 1,
+    description: 'Decide if the sentence is grammatically correct',
+    icon: 'CheckCircle'
+  },
+  {
+    id: 'multiple_choice_grammar',
+    name: 'Choose the Right Word',
+    component: 'MultipleChoiceGrammar',
+    difficulty: 1,
+    description: 'Pick the correct grammar option to complete the sentence',
+    icon: 'ListChecks'
   }
 ];
 
 // Select grammar games for a lesson
 export const selectGrammarGamesForLesson = (unitNum, lessonNum) => {
-  // Return 2-3 games per lesson based on rotation
-  const gameCount = lessonNum % 2 === 0 ? 3 : 2;
+  const gameCount = 5;
   const selected = [];
   
   for (let i = 0; i < gameCount; i++) {
@@ -48,6 +65,5 @@ export const selectGrammarGamesForLesson = (unitNum, lessonNum) => {
     }
   }
   
-  // Sort by difficulty
   return selected.sort((a, b) => a.difficulty - b.difficulty);
 };
