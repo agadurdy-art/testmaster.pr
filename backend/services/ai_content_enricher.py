@@ -527,7 +527,7 @@ Respond with ONLY valid JSON:
         vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
         grammar_pattern = unit.get('grammar_focus', [])
         
-        prompt = f"""Create a listening activity for young ESL learners (ages 4-7).
+        prompt = f"""Create a Cambridge Starters exam-style listening activity for young ESL learners (ages 4-7).
 
 ORIGINAL CONTENT:
 {json.dumps(step, indent=2)}
@@ -535,26 +535,32 @@ ORIGINAL CONTENT:
 VOCABULARY: {vocab_words}
 GRAMMAR PATTERNS: {grammar_pattern}
 LESSON TOPIC: {lesson.get('topic')}
+LESSON CONTEXT: {lesson.get('context', '')}
 
-CRITICAL: The questions must be LOGICAL and match the audio content!
-- If asking "How many?", options should be NUMBERS
-- If asking "What color?", options should be COLORS
-- If asking "Does he like...?", options should be "Yes" / "No"
+CAMBRIDGE STARTERS LISTENING FORMAT:
+- Create a natural classroom dialogue or narration (3-4 short sentences)
+- The audio text should be something a REAL teacher would say to children
+- Use vocabulary words naturally in context
+- Questions must DIRECTLY relate to information in the audio
 
-Create:
-1. A natural, conversational audio script (2-3 sentences, using vocabulary)
-2. 1-2 comprehension questions with LOGICAL multiple-choice options
+QUESTION RULES:
+- 2-3 comprehension questions
+- Each question has 3-4 LOGICAL options
+- If asking "How many?" → options are NUMBERS
+- If asking "What color?" → options are COLORS
+- If asking "Who?" → options are NAMES/PEOPLE
+- Options should be the same TYPE (all numbers, all names, etc.)
 
 Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
     "type": "listening",
-    "audio_text": "Natural conversational script for TTS.",
+    "audio_text": "Natural classroom dialogue or teacher narration using vocabulary.",
     "questions": [
         {{
-            "question": "Clear listening comprehension question",
-            "answer": "correct answer (must match question type)",
-            "options": ["logical option 1", "logical option 2", "logical option 3"]
+            "question": "Comprehension question about the audio",
+            "answer": "correct answer",
+            "options": ["option1", "option2", "option3"]
         }}
     ]
 }}"""
