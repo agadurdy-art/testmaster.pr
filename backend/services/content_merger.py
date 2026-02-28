@@ -29,6 +29,7 @@ ENRICH_MAP = {
     'warm_up': 'warm_up',
     'exit_ticket': 'exit_ticket',
     'listening': 'listening',
+    'production': 'production',
 }
 
 
@@ -43,6 +44,8 @@ def _enriched_has_content(step: Dict, step_type: str) -> bool:
     if step_type == 'listening':
         qs = step.get('questions', [])
         return len(qs) >= 1 and all(q.get('options') and len(q['options']) >= 2 for q in qs)
+    if step_type == 'production':
+        return len(step.get('prompts', [])) >= 2
     return False
 
 
