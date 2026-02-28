@@ -31,7 +31,20 @@ const ErrorHunter = ({
     setSelectedWord({ word, index });
     setShowFeedback(true);
     
-    const isCorrect = word.toLowerCase().replace(/[.,!?]/g, '') === currentItem.errorWord.toLowerCase();
+    // Support multiple comparison methods for errorWord matching
+    const cleanClicked = word.toLowerCase().replace(/[.,!?;:'"]/g, '');
+    const cleanError = currentItem.errorWord.toLowerCase().replace(/[.,!?;:'"]/g, '');
+    
+    const isCorrect = 
+      // Exact match (word is the error)
+      word.toLowerCase() === currentItem.errorWord.toLowerCase() ||
+      // Clean match (stripped punctuation comparison)
+      (cleanError.length > 0 && cleanClicked === cleanError) ||
+      // Word contains the error punctuation at the end (e.g., "he." contains ".")
+      (currentItem.errorWord.length <= 2 && word.includes(currentItem.errorWord)) ||
+      // The clicked word IS the word with the wrong punctuation
+      (cleanClicked === cleanError && word !== currentItem.correctWord);
+    
     if (isCorrect) {
       setScore(s => s + 1);
     }
@@ -71,7 +84,17 @@ const ErrorHunter = ({
   if (!currentItem) return null;
 
   const words = currentItem.sentence.split(' ');
-  const isCorrectSelection = selectedWord?.word.toLowerCase().replace(/[.,!?]/g, '') === currentItem.errorWord.toLowerCase();
+  const isCorrectSelection = (() => {
+    if (!selectedWord) return false;
+    const w = selectedWord.word;
+    const cleanClicked = w.toLowerCase().replace(/[.,!?;:'"]/g, '');
+    const cleanError = currentItem.errorWord.toLowerCase().replace(/[.,!?;:'"]/g, '');
+    return (
+      w.toLowerCase() === currentItem.errorWord.toLowerCase() ||
+      (cleanError.length > 0 && cleanClicked === cleanError) ||
+      (currentItem.errorWord.length <= 2 && w.includes(currentItem.errorWord))
+    );
+  })();
 
   return (
     <GameWrapper
