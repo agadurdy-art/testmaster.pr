@@ -558,7 +558,9 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
 
 // ═══════ VOCAB GAMES PLAYER (Multiple Games in Sequence) ═══════
 function VocabGamesPlayer({ activity, onComplete, onSkip }) {
-  const games = activity?.games || [];
+  // Limit to 2 games max to reduce repetition
+  const allGames = activity?.games || [];
+  const games = allGames.slice(0, 2);
   const [currentGameIdx, setCurrentGameIdx] = useState(0);
   const [gameScores, setGameScores] = useState([]);
   const [isAllComplete, setIsAllComplete] = useState(false);
