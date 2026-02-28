@@ -1917,9 +1917,9 @@ function ExitTicket({ activity, onComplete, onSkip }) {
       </div>
       <Progress value={(idx / questions.length) * 100} className="mb-6" />
       <Card className="p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question_text}</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-5">{q.question_text}</h3>
         {q.question_type === 'multiple_choice' && (
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {q.options?.map(option => {
               const isSelected = currentAnswer === option;
               const isCorrectOption = Array.isArray(q.correct_answer) ? q.correct_answer.includes(option) : option === q.correct_answer;
@@ -1930,7 +1930,7 @@ function ExitTicket({ activity, onComplete, onSkip }) {
                 else cls = 'border-gray-200 opacity-50';
               } else if (isSelected) cls = 'border-blue-500 bg-blue-50';
               return (
-                <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium ${cls}`}
+                <button key={option} className={`w-full p-5 rounded-xl text-left border-2 transition-all text-lg font-medium ${cls}`}
                   onClick={() => handleAnswer(option)} disabled={showFeedback}
                   data-testid={`exit-option-${option.substring(0,15).replace(/\s/g,'-')}`}>
                   {option}
