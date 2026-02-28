@@ -76,6 +76,11 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
                         print(f"    grammar_games: {len(games)} games, {total_items} items")
                         if total_items >= 3:
                             enriched_steps.append(gg)
+                    elif st == 'production':
+                        e = await enricher._enrich_production(chat, step, lesson, unit_context)
+                        prompts = e.get('prompts', [])
+                        print(f"    production: {len(prompts)} prompts")
+                        enriched_steps.append(e if len(prompts) >= 2 else step)
                     else:
                         enriched_steps.append(step)
                 except Exception as e:
