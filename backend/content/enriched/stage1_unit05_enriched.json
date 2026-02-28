@@ -34,40 +34,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Who usually bakes cookies in the video?",
-                  "correct_answer": "mother",
-                  "options": [
-                    "mother",
-                    "father",
-                    "grandmother",
-                    "sister"
-                  ],
-                  "image_emoji": "🍪",
-                  "hint": "She loves to make sweet treats."
-                },
-                {
-                  "question_text": "Who takes the family dog for a walk in the video?",
+                  "question_text": "Who is wearing a red hat in the video?",
                   "correct_answer": "father",
                   "options": [
                     "father",
-                    "big brother",
-                    "neighbor",
-                    "cat"
+                    "mother",
+                    "big sister",
+                    "neighbor"
                   ],
-                  "image_emoji": "🐶",
-                  "hint": "He enjoys walking with the dog in the park."
+                  "image_emoji": "🎩",
+                  "hint": "He wears it when he goes outside."
                 },
                 {
-                  "question_text": "Who is seen playing the violin in the video?",
-                  "correct_answer": "big sister",
+                  "question_text": "What instrument does big sister play?",
+                  "correct_answer": "violin",
                   "options": [
-                    "big sister",
-                    "mother",
-                    "cousin",
-                    "friend"
+                    "violin",
+                    "piano",
+                    "guitar",
+                    "drum"
                   ],
                   "image_emoji": "🎻",
-                  "hint": "She loves making music with strings."
+                  "hint": "It's a string instrument she holds under her chin."
+                },
+                {
+                  "question_text": "Who helps big brother with homework in the video?",
+                  "correct_answer": "mother",
+                  "options": [
+                    "mother",
+                    "big sister",
+                    "father",
+                    "grandmother"
+                  ],
+                  "image_emoji": "📖",
+                  "hint": "She is seen sitting at the table with him."
                 }
               ]
             },
@@ -406,24 +406,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! This is my mother. We are going on a trip in our big van. We always pack our yellow umbrella.",
+              "audio_text": "Hi there! I'm with my father. We are driving our van to the park, and my father is holding our green umbrella.",
               "questions": [
                 {
-                  "question": "Who is going on a trip with the speaker?",
-                  "answer": "mother",
+                  "question": "Who is with the speaker in the van?",
+                  "answer": "father",
                   "options": [
-                    "mother",
                     "father",
+                    "mother",
                     "sister"
                   ]
                 },
                 {
                   "question": "What color is the umbrella?",
-                  "answer": "yellow",
+                  "answer": "green",
                   "options": [
+                    "green",
                     "yellow",
-                    "blue",
-                    "red"
+                    "blue"
                   ]
                 }
               ]
@@ -441,29 +441,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "This is my ___. (Fill in the blank)",
+                  "question_text": "This is my ___ (Vocabulary question)",
                   "question_type": "fill_blank",
                   "correct_answer": "father",
                   "options": [
                     "father",
                     "umbrella",
                     "van",
-                    "mother"
+                    "apple"
                   ]
                 },
                 {
-                  "question_text": "What goes 'vroom vroom'? (Vocabulary question)",
+                  "question_text": "Which vehicle do we drive to the park? (Reading comprehension question)",
                   "question_type": "multiple_choice",
                   "correct_answer": "van",
                   "options": [
                     "van",
-                    "umbrella",
-                    "father",
-                    "mother"
+                    "car",
+                    "bike",
+                    "bus"
                   ]
                 },
                 {
-                  "question_text": "True or False: An umbrella can be blue.",
+                  "question_text": "This is my ___ van. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "yellow",
+                  "options": [
+                    "yellow",
+                    "big",
+                    "red",
+                    "small"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A 'mother' is part of the family.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -472,25 +483,14 @@
                   ]
                 },
                 {
-                  "question_text": "Who is in 'My Mother and Father'?",
+                  "question_text": "What do we use to stay dry in the rain? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "mother and father",
-                  "options": [
-                    "dog and cat",
-                    "brother and sister",
-                    "mother and father",
-                    "aunt and uncle"
-                  ]
-                },
-                {
-                  "question_text": "Which word starts with 'V'? (Sounds question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "van",
+                  "correct_answer": "umbrella",
                   "options": [
                     "umbrella",
-                    "father",
+                    "hat",
                     "van",
-                    "mother"
+                    "scarf"
                   ]
                 }
               ]
@@ -529,40 +529,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Who is drawing in the video?",
-                  "correct_answer": "sister",
+                  "question_text": "Who is wearing the striped shirt?",
+                  "correct_answer": "brother",
                   "options": [
-                    "sister",
                     "brother",
+                    "sister",
                     "mother",
                     "father"
                   ],
-                  "image_emoji": "🖌",
-                  "hint": "Look for a girl with a pencil and paper."
+                  "image_emoji": "👚",
+                  "hint": "Look for a boy with stripes on his shirt."
                 },
                 {
-                  "question_text": "What color is the father's shirt?",
-                  "correct_answer": "blue",
+                  "question_text": "What game are the children playing?",
+                  "correct_answer": "hide and seek",
                   "options": [
-                    "blue",
-                    "red",
-                    "green",
-                    "yellow"
+                    "hide and seek",
+                    "tag",
+                    "soccer",
+                    "checkers"
                   ],
-                  "image_emoji": "🟦",
-                  "hint": "It's the same color as the sky on a clear day."
+                  "image_emoji": "👀",
+                  "hint": "They are looking for a hiding friend."
                 },
                 {
-                  "question_text": "What sound does the word 'waving' start with?",
-                  "correct_answer": "W",
+                  "question_text": "What sound does the word 'brother' start with?",
+                  "correct_answer": "B",
                   "options": [
-                    "W",
-                    "S",
-                    "R",
-                    "F"
+                    "B",
+                    "T",
+                    "P",
+                    "S"
                   ],
                   "image_emoji": "🔊",
-                  "hint": "It's the same sound as in 'water'."
+                  "hint": "It's the same sound as in 'ball'."
                 }
               ]
             },
@@ -861,24 +861,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "This is my brother. He loves his blue watch and keeps it in a green box. My sister thinks it's very cool.",
+              "audio_text": "This is my sister. She has a red box with a yellow watch inside. My brother thinks it's very fun.",
               "questions": [
                 {
-                  "question": "What color is the brother's watch?",
-                  "answer": "blue",
+                  "question": "What color is the sister's watch?",
+                  "answer": "yellow",
                   "options": [
-                    "blue",
+                    "yellow",
                     "red",
                     "green"
                   ]
                 },
                 {
-                  "question": "Where does the brother keep his watch?",
-                  "answer": "green box",
+                  "question": "What does the sister keep in the box?",
+                  "answer": "watch",
                   "options": [
-                    "green box",
-                    "red box",
-                    "blue box"
+                    "watch",
+                    "book",
+                    "toy"
                   ]
                 }
               ]
@@ -901,40 +901,51 @@
                   "correct_answer": "blue",
                   "options": [
                     "blue",
+                    "green",
                     "red",
-                    "big",
-                    "small"
+                    "yellow"
                   ]
                 },
                 {
-                  "question_text": "Which word begins with 'W'? (Vocabulary question)",
+                  "question_text": "Which word means brother's sibling? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "watch",
+                  "correct_answer": "sister",
                   "options": [
                     "sister",
-                    "brother",
-                    "watch",
-                    "box"
+                    "father",
+                    "mother",
+                    "friend"
                   ]
                 },
                 {
-                  "question_text": "True or False: The story is about a sister and her toy.",
+                  "question_text": "True or False: 'Watch' starts with a W sound.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What does the sister think is cool? (Reading comprehension question)",
+                  "question_text": "What does Ben have in his box? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "brother's watch",
+                  "correct_answer": "watch",
                   "options": [
-                    "brother's watch",
-                    "her doll",
-                    "the cat",
-                    "a car"
+                    "watch",
+                    "toy",
+                    "book",
+                    "pencil"
+                  ]
+                },
+                {
+                  "question_text": "Fill in: My ___ is my best friend.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "brother",
+                  "options": [
+                    "brother",
+                    "sister",
+                    "box",
+                    "watch"
                   ]
                 }
               ]
@@ -968,40 +979,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What color is Baby's favorite toy? ✨",
-                  "correct_answer": "Yellow",
-                  "options": [
-                    "Yellow",
-                    "Blue",
-                    "Green",
-                    "Red"
-                  ],
-                  "image_emoji": "✨",
-                  "hint": "It's the color of the sun."
-                },
-                {
-                  "question_text": "What sound does Grandpa love to imitate? 💬",
+                  "question_text": "Which animal does Baby like to see at the zoo? 🦓",
                   "correct_answer": "Zebra",
                   "options": [
                     "Zebra",
-                    "Lion",
-                    "Bird",
-                    "Dog"
+                    "Elephant",
+                    "Monkey",
+                    "Tiger"
                   ],
-                  "image_emoji": "💬",
-                  "hint": "It's an animal with stripes."
+                  "image_emoji": "🦓",
+                  "hint": "It has black and white stripes."
                 },
                 {
-                  "question_text": "What food does Baby enjoy at breakfast? 🍒",
-                  "correct_answer": "Yogurt",
+                  "question_text": "What sound does the lion make in the video? 🦁",
+                  "correct_answer": "Roar",
                   "options": [
-                    "Yogurt",
-                    "Apple",
-                    "Milk",
-                    "Juice"
+                    "Roar",
+                    "Chirp",
+                    "Bark",
+                    "Buzz"
                   ],
-                  "image_emoji": "🍒",
-                  "hint": "It's creamy and starts with Y."
+                  "image_emoji": "🦁",
+                  "hint": "It's a loud sound from the king of the jungle."
+                },
+                {
+                  "question_text": "What fruit does Grandpa use to make a funny sound? 🍎",
+                  "correct_answer": "Apple",
+                  "options": [
+                    "Apple",
+                    "Banana",
+                    "Orange",
+                    "Grape"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "It's a red fruit and makes a crunch."
                 }
               ]
             },
@@ -1302,10 +1313,10 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "This is my grandpa. He plays with a yo-yo. My grandma has a book about zebras. We have fun together!",
+              "audio_text": "This is my grandma. She reads a book to me about zebras. My grandpa likes to play with his yo-yo. We have fun together in the park.",
               "questions": [
                 {
-                  "question": "What does grandpa play with?",
+                  "question": "What does grandpa like to play with?",
                   "answer": "yo-yo",
                   "options": [
                     "yo-yo",
@@ -1314,7 +1325,7 @@
                   ]
                 },
                 {
-                  "question": "What is in grandma's book?",
+                  "question": "What animal is in grandma's book?",
                   "answer": "zebras",
                   "options": [
                     "zebras",
@@ -1337,27 +1348,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "Who is the oldest in the family? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "grandpa",
-                  "options": [
-                    "grandpa",
-                    "baby",
-                    "grandma"
-                  ]
-                },
-                {
-                  "question_text": "My ___ is happy. Choose the correct family word. (Grammar question)",
+                  "question_text": "My grandpa is ___ at the park. (Vocabulary question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "grandpa",
+                  "correct_answer": "playing",
                   "options": [
-                    "grandpa",
-                    "baby",
-                    "yo-yo"
+                    "playing",
+                    "eating",
+                    "reading",
+                    "sleeping"
                   ]
                 },
                 {
-                  "question_text": "True or False: A zebra is in grandma's book. (Reading comprehension question)",
+                  "question_text": "Complete the sentence: My grandma is ___ happy. (Grammar question)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "feeling",
+                  "options": [
+                    "feeling",
+                    "have",
+                    "do",
+                    "at"
+                  ]
+                },
+                {
+                  "question_text": "What does grandpa play with? (Reading comprehension question)",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "yo-yo",
+                  "options": [
+                    "yo-yo",
+                    "kite",
+                    "ball",
+                    "book"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Zebras are in grandma's book.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1366,13 +1390,14 @@
                   ]
                 },
                 {
-                  "question_text": "What toy does grandpa have? (Reading comprehension question)",
+                  "question_text": "Which sound is like the letter 'Y'? (Phonics question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "yo-yo",
+                  "correct_answer": "Yellow",
                   "options": [
-                    "yo-yo",
-                    "ball",
-                    "kite"
+                    "Yellow",
+                    "Zebra",
+                    "Apple",
+                    "Orange"
                   ]
                 }
               ]
@@ -1407,40 +1432,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which animal in the video can swing from trees and likes bananas?",
-                  "correct_answer": "Monkey",
+                  "question_text": "Which animal has stripes and likes to eat grass?",
+                  "correct_answer": "Zebra",
                   "options": [
-                    "Monkey",
-                    "Giraffe",
+                    "Zebra",
+                    "Lion",
                     "Elephant",
-                    "Zebra"
+                    "Monkey"
                   ],
-                  "image_emoji": "🐒",
-                  "hint": "This animal is very playful and has a long tail."
+                  "image_emoji": "🦓",
+                  "hint": "This animal looks a bit like a horse but with black and white stripes."
                 },
                 {
-                  "question_text": "What color is the sky when the sun is shining brightly?",
-                  "correct_answer": "Blue",
+                  "question_text": "Who is the person that loves to sing you lullabies at night?",
+                  "correct_answer": "Mother",
                   "options": [
-                    "Blue",
-                    "Gray",
-                    "Black",
-                    "White"
-                  ],
-                  "image_emoji": "🌆",
-                  "hint": "It's the color you see when there are no clouds during the day."
-                },
-                {
-                  "question_text": "Which family member is usually the oldest?",
-                  "correct_answer": "Grandparent",
-                  "options": [
-                    "Grandparent",
+                    "Mother",
                     "Brother",
-                    "Sister",
-                    "Cousin"
+                    "Uncle",
+                    "Aunt"
                   ],
-                  "image_emoji": "🎓",
-                  "hint": "This person can be a grandpa or grandma."
+                  "image_emoji": "🎤",
+                  "hint": "This person takes care of you and lives with you at home."
+                },
+                {
+                  "question_text": "What do you see in the sky at night shining bright?",
+                  "correct_answer": "Stars",
+                  "options": [
+                    "Stars",
+                    "Clouds",
+                    "Sun",
+                    "Rain"
+                  ],
+                  "image_emoji": "⭐",
+                  "hint": "These twinkle and can be seen in the dark sky when the moon is out."
                 }
               ]
             },
@@ -1733,24 +1758,24 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "This is our garden. I have a small orange cat. My brother is playing with his yellow ball.",
+              "audio_text": "This is my mom. She is reading a big blue book. My sister is drawing with her red crayons.",
               "questions": [
                 {
-                  "question": "What color is the cat?",
-                  "answer": "orange",
+                  "question": "What is my mom doing?",
+                  "answer": "reading",
                   "options": [
-                    "orange",
-                    "black",
-                    "white"
+                    "reading",
+                    "cooking",
+                    "singing"
                   ]
                 },
                 {
-                  "question": "What is my brother playing with?",
-                  "answer": "ball",
+                  "question": "What color are the crayons my sister is using?",
+                  "answer": "red",
                   "options": [
-                    "ball",
-                    "car",
-                    "kite"
+                    "red",
+                    "green",
+                    "blue"
                   ]
                 }
               ]
@@ -1765,59 +1790,59 @@
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Lesson Review Quiz",
+              "title": "Unit 5 Mastery Check",
               "questions": [
                 {
-                  "question_text": "This is my ___. (Fill in the blank about family member)",
+                  "question_text": "This is ___ dad. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "sister",
+                  "correct_answer": "my",
                   "options": [
-                    "sister",
-                    "teacher",
-                    "friend",
-                    "car"
+                    "my",
+                    "your",
+                    "his",
+                    "their"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'dog'? (Vocabulary question)",
+                  "question_text": "What fruit is yellow and curved? (Vocabulary question)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "🐶",
+                  "correct_answer": "Banana",
                   "options": [
-                    "🐶",
-                    "🐱",
-                    "🐺",
-                    "🦧"
+                    "Banana",
+                    "Apple",
+                    "Grapes",
+                    "Orange"
                   ]
                 },
                 {
-                  "question_text": "True or False: A red apple can be green.",
+                  "question_text": "True or False: My brother is playing with a yellow toy.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "What color is the sun in the sky? (Reading comprehension)",
+                  "question_text": "Which one is a family member? (Reading comprehension)",
                   "question_type": "multiple_choice",
-                  "correct_answer": "yellow",
+                  "correct_answer": "Aunt",
                   "options": [
-                    "yellow",
-                    "blue",
-                    "green",
-                    "black"
+                    "Car",
+                    "Sun",
+                    "Aunt",
+                    "Ball"
                   ]
                 },
                 {
-                  "question_text": "My brother is playing with ___ ball. (Grammar question)",
+                  "question_text": "I have a ___ cat. (Grammar question)",
                   "question_type": "fill_blank",
-                  "correct_answer": "his",
+                  "correct_answer": "small orange",
                   "options": [
-                    "his",
-                    "her",
-                    "my",
-                    "our"
+                    "small orange",
+                    "big red",
+                    "tiny blue",
+                    "large green"
                   ]
                 }
               ]
