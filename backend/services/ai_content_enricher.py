@@ -356,7 +356,7 @@ Respond with ONLY valid JSON:
         vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
         grammar_pattern = unit.get('grammar_focus', [])
         
-        prompt = f"""Create an engaging micro-reading activity for young ESL learners (ages 4-7).
+        prompt = f"""Create a Cambridge Starters exam-style reading activity for young ESL learners (ages 4-7).
 
 ORIGINAL CONTENT:
 {json.dumps(step, indent=2)}
@@ -364,22 +364,32 @@ ORIGINAL CONTENT:
 VOCABULARY TO INCLUDE: {vocab_words}
 GRAMMAR PATTERNS: {grammar_pattern}
 LESSON TOPIC: {lesson.get('topic')}
+LESSON CONTEXT: {lesson.get('context', '')}
 
-Create:
-1. A short, engaging story (3-5 simple sentences)
-2. Uses the target vocabulary naturally
-3. Includes the grammar pattern
-4. 1-2 comprehension questions with logical multiple-choice options
+CAMBRIDGE STARTERS READING FORMAT:
+- Short story or description (4-6 simple sentences, max 40 words)
+- Story must use the EXACT vocabulary words naturally
+- Story must be realistic and relatable to children's daily life
+- 2-3 comprehension questions in these styles:
+  * "Read and choose" (multiple choice)
+  * "Yes or No" (true/false about the passage)
+  * "Who/What/Where" (direct comprehension)
+- Each question must have 3-4 clear options
+- Questions should test READING COMPREHENSION, not trivia
+
+EMOJI/VISUAL NOTES:
+- Include an appropriate scene description for a stock photo search (e.g., "children playing in classroom")
 
 Respond with ONLY valid JSON:
 {{
     "step": {step.get('step')},
     "type": "micro_reading",
     "title": "Story Title",
-    "text": "Short engaging story using vocabulary and grammar patterns.",
+    "text": "Short engaging story using vocabulary and grammar patterns. 4-6 sentences.",
+    "scene_description": "Description for finding a matching stock photo",
     "questions": [
         {{
-            "question": "Clear comprehension question",
+            "question": "Clear comprehension question about the story",
             "answer": "correct answer",
             "options": ["option1", "option2", "option3"]
         }}
