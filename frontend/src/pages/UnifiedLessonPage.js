@@ -995,8 +995,8 @@ function MicroReading({ activity, onComplete, onSkip }) {
       {/* Passage */}
       {showPassage && (
         <Card className="p-6 mb-6 bg-amber-50/50 border-amber-200">
-          <h4 className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-3">Read the passage</h4>
-          <p className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(passageText) }} />
+          <h4 className="text-sm font-semibold text-amber-600 uppercase tracking-wider mb-3">Read the passage</h4>
+          <p className="text-xl text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: highlightText(passageText) }} />
           {questions.length > 0 && (
             <Button variant="outline" size="sm" className="mt-4" onClick={() => setShowPassage(false)} data-testid="reading-answer-questions-btn">
               Answer Questions <ChevronRight className="w-3 h-3 ml-1" />
