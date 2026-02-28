@@ -1012,8 +1012,8 @@ function MicroReading({ activity, onComplete, onSkip }) {
           <button className="text-sm text-blue-600 mb-4 flex items-center gap-1" onClick={() => setShowPassage(true)}>
             <ArrowLeft className="w-3 h-3" /> Show passage
           </button>
-          <h3 className="text-lg font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
-          <div className="space-y-2.5">
+          <h3 className="text-2xl font-bold text-gray-900 mb-5">{q.question || q.question_text}</h3>
+          <div className="space-y-3">
             {(q.options || []).map(option => {
               const isSelected = selectedAnswer === option;
               const optionIsCorrect = isCorrectOption(option);
@@ -1024,7 +1024,7 @@ function MicroReading({ activity, onComplete, onSkip }) {
                 else cls = 'border-gray-200 opacity-50';
               }
               return (
-                <button key={option} className={`w-full p-3.5 rounded-xl text-left border-2 transition-all text-sm font-medium ${cls}`}
+                <button key={option} className={`w-full p-5 rounded-xl text-left border-2 transition-all text-lg font-medium ${cls}`}
                   onClick={() => handleAnswer(option)} disabled={showFeedback}>
                   {option}
                 </button>
