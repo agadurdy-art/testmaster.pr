@@ -36,7 +36,13 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
         }
         for lesson in unit.get('lessons', []):
             lid = lesson.get('lesson_id')
-            print(f"  Enriching: {lid}")
+            # Extract lesson number from ID (e.g. stage_2_unit_01_lesson_03 -> 3)
+            try:
+                lesson_num = int(lid.split('_lesson_')[1])
+            except:
+                lesson_num = 1
+            lesson['number'] = lesson_num
+            print(f"  Enriching: {lid} (lesson {lesson_num})")
             chat = enricher._create_chat(f"enrich_{lid}")
             enriched_steps = []
             for step in lesson.get('steps', []):
