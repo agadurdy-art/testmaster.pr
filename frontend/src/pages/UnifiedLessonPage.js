@@ -1775,9 +1775,26 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
               <Button variant="outline" onClick={handleRetry} data-testid="retry-speaking-btn">
                 <RotateCcw className="w-4 h-4 mr-1" /> Try Again
               </Button>
-              <Button onClick={() => onComplete(score)} data-testid="production-continue-btn">
-                Continue <ChevronRight className="w-4 h-4 ml-1" />
-              </Button>
+              {currentPromptIdx < prompts.length - 1 ? (
+                <Button onClick={() => {
+                  setPromptScores(prev => [...prev, score]);
+                  setCurrentPromptIdx(i => i + 1);
+                  setPhase('ready');
+                  setTranscription(''); setBrowserTranscript('');
+                  setScore(0); setMatchedWords([]); setMissingWords([]);
+                  setRecordingTime(0); setError('');
+                }} data-testid="production-next-btn">
+                  Next ({currentPromptIdx + 1}/{prompts.length}) <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              ) : (
+                <Button onClick={() => {
+                  const allScores = [...promptScores, score];
+                  const avg = Math.round(allScores.reduce((a, b) => a + b, 0) / allScores.length);
+                  onComplete(avg);
+                }} data-testid="production-continue-btn">
+                  Continue <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              )}
             </div>
           </div>
         )}
