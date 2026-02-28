@@ -1080,14 +1080,14 @@ function GrammarFocus({ activity, onComplete, onSkip }) {
         <Card className="p-8">
           {/* Pattern highlight */}
           <div className="text-center mb-6">
-            <div className="inline-block bg-violet-100 text-violet-800 font-mono text-lg px-6 py-3 rounded-xl font-bold">
+            <div className="inline-block bg-violet-100 text-violet-800 font-mono text-2xl px-6 py-3 rounded-xl font-bold">
               {rule.pattern || activity?.pattern_highlight || ''}
             </div>
           </div>
 
           {/* Rule */}
           <div className="bg-blue-50 rounded-xl p-5 mb-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">{rule.rule_text || rule.title}</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">{rule.rule_text || rule.title}</h3>
             <p className="text-sm text-gray-600 mb-2">{rule.explanation}</p>
             <code className="text-sm text-blue-700 bg-blue-100 px-2 py-1 rounded">{rule.pattern}</code>
           </div>
