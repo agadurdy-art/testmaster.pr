@@ -728,8 +728,12 @@ function GrammarGamesPlayer({ activity, onComplete, onSkip }) {
         return <FillTheBlank items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
       case 'error_hunter':
         return <ErrorHunter items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'true_false':
+        return <TrueFalseGrammar items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'multiple_choice_grammar':
+        return <MultipleChoiceGrammar items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
       default:
-        return <GrammarGame activity={{ items }} onComplete={handleGameComplete} onSkip={handleSkip} />;
+        return <FillTheBlank items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
     }
   };
 
