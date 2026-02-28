@@ -651,6 +651,12 @@ function VocabGamesPlayer({ activity, onComplete, onSkip }) {
         return <FillTheGap items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
       case 'animal_sounds':
         return <AnimalSounds items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'crossword':
+        return <Crossword items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'word_search':
+        return <WordSearch items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
+      case 'board_game':
+        return <BoardGame items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
       default:
         // Fallback to MCQ game
         return <MatchingGame activity={{ items }} onComplete={handleGameComplete} onSkip={handleSkip} />;
