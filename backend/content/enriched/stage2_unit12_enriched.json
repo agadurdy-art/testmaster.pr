@@ -1,0 +1,2734 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_12",
+      "unit_num": 12,
+      "title": "Review & Final Gate",
+      "subtitle": "Cumulative review of all Stage 2",
+      "phonics_focus": [
+        "All Stage 2 phonics"
+      ],
+      "grammar_focus": [
+        "All Stage 2 grammar patterns"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_12_lesson_01",
+          "title": "Basics Review",
+          "topic": "A welcome back party",
+          "context": "Grammar: Greetings, Numbers 1-20, Colors. A welcome back party.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do we do at a welcome back party?",
+                  "correct_answer": "Say hello to our friends",
+                  "options": [
+                    "Say hello to our friends",
+                    "Go to sleep",
+                    "Brush our teeth",
+                    "Take a bath"
+                  ],
+                  "image_emoji": "🎉",
+                  "hint": "Think about when you see your friends after a long time!"
+                },
+                {
+                  "question_text": "What can you see at a party?",
+                  "correct_answer": "Balloons and decorations",
+                  "options": [
+                    "Balloons and decorations",
+                    "Cars and trucks",
+                    "Books and pencils",
+                    "Trees and flowers"
+                  ],
+                  "image_emoji": "🎈",
+                  "hint": "Parties have colorful things to make them pretty!"
+                },
+                {
+                  "question_text": "How do you feel at a welcome back party?",
+                  "correct_answer": "Happy and excited",
+                  "options": [
+                    "Happy and excited",
+                    "Sleepy and tired",
+                    "Hungry and thirsty",
+                    "Cold and wet"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "When you see your friends again, you feel good!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "hello",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "twelve",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "purple",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "desk",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "goodbye",
+                          "emoji": "👎"
+                        },
+                        {
+                          "word": "sleep",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "eat",
+                          "emoji": "🍴"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "twelve",
+                      "emoji": "1️⃣2️⃣",
+                      "distractors": [
+                        {
+                          "word": "five",
+                          "emoji": "5️⃣"
+                        },
+                        {
+                          "word": "eight",
+                          "emoji": "8️⃣"
+                        },
+                        {
+                          "word": "three",
+                          "emoji": "3️⃣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "purple",
+                      "emoji": "🟣",
+                      "distractors": [
+                        {
+                          "word": "red",
+                          "emoji": "🔴"
+                        },
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
+                        },
+                        {
+                          "word": "green",
+                          "emoji": "🟢"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "🪑",
+                      "distractors": [
+                        {
+                          "word": "bed",
+                          "emoji": "🛏️"
+                        },
+                        {
+                          "word": "door",
+                          "emoji": "🚪"
+                        },
+                        {
+                          "word": "window",
+                          "emoji": "🪟"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "distractors": [
+                        {
+                          "word": "bye",
+                          "emoji": "🙋"
+                        },
+                        {
+                          "word": "thank you",
+                          "emoji": "🙏"
+                        },
+                        {
+                          "word": "sorry",
+                          "emoji": "😢"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "twelve",
+                      "emoji": "1️⃣2️⃣",
+                      "distractors": [
+                        {
+                          "word": "ten",
+                          "emoji": "🔟"
+                        },
+                        {
+                          "word": "two",
+                          "emoji": "2️⃣"
+                        },
+                        {
+                          "word": "twenty",
+                          "emoji": "2️⃣0️⃣"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "purple",
+                      "emoji": "🟣",
+                      "distractors": [
+                        {
+                          "word": "blue",
+                          "emoji": "🔵"
+                        },
+                        {
+                          "word": "pink",
+                          "emoji": "🩷"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🟠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "🪑",
+                      "distractors": [
+                        {
+                          "word": "chair",
+                          "emoji": "💺"
+                        },
+                        {
+                          "word": "table",
+                          "emoji": "🪵"
+                        },
+                        {
+                          "word": "sofa",
+                          "emoji": "🛋️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "twelve",
+                      "emoji": "1️⃣2️⃣"
+                    },
+                    {
+                      "word": "purple",
+                      "emoji": "🟣"
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "🪑"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "definition": "A greeting we say when we meet someone"
+                    },
+                    {
+                      "word": "twelve",
+                      "emoji": "1️⃣2️⃣",
+                      "definition": "The number that comes after eleven"
+                    },
+                    {
+                      "word": "purple",
+                      "emoji": "🟣",
+                      "definition": "A color made from red and blue mixed together"
+                    },
+                    {
+                      "word": "desk",
+                      "emoji": "🪑",
+                      "definition": "A table where we sit to write and study"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Welcome Back Party",
+              "text": "Today is our welcome back party! I say hello to my friends. There are twelve balloons in our classroom. I sit at my purple desk. We are so happy to be back at school!",
+              "scene_description": "children at classroom party with colorful balloons and decorations",
+              "questions": [
+                {
+                  "question": "How many balloons are in the classroom?",
+                  "answer": "Twelve",
+                  "options": [
+                    "Ten",
+                    "Twelve",
+                    "Twenty"
+                  ],
+                  "correct_answer": "Twelve"
+                },
+                {
+                  "question": "What color is the child's desk?",
+                  "answer": "Purple",
+                  "options": [
+                    "Purple",
+                    "Blue",
+                    "Red"
+                  ],
+                  "correct_answer": "Purple"
+                },
+                {
+                  "question": "How do the children feel at the party?",
+                  "answer": "Happy",
+                  "options": [
+                    "Sad",
+                    "Tired",
+                    "Happy"
+                  ],
+                  "correct_answer": "Happy"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Hello, my name is ___.",
+              "explanation": "We use greetings to say hello and introduce ourselves to friends.",
+              "examples": [
+                "Hello, my name is Emma.",
+                "Hi, I am seven years old.",
+                "Good morning, nice to meet you!"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Hello",
+                        "I",
+                        "am",
+                        "Tom"
+                      ],
+                      "correctSentence": "Hello I am Tom"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "twelve",
+                        "crayons"
+                      ],
+                      "correctSentence": "I have twelve crayons"
+                    },
+                    {
+                      "words": [
+                        "My",
+                        "desk",
+                        "is",
+                        "purple"
+                      ],
+                      "correctSentence": "My desk is purple"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "seven",
+                        "years",
+                        "old"
+                      ],
+                      "correctSentence": "She is seven years old"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "at",
+                        "the",
+                        "party"
+                      ],
+                      "correctSentence": "We are at the party"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Hello, I ___ Emma.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ at the party.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ happy today.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "I have ___ balloons.",
+                      "answer": "twelve",
+                      "options": [
+                        "twelve",
+                        "twelves",
+                        "twelfth",
+                        "twelf"
+                      ]
+                    },
+                    {
+                      "sentence": "My desk is ___.",
+                      "answer": "purple",
+                      "options": [
+                        "purple",
+                        "purples",
+                        "a purple",
+                        "the purple"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She are my friend.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "Me am happy today.",
+                      "errorWord": "Me",
+                      "correctWord": "I",
+                      "explanation": "Use 'I' as the subject"
+                    },
+                    {
+                      "sentence": "I have two desk.",
+                      "errorWord": "desk",
+                      "correctWord": "desks",
+                      "explanation": "Use 'desks' for more than one"
+                    },
+                    {
+                      "sentence": "He can jumps high.",
+                      "errorWord": "jumps",
+                      "correctWord": "jump",
+                      "explanation": "Use 'jump' after 'can'"
+                    },
+                    {
+                      "sentence": "The book is at the desk.",
+                      "errorWord": "at",
+                      "correctWord": "on",
+                      "explanation": "Use 'on' for things on top of desks"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "Hello, I am Lucy.",
+                      "is_correct": true,
+                      "corrected": "Hello, I am Lucy.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "She are seven years old.",
+                      "is_correct": false,
+                      "corrected": "She is seven years old.",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "We have twelve balloons.",
+                      "is_correct": true,
+                      "corrected": "We have twelve balloons.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "Him is at the party.",
+                      "is_correct": false,
+                      "corrected": "He is at the party.",
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "sentence": "My desk is purple.",
+                      "is_correct": true,
+                      "corrected": "My desk is purple.",
+                      "explanation": "This sentence is correct"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ name is Tom.",
+                      "answer": "My",
+                      "options": [
+                        "My",
+                        "I",
+                        "Me",
+                        "Mine"
+                      ],
+                      "explanation": "Use 'My' before a noun"
+                    },
+                    {
+                      "question": "She ___ a purple desk.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "having",
+                        "had"
+                      ],
+                      "explanation": "Use 'has' with she/he/it"
+                    },
+                    {
+                      "question": "We ___ happy at the party.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with we"
+                    },
+                    {
+                      "question": "I can ___ hello.",
+                      "answer": "say",
+                      "options": [
+                        "say",
+                        "says",
+                        "saying",
+                        "said"
+                      ],
+                      "explanation": "Use base form after 'can'"
+                    },
+                    {
+                      "question": "There are ___ students here.",
+                      "answer": "twelve",
+                      "options": [
+                        "twelve",
+                        "twelfth",
+                        "twelves",
+                        "twelf"
+                      ],
+                      "explanation": "Use 'twelve' for counting"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Welcome back to school! Today we have a special party. Look at all the balloons! Can you count them? There are twelve balloons. Now, please sit down at your desks. Emma, I like your purple desk. It's so pretty!",
+              "questions": [
+                {
+                  "question": "How many balloons are there?",
+                  "answer": "Twelve",
+                  "options": [
+                    "Ten",
+                    "Twelve",
+                    "Fifteen",
+                    "Twenty"
+                  ]
+                },
+                {
+                  "question": "What color is Emma's desk?",
+                  "answer": "Purple",
+                  "options": [
+                    "Red",
+                    "Blue",
+                    "Purple",
+                    "Green"
+                  ]
+                },
+                {
+                  "question": "What kind of party is it?",
+                  "answer": "A welcome back party",
+                  "options": [
+                    "A birthday party",
+                    "A welcome back party",
+                    "A goodbye party",
+                    "A Christmas party"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's practice talking about the welcome back party! Listen and repeat after me.",
+              "expected_text": "Hello, my name is [student name].",
+              "prompts": [
+                {
+                  "prompt": "Say: Hello, my name is [your name].",
+                  "expected_text": "Hello, my name is [student name]."
+                },
+                {
+                  "prompt": "Say: I have twelve balloons at the party.",
+                  "expected_text": "I have twelve balloons at the party."
+                },
+                {
+                  "prompt": "Say: My desk is purple and I am happy.",
+                  "expected_text": "My desk is purple and I am happy."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Hello, I ___ Emma.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "am",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "What color is mentioned in our lesson?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "purple",
+                  "options": [
+                    "purple",
+                    "orange",
+                    "brown",
+                    "black"
+                  ]
+                },
+                {
+                  "question_text": "How many balloons are at the welcome back party?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "twelve",
+                  "options": [
+                    "ten",
+                    "eleven",
+                    "twelve",
+                    "thirteen"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We say 'hello' when we meet our friends.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Where do students sit in the classroom?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "at a desk",
+                  "options": [
+                    "at a desk",
+                    "on the floor",
+                    "in bed",
+                    "at the door"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_12_lesson_02",
+          "title": "Description Review",
+          "topic": "Describing a Mystery Person",
+          "context": "Grammar: Body, Clothes, Animals, Family. Describing a Mystery Person.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about describing people! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "When we describe a person, what can we talk about?",
+                  "correct_answer": "Their hair, eyes, and clothes",
+                  "options": [
+                    "Their hair, eyes, and clothes",
+                    "Their favorite food",
+                    "Their birthday",
+                    "Their house"
+                  ],
+                  "image_emoji": "👧",
+                  "hint": "Think about what you can SEE when you look at someone!"
+                },
+                {
+                  "question_text": "If someone has long, yellow hair, what color is it?",
+                  "correct_answer": "Blonde",
+                  "options": [
+                    "Blonde",
+                    "Brown",
+                    "Red",
+                    "Black"
+                  ],
+                  "image_emoji": "👱‍♀️",
+                  "hint": "Yellow hair has a special name. It starts with 'B'!"
+                },
+                {
+                  "question_text": "What question do we ask to find out about someone's clothing?",
+                  "correct_answer": "What are they wearing?",
+                  "options": [
+                    "What are they wearing?",
+                    "What do they eat?",
+                    "Where do they live?",
+                    "How old are they?"
+                  ],
+                  "image_emoji": "👕",
+                  "hint": "We want to know about their shirt, pants, or dress!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "arm",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "shirt",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "giraffe",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "daughter",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "arm",
+                      "emoji": "💪"
+                    },
+                    {
+                      "word": "shirt",
+                      "emoji": "👕"
+                    },
+                    {
+                      "word": "giraffe",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "daughter",
+                      "emoji": "👧"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "arm",
+                      "emoji": "💪",
+                      "hint": "This is part of your body. You use it to wave!"
+                    },
+                    {
+                      "word": "shirt",
+                      "emoji": "👕",
+                      "hint": "You wear this on top. It has sleeves!"
+                    },
+                    {
+                      "word": "giraffe",
+                      "emoji": "🦒",
+                      "hint": "This animal is very tall with a long neck!"
+                    },
+                    {
+                      "word": "daughter",
+                      "emoji": "👧",
+                      "hint": "A girl in a family. Mom and Dad's child!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "I can wave my ___ to say hello!",
+                      "answer": "arm",
+                      "options": [
+                        "arm",
+                        "shirt",
+                        "giraffe",
+                        "daughter"
+                      ],
+                      "emoji": "💪"
+                    },
+                    {
+                      "sentence": "Tom is wearing a blue ___ today.",
+                      "answer": "shirt",
+                      "options": [
+                        "shirt",
+                        "arm",
+                        "daughter",
+                        "giraffe"
+                      ],
+                      "emoji": "👕"
+                    },
+                    {
+                      "sentence": "Look at that tall ___ eating leaves from the tree!",
+                      "answer": "giraffe",
+                      "options": [
+                        "giraffe",
+                        "shirt",
+                        "arm",
+                        "daughter"
+                      ],
+                      "emoji": "🦒"
+                    },
+                    {
+                      "sentence": "This is my ___. Her name is Emma.",
+                      "answer": "daughter",
+                      "options": [
+                        "daughter",
+                        "giraffe",
+                        "shirt",
+                        "arm"
+                      ],
+                      "emoji": "👧"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Who Is She?",
+              "text": "My daughter Emma is playing in the park. She is wearing a yellow shirt. Look! She is waving her arm at a tall giraffe toy. Can you find her?",
+              "scene_description": "young girl in yellow shirt waving at toy giraffe in playground",
+              "questions": [
+                {
+                  "question": "Who is playing in the park?",
+                  "answer": "Emma",
+                  "options": [
+                    "Emma",
+                    "A giraffe",
+                    "Mom",
+                    "A teacher"
+                  ],
+                  "correct_answer": "Emma"
+                },
+                {
+                  "question": "What color is Emma's shirt?",
+                  "answer": "Yellow",
+                  "options": [
+                    "Yellow",
+                    "Blue",
+                    "Red",
+                    "Green"
+                  ],
+                  "correct_answer": "Yellow"
+                },
+                {
+                  "question": "What is Emma waving?",
+                  "answer": "Her arm",
+                  "options": [
+                    "Her arm",
+                    "Her shirt",
+                    "A ball",
+                    "A book"
+                  ],
+                  "correct_answer": "Her arm"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "He/She has ___ and ___.",
+              "explanation": "We use 'has' to describe what a person looks like.",
+              "examples": [
+                "She has long hair and blue eyes.",
+                "He has brown eyes and a red shirt.",
+                "My friend has short hair and a big smile."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "She",
+                        "has",
+                        "long",
+                        "hair"
+                      ],
+                      "correctSentence": "She has long hair"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "wearing",
+                        "a",
+                        "blue",
+                        "shirt"
+                      ],
+                      "correctSentence": "He is wearing a blue shirt"
+                    },
+                    {
+                      "words": [
+                        "My",
+                        "daughter",
+                        "is",
+                        "tall"
+                      ],
+                      "correctSentence": "My daughter is tall"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "giraffe",
+                        "has",
+                        "a",
+                        "long",
+                        "neck"
+                      ],
+                      "correctSentence": "The giraffe has a long neck"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "can",
+                        "wave",
+                        "my",
+                        "arm"
+                      ],
+                      "correctSentence": "I can wave my arm"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "She ___ brown eyes.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ wearing a red shirt.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "My daughter ___ play outside.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "The giraffe ___ very tall.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ blue shirts today.",
+                      "answer": "are wearing",
+                      "options": [
+                        "is wearing",
+                        "are wearing",
+                        "has",
+                        "have"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She have long hair.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with she/he/it"
+                    },
+                    {
+                      "sentence": "Him is my friend.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "sentence": "My daughter can swims fast.",
+                      "errorWord": "swims",
+                      "correctWord": "swim",
+                      "explanation": "After 'can', use the base verb"
+                    },
+                    {
+                      "sentence": "I see two giraffe.",
+                      "errorWord": "giraffe",
+                      "correctWord": "giraffes",
+                      "explanation": "Use plural with 'two'"
+                    },
+                    {
+                      "sentence": "The shirt are blue.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with singular nouns"
+                    },
+                    {
+                      "sentence": "She is wear a dress.",
+                      "errorWord": "wear",
+                      "correctWord": "wearing",
+                      "explanation": "Use 'is wearing' for present continuous"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "He has green eyes.",
+                      "is_correct": true,
+                      "corrected": "He has green eyes.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She are wearing a shirt.",
+                      "is_correct": false,
+                      "corrected": "She is wearing a shirt.",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "My daughter can run fast.",
+                      "is_correct": true,
+                      "corrected": "My daughter can run fast.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "The giraffe have long legs.",
+                      "is_correct": false,
+                      "corrected": "The giraffe has long legs.",
+                      "explanation": "Use 'has' with singular nouns"
+                    },
+                    {
+                      "sentence": "I am waving my arm.",
+                      "is_correct": true,
+                      "corrected": "I am waving my arm.",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "She ___ a yellow shirt.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ],
+                      "explanation": "Use 'has' with she/he/it"
+                    },
+                    {
+                      "question": "___ daughter is very kind.",
+                      "answer": "My",
+                      "options": [
+                        "I",
+                        "My",
+                        "Me",
+                        "Mine"
+                      ],
+                      "explanation": "Use 'My' before a noun"
+                    },
+                    {
+                      "question": "The giraffe ___ eating leaves.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with singular animals"
+                    },
+                    {
+                      "question": "He can ___ his arm high.",
+                      "answer": "raise",
+                      "options": [
+                        "raise",
+                        "raises",
+                        "raising",
+                        "raised"
+                      ],
+                      "explanation": "After 'can', use the base verb"
+                    },
+                    {
+                      "question": "They ___ two arms each.",
+                      "answer": "have",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ],
+                      "explanation": "Use 'have' with they/we/you"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello, children! Today I want to tell you about my daughter, Lucy. She is seven years old. She loves animals, especially giraffes! Right now, she is wearing her favorite green shirt. Can you wave your arm like Lucy does when she sees a giraffe at the zoo?",
+              "questions": [
+                {
+                  "question": "What is the teacher's daughter's name?",
+                  "answer": "Lucy",
+                  "options": [
+                    "Lucy",
+                    "Emma",
+                    "Sarah",
+                    "Anna"
+                  ]
+                },
+                {
+                  "question": "What color is Lucy's shirt?",
+                  "answer": "Green",
+                  "options": [
+                    "Green",
+                    "Blue",
+                    "Red",
+                    "Yellow"
+                  ]
+                },
+                {
+                  "question": "What is Lucy's favorite animal?",
+                  "answer": "Giraffe",
+                  "options": [
+                    "Giraffe",
+                    "Elephant",
+                    "Lion",
+                    "Monkey"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's practice describing people! Listen and repeat after me.",
+              "expected_text": "She has long hair.",
+              "prompts": [
+                {
+                  "prompt": "Say: She has long hair.",
+                  "expected_text": "She has long hair."
+                },
+                {
+                  "prompt": "Say: He is wearing a blue shirt.",
+                  "expected_text": "He is wearing a blue shirt."
+                },
+                {
+                  "prompt": "Now describe someone you know! Say: My [mom/dad/friend] has [color] [hair/eyes].",
+                  "expected_text": "My mom has brown hair."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Description Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which body part do you wave?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "arm",
+                  "options": [
+                    "arm",
+                    "shirt",
+                    "giraffe",
+                    "daughter"
+                  ]
+                },
+                {
+                  "question_text": "She ___ a red shirt today.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is wearing",
+                  "options": [
+                    "is wearing",
+                    "am wearing",
+                    "are wearing",
+                    "have"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'My daughter has blue eyes and long hair.' What color are her eyes?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Blue",
+                  "options": [
+                    "Blue",
+                    "Brown",
+                    "Green",
+                    "Black"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A giraffe has a long neck.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Complete: He ___ brown hair.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "has",
+                  "options": [
+                    "has",
+                    "have",
+                    "is",
+                    "are"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_12_lesson_03",
+          "title": "Usage Review",
+          "topic": "A weekend trip story",
+          "context": "Grammar: Present Continuous, Can/Can't, Likes/Dislikes. A weekend trip story.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do people go on a weekend trip?",
+                  "correct_answer": "to fun places",
+                  "options": [
+                    "to fun places",
+                    "to school",
+                    "to bed",
+                    "to breakfast"
+                  ],
+                  "image_emoji": "🚗",
+                  "hint": "Think about where families go to have fun together!"
+                },
+                {
+                  "question_text": "What do you take with you on a trip?",
+                  "correct_answer": "a bag",
+                  "options": [
+                    "a bag",
+                    "a table",
+                    "a wall",
+                    "a door"
+                  ],
+                  "image_emoji": "🎒",
+                  "hint": "You carry your clothes and toys in this!"
+                },
+                {
+                  "question_text": "How do you feel when you go on a trip?",
+                  "correct_answer": "excited",
+                  "options": [
+                    "excited",
+                    "sleepy",
+                    "hungry",
+                    "cold"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "Trips are fun! How does something fun make you feel?"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "eating",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "can",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "like",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "kitchen",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "emoji": "🍽️"
+                    },
+                    {
+                      "word": "can",
+                      "emoji": "✅"
+                    },
+                    {
+                      "word": "like",
+                      "emoji": "❤️"
+                    },
+                    {
+                      "word": "kitchen",
+                      "emoji": "👨‍🍳"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "emoji": "🍽️",
+                      "distractors": [
+                        "eeting",
+                        "eatting",
+                        "eaten"
+                      ]
+                    },
+                    {
+                      "word": "can",
+                      "emoji": "✅",
+                      "distractors": [
+                        "kon",
+                        "cen",
+                        "khan"
+                      ]
+                    },
+                    {
+                      "word": "like",
+                      "emoji": "❤️",
+                      "distractors": [
+                        "lik",
+                        "lick",
+                        "lyke"
+                      ]
+                    },
+                    {
+                      "word": "kitchen",
+                      "emoji": "👨‍🍳",
+                      "distractors": [
+                        "kichen",
+                        "kitchin",
+                        "kichan"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "eating",
+                      "emoji": "🍽️",
+                      "distractors": [
+                        {
+                          "word": "sleeping",
+                          "emoji": "😴"
+                        },
+                        {
+                          "word": "running",
+                          "emoji": "🏃"
+                        },
+                        {
+                          "word": "reading",
+                          "emoji": "📖"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "can",
+                      "emoji": "✅",
+                      "distractors": [
+                        {
+                          "word": "cannot",
+                          "emoji": "❌"
+                        },
+                        {
+                          "word": "maybe",
+                          "emoji": "🤔"
+                        },
+                        {
+                          "word": "stop",
+                          "emoji": "🛑"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "like",
+                      "emoji": "❤️",
+                      "distractors": [
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "angry",
+                          "emoji": "😠"
+                        },
+                        {
+                          "word": "scared",
+                          "emoji": "😨"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "kitchen",
+                      "emoji": "👨‍🍳",
+                      "distractors": [
+                        {
+                          "word": "bedroom",
+                          "emoji": "🛏️"
+                        },
+                        {
+                          "word": "bathroom",
+                          "emoji": "🚿"
+                        },
+                        {
+                          "word": "garden",
+                          "emoji": "🌳"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Beach Trip",
+              "text": "It's Saturday! Emma and her family are going to the beach. They are eating sandwiches in the kitchen. Emma likes ice cream. She can swim in the sea. They are very happy!",
+              "scene_description": "happy family eating together in bright kitchen preparing for beach trip",
+              "questions": [
+                {
+                  "question": "Where is Emma's family going?",
+                  "answer": "to the beach",
+                  "options": [
+                    "to the beach",
+                    "to school",
+                    "to the park"
+                  ],
+                  "correct_answer": "to the beach"
+                },
+                {
+                  "question": "What can Emma do?",
+                  "answer": "swim",
+                  "options": [
+                    "swim",
+                    "fly",
+                    "cook"
+                  ],
+                  "correct_answer": "swim"
+                },
+                {
+                  "question": "Where are they eating sandwiches?",
+                  "answer": "in the kitchen",
+                  "options": [
+                    "in the kitchen",
+                    "at the beach",
+                    "in the car"
+                  ],
+                  "correct_answer": "in the kitchen"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I am ___ ing. / I can ___. / I like ___.",
+              "explanation": "We use 'am/is/are + ing' to say what is happening now, 'can' to say what we are able to do, and 'like' to say what we enjoy!",
+              "examples": [
+                "I am eating an apple.",
+                "I can swim in the pool.",
+                "I like ice cream."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "eating",
+                        "lunch"
+                      ],
+                      "correctSentence": "I am eating lunch"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "can",
+                        "swim",
+                        "fast"
+                      ],
+                      "correctSentence": "She can swim fast"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "ice",
+                        "cream"
+                      ],
+                      "correctSentence": "I like ice cream"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "are",
+                        "in",
+                        "the",
+                        "kitchen"
+                      ],
+                      "correctSentence": "We are in the kitchen"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "is",
+                        "playing",
+                        "now"
+                      ],
+                      "correctSentence": "He is playing now"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ eating breakfast.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ swim very well.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "canning",
+                        "could"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ playing outside.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ pizza and cake.",
+                      "answer": "like",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "liked"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ run fast.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She like ice cream.",
+                      "errorWord": "like",
+                      "correctWord": "likes",
+                      "explanation": "Use 'likes' with she/he/it"
+                    },
+                    {
+                      "sentence": "I can swims in the pool.",
+                      "errorWord": "swims",
+                      "correctWord": "swim",
+                      "explanation": "After 'can', use the base verb"
+                    },
+                    {
+                      "sentence": "They is eating lunch.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they/we/you"
+                    },
+                    {
+                      "sentence": "Him can run fast.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "sentence": "We are play in the kitchen.",
+                      "errorWord": "play",
+                      "correctWord": "playing",
+                      "explanation": "Use 'are playing' for actions happening now"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I am eating a sandwich.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She can dance.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He like apples.",
+                      "is_correct": false,
+                      "corrected": "He likes apples.",
+                      "explanation": "Use 'likes' with he/she/it"
+                    },
+                    {
+                      "sentence": "We are in the kitchen.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "I can swimming.",
+                      "is_correct": false,
+                      "corrected": "I can swim.",
+                      "explanation": "After 'can', use the base verb"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ playing in the park.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with 'I'"
+                    },
+                    {
+                      "question": "She ___ cook in the kitchen.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "am",
+                        "is"
+                      ],
+                      "explanation": "Use 'can' to show ability"
+                    },
+                    {
+                      "question": "They ___ reading books.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with they/we/you"
+                    },
+                    {
+                      "question": "He ___ bananas.",
+                      "answer": "likes",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "to like"
+                      ],
+                      "explanation": "Use 'likes' with he/she/it"
+                    },
+                    {
+                      "question": "I ___ jump high.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "am",
+                        "is"
+                      ],
+                      "explanation": "Use 'can' to show ability"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello! Let me tell you about Tom's weekend trip. On Saturday, Tom and his family went to the beach. In the morning, they were eating pancakes in the kitchen. Tom likes swimming, and he can swim very well! He swam in the sea all day. It was a great trip!",
+              "questions": [
+                {
+                  "question": "Where did Tom go on the weekend?",
+                  "answer": "to the beach",
+                  "options": [
+                    "to the beach",
+                    "to the park",
+                    "to the zoo",
+                    "to school"
+                  ]
+                },
+                {
+                  "question": "What were they eating in the kitchen?",
+                  "answer": "pancakes",
+                  "options": [
+                    "pancakes",
+                    "sandwiches",
+                    "pizza",
+                    "apples"
+                  ]
+                },
+                {
+                  "question": "What can Tom do very well?",
+                  "answer": "swim",
+                  "options": [
+                    "swim",
+                    "dance",
+                    "sing",
+                    "cook"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about a weekend trip! Say these sentences about what you can do and like.",
+              "expected_text": "I like pizza.",
+              "prompts": [
+                {
+                  "prompt": "Say: I like ___. (Choose something you like!)",
+                  "expected_text": "I like pizza."
+                },
+                {
+                  "prompt": "Say: I can ___. (Tell me something you can do!)",
+                  "expected_text": "I can swim."
+                },
+                {
+                  "prompt": "Say: I am eating ___. (What are you eating now or what do you eat?)",
+                  "expected_text": "I am eating breakfast."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "What do we do with food?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "eating",
+                  "options": [
+                    "eating",
+                    "sleeping",
+                    "jumping",
+                    "reading"
+                  ]
+                },
+                {
+                  "question_text": "I ___ swim in the pool.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "can",
+                  "options": [
+                    "can",
+                    "cans",
+                    "am",
+                    "is"
+                  ]
+                },
+                {
+                  "question_text": "She ___ ice cream and cake.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "likes",
+                  "options": [
+                    "like",
+                    "likes",
+                    "liking",
+                    "can"
+                  ]
+                },
+                {
+                  "question_text": "Where do we cook food at home?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "kitchen",
+                  "options": [
+                    "kitchen",
+                    "bedroom",
+                    "garden",
+                    "classroom"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'They is eating' is correct.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_12_lesson_04",
+          "title": "Starters Mock Exam",
+          "topic": "The Island Adventure - Full Mastery Check",
+          "context": "The Island Adventure where students use all skills to find a treasure and earn their Stage 2 Certificate.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do you think an island adventure happens?",
+                  "correct_answer": "On an island in the sea",
+                  "options": [
+                    "On an island in the sea",
+                    "In a big city",
+                    "At the shopping mall",
+                    "In a classroom"
+                  ],
+                  "image_emoji": "🏝️",
+                  "hint": "Think about where you find sand, water, and palm trees!"
+                },
+                {
+                  "question_text": "What fun things can you do on an island?",
+                  "correct_answer": "Swim and play on the beach",
+                  "options": [
+                    "Swim and play on the beach",
+                    "Ride the bus to school",
+                    "Watch TV at home",
+                    "Sleep in your bed"
+                  ],
+                  "image_emoji": "🏖️",
+                  "hint": "Islands have water all around them. What do you do in water?"
+                },
+                {
+                  "question_text": "Who might you meet on an island adventure?",
+                  "correct_answer": "New friends and animals",
+                  "options": [
+                    "New friends and animals",
+                    "Your teacher only",
+                    "Nobody at all",
+                    "Just your pillow"
+                  ],
+                  "image_emoji": "🐚",
+                  "hint": "Adventures are exciting! You can meet people and see sea creatures!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "hello",
+                "can",
+                "eating",
+                "shirt",
+                "giraffe",
+                "kitchen",
+                "twelve",
+                "desk"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "definition": "What you say when you meet someone",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "can",
+                      "definition": "I ___ jump! (am able to)",
+                      "emoji": "💪"
+                    },
+                    {
+                      "word": "eating",
+                      "definition": "Having food in your mouth",
+                      "emoji": "🍽️"
+                    },
+                    {
+                      "word": "shirt",
+                      "definition": "Clothes you wear on top",
+                      "emoji": "👕"
+                    },
+                    {
+                      "word": "giraffe",
+                      "definition": "A tall animal with a long neck",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "kitchen",
+                      "definition": "The room where you cook food",
+                      "emoji": "🍳"
+                    },
+                    {
+                      "word": "twelve",
+                      "definition": "The number after eleven",
+                      "emoji": "1️⃣2️⃣"
+                    },
+                    {
+                      "word": "desk",
+                      "definition": "A table where you write and study",
+                      "emoji": "🪑"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "definition": "A friendly greeting word",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "can",
+                      "definition": "This word means you are able to do something",
+                      "emoji": "💪"
+                    },
+                    {
+                      "word": "eating",
+                      "definition": "When you put food in your mouth and chew",
+                      "emoji": "🍽️"
+                    },
+                    {
+                      "word": "shirt",
+                      "definition": "You wear this on your body with buttons",
+                      "emoji": "👕"
+                    },
+                    {
+                      "word": "giraffe",
+                      "definition": "This animal has spots and eats leaves from trees",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "kitchen",
+                      "definition": "This room has a stove and refrigerator",
+                      "emoji": "🍳"
+                    },
+                    {
+                      "word": "twelve",
+                      "definition": "This number comes after eleven and before thirteen",
+                      "emoji": "1️⃣2️⃣"
+                    },
+                    {
+                      "word": "desk",
+                      "definition": "You sit at this to do your homework",
+                      "emoji": "🪑"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "What do you say when you meet a friend?",
+                      "answer": "Hello",
+                      "options": [
+                        "Hello",
+                        "Goodbye",
+                        "Thank you",
+                        "Please"
+                      ]
+                    },
+                    {
+                      "question": "I ___ swim in the pool. Which word fits?",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "table",
+                        "happy",
+                        "blue"
+                      ]
+                    },
+                    {
+                      "question": "What am I doing when I have lunch?",
+                      "answer": "eating",
+                      "options": [
+                        "eating",
+                        "sleeping",
+                        "running",
+                        "reading"
+                      ]
+                    },
+                    {
+                      "question": "What do you wear on your body with sleeves?",
+                      "answer": "A shirt",
+                      "options": [
+                        "A shirt",
+                        "A kitchen",
+                        "A desk",
+                        "A number"
+                      ]
+                    },
+                    {
+                      "question": "Which animal has a very long neck?",
+                      "answer": "A giraffe",
+                      "options": [
+                        "A giraffe",
+                        "A cat",
+                        "A fish",
+                        "A bird"
+                      ]
+                    },
+                    {
+                      "question": "Where do you cook food at home?",
+                      "answer": "In the kitchen",
+                      "options": [
+                        "In the kitchen",
+                        "In the bathroom",
+                        "In the garden",
+                        "In the car"
+                      ]
+                    },
+                    {
+                      "question": "What number comes after eleven?",
+                      "answer": "Twelve",
+                      "options": [
+                        "Twelve",
+                        "Ten",
+                        "Twenty",
+                        "Two"
+                      ]
+                    },
+                    {
+                      "question": "Where do you sit to write and study?",
+                      "answer": "At a desk",
+                      "options": [
+                        "At a desk",
+                        "On a giraffe",
+                        "In a shirt",
+                        "On twelve"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "The Island Treasure",
+              "text": "Sam and Lily go to a small island. They can see a map under a big tree. The map shows where the treasure is. They walk to the beach and find a box. Inside the box, there are gold stars and a certificate. Sam and Lily are very happy!",
+              "scene_description": "Two young children discovering a treasure chest on a sunny beach with palm trees",
+              "questions": [
+                {
+                  "question": "Where do Sam and Lily go?",
+                  "answer": "To a small island",
+                  "options": [
+                    "To a small island",
+                    "To their school",
+                    "To a big city",
+                    "To their house"
+                  ],
+                  "correct_answer": "To a small island"
+                },
+                {
+                  "question": "What do they find under the big tree?",
+                  "answer": "A map",
+                  "options": [
+                    "A map",
+                    "A boat",
+                    "A toy",
+                    "A book"
+                  ],
+                  "correct_answer": "A map"
+                },
+                {
+                  "question": "Are Sam and Lily happy at the end?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe",
+                    "We don't know"
+                  ],
+                  "correct_answer": "Yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I can ___ . / He/She can ___ .",
+              "explanation": "We use 'can' to talk about things we are able to do.",
+              "examples": [
+                "I can swim in the sea.",
+                "She can find the treasure.",
+                "He can read the map."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "can",
+                        "swim"
+                      ],
+                      "correctSentence": "I can swim"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "eating",
+                        "lunch"
+                      ],
+                      "correctSentence": "She is eating lunch"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "giraffe",
+                        "is",
+                        "tall"
+                      ],
+                      "correctSentence": "The giraffe is tall"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "twelve",
+                        "books"
+                      ],
+                      "correctSentence": "I have twelve books"
+                    },
+                    {
+                      "words": [
+                        "My",
+                        "shirt",
+                        "is",
+                        "blue"
+                      ],
+                      "correctSentence": "My shirt is blue"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ jump high.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ eating an apple.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ]
+                    },
+                    {
+                      "sentence": "The desk ___ in the kitchen.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ two shirts.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "am",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ say hello.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "am",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "There ___ twelve pencils on the desk.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "He can swims fast.",
+                      "errorWord": "swims",
+                      "correctWord": "swim",
+                      "explanation": "After 'can' use the base form: swim"
+                    },
+                    {
+                      "sentence": "Her is eating breakfast.",
+                      "errorWord": "Her",
+                      "correctWord": "She",
+                      "explanation": "Use 'She' as the subject"
+                    },
+                    {
+                      "sentence": "I have two giraffe.",
+                      "errorWord": "giraffe",
+                      "correctWord": "giraffes",
+                      "explanation": "Use plural form: giraffes"
+                    },
+                    {
+                      "sentence": "The shirt are on the desk.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with singular noun"
+                    },
+                    {
+                      "sentence": "We can finds the treasure.",
+                      "errorWord": "finds",
+                      "correctWord": "find",
+                      "explanation": "After 'can' use the base form: find"
+                    },
+                    {
+                      "sentence": "She am in the kitchen.",
+                      "errorWord": "am",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she/he/it"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I can run fast.",
+                      "is_correct": true,
+                      "corrected": "I can run fast.",
+                      "explanation": "This is correct"
+                    },
+                    {
+                      "sentence": "She are eating lunch.",
+                      "is_correct": false,
+                      "corrected": "She is eating lunch.",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "The giraffe is tall.",
+                      "is_correct": true,
+                      "corrected": "The giraffe is tall.",
+                      "explanation": "This is correct"
+                    },
+                    {
+                      "sentence": "He can swimming.",
+                      "is_correct": false,
+                      "corrected": "He can swim.",
+                      "explanation": "After 'can' use base form: swim"
+                    },
+                    {
+                      "sentence": "There are twelve desks.",
+                      "is_correct": true,
+                      "corrected": "There are twelve desks.",
+                      "explanation": "This is correct"
+                    },
+                    {
+                      "sentence": "I has a blue shirt.",
+                      "is_correct": false,
+                      "corrected": "I have a blue shirt.",
+                      "explanation": "Use 'have' with I"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ a red shirt.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "am",
+                        "is"
+                      ],
+                      "explanation": "Use 'have' with I/you/we/they"
+                    },
+                    {
+                      "question": "She ___ eating in the kitchen.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ],
+                      "explanation": "Use 'is' with she for present continuous"
+                    },
+                    {
+                      "question": "The giraffe ___ run fast.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "am",
+                        "is",
+                        "are"
+                      ],
+                      "explanation": "Use 'can' to show ability"
+                    },
+                    {
+                      "question": "There ___ twelve pencils on the desk.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ],
+                      "explanation": "Use 'are' with plural nouns"
+                    },
+                    {
+                      "question": "He ___ hello to his friends.",
+                      "answer": "says",
+                      "options": [
+                        "say",
+                        "says",
+                        "saying",
+                        "can says"
+                      ],
+                      "explanation": "Use 'says' with he/she/it"
+                    },
+                    {
+                      "question": "We ___ in the kitchen now.",
+                      "answer": "are",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "can"
+                      ],
+                      "explanation": "Use 'are' with we"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Today we are going on an island adventure. We can find a treasure on the beach. There are twelve gold stars in the treasure box. Let's all say hello to the island and start our adventure!",
+              "questions": [
+                {
+                  "question": "Where can we find the treasure?",
+                  "answer": "On the beach",
+                  "options": [
+                    "On the beach",
+                    "In the kitchen",
+                    "At the desk",
+                    "In the classroom"
+                  ]
+                },
+                {
+                  "question": "How many gold stars are in the treasure box?",
+                  "answer": "Twelve",
+                  "options": [
+                    "Ten",
+                    "Eleven",
+                    "Twelve",
+                    "Thirteen"
+                  ]
+                },
+                {
+                  "question": "What do we say to the island?",
+                  "answer": "Hello",
+                  "options": [
+                    "Hello",
+                    "Goodbye",
+                    "Thank you",
+                    "Please"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about our island adventure! Listen and repeat, then say your own sentences.",
+              "expected_text": "I can find the treasure.",
+              "prompts": [
+                {
+                  "prompt": "Say: I can find the treasure.",
+                  "expected_text": "I can find the treasure."
+                },
+                {
+                  "prompt": "Say: We are going to the island.",
+                  "expected_text": "We are going to the island."
+                },
+                {
+                  "prompt": "Now tell me: What can you do on the island?",
+                  "expected_text": "I can swim. / I can play. / I can find treasure."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Island Adventure Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ swim in the sea.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "can",
+                  "options": [
+                    "can",
+                    "am",
+                    "is",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "What number comes after eleven?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "twelve",
+                  "options": [
+                    "ten",
+                    "twelve",
+                    "twenty",
+                    "two"
+                  ]
+                },
+                {
+                  "question_text": "She ___ eating lunch in the kitchen.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "is",
+                  "options": [
+                    "am",
+                    "is",
+                    "are",
+                    "can"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A giraffe has a long neck.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Where do you find treasure on the island?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "On the beach",
+                  "options": [
+                    "On the beach",
+                    "In the kitchen",
+                    "At the desk",
+                    "In the shirt"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}
