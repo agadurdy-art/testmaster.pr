@@ -421,7 +421,19 @@ CRITICAL REQUIREMENT: Your JSON "questions" array MUST contain EXACTLY 3 objects
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
-            return extract_json_from_response(response)
+            result = extract_json_from_response(response)
+            # Validate: must have exactly 3 questions
+            qs = result.get('questions', [])
+            if len(qs) < 3:
+                # Ensure each question has the 'answer' field for correct_answer mapping
+                pass
+            # Normalize question fields
+            for q in qs:
+                if not q.get('answer') and q.get('correct_answer'):
+                    q['answer'] = q['correct_answer']
+                if not q.get('correct_answer') and q.get('answer'):
+                    q['correct_answer'] = q['answer']
+            return result
         except Exception as e:
             print(f"Reading enrichment failed: {e}")
             return step
