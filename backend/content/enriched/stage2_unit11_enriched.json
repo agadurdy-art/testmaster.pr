@@ -1,0 +1,2741 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_11",
+      "unit_num": 11,
+      "title": "Play & Hobbies",
+      "subtitle": "Sports and free-time activities",
+      "phonics_focus": [
+        "Sport words",
+        "Hobby sounds"
+      ],
+      "grammar_focus": [
+        "Verbs Play, Go, Do",
+        "Adverbs of frequency (always, never)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_11_lesson_01",
+          "title": "Sports",
+          "topic": "Choosing a sport to play at the weekend",
+          "context": "Choosing a sport to play at the weekend.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do you play sports?",
+                  "correct_answer": "outside in the park",
+                  "options": [
+                    "in the kitchen",
+                    "outside in the park",
+                    "in the bathroom",
+                    "in bed"
+                  ],
+                  "image_emoji": "⚽",
+                  "hint": "Think about where you have lots of space to run and play!"
+                },
+                {
+                  "question_text": "What do you wear when you play sports?",
+                  "correct_answer": "sports shoes and comfortable clothes",
+                  "options": [
+                    "pajamas",
+                    "sports shoes and comfortable clothes",
+                    "a party dress",
+                    "a winter coat"
+                  ],
+                  "image_emoji": "👟",
+                  "hint": "You need clothes that help you move easily and run fast!"
+                },
+                {
+                  "question_text": "When do many children play sports?",
+                  "correct_answer": "on Saturday and Sunday",
+                  "options": [
+                    "at midnight",
+                    "on Saturday and Sunday",
+                    "during dinner time",
+                    "when they are sleeping"
+                  ],
+                  "image_emoji": "📅",
+                  "hint": "Think about when you don't have school and have free time to play!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "basketball",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "football",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "tennis",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "game",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "basketball",
+                      "emoji": "🏀",
+                      "distractors": [
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "football",
+                      "emoji": "⚽",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "tennis",
+                      "emoji": "🎾",
+                      "distractors": [
+                        {
+                          "word": "pizza",
+                          "emoji": "🍕"
+                        },
+                        {
+                          "word": "house",
+                          "emoji": "🏠"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "game",
+                      "emoji": "🎮",
+                      "distractors": [
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "chair",
+                          "emoji": "🪑"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "basketball",
+                      "emoji": "🏀",
+                      "distractors": [
+                        {
+                          "word": "clock",
+                          "emoji": "⏰"
+                        },
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "rainbow",
+                          "emoji": "🌈"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "football",
+                      "emoji": "⚽",
+                      "distractors": [
+                        {
+                          "word": "balloon",
+                          "emoji": "🎈"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        },
+                        {
+                          "word": "cookie",
+                          "emoji": "🍪"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "tennis",
+                      "emoji": "🎾",
+                      "distractors": [
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "ice cream",
+                          "emoji": "🍦"
+                        },
+                        {
+                          "word": "butterfly",
+                          "emoji": "🦋"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "game",
+                      "emoji": "🎮",
+                      "distractors": [
+                        {
+                          "word": "heart",
+                          "emoji": "❤️"
+                        },
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        },
+                        {
+                          "word": "bag",
+                          "emoji": "👜"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "basketball",
+                      "emoji": "🏀"
+                    },
+                    {
+                      "word": "football",
+                      "emoji": "⚽"
+                    },
+                    {
+                      "word": "tennis",
+                      "emoji": "🎾"
+                    },
+                    {
+                      "word": "game",
+                      "emoji": "🎮"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "basketball",
+                      "emoji": "🏀",
+                      "definition": "A sport where you bounce an orange ball and throw it into a high net"
+                    },
+                    {
+                      "word": "football",
+                      "emoji": "⚽",
+                      "definition": "A sport where you kick a round ball with your feet"
+                    },
+                    {
+                      "word": "tennis",
+                      "emoji": "🎾",
+                      "definition": "A sport where you hit a small ball with a racket over a net"
+                    },
+                    {
+                      "word": "game",
+                      "emoji": "🎮",
+                      "definition": "Something fun you play with rules, like a sport or video game"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Tom's Weekend Sport",
+              "text": "Tom always plays sports on Saturday. He loves football and basketball. His sister Emma plays tennis every weekend. Today, Tom wants to play a new game with his friends in the park.",
+              "scene_description": "happy children playing different sports together in a sunny park on weekend",
+              "questions": [
+                {
+                  "question": "When does Tom always play sports?",
+                  "answer": "on Saturday",
+                  "options": [
+                    "on Monday",
+                    "on Saturday",
+                    "never"
+                  ],
+                  "correct_answer": "on Saturday"
+                },
+                {
+                  "question": "What sport does Emma play?",
+                  "answer": "tennis",
+                  "options": [
+                    "football",
+                    "basketball",
+                    "tennis"
+                  ],
+                  "correct_answer": "tennis"
+                },
+                {
+                  "question": "Where does Tom want to play today?",
+                  "answer": "in the park",
+                  "options": [
+                    "at home",
+                    "at school",
+                    "in the park"
+                  ],
+                  "correct_answer": "in the park"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I ___ sports. / I ___ play sports.",
+              "explanation": "We use 'play' with ball sports, 'go' when we move to do sports, and 'do' with other sports. We use 'always' for things we do every time and 'never' for things we don't do.",
+              "examples": [
+                "I play football on Saturday.",
+                "I always go swimming on Sunday.",
+                "I never do karate."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "play",
+                        "football",
+                        "always"
+                      ],
+                      "correctSentence": "I always play football"
+                    },
+                    {
+                      "words": [
+                        "never",
+                        "go",
+                        "I",
+                        "swimming"
+                      ],
+                      "correctSentence": "I never go swimming"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "does",
+                        "karate",
+                        "always"
+                      ],
+                      "correctSentence": "She always does karate"
+                    },
+                    {
+                      "words": [
+                        "play",
+                        "We",
+                        "tennis",
+                        "on",
+                        "Saturday"
+                      ],
+                      "correctSentence": "We play tennis on Saturday"
+                    },
+                    {
+                      "words": [
+                        "go",
+                        "They",
+                        "cycling",
+                        "never"
+                      ],
+                      "correctSentence": "They never go cycling"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ basketball every day.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "plays"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ swimming on Sunday.",
+                      "answer": "goes",
+                      "options": [
+                        "play",
+                        "go",
+                        "goes",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ karate at school.",
+                      "answer": "do",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "does"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ play tennis.",
+                      "answer": "never",
+                      "options": [
+                        "never",
+                        "not",
+                        "don't never",
+                        "no"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ plays football on Saturday.",
+                      "answer": "always",
+                      "options": [
+                        "never",
+                        "always",
+                        "not",
+                        "every"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She play tennis on Sunday.",
+                      "errorWord": "play",
+                      "correctWord": "plays",
+                      "explanation": "Use 'plays' with she/he/it"
+                    },
+                    {
+                      "sentence": "I always goes swimming.",
+                      "errorWord": "goes",
+                      "correctWord": "go",
+                      "explanation": "Use 'go' with I/you/we/they"
+                    },
+                    {
+                      "sentence": "Them do karate every day.",
+                      "errorWord": "Them",
+                      "correctWord": "They",
+                      "explanation": "Use 'They' as the subject"
+                    },
+                    {
+                      "sentence": "He play basketball never.",
+                      "errorWord": "never",
+                      "correctWord": "never plays",
+                      "explanation": "'Never' goes before the verb"
+                    },
+                    {
+                      "sentence": "We plays football at school.",
+                      "errorWord": "plays",
+                      "correctWord": "play",
+                      "explanation": "Use 'play' with we/they"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I always play football.",
+                      "is_correct": true,
+                      "corrected": "I always play football.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She go swimming on Saturday.",
+                      "is_correct": false,
+                      "corrected": "She goes swimming on Saturday.",
+                      "explanation": "Use 'goes' with she"
+                    },
+                    {
+                      "sentence": "They never do karate.",
+                      "is_correct": true,
+                      "corrected": "They never do karate.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He always play tennis.",
+                      "is_correct": false,
+                      "corrected": "He always plays tennis.",
+                      "explanation": "Use 'plays' with he"
+                    },
+                    {
+                      "sentence": "We go cycling every weekend.",
+                      "is_correct": true,
+                      "corrected": "We go cycling every weekend.",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ football every Saturday.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "plays",
+                        "go",
+                        "do"
+                      ],
+                      "explanation": "We use 'play' with ball sports like football"
+                    },
+                    {
+                      "question": "She ___ swimming on Sunday.",
+                      "answer": "goes",
+                      "options": [
+                        "play",
+                        "go",
+                        "goes",
+                        "do"
+                      ],
+                      "explanation": "We use 'go' with -ing sports, and 'goes' with she"
+                    },
+                    {
+                      "question": "They ___ karate at school.",
+                      "answer": "do",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "does"
+                      ],
+                      "explanation": "We use 'do' with karate and other martial arts"
+                    },
+                    {
+                      "question": "I ___ play tennis.",
+                      "answer": "never",
+                      "options": [
+                        "always",
+                        "never",
+                        "not",
+                        "don't never"
+                      ],
+                      "explanation": "'Never' means you don't do something at any time"
+                    },
+                    {
+                      "question": "He ___ plays basketball.",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "never",
+                        "not",
+                        "every"
+                      ],
+                      "explanation": "'Always' means you do something every time"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! My name is Sam. I always play sports on the weekend. On Saturday, I play football with my friends in the park. On Sunday, I play basketball at school. I never play tennis because I don't have a racket. What's your favorite game?",
+              "questions": [
+                {
+                  "question": "What sport does Sam play on Saturday?",
+                  "answer": "football",
+                  "options": [
+                    "football",
+                    "basketball",
+                    "tennis",
+                    "swimming"
+                  ]
+                },
+                {
+                  "question": "Where does Sam play basketball?",
+                  "answer": "at school",
+                  "options": [
+                    "in the park",
+                    "at home",
+                    "at school",
+                    "at the beach"
+                  ]
+                },
+                {
+                  "question": "Why does Sam never play tennis?",
+                  "answer": "he doesn't have a racket",
+                  "options": [
+                    "he doesn't like it",
+                    "he doesn't have a racket",
+                    "he doesn't have time",
+                    "he doesn't have friends"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Now it's your turn to speak! Tell me about the sports you play.",
+              "expected_text": "I play football on Saturday.",
+              "prompts": [
+                {
+                  "prompt": "Say: I play ___ on the weekend.",
+                  "expected_text": "I play football on the weekend."
+                },
+                {
+                  "prompt": "Say: I always play ___ or I never play ___.",
+                  "expected_text": "I always play basketball."
+                },
+                {
+                  "prompt": "Tell me: What sport do you want to play next weekend?",
+                  "expected_text": "I want to play tennis next weekend."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which emoji shows 'basketball'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "🏀",
+                  "options": [
+                    "🏀",
+                    "⚽",
+                    "🎾",
+                    "🎮"
+                  ]
+                },
+                {
+                  "question_text": "I ___ football every Saturday.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "play",
+                  "options": [
+                    "play",
+                    "go",
+                    "do",
+                    "make"
+                  ]
+                },
+                {
+                  "question_text": "She ___ swimming on Sunday.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "goes",
+                  "options": [
+                    "play",
+                    "go",
+                    "goes",
+                    "do"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'I always play tennis' means I play tennis every time.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Tom plays football on Saturday. When does Tom play football?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "on Saturday",
+                  "options": [
+                    "on Monday",
+                    "on Saturday",
+                    "on Sunday",
+                    "never"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_11_lesson_02",
+          "title": "Arts & Music",
+          "topic": "An after-school hobby club",
+          "context": "An after-school hobby club.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you like to do after school?",
+                  "correct_answer": "play with friends",
+                  "options": [
+                    "play with friends",
+                    "go to bed",
+                    "eat breakfast",
+                    "wake up"
+                  ],
+                  "image_emoji": "🎨",
+                  "hint": "Think about fun things you do when school finishes!"
+                },
+                {
+                  "question_text": "Where do children go to do hobbies together?",
+                  "correct_answer": "a club",
+                  "options": [
+                    "a club",
+                    "a bedroom",
+                    "a kitchen",
+                    "a bathroom"
+                  ],
+                  "image_emoji": "🏫",
+                  "hint": "It's a special place where friends meet to do fun activities!"
+                },
+                {
+                  "question_text": "Which activity can you do at an arts club?",
+                  "correct_answer": "draw and paint",
+                  "options": [
+                    "draw and paint",
+                    "sleep",
+                    "wash dishes",
+                    "drive a car"
+                  ],
+                  "image_emoji": "🖍️",
+                  "hint": "Think about what you use crayons and brushes for!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "guitar",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "piano",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "paint",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "photo",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "guitar",
+                      "emoji": "🎸"
+                    },
+                    {
+                      "word": "piano",
+                      "emoji": "🎹"
+                    },
+                    {
+                      "word": "paint",
+                      "emoji": "🎨"
+                    },
+                    {
+                      "word": "photo",
+                      "emoji": "📷"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "guitar",
+                      "emoji": "🎸",
+                      "hint": "You play music with this. It has strings."
+                    },
+                    {
+                      "word": "piano",
+                      "emoji": "🎹",
+                      "hint": "You press keys to make music with this."
+                    },
+                    {
+                      "word": "paint",
+                      "emoji": "🎨",
+                      "hint": "You use brushes and colors to make art."
+                    },
+                    {
+                      "word": "photo",
+                      "emoji": "📷",
+                      "hint": "You take this with a camera to remember things."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "I play the ___ at music club.",
+                      "answer": "guitar",
+                      "options": [
+                        "guitar",
+                        "paint",
+                        "photo",
+                        "book"
+                      ],
+                      "emoji": "🎸"
+                    },
+                    {
+                      "sentence": "Sarah plays the ___ with both hands.",
+                      "answer": "piano",
+                      "options": [
+                        "piano",
+                        "ball",
+                        "guitar",
+                        "paint"
+                      ],
+                      "emoji": "🎹"
+                    },
+                    {
+                      "sentence": "We ___ colorful pictures at art club.",
+                      "answer": "paint",
+                      "options": [
+                        "paint",
+                        "photo",
+                        "run",
+                        "eat"
+                      ],
+                      "emoji": "🎨"
+                    },
+                    {
+                      "sentence": "Let's take a ___ of our class!",
+                      "answer": "photo",
+                      "options": [
+                        "photo",
+                        "guitar",
+                        "piano",
+                        "cake"
+                      ],
+                      "emoji": "📷"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Our Hobby Club",
+              "text": "Emma goes to hobby club after school. She always plays the piano on Monday. Tom plays the guitar. Lily likes to paint pictures. They never do homework at the club! On Friday, they take a photo together.",
+              "scene_description": "diverse children doing music and art activities in a bright classroom after school",
+              "questions": [
+                {
+                  "question": "What does Emma always do on Monday?",
+                  "answer": "She plays the piano",
+                  "options": [
+                    "She plays the piano",
+                    "She plays the guitar",
+                    "She paints pictures"
+                  ],
+                  "correct_answer": "She plays the piano"
+                },
+                {
+                  "question": "Do the children do homework at hobby club?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Sometimes"
+                  ],
+                  "correct_answer": "No"
+                },
+                {
+                  "question": "When do the children take a photo?",
+                  "answer": "On Friday",
+                  "options": [
+                    "On Monday",
+                    "On Friday",
+                    "Every day"
+                  ],
+                  "correct_answer": "On Friday"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I always/never ___ (play/go/do) ___.",
+              "explanation": "We use 'always' when we do something every time, and 'never' when we don't do something at all.",
+              "examples": [
+                "I always play the piano on Monday.",
+                "Tom never paints at home.",
+                "We always go to hobby club after school."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "always",
+                        "play",
+                        "the",
+                        "guitar"
+                      ],
+                      "correctSentence": "I always play the guitar"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "never",
+                        "goes",
+                        "to",
+                        "hobby",
+                        "club"
+                      ],
+                      "correctSentence": "She never goes to hobby club"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "always",
+                        "do",
+                        "art",
+                        "on",
+                        "Monday"
+                      ],
+                      "correctSentence": "We always do art on Monday"
+                    },
+                    {
+                      "words": [
+                        "Tom",
+                        "never",
+                        "plays",
+                        "the",
+                        "piano"
+                      ],
+                      "correctSentence": "Tom never plays the piano"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "always",
+                        "paint",
+                        "after",
+                        "school"
+                      ],
+                      "correctSentence": "They always paint after school"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ play the guitar at club.",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "never",
+                        "sometimes",
+                        "usually"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ goes to music club on Friday.",
+                      "answer": "never",
+                      "options": [
+                        "always",
+                        "never",
+                        "often",
+                        "usually"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ the piano together.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "make"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ to hobby club after school.",
+                      "answer": "go",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "make"
+                      ]
+                    },
+                    {
+                      "sentence": "Tom always ___ his homework first.",
+                      "answer": "does",
+                      "options": [
+                        "do",
+                        "does",
+                        "goes",
+                        "plays"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She always play the piano.",
+                      "errorWord": "play",
+                      "correctWord": "plays",
+                      "explanation": "Use 'plays' with she/he/it"
+                    },
+                    {
+                      "sentence": "Me never go to art club.",
+                      "errorWord": "Me",
+                      "correctWord": "I",
+                      "explanation": "Use 'I' as the subject"
+                    },
+                    {
+                      "sentence": "They goes to hobby club.",
+                      "errorWord": "goes",
+                      "correctWord": "go",
+                      "explanation": "Use 'go' with they/we/you"
+                    },
+                    {
+                      "sentence": "Tom always paint on Monday.",
+                      "errorWord": "paint",
+                      "correctWord": "paints",
+                      "explanation": "Use 'paints' with Tom/he"
+                    },
+                    {
+                      "sentence": "I play two guitar at home.",
+                      "errorWord": "guitar",
+                      "correctWord": "guitars",
+                      "explanation": "Use 'guitars' for more than one"
+                    },
+                    {
+                      "sentence": "She can plays the piano.",
+                      "errorWord": "plays",
+                      "correctWord": "play",
+                      "explanation": "After 'can' use the base verb"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I always play the guitar.",
+                      "is_correct": true,
+                      "corrected": "I always play the guitar.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She never go to club.",
+                      "is_correct": false,
+                      "corrected": "She never goes to club.",
+                      "explanation": "Use 'goes' with she"
+                    },
+                    {
+                      "sentence": "We always paint pictures.",
+                      "is_correct": true,
+                      "corrected": "We always paint pictures.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "Tom always do his homework.",
+                      "is_correct": false,
+                      "corrected": "Tom always does his homework.",
+                      "explanation": "Use 'does' with Tom/he"
+                    },
+                    {
+                      "sentence": "They never play the piano.",
+                      "is_correct": true,
+                      "corrected": "They never play the piano.",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "Emma ___ plays the guitar on Monday.",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "never",
+                        "yesterday",
+                        "tomorrow"
+                      ],
+                      "explanation": "Use 'always' to show it happens every time"
+                    },
+                    {
+                      "question": "I ___ go to hobby club. I don't like it.",
+                      "answer": "never",
+                      "options": [
+                        "always",
+                        "never",
+                        "often",
+                        "usually"
+                      ],
+                      "explanation": "Use 'never' when you don't do something at all"
+                    },
+                    {
+                      "question": "We ___ the piano at music club.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "make"
+                      ],
+                      "explanation": "Use 'play' with musical instruments"
+                    },
+                    {
+                      "question": "She ___ art after school.",
+                      "answer": "does",
+                      "options": [
+                        "plays",
+                        "goes",
+                        "does",
+                        "makes"
+                      ],
+                      "explanation": "Use 'does' with activities like art, homework"
+                    },
+                    {
+                      "question": "They always ___ to hobby club on Friday.",
+                      "answer": "go",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "make"
+                      ],
+                      "explanation": "Use 'go' when moving to a place"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today I want to tell you about our hobby club. We have hobby club every day after school. On Monday and Wednesday, you can play the piano or the guitar in the music room. On Tuesday and Thursday, we always paint pictures in the art room. On Friday, we take a photo of all the children. I never miss Friday! It's my favorite day.",
+              "questions": [
+                {
+                  "question": "What do children do on Monday?",
+                  "answer": "play the piano or guitar",
+                  "options": [
+                    "play the piano or guitar",
+                    "paint pictures",
+                    "take photos",
+                    "do homework"
+                  ]
+                },
+                {
+                  "question": "When do children paint pictures?",
+                  "answer": "Tuesday and Thursday",
+                  "options": [
+                    "Monday and Wednesday",
+                    "Tuesday and Thursday",
+                    "Friday",
+                    "Every day"
+                  ]
+                },
+                {
+                  "question": "What happens on Friday?",
+                  "answer": "They take a photo",
+                  "options": [
+                    "They take a photo",
+                    "They play guitar",
+                    "They paint",
+                    "They go home"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice talking about hobby club! Say these sentences out loud.",
+              "expected_text": "I always go to hobby club.",
+              "prompts": [
+                {
+                  "prompt": "Say: I always go to hobby club.",
+                  "expected_text": "I always go to hobby club."
+                },
+                {
+                  "prompt": "Say: I play the guitar at music club.",
+                  "expected_text": "I play the guitar at music club."
+                },
+                {
+                  "prompt": "Say: We never paint on Monday.",
+                  "expected_text": "We never paint on Monday."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Arts & Music Quiz",
+              "questions": [
+                {
+                  "question_text": "What do you use to make music with strings?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "guitar",
+                  "options": [
+                    "guitar",
+                    "paint",
+                    "photo",
+                    "book"
+                  ]
+                },
+                {
+                  "question_text": "I ___ play the piano after school.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "always",
+                  "options": [
+                    "always",
+                    "never",
+                    "yesterday",
+                    "tomorrow"
+                  ]
+                },
+                {
+                  "question_text": "She ___ to hobby club on Friday.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "goes",
+                  "options": [
+                    "go",
+                    "goes",
+                    "going",
+                    "gone"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We use 'play' with musical instruments like guitar and piano.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What do children do at art club?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "paint pictures",
+                  "options": [
+                    "paint pictures",
+                    "sleep",
+                    "eat lunch",
+                    "go home"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_11_lesson_03",
+          "title": "Frequency",
+          "topic": "Describing daily hobby routines",
+          "context": "Describing daily hobby routines.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's talk about things we do every day! Answer these questions about your hobbies!",
+              "questions": [
+                {
+                  "question_text": "What do you like to play every day?",
+                  "correct_answer": "with my toys",
+                  "options": [
+                    "with my toys",
+                    "with my dinner",
+                    "with my bed",
+                    "with my shoes"
+                  ],
+                  "image_emoji": "🧸",
+                  "hint": "Think about what makes you happy! What do you play with at home?"
+                },
+                {
+                  "question_text": "When do you usually play outside?",
+                  "correct_answer": "after school",
+                  "options": [
+                    "after school",
+                    "during sleep",
+                    "while eating",
+                    "in the bathroom"
+                  ],
+                  "image_emoji": "⚽",
+                  "hint": "When is it sunny and you have free time to run and play?"
+                },
+                {
+                  "question_text": "How often do you read a story book?",
+                  "correct_answer": "every night",
+                  "options": [
+                    "every night",
+                    "never ever",
+                    "only in winter",
+                    "when I'm sleeping"
+                  ],
+                  "image_emoji": "📚",
+                  "hint": "Think about bedtime! Does someone read to you before you sleep?"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "always",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "never",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "sometimes",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "radio",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "always",
+                      "emoji": "💯"
+                    },
+                    {
+                      "word": "never",
+                      "emoji": "🚫"
+                    },
+                    {
+                      "word": "sometimes",
+                      "emoji": "🤷"
+                    },
+                    {
+                      "word": "radio",
+                      "emoji": "📻"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "always",
+                      "emoji": "💯",
+                      "distractors": [
+                        "also",
+                        "away",
+                        "alway"
+                      ]
+                    },
+                    {
+                      "word": "never",
+                      "emoji": "🚫",
+                      "distractors": [
+                        "ever",
+                        "naver",
+                        "newer"
+                      ]
+                    },
+                    {
+                      "word": "sometimes",
+                      "emoji": "🤷",
+                      "distractors": [
+                        "sometime",
+                        "some times",
+                        "somtimes"
+                      ]
+                    },
+                    {
+                      "word": "radio",
+                      "emoji": "📻",
+                      "distractors": [
+                        "redio",
+                        "radyo",
+                        "raido"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "always",
+                      "emoji": "💯",
+                      "distractors": [
+                        {
+                          "word": "phone",
+                          "emoji": "📱"
+                        },
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "never",
+                      "emoji": "🚫",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "sometimes",
+                      "emoji": "🤷",
+                      "distractors": [
+                        {
+                          "word": "cup",
+                          "emoji": "☕"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        },
+                        {
+                          "word": "door",
+                          "emoji": "🚪"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "radio",
+                      "emoji": "📻",
+                      "distractors": [
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        },
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        },
+                        {
+                          "word": "clock",
+                          "emoji": "⏰"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's Happy Day",
+              "text": "Emma loves music! She always listens to the radio in the morning. She sometimes plays with her toys after school. Emma likes to go to the park on sunny days. She never goes to bed late because she feels tired.",
+              "scene_description": "happy young girl listening to radio in bright bedroom, smiling child with toy radio",
+              "questions": [
+                {
+                  "question": "When does Emma listen to the radio?",
+                  "answer": "in the morning",
+                  "options": [
+                    "in the morning",
+                    "at night",
+                    "never"
+                  ],
+                  "correct_answer": "in the morning"
+                },
+                {
+                  "question": "Does Emma always play with her toys after school?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Only on Mondays"
+                  ],
+                  "correct_answer": "No"
+                },
+                {
+                  "question": "Why does Emma never go to bed late?",
+                  "answer": "because she feels tired",
+                  "options": [
+                    "because she feels tired",
+                    "because she likes morning",
+                    "because she plays outside"
+                  ],
+                  "correct_answer": "because she feels tired"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I ___ play/go/do ___.",
+              "explanation": "We use special words like 'always', 'sometimes', and 'never' to tell how often we do our hobbies!",
+              "examples": [
+                "I always play with my toys after school.",
+                "I sometimes go to the park on Saturday.",
+                "I never do homework on Sunday."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "always",
+                        "play",
+                        "soccer"
+                      ],
+                      "correctSentence": "I always play soccer"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "never",
+                        "goes",
+                        "swimming"
+                      ],
+                      "correctSentence": "She never goes swimming"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "sometimes",
+                        "do",
+                        "homework"
+                      ],
+                      "correctSentence": "We sometimes do homework"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "always",
+                        "listens",
+                        "to",
+                        "the",
+                        "radio"
+                      ],
+                      "correctSentence": "He always listens to the radio"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "sometimes",
+                        "play",
+                        "games"
+                      ],
+                      "correctSentence": "They sometimes play games"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ play with my toys.",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "never",
+                        "go",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ to the park every day.",
+                      "answer": "goes",
+                      "options": [
+                        "go",
+                        "goes",
+                        "going",
+                        "play"
+                      ]
+                    },
+                    {
+                      "sentence": "We never ___ homework on Sunday.",
+                      "answer": "do",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "does"
+                      ]
+                    },
+                    {
+                      "sentence": "He sometimes ___ football after school.",
+                      "answer": "plays",
+                      "options": [
+                        "play",
+                        "plays",
+                        "goes",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ listen to the radio.",
+                      "answer": "sometimes",
+                      "options": [
+                        "sometimes",
+                        "go",
+                        "play",
+                        "does"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "She always go to school.",
+                      "errorWord": "go",
+                      "correctWord": "goes",
+                      "explanation": "Use 'goes' with she, he, or it"
+                    },
+                    {
+                      "sentence": "Them never play outside.",
+                      "errorWord": "Them",
+                      "correctWord": "They",
+                      "explanation": "Use 'They' as a subject pronoun"
+                    },
+                    {
+                      "sentence": "I sometimes plays with toys.",
+                      "errorWord": "plays",
+                      "correctWord": "play",
+                      "explanation": "Use 'play' with I, you, we, or they"
+                    },
+                    {
+                      "sentence": "He can goes to the park.",
+                      "errorWord": "goes",
+                      "correctWord": "go",
+                      "explanation": "After 'can', use the simple verb 'go'"
+                    },
+                    {
+                      "sentence": "We have two radio at home.",
+                      "errorWord": "radio",
+                      "correctWord": "radios",
+                      "explanation": "Use 'radios' for more than one radio"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I always play with my friends.",
+                      "is_correct": true,
+                      "corrected": "I always play with my friends.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "She never go swimming.",
+                      "is_correct": false,
+                      "corrected": "She never goes swimming.",
+                      "explanation": "Use 'goes' with she, he, or it"
+                    },
+                    {
+                      "sentence": "They sometimes do homework.",
+                      "is_correct": true,
+                      "corrected": "They sometimes do homework.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "He always listen to the radio.",
+                      "is_correct": false,
+                      "corrected": "He always listens to the radio.",
+                      "explanation": "Use 'listens' with he, she, or it"
+                    },
+                    {
+                      "sentence": "We never play on Monday.",
+                      "is_correct": true,
+                      "corrected": "We never play on Monday.",
+                      "explanation": "This sentence is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ play outside every day.",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "go",
+                        "does",
+                        "plays"
+                      ],
+                      "explanation": "'Always' shows how often you do something"
+                    },
+                    {
+                      "question": "She never ___ to bed late.",
+                      "answer": "goes",
+                      "options": [
+                        "go",
+                        "goes",
+                        "going",
+                        "play"
+                      ],
+                      "explanation": "Use 'goes' with she, he, or it"
+                    },
+                    {
+                      "question": "We sometimes ___ homework together.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "goes",
+                        "plays"
+                      ],
+                      "explanation": "Use 'do' with I, you, we, or they"
+                    },
+                    {
+                      "question": "He ___ listens to the radio.",
+                      "answer": "sometimes",
+                      "options": [
+                        "sometimes",
+                        "play",
+                        "go",
+                        "does"
+                      ],
+                      "explanation": "'Sometimes' means not always, but a few times"
+                    },
+                    {
+                      "question": "They always ___ soccer after school.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "plays",
+                        "goes",
+                        "do"
+                      ],
+                      "explanation": "Use 'play' with I, you, we, or they"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Let me tell you about my friend Tom. Tom always plays with his toy cars after school. He sometimes listens to the radio with his dad in the morning. But Tom never goes swimming because he doesn't like water. What about you? What do you always do?",
+              "questions": [
+                {
+                  "question": "What does Tom always do after school?",
+                  "answer": "plays with toy cars",
+                  "options": [
+                    "plays with toy cars",
+                    "listens to the radio",
+                    "goes swimming",
+                    "does homework"
+                  ]
+                },
+                {
+                  "question": "When does Tom listen to the radio?",
+                  "answer": "in the morning",
+                  "options": [
+                    "in the morning",
+                    "after school",
+                    "at night",
+                    "never"
+                  ]
+                },
+                {
+                  "question": "Does Tom go swimming?",
+                  "answer": "No, never",
+                  "options": [
+                    "Yes, always",
+                    "Yes, sometimes",
+                    "No, never",
+                    "Yes, every day"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about what you do! Practice saying these sentences about your hobbies.",
+              "expected_text": "I always play with my toys.",
+              "prompts": [
+                {
+                  "prompt": "Tell me something you always do after school. Say: I always...",
+                  "expected_text": "I always play with my toys."
+                },
+                {
+                  "prompt": "Tell me something you sometimes do on Saturday. Say: I sometimes...",
+                  "expected_text": "I sometimes go to the park."
+                },
+                {
+                  "prompt": "Tell me something you never do. Say: I never...",
+                  "expected_text": "I never go to bed late."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Frequency Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which word means 'every time, all the time'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "always",
+                  "options": [
+                    "always",
+                    "never",
+                    "sometimes",
+                    "radio"
+                  ]
+                },
+                {
+                  "question_text": "She ___ goes to the park on Sunday.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "always",
+                  "options": [
+                    "always",
+                    "never",
+                    "go",
+                    "play"
+                  ]
+                },
+                {
+                  "question_text": "I sometimes ___ homework after school.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "do",
+                  "options": [
+                    "do",
+                    "does",
+                    "goes",
+                    "plays"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'He never play soccer' is correct.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Tom always listens to the radio. Does Tom listen to the radio every day?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes, he does",
+                  "options": [
+                    "Yes, he does",
+                    "No, he doesn't",
+                    "Only sometimes",
+                    "Never"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_11_lesson_04",
+          "title": "Unit Review",
+          "topic": "Creating a weekly hobby schedule",
+          "context": "Creating a weekly hobby schedule.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "How many days are in one week?",
+                  "correct_answer": "7 days",
+                  "options": [
+                    "5 days",
+                    "6 days",
+                    "7 days",
+                    "10 days"
+                  ],
+                  "image_emoji": "📅",
+                  "hint": "Count from Monday to Sunday!"
+                },
+                {
+                  "question_text": "What is a hobby?",
+                  "correct_answer": "Something fun you like to do",
+                  "options": [
+                    "Something fun you like to do",
+                    "Your homework",
+                    "Eating breakfast",
+                    "Going to sleep"
+                  ],
+                  "image_emoji": "🎨",
+                  "hint": "It's an activity you enjoy doing in your free time!"
+                },
+                {
+                  "question_text": "Which day comes after Saturday?",
+                  "correct_answer": "Sunday",
+                  "options": [
+                    "Monday",
+                    "Friday",
+                    "Sunday",
+                    "Tuesday"
+                  ],
+                  "image_emoji": "📆",
+                  "hint": "It's the last day of the week!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "basketball",
+                "football",
+                "tennis",
+                "game",
+                "guitar",
+                "piano",
+                "paint",
+                "photo",
+                "always",
+                "never",
+                "sometimes",
+                "radio"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "basketball",
+                      "definition": "A sport you play with a ball and hoop",
+                      "emoji": "🏀"
+                    },
+                    {
+                      "word": "football",
+                      "definition": "A sport you play with your feet and a ball",
+                      "emoji": "⚽"
+                    },
+                    {
+                      "word": "guitar",
+                      "definition": "A musical instrument with strings",
+                      "emoji": "🎸"
+                    },
+                    {
+                      "word": "piano",
+                      "definition": "A musical instrument with black and white keys",
+                      "emoji": "🎹"
+                    },
+                    {
+                      "word": "paint",
+                      "definition": "To make pictures with colors and a brush",
+                      "emoji": "🎨"
+                    },
+                    {
+                      "word": "always",
+                      "definition": "Every time, all the time",
+                      "emoji": "💯"
+                    },
+                    {
+                      "word": "never",
+                      "definition": "Not ever, zero times",
+                      "emoji": "🚫"
+                    },
+                    {
+                      "word": "sometimes",
+                      "definition": "Not always, but not never",
+                      "emoji": "🔄"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "tennis",
+                      "definition": "A sport with a racket and yellow ball",
+                      "emoji": "🎾"
+                    },
+                    {
+                      "word": "game",
+                      "definition": "A fun activity you play",
+                      "emoji": "🎮"
+                    },
+                    {
+                      "word": "photo",
+                      "definition": "A picture you take with a camera",
+                      "emoji": "📸"
+                    },
+                    {
+                      "word": "radio",
+                      "definition": "A device that plays music and talk",
+                      "emoji": "📻"
+                    },
+                    {
+                      "word": "basketball",
+                      "definition": "A sport you play with a ball and hoop",
+                      "emoji": "🏀"
+                    },
+                    {
+                      "word": "guitar",
+                      "definition": "A musical instrument with strings",
+                      "emoji": "🎸"
+                    },
+                    {
+                      "word": "always",
+                      "definition": "Every time, all the time",
+                      "emoji": "💯"
+                    },
+                    {
+                      "word": "sometimes",
+                      "definition": "Not always, but not never",
+                      "emoji": "🔄"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "Which sport uses a racket?",
+                      "answer": "tennis",
+                      "options": [
+                        "tennis",
+                        "football",
+                        "basketball",
+                        "piano"
+                      ]
+                    },
+                    {
+                      "question": "What do you do with a brush and colors?",
+                      "answer": "paint",
+                      "options": [
+                        "paint",
+                        "photo",
+                        "radio",
+                        "game"
+                      ]
+                    },
+                    {
+                      "question": "Which one has black and white keys?",
+                      "answer": "piano",
+                      "options": [
+                        "piano",
+                        "guitar",
+                        "radio",
+                        "photo"
+                      ]
+                    },
+                    {
+                      "question": "What word means 'all the time'?",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "never",
+                        "sometimes",
+                        "game"
+                      ]
+                    },
+                    {
+                      "question": "Which sport do you play with your feet?",
+                      "answer": "football",
+                      "options": [
+                        "football",
+                        "tennis",
+                        "piano",
+                        "guitar"
+                      ]
+                    },
+                    {
+                      "question": "What takes pictures?",
+                      "answer": "photo",
+                      "options": [
+                        "photo",
+                        "paint",
+                        "radio",
+                        "game"
+                      ]
+                    },
+                    {
+                      "question": "What word means 'zero times'?",
+                      "answer": "never",
+                      "options": [
+                        "never",
+                        "always",
+                        "sometimes",
+                        "radio"
+                      ]
+                    },
+                    {
+                      "question": "Which one plays music and talk?",
+                      "answer": "radio",
+                      "options": [
+                        "radio",
+                        "photo",
+                        "paint",
+                        "basketball"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's Week",
+              "text": "Emma loves hobbies! She always plays basketball on Monday. On Wednesday, she never goes swimming, but she does play the piano. Emma sometimes paints on Friday. On Sunday, she always plays football with her dad.",
+              "scene_description": "young girl with weekly schedule calendar showing different hobby activities",
+              "questions": [
+                {
+                  "question": "What does Emma do on Monday?",
+                  "answer": "She plays basketball",
+                  "options": [
+                    "She plays basketball",
+                    "She plays football",
+                    "She paints",
+                    "She plays the piano"
+                  ],
+                  "correct_answer": "She plays basketball"
+                },
+                {
+                  "question": "Does Emma go swimming on Wednesday?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Sometimes"
+                  ],
+                  "correct_answer": "No"
+                },
+                {
+                  "question": "Who does Emma play football with on Sunday?",
+                  "answer": "Her dad",
+                  "options": [
+                    "Her dad",
+                    "Her friend",
+                    "Her teacher",
+                    "Her brother"
+                  ],
+                  "correct_answer": "Her dad"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "I ___ play/go/do + hobby. I always/never ___ on ___day.",
+              "explanation": "We use 'play' for sports with a ball, 'go' with '-ing' words, and 'do' for other activities. We use 'always' when we do something every time and 'never' when we don't do it at all.",
+              "examples": [
+                "I play basketball on Monday. I always play after school.",
+                "I go swimming on Tuesday. I never go on Sunday.",
+                "I do homework on Wednesday. I always do it before dinner."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "I",
+                        "always",
+                        "play",
+                        "basketball"
+                      ],
+                      "correctSentence": "I always play basketball"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "never",
+                        "goes",
+                        "swimming"
+                      ],
+                      "correctSentence": "She never goes swimming"
+                    },
+                    {
+                      "words": [
+                        "We",
+                        "do",
+                        "homework",
+                        "on",
+                        "Monday"
+                      ],
+                      "correctSentence": "We do homework on Monday"
+                    },
+                    {
+                      "words": [
+                        "He",
+                        "sometimes",
+                        "plays",
+                        "the",
+                        "piano"
+                      ],
+                      "correctSentence": "He sometimes plays the piano"
+                    },
+                    {
+                      "words": [
+                        "They",
+                        "always",
+                        "play",
+                        "football"
+                      ],
+                      "correctSentence": "They always play football"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "I ___ basketball every day.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "plays"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ swimming on Tuesday.",
+                      "answer": "goes",
+                      "options": [
+                        "plays",
+                        "goes",
+                        "do",
+                        "does"
+                      ]
+                    },
+                    {
+                      "sentence": "We ___ homework after school.",
+                      "answer": "do",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "does"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ play tennis on Sunday.",
+                      "answer": "never",
+                      "options": [
+                        "never",
+                        "play",
+                        "go",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ plays the guitar.",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "play",
+                        "go",
+                        "never"
+                      ]
+                    },
+                    {
+                      "sentence": "They ___ football on Saturday.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "plays"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "I plays basketball on Monday.",
+                      "errorWord": "plays",
+                      "correctWord": "play",
+                      "explanation": "Use 'play' with I"
+                    },
+                    {
+                      "sentence": "She always go swimming.",
+                      "errorWord": "go",
+                      "correctWord": "goes",
+                      "explanation": "Use 'goes' with she"
+                    },
+                    {
+                      "sentence": "We does homework every day.",
+                      "errorWord": "does",
+                      "correctWord": "do",
+                      "explanation": "Use 'do' with we"
+                    },
+                    {
+                      "sentence": "He never play the piano.",
+                      "errorWord": "play",
+                      "correctWord": "plays",
+                      "explanation": "Use 'plays' with he"
+                    },
+                    {
+                      "sentence": "They goes dancing on Friday.",
+                      "errorWord": "goes",
+                      "correctWord": "go",
+                      "explanation": "Use 'go' with they"
+                    },
+                    {
+                      "sentence": "I do painting on Sunday.",
+                      "errorWord": "do",
+                      "correctWord": "go",
+                      "explanation": "Use 'go' before -ing words"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I always play football.",
+                      "is_correct": true,
+                      "corrected": "I always play football.",
+                      "explanation": "Correct! We use 'play' with sports"
+                    },
+                    {
+                      "sentence": "She go swimming on Tuesday.",
+                      "is_correct": false,
+                      "corrected": "She goes swimming on Tuesday.",
+                      "explanation": "Use 'goes' with she"
+                    },
+                    {
+                      "sentence": "We never do homework.",
+                      "is_correct": true,
+                      "corrected": "We never do homework.",
+                      "explanation": "Correct! We use 'do' with homework"
+                    },
+                    {
+                      "sentence": "He always plays basketball.",
+                      "is_correct": true,
+                      "corrected": "He always plays basketball.",
+                      "explanation": "Correct! We use 'plays' with he"
+                    },
+                    {
+                      "sentence": "They plays tennis every day.",
+                      "is_correct": false,
+                      "corrected": "They play tennis every day.",
+                      "explanation": "Use 'play' with they"
+                    },
+                    {
+                      "sentence": "I sometimes go painting.",
+                      "is_correct": true,
+                      "corrected": "I sometimes go painting.",
+                      "explanation": "Correct! We use 'go' before -ing words"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ basketball on Monday.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "plays"
+                      ],
+                      "explanation": "Use 'play' for ball sports"
+                    },
+                    {
+                      "question": "She ___ swimming every week.",
+                      "answer": "goes",
+                      "options": [
+                        "plays",
+                        "goes",
+                        "do",
+                        "does"
+                      ],
+                      "explanation": "Use 'go' before -ing words"
+                    },
+                    {
+                      "question": "We ___ homework after school.",
+                      "answer": "do",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "does"
+                      ],
+                      "explanation": "Use 'do' with homework"
+                    },
+                    {
+                      "question": "He ___ plays the guitar.",
+                      "answer": "always",
+                      "options": [
+                        "always",
+                        "play",
+                        "go",
+                        "do"
+                      ],
+                      "explanation": "Use 'always' to show every time"
+                    },
+                    {
+                      "question": "I ___ play tennis on Sunday.",
+                      "answer": "never",
+                      "options": [
+                        "never",
+                        "play",
+                        "go",
+                        "always"
+                      ],
+                      "explanation": "Use 'never' to show zero times"
+                    },
+                    {
+                      "question": "They ___ football on Saturday.",
+                      "answer": "play",
+                      "options": [
+                        "play",
+                        "go",
+                        "do",
+                        "plays"
+                      ],
+                      "explanation": "Use 'play' for ball sports"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello, children! Let me tell you about my week. I always play basketball on Monday after school. On Wednesday, I never play tennis because I go swimming instead. I sometimes paint pictures on Friday. On Saturday, I always do my favorite hobby - I play the guitar!",
+              "questions": [
+                {
+                  "question": "What does the teacher always do on Monday?",
+                  "answer": "Play basketball",
+                  "options": [
+                    "Play basketball",
+                    "Go swimming",
+                    "Play tennis",
+                    "Play the guitar"
+                  ]
+                },
+                {
+                  "question": "What does the teacher do on Wednesday?",
+                  "answer": "Go swimming",
+                  "options": [
+                    "Go swimming",
+                    "Play basketball",
+                    "Paint pictures",
+                    "Play tennis"
+                  ]
+                },
+                {
+                  "question": "When does the teacher sometimes paint pictures?",
+                  "answer": "Friday",
+                  "options": [
+                    "Monday",
+                    "Wednesday",
+                    "Friday",
+                    "Saturday"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Tell me about your hobbies! Say these sentences out loud.",
+              "expected_text": "I always play basketball on Monday.",
+              "prompts": [
+                {
+                  "prompt": "Say: I always play basketball on Monday.",
+                  "expected_text": "I always play basketball on Monday."
+                },
+                {
+                  "prompt": "Say: I sometimes go swimming on Wednesday.",
+                  "expected_text": "I sometimes go swimming on Wednesday."
+                },
+                {
+                  "prompt": "Now tell me: What hobby do you always do? Say: I always...",
+                  "expected_text": "I always [hobby] on [day]."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit Review Quiz",
+              "questions": [
+                {
+                  "question_text": "I ___ basketball every Monday.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "play",
+                  "options": [
+                    "play",
+                    "go",
+                    "do",
+                    "plays"
+                  ]
+                },
+                {
+                  "question_text": "She ___ swimming on Tuesday.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "goes",
+                  "options": [
+                    "plays",
+                    "goes",
+                    "do",
+                    "does"
+                  ]
+                },
+                {
+                  "question_text": "Which word means 'every time, all the time'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "always",
+                  "options": [
+                    "always",
+                    "never",
+                    "sometimes",
+                    "maybe"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We use 'play' with the piano.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What is the correct sentence?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "I always do homework.",
+                  "options": [
+                    "I always do homework.",
+                    "I always play homework.",
+                    "I always go homework.",
+                    "I always does homework."
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}
