@@ -1,60 +1,74 @@
 # TESTMASTER - Mastery-Based English Learning Platform
 
-## Original Problem Statement
-Build a "Mastery-Based" and "Retention-Driven" English learning platform. The user (pedagogy expert) provides curriculum content, and the AI enhances it with pedagogically sound, native ESL teacher quality content.
+## Product Requirements Document (PRD)
 
-## Current State (February 28, 2026)
+### Vision
+A mastery-based English learning platform following Cambridge Young Learners methodology. The platform takes learners from absolute beginner (Pre-A1) through IELTS mastery with structured, AI-enriched lessons.
 
-### Implemented Features
-- [x] Stage 1: 12 units, 48 lessons - ALL MERGED & SEEDED
-- [x] Stage 2: Unit 1 (4 lessons) - GENERATED, ENRICHED & SEEDED (pilot)
-- [x] AI Content Enrichment (GPT-4o) 
-- [x] Data merge pipeline: original + enriched -> unified activity_flow
-- [x] 10 Vocabulary Games + 3 Grammar Games
-- [x] iOS 26 Glassmorphism UI
-- [x] Speaking: Record & Evaluate (Whisper + Browser SpeechRecognition)
-- [x] PDF Worksheet: GPT-4o teacher-quality (6 exercise types + mixed review, max 20 words)
-- [x] All bug fixes: Word Order, Listening options, Warm-up 3 qs, Exit Ticket 5 qs
-- [x] Stage 2 content generation pipeline (GPT-4o from vocab+grammar → full lessons)
-- [x] All stages unlocked for development (isStageUnlocked always returns true)
-- [x] Fixed Stage 2 data visibility (stage_id mismatch: stage_2 → stage_2_starters)
-- [x] Increased text sizes for interactive board use (text-2xl headings, text-xl passages, text-lg options)
-- [x] Vocab games limited to 2 games (was 3, reduced repetition)
-- [x] Error Hunter grammar game evaluation logic fixed (punctuation-embedded words)
-- [x] Speaking section expanded to 3 prompts per lesson (was 1)
-- [x] Production enrichment added to merger pipeline (ENRICH_MAP + _enriched_has_content)
-- [x] 5 new game components: TrueFalseGrammar, MultipleChoiceGrammar, Crossword, WordSearch, BoardGame
-- [x] Vocab game rotation per lesson (L1:4, L2:3, L3:3, L4:3 review)
-- [x] Grammar games expanded from 3 to 5 types (word_order, fill_blank, error_hunter, true_false, multiple_choice_grammar)
-- [x] Enrichment model switched from GPT-4o to Claude Sonnet 4.5
-- [x] Error Hunter diverse error types (pronoun, article, verb, preposition)
-- [x] Reading updated to Cambridge Starters exam format
-- [x] Review games for L4 (crossword, word_search, board_game)
+### Core Architecture
+- **Frontend:** React (CRA) with Shadcn/UI components
+- **Backend:** FastAPI (Python) with MongoDB
+- **AI:** Claude Sonnet 4.5 (via Emergent LLM Key) for content generation
+- **TTS:** ElevenLabs for vocabulary and listening audio
+- **Speech:** OpenAI Whisper for pronunciation evaluation
 
-### Stage 2 Progress
-- [x] Unit 1: Say Hello! (4 lessons) ✅ - Re-enriched with fixed pipeline (vocab+grammar games working)
-- [ ] Unit 2: Numbers & Colors
-- [ ] Unit 3: What's in Your Classroom?
-- [ ] Unit 4: Body & Action
-- [ ] Unit 5: Animals Everywhere
-- [ ] Unit 6: My Family & Friends
-- [ ] Unit 7: Food I Like! (was incorrectly labeled Unit 4)
-- [ ] Unit 8: My House
-- [ ] Unit 9: What are we doing?
-- [ ] Unit 10: Clothes
-- [ ] Unit 11: Play & Hobbies
-- [ ] Unit 12: Review & Final Gate
+### Stage 2: Starters (A1) - 12 Units, 48 Lessons
+Each lesson follows a 10-step flow:
+1. Retrieval Warm-up (3 questions)
+2. Vocabulary (4-6 words with emojis, IPA, definitions, examples)
+3. Vocab Games (4 rotating game types per lesson)
+4. Micro Reading (passage + 3 comprehension questions)
+5. Grammar Focus (rule pattern + 3 examples)
+6. Grammar Games (5 game types: word_order, fill_blank, error_hunter, true_false, multiple_choice)
+7. Listening (audio text + 3 questions)
+8. Production/Speaking (3 prompts with speech evaluation)
+9. Exit Ticket (3-5 review questions)
+10. Auto Review
 
-### Key Scripts
-- `scripts/generate_stage_content.py` - GPT-4o content generator (takes unit num)
-- `scripts/enrich_and_seed_stage.py` - Enriches + seeds to DB (takes stage, unit num)
-- `scripts/re_enrich_targeted.py` - Targeted re-enrichment
+### Key Routes
+- `/unified` - Course overview with all stages
+- `/unified/stage/:stageId` - Stage with units
+- `/unified/lesson/:lessonId` - Full lesson experience
 
-### Priority Backlog
-- [ ] Stage 2 Units 2-12 generation
-- [ ] Achievement System
-- [ ] Daily Habit SRS
-- [ ] Booster Mode
+### Key API Endpoints
+- `GET /api/unified/stages` - All stages
+- `GET /api/unified/stages/:stageId/units` - Units in a stage
+- `GET /api/unified/lessons/:lessonId` - Lesson with activity_flow
+- `POST /api/unified/tts/generate` - ElevenLabs TTS generation
 
-## Test Credentials
-- Email: tester@test.com, Password: tester123
+### Pipeline (Content Generation)
+```
+master_data.md → generate_unit.py → stage2_unitXX.json → enrich_and_seed_stage.py → MongoDB
+```
+
+### What's Implemented (as of Mar 2026)
+- [x] Stage 1: Foundations (Pre-A1) - 12 units, 48 lessons
+- [x] Stage 2 Unit 1: Say Hello! - Fully enriched with AI content
+- [x] 5 Grammar game types per lesson
+- [x] 4 Vocab game types per lesson (rotating)
+- [x] 3 Reading questions per lesson
+- [x] 3 Grammar examples per lesson
+- [x] ElevenLabs TTS service (API endpoint working)
+- [x] Claude Sonnet 4.5 AI content generation
+- [x] FormattedQuestion component for rich text display
+- [x] Scalable pipeline for generating remaining 11 units
+- [x] Unit content generator with all 12 units master data
+- [x] Fixed DB upsert for new unit seeding
+- [x] Fixed stage_id mapping (stage_2_starters)
+
+### Pending
+- [ ] Stage 2 Units 2-12 content generation (pipeline ready)
+- [ ] AI-generated vocabulary images (user prefers AI over stock photos)
+- [ ] Daily Habit SRS system
+- [ ] Booster Mode (remedial lessons)
+- [ ] Certification Gate
+- [ ] Teacher Control Panel
+
+### Test Credentials
+- Email: tester@test.com
+- Password: tester123
+
+### Database
+- DB Name: ielts_database
+- Stage 2 stage_id: stage_2_starters
+- Lesson IDs: stage_2_unit_XX_lesson_YY
