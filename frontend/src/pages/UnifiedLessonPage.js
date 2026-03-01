@@ -524,7 +524,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
               <div className="flex-1">
                 <p className="text-gray-700 italic text-lg">"{w.example_sentence || w.example}"</p>
               </div>
-              <button className="shrink-0 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 transition-colors" onClick={() => speakWord(w.example_sentence || w.example)} data-testid="vocab-listen-sentence-btn">
+              <button className="shrink-0 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 transition-colors" onClick={() => playTTS(w.example_sentence || w.example)} data-testid="vocab-listen-sentence-btn">
                 <Volume2 className="w-5 h-5" />
               </button>
             </div>
