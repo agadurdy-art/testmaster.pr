@@ -25,6 +25,22 @@ Each lesson follows a 10-step flow:
 9. Exit Ticket (3-5 review questions)
 10. Auto Review
 
+### Unit List (Stage 2)
+| Unit | Title | Topics |
+|------|-------|--------|
+| 1 | Say Hello! | Greetings, introductions, alphabet |
+| 2 | Numbers & Colors | Numbers 11-20, new colors |
+| 3 | What's in Your Classroom? | Classroom objects, prepositions |
+| 4 | Body & Action | Body parts, can/can't |
+| 5 | Animals Everywhere | Zoo/garden animals, descriptions |
+| 6 | My Family & Friends | Family members, possessive 's |
+| 7 | Food I Like! | Food, drinks, preferences |
+| 8 | My House | Rooms, furniture, there is/are |
+| 9 | What are we doing? | Present continuous |
+| 10 | Clothes | Clothing, descriptions |
+| 11 | Play & Hobbies | Sports, hobbies, frequency |
+| 12 | Review & Final Gate | Cumulative review, mock exam |
+
 ### Key Routes
 - `/unified` - Course overview with all stages
 - `/unified/stage/:stageId` - Stage with units
@@ -33,36 +49,37 @@ Each lesson follows a 10-step flow:
 ### Key API Endpoints
 - `GET /api/unified/stages` - All stages
 - `GET /api/unified/stages/:stageId/units` - Units in a stage
+- `GET /api/unified/units/:unitId` - Unit with lessons
 - `GET /api/unified/lessons/:lessonId` - Lesson with activity_flow
 - `POST /api/unified/tts/generate` - ElevenLabs TTS generation
 
 ### Pipeline (Content Generation)
 ```
-master_data.md → generate_unit.py → stage2_unitXX.json → enrich_and_seed_stage.py → MongoDB
+master_data (generate_unit.py) → stage2_unitXX.json → enrich_and_seed_stage.py → MongoDB
 ```
+Usage: `cd /app/backend && python3 scripts/generate_unit.py <unit_num>`
 
 ### What's Implemented (as of Mar 2026)
 - [x] Stage 1: Foundations (Pre-A1) - 12 units, 48 lessons
-- [x] Stage 2 Unit 1: Say Hello! - Fully enriched with AI content
-- [x] 5 Grammar game types per lesson
-- [x] 4 Vocab game types per lesson (rotating)
-- [x] 3 Reading questions per lesson
+- [x] Stage 2: Starters (A1) - 12 units, 48 lessons - ALL COMPLETE
+- [x] 5 Grammar game types per lesson (word_order, fill_blank, error_hunter, true_false, multiple_choice)
+- [x] 4 Vocab game types per lesson (rotating between lessons)
+- [x] 3 Reading questions per lesson (with retry validation)
 - [x] 3 Grammar examples per lesson
 - [x] ElevenLabs TTS service (API endpoint working)
 - [x] Claude Sonnet 4.5 AI content generation
-- [x] FormattedQuestion component for rich text display
-- [x] Scalable pipeline for generating remaining 11 units
-- [x] Unit content generator with all 12 units master data
-- [x] Fixed DB upsert for new unit seeding
-- [x] Fixed stage_id mapping (stage_2_starters)
+- [x] FormattedQuestion component (HTML escape fixed)
+- [x] Scalable pipeline with upsert and stage_id mapping
+- [x] All UI text in English (Turkish strings removed)
+- [x] Error Hunter with single-error prompt improvements
 
-### Pending
-- [ ] Stage 2 Units 2-12 content generation (pipeline ready)
+### Pending / Backlog
 - [ ] AI-generated vocabulary images (user prefers AI over stock photos)
 - [ ] Daily Habit SRS system
 - [ ] Booster Mode (remedial lessons)
-- [ ] Certification Gate
+- [ ] Certification Gate logic
 - [ ] Teacher Control Panel
+- [ ] Stages 3-8 content
 
 ### Test Credentials
 - Email: tester@test.com
@@ -71,4 +88,5 @@ master_data.md → generate_unit.py → stage2_unitXX.json → enrich_and_seed_s
 ### Database
 - DB Name: ielts_database
 - Stage 2 stage_id: stage_2_starters
-- Lesson IDs: stage_2_unit_XX_lesson_YY
+- Unit IDs: stage_2_unit_01 through stage_2_unit_12
+- Lesson IDs: stage_2_unit_XX_lesson_YY (XX: 01-12, YY: 01-04)
