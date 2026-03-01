@@ -74,7 +74,16 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
                             if total_items >= 3:
                                 enriched_steps.append(vg)
                     elif st in ('grammar_focus', 'grammar_review'):
-                        enriched_steps.append(step)
+                        # Enrich grammar content (add examples)
+                        try:
+                            eg = await enricher._enrich_grammar(chat, step, lesson, unit_context)
+                            if eg.get('examples') or eg.get('rule_pattern'):
+                                enriched_steps.append(eg)
+                                print(f"    grammar_enriched: examples={len(eg.get('examples',[]))}")
+                            else:
+                                enriched_steps.append(step)
+                        except:
+                            enriched_steps.append(step)
                         # Generate grammar games
                         gg = await enricher._enrich_grammar_game(chat, step, lesson, unit_context)
                         games = gg.get('games', [])
