@@ -231,7 +231,7 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
                 {"$set": {
                     "lesson_id": lid,
                     "unit_id": unit_id,
-                    "stage_id": "stage_2",
+                    "stage_id": stage_db_id,
                     "lesson_number": orig_lesson.get('lesson_num', orig_lesson.get('number', 1)),
                     "title": orig_lesson.get('title', ''),
                     "topic": orig_lesson.get('topic', ''),
