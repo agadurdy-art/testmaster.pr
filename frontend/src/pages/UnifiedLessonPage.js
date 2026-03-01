@@ -354,6 +354,33 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
   const w = words[idx];
 
   const speakWord = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u); };
+  const [ttsCache, setTtsCache] = useState({});
+
+  const playTTS = async (text) => {
+    // Try ElevenLabs first, fallback to browser TTS
+    if (ttsCache[text]) {
+      const audio = new Audio(ttsCache[text]);
+      audio.play().catch(() => speakWord(text));
+      return;
+    }
+    try {
+      const res = await fetch(`${API_URL}/api/unified/tts/generate`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const url = data.audio_url?.startsWith('/') ? `${API_URL}/api${data.audio_url}` : data.audio_url;
+        if (url) {
+          setTtsCache(prev => ({ ...prev, [text]: url }));
+          const audio = new Audio(url);
+          audio.play().catch(() => speakWord(text));
+          return;
+        }
+      }
+    } catch {}
+    speakWord(text);
+  };
 
   const check = () => {
     const ok = input.toLowerCase().trim() === w.word.toLowerCase();
