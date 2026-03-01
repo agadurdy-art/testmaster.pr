@@ -400,12 +400,24 @@ Respond with ONLY valid JSON:
     "scene_description": "Description for finding a matching stock photo",
     "questions": [
         {{
-            "question": "Clear comprehension question about the story",
+            "question": "Comprehension question 1",
+            "answer": "correct answer",
+            "options": ["option1", "option2", "option3"]
+        }},
+        {{
+            "question": "Comprehension question 2",
+            "answer": "correct answer",
+            "options": ["option1", "option2", "option3"]
+        }},
+        {{
+            "question": "Comprehension question 3",
             "answer": "correct answer",
             "options": ["option1", "option2", "option3"]
         }}
     ]
-}}"""
+}}
+
+CRITICAL: You MUST create exactly 3 questions. Not 1, not 2, but 3 different comprehension questions."""
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))
