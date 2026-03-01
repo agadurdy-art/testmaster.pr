@@ -51,6 +51,19 @@ const STAGE_THEMES = {
 };
 const getTheme = (stageId) => STAGE_THEMES[stageId] || STAGE_THEMES.stage_1;
 
+// ═══════ FORMATTED QUESTION - Child-friendly with bold/colored keywords ═══════
+const FormattedQuestion = ({ text, className = '' }) => {
+  if (!text) return null;
+  // Highlight quoted words, words in ALL CAPS, words with underscores
+  const formatted = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-700">$1</strong>')
+    .replace(/'([^']+)'/g, '<strong class="text-indigo-600 bg-indigo-50 px-1 rounded">\'$1\'</strong>')
+    .replace(/"([^"]+)"/g, '<strong class="text-indigo-600 bg-indigo-50 px-1 rounded">"$1"</strong>')
+    .replace(/___+/g, '<span class="inline-block w-24 border-b-3 border-blue-400 mx-1"></span>')
+    .replace(/\b([A-Z]{2,})\b/g, '<strong class="text-purple-700">$1</strong>');
+  return <span className={className} dangerouslySetInnerHTML={{ __html: formatted }} />;
+};
+
 // Grouped roadmap steps for the visual roadmap
 const ROADMAP_STEPS = [
   { key: 'warmup_vocab', label: 'Vocabulary', icon: BookOpen, activities: ['retrieval_warmup', 'vocabulary'], color: '#3B82F6' },
