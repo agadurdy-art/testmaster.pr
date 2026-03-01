@@ -7,7 +7,10 @@ Usage: python3 generate_unit.py <unit_num>
 Example: python3 generate_unit.py 2
 """
 
-import os, json, sys, asyncio
+import os
+import json
+import sys
+import asyncio
 from dotenv import load_dotenv
 load_dotenv()
 sys.path.insert(0, '/app/backend')

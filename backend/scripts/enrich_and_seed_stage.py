@@ -1,5 +1,8 @@
 """Enrich and seed Stage 2 unit content."""
-import os, json, asyncio, sys
+import os
+import json
+import asyncio
+import sys
 from dotenv import load_dotenv
 load_dotenv()
 sys.path.insert(0, '/app/backend')
@@ -128,7 +131,7 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
     print(f"  Saved enriched: {enriched_path}")
 
     # Step 2: Merge and seed to DB
-    print(f"\n=== Merging and seeding ===")
+    print("\n=== Merging and seeding ===")
     from motor.motor_asyncio import AsyncIOMotorClient
     from datetime import datetime, timezone
 
