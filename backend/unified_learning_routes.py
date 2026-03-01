@@ -77,7 +77,13 @@ async def get_unit(unit_id: str):
     # Get lessons for this unit
     lessons = await db.unified_lessons.find(
         {"unit_id": unit_id}, {"_id": 0}
-    ).sort("number", 1).to_list(10)
+    ).sort("lesson_number", 1).to_list(10)
+    
+    # Add 'number' field for frontend compatibility
+    for lesson in lessons:
+        lesson["number"] = lesson.get("lesson_number", 0)
+        lesson["estimated_duration_minutes"] = lesson.get("estimated_duration_minutes", 15)
+        lesson["points_reward"] = lesson.get("points_reward", 100)
     
     unit["lessons"] = lessons
     return unit
