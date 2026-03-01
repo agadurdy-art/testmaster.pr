@@ -467,8 +467,9 @@ Respond with ONLY valid JSON:
         """Generate 5 grammar game types with 4-8 items each, diverse error types"""
         
         grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') in ('grammar_focus', 'grammar_review')), {})
+        pattern = grammar_step.get('rule_pattern', step.get('rule_pattern', ''))
         examples = grammar_step.get('examples', [])
-        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') == 'vocabulary'), {})
+        vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') in ('vocabulary', 'vocabulary_review')), {})
         vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
         
         prompt = f"""Create 5 grammar game activities for young ESL learners (ages 4-7).
