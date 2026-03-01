@@ -297,6 +297,7 @@ function RetrievalWarmup({ activity, onComplete, onSkip }) {
           </div>
         )}
         <h3 className="text-2xl font-bold text-gray-900 mb-4"><FormattedQuestion text={q.question_text} /></h3>
+        {q.hint && !showFeedback && (
           <p className="text-base text-amber-600 italic mb-4">Hint: {q.hint}</p>
         )}
         <div className="space-y-3">
