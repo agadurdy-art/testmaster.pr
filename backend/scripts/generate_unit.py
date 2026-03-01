@@ -324,6 +324,7 @@ def generate_unit_json(unit_num: int) -> dict:
 
     return {
         "stage": "stage_2",
+        "stage_id": "stage_2_starters",
         "stage_title": "Starters (A1)",
         "units": [{
             "unit_id": f"stage_2_unit_{unit_str}",
