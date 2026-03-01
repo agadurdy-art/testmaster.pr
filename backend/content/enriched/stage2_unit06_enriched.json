@@ -1,0 +1,2781 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_06",
+      "unit_num": 6,
+      "title": "My Family & Friends",
+      "subtitle": "Family members and people",
+      "phonics_focus": [
+        "Family words",
+        "People words"
+      ],
+      "grammar_focus": [
+        "Possessive 's (Ben's father)",
+        "Who are they?",
+        "Plural nouns"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_06_lesson_01",
+          "title": "Family Tree",
+          "topic": "Looking at a family photo album",
+          "context": "Looking at a family photo album.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Who do you see in family photos?",
+                  "correct_answer": "mummy, daddy, and me",
+                  "options": [
+                    "mummy, daddy, and me",
+                    "my toys and books",
+                    "animals at the zoo",
+                    "my teacher at school"
+                  ],
+                  "image_emoji": "👨‍👩‍👧",
+                  "hint": "Think about the people who live in your house with you!"
+                },
+                {
+                  "question_text": "Where do we keep our family photos?",
+                  "correct_answer": "in a photo album",
+                  "options": [
+                    "in a photo album",
+                    "in the refrigerator",
+                    "in my school bag",
+                    "in the garden"
+                  ],
+                  "image_emoji": "📔",
+                  "hint": "It's a special book where we put pictures to remember happy times!"
+                },
+                {
+                  "question_text": "What are people doing in family photos?",
+                  "correct_answer": "smiling and having fun",
+                  "options": [
+                    "smiling and having fun",
+                    "sleeping all day",
+                    "crying and sad",
+                    "doing homework"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "Family photos show happy memories! What do happy faces look like?"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "son",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "daughter",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "baby",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "parent",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "son",
+                      "emoji": "👦",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "�책"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "daughter",
+                      "emoji": "👧",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        },
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "baby",
+                      "emoji": "👶",
+                      "distractors": [
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        },
+                        {
+                          "word": "cup",
+                          "emoji": "☕"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "parent",
+                      "emoji": "👨‍👩‍👧‍👦",
+                      "distractors": [
+                        {
+                          "word": "house",
+                          "emoji": "🏠"
+                        },
+                        {
+                          "word": "pizza",
+                          "emoji": "🍕"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "son",
+                      "emoji": "👦",
+                      "distractors": [
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "chair",
+                          "emoji": "🪑"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "daughter",
+                      "emoji": "👧",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "balloon",
+                          "emoji": "🎈"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "baby",
+                      "emoji": "👶",
+                      "distractors": [
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        },
+                        {
+                          "word": "cookie",
+                          "emoji": "🍪"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "parent",
+                      "emoji": "👨‍👩‍👧‍👦",
+                      "distractors": [
+                        {
+                          "word": "train",
+                          "emoji": "🚂"
+                        },
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        },
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "son",
+                      "emoji": "👦"
+                    },
+                    {
+                      "word": "daughter",
+                      "emoji": "👧"
+                    },
+                    {
+                      "word": "baby",
+                      "emoji": "👶"
+                    },
+                    {
+                      "word": "parent",
+                      "emoji": "👨‍👩‍👧‍👦"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "son",
+                      "emoji": "👦",
+                      "definition": "a boy in the family"
+                    },
+                    {
+                      "word": "daughter",
+                      "emoji": "👧",
+                      "definition": "a girl in the family"
+                    },
+                    {
+                      "word": "baby",
+                      "emoji": "👶",
+                      "definition": "a very young child"
+                    },
+                    {
+                      "word": "parent",
+                      "emoji": "👨‍👩‍👧‍👦",
+                      "definition": "mummy or daddy"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's Family Album",
+              "text": "Emma looks at her family photo album with Mum. She sees her baby brother Tom. Emma is her parent's daughter. Tom is their son. Emma says, 'Look! There are two children in our family!'",
+              "scene_description": "young girl and mother looking at photo album together on sofa, smiling, cozy living room",
+              "questions": [
+                {
+                  "question": "Who looks at the photo album with Emma?",
+                  "answer": "Mum",
+                  "options": [
+                    "Mum",
+                    "her teacher",
+                    "her friend",
+                    "baby Tom"
+                  ],
+                  "correct_answer": "Mum"
+                },
+                {
+                  "question": "Is Tom Emma's baby brother?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "How many children are in Emma's family?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "three",
+                    "four"
+                  ],
+                  "correct_answer": "two"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "This is ___'s ___. (name + 's + thing/person)",
+              "explanation": "We use 's after a name to show that something belongs to that person.",
+              "examples": [
+                "This is Mia's mummy.",
+                "Look at Ben's baby sister.",
+                "That is Emma's photo album."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "Emma's",
+                        "baby"
+                      ],
+                      "correctSentence": "This is Emma's baby"
+                    },
+                    {
+                      "words": [
+                        "Ben's",
+                        "father",
+                        "is",
+                        "tall"
+                      ],
+                      "correctSentence": "Ben's father is tall"
+                    },
+                    {
+                      "words": [
+                        "are",
+                        "They",
+                        "my",
+                        "parents"
+                      ],
+                      "correctSentence": "They are my parents"
+                    },
+                    {
+                      "words": [
+                        "has",
+                        "Mia",
+                        "two",
+                        "daughters"
+                      ],
+                      "correctSentence": "Mia has two daughters"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "are",
+                        "they",
+                        "?"
+                      ],
+                      "correctSentence": "Who are they?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "This is Tom___ sister.",
+                      "answer": "'s",
+                      "options": [
+                        "'s",
+                        "s",
+                        "s'",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ they?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "I have three ___.",
+                      "answer": "babies",
+                      "options": [
+                        "baby",
+                        "babies",
+                        "babys",
+                        "babyies"
+                      ]
+                    },
+                    {
+                      "sentence": "Look at Anna___ photo album.",
+                      "answer": "'s",
+                      "options": [
+                        "'s",
+                        "s",
+                        "is",
+                        "'"
+                      ]
+                    },
+                    {
+                      "sentence": "My parents ___ happy.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "This is Ben father.",
+                      "errorWord": "Ben",
+                      "correctWord": "Ben's",
+                      "explanation": "We need 's to show it belongs to Ben"
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with 'they'"
+                    },
+                    {
+                      "sentence": "I see two baby in the photo.",
+                      "errorWord": "baby",
+                      "correctWord": "babies",
+                      "explanation": "Use 'babies' for more than one baby"
+                    },
+                    {
+                      "sentence": "Them are my parents.",
+                      "errorWord": "Them",
+                      "correctWord": "They",
+                      "explanation": "Use 'They' as the subject pronoun"
+                    },
+                    {
+                      "sentence": "Emma's sister are little.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with one sister"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "This is Mia's daughter.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 's to show belonging"
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "is_correct": false,
+                      "corrected": "Who are they?",
+                      "explanation": "Use 'are' with 'they'"
+                    },
+                    {
+                      "sentence": "I have two sons.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! Add 's' for plural"
+                    },
+                    {
+                      "sentence": "That is Tom sister.",
+                      "is_correct": false,
+                      "corrected": "That is Tom's sister.",
+                      "explanation": "We need 's to show it belongs to Tom"
+                    },
+                    {
+                      "sentence": "They are my parents.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! Use 'they' and 'are' together"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "This is ___ baby brother.",
+                      "answer": "Emma's",
+                      "options": [
+                        "Emma",
+                        "Emma's",
+                        "Emmas",
+                        "Emma is"
+                      ],
+                      "explanation": "Use 's after the name to show belonging"
+                    },
+                    {
+                      "question": "___ are they?",
+                      "answer": "Who",
+                      "options": [
+                        "What",
+                        "Who",
+                        "Where",
+                        "How"
+                      ],
+                      "explanation": "Use 'Who' to ask about people"
+                    },
+                    {
+                      "question": "I see three ___ in the photo.",
+                      "answer": "children",
+                      "options": [
+                        "child",
+                        "children",
+                        "childs",
+                        "childrens"
+                      ],
+                      "explanation": "Children is the plural of child"
+                    },
+                    {
+                      "question": "___ is Ben's father.",
+                      "answer": "He",
+                      "options": [
+                        "He",
+                        "She",
+                        "It",
+                        "They"
+                      ],
+                      "explanation": "Use 'He' for a man"
+                    },
+                    {
+                      "question": "My parents ___ kind.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with plural parents"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today we're looking at Lucy's family photo album. Look at this picture! Lucy's mum and dad are her parents. Lucy has a baby brother called Max. He is their son. Lucy is their daughter. Who can you see in your family photos?",
+              "questions": [
+                {
+                  "question": "Whose photo album are they looking at?",
+                  "answer": "Lucy's",
+                  "options": [
+                    "Lucy's",
+                    "Max's",
+                    "the teacher's",
+                    "Mum's"
+                  ]
+                },
+                {
+                  "question": "What is the baby brother's name?",
+                  "answer": "Max",
+                  "options": [
+                    "Max",
+                    "Tom",
+                    "Ben",
+                    "Sam"
+                  ]
+                },
+                {
+                  "question": "Who are Lucy's parents?",
+                  "answer": "her mum and dad",
+                  "options": [
+                    "her mum and dad",
+                    "her brother and sister",
+                    "her teacher and friend",
+                    "her grandma and grandpa"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at your family photo and tell me about it! Practice saying these sentences:",
+              "expected_text": "This is my mum's photo album",
+              "prompts": [
+                {
+                  "prompt": "Say: This is [name]'s photo album.",
+                  "expected_text": "This is my mum's photo album"
+                },
+                {
+                  "prompt": "Say: I can see [number] people in the photo.",
+                  "expected_text": "I can see three people in the photo"
+                },
+                {
+                  "prompt": "Say: They are my [family members].",
+                  "expected_text": "They are my parents and my baby brother"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Family Tree Review Quiz",
+              "questions": [
+                {
+                  "question_text": "A boy in the family is called a ___.",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "son",
+                  "options": [
+                    "son",
+                    "daughter",
+                    "parent",
+                    "baby"
+                  ]
+                },
+                {
+                  "question_text": "This is ___ photo album. (Use Emma)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Emma's",
+                  "options": [
+                    "Emma",
+                    "Emma's",
+                    "Emmas",
+                    "Emma is"
+                  ]
+                },
+                {
+                  "question_text": "I have two ___. (Use baby)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "babies",
+                  "options": [
+                    "baby",
+                    "babies",
+                    "babys",
+                    "babyies"
+                  ]
+                },
+                {
+                  "question_text": "True or False: Mum and Dad are called parents.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Who are they?",
+                  "options": [
+                    "Who is they?",
+                    "Who are they?",
+                    "Who am they?",
+                    "Who be they?"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_06_lesson_02",
+          "title": "Relatives",
+          "topic": "Talking about visitors coming for dinner",
+          "context": "Talking about visitors coming for dinner.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about when family comes to visit! Answer these questions.",
+              "questions": [
+                {
+                  "question_text": "Who comes to visit your house for dinner?",
+                  "correct_answer": "grandma and grandpa",
+                  "options": [
+                    "grandma and grandpa",
+                    "the mailman",
+                    "people from TV",
+                    "dinosaurs"
+                  ],
+                  "image_emoji": "👵👴",
+                  "hint": "Think about your family members who are older and love you very much!"
+                },
+                {
+                  "question_text": "What do we do before visitors come for dinner?",
+                  "correct_answer": "clean the house",
+                  "options": [
+                    "clean the house",
+                    "go to sleep",
+                    "play in the mud",
+                    "watch cartoons all day"
+                  ],
+                  "image_emoji": "🧹",
+                  "hint": "We want the house to look nice and tidy for our guests!"
+                },
+                {
+                  "question_text": "When grandma arrives at the door, what do you say?",
+                  "correct_answer": "Hello! Welcome!",
+                  "options": [
+                    "Hello! Welcome!",
+                    "Go away!",
+                    "I'm sleeping",
+                    "Who are you?"
+                  ],
+                  "image_emoji": "🚪",
+                  "hint": "We use friendly, polite words to greet people we love!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "uncle",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "aunt",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "cousin",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "uncle",
+                      "emoji": "👨"
+                    },
+                    {
+                      "word": "aunt",
+                      "emoji": "👩"
+                    },
+                    {
+                      "word": "cousin",
+                      "emoji": "👧"
+                    },
+                    {
+                      "word": "uncle",
+                      "emoji": "👨"
+                    },
+                    {
+                      "word": "aunt",
+                      "emoji": "👩"
+                    },
+                    {
+                      "word": "cousin",
+                      "emoji": "👦"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "uncle",
+                      "emoji": "👨",
+                      "hint": "Your dad's brother or your mom's brother"
+                    },
+                    {
+                      "word": "aunt",
+                      "emoji": "👩",
+                      "hint": "Your mom's sister or your dad's sister"
+                    },
+                    {
+                      "word": "cousin",
+                      "emoji": "👧",
+                      "hint": "Your aunt and uncle's child"
+                    },
+                    {
+                      "word": "uncle",
+                      "emoji": "👨",
+                      "hint": "Your parent's brother"
+                    },
+                    {
+                      "word": "aunt",
+                      "emoji": "👩",
+                      "hint": "Your parent's sister"
+                    },
+                    {
+                      "word": "cousin",
+                      "emoji": "👦",
+                      "hint": "Your aunt or uncle's son or daughter"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "My ___ is my dad's brother.",
+                      "answer": "uncle",
+                      "options": [
+                        "uncle",
+                        "aunt",
+                        "teacher",
+                        "friend"
+                      ],
+                      "emoji": "👨"
+                    },
+                    {
+                      "sentence": "My ___ is my mom's sister.",
+                      "answer": "aunt",
+                      "options": [
+                        "aunt",
+                        "uncle",
+                        "sister",
+                        "grandma"
+                      ],
+                      "emoji": "👩"
+                    },
+                    {
+                      "sentence": "My ___ is my aunt's daughter.",
+                      "answer": "cousin",
+                      "options": [
+                        "cousin",
+                        "aunt",
+                        "sister",
+                        "mother"
+                      ],
+                      "emoji": "👧"
+                    },
+                    {
+                      "sentence": "Uncle Tom is coming to visit. My ___ is very kind.",
+                      "answer": "uncle",
+                      "options": [
+                        "uncle",
+                        "aunt",
+                        "brother",
+                        "grandpa"
+                      ],
+                      "emoji": "👨"
+                    },
+                    {
+                      "sentence": "I play with my ___ at family dinners.",
+                      "answer": "cousin",
+                      "options": [
+                        "cousin",
+                        "uncle",
+                        "neighbor",
+                        "teacher"
+                      ],
+                      "emoji": "👦"
+                    },
+                    {
+                      "sentence": "My ___ brings me presents on my birthday.",
+                      "answer": "aunt",
+                      "options": [
+                        "aunt",
+                        "uncle",
+                        "friend",
+                        "classmate"
+                      ],
+                      "emoji": "👩"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Dinner with Family",
+              "text": "Today my aunt and uncle are coming for dinner. My cousin Emma is coming too. We are cleaning the house. Mom is cooking chicken and rice. Emma and I will play together after dinner. I am so excited!",
+              "scene_description": "happy family preparing dining table together for dinner, parents and children setting plates and food",
+              "questions": [
+                {
+                  "question": "Who is coming for dinner?",
+                  "answer": "aunt, uncle, and cousin",
+                  "options": [
+                    "aunt, uncle, and cousin",
+                    "grandma and grandpa",
+                    "teacher and friends",
+                    "neighbors only"
+                  ],
+                  "correct_answer": "aunt, uncle, and cousin"
+                },
+                {
+                  "question": "What is Mom cooking?",
+                  "answer": "chicken and rice",
+                  "options": [
+                    "chicken and rice",
+                    "pizza and cake",
+                    "burgers and chips",
+                    "soup and bread"
+                  ],
+                  "correct_answer": "chicken and rice"
+                },
+                {
+                  "question": "What will the child and Emma do after dinner?",
+                  "answer": "play together",
+                  "options": [
+                    "play together",
+                    "go to school",
+                    "clean the kitchen",
+                    "watch the door"
+                  ],
+                  "correct_answer": "play together"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "This is ___'s ___. / Who are they? They are my ___s.",
+              "explanation": "We use 's to show that something belongs to someone, and we add 's' to make more than one person in a family.",
+              "examples": [
+                "This is Emma's cousin. He is coming for dinner.",
+                "Who are they? They are my aunts and uncles.",
+                "Look at Ben's family. His cousins are here!"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "Tom's",
+                        "uncle"
+                      ],
+                      "correctSentence": "This is Tom's uncle"
+                    },
+                    {
+                      "words": [
+                        "are",
+                        "They",
+                        "my",
+                        "cousins"
+                      ],
+                      "correctSentence": "They are my cousins"
+                    },
+                    {
+                      "words": [
+                        "Emma's",
+                        "aunt",
+                        "is",
+                        "coming"
+                      ],
+                      "correctSentence": "Emma's aunt is coming"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "are",
+                        "they",
+                        "?"
+                      ],
+                      "correctSentence": "Who are they?"
+                    },
+                    {
+                      "words": [
+                        "Ben's",
+                        "uncles",
+                        "are",
+                        "here"
+                      ],
+                      "correctSentence": "Ben's uncles are here"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "This is my uncle___ car.",
+                      "answer": "'s",
+                      "options": [
+                        "'s",
+                        "s",
+                        "s'",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "Who are they? They are my ___.",
+                      "answer": "aunts",
+                      "options": [
+                        "aunt",
+                        "aunts",
+                        "aunt's",
+                        "auntes"
+                      ]
+                    },
+                    {
+                      "sentence": "Look at Sara___ cousins!",
+                      "answer": "'s",
+                      "options": [
+                        "'s",
+                        "s",
+                        "is",
+                        "s'"
+                      ]
+                    },
+                    {
+                      "sentence": "My two ___ are coming for dinner.",
+                      "answer": "uncles",
+                      "options": [
+                        "uncle",
+                        "uncles",
+                        "uncle's",
+                        "uncless"
+                      ]
+                    },
+                    {
+                      "sentence": "___ are they? They are my family.",
+                      "answer": "Who",
+                      "options": [
+                        "Who",
+                        "What",
+                        "Where",
+                        "How"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "This is Tom uncle.",
+                      "errorWord": "Tom",
+                      "correctWord": "Tom's",
+                      "explanation": "We need 's to show it belongs to Tom"
+                    },
+                    {
+                      "sentence": "They is my cousins.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with 'they'"
+                    },
+                    {
+                      "sentence": "My aunt are coming today.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with one aunt"
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with 'they'"
+                    },
+                    {
+                      "sentence": "I have two cousin.",
+                      "errorWord": "cousin",
+                      "correctWord": "cousins",
+                      "explanation": "Add 's' for more than one"
+                    },
+                    {
+                      "sentence": "Emma's aunts is here.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with plural aunts"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "This is Ben's aunt.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 's to show possession"
+                    },
+                    {
+                      "sentence": "My uncle is kind.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! This sentence is perfect"
+                    },
+                    {
+                      "sentence": "They are my cousin.",
+                      "is_correct": false,
+                      "corrected": "They are my cousins.",
+                      "explanation": "Use 'cousins' (plural) with 'they are'"
+                    },
+                    {
+                      "sentence": "Who are they? They is my aunts.",
+                      "is_correct": false,
+                      "corrected": "Who are they? They are my aunts.",
+                      "explanation": "Use 'are' with 'they', not 'is'"
+                    },
+                    {
+                      "sentence": "Sara's uncles are coming for dinner.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Perfect! Sara's shows possession and uncles is plural"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "This is ___ father.",
+                      "answer": "Emma's",
+                      "options": [
+                        "Emma",
+                        "Emma's",
+                        "Emmas",
+                        "Emmas'"
+                      ],
+                      "explanation": "Use 's after the name to show belonging"
+                    },
+                    {
+                      "question": "Who ___ they?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with 'they'"
+                    },
+                    {
+                      "question": "My two ___ are here.",
+                      "answer": "cousins",
+                      "options": [
+                        "cousin",
+                        "cousins",
+                        "cousin's",
+                        "cousines"
+                      ],
+                      "explanation": "Add 's' to make plural (more than one)"
+                    },
+                    {
+                      "question": "Look at ___ uncle!",
+                      "answer": "Ben's",
+                      "options": [
+                        "Ben",
+                        "Ben's",
+                        "Bens",
+                        "Bens'"
+                      ],
+                      "explanation": "Use 's to show it's Ben's uncle"
+                    },
+                    {
+                      "question": "They ___ my aunts and uncles.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with 'they' and plural nouns"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today I want to tell you about my family dinner. My aunt Lisa and my uncle Tom are coming to my house tonight. They are bringing their daughter. She is my cousin Sarah. We are so excited! My mom is cooking spaghetti for dinner. Who are they? They are my favorite relatives!",
+              "questions": [
+                {
+                  "question": "Who is coming for dinner?",
+                  "answer": "aunt, uncle, and cousin",
+                  "options": [
+                    "aunt, uncle, and cousin",
+                    "grandma and grandpa",
+                    "two aunts",
+                    "three uncles"
+                  ]
+                },
+                {
+                  "question": "What is the cousin's name?",
+                  "answer": "Sarah",
+                  "options": [
+                    "Sarah",
+                    "Lisa",
+                    "Tom",
+                    "Emma"
+                  ]
+                },
+                {
+                  "question": "What is mom cooking?",
+                  "answer": "spaghetti",
+                  "options": [
+                    "spaghetti",
+                    "chicken",
+                    "pizza",
+                    "rice"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice talking about family visitors! Listen and repeat each sentence.",
+              "expected_text": "My aunt is coming for dinner",
+              "prompts": [
+                {
+                  "prompt": "Say: My aunt is coming for dinner.",
+                  "expected_text": "My aunt is coming for dinner"
+                },
+                {
+                  "prompt": "Say: This is Emma's uncle.",
+                  "expected_text": "This is Emma's uncle"
+                },
+                {
+                  "prompt": "Say: Who are they? They are my cousins.",
+                  "expected_text": "Who are they? They are my cousins"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Relatives - Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Your mom's sister is your ___.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "aunt",
+                  "options": [
+                    "aunt",
+                    "uncle",
+                    "cousin",
+                    "grandma"
+                  ]
+                },
+                {
+                  "question_text": "This is ___ father. He is coming for dinner.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Ben's",
+                  "options": [
+                    "Ben's",
+                    "Ben",
+                    "Bens",
+                    "Bens'"
+                  ]
+                },
+                {
+                  "question_text": "Who are they? They are my ___.",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "cousins",
+                  "options": [
+                    "cousin",
+                    "cousins",
+                    "cousin's",
+                    "cousines"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'My uncle and aunt are coming for dinner tonight. Their son is my cousin Tom.' Who is Tom?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "my cousin",
+                  "options": [
+                    "my uncle",
+                    "my aunt",
+                    "my cousin",
+                    "my brother"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'My aunts is here' is correct.",
+                  "question_type": "true_false",
+                  "correct_answer": "False",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_06_lesson_03",
+          "title": "People",
+          "topic": "Describing people at a park",
+          "context": "Describing people at a park.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about people at the park! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Who can you see at a park?",
+                  "correct_answer": "children playing",
+                  "options": [
+                    "children playing",
+                    "fish swimming",
+                    "cars driving",
+                    "birds flying in the sky"
+                  ],
+                  "image_emoji": "🧒",
+                  "hint": "Think about who goes to the park to have fun!"
+                },
+                {
+                  "question_text": "What do people wear to the park?",
+                  "correct_answer": "comfortable clothes",
+                  "options": [
+                    "pajamas",
+                    "comfortable clothes",
+                    "swimming suits",
+                    "winter coats in summer"
+                  ],
+                  "image_emoji": "👕",
+                  "hint": "People wear clothes that are good for running and playing!"
+                },
+                {
+                  "question_text": "What can you say about a person at the park?",
+                  "correct_answer": "She is tall",
+                  "options": [
+                    "She is tall",
+                    "He is a table",
+                    "It is raining",
+                    "The tree is green"
+                  ],
+                  "image_emoji": "👧",
+                  "hint": "We describe people, not things! Think about how people look."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "man",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "woman",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "children",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "person",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "man",
+                      "emoji": "👨"
+                    },
+                    {
+                      "word": "woman",
+                      "emoji": "👩"
+                    },
+                    {
+                      "word": "children",
+                      "emoji": "🧒"
+                    },
+                    {
+                      "word": "person",
+                      "emoji": "🧍"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "man",
+                      "emoji": "👨",
+                      "distractors": [
+                        "men",
+                        "mom",
+                        "can"
+                      ]
+                    },
+                    {
+                      "word": "woman",
+                      "emoji": "👩",
+                      "distractors": [
+                        "women",
+                        "human",
+                        "wooman"
+                      ]
+                    },
+                    {
+                      "word": "children",
+                      "emoji": "🧒",
+                      "distractors": [
+                        "child",
+                        "chicken",
+                        "childern"
+                      ]
+                    },
+                    {
+                      "word": "person",
+                      "emoji": "🧍",
+                      "distractors": [
+                        "people",
+                        "parson",
+                        "parent"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "man",
+                      "emoji": "👨",
+                      "distractors": [
+                        {
+                          "word": "boy",
+                          "emoji": "👦"
+                        },
+                        {
+                          "word": "baby",
+                          "emoji": "👶"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "woman",
+                      "emoji": "👩",
+                      "distractors": [
+                        {
+                          "word": "girl",
+                          "emoji": "👧"
+                        },
+                        {
+                          "word": "dog",
+                          "emoji": "🐶"
+                        },
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "children",
+                      "emoji": "🧒",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "book",
+                          "emoji": "📖"
+                        },
+                        {
+                          "word": "chair",
+                          "emoji": "🪑"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "person",
+                      "emoji": "🧍",
+                      "distractors": [
+                        {
+                          "word": "bicycle",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        },
+                        {
+                          "word": "house",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "At the Park",
+              "text": "Emma is at the park. She sees a man and a woman on the bench. The woman is Ben's mother. Three children are playing. One person has a red ball.",
+              "scene_description": "diverse families with children playing at sunny park, parents sitting on bench watching kids",
+              "questions": [
+                {
+                  "question": "Where is Emma?",
+                  "answer": "At the park",
+                  "options": [
+                    "At the park",
+                    "At school",
+                    "At home",
+                    "At the shop"
+                  ],
+                  "correct_answer": "At the park"
+                },
+                {
+                  "question": "Who is the woman on the bench?",
+                  "answer": "Ben's mother",
+                  "options": [
+                    "Ben's mother",
+                    "Emma's teacher",
+                    "Ben's sister",
+                    "A doctor"
+                  ],
+                  "correct_answer": "Ben's mother"
+                },
+                {
+                  "question": "How many children are playing?",
+                  "answer": "Three",
+                  "options": [
+                    "One",
+                    "Two",
+                    "Three",
+                    "Four"
+                  ],
+                  "correct_answer": "Three"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "This is _____'s _____. (Emma's ball) / Who are they? They are _____. / one child → two children",
+              "explanation": "We use 's to show that something belongs to someone, and we change words when there is more than one person or thing.",
+              "examples": [
+                "This is Tom's mother. She is at the park.",
+                "Who are they? They are children.",
+                "I see one woman and two men."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "Tom's",
+                        "ball"
+                      ],
+                      "correctSentence": "This is Tom's ball"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "are",
+                        "they"
+                      ],
+                      "correctSentence": "Who are they"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "see",
+                        "two",
+                        "children"
+                      ],
+                      "correctSentence": "I see two children"
+                    },
+                    {
+                      "words": [
+                        "She",
+                        "is",
+                        "Ben's",
+                        "mother"
+                      ],
+                      "correctSentence": "She is Ben's mother"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "men",
+                        "are",
+                        "tall"
+                      ],
+                      "correctSentence": "The men are tall"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "This is Emma___ dog.",
+                      "answer": "'s",
+                      "options": [
+                        "s",
+                        "'s",
+                        "s'",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ they?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "I see three ___.",
+                      "answer": "children",
+                      "options": [
+                        "child",
+                        "children",
+                        "childs",
+                        "childrens"
+                      ]
+                    },
+                    {
+                      "sentence": "The ___ are at the park.",
+                      "answer": "women",
+                      "options": [
+                        "woman",
+                        "women",
+                        "womans",
+                        "womens"
+                      ]
+                    },
+                    {
+                      "sentence": "That is my father___ car.",
+                      "answer": "'s",
+                      "options": [
+                        "s",
+                        "'s",
+                        "is",
+                        "s'"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "This is Sara ball.",
+                      "errorWord": "Sara",
+                      "correctWord": "Sara's",
+                      "explanation": "Use 's to show something belongs to Sara"
+                    },
+                    {
+                      "sentence": "The childs are playing.",
+                      "errorWord": "childs",
+                      "correctWord": "children",
+                      "explanation": "The plural of child is children"
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "sentence": "I see two man.",
+                      "errorWord": "man",
+                      "correctWord": "men",
+                      "explanation": "The plural of man is men"
+                    },
+                    {
+                      "sentence": "Them are at the park.",
+                      "errorWord": "Them",
+                      "correctWord": "They",
+                      "explanation": "Use 'They' as the subject"
+                    },
+                    {
+                      "sentence": "This are my mother's hat.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with this"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "This is Tom's father.",
+                      "is_correct": true,
+                      "corrected": "This is Tom's father.",
+                      "explanation": "Correct! We use 's to show possession"
+                    },
+                    {
+                      "sentence": "Who are they?",
+                      "is_correct": true,
+                      "corrected": "Who are they?",
+                      "explanation": "Correct! We use 'are' with they"
+                    },
+                    {
+                      "sentence": "I see three womans.",
+                      "is_correct": false,
+                      "corrected": "I see three women.",
+                      "explanation": "The plural of woman is women"
+                    },
+                    {
+                      "sentence": "The children is happy.",
+                      "is_correct": false,
+                      "corrected": "The children are happy.",
+                      "explanation": "Use 'are' with children (plural)"
+                    },
+                    {
+                      "sentence": "That is Emma's ball.",
+                      "is_correct": true,
+                      "corrected": "That is Emma's ball.",
+                      "explanation": "Correct! Emma's shows the ball belongs to Emma"
+                    },
+                    {
+                      "sentence": "Two person are running.",
+                      "is_correct": false,
+                      "corrected": "Two people are running.",
+                      "explanation": "The plural of person is people"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "This is ___ mother.",
+                      "answer": "Ben's",
+                      "options": [
+                        "Ben",
+                        "Ben's",
+                        "Bens",
+                        "Bens'"
+                      ],
+                      "explanation": "Use 's after the name to show possession"
+                    },
+                    {
+                      "question": "Who ___ they?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with they"
+                    },
+                    {
+                      "question": "I see two ___.",
+                      "answer": "women",
+                      "options": [
+                        "woman",
+                        "women",
+                        "womans",
+                        "womens"
+                      ],
+                      "explanation": "Women is the plural of woman"
+                    },
+                    {
+                      "question": "The ___ are playing.",
+                      "answer": "children",
+                      "options": [
+                        "child",
+                        "children",
+                        "childs",
+                        "childrens"
+                      ],
+                      "explanation": "Children is the plural of child"
+                    },
+                    {
+                      "question": "That is my ___.",
+                      "answer": "father's car",
+                      "options": [
+                        "father car",
+                        "father's car",
+                        "fathers car",
+                        "fathers' car"
+                      ],
+                      "explanation": "Use father's to show the car belongs to father"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Look at this picture of the park! Can you see the man with the blue shirt? That's Ben's father. Next to him is a woman with long hair. She's Ben's mother. How many children are in the park? I can see three children playing with a ball. One person is sitting under the tree.",
+              "questions": [
+                {
+                  "question": "Who is the man with the blue shirt?",
+                  "answer": "Ben's father",
+                  "options": [
+                    "Ben's father",
+                    "Ben's brother",
+                    "Ben's teacher",
+                    "Ben's friend"
+                  ]
+                },
+                {
+                  "question": "How many children are playing in the park?",
+                  "answer": "Three",
+                  "options": [
+                    "One",
+                    "Two",
+                    "Three",
+                    "Four"
+                  ]
+                },
+                {
+                  "question": "Where is one person sitting?",
+                  "answer": "Under the tree",
+                  "options": [
+                    "On a bench",
+                    "Under the tree",
+                    "On the grass",
+                    "By the gate"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Look at the picture and describe the people at the park. Use the words you learned!",
+              "expected_text": "This is Emma's mother.",
+              "prompts": [
+                {
+                  "prompt": "Point to someone and say: This is ___'s mother.",
+                  "expected_text": "This is Emma's mother."
+                },
+                {
+                  "prompt": "Look at the people playing and say: I can see ___ children.",
+                  "expected_text": "I can see three children."
+                },
+                {
+                  "prompt": "Point to some people and ask: Who are they?",
+                  "expected_text": "Who are they? They are children."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which word means more than one child?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "children",
+                  "options": [
+                    "child",
+                    "children",
+                    "childs",
+                    "childrens"
+                  ]
+                },
+                {
+                  "question_text": "This is Tom___ father.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "'s",
+                  "options": [
+                    "s",
+                    "'s",
+                    "is",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "Read: 'I see a man and a woman at the park.' How many people do you see?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Two",
+                  "options": [
+                    "One",
+                    "Two",
+                    "Three",
+                    "Four"
+                  ]
+                },
+                {
+                  "question_text": "Who ___ they?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "are",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The word 'person' means one man or one woman.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_06_lesson_04",
+          "title": "Unit Review",
+          "topic": "Identifying family members and using possessive 's",
+          "context": "Identifying family members and using possessive 's.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about families! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Who is your mom's mom?",
+                  "correct_answer": "My grandma",
+                  "options": [
+                    "My grandma",
+                    "My sister",
+                    "My aunt",
+                    "My cousin"
+                  ],
+                  "image_emoji": "👵",
+                  "hint": "She's older and gives you hugs and cookies!"
+                },
+                {
+                  "question_text": "Look at the picture. This is Ben. The woman is Ben's mother. We can say: This is _____ mother.",
+                  "correct_answer": "Ben's",
+                  "options": [
+                    "Ben's",
+                    "Bens",
+                    "Ben",
+                    "Ben is"
+                  ],
+                  "image_emoji": "👦👩",
+                  "hint": "We add 's to show something belongs to someone!"
+                },
+                {
+                  "question_text": "Emma has a brother. His name is Tom. How do we say whose brother Tom is?",
+                  "correct_answer": "Emma's brother",
+                  "options": [
+                    "Emma's brother",
+                    "Emma brother",
+                    "Emmas brother",
+                    "Brother Emma"
+                  ],
+                  "image_emoji": "👧👦",
+                  "hint": "Remember to use 's after the person's name!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "son",
+                "daughter",
+                "baby",
+                "parent",
+                "uncle",
+                "aunt",
+                "cousin",
+                "man",
+                "woman",
+                "children",
+                "person"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "son",
+                      "definition": "A boy child in a family",
+                      "emoji": "👦"
+                    },
+                    {
+                      "word": "daughter",
+                      "definition": "A girl child in a family",
+                      "emoji": "👧"
+                    },
+                    {
+                      "word": "baby",
+                      "definition": "A very young child",
+                      "emoji": "👶"
+                    },
+                    {
+                      "word": "uncle",
+                      "definition": "Your parent's brother",
+                      "emoji": "👨"
+                    },
+                    {
+                      "word": "aunt",
+                      "definition": "Your parent's sister",
+                      "emoji": "👩"
+                    },
+                    {
+                      "word": "cousin",
+                      "definition": "Your aunt or uncle's child",
+                      "emoji": "🧒"
+                    },
+                    {
+                      "word": "parent",
+                      "definition": "A mother or father",
+                      "emoji": "👨‍👩‍👧"
+                    },
+                    {
+                      "word": "children",
+                      "definition": "More than one child",
+                      "emoji": "👦👧"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "man",
+                      "definition": "An adult male person",
+                      "emoji": "👨"
+                    },
+                    {
+                      "word": "woman",
+                      "definition": "An adult female person",
+                      "emoji": "👩"
+                    },
+                    {
+                      "word": "person",
+                      "definition": "One human being",
+                      "emoji": "🧍"
+                    },
+                    {
+                      "word": "baby",
+                      "definition": "A very young child",
+                      "emoji": "👶"
+                    },
+                    {
+                      "word": "son",
+                      "definition": "A boy child in a family",
+                      "emoji": "👦"
+                    },
+                    {
+                      "word": "daughter",
+                      "definition": "A girl child in a family",
+                      "emoji": "👧"
+                    },
+                    {
+                      "word": "cousin",
+                      "definition": "Your aunt or uncle's child",
+                      "emoji": "🧒"
+                    },
+                    {
+                      "word": "parent",
+                      "definition": "A mother or father",
+                      "emoji": "👨‍👩‍👧"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "What do we call a boy child in a family?",
+                      "answer": "son",
+                      "options": [
+                        "son",
+                        "daughter",
+                        "cousin",
+                        "uncle"
+                      ]
+                    },
+                    {
+                      "question": "What do we call a girl child in a family?",
+                      "answer": "daughter",
+                      "options": [
+                        "daughter",
+                        "son",
+                        "aunt",
+                        "baby"
+                      ]
+                    },
+                    {
+                      "question": "Who is your parent's brother?",
+                      "answer": "uncle",
+                      "options": [
+                        "uncle",
+                        "aunt",
+                        "cousin",
+                        "parent"
+                      ]
+                    },
+                    {
+                      "question": "Who is your parent's sister?",
+                      "answer": "aunt",
+                      "options": [
+                        "aunt",
+                        "uncle",
+                        "cousin",
+                        "daughter"
+                      ]
+                    },
+                    {
+                      "question": "What do we call your aunt or uncle's child?",
+                      "answer": "cousin",
+                      "options": [
+                        "cousin",
+                        "baby",
+                        "son",
+                        "daughter"
+                      ]
+                    },
+                    {
+                      "question": "What do we call a very young child?",
+                      "answer": "baby",
+                      "options": [
+                        "baby",
+                        "person",
+                        "children",
+                        "parent"
+                      ]
+                    },
+                    {
+                      "question": "What do we call a mother or father?",
+                      "answer": "parent",
+                      "options": [
+                        "parent",
+                        "children",
+                        "cousin",
+                        "person"
+                      ]
+                    },
+                    {
+                      "question": "What word means more than one child?",
+                      "answer": "children",
+                      "options": [
+                        "children",
+                        "baby",
+                        "person",
+                        "parent"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Lucy's Family Photo",
+              "text": "This is Lucy's family photo. Lucy's mother and father are smiling. Lucy's baby brother is sitting on the floor. Lucy's aunt and uncle are standing behind them. Who are they? They are Lucy's cousins! There are five children in the photo.",
+              "scene_description": "happy family portrait with parents, children, aunt, uncle and cousins posing together indoors",
+              "questions": [
+                {
+                  "question": "Where is Lucy's baby brother?",
+                  "answer": "On the floor",
+                  "options": [
+                    "On the floor",
+                    "Behind them",
+                    "Next to the aunt",
+                    "In the garden"
+                  ],
+                  "correct_answer": "On the floor"
+                },
+                {
+                  "question": "How many children are in the photo?",
+                  "answer": "Five children",
+                  "options": [
+                    "Five children",
+                    "Three children",
+                    "Two children",
+                    "Four children"
+                  ],
+                  "correct_answer": "Five children"
+                },
+                {
+                  "question": "Who is standing behind Lucy's parents?",
+                  "answer": "Lucy's aunt and uncle",
+                  "options": [
+                    "Lucy's aunt and uncle",
+                    "Lucy's cousins",
+                    "Lucy's baby brother",
+                    "Lucy's friends"
+                  ],
+                  "correct_answer": "Lucy's aunt and uncle"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "This is ___'s ___.",
+              "explanation": "We use 's after a person's name to show that something belongs to them.",
+              "examples": [
+                "This is Emma's mother.",
+                "That is Tom's brother.",
+                "Look at Sara's baby sister!"
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "Emma's",
+                        "mother"
+                      ],
+                      "correctSentence": "This is Emma's mother"
+                    },
+                    {
+                      "words": [
+                        "Who",
+                        "are",
+                        "they",
+                        "?"
+                      ],
+                      "correctSentence": "Who are they?"
+                    },
+                    {
+                      "words": [
+                        "Tom's",
+                        "father",
+                        "is",
+                        "tall"
+                      ],
+                      "correctSentence": "Tom's father is tall"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "two",
+                        "cousins"
+                      ],
+                      "correctSentence": "I have two cousins"
+                    },
+                    {
+                      "words": [
+                        "Sara's",
+                        "baby",
+                        "is",
+                        "cute"
+                      ],
+                      "correctSentence": "Sara's baby is cute"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "This is Ben___ sister.",
+                      "answer": "'s",
+                      "options": [
+                        "'s",
+                        "s",
+                        "s'",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "Who ___ they?",
+                      "answer": "are",
+                      "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "I have three ___.",
+                      "answer": "cousins",
+                      "options": [
+                        "cousins",
+                        "cousin",
+                        "cousines",
+                        "cousin's"
+                      ]
+                    },
+                    {
+                      "sentence": "That is ___ uncle.",
+                      "answer": "Lucy's",
+                      "options": [
+                        "Lucy's",
+                        "Lucys",
+                        "Lucy",
+                        "Lucys'"
+                      ]
+                    },
+                    {
+                      "sentence": "Look at the ___!",
+                      "answer": "children",
+                      "options": [
+                        "children",
+                        "childs",
+                        "childrens",
+                        "child"
+                      ]
+                    },
+                    {
+                      "sentence": "My ___ brother is two years old.",
+                      "answer": "aunt's",
+                      "options": [
+                        "aunt's",
+                        "aunts",
+                        "aunt",
+                        "aunts'"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "This is Tom father.",
+                      "errorWord": "father",
+                      "correctWord": "Tom's father",
+                      "explanation": "Use 's to show belonging"
+                    },
+                    {
+                      "sentence": "Who is they?",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with 'they'"
+                    },
+                    {
+                      "sentence": "I have two cousin.",
+                      "errorWord": "cousin",
+                      "correctWord": "cousins",
+                      "explanation": "Use plural 's' with numbers greater than one"
+                    },
+                    {
+                      "sentence": "Emma brother is tall.",
+                      "errorWord": "brother",
+                      "correctWord": "Emma's brother",
+                      "explanation": "Add 's after the name"
+                    },
+                    {
+                      "sentence": "The baby are sleeping.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with singular nouns"
+                    },
+                    {
+                      "sentence": "Look at Sara cat!",
+                      "errorWord": "cat",
+                      "correctWord": "Sara's cat",
+                      "explanation": "Use 's to show the cat belongs to Sara"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "This is Ben's mother.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 's after the name"
+                    },
+                    {
+                      "sentence": "Who are they?",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 'are' with 'they'"
+                    },
+                    {
+                      "sentence": "I have three cousin.",
+                      "is_correct": false,
+                      "corrected": "I have three cousins.",
+                      "explanation": "Use plural 's' after numbers"
+                    },
+                    {
+                      "sentence": "That is Lucy brother.",
+                      "is_correct": false,
+                      "corrected": "That is Lucy's brother.",
+                      "explanation": "Add 's after Lucy"
+                    },
+                    {
+                      "sentence": "The children are playing.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! 'Children' is the plural form"
+                    },
+                    {
+                      "sentence": "Emma's baby is cute.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! We use 's to show belonging"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "This is ___ aunt.",
+                      "answer": "Tom's",
+                      "options": [
+                        "Tom's",
+                        "Tom",
+                        "Toms",
+                        "Toms'"
+                      ],
+                      "explanation": "Use 's after the name to show belonging"
+                    },
+                    {
+                      "question": "___ are they?",
+                      "answer": "Who",
+                      "options": [
+                        "Who",
+                        "What",
+                        "Where",
+                        "How"
+                      ],
+                      "explanation": "Use 'Who' to ask about people"
+                    },
+                    {
+                      "question": "I see two ___.",
+                      "answer": "children",
+                      "options": [
+                        "children",
+                        "child",
+                        "childs",
+                        "childrens"
+                      ],
+                      "explanation": "'Children' is the plural of 'child'"
+                    },
+                    {
+                      "question": "Look at ___!",
+                      "answer": "Sara's baby",
+                      "options": [
+                        "Sara's baby",
+                        "Sara baby",
+                        "Saras baby",
+                        "Baby Sara"
+                      ],
+                      "explanation": "Use 's to show the baby belongs to Sara"
+                    },
+                    {
+                      "question": "My uncle ___ three sons.",
+                      "answer": "has",
+                      "options": [
+                        "has",
+                        "have",
+                        "is",
+                        "are"
+                      ],
+                      "explanation": "Use 'has' with he/she/it/singular nouns"
+                    },
+                    {
+                      "question": "Those are my ___.",
+                      "answer": "cousins",
+                      "options": [
+                        "cousins",
+                        "cousin",
+                        "cousin's",
+                        "cousines"
+                      ],
+                      "explanation": "Add 's' to make plural"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Look at this family photo. This is my friend Tom's family. Tom's mother is wearing a blue dress. Tom's father is very tall. Who are they? They are Tom's cousins! Tom has three cousins. The baby is Tom's little sister. She is one year old.",
+              "questions": [
+                {
+                  "question": "How many cousins does Tom have?",
+                  "answer": "Three",
+                  "options": [
+                    "Two",
+                    "Three",
+                    "Four",
+                    "Five"
+                  ]
+                },
+                {
+                  "question": "Who is wearing a blue dress?",
+                  "answer": "Tom's mother",
+                  "options": [
+                    "Tom's mother",
+                    "Tom's sister",
+                    "Tom's cousin",
+                    "Tom's aunt"
+                  ]
+                },
+                {
+                  "question": "How old is Tom's baby sister?",
+                  "answer": "One year old",
+                  "options": [
+                    "One year old",
+                    "Two years old",
+                    "Three years old",
+                    "Four years old"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's practice talking about families! Listen and repeat each sentence.",
+              "expected_text": "This is my mother.",
+              "prompts": [
+                {
+                  "prompt": "Say: This is my mother.",
+                  "expected_text": "This is my mother."
+                },
+                {
+                  "prompt": "Say: That is Emma's father.",
+                  "expected_text": "That is Emma's father."
+                },
+                {
+                  "prompt": "Say: I have two cousins.",
+                  "expected_text": "I have two cousins."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Who is your parent's brother?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "uncle",
+                  "options": [
+                    "uncle",
+                    "aunt",
+                    "cousin",
+                    "baby"
+                  ]
+                },
+                {
+                  "question_text": "This is Tom___ mother.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "'s",
+                  "options": [
+                    "'s",
+                    "s",
+                    "is",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "I have three ___. (more than one cousin)",
+                  "question_type": "fill_blank",
+                  "correct_answer": "cousins",
+                  "options": [
+                    "cousins",
+                    "cousin",
+                    "cousin's",
+                    "cousines"
+                  ]
+                },
+                {
+                  "question_text": "___ are they? They are my aunt and uncle.",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Who",
+                  "options": [
+                    "Who",
+                    "What",
+                    "Where",
+                    "How"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Emma's father' means the father belongs to Emma.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}
