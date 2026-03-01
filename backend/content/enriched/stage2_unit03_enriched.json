@@ -32,39 +32,39 @@
               "questions": [
                 {
                   "question_text": "What do you use a computer for?",
-                  "correct_answer": "To play games and learn",
+                  "correct_answer": "Playing games and learning",
                   "options": [
-                    "To play games and learn",
-                    "To cook dinner",
-                    "To wash your hands",
-                    "To ride a bike"
+                    "Playing games and learning",
+                    "Cooking dinner",
+                    "Riding a bike",
+                    "Sleeping"
                   ],
                   "image_emoji": "💻",
-                  "hint": "Think about what you do when you sit at a computer!"
+                  "hint": "Think about what you can do when you sit at a computer!"
                 },
                 {
-                  "question_text": "What do you click with when using a computer?",
+                  "question_text": "What can you find in a computer room?",
+                  "correct_answer": "Computers and chairs",
+                  "options": [
+                    "Computers and chairs",
+                    "Beds and pillows",
+                    "Swings and slides",
+                    "Pots and pans"
+                  ],
+                  "image_emoji": "🖥️",
+                  "hint": "A computer room is a special place at school. What do children sit on and use there?"
+                },
+                {
+                  "question_text": "What do you click with when you use a computer?",
                   "correct_answer": "A mouse",
                   "options": [
                     "A mouse",
+                    "A spoon",
                     "A pencil",
-                    "A book",
                     "A ball"
                   ],
                   "image_emoji": "🖱️",
-                  "hint": "It's small and fits in your hand. You move it around on the desk!"
-                },
-                {
-                  "question_text": "Where do you usually find computers at school?",
-                  "correct_answer": "In the computer room",
-                  "options": [
-                    "In the computer room",
-                    "In the playground",
-                    "In the bathroom",
-                    "In the lunch room"
-                  ],
-                  "image_emoji": "🏫",
-                  "hint": "It's a special room where children go to use computers together!"
+                  "hint": "It's small and you hold it in your hand. It helps you point and click!"
                 }
               ]
             },
@@ -139,8 +139,8 @@
                           "emoji": "🛋️"
                         },
                         {
-                          "word": "bench",
-                          "emoji": "🪑"
+                          "word": "lamp",
+                          "emoji": "💡"
                         }
                       ]
                     },
@@ -157,8 +157,8 @@
                           "emoji": "📄"
                         },
                         {
-                          "word": "notebook",
-                          "emoji": "📓"
+                          "word": "picture",
+                          "emoji": "🖼️"
                         }
                       ]
                     },
@@ -171,12 +171,12 @@
                           "emoji": "📱"
                         },
                         {
-                          "word": "tablet",
-                          "emoji": "📲"
-                        },
-                        {
                           "word": "television",
                           "emoji": "📺"
+                        },
+                        {
+                          "word": "tablet",
+                          "emoji": "📱"
                         }
                       ]
                     }
@@ -194,12 +194,12 @@
                           "emoji": "📚"
                         },
                         {
-                          "word": "lamp",
-                          "emoji": "💡"
+                          "word": "floor",
+                          "emoji": "🟫"
                         },
                         {
-                          "word": "rug",
-                          "emoji": "🧺"
+                          "word": "wall",
+                          "emoji": "🧱"
                         }
                       ]
                     },
@@ -208,16 +208,16 @@
                       "emoji": "💺",
                       "distractors": [
                         {
-                          "word": "pillow",
-                          "emoji": "🛏️"
+                          "word": "bench",
+                          "emoji": "🪑"
                         },
                         {
                           "word": "stool",
-                          "emoji": "🪜"
+                          "emoji": "🪑"
                         },
                         {
-                          "word": "blanket",
-                          "emoji": "🧸"
+                          "word": "cushion",
+                          "emoji": "🛋️"
                         }
                       ]
                     },
@@ -226,16 +226,16 @@
                       "emoji": "📋",
                       "distractors": [
                         {
+                          "word": "notebook",
+                          "emoji": "📓"
+                        },
+                        {
                           "word": "poster",
                           "emoji": "🖼️"
                         },
                         {
-                          "word": "map",
-                          "emoji": "🗺️"
-                        },
-                        {
-                          "word": "calendar",
-                          "emoji": "📅"
+                          "word": "screen",
+                          "emoji": "📺"
                         }
                       ]
                     },
@@ -248,8 +248,8 @@
                           "emoji": "⌨️"
                         },
                         {
-                          "word": "camera",
-                          "emoji": "📷"
+                          "word": "mouse",
+                          "emoji": "🖱️"
                         },
                         {
                           "word": "printer",
@@ -286,7 +286,7 @@
                     {
                       "word": "desk",
                       "emoji": "🪑",
-                      "definition": "You sit here to write and work"
+                      "definition": "You sit at this to write and work"
                     },
                     {
                       "word": "chair",
@@ -301,7 +301,7 @@
                     {
                       "word": "computer",
                       "emoji": "💻",
-                      "definition": "You use this to type and play games"
+                      "definition": "You type and click on this"
                     }
                   ]
                 }
@@ -319,38 +319,38 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Our Computer Room",
-              "text": "Today we visit the computer room. There are computers on the desks. The chairs are next to the desks. Look! The board is behind the teacher's desk. I like the computer room!",
-              "scene_description": "children sitting at computers in a bright school computer lab classroom",
+              "text": "Today we visit the computer room. There is a big desk next to the window. A black computer is on the desk. My chair is under the desk. The white board is behind me.",
+              "scene_description": "elementary school computer lab with children sitting at desks with computers, bright and colorful classroom",
               "questions": [
                 {
-                  "question": "Where are the computers?",
-                  "answer": "On the desks",
+                  "question": "Where is the computer?",
+                  "answer": "On the desk",
                   "options": [
-                    "On the desks",
-                    "Under the chairs",
+                    "On the desk",
+                    "Under the chair",
                     "Behind the board"
                   ],
-                  "correct_answer": "On the desks"
+                  "correct_answer": "On the desk"
                 },
                 {
-                  "question": "What is behind the teacher's desk?",
-                  "answer": "The board",
+                  "question": "What color is the board?",
+                  "answer": "White",
                   "options": [
-                    "The board",
-                    "The computers",
-                    "The chairs"
+                    "White",
+                    "Black",
+                    "Blue"
                   ],
-                  "correct_answer": "The board"
+                  "correct_answer": "White"
                 },
                 {
-                  "question": "Does the child like the computer room?",
-                  "answer": "Yes",
+                  "question": "Where is the chair?",
+                  "answer": "Under the desk",
                   "options": [
-                    "Yes",
-                    "No",
-                    "We don't know"
+                    "Under the desk",
+                    "On the computer",
+                    "Next to the window"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "Under the desk"
                 }
               ]
             },
@@ -358,11 +358,11 @@
               "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "The ___ is [in/on/under/next to/behind] the ___.",
-              "explanation": "We use special words to say WHERE things are!",
+              "explanation": "We use these special words to tell where things are!",
               "examples": [
                 "The computer is on the desk.",
-                "The chair is next to the desk.",
-                "The bag is under the chair."
+                "The chair is next to the board.",
+                "The book is under the desk."
               ]
             },
             {
@@ -388,23 +388,11 @@
                         "The",
                         "chair",
                         "is",
-                        "next",
-                        "to",
+                        "under",
                         "the",
                         "desk"
                       ],
-                      "correctSentence": "The chair is next to the desk"
-                    },
-                    {
-                      "words": [
-                        "The",
-                        "bag",
-                        "is",
-                        "under",
-                        "the",
-                        "chair"
-                      ],
-                      "correctSentence": "The bag is under the chair"
+                      "correctSentence": "The chair is under the desk"
                     },
                     {
                       "words": [
@@ -412,21 +400,32 @@
                         "board",
                         "is",
                         "behind",
-                        "the",
-                        "desk"
+                        "me"
                       ],
-                      "correctSentence": "The board is behind the desk"
+                      "correctSentence": "The board is behind me"
+                    },
+                    {
+                      "words": [
+                        "My",
+                        "book",
+                        "is",
+                        "next",
+                        "to",
+                        "the",
+                        "computer"
+                      ],
+                      "correctSentence": "My book is next to the computer"
                     },
                     {
                       "words": [
                         "The",
-                        "book",
+                        "pen",
                         "is",
                         "in",
                         "the",
                         "bag"
                       ],
-                      "correctSentence": "The book is in the bag"
+                      "correctSentence": "The pen is in the bag"
                     }
                   ]
                 },
@@ -437,37 +436,27 @@
                       "sentence": "The computer is ___ the desk.",
                       "answer": "on",
                       "options": [
-                        "in",
                         "on",
-                        "at",
-                        "to"
+                        "in",
+                        "under",
+                        "behind"
                       ]
                     },
                     {
-                      "sentence": "The chair is ___ the desk.",
+                      "sentence": "The chair is ___ the table.",
                       "answer": "next to",
                       "options": [
                         "next to",
-                        "between",
-                        "over",
-                        "through"
+                        "in",
+                        "on",
+                        "behind"
                       ]
                     },
                     {
-                      "sentence": "The pencil is ___ the bag.",
+                      "sentence": "The cat is ___ the box.",
                       "answer": "in",
                       "options": [
                         "in",
-                        "on",
-                        "behind",
-                        "next to"
-                      ]
-                    },
-                    {
-                      "sentence": "The cat is ___ the chair.",
-                      "answer": "under",
-                      "options": [
-                        "under",
                         "on",
                         "next to",
                         "behind"
@@ -479,8 +468,18 @@
                       "options": [
                         "behind",
                         "in",
+                        "on",
+                        "under"
+                      ]
+                    },
+                    {
+                      "sentence": "My bag is ___ the chair.",
+                      "answer": "under",
+                      "options": [
                         "under",
-                        "on"
+                        "behind",
+                        "next to",
+                        "in"
                       ]
                     }
                   ]
@@ -492,31 +491,31 @@
                       "sentence": "The computer is at the desk.",
                       "errorWord": "at",
                       "correctWord": "on",
-                      "explanation": "Use 'on' when something sits on top of a surface"
+                      "explanation": "Use 'on' for things on top of surfaces"
                     },
                     {
-                      "sentence": "The chair are next to the desk.",
+                      "sentence": "The chair are under the desk.",
                       "errorWord": "are",
                       "correctWord": "is",
                       "explanation": "Use 'is' with singular nouns like 'chair'"
                     },
                     {
-                      "sentence": "The bag is in under the chair.",
+                      "sentence": "My book is in next to the computer.",
                       "errorWord": "in",
                       "correctWord": "",
-                      "explanation": "Use only 'under', not 'in under'"
+                      "explanation": "Remove 'in' - just use 'next to'"
                     },
                     {
-                      "sentence": "Two computer is on the desk.",
+                      "sentence": "The bag is under desk.",
+                      "errorWord": "under",
+                      "correctWord": "under the",
+                      "explanation": "Add 'the' before desk"
+                    },
+                    {
+                      "sentence": "Two computer is on the table.",
                       "errorWord": "computer",
                       "correctWord": "computers",
-                      "explanation": "Use plural 'computers' with 'two'"
-                    },
-                    {
-                      "sentence": "The book is behind to the board.",
-                      "errorWord": "to",
-                      "correctWord": "",
-                      "explanation": "Use 'behind' alone, not 'behind to'"
+                      "explanation": "Use 'computers' for more than one"
                     }
                   ]
                 },
@@ -524,34 +523,34 @@
                   "game_type": "true_false",
                   "items": [
                     {
-                      "sentence": "The computer is on the desk.",
+                      "sentence": "The book is on the desk.",
                       "is_correct": true,
-                      "corrected": "The computer is on the desk.",
-                      "explanation": "Correct! We use 'on' for things on top of surfaces."
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
                     },
                     {
-                      "sentence": "The chair is under to the desk.",
+                      "sentence": "The chair is at the table.",
                       "is_correct": false,
-                      "corrected": "The chair is next to the desk.",
-                      "explanation": "Use 'next to', not 'under to'"
+                      "corrected": "The chair is next to the table.",
+                      "explanation": "Use 'next to' not 'at'"
                     },
                     {
-                      "sentence": "The bag is under the chair.",
+                      "sentence": "The computer is behind the board.",
                       "is_correct": true,
-                      "corrected": "The bag is under the chair.",
-                      "explanation": "Correct! We use 'under' for things below."
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
                     },
                     {
-                      "sentence": "The board is in the wall.",
+                      "sentence": "The pen is to the book.",
                       "is_correct": false,
-                      "corrected": "The board is on the wall.",
-                      "explanation": "Use 'on' for things attached to walls"
+                      "corrected": "The pen is next to the book.",
+                      "explanation": "Use 'next to' not 'to'"
                     },
                     {
-                      "sentence": "The pencil is in the bag.",
+                      "sentence": "The cat is under the chair.",
                       "is_correct": true,
-                      "corrected": "The pencil is in the bag.",
-                      "explanation": "Correct! We use 'in' for things inside containers."
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
                     }
                   ]
                 },
@@ -559,59 +558,59 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "The computer is ___ the desk.",
+                      "question": "The book is ___ the desk.",
                       "answer": "on",
                       "options": [
                         "on",
-                        "in",
                         "at",
-                        "to"
+                        "to",
+                        "of"
                       ],
-                      "explanation": "Use 'on' when something sits on top of a surface"
-                    },
-                    {
-                      "question": "The chair is ___ the desk.",
-                      "answer": "next to",
-                      "options": [
-                        "next to",
-                        "between",
-                        "through",
-                        "over"
-                      ],
-                      "explanation": "Use 'next to' when things are side by side"
+                      "explanation": "Use 'on' for things on top of surfaces"
                     },
                     {
                       "question": "The bag is ___ the chair.",
                       "answer": "under",
                       "options": [
                         "under",
-                        "over",
-                        "between",
-                        "through"
+                        "at",
+                        "to",
+                        "of"
                       ],
-                      "explanation": "Use 'under' when something is below"
+                      "explanation": "Use 'under' for things below something"
                     },
                     {
-                      "question": "The book is ___ the bag.",
+                      "question": "The computer is ___ the desk.",
+                      "answer": "next to",
+                      "options": [
+                        "next to",
+                        "at",
+                        "to",
+                        "of"
+                      ],
+                      "explanation": "Use 'next to' for things beside something"
+                    },
+                    {
+                      "question": "The pen is ___ the box.",
                       "answer": "in",
                       "options": [
                         "in",
-                        "on",
-                        "behind",
-                        "next to"
+                        "at",
+                        "to",
+                        "of"
                       ],
-                      "explanation": "Use 'in' for things inside containers"
+                      "explanation": "Use 'in' for things inside something"
                     },
                     {
-                      "question": "The board is ___ the teacher's desk.",
+                      "question": "The board is ___ me.",
                       "answer": "behind",
                       "options": [
                         "behind",
-                        "in",
-                        "under",
-                        "through"
+                        "at",
+                        "to",
+                        "of"
                       ],
-                      "explanation": "Use 'behind' when something is at the back"
+                      "explanation": "Use 'behind' for things at the back"
                     }
                   ]
                 }
@@ -627,36 +626,36 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello everyone! Welcome to our computer room. Look, there are computers on every desk. Please sit on your chairs. The big board is behind my desk. Let's start our lesson!",
+              "audio_text": "Hello children! Welcome to our computer room. Look, there are ten computers on the desks. Can you see the big white board behind me? Good! Now, please sit on your chairs next to the desks. Let's start our computer lesson!",
               "questions": [
                 {
-                  "question": "Where are the computers?",
-                  "answer": "On the desks",
+                  "question": "How many computers are in the room?",
+                  "answer": "Ten",
                   "options": [
-                    "On the desks",
-                    "Under the chairs",
-                    "Behind the board",
-                    "Next to the door"
+                    "Five",
+                    "Ten",
+                    "Fifteen",
+                    "Twenty"
                   ]
                 },
                 {
-                  "question": "Where is the big board?",
-                  "answer": "Behind the teacher's desk",
+                  "question": "What color is the board?",
+                  "answer": "White",
                   "options": [
-                    "Behind the teacher's desk",
-                    "On the chair",
-                    "Under the computer",
-                    "Next to the window"
+                    "White",
+                    "Black",
+                    "Blue",
+                    "Green"
                   ]
                 },
                 {
-                  "question": "What does the teacher ask children to do?",
-                  "answer": "Sit on their chairs",
+                  "question": "Where is the board?",
+                  "answer": "Behind the teacher",
                   "options": [
-                    "Sit on their chairs",
-                    "Stand up",
-                    "Close the door",
-                    "Open their books"
+                    "Behind the teacher",
+                    "Under the desk",
+                    "Next to the door",
+                    "On the chair"
                   ]
                 }
               ]
@@ -665,20 +664,20 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Look at your classroom and tell me where things are!",
-              "expected_text": "The computer is on the desk.",
+              "prompt": "Look at your classroom and describe where things are!",
+              "expected_text": "The computer is on the desk",
               "prompts": [
                 {
                   "prompt": "Say: The computer is on the desk.",
-                  "expected_text": "The computer is on the desk."
+                  "expected_text": "The computer is on the desk"
                 },
                 {
                   "prompt": "Say: The chair is next to the desk.",
-                  "expected_text": "The chair is next to the desk."
+                  "expected_text": "The chair is next to the desk"
                 },
                 {
-                  "prompt": "Now tell me: Where is your bag?",
-                  "expected_text": "My bag is under the chair."
+                  "prompt": "Now tell me: Where is the board in your classroom?",
+                  "expected_text": "The board is behind the teacher"
                 }
               ]
             },
@@ -710,18 +709,18 @@
                   ]
                 },
                 {
-                  "question_text": "Where do we find computers at school?",
+                  "question_text": "Where do you sit in the computer room?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "In the computer room",
+                  "correct_answer": "On a chair",
                   "options": [
-                    "In the computer room",
-                    "In the playground",
-                    "In the kitchen",
-                    "In the bathroom"
+                    "On a chair",
+                    "On the desk",
+                    "On the computer",
+                    "On the board"
                   ]
                 },
                 {
-                  "question_text": "True or False: The chair is next to the desk.",
+                  "question_text": "True or False: The teacher writes on the board.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -730,14 +729,14 @@
                   ]
                 },
                 {
-                  "question_text": "The teacher writes on the ___.",
+                  "question_text": "The bag is ___ the chair.",
                   "question_type": "fill_blank",
-                  "correct_answer": "board",
+                  "correct_answer": "under",
                   "options": [
-                    "board",
-                    "desk",
-                    "chair",
-                    "computer"
+                    "under",
+                    "at",
+                    "to",
+                    "of"
                   ]
                 }
               ]
@@ -756,11 +755,46 @@
             {
               "step": 1,
               "type": "warm_up",
-              "question_text": "What do you know about finding a lost pencil in the classroom?",
-              "correct_answer": "",
-              "options": [],
-              "image_emoji": "",
-              "hint": ""
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do you keep your pencils at school?",
+                  "correct_answer": "in my pencil case",
+                  "options": [
+                    "in my pencil case",
+                    "in the fridge",
+                    "in my shoe",
+                    "in the window"
+                  ],
+                  "image_emoji": "✏️",
+                  "hint": "Think about what you use to carry your pencils and crayons!"
+                },
+                {
+                  "question_text": "Oh no! You can't find your pencil. Where should you look first?",
+                  "correct_answer": "on my desk",
+                  "options": [
+                    "on my desk",
+                    "in the playground",
+                    "in the sky",
+                    "at home"
+                  ],
+                  "image_emoji": "🔍",
+                  "hint": "Where were you sitting when you last used it?"
+                },
+                {
+                  "question_text": "Your pencil fell down. Where is it now?",
+                  "correct_answer": "under the desk",
+                  "options": [
+                    "under the desk",
+                    "on the roof",
+                    "in the bin",
+                    "behind the door"
+                  ],
+                  "image_emoji": "⬇️",
+                  "hint": "When something falls, it goes down to the floor!"
+                }
+              ]
             },
             {
               "step": 2,
@@ -790,6 +824,169 @@
               ]
             },
             {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "in",
+                      "emoji": "📦"
+                    },
+                    {
+                      "word": "on",
+                      "emoji": "📚"
+                    },
+                    {
+                      "word": "under",
+                      "emoji": "🛏️"
+                    },
+                    {
+                      "word": "in",
+                      "emoji": "🎒"
+                    },
+                    {
+                      "word": "on",
+                      "emoji": "🪑"
+                    },
+                    {
+                      "word": "under",
+                      "emoji": "🌳"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "in",
+                      "emoji": "📦",
+                      "hint": "Inside the box"
+                    },
+                    {
+                      "word": "on",
+                      "emoji": "📕",
+                      "hint": "The book is ___ the table"
+                    },
+                    {
+                      "word": "under",
+                      "emoji": "🐱",
+                      "hint": "The cat is ___ the chair"
+                    },
+                    {
+                      "word": "in",
+                      "emoji": "🎒",
+                      "hint": "The pencil is ___ the bag"
+                    },
+                    {
+                      "word": "on",
+                      "emoji": "🍎",
+                      "hint": "The apple is ___ the desk"
+                    },
+                    {
+                      "word": "under",
+                      "emoji": "🐶",
+                      "hint": "The dog is ___ the bed"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "The pencil is ___ the pencil case.",
+                      "answer": "in",
+                      "options": [
+                        "in",
+                        "on",
+                        "under",
+                        "next to"
+                      ],
+                      "emoji": "✏️"
+                    },
+                    {
+                      "sentence": "The book is ___ the table.",
+                      "answer": "on",
+                      "options": [
+                        "on",
+                        "in",
+                        "under",
+                        "behind"
+                      ],
+                      "emoji": "📖"
+                    },
+                    {
+                      "sentence": "The cat is hiding ___ the bed.",
+                      "answer": "under",
+                      "options": [
+                        "under",
+                        "on",
+                        "in",
+                        "above"
+                      ],
+                      "emoji": "🐱"
+                    },
+                    {
+                      "sentence": "My lunch is ___ my bag.",
+                      "answer": "in",
+                      "options": [
+                        "in",
+                        "on",
+                        "under",
+                        "beside"
+                      ],
+                      "emoji": "🥪"
+                    },
+                    {
+                      "sentence": "The cup is ___ the desk.",
+                      "answer": "on",
+                      "options": [
+                        "on",
+                        "in",
+                        "under",
+                        "near"
+                      ],
+                      "emoji": "🥤"
+                    },
+                    {
+                      "sentence": "The ball rolled ___ the chair.",
+                      "answer": "under",
+                      "options": [
+                        "under",
+                        "on",
+                        "in",
+                        "over"
+                      ],
+                      "emoji": "⚽"
+                    },
+                    {
+                      "sentence": "The crayons are ___ the box.",
+                      "answer": "in",
+                      "options": [
+                        "in",
+                        "on",
+                        "under",
+                        "around"
+                      ],
+                      "emoji": "🖍️"
+                    },
+                    {
+                      "sentence": "The paper is ___ the table.",
+                      "answer": "on",
+                      "options": [
+                        "on",
+                        "in",
+                        "under",
+                        "between"
+                      ],
+                      "emoji": "📄"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
               "step": 3,
               "type": "micro_game_vocab",
               "question_text": "",
@@ -799,13 +996,39 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Positions 1",
-              "text": "A short story about finding a lost pencil in the classroom.",
+              "title": "Where Is My Pencil?",
+              "text": "Emma can't find her pencil. She looks on her desk. It's not there. She looks in her pencil case. It's not there. Then she looks under her chair. There it is!",
+              "scene_description": "young girl searching for pencil in classroom, looking under desk and chair",
               "questions": [
                 {
-                  "question": "What happens in the story?",
-                  "answer": "",
-                  "options": []
+                  "question": "Where does Emma look first?",
+                  "answer": "on her desk",
+                  "options": [
+                    "on her desk",
+                    "in her pencil case",
+                    "under her chair"
+                  ],
+                  "correct_answer": "on her desk"
+                },
+                {
+                  "question": "Where does Emma find her pencil?",
+                  "answer": "under her chair",
+                  "options": [
+                    "under her chair",
+                    "on her desk",
+                    "in her pencil case"
+                  ],
+                  "correct_answer": "under her chair"
+                },
+                {
+                  "question": "Is the pencil in the pencil case?",
+                  "answer": "No",
+                  "options": [
+                    "No",
+                    "Yes",
+                    "Maybe"
+                  ],
+                  "correct_answer": "No"
                 }
               ]
             },
@@ -813,9 +1036,9 @@
               "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "The ___ is in/on/under the ___.",
-              "explanation": "We use 'in' for inside, 'on' for on top, and 'under' for below something.",
+              "explanation": "We use 'in' for inside something, 'on' for on top of something, and 'under' for below something.",
               "examples": [
-                "The pencil is in the box.",
+                "The pencil is in the bag.",
                 "The book is on the table.",
                 "The ball is under the chair."
               ]
@@ -829,58 +1052,58 @@
                   "items": [
                     {
                       "words": [
-                        "The",
                         "pencil",
                         "is",
-                        "in",
+                        "The",
                         "the",
-                        "box"
+                        "in",
+                        "bag"
                       ],
-                      "correctSentence": "The pencil is in the box"
+                      "correctSentence": "The pencil is in the bag"
                     },
                     {
                       "words": [
-                        "The",
-                        "book",
-                        "is",
                         "on",
-                        "the",
-                        "desk"
+                        "book",
+                        "The",
+                        "is",
+                        "desk",
+                        "the"
                       ],
                       "correctSentence": "The book is on the desk"
                     },
                     {
                       "words": [
-                        "The",
+                        "under",
                         "cat",
                         "is",
-                        "under",
-                        "the",
-                        "table"
+                        "The",
+                        "table",
+                        "the"
                       ],
                       "correctSentence": "The cat is under the table"
                     },
                     {
                       "words": [
-                        "My",
-                        "bag",
                         "is",
-                        "on",
+                        "ruler",
+                        "My",
                         "the",
+                        "on",
                         "chair"
                       ],
-                      "correctSentence": "My bag is on the chair"
+                      "correctSentence": "My ruler is on the chair"
                     },
                     {
                       "words": [
                         "The",
-                        "ball",
-                        "is",
-                        "under",
-                        "the",
-                        "bed"
+                        "in",
+                        "crayons",
+                        "box",
+                        "are",
+                        "the"
                       ],
-                      "correctSentence": "The ball is under the bed"
+                      "correctSentence": "The crayons are in the box"
                     }
                   ]
                 },
@@ -888,53 +1111,53 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "The pencil is ___ the box.",
+                      "sentence": "The pencil is ___ the pencil case.",
                       "answer": "in",
                       "options": [
                         "in",
                         "on",
-                        "under",
-                        "at"
+                        "at",
+                        "to"
                       ]
                     },
                     {
                       "sentence": "The book is ___ the table.",
                       "answer": "on",
                       "options": [
-                        "in",
                         "on",
-                        "under",
-                        "behind"
+                        "in",
+                        "at",
+                        "of"
                       ]
                     },
                     {
-                      "sentence": "The cat is ___ the chair.",
+                      "sentence": "The ball is ___ the chair.",
                       "answer": "under",
                       "options": [
-                        "in",
-                        "on",
                         "under",
-                        "next"
+                        "in",
+                        "at",
+                        "by"
                       ]
                     },
                     {
-                      "sentence": "My toy is ___ my bag.",
-                      "answer": "in",
-                      "options": [
-                        "in",
-                        "on",
-                        "under",
-                        "at"
-                      ]
-                    },
-                    {
-                      "sentence": "The cup is ___ the desk.",
+                      "sentence": "My bag is ___ the desk.",
                       "answer": "on",
                       "options": [
-                        "in",
                         "on",
                         "under",
-                        "behind"
+                        "at",
+                        "to"
+                      ]
+                    },
+                    {
+                      "sentence": "The cat is hiding ___ the bed.",
+                      "answer": "under",
+                      "options": [
+                        "under",
+                        "on",
+                        "at",
+                        "to"
                       ]
                     }
                   ]
@@ -943,40 +1166,40 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "The pencil is at the box.",
-                      "errorWord": "at",
-                      "correctWord": "in",
-                      "explanation": "Use 'in' for inside something"
-                    },
-                    {
-                      "sentence": "The books is on the table.",
-                      "errorWord": "is",
-                      "correctWord": "are",
-                      "explanation": "Use 'are' with plural words"
-                    },
-                    {
-                      "sentence": "The cat are under the bed.",
+                      "sentence": "The pencil are in the box.",
                       "errorWord": "are",
                       "correctWord": "is",
-                      "explanation": "Use 'is' with one cat"
+                      "explanation": "Use 'is' with singular nouns like 'pencil'"
                     },
                     {
-                      "sentence": "My bag is in the chair.",
-                      "errorWord": "in",
+                      "sentence": "The book is at the table.",
+                      "errorWord": "at",
                       "correctWord": "on",
-                      "explanation": "Use 'on' for on top of something"
+                      "explanation": "Use 'on' when something is on top of a surface"
                     },
                     {
-                      "sentence": "Two pencil is on the desk.",
-                      "errorWord": "pencil",
-                      "correctWord": "pencils",
-                      "explanation": "Use 'pencils' for two or more"
+                      "sentence": "My pencil is under the desk and I see them.",
+                      "errorWord": "them",
+                      "correctWord": "it",
+                      "explanation": "Use 'it' for one thing, 'them' for many things"
                     },
                     {
-                      "sentence": "The ball is to the table.",
-                      "errorWord": "to",
-                      "correctWord": "under",
-                      "explanation": "Use 'under' for below something"
+                      "sentence": "She have a pencil in her bag.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with she/he/it"
+                    },
+                    {
+                      "sentence": "Two book are on the desk.",
+                      "errorWord": "book",
+                      "correctWord": "books",
+                      "explanation": "Add 's' to make plural when there are two or more"
+                    },
+                    {
+                      "sentence": "The cat can sleeps under the bed.",
+                      "errorWord": "sleeps",
+                      "correctWord": "sleep",
+                      "explanation": "After 'can' we use the base form of the verb"
                     }
                   ]
                 },
@@ -984,33 +1207,33 @@
                   "game_type": "true_false",
                   "items": [
                     {
-                      "sentence": "The pencil is in the box.",
+                      "sentence": "The pencil is in the bag.",
                       "is_correct": true,
-                      "corrected": "The pencil is in the box.",
+                      "corrected": "",
                       "explanation": "This sentence is correct!"
                     },
                     {
                       "sentence": "The book is at the table.",
                       "is_correct": false,
                       "corrected": "The book is on the table.",
-                      "explanation": "Use 'on' for on top of something"
+                      "explanation": "Use 'on' when something is on top of a surface"
                     },
                     {
                       "sentence": "The cat is under the chair.",
                       "is_correct": true,
-                      "corrected": "The cat is under the chair.",
+                      "corrected": "",
                       "explanation": "This sentence is correct!"
                     },
                     {
-                      "sentence": "My bag is to the desk.",
+                      "sentence": "My crayons is in the box.",
                       "is_correct": false,
-                      "corrected": "My bag is on the desk.",
-                      "explanation": "Use 'on' not 'to' for position"
+                      "corrected": "My crayons are in the box.",
+                      "explanation": "Use 'are' with plural nouns like 'crayons'"
                     },
                     {
-                      "sentence": "The ball is under the bed.",
+                      "sentence": "The ruler is on the desk.",
                       "is_correct": true,
-                      "corrected": "The ball is under the bed.",
+                      "corrected": "",
                       "explanation": "This sentence is correct!"
                     }
                   ]
@@ -1019,7 +1242,7 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "The pencil is ___ the pencil case.",
+                      "question": "Where is the pencil? It's ___ the bag.",
                       "answer": "in",
                       "options": [
                         "in",
@@ -1027,51 +1250,51 @@
                         "at",
                         "to"
                       ],
-                      "explanation": "Use 'in' for inside something"
+                      "explanation": "Use 'in' when something is inside"
                     },
                     {
-                      "question": "The book is ___ the desk.",
-                      "answer": "on",
+                      "question": "The book ___ on the table.",
+                      "answer": "is",
                       "options": [
-                        "in",
-                        "on",
-                        "at",
-                        "to"
+                        "is",
+                        "are",
+                        "am",
+                        "be"
                       ],
-                      "explanation": "Use 'on' for on top of something"
+                      "explanation": "Use 'is' with singular nouns like 'book'"
                     },
                     {
-                      "question": "The cat is ___ the table.",
+                      "question": "The cat is ___ the bed.",
                       "answer": "under",
                       "options": [
-                        "in",
-                        "on",
                         "under",
-                        "at"
+                        "in",
+                        "at",
+                        "of"
                       ],
-                      "explanation": "Use 'under' for below something"
+                      "explanation": "Use 'under' when something is below"
                     },
                     {
-                      "question": "My ruler is ___ my bag.",
-                      "answer": "in",
+                      "question": "My pencils ___ in the pencil case.",
+                      "answer": "are",
                       "options": [
-                        "in",
+                        "are",
+                        "is",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with plural nouns like 'pencils'"
+                    },
+                    {
+                      "question": "The ruler is ___ the desk.",
+                      "answer": "on",
+                      "options": [
                         "on",
+                        "in",
                         "at",
                         "to"
                       ],
-                      "explanation": "Use 'in' for inside something"
-                    },
-                    {
-                      "question": "The cup is ___ the chair.",
-                      "answer": "on",
-                      "options": [
-                        "in",
-                        "on",
-                        "under",
-                        "at"
-                      ],
-                      "explanation": "Use 'on' for on top of something"
+                      "explanation": "Use 'on' when something is on top of a surface"
                     }
                   ]
                 }
@@ -1087,25 +1310,16 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Oh no! I can't find my pencil. Let me look on my desk. It's not there. Maybe it's in my pencil case. No, it's not in there. Wait! I can see it under my chair. There it is!",
+              "audio_text": "Oh no! I can't find my pencil. Let me look on my desk. No, it's not there. Is it in my pencil case? No, not there either. Wait! I can see it under my chair. There it is!",
               "questions": [
                 {
                   "question": "Where is the pencil?",
                   "answer": "under the chair",
                   "options": [
+                    "under the chair",
                     "on the desk",
                     "in the pencil case",
-                    "under the chair",
-                    "on the floor"
-                  ]
-                },
-                {
-                  "question": "Is the pencil on the desk?",
-                  "answer": "No",
-                  "options": [
-                    "Yes",
-                    "No",
-                    "Maybe"
+                    "in the bag"
                   ]
                 },
                 {
@@ -1117,6 +1331,16 @@
                     "under the chair",
                     "in the bag"
                   ]
+                },
+                {
+                  "question": "Is the pencil in the pencil case?",
+                  "answer": "No",
+                  "options": [
+                    "No",
+                    "Yes",
+                    "Maybe",
+                    "I don't know"
+                  ]
                 }
               ]
             },
@@ -1125,29 +1349,29 @@
               "type": "production",
               "production_type": "speaking",
               "prompt": "Practice saying where things are in your classroom!",
-              "expected_text": "The pencil is in the box.",
+              "expected_text": "The pencil is in the bag.",
               "prompts": [
                 {
-                  "prompt": "Say: The pencil is in the box.",
-                  "expected_text": "The pencil is in the box."
+                  "prompt": "Say: The pencil is in the bag.",
+                  "expected_text": "The pencil is in the bag."
                 },
                 {
                   "prompt": "Say: The book is on the desk.",
                   "expected_text": "The book is on the desk."
                 },
                 {
-                  "prompt": "Say: My pencil is under the chair.",
-                  "expected_text": "My pencil is under the chair."
+                  "prompt": "Say: The ruler is under the chair.",
+                  "expected_text": "The ruler is under the chair."
                 }
               ]
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Positions 1 Review Quiz",
+              "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "The pencil is ___ the box.",
+                  "question_text": "The pencil is ___ the bag.",
                   "question_type": "fill_blank",
                   "correct_answer": "in",
                   "options": [
@@ -1165,38 +1389,38 @@
                     "in",
                     "on",
                     "under",
-                    "next"
+                    "next to"
                   ]
                 },
                 {
-                  "question_text": "True or False: The book is ON the table means the book is on top of the table.",
+                  "question_text": "Where is the book? It is ___ the table.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "on",
+                  "options": [
+                    "on",
+                    "in",
+                    "under",
+                    "behind"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'The cat is under the chair' means the cat is on top of the chair.",
                   "question_type": "true_false",
-                  "correct_answer": "True",
+                  "correct_answer": "False",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Where is the cat? The cat is ___ the chair.",
-                  "question_type": "fill_blank",
-                  "correct_answer": "under",
-                  "options": [
-                    "in",
-                    "on",
-                    "under",
-                    "at"
-                  ]
-                },
-                {
-                  "question_text": "My ruler is inside my pencil case. My ruler is ___ my pencil case.",
+                  "question_text": "Emma can't find her pencil. She looks on her desk and in her pencil case. Then she finds it under her chair. Where was the pencil?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "in",
+                  "correct_answer": "under the chair",
                   "options": [
-                    "in",
-                    "on",
-                    "under",
-                    "behind"
+                    "on the desk",
+                    "in the pencil case",
+                    "under the chair",
+                    "in her bag"
                   ]
                 }
               ]
@@ -1216,43 +1440,43 @@
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Let's think about pictures in your classroom! Answer these questions!",
+              "instruction": "Let's think about pictures in our classroom! Answer these questions!",
               "questions": [
                 {
-                  "question_text": "Where can you see pictures in your classroom?",
+                  "question_text": "Where do we usually see pictures in a classroom?",
                   "correct_answer": "on the walls",
                   "options": [
                     "on the walls",
-                    "in the fridge",
-                    "under the chair",
-                    "in your bag"
+                    "under the chairs",
+                    "in our bags",
+                    "on the floor"
                   ],
                   "image_emoji": "🖼️",
-                  "hint": "Look around! Pictures usually hang high up where everyone can see them!"
+                  "hint": "Look around! Pictures are high up where everyone can see them!"
                 },
                 {
-                  "question_text": "What helps pictures stay on the wall?",
-                  "correct_answer": "tape or hooks",
+                  "question_text": "What can you see in classroom pictures?",
+                  "correct_answer": "letters and animals",
                   "options": [
-                    "tape or hooks",
-                    "water",
-                    "pencils",
-                    "books"
+                    "letters and animals",
+                    "only cars",
+                    "only food",
+                    "only shoes"
+                  ],
+                  "image_emoji": "🎨",
+                  "hint": "Think about the pictures in your classroom. What helps you learn?"
+                },
+                {
+                  "question_text": "How do pictures stay on the wall?",
+                  "correct_answer": "they are hanging",
+                  "options": [
+                    "they are hanging",
+                    "they are jumping",
+                    "they are sleeping",
+                    "they are flying"
                   ],
                   "image_emoji": "📌",
-                  "hint": "Think about what holds things up on walls. It's sticky or has a little nail!"
-                },
-                {
-                  "question_text": "When you look at a picture on the wall, where are your eyes looking?",
-                  "correct_answer": "up",
-                  "options": [
-                    "up",
-                    "down at the floor",
-                    "in your pencil case",
-                    "at your shoes"
-                  ],
-                  "image_emoji": "👀",
-                  "hint": "Pictures hang above you! Which way do you look to see them?"
+                  "hint": "Pictures don't move! They stay in one place on the wall!"
                 }
               ]
             },
@@ -1298,7 +1522,7 @@
                   "items": [
                     {
                       "word": "behind",
-                      "emoji": "🔙"
+                      "emoji": "⬅️"
                     },
                     {
                       "word": "next to",
@@ -1310,7 +1534,7 @@
                     },
                     {
                       "word": "floor",
-                      "emoji": "🟫"
+                      "emoji": "⬜"
                     }
                   ]
                 },
@@ -1319,20 +1543,20 @@
                   "items": [
                     {
                       "word": "behind",
-                      "emoji": "🔙",
+                      "emoji": "⬅️",
                       "distractors": [
-                        "ahead",
-                        "beside",
-                        "behand"
+                        "behand",
+                        "behide",
+                        "benind"
                       ]
                     },
                     {
                       "word": "next to",
                       "emoji": "↔️",
                       "distractors": [
-                        "near too",
-                        "next two",
-                        "nex to"
+                        "nex to",
+                        "next too",
+                        "nexto"
                       ]
                     },
                     {
@@ -1340,17 +1564,17 @@
                       "emoji": "🧱",
                       "distractors": [
                         "woll",
-                        "wel",
-                        "whal"
+                        "wal",
+                        "wale"
                       ]
                     },
                     {
                       "word": "floor",
-                      "emoji": "🟫",
+                      "emoji": "⬜",
                       "distractors": [
                         "flor",
-                        "flour",
-                        "floar"
+                        "floar",
+                        "flour"
                       ]
                     }
                   ]
@@ -1360,18 +1584,18 @@
                   "items": [
                     {
                       "word": "behind",
-                      "emoji": "🔙",
+                      "emoji": "⬅️",
                       "distractors": [
                         {
                           "word": "in front",
-                          "emoji": "⏩"
+                          "emoji": "➡️"
                         },
                         {
                           "word": "above",
                           "emoji": "⬆️"
                         },
                         {
-                          "word": "under",
+                          "word": "below",
                           "emoji": "⬇️"
                         }
                       ]
@@ -1382,15 +1606,15 @@
                       "distractors": [
                         {
                           "word": "between",
-                          "emoji": "🔀"
+                          "emoji": "⏸️"
                         },
                         {
-                          "word": "on",
-                          "emoji": "🔛"
+                          "word": "far from",
+                          "emoji": "↔️➖"
                         },
                         {
-                          "word": "in",
-                          "emoji": "📥"
+                          "word": "around",
+                          "emoji": "🔄"
                         }
                       ]
                     },
@@ -1407,18 +1631,18 @@
                           "emoji": "🪟"
                         },
                         {
-                          "word": "roof",
-                          "emoji": "🏠"
+                          "word": "ceiling",
+                          "emoji": "⬛"
                         }
                       ]
                     },
                     {
                       "word": "floor",
-                      "emoji": "🟫",
+                      "emoji": "⬜",
                       "distractors": [
                         {
-                          "word": "ceiling",
-                          "emoji": "⬜"
+                          "word": "roof",
+                          "emoji": "🏠"
                         },
                         {
                           "word": "table",
@@ -1446,8 +1670,8 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Our Classroom Pictures",
-              "text": "Look at our classroom! There is a big picture on the wall. It is next to the window. My drawing is behind the teacher's desk. Oh no! Tom's picture is on the floor. Let's put it on the wall!",
-              "scene_description": "diverse children looking at colorful drawings and pictures hanging on classroom wall, bright elementary school classroom with windows",
+              "text": "Look at our classroom! There is a big picture on the wall. It is next to the window. My drawing is behind the teacher's desk. There are some books on the floor next to my bag.",
+              "scene_description": "colorful elementary classroom with pictures on walls, children's drawings, teacher's desk, and school bags on floor",
               "questions": [
                 {
                   "question": "Where is the big picture?",
@@ -1455,31 +1679,29 @@
                   "options": [
                     "on the wall",
                     "on the floor",
-                    "under the desk",
-                    "in the bag"
+                    "behind the desk"
                   ],
                   "correct_answer": "on the wall"
                 },
                 {
-                  "question": "Where is the child's drawing?",
-                  "answer": "behind the teacher's desk",
+                  "question": "What is next to the window?",
+                  "answer": "a big picture",
                   "options": [
-                    "behind the teacher's desk",
-                    "next to the window",
-                    "on the floor",
-                    "on the door"
+                    "a big picture",
+                    "the teacher's desk",
+                    "some books"
                   ],
-                  "correct_answer": "behind the teacher's desk"
+                  "correct_answer": "a big picture"
                 },
                 {
-                  "question": "Is Tom's picture on the wall?",
-                  "answer": "No",
+                  "question": "Where are the books?",
+                  "answer": "on the floor next to the bag",
                   "options": [
-                    "No",
-                    "Yes",
-                    "Maybe"
+                    "on the floor next to the bag",
+                    "on the wall",
+                    "behind the window"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "on the floor next to the bag"
                 }
               ]
             },
@@ -1491,7 +1713,7 @@
               "examples": [
                 "The picture is on the wall.",
                 "The picture is next to the door.",
-                "The picture is behind the bookshelf."
+                "The picture is behind the teacher's chair."
               ]
             },
             {
@@ -1503,58 +1725,59 @@
                   "items": [
                     {
                       "words": [
-                        "picture",
                         "The",
-                        "on",
+                        "picture",
                         "is",
-                        "wall",
-                        "the"
+                        "on",
+                        "the",
+                        "wall"
                       ],
                       "correctSentence": "The picture is on the wall"
                     },
                     {
                       "words": [
-                        "behind",
+                        "My",
+                        "bag",
                         "is",
-                        "book",
-                        "The",
-                        "desk",
-                        "the"
-                      ],
-                      "correctSentence": "The book is behind the desk"
-                    },
-                    {
-                      "words": [
-                        "next to",
-                        "chair",
-                        "is",
-                        "The",
-                        "door",
-                        "the"
-                      ],
-                      "correctSentence": "The chair is next to the door"
-                    },
-                    {
-                      "words": [
-                        "floor",
-                        "on",
-                        "The",
-                        "is",
-                        "toy",
-                        "the"
-                      ],
-                      "correctSentence": "The toy is on the floor"
-                    },
-                    {
-                      "words": [
                         "under",
-                        "The",
-                        "table",
-                        "is",
-                        "cat",
-                        "the"
+                        "the",
+                        "desk"
                       ],
-                      "correctSentence": "The cat is under the table"
+                      "correctSentence": "My bag is under the desk"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "cat",
+                        "is",
+                        "behind",
+                        "the",
+                        "door"
+                      ],
+                      "correctSentence": "The cat is behind the door"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "book",
+                        "is",
+                        "next",
+                        "to",
+                        "the",
+                        "pen"
+                      ],
+                      "correctSentence": "The book is next to the pen"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "ball",
+                        "is",
+                        "in",
+                        "the",
+                        "box"
+                      ],
+                      "correctSentence": "The ball is in the box"
                     }
                   ]
                 },
@@ -1565,50 +1788,50 @@
                       "sentence": "The picture is ___ the wall.",
                       "answer": "on",
                       "options": [
-                        "in",
                         "on",
+                        "in",
                         "at",
-                        "under"
+                        "to"
                       ]
                     },
                     {
-                      "sentence": "The ball is ___ the box.",
+                      "sentence": "The chair is ___ the table.",
+                      "answer": "next to",
+                      "options": [
+                        "next to",
+                        "between",
+                        "among",
+                        "through"
+                      ]
+                    },
+                    {
+                      "sentence": "The dog is ___ the bed.",
+                      "answer": "under",
+                      "options": [
+                        "under",
+                        "above",
+                        "between",
+                        "through"
+                      ]
+                    },
+                    {
+                      "sentence": "My toy is ___ the box.",
                       "answer": "in",
                       "options": [
                         "in",
                         "on",
-                        "behind",
-                        "next to"
-                      ]
-                    },
-                    {
-                      "sentence": "The dog is ___ the table.",
-                      "answer": "under",
-                      "options": [
-                        "under",
-                        "on",
-                        "in",
+                        "at",
                         "behind"
                       ]
                     },
                     {
-                      "sentence": "My bag is ___ the door.",
+                      "sentence": "The clock is ___ the door.",
                       "answer": "behind",
                       "options": [
                         "behind",
-                        "in",
-                        "under",
-                        "on"
-                      ]
-                    },
-                    {
-                      "sentence": "The chair is ___ the window.",
-                      "answer": "next to",
-                      "options": [
-                        "next to",
-                        "in",
-                        "under",
-                        "behind"
+                        "between",
+                        "among",
+                        "through"
                       ]
                     }
                   ]
@@ -1617,34 +1840,34 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "The picture is at the wall.",
-                      "errorWord": "at",
+                      "sentence": "The picture is in the wall.",
+                      "errorWord": "in",
                       "correctWord": "on",
-                      "explanation": "Use 'on' with wall, not 'at'"
+                      "explanation": "We say 'on the wall', not 'in the wall'"
                     },
                     {
-                      "sentence": "The cat are under the bed.",
+                      "sentence": "My books is on the floor.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with plural words like 'books'"
+                    },
+                    {
+                      "sentence": "The cat are under the chair.",
                       "errorWord": "are",
                       "correctWord": "is",
-                      "explanation": "Use 'is' with one cat"
+                      "explanation": "Use 'is' with singular words like 'cat'"
                     },
                     {
-                      "sentence": "Two picture is on the floor.",
-                      "errorWord": "picture",
-                      "correctWord": "pictures",
-                      "explanation": "Use 'pictures' for two"
-                    },
-                    {
-                      "sentence": "Her is next to the desk.",
+                      "sentence": "Her is next to the window.",
                       "errorWord": "Her",
                       "correctWord": "She",
-                      "explanation": "Use 'She' as subject pronoun"
+                      "explanation": "Use 'She' as the subject, not 'Her'"
                     },
                     {
-                      "sentence": "The book is in behind the door.",
-                      "errorWord": "in",
-                      "correctWord": "",
-                      "explanation": "Don't use 'in' with 'behind'"
+                      "sentence": "Two picture are on the wall.",
+                      "errorWord": "picture",
+                      "correctWord": "pictures",
+                      "explanation": "Add 's' for two or more things"
                     }
                   ]
                 },
@@ -1655,31 +1878,31 @@
                       "sentence": "The picture is on the wall.",
                       "is_correct": true,
                       "corrected": "The picture is on the wall.",
-                      "explanation": "This is correct!"
+                      "explanation": "This sentence is correct!"
                     },
                     {
-                      "sentence": "The toy is in the floor.",
+                      "sentence": "My bag is in the floor.",
                       "is_correct": false,
-                      "corrected": "The toy is on the floor.",
-                      "explanation": "Use 'on' with floor, not 'in'"
+                      "corrected": "My bag is on the floor.",
+                      "explanation": "We say 'on the floor', not 'in the floor'"
                     },
                     {
-                      "sentence": "My bag is behind the chair.",
+                      "sentence": "The books are next to the pen.",
                       "is_correct": true,
-                      "corrected": "My bag is behind the chair.",
-                      "explanation": "This is correct!"
+                      "corrected": "The books are next to the pen.",
+                      "explanation": "This sentence is correct!"
                     },
                     {
-                      "sentence": "The cat is under table.",
+                      "sentence": "The cat is behind door.",
                       "is_correct": false,
-                      "corrected": "The cat is under the table.",
-                      "explanation": "We need 'the' before table"
+                      "corrected": "The cat is behind the door.",
+                      "explanation": "Don't forget to use 'the' before 'door'"
                     },
                     {
-                      "sentence": "The book is next to the window.",
+                      "sentence": "The toy is under the bed.",
                       "is_correct": true,
-                      "corrected": "The book is next to the window.",
-                      "explanation": "This is correct!"
+                      "corrected": "The toy is under the bed.",
+                      "explanation": "This sentence is correct!"
                     }
                   ]
                 },
@@ -1690,12 +1913,23 @@
                       "question": "The picture is ___ the wall.",
                       "answer": "on",
                       "options": [
-                        "in",
                         "on",
+                        "in",
                         "at",
-                        "to"
+                        "under"
                       ],
-                      "explanation": "We hang pictures 'on' the wall"
+                      "explanation": "We use 'on' for things attached to walls"
+                    },
+                    {
+                      "question": "My pencil is ___ my book.",
+                      "answer": "next to",
+                      "options": [
+                        "next to",
+                        "between",
+                        "through",
+                        "among"
+                      ],
+                      "explanation": "Use 'next to' when something is beside another thing"
                     },
                     {
                       "question": "The ball is ___ the box.",
@@ -1703,43 +1937,32 @@
                       "options": [
                         "in",
                         "on",
-                        "at",
-                        "under"
+                        "behind",
+                        "next to"
                       ],
-                      "explanation": "Things go 'in' a box"
+                      "explanation": "Use 'in' when something is inside"
                     },
                     {
-                      "question": "My chair is ___ the desk.",
-                      "answer": "next to",
+                      "question": "The chair is ___ the desk.",
+                      "answer": "behind",
                       "options": [
-                        "next to",
+                        "behind",
+                        "between",
+                        "among",
+                        "through"
+                      ],
+                      "explanation": "Use 'behind' when something is at the back"
+                    },
+                    {
+                      "question": "The books are ___ the floor.",
+                      "answer": "on",
+                      "options": [
+                        "on",
                         "in",
                         "at",
                         "behind"
                       ],
-                      "explanation": "'Next to' means beside something"
-                    },
-                    {
-                      "question": "The cat is ___ the bed.",
-                      "answer": "under",
-                      "options": [
-                        "under",
-                        "in",
-                        "on",
-                        "at"
-                      ],
-                      "explanation": "The cat hides 'under' the bed"
-                    },
-                    {
-                      "question": "The door is ___ the window.",
-                      "answer": "behind",
-                      "options": [
-                        "behind",
-                        "in",
-                        "under",
-                        "on"
-                      ],
-                      "explanation": "'Behind' means at the back of something"
+                      "explanation": "We use 'on' for things resting on flat surfaces"
                     }
                   ]
                 }
@@ -1755,36 +1978,33 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello, everyone! Look at our beautiful classroom. Can you see the big rainbow picture? It's on the wall next to the clock. And look! There's a drawing of a cat behind the teacher's desk. Oh no! Someone's pencil case is on the floor. Let's pick it up!",
+              "audio_text": "Hello children! Let's look at our classroom pictures today. There is a big alphabet picture on the wall next to the board. Can you see the animal pictures? They are behind my desk. Oh, and please pick up the crayons on the floor next to your bags!",
               "questions": [
                 {
-                  "question": "Where is the rainbow picture?",
-                  "answer": "on the wall next to the clock",
+                  "question": "Where is the alphabet picture?",
+                  "answer": "on the wall next to the board",
                   "options": [
-                    "on the wall next to the clock",
+                    "on the wall next to the board",
                     "behind the desk",
-                    "on the floor",
-                    "under the table"
+                    "on the floor"
                   ]
                 },
                 {
-                  "question": "What is behind the teacher's desk?",
-                  "answer": "a drawing of a cat",
+                  "question": "What pictures are behind the teacher's desk?",
+                  "answer": "animal pictures",
                   "options": [
-                    "a drawing of a cat",
-                    "a rainbow picture",
-                    "a pencil case",
-                    "a clock"
+                    "animal pictures",
+                    "alphabet picture",
+                    "number pictures"
                   ]
                 },
                 {
-                  "question": "What is on the floor?",
-                  "answer": "a pencil case",
+                  "question": "Where are the crayons?",
+                  "answer": "on the floor next to the bags",
                   "options": [
-                    "a pencil case",
-                    "a cat",
-                    "a picture",
-                    "a clock"
+                    "on the floor next to the bags",
+                    "on the wall",
+                    "behind the desk"
                   ]
                 }
               ]
@@ -1801,11 +2021,11 @@
                   "expected_text": "The picture is on the wall."
                 },
                 {
-                  "prompt": "Say: The picture is next to the window.",
-                  "expected_text": "The picture is next to the window."
+                  "prompt": "Say: My picture is next to the window.",
+                  "expected_text": "My picture is next to the window."
                 },
                 {
-                  "prompt": "Now tell me: Where is a picture in YOUR room?",
+                  "prompt": "Now tell me: Where is a picture in your room?",
                   "expected_text": "The picture is on the wall next to my bed."
                 }
               ]
@@ -1815,17 +2035,6 @@
               "type": "exit_ticket",
               "title": "Positions 2 Review Quiz",
               "questions": [
-                {
-                  "question_text": "Which word means 'at the back of something'?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "behind",
-                  "options": [
-                    "behind",
-                    "next to",
-                    "wall",
-                    "floor"
-                  ]
-                },
                 {
                   "question_text": "The picture is ___ the wall.",
                   "question_type": "fill_blank",
@@ -1838,7 +2047,29 @@
                   ]
                 },
                 {
-                  "question_text": "True or False: We can say 'The book is next to the pencil.'",
+                  "question_text": "Which word means 'beside something'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "next to",
+                  "options": [
+                    "behind",
+                    "next to",
+                    "floor",
+                    "wall"
+                  ]
+                },
+                {
+                  "question_text": "Where do we walk in the classroom?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "on the floor",
+                  "options": [
+                    "on the wall",
+                    "on the floor",
+                    "behind the floor",
+                    "in the wall"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Behind' means something is at the back.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1847,25 +2078,14 @@
                   ]
                 },
                 {
-                  "question_text": "Look at this sentence: 'My toy is on the floor.' Where is the toy?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "on the ground",
-                  "options": [
-                    "on the ground",
-                    "on the wall",
-                    "behind the door",
-                    "under the bed"
-                  ]
-                },
-                {
-                  "question_text": "The cat is ___ the table means the cat is beside the table.",
+                  "question_text": "My bag is ___ the door. I can't see it!",
                   "question_type": "fill_blank",
-                  "correct_answer": "next to",
+                  "correct_answer": "behind",
                   "options": [
-                    "next to",
                     "behind",
-                    "under",
-                    "in"
+                    "next to",
+                    "on",
+                    "under"
                   ]
                 }
               ]
@@ -1885,43 +2105,43 @@
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Let's think about where things are in our classroom! Answer these questions!",
+              "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Where is your book right now?",
+                  "question_text": "Where is the pencil in this picture?",
                   "correct_answer": "on the desk",
                   "options": [
                     "on the desk",
-                    "under the sky",
-                    "in the tree",
-                    "behind the moon"
-                  ],
-                  "image_emoji": "📚",
-                  "hint": "Look at your desk! Is your book sitting on top of it?"
-                },
-                {
-                  "question_text": "Where can you find a pencil case in the classroom?",
-                  "correct_answer": "in the bag",
-                  "options": [
+                    "under the chair",
                     "in the bag",
-                    "under the cloud",
-                    "on the sun",
-                    "behind the ocean"
+                    "next to the window"
                   ],
                   "image_emoji": "✏️",
-                  "hint": "Think about where you keep your pencils and pens. Is it inside something?"
+                  "hint": "Look at the desk. What do you see on top of it?"
                 },
                 {
-                  "question_text": "Where is the teacher usually standing?",
-                  "correct_answer": "in front of the board",
+                  "question_text": "The book is under the table. Where is it?",
+                  "correct_answer": "under the table",
                   "options": [
-                    "in front of the board",
-                    "under the chair",
-                    "inside the book",
-                    "on the window"
+                    "under the table",
+                    "on the table",
+                    "in the box",
+                    "behind the door"
                   ],
-                  "image_emoji": "👩‍🏫",
-                  "hint": "Look at the whiteboard! Where does the teacher stand when writing on it?"
+                  "image_emoji": "📚",
+                  "hint": "Listen carefully! The sentence tells you where the book is!"
+                },
+                {
+                  "question_text": "Look! The ball is in the box. Where can you find the ball?",
+                  "correct_answer": "inside the box",
+                  "options": [
+                    "inside the box",
+                    "next to the box",
+                    "on the box",
+                    "behind the box"
+                  ],
+                  "image_emoji": "⚽",
+                  "hint": "The word 'in' means inside something. Where is the ball?"
                 }
               ]
             },
@@ -1950,7 +2170,7 @@
                   "items": [
                     {
                       "word": "desk",
-                      "definition": "You sit here to write and read",
+                      "definition": "You sit here to write and do your work",
                       "emoji": "🪑"
                     },
                     {
@@ -1961,7 +2181,7 @@
                     {
                       "word": "board",
                       "definition": "The teacher writes on this",
-                      "emoji": "⬜"
+                      "emoji": "⬛"
                     },
                     {
                       "word": "computer",
@@ -1976,11 +2196,11 @@
                     {
                       "word": "behind",
                       "definition": "At the back of something",
-                      "emoji": "👈"
+                      "emoji": "↩️"
                     },
                     {
                       "word": "wall",
-                      "definition": "The side of your classroom",
+                      "definition": "The side of a room",
                       "emoji": "🧱"
                     },
                     {
@@ -1995,18 +2215,23 @@
                   "items": [
                     {
                       "word": "desk",
-                      "definition": "You sit here to write and read",
+                      "definition": "A table for working",
                       "emoji": "🪑"
                     },
                     {
                       "word": "chair",
-                      "definition": "You sit on this",
+                      "definition": "Something to sit on",
                       "emoji": "💺"
                     },
                     {
                       "word": "board",
-                      "definition": "The teacher writes on this",
-                      "emoji": "⬜"
+                      "definition": "Where the teacher writes",
+                      "emoji": "⬛"
+                    },
+                    {
+                      "word": "computer",
+                      "definition": "A machine for learning",
+                      "emoji": "💻"
                     },
                     {
                       "word": "in",
@@ -2019,18 +2244,13 @@
                       "emoji": "⬆️"
                     },
                     {
-                      "word": "next to",
-                      "definition": "Beside something",
-                      "emoji": "↔️"
-                    },
-                    {
                       "word": "wall",
-                      "definition": "The side of your classroom",
+                      "definition": "The sides of a classroom",
                       "emoji": "🧱"
                     },
                     {
                       "word": "floor",
-                      "definition": "You walk on this",
+                      "definition": "What you stand on",
                       "emoji": "🟫"
                     }
                   ]
@@ -2039,83 +2259,83 @@
                   "game_type": "board_game",
                   "items": [
                     {
-                      "question": "Where is the pencil? It's ___ the desk.",
+                      "question": "Where do you sit to do your work?",
+                      "answer": "at a desk",
+                      "options": [
+                        "at a desk",
+                        "on the floor",
+                        "on the wall",
+                        "in the computer"
+                      ]
+                    },
+                    {
+                      "question": "What do you sit on?",
+                      "answer": "a chair",
+                      "options": [
+                        "a chair",
+                        "a board",
+                        "a wall",
+                        "a computer"
+                      ]
+                    },
+                    {
+                      "question": "The pencil is _____ the table.",
                       "answer": "on",
                       "options": [
                         "on",
                         "wall",
                         "chair",
-                        "floor"
+                        "desk"
                       ]
                     },
                     {
-                      "question": "What do you sit on?",
-                      "answer": "chair",
-                      "options": [
-                        "chair",
-                        "wall",
-                        "floor",
-                        "board"
-                      ]
-                    },
-                    {
-                      "question": "The cat is hiding ___ the table.",
+                      "question": "The bag is _____ the desk. You can't see it!",
                       "answer": "under",
                       "options": [
                         "under",
-                        "desk",
                         "computer",
+                        "board",
                         "wall"
                       ]
                     },
                     {
-                      "question": "What does the teacher write on?",
-                      "answer": "board",
-                      "options": [
-                        "board",
-                        "floor",
-                        "chair",
-                        "under"
-                      ]
-                    },
-                    {
-                      "question": "The picture is ___ the door.",
+                      "question": "The picture is _____ the door.",
                       "answer": "behind",
                       "options": [
                         "behind",
+                        "floor",
                         "desk",
-                        "chair",
-                        "computer"
+                        "chair"
                       ]
                     },
                     {
-                      "question": "Your toys are ___ the box.",
-                      "answer": "in",
+                      "question": "The ruler is _____ the book. They are together.",
+                      "answer": "next to",
                       "options": [
-                        "in",
-                        "wall",
+                        "next to",
+                        "computer",
                         "board",
-                        "floor"
+                        "wall"
                       ]
                     },
                     {
-                      "question": "What do you walk on?",
+                      "question": "You walk on this in the classroom.",
                       "answer": "floor",
                       "options": [
                         "floor",
                         "chair",
                         "desk",
-                        "behind"
+                        "computer"
                       ]
                     },
                     {
-                      "question": "The chair is ___ the desk.",
-                      "answer": "next to",
+                      "question": "The clock is on the _____.",
+                      "answer": "wall",
                       "options": [
-                        "next to",
-                        "computer",
                         "wall",
-                        "board"
+                        "under",
+                        "next to",
+                        "in"
                       ]
                     }
                   ]
@@ -2133,38 +2353,39 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Where Is My Teddy?",
-              "text": "Emma is looking for her teddy bear. It is not on the bed. It is not under the chair. She looks behind the door. Her teddy is next to the wall! Emma is happy.",
-              "scene_description": "young girl finding teddy bear behind door in bedroom, happy child with stuffed toy",
+              "title": "Where Is My Pencil?",
+              "text": "Emma is looking for her pencil. She looks on her desk. It's not there. She looks under her chair. No pencil! Then she looks in her bag. Yes! Her pencil is in her bag next to her book.",
+              "scene_description": "young girl searching for pencil in classroom, looking in school bag",
               "questions": [
                 {
-                  "question": "Where is Emma's teddy bear?",
-                  "answer": "next to the wall",
+                  "question": "Where does Emma look first?",
+                  "answer": "on her desk",
                   "options": [
-                    "on the bed",
-                    "under the chair",
-                    "next to the wall"
+                    "on her desk",
+                    "in her bag",
+                    "under the chair"
                   ],
-                  "correct_answer": "next to the wall"
+                  "correct_answer": "on her desk"
                 },
                 {
-                  "question": "Is the teddy on the bed?",
-                  "answer": "No",
+                  "question": "Where is Emma's pencil?",
+                  "answer": "in her bag",
                   "options": [
-                    "Yes",
-                    "No"
+                    "in her bag",
+                    "on her desk",
+                    "under her chair"
                   ],
-                  "correct_answer": "No"
+                  "correct_answer": "in her bag"
                 },
                 {
-                  "question": "How does Emma feel when she finds her teddy?",
-                  "answer": "happy",
+                  "question": "What is next to the pencil?",
+                  "answer": "a book",
                   "options": [
-                    "sad",
-                    "angry",
-                    "happy"
+                    "a book",
+                    "a chair",
+                    "a desk"
                   ],
-                  "correct_answer": "happy"
+                  "correct_answer": "a book"
                 }
               ]
             },
@@ -2172,10 +2393,12 @@
               "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "The ___ is [in/on/under/next to/behind] the ___.",
-              "explanation": "We use special words to say where things are!",
+              "explanation": "We use special words to show where things are in our classroom.",
               "examples": [
-                "The book is on the desk.",
-                "The cat is under the chair.",
+                "The pencil is on the desk.",
+                "The bag is under the chair.",
+                "The book is in the box.",
+                "The ruler is next to the pen.",
                 "The ball is behind the door."
               ]
             },
@@ -2189,58 +2412,58 @@
                     {
                       "words": [
                         "The",
-                        "cat",
-                        "is",
-                        "under",
-                        "the",
-                        "desk"
-                      ],
-                      "correctSentence": "The cat is under the desk"
-                    },
-                    {
-                      "words": [
                         "book",
                         "is",
                         "on",
                         "the",
-                        "chair",
-                        "The"
+                        "desk"
                       ],
-                      "correctSentence": "The book is on the chair"
+                      "correctSentence": "The book is on the desk"
                     },
                     {
                       "words": [
-                        "behind",
                         "The",
+                        "cat",
                         "is",
-                        "ball",
+                        "under",
                         "the",
-                        "door"
+                        "chair"
                       ],
-                      "correctSentence": "The ball is behind the door"
+                      "correctSentence": "The cat is under the chair"
                     },
                     {
                       "words": [
-                        "next",
-                        "computer",
-                        "to",
+                        "The",
+                        "ball",
                         "is",
+                        "in",
                         "the",
-                        "wall",
-                        "The"
+                        "box"
+                      ],
+                      "correctSentence": "The ball is in the box"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "computer",
+                        "is",
+                        "next",
+                        "to",
+                        "the",
+                        "wall"
                       ],
                       "correctSentence": "The computer is next to the wall"
                     },
                     {
                       "words": [
-                        "pencil",
-                        "in",
-                        "is",
                         "The",
+                        "bag",
+                        "is",
+                        "behind",
                         "the",
-                        "box"
+                        "door"
                       ],
-                      "correctSentence": "The pencil is in the box"
+                      "correctSentence": "The bag is behind the door"
                     }
                   ]
                 },
@@ -2248,7 +2471,7 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "The book is ___ the desk.",
+                      "sentence": "The pencil is ___ the desk.",
                       "answer": "on",
                       "options": [
                         "on",
@@ -2258,53 +2481,53 @@
                       ]
                     },
                     {
-                      "sentence": "The cat is hiding ___ the chair.",
+                      "sentence": "The cat is ___ the table.",
                       "answer": "under",
                       "options": [
-                        "on",
                         "under",
+                        "on",
                         "next to",
-                        "in"
+                        "wall"
                       ]
                     },
                     {
-                      "sentence": "The ball is ___ the box.",
+                      "sentence": "The book is ___ the bag.",
                       "answer": "in",
                       "options": [
                         "in",
                         "on",
-                        "behind",
-                        "under"
+                        "floor",
+                        "chair"
                       ]
                     },
                     {
-                      "sentence": "The computer is ___ the wall.",
+                      "sentence": "The chair is ___ the desk.",
                       "answer": "next to",
                       "options": [
-                        "in",
-                        "on",
                         "next to",
-                        "under"
+                        "in",
+                        "wall",
+                        "computer"
                       ]
                     },
                     {
-                      "sentence": "The toy is ___ the door.",
+                      "sentence": "The ball is ___ the door.",
                       "answer": "behind",
                       "options": [
                         "behind",
-                        "in",
-                        "on",
-                        "next to"
+                        "floor",
+                        "board",
+                        "in"
                       ]
                     },
                     {
-                      "sentence": "The pen is ___ the floor.",
+                      "sentence": "The picture is ___ the wall.",
                       "answer": "on",
                       "options": [
                         "on",
+                        "under",
                         "in",
-                        "behind",
-                        "next to"
+                        "floor"
                       ]
                     }
                   ]
@@ -2316,13 +2539,13 @@
                       "sentence": "The book is at the desk.",
                       "errorWord": "at",
                       "correctWord": "on",
-                      "explanation": "Use 'on' when something is on top of a surface"
+                      "explanation": "Use 'on' for things on top of a surface"
                     },
                     {
-                      "sentence": "The cats is under the chair.",
-                      "errorWord": "is",
-                      "correctWord": "are",
-                      "explanation": "Use 'are' with plural nouns like 'cats'"
+                      "sentence": "The cat is next the chair.",
+                      "errorWord": "next",
+                      "correctWord": "next to",
+                      "explanation": "We say 'next to', not just 'next'"
                     },
                     {
                       "sentence": "The ball are in the box.",
@@ -2331,16 +2554,16 @@
                       "explanation": "Use 'is' with singular nouns like 'ball'"
                     },
                     {
-                      "sentence": "The computer is next the wall.",
-                      "errorWord": "next",
-                      "correctWord": "next to",
-                      "explanation": "The preposition is 'next to', not just 'next'"
+                      "sentence": "The pencil is under the wall.",
+                      "errorWord": "under",
+                      "correctWord": "on",
+                      "explanation": "Things go 'on' the wall, not 'under' it"
                     },
                     {
-                      "sentence": "The toy is between the door.",
-                      "errorWord": "between",
-                      "correctWord": "behind",
-                      "explanation": "Use 'behind' for one object; 'between' needs two objects"
+                      "sentence": "Two book is on the desk.",
+                      "errorWord": "book",
+                      "correctWord": "books",
+                      "explanation": "Use plural 'books' with 'two'"
                     }
                   ]
                 },
@@ -2348,40 +2571,34 @@
                   "game_type": "true_false",
                   "items": [
                     {
-                      "sentence": "The book is on the chair.",
+                      "sentence": "The cat is under the chair.",
                       "is_correct": true,
                       "corrected": "",
-                      "explanation": "This sentence is correct!"
+                      "explanation": "This sentence is correct"
                     },
                     {
-                      "sentence": "The cat is in under the desk.",
+                      "sentence": "The book is in the desk.",
                       "is_correct": false,
-                      "corrected": "The cat is under the desk.",
-                      "explanation": "Don't use two prepositions together"
+                      "corrected": "The book is on the desk.",
+                      "explanation": "Books usually go 'on' the desk, not 'in' it"
                     },
                     {
                       "sentence": "The ball is behind the door.",
                       "is_correct": true,
                       "corrected": "",
-                      "explanation": "This sentence is correct!"
+                      "explanation": "This sentence is correct"
                     },
                     {
-                      "sentence": "The computer next to the wall.",
+                      "sentence": "The computer is next the wall.",
                       "is_correct": false,
                       "corrected": "The computer is next to the wall.",
-                      "explanation": "Don't forget 'is' in the sentence"
+                      "explanation": "We say 'next to', not 'next'"
                     },
                     {
-                      "sentence": "The pen is on the floor.",
+                      "sentence": "The pencil is on the floor.",
                       "is_correct": true,
                       "corrected": "",
-                      "explanation": "This sentence is correct!"
-                    },
-                    {
-                      "sentence": "The toy is on under the chair.",
-                      "is_correct": false,
-                      "corrected": "The toy is under the chair.",
-                      "explanation": "Choose one preposition, not two"
+                      "explanation": "This sentence is correct"
                     }
                   ]
                 },
@@ -2389,70 +2606,70 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "The book is ___ the desk.",
-                      "answer": "on",
+                      "question": "The book is ___ the bag.",
+                      "answer": "in",
                       "options": [
+                        "in",
                         "on",
                         "at",
-                        "of",
-                        "to"
+                        "of"
                       ],
-                      "explanation": "Use 'on' when something is on top of a surface"
+                      "explanation": "Use 'in' for inside something"
                     },
                     {
                       "question": "The cat is ___ the table.",
                       "answer": "under",
                       "options": [
                         "under",
-                        "between",
-                        "through",
-                        "across"
+                        "behind",
+                        "next",
+                        "at"
                       ],
-                      "explanation": "Use 'under' when something is below"
+                      "explanation": "Use 'under' for below something"
                     },
                     {
-                      "question": "The ball is ___ the box.",
-                      "answer": "in",
+                      "question": "The picture is ___ the wall.",
+                      "answer": "on",
                       "options": [
+                        "on",
                         "in",
                         "at",
-                        "of",
-                        "by"
+                        "under"
                       ],
-                      "explanation": "Use 'in' when something is inside"
+                      "explanation": "Use 'on' for things attached to the wall"
                     },
                     {
                       "question": "The chair is ___ the desk.",
                       "answer": "next to",
                       "options": [
                         "next to",
-                        "between",
-                        "among",
-                        "through"
+                        "in",
+                        "at",
+                        "of"
                       ],
-                      "explanation": "Use 'next to' when things are beside each other"
+                      "explanation": "Use 'next to' for beside something"
                     },
                     {
-                      "question": "The toy is ___ the door.",
+                      "question": "The ball is ___ the door.",
                       "answer": "behind",
                       "options": [
                         "behind",
-                        "between",
-                        "among",
-                        "across"
+                        "in",
+                        "at",
+                        "of"
                       ],
-                      "explanation": "Use 'behind' when something is at the back"
+                      "explanation": "Use 'behind' for at the back of something"
                     },
                     {
-                      "question": "The computer is ___ the wall.",
-                      "answer": "next to",
+                      "question": "The computer is ___ the desk.",
+                      "answer": "on",
                       "options": [
-                        "next to",
-                        "between",
-                        "through",
-                        "across"
+                        "on",
+                        "in",
+                        "at",
+                        "under"
                       ],
-                      "explanation": "Use 'next to' when something is beside"
+                      "explanation": "Use 'on' for things on top of a surface"
                     }
                   ]
                 }
@@ -2468,36 +2685,36 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello children! Let's play a game. I'm hiding a red ball in the classroom. The ball is under the desk. It's next to the wall. Can you find it?",
+              "audio_text": "Hello children! Let's play a game. I'm looking at something in our classroom. It's on the wall next to the board. It's a clock! Now you try. Can you find something under your desk?",
               "questions": [
                 {
-                  "question": "Where is the ball?",
-                  "answer": "under the desk",
+                  "question": "Where is the clock?",
+                  "answer": "on the wall next to the board",
                   "options": [
-                    "on the chair",
+                    "on the wall next to the board",
                     "under the desk",
-                    "behind the door",
-                    "in the box"
+                    "in the bag",
+                    "behind the door"
                   ]
                 },
                 {
-                  "question": "What color is the ball?",
-                  "answer": "red",
+                  "question": "What is on the wall?",
+                  "answer": "a clock",
                   "options": [
-                    "blue",
-                    "red",
-                    "green",
-                    "yellow"
+                    "a clock",
+                    "a desk",
+                    "a bag",
+                    "a chair"
                   ]
                 },
                 {
-                  "question": "What is next to the wall?",
-                  "answer": "the ball",
+                  "question": "Where should the children look?",
+                  "answer": "under their desk",
                   "options": [
-                    "the chair",
-                    "the book",
-                    "the ball",
-                    "the computer"
+                    "under their desk",
+                    "on the board",
+                    "behind the wall",
+                    "in the clock"
                   ]
                 }
               ]
@@ -2510,7 +2727,7 @@
               "expected_text": "The book is on the desk.",
               "prompts": [
                 {
-                  "prompt": "Say: The book is on the desk.",
+                  "prompt": "Look at your desk. Say: The book is on the desk.",
                   "expected_text": "The book is on the desk."
                 },
                 {
@@ -2518,51 +2735,40 @@
                   "expected_text": "The bag is under the chair."
                 },
                 {
-                  "prompt": "Tell me where your pencil is. Say: My pencil is...",
-                  "expected_text": "My pencil is in the box."
+                  "prompt": "Now tell me about something in your room. Say: The [something] is [in/on/under/next to/behind] the [something].",
+                  "expected_text": "The pencil is in the box."
                 }
               ]
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Unit Review Quiz",
+              "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "The book is ___ the desk.",
+                  "question_text": "The pencil is ___ the desk.",
                   "question_type": "fill_blank",
                   "correct_answer": "on",
                   "options": [
                     "on",
+                    "in",
                     "at",
-                    "of",
-                    "to"
+                    "of"
                   ]
                 },
                 {
-                  "question_text": "Where do you sit to write?",
+                  "question_text": "Where do you sit to do your work?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "at the desk",
+                  "correct_answer": "at a desk",
                   "options": [
-                    "at the desk",
+                    "at a desk",
                     "on the floor",
-                    "behind the wall",
-                    "under the board"
+                    "in the computer",
+                    "behind the wall"
                   ]
                 },
                 {
-                  "question_text": "The cat is hiding under the chair. Where is the cat?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "under the chair",
-                  "options": [
-                    "on the chair",
-                    "under the chair",
-                    "next to the chair",
-                    "behind the chair"
-                  ]
-                },
-                {
-                  "question_text": "True or False: 'Next to' means beside something.",
+                  "question_text": "True or False: 'The cat is under the chair' means the cat is below the chair.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -2571,14 +2777,25 @@
                   ]
                 },
                 {
-                  "question_text": "The ball is ___ the box. (inside)",
+                  "question_text": "Read: 'The ball is behind the door.' Where is the ball?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "at the back of the door",
+                  "options": [
+                    "at the back of the door",
+                    "on top of the door",
+                    "inside the door",
+                    "under the door"
+                  ]
+                },
+                {
+                  "question_text": "The book is ___ the bag. (You can't see it!)",
                   "question_type": "fill_blank",
                   "correct_answer": "in",
                   "options": [
                     "in",
                     "on",
-                    "behind",
-                    "next to"
+                    "next to",
+                    "behind"
                   ]
                 }
               ]
