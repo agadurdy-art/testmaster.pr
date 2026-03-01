@@ -512,7 +512,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
               )}
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-3xl font-bold text-gray-900 mb-1" data-testid="current-word">{w.word}</h2>
-                <button className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-2 text-base" onClick={() => speakWord(w.word)}>
+                <button className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-2 text-base" onClick={() => playTTS(w.word)}>
                   <Volume2 className="w-5 h-5" /><span className="font-medium">{w.ipa}</span>
                 </button>
                 <p className="text-gray-600 text-base">{w.definition}</p>
