@@ -480,9 +480,12 @@ Respond with ONLY valid JSON:
         
         grammar_step = next((s for s in lesson.get('steps', []) if s.get('type') in ('grammar_focus', 'grammar_review')), {})
         pattern = grammar_step.get('rule_pattern', step.get('rule_pattern', ''))
+        if not pattern and grammar_step.get('patterns'):
+            pattern = ' / '.join(grammar_step.get('patterns', []))
         examples = grammar_step.get('examples', [])
         vocab_step = next((s for s in lesson.get('steps', []) if s.get('type') in ('vocabulary', 'vocabulary_review')), {})
-        vocab_words = [item.get('word') for item in vocab_step.get('items', [])]
+        raw_items = vocab_step.get('items', [])
+        vocab_words = [item.get('word') if isinstance(item, dict) else str(item) for item in raw_items]
         
         prompt = f"""Create 5 grammar game activities for young ESL learners (ages 4-7).
 
