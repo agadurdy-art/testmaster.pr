@@ -474,9 +474,15 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
           <Card className="p-6 bg-white shadow-sm">
             {/* Word display with image area */}
             <div className="flex flex-col md:flex-row gap-6 items-center mb-6">
-              <div className="w-36 h-36 bg-gradient-to-br from-sky-100 to-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 shrink-0">
-                <span className="text-5xl">{w.image_emoji || '📖'}</span>
-              </div>
+              {w.image_url ? (
+                <div className="w-36 h-36 rounded-2xl overflow-hidden border border-blue-100 shadow-sm shrink-0">
+                  <img src={w.image_url} alt={w.word} className="w-full h-full object-cover" loading="lazy" />
+                </div>
+              ) : (
+                <div className="w-36 h-36 bg-gradient-to-br from-sky-100 to-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 shrink-0">
+                  <span className="text-5xl">{w.image_emoji || '📖'}</span>
+                </div>
+              )}
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-3xl font-bold text-gray-900 mb-1" data-testid="current-word">{w.word}</h2>
                 <button className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-2 text-base" onClick={() => speakWord(w.word)}>
