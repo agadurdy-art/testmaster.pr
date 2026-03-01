@@ -185,6 +185,12 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
 
     TS = datetime.now(timezone.utc).isoformat()
 
+    STAGE_ID_MAP = {
+        "stage2": "stage_2_starters",
+        "stage1": "stage_1",
+    }
+    stage_db_id = STAGE_ID_MAP.get(stage, stage)
+
     for enrich_unit in enriched_data.get('units', []):
         unit_id = enrich_unit.get('unit_id', f"stage_2_unit_{str(unit_num).zfill(2)}")
         
@@ -193,7 +199,7 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
             {"unit_id": unit_id},
             {"$set": {
                 "unit_id": unit_id,
-                "stage_id": "stage_2",
+                "stage_id": stage_db_id,
                 "number": unit_num,
                 "title": enrich_unit.get('title', ''),
                 "subtitle": enrich_unit.get('subtitle', ''),
