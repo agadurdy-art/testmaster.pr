@@ -417,7 +417,7 @@ Respond with ONLY valid JSON:
     ]
 }}
 
-CRITICAL: You MUST create exactly 3 questions. Not 1, not 2, but 3 different comprehension questions."""
+CRITICAL REQUIREMENT: Your JSON "questions" array MUST contain EXACTLY 3 objects. If you return fewer than 3 questions, the response will be rejected. Generate question 1, question 2, AND question 3."""
 
         try:
             response = await chat.send_message(UserMessage(text=prompt))

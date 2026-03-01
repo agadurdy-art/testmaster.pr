@@ -1606,7 +1606,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
       if (browserTranscript.trim()) {
         evaluateLocally(browserTranscript);
       } else {
-        setError('Ses kaydı çok kısa. Lütfen tekrar deneyin.');
+        setError('Recording too short. Please try again.');
         setPhase('ready');
       }
       return;
