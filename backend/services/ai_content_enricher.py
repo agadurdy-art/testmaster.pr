@@ -490,13 +490,16 @@ GAME TYPES:
    Format: {{"sentence": "She ___ happy.", "answer": "is", "options": ["am", "is", "are", "be"]}}
 
 3. error_hunter (4-6 items): Find the grammar mistake in the sentence.
-   CRITICAL: Use DIVERSE error types - NOT just is/are. Mix these error categories:
+   CRITICAL RULES FOR ERROR HUNTER:
+   - Each sentence must have EXACTLY ONE error (not two or more!)
+   - Use DIVERSE error types - NOT just is/are. Mix these error categories:
    - Subject-verb agreement (he go → he goes)
    - Pronoun errors (Him is happy → He is happy)  
    - Article errors (I have cat → I have a cat)
    - Preposition errors (The book is to the table → on the table)
    - Verb form errors (She can swims → She can swim)
    - Plural errors (two dog → two dogs)
+   - NEVER put two errors in the same sentence. Keep the rest of the sentence perfect.
    Format: {{"sentence": "Him is happy.", "errorWord": "Him", "correctWord": "He", "explanation": "Use 'He' as subject pronoun"}}
 
 4. true_false (4-6 items): Is this sentence grammatically correct?
