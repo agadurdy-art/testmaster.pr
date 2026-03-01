@@ -1,0 +1,461 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_09",
+      "unit_num": 9,
+      "title": "What are we doing?",
+      "subtitle": "Actions happening right now",
+      "phonics_focus": [
+        "-ing endings",
+        "Verb sounds"
+      ],
+      "grammar_focus": [
+        "Present Continuous (am/is/are + verb-ing)"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_09_lesson_01",
+          "title": "Current Actions",
+          "topic": "Describing a busy scene in a playground",
+          "context": "Describing a busy scene in a playground.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing a busy scene in a playground?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "eating",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "drinking",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "playing",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "wearing",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Current Actions",
+              "text": "A short story about describing a busy scene in a playground.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Present Continuous (am/is/are + verb-ing)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing a busy scene in a playground.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing a busy scene in a playground.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing a busy scene in a playground?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_09_lesson_02",
+          "title": "At Home Actions",
+          "topic": "A phone call asking family members what they are doing",
+          "context": "A phone call asking family members what they are doing.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about a phone call asking family members what they are doing?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "sleeping",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "drawing",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "watching TV",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "listening to music",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "At Home Actions",
+              "text": "A short story about a phone call asking family members what they are doing.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Present Continuous (am/is/are + verb-ing)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about a phone call asking family members what they are doing.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about a phone call asking family members what they are doing.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about a phone call asking family members what they are doing?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_09_lesson_03",
+          "title": "Grammar Focus",
+          "topic": "A Mime the action game",
+          "context": "Focus on -ing endings and subject-verb agreement.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about a mime the action game?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "running",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "singing",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "dancing",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "reading",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Grammar Focus",
+              "text": "A short story about a mime the action game.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Present Continuous (am/is/are + verb-ing)",
+              "explanation": "",
+              "examples": []
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about a mime the action game.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about a mime the action game.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about a mime the action game?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_09_lesson_04",
+          "title": "Unit Review",
+          "topic": "Describing a picture of people doing various activities",
+          "context": "Describing a picture of people doing various activities.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "question_text": "What do you know about describing a picture of people doing various activities?",
+              "correct_answer": "",
+              "options": [],
+              "image_emoji": "",
+              "hint": ""
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "eating",
+                "drinking",
+                "playing",
+                "wearing",
+                "sleeping",
+                "drawing",
+                "watching TV",
+                "listening to music",
+                "running",
+                "singing",
+                "dancing",
+                "reading"
+              ]
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Unit Review",
+              "text": "A short story about describing a picture of people doing various activities.",
+              "questions": [
+                {
+                  "question": "What happens in the story?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "rule_pattern": "Present Continuous (am/is/are + verb-ing)",
+              "explanation": "",
+              "examples": [],
+              "patterns": [
+                "Present Continuous (am/is/are + verb-ing)"
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Listen to the story about describing a picture of people doing various activities.",
+              "questions": [
+                {
+                  "question": "What did you hear?",
+                  "answer": "",
+                  "options": []
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "prompt": "Say something about describing a picture of people doing various activities.",
+              "expected_text": "",
+              "mode": "speaking"
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "question_text": "What did you learn about describing a picture of people doing various activities?",
+              "correct_answer": "",
+              "options": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
