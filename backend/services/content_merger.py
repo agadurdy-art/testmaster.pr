@@ -30,6 +30,9 @@ ENRICH_MAP = {
     'exit_ticket': 'exit_ticket',
     'listening': 'listening',
     'production': 'production',
+    'grammar_focus': 'grammar_focus',
+    'grammar_review': 'grammar_focus',
+    'micro_reading': 'micro_reading',
 }
 
 
@@ -46,6 +49,10 @@ def _enriched_has_content(step: Dict, step_type: str) -> bool:
         return len(qs) >= 1 and all(q.get('options') and len(q['options']) >= 2 for q in qs)
     if step_type == 'production':
         return len(step.get('prompts', [])) >= 2
+    if step_type == 'grammar_focus':
+        return len(step.get('examples', [])) >= 1 or bool(step.get('rule_pattern'))
+    if step_type == 'micro_reading':
+        return len(step.get('questions', [])) >= 2 and bool(step.get('text', ''))
     return False
 
 
