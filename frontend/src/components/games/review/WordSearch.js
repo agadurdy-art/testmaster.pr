@@ -142,15 +142,14 @@ const WordSearch = ({ items, onComplete, onSkip }) => {
 
         <Card className="p-5">
           <h4 className="font-bold text-lg mb-3">Words to Find:</h4>
-          <div className="space-y-2">
+          <div className="grid grid-cols-2 gap-2">
             {placed.map(w => (
-              <div key={w.word} className={`flex items-center gap-2 p-3 rounded-lg transition-all ${
+              <div key={w.word} className={`flex items-center gap-2 p-2.5 rounded-lg transition-all ${
                 foundWords.has(w.word) ? 'bg-green-50 line-through text-green-600' : 'bg-gray-50'
               }`}>
-                <span className="text-2xl">{w.image_emoji || w.emoji || '?'}</span>
-                <div>
-                  <p className={`font-medium text-base ${foundWords.has(w.word) ? 'text-green-600' : 'text-gray-800'}`}>{w.word.toLowerCase()}</p>
-                  <p className="text-sm text-gray-500">{w.definition || ''}</p>
+                <span className="text-xl">{w.image_emoji || w.emoji || '?'}</span>
+                <div className="min-w-0">
+                  <p className={`font-medium text-sm truncate ${foundWords.has(w.word) ? 'text-green-600' : 'text-gray-800'}`}>{w.word.toLowerCase()}</p>
                 </div>
               </div>
             ))}
