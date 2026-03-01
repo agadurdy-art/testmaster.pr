@@ -503,15 +503,18 @@ GAME TYPES:
 
 3. error_hunter (4-6 items): Find the grammar mistake in the sentence.
    CRITICAL RULES FOR ERROR HUNTER:
-   - Each sentence must have EXACTLY ONE error (not two or more!)
-   - Use DIVERSE error types - NOT just is/are. Mix these error categories:
-   - Subject-verb agreement (he go → he goes)
-   - Pronoun errors (Him is happy → He is happy)  
-   - Article errors (I have cat → I have a cat)
-   - Preposition errors (The book is to the table → on the table)
-   - Verb form errors (She can swims → She can swim)
-   - Plural errors (two dog → two dogs)
-   - NEVER put two errors in the same sentence. Keep the rest of the sentence perfect.
+   - Each sentence MUST contain EXACTLY ONE grammar error. The rest of the sentence MUST be 100% correct.
+   - The errorWord MUST be a single word that appears in the sentence
+   - The correctWord MUST be the replacement that fixes the sentence
+   - Use DIVERSE error types across items - at least 3 different categories:
+     * Subject-verb agreement: "He go to school" (errorWord: "go", correctWord: "goes")
+     * Wrong pronoun: "Him is happy" (errorWord: "Him", correctWord: "He")  
+     * Missing/wrong article: "She has cat" (errorWord: "has", correctWord: "has a") — NO, instead write "She have a cat" (errorWord: "have", correctWord: "has")
+     * Wrong preposition: "The ball is to the box" (errorWord: "to", correctWord: "in")
+     * Wrong verb form: "She can swims" (errorWord: "swims", correctWord: "swim")
+     * Plural errors: "two dog" (errorWord: "dog", correctWord: "dogs")
+   - NEVER put two errors in the same sentence
+   - Keep sentences short (5-8 words) and use simple A1 vocabulary
    Format: {{"sentence": "Him is happy.", "errorWord": "Him", "correctWord": "He", "explanation": "Use 'He' as subject pronoun"}}
 
 4. true_false (4-6 items): Is this sentence grammatically correct?
