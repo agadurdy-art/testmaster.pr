@@ -610,3 +610,28 @@ async def update_review_item(request: ReviewItemUpdateRequest):
         "next_review_date": next_review.isoformat(),
         "interval_days": interval
     }
+
+
+
+# ============ TTS ROUTES ============
+
+from pydantic import BaseModel as PydanticBaseModel
+
+class TTSRequest(PydanticBaseModel):
+    text: str
+
+@router.post("/tts/generate")
+async def generate_tts(request: TTSRequest):
+    """Generate TTS audio for a given text using ElevenLabs"""
+    try:
+        from services.tts_service import get_tts_service
+        tts = get_tts_service()
+        audio_url = tts.generate_audio(request.text)
+        if not audio_url:
+            raise HTTPException(status_code=500, detail="TTS generation failed")
+        return {"audio_url": audio_url, "text": request.text}
+    except ImportError:
+        raise HTTPException(status_code=500, detail="TTS service not available")
+    except Exception as e:
+        logger.error(f"TTS error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
