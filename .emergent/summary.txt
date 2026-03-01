@@ -1,81 +1,160 @@
 <analysis>An analysis of the user and agent conversation has been done. Here is the summary:
 
 **original_problem_statement:**
-The user is building Testmaster, a mastery-based English learning platform. The initial task was to fix a critical data-merging issue where AI-generated content was overwriting human-authored core lessons. After successfully fixing this and several other bugs, the agent implemented a speech evaluation feature and a dynamic PDF worksheet generator.
+The user is building Testmaster, a mastery-based English learning platform. After initial bug fixes and feature implementations (speech evaluation, PDF generator), the core task shifted to building out the 12 units of **Stage 2: Starters (A1)**.
 
-The current core task is to build out **Stage 2: Starters (A1)** of the curriculum, which consists of 12 units. The user has provided a master data document outlining the vocabulary and grammar for each lesson. The agreed-upon plan is to generate, enrich, and implement the content unit-by-unit to ensure quality.
-
-The immediate user request is to unlock all stages in the UI, so they can access and test Stage 2 content as it becomes available without being blocked by a completion gate.
+The agent successfully implemented Stage 2, Unit 1, but the user provided two large rounds of detailed feedback focusing on content quality, game variety, UX, and pedagogical correctness. The current goal is to address this comprehensive feedback, perfecting Unit 1 to serve as the gold-standard template for the remaining 11 units. This involves upgrading the AI model, creating new game components, rewriting the entire content enrichment pipeline, and integrating new services for audio and images.
 
 **PRODUCT REQUIREMENTS:**
-1.  **Stage 2 Implementation:** Systematically generate, enrich, and seed all 12 units of Stage 2 content based on the provided master data document.
-2.  **Unlock All Stages:** Remove the UI-level locking mechanism that prevents users from accessing later stages (like Stage 2) before completing earlier ones. All stages should be open for the duration of development.
-3.  **Data Quality:** Ensure each vocabulary item in Stage 2 has an associated image/emoji and that the AI-generated content (games, quizzes) is high quality and contextually relevant.
-4.  **PDF Generator:** A previously implemented feature, the PDF generator should create high-quality worksheets using GPT-4o, randomly selecting 20 words for cumulative reviews.
-5.  **Speaking Practice:** A previously implemented feature, the Production activity must include a Record and Evaluate function using Whisper for speech-to-text evaluation.
+1.  **Content Quality (Claude Sonnet 4.5):** All AI-generated content (reading, listening, games) must be high-quality, pedagogically sound for A1 level (6-year-old learners), and free of nonsensical or incorrect information. The AI model has been upgraded from GPT-4o to Claude Sonnet 4.5 to meet this requirement.
+2.  **Game Variety & Rotation:** Implement a wider variety of vocabulary and grammar games.
+    *   **Vocabulary:** At least 4 game types per lesson for lessons 1-3, with types rotating between lessons. Lesson 4 (review) should have summary games like Crossword and Word Search.
+    *   **Grammar:** 5 distinct game types per lesson.
+3.  **Reading & Listening Content:** Reading passages must follow the Cambridge Starters exam format (image-driven). Questions should be clear, well-formatted (using bold/color), and appropriate for the target age group.
+4.  **Visuals & Audio:**
+    *   Replace all emojis in the vocabulary section with high-quality stock photos.
+    *   Integrate ElevenLabs to generate child-friendly, slow-paced (e.g., 0.85x speed) audio for all vocabulary and listening activities in Stage 1 and 2.
+5.  **UX/UI Improvements:**
+    *   Fix UI bugs in games (e.g., Crossword auto-advance, Word Search layout).
+    *   Ensure all user-facing text inside lessons is large and readable for presentation on an interactive board.
+    *   Fix browser permission warnings to be in English, not Turkish.
 
 **User's preferred language**: The user's messages are in **Turkish**. The next agent MUST respond in Turkish for all  interactions.
 
 **what currently exists?**
-*   **Backend:** The data pipeline is robust. The critical bug of overwriting original content has been fixed. The system now correctly merges human-authored content with AI-enriched game/quiz data. Endpoints exist for speech evaluation (), dynamic PDF worksheet generation (), and a new pipeline for generating and seeding Stage 2 content.
-*   **Frontend:** The UI is stable. All major bugs (empty activities, incorrect data display, broken buttons) have been fixed. A new speech recording UI has been implemented in the  component.
-*   **Content:** Stage 1 is fully functional and stable. For Stage 2, Unit 1 has been successfully generated, enriched, and seeded into the database as a pilot. It is viewable and functional in the UI, but the stage itself is currently locked.
+*   **Backend:** The data pipeline and enrichment scripts (, ) have been extensively rewritten to support the new requirements. The AI model has been switched to Claude Sonnet 4.5. The logic for game rotation, generating multiple game types, and handling review lessons has been implemented, though it has several outstanding bugs.
+*   **Frontend:** All stages are unlocked. Numerous new game components have been created: , , , , and . Existing components (, , , etc.) have been heavily modified to support larger text sizes, multiple prompts (for speaking), and improved question formatting via a new  helper component.
+*   **Content:** Stage 1 is stable. Stage 2, Unit 1 has been generated and re-enriched multiple times. It now contains a variety of games and improved content structure, but still has bugs related to data merging and AI generation quality.
 
 **Last working item**:
-*   **Last item agent was working:** The user requested that all stages be unlocked to allow access to Stage 2 during development. The agent identified the file () containing the locking logic and was about to remove it.
+*   **Last item agent was working:** The agent was fixing a critical data merging issue where enriched content for  and  was being discarded. The agent identified that these activity types were missing from the  in . After adding them, the agent noted that the AI was still only generating 1 reading question despite being prompted for 3.
 *   **Status:** IN PROGRESS
 *   **Agent Testing Done:** N
-*   **Which testing method agent to use?** screenshot tool. After removing the lock, take a screenshot of the main course page to visually confirm that Stage 2 is no longer greyed out and is clickable.
+*   **Which testing method agent to use?** backend testing agent.
+    1.  Re-run the enrichment and seeding process for Unit 1.
+    2.  Use  commands to inspect the  document for Stage 2, Unit 1.
+    3.  Verify that the  step in the  array now contains **3 questions**.
+    4.  Verify that the  step in Lesson 4 now contains an  array with content.
+    5.  After backend verification, use the screenshot tool to confirm the UI displays 3 reading questions.
 *   **User Testing Done:** N
 
 **All Pending/In progress Issue list**:
-*   **Issue 1: Unlock All Stages (P0)**
-    *   **Description:** The frontend UI currently grays out and locks access to stages that have not been completed. The user wants this lock removed for development purposes.
+This is the prioritized list of outstanding issues from the user's latest feedback (Chat Message 373).
+
+*   **Issue 1: Reading Questions Count (P0)**
+*   **Issue 2: Error Hunter Logic (P0)**
+*   **Issue 3: Microphone Permission Language (P0)**
+*   **Issue 4: Lesson 4 Examples Empty (P1)**
+*   **Issue 5: Vocabulary Images (P1)**
+*   **Issue 6: ElevenLabs Audio Integration (P1)**
+*   **Issue 7: Question Formatting & Simplicity (P1)**
+*   **Issue 8: Crossword UX & Bug (P2)**
+*   **Issue 9: WordSearch UX (P2)**
+
+**Issues Detail:**
+*   **Issue 1: Reading Questions Count (P0)**
+    *   **Description:** The reading section only shows 1 question, but the requirement is 3. The agent fixed a merging bug, but the AI itself seems to be generating only one question despite the prompt.
+    *   **Attempted fixes:** Added  to  in . Updated the enrichment prompt in  to explicitly ask for 3 questions.
     *   **Next debug checklist:**
-        1.  Edit .
-        2.  Locate the logic that calculates  for each stage card (likely around line 150).
-        3.  Modify the logic to ensure  is always , or remove the conditional styling and click handlers based on this variable.
-    *   **Why fix this issue and what will be achieved with the fix?** This will allow the user and the agent to access and test Stage 2 units as they are being developed without needing to complete Stage 1.
+        1.  Review the  method in .
+        2.  Strengthen the prompt to be more insistent on the JSON structure and the number of questions. Consider adding a post-generation validation step that retries if the question count is not 3.
+        3.  Check the raw output from the Claude Sonnet 4.5 model to see if it's a parsing error or a generation failure.
+    *   **Why fix this issue and what will be achieved with the fix?** To meet the pedagogical requirement of having sufficient comprehension checks for reading passages.
     *   **Status:** IN PROGRESS
+    *   **Is recurring issue?** Y
+    *   **Should Test frontend/backend/both after fix?** Both.
+*   **Issue 2: Error Hunter Logic (P0)**
+    *   **Description:** The Find the Mistake game () sometimes has multiple errors in a sentence or incorrectly marks a valid correction as wrong. The AI needs to generate sentences with only **one** clear, unambiguous error.
+    *   **Next debug checklist:**
+        1.  Revise the  prompt in .
+        2.  Specifically instruct the AI to generate  items where only a single, obvious grammar error (relevant to the lesson's topic) exists.
+        3.  Update the frontend component  to handle punctuation more robustly during answer comparison.
+    *   **Why fix this issue and what will be achieved with the fix?** Provides a fair and accurate evaluation for the user, preventing frustration from buggy game logic.
+    *   **Status:** IN PROGRESS
+    *   **Is recurring issue?** Y
+    *   **Should Test frontend/backend/both after fix?** Both.
+*   **Issue 3: Microphone Permission Language (P0)**
+    *   **Description:** The browser's microphone access denied warning in the Speaking activity appears in Turkish. It should be in English. This is likely a browser-level setting, but the agent should investigate if it can be influenced or if a custom, English-only warning can be displayed.
+    *   **Next debug checklist:**
+        1.  Examine .
+        2.  In the  function's  block, add a custom state for the error message (e.g., ).
+        3.  Render a custom, hardcoded English error message in the UI if  is true, instead of relying on the browser's default message.
+    *   **Why fix this issue and what will be achieved with the fix?** Ensures a consistent English-only experience throughout the application.
+    *   **Status:** NOT STARTED
     *   **Is recurring issue?** N
     *   **Should Test frontend/backend/both after fix?** Frontend.
-    *   **Blocked on other issue:** None.
+*   **Issue 4: Lesson 4 Examples Empty (P1)**
+    *   **Description:** The grammar review section in Lesson 4 does not display any example sentences.
+    *   **Attempted fixes:** The agent identified that  activities were not being enriched. The agent added logic to handle this type in  and . However, the issue persists.
+    *   **Next debug checklist:**
+        1.  Trace the data flow for Lesson 4 in .
+        2.  Verify that the  step is correctly passed to the  function.
+        3.  Verify that the enriched  object (with examples) returned by the AI is correctly merged back into the lesson's .
+        4.  Check the final document in the  MongoDB collection.
+    *   **Why fix this issue and what will be achieved with the fix?** Review lessons need grammar examples to be effective.
+    *   **Status:** IN PROGRESS
+    *   **Is recurring issue?** Y
+    *   **Should Test frontend/backend/both after fix?** Both.
+*   **Issue 5: Vocabulary Images (P1)**
+    *   **Description:** Emojis are insufficient and often incorrect for vocabulary. The user wants to use stock photos instead.
+    *   **Next debug checklist:**
+        1.  Choose a stock photo API (e.g., Pexels, Unsplash, or a paid service).
+        2.  Call  to get the integration plan.
+        3.  Update  in the  method to call this new service to find a relevant image URL for each vocabulary word.
+        4.  Store the image URL in the vocabulary item data.
+        5.  Update the frontend Vocabulary component to display this image instead of the emoji.
+    *   **Why fix this issue and what will be achieved with the fix?** Greatly improves the visual quality and pedagogical accuracy of the vocabulary section.
+    *   **Status:** NOT STARTED
+    *   **Is recurring issue?** N
+    *   **Should Test frontend/backend/both after fix?** Both.
+*   **Issue 6: ElevenLabs Audio Integration (P1)**
+    *   **Description:** The user wants high-quality, child-friendly, slow-paced audio for all vocabulary and listening prompts in Stage 1 & 2.
+    *   **Next debug checklist:**
+        1.  Call  for ElevenLabs.
+        2.  Implement a new service in the backend to take text and generate an audio file URL using the ElevenLabs API. Configure it for a slow, natural, child-friendly voice.
+        3.  Modify the enrichment process () to generate audio for every vocabulary word's  and every  prompt.
+        4.  Store the audio URL in the respective data objects.
+        5.  Update the frontend components (, ) to include a play audio button.
+    *   **Why fix this issue and what will be achieved with the fix?** Adds a critical listening comprehension component to the platform, making it much more interactive and effective for language learners.
+    *   **Status:** NOT STARTED
+    *   **Is recurring issue?** N
+    *   **Should Test frontend/backend/both after fix?** Both.
+*   **And 4 more issues...** (The remaining issues are lower priority but should be tracked.)
 
 **In progress Task List**:
-*   **Task 1: Implement Stage 2 Content (P0)**
-    *   **Where to resume:** Unit 1 has been successfully implemented as a pilot. The agent needs to proceed with Unit 2. The generation script () is ready.
-    *   **What will be achieved with this?** The full curriculum for Stage 2 (Starters A1) will be built out, making the platform substantially more complete.
+*   **Task 1: Finalize Stage 2, Unit 1 (P0)**
+    *   **Where to resume:** Address the 9 pending issues, starting with the highest priority ones (Reading questions, Error Hunter logic, Microphone message).
+    *   **What will be achieved with this?** Unit 1 will be fully functional and meet all user quality standards, serving as the definitive template for the rest of Stage 2.
     *   **Status:** IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?** Both. Each unit should be tested after seeding.
-    *   **Blocked on something:** None.
+    *   **Should Test frontend/backend/both after fix?** Both.
+    *   **Blocked on something:** The pending issues themselves.
 
 **Upcoming and Future Tasks**
 **Upcoming Tasks:**
-*   **P0: Implement Stage 2 (Units 2-12):** Systematically generate, enrich, and seed the remaining 11 units for Stage 2, following the unit-by-unit plan.
-*   **P1: Correct Unit Numbering:** In the master data document provided by the user, there are two UNIT 4 entries. The second one (Food I Like!) should be corrected to UNIT 7. This needs to be handled before generating that unit's content.
-*   **P2: Verify Vocabulary Word Completion Bug:** The initial handoff summary mentioned a bug where typing one word marks all words as complete in a game. While many components were rewritten, this specific bug was never explicitly tested and verified as fixed. This requires a dedicated test run.
+*   **P0: Implement Stage 2 (Units 2-12):** Once Unit 1 is approved by the user, systematically generate, enrich, and seed the remaining 11 units using the perfected pipeline.
+*   **P1: Correct Unit Numbering:** In , correct the second UNIT 4 (Food I Like!) to UNIT 7 before generating that unit's content.
+*   **P2: Verify Old Vocabulary Word Completion Bug:** The original handoff mentioned a bug where typing one word marks all words as complete. This needs a dedicated regression test.
 
 **Future Tasks:**
 *   Implement the Daily Habit Spaced Repetition System (SRS).
 *   Implement the Booster Mode for remedial lessons.
-*   Implement the full logic for the Certification Gate to unlock stages (this will be re-enabled after development).
+*   Implement the full logic for the Certification Gate to unlock stages (to be re-enabled after development).
 *   Build the Teacher Control Panel.
-*   Begin planning for Stage 3 and beyond.
 
 **Completed work in this session**
-- **Critical Data Pipeline Fix:** Resolved the core issue of AI-generated content overwriting human-authored content by implementing a robust  logic.
-- **Bug Squashing:** Fixed numerous bugs, including:
-    - Empty/blank activities (Warm-up, Listening, Exit Ticket) due to data generation errors.
-    - Word Order game incorrectly marking correct answers as wrong (due to punctuation).
-    - Vocabulary cards not displaying example sentences.
-    - A UI animation blocking the Stop Recording button.
-- **Speaking Evaluation Feature:** Implemented a full-stack feature allowing users to record their voice for speaking prompts, with the backend using Whisper for transcription and evaluation.
-- **Advanced PDF Generator:** Reworked the PDF worksheet feature to use GPT-4o, generating dynamic and high-quality exercises based on a random selection of 20 cumulative vocabulary words.
-- **Stage 2 Pilot:** Created the content generation and enrichment pipeline for Stage 2 and successfully implemented Unit 1 as a proof-of-concept.
-- **User Support:** Guided the user through issues related to custom domain SSL configuration and platform deployment options.
+- Unlocked all course stages by modifying .
+- Fixed a  mismatch bug that prevented Stage 2 lessons from loading.
+- Debugged and fixed multiple critical flaws in the enrichment and data merging pipeline (, ).
+- Upgraded the core AI model from GPT-4o to **Claude Sonnet 4.5** for higher quality content generation.
+- **Created 5 new frontend game components:** , , , , .
+- Rewrote backend enrichment prompts to generate a rotating variety of vocabulary games and 5 distinct grammar games.
+- Refactored frontend components to significantly increase text size for better readability.
+- Implemented support for multiple (3) speaking prompts in .
+- Created a  helper component to render questions with bold/color/italics for better clarity.
+- Implemented UX fixes for the new Crossword and WordSearch games.
 
 **Earlier issues found/mentioned but not fixed**
-*   None.
+*   **Vocabulary Word Completion Bug:** A bug from a previous session where completing one word in a vocabulary game completes all of them was never explicitly tested and verified as fixed. This should be checked during the next testing cycle.
 
 **Known issue recurrence from previous fork**
 *   None.
@@ -84,75 +163,66 @@ The immediate user request is to unlock all stages in the UI, so they can access
 
 
 **Key Technical Concepts**
-*   **Hybrid Content Architecture:** The system combines static, human-authored JSON content with AI-enriched games and quizzes.
-*   **Data Unification:** A  class merges the two data sources into a final lesson object before saving it to MongoDB.
-*   **AI Content Generation & Enrichment:** Using GPT-4o to both generate baseline lesson structures (for Stage 2) and enrich specific activities (games, warm-ups, exit tickets) for all stages.
-*   **Speech-to-Text Evaluation:** Using OpenAI's Whisper via  to transcribe user audio and provide feedback.
-*   **Dynamic PDF Worksheet Generation:** Using GPT-4o to create varied and context-aware exercises for downloadable PDFs.
+*   **AI Model Upgrade:** Switched from OpenAI GPT-4o to Anthropic's **Claude Sonnet 4.5** for higher-fidelity content generation.
+*   **Advanced Prompt Engineering:** The system now uses highly structured and detailed prompts to control game variety per lesson, ensure pedagogical correctness (e.g., single-error sentences), and match specific curriculum formats (e.g., Cambridge Starters).
+*   **Dynamic Component Rendering:** The frontend now dynamically renders a wide array of game components based on the  field provided by the backend API.
+*   **Complex Data Merging:** The  script is critical, responsible for intelligently combining the original lesson structure with the newly enriched, complex data from the AI, including multiple game types and arrays of prompts.
 
 **key DB schema**
-*   ** collection:** Contains metadata for each stage (e.g., , ).
-*   ** collection:** Stores complete, merged lesson documents. Each document includes the original content and the enriched  array, which contains data for all games and activities.
+*   ** collection:** The documents within this collection are now much richer. The  array contains steps with diverse structures, including different  fields (, , , etc.) and arrays of data (e.g., a  array in  steps).
 
 **All files of reference**
-*   : Key file for the immediate task of unlocking stages.
-*   : Script used to generate content for Stage 2 units.
-*   : Contains the critical  endpoint that orchestrates the data merge and database seeding.
-*   : The frontend component for the speaking practice feature.
-*   : The backend endpoint for the speaking practice feature.
-*   : The backend endpoint for the PDF worksheet generation.
-
-**Areas that need refactoring**:
-*   None at the moment. The codebase was significantly cleaned up in the last session.
+*   : The heart of the content generation. Contains all the new Claude Sonnet 4.5 prompts.
+*   : The critical script that merges original and AI content. The  here is key.
+*   : The main page for rendering all lesson activities and games.
+*   : The parent directory for all the new and updated game components.
+*   : The new helper for rendering user-friendly questions.
+*   : The source of truth for Stage 2 curriculum.
 
 **key api endpoints**
-*   : The main endpoint to enrich and seed lesson content into the database.
-*   : Endpoint to handle audio file uploads and return speech evaluation.
-*   : Generates content for PDF worksheets using GPT-4o.
-*   : A helper script/endpoint to generate the base JSON files for Stage 2 units.
+*   : The main endpoint used to trigger the entire enrichment and database seeding process.
 
 **Critical Info for New Agent**
-*   Your first priority is to unlock all stages as requested by the user. Edit  to remove the  logic.
-*   After unlocking the stages, the main project is the systematic implementation of Stage 2. Follow the user-approved plan: work unit by unit.
-*   Use the existing script  to generate the content for Unit 2, then use the  endpoint to enrich and save it. Verify it works on the frontend before moving to the next unit.
-*   The user's confidence in the agent is high after the last session's success. Maintain this by communicating clearly (in Turkish) and executing tasks methodically.
+*   You are inheriting a project mid-way through a major refactoring effort driven by user feedback. Your immediate task is to systematically work through the 9 pending issues listed above.
+*   **Start with Issue #1 (Reading Questions Count).** This is a blocker for content quality. The issue is likely in the prompt engineering within  or a limitation of the AI model that needs to be worked around.
+*   The user is technically savvy and provides excellent, detailed feedback. Communicate your plan clearly (in Turkish) before implementing, and address each of their points.
+*   Do not proceed to Stage 2 (Units 2-12) until all 9 issues are resolved for Unit 1 and the user gives explicit approval. Unit 1 is the template for everything that follows.
+*   The next big integrations will be a **stock photo API** and **ElevenLabs**. Be prepared to use  for both.
 
 **documents and test reports created in this job**
 *   
 *   
 *   
-*   
-*   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User:** Provides a master data document for Stage 2 and asks for a plan. Suggests a unit-by-unit approach.
-2.  **Agent:** Analyzes the data, notes a numbering error (two Unit 4s), and proposes a phased plan: 1. Pilot with Unit 1, 2. Implement remaining units, 3. User verification.
-3.  **User:** Approves the plan and confirms the numbering error needs fixing.
-4.  **Agent:** Successfully generates, enriches, and seeds Stage 2, Unit 1.
-5.  **Agent:** Verifies Stage 2, Unit 1 is working perfectly via screenshot.
-6.  **User:** Sees the screenshot and points out that Stage 2 is locked in the UI. Requests that all stages be unlocked for development.
-7.  **Agent:** Acknowledges the request to unlock all stages.
-8.  **Agent:** Identifies the file () responsible for the locking logic and prepares to modify it.
+1.  **User:** Requests plan for a large set of feedback (6 items).
+2.  **Agent:** Provides a plan to address the feedback.
+3.  **User:** Provides more specific instructions on game rotation and AI model preference (Sonnet 4.6).
+4.  **Agent:** Acknowledges and prepares to start.
+5.  **User:** Asks for a detailed plan *before* implementation and clarifies model is 4.6 not 4.5. Also notes reading parts should be visual like Starters exams.
+6.  **Agent:** Provides a very detailed plan, including options for handling visual content.
+7.  **User:** Asks how images will be generated.
+8.  **Agent:** Proposes 4 options for image generation.
+9.  **User:** Selects option 4 (AI for vocab, stock photos for reading) and gives the green light.
+10. **User:** (After a large batch of work) Provides a new, detailed list of 9 issues/feedback points, including bugs, UX improvements, and a request for ElevenLabs integration.
 
 **Project Health Check:**
-*   **Healthy:** The application is stable, and the core data pipeline is functioning correctly. All major bugs from previous sessions have been resolved.
-*   **Needs Improvement:** The UI lock on stages is preventing development progress on Stage 2. This is the main broken piece of functionality.
-*   **Mocked:** N/A.
+*   **Healthy but in Active Refactoring:** The application is running, but many new features and components are being actively developed and debugged.
+*   **Needs Improvement:** The data enrichment pipeline is the most critical area. It is powerful but brittle, with several known bugs related to AI generation quality and data merging that must be fixed.
 
 **3rd Party Integrations**
-*   **OpenAI GPT-4o:** Used for content enrichment, Stage 2 generation, and PDF worksheet creation. Uses Emergent LLM Key.
-*   **Emergent Integrations (Whisper):** Used for speech-to-text in the speaking evaluation feature. Uses Emergent LLM Key.
-*   **jsPDF:** For generating downloadable PDFs on the frontend.
-*   **canvas-confetti:** For completion animations.
+*   **Anthropic Claude Sonnet 4.5:** Used for all content/game generation (via Emergent LLM Key). Replaced GPT-4o.
+*   **Emergent Integrations (Whisper):** Used for speech-to-text.
+*   **ElevenLabs (Requested):** To be integrated for text-to-speech.
+*   **Stock Photo API (Requested):** To be integrated for vocabulary images.
 
 **Testing status**
-*   **Testing agent used after significant changes:** YES. The testing agent was used multiple times to verify bug fixes and new features, with all tests passing.
-*   **Troubleshoot agent used after agent stuck in loop:** NO
-*   **Test files created:** None, but the testing agent generated multiple test reports.
-*   **Known regressions:** None.
+*   **Testing agent used after significant changes:** YES. The agent has used the testing agent multiple times. The last run was 100% successful, but was *before* the user's latest 9-point feedback list, so many of the tests are now outdated.
+*   **Test files created:** None.
+*   **Known regressions:** The  logic and  question count appear to be regressions or persistent bugs.
 
 **Credentials to test flow:**
 *   Credentials can be found in .
 
 **What agent forgot to execute**
-*   The agent was in the process of fulfilling the user's latest request (unlocking all stages) when the session ended. This task is mid-flight and is the immediate next action item.</analysis>
+*   The agent has a large, pending list of 9 explicit user requests. The highest priority is fixing the  component to show 3 questions and improving the  game logic. The integrations for stock photos and ElevenLabs are also pending.</analysis>
