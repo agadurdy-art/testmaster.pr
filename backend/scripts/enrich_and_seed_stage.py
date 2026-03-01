@@ -91,6 +91,21 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
                         print(f"    grammar_games: {len(games)} games, {total_items} items")
                         if total_items >= 3:
                             enriched_steps.append(gg)
+                    elif st == 'micro_reading':
+                        e = await enricher._enrich_reading(chat, step, lesson, unit_context)
+                        qs = e.get('questions', [])
+                        txt = e.get('text', '') or e.get('passage', '')
+                        print(f"    micro_reading: {len(qs)} questions, passage={len(txt)} chars")
+                        # Retry once if < 3 questions
+                        if len(qs) < 3 and txt:
+                            print(f"    micro_reading: only {len(qs)} questions, retrying...")
+                            e2 = await enricher._enrich_reading(chat, step, lesson, unit_context)
+                            qs2 = e2.get('questions', [])
+                            if len(qs2) >= 3:
+                                e = e2
+                                qs = qs2
+                                print(f"    micro_reading retry: {len(qs2)} questions")
+                        enriched_steps.append(e if len(qs) >= 2 and txt else step)
                     elif st == 'production':
                         e = await enricher._enrich_production(chat, step, lesson, unit_context)
                         prompts = e.get('prompts', [])
