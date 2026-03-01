@@ -186,6 +186,25 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
     TS = datetime.now(timezone.utc).isoformat()
 
     for enrich_unit in enriched_data.get('units', []):
+        unit_id = enrich_unit.get('unit_id', f"stage_2_unit_{str(unit_num).zfill(2)}")
+        
+        # Ensure unit document exists
+        await db.unified_units.update_one(
+            {"unit_id": unit_id},
+            {"$set": {
+                "unit_id": unit_id,
+                "stage_id": "stage_2",
+                "number": unit_num,
+                "title": enrich_unit.get('title', ''),
+                "subtitle": enrich_unit.get('subtitle', ''),
+                "grammar_focus": enrich_unit.get('grammar_focus', []),
+                "phonics_focus": enrich_unit.get('phonics_focus', []),
+                "total_lessons": len(enrich_unit.get('lessons', [])),
+                "updated_at": TS
+            }},
+            upsert=True
+        )
+        
         for orig_lesson in original_data['units'][0]['lessons']:
             lid = orig_lesson['lesson_id']
             enrich_lesson = next((l for l in enrich_unit['lessons'] if l['lesson_id'] == lid), None)
@@ -203,7 +222,19 @@ async def enrich_and_seed_unit(stage: str, unit_num: int):
 
             await db.unified_lessons.update_one(
                 {"lesson_id": lid},
-                {"$set": {"activity_flow": activity_flow, "merged": True, "merged_at": TS}}
+                {"$set": {
+                    "lesson_id": lid,
+                    "unit_id": unit_id,
+                    "stage_id": "stage_2",
+                    "lesson_number": orig_lesson.get('lesson_num', orig_lesson.get('number', 1)),
+                    "title": orig_lesson.get('title', ''),
+                    "topic": orig_lesson.get('topic', ''),
+                    "context": orig_lesson.get('context', ''),
+                    "activity_flow": activity_flow,
+                    "merged": True,
+                    "merged_at": TS
+                }},
+                upsert=True
             )
             print(f"  Seeded: {lid} ({len(activity_flow)} activities)")
 
