@@ -1,0 +1,2813 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_07",
+      "unit_num": 7,
+      "title": "Food I Like!",
+      "subtitle": "Food preferences and meals",
+      "phonics_focus": [
+        "Food words",
+        "Question intonation"
+      ],
+      "grammar_focus": [
+        "Do you like...?",
+        "Yes, I do / No, I don't",
+        "Conjunction and"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_07_lesson_01",
+          "title": "Lunch Time",
+          "topic": "Choosing food in the school canteen",
+          "context": "Choosing food in the school canteen.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about lunch time! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do you eat lunch at school?",
+                  "correct_answer": "In the canteen",
+                  "options": [
+                    "In the canteen",
+                    "In the library",
+                    "In the playground",
+                    "In the bathroom"
+                  ],
+                  "image_emoji": "🍽️",
+                  "hint": "It's a special place where we eat food at school!"
+                },
+                {
+                  "question_text": "What do you do when you want food in the canteen?",
+                  "correct_answer": "Choose what I want",
+                  "options": [
+                    "Choose what I want",
+                    "Sleep on a chair",
+                    "Play with toys",
+                    "Read a book"
+                  ],
+                  "image_emoji": "🤔",
+                  "hint": "You look at the food and pick something yummy!"
+                },
+                {
+                  "question_text": "Who helps you get food in the canteen?",
+                  "correct_answer": "The canteen worker",
+                  "options": [
+                    "The canteen worker",
+                    "The bus driver",
+                    "A police officer",
+                    "A doctor"
+                  ],
+                  "image_emoji": "👩‍🍳",
+                  "hint": "This person works in the canteen and gives you food!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "chicken",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "rice",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "beans",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "bread",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "chicken",
+                      "emoji": "🍗",
+                      "distractors": [
+                        {
+                          "word": "fish",
+                          "emoji": "🐟"
+                        },
+                        {
+                          "word": "pizza",
+                          "emoji": "🍕"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rice",
+                      "emoji": "🍚",
+                      "distractors": [
+                        {
+                          "word": "noodles",
+                          "emoji": "🍜"
+                        },
+                        {
+                          "word": "cake",
+                          "emoji": "🍰"
+                        },
+                        {
+                          "word": "cheese",
+                          "emoji": "🧀"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "beans",
+                      "emoji": "🫘",
+                      "distractors": [
+                        {
+                          "word": "carrot",
+                          "emoji": "🥕"
+                        },
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "egg",
+                          "emoji": "🥚"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bread",
+                      "emoji": "🍞",
+                      "distractors": [
+                        {
+                          "word": "cookie",
+                          "emoji": "🍪"
+                        },
+                        {
+                          "word": "orange",
+                          "emoji": "🍊"
+                        },
+                        {
+                          "word": "milk",
+                          "emoji": "🥛"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "chicken",
+                      "emoji": "🍗",
+                      "distractors": [
+                        {
+                          "word": "burger",
+                          "emoji": "🍔"
+                        },
+                        {
+                          "word": "tomato",
+                          "emoji": "🍅"
+                        },
+                        {
+                          "word": "ice cream",
+                          "emoji": "🍦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "rice",
+                      "emoji": "🍚",
+                      "distractors": [
+                        {
+                          "word": "soup",
+                          "emoji": "🍲"
+                        },
+                        {
+                          "word": "strawberry",
+                          "emoji": "🍓"
+                        },
+                        {
+                          "word": "sandwich",
+                          "emoji": "🥪"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "beans",
+                      "emoji": "🫘",
+                      "distractors": [
+                        {
+                          "word": "grapes",
+                          "emoji": "🍇"
+                        },
+                        {
+                          "word": "potato",
+                          "emoji": "🥔"
+                        },
+                        {
+                          "word": "watermelon",
+                          "emoji": "🍉"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "bread",
+                      "emoji": "🍞",
+                      "distractors": [
+                        {
+                          "word": "donut",
+                          "emoji": "🍩"
+                        },
+                        {
+                          "word": "pear",
+                          "emoji": "🍐"
+                        },
+                        {
+                          "word": "hot dog",
+                          "emoji": "🌭"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "chicken",
+                      "emoji": "🍗"
+                    },
+                    {
+                      "word": "rice",
+                      "emoji": "🍚"
+                    },
+                    {
+                      "word": "beans",
+                      "emoji": "🫘"
+                    },
+                    {
+                      "word": "bread",
+                      "emoji": "🍞"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "chicken",
+                      "emoji": "🍗",
+                      "definition": "Yummy meat from a bird"
+                    },
+                    {
+                      "word": "rice",
+                      "emoji": "🍚",
+                      "definition": "Small white grains we cook"
+                    },
+                    {
+                      "word": "beans",
+                      "emoji": "🫘",
+                      "definition": "Little round vegetables"
+                    },
+                    {
+                      "word": "bread",
+                      "emoji": "🍞",
+                      "definition": "Soft food made from flour"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Lunch Time at School",
+              "text": "It's lunch time at school! Tom goes to the canteen. He looks at the food. There is chicken, rice, beans and bread. Tom asks, 'Do you like chicken?' His friend says, 'Yes, I do!' Tom chooses chicken and rice. His friend chooses beans and bread.",
+              "scene_description": "children choosing food at school canteen counter with lunch trays",
+              "questions": [
+                {
+                  "question": "Where does Tom go at lunch time?",
+                  "answer": "To the canteen",
+                  "options": [
+                    "To the canteen",
+                    "To the playground",
+                    "To the library"
+                  ],
+                  "correct_answer": "To the canteen"
+                },
+                {
+                  "question": "What food does Tom choose?",
+                  "answer": "Chicken and rice",
+                  "options": [
+                    "Chicken and rice",
+                    "Beans and bread",
+                    "Only chicken"
+                  ],
+                  "correct_answer": "Chicken and rice"
+                },
+                {
+                  "question": "Does Tom's friend like chicken?",
+                  "answer": "Yes, he does",
+                  "options": [
+                    "Yes, he does",
+                    "No, he doesn't",
+                    "We don't know"
+                  ],
+                  "correct_answer": "Yes, he does"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Do you like ___? / Yes, I do. / No, I don't. / I like ___ and ___.",
+              "explanation": "We use 'Do you like...?' to ask about food we enjoy, and we can use 'and' to talk about two foods together.",
+              "examples": [
+                "Do you like chicken? Yes, I do!",
+                "Do you like beans? No, I don't.",
+                "I like rice and bread."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "chicken",
+                        "?"
+                      ],
+                      "correctSentence": "Do you like chicken?"
+                    },
+                    {
+                      "words": [
+                        "Yes",
+                        ",",
+                        "I",
+                        "do",
+                        "."
+                      ],
+                      "correctSentence": "Yes, I do."
+                    },
+                    {
+                      "words": [
+                        "No",
+                        ",",
+                        "I",
+                        "don't",
+                        "."
+                      ],
+                      "correctSentence": "No, I don't."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "rice",
+                        "and",
+                        "beans",
+                        "."
+                      ],
+                      "correctSentence": "I like rice and beans."
+                    },
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "bread",
+                        "?"
+                      ],
+                      "correctSentence": "Do you like bread?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Do you ___ chicken?",
+                      "answer": "like",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "liked"
+                      ]
+                    },
+                    {
+                      "sentence": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "am",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "don't",
+                        "doesn't",
+                        "not",
+                        "no"
+                      ]
+                    },
+                    {
+                      "sentence": "I like rice ___ bread.",
+                      "answer": "and",
+                      "options": [
+                        "and",
+                        "or",
+                        "but",
+                        "with"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you like beans?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Does you like chicken?",
+                      "errorWord": "Does",
+                      "correctWord": "Do",
+                      "explanation": "Use 'Do' with 'you', not 'Does'"
+                    },
+                    {
+                      "sentence": "Yes, I does.",
+                      "errorWord": "does",
+                      "correctWord": "do",
+                      "explanation": "Use 'do' with 'I', not 'does'"
+                    },
+                    {
+                      "sentence": "I like chicken or rice.",
+                      "errorWord": "or",
+                      "correctWord": "and",
+                      "explanation": "Use 'and' to connect two foods you like"
+                    },
+                    {
+                      "sentence": "Do you likes bread?",
+                      "errorWord": "likes",
+                      "correctWord": "like",
+                      "explanation": "Use 'like' after 'Do you', not 'likes'"
+                    },
+                    {
+                      "sentence": "No, I not.",
+                      "errorWord": "not",
+                      "correctWord": "don't",
+                      "explanation": "Say 'I don't' as the short answer"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "Do you like rice?",
+                      "is_correct": true,
+                      "corrected": "Do you like rice?",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "Yes, I does.",
+                      "is_correct": false,
+                      "corrected": "Yes, I do.",
+                      "explanation": "Use 'do' with 'I'"
+                    },
+                    {
+                      "sentence": "I like beans and bread.",
+                      "is_correct": true,
+                      "corrected": "I like beans and bread.",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "Does you like chicken?",
+                      "is_correct": false,
+                      "corrected": "Do you like chicken?",
+                      "explanation": "Use 'Do' with 'you'"
+                    },
+                    {
+                      "sentence": "No, I don't.",
+                      "is_correct": true,
+                      "corrected": "No, I don't.",
+                      "explanation": "This is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ you like chicken?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Is",
+                        "Are"
+                      ],
+                      "explanation": "Use 'Do' with 'you'"
+                    },
+                    {
+                      "question": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "am",
+                        "like"
+                      ],
+                      "explanation": "Answer 'Do you...?' with 'I do'"
+                    },
+                    {
+                      "question": "I like rice ___ beans.",
+                      "answer": "and",
+                      "options": [
+                        "and",
+                        "or",
+                        "but",
+                        "so"
+                      ],
+                      "explanation": "Use 'and' to connect two things you like"
+                    },
+                    {
+                      "question": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "don't",
+                        "doesn't",
+                        "not",
+                        "no"
+                      ],
+                      "explanation": "Answer 'Do you...?' with 'I don't'"
+                    },
+                    {
+                      "question": "Do you ___ bread?",
+                      "answer": "like",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "to like"
+                      ],
+                      "explanation": "Use 'like' after 'Do you'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! It's lunch time now. Let's go to the canteen. Look at all the food! There is chicken, rice, beans and bread. Do you like chicken? Yes? Great! Do you like beans? No? That's okay. You can choose chicken and rice, or beans and bread. What do you want today?",
+              "questions": [
+                {
+                  "question": "What time is it?",
+                  "answer": "Lunch time",
+                  "options": [
+                    "Lunch time",
+                    "Breakfast time",
+                    "Dinner time",
+                    "Snack time"
+                  ]
+                },
+                {
+                  "question": "Where are the children going?",
+                  "answer": "To the canteen",
+                  "options": [
+                    "To the canteen",
+                    "To the playground",
+                    "To the classroom",
+                    "To the library"
+                  ]
+                },
+                {
+                  "question": "What foods can you choose?",
+                  "answer": "Chicken and rice, or beans and bread",
+                  "options": [
+                    "Chicken and rice, or beans and bread",
+                    "Pizza and chips",
+                    "Apples and oranges",
+                    "Cake and ice cream"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's practice talking about food! Say these sentences about lunch time.",
+              "expected_text": "I like chicken and rice.",
+              "prompts": [
+                {
+                  "prompt": "Say: I like chicken and rice.",
+                  "expected_text": "I like chicken and rice."
+                },
+                {
+                  "prompt": "Ask your friend: Do you like beans?",
+                  "expected_text": "Do you like beans?"
+                },
+                {
+                  "prompt": "Answer: Yes, I do! I like beans and bread.",
+                  "expected_text": "Yes, I do! I like beans and bread."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lunch Time Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which food is this? 🍗",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "chicken",
+                  "options": [
+                    "chicken",
+                    "rice",
+                    "beans",
+                    "bread"
+                  ]
+                },
+                {
+                  "question_text": "Do you ___ rice?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "like",
+                  "options": [
+                    "like",
+                    "likes",
+                    "liking",
+                    "liked"
+                  ]
+                },
+                {
+                  "question_text": "I like chicken ___ bread.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "and",
+                  "options": [
+                    "and",
+                    "or",
+                    "but",
+                    "so"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We choose food in the canteen at lunch time.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What is the correct answer to 'Do you like beans?'",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes, I do.",
+                  "options": [
+                    "Yes, I do.",
+                    "Yes, I like.",
+                    "Yes, I does.",
+                    "Yes, I am."
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_07_lesson_02",
+          "title": "Drinks",
+          "topic": "Ordering drinks at a cafe",
+          "context": "Ordering drinks at a cafe.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What do you drink when you are thirsty?",
+                  "correct_answer": "water",
+                  "options": [
+                    "water",
+                    "pizza",
+                    "shoes",
+                    "ball"
+                  ],
+                  "image_emoji": "💧",
+                  "hint": "It's cold and clear. You drink it every day!"
+                },
+                {
+                  "question_text": "Where can you buy drinks and snacks?",
+                  "correct_answer": "cafe",
+                  "options": [
+                    "cafe",
+                    "bedroom",
+                    "garden",
+                    "bathroom"
+                  ],
+                  "image_emoji": "☕",
+                  "hint": "People sit at tables here. They order food and drinks."
+                },
+                {
+                  "question_text": "What do you say when you want something?",
+                  "correct_answer": "Can I have..., please?",
+                  "options": [
+                    "Can I have..., please?",
+                    "Give me now!",
+                    "I want!",
+                    "Go away!"
+                  ],
+                  "image_emoji": "😊",
+                  "hint": "Good manners are important! We say 'please' when we ask."
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "water",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "juice",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "milk",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "hot",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "cold",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "water",
+                      "emoji": "💧"
+                    },
+                    {
+                      "word": "juice",
+                      "emoji": "🧃"
+                    },
+                    {
+                      "word": "milk",
+                      "emoji": "🥛"
+                    },
+                    {
+                      "word": "hot",
+                      "emoji": "🔥"
+                    },
+                    {
+                      "word": "cold",
+                      "emoji": "🧊"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "water",
+                      "emoji": "💧",
+                      "hint": "You drink this when you are thirsty."
+                    },
+                    {
+                      "word": "juice",
+                      "emoji": "🧃",
+                      "hint": "This is sweet. It comes from fruit."
+                    },
+                    {
+                      "word": "milk",
+                      "emoji": "🥛",
+                      "hint": "This is white. It comes from cows."
+                    },
+                    {
+                      "word": "hot",
+                      "emoji": "🔥",
+                      "hint": "Tea and coffee are like this. Be careful!"
+                    },
+                    {
+                      "word": "cold",
+                      "emoji": "🧊",
+                      "hint": "Ice cream is like this. Brrrr!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "I want some ___, please.",
+                      "answer": "water",
+                      "options": [
+                        "water",
+                        "juice",
+                        "milk",
+                        "hot"
+                      ],
+                      "emoji": "💧"
+                    },
+                    {
+                      "sentence": "Can I have orange ___, please?",
+                      "answer": "juice",
+                      "options": [
+                        "juice",
+                        "water",
+                        "milk",
+                        "cold"
+                      ],
+                      "emoji": "🧃"
+                    },
+                    {
+                      "sentence": "My baby drinks ___.",
+                      "answer": "milk",
+                      "options": [
+                        "milk",
+                        "juice",
+                        "water",
+                        "hot"
+                      ],
+                      "emoji": "🥛"
+                    },
+                    {
+                      "sentence": "The tea is very ___!",
+                      "answer": "hot",
+                      "options": [
+                        "hot",
+                        "cold",
+                        "water",
+                        "juice"
+                      ],
+                      "emoji": "🔥"
+                    },
+                    {
+                      "sentence": "I like ___ water on a sunny day.",
+                      "answer": "cold",
+                      "options": [
+                        "cold",
+                        "hot",
+                        "milk",
+                        "juice"
+                      ],
+                      "emoji": "🧊"
+                    },
+                    {
+                      "sentence": "This chocolate milk is ___. Yummy!",
+                      "answer": "cold",
+                      "options": [
+                        "cold",
+                        "hot",
+                        "water",
+                        "juice"
+                      ],
+                      "emoji": "🥛"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "At the Cafe",
+              "text": "Emma and Tom go to a cafe. Emma says, 'I like cold juice!' Tom says, 'Do you like milk?' Emma says, 'Yes, I do!' They order orange juice and cold milk. The drinks are yummy!",
+              "scene_description": "two happy children sitting at a cafe table with drinks",
+              "questions": [
+                {
+                  "question": "Where do Emma and Tom go?",
+                  "answer": "to a cafe",
+                  "options": [
+                    "to a cafe",
+                    "to school",
+                    "to the park"
+                  ],
+                  "correct_answer": "to a cafe"
+                },
+                {
+                  "question": "Does Emma like milk?",
+                  "answer": "Yes, she does",
+                  "options": [
+                    "Yes, she does",
+                    "No, she doesn't",
+                    "She likes hot tea"
+                  ],
+                  "correct_answer": "Yes, she does"
+                },
+                {
+                  "question": "What do they order?",
+                  "answer": "orange juice and cold milk",
+                  "options": [
+                    "orange juice and cold milk",
+                    "hot tea and water",
+                    "pizza and cake"
+                  ],
+                  "correct_answer": "orange juice and cold milk"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Do you like ___? / Yes, I do. / No, I don't. / I like ___ and ___.",
+              "explanation": "We use 'Do you like...?' to ask questions about drinks and food, and we can use 'and' to join two things together.",
+              "examples": [
+                "Do you like juice? Yes, I do!",
+                "Do you like hot milk? No, I don't.",
+                "I like water and cold juice."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "juice",
+                        "?"
+                      ],
+                      "correctSentence": "Do you like juice?"
+                    },
+                    {
+                      "words": [
+                        "Yes",
+                        ",",
+                        "I",
+                        "do",
+                        "."
+                      ],
+                      "correctSentence": "Yes, I do."
+                    },
+                    {
+                      "words": [
+                        "No",
+                        ",",
+                        "I",
+                        "don't",
+                        "."
+                      ],
+                      "correctSentence": "No, I don't."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "water",
+                        "and",
+                        "milk",
+                        "."
+                      ],
+                      "correctSentence": "I like water and milk."
+                    },
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "hot",
+                        "tea",
+                        "?"
+                      ],
+                      "correctSentence": "Do you like hot tea?"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "___ you like juice?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ]
+                    },
+                    {
+                      "sentence": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "am",
+                        "like"
+                      ]
+                    },
+                    {
+                      "sentence": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "don't",
+                        "doesn't",
+                        "not",
+                        "aren't"
+                      ]
+                    },
+                    {
+                      "sentence": "I like milk ___ water.",
+                      "answer": "and",
+                      "options": [
+                        "and",
+                        "or",
+                        "but",
+                        "with"
+                      ]
+                    },
+                    {
+                      "sentence": "Do you like ___ milk?",
+                      "answer": "cold",
+                      "options": [
+                        "cold",
+                        "colds",
+                        "a cold",
+                        "the cold"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Does you like juice?",
+                      "errorWord": "Does",
+                      "correctWord": "Do",
+                      "explanation": "Use 'Do' with 'you', not 'Does'"
+                    },
+                    {
+                      "sentence": "Yes, I does.",
+                      "errorWord": "does",
+                      "correctWord": "do",
+                      "explanation": "Use 'do' with 'I', not 'does'"
+                    },
+                    {
+                      "sentence": "I like water or milk.",
+                      "errorWord": "or",
+                      "correctWord": "and",
+                      "explanation": "Use 'and' to join two things you like"
+                    },
+                    {
+                      "sentence": "Do you like a cold juice?",
+                      "errorWord": "a",
+                      "correctWord": "",
+                      "explanation": "We don't need 'a' before juice"
+                    },
+                    {
+                      "sentence": "No, I not.",
+                      "errorWord": "not",
+                      "correctWord": "don't",
+                      "explanation": "Use 'don't', not 'not'"
+                    },
+                    {
+                      "sentence": "I like hot milks.",
+                      "errorWord": "milks",
+                      "correctWord": "milk",
+                      "explanation": "Milk doesn't need 's' at the end"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "Do you like water?",
+                      "is_correct": true,
+                      "corrected": "Do you like water?",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "Yes, I do.",
+                      "is_correct": true,
+                      "corrected": "Yes, I do.",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "Does you like milk?",
+                      "is_correct": false,
+                      "corrected": "Do you like milk?",
+                      "explanation": "Use 'Do' with 'you'"
+                    },
+                    {
+                      "sentence": "I like juice and water.",
+                      "is_correct": true,
+                      "corrected": "I like juice and water.",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "No, I doesn't.",
+                      "is_correct": false,
+                      "corrected": "No, I don't.",
+                      "explanation": "Use 'don't' with 'I'"
+                    },
+                    {
+                      "sentence": "Do you like cold milk?",
+                      "is_correct": true,
+                      "corrected": "Do you like cold milk?",
+                      "explanation": "This is correct!"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ you like juice?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ],
+                      "explanation": "Use 'Do' to ask questions with 'you'"
+                    },
+                    {
+                      "question": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "am",
+                        "like"
+                      ],
+                      "explanation": "Answer 'Do you...?' with 'I do'"
+                    },
+                    {
+                      "question": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "don't",
+                        "doesn't",
+                        "not",
+                        "no"
+                      ],
+                      "explanation": "Use 'don't' to say no with 'I'"
+                    },
+                    {
+                      "question": "I like water ___ milk.",
+                      "answer": "and",
+                      "options": [
+                        "and",
+                        "or",
+                        "but",
+                        "with"
+                      ],
+                      "explanation": "Use 'and' to join two things"
+                    },
+                    {
+                      "question": "Do you like ___ juice?",
+                      "answer": "cold",
+                      "options": [
+                        "cold",
+                        "a cold",
+                        "colds",
+                        "the cold"
+                      ],
+                      "explanation": "Use 'cold' before juice, no 'a' needed"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello, children! Today we are at a cafe. Look! I have cold water and hot tea. Do you like juice? Yes? Great! I like orange juice and apple juice. What about milk? Do you like cold milk or hot milk?",
+              "questions": [
+                {
+                  "question": "What does the teacher have?",
+                  "answer": "cold water and hot tea",
+                  "options": [
+                    "cold water and hot tea",
+                    "juice and milk",
+                    "hot water and cold tea"
+                  ]
+                },
+                {
+                  "question": "What kind of juice does the teacher like?",
+                  "answer": "orange juice and apple juice",
+                  "options": [
+                    "orange juice and apple juice",
+                    "grape juice and milk",
+                    "cold water and juice"
+                  ]
+                },
+                {
+                  "question": "What question does the teacher ask about milk?",
+                  "answer": "Do you like cold milk or hot milk?",
+                  "options": [
+                    "Do you like cold milk or hot milk?",
+                    "Do you like juice?",
+                    "Do you like water?"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Practice asking and answering questions about drinks!",
+              "expected_text": "Do you like juice?",
+              "prompts": [
+                {
+                  "prompt": "Ask your friend: Do you like juice?",
+                  "expected_text": "Do you like juice?"
+                },
+                {
+                  "prompt": "Answer: Yes, I do!",
+                  "expected_text": "Yes, I do!"
+                },
+                {
+                  "prompt": "Say what you like: I like water and milk.",
+                  "expected_text": "I like water and milk."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which drink is cold? 🧊",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "cold water",
+                  "options": [
+                    "cold water",
+                    "hot tea",
+                    "warm milk",
+                    "hot coffee"
+                  ]
+                },
+                {
+                  "question_text": "___ you like juice?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Do",
+                  "options": [
+                    "Do",
+                    "Does",
+                    "Are",
+                    "Is"
+                  ]
+                },
+                {
+                  "question_text": "I like milk ___ water.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "and",
+                  "options": [
+                    "and",
+                    "or",
+                    "but",
+                    "with"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Yes, I do' answers the question 'Do you like milk?'",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "At a cafe, you can order ___.",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "drinks and food",
+                  "options": [
+                    "drinks and food",
+                    "only books",
+                    "only toys",
+                    "only shoes"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_07_lesson_03",
+          "title": "Preferences",
+          "topic": "A survey about favorite snacks",
+          "context": "A survey about favorite snacks.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's talk about snacks! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "What is your favorite snack?",
+                  "correct_answer": "I like cookies!",
+                  "options": [
+                    "I like cookies!",
+                    "I like shoes!",
+                    "I like books!",
+                    "I like cars!"
+                  ],
+                  "image_emoji": "🍪",
+                  "hint": "Think about yummy food you like to eat!"
+                },
+                {
+                  "question_text": "When do you eat snacks?",
+                  "correct_answer": "Between meals",
+                  "options": [
+                    "Between meals",
+                    "In my sleep",
+                    "Never ever",
+                    "Only at night"
+                  ],
+                  "image_emoji": "🕐",
+                  "hint": "We eat snacks when we feel a little hungry during the day!"
+                },
+                {
+                  "question_text": "Where can you find snacks at home?",
+                  "correct_answer": "In the kitchen",
+                  "options": [
+                    "In the kitchen",
+                    "In the bathroom",
+                    "In the garage",
+                    "In the garden"
+                  ],
+                  "image_emoji": "🏠",
+                  "hint": "Think about where your family keeps food at home!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "like",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "don't like",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "favorite",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "fruit",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "like",
+                      "emoji": "👍"
+                    },
+                    {
+                      "word": "don't like",
+                      "emoji": "👎"
+                    },
+                    {
+                      "word": "favorite",
+                      "emoji": "⭐"
+                    },
+                    {
+                      "word": "fruit",
+                      "emoji": "🍎"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "like",
+                      "emoji": "👍",
+                      "distractors": [
+                        "bike",
+                        "kite",
+                        "lake"
+                      ]
+                    },
+                    {
+                      "word": "don't like",
+                      "emoji": "👎",
+                      "distractors": [
+                        "don't bike",
+                        "can't like",
+                        "won't like"
+                      ]
+                    },
+                    {
+                      "word": "favorite",
+                      "emoji": "⭐",
+                      "distractors": [
+                        "favorit",
+                        "favrite",
+                        "faverite"
+                      ]
+                    },
+                    {
+                      "word": "fruit",
+                      "emoji": "🍎",
+                      "distractors": [
+                        "feet",
+                        "frut",
+                        "foot"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "like",
+                      "emoji": "👍",
+                      "distractors": [
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        },
+                        {
+                          "word": "kite",
+                          "emoji": "🪁"
+                        },
+                        {
+                          "word": "light",
+                          "emoji": "💡"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "don't like",
+                      "emoji": "👎",
+                      "distractors": [
+                        {
+                          "word": "like",
+                          "emoji": "👍"
+                        },
+                        {
+                          "word": "dislike",
+                          "emoji": "😞"
+                        },
+                        {
+                          "word": "angry",
+                          "emoji": "😠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "favorite",
+                      "emoji": "⭐",
+                      "distractors": [
+                        {
+                          "word": "star",
+                          "emoji": "✨"
+                        },
+                        {
+                          "word": "love",
+                          "emoji": "❤️"
+                        },
+                        {
+                          "word": "best",
+                          "emoji": "🏆"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "fruit",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "food",
+                          "emoji": "🍕"
+                        },
+                        {
+                          "word": "vegetable",
+                          "emoji": "🥕"
+                        },
+                        {
+                          "word": "drink",
+                          "emoji": "🥤"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Our Favorite Snacks",
+              "text": "Today, Miss Lee asks the class a question. \"Do you like fruit?\" Emma says, \"Yes, I do! Apples are my favorite.\" Tom says, \"No, I don't like fruit. I like cookies and crackers.\" Miss Lee writes their answers on the board.",
+              "scene_description": "Female teacher with clipboard talking to diverse young children in classroom, children raising hands",
+              "questions": [
+                {
+                  "question": "What does Miss Lee ask the children?",
+                  "answer": "Do you like fruit?",
+                  "options": [
+                    "Do you like fruit?",
+                    "Do you like ice cream?",
+                    "Do you like pizza?"
+                  ],
+                  "correct_answer": "Do you like fruit?"
+                },
+                {
+                  "question": "Does Emma like fruit?",
+                  "answer": "Yes, she does",
+                  "options": [
+                    "Yes, she does",
+                    "No, she doesn't",
+                    "She doesn't know"
+                  ],
+                  "correct_answer": "Yes, she does"
+                },
+                {
+                  "question": "What is Emma's favorite fruit?",
+                  "answer": "Apples",
+                  "options": [
+                    "Apples",
+                    "Bananas",
+                    "Oranges"
+                  ],
+                  "correct_answer": "Apples"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Do you like ___? / Yes, I do. / No, I don't. / I like ___ and ___.",
+              "explanation": "We use 'Do you like...?' to ask about someone's favorites, and we can use 'and' to talk about two things we like!",
+              "examples": [
+                "Do you like apples? Yes, I do!",
+                "Do you like carrots? No, I don't.",
+                "I like cookies and milk."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "apples",
+                        "?"
+                      ],
+                      "correctSentence": "Do you like apples?"
+                    },
+                    {
+                      "words": [
+                        "Yes",
+                        ",",
+                        "I",
+                        "do",
+                        "."
+                      ],
+                      "correctSentence": "Yes, I do."
+                    },
+                    {
+                      "words": [
+                        "No",
+                        ",",
+                        "I",
+                        "don't",
+                        "."
+                      ],
+                      "correctSentence": "No, I don't."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "cookies",
+                        "and",
+                        "milk",
+                        "."
+                      ],
+                      "correctSentence": "I like cookies and milk."
+                    },
+                    {
+                      "words": [
+                        "Apples",
+                        "are",
+                        "my",
+                        "favorite",
+                        "."
+                      ],
+                      "correctSentence": "Apples are my favorite."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Do you ___ bananas?",
+                      "answer": "like",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "liked"
+                      ]
+                    },
+                    {
+                      "sentence": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "am",
+                        "don't"
+                      ]
+                    },
+                    {
+                      "sentence": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "do",
+                        "don't",
+                        "doesn't",
+                        "am not"
+                      ]
+                    },
+                    {
+                      "sentence": "I like apples ___ oranges.",
+                      "answer": "and",
+                      "options": [
+                        "and",
+                        "or",
+                        "but",
+                        "with"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you like fruit?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Do you likes apples?",
+                      "errorWord": "likes",
+                      "correctWord": "like",
+                      "explanation": "Use 'like' after 'Do you'"
+                    },
+                    {
+                      "sentence": "Yes, I does.",
+                      "errorWord": "does",
+                      "correctWord": "do",
+                      "explanation": "Use 'do' with 'I'"
+                    },
+                    {
+                      "sentence": "She like cookies very much.",
+                      "errorWord": "like",
+                      "correctWord": "likes",
+                      "explanation": "Use 'likes' with 'she'"
+                    },
+                    {
+                      "sentence": "I like apple and banana.",
+                      "errorWord": "apple",
+                      "correctWord": "apples",
+                      "explanation": "Use plural 'apples' with 'and'"
+                    },
+                    {
+                      "sentence": "Him don't like carrots.",
+                      "errorWord": "Him",
+                      "correctWord": "He",
+                      "explanation": "Use 'He' as the subject"
+                    },
+                    {
+                      "sentence": "They likes fruit and cookies.",
+                      "errorWord": "likes",
+                      "correctWord": "like",
+                      "explanation": "Use 'like' with 'they'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "Do you like cookies?",
+                      "is_correct": true,
+                      "corrected": "Do you like cookies?",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "Yes, I do.",
+                      "is_correct": true,
+                      "corrected": "Yes, I do.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "No, I doesn't.",
+                      "is_correct": false,
+                      "corrected": "No, I don't.",
+                      "explanation": "Use 'don't' with 'I'"
+                    },
+                    {
+                      "sentence": "I like apples and bananas.",
+                      "is_correct": true,
+                      "corrected": "I like apples and bananas.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "Does you like fruit?",
+                      "is_correct": false,
+                      "corrected": "Do you like fruit?",
+                      "explanation": "Use 'Do' with 'you'"
+                    },
+                    {
+                      "sentence": "She don't like carrots.",
+                      "is_correct": false,
+                      "corrected": "She doesn't like carrots.",
+                      "explanation": "Use 'doesn't' with 'she'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ you like chocolate?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ],
+                      "explanation": "Use 'Do' with 'you'"
+                    },
+                    {
+                      "question": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "do",
+                        "does",
+                        "am",
+                        "like"
+                      ],
+                      "explanation": "Answer with 'do' for 'I'"
+                    },
+                    {
+                      "question": "I like cookies ___ milk.",
+                      "answer": "and",
+                      "options": [
+                        "and",
+                        "or",
+                        "but",
+                        "with"
+                      ],
+                      "explanation": "Use 'and' to connect two things"
+                    },
+                    {
+                      "question": "She ___ apples and bananas.",
+                      "answer": "likes",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "don't like"
+                      ],
+                      "explanation": "Use 'likes' with 'she'"
+                    },
+                    {
+                      "question": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "don't",
+                        "doesn't",
+                        "am not",
+                        "do"
+                      ],
+                      "explanation": "Use 'don't' to say no with 'I'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Good morning, class! Today we're doing a survey about snacks. Let me ask you a question. Do you like fruit? If fruit is your favorite snack, raise your hand! Great! Now, who doesn't like fruit? That's okay, we all like different things.",
+              "questions": [
+                {
+                  "question": "What is the teacher asking about?",
+                  "answer": "Snacks",
+                  "options": [
+                    "Snacks",
+                    "Toys",
+                    "Colors",
+                    "Animals"
+                  ]
+                },
+                {
+                  "question": "What does the teacher ask the children?",
+                  "answer": "Do you like fruit?",
+                  "options": [
+                    "Do you like fruit?",
+                    "Do you like vegetables?",
+                    "Do you like pizza?",
+                    "Do you like candy?"
+                  ]
+                },
+                {
+                  "question": "What should children do if fruit is their favorite?",
+                  "answer": "Raise your hand",
+                  "options": [
+                    "Raise your hand",
+                    "Stand up",
+                    "Clap your hands",
+                    "Jump up"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Now it's your turn! Practice asking and answering about snacks you like.",
+              "expected_text": "Do you like cookies?",
+              "prompts": [
+                {
+                  "prompt": "Ask your friend: Do you like cookies?",
+                  "expected_text": "Do you like cookies?"
+                },
+                {
+                  "prompt": "Answer: Yes, I do!",
+                  "expected_text": "Yes, I do!"
+                },
+                {
+                  "prompt": "Tell me two snacks you like using 'and'. Example: I like apples and bananas.",
+                  "expected_text": "I like cookies and milk."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which word means 'the one you love most'?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "favorite",
+                  "options": [
+                    "favorite",
+                    "fruit",
+                    "like",
+                    "don't like"
+                  ]
+                },
+                {
+                  "question_text": "Do you ___ apples?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "like",
+                  "options": [
+                    "like",
+                    "likes",
+                    "liking",
+                    "liked"
+                  ]
+                },
+                {
+                  "question_text": "Choose the correct answer: Do you like cookies?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Yes, I do.",
+                  "options": [
+                    "Yes, I do.",
+                    "Yes, I does.",
+                    "Yes, I am.",
+                    "Yes, I like."
+                  ]
+                },
+                {
+                  "question_text": "I like cookies ___ milk.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "and",
+                  "options": [
+                    "and",
+                    "or",
+                    "but",
+                    "with"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Fruit' means foods like apples, bananas, and oranges.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_07_lesson_04",
+          "title": "Unit Review",
+          "topic": "Creating a healthy meal plan",
+          "context": "Creating a healthy meal plan.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about healthy food! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which food helps you grow big and strong?",
+                  "correct_answer": "apples and carrots",
+                  "options": [
+                    "apples and carrots",
+                    "candy and cookies",
+                    "soda and chips",
+                    "ice cream and cake"
+                  ],
+                  "image_emoji": "🥕",
+                  "hint": "Think about fruits and vegetables!"
+                },
+                {
+                  "question_text": "What should you eat every day to stay healthy?",
+                  "correct_answer": "different kinds of food",
+                  "options": [
+                    "only pizza",
+                    "only sweets",
+                    "different kinds of food",
+                    "only bread"
+                  ],
+                  "image_emoji": "🍎",
+                  "hint": "We need many colors on our plate!"
+                },
+                {
+                  "question_text": "When do we eat meals during the day?",
+                  "correct_answer": "breakfast, lunch, and dinner",
+                  "options": [
+                    "only at night",
+                    "breakfast, lunch, and dinner",
+                    "only one time",
+                    "anytime we want candy"
+                  ],
+                  "image_emoji": "🍽️",
+                  "hint": "We eat in the morning, middle of the day, and evening!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "chicken",
+                "rice",
+                "beans",
+                "bread",
+                "water",
+                "juice",
+                "milk",
+                "hot",
+                "cold",
+                "like",
+                "don't like",
+                "favorite",
+                "fruit"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "chicken",
+                      "definition": "A bird we eat for dinner",
+                      "emoji": "🍗"
+                    },
+                    {
+                      "word": "rice",
+                      "definition": "Small white or brown grains we cook",
+                      "emoji": "🍚"
+                    },
+                    {
+                      "word": "bread",
+                      "definition": "We make toast and sandwiches with this",
+                      "emoji": "🍞"
+                    },
+                    {
+                      "word": "juice",
+                      "definition": "A sweet drink made from fruit",
+                      "emoji": "🧃"
+                    },
+                    {
+                      "word": "milk",
+                      "definition": "A white drink that comes from cows",
+                      "emoji": "🥛"
+                    },
+                    {
+                      "word": "hot",
+                      "definition": "Very warm, like tea or soup",
+                      "emoji": "🔥"
+                    },
+                    {
+                      "word": "cold",
+                      "definition": "Not warm, like ice cream",
+                      "emoji": "🧊"
+                    },
+                    {
+                      "word": "favorite",
+                      "definition": "The one you like the most",
+                      "emoji": "⭐"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "beans",
+                      "definition": "Small round vegetables, can be green or brown",
+                      "emoji": "🫘"
+                    },
+                    {
+                      "word": "water",
+                      "definition": "A clear drink we need every day",
+                      "emoji": "💧"
+                    },
+                    {
+                      "word": "fruit",
+                      "definition": "Apples, bananas, and oranges are examples",
+                      "emoji": "🍎"
+                    },
+                    {
+                      "word": "like",
+                      "definition": "When something makes you happy",
+                      "emoji": "😊"
+                    },
+                    {
+                      "word": "rice",
+                      "definition": "Small white or brown grains we cook",
+                      "emoji": "🍚"
+                    },
+                    {
+                      "word": "chicken",
+                      "definition": "A bird we eat for dinner",
+                      "emoji": "🍗"
+                    },
+                    {
+                      "word": "hot",
+                      "definition": "Very warm, like tea or soup",
+                      "emoji": "🔥"
+                    },
+                    {
+                      "word": "cold",
+                      "definition": "Not warm, like ice cream",
+                      "emoji": "🧊"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "Which word means you enjoy eating something?",
+                      "answer": "like",
+                      "options": [
+                        "like",
+                        "hot",
+                        "cold",
+                        "bread"
+                      ]
+                    },
+                    {
+                      "question": "What is the drink that comes from cows?",
+                      "answer": "milk",
+                      "options": [
+                        "juice",
+                        "water",
+                        "milk",
+                        "rice"
+                      ]
+                    },
+                    {
+                      "question": "Which food is made from fruit?",
+                      "answer": "juice",
+                      "options": [
+                        "bread",
+                        "rice",
+                        "chicken",
+                        "juice"
+                      ]
+                    },
+                    {
+                      "question": "What word means the opposite of hot?",
+                      "answer": "cold",
+                      "options": [
+                        "warm",
+                        "cold",
+                        "favorite",
+                        "like"
+                      ]
+                    },
+                    {
+                      "question": "Which food do we make sandwiches with?",
+                      "answer": "bread",
+                      "options": [
+                        "rice",
+                        "beans",
+                        "bread",
+                        "water"
+                      ]
+                    },
+                    {
+                      "question": "What word means the one you like best?",
+                      "answer": "favorite",
+                      "options": [
+                        "like",
+                        "favorite",
+                        "hot",
+                        "cold"
+                      ]
+                    },
+                    {
+                      "question": "Which one is a clear drink we need every day?",
+                      "answer": "water",
+                      "options": [
+                        "milk",
+                        "juice",
+                        "water",
+                        "fruit"
+                      ]
+                    },
+                    {
+                      "question": "Apples and bananas are examples of what?",
+                      "answer": "fruit",
+                      "options": [
+                        "chicken",
+                        "beans",
+                        "rice",
+                        "fruit"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Emma's Healthy Plate",
+              "text": "Emma is making lunch. She puts chicken and rice on her plate. She adds beans and bread too. Emma drinks cold water. 'Do you like your lunch?' asks Mom. 'Yes, I do! This is my favorite!' says Emma.",
+              "scene_description": "young girl eating healthy lunch at kitchen table with mother watching",
+              "questions": [
+                {
+                  "question": "What does Emma put on her plate?",
+                  "answer": "chicken, rice, beans and bread",
+                  "options": [
+                    "only chicken",
+                    "chicken, rice, beans and bread",
+                    "only fruit",
+                    "only bread and water"
+                  ],
+                  "correct_answer": "chicken, rice, beans and bread"
+                },
+                {
+                  "question": "What does Emma drink?",
+                  "answer": "cold water",
+                  "options": [
+                    "hot milk",
+                    "juice",
+                    "cold water",
+                    "nothing"
+                  ],
+                  "correct_answer": "cold water"
+                },
+                {
+                  "question": "Does Emma like her lunch?",
+                  "answer": "Yes, she does",
+                  "options": [
+                    "No, she doesn't",
+                    "Yes, she does",
+                    "She doesn't eat it",
+                    "She is sad"
+                  ],
+                  "correct_answer": "Yes, she does"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "Do you like ___? / Yes, I do. / No, I don't. / I like ___ and ___.",
+              "explanation": "We use 'Do you like...?' to ask about food someone enjoys, and we use 'and' to put two foods together.",
+              "examples": [
+                "Do you like apples? Yes, I do!",
+                "Do you like fish? No, I don't.",
+                "I like rice and chicken."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "rice?"
+                      ],
+                      "correctSentence": "Do you like rice?"
+                    },
+                    {
+                      "words": [
+                        "Yes,",
+                        "I",
+                        "do."
+                      ],
+                      "correctSentence": "Yes, I do."
+                    },
+                    {
+                      "words": [
+                        "No,",
+                        "I",
+                        "don't."
+                      ],
+                      "correctSentence": "No, I don't."
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "chicken",
+                        "and",
+                        "beans."
+                      ],
+                      "correctSentence": "I like chicken and beans."
+                    },
+                    {
+                      "words": [
+                        "Do",
+                        "you",
+                        "like",
+                        "milk?"
+                      ],
+                      "correctSentence": "Do you like milk?"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "like",
+                        "bread",
+                        "and",
+                        "juice."
+                      ],
+                      "correctSentence": "I like bread and juice."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "Do you ___ chicken?",
+                      "answer": "like",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "liked"
+                      ]
+                    },
+                    {
+                      "sentence": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "am",
+                        "do",
+                        "does",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "doesn't",
+                        "don't",
+                        "not",
+                        "am not"
+                      ]
+                    },
+                    {
+                      "sentence": "I like rice ___ beans.",
+                      "answer": "and",
+                      "options": [
+                        "or",
+                        "and",
+                        "but",
+                        "with"
+                      ]
+                    },
+                    {
+                      "sentence": "___ you like milk?",
+                      "answer": "Do",
+                      "options": [
+                        "Are",
+                        "Do",
+                        "Does",
+                        "Is"
+                      ]
+                    },
+                    {
+                      "sentence": "I like bread ___ water.",
+                      "answer": "and",
+                      "options": [
+                        "but",
+                        "or",
+                        "and",
+                        "with"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "Do you likes rice?",
+                      "errorWord": "likes",
+                      "correctWord": "like",
+                      "explanation": "Use 'like' after 'Do you'"
+                    },
+                    {
+                      "sentence": "Yes, I does.",
+                      "errorWord": "does",
+                      "correctWord": "do",
+                      "explanation": "Use 'I do' not 'I does'"
+                    },
+                    {
+                      "sentence": "I like chicken but beans.",
+                      "errorWord": "but",
+                      "correctWord": "and",
+                      "explanation": "Use 'and' to connect two foods you like"
+                    },
+                    {
+                      "sentence": "Does you like milk?",
+                      "errorWord": "Does",
+                      "correctWord": "Do",
+                      "explanation": "Use 'Do you' not 'Does you'"
+                    },
+                    {
+                      "sentence": "No, I doesn't.",
+                      "errorWord": "doesn't",
+                      "correctWord": "don't",
+                      "explanation": "Use 'I don't' not 'I doesn't'"
+                    },
+                    {
+                      "sentence": "I like two bread.",
+                      "errorWord": "two",
+                      "correctWord": "some",
+                      "explanation": "Say 'some bread' not 'two bread'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "Do you like fruit?",
+                      "is_correct": true,
+                      "corrected": "Do you like fruit?",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "Yes, I does.",
+                      "is_correct": false,
+                      "corrected": "Yes, I do.",
+                      "explanation": "Use 'I do' not 'I does'"
+                    },
+                    {
+                      "sentence": "I like milk and juice.",
+                      "is_correct": true,
+                      "corrected": "I like milk and juice.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "Do you likes beans?",
+                      "is_correct": false,
+                      "corrected": "Do you like beans?",
+                      "explanation": "Use 'like' after 'Do you'"
+                    },
+                    {
+                      "sentence": "No, I don't.",
+                      "is_correct": true,
+                      "corrected": "No, I don't.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "I like chicken but rice.",
+                      "is_correct": false,
+                      "corrected": "I like chicken and rice.",
+                      "explanation": "Use 'and' to connect two foods you like"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "___ you like bread?",
+                      "answer": "Do",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Are",
+                        "Is"
+                      ],
+                      "explanation": "Use 'Do you' to ask about liking food"
+                    },
+                    {
+                      "question": "Yes, I ___.",
+                      "answer": "do",
+                      "options": [
+                        "am",
+                        "do",
+                        "does",
+                        "like"
+                      ],
+                      "explanation": "Answer 'Yes, I do' to the question"
+                    },
+                    {
+                      "question": "I like rice ___ beans.",
+                      "answer": "and",
+                      "options": [
+                        "but",
+                        "and",
+                        "or",
+                        "with"
+                      ],
+                      "explanation": "Use 'and' to connect two foods"
+                    },
+                    {
+                      "question": "No, I ___.",
+                      "answer": "don't",
+                      "options": [
+                        "doesn't",
+                        "don't",
+                        "not",
+                        "no"
+                      ],
+                      "explanation": "Answer 'No, I don't' to say you don't like something"
+                    },
+                    {
+                      "question": "Do you ___ chicken?",
+                      "answer": "like",
+                      "options": [
+                        "like",
+                        "likes",
+                        "liking",
+                        "to like"
+                      ],
+                      "explanation": "Use 'like' after 'Do you'"
+                    },
+                    {
+                      "question": "I ___ water and milk.",
+                      "answer": "like",
+                      "options": [
+                        "likes",
+                        "like",
+                        "liking",
+                        "am like"
+                      ],
+                      "explanation": "Use 'I like' to talk about foods you enjoy"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello, children! Today we're making a healthy lunch. Do you like chicken and rice? Yes? Great! We also need some beans and bread. Don't forget cold water to drink. This is my favorite healthy meal!",
+              "questions": [
+                {
+                  "question": "What are the children making today?",
+                  "answer": "a healthy lunch",
+                  "options": [
+                    "a healthy lunch",
+                    "a birthday cake",
+                    "a sandwich",
+                    "breakfast"
+                  ]
+                },
+                {
+                  "question": "What does the teacher say to drink?",
+                  "answer": "cold water",
+                  "options": [
+                    "hot milk",
+                    "cold water",
+                    "juice",
+                    "tea"
+                  ]
+                },
+                {
+                  "question": "How does the teacher feel about this meal?",
+                  "answer": "It's her favorite",
+                  "options": [
+                    "She doesn't like it",
+                    "It's her favorite",
+                    "She is hungry",
+                    "She is tired"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about food you like! Practice asking and answering questions.",
+              "expected_text": "Do you like rice?",
+              "prompts": [
+                {
+                  "prompt": "Ask your friend: Do you like rice?",
+                  "expected_text": "Do you like rice?"
+                },
+                {
+                  "prompt": "Answer: Yes, I do!",
+                  "expected_text": "Yes, I do!"
+                },
+                {
+                  "prompt": "Say two foods you like using 'and'",
+                  "expected_text": "I like chicken and beans."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Do you ___ chicken and rice?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "like",
+                  "options": [
+                    "like",
+                    "likes",
+                    "liking",
+                    "liked"
+                  ]
+                },
+                {
+                  "question_text": "Which food is healthy for lunch?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "chicken and beans",
+                  "options": [
+                    "candy and cake",
+                    "chicken and beans",
+                    "only chips",
+                    "ice cream"
+                  ]
+                },
+                {
+                  "question_text": "I like milk ___ water.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "and",
+                  "options": [
+                    "and",
+                    "but",
+                    "or",
+                    "with"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'Yes, I do' is the correct answer to 'Do you like fruit?'",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What do we say when we don't like something?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "No, I don't",
+                  "options": [
+                    "Yes, I do",
+                    "No, I don't",
+                    "I am happy",
+                    "Thank you"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}
