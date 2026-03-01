@@ -1473,6 +1473,7 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           </button>
           <Progress value={((currentQ + 1) / questions.length) * 100} className="mb-5" />
           <h3 className="text-2xl font-bold text-gray-900 mb-5"><FormattedQuestion text={q.question || q.question_text} /></h3>
+          <div className="space-y-3">
             {((q.options && q.options.length > 0) ? q.options : (() => {
               const ans = (q.answer || q.correct_answer || '').toLowerCase();
               if (ans === 'yes' || ans === 'no') return ['Yes', 'No'];
