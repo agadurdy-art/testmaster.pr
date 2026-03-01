@@ -33,40 +33,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "What word do you use at the start of the day to greet someone?",
-                  "correct_answer": "good morning",
+                  "question_text": "What do you say when you meet a friend?",
+                  "correct_answer": "hello",
                   "options": [
-                    "good morning",
-                    "good night",
+                    "hello",
                     "goodbye",
-                    "hello"
+                    "thank you",
+                    "sorry"
                   ],
-                  "image_emoji": "☀️",
-                  "hint": "It's said when you see someone after waking up."
+                  "image_emoji": "👋",
+                  "hint": "You say this when you see someone for the first time today."
                 },
                 {
-                  "question_text": "Find the word that begins with the same sound as 'alligator'.",
-                  "correct_answer": "apple",
+                  "question_text": "When do we say 'hello'?",
+                  "correct_answer": "when we meet someone",
                   "options": [
-                    "apple",
-                    "ball",
-                    "cat",
-                    "dog"
+                    "when we meet someone",
+                    "when we eat food",
+                    "when we go to sleep",
+                    "when we play alone"
                   ],
-                  "image_emoji": "🍎",
-                  "hint": "It's something crunchy you can eat."
+                  "image_emoji": "🤝",
+                  "hint": "Think about what you do when you see your teacher in the morning."
                 },
                 {
-                  "question_text": "What would you find in the sky on a warm sunny day?",
-                  "correct_answer": "sun",
+                  "question_text": "Which word means the same as 'hello'?",
+                  "correct_answer": "hi",
                   "options": [
-                    "sun",
-                    "moon",
-                    "rain",
-                    "stars"
+                    "hi",
+                    "bye",
+                    "yes",
+                    "no"
                   ],
-                  "image_emoji": "🌞",
-                  "hint": "It's a big bright star that shines during the day."
+                  "image_emoji": "😊",
+                  "hint": "It's a short, friendly word we use to greet people."
                 }
               ]
             },
@@ -77,35 +77,34 @@
                 {
                   "word": "hello",
                   "ipa": "/həˈloʊ/",
-                  "definition": "A word to say hi.",
-                  "example": "I am saying hello to you.",
+                  "definition": "A greeting",
+                  "example": "Hello, Teacher!",
                   "image_emoji": "👋"
                 },
                 {
                   "word": "teacher",
-                  "ipa": "/ˈtiː.tʃər/",
-                  "definition": "Person who helps you learn.",
-                  "example": "This is my teacher.",
+                  "ipa": "/ˈtiːtʃər/",
+                  "definition": "Person who helps you learn",
+                  "example": "I am a teacher.",
                   "image_emoji": "👩‍🏫"
                 },
                 {
                   "word": "student",
-                  "ipa": "/ˈstuː.dənt/",
-                  "definition": "Person who learns at school.",
-                  "example": "I am a student here.",
-                  "image_emoji": "👦"
+                  "ipa": "/ˈstuːdənt/",
+                  "definition": "Person learning at school",
+                  "example": "I am a student.",
+                  "image_emoji": "🙋‍♂️"
                 },
                 {
                   "word": "apple",
-                  "ipa": "/ˈæp.əl/",
-                  "definition": "A red or green fruit.",
-                  "example": "I have an apple.",
+                  "ipa": "/ˈæpl/",
+                  "definition": "A red/green fruit",
+                  "example": "This is an apple.",
                   "image_emoji": "🍎"
                 }
               ]
             },
             {
-              "step": 3,
               "type": "vocab_games",
               "games": [
                 {
@@ -116,16 +115,16 @@
                       "emoji": "👋",
                       "distractors": [
                         {
-                          "word": "teacher",
-                          "emoji": "👩‍🏫"
+                          "word": "book",
+                          "emoji": "📚"
                         },
                         {
-                          "word": "student",
-                          "emoji": "🙋‍♂️"
+                          "word": "sun",
+                          "emoji": "☀️"
                         },
                         {
-                          "word": "apple",
-                          "emoji": "🍎"
+                          "word": "ball",
+                          "emoji": "⚽"
                         }
                       ]
                     },
@@ -134,16 +133,16 @@
                       "emoji": "👩‍🏫",
                       "distractors": [
                         {
-                          "word": "hello",
-                          "emoji": "👋"
+                          "word": "doctor",
+                          "emoji": "👨‍⚕️"
                         },
                         {
-                          "word": "student",
-                          "emoji": "🙋‍♂️"
+                          "word": "car",
+                          "emoji": "🚗"
                         },
                         {
-                          "word": "apple",
-                          "emoji": "🍎"
+                          "word": "house",
+                          "emoji": "🏠"
                         }
                       ]
                     },
@@ -152,16 +151,34 @@
                       "emoji": "🙋‍♂️",
                       "distractors": [
                         {
-                          "word": "hello",
-                          "emoji": "👋"
+                          "word": "baby",
+                          "emoji": "👶"
                         },
                         {
-                          "word": "teacher",
-                          "emoji": "👩‍🏫"
+                          "word": "tree",
+                          "emoji": "🌳"
                         },
                         {
-                          "word": "apple",
-                          "emoji": "🍎"
+                          "word": "chair",
+                          "emoji": "🪑"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        },
+                        {
+                          "word": "clock",
+                          "emoji": "🕐"
                         }
                       ]
                     }
@@ -175,16 +192,16 @@
                       "emoji": "👋",
                       "distractors": [
                         {
-                          "word": "teacher",
-                          "emoji": "👩‍🏫"
+                          "word": "heart",
+                          "emoji": "❤️"
                         },
                         {
-                          "word": "student",
-                          "emoji": "🙋‍♂️"
+                          "word": "star",
+                          "emoji": "⭐"
                         },
                         {
-                          "word": "apple",
-                          "emoji": "🍎"
+                          "word": "moon",
+                          "emoji": "🌙"
                         }
                       ]
                     },
@@ -193,16 +210,16 @@
                       "emoji": "👩‍🏫",
                       "distractors": [
                         {
-                          "word": "hello",
-                          "emoji": "👋"
+                          "word": "police",
+                          "emoji": "👮"
                         },
                         {
-                          "word": "student",
-                          "emoji": "🙋‍♂️"
+                          "word": "desk",
+                          "emoji": "🖥️"
                         },
                         {
-                          "word": "apple",
-                          "emoji": "🍎"
+                          "word": "door",
+                          "emoji": "🚪"
                         }
                       ]
                     },
@@ -211,16 +228,16 @@
                       "emoji": "🙋‍♂️",
                       "distractors": [
                         {
-                          "word": "hello",
-                          "emoji": "👋"
+                          "word": "parent",
+                          "emoji": "👨‍👩‍👧"
                         },
                         {
-                          "word": "teacher",
-                          "emoji": "👩‍🏫"
+                          "word": "pencil",
+                          "emoji": "✏️"
                         },
                         {
-                          "word": "apple",
-                          "emoji": "🍎"
+                          "word": "bag",
+                          "emoji": "🎒"
                         }
                       ]
                     },
@@ -229,16 +246,16 @@
                       "emoji": "🍎",
                       "distractors": [
                         {
-                          "word": "hello",
-                          "emoji": "👋"
+                          "word": "orange",
+                          "emoji": "🍊"
                         },
                         {
-                          "word": "teacher",
-                          "emoji": "👩‍🏫"
+                          "word": "cake",
+                          "emoji": "🎂"
                         },
                         {
-                          "word": "student",
-                          "emoji": "🙋‍♂️"
+                          "word": "water",
+                          "emoji": "💧"
                         }
                       ]
                     }
@@ -264,54 +281,112 @@
                       "emoji": "🍎"
                     }
                   ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "hello",
+                      "emoji": "👋",
+                      "definition": "A greeting you say when you meet someone"
+                    },
+                    {
+                      "word": "teacher",
+                      "emoji": "👩‍🏫",
+                      "definition": "A person who helps you learn at school"
+                    },
+                    {
+                      "word": "student",
+                      "emoji": "🙋‍♂️",
+                      "definition": "A child who learns at school"
+                    },
+                    {
+                      "word": "apple",
+                      "emoji": "🍎",
+                      "definition": "A round red fruit that is healthy to eat"
+                    }
+                  ]
                 }
               ],
-              "total_exercises": 10
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the person who helps you learn: 👩‍🏫",
+              "correct_answer": "teacher",
+              "options": [
+                "teacher",
+                "student",
+                "apple",
+                "hello"
+              ]
             },
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Ben's School Day",
-              "text": "Hello! I am Ben. This is my teacher. I have an apple. Hello, Teacher!",
+              "title": "My First Day",
+              "text": "Hello! I am Emma. I am a student. This is my teacher, Miss Lee. I have an apple in my bag. Hello, teacher! Hello, friends!",
+              "scene_description": "happy young girl student waving hello to teacher in bright classroom",
               "questions": [
                 {
-                  "question": "Who is Ben saying hello to?",
-                  "answer": "teacher",
+                  "question": "Who is Emma?",
+                  "answer": "a student",
                   "options": [
-                    "teacher",
-                    "student",
-                    "apple"
-                  ]
+                    "a student",
+                    "a teacher",
+                    "a parent"
+                  ],
+                  "correct_answer": "a student"
                 },
                 {
-                  "question": "What does Ben have?",
-                  "answer": "apple",
+                  "question": "What does Emma have in her bag?",
+                  "answer": "an apple",
                   "options": [
-                    "apple",
-                    "book",
-                    "pencil"
-                  ]
+                    "an apple",
+                    "a book",
+                    "a pencil"
+                  ],
+                  "correct_answer": "an apple"
+                },
+                {
+                  "question": "Does Emma say hello to her teacher?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ],
+                  "correct_answer": "yes"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "I have a ___.",
-              "explanation": "Use 'I have' to say what you own.",
+              "rule_pattern": "I am a ___.",
+              "explanation": "We use 'I am' to say what we are or who we are.",
               "examples": [
-                "I have a book.",
-                "I have a toy.",
-                "I have a cat."
+                "I am a student.",
+                "I am a teacher.",
+                "I am a friend."
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_games",
               "games": [
                 {
                   "game_type": "word_order",
                   "items": [
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "a",
+                        "student"
+                      ],
+                      "correctSentence": "I am a student"
+                    },
                     {
                       "words": [
                         "I",
@@ -323,21 +398,20 @@
                     },
                     {
                       "words": [
-                        "a",
-                        "am",
                         "I",
-                        "student"
+                        "am",
+                        "happy"
                       ],
-                      "correctSentence": "I am a student"
+                      "correctSentence": "I am happy"
                     },
                     {
                       "words": [
+                        "I",
+                        "am",
                         "a",
-                        "is",
-                        "He",
-                        "doctor"
+                        "friend"
                       ],
-                      "correctSentence": "He is a doctor"
+                      "correctSentence": "I am a friend"
                     }
                   ]
                 },
@@ -345,33 +419,53 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "I am a ___.",
-                      "answer": "teacher",
+                      "sentence": "I ___ a student.",
+                      "answer": "am",
                       "options": [
-                        "teacher",
-                        "book",
-                        "apple",
-                        "happy"
+                        "am",
+                        "is",
+                        "are",
+                        "be"
                       ]
                     },
                     {
-                      "sentence": "She is a ___.",
-                      "answer": "student",
+                      "sentence": "I ___ a teacher.",
+                      "answer": "am",
                       "options": [
-                        "student",
-                        "cat",
-                        "pencil",
-                        "tall"
+                        "am",
+                        "is",
+                        "are",
+                        "be"
                       ]
                     },
                     {
-                      "sentence": "You are a ___.",
-                      "answer": "friend",
+                      "sentence": "She ___ a student.",
+                      "answer": "is",
                       "options": [
-                        "friend",
-                        "table",
-                        "big",
-                        "small"
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "He ___ happy.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ seven years old.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
                       ]
                     }
                   ]
@@ -380,41 +474,179 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "I am student.",
-                      "errorWord": "student",
-                      "correctWord": "a student"
+                      "sentence": "I is a student.",
+                      "errorWord": "is",
+                      "correctWord": "am",
+                      "explanation": "Use 'am' with I"
                     },
                     {
-                      "sentence": "He are a teacher.",
+                      "sentence": "She are happy.",
                       "errorWord": "are",
-                      "correctWord": "is"
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "sentence": "Me am a teacher.",
+                      "errorWord": "Me",
+                      "correctWord": "I",
+                      "explanation": "Use 'I' as the subject"
+                    },
+                    {
+                      "sentence": "He have two apple.",
+                      "errorWord": "apple",
+                      "correctWord": "apples",
+                      "explanation": "Use plural 'apples' for two"
+                    },
+                    {
+                      "sentence": "I am student.",
+                      "errorWord": "student",
+                      "correctWord": "a student",
+                      "explanation": "Add 'a' before student"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I am a student.",
+                      "is_correct": true,
+                      "corrected": "I am a student.",
+                      "explanation": "This is correct"
+                    },
+                    {
+                      "sentence": "I is happy.",
+                      "is_correct": false,
+                      "corrected": "I am happy.",
+                      "explanation": "Use 'am' with I, not 'is'"
+                    },
+                    {
+                      "sentence": "She is a teacher.",
+                      "is_correct": true,
+                      "corrected": "She is a teacher.",
+                      "explanation": "This is correct"
+                    },
+                    {
+                      "sentence": "He are a student.",
+                      "is_correct": false,
+                      "corrected": "He is a student.",
+                      "explanation": "Use 'is' with he, not 'are'"
+                    },
+                    {
+                      "sentence": "I am seven.",
+                      "is_correct": true,
+                      "corrected": "I am seven.",
+                      "explanation": "This is correct"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ a student.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "question": "She ___ a teacher.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with she"
+                    },
+                    {
+                      "question": "He ___ happy today.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with he"
+                    },
+                    {
+                      "question": "___ am a friend.",
+                      "answer": "I",
+                      "options": [
+                        "I",
+                        "She",
+                        "He",
+                        "They"
+                      ],
+                      "explanation": "Only 'I' goes with 'am'"
+                    },
+                    {
+                      "question": "I am ___ student.",
+                      "answer": "a",
+                      "options": [
+                        "a",
+                        "an",
+                        "the",
+                        "two"
+                      ],
+                      "explanation": "Use 'a' before student"
                     }
                   ]
                 }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "I",
+                "am",
+                "a",
+                "teacher"
               ],
-              "total_exercises": 8
+              "correct_sentence": "I am a teacher."
             },
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello! I am Lucy. This is my teacher. I have a red apple.",
+              "audio_text": "Hello, everyone! I am Miss Anna, your teacher. Today we have a new student. His name is Tom. Tom, please say hello to the class. Oh, Tom has a red apple for snack time!",
               "questions": [
                 {
-                  "question": "Who is with Lucy?",
-                  "answer": "teacher",
+                  "question": "Who is the teacher?",
+                  "answer": "Miss Anna",
                   "options": [
-                    "teacher",
-                    "friend",
-                    "parent"
+                    "Miss Anna",
+                    "Tom",
+                    "Mr. Lee",
+                    "Emma"
                   ]
                 },
                 {
-                  "question": "What does Lucy have?",
-                  "answer": "red apple",
+                  "question": "Who is the new student?",
+                  "answer": "Tom",
                   "options": [
-                    "red apple",
-                    "green apple",
-                    "banana"
+                    "Tom",
+                    "Miss Anna",
+                    "Ben",
+                    "Lucy"
+                  ]
+                },
+                {
+                  "question": "What does Tom have?",
+                  "answer": "an apple",
+                  "options": [
+                    "an apple",
+                    "a book",
+                    "a pencil",
+                    "a ball"
                   ]
                 }
               ]
@@ -422,9 +654,23 @@
             {
               "step": 8,
               "type": "production",
-              "prompt": "Say: Hello, I am a teacher.",
-              "expected_text": "hello, i am a teacher",
-              "mode": "speaking"
+              "production_type": "speaking",
+              "prompt": "Practice saying these sentences out loud!",
+              "expected_text": "Hello, I am a student",
+              "prompts": [
+                {
+                  "prompt": "Say: Hello!",
+                  "expected_text": "Hello"
+                },
+                {
+                  "prompt": "Say: I am a student.",
+                  "expected_text": "I am a student"
+                },
+                {
+                  "prompt": "Say: Hello, I am a student.",
+                  "expected_text": "Hello, I am a student"
+                }
+              ]
             },
             {
               "step": 9,
@@ -432,7 +678,18 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ Ben. (Grammar question)",
+                  "question_text": "Which word is a greeting?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "hello",
+                  "options": [
+                    "hello",
+                    "apple",
+                    "student",
+                    "teacher"
+                  ]
+                },
+                {
+                  "question_text": "I ___ a student.",
                   "question_type": "fill_blank",
                   "correct_answer": "am",
                   "options": [
@@ -443,18 +700,18 @@
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'teacher'? (Vocabulary question)",
+                  "question_text": "Read: 'I am a teacher.' Who is speaking?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "👩‍🏫",
+                  "correct_answer": "a teacher",
                   "options": [
-                    "👩‍🏫",
-                    "🍎",
-                    "👋",
-                    "🙋"
+                    "a teacher",
+                    "a student",
+                    "an apple",
+                    "a friend"
                   ]
                 },
                 {
-                  "question_text": "True or False: 'Hello' is a greeting.",
+                  "question_text": "True or False: We say 'hello' when we meet someone.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -463,25 +720,14 @@
                   ]
                 },
                 {
-                  "question_text": "What sound does 'apple' start with? (Reading comprehension)",
+                  "question_text": "Which sentence is correct?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "A",
+                  "correct_answer": "I am a student.",
                   "options": [
-                    "A",
-                    "B",
-                    "C",
-                    "D"
-                  ]
-                },
-                {
-                  "question_text": "'I am a student.' What is the correct answer?",
-                  "question_type": "fill_blank",
-                  "correct_answer": "student",
-                  "options": [
-                    "teacher",
-                    "student",
-                    "apple",
-                    "parent"
+                    "I am a student.",
+                    "I is a student.",
+                    "I are a student.",
+                    "Me am a student."
                   ]
                 }
               ]
@@ -499,8 +745,7 @@
               "type": "youtube"
             }
           ],
-          "ai_enriched": true,
-          "enrichment_version": "1.0"
+          "number": 1
         },
         {
           "lesson_num": 2,
@@ -511,44 +756,44 @@
             {
               "step": 1,
               "type": "warm_up",
-              "video_url": "https://example.com/video_morning_and_pets",
-              "instruction": "Watch the video and answer these questions!",
+              "video_url": "",
+              "instruction": "Let's wake up and get ready! Answer these questions!",
               "questions": [
                 {
-                  "question_text": "What does the dog do when it's happy?",
-                  "correct_answer": "Wags its tail",
+                  "question_text": "What do we say when we see our friends in the morning?",
+                  "correct_answer": "Hello!",
                   "options": [
-                    "Wags its tail",
-                    "Purrs",
-                    "Chirps",
-                    "Quacks"
+                    "Hello!",
+                    "Goodbye!",
+                    "Thank you!",
+                    "Sorry!"
                   ],
-                  "image_emoji": "🐶",
-                  "hint": "It's how dogs show they're happy."
+                  "image_emoji": "👋",
+                  "hint": "We say this when we meet someone."
                 },
                 {
-                  "question_text": "What sound does the bird make?",
-                  "correct_answer": "Chirps",
+                  "question_text": "Which animal says 'meow'?",
+                  "correct_answer": "cat",
                   "options": [
-                    "Chirps",
-                    "Barks",
-                    "Neighs",
-                    "Roars"
+                    "cat",
+                    "dog",
+                    "bird",
+                    "fish"
                   ],
-                  "image_emoji": "🐦",
-                  "hint": "It's a sweet, singing sound."
+                  "image_emoji": "🐱",
+                  "hint": "This pet likes to sleep and catch mice."
                 },
                 {
-                  "question_text": "What does the cat like to chase?",
-                  "correct_answer": "Ball of yarn",
+                  "question_text": "What sound does the letter B make?",
+                  "correct_answer": "/b/ like in 'ball'",
                   "options": [
-                    "Ball of yarn",
-                    "Bone",
-                    "Stick",
-                    "Cheese"
+                    "/b/ like in 'ball'",
+                    "/s/ like in 'sun'",
+                    "/m/ like in 'man'",
+                    "/t/ like in 'top'"
                   ],
-                  "image_emoji": "🎟",
-                  "hint": "It's soft and rolls around."
+                  "image_emoji": "⚽",
+                  "hint": "Say 'ball' and listen to the first sound."
                 }
               ]
             },
@@ -559,193 +804,38 @@
                 {
                   "word": "morning",
                   "ipa": "/ˈmɔːrnɪŋ/",
-                  "definition": "Early part of the day",
-                  "example": "This is my morning.",
+                  "definition": "The start of the day",
+                  "example": "Good morning!",
                   "image_emoji": "🌅"
                 },
                 {
                   "word": "fine",
                   "ipa": "/faɪn/",
-                  "definition": "Happy and well",
+                  "definition": "Feeling good",
                   "example": "I am fine.",
                   "image_emoji": "😊"
                 },
                 {
                   "word": "ball",
                   "ipa": "/bɔːl/",
-                  "definition": "Round toy to play",
+                  "definition": "A round toy (Sound B)",
                   "example": "I have a ball.",
                   "image_emoji": "⚽"
                 },
                 {
                   "word": "cat",
                   "ipa": "/kæt/",
-                  "definition": "Furry pet animal",
-                  "example": "This is my cat.",
+                  "definition": "A small pet (Sound C)",
+                  "example": "I have a cat.",
                   "image_emoji": "🐱"
                 }
               ]
             },
             {
-              "step": 3,
               "type": "vocab_games",
               "games": [
                 {
-                  "game_type": "listen_choose_picture",
-                  "items": [
-                    {
-                      "word": "morning",
-                      "emoji": "🌅",
-                      "distractors": [
-                        {
-                          "word": "fine",
-                          "emoji": "😊"
-                        },
-                        {
-                          "word": "ball",
-                          "emoji": "⚽"
-                        },
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "fine",
-                      "emoji": "😊",
-                      "distractors": [
-                        {
-                          "word": "morning",
-                          "emoji": "🌅"
-                        },
-                        {
-                          "word": "ball",
-                          "emoji": "⚽"
-                        },
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "ball",
-                      "emoji": "⚽",
-                      "distractors": [
-                        {
-                          "word": "morning",
-                          "emoji": "🌅"
-                        },
-                        {
-                          "word": "fine",
-                          "emoji": "😊"
-                        },
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "cat",
-                      "emoji": "🐱",
-                      "distractors": [
-                        {
-                          "word": "morning",
-                          "emoji": "🌅"
-                        },
-                        {
-                          "word": "fine",
-                          "emoji": "😊"
-                        },
-                        {
-                          "word": "ball",
-                          "emoji": "⚽"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "game_type": "read_choose_picture",
-                  "items": [
-                    {
-                      "word": "morning",
-                      "emoji": "🌅",
-                      "distractors": [
-                        {
-                          "word": "fine",
-                          "emoji": "😊"
-                        },
-                        {
-                          "word": "ball",
-                          "emoji": "⚽"
-                        },
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "fine",
-                      "emoji": "😊",
-                      "distractors": [
-                        {
-                          "word": "morning",
-                          "emoji": "🌅"
-                        },
-                        {
-                          "word": "ball",
-                          "emoji": "⚽"
-                        },
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "ball",
-                      "emoji": "⚽",
-                      "distractors": [
-                        {
-                          "word": "morning",
-                          "emoji": "🌅"
-                        },
-                        {
-                          "word": "fine",
-                          "emoji": "😊"
-                        },
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "cat",
-                      "emoji": "🐱",
-                      "distractors": [
-                        {
-                          "word": "morning",
-                          "emoji": "🌅"
-                        },
-                        {
-                          "word": "fine",
-                          "emoji": "😊"
-                        },
-                        {
-                          "word": "ball",
-                          "emoji": "⚽"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "game_type": "unscramble",
+                  "game_type": "listen_write",
                   "items": [
                     {
                       "word": "morning",
@@ -764,49 +854,170 @@
                       "emoji": "🐱"
                     }
                   ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "morning",
+                      "emoji": "🌅",
+                      "hint": "The time when the sun comes up"
+                    },
+                    {
+                      "word": "fine",
+                      "emoji": "😊",
+                      "hint": "How you feel when you are happy and good"
+                    },
+                    {
+                      "word": "ball",
+                      "emoji": "⚽",
+                      "hint": "A round toy you can throw and kick"
+                    },
+                    {
+                      "word": "cat",
+                      "emoji": "🐱",
+                      "hint": "A pet that says meow"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "Good ___, Mom!",
+                      "answer": "morning",
+                      "options": [
+                        "morning",
+                        "night",
+                        "afternoon",
+                        "evening"
+                      ],
+                      "emoji": "🌅"
+                    },
+                    {
+                      "sentence": "How are you? I'm ___!",
+                      "answer": "fine",
+                      "options": [
+                        "fine",
+                        "sad",
+                        "angry",
+                        "sleepy"
+                      ],
+                      "emoji": "😊"
+                    },
+                    {
+                      "sentence": "Let's play with the ___!",
+                      "answer": "ball",
+                      "options": [
+                        "ball",
+                        "book",
+                        "chair",
+                        "bag"
+                      ],
+                      "emoji": "⚽"
+                    },
+                    {
+                      "sentence": "My ___ says meow!",
+                      "answer": "cat",
+                      "options": [
+                        "cat",
+                        "dog",
+                        "bird",
+                        "cow"
+                      ],
+                      "emoji": "🐱"
+                    },
+                    {
+                      "sentence": "I wake up in the ___.",
+                      "answer": "morning",
+                      "options": [
+                        "morning",
+                        "night",
+                        "moon",
+                        "star"
+                      ],
+                      "emoji": "🌅"
+                    },
+                    {
+                      "sentence": "The ___ is round and fun!",
+                      "answer": "ball",
+                      "options": [
+                        "ball",
+                        "box",
+                        "table",
+                        "cup"
+                      ],
+                      "emoji": "⚽"
+                    }
+                  ]
                 }
               ],
-              "total_exercises": 12
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the animal: 🐱",
+              "correct_answer": "cat",
+              "options": [
+                "cat",
+                "ball",
+                "apple",
+                "teacher"
+              ]
             },
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "My Fun Morning",
-              "text": "Good morning! I am happy. I have a blue ball. This is my cat. Hello, Cat!",
+              "title": "Hello, Morning!",
+              "text": "Good morning! I am Ben. I am fine today. I have a ball. It is red. I have a cat. My cat is black. Hello, Cat!",
+              "scene_description": "Happy young boy in pajamas waving in the morning, holding a red ball, with a black cat sitting nearby in a bright sunny bedroom",
               "questions": [
                 {
-                  "question": "What color is the ball?",
-                  "answer": "blue",
+                  "question": "How is Ben today?",
+                  "answer": "He is fine",
                   "options": [
-                    "blue",
-                    "red",
-                    "apple"
-                  ]
+                    "He is fine",
+                    "He is sad",
+                    "He is tired"
+                  ],
+                  "correct_answer": "He is fine"
                 },
                 {
-                  "question": "Who does he say hello to?",
-                  "answer": "Cat",
+                  "question": "What color is Ben's ball?",
+                  "answer": "red",
                   "options": [
-                    "Cat",
-                    "Dog",
-                    "Bird"
-                  ]
+                    "red",
+                    "blue",
+                    "yellow"
+                  ],
+                  "correct_answer": "red"
+                },
+                {
+                  "question": "What pet does Ben have?",
+                  "answer": "a cat",
+                  "options": [
+                    "a cat",
+                    "a dog",
+                    "a bird"
+                  ],
+                  "correct_answer": "a cat"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "I see a ___.",
-              "explanation": "Use 'I see' for things you look at.",
+              "rule_pattern": "I have a ___.",
+              "explanation": "We use 'I have' to talk about things that belong to us.",
               "examples": [
-                "I see a ball.",
-                "I see a cat.",
-                "I see a bird."
+                "I have a ball.",
+                "I have a cat.",
+                "I have a book."
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_games",
               "games": [
                 {
@@ -819,7 +1030,7 @@
                         "a",
                         "ball"
                       ],
-                      "correctSentence": "I have a ball."
+                      "correctSentence": "I have a ball"
                     },
                     {
                       "words": [
@@ -828,16 +1039,34 @@
                         "a",
                         "cat"
                       ],
-                      "correctSentence": "I have a cat."
+                      "correctSentence": "I have a cat"
                     },
                     {
                       "words": [
-                        "She",
-                        "has",
+                        "I",
+                        "have",
+                        "a",
+                        "book"
+                      ],
+                      "correctSentence": "I have a book"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
                         "a",
                         "dog"
                       ],
-                      "correctSentence": "She has a dog."
+                      "correctSentence": "I have a dog"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "have",
+                        "a",
+                        "pen"
+                      ],
+                      "correctSentence": "I have a pen"
                     }
                   ]
                 },
@@ -845,33 +1074,53 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "I ___ a cat.",
+                      "sentence": "I ___ a ball.",
                       "answer": "have",
                       "options": [
+                        "have",
                         "has",
+                        "am",
+                        "is"
+                      ]
+                    },
+                    {
+                      "sentence": "I have ___ cat.",
+                      "answer": "a",
+                      "options": [
+                        "a",
+                        "an",
+                        "the",
+                        "two"
+                      ]
+                    },
+                    {
+                      "sentence": "She ___ a dog.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "am"
+                      ]
+                    },
+                    {
+                      "sentence": "I ___ fine today.",
+                      "answer": "am",
+                      "options": [
+                        "am",
                         "is",
                         "are",
                         "have"
                       ]
                     },
                     {
-                      "sentence": "You ___ a ball.",
-                      "answer": "have",
+                      "sentence": "Good ___, Mom!",
+                      "answer": "morning",
                       "options": [
-                        "has",
-                        "have",
-                        "is",
-                        "are"
-                      ]
-                    },
-                    {
-                      "sentence": "They ___ a bike.",
-                      "answer": "have",
-                      "options": [
-                        "has",
-                        "have",
-                        "is",
-                        "are"
+                        "morning",
+                        "night",
+                        "afternoon",
+                        "day"
                       ]
                     }
                   ]
@@ -880,40 +1129,187 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "I has a cat.",
+                      "sentence": "I has a ball.",
                       "errorWord": "has",
-                      "correctWord": "have"
+                      "correctWord": "have",
+                      "explanation": "Use 'have' with I"
                     },
                     {
-                      "sentence": "We has a ball.",
-                      "errorWord": "has",
-                      "correctWord": "have"
+                      "sentence": "She have a cat.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with she"
+                    },
+                    {
+                      "sentence": "Me am fine today.",
+                      "errorWord": "Me",
+                      "correctWord": "I",
+                      "explanation": "Use 'I' as the subject"
+                    },
+                    {
+                      "sentence": "I have two cat.",
+                      "errorWord": "cat",
+                      "correctWord": "cats",
+                      "explanation": "Use 'cats' for more than one"
+                    },
+                    {
+                      "sentence": "Good morning at you!",
+                      "errorWord": "at",
+                      "correctWord": "to",
+                      "explanation": "Say 'Good morning to you'"
+                    },
+                    {
+                      "sentence": "He can plays with the ball.",
+                      "errorWord": "plays",
+                      "correctWord": "play",
+                      "explanation": "After 'can' use the simple verb"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I have a ball.",
+                      "is_correct": true,
+                      "corrected": "I have a ball.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "I has a cat.",
+                      "is_correct": false,
+                      "corrected": "I have a cat.",
+                      "explanation": "Use 'have' with I"
+                    },
+                    {
+                      "sentence": "She has a dog.",
+                      "is_correct": true,
+                      "corrected": "She has a dog.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "Me have a book.",
+                      "is_correct": false,
+                      "corrected": "I have a book.",
+                      "explanation": "Use 'I' not 'Me' as the subject"
+                    },
+                    {
+                      "sentence": "Good morning!",
+                      "is_correct": true,
+                      "corrected": "Good morning!",
+                      "explanation": "This greeting is correct"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ a ball.",
+                      "answer": "have",
+                      "options": [
+                        "have",
+                        "has",
+                        "am",
+                        "is"
+                      ],
+                      "explanation": "Use 'have' with I"
+                    },
+                    {
+                      "question": "She ___ a cat.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "am",
+                        "is"
+                      ],
+                      "explanation": "Use 'has' with she"
+                    },
+                    {
+                      "question": "___ am fine.",
+                      "answer": "I",
+                      "options": [
+                        "I",
+                        "Me",
+                        "My",
+                        "She"
+                      ],
+                      "explanation": "Use 'I' as the subject"
+                    },
+                    {
+                      "question": "I have ___ book.",
+                      "answer": "a",
+                      "options": [
+                        "a",
+                        "an",
+                        "two",
+                        "the"
+                      ],
+                      "explanation": "Use 'a' before consonant sounds"
+                    },
+                    {
+                      "question": "Good ___, teacher!",
+                      "answer": "morning",
+                      "options": [
+                        "morning",
+                        "day",
+                        "time",
+                        "night"
+                      ],
+                      "explanation": "We say 'Good morning' as a greeting"
                     }
                   ]
                 }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "fill_blank",
+              "sentence": "I have a ______.",
+              "correct_answer": "cat",
+              "options": [
+                "cat",
+                "am",
+                "fine",
+                "morning"
               ],
-              "total_exercises": 8
+              "hint": "It says meow."
             },
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Good morning! I am happy today. This is my big, brown cat. What do you have?",
+              "audio_text": "Good morning, children! My name is Miss Emily. I am fine today. Look! I have a ball. It's red. I also have a cat. Her name is Bella. Say hello to Bella!",
               "questions": [
                 {
-                  "question": "What color is the cat?",
-                  "answer": "brown",
+                  "question": "How is Miss Emily today?",
+                  "answer": "fine",
                   "options": [
-                    "brown",
-                    "white",
-                    "black"
+                    "fine",
+                    "tired",
+                    "sad",
+                    "hungry"
                   ]
                 },
                 {
-                  "question": "Is she happy today?",
-                  "answer": "Yes",
+                  "question": "What color is the ball?",
+                  "answer": "red",
                   "options": [
-                    "Yes",
-                    "No"
+                    "red",
+                    "blue",
+                    "yellow",
+                    "green"
+                  ]
+                },
+                {
+                  "question": "What is the cat's name?",
+                  "answer": "Bella",
+                  "options": [
+                    "Bella",
+                    "Lucy",
+                    "Molly",
+                    "Kitty"
                   ]
                 }
               ]
@@ -921,9 +1317,23 @@
             {
               "step": 8,
               "type": "production",
-              "prompt": "Say: I have a cat.",
-              "expected_text": "i have a cat",
-              "mode": "speaking"
+              "production_type": "speaking",
+              "prompt": "Practice speaking! Say these sentences clearly.",
+              "expected_text": "Good morning! I am fine.",
+              "prompts": [
+                {
+                  "prompt": "Say: Good morning! I am fine.",
+                  "expected_text": "Good morning! I am fine."
+                },
+                {
+                  "prompt": "Say: I have a ball.",
+                  "expected_text": "I have a ball."
+                },
+                {
+                  "prompt": "Say: I have a cat. Hello, Cat!",
+                  "expected_text": "I have a cat. Hello, Cat!"
+                }
+              ]
             },
             {
               "step": 9,
@@ -931,29 +1341,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I have a ___. (Grammar question)",
+                  "question_text": "What do we say in the morning when we meet someone?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Good morning",
+                  "options": [
+                    "Good morning",
+                    "Good night",
+                    "Goodbye",
+                    "Thank you"
+                  ]
+                },
+                {
+                  "question_text": "I ___ a ball.",
                   "question_type": "fill_blank",
+                  "correct_answer": "have",
+                  "options": [
+                    "have",
+                    "has",
+                    "am",
+                    "is"
+                  ]
+                },
+                {
+                  "question_text": "Which animal says 'meow'?",
+                  "question_type": "multiple_choice",
                   "correct_answer": "cat",
                   "options": [
                     "cat",
-                    "run",
-                    "happy",
-                    "ball"
+                    "dog",
+                    "bird",
+                    "cow"
                   ]
                 },
                 {
-                  "question_text": "Which picture shows a 'morning'? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "🌞",
-                  "options": [
-                    "🌞",
-                    "🐈",
-                    "😄",
-                    "💤"
-                  ]
-                },
-                {
-                  "question_text": "True or False: 'Fine' can be used to say how you feel.",
+                  "question_text": "True or False: Ball starts with the sound /b/.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -962,25 +1383,14 @@
                   ]
                 },
                 {
-                  "question_text": "What sound does 'C' make at the start of 'cat'?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "k",
+                  "question_text": "How are you? I am ___.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "fine",
                   "options": [
-                    "k",
-                    "b",
-                    "s",
-                    "m"
-                  ]
-                },
-                {
-                  "question_text": "Who says 'Good morning' in the story? (Comprehension question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "Teacher",
-                  "options": [
-                    "Teacher",
-                    "Dog",
-                    "Bird",
-                    "Cat"
+                    "fine",
+                    "morning",
+                    "ball",
+                    "cat"
                   ]
                 }
               ]
@@ -998,8 +1408,7 @@
               "type": "youtube"
             }
           ],
-          "ai_enriched": true,
-          "enrichment_version": "1.0"
+          "number": 2
         },
         {
           "lesson_num": 3,
@@ -1014,40 +1423,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Which animal can both swim and walk, making a sound like 'quack'?",
-                  "correct_answer": "duck",
+                  "question_text": "What animal says meow?",
+                  "correct_answer": "cat",
                   "options": [
+                    "cat",
+                    "dog",
                     "duck",
-                    "frog",
-                    "fish",
-                    "turtle"
+                    "cow"
                   ],
-                  "image_emoji": "🦆",
-                  "hint": "This animal also waddles on land."
+                  "image_emoji": "🐱",
+                  "hint": "This pet likes to purr and chase mice!"
                 },
                 {
-                  "question_text": "What animal has curly wool and loves to munch on grass?",
-                  "correct_answer": "sheep",
+                  "question_text": "What sound does a dog make?",
+                  "correct_answer": "woof",
                   "options": [
-                    "sheep",
-                    "cow",
-                    "goat",
-                    "pig"
+                    "woof",
+                    "meow",
+                    "moo",
+                    "quack"
                   ],
-                  "image_emoji": "🐑",
-                  "hint": "We often see them in big groups."
+                  "image_emoji": "🐶",
+                  "hint": "Listen! A dog goes woof woof!"
                 },
                 {
-                  "question_text": "Who has long ears and says 'hee-haw', helping farmers carry things?",
-                  "correct_answer": "donkey",
+                  "question_text": "Which animal is your friend and lives in your house?",
+                  "correct_answer": "pet",
                   "options": [
-                    "donkey",
-                    "camel",
-                    "horse",
-                    "mule"
+                    "pet",
+                    "tree",
+                    "car",
+                    "chair"
                   ],
-                  "image_emoji": "🐴",
-                  "hint": "This animal is very strong."
+                  "image_emoji": "🐾",
+                  "hint": "Cats and dogs can be your special friends at home!"
                 }
               ]
             },
@@ -1058,164 +1467,45 @@
                 {
                   "word": "boy",
                   "ipa": "/bɔɪ/",
-                  "definition": "A young male child.",
-                  "example": "This is a happy boy.",
+                  "definition": "A male child",
+                  "example": "He is a boy.",
                   "image_emoji": "👦"
                 },
                 {
                   "word": "girl",
                   "ipa": "/ɡɜːrl/",
-                  "definition": "A young female child.",
-                  "example": "I am a small girl.",
+                  "definition": "A female child",
+                  "example": "She is a girl.",
                   "image_emoji": "👧"
                 },
                 {
                   "word": "friend",
-                  "ipa": "/frɛnd/",
-                  "definition": "A person I like.",
-                  "example": "I have a best friend.",
-                  "image_emoji": "👭"
+                  "ipa": "/frend/",
+                  "definition": "Someone you like",
+                  "example": "This is my friend.",
+                  "image_emoji": "🤝"
                 },
                 {
                   "word": "dog",
-                  "ipa": "/dɔɡ/",
-                  "definition": "A playful pet animal.",
-                  "example": "This is my pet dog.",
+                  "ipa": "/dɔːɡ/",
+                  "definition": "A pet (Sound D)",
+                  "example": "This is a dog.",
                   "image_emoji": "🐶"
                 },
                 {
                   "word": "egg",
-                  "ipa": "/ɛɡ/",
-                  "definition": "What a bird lays.",
-                  "example": "I have an egg to eat.",
+                  "ipa": "/eɡ/",
+                  "definition": "Food from a bird (Sound E)",
+                  "example": "This is an egg.",
                   "image_emoji": "🥚"
                 }
               ]
             },
             {
-              "step": 3,
               "type": "vocab_games",
               "games": [
                 {
-                  "game_type": "listen_choose_picture",
-                  "items": [
-                    {
-                      "word": "boy",
-                      "emoji": "👦",
-                      "distractors": [
-                        {
-                          "word": "girl",
-                          "emoji": "👧"
-                        },
-                        {
-                          "word": "dog",
-                          "emoji": "🐶"
-                        },
-                        {
-                          "word": "egg",
-                          "emoji": "🥚"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "girl",
-                      "emoji": "👧",
-                      "distractors": [
-                        {
-                          "word": "boy",
-                          "emoji": "👦"
-                        },
-                        {
-                          "word": "friend",
-                          "emoji": "🤝"
-                        },
-                        {
-                          "word": "dog",
-                          "emoji": "🐶"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "dog",
-                      "emoji": "🐶",
-                      "distractors": [
-                        {
-                          "word": "egg",
-                          "emoji": "🥚"
-                        },
-                        {
-                          "word": "girl",
-                          "emoji": "👧"
-                        },
-                        {
-                          "word": "friend",
-                          "emoji": "🤝"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "game_type": "read_choose_picture",
-                  "items": [
-                    {
-                      "word": "friend",
-                      "emoji": "🤝",
-                      "distractors": [
-                        {
-                          "word": "boy",
-                          "emoji": "👦"
-                        },
-                        {
-                          "word": "girl",
-                          "emoji": "👧"
-                        },
-                        {
-                          "word": "egg",
-                          "emoji": "🥚"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "egg",
-                      "emoji": "🥚",
-                      "distractors": [
-                        {
-                          "word": "dog",
-                          "emoji": "🐶"
-                        },
-                        {
-                          "word": "friend",
-                          "emoji": "🤝"
-                        },
-                        {
-                          "word": "boy",
-                          "emoji": "👦"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "dog",
-                      "emoji": "🐶",
-                      "distractors": [
-                        {
-                          "word": "girl",
-                          "emoji": "👧"
-                        },
-                        {
-                          "word": "egg",
-                          "emoji": "🥚"
-                        },
-                        {
-                          "word": "friend",
-                          "emoji": "🤝"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "game_type": "unscramble",
+                  "game_type": "memory_game",
                   "items": [
                     {
                       "word": "boy",
@@ -1226,6 +1516,10 @@
                       "emoji": "👧"
                     },
                     {
+                      "word": "friend",
+                      "emoji": "🤝"
+                    },
+                    {
                       "word": "dog",
                       "emoji": "🐶"
                     },
@@ -1234,49 +1528,218 @@
                       "emoji": "🥚"
                     }
                   ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "boy",
+                      "emoji": "👦",
+                      "distractors": [
+                        "toy",
+                        "bay",
+                        "buy"
+                      ]
+                    },
+                    {
+                      "word": "girl",
+                      "emoji": "👧",
+                      "distractors": [
+                        "grill",
+                        "curl",
+                        "pearl"
+                      ]
+                    },
+                    {
+                      "word": "friend",
+                      "emoji": "🤝",
+                      "distractors": [
+                        "fried",
+                        "trend",
+                        "fend"
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐶",
+                      "distractors": [
+                        "fog",
+                        "log",
+                        "hog"
+                      ]
+                    },
+                    {
+                      "word": "egg",
+                      "emoji": "🥚",
+                      "distractors": [
+                        "leg",
+                        "peg",
+                        "beg"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "boy",
+                      "emoji": "👦",
+                      "distractors": [
+                        {
+                          "word": "baby",
+                          "emoji": "👶"
+                        },
+                        {
+                          "word": "man",
+                          "emoji": "👨"
+                        },
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "girl",
+                      "emoji": "👧",
+                      "distractors": [
+                        {
+                          "word": "woman",
+                          "emoji": "👩"
+                        },
+                        {
+                          "word": "baby",
+                          "emoji": "👶"
+                        },
+                        {
+                          "word": "bird",
+                          "emoji": "🐦"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "friend",
+                      "emoji": "🤝",
+                      "distractors": [
+                        {
+                          "word": "hand",
+                          "emoji": "✋"
+                        },
+                        {
+                          "word": "heart",
+                          "emoji": "❤️"
+                        },
+                        {
+                          "word": "wave",
+                          "emoji": "👋"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "dog",
+                      "emoji": "🐶",
+                      "distractors": [
+                        {
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "rabbit",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "bear",
+                          "emoji": "🐻"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "egg",
+                      "emoji": "🥚",
+                      "distractors": [
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        },
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
-              "total_exercises": 10
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match the friend: 🤝",
+              "correct_answer": "friend",
+              "options": [
+                "friend",
+                "boy",
+                "girl",
+                "dog"
+              ]
             },
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "My Special Day",
-              "text": "This is Emma. She is a girl. Emma has a pet dog. The dog is her friend. 'I have an egg for you,' she says.",
+              "title": "My Friend",
+              "text": "I am Emma. This is my friend Dan. Dan is a boy. I have a dog. Dan has an egg. We are friends!",
+              "scene_description": "two young children smiling together with a friendly dog, outdoor playground or park setting",
               "questions": [
                 {
-                  "question": "Who is Emma's friend?",
-                  "answer": "dog",
+                  "question": "Who is Dan?",
+                  "answer": "Emma's friend",
                   "options": [
-                    "dog",
-                    "boy",
-                    "egg"
-                  ]
+                    "Emma's friend",
+                    "Emma's dog",
+                    "Emma's egg"
+                  ],
+                  "correct_answer": "Emma's friend"
                 },
                 {
-                  "question": "What does Emma have for the dog?",
-                  "answer": "egg",
+                  "question": "Is Dan a girl?",
+                  "answer": "No",
                   "options": [
-                    "egg",
-                    "ball",
-                    "friend"
-                  ]
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "No"
+                },
+                {
+                  "question": "What does Emma have?",
+                  "answer": "a dog",
+                  "options": [
+                    "a dog",
+                    "an egg",
+                    "a cat"
+                  ],
+                  "correct_answer": "a dog"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "I have a ___.",
-              "explanation": "Use 'I have a' to show things you own.",
+              "rule_pattern": "This is my ___.",
+              "explanation": "We use 'This is my' when we want to show something that belongs to us.",
               "examples": [
-                "I have a dog.",
-                "I have a toy.",
-                "I have a cake."
+                "This is my friend.",
+                "This is my dog.",
+                "This is my egg."
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_games",
               "games": [
                 {
@@ -1287,18 +1750,45 @@
                         "This",
                         "is",
                         "my",
-                        "teacher"
+                        "friend"
                       ],
-                      "correctSentence": "This is my teacher."
+                      "correctSentence": "This is my friend"
                     },
                     {
                       "words": [
                         "This",
-                        "friend",
+                        "is",
                         "my",
+                        "dog"
+                      ],
+                      "correctSentence": "This is my dog"
+                    },
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "my",
+                        "egg"
+                      ],
+                      "correctSentence": "This is my egg"
+                    },
+                    {
+                      "words": [
+                        "my",
+                        "This",
+                        "boy",
                         "is"
                       ],
-                      "correctSentence": "This is my friend."
+                      "correctSentence": "This is my boy"
+                    },
+                    {
+                      "words": [
+                        "is",
+                        "girl",
+                        "This",
+                        "my"
+                      ],
+                      "correctSentence": "This is my girl"
                     }
                   ]
                 },
@@ -1306,21 +1796,53 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "This is my ___.",
-                      "answer": "friend",
+                      "sentence": "This ___ my friend.",
+                      "answer": "is",
                       "options": [
-                        "friend",
-                        "apple",
-                        "house"
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "This is ___ dog.",
+                      "answer": "my",
+                      "options": [
+                        "my",
+                        "I",
+                        "me",
+                        "mine"
+                      ]
+                    },
+                    {
+                      "sentence": "___ is my egg.",
+                      "answer": "This",
+                      "options": [
+                        "This",
+                        "These",
+                        "That",
+                        "Those"
                       ]
                     },
                     {
                       "sentence": "This is my ___.",
-                      "answer": "bag",
+                      "answer": "friend",
                       "options": [
-                        "cat",
-                        "bag",
-                        "star"
+                        "friend",
+                        "friends",
+                        "friending",
+                        "befriend"
+                      ]
+                    },
+                    {
+                      "sentence": "This ___ my girl.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "was"
                       ]
                     }
                   ]
@@ -1329,110 +1851,210 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "This am my friend.",
-                      "errorWord": "am",
-                      "correctWord": "is"
+                      "sentence": "This are my friend.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with 'this'"
                     },
                     {
-                      "sentence": "This is mine teacher.",
+                      "sentence": "That is I dog.",
+                      "errorWord": "I",
+                      "correctWord": "my",
+                      "explanation": "Use 'my' to show belonging"
+                    },
+                    {
+                      "sentence": "This is my two egg.",
+                      "errorWord": "egg",
+                      "correctWord": "eggs",
+                      "explanation": "Use 'eggs' for more than one"
+                    },
+                    {
+                      "sentence": "Her is my friend.",
+                      "errorWord": "Her",
+                      "correctWord": "She",
+                      "explanation": "Use 'She' as the subject"
+                    },
+                    {
+                      "sentence": "This is mine boy.",
                       "errorWord": "mine",
-                      "correctWord": "my"
+                      "correctWord": "my",
+                      "explanation": "Use 'my' before a noun"
                     }
-                  ]
-                }
-              ],
-              "total_exercises": 8
-            },
-            {
-              "step": 7,
-              "type": "listening",
-              "audio_text": "Hi! I am a boy. This is my friend, Ella. Ella has a dog and a big egg.",
-              "questions": [
-                {
-                  "question": "Who has a dog?",
-                  "answer": "Ella",
-                  "options": [
-                    "Ella",
-                    "Emma",
-                    "Tom"
                   ]
                 },
                 {
-                  "question": "What does Ella have besides a dog?",
-                  "answer": "egg",
-                  "options": [
-                    "egg",
-                    "ball",
-                    "toy"
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "This is my friend.",
+                      "is_correct": true,
+                      "corrected": "This is my friend.",
+                      "explanation": "Perfect! This sentence is correct."
+                    },
+                    {
+                      "sentence": "This are my dog.",
+                      "is_correct": false,
+                      "corrected": "This is my dog.",
+                      "explanation": "Use 'is' with 'this', not 'are'"
+                    },
+                    {
+                      "sentence": "This is my egg.",
+                      "is_correct": true,
+                      "corrected": "This is my egg.",
+                      "explanation": "Perfect! This sentence is correct."
+                    },
+                    {
+                      "sentence": "This is I girl.",
+                      "is_correct": false,
+                      "corrected": "This is my girl.",
+                      "explanation": "Use 'my' to show belonging, not 'I'"
+                    },
+                    {
+                      "sentence": "This is my boy.",
+                      "is_correct": true,
+                      "corrected": "This is my boy.",
+                      "explanation": "Perfect! This sentence is correct."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "This ___ my friend.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' after 'this'"
+                    },
+                    {
+                      "question": "___ is my dog.",
+                      "answer": "This",
+                      "options": [
+                        "This",
+                        "These",
+                        "Them",
+                        "Those"
+                      ],
+                      "explanation": "Use 'This' for one thing near you"
+                    },
+                    {
+                      "question": "This is ___ egg.",
+                      "answer": "my",
+                      "options": [
+                        "I",
+                        "my",
+                        "me",
+                        "mine"
+                      ],
+                      "explanation": "Use 'my' before a noun to show belonging"
+                    },
+                    {
+                      "question": "This is my ___.",
+                      "answer": "girl",
+                      "options": [
+                        "girl",
+                        "girls",
+                        "girling",
+                        "a girl"
+                      ],
+                      "explanation": "Use just the noun after 'my'"
+                    },
+                    {
+                      "question": "___ is my boy.",
+                      "answer": "This",
+                      "options": [
+                        "That",
+                        "This",
+                        "These",
+                        "Those"
+                      ],
+                      "explanation": "Use 'This' to introduce someone near you"
+                    }
                   ]
                 }
               ]
             },
             {
-              "step": 8,
-              "type": "production",
-              "prompt": "Say: This is my dog.",
-              "expected_text": "this is my dog",
-              "mode": "speaking"
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "error_hunter",
+              "sentence": "This are my friend.",
+              "has_error": true,
+              "correct_sentence": "This is my friend."
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "This is a dog and an egg.",
+              "questions": [
+                {
+                  "question": "What animal?",
+                  "answer": "dog"
+                }
+              ]
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello everyone! Look at this picture. This is my friend Dan. Dan is a boy. He has a dog. The dog's name is Buddy. Dan also has an egg for breakfast!",
+              "questions": [
+                {
+                  "question": "Who is Dan?",
+                  "answer": "a friend",
+                  "options": [
+                    "a friend",
+                    "a dog",
+                    "a teacher"
+                  ]
+                },
+                {
+                  "question": "Is Dan a boy or a girl?",
+                  "answer": "a boy",
+                  "options": [
+                    "a boy",
+                    "a girl",
+                    "a dog"
+                  ]
+                },
+                {
+                  "question": "What does Dan have?",
+                  "answer": "a dog and an egg",
+                  "options": [
+                    "a dog and an egg",
+                    "a cat and an apple",
+                    "a ball and a toy"
+                  ]
+                }
+              ],
+              "prompts": [
+                {
+                  "prompt": "Say hello",
+                  "expected_text": "hello"
+                },
+                {
+                  "prompt": "Now say: I like boy",
+                  "expected_text": "i like boy"
+                },
+                {
+                  "prompt": "Tell me: This is my ___.",
+                  "expected_text": "this is my ___."
+                }
+              ]
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Lesson Review Quiz",
-              "questions": [
-                {
-                  "question_text": "This is my ___. (Grammar question)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "friend",
-                  "options": [
-                    "friend",
-                    "egg",
-                    "dog",
-                    "boy"
-                  ]
-                },
-                {
-                  "question_text": "Which word starts with the sound 'D'? (Vocabulary question)",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "dog",
-                  "options": [
-                    "dog",
-                    "egg",
-                    "girl",
-                    "friend"
-                  ]
-                },
-                {
-                  "question_text": "True or False: 'This is my dog.' is correctly using the pattern.",
-                  "question_type": "true_false",
-                  "correct_answer": "True",
-                  "options": [
-                    "True",
-                    "False"
-                  ]
-                },
-                {
-                  "question_text": "What is the sound at the start of 'egg'?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "E",
-                  "options": [
-                    "D",
-                    "E",
-                    "G",
-                    "F"
-                  ]
-                },
-                {
-                  "question_text": "Who can be a friend?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "girl",
-                  "options": [
-                    "girl",
-                    "egg",
-                    "bag",
-                    "car"
-                  ]
-                }
+              "question_text": "Match 👦:",
+              "correct_answer": "boy",
+              "options": [
+                "boy",
+                "girl",
+                "dog"
               ]
             }
           ],
@@ -1448,8 +2070,7 @@
               "type": "youtube"
             }
           ],
-          "ai_enriched": true,
-          "enrichment_version": "1.0"
+          "number": 3
         },
         {
           "lesson_num": 4,
@@ -1461,44 +2082,44 @@
             {
               "step": 1,
               "type": "warm_up",
-              "video_url": "https://example.com/phonics-song",
-              "instruction": "Watch the video and answer these questions!",
+              "video_url": "",
+              "instruction": "Let's review our sounds! Listen carefully and choose the right answer.",
               "questions": [
                 {
-                  "question_text": "Which fruit starts with the same sound as 'Apple'?",
-                  "correct_answer": "apricot",
+                  "question_text": "Which word starts with the sound 'A'?",
+                  "correct_answer": "apple",
                   "options": [
+                    "apple",
+                    "elephant",
                     "banana",
-                    "orange",
-                    "apricot",
-                    "grape"
+                    "cat"
                   ],
                   "image_emoji": "🍎",
-                  "hint": "Listen for the 'a' sound like in 'apple'."
+                  "hint": "Think about the fruit that is red or green!"
                 },
                 {
-                  "question_text": "What starts with the same sound as 'Elephant'?",
-                  "correct_answer": "egg",
+                  "question_text": "What do you say when you meet someone?",
+                  "correct_answer": "Hello!",
                   "options": [
-                    "frog",
-                    "cat",
-                    "egg",
-                    "dog"
+                    "Hello!",
+                    "Goodbye!",
+                    "Thank you!",
+                    "Sorry!"
                   ],
-                  "image_emoji": "🥚",
-                  "hint": "Listen for the 'e' sound like in 'elephant'."
+                  "image_emoji": "👋",
+                  "hint": "We wave our hand and say this when we meet our friends!"
                 },
                 {
-                  "question_text": "Which food begins with the same sound as 'Carrot'?",
-                  "correct_answer": "cookie",
+                  "question_text": "Which word starts with the sound 'B'?",
+                  "correct_answer": "ball",
                   "options": [
-                    "pizza",
-                    "ice cream",
-                    "cookie",
-                    "banana"
+                    "ball",
+                    "apple",
+                    "dog",
+                    "egg"
                   ],
-                  "image_emoji": "🍪",
-                  "hint": "Listen for the 'c' sound like in 'carrot'."
+                  "image_emoji": "⚽",
+                  "hint": "You can throw it and catch it. It's round and bouncy!"
                 }
               ]
             },
@@ -1522,202 +2143,250 @@
               ]
             },
             {
-              "step": 3,
               "type": "vocab_games",
               "games": [
                 {
-                  "game_type": "listen_choose_picture",
+                  "game_type": "crossword",
                   "items": [
                     {
-                      "word": "cat",
-                      "emoji": "🐱",
-                      "distractors": [
-                        {
-                          "word": "dog",
-                          "emoji": "🐕"
-                        },
-                        {
-                          "word": "bird",
-                          "emoji": "🐦"
-                        },
-                        {
-                          "word": "fish",
-                          "emoji": "🐟"
-                        }
-                      ]
+                      "word": "hello",
+                      "definition": "What you say when you meet someone",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "teacher",
+                      "definition": "The person who helps you learn",
+                      "emoji": "👩‍🏫"
+                    },
+                    {
+                      "word": "morning",
+                      "definition": "The time when the sun comes up",
+                      "emoji": "🌅"
+                    },
+                    {
+                      "word": "friend",
+                      "definition": "Someone you like to play with",
+                      "emoji": "🤝"
                     },
                     {
                       "word": "apple",
-                      "emoji": "🍎",
-                      "distractors": [
-                        {
-                          "word": "banana",
-                          "emoji": "🍌"
-                        },
-                        {
-                          "word": "grape",
-                          "emoji": "🍇"
-                        },
-                        {
-                          "word": "pear",
-                          "emoji": "🍐"
-                        }
-                      ]
+                      "definition": "A red or green fruit",
+                      "emoji": "🍎"
                     },
-                    {
-                      "word": "car",
-                      "emoji": "🚗",
-                      "distractors": [
-                        {
-                          "word": "bus",
-                          "emoji": "🚌"
-                        },
-                        {
-                          "word": "bicycle",
-                          "emoji": "🚲"
-                        },
-                        {
-                          "word": "train",
-                          "emoji": "🚆"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "game_type": "read_choose_picture",
-                  "items": [
-                    {
-                      "word": "dog",
-                      "emoji": "🐕",
-                      "distractors": [
-                        {
-                          "word": "cat",
-                          "emoji": "🐱"
-                        },
-                        {
-                          "word": "horse",
-                          "emoji": "🐴"
-                        },
-                        {
-                          "word": "cow",
-                          "emoji": "🐄"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "banana",
-                      "emoji": "🍌",
-                      "distractors": [
-                        {
-                          "word": "apple",
-                          "emoji": "🍎"
-                        },
-                        {
-                          "word": "cherry",
-                          "emoji": "🍒"
-                        },
-                        {
-                          "word": "strawberry",
-                          "emoji": "🍓"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "bus",
-                      "emoji": "🚌",
-                      "distractors": [
-                        {
-                          "word": "car",
-                          "emoji": "🚗"
-                        },
-                        {
-                          "word": "bicycle",
-                          "emoji": "🚲"
-                        },
-                        {
-                          "word": "truck",
-                          "emoji": "🚚"
-                        }
-                      ]
-                    },
-                    {
-                      "word": "bird",
-                      "emoji": "🐦",
-                      "distractors": [
-                        {
-                          "word": "rabbit",
-                          "emoji": "🐇"
-                        },
-                        {
-                          "word": "frog",
-                          "emoji": "🐸"
-                        },
-                        {
-                          "word": "fish",
-                          "emoji": "🐟"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "game_type": "unscramble",
-                  "items": [
                     {
                       "word": "cat",
+                      "definition": "A small furry animal that says meow",
                       "emoji": "🐱"
                     },
                     {
                       "word": "dog",
+                      "definition": "An animal that says woof woof",
                       "emoji": "🐕"
                     },
                     {
-                      "word": "apple",
-                      "emoji": "🍎"
+                      "word": "egg",
+                      "definition": "A white or brown thing from a chicken",
+                      "emoji": "🥚"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "student",
+                      "definition": "A child who comes to school to learn",
+                      "emoji": "👦"
+                    },
+                    {
+                      "word": "fine",
+                      "definition": "How you feel when you are good and happy",
+                      "emoji": "😊"
+                    },
+                    {
+                      "word": "boy",
+                      "definition": "A male child",
+                      "emoji": "👦"
+                    },
+                    {
+                      "word": "girl",
+                      "definition": "A female child",
+                      "emoji": "👧"
+                    },
+                    {
+                      "word": "ball",
+                      "definition": "A round toy you can throw and catch",
+                      "emoji": "⚽"
+                    },
+                    {
+                      "word": "hello",
+                      "definition": "What you say when you meet someone",
+                      "emoji": "👋"
+                    },
+                    {
+                      "word": "teacher",
+                      "definition": "The person who helps you learn",
+                      "emoji": "👩‍🏫"
+                    },
+                    {
+                      "word": "friend",
+                      "definition": "Someone you like to play with",
+                      "emoji": "🤝"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "What do you say when you meet your friend?",
+                      "answer": "Hello",
+                      "options": [
+                        "Hello",
+                        "Goodbye",
+                        "Apple",
+                        "Ball"
+                      ]
+                    },
+                    {
+                      "question": "Who helps you learn at school?",
+                      "answer": "Teacher",
+                      "options": [
+                        "Teacher",
+                        "Cat",
+                        "Dog",
+                        "Egg"
+                      ]
+                    },
+                    {
+                      "question": "What time is it when the sun comes up?",
+                      "answer": "Morning",
+                      "options": [
+                        "Morning",
+                        "Apple",
+                        "Ball",
+                        "Fine"
+                      ]
+                    },
+                    {
+                      "question": "How do you feel when you are happy and good?",
+                      "answer": "Fine",
+                      "options": [
+                        "Fine",
+                        "Dog",
+                        "Cat",
+                        "Egg"
+                      ]
+                    },
+                    {
+                      "question": "What is a red or green fruit?",
+                      "answer": "Apple",
+                      "options": [
+                        "Apple",
+                        "Ball",
+                        "Cat",
+                        "Dog"
+                      ]
+                    },
+                    {
+                      "question": "What animal says meow?",
+                      "answer": "Cat",
+                      "options": [
+                        "Cat",
+                        "Dog",
+                        "Boy",
+                        "Girl"
+                      ]
+                    },
+                    {
+                      "question": "What animal says woof woof?",
+                      "answer": "Dog",
+                      "options": [
+                        "Dog",
+                        "Cat",
+                        "Egg",
+                        "Ball"
+                      ]
+                    },
+                    {
+                      "question": "What is round and you can play with it?",
+                      "answer": "Ball",
+                      "options": [
+                        "Ball",
+                        "Egg",
+                        "Apple",
+                        "Morning"
+                      ]
                     }
                   ]
                 }
               ],
-              "total_exercises": 10
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match 🥚:",
+              "correct_answer": "egg",
+              "options": [
+                "egg",
+                "dog",
+                "cat",
+                "apple"
+              ]
             },
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Anna's Garden",
-              "text": "Hello! I am Anna. This is my garden. I have flowers and a bird. The bird sings.",
+              "title": "Emma and Max",
+              "text": "Hello! I am Emma. I am a student. This is my teacher, Miss Rose. I have an apple and an egg. This is my friend Max. He is a boy. We are fine!",
+              "scene_description": "young girl student with female teacher in classroom, holding apple",
               "questions": [
                 {
-                  "question": "What does Anna have in her garden?",
-                  "answer": "flowers and a bird",
+                  "question": "Who is Emma's teacher?",
+                  "answer": "Miss Rose",
                   "options": [
-                    "flowers and a bird",
-                    "a dog and a cat",
-                    "apples and bananas"
-                  ]
+                    "Miss Rose",
+                    "Max",
+                    "Emma"
+                  ],
+                  "correct_answer": "Miss Rose"
                 },
                 {
-                  "question": "What does the bird do?",
-                  "answer": "sings",
+                  "question": "Is Max a boy or a girl?",
+                  "answer": "A boy",
                   "options": [
-                    "sings",
-                    "jumps",
-                    "runs"
-                  ]
+                    "A boy",
+                    "A girl",
+                    "A teacher"
+                  ],
+                  "correct_answer": "A boy"
+                },
+                {
+                  "question": "What does Emma have?",
+                  "answer": "An apple and an egg",
+                  "options": [
+                    "An apple and an egg",
+                    "A ball and a cat",
+                    "A dog and a ball"
+                  ],
+                  "correct_answer": "An apple and an egg"
                 }
               ]
             },
             {
               "step": 5,
-              "type": "grammar_review",
-              "patterns": [
-                "I am...",
-                "I have...",
-                "This is my..."
+              "type": "grammar_focus",
+              "rule_pattern": "I am ___ / I have ___ / This is my ___",
+              "explanation": "We use 'I am' to say who we are, 'I have' to say what we own, and 'This is my' to show our things to others.",
+              "examples": [
+                "I am a student.",
+                "I have a ball.",
+                "This is my friend."
               ]
             },
             {
-              "step": 6,
+              "step": 5,
               "type": "grammar_games",
               "games": [
                 {
@@ -1725,19 +2394,47 @@
                   "items": [
                     {
                       "words": [
-                        "She",
-                        "is",
-                        "happy"
+                        "I",
+                        "am",
+                        "a",
+                        "student"
                       ],
-                      "correctSentence": "She is happy"
+                      "correctSentence": "I am a student"
                     },
                     {
                       "words": [
-                        "They",
-                        "are",
-                        "playing"
+                        "I",
+                        "have",
+                        "a",
+                        "ball"
                       ],
-                      "correctSentence": "They are playing"
+                      "correctSentence": "I have a ball"
+                    },
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "my",
+                        "friend"
+                      ],
+                      "correctSentence": "This is my friend"
+                    },
+                    {
+                      "words": [
+                        "I",
+                        "am",
+                        "fine"
+                      ],
+                      "correctSentence": "I am fine"
+                    },
+                    {
+                      "words": [
+                        "This",
+                        "is",
+                        "my",
+                        "dog"
+                      ],
+                      "correctSentence": "This is my dog"
                     }
                   ]
                 },
@@ -1745,23 +2442,53 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "I ___ a book.",
-                      "answer": "have",
+                      "sentence": "I ___ a boy.",
+                      "answer": "am",
                       "options": [
-                        "has",
-                        "have",
+                        "am",
                         "is",
-                        "are"
+                        "are",
+                        "have"
                       ]
                     },
                     {
-                      "sentence": "We ___ friends.",
-                      "answer": "are",
+                      "sentence": "I ___ a cat.",
+                      "answer": "have",
                       "options": [
-                        "have",
-                        "has",
+                        "am",
                         "is",
-                        "are"
+                        "have",
+                        "has"
+                      ]
+                    },
+                    {
+                      "sentence": "This is ___ teacher.",
+                      "answer": "my",
+                      "options": [
+                        "my",
+                        "I",
+                        "me",
+                        "am"
+                      ]
+                    },
+                    {
+                      "sentence": "I am a ___.",
+                      "answer": "student",
+                      "options": [
+                        "student",
+                        "teacher",
+                        "apple",
+                        "ball"
+                      ]
+                    },
+                    {
+                      "sentence": "This ___ my friend.",
+                      "answer": "is",
+                      "options": [
+                        "is",
+                        "am",
+                        "are",
+                        "have"
                       ]
                     }
                   ]
@@ -1770,45 +2497,176 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "They is running.",
+                      "sentence": "I is a student.",
                       "errorWord": "is",
-                      "correctWord": "are"
+                      "correctWord": "am",
+                      "explanation": "Use 'am' with I"
                     },
                     {
-                      "sentence": "She have a pen.",
-                      "errorWord": "have",
-                      "correctWord": "has"
+                      "sentence": "I has a ball.",
+                      "errorWord": "has",
+                      "correctWord": "have",
+                      "explanation": "Use 'have' with I"
                     },
                     {
-                      "sentence": "I am eats pizza.",
-                      "errorWord": "eats",
-                      "correctWord": "eating"
+                      "sentence": "This are my dog.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with this"
+                    },
+                    {
+                      "sentence": "Me am fine.",
+                      "errorWord": "Me",
+                      "correctWord": "I",
+                      "explanation": "Use 'I' as the subject"
+                    },
+                    {
+                      "sentence": "I have two cat.",
+                      "errorWord": "cat",
+                      "correctWord": "cats",
+                      "explanation": "Use 's' for more than one"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "I am a teacher.",
+                      "is_correct": true,
+                      "corrected": "I am a teacher.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "I have a apple.",
+                      "is_correct": false,
+                      "corrected": "I have an apple.",
+                      "explanation": "Use 'an' before vowel sounds"
+                    },
+                    {
+                      "sentence": "This is my friend.",
+                      "is_correct": true,
+                      "corrected": "This is my friend.",
+                      "explanation": "This sentence is correct"
+                    },
+                    {
+                      "sentence": "I has a dog.",
+                      "is_correct": false,
+                      "corrected": "I have a dog.",
+                      "explanation": "Use 'have' with I"
+                    },
+                    {
+                      "sentence": "I am fine.",
+                      "is_correct": true,
+                      "corrected": "I am fine.",
+                      "explanation": "This sentence is correct"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "I ___ a girl.",
+                      "answer": "am",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'am' with I"
+                    },
+                    {
+                      "question": "I ___ an egg.",
+                      "answer": "have",
+                      "options": [
+                        "am",
+                        "is",
+                        "have",
+                        "has"
+                      ],
+                      "explanation": "Use 'have' to show what you own"
+                    },
+                    {
+                      "question": "This is ___ ball.",
+                      "answer": "my",
+                      "options": [
+                        "my",
+                        "I",
+                        "me",
+                        "am"
+                      ],
+                      "explanation": "Use 'my' to show it belongs to you"
+                    },
+                    {
+                      "question": "___ is my cat.",
+                      "answer": "This",
+                      "options": [
+                        "This",
+                        "I",
+                        "My",
+                        "Am"
+                      ],
+                      "explanation": "Use 'This' to point to something"
+                    },
+                    {
+                      "question": "I am a ___.",
+                      "answer": "student",
+                      "options": [
+                        "student",
+                        "fine",
+                        "morning",
+                        "hello"
+                      ],
+                      "explanation": "Student is what you are"
                     }
                   ]
                 }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [
+                "This",
+                "is",
+                "my",
+                "dog"
               ],
-              "total_exercises": 8
+              "correct_sentence": "This is my dog."
             },
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hi, I am Emma. This is my small orange cat. She loves to play and is very friendly.",
+              "audio_text": "Good morning, class! I am Miss Sarah, your teacher. Today we have a new student. This is Tom. He is a boy. Tom has a ball and a cat. Let's say hello to Tom!",
               "questions": [
                 {
-                  "question": "What color is Emma's cat?",
-                  "answer": "orange",
+                  "question": "Who is the teacher?",
+                  "answer": "Miss Sarah",
                   "options": [
-                    "orange",
-                    "black",
-                    "white"
+                    "Miss Sarah",
+                    "Tom",
+                    "Emma"
                   ]
                 },
                 {
-                  "question": "Is Emma's cat friendly?",
-                  "answer": "Yes",
+                  "question": "Is Tom a boy or a girl?",
+                  "answer": "A boy",
                   "options": [
-                    "Yes",
-                    "No"
+                    "A boy",
+                    "A girl",
+                    "A teacher"
+                  ]
+                },
+                {
+                  "question": "What does Tom have?",
+                  "answer": "A ball and a cat",
+                  "options": [
+                    "A ball and a cat",
+                    "An apple and an egg",
+                    "A dog and a ball"
                   ]
                 }
               ]
@@ -1816,9 +2674,23 @@
             {
               "step": 8,
               "type": "production",
-              "prompt": "Say: I am happy and this is my book.",
-              "expected_text": "i am happy and this is my book",
-              "mode": "speaking"
+              "production_type": "speaking",
+              "prompt": "Let's practice! Say these sentences out loud. Speak clearly and confidently!",
+              "expected_text": "Hello! I am a student.",
+              "prompts": [
+                {
+                  "prompt": "Say: Hello! I am a student.",
+                  "expected_text": "Hello! I am a student."
+                },
+                {
+                  "prompt": "Say: I have a ball and a dog.",
+                  "expected_text": "I have a ball and a dog."
+                },
+                {
+                  "prompt": "Say: This is my friend. We are fine!",
+                  "expected_text": "This is my friend. We are fine!"
+                }
+              ]
             },
             {
               "step": 9,
@@ -1826,29 +2698,40 @@
               "title": "Lesson Review Quiz",
               "questions": [
                 {
-                  "question_text": "I ___ Ben. (Grammar question)",
+                  "question_text": "I ___ a student.",
                   "question_type": "fill_blank",
                   "correct_answer": "am",
                   "options": [
                     "am",
                     "is",
                     "are",
-                    "be"
+                    "have"
                   ]
                 },
                 {
-                  "question_text": "Which emoji shows 'teacher'? (Vocabulary question)",
+                  "question_text": "What do you say when you meet someone in the morning?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "👩‍🏫",
+                  "correct_answer": "Hello! Good morning!",
                   "options": [
-                    "👩‍🏫",
-                    "🍎",
-                    "👋",
-                    "🙋"
+                    "Hello! Good morning!",
+                    "Goodbye!",
+                    "Thank you!",
+                    "I have a ball."
                   ]
                 },
                 {
-                  "question_text": "True or False: 'Hello' is a greeting.",
+                  "question_text": "I ___ a ball and a cat.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "have",
+                  "options": [
+                    "am",
+                    "is",
+                    "have",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'This is my friend' is correct.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -1857,25 +2740,14 @@
                   ]
                 },
                 {
-                  "question_text": "What is the first letter of 'Elephant'?",
+                  "question_text": "Which word starts with the sound 'E'?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "E",
+                  "correct_answer": "egg",
                   "options": [
-                    "A",
-                    "E",
-                    "I",
-                    "O"
-                  ]
-                },
-                {
-                  "question_text": "Complete: This is my ___ cat. (Reading comprehension)",
-                  "question_type": "fill_blank",
-                  "correct_answer": "small",
-                  "options": [
-                    "small",
-                    "big",
-                    "happy",
-                    "red"
+                    "egg",
+                    "apple",
+                    "ball",
+                    "cat"
                   ]
                 }
               ]
@@ -1888,12 +2760,9 @@
               "type": "youtube"
             }
           ],
-          "ai_enriched": true,
-          "enrichment_version": "1.0"
+          "number": 4
         }
       ]
     }
-  ],
-  "ai_enriched": true,
-  "enriched_at": "2026-02-17T17:49:42.829993+00:00"
+  ]
 }
