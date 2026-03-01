@@ -1972,7 +1972,7 @@ function ExitTicket({ activity, onComplete, onSkip }) {
       </div>
       <Progress value={(idx / questions.length) * 100} className="mb-6" />
       <Card className="p-6">
-        <h3 className="text-2xl font-bold text-gray-900 mb-5">{q.question_text}</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-5"><FormattedQuestion text={q.question_text} /></h3>
         {q.question_type === 'multiple_choice' && (
           <div className="space-y-3">
             {q.options?.map(option => {
