@@ -452,8 +452,12 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
         <p className="text-sm text-gray-500 text-center">Review all words from this unit</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {words.map((word, i) => (
-            <button key={i} onClick={() => speakWord(word.word)} className="p-3 bg-white rounded-xl border-2 border-gray-100 hover:border-amber-300 hover:shadow-md transition-all text-center cursor-pointer" data-testid={`review-word-${i}`}>
-              <span className="text-2xl block mb-1">{word.image_emoji || '📝'}</span>
+            <button key={i} onClick={() => playTTS(word.word)} className="p-3 bg-white rounded-xl border-2 border-gray-100 hover:border-amber-300 hover:shadow-md transition-all text-center cursor-pointer" data-testid={`review-word-${i}`}>
+              {word.image_url ? (
+                <img src={word.image_url} alt={word.word} className="w-16 h-16 object-cover rounded-lg mx-auto mb-1" />
+              ) : (
+                <span className="text-2xl block mb-1">{word.image_emoji || '📝'}</span>
+              )}
               <span className="font-bold text-gray-800">{word.word}</span>
             </button>
           ))}
