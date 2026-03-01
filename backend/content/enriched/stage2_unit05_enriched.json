@@ -1,0 +1,2718 @@
+{
+  "stage": "stage_2",
+  "stage_id": "stage_2_starters",
+  "stage_title": "Starters (A1)",
+  "units": [
+    {
+      "unit_id": "stage_2_unit_05",
+      "unit_num": 5,
+      "title": "Animals Everywhere",
+      "subtitle": "Zoo and garden animals",
+      "phonics_focus": [
+        "Animal sounds",
+        "Description words"
+      ],
+      "grammar_focus": [
+        "Present Simple (it lives, it eats)",
+        "Has it got...?",
+        "Physical descriptions"
+      ],
+      "lessons": [
+        {
+          "lesson_num": 1,
+          "lesson_id": "stage_2_unit_05_lesson_01",
+          "title": "Zoo Animals",
+          "topic": "A virtual trip to the zoo",
+          "context": "A virtual trip to the zoo.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where do zoo animals live?",
+                  "correct_answer": "In special homes at the zoo",
+                  "options": [
+                    "In special homes at the zoo",
+                    "In our houses",
+                    "In the supermarket",
+                    "In the classroom"
+                  ],
+                  "image_emoji": "🦁",
+                  "hint": "Think about where you go to see lions and elephants!"
+                },
+                {
+                  "question_text": "What can you see at the zoo?",
+                  "correct_answer": "Different animals",
+                  "options": [
+                    "Different animals",
+                    "Only dogs and cats",
+                    "Toys and games",
+                    "Cars and buses"
+                  ],
+                  "image_emoji": "🦒",
+                  "hint": "The zoo has many kinds of animals like giraffes and monkeys!"
+                },
+                {
+                  "question_text": "How do you visit a zoo?",
+                  "correct_answer": "Walk around and look at the animals",
+                  "options": [
+                    "Walk around and look at the animals",
+                    "Stay at home",
+                    "Go to bed",
+                    "Play with your tablet"
+                  ],
+                  "image_emoji": "👀",
+                  "hint": "You use your eyes to see all the amazing animals!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "giraffe",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "hippo",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "zebra",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "snake",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_choose_picture",
+                  "items": [
+                    {
+                      "word": "giraffe",
+                      "emoji": "🦒",
+                      "distractors": [
+                        {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        },
+                        {
+                          "word": "car",
+                          "emoji": "🚗"
+                        },
+                        {
+                          "word": "apple",
+                          "emoji": "🍎"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hippo",
+                      "emoji": "🦛",
+                      "distractors": [
+                        {
+                          "word": "chair",
+                          "emoji": "🪑"
+                        },
+                        {
+                          "word": "ball",
+                          "emoji": "⚽"
+                        },
+                        {
+                          "word": "house",
+                          "emoji": "🏠"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "zebra",
+                      "emoji": "🦓",
+                      "distractors": [
+                        {
+                          "word": "book",
+                          "emoji": "�책"
+                        },
+                        {
+                          "word": "sun",
+                          "emoji": "☀️"
+                        },
+                        {
+                          "word": "flower",
+                          "emoji": "🌸"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "snake",
+                      "emoji": "🐍",
+                      "distractors": [
+                        {
+                          "word": "spoon",
+                          "emoji": "🥄"
+                        },
+                        {
+                          "word": "hat",
+                          "emoji": "🎩"
+                        },
+                        {
+                          "word": "star",
+                          "emoji": "⭐"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "giraffe",
+                      "emoji": "🦒",
+                      "distractors": [
+                        {
+                          "word": "banana",
+                          "emoji": "🍌"
+                        },
+                        {
+                          "word": "rainbow",
+                          "emoji": "🌈"
+                        },
+                        {
+                          "word": "pencil",
+                          "emoji": "✏️"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "hippo",
+                      "emoji": "🦛",
+                      "distractors": [
+                        {
+                          "word": "cookie",
+                          "emoji": "🍪"
+                        },
+                        {
+                          "word": "cloud",
+                          "emoji": "☁️"
+                        },
+                        {
+                          "word": "cup",
+                          "emoji": "🥤"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "zebra",
+                      "emoji": "🦓",
+                      "distractors": [
+                        {
+                          "word": "pizza",
+                          "emoji": "🍕"
+                        },
+                        {
+                          "word": "moon",
+                          "emoji": "🌙"
+                        },
+                        {
+                          "word": "bike",
+                          "emoji": "🚲"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "snake",
+                      "emoji": "🐍",
+                      "distractors": [
+                        {
+                          "word": "kite",
+                          "emoji": "🪁"
+                        },
+                        {
+                          "word": "drum",
+                          "emoji": "🥁"
+                        },
+                        {
+                          "word": "shoe",
+                          "emoji": "👟"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "unscramble",
+                  "items": [
+                    {
+                      "word": "giraffe",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "hippo",
+                      "emoji": "🦛"
+                    },
+                    {
+                      "word": "zebra",
+                      "emoji": "🦓"
+                    },
+                    {
+                      "word": "snake",
+                      "emoji": "🐍"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "flashcard_match",
+                  "items": [
+                    {
+                      "word": "giraffe",
+                      "emoji": "🦒",
+                      "definition": "A tall animal with a long neck"
+                    },
+                    {
+                      "word": "hippo",
+                      "emoji": "🦛",
+                      "definition": "A big animal that loves water"
+                    },
+                    {
+                      "word": "zebra",
+                      "emoji": "🦓",
+                      "definition": "An animal with black and white stripes"
+                    },
+                    {
+                      "word": "snake",
+                      "emoji": "🐍",
+                      "definition": "A long animal with no legs"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "My Virtual Zoo Trip",
+              "text": "Today I visit the zoo on my computer! I see a tall giraffe. It eats leaves from trees. The hippo lives in water. It has got a big mouth! The zebra has black and white stripes. Look, there is a long snake in the grass.",
+              "scene_description": "child looking at computer screen showing zoo animals, smiling and pointing at screen",
+              "questions": [
+                {
+                  "question": "Where does the hippo live?",
+                  "answer": "In water",
+                  "options": [
+                    "In water",
+                    "In trees",
+                    "In the grass"
+                  ],
+                  "correct_answer": "In water"
+                },
+                {
+                  "question": "What does the giraffe eat?",
+                  "answer": "Leaves from trees",
+                  "options": [
+                    "Leaves from trees",
+                    "Grass",
+                    "Fish"
+                  ],
+                  "correct_answer": "Leaves from trees"
+                },
+                {
+                  "question": "Has the zebra got stripes?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No",
+                    "Maybe"
+                  ],
+                  "correct_answer": "Yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "It ___ (verb). / Has it got ___? / It has got ___ (description).",
+              "explanation": "We use 'it' to talk about one animal and tell what the animal does or what it has got.",
+              "examples": [
+                "The giraffe eats leaves.",
+                "Has it got a long neck? Yes, it has!",
+                "The zebra has got black and white stripes."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "The",
+                        "giraffe",
+                        "eats",
+                        "leaves"
+                      ],
+                      "correctSentence": "The giraffe eats leaves"
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "lives",
+                        "in",
+                        "water"
+                      ],
+                      "correctSentence": "It lives in water"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "snake",
+                        "is",
+                        "long"
+                      ],
+                      "correctSentence": "The snake is long"
+                    },
+                    {
+                      "words": [
+                        "Has",
+                        "it",
+                        "got",
+                        "stripes"
+                      ],
+                      "correctSentence": "Has it got stripes"
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "has",
+                        "got",
+                        "a",
+                        "big",
+                        "mouth"
+                      ],
+                      "correctSentence": "It has got a big mouth"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "The giraffe ___ leaves.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "to eat"
+                      ]
+                    },
+                    {
+                      "sentence": "The hippo ___ in water.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "to live"
+                      ]
+                    },
+                    {
+                      "sentence": "Has it ___ a long neck?",
+                      "answer": "got",
+                      "options": [
+                        "get",
+                        "got",
+                        "gets",
+                        "getting"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ got black stripes.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "had",
+                        "having"
+                      ]
+                    },
+                    {
+                      "sentence": "The snake ___ no legs.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "The giraffe eat leaves.",
+                      "errorWord": "eat",
+                      "correctWord": "eats",
+                      "explanation": "Use 'eats' with the giraffe (it)"
+                    },
+                    {
+                      "sentence": "Has the hippo got big mouth?",
+                      "errorWord": "big",
+                      "correctWord": "a big",
+                      "explanation": "We need 'a' before big mouth"
+                    },
+                    {
+                      "sentence": "The zebra have got stripes.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with the zebra (it)"
+                    },
+                    {
+                      "sentence": "It live in the water.",
+                      "errorWord": "live",
+                      "correctWord": "lives",
+                      "explanation": "Use 'lives' with it"
+                    },
+                    {
+                      "sentence": "The snake are very long.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with the snake (it)"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "The giraffe eats leaves.",
+                      "is_correct": true,
+                      "corrected": "The giraffe eats leaves.",
+                      "explanation": "This is correct! Use 'eats' with giraffe."
+                    },
+                    {
+                      "sentence": "It live in water.",
+                      "is_correct": false,
+                      "corrected": "It lives in water.",
+                      "explanation": "Use 'lives' with it, not 'live'"
+                    },
+                    {
+                      "sentence": "Has it got a long neck?",
+                      "is_correct": true,
+                      "corrected": "Has it got a long neck?",
+                      "explanation": "This is correct! Good question form."
+                    },
+                    {
+                      "sentence": "The zebra have stripes.",
+                      "is_correct": false,
+                      "corrected": "The zebra has stripes.",
+                      "explanation": "Use 'has' with the zebra, not 'have'"
+                    },
+                    {
+                      "sentence": "The snake has got no legs.",
+                      "is_correct": true,
+                      "corrected": "The snake has got no legs.",
+                      "explanation": "This is correct! Perfect sentence."
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "The giraffe ___ a long neck.",
+                      "answer": "has got",
+                      "options": [
+                        "have got",
+                        "has got",
+                        "is got",
+                        "are got"
+                      ],
+                      "explanation": "Use 'has got' with the giraffe (it)"
+                    },
+                    {
+                      "question": "___ it got big teeth?",
+                      "answer": "Has",
+                      "options": [
+                        "Have",
+                        "Has",
+                        "Is",
+                        "Does"
+                      ],
+                      "explanation": "Use 'Has' to ask about it"
+                    },
+                    {
+                      "question": "The hippo ___ in water.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "to live"
+                      ],
+                      "explanation": "Use 'lives' with the hippo (it)"
+                    },
+                    {
+                      "question": "It ___ grass every day.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "to eat"
+                      ],
+                      "explanation": "Use 'eats' with it"
+                    },
+                    {
+                      "question": "The zebra ___ black and white.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with the zebra (it)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello, children! Today we're going on a virtual zoo trip. Look at the screen! Can you see the tall giraffe? It eats leaves from the trees. Now look at the hippo. It lives in the water and has got a very big mouth! Oh, there's a zebra! It has got black and white stripes. And look in the grass... there's a long snake!",
+              "questions": [
+                {
+                  "question": "What does the giraffe eat?",
+                  "answer": "Leaves",
+                  "options": [
+                    "Leaves",
+                    "Grass",
+                    "Fish",
+                    "Bananas"
+                  ]
+                },
+                {
+                  "question": "Where does the hippo live?",
+                  "answer": "In the water",
+                  "options": [
+                    "In the water",
+                    "In a tree",
+                    "In the grass",
+                    "In a cave"
+                  ]
+                },
+                {
+                  "question": "What colors is the zebra?",
+                  "answer": "Black and white",
+                  "options": [
+                    "Black and white",
+                    "Brown and yellow",
+                    "Green and blue",
+                    "Red and orange"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about zoo animals! Listen and repeat, then answer the questions.",
+              "expected_text": "The giraffe eats leaves.",
+              "prompts": [
+                {
+                  "prompt": "Say: The giraffe eats leaves.",
+                  "expected_text": "The giraffe eats leaves."
+                },
+                {
+                  "prompt": "Say: The hippo lives in water.",
+                  "expected_text": "The hippo lives in water."
+                },
+                {
+                  "prompt": "Now you! What has the zebra got?",
+                  "expected_text": "It has got stripes."
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Zoo Animals Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which animal has got a long neck?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "giraffe",
+                  "options": [
+                    "giraffe",
+                    "hippo",
+                    "snake",
+                    "zebra"
+                  ]
+                },
+                {
+                  "question_text": "The hippo ___ in water.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "lives",
+                  "options": [
+                    "live",
+                    "lives",
+                    "living",
+                    "to live"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The zebra has got black and white stripes.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "What does the giraffe eat?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Leaves from trees",
+                  "options": [
+                    "Leaves from trees",
+                    "Fish",
+                    "Grass",
+                    "Bananas"
+                  ]
+                },
+                {
+                  "question_text": "Has the snake got legs?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "No, it hasn't",
+                  "options": [
+                    "Yes, it has",
+                    "No, it hasn't",
+                    "Maybe",
+                    "I don't know"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 1
+        },
+        {
+          "lesson_num": 2,
+          "lesson_id": "stage_2_unit_05_lesson_02",
+          "title": "Small Animals",
+          "topic": "Looking for tiny animals in a garden",
+          "context": "Looking for tiny animals in a garden.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Watch the video and answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Where can we find tiny animals in a garden?",
+                  "correct_answer": "Under leaves and stones",
+                  "options": [
+                    "Under leaves and stones",
+                    "In the refrigerator",
+                    "In our school bags",
+                    "On the moon"
+                  ],
+                  "image_emoji": "🌿",
+                  "hint": "Think about dark, quiet places where small animals like to hide!"
+                },
+                {
+                  "question_text": "Which tiny animal can we see in a garden?",
+                  "correct_answer": "A ladybug",
+                  "options": [
+                    "A ladybug",
+                    "An elephant",
+                    "A shark",
+                    "A polar bear"
+                  ],
+                  "image_emoji": "🐞",
+                  "hint": "This tiny animal is red with black spots and can fly!"
+                },
+                {
+                  "question_text": "What should we do when we find a tiny animal?",
+                  "correct_answer": "Look carefully and be gentle",
+                  "options": [
+                    "Look carefully and be gentle",
+                    "Run away and scream",
+                    "Pick it up and put it in our pocket",
+                    "Paint it with crayons"
+                  ],
+                  "image_emoji": "👀",
+                  "hint": "Tiny animals are very small and delicate. We need to be kind and quiet!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "spider",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "frog",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "lizard",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "tail",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "listen_write",
+                  "items": [
+                    {
+                      "word": "spider",
+                      "emoji": "🕷️"
+                    },
+                    {
+                      "word": "frog",
+                      "emoji": "🐸"
+                    },
+                    {
+                      "word": "lizard",
+                      "emoji": "🦎"
+                    },
+                    {
+                      "word": "tail",
+                      "emoji": "🦎"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "look_write",
+                  "items": [
+                    {
+                      "word": "spider",
+                      "emoji": "🕷️",
+                      "hint": "This tiny animal has eight legs"
+                    },
+                    {
+                      "word": "frog",
+                      "emoji": "🐸",
+                      "hint": "This green animal jumps and says 'ribbit'"
+                    },
+                    {
+                      "word": "lizard",
+                      "emoji": "🦎",
+                      "hint": "This animal has four legs and a long tail"
+                    },
+                    {
+                      "word": "tail",
+                      "emoji": "🦎",
+                      "hint": "The long part at the back of an animal's body"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_gap",
+                  "items": [
+                    {
+                      "sentence": "Look! A ___ is making a web.",
+                      "answer": "spider",
+                      "options": [
+                        "spider",
+                        "frog",
+                        "flower",
+                        "book"
+                      ],
+                      "emoji": "🕷️"
+                    },
+                    {
+                      "sentence": "The green ___ jumps into the pond.",
+                      "answer": "frog",
+                      "options": [
+                        "frog",
+                        "lizard",
+                        "ball",
+                        "apple"
+                      ],
+                      "emoji": "🐸"
+                    },
+                    {
+                      "sentence": "The ___ is sitting on the rock in the sun.",
+                      "answer": "lizard",
+                      "options": [
+                        "lizard",
+                        "spider",
+                        "tree",
+                        "shoe"
+                      ],
+                      "emoji": "🦎"
+                    },
+                    {
+                      "sentence": "The lizard has a very long ___.",
+                      "answer": "tail",
+                      "options": [
+                        "tail",
+                        "frog",
+                        "hat",
+                        "chair"
+                      ],
+                      "emoji": "🦎"
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "In the Garden",
+              "text": "Emma goes to the garden. She looks under a leaf. A spider is there! It has eight legs. Emma looks near the pond. A green frog jumps in the water. Then she sees a lizard on a rock. It has a long tail.",
+              "scene_description": "young girl exploring garden looking at plants and small animals",
+              "questions": [
+                {
+                  "question": "Where does Emma find the spider?",
+                  "answer": "Under a leaf",
+                  "options": [
+                    "Under a leaf",
+                    "In the pond",
+                    "On a rock"
+                  ],
+                  "correct_answer": "Under a leaf"
+                },
+                {
+                  "question": "What colour is the frog?",
+                  "answer": "Green",
+                  "options": [
+                    "Green",
+                    "Brown",
+                    "Red"
+                  ],
+                  "correct_answer": "Green"
+                },
+                {
+                  "question": "The lizard has got a long tail. Yes or No?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "It has got ___ / Has it got ___?",
+              "explanation": "We use 'has got' to talk about what animals have on their bodies.",
+              "examples": [
+                "The spider has got eight legs.",
+                "The lizard has got a long tail.",
+                "Has the frog got wings? No, it hasn't."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "The",
+                        "spider",
+                        "has",
+                        "got",
+                        "eight",
+                        "legs"
+                      ],
+                      "correctSentence": "The spider has got eight legs"
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "lives",
+                        "in",
+                        "the",
+                        "garden"
+                      ],
+                      "correctSentence": "It lives in the garden"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "frog",
+                        "eats",
+                        "small",
+                        "flies"
+                      ],
+                      "correctSentence": "The frog eats small flies"
+                    },
+                    {
+                      "words": [
+                        "Has",
+                        "it",
+                        "got",
+                        "a",
+                        "tail"
+                      ],
+                      "correctSentence": "Has it got a tail"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "lizard",
+                        "has",
+                        "got",
+                        "four",
+                        "legs"
+                      ],
+                      "correctSentence": "The lizard has got four legs"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "The spider ___ got eight legs.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ in the garden.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "lived"
+                      ]
+                    },
+                    {
+                      "sentence": "The frog ___ flies.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "ate"
+                      ]
+                    },
+                    {
+                      "sentence": "___ it got a long tail?",
+                      "answer": "Has",
+                      "options": [
+                        "Have",
+                        "Has",
+                        "Is",
+                        "Does"
+                      ]
+                    },
+                    {
+                      "sentence": "The lizard ___ on the rock.",
+                      "answer": "sits",
+                      "options": [
+                        "sit",
+                        "sits",
+                        "sitting",
+                        "sat"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "The spider have got eight legs.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with it/he/she or single things"
+                    },
+                    {
+                      "sentence": "It live in the garden.",
+                      "errorWord": "live",
+                      "correctWord": "lives",
+                      "explanation": "Add 's' to verbs with it/he/she"
+                    },
+                    {
+                      "sentence": "Has the frog got wing?",
+                      "errorWord": "wing",
+                      "correctWord": "wings",
+                      "explanation": "Use plural 'wings' because frogs don't have wings anyway, but if they did, there would be two"
+                    },
+                    {
+                      "sentence": "The lizard eat small bugs.",
+                      "errorWord": "eat",
+                      "correctWord": "eats",
+                      "explanation": "Add 's' to verbs with it/he/she or single animals"
+                    },
+                    {
+                      "sentence": "Him has got a long tail.",
+                      "errorWord": "Him",
+                      "correctWord": "It",
+                      "explanation": "Use 'It' for animals, not 'Him'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "The spider has got eight legs.",
+                      "is_correct": true,
+                      "corrected": "The spider has got eight legs.",
+                      "explanation": "This is correct! Use 'has got' with single animals."
+                    },
+                    {
+                      "sentence": "It live in the garden.",
+                      "is_correct": false,
+                      "corrected": "It lives in the garden.",
+                      "explanation": "Add 's' to make 'lives' with it/he/she"
+                    },
+                    {
+                      "sentence": "Has it got a tail?",
+                      "is_correct": true,
+                      "corrected": "Has it got a tail?",
+                      "explanation": "This is correct! Use 'Has' to ask questions."
+                    },
+                    {
+                      "sentence": "The frog eats flies.",
+                      "is_correct": true,
+                      "corrected": "The frog eats flies.",
+                      "explanation": "This is correct! Use 'eats' with single animals."
+                    },
+                    {
+                      "sentence": "The lizard have four legs.",
+                      "is_correct": false,
+                      "corrected": "The lizard has four legs.",
+                      "explanation": "Use 'has' with single animals, not 'have'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "The spider ___ got eight legs.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ],
+                      "explanation": "Use 'has got' with it/he/she or single animals"
+                    },
+                    {
+                      "question": "It ___ in the garden.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "lived"
+                      ],
+                      "explanation": "Add 's' to make 'lives' with it/he/she"
+                    },
+                    {
+                      "question": "___ the frog got long legs?",
+                      "answer": "Has",
+                      "options": [
+                        "Have",
+                        "Has",
+                        "Is",
+                        "Does"
+                      ],
+                      "explanation": "Use 'Has' with it/he/she in questions"
+                    },
+                    {
+                      "question": "The lizard ___ small bugs.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "ate"
+                      ],
+                      "explanation": "Add 's' to make 'eats' with single animals"
+                    },
+                    {
+                      "question": "Where ___ it live?",
+                      "answer": "does",
+                      "options": [
+                        "do",
+                        "does",
+                        "is",
+                        "has"
+                      ],
+                      "explanation": "Use 'does' in questions with it/he/she"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today we are looking for tiny animals in the garden. Look! I can see a spider under this leaf. It has got eight legs. Now let's look by the pond. Can you see the green frog? It's jumping! And there's a lizard on that rock. It has got a very long tail.",
+              "questions": [
+                {
+                  "question": "How many legs has the spider got?",
+                  "answer": "Eight",
+                  "options": [
+                    "Six",
+                    "Eight",
+                    "Ten",
+                    "Four"
+                  ]
+                },
+                {
+                  "question": "What color is the frog?",
+                  "answer": "Green",
+                  "options": [
+                    "Green",
+                    "Brown",
+                    "Yellow",
+                    "Blue"
+                  ]
+                },
+                {
+                  "question": "Where is the lizard?",
+                  "answer": "On a rock",
+                  "options": [
+                    "On a rock",
+                    "Under a leaf",
+                    "In the pond",
+                    "In a tree"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Now it's your turn to speak! Say these sentences about tiny animals.",
+              "expected_text": "The spider has got eight legs",
+              "prompts": [
+                {
+                  "prompt": "Look at the spider. Say: The spider has got eight legs.",
+                  "expected_text": "The spider has got eight legs"
+                },
+                {
+                  "prompt": "Look at the frog. Say: The frog lives in the garden.",
+                  "expected_text": "The frog lives in the garden"
+                },
+                {
+                  "prompt": "Look at the lizard. Ask: Has it got a long tail?",
+                  "expected_text": "Has it got a long tail"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which animal has got eight legs?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Spider",
+                  "options": [
+                    "Spider",
+                    "Frog",
+                    "Lizard",
+                    "Cat"
+                  ]
+                },
+                {
+                  "question_text": "The lizard ___ got a long tail.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "has",
+                  "options": [
+                    "have",
+                    "has",
+                    "is",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "Where do tiny animals live in the garden?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Under leaves and stones",
+                  "options": [
+                    "Under leaves and stones",
+                    "In the sky",
+                    "In the fridge",
+                    "At school"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A frog eats small flies.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "___ it got a tail?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Has",
+                  "options": [
+                    "Has",
+                    "Have",
+                    "Is",
+                    "Do"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 2
+        },
+        {
+          "lesson_num": 3,
+          "lesson_id": "stage_2_unit_05_lesson_03",
+          "title": "Descriptions",
+          "topic": "Guessing an animal based on physical clues",
+          "context": "Guessing an animal based on physical clues.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about animals! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which animal has a long neck?",
+                  "correct_answer": "giraffe",
+                  "options": [
+                    "elephant",
+                    "giraffe",
+                    "rabbit",
+                    "fish"
+                  ],
+                  "image_emoji": "🦒",
+                  "hint": "This animal is very tall and eats leaves from trees!"
+                },
+                {
+                  "question_text": "Which animal has big ears?",
+                  "correct_answer": "elephant",
+                  "options": [
+                    "snake",
+                    "elephant",
+                    "bird",
+                    "frog"
+                  ],
+                  "image_emoji": "🐘",
+                  "hint": "This animal is big and grey with a long nose called a trunk!"
+                },
+                {
+                  "question_text": "Which animal can jump very high?",
+                  "correct_answer": "kangaroo",
+                  "options": [
+                    "turtle",
+                    "kangaroo",
+                    "duck",
+                    "pig"
+                  ],
+                  "image_emoji": "🦘",
+                  "hint": "This animal has strong back legs and carries babies in a pouch!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary",
+              "items": [
+                {
+                  "word": "long neck",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "big ears",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "scary",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                },
+                {
+                  "word": "funny",
+                  "ipa": "",
+                  "definition": "",
+                  "example": "",
+                  "image_emoji": ""
+                }
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "memory_game",
+                  "items": [
+                    {
+                      "word": "long neck",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "big ears",
+                      "emoji": "🐘"
+                    },
+                    {
+                      "word": "scary",
+                      "emoji": "😱"
+                    },
+                    {
+                      "word": "funny",
+                      "emoji": "😄"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "listen_choose_word",
+                  "items": [
+                    {
+                      "word": "long neck",
+                      "emoji": "🦒",
+                      "distractors": [
+                        "long back",
+                        "short neck",
+                        "long tail"
+                      ]
+                    },
+                    {
+                      "word": "big ears",
+                      "emoji": "🐘",
+                      "distractors": [
+                        "big eyes",
+                        "small ears",
+                        "big nose"
+                      ]
+                    },
+                    {
+                      "word": "scary",
+                      "emoji": "😱",
+                      "distractors": [
+                        "happy",
+                        "sleepy",
+                        "angry"
+                      ]
+                    },
+                    {
+                      "word": "funny",
+                      "emoji": "😄",
+                      "distractors": [
+                        "sunny",
+                        "hungry",
+                        "silly"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "read_choose_picture",
+                  "items": [
+                    {
+                      "word": "long neck",
+                      "emoji": "🦒",
+                      "distractors": [
+                        {
+                          "word": "short tail",
+                          "emoji": "🐰"
+                        },
+                        {
+                          "word": "big body",
+                          "emoji": "🐻"
+                        },
+                        {
+                          "word": "long tail",
+                          "emoji": "🐒"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "big ears",
+                      "emoji": "🐘",
+                      "distractors": [
+                        {
+                          "word": "small nose",
+                          "emoji": "🐭"
+                        },
+                        {
+                          "word": "long legs",
+                          "emoji": "🦩"
+                        },
+                        {
+                          "word": "big teeth",
+                          "emoji": "🦷"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "scary",
+                      "emoji": "😱",
+                      "distractors": [
+                        {
+                          "word": "happy",
+                          "emoji": "😊"
+                        },
+                        {
+                          "word": "sad",
+                          "emoji": "😢"
+                        },
+                        {
+                          "word": "tired",
+                          "emoji": "😴"
+                        }
+                      ]
+                    },
+                    {
+                      "word": "funny",
+                      "emoji": "😄",
+                      "distractors": [
+                        {
+                          "word": "angry",
+                          "emoji": "😠"
+                        },
+                        {
+                          "word": "surprised",
+                          "emoji": "😮"
+                        },
+                        {
+                          "word": "worried",
+                          "emoji": "😟"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Let's Guess the Animal!",
+              "text": "Emma plays a guessing game with her friends. She says, 'This animal has a long neck. It eats leaves from tall trees. It lives in Africa. It has big ears too!' Tom says, 'Is it scary?' Emma laughs, 'No, it's funny when it runs!'",
+              "scene_description": "children playing guessing game in classroom, pointing at animal pictures on wall",
+              "questions": [
+                {
+                  "question": "What animal are the children talking about?",
+                  "answer": "a giraffe",
+                  "options": [
+                    "a giraffe",
+                    "an elephant",
+                    "a lion"
+                  ],
+                  "correct_answer": "a giraffe"
+                },
+                {
+                  "question": "Does the animal eat leaves from tall trees?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "Is the animal scary?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "No"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "It has ___ / It has got ___",
+              "explanation": "We use 'has' or 'has got' to describe what animals have on their bodies.",
+              "examples": [
+                "It has a long neck.",
+                "It has got big ears.",
+                "It has four legs."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "It",
+                        "has",
+                        "big",
+                        "ears"
+                      ],
+                      "correctSentence": "It has big ears"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "giraffe",
+                        "eats",
+                        "leaves"
+                      ],
+                      "correctSentence": "The giraffe eats leaves"
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "lives",
+                        "in",
+                        "Africa"
+                      ],
+                      "correctSentence": "It lives in Africa"
+                    },
+                    {
+                      "words": [
+                        "Has",
+                        "it",
+                        "got",
+                        "a",
+                        "long",
+                        "neck"
+                      ],
+                      "correctSentence": "Has it got a long neck"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "lion",
+                        "is",
+                        "scary"
+                      ],
+                      "correctSentence": "The lion is scary"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "It ___ a long neck.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "The elephant ___ in the jungle.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "lived"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ grass every day.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "ate"
+                      ]
+                    },
+                    {
+                      "sentence": "___ it got big ears?",
+                      "answer": "Has",
+                      "options": [
+                        "Have",
+                        "Has",
+                        "Is",
+                        "Does"
+                      ]
+                    },
+                    {
+                      "sentence": "The monkey is very ___.",
+                      "answer": "funny",
+                      "options": [
+                        "funny",
+                        "funnies",
+                        "funnier",
+                        "funniest"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "It have big ears.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with 'it'"
+                    },
+                    {
+                      "sentence": "The giraffe live in Africa.",
+                      "errorWord": "live",
+                      "correctWord": "lives",
+                      "explanation": "Add 's' for he/she/it"
+                    },
+                    {
+                      "sentence": "Has she got long neck?",
+                      "errorWord": "long",
+                      "correctWord": "a long",
+                      "explanation": "We need 'a' before the noun"
+                    },
+                    {
+                      "sentence": "It can jumps very high.",
+                      "errorWord": "jumps",
+                      "correctWord": "jump",
+                      "explanation": "Use base form after 'can'"
+                    },
+                    {
+                      "sentence": "The lion has two big tooth.",
+                      "errorWord": "tooth",
+                      "correctWord": "teeth",
+                      "explanation": "Use 'teeth' for plural"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "It has got a long neck.",
+                      "is_correct": true,
+                      "corrected": "It has got a long neck.",
+                      "explanation": "Correct! 'Has got' is right with 'it'"
+                    },
+                    {
+                      "sentence": "The elephant eat leaves.",
+                      "is_correct": false,
+                      "corrected": "The elephant eats leaves.",
+                      "explanation": "Add 's' to the verb with he/she/it"
+                    },
+                    {
+                      "sentence": "Has it got big ears?",
+                      "is_correct": true,
+                      "corrected": "Has it got big ears?",
+                      "explanation": "Correct! This is the right question form"
+                    },
+                    {
+                      "sentence": "It live in the zoo.",
+                      "is_correct": false,
+                      "corrected": "It lives in the zoo.",
+                      "explanation": "Use 'lives' with 'it'"
+                    },
+                    {
+                      "sentence": "The monkey is funny.",
+                      "is_correct": true,
+                      "corrected": "The monkey is funny.",
+                      "explanation": "Correct! 'Is' is right with singular nouns"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "It ___ got a long neck.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ],
+                      "explanation": "Use 'has' with 'it'"
+                    },
+                    {
+                      "question": "___ it live in Africa?",
+                      "answer": "Does",
+                      "options": [
+                        "Do",
+                        "Does",
+                        "Is",
+                        "Has"
+                      ],
+                      "explanation": "Use 'Does' for Present Simple questions with 'it'"
+                    },
+                    {
+                      "question": "The giraffe ___ leaves from trees.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "ate"
+                      ],
+                      "explanation": "Add 's' to verbs with he/she/it"
+                    },
+                    {
+                      "question": "Has the lion got ___ scary teeth?",
+                      "answer": "any",
+                      "options": [
+                        "a",
+                        "an",
+                        "any",
+                        "some"
+                      ],
+                      "explanation": "Use 'any' in questions with plural nouns"
+                    },
+                    {
+                      "question": "It ___ swim in the water.",
+                      "answer": "can",
+                      "options": [
+                        "can",
+                        "cans",
+                        "is",
+                        "has"
+                      ],
+                      "explanation": "Use 'can' without 's' for abilities"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Let's play a guessing game. I'm thinking of an animal. It has a very long neck and big ears. It lives in Africa and eats leaves from tall trees. Is it scary? No! It's funny when it runs. What animal is it?",
+              "questions": [
+                {
+                  "question": "What does the animal have?",
+                  "answer": "a long neck and big ears",
+                  "options": [
+                    "a long tail and big eyes",
+                    "a long neck and big ears",
+                    "short legs and big teeth",
+                    "a short neck and small ears"
+                  ]
+                },
+                {
+                  "question": "Where does the animal live?",
+                  "answer": "Africa",
+                  "options": [
+                    "Australia",
+                    "Africa",
+                    "America",
+                    "Asia"
+                  ]
+                },
+                {
+                  "question": "Is the animal scary?",
+                  "answer": "No",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Now it's your turn! Describe an animal using the words we learned.",
+              "expected_text": "It has a long neck",
+              "prompts": [
+                {
+                  "prompt": "Look at the giraffe. Say: It has a long neck.",
+                  "expected_text": "It has a long neck"
+                },
+                {
+                  "prompt": "Look at the elephant. Say: It has got big ears.",
+                  "expected_text": "It has got big ears"
+                },
+                {
+                  "prompt": "Think of a funny animal. Say: The monkey is funny.",
+                  "expected_text": "The monkey is funny"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Lesson Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which animal has a long neck?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "giraffe",
+                  "options": [
+                    "elephant",
+                    "giraffe",
+                    "monkey",
+                    "lion"
+                  ]
+                },
+                {
+                  "question_text": "It ___ big ears.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "has",
+                  "options": [
+                    "have",
+                    "has",
+                    "is",
+                    "are"
+                  ]
+                },
+                {
+                  "question_text": "The giraffe ___ leaves from tall trees.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "eats",
+                  "options": [
+                    "eat",
+                    "eats",
+                    "eating",
+                    "ate"
+                  ]
+                },
+                {
+                  "question_text": "True or False: A lion is scary.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Which sentence is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "It lives in Africa.",
+                  "options": [
+                    "It live in Africa.",
+                    "It lives in Africa.",
+                    "It living in Africa.",
+                    "It lived in Africa."
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 3
+        },
+        {
+          "lesson_num": 4,
+          "lesson_id": "stage_2_unit_05_lesson_04",
+          "title": "Unit Review",
+          "topic": "Sorting animals by size and habitat",
+          "context": "Sorting animals by size and habitat.",
+          "extra_links": [],
+          "steps": [
+            {
+              "step": 1,
+              "type": "warm_up",
+              "video_url": "",
+              "instruction": "Let's think about animals! Answer these questions!",
+              "questions": [
+                {
+                  "question_text": "Which animal is the biggest?",
+                  "correct_answer": "elephant",
+                  "options": [
+                    "mouse",
+                    "elephant",
+                    "cat",
+                    "rabbit"
+                  ],
+                  "image_emoji": "🐘",
+                  "hint": "This animal has a long trunk and is very, very big!"
+                },
+                {
+                  "question_text": "Where does a fish live?",
+                  "correct_answer": "in the water",
+                  "options": [
+                    "in a tree",
+                    "in the water",
+                    "in the sky",
+                    "in a house"
+                  ],
+                  "image_emoji": "🐟",
+                  "hint": "Fish swim! Where can they swim?"
+                },
+                {
+                  "question_text": "Which animal is the smallest?",
+                  "correct_answer": "ant",
+                  "options": [
+                    "horse",
+                    "dog",
+                    "ant",
+                    "cow"
+                  ],
+                  "image_emoji": "🐜",
+                  "hint": "This animal is so tiny you can step on it by accident!"
+                }
+              ]
+            },
+            {
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "giraffe",
+                "hippo",
+                "zebra",
+                "snake",
+                "spider",
+                "frog",
+                "lizard",
+                "tail",
+                "long neck",
+                "big ears",
+                "scary",
+                "funny"
+              ]
+            },
+            {
+              "type": "vocab_games",
+              "games": [
+                {
+                  "game_type": "crossword",
+                  "items": [
+                    {
+                      "word": "giraffe",
+                      "definition": "A tall animal with a very long neck",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "hippo",
+                      "definition": "A big, fat animal that lives in water",
+                      "emoji": "🦛"
+                    },
+                    {
+                      "word": "zebra",
+                      "definition": "An animal with black and white stripes",
+                      "emoji": "🦓"
+                    },
+                    {
+                      "word": "snake",
+                      "definition": "A long animal with no legs",
+                      "emoji": "🐍"
+                    },
+                    {
+                      "word": "spider",
+                      "definition": "A small animal with eight legs",
+                      "emoji": "🕷️"
+                    },
+                    {
+                      "word": "frog",
+                      "definition": "A green animal that jumps and says ribbit",
+                      "emoji": "🐸"
+                    },
+                    {
+                      "word": "tail",
+                      "definition": "The long part at the back of an animal",
+                      "emoji": "🦎"
+                    },
+                    {
+                      "word": "scary",
+                      "definition": "Something that makes you afraid",
+                      "emoji": "😱"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "word_search",
+                  "items": [
+                    {
+                      "word": "giraffe",
+                      "definition": "A tall animal with a very long neck",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "lizard",
+                      "definition": "A small animal with four legs and a long tail",
+                      "emoji": "🦎"
+                    },
+                    {
+                      "word": "zebra",
+                      "definition": "An animal with black and white stripes",
+                      "emoji": "🦓"
+                    },
+                    {
+                      "word": "long neck",
+                      "definition": "A body part that is very tall",
+                      "emoji": "🦒"
+                    },
+                    {
+                      "word": "big ears",
+                      "definition": "Large body parts used for hearing",
+                      "emoji": "🐘"
+                    },
+                    {
+                      "word": "funny",
+                      "definition": "Something that makes you laugh",
+                      "emoji": "😄"
+                    },
+                    {
+                      "word": "tail",
+                      "definition": "The long part at the back of an animal",
+                      "emoji": "🦎"
+                    },
+                    {
+                      "word": "frog",
+                      "definition": "A green animal that jumps and says ribbit",
+                      "emoji": "🐸"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "board_game",
+                  "items": [
+                    {
+                      "question": "Which animal has a very long neck?",
+                      "answer": "giraffe",
+                      "options": [
+                        "giraffe",
+                        "hippo",
+                        "spider",
+                        "frog"
+                      ]
+                    },
+                    {
+                      "question": "Which animal has eight legs?",
+                      "answer": "spider",
+                      "options": [
+                        "zebra",
+                        "snake",
+                        "spider",
+                        "lizard"
+                      ]
+                    },
+                    {
+                      "question": "Which animal has no legs?",
+                      "answer": "snake",
+                      "options": [
+                        "frog",
+                        "snake",
+                        "lizard",
+                        "hippo"
+                      ]
+                    },
+                    {
+                      "question": "What is at the back of many animals?",
+                      "answer": "tail",
+                      "options": [
+                        "big ears",
+                        "tail",
+                        "long neck",
+                        "stripes"
+                      ]
+                    },
+                    {
+                      "question": "Which animal has black and white stripes?",
+                      "answer": "zebra",
+                      "options": [
+                        "giraffe",
+                        "zebra",
+                        "hippo",
+                        "snake"
+                      ]
+                    },
+                    {
+                      "question": "Which word means something makes you laugh?",
+                      "answer": "funny",
+                      "options": [
+                        "scary",
+                        "funny",
+                        "big",
+                        "long"
+                      ]
+                    },
+                    {
+                      "question": "Which animal is big and lives in water?",
+                      "answer": "hippo",
+                      "options": [
+                        "spider",
+                        "lizard",
+                        "hippo",
+                        "snake"
+                      ]
+                    },
+                    {
+                      "question": "Which animal jumps and says ribbit?",
+                      "answer": "frog",
+                      "options": [
+                        "frog",
+                        "lizard",
+                        "spider",
+                        "zebra"
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "step": 2
+            },
+            {
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "",
+              "correct_answer": "",
+              "options": []
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Animals at the Zoo",
+              "text": "Emma goes to the zoo with her class. She sees a tall giraffe with a long neck. It eats leaves from the trees. Then she sees a hippo in the water. It has got big ears and a big mouth. The snake is small and scary. It lives in the grass.",
+              "scene_description": "children looking at animals at the zoo, giraffe and hippo visible",
+              "questions": [
+                {
+                  "question": "Where does the hippo live?",
+                  "answer": "in the water",
+                  "options": [
+                    "in the water",
+                    "in the trees",
+                    "in the grass"
+                  ],
+                  "correct_answer": "in the water"
+                },
+                {
+                  "question": "Has the giraffe got a long neck?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
+                },
+                {
+                  "question": "What does the giraffe eat?",
+                  "answer": "leaves",
+                  "options": [
+                    "leaves",
+                    "water",
+                    "grass"
+                  ],
+                  "correct_answer": "leaves"
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_focus",
+              "rule_pattern": "It ___ (verb). / Has it got ___? / It has got ___ (body part).",
+              "explanation": "We use 'it' to talk about one animal, and we can describe what it does, where it lives, and what body parts it has.",
+              "examples": [
+                "It lives in the water.",
+                "Has it got a long neck? Yes, it has!",
+                "It eats leaves from the trees.",
+                "The giraffe has got big ears."
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "It",
+                        "lives",
+                        "in",
+                        "the",
+                        "water"
+                      ],
+                      "correctSentence": "It lives in the water"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "giraffe",
+                        "eats",
+                        "leaves"
+                      ],
+                      "correctSentence": "The giraffe eats leaves"
+                    },
+                    {
+                      "words": [
+                        "Has",
+                        "it",
+                        "got",
+                        "a",
+                        "tail?"
+                      ],
+                      "correctSentence": "Has it got a tail?"
+                    },
+                    {
+                      "words": [
+                        "It",
+                        "has",
+                        "got",
+                        "big",
+                        "ears"
+                      ],
+                      "correctSentence": "It has got big ears"
+                    },
+                    {
+                      "words": [
+                        "The",
+                        "snake",
+                        "is",
+                        "scary"
+                      ],
+                      "correctSentence": "The snake is scary"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "The hippo ___ in the water.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "lived"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ leaves from the trees.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "eaten"
+                      ]
+                    },
+                    {
+                      "sentence": "___ it got a long neck?",
+                      "answer": "Has",
+                      "options": [
+                        "Have",
+                        "Has",
+                        "Is",
+                        "Do"
+                      ]
+                    },
+                    {
+                      "sentence": "The giraffe ___ got big ears.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ]
+                    },
+                    {
+                      "sentence": "It ___ in the grass.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "lived"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "It live in the water.",
+                      "errorWord": "live",
+                      "correctWord": "lives",
+                      "explanation": "Use 'lives' with 'it'"
+                    },
+                    {
+                      "sentence": "The giraffe have got a tail.",
+                      "errorWord": "have",
+                      "correctWord": "has",
+                      "explanation": "Use 'has' with singular nouns"
+                    },
+                    {
+                      "sentence": "Has the snake got two tail?",
+                      "errorWord": "tail",
+                      "correctWord": "tails",
+                      "explanation": "Use plural 'tails' after 'two'"
+                    },
+                    {
+                      "sentence": "It eats leaf from trees.",
+                      "errorWord": "leaf",
+                      "correctWord": "leaves",
+                      "explanation": "Use plural 'leaves' for many"
+                    },
+                    {
+                      "sentence": "The spider are small.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with singular nouns"
+                    },
+                    {
+                      "sentence": "Them live in the grass.",
+                      "errorWord": "Them",
+                      "correctWord": "They",
+                      "explanation": "Use 'They' as subject pronoun"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "It lives in the water.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! 'lives' is right with 'it'"
+                    },
+                    {
+                      "sentence": "The hippo eat grass.",
+                      "is_correct": false,
+                      "corrected": "The hippo eats grass.",
+                      "explanation": "Use 'eats' with singular nouns"
+                    },
+                    {
+                      "sentence": "Has it got big ears?",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! This question is perfect"
+                    },
+                    {
+                      "sentence": "The snake have a long tail.",
+                      "is_correct": false,
+                      "corrected": "The snake has a long tail.",
+                      "explanation": "Use 'has' with singular nouns"
+                    },
+                    {
+                      "sentence": "It is scary and funny.",
+                      "is_correct": true,
+                      "corrected": "",
+                      "explanation": "Correct! 'is' is right with 'it'"
+                    },
+                    {
+                      "sentence": "The giraffe live in trees.",
+                      "is_correct": false,
+                      "corrected": "The giraffe lives in trees.",
+                      "explanation": "Use 'lives' with singular nouns"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "The frog ___ in the water.",
+                      "answer": "lives",
+                      "options": [
+                        "live",
+                        "lives",
+                        "living",
+                        "lived"
+                      ],
+                      "explanation": "Use 'lives' with singular animal names"
+                    },
+                    {
+                      "question": "___ the zebra got stripes?",
+                      "answer": "Has",
+                      "options": [
+                        "Have",
+                        "Has",
+                        "Is",
+                        "Does"
+                      ],
+                      "explanation": "Use 'Has' to ask about body parts"
+                    },
+                    {
+                      "question": "It ___ got a long neck.",
+                      "answer": "has",
+                      "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                      ],
+                      "explanation": "Use 'has' with 'it'"
+                    },
+                    {
+                      "question": "The spider ___ scary.",
+                      "answer": "is",
+                      "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                      ],
+                      "explanation": "Use 'is' with singular nouns"
+                    },
+                    {
+                      "question": "The lizard ___ insects.",
+                      "answer": "eats",
+                      "options": [
+                        "eat",
+                        "eats",
+                        "eating",
+                        "eaten"
+                      ],
+                      "explanation": "Use 'eats' with singular animal names"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
+              "mode": "word_order",
+              "words": [],
+              "correct_sentence": ""
+            },
+            {
+              "step": 7,
+              "type": "listening",
+              "audio_text": "Hello children! Today we learned about animals. The giraffe is very tall. It has got a long neck and it eats leaves. The hippo is big and it lives in the water. The snake is small and scary. It lives in the grass. Now, can you tell me which animals are big and which are small?",
+              "questions": [
+                {
+                  "question": "Where does the hippo live?",
+                  "answer": "in the water",
+                  "options": [
+                    "in the water",
+                    "in the grass",
+                    "in the trees",
+                    "in the sky"
+                  ]
+                },
+                {
+                  "question": "What does the giraffe eat?",
+                  "answer": "leaves",
+                  "options": [
+                    "leaves",
+                    "grass",
+                    "water",
+                    "insects"
+                  ]
+                },
+                {
+                  "question": "Which animal has got a long neck?",
+                  "answer": "giraffe",
+                  "options": [
+                    "giraffe",
+                    "hippo",
+                    "snake",
+                    "spider"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 8,
+              "type": "production",
+              "production_type": "speaking",
+              "prompt": "Let's talk about animals! Listen and repeat, then answer the questions.",
+              "expected_text": "It lives in the water",
+              "prompts": [
+                {
+                  "prompt": "Say: It lives in the water.",
+                  "expected_text": "It lives in the water"
+                },
+                {
+                  "prompt": "Say: The giraffe has got a long neck.",
+                  "expected_text": "The giraffe has got a long neck"
+                },
+                {
+                  "prompt": "Now you try! Where does the hippo live?",
+                  "expected_text": "It lives in the water"
+                },
+                {
+                  "prompt": "Has the giraffe got big ears?",
+                  "expected_text": "Yes, it has"
+                },
+                {
+                  "prompt": "Tell me about one animal. What does it look like?",
+                  "expected_text": "The snake is long and scary"
+                }
+              ]
+            },
+            {
+              "step": 9,
+              "type": "exit_ticket",
+              "title": "Unit Review Quiz",
+              "questions": [
+                {
+                  "question_text": "Which animal has got a long neck?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "giraffe",
+                  "options": [
+                    "giraffe",
+                    "hippo",
+                    "snake",
+                    "spider"
+                  ]
+                },
+                {
+                  "question_text": "The hippo ___ in the water.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "lives",
+                  "options": [
+                    "live",
+                    "lives",
+                    "living",
+                    "lived"
+                  ]
+                },
+                {
+                  "question_text": "___ the snake got legs?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "Has",
+                  "options": [
+                    "Has",
+                    "Have",
+                    "Is",
+                    "Does"
+                  ]
+                },
+                {
+                  "question_text": "True or False: The giraffe eats leaves from the trees.",
+                  "question_type": "true_false",
+                  "correct_answer": "True",
+                  "options": [
+                    "True",
+                    "False"
+                  ]
+                },
+                {
+                  "question_text": "Where does a fish live?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "in the water",
+                  "options": [
+                    "in the water",
+                    "in the grass",
+                    "in the trees",
+                    "in the sky"
+                  ]
+                }
+              ]
+            }
+          ],
+          "number": 4
+        }
+      ]
+    }
+  ]
+}
