@@ -32,40 +32,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Where do we see lots of balloons?",
-                  "correct_answer": "At a party",
+                  "question_text": "What colors can balloons be at a party?",
+                  "correct_answer": "red, blue, yellow, and green",
                   "options": [
-                    "At a party",
-                    "In the garden",
-                    "At school",
-                    "In the kitchen"
+                    "only white",
+                    "only black",
+                    "red, blue, yellow, and green",
+                    "only brown"
                   ],
                   "image_emoji": "🎈",
-                  "hint": "Think about fun times with friends and cake!"
+                  "hint": "Think about the bright, happy colors you see at birthday parties!"
                 },
                 {
-                  "question_text": "What colors can balloons be?",
-                  "correct_answer": "Many different colors",
+                  "question_text": "Where do we see lots of balloons?",
+                  "correct_answer": "at a birthday party",
                   "options": [
-                    "Only red",
-                    "Only blue",
-                    "Many different colors",
-                    "Only yellow"
+                    "at the hospital",
+                    "at a birthday party",
+                    "at the library",
+                    "at the dentist"
                   ],
-                  "image_emoji": "🌈",
-                  "hint": "Look around! Balloons come in lots of pretty colors!"
+                  "image_emoji": "🎉",
+                  "hint": "Where do we celebrate with cake, friends, and fun decorations?"
                 },
                 {
-                  "question_text": "How many is more than ten?",
-                  "correct_answer": "Eleven",
+                  "question_text": "What happens when we count balloons?",
+                  "correct_answer": "we say numbers like 1, 2, 3",
                   "options": [
-                    "Five",
-                    "Ten",
-                    "Eleven",
-                    "Nine"
+                    "we say the alphabet",
+                    "we say colors only",
+                    "we say numbers like 1, 2, 3",
+                    "we say animal names"
                   ],
                   "image_emoji": "🔢",
-                  "hint": "Count: 10, and one more makes...?"
+                  "hint": "When we count things, we use special words that help us know how many!"
                 }
               ]
             },
@@ -121,16 +121,16 @@
                       "emoji": "1️⃣1️⃣",
                       "distractors": [
                         {
+                          "word": "seven",
+                          "emoji": "7️⃣"
+                        },
+                        {
                           "word": "ten",
                           "emoji": "🔟"
                         },
                         {
                           "word": "twelve",
                           "emoji": "1️⃣2️⃣"
-                        },
-                        {
-                          "word": "fifteen",
-                          "emoji": "1️⃣5️⃣"
                         }
                       ]
                     },
@@ -143,12 +143,12 @@
                           "emoji": "2️⃣"
                         },
                         {
-                          "word": "eleven",
-                          "emoji": "1️⃣1️⃣"
+                          "word": "twenty",
+                          "emoji": "2️⃣0️⃣"
                         },
                         {
-                          "word": "thirteen",
-                          "emoji": "1️⃣3️⃣"
+                          "word": "eleven",
+                          "emoji": "1️⃣1️⃣"
                         }
                       ]
                     },
@@ -161,12 +161,12 @@
                           "emoji": "3️⃣"
                         },
                         {
-                          "word": "fourteen",
-                          "emoji": "1️⃣4️⃣"
+                          "word": "thirty",
+                          "emoji": "3️⃣0️⃣"
                         },
                         {
-                          "word": "twelve",
-                          "emoji": "1️⃣2️⃣"
+                          "word": "fourteen",
+                          "emoji": "1️⃣4️⃣"
                         }
                       ]
                     },
@@ -179,12 +179,12 @@
                           "emoji": "4️⃣"
                         },
                         {
-                          "word": "fifteen",
-                          "emoji": "1️⃣5️⃣"
+                          "word": "forty",
+                          "emoji": "4️⃣0️⃣"
                         },
                         {
-                          "word": "thirteen",
-                          "emoji": "1️⃣3️⃣"
+                          "word": "fifteen",
+                          "emoji": "1️⃣5️⃣"
                         }
                       ]
                     },
@@ -197,12 +197,12 @@
                           "emoji": "5️⃣"
                         },
                         {
-                          "word": "fourteen",
-                          "emoji": "1️⃣4️⃣"
+                          "word": "fifty",
+                          "emoji": "5️⃣0️⃣"
                         },
                         {
-                          "word": "eleven",
-                          "emoji": "1️⃣1️⃣"
+                          "word": "fourteen",
+                          "emoji": "1️⃣4️⃣"
                         }
                       ]
                     }
@@ -220,8 +220,8 @@
                           "emoji": "7️⃣"
                         },
                         {
-                          "word": "twelve",
-                          "emoji": "1️⃣2️⃣"
+                          "word": "fifteen",
+                          "emoji": "1️⃣5️⃣"
                         },
                         {
                           "word": "ten",
@@ -234,12 +234,12 @@
                       "emoji": "1️⃣2️⃣",
                       "distractors": [
                         {
-                          "word": "twenty",
-                          "emoji": "2️⃣0️⃣"
-                        },
-                        {
                           "word": "two",
                           "emoji": "2️⃣"
+                        },
+                        {
+                          "word": "eleven",
+                          "emoji": "1️⃣1️⃣"
                         },
                         {
                           "word": "thirteen",
@@ -252,12 +252,12 @@
                       "emoji": "1️⃣3️⃣",
                       "distractors": [
                         {
-                          "word": "thirty",
-                          "emoji": "3️⃣0️⃣"
-                        },
-                        {
                           "word": "three",
                           "emoji": "3️⃣"
+                        },
+                        {
+                          "word": "twelve",
+                          "emoji": "1️⃣2️⃣"
                         },
                         {
                           "word": "fourteen",
@@ -270,12 +270,12 @@
                       "emoji": "1️⃣4️⃣",
                       "distractors": [
                         {
-                          "word": "forty",
-                          "emoji": "4️⃣0️⃣"
-                        },
-                        {
                           "word": "four",
                           "emoji": "4️⃣"
+                        },
+                        {
+                          "word": "thirteen",
+                          "emoji": "1️⃣3️⃣"
                         },
                         {
                           "word": "fifteen",
@@ -288,16 +288,16 @@
                       "emoji": "1️⃣5️⃣",
                       "distractors": [
                         {
-                          "word": "fifty",
-                          "emoji": "5️⃣0️⃣"
-                        },
-                        {
                           "word": "five",
                           "emoji": "5️⃣"
                         },
                         {
                           "word": "fourteen",
                           "emoji": "1️⃣4️⃣"
+                        },
+                        {
+                          "word": "eleven",
+                          "emoji": "1️⃣1️⃣"
                         }
                       ]
                     }
@@ -334,27 +334,27 @@
                     {
                       "word": "eleven",
                       "emoji": "1️⃣1️⃣",
-                      "definition": "10 and 1 more"
+                      "definition": "The number that comes after ten"
                     },
                     {
                       "word": "twelve",
                       "emoji": "1️⃣2️⃣",
-                      "definition": "10 and 2 more"
+                      "definition": "The number that comes after eleven"
                     },
                     {
                       "word": "thirteen",
                       "emoji": "1️⃣3️⃣",
-                      "definition": "10 and 3 more"
+                      "definition": "The number that comes after twelve"
                     },
                     {
                       "word": "fourteen",
                       "emoji": "1️⃣4️⃣",
-                      "definition": "10 and 4 more"
+                      "definition": "The number that comes after thirteen"
                     },
                     {
                       "word": "fifteen",
                       "emoji": "1️⃣5️⃣",
-                      "definition": "10 and 5 more"
+                      "definition": "The number that comes after fourteen"
                     }
                   ]
                 }
@@ -371,42 +371,40 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Lily's Birthday Party",
-              "text": "It's Lily's birthday party! How many balloons are there? There are eleven red balloons and twelve blue balloons. There are thirteen yellow balloons. Mom brings fourteen green balloons and fifteen pink balloons. So many colorful balloons!",
-              "scene_description": "happy children at birthday party with many colorful balloons decorations",
+              "title": "Emma's Birthday Party",
+              "text": "Today is Emma's birthday party! There are eleven red balloons and twelve blue balloons. Emma counts thirteen yellow balloons too. Her friend Max brings fourteen green balloons. Now there are fifteen pink balloons on the wall. What a colorful party!",
+              "scene_description": "children at a colorful birthday party with many balloons in different colors",
               "questions": [
                 {
                   "question": "How many red balloons are there?",
-                  "answer": "Eleven",
+                  "answer": "eleven",
                   "options": [
-                    "Eleven",
-                    "Twelve",
-                    "Thirteen",
-                    "Fifteen"
+                    "eleven",
+                    "twelve",
+                    "thirteen",
+                    "fourteen"
                   ],
-                  "correct_answer": "Eleven"
-                },
-                {
-                  "question": "What color are the twelve balloons?",
-                  "answer": "Blue",
-                  "options": [
-                    "Red",
-                    "Blue",
-                    "Yellow",
-                    "Green"
-                  ],
-                  "correct_answer": "Blue"
+                  "correct_answer": "eleven"
                 },
                 {
                   "question": "Who brings the green balloons?",
-                  "answer": "Mom",
+                  "answer": "Max",
                   "options": [
-                    "Lily",
+                    "Emma",
+                    "Max",
                     "Mom",
-                    "Dad",
-                    "A friend"
+                    "Dad"
                   ],
-                  "correct_answer": "Mom"
+                  "correct_answer": "Max"
+                },
+                {
+                  "question": "Are there fifteen pink balloons?",
+                  "answer": "Yes",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "correct_answer": "Yes"
                 }
               ]
             },
@@ -414,11 +412,11 @@
               "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "How many ___ are there? There are ___ ___ ___.",
-              "explanation": "We use 'How many' to ask about numbers, and we answer with 'There are' plus the number, color, and thing.",
+              "explanation": "We use 'How many' to ask about the number of things, and we answer with 'There are' plus the number, color, and object.",
               "examples": [
                 "How many balloons are there? There are eleven red balloons.",
-                "How many candles are there? There are twelve yellow candles.",
-                "How many cookies are there? There are fifteen brown cookies."
+                "How many balloons are there? There are thirteen yellow balloons.",
+                "How many balloons are there? There are fifteen pink balloons."
               ]
             },
             {
@@ -452,31 +450,32 @@
                       "words": [
                         "There",
                         "are",
-                        "twelve",
-                        "blue",
-                        "cakes."
+                        "thirteen",
+                        "yellow",
+                        "balloons."
                       ],
-                      "correctSentence": "There are twelve blue cakes."
+                      "correctSentence": "There are thirteen yellow balloons."
                     },
                     {
                       "words": [
                         "How",
                         "many",
-                        "candles",
+                        "green",
+                        "balloons",
                         "are",
                         "there?"
                       ],
-                      "correctSentence": "How many candles are there?"
+                      "correctSentence": "How many green balloons are there?"
                     },
                     {
                       "words": [
                         "There",
                         "are",
                         "fifteen",
-                        "yellow",
-                        "flowers."
+                        "pink",
+                        "balloons."
                       ],
-                      "correctSentence": "There are fifteen yellow flowers."
+                      "correctSentence": "There are fifteen pink balloons."
                     }
                   ]
                 },
@@ -494,7 +493,7 @@
                       ]
                     },
                     {
-                      "sentence": "There ___ thirteen green balloons.",
+                      "sentence": "There ___ twelve blue balloons.",
                       "answer": "are",
                       "options": [
                         "is",
@@ -504,33 +503,33 @@
                       ]
                     },
                     {
-                      "sentence": "How ___ candles are there?",
-                      "answer": "many",
+                      "sentence": "___ many red balloons are there?",
+                      "answer": "How",
                       "options": [
-                        "much",
-                        "many",
-                        "lot",
-                        "some"
+                        "What",
+                        "How",
+                        "Where",
+                        "Who"
                       ]
                     },
                     {
-                      "sentence": "There are fourteen ___ cookies.",
-                      "answer": "brown",
+                      "sentence": "There are ___ green balloons.",
+                      "answer": "fourteen",
                       "options": [
-                        "brown",
-                        "browns",
-                        "a brown",
-                        "the brown"
+                        "fourteen",
+                        "four",
+                        "forty",
+                        "fourth"
                       ]
                     },
                     {
-                      "sentence": "___ are twelve red apples.",
-                      "answer": "There",
+                      "sentence": "There are fifteen ___ balloons.",
+                      "answer": "pink",
                       "options": [
-                        "They",
-                        "Their",
-                        "There",
-                        "Here"
+                        "pink",
+                        "pinks",
+                        "a pink",
+                        "the pink"
                       ]
                     }
                   ]
@@ -551,22 +550,22 @@
                       "explanation": "Use 'are' with plural balloons"
                     },
                     {
-                      "sentence": "How much candles are there?",
-                      "errorWord": "much",
-                      "correctWord": "many",
-                      "explanation": "Use 'many' to count things"
+                      "sentence": "How many balloons there are?",
+                      "errorWord": "there are",
+                      "correctWord": "are there",
+                      "explanation": "In questions, 'are' comes before 'there'"
                     },
                     {
-                      "sentence": "There are fifteen pink balloon.",
+                      "sentence": "There are thirteen yellow balloon.",
                       "errorWord": "balloon",
                       "correctWord": "balloons",
-                      "explanation": "Use 'balloons' (plural) after fifteen"
+                      "explanation": "Use 'balloons' (plural) after number thirteen"
                     },
                     {
-                      "sentence": "There are twelve blue cake.",
-                      "errorWord": "cake",
-                      "correctWord": "cakes",
-                      "explanation": "Use 'cakes' (plural) after twelve"
+                      "sentence": "There are fifteen pink balloons at party.",
+                      "errorWord": "at party",
+                      "correctWord": "at the party",
+                      "explanation": "Use 'the' before party"
                     }
                   ]
                 },
@@ -577,31 +576,31 @@
                       "sentence": "How many balloons are there?",
                       "is_correct": true,
                       "corrected": "How many balloons are there?",
-                      "explanation": "This sentence is correct!"
+                      "explanation": "This is correct!"
                     },
                     {
-                      "sentence": "There is fourteen yellow candles.",
+                      "sentence": "There is fifteen pink balloons.",
                       "is_correct": false,
-                      "corrected": "There are fourteen yellow candles.",
-                      "explanation": "Use 'are' with plural candles"
+                      "corrected": "There are fifteen pink balloons.",
+                      "explanation": "Use 'are' with plural balloons"
+                    },
+                    {
+                      "sentence": "There are twelve blue balloons.",
+                      "is_correct": true,
+                      "corrected": "There are twelve blue balloons.",
+                      "explanation": "This is correct!"
+                    },
+                    {
+                      "sentence": "How many balloon are there?",
+                      "is_correct": false,
+                      "corrected": "How many balloons are there?",
+                      "explanation": "Use 'balloons' (plural) after 'many'"
                     },
                     {
                       "sentence": "There are eleven red balloons.",
                       "is_correct": true,
                       "corrected": "There are eleven red balloons.",
-                      "explanation": "This sentence is correct!"
-                    },
-                    {
-                      "sentence": "How many cookie are there?",
-                      "is_correct": false,
-                      "corrected": "How many cookies are there?",
-                      "explanation": "Use 'cookies' (plural) after 'many'"
-                    },
-                    {
-                      "sentence": "There are thirteen green apples.",
-                      "is_correct": true,
-                      "corrected": "There are thirteen green apples.",
-                      "explanation": "This sentence is correct!"
+                      "explanation": "This is correct!"
                     }
                   ]
                 },
@@ -620,48 +619,48 @@
                       "explanation": "Use 'are' with plural balloons"
                     },
                     {
-                      "question": "There ___ fifteen pink candles.",
+                      "question": "There ___ fourteen green balloons.",
                       "answer": "are",
                       "options": [
                         "is",
                         "are",
                         "am",
-                        "be"
+                        "was"
                       ],
-                      "explanation": "Use 'are' with plural candles"
+                      "explanation": "Use 'are' with plural balloons"
                     },
                     {
-                      "question": "How ___ cookies are there?",
-                      "answer": "many",
+                      "question": "___ many red balloons are there?",
+                      "answer": "How",
                       "options": [
-                        "much",
-                        "many",
-                        "lot",
-                        "some"
+                        "What",
+                        "How",
+                        "Where",
+                        "Who"
                       ],
-                      "explanation": "Use 'many' to count things"
+                      "explanation": "Use 'How' to ask about quantity"
                     },
                     {
-                      "question": "There are twelve ___ balloons.",
-                      "answer": "red",
+                      "question": "There are fifteen pink ___.",
+                      "answer": "balloons",
                       "options": [
-                        "red",
-                        "reds",
-                        "a red",
-                        "the red"
+                        "balloon",
+                        "balloons",
+                        "a balloon",
+                        "the balloon"
                       ],
-                      "explanation": "Colors don't need 's' or articles"
+                      "explanation": "Use 'balloons' (plural) after number fifteen"
                     },
                     {
-                      "question": "___ are eleven blue flowers.",
-                      "answer": "There",
+                      "question": "How many ___ are there?",
+                      "answer": "balloons",
                       "options": [
-                        "They",
-                        "Their",
-                        "There",
-                        "Here"
+                        "balloon",
+                        "balloons",
+                        "a balloon",
+                        "the balloon"
                       ],
-                      "explanation": "Use 'There are' to say how many"
+                      "explanation": "Use 'balloons' (plural) after 'many'"
                     }
                   ]
                 }
@@ -677,36 +676,36 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello, children! Look at Emma's birthday party. How many balloons are there? Let's count together! There are eleven red balloons and twelve yellow balloons. Oh, and there are fifteen blue balloons too! So many colorful balloons at the party!",
+              "audio_text": "Hello children! Look at the party! How many red balloons are there? Let's count together. There are eleven red balloons. Now look at the blue balloons. There are twelve blue balloons. Can you see the yellow balloons? There are thirteen yellow balloons at the party!",
               "questions": [
                 {
                   "question": "How many red balloons are there?",
-                  "answer": "Eleven",
+                  "answer": "eleven",
                   "options": [
-                    "Eleven",
-                    "Twelve",
-                    "Thirteen",
-                    "Fifteen"
+                    "eleven",
+                    "twelve",
+                    "thirteen",
+                    "fourteen"
                   ]
                 },
                 {
                   "question": "How many blue balloons are there?",
-                  "answer": "Fifteen",
+                  "answer": "twelve",
                   "options": [
-                    "Eleven",
-                    "Twelve",
-                    "Fourteen",
-                    "Fifteen"
+                    "eleven",
+                    "twelve",
+                    "thirteen",
+                    "fifteen"
                   ]
                 },
                 {
-                  "question": "What color are the twelve balloons?",
-                  "answer": "Yellow",
+                  "question": "What color are the thirteen balloons?",
+                  "answer": "yellow",
                   "options": [
-                    "Red",
-                    "Yellow",
-                    "Blue",
-                    "Green"
+                    "red",
+                    "blue",
+                    "yellow",
+                    "green"
                   ]
                 }
               ]
@@ -715,19 +714,19 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Practice counting balloons! Look at the picture and say the sentences.",
+              "prompt": "Look at the pictures and practice speaking about the balloons!",
               "expected_text": "There are eleven red balloons.",
               "prompts": [
                 {
-                  "prompt": "Say: There are eleven red balloons.",
+                  "prompt": "Look at the picture. Say: There are eleven red balloons.",
                   "expected_text": "There are eleven red balloons."
                 },
                 {
-                  "prompt": "Say: There are thirteen yellow balloons.",
+                  "prompt": "Look at the picture. Say: There are thirteen yellow balloons.",
                   "expected_text": "There are thirteen yellow balloons."
                 },
                 {
-                  "prompt": "Ask your friend: How many blue balloons are there?",
+                  "prompt": "Look at the picture. Ask your friend: How many blue balloons are there?",
                   "expected_text": "How many blue balloons are there?"
                 }
               ]
@@ -737,6 +736,17 @@
               "type": "exit_ticket",
               "title": "Numbers 11-15 Review Quiz",
               "questions": [
+                {
+                  "question_text": "What number comes after twelve?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "thirteen",
+                  "options": [
+                    "eleven",
+                    "twelve",
+                    "thirteen",
+                    "fourteen"
+                  ]
+                },
                 {
                   "question_text": "How many balloons ___ there?",
                   "question_type": "fill_blank",
@@ -749,45 +759,34 @@
                   ]
                 },
                 {
-                  "question_text": "Which number comes after twelve?",
+                  "question_text": "Read: 'There are fifteen pink balloons at the party.' How many pink balloons are there?",
                   "question_type": "multiple_choice",
-                  "correct_answer": "thirteen",
+                  "correct_answer": "fifteen",
                   "options": [
                     "eleven",
-                    "thirteen",
+                    "twelve",
                     "fourteen",
                     "fifteen"
                   ]
                 },
                 {
-                  "question_text": "Read: 'There are fifteen red balloons.' How many red balloons are there?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "Fifteen",
-                  "options": [
-                    "Eleven",
-                    "Twelve",
-                    "Fourteen",
-                    "Fifteen"
-                  ]
-                },
-                {
-                  "question_text": "Choose the correct sentence:",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "There are eleven blue balloons.",
-                  "options": [
-                    "There is eleven blue balloons.",
-                    "There are eleven blue balloons.",
-                    "There are eleven blue balloon.",
-                    "There is eleven blue balloon."
-                  ]
-                },
-                {
-                  "question_text": "True or False: We use 'How many' to ask about numbers.",
+                  "question_text": "True or False: We say 'There are' with many balloons.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
+                  ]
+                },
+                {
+                  "question_text": "Which sentence is correct?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "There are eleven red balloons.",
+                  "options": [
+                    "There is eleven red balloons.",
+                    "There are eleven red balloons.",
+                    "There am eleven red balloons.",
+                    "There be eleven red balloons."
                   ]
                 }
               ]
@@ -810,40 +809,40 @@
               "instruction": "Watch the video and answer these questions!",
               "questions": [
                 {
-                  "question_text": "Where do we keep books at home or school?",
+                  "question_text": "Where do we find books?",
                   "correct_answer": "On a shelf",
                   "options": [
                     "On a shelf",
                     "In the fridge",
-                    "Under the bed",
-                    "In a lunchbox"
+                    "On a plate",
+                    "In a shoe"
                   ],
                   "image_emoji": "📚",
-                  "hint": "Think about where books stand up in a row!"
+                  "hint": "Think about where we keep books at home or in a library!"
                 },
                 {
-                  "question_text": "How many fingers do you have on both hands?",
-                  "correct_answer": "10 fingers",
+                  "question_text": "How many books can you see if you count: one book, two books, three books?",
+                  "correct_answer": "Three books",
                   "options": [
-                    "5 fingers",
-                    "10 fingers",
-                    "15 fingers",
-                    "20 fingers"
+                    "One book",
+                    "Two books",
+                    "Three books",
+                    "Five books"
                   ],
-                  "image_emoji": "✋",
-                  "hint": "Count the fingers on one hand, then the other hand!"
+                  "image_emoji": "🔢",
+                  "hint": "Count with me: one, two, three!"
                 },
                 {
-                  "question_text": "If you have 10 books and add more books, do you get a bigger or smaller number?",
-                  "correct_answer": "A bigger number",
+                  "question_text": "What can we do with books?",
+                  "correct_answer": "Read them",
                   "options": [
-                    "A bigger number",
-                    "A smaller number",
-                    "The same number",
-                    "No books"
+                    "Eat them",
+                    "Read them",
+                    "Wear them",
+                    "Drive them"
                   ],
                   "image_emoji": "📖",
-                  "hint": "When we add more things, we count up!"
+                  "hint": "We open books and look at the words and pictures!"
                 }
               ]
             },
@@ -922,27 +921,27 @@
                     {
                       "word": "sixteen",
                       "emoji": "🔢",
-                      "hint": "It comes after fifteen"
+                      "hint": "Count: 10, 11, 12, 13, 14, 15, ___"
                     },
                     {
                       "word": "seventeen",
                       "emoji": "🔢",
-                      "hint": "It has 'seven' in it"
+                      "hint": "One more after sixteen!"
                     },
                     {
                       "word": "eighteen",
                       "emoji": "🔢",
-                      "hint": "It has 'eight' in it"
+                      "hint": "Two more after sixteen!"
                     },
                     {
                       "word": "nineteen",
                       "emoji": "🔢",
-                      "hint": "It comes before twenty"
+                      "hint": "One less than twenty!"
                     },
                     {
                       "word": "twenty",
                       "emoji": "🔢",
-                      "hint": "It's 10 + 10"
+                      "hint": "Two tens make ___!"
                     }
                   ]
                 },
@@ -950,7 +949,7 @@
                   "game_type": "fill_gap",
                   "items": [
                     {
-                      "sentence": "I count ___ books on the top shelf.",
+                      "sentence": "I can count ___ books on the shelf!",
                       "answer": "sixteen",
                       "options": [
                         "sixteen",
@@ -961,7 +960,7 @@
                       "emoji": "📚"
                     },
                     {
-                      "sentence": "There are ___ colorful crayons in my box.",
+                      "sentence": "My friend has ___ toy cars!",
                       "answer": "seventeen",
                       "options": [
                         "sixteen",
@@ -969,40 +968,40 @@
                         "nineteen",
                         "twenty"
                       ],
-                      "emoji": "🖍️"
-                    },
-                    {
-                      "sentence": "My friend has ___ toy cars.",
-                      "answer": "eighteen",
-                      "options": [
-                        "seventeen",
-                        "eighteen",
-                        "nineteen",
-                        "twenty"
-                      ],
                       "emoji": "🚗"
                     },
                     {
-                      "sentence": "The library has ___ new storybooks.",
-                      "answer": "nineteen",
+                      "sentence": "There are ___ apples in the basket!",
+                      "answer": "eighteen",
                       "options": [
                         "sixteen",
                         "eighteen",
                         "nineteen",
                         "twenty"
                       ],
-                      "emoji": "📖"
+                      "emoji": "🍎"
                     },
                     {
-                      "sentence": "I can count all the way to ___!",
+                      "sentence": "I see ___ birds in the tree!",
+                      "answer": "nineteen",
+                      "options": [
+                        "seventeen",
+                        "eighteen",
+                        "nineteen",
+                        "twenty"
+                      ],
+                      "emoji": "🐦"
+                    },
+                    {
+                      "sentence": "We have ___ pencils in our box!",
                       "answer": "twenty",
                       "options": [
                         "sixteen",
-                        "seventeen",
                         "eighteen",
+                        "nineteen",
                         "twenty"
                       ],
-                      "emoji": "🎉"
+                      "emoji": "✏️"
                     }
                   ]
                 }
@@ -1020,8 +1019,8 @@
               "step": 4,
               "type": "micro_reading",
               "title": "Books at the Library",
-              "text": "Emma goes to the library. She counts books on the shelf. There are sixteen red books. There are seventeen blue books. There are eighteen green books. How many books are there?",
-              "scene_description": "young girl counting colorful books on library shelf",
+              "text": "Emma goes to the library. She sees many books on the shelf. There are sixteen red books. There are seventeen blue books. How many are there? There are eighteen green books, nineteen yellow books, and twenty orange books!",
+              "scene_description": "young girl looking at colorful books on library shelf",
               "questions": [
                 {
                   "question": "Where does Emma go?",
@@ -1044,25 +1043,25 @@
                   "correct_answer": "Sixteen"
                 },
                 {
-                  "question": "What does Emma do at the library?",
-                  "answer": "She counts books",
+                  "question": "How many orange books does Emma see?",
+                  "answer": "Twenty",
                   "options": [
-                    "She counts books",
-                    "She reads stories",
-                    "She plays games"
+                    "Eighteen",
+                    "Nineteen",
+                    "Twenty"
                   ],
-                  "correct_answer": "She counts books"
+                  "correct_answer": "Twenty"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "How many ___ are there? There are ___ ___.",
+              "rule_pattern": "How many ___ are there? / There are ___ ___.",
               "explanation": "We use 'How many' to ask about numbers, and we answer with 'There are' plus the number and thing we are counting.",
               "examples": [
                 "How many books are there? There are sixteen books.",
-                "How many crayons are there? There are nineteen crayons.",
+                "How many pencils are there? There are nineteen pencils.",
                 "How many apples are there? There are twenty apples."
               ]
             },
@@ -1097,31 +1096,31 @@
                       "words": [
                         "There",
                         "are",
-                        "seventeen",
-                        "blue",
-                        "crayons."
-                      ],
-                      "correctSentence": "There are seventeen blue crayons."
-                    },
-                    {
-                      "words": [
-                        "There",
-                        "are",
-                        "eighteen",
-                        "green",
-                        "apples."
-                      ],
-                      "correctSentence": "There are eighteen green apples."
-                    },
-                    {
-                      "words": [
-                        "There",
-                        "are",
                         "twenty",
-                        "yellow",
+                        "orange",
                         "pencils."
                       ],
-                      "correctSentence": "There are twenty yellow pencils."
+                      "correctSentence": "There are twenty orange pencils."
+                    },
+                    {
+                      "words": [
+                        "How",
+                        "many",
+                        "apples",
+                        "are",
+                        "there?"
+                      ],
+                      "correctSentence": "How many apples are there?"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "nineteen",
+                        "yellow",
+                        "bags."
+                      ],
+                      "correctSentence": "There are nineteen yellow bags."
                     }
                   ]
                 },
@@ -1129,13 +1128,13 @@
                   "game_type": "fill_blank",
                   "items": [
                     {
-                      "sentence": "How many ___ are there?",
-                      "answer": "books",
+                      "sentence": "How many books ___ there?",
+                      "answer": "are",
                       "options": [
-                        "book",
-                        "books",
-                        "a book",
-                        "the book"
+                        "is",
+                        "are",
+                        "am",
+                        "be"
                       ]
                     },
                     {
@@ -1149,33 +1148,33 @@
                       ]
                     },
                     {
-                      "sentence": "___ many crayons are there?",
+                      "sentence": "___ many pencils are there?",
                       "answer": "How",
                       "options": [
-                        "What",
                         "How",
-                        "Where",
-                        "Who"
+                        "What",
+                        "Who",
+                        "Where"
                       ]
                     },
                     {
-                      "sentence": "There are ___ blue pencils.",
-                      "answer": "seventeen",
+                      "sentence": "There are ___ orange books.",
+                      "answer": "twenty",
                       "options": [
                         "sixteen",
                         "seventeen",
-                        "seven",
-                        "ten"
+                        "nineteen",
+                        "twenty"
                       ]
                     },
                     {
-                      "sentence": "There are nineteen ___ apples.",
-                      "answer": "green",
+                      "sentence": "How ___ apples are there?",
+                      "answer": "many",
                       "options": [
-                        "greens",
-                        "green",
-                        "a green",
-                        "the green"
+                        "much",
+                        "many",
+                        "long",
+                        "old"
                       ]
                     }
                   ]
@@ -1193,25 +1192,25 @@
                       "sentence": "There is sixteen red books.",
                       "errorWord": "is",
                       "correctWord": "are",
-                      "explanation": "Use 'are' with plural nouns like 'books'"
+                      "explanation": "Use 'are' with plural books"
                     },
                     {
-                      "sentence": "How many apples is there?",
-                      "errorWord": "is",
-                      "correctWord": "are",
-                      "explanation": "Use 'are' when asking about plural things"
-                    },
-                    {
-                      "sentence": "There are seventeen blue crayon.",
-                      "errorWord": "crayon",
-                      "correctWord": "crayons",
-                      "explanation": "Use 'crayons' (plural) after a number"
+                      "sentence": "How many apples there are?",
+                      "errorWord": "there",
+                      "correctWord": "are there",
+                      "explanation": "The correct question order is 'are there'"
                     },
                     {
                       "sentence": "There are twenty book on the shelf.",
                       "errorWord": "book",
                       "correctWord": "books",
-                      "explanation": "Use 'books' (plural) after numbers"
+                      "explanation": "Use 'books' (plural) after twenty"
+                    },
+                    {
+                      "sentence": "How much books are there?",
+                      "errorWord": "much",
+                      "correctWord": "many",
+                      "explanation": "Use 'many' with countable things like books"
                     }
                   ]
                 },
@@ -1222,19 +1221,19 @@
                       "sentence": "How many books are there?",
                       "is_correct": true,
                       "corrected": "How many books are there?",
-                      "explanation": "This question is correct!"
+                      "explanation": "This is correct!"
                     },
                     {
-                      "sentence": "There are sixteen red book.",
+                      "sentence": "There is seventeen blue books.",
                       "is_correct": false,
-                      "corrected": "There are sixteen red books.",
-                      "explanation": "Use 'books' (plural) after a number"
+                      "corrected": "There are seventeen blue books.",
+                      "explanation": "Use 'are' with plural books"
                     },
                     {
-                      "sentence": "There are seventeen blue crayons.",
+                      "sentence": "There are twenty orange pencils.",
                       "is_correct": true,
-                      "corrected": "There are seventeen blue crayons.",
-                      "explanation": "This sentence is correct!"
+                      "corrected": "There are twenty orange pencils.",
+                      "explanation": "This is correct!"
                     },
                     {
                       "sentence": "How many apple are there?",
@@ -1243,10 +1242,10 @@
                       "explanation": "Use 'apples' (plural) after 'many'"
                     },
                     {
-                      "sentence": "There is twenty pencils.",
-                      "is_correct": false,
-                      "corrected": "There are twenty pencils.",
-                      "explanation": "Use 'are' with plural nouns"
+                      "sentence": "There are nineteen yellow bags.",
+                      "is_correct": true,
+                      "corrected": "There are nineteen yellow bags.",
+                      "explanation": "This is correct!"
                     }
                   ]
                 },
@@ -1262,7 +1261,7 @@
                         "am",
                         "be"
                       ],
-                      "explanation": "Use 'are' when asking about plural things"
+                      "explanation": "Use 'are' with plural books"
                     },
                     {
                       "question": "There ___ sixteen red books.",
@@ -1273,40 +1272,40 @@
                         "am",
                         "be"
                       ],
-                      "explanation": "Use 'are' with plural nouns like 'books'"
+                      "explanation": "Use 'are' with plural books"
                     },
                     {
-                      "question": "How many ___ are there?",
-                      "answer": "crayons",
+                      "question": "How ___ apples are there?",
+                      "answer": "many",
                       "options": [
-                        "crayon",
-                        "crayons",
-                        "a crayon",
-                        "the crayon"
+                        "much",
+                        "many",
+                        "old",
+                        "long"
                       ],
-                      "explanation": "Use plural 'crayons' after 'many'"
+                      "explanation": "Use 'many' with countable things"
                     },
                     {
-                      "question": "There are seventeen ___ pencils.",
-                      "answer": "blue",
+                      "question": "There are twenty orange ___.",
+                      "answer": "books",
                       "options": [
-                        "blues",
-                        "blue",
-                        "a blue",
-                        "the blue"
+                        "book",
+                        "books",
+                        "a book",
+                        "the book"
                       ],
-                      "explanation": "Use 'blue' (adjective) before a noun"
+                      "explanation": "Use 'books' (plural) after twenty"
                     },
                     {
-                      "question": "___ many apples are there?",
+                      "question": "___ many pencils are there?",
                       "answer": "How",
                       "options": [
-                        "What",
                         "How",
-                        "Where",
-                        "Who"
+                        "What",
+                        "Who",
+                        "Where"
                       ],
-                      "explanation": "Use 'How many' to ask about numbers"
+                      "explanation": "Use 'How' to ask about numbers"
                     }
                   ]
                 }
@@ -1322,7 +1321,7 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello, children! Today we're going to count books at the library. Look at the shelf. How many red books are there? Let's count together: one, two, three... sixteen! There are sixteen red books. Now, how many blue books are there? Count with me: seventeen blue books! Great job, everyone!",
+              "audio_text": "Hello children! Look at this library shelf. How many books are there? Let me count them with you. There are sixteen red books on the top. There are seventeen blue books in the middle. And there are twenty green books at the bottom. Wow, that's a lot of books!",
               "questions": [
                 {
                   "question": "How many red books are there?",
@@ -1330,28 +1329,28 @@
                   "options": [
                     "Sixteen",
                     "Seventeen",
-                    "Eighteen",
-                    "Twenty"
+                    "Twenty",
+                    "Nineteen"
                   ]
                 },
                 {
-                  "question": "How many blue books are there?",
-                  "answer": "Seventeen",
+                  "question": "What color are the books in the middle?",
+                  "answer": "Blue",
+                  "options": [
+                    "Red",
+                    "Blue",
+                    "Green",
+                    "Yellow"
+                  ]
+                },
+                {
+                  "question": "How many green books are at the bottom?",
+                  "answer": "Twenty",
                   "options": [
                     "Sixteen",
                     "Seventeen",
                     "Nineteen",
                     "Twenty"
-                  ]
-                },
-                {
-                  "question": "Where are the children counting books?",
-                  "answer": "At the library",
-                  "options": [
-                    "At the library",
-                    "At school",
-                    "At home",
-                    "At the park"
                   ]
                 }
               ]
@@ -1360,41 +1359,30 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Practice speaking! Say these sentences out loud.",
-              "expected_text": "There are sixteen books.",
+              "prompt": "Practice counting books! Say these sentences out loud.",
+              "expected_text": "There are sixteen red books.",
               "prompts": [
                 {
-                  "prompt": "Say: There are sixteen books.",
-                  "expected_text": "There are sixteen books."
+                  "prompt": "Say: There are sixteen red books.",
+                  "expected_text": "There are sixteen red books."
                 },
                 {
-                  "prompt": "Say: How many books are there?",
-                  "expected_text": "How many books are there?"
+                  "prompt": "Say: How many blue books are there?",
+                  "expected_text": "How many blue books are there?"
                 },
                 {
-                  "prompt": "Say: There are twenty red books on the shelf.",
-                  "expected_text": "There are twenty red books on the shelf."
+                  "prompt": "Now make your own sentence! Say: There are twenty [color] books.",
+                  "expected_text": "There are twenty [color] books."
                 }
               ]
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Lesson Review Quiz",
+              "title": "Numbers 16-20 Review Quiz",
               "questions": [
                 {
-                  "question_text": "How do you say the number 17?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "seventeen",
-                  "options": [
-                    "sixteen",
-                    "seventeen",
-                    "eighteen",
-                    "nineteen"
-                  ]
-                },
-                {
-                  "question_text": "There ___ twenty books on the shelf.",
+                  "question_text": "How many books are there? There ___ seventeen books.",
                   "question_type": "fill_blank",
                   "correct_answer": "are",
                   "options": [
@@ -1405,34 +1393,45 @@
                   ]
                 },
                 {
-                  "question_text": "How many ___ are there?",
-                  "question_type": "fill_blank",
-                  "correct_answer": "books",
+                  "question_text": "Which number comes after nineteen?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "twenty",
                   "options": [
-                    "book",
-                    "books",
-                    "a book",
-                    "the book"
+                    "sixteen",
+                    "eighteen",
+                    "twenty",
+                    "seventeen"
                   ]
                 },
                 {
-                  "question_text": "True or False: We say 'There are sixteen book.'",
+                  "question_text": "Read: 'There are sixteen red books on the shelf.' How many red books are there?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "Sixteen",
+                  "options": [
+                    "Fifteen",
+                    "Sixteen",
+                    "Seventeen",
+                    "Twenty"
+                  ]
+                },
+                {
+                  "question_text": "True or False: We say 'How many books are there?' to ask about numbers.",
                   "question_type": "true_false",
-                  "correct_answer": "False",
+                  "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
                   ]
                 },
                 {
-                  "question_text": "Which number comes after nineteen?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "twenty",
+                  "question_text": "Complete the sentence: How ___ pencils are there?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "many",
                   "options": [
-                    "eighteen",
-                    "nineteen",
-                    "twenty",
-                    "sixteen"
+                    "many",
+                    "much",
+                    "old",
+                    "long"
                   ]
                 }
               ]
@@ -1452,43 +1451,43 @@
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Watch the video and answer these questions!",
+              "instruction": "Let's talk about colors! Answer these questions.",
               "questions": [
                 {
                   "question_text": "What colors do you see in a rainbow?",
-                  "correct_answer": "red, yellow, and blue",
+                  "correct_answer": "Red, yellow, and blue",
                   "options": [
-                    "red, yellow, and blue",
-                    "only black and white",
-                    "brown and gray",
-                    "just green"
+                    "Red, yellow, and blue",
+                    "Only black and white",
+                    "Just green",
+                    "Brown and gray"
                   ],
                   "image_emoji": "🌈",
                   "hint": "Think about the bright colors you see in the sky after rain!"
                 },
                 {
-                  "question_text": "Where can we see rainbows?",
-                  "correct_answer": "in the sky and in our classroom",
+                  "question_text": "Where can you find the color red in your classroom?",
+                  "correct_answer": "In a book or on a toy",
                   "options": [
-                    "in the sky and in our classroom",
-                    "only under the table",
-                    "only in the dark",
-                    "inside our pencil case"
+                    "In a book or on a toy",
+                    "In the sky",
+                    "Under the ground",
+                    "In your tummy"
                   ],
-                  "image_emoji": "☀️",
-                  "hint": "Rainbows can be outside AND inside when we make them!"
+                  "image_emoji": "🔴",
+                  "hint": "Look around you! Can you see something red near you?"
                 },
                 {
-                  "question_text": "What color comes after red in a rainbow?",
-                  "correct_answer": "orange",
+                  "question_text": "What happens when you mix two colors together?",
+                  "correct_answer": "You make a new color",
                   "options": [
-                    "orange",
-                    "purple",
-                    "black",
-                    "white"
+                    "You make a new color",
+                    "The colors disappear",
+                    "They turn into water",
+                    "They become numbers"
                   ],
                   "image_emoji": "🎨",
-                  "hint": "It's a color that looks like a yummy fruit!"
+                  "hint": "Think about painting! What happens when colors touch?"
                 }
               ]
             },
@@ -1581,7 +1580,7 @@
                       "distractors": [
                         "purpel",
                         "perpul",
-                        "purpul"
+                        "purpol"
                       ]
                     },
                     {
@@ -1589,8 +1588,8 @@
                       "emoji": "🩶",
                       "distractors": [
                         "gray",
-                        "grei",
-                        "grai"
+                        "grae",
+                        "grey"
                       ]
                     },
                     {
@@ -1598,8 +1597,8 @@
                       "emoji": "🟤",
                       "distractors": [
                         "broun",
-                        "bron",
-                        "braun"
+                        "brow",
+                        "brownn"
                       ]
                     },
                     {
@@ -1608,7 +1607,7 @@
                       "distractors": [
                         "wite",
                         "whit",
-                        "whitte"
+                        "withe"
                       ]
                     },
                     {
@@ -1617,16 +1616,16 @@
                       "distractors": [
                         "blak",
                         "blac",
-                        "blaك"
+                        "bleck"
                       ]
                     },
                     {
                       "word": "rainbow",
                       "emoji": "🌈",
                       "distractors": [
-                        "rainbo",
-                        "raenbow",
-                        "ranboe"
+                        "rainbou",
+                        "rainebow",
+                        "ranbow"
                       ]
                     }
                   ]
@@ -1639,16 +1638,16 @@
                       "emoji": "🟣",
                       "distractors": [
                         {
-                          "word": "grape",
-                          "emoji": "🍇"
+                          "word": "orange",
+                          "emoji": "🟠"
                         },
                         {
-                          "word": "heart",
-                          "emoji": "💜"
+                          "word": "green",
+                          "emoji": "🟢"
                         },
                         {
-                          "word": "flower",
-                          "emoji": "🌸"
+                          "word": "pink",
+                          "emoji": "🩷"
                         }
                       ]
                     },
@@ -1657,16 +1656,16 @@
                       "emoji": "🩶",
                       "distractors": [
                         {
-                          "word": "elephant",
-                          "emoji": "🐘"
+                          "word": "silver",
+                          "emoji": "⚙️"
                         },
                         {
                           "word": "cloud",
                           "emoji": "☁️"
                         },
                         {
-                          "word": "mouse",
-                          "emoji": "🐭"
+                          "word": "rock",
+                          "emoji": "🪨"
                         }
                       ]
                     },
@@ -1675,16 +1674,16 @@
                       "emoji": "🟤",
                       "distractors": [
                         {
+                          "word": "tree",
+                          "emoji": "🌳"
+                        },
+                        {
                           "word": "bear",
                           "emoji": "🐻"
                         },
                         {
-                          "word": "chocolate",
-                          "emoji": "🍫"
-                        },
-                        {
-                          "word": "tree",
-                          "emoji": "🌳"
+                          "word": "orange",
+                          "emoji": "🟠"
                         }
                       ]
                     },
@@ -1697,12 +1696,12 @@
                           "emoji": "❄️"
                         },
                         {
-                          "word": "sheep",
-                          "emoji": "🐑"
-                        },
-                        {
                           "word": "milk",
                           "emoji": "🥛"
+                        },
+                        {
+                          "word": "yellow",
+                          "emoji": "🟡"
                         }
                       ]
                     },
@@ -1711,16 +1710,16 @@
                       "emoji": "⚫",
                       "distractors": [
                         {
-                          "word": "cat",
-                          "emoji": "🐈‍⬛"
-                        },
-                        {
                           "word": "night",
                           "emoji": "🌙"
                         },
                         {
-                          "word": "hat",
-                          "emoji": "🎩"
+                          "word": "cat",
+                          "emoji": "🐱"
+                        },
+                        {
+                          "word": "grey",
+                          "emoji": "🩶"
                         }
                       ]
                     },
@@ -1733,12 +1732,12 @@
                           "emoji": "☀️"
                         },
                         {
-                          "word": "umbrella",
-                          "emoji": "☂️"
+                          "word": "star",
+                          "emoji": "⭐"
                         },
                         {
-                          "word": "butterfly",
-                          "emoji": "🦋"
+                          "word": "bridge",
+                          "emoji": "🌉"
                         }
                       ]
                     }
@@ -1757,39 +1756,42 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Our Classroom Rainbow",
-              "text": "Look at our classroom rainbow! There are purple and grey stripes. There are brown and white stripes too. The black stripe is at the bottom. How many colors are there? There are six colors in our rainbow!",
-              "scene_description": "children looking at a colorful rainbow display on classroom wall",
+              "title": "The Classroom Rainbow",
+              "text": "Look at our classroom rainbow! How many colors are there? There are seven colors. I can see red, orange, yellow, green, blue, purple, and white. There is a grey cloud and a brown bird too. My friend Emma likes the black bird best.",
+              "scene_description": "diverse children looking at colorful rainbow display on classroom wall with paper birds and clouds",
               "questions": [
                 {
-                  "question": "Where is the black stripe?",
-                  "answer": "at the bottom",
+                  "question": "How many colors are in the rainbow?",
+                  "answer": "Seven colors",
                   "options": [
-                    "at the bottom",
-                    "at the top",
-                    "in the middle"
+                    "Seven colors",
+                    "Five colors",
+                    "Three colors",
+                    "Ten colors"
                   ],
-                  "correct_answer": "at the bottom"
+                  "correct_answer": "Seven colors"
                 },
                 {
-                  "question": "How many colors are in the classroom rainbow?",
-                  "answer": "six",
+                  "question": "What color is the cloud?",
+                  "answer": "Grey",
                   "options": [
-                    "six",
-                    "three",
-                    "ten"
+                    "Grey",
+                    "White",
+                    "Black",
+                    "Brown"
                   ],
-                  "correct_answer": "six"
+                  "correct_answer": "Grey"
                 },
                 {
-                  "question": "What colors does the story mention together?",
-                  "answer": "purple and grey",
+                  "question": "Which bird does Emma like best?",
+                  "answer": "The black bird",
                   "options": [
-                    "purple and grey",
-                    "red and blue",
-                    "green and yellow"
+                    "The black bird",
+                    "The brown bird",
+                    "The white bird",
+                    "The purple bird"
                   ],
-                  "correct_answer": "purple and grey"
+                  "correct_answer": "The black bird"
                 }
               ]
             },
@@ -1797,11 +1799,11 @@
               "step": 5,
               "type": "grammar_focus",
               "rule_pattern": "How many ___ are there? There are [number] [color] ___.",
-              "explanation": "We use this pattern to ask about numbers and tell how many colored things we see.",
+              "explanation": "We use 'How many are there?' to ask about numbers, and we answer with 'There are' plus the number and color.",
               "examples": [
-                "How many crayons are there? There are five purple crayons.",
-                "How many cats are there? There are two black cats.",
-                "How many chairs are there? There are six brown chairs."
+                "How many pencils are there? There are five red pencils.",
+                "How many chairs are there? There are ten brown chairs.",
+                "How many clouds are there? There are three white clouds."
               ]
             },
             {
@@ -1815,51 +1817,52 @@
                       "words": [
                         "How",
                         "many",
+                        "rainbows",
                         "are",
                         "there?"
                       ],
-                      "correctSentence": "How many are there?"
-                    },
-                    {
-                      "words": [
-                        "There",
-                        "are",
-                        "three",
-                        "purple",
-                        "crayons."
-                      ],
-                      "correctSentence": "There are three purple crayons."
+                      "correctSentence": "How many rainbows are there?"
                     },
                     {
                       "words": [
                         "There",
                         "are",
                         "five",
-                        "brown",
-                        "chairs."
+                        "purple",
+                        "crayons."
                       ],
-                      "correctSentence": "There are five brown chairs."
+                      "correctSentence": "There are five purple crayons."
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "three",
+                        "black",
+                        "cats."
+                      ],
+                      "correctSentence": "There are three black cats."
+                    },
+                    {
+                      "words": [
+                        "How",
+                        "many",
+                        "white",
+                        "clouds",
+                        "are",
+                        "there?"
+                      ],
+                      "correctSentence": "How many white clouds are there?"
                     },
                     {
                       "words": [
                         "There",
                         "are",
                         "two",
-                        "black",
-                        "cats."
+                        "brown",
+                        "desks."
                       ],
-                      "correctSentence": "There are two black cats."
-                    },
-                    {
-                      "words": [
-                        "How",
-                        "many",
-                        "grey",
-                        "clouds",
-                        "are",
-                        "there?"
-                      ],
-                      "correctSentence": "How many grey clouds are there?"
+                      "correctSentence": "There are two brown desks."
                     }
                   ]
                 },
@@ -1868,16 +1871,16 @@
                   "items": [
                     {
                       "sentence": "How many ___ are there?",
-                      "answer": "colors",
+                      "answer": "chairs",
                       "options": [
-                        "color",
-                        "colors",
-                        "colores",
-                        "colour"
+                        "chair",
+                        "chairs",
+                        "chairing",
+                        "chaired"
                       ]
                     },
                     {
-                      "sentence": "There ___ six white eggs.",
+                      "sentence": "There ___ four grey mice.",
                       "answer": "are",
                       "options": [
                         "is",
@@ -1887,33 +1890,33 @@
                       ]
                     },
                     {
-                      "sentence": "How ___ black pens are there?",
-                      "answer": "many",
+                      "sentence": "___ many books are there?",
+                      "answer": "How",
                       "options": [
-                        "much",
-                        "many",
-                        "lot",
-                        "some"
+                        "How",
+                        "What",
+                        "Who",
+                        "Where"
                       ]
                     },
                     {
-                      "sentence": "There are four ___ pencils.",
-                      "answer": "brown",
+                      "sentence": "There are ___ black pens.",
+                      "answer": "six",
                       "options": [
-                        "browns",
-                        "brown",
-                        "brownes",
-                        "a brown"
+                        "six",
+                        "a",
+                        "one",
+                        "many"
                       ]
                     },
                     {
-                      "sentence": "___ are two grey elephants.",
-                      "answer": "There",
+                      "sentence": "How many brown ___ are there?",
+                      "answer": "bears",
                       "options": [
-                        "Their",
-                        "There",
-                        "They",
-                        "These"
+                        "bear",
+                        "bears",
+                        "bearing",
+                        "a bear"
                       ]
                     }
                   ]
@@ -1922,34 +1925,40 @@
                   "game_type": "error_hunter",
                   "items": [
                     {
-                      "sentence": "How many cats is there?",
+                      "sentence": "How many pencil are there?",
+                      "errorWord": "pencil",
+                      "correctWord": "pencils",
+                      "explanation": "Use plural 'pencils' after 'many'"
+                    },
+                    {
+                      "sentence": "There is five purple flowers.",
                       "errorWord": "is",
                       "correctWord": "are",
-                      "explanation": "Use 'are' when asking about many things"
+                      "explanation": "Use 'are' with plural numbers"
                     },
                     {
-                      "sentence": "There are five purple crayon.",
-                      "errorWord": "crayon",
-                      "correctWord": "crayons",
-                      "explanation": "Use plural 'crayons' after number five"
-                    },
-                    {
-                      "sentence": "How many are they?",
-                      "errorWord": "they",
-                      "correctWord": "there",
-                      "explanation": "Use 'there' in this question pattern"
-                    },
-                    {
-                      "sentence": "There is three black cats.",
+                      "sentence": "How many dogs is there?",
                       "errorWord": "is",
                       "correctWord": "are",
-                      "explanation": "Use 'are' with plural number three"
+                      "explanation": "Use 'are' in questions with plural"
                     },
                     {
-                      "sentence": "There are two white dog.",
-                      "errorWord": "dog",
-                      "correctWord": "dogs",
-                      "explanation": "Use plural 'dogs' after number two"
+                      "sentence": "There are three white cat.",
+                      "errorWord": "cat",
+                      "correctWord": "cats",
+                      "explanation": "Use plural 'cats' after 'three'"
+                    },
+                    {
+                      "sentence": "How much stars are there?",
+                      "errorWord": "much",
+                      "correctWord": "many",
+                      "explanation": "Use 'many' for counting things"
+                    },
+                    {
+                      "sentence": "There are a black bird.",
+                      "errorWord": "are",
+                      "correctWord": "is",
+                      "explanation": "Use 'is' with 'a' (one thing)"
                     }
                   ]
                 },
@@ -1957,34 +1966,34 @@
                   "game_type": "true_false",
                   "items": [
                     {
-                      "sentence": "How many colors are there?",
+                      "sentence": "How many rainbows are there?",
                       "is_correct": true,
-                      "corrected": "How many colors are there?",
-                      "explanation": "This sentence is correct"
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
                     },
                     {
-                      "sentence": "There are six brown chair.",
+                      "sentence": "There is seven grey clouds.",
                       "is_correct": false,
-                      "corrected": "There are six brown chairs.",
-                      "explanation": "Use plural 'chairs' after six"
+                      "corrected": "There are seven grey clouds.",
+                      "explanation": "Use 'are' with numbers more than one"
                     },
                     {
-                      "sentence": "There are four purple crayons.",
+                      "sentence": "There are ten brown chairs.",
                       "is_correct": true,
-                      "corrected": "There are four purple crayons.",
-                      "explanation": "This sentence is correct"
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
                     },
                     {
-                      "sentence": "How many is there?",
+                      "sentence": "How many book are there?",
                       "is_correct": false,
-                      "corrected": "How many are there?",
-                      "explanation": "Use 'are' in this question"
+                      "corrected": "How many books are there?",
+                      "explanation": "Use plural 'books' after 'many'"
                     },
                     {
-                      "sentence": "There are two grey elephants.",
+                      "sentence": "There are four white rabbits.",
                       "is_correct": true,
-                      "corrected": "There are two grey elephants.",
-                      "explanation": "This sentence is correct"
+                      "corrected": "",
+                      "explanation": "This sentence is correct!"
                     }
                   ]
                 },
@@ -1992,7 +2001,7 @@
                   "game_type": "multiple_choice_grammar",
                   "items": [
                     {
-                      "question": "How many ___ there?",
+                      "question": "How many colors ___ there in a rainbow?",
                       "answer": "are",
                       "options": [
                         "is",
@@ -2000,51 +2009,51 @@
                         "am",
                         "be"
                       ],
-                      "explanation": "Use 'are' when asking about many things"
+                      "explanation": "Use 'are' for plural questions"
                     },
                     {
-                      "question": "There ___ three black cats.",
+                      "question": "There ___ two black cats.",
                       "answer": "are",
                       "options": [
                         "is",
                         "are",
                         "am",
-                        "was"
+                        "be"
                       ],
-                      "explanation": "Use 'are' with plural number three"
+                      "explanation": "Use 'are' with numbers more than one"
                     },
                     {
-                      "question": "How ___ pencils are there?",
-                      "answer": "many",
+                      "question": "How many purple ___?",
+                      "answer": "crayons are there",
                       "options": [
-                        "much",
-                        "many",
-                        "lot",
-                        "more"
+                        "crayon is there",
+                        "crayons are there",
+                        "crayon are there",
+                        "crayons is there"
                       ],
-                      "explanation": "Use 'many' to ask about countable things"
+                      "explanation": "Use plural 'crayons' and 'are' for counting"
                     },
                     {
-                      "question": "There are five brown ___.",
-                      "answer": "chairs",
+                      "question": "There are eight ___ desks.",
+                      "answer": "brown",
                       "options": [
-                        "chair",
-                        "chairs",
-                        "a chair",
-                        "the chair"
+                        "brown",
+                        "browns",
+                        "a brown",
+                        "browning"
                       ],
-                      "explanation": "Use plural after number five"
+                      "explanation": "Color words don't change for plural"
                     },
                     {
-                      "question": "___ are two white eggs.",
-                      "answer": "There",
+                      "question": "___ chairs are there?",
+                      "answer": "How many",
                       "options": [
-                        "Their",
-                        "There",
-                        "They",
-                        "These"
+                        "How many",
+                        "How much",
+                        "What many",
+                        "Who many"
                       ],
-                      "explanation": "Use 'There' to say what exists"
+                      "explanation": "Use 'How many' to ask about numbers"
                     }
                   ]
                 }
@@ -2060,36 +2069,36 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Good morning, class! Look at our beautiful rainbow on the wall. How many colors are there? Let's count together. There are purple, grey, brown, white, black, and one more. Yes! There are six colors in our classroom rainbow. The purple stripe is at the top and the black stripe is at the bottom.",
+              "audio_text": "Good morning, children! Today we're making a classroom rainbow. Look at all the colors! How many colors are there? There are seven colors. Can you see the purple at the top? Now let's add a grey cloud and a brown bird. Oh, and don't forget the white clouds and the black bird too!",
               "questions": [
                 {
-                  "question": "How many colors are in the classroom rainbow?",
-                  "answer": "six",
+                  "question": "How many colors are in the rainbow?",
+                  "answer": "Seven",
                   "options": [
-                    "four",
-                    "six",
-                    "eight",
-                    "ten"
+                    "Five",
+                    "Seven",
+                    "Ten",
+                    "Three"
                   ]
                 },
                 {
                   "question": "What color is at the top of the rainbow?",
-                  "answer": "purple",
+                  "answer": "Purple",
                   "options": [
-                    "purple",
-                    "black",
-                    "grey",
-                    "brown"
+                    "Purple",
+                    "Grey",
+                    "Brown",
+                    "Black"
                   ]
                 },
                 {
-                  "question": "Where is the black stripe?",
-                  "answer": "at the bottom",
+                  "question": "What are the children making today?",
+                  "answer": "A classroom rainbow",
                   "options": [
-                    "at the top",
-                    "at the bottom",
-                    "in the middle",
-                    "on the side"
+                    "A classroom rainbow",
+                    "A birthday cake",
+                    "A picture of animals",
+                    "A number chart"
                   ]
                 }
               ]
@@ -2098,20 +2107,20 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Let's practice talking about colors! Listen and repeat these sentences.",
-              "expected_text": "There are six colors in the rainbow.",
+              "prompt": "Let's practice talking about colors! Listen and repeat, then answer the questions.",
+              "expected_text": "There are seven colors.",
               "prompts": [
                 {
-                  "prompt": "Look at the rainbow. Say: There are six colors.",
-                  "expected_text": "There are six colors."
+                  "prompt": "Say: How many colors are there?",
+                  "expected_text": "How many colors are there?"
                 },
                 {
-                  "prompt": "Now ask me: How many purple crayons are there?",
-                  "expected_text": "How many purple crayons are there?"
+                  "prompt": "Answer: How many colors are in a rainbow?",
+                  "expected_text": "There are seven colors."
                 },
                 {
-                  "prompt": "Tell me: There are three brown chairs in the classroom.",
-                  "expected_text": "There are three brown chairs in the classroom."
+                  "prompt": "Tell me: What colors do you see? Use: There are...",
+                  "expected_text": "There are purple, grey, brown, white, and black."
                 }
               ]
             },
@@ -2121,7 +2130,7 @@
               "title": "New Colors Review Quiz",
               "questions": [
                 {
-                  "question_text": "What color is this? 🟣",
+                  "question_text": "Which color is this? 🟣",
                   "question_type": "multiple_choice",
                   "correct_answer": "purple",
                   "options": [
@@ -2132,7 +2141,7 @@
                   ]
                 },
                 {
-                  "question_text": "There ___ five brown chairs.",
+                  "question_text": "How many pencils are there? There ___ five purple pencils.",
                   "question_type": "fill_blank",
                   "correct_answer": "are",
                   "options": [
@@ -2143,18 +2152,7 @@
                   ]
                 },
                 {
-                  "question_text": "How many colors are in a rainbow?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "six or seven",
-                  "options": [
-                    "two",
-                    "six or seven",
-                    "ten",
-                    "one"
-                  ]
-                },
-                {
-                  "question_text": "True or False: We say 'How many are there?' to ask about numbers.",
+                  "question_text": "True or False: A rainbow has many colors.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
@@ -2163,14 +2161,25 @@
                   ]
                 },
                 {
-                  "question_text": "Which sentence is correct?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "There are three black cats.",
+                  "question_text": "Complete the question: How ___ chairs are there?",
+                  "question_type": "fill_blank",
+                  "correct_answer": "many",
                   "options": [
-                    "There is three black cats.",
-                    "There are three black cats.",
-                    "There am three black cats.",
-                    "How many is there?"
+                    "many",
+                    "much",
+                    "old",
+                    "color"
+                  ]
+                },
+                {
+                  "question_text": "What color is a cloud usually? ☁️",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "white",
+                  "options": [
+                    "white",
+                    "black",
+                    "purple",
+                    "brown"
                   ]
                 }
               ]
@@ -2190,43 +2199,43 @@
               "step": 1,
               "type": "warm_up",
               "video_url": "",
-              "instruction": "Let's think about numbers and colors! Answer these questions!",
+              "instruction": "Let's warm up! Answer these questions about numbers and colors!",
               "questions": [
                 {
-                  "question_text": "How many red apples do you see?",
-                  "correct_answer": "5 red apples",
+                  "question_text": "How many fingers do you have on one hand?",
+                  "correct_answer": "5 fingers",
                   "options": [
-                    "3 red apples",
-                    "5 red apples",
-                    "7 red apples",
-                    "2 red apples"
+                    "3 fingers",
+                    "5 fingers",
+                    "7 fingers",
+                    "10 fingers"
                   ],
-                  "image_emoji": "🍎🍎🍎🍎🍎",
-                  "hint": "Count carefully! Point to each apple as you count: 1, 2, 3, 4, 5!"
+                  "image_emoji": "✋",
+                  "hint": "Look at your hand and count each finger!"
                 },
                 {
-                  "question_text": "Which group has MORE toys?",
-                  "correct_answer": "8 blue balls",
+                  "question_text": "Which number comes after 9?",
+                  "correct_answer": "10",
                   "options": [
-                    "4 yellow stars",
-                    "8 blue balls",
-                    "3 green cars",
-                    "6 red blocks"
+                    "8",
+                    "10",
+                    "11",
+                    "12"
                   ],
-                  "image_emoji": "🔵🔵🔵🔵🔵🔵🔵🔵",
-                  "hint": "Count each group. Which number is the biggest? 8 is more than 6, 4, and 3!"
+                  "image_emoji": "🔢",
+                  "hint": "Count from 1 to 10. What number comes at the end?"
                 },
                 {
-                  "question_text": "What color are these 10 balloons?",
-                  "correct_answer": "purple",
+                  "question_text": "If you have 3 red apples and 2 green apples, how many apples do you have?",
+                  "correct_answer": "5 apples",
                   "options": [
-                    "orange",
-                    "purple",
-                    "pink",
-                    "brown"
+                    "3 apples",
+                    "4 apples",
+                    "5 apples",
+                    "6 apples"
                   ],
-                  "image_emoji": "🟣🟣🟣🟣🟣🟣🟣🟣🟣🟣",
-                  "hint": "Look at all the balloons. They are all the same color. What color is it?"
+                  "image_emoji": "🍎",
+                  "hint": "Count the red apples first, then add the green apples!"
                 }
               ]
             },
@@ -2264,29 +2273,24 @@
                       "emoji": "1️⃣1️⃣"
                     },
                     {
+                      "word": "thirteen",
+                      "definition": "The number between twelve and fourteen",
+                      "emoji": "1️⃣3️⃣"
+                    },
+                    {
                       "word": "fifteen",
-                      "definition": "The number between fourteen and sixteen",
+                      "definition": "The number that is five plus ten",
                       "emoji": "1️⃣5️⃣"
                     },
                     {
-                      "word": "twenty",
-                      "definition": "Two groups of ten",
-                      "emoji": "2️⃣0️⃣"
-                    },
-                    {
                       "word": "purple",
-                      "definition": "The color you make when you mix red and blue",
-                      "emoji": "🟣"
+                      "definition": "The color you get when you mix red and blue",
+                      "emoji": "💜"
                     },
                     {
                       "word": "brown",
-                      "definition": "The color of chocolate and tree trunks",
-                      "emoji": "🟤"
-                    },
-                    {
-                      "word": "white",
-                      "definition": "The color of snow and clouds",
-                      "emoji": "⚪"
+                      "definition": "The color of chocolate and wood",
+                      "emoji": "🤎"
                     },
                     {
                       "word": "rainbow",
@@ -2294,9 +2298,14 @@
                       "emoji": "🌈"
                     },
                     {
-                      "word": "grey",
-                      "definition": "The color between black and white",
-                      "emoji": "⚫"
+                      "word": "twenty",
+                      "definition": "The number that is two times ten",
+                      "emoji": "2️⃣0️⃣"
+                    },
+                    {
+                      "word": "white",
+                      "definition": "The color of snow and clouds",
+                      "emoji": "🤍"
                     }
                   ]
                 },
@@ -2309,39 +2318,39 @@
                       "emoji": "1️⃣2️⃣"
                     },
                     {
-                      "word": "thirteen",
-                      "definition": "The number that comes after twelve",
-                      "emoji": "1️⃣3️⃣"
+                      "word": "fourteen",
+                      "definition": "The number between thirteen and fifteen",
+                      "emoji": "1️⃣4️⃣"
                     },
                     {
                       "word": "sixteen",
-                      "definition": "The number between fifteen and seventeen",
+                      "definition": "The number that comes after fifteen",
                       "emoji": "1️⃣6️⃣"
                     },
                     {
                       "word": "eighteen",
-                      "definition": "The number that comes after seventeen",
+                      "definition": "The number between seventeen and nineteen",
                       "emoji": "1️⃣8️⃣"
                     },
                     {
+                      "word": "grey",
+                      "definition": "The color of elephants and clouds on rainy days",
+                      "emoji": "🩶"
+                    },
+                    {
                       "word": "black",
-                      "definition": "The color of night and dark things",
-                      "emoji": "⚫"
+                      "definition": "The color of the night sky",
+                      "emoji": "🖤"
                     },
                     {
-                      "word": "purple",
-                      "definition": "The color of grapes and eggplants",
-                      "emoji": "🟣"
+                      "word": "seventeen",
+                      "definition": "The number that comes before eighteen",
+                      "emoji": "1️⃣7️⃣"
                     },
                     {
-                      "word": "brown",
-                      "definition": "The color of bears and cookies",
-                      "emoji": "🟤"
-                    },
-                    {
-                      "word": "rainbow",
-                      "definition": "Red, orange, yellow, green, blue, purple in the sky",
-                      "emoji": "🌈"
+                      "word": "nineteen",
+                      "definition": "The number that comes before twenty",
+                      "emoji": "1️⃣9️⃣"
                     }
                   ]
                 },
@@ -2349,53 +2358,63 @@
                   "game_type": "board_game",
                   "items": [
                     {
-                      "question": "How many is fourteen?",
-                      "answer": "1️⃣4️⃣",
+                      "question": "What number comes after ten?",
+                      "answer": "eleven",
                       "options": [
-                        "1️⃣4️⃣",
-                        "1️⃣5️⃣",
-                        "1️⃣3️⃣",
-                        "1️⃣6️⃣"
+                        "eleven",
+                        "twelve",
+                        "ten",
+                        "nine"
                       ]
                     },
                     {
-                      "question": "What number comes after sixteen?",
-                      "answer": "seventeen",
+                      "question": "Which color do you make when you mix red and blue?",
+                      "answer": "purple",
                       "options": [
-                        "seventeen",
-                        "fifteen",
+                        "purple",
+                        "green",
+                        "orange",
+                        "brown"
+                      ]
+                    },
+                    {
+                      "question": "What is the number before twenty?",
+                      "answer": "nineteen",
+                      "options": [
                         "eighteen",
-                        "nineteen"
+                        "nineteen",
+                        "twenty-one",
+                        "seventeen"
                       ]
                     },
                     {
-                      "question": "What color is this? 🟤",
+                      "question": "What color is chocolate?",
                       "answer": "brown",
                       "options": [
+                        "black",
                         "brown",
                         "grey",
-                        "black",
-                        "purple"
+                        "white"
                       ]
                     },
                     {
-                      "question": "Which number is the biggest?",
-                      "answer": "twenty",
+                      "question": "How many colors can you see in a rainbow?",
+                      "answer": "many colors",
                       "options": [
-                        "twenty",
-                        "eleven",
+                        "one color",
+                        "two colors",
+                        "many colors",
+                        "no colors"
+                      ]
+                    },
+                    {
+                      "question": "What is ten plus five?",
+                      "answer": "fifteen",
+                      "options": [
+                        "fourteen",
                         "fifteen",
-                        "twelve"
-                      ]
-                    },
-                    {
-                      "question": "What do we call this? 🌈",
-                      "answer": "rainbow",
-                      "options": [
-                        "rainbow",
-                        "colors",
-                        "white",
-                        "purple"
+                        "sixteen",
+                        "thirteen"
                       ]
                     },
                     {
@@ -2409,23 +2428,13 @@
                       ]
                     },
                     {
-                      "question": "Count: 🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎 How many apples?",
-                      "answer": "nineteen",
+                      "question": "Which number is between eleven and thirteen?",
+                      "answer": "twelve",
                       "options": [
-                        "nineteen",
-                        "seventeen",
-                        "eighteen",
-                        "twenty"
-                      ]
-                    },
-                    {
-                      "question": "What color are elephants?",
-                      "answer": "grey",
-                      "options": [
-                        "grey",
-                        "brown",
-                        "white",
-                        "black"
+                        "eleven",
+                        "twelve",
+                        "fourteen",
+                        "ten"
                       ]
                     }
                   ]
@@ -2443,63 +2452,333 @@
             {
               "step": 4,
               "type": "micro_reading",
-              "title": "Emma's Toy Shop",
-              "text": "Emma has a toy shop. How many toys are there? There are fifteen purple balls and twelve brown teddy bears. There are eighteen grey elephants and twenty white rabbits. Emma loves her colorful toy shop!",
-              "scene_description": "young girl in a colorful toy shop with stuffed animals and balls on shelves",
+              "title": "Emma's Colorful Crayons",
+              "text": "Emma has a big box of crayons. She counts them. There are twelve red crayons and fifteen blue crayons. How many crayons are there? There are twenty-seven crayons in the box!",
+              "scene_description": "young girl counting colorful crayons at a table, organized crayons in groups",
               "questions": [
                 {
-                  "question": "How many brown teddy bears are there?",
+                  "question": "How many red crayons does Emma have?",
                   "answer": "twelve",
                   "options": [
-                    "fifteen",
+                    "eleven",
                     "twelve",
-                    "eighteen",
+                    "fifteen",
                     "twenty"
                   ],
                   "correct_answer": "twelve"
                 },
                 {
-                  "question": "What color are the rabbits?",
-                  "answer": "white",
+                  "question": "What is Emma counting?",
+                  "answer": "crayons",
                   "options": [
-                    "purple",
-                    "grey",
-                    "brown",
-                    "white"
+                    "crayons",
+                    "pencils",
+                    "books",
+                    "toys"
                   ],
-                  "correct_answer": "white"
+                  "correct_answer": "crayons"
                 },
                 {
-                  "question": "Does Emma have twenty white rabbits?",
-                  "answer": "Yes",
+                  "question": "How many crayons are in the box?",
+                  "answer": "twenty-seven",
                   "options": [
-                    "Yes",
-                    "No"
+                    "twelve",
+                    "fifteen",
+                    "twenty",
+                    "twenty-seven"
                   ],
-                  "correct_answer": "Yes"
+                  "correct_answer": "twenty-seven"
                 }
               ]
             },
             {
               "step": 5,
               "type": "grammar_focus",
-              "rule_pattern": "How many ___ are there? There are ___ ___ ___.",
-              "explanation": "We use 'How many' to ask about numbers, and 'There are' to tell how many colored things we can see.",
+              "rule_pattern": "There are ___ [color] [objects].",
+              "explanation": "We use 'There are' with numbers to say how many things we can see.",
               "examples": [
-                "How many red apples are there? There are fifteen red apples.",
-                "How many blue cars are there? There are twelve blue cars.",
-                "How many yellow stars are there? There are twenty yellow stars."
+                "There are thirteen green apples.",
+                "There are eighteen purple balloons.",
+                "There are twenty brown teddy bears."
               ]
             },
             {
               "step": 5,
-              "type": "grammar_review",
-              "rule_pattern": "How many are there? / There are [Number] [Color] [Objects].",
-              "explanation": "",
-              "examples": [],
-              "patterns": [
-                "How many are there?",
-                "There are [Number] [Color] [Objects]."
+              "type": "grammar_games",
+              "games": [
+                {
+                  "game_type": "word_order",
+                  "items": [
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "fifteen",
+                        "purple",
+                        "balloons"
+                      ],
+                      "correctSentence": "There are fifteen purple balloons"
+                    },
+                    {
+                      "words": [
+                        "How",
+                        "many",
+                        "are",
+                        "there",
+                        "?"
+                      ],
+                      "correctSentence": "How many are there?"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "twenty",
+                        "white",
+                        "flowers"
+                      ],
+                      "correctSentence": "There are twenty white flowers"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "thirteen",
+                        "grey",
+                        "stones"
+                      ],
+                      "correctSentence": "There are thirteen grey stones"
+                    },
+                    {
+                      "words": [
+                        "There",
+                        "are",
+                        "eighteen",
+                        "black",
+                        "cats"
+                      ],
+                      "correctSentence": "There are eighteen black cats"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "fill_blank",
+                  "items": [
+                    {
+                      "sentence": "There ___ sixteen brown bears.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ]
+                    },
+                    {
+                      "sentence": "How many ___ there?",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "do"
+                      ]
+                    },
+                    {
+                      "sentence": "There are ___ purple grapes.",
+                      "answer": "seventeen",
+                      "options": [
+                        "seventeen",
+                        "seventh",
+                        "seven",
+                        "seventieth"
+                      ]
+                    },
+                    {
+                      "sentence": "There are fourteen ___ apples.",
+                      "answer": "grey",
+                      "options": [
+                        "grey",
+                        "greys",
+                        "gray's",
+                        "greyes"
+                      ]
+                    },
+                    {
+                      "sentence": "___ many are there?",
+                      "answer": "How",
+                      "options": [
+                        "How",
+                        "What",
+                        "Where",
+                        "Who"
+                      ]
+                    },
+                    {
+                      "sentence": "There are twelve ___ stars.",
+                      "answer": "white",
+                      "options": [
+                        "white",
+                        "whites",
+                        "whitely",
+                        "whitest"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "game_type": "error_hunter",
+                  "items": [
+                    {
+                      "sentence": "There is fifteen purple balloons.",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with plural numbers"
+                    },
+                    {
+                      "sentence": "How many is there?",
+                      "errorWord": "is",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' with 'How many'"
+                    },
+                    {
+                      "sentence": "There are twenty white cat.",
+                      "errorWord": "cat",
+                      "correctWord": "cats",
+                      "explanation": "Use plural 'cats' with number twenty"
+                    },
+                    {
+                      "sentence": "There are eleven brown dog.",
+                      "errorWord": "dog",
+                      "correctWord": "dogs",
+                      "explanation": "Use plural 'dogs' with number eleven"
+                    },
+                    {
+                      "sentence": "There have nineteen black pens.",
+                      "errorWord": "have",
+                      "correctWord": "are",
+                      "explanation": "Use 'are' not 'have' in this pattern"
+                    },
+                    {
+                      "sentence": "There are grey seventeen stones.",
+                      "errorWord": "grey seventeen",
+                      "correctWord": "seventeen grey",
+                      "explanation": "Number comes before color"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "true_false",
+                  "items": [
+                    {
+                      "sentence": "There are thirteen purple flowers.",
+                      "is_correct": true,
+                      "corrected": "There are thirteen purple flowers.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "There is twenty brown bears.",
+                      "is_correct": false,
+                      "corrected": "There are twenty brown bears.",
+                      "explanation": "Use 'are' with plural numbers"
+                    },
+                    {
+                      "sentence": "How many are there?",
+                      "is_correct": true,
+                      "corrected": "How many are there?",
+                      "explanation": "This question is correct!"
+                    },
+                    {
+                      "sentence": "There are white sixteen clouds.",
+                      "is_correct": false,
+                      "corrected": "There are sixteen white clouds.",
+                      "explanation": "Number comes before color"
+                    },
+                    {
+                      "sentence": "There are eighteen black cars.",
+                      "is_correct": true,
+                      "corrected": "There are eighteen black cars.",
+                      "explanation": "This sentence is correct!"
+                    },
+                    {
+                      "sentence": "How many is there?",
+                      "is_correct": false,
+                      "corrected": "How many are there?",
+                      "explanation": "Use 'are' with 'How many'"
+                    }
+                  ]
+                },
+                {
+                  "game_type": "multiple_choice_grammar",
+                  "items": [
+                    {
+                      "question": "There ___ fourteen grey elephants.",
+                      "answer": "are",
+                      "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                      ],
+                      "explanation": "Use 'are' with plural numbers"
+                    },
+                    {
+                      "question": "How ___ are there?",
+                      "answer": "many",
+                      "options": [
+                        "many",
+                        "much",
+                        "old",
+                        "long"
+                      ],
+                      "explanation": "Use 'many' to count things"
+                    },
+                    {
+                      "question": "There are ___ purple grapes.",
+                      "answer": "nineteen",
+                      "options": [
+                        "nineteenth",
+                        "nineteen",
+                        "nine",
+                        "ninety"
+                      ],
+                      "explanation": "Use the number 'nineteen' to count"
+                    },
+                    {
+                      "question": "There are twelve ___ dogs.",
+                      "answer": "brown",
+                      "options": [
+                        "brown",
+                        "browns",
+                        "browning",
+                        "browned"
+                      ],
+                      "explanation": "Use the color word 'brown'"
+                    },
+                    {
+                      "question": "___ are twenty white stars.",
+                      "answer": "There",
+                      "options": [
+                        "There",
+                        "Their",
+                        "They",
+                        "These"
+                      ],
+                      "explanation": "Use 'There' to start counting sentences"
+                    },
+                    {
+                      "question": "There are fifteen black ___.",
+                      "answer": "cats",
+                      "options": [
+                        "cat",
+                        "cats",
+                        "cat's",
+                        "cates"
+                      ],
+                      "explanation": "Use plural 'cats' with numbers"
+                    }
+                  ]
+                }
               ]
             },
             {
@@ -2512,36 +2791,36 @@
             {
               "step": 7,
               "type": "listening",
-              "audio_text": "Hello children! Let's count together. Look at my basket. How many oranges are there? There are seventeen orange oranges! Now look at the box. How many pencils are there? There are thirteen grey pencils. Great counting, everyone!",
+              "audio_text": "Hello children! Look at my desk. I have some colored pencils. How many are there? Let me count. There are eighteen brown pencils and fifteen purple pencils. I also have thirteen white erasers. How many pencils are there in total? There are thirty-three pencils!",
               "questions": [
                 {
-                  "question": "How many oranges are there?",
-                  "answer": "seventeen",
+                  "question": "How many brown pencils are there?",
+                  "answer": "eighteen",
                   "options": [
-                    "thirteen",
                     "fifteen",
-                    "seventeen",
+                    "eighteen",
+                    "thirteen",
                     "twenty"
                   ]
                 },
                 {
-                  "question": "What color are the pencils?",
-                  "answer": "grey",
+                  "question": "What color are the erasers?",
+                  "answer": "white",
                   "options": [
-                    "orange",
-                    "grey",
                     "brown",
+                    "purple",
+                    "white",
                     "black"
                   ]
                 },
                 {
-                  "question": "Where are the oranges?",
-                  "answer": "in the basket",
+                  "question": "How many pencils are there in total?",
+                  "answer": "thirty-three",
                   "options": [
-                    "in the basket",
-                    "in the box",
-                    "on the table",
-                    "on the floor"
+                    "eighteen",
+                    "fifteen",
+                    "thirty-three",
+                    "thirteen"
                   ]
                 }
               ]
@@ -2550,79 +2829,79 @@
               "step": 8,
               "type": "production",
               "production_type": "speaking",
-              "prompt": "Look at the pictures and practice speaking! Count the colored objects and tell me about them.",
-              "expected_text": "There are eleven red apples.",
+              "prompt": "Practice counting colored objects! Say these sentences out loud.",
+              "expected_text": "There are fifteen purple balloons.",
               "prompts": [
                 {
-                  "prompt": "Look at the red apples. Count them and say: There are ___ red apples.",
-                  "expected_text": "There are eleven red apples."
+                  "prompt": "Say: There are fifteen purple balloons.",
+                  "expected_text": "There are fifteen purple balloons."
                 },
                 {
-                  "prompt": "Now look at the purple balloons. Ask me: How many purple balloons are there?",
-                  "expected_text": "How many purple balloons are there?"
+                  "prompt": "Say: There are twenty grey elephants.",
+                  "expected_text": "There are twenty grey elephants."
                 },
                 {
-                  "prompt": "Count the brown cookies and tell me: There are ___ brown cookies.",
-                  "expected_text": "There are sixteen brown cookies."
+                  "prompt": "Look around you. How many things can you see? Say: There are ___ [color] [objects].",
+                  "expected_text": "There are [number] [color] [objects]."
                 }
               ]
             },
             {
               "step": 9,
               "type": "exit_ticket",
-              "title": "Lesson Review Quiz",
+              "title": "Unit Review Quiz",
               "questions": [
-                {
-                  "question_text": "How many ___ are there? There are fifteen red apples.",
-                  "question_type": "fill_blank",
-                  "correct_answer": "apples",
-                  "options": [
-                    "apples",
-                    "apple",
-                    "colors",
-                    "numbers"
-                  ]
-                },
                 {
                   "question_text": "What number comes after nineteen?",
                   "question_type": "multiple_choice",
                   "correct_answer": "twenty",
                   "options": [
                     "eighteen",
+                    "nineteen",
                     "twenty",
-                    "seventeen",
-                    "fifteen"
+                    "twenty-one"
                   ]
                 },
                 {
-                  "question_text": "Which color is this? 🟣",
+                  "question_text": "There ___ sixteen brown bears.",
+                  "question_type": "fill_blank",
+                  "correct_answer": "are",
+                  "options": [
+                    "is",
+                    "are",
+                    "am",
+                    "be"
+                  ]
+                },
+                {
+                  "question_text": "Which color is made by mixing red and blue?",
                   "question_type": "multiple_choice",
                   "correct_answer": "purple",
                   "options": [
-                    "brown",
                     "purple",
                     "grey",
+                    "brown",
                     "black"
                   ]
                 },
                 {
-                  "question_text": "True or False: We say 'There are twelve brown bears' to tell how many brown bears we see.",
+                  "question_text": "Read: 'There are twelve white clouds.' How many clouds are there?",
+                  "question_type": "multiple_choice",
+                  "correct_answer": "twelve",
+                  "options": [
+                    "eleven",
+                    "twelve",
+                    "thirteen",
+                    "twenty"
+                  ]
+                },
+                {
+                  "question_text": "True or False: 'How many are there?' is the correct question to ask about counting.",
                   "question_type": "true_false",
                   "correct_answer": "True",
                   "options": [
                     "True",
                     "False"
-                  ]
-                },
-                {
-                  "question_text": "Count the stars: ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐ How many stars are there?",
-                  "question_type": "multiple_choice",
-                  "correct_answer": "sixteen",
-                  "options": [
-                    "fourteen",
-                    "fifteen",
-                    "sixteen",
-                    "seventeen"
                   ]
                 }
               ]
