@@ -1565,7 +1565,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
         recognitionRef.current = recognition;
       }
     } catch (err) {
-      setError('Mikrofon erişimi reddedildi. Lütfen tarayıcı ayarlarından izin verin.');
+      setError('Microphone access denied. Please allow microphone permission in your browser settings.');
       setPhase('ready');
     }
   };
