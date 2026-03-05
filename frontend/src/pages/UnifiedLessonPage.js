@@ -1673,7 +1673,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
         if (browserTranscript.trim()) {
           evaluateLocally(browserTranscript);
         } else {
-          setError('Ses değerlendirilemedi. Lütfen tekrar deneyin.');
+          setError('Audio could not be evaluated. Please try again.');
           setPhase('ready');
         }
         return;
@@ -1688,7 +1688,7 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
       if (browserTranscript.trim()) {
         evaluateLocally(browserTranscript);
       } else {
-        setError('Bağlantı hatası. Lütfen tekrar deneyin.');
+        setError('Connection error. Please try again.');
         setPhase('ready');
       }
     }
@@ -1696,8 +1696,10 @@ function ProductionActivity({ activity, onComplete, onSkip }) {
 
   const evaluateLocally = (text) => {
     setTranscription(text);
-    const tWords = new Set(text.toLowerCase().trim().split(/\s+/));
-    const eWords = new Set(expectedText.toLowerCase().trim().split(/\s+/));
+    // Strip punctuation before comparing words
+    const clean = (s) => s.toLowerCase().trim().replace(/[^\w\s]/g, '').split(/\s+/).filter(Boolean);
+    const tWords = new Set(clean(text));
+    const eWords = new Set(clean(expectedText));
     const matched = [...tWords].filter(w => eWords.has(w));
     const missing = [...eWords].filter(w => !tWords.has(w));
     const s = eWords.size > 0 ? Math.min(Math.round((matched.length / eWords.size) * 100), 100) : 100;

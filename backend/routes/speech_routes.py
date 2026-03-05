@@ -12,8 +12,11 @@ router = APIRouter(prefix="/api/speech", tags=["speech"])
 
 def compute_similarity(transcription: str, expected: str) -> dict:
     """Simple word-level similarity scoring for young learners."""
-    t_words = set(transcription.lower().strip().split())
-    e_words = set(expected.lower().strip().split())
+    import re
+    # Strip punctuation and normalize
+    clean = lambda s: set(re.sub(r'[^\w\s]', '', s.lower().strip()).split())
+    t_words = clean(transcription)
+    e_words = clean(expected)
 
     if not e_words:
         return {"score": 100, "matched_words": [], "missing_words": []}
