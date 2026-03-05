@@ -43,7 +43,8 @@ async def check_pronunciation(
                     model="whisper-1",
                     response_format="json",
                     language="en",
-                    temperature=0.0
+                    temperature=0.0,
+                    prompt=f"The speaker is practicing English pronunciation of the word: {target_word}"
                 )
             transcribed = response.text.strip().lower().rstrip('.')
         finally:
