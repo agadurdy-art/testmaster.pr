@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Lock } from 'lucide-react';
 
-const ALLOWED_PLANS = ['booster', 'pro'];
+const ALLOWED_PLANS = ['learner', 'achiever', 'master'];
 
 export default function LizFloatingButton({ user }) {
   const navigate = useNavigate();

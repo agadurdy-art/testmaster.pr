@@ -40,7 +40,7 @@ function StageCard({ stage, isUnlocked, progress, onClick }) {
         border: `2px solid ${stage.color}40`,
         boxShadow: '0 8px 32px rgba(31, 38, 135, 0.07)'
       }}
-      onClick={() => isUnlocked && onClick(stage)}
+      onClick={() => onClick(stage)}
       data-testid={`stage-card-${stage.number}`}
     >
       {/* Background gradient */}
@@ -52,8 +52,9 @@ function StageCard({ stage, isUnlocked, progress, onClick }) {
       <div className="relative p-6">
         {/* Lock overlay */}
         {!isUnlocked && (
-          <div className="absolute inset-0 bg-gray-900/50 flex items-center justify-center z-10 rounded-3xl backdrop-blur-sm">
-            <Lock className="w-12 h-12 text-white" />
+          <div className="absolute inset-0 bg-gray-900/60 flex flex-col items-center justify-center z-10 rounded-3xl backdrop-blur-sm gap-2">
+            <Lock className="w-10 h-10 text-white" />
+            <span className="text-white text-sm font-medium">Upgrade to Explorer</span>
           </div>
         )}
         
@@ -223,11 +224,20 @@ export default function UnifiedCoursePage({ user }) {
   };
   
   const handleStageClick = (stage) => {
+    if (!isStageUnlocked(stage)) {
+      navigate('/pricing?from=Learning%20Stages');
+      return;
+    }
     navigate(`/unified/stage/${stage.stage_id}`);
   };
   
   const isStageUnlocked = (stage) => {
-    // All stages unlocked during development
+    const userPlan = user?.plan || 'free';
+    // Free users: only Stage 1
+    if (userPlan === 'free') {
+      return stage.stage_id === 'stage_1';
+    }
+    // Explorer+ : all stages
     return true;
   };
   

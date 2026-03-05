@@ -2089,19 +2089,21 @@ async def get_payment_order(order_id: str):
 
 
 # PayPal Smart Buttons -> Orders API mappings
+from plan_access import PLAN_PRICES_USD, get_plan_features, plan_meets_minimum, can_access_stage, PLAN_FEATURES
+
 PAYPAL_PLAN_PRICES = {
-    "single": "4.99",
-    "starter": "9.00",
-    "booster": "19.00",
-    "pro": "29.00",
+    "explorer": PLAN_PRICES_USD["explorer"],
+    "learner": PLAN_PRICES_USD["learner"],
+    "achiever": PLAN_PRICES_USD["achiever"],
+    "master": PLAN_PRICES_USD["master"],
 }
 
-PAYPAL_PLAN_CREDITS = {
-    # plan_id: (credits, subscription_name or None, upgrade_to_pro: bool)
-    "single": (1, None, False),
-    "starter": (2, "Starter", True),
-    "booster": (5, "Booster", True),
-    "pro": (8, "Pro", True),
+# plan_id -> (plan_name_to_set, subscription_label)
+PAYPAL_PLAN_MAPPING = {
+    "explorer": ("explorer", "Explorer"),
+    "learner": ("learner", "Learner"),
+    "achiever": ("achiever", "Achiever"),
+    "master": ("master", "Master"),
 }
 
 
@@ -2224,15 +2226,14 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
     if status_value != "COMPLETED":
         raise HTTPException(status_code=400, detail=f"Order not completed (status={status_value})")
 
-    credits, subscription_name, upgrade_to_pro = PAYPAL_PLAN_CREDITS[plan_id]
+    plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
 
     update_fields: Dict[str, Any] = {}
-    update_fields["examCredits"] = user.get("examCredits", 0) + credits
-    if upgrade_to_pro:
-        update_fields["plan"] = "pro"
-    if subscription_name:
-        update_fields["subscription"] = subscription_name
+    update_fields["plan"] = plan_name
+    update_fields["subscription"] = subscription_label
     update_fields["lastPayment"] = datetime.now(timezone.utc).isoformat()
+    # Reset monthly usage on new payment
+    update_fields["monthly_usage"] = {"liz_messages": 0, "speaking_evals": 0, "reset_date": datetime.now(timezone.utc).isoformat()}
 
     await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
 
@@ -2250,12 +2251,43 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
     )
 
     return {
-        "detail": "PayPal payment captured and credits updated",
-        "examCredits": update_fields["examCredits"],
-        "plan": update_fields.get("plan", user.get("plan", "free")),
-        "subscription": update_fields.get("subscription", user.get("subscription")),
+        "detail": "PayPal payment captured and plan updated",
+        "plan": plan_name,
+        "subscription": subscription_label,
     }
 
+
+
+
+
+# ================== Plan Access Control ==================
+
+@api_router.get("/user/plan-info/{user_email}")
+async def get_user_plan_info(user_email: str):
+    """Return the user's current plan, features, and usage."""
+    user = await _get_user_by_email(user_email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    plan = user.get("plan", "free")
+    features = get_plan_features(plan)
+    usage = user.get("monthly_usage", {"liz_messages": 0, "speaking_evals": 0})
+    
+    return {
+        "plan": plan,
+        "subscription": user.get("subscription"),
+        "features": features,
+        "monthly_usage": usage,
+    }
+
+
+@api_router.get("/plan/features")
+async def get_all_plan_features():
+    """Return all plan features for the pricing page."""
+    return {
+        "plans": PLAN_FEATURES,
+        "prices": PLAN_PRICES_USD,
+    }
 
 
 

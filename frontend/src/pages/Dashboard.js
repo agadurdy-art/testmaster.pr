@@ -174,7 +174,7 @@ export default function Dashboard({ user, onLogout }) {
     { name: getText('Question Bank', 'Ngân hàng câu hỏi', 'Soru Bankası'), icon: LayoutDashboard, color: 'from-indigo-500 to-purple-600', route: '/question-bank', badge: 'NEW' },
     { name: getText('Vocab & Grammar', 'Từ vựng & Ngữ pháp', 'Kelime & Dilbilgisi'), icon: BookMarked, color: 'from-emerald-500 to-teal-600', route: '/vocab-grammar' },
     { name: getText('Writing Practice', 'Luyện viết', 'Yazma Pratiği'), icon: FileText, color: 'from-orange-500 to-amber-600', route: '/writing-practice' },
-    { name: getText('Speaking Practice', 'Luyện nói', 'Konuşma Pratiği'), icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice' },
+    { name: getText('Speaking Practice', 'Luyện nói', 'Konuşma Pratiği'), icon: MessageSquare, color: 'from-violet-500 to-purple-600', route: '/speaking-practice', requiredPlan: 'Speaking Practice' },
     { name: getText('Tips & Strategies', 'Mẹo & Chiến lược', 'İpuçları & Stratejiler'), icon: Lightbulb, color: 'from-pink-500 to-rose-600', route: '/tips' }
   ];
 
@@ -198,15 +198,36 @@ export default function Dashboard({ user, onLogout }) {
   
   // Check if user is verified
   const isVerified = user?.verified || user?.email_verified;
+  const userPlan = user?.plan || 'free';
+  
+  // Plan-based feature access check
+  const PLAN_TIER = { free: 0, explorer: 1, learner: 2, achiever: 3, master: 4 };
+  const FEATURE_MIN_PLAN = {
+    'Learning Stages': 'explorer',
+    'Liz AI Teacher': 'learner',
+    'Mastery Course': 'learner',
+    'Advanced Mastery': 'achiever',
+    'Speaking Practice': 'achiever',
+  };
+  
+  const canAccessByPlan = (featureName) => {
+    const minPlan = FEATURE_MIN_PLAN[featureName];
+    if (!minPlan) return true;
+    return (PLAN_TIER[userPlan] || 0) >= (PLAN_TIER[minPlan] || 0);
+  };
   
   // Handler for locked content
   const handleLockedContent = (featureName) => {
     if (!isVerified) {
       setLockedFeatureName(featureName);
       setShowLockedModal(true);
-      return true; // Content is locked
+      return true;
     }
-    return false; // Content is not locked
+    if (!canAccessByPlan(featureName)) {
+      navigate(`/pricing?from=${encodeURIComponent(featureName)}`);
+      return true;
+    }
+    return false;
   };
 
   if (hasProgress && Array.isArray(progress.recent_attempts)) {
@@ -517,24 +538,31 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             </div>
             <div className="space-y-3">
-              {courses.map((course) => (
+              {courses.map((course) => {
+                const featureMap = { mastery: 'Mastery Course', advanced: 'Advanced Mastery' };
+                const locked = featureMap[course.id] && !canAccessByPlan(featureMap[course.id]);
+                return (
                 <div
                   key={course.id}
-                  onClick={() => navigate(course.route)}
-                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group flex items-center justify-between`}
+                  onClick={() => {
+                    if (locked) { handleLockedContent(featureMap[course.id]); return; }
+                    navigate(course.route);
+                  }}
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group flex items-center justify-between ${locked ? 'opacity-60' : ''}`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${course.color} flex items-center justify-center text-lg group-hover:scale-110 transition-transform`}>
-                      {course.icon}
+                      {locked ? <Lock className="w-5 h-5 text-white" /> : course.icon}
                     </div>
                     <div>
                       <p className={`font-semibold ${textPrimary}`}>{course.name}</p>
-                      <p className={`text-xs ${textSecondary}`}>{course.band} • {course.lessons} {getText('lessons', 'bài', 'ders')}</p>
+                      <p className={`text-xs ${textSecondary}`}>{locked ? getText('Upgrade to unlock', 'Nâng cấp để mở', 'Kilidini açmak için yükseltin') : `${course.band} • ${course.lessons} ${getText('lessons', 'bài', 'ders')}`}</p>
                     </div>
                   </div>
                   <ChevronRight className={`w-5 h-5 ${textSecondary} group-hover:translate-x-1 transition-transform`} />
                 </div>
-              ))}
+                );
+              })}
             </div>
           </Card>
           {/* Learning Tools */}
@@ -549,11 +577,16 @@ export default function Dashboard({ user, onLogout }) {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {learningTools.map((tool, idx) => (
+              {learningTools.map((tool, idx) => {
+                const toolLocked = tool.requiredPlan && !canAccessByPlan(tool.requiredPlan);
+                return (
                 <div
                   key={idx}
-                  onClick={() => navigate(tool.route)}
-                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group relative`}
+                  onClick={() => {
+                    if (toolLocked) { handleLockedContent(tool.requiredPlan); return; }
+                    navigate(tool.route);
+                  }}
+                  className={`p-4 ${isDark ? 'bg-gray-700/50 hover:bg-gray-700' : 'bg-gray-50'} rounded-xl cursor-pointer hover:shadow-md transition-all hover:-translate-y-0.5 group relative ${toolLocked ? 'opacity-60' : ''}`}
                 >
                   {tool.badge && (
                     <span className="absolute top-2 right-2 px-1.5 py-0.5 bg-gradient-to-r from-violet-500 to-purple-600 text-white text-[10px] font-bold rounded-full">
@@ -564,8 +597,10 @@ export default function Dashboard({ user, onLogout }) {
                     <tool.icon className="w-5 h-5 text-white" />
                   </div>
                   <p className={`font-semibold ${textPrimary} text-sm`}>{tool.name}</p>
+                  {toolLocked && <p className={`text-[10px] ${textSecondary}`}>Upgrade</p>}
                 </div>
-              ))}
+                );
+              })}
             </div>
             {/* NEW Adaptive Level Test CTA */}
             <div 
