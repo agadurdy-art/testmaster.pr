@@ -354,32 +354,23 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
   const w = words[idx];
 
   const speakWord = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u); };
-  const [ttsCache, setTtsCache] = useState({});
 
-  const playTTS = async (text) => {
-    // Try ElevenLabs first, fallback to browser TTS
-    if (ttsCache[text]) {
-      const audio = new Audio(ttsCache[text]);
-      audio.play().catch(() => speakWord(text));
-      return;
-    }
-    try {
-      const res = await fetch(`${API_URL}/api/unified/tts/generate`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const url = data.audio_url?.startsWith('/') ? `${API_URL}/api${data.audio_url}` : data.audio_url;
-        if (url) {
-          setTtsCache(prev => ({ ...prev, [text]: url }));
-          const audio = new Audio(url);
-          audio.play().catch(() => speakWord(text));
-          return;
-        }
-      }
-    } catch {}
-    speakWord(text);
+  const playAudioUrl = (url) => {
+    if (!url) return false;
+    const fullUrl = url.startsWith('/') ? `${API_URL}/api${url}` : url;
+    const audio = new Audio(fullUrl);
+    audio.play().catch(() => {});
+    return true;
+  };
+
+  const playWordAudio = () => {
+    if (w?.audio_url && playAudioUrl(w.audio_url)) return;
+    speakWord(w?.word || '');
+  };
+
+  const playExampleAudio = () => {
+    if (w?.example_audio_url && playAudioUrl(w.example_audio_url)) return;
+    speakWord(w?.example_sentence || w?.example || '');
   };
 
   const check = () => {
@@ -452,9 +443,14 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
         <p className="text-sm text-gray-500 text-center">Review all words from this unit</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {words.map((word, i) => (
-            <button key={i} onClick={() => playTTS(word.word)} className="p-3 bg-white rounded-xl border-2 border-gray-100 hover:border-amber-300 hover:shadow-md transition-all text-center cursor-pointer" data-testid={`review-word-${i}`}>
+            <button key={i} onClick={() => {
+              if (word.audio_url) {
+                const fullUrl = word.audio_url.startsWith('/') ? `${API_URL}/api${word.audio_url}` : word.audio_url;
+                new Audio(fullUrl).play().catch(() => speakWord(word.word));
+              } else { speakWord(word.word); }
+            }} className="p-3 bg-white rounded-xl border-2 border-gray-100 hover:border-amber-300 hover:shadow-md transition-all text-center cursor-pointer" data-testid={`review-word-${i}`}>
               {word.image_url ? (
-                <img src={word.image_url} alt={word.word} className="w-16 h-16 object-cover rounded-lg mx-auto mb-1" />
+                <img src={word.image_url.startsWith('/') ? `${API_URL}/api${word.image_url}` : word.image_url} alt={word.word} className="w-16 h-16 object-cover rounded-lg mx-auto mb-1" />
               ) : (
                 <span className="text-2xl block mb-1">{word.image_emoji || '📝'}</span>
               )}
@@ -507,7 +503,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
             <div className="flex flex-col md:flex-row gap-6 items-center mb-6">
               {w.image_url ? (
                 <div className="w-36 h-36 rounded-2xl overflow-hidden border border-blue-100 shadow-sm shrink-0">
-                  <img src={w.image_url} alt={w.word} className="w-full h-full object-cover" loading="lazy" />
+                  <img src={w.image_url.startsWith('/') ? `${API_URL}/api${w.image_url}` : w.image_url} alt={w.word} className="w-full h-full object-cover" loading="lazy" />
                 </div>
               ) : (
                 <div className="w-36 h-36 bg-gradient-to-br from-sky-100 to-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 shrink-0">
@@ -516,7 +512,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
               )}
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-3xl font-bold text-gray-900 mb-1" data-testid="current-word">{w.word}</h2>
-                <button className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-2 text-base" onClick={() => playTTS(w.word)}>
+                <button className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 mb-2 text-base" onClick={playWordAudio}>
                   <Volume2 className="w-5 h-5" /><span className="font-medium">{w.ipa}</span>
                 </button>
                 <p className="text-gray-600 text-base">{w.definition}</p>
@@ -528,7 +524,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
               <div className="flex-1">
                 <p className="text-gray-700 italic text-lg">"{w.example_sentence || w.example}"</p>
               </div>
-              <button className="shrink-0 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 transition-colors" onClick={() => playTTS(w.example_sentence || w.example)} data-testid="vocab-listen-sentence-btn">
+              <button className="shrink-0 w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 transition-colors" onClick={playExampleAudio} data-testid="vocab-listen-sentence-btn">
                 <Volume2 className="w-5 h-5" />
               </button>
             </div>
@@ -1439,6 +1435,19 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
 
   const speakText = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.85; speechSynthesis.speak(u); };
 
+  const playListeningAudio = () => {
+    // Use ElevenLabs audio if available, fallback to browser TTS
+    const audioUrl = activity?.audio_url;
+    if (audioUrl) {
+      const fullUrl = audioUrl.startsWith('/') ? `${process.env.REACT_APP_BACKEND_URL}/api${audioUrl}` : audioUrl;
+      const audio = new Audio(fullUrl);
+      audio.playbackRate = 0.9;
+      audio.play().catch(() => speakText(transcript));
+    } else {
+      speakText(transcript);
+    }
+  };
+
   const checkAnswer = (answer, correctAnswer) => {
     // Support both 'correct_answer' and 'answer' field names
     const correctAns = correctAnswer || q?.answer;
@@ -1481,7 +1490,7 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
           </div>
           <h3 className="text-2xl font-bold text-gray-900 mb-4">Listen carefully</h3>
           <p className="text-gray-600 mb-6 text-base">Click the play button to hear the audio. You can listen multiple times.</p>
-          <Button className="bg-cyan-600 hover:bg-cyan-700 mb-4" onClick={() => speakText(transcript)} data-testid="listening-play-btn">
+          <Button className="bg-cyan-600 hover:bg-cyan-700 mb-4" onClick={playListeningAudio} data-testid="listening-play-btn">
             <Play className="w-5 h-5 mr-2" /> Play Audio
           </Button>
           <div>

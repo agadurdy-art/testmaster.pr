@@ -294,8 +294,14 @@ if static_audio_path.exists():
     app.mount("/api/static/audio", StaticFiles(directory=str(static_audio_path)), name="audio_api")
     app.mount("/static/audio", StaticFiles(directory=str(static_audio_path)), name="audio")
     print("✅ Static audio files mounted at /api/static/audio and /static/audio")
-else:
-    print("⚠️  Static audio directory not found")
+
+# Mount static files for vocabulary images
+static_vocab_path = ROOT_DIR / "static" / "vocab_images"
+if not static_vocab_path.exists():
+    os.makedirs(static_vocab_path, exist_ok=True)
+app.mount("/api/static/vocab_images", StaticFiles(directory=str(static_vocab_path)), name="vocab_images_api")
+app.mount("/static/vocab_images", StaticFiles(directory=str(static_vocab_path)), name="vocab_images")
+print("✅ Static vocab images mounted at /api/static/vocab_images")
 
 # Mount static files for images (Cambridge test visuals)
 static_images_path = ROOT_DIR / "static" / "images"
