@@ -10,61 +10,54 @@ A mastery-based English learning platform following Cambridge Young Learners met
 - **Backend:** FastAPI (Python) with MongoDB
 - **AI Content:** Claude Sonnet 4.5 (via Emergent LLM Key)
 - **AI Images:** GPT Image 1 (60 words) + Nano Banana 2 (90 words) + bestflashcard.com scraped (93 words)
-- **TTS:** ElevenLabs - ALL vocab + listening audio (478 files, 0 fail)
+- **TTS:** ElevenLabs - ALL vocab + listening audio pre-generated
 - **Speech:** OpenAI Whisper for pronunciation evaluation
+- **Payments:** PayPal Orders API + Bank Transfer
 
-### What's Implemented (as of Mar 5, 2026)
-- [x] Stage 1: Foundations (Pre-A1) - 12 units, 48 lessons + ElevenLabs audio
-- [x] Stage 2: Starters (A1) - 12 units, 48 lessons - fully enriched
-- [x] **243/243 vocabulary images complete (100% coverage)**
-  - 93 scraped from bestflashcard.com (high quality flashcards)
-  - 90 Nano Banana 2 AI-generated (pre-existing)
-  - 60 GPT Image 1 AI-generated (new, child-friendly illustrations)
-- [x] ElevenLabs TTS: all vocab words + example sentences + listening passages
-- [x] Speaking evaluation: punctuation-safe scoring (100% for exact match)
-- [x] All UI text in English (no Turkish)
-- [x] 5 grammar game types, 4 vocab game types per lesson
-- [x] 3 reading questions, 3 grammar examples per lesson
-- [x] Pronunciation check via Whisper
-- [x] Static serving for AI images + audio files
+### Pricing Structure (Implemented Mar 5, 2026)
+
+| Plan | Price | Features |
+|------|-------|----------|
+| **Free** | $0 | Stage 1 only |
+| **Explorer** | $4.99/mo | All 8 stages, games, audio |
+| **Learner** | $9/mo | + Liz AI Teacher, Mastery Course |
+| **Achiever** | $19/mo | + Advanced Mastery, Speaking eval, Unlimited Liz |
+| **Master** | $29/mo | + AI Speaking Agent, Full mock exams |
+
+### What's Implemented
+- [x] Stage 1 & Stage 2 content (24 units, 96 lessons)
+- [x] 243/243 vocabulary images (100% coverage)
+- [x] ElevenLabs TTS: all audio pre-generated
+- [x] Speaking evaluation with punctuation-safe scoring
+- [x] **4-tier pricing system** (Explorer/Learner/Achiever/Master)
+- [x] **Plan-based access control** (backend + frontend)
+- [x] **Stage locking** for free users (Stage 2-8 locked)
+- [x] **Feature locking** (Liz, Mastery, Advanced, Speaking)
+- [x] **New pricing page** with PayPal + Bank Transfer
+- [x] PayPal Subscriptions setup guide (`/app/docs/PAYPAL_SUBSCRIPTIONS_GUIDE.md`)
 
 ### Key Endpoints
-- `GET /api/unified/stages` / `GET /api/unified/stages/:stageId/units`
-- `GET /api/unified/units/:unitId` / `GET /api/unified/lessons/:lessonId`
-- `POST /api/unified/tts/generate` / `POST /api/speech/evaluate`
-- `POST /api/unified/pronunciation/check`
-- `GET /api/static/vocab_images/{filename}` - Vocabulary images
-
-### Image Pipeline
-```
-scrape_flashcard_images.py → /backend/static/vocab_images/ (93 scraped)
-generate_gpt_images.py → /backend/static/vocab_images/gpt_*.png (60 GPT)
-Nano Banana (pre-existing) → /backend/static/vocab_images/{md5hash}.png (90)
-update_db_images.py → MongoDB unified_lessons image_url update
-```
-
-### Content Pipeline
-```
-generate_unit.py → enrich_and_seed_stage.py → MongoDB
-generate_vocab_images.py → /static/vocab_images/
-generate_tts_audio.py → /static/audio/
-```
-
-### Pending / Backlog
-- [ ] Daily Habit SRS system
-- [ ] Booster Mode / Certification Gate
-- [ ] Teacher Control Panel
-- [ ] Stages 3-8 content
-- [ ] Stage 1 content re-enrichment (on hold - cost)
-- [ ] Vocabulary completion bug verification (one word marks all complete)
-
-### Test Credentials
-- Email: tester@test.com / Password: tester123
+- `GET /api/plan/features` - All plan features and prices (public)
+- `GET /api/user/plan-info/{email}` - User plan info
+- `POST /api/payments/paypal/create-order` - PayPal order
+- `POST /api/payments/paypal/capture-order` - PayPal capture
+- `GET /api/unified/stages` / `GET /api/unified/lessons/:lessonId`
+- `POST /api/speech/evaluate` / `POST /api/unified/pronunciation/check`
 
 ### Key Files
-- `/app/tools/scrape_flashcard_images.py` - bestflashcard.com scraper
-- `/app/tools/generate_gpt_images.py` - GPT Image 1 generator
-- `/app/tools/update_db_images.py` - DB updater with image URLs
-- `/app/tools/image_mapping.json` - Scraped image word-to-path mapping
-- `/app/tools/gpt_image_mapping.json` - GPT image word-to-path mapping
-- `/app/backend/static/vocab_images/` - All vocabulary images (419 files)
+- `/app/backend/plan_access.py` - Plan tier definitions, feature access logic
+- `/app/frontend/src/pages/PricingPage.js` - 4-tier pricing page
+- `/app/frontend/src/pages/UnifiedCoursePage.js` - Stage locking
+- `/app/frontend/src/pages/Dashboard.js` - Feature locking
+- `/app/frontend/src/components/LizFloatingButton.js` - Liz access control
+- `/app/docs/PAYPAL_SUBSCRIPTIONS_GUIDE.md` - PayPal recurring setup guide
+
+### Pending / Backlog
+- [ ] PayPal Subscriptions API (otomatik aylık yenileme) - rehber hazır
+- [ ] Own AI Speaking Agent (Whisper + GPT-4o + OpenAI TTS) - Master plan için
+- [ ] Monthly usage tracking (soft limits per plan)
+- [ ] Daily Habit SRS system
+- [ ] Teacher Control Panel
+- [ ] Stages 3-8 content generation
+- [ ] Stage 1 content re-enrichment
+- [ ] Vocabulary completion bug verification
