@@ -3,7 +3,6 @@ Plan Access Control Module
 Defines plan tiers, feature access, and usage limits for Testmaster.
 """
 
-# Plan hierarchy (higher index = more access)
 PLAN_TIERS = {
     "free": 0,
     "explorer": 1,
@@ -12,35 +11,38 @@ PLAN_TIERS = {
     "master": 4,
 }
 
-# What each plan unlocks
 PLAN_FEATURES = {
     "free": {
-        "unified_stages": ["stage_1"],  # Only Stage 1 free
+        "unified_stages": ["stage_1"],
         "max_liz_messages": 0,
+        "speaking_credits": 0,
         "mastery_course": False,
         "advanced_mastery": False,
         "speaking_eval": False,
         "speaking_agent": False,
     },
     "explorer": {
-        "unified_stages": "all",  # All 8 stages
+        "unified_stages": "all",
         "max_liz_messages": 0,
+        "speaking_credits": 1,
         "mastery_course": False,
         "advanced_mastery": False,
-        "speaking_eval": False,
+        "speaking_eval": True,
         "speaking_agent": False,
     },
     "learner": {
         "unified_stages": "all",
         "max_liz_messages": 50,
+        "speaking_credits": 5,
         "mastery_course": True,
         "advanced_mastery": False,
-        "speaking_eval": False,
+        "speaking_eval": True,
         "speaking_agent": False,
     },
     "achiever": {
         "unified_stages": "all",
         "max_liz_messages": 150,
+        "speaking_credits": 999,
         "mastery_course": True,
         "advanced_mastery": True,
         "speaking_eval": True,
@@ -48,7 +50,8 @@ PLAN_FEATURES = {
     },
     "master": {
         "unified_stages": "all",
-        "max_liz_messages": 999,  # Effectively unlimited
+        "max_liz_messages": 999,
+        "speaking_credits": 999,
         "mastery_course": True,
         "advanced_mastery": True,
         "speaking_eval": True,
@@ -56,7 +59,6 @@ PLAN_FEATURES = {
     },
 }
 
-# PayPal pricing
 PLAN_PRICES_USD = {
     "explorer": "4.99",
     "learner": "9.00",

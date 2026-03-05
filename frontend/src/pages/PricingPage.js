@@ -28,10 +28,9 @@ const plans = [
       { text: 'Grammar exercises', included: true },
       { text: 'Listening & reading activities', included: true },
       { text: 'Pre-generated audio (ElevenLabs)', included: true },
+      { text: '1 AI Speaking test / month', included: true },
       { text: 'Liz AI Teacher', included: false },
       { text: 'Mastery Course', included: false },
-      { text: 'Advanced Mastery', included: false },
-      { text: 'Speaking evaluation', included: false },
     ],
   },
   {
@@ -46,10 +45,10 @@ const plans = [
       { text: 'Everything in Explorer', included: true, bold: true },
       { text: 'Liz AI Teacher (personal tutor)', included: true },
       { text: 'Mastery Course (IELTS prep)', included: true },
+      { text: '5 AI Speaking tests / month', included: true },
       { text: 'Writing evaluation with AI', included: true },
       { text: 'Personalized study plans', included: true },
       { text: 'Advanced Mastery', included: false },
-      { text: 'Speaking evaluation', included: false },
     ],
   },
   {
@@ -64,7 +63,7 @@ const plans = [
     features: [
       { text: 'Everything in Learner', included: true, bold: true },
       { text: 'Advanced Mastery Course', included: true },
-      { text: 'AI Speaking evaluation', included: true },
+      { text: 'Unlimited AI Speaking tests', included: true },
       { text: 'Detailed pronunciation feedback', included: true },
       { text: 'Unlimited Liz AI messages', included: true },
       { text: 'Priority feedback', included: true },

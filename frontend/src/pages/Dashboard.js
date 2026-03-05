@@ -207,7 +207,7 @@ export default function Dashboard({ user, onLogout }) {
     'Liz AI Teacher': 'learner',
     'Mastery Course': 'learner',
     'Advanced Mastery': 'achiever',
-    'Speaking Practice': 'achiever',
+    'Speaking Practice': 'explorer',
   };
   
   const canAccessByPlan = (featureName) => {
