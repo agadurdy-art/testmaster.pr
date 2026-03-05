@@ -388,7 +388,7 @@ export default function WritingTask1Practice() {
                       className="ml-2"
                     >
                       <RefreshCw className={`w-3.5 h-3.5 mr-1 ${loading ? 'animate-spin' : ''}`} />
-                      Yeni
+                      New
                     </Button>
                   </div>
                 </div>
@@ -400,7 +400,7 @@ export default function WritingTask1Practice() {
                   {loading ? (
                     <div className="text-center py-12">
                       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-2"></div>
-                      <p className="text-gray-500 text-sm">Görsel oluşturuluyor...</p>
+                      <p className="text-gray-500 text-sm">Generating visual...</p>
                     </div>
                   ) : svgContent ? (
                     <div 
@@ -409,7 +409,7 @@ export default function WritingTask1Practice() {
                       dangerouslySetInnerHTML={{ __html: svgContent }}
                     />
                   ) : (
-                    <p className="text-gray-400 text-center py-12">Görsel oluşturulmadı</p>
+                    <p className="text-gray-400 text-center py-12">No visual generated</p>
                   )}
                 </div>
               </div>
@@ -464,10 +464,10 @@ export default function WritingTask1Practice() {
                     {taskData?.band_calibration && (
                       <div className="mt-3 flex items-center gap-2">
                         <Badge variant="outline" className="text-xs">
-                          Hedef Band: {taskData.band_calibration.target_band}
+                          Target Band: {taskData.band_calibration.target_band}
                         </Badge>
                         <Badge variant="outline" className="text-xs">
-                          Karmaşıklık: {taskData.band_calibration.complexity}
+                          Complexity: {taskData.band_calibration.complexity}
                         </Badge>
                       </div>
                     )}

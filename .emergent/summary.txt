@@ -1,93 +1,96 @@
 <analysis>An analysis of the user and agent conversation has been done. Here is the summary:
 
 **original_problem_statement:**
-The user initially requested to replace low-quality, AI-generated vocabulary images by scraping a specific website. After dissatisfaction with the scraped results and near-matches, the user's priority shifted. The new tasks included:
-1.  Generating the remaining vocabulary images using a higher-quality model (GPT Image 1).
-2.  Implementing a full-featured, multi-tiered subscription model with plan-based feature locking.
-3.  Integrating PayPal Subscriptions for recurring payments (now in LIVE mode).
-4.  Fixing critical bugs related to missing example sentences in vocabulary activities and inaccurate speech evaluation.
-5.  Internationalizing the new pricing page.
-
-The current task is to modify the existing bank transfer payment flow to grant only temporary (30-day) access to a subscription plan, rather than permanent access.
+The user initially requested to replace low-quality vocabulary images and build a subscription system. The current set of tasks, based on the user's latest feedback, are:
+1.  **Bank Transfer QR Codes:** The bank transfer payment option on the pricing page should display a unique QR code for each subscription plan in a floating modal.
+2.  **Fix Hardcoded Text:** Remove hardcoded Turkish text from the Question Bank (QB) feature.
+3.  **Map Generator Status:** Investigate and report on the status of a previously discussed Map Generator feature for creating AI tests.
 
 **PRODUCT REQUIREMENTS:**
-1.  **Subscription Model:** Implement a four-tier subscription model (Free, Explorer, Learner, Achiever, Master) that controls access to different stages and features.
-2.  **Payment Integration:** Fully integrate PayPal Subscriptions for automated, recurring monthly payments.
-3.  **Bank Transfer Logic:** Bank transfer payments should activate a plan for only 30 days, after which the user's plan should automatically revert to Free.
-4.  **Content Quality:** All vocabulary items must have a high-quality, relevant image and an example sentence. The speech evaluation must be accurate.
-5.  **Internationalization:** The pricing page must be available in English, Turkish, and Vietnamese.
+1.  **Bank Transfer Flow:** The bank transfer modal must show the correct QR code image for the selected plan (Explorer, Learner, Achiever, Master).
+2.  **UI Localization:** The Question Bank interface must not contain any hardcoded, untranslatable text.
+3.  **Lesson Progression:** Lessons must unlock sequentially as the user completes the previous one. Admin users should be able to bypass this restriction. (This was implemented in the last session).
 
 **User's preferred language**: The user's messages are in **Turkish**. The next agent MUST respond in Turkish for all  interactions.
 
 **what currently exists?**
-*   **Full-Stack Application:** A working React frontend, FastAPI backend, and MongoDB database.
-*   **Complete Content (Stages 1 & 2):** All lessons, activities, high-quality ElevenLabs audio, and 100% vocabulary image/sentence coverage are complete and in the database.
-*   **Live Subscription System:** A 4-tier subscription model is fully implemented. It's integrated with PayPal's LIVE subscription service. Backend and frontend logic correctly locks/unlocks features (e.g., course stages, Liz AI Teacher) based on the user's current plan.
-*   **Multi-Lingual Pricing Page:** A new  and a pricing section on the landing page exist, both fully translated into English, Turkish, and Vietnamese using the existing i18n framework.
-*   **Bug Fixes:** The speech evaluation is now more accurate (using prompts), and all vocabulary words have AI-generated example sentences.
+*   A full-stack application with a React frontend, a monolithic FastAPI backend (), and a MongoDB database.
+*   A live, 4-tier subscription model integrated with PayPal.
+*   A smart lock system that enforces sequential lesson completion for regular users, with an admin bypass.
+*   A bank transfer flow that grants 30-day plan access.
+*   A UI for the bank transfer modal () and logic to fix hardcoded text have been implemented but are not fully functional or verified.
 
 **Last working item**:
-*   **Last item agent was working:** Implementing the user's request to make bank transfer payments a one-time, 30-day activation (Option C). The plan is to add a  field to the user model upon manual bank transfer approval. A backend check will then automatically downgrade the user's plan if the expiry date has passed.
-*   **Status:** IN PROGRESS
+*   **Last item agent was working:** The agent was simultaneously working on two user requests:
+    1.  Implementing a floating modal to display plan-specific QR codes for bank transfers.
+    2.  Removing hardcoded Turkish text from the Question Bank feature.
+*   **Status:** BLOCKED
 *   **Agent Testing Done:** N
-*   **Which testing method agent to use?** Backend testing agent. The agent should write a test to: 1. Simulate an admin approving a bank transfer and verify the  and  fields are correctly set in the database. 2. Create a test endpoint or utility to simulate time passing and call a protected API route to ensure the user is correctly downgraded back to the free plan.
+*   **Which testing method agent to use?** Frontend testing agent. After the user provides valid QR images, the agent should test the pricing page and question bank. The test should verify that clicking the bank transfer button for each plan opens a modal with the correct QR code and that all hardcoded Turkish text in the QB is gone.
 *   **User Testing Done:** N
 
 **All Pending/In progress Issue list**:
-*   **Issue 1: Implement 30-Day Expiry for Bank Transfers (P0)**
+*   **Issue 1: Bank Transfer QR Code Display is Broken (P0)**
+*   **Issue 2: Hardcoded Turkish Text in Question Bank (P0)**
 
 **Issues Detail:**
-*   **Issue 1: Implement 30-Day Expiry for Bank Transfers (P0)**
-    *   **Description:** The current bank transfer approval process grants permanent access to a subscription tier. The user wants this changed so that it only grants access for 30 days, after which the plan should automatically revert to free.
-    *   **Attempted fixes:** The agent has analyzed the relevant files (, , ) to understand the current flow.
+*   **Issue 1: Bank Transfer QR Code Display is Broken (P0)**
+    *   **Description:** The bank transfer modal has been implemented, but it fails to display the QR codes. The agent discovered that the source image files () are all 0 bytes (empty placeholders).
+    *   **Attempted fixes:** A new  component was created and integrated into . The agent correctly identified the root cause is the empty image files.
     *   **Next debug checklist:**
-        1.  Modify the  model in  to include a  field.
-        2.  In the admin endpoint that approves bank transfers (likely in ), update the logic to set  to the purchased plan and  to .
-        3.  Create a dependency or middleware in the backend that is used on all authenticated routes. This function will check if  exists and is in the past. If so, it will update the user's plan to free and set  to  before proceeding with the request.
-        4.  Update the frontend text in  to inform the user that a bank transfer provides a one-time 30-day activation.
-    *   **Why fix this issue and what will be achieved with the fix?** To align the bank transfer payment method with the user's business logic, treating it as a non-recurring purchase and encouraging users to use PayPal for automated subscriptions.
-    *   **Status:** IN PROGRESS
+        1.  **CRITICAL:** Inform the user in Turkish that the QR code image files are empty and that you cannot proceed without valid files.
+        2.  Request the user to upload the correct, non-empty image files for each plan.
+        3.  Once received, place the valid images into , overwriting the empty placeholders.
+        4.  Take a screenshot of the pricing page and test the modal for each plan to confirm the correct QR code is displayed.
+    *   **Why fix this issue and what will be achieved with the fix?** This will make the bank transfer payment method functional, fulfilling a direct user request.
+    *   **Status:** BLOCKED
     *   **Is recurring issue?** N
-    *   **Should Test frontend/backend/both after fix?** Backend is critical. Frontend is a minor text change.
+    *   **Should Test frontend/backend/both after fix?** Frontend.
+    *   **Blocked on other issue:** Blocked on the user providing valid QR code images.
+
+*   **Issue 2: Hardcoded Turkish Text in Question Bank (P0)**
+    *   **Description:** The Question Bank feature contains hardcoded Turkish text like Hedef Band and Karmaşıklık, which was reported by the user.
+    *   **Attempted fixes:** The agent identified the text in  and  and applied  operations to remove it.
+    *   **Next debug checklist:**
+        1.  Navigate to the  page and take a screenshot to visually verify that the hardcoded Turkish text has been successfully removed.
+        2.  Show the screenshot to the user for confirmation.
+    *   **Why fix this issue and what will be achieved with the fix?** To resolve a UI bug and improve the internationalization of the application.
+    *   **Status:** IN PROGRESS (Fix applied, testing and verification pending).
+    *   **Is recurring issue?** N
+    -   **Should Test frontend/backend/both after fix?** Frontend.
+    *   **Blocked on other issue:** None.
 
 **In progress Task List**:
-*   **Task 1: Implement 30-Day Expiry for Bank Transfers (P0)**
-    *   **Where to resume:** Resume by modifying the user model and the bank transfer approval endpoint in the backend as outlined in the checklist above.
-    *   **What will be achieved with this?** Bank transfers will grant temporary access, matching the user's request.
-    *   **Status:** IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?** Backend.
-    *   **Blocked on something:** None.
+*   None.
 
 **Upcoming and Future Tasks**
 **Upcoming Tasks:**
-*   **P1: Verify Old Vocabulary Word Completion Bug:** A bug from a previous session where completing one word in a vocabulary game marks all words as complete was never explicitly regression tested. This should be checked after the current task.
+*   **P1: Report on Map Generator Status:** The user asked about a Map Generator for AI test creation. The agent searched for relevant files and found none. The next step is to report this finding to the user and confirm if this is a new feature request or if they have more information about it.
 
 **Future Tasks:**
-*   **P2: Implement Daily Habit Spaced Repetition System (SRS).**
-*   **P2: Implement Booster Mode for remedial lessons.**
+*   **P2: Bank Transfer Expiry Reminders:** Implement an automated email reminder 3 days before a bank transfer plan expires, encouraging users to switch to PayPal.
+*   **P2: Daily Habit Spaced Repetition System (SRS).**
+*   **P2: Booster Mode for remedial lessons.**
 *   **P2: Build the Teacher Control Panel.**
-*   **P2: Implement a custom Speaking Agent** as a cheaper, API-based alternative to ElevenLabs for conversational practice.
-*   **P2: Investigate user database:** The user mentioned they are not real users regarding the user list, which should be investigated later.
-*   **P2: Stage 1 Content Re-enrichment (On Hold):** Upgrade Stage 1 content to match Stage 2's quality.
-*   **P2: Re-enable Certification Gate** to unlock stages based on performance.
+*   **P2: Implement a custom Speaking Agent.**
+*   **P2: Investigate user database:** The user mentioned they are not real users, which needs further investigation.
+*   **P1 (from previous fork): Verify Vocabulary Word Completion Bug:** Regression test a bug where completing one vocabulary word marks all words in the activity as complete.
 
 **Completed work in this session**
-- **Subscription & Pricing Model Implemented:**
-  - Created a 4-tier pricing model (Free, Explorer, Learner, Achiever, Master).
-  - Built a new, fully internationalized (EN, VI, TR) pricing page and added a pricing section to the landing page.
-  - Implemented plan-based feature locking across the entire application, controlled by backend logic.
-- **PayPal LIVE Integration:**
-  - Fully integrated PayPal Subscriptions for recurring payments using the user's LIVE credentials (Client ID, Secret, Plan IDs) and configured the live webhook.
-- **Vocabulary Content Overhaul:**
-  - Achieved 100% image coverage for all vocabulary words by scraping, using existing AI images, and generating 60+ new images with **GPT Image 1**.
-  - Identified and fixed a major data gap by AI-generating example sentences for **469 vocabulary words**.
-- **Critical Bug Fixes:**
-  - Resolved a speech evaluation bug by adding the target word as a  to the Whisper API, significantly improving recognition accuracy.
-- **Extensive Testing:**
-  - Used the testing agent to run comprehensive frontend and backend tests for the new subscription system, achieving 100% pass rates.
+- **Smart Lock Lesson Progression System:**
+  - Implemented frontend and backend logic to lock lessons until the previous one is completed (, , ).
+  - Added an admin bypass for specific emails.
+  - Secured the system with a backend endpoint () to prevent direct URL access.
+  - Successfully verified the entire feature using the testing agent.
+- **Bank Transfer 30-Day Expiry Logic:**
+  - Modified the backend () to set a  timestamp upon bank transfer approval.
+  - Implemented an automatic plan downgrade check that reverts the user to free when their temporary plan expires.
+  - Manually tested the entire activation and expiration flow.
+- **Backend Refinements:**
+  - Corrected API sort logic in  to use  instead of an unreliable  field to ensure consistent lesson ordering.
 
 **Earlier issues found/mentioned but not fixed**
-*   **Vocabulary Word Completion Bug:** A P1 task from the initial handoff to regression test a bug where completing one vocabulary word marks the entire set as complete was not addressed, as the agent prioritized the user's more recent, urgent requests.
+*   **Vocabulary Word Completion Bug:** This P1 regression test from a previous session remains pending.
 
 **Known issue recurrence from previous fork**
 *   None.
@@ -96,56 +99,55 @@ The current task is to modify the existing bank transfer payment flow to grant o
 
 
 **Key Technical Concepts**
-*   **Payment Gateway Integration:** Deep integration with the PayPal Subscriptions API for creating and managing recurring payments in a LIVE environment.
-*   **Subscription Management:** Backend logic for tier-based feature access control (feature flagging) and automated plan expiry checks.
-*   **Internationalization (i18n):** Using  to provide a multi-lingual user experience on critical pages like pricing.
-*   **AI Content Generation:** Using  to programmatically generate missing database content (example sentences) and user-facing assets (vocabulary images).
+*   **Monolithic Backend:** The entire backend application logic (routes, Pydantic models, helpers, DB interactions) is contained within a single  file.
+*   **Conditional UI Rendering & Security:** Using a combination of frontend logic (locking UI) and backend API protection to enforce lesson progression rules.
+*   **Dynamic Modals:** Using a single modal component () to display different content (QR codes) based on which plan the user selects on the .
 
 **key DB schema**
 *   ** collection:**
-    *    (e.g., free, explorer, learner, achiever, master)
-    *    (To be implemented for temporary plans like bank transfers)
+    *   
+    *   
+    *   
+    *   
 *   ** collection:**
-    *    (Now 100% populated)
-    *    (Now 100% populated)
-    *    (Now 100% populated)
+    *   
+    *   
 
 **All files of reference**
-*    (Core logic for payments)
-*    (User data model)
-*    (Subscription UI)
-*    (Bank transfer UI)
-*    (Contains LIVE PayPal credentials)
-*   
-*   
-*   
+*    (For all backend logic)
+*    (For bank transfer modal integration)
+*    (The modal component itself)
+*    (For hardcoded text fix)
+*    (Directory with empty QR code images)
+
+**Areas that need refactoring**:
+*   The monolithic  file should be a high-priority candidate for refactoring. The logic should be split into a standard FastAPI project structure (e.g., dedicated folders for , , ) to improve maintainability and scalability.
+
+**key api endpoints**
+*   ****: Approves bank transfer and sets .
+*   ****: Gets user's current plan, now includes expiry check.
+*   ****: **(NEW)** Checks if a specific lesson is accessible to the current user.
+*   ****: **(MODIFIED)** Fetches units for a stage, now correctly sorted by .
 
 **Critical Info for New Agent**
-*   Your immediate and highest priority is to implement the 30-day expiry logic for bank transfers.
-*   You are working with a LIVE PayPal integration. Do not alter the Plan IDs or credentials in  unless specifically instructed by the user. The current credentials are for the live environment.
-*   The user is Turkish and must be addressed in Turkish. They are technically savvy and provide direct, specific feedback. Do not deviate from their requests without asking for confirmation first.
-*   After completing the current task, you should propose tackling the P1 regression test for the Vocabulary Word Completion Bug.
+*   **IMMEDIATE BLOCKER:** You cannot complete the QR code task because the image files are empty. Your first action must be to inform the user in Turkish about this blocker and request valid image files.
+*   The entire backend is in . The file paths in the initial handoff summary were incorrect. Trust the file structure discovered in the last session.
+*   After addressing the blocker, your plan should be to verify the hardcoded text fix and then provide the user with an update on the Map Generator query.
 
 **documents and test reports created in this job**
-*    (Created, but content was explained directly to user)
-*    (Updated)
-*    (Passed)
-*    (Passed)
+*   
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. **User:** How will the subscription logic work for bank transfers?
-9.  **User:** I choose Option C (30-day access). Also, can PayPal create QR codes?
-8.  **User:** Yes (approves implementing Option C).
-7.  **User:** The plans need to be recreated, I was in sandbox, now I'm making a business account for live mode.
-6.  **User:** I think it's done. Check if the Client ID is correct.
-5.  **User:** (Provides the LIVE secret key) I think the plan IDs are the same.
-4.  **User:** Check it out. (Shows screenshot of LIVE PayPal plans).
-3.  **User:** Are Stage 1 and Stage 2 ready to use?
-2.  **User:** The pricing page needs a language option and translations.
-1.  **User:** (Reports bugs) Sentences are missing and the speech evaluation isn't working correctly.
+1.  **User (pending):** None. The last messages provided instructions for the current tasks.
+2.  **User:** Provided the mapping for which QR code file to use for each subscription plan.
+3.  **User:** Reported 3 new issues via screenshot: 1) QR code is missing from bank transfer flow and should be in a floating window, 2) Hardcoded Turkish text exists in the Question Bank, 3) Asked for the status of a past Map Generator task.
+4.  **User:** Provided the two admin email addresses for bypassing the lesson lock system.
+5.  **User:** Requested the smart lock feature where lessons unlock sequentially, except for admins.
+6.  **User:** Acknowledged the completion of the 30-day bank transfer expiry feature and suggested a future enhancement (email reminders).
 
 **Project Health Check:**
-*   **Healthy:** The application is stable and key revenue-generating features (subscriptions) are live. The current work is a refinement of an existing payment flow.
+*   **Broken:** The bank transfer payment flow is non-functional because of the missing QR code images. This is a critical issue as it affects a payment method.
+*   **Mocked:** N/A
 
 **3rd Party Integrations**
 *   **PayPal Subscriptions:** (LIVE) For recurring subscription payments. Requires User API Key.
@@ -155,9 +157,13 @@ The current task is to modify the existing bank transfer payment flow to grant o
 *   **Emergent Integrations (Whisper):** (Speech-to-Text).
 
 **Testing status**
-*   **Testing agent used after significant changes:** YES. Used successfully to verify the entire subscription and feature-locking flow.
-*   **Test files created:** None.
-*   **Known regressions:** The Vocabulary Word Completion Bug from a previous fork remains untriaged and untested.
+*   **Testing agent used after significant changes:** YES. It was used successfully to validate the 'smart lock' lesson progression system.
+*   **Troubleshoot agent used after agent stuck in loop:** NO
+*   **Test files created:** None. The testing agent ran its own tests and produced .
+*   **Known regressions:** The Vocabulary Word Completion Bug from a previous fork has not been regression tested.
+
+**Credentials to test flow:**
+*   **Admin Accounts (bypass lesson lock):** , 
 
 **What agent forgot to execute**
-*   The agent did not perform the P1 regression test for the vocabulary word completion bug mentioned in the initial handoff summary. This was deprioritized in favor of the user's more urgent requests for the subscription model and bug fixes.</analysis>
+*   The agent has not yet responded to the user's query about the status of the Map Generator. It has performed an initial file search but has not communicated the findings back to the user.</analysis>

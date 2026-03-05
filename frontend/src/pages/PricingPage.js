@@ -7,12 +7,24 @@ import { uploadBankPayment } from '../lib/api';
 import { useI18n, LANGUAGES } from '../lib/i18n';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import {
-  ArrowLeft, Check, X, Compass, BookOpen, Award, Crown, Building2, Mail, Globe
+  ArrowLeft, Check, X, Compass, BookOpen, Award, Crown, Building2, Mail, Globe, QrCode, Upload
 } from 'lucide-react';
+
+import qrExplorer from '../assets/payments/Single exam 120k.png';
+import qrLearner from '../assets/payments/Starter plan 220k.png';
+import qrAchiever from '../assets/payments/Booster plan 460k.png';
+import qrMaster from '../assets/payments/Pro plan 700k.png';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 const SUPPORT_EMAIL = 'support@testmaster.pro';
+
+const QR_IMAGES = {
+  explorer: qrExplorer,
+  learner: qrLearner,
+  achiever: qrAchiever,
+  master: qrMaster,
+};
 
 const PAYPAL_PLAN_IDS = {
   explorer: 'P-01067231X8887700NNGUZXZI',
@@ -286,31 +298,50 @@ export default function PricingPage({ user }) {
       </main>
 
       <Dialog open={bankModalOpen} onOpenChange={setBankModalOpen}>
-        <DialogContent className="max-w-lg bg-gray-900 border-gray-700">
-          <DialogHeader>
-            <DialogTitle className="text-white">{t('bankModalTitle')}</DialogTitle>
-            <DialogDescription className="text-gray-400">{t('bankModalDesc')}</DialogDescription>
-          </DialogHeader>
+        <DialogContent className="max-w-md bg-gray-900 border-gray-700 p-0 overflow-hidden" data-testid="bank-modal">
+          <div className="p-5 pb-3">
+            <DialogHeader>
+              <DialogTitle className="text-white text-lg">{t('bankModalTitle')}</DialogTitle>
+              <DialogDescription className="text-gray-400 text-xs">{t('bankModalDesc')}</DialogDescription>
+            </DialogHeader>
+          </div>
           {selectedPlan && (
-            <div className="space-y-4 mt-2">
-              <div className="flex flex-col md:flex-row gap-4 items-center">
-                <div className="w-full md:w-1/2 flex justify-center">
-                  <div className="bg-gray-800 rounded-lg p-4 text-center">
-                    <p className="text-3xl font-bold text-white">{selectedPlan.price}<span className="text-sm text-gray-400">{selectedPlan.period}</span></p>
-                    <p className="text-sm text-gray-400 mt-1">{selectedPlan.name}</p>
+            <div className="px-5 pb-5 space-y-4">
+              {/* QR Code - centered and prominent */}
+              {QR_IMAGES[selectedPlan.id] && (
+                <div className="flex justify-center">
+                  <div className="bg-white rounded-2xl p-3 shadow-lg" data-testid="bank-qr-code">
+                    <img
+                      src={QR_IMAGES[selectedPlan.id]}
+                      alt={`QR code for ${selectedPlan.name}`}
+                      className="w-48 h-48 object-contain"
+                    />
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 text-sm space-y-2 text-gray-300">
+              )}
+
+              {/* Plan + Account info row */}
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-800 rounded-xl px-4 py-2 text-center flex-shrink-0">
+                  <p className="text-2xl font-bold text-white">{selectedPlan.price}</p>
+                  <p className="text-[11px] text-gray-400">{selectedPlan.name}</p>
+                </div>
+                <div className="text-xs space-y-1 text-gray-300 min-w-0">
                   <p><span className="font-semibold text-white">{t('bankAccountName')}:</span> OVEZDURDYYEV AGAGELDI</p>
                   <p><span className="font-semibold text-white">{t('bankAccountNumber')}:</span> 700036356609</p>
                   <p><span className="font-semibold text-white">{t('bankName')}:</span> Shinhan Vietnam</p>
                 </div>
               </div>
-              <div className="pt-2 flex justify-end">
-                <Button onClick={handleUploadScreenshot} className="bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0" data-testid="bank-upload-btn">
-                  {t('bankUploadReceipt')}
-                </Button>
-              </div>
+
+              {/* Upload button */}
+              <Button
+                onClick={handleUploadScreenshot}
+                className="w-full bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 h-10"
+                data-testid="bank-upload-btn"
+              >
+                <Upload className="w-4 h-4 mr-2" />
+                {t('bankUploadReceipt')}
+              </Button>
             </div>
           )}
         </DialogContent>

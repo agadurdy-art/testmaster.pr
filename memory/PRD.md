@@ -1,47 +1,72 @@
-# TESTMASTER - Mastery-Based English Learning Platform
+# IELTS Ace - AI-Powered IELTS Preparation Platform
 
-## Product Requirements Document (PRD)
+## Original Problem Statement
+Full-stack IELTS preparation platform with AI-powered features including vocabulary, grammar, reading, listening, writing evaluation, speaking practice, and a comprehensive question bank. The platform uses a subscription model with PayPal and bank transfer payment options.
 
-### Pricing Structure
+## User Personas
+- **IELTS Students**: Primary users preparing for IELTS exam (Vietnamese, Turkish, English speakers)
+- **Admin Users**: aga.durdy@gmail.com, stemhousebenluc@gmail.com (bypass lesson lock)
 
-| Plan | Price | Stages | Speaking | Liz AI | Mastery | Advanced |
-|------|-------|--------|----------|--------|---------|----------|
-| **Free** | $0 | Stage 1 | - | - | - | - |
-| **Explorer** | $4.99/mo | All 8 | 1 test/mo | - | - | - |
-| **Learner** | $9/mo | All 8 | 5 tests/mo | 50 msg | Yes | - |
-| **Achiever** | $19/mo | All 8 | Unlimited | 150 msg | Yes | Yes |
-| **Master** | $29/mo | All 8 | Unlimited | Unlimited | Yes | Yes + Agent |
+## Core Architecture
+- **Frontend**: React (CRA) + Tailwind CSS + Shadcn/UI
+- **Backend**: Monolithic FastAPI (server.py)
+- **Database**: MongoDB (ielts_database)
+- **3rd Party**: PayPal Subscriptions, Anthropic Claude 4.5 (Emergent LLM Key), OpenAI GPT Image 1, ElevenLabs TTS, Azure Speech, Emergent Whisper
 
-### What's Implemented
-- [x] Stage 1 & Stage 2 content (24 units, 96 lessons)
-- [x] 243/243 vocabulary images (100% coverage)
-- [x] 243/243 vocabulary example sentences + definitions (AI-generated)
-- [x] ElevenLabs TTS pre-generated audio
-- [x] Speaking evaluation with Whisper prompt hint
-- [x] 4-tier pricing with PayPal Subscriptions (Live)
-- [x] Plan-based access control + stage/feature locking
-- [x] Pricing page with 3-language support (EN/VI/TR)
-- [x] Landing page pricing section
-- [x] PayPal webhook for renewals/cancellations
-- [x] Bank transfer 30-day temporary plan activation (auto-downgrade to free after expiry)
-- [x] **Smart Lock system** - sequential lesson/unit progression with admin bypass
+## Subscription Plans
+| Plan | Price | Old Name | QR Code File |
+|------|-------|----------|-------------|
+| Explorer | $4.99/mo | Single exam | Single exam 120k.png |
+| Learner | $9/mo | Starter | Starter plan 220k.png |
+| Achiever | $19/mo | Booster | Booster plan 460k.png |
+| Master | $29/mo | Pro | Pro plan 700k.png |
 
-### Key Fixes (Mar 5, 2026)
-- Fixed empty example sentences for all 243 vocabulary words
-- Fixed Whisper pronunciation detection by adding target word prompt hint
-- Updated pricing page with full i18n support
-- Implemented 30-day expiry for bank transfer payments with auto-downgrade
-- Implemented Smart Lock: lessons unlock sequentially within units, units unlock after completing all lessons in previous unit
-- Admin emails (aga.durdy@gmail.com, stemhousebenluc@gmail.com) bypass all locks
+## What's Been Implemented
+- Full lesson system with 8 learning stages (Pre-A1 to IELTS)
+- Smart Lock lesson progression (sequential unlock, admin bypass)
+- Bank transfer 30-day plan expiry system
+- Bank transfer QR code modal with plan-specific VietQR codes
+- PayPal recurring subscriptions
+- Question Bank (1420+ questions)
+- Writing Task evaluation with AI
+- Speaking practice with AI
+- Multi-language UI (EN, VI, TR)
+- Vocabulary games, grammar exercises, listening/reading activities
+- Liz AI Teacher, Emily AI Mentor
+- Level test system
 
-### Pending / Backlog
-- [ ] Bank transfer expiry email reminder (3 days before expiry)
-- [ ] Own AI Speaking Agent (Master plan)
-- [ ] Monthly usage tracking enforcement
-- [ ] Stages 3-8 content generation
-- [ ] Daily Habit SRS system
+## Completed (Latest Session - March 2026)
+- [x] Downloaded and saved 4 VietQR code images for bank transfer plans
+- [x] Verified QR code modal shows correct QR for each plan (Explorer, Learner, Achiever, Master)
+- [x] Hardcoded Turkish text fix confirmed by user
+
+## P0 - Resolved
+- [x] Bank Transfer QR Code Display - QR images were 0 bytes, now populated with real VietQR images
+- [x] Hardcoded Turkish Text in Question Bank - User confirmed fix is working
+
+## P1 - Pending
+- [ ] Vocabulary Word Completion Bug - Regression test needed (completing one word may mark all as complete)
+- [ ] Map Generator Status - Report to user (no code found, likely a new feature request)
+
+## P2 - Backlog
+- [ ] Bank Transfer Expiry Email Reminders (3 days before expiry)
+- [ ] Daily Habit Spaced Repetition System (SRS)
+- [ ] Booster Mode for remedial lessons
 - [ ] Teacher Control Panel
-- [ ] Booster Mode (remedial lessons)
-- [ ] Investigate user database ("not real users")
-- [ ] Stage 1 content re-enrichment
-- [ ] Re-enable Certification Gate
+- [ ] Custom Speaking Agent
+- [ ] User database investigation ("not real users" concern)
+- [ ] server.py refactoring into proper FastAPI project structure
+
+## Key API Endpoints
+- POST /api/v1/payments/upload-bank-transfer - Bank transfer approval
+- GET /api/v1/users/me/plan - User plan with expiry check
+- GET /api/v1/unified-learning/check-lesson-lock-status - Lesson access check
+- GET /api/v1/unified-learning/stages/{stage_id} - Stage units (sorted by unit_number)
+- POST /api/auth/register - User registration
+- POST /api/auth/login - User login
+
+## Key Files
+- /app/backend/server.py - Monolithic backend
+- /app/frontend/src/pages/PricingPage.js - Pricing with QR modal
+- /app/frontend/src/assets/payments/ - QR code images
+- /app/frontend/src/lib/i18n.js - Translations
