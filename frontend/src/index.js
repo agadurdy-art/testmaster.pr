@@ -15,8 +15,9 @@ function RootProviders({ children }) {
   const options = {
     "client-id": paypalClientId,
     currency: "USD",
-    intent: "capture",
-    components: "buttons,marks",
+    intent: "subscription",
+    vault: true,
+    components: "buttons",
   };
 
   return (

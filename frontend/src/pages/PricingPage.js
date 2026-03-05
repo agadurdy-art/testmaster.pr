@@ -3,15 +3,24 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
-import { uploadBankPayment, createPaypalOrder, capturePaypalOrder } from '../lib/api';
+import { uploadBankPayment } from '../lib/api';
 import { useI18n } from '../lib/i18n';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import {
   ArrowLeft, Check, X, Compass, BookOpen, Award, Crown, Building2, Mail
 } from 'lucide-react';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 const paypalClientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
 const SUPPORT_EMAIL = 'support@testmaster.pro';
+
+// PayPal Subscription Plan IDs
+const PAYPAL_PLAN_IDS = {
+  explorer: 'P-01067231X8887700NNGUZXZI',
+  learner: 'P-8PA72532LU348322JNGUZYWY',
+  achiever: 'P-0BT993836S704213PNGUZZJQ',
+  master: 'P-06T688388Y238120JNGUZZ4I',
+};
 
 const plans = [
   {
@@ -250,22 +259,40 @@ export default function PricingPage({ user }) {
                       >
                         <Building2 className="w-4 h-4 mr-2" />Pay by Bank
                       </Button>
-                      {paypalClientId && !bankModalOpen && (
+                      {paypalClientId && PAYPAL_PLAN_IDS[plan.id] && (
                         <div data-testid={`paypal-btn-${plan.id}`}>
                           <PayPalButtons
-                            style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 36 }}
-                            createOrder={async () => {
+                            style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'subscribe', height: 36 }}
+                            createSubscription={(data, actions) => {
                               if (!user) { alert('Please log in.'); throw new Error('No user'); }
-                              const res = await createPaypalOrder({ planId: plan.id, email: user.email });
-                              return res.orderId;
+                              return actions.subscription.create({
+                                plan_id: PAYPAL_PLAN_IDS[plan.id],
+                              });
                             }}
                             onApprove={async (data) => {
                               if (!user) return;
-                              const res = await capturePaypalOrder({ orderId: data.orderID, planId: plan.id, email: user.email });
-                              const updatedUser = { ...user, plan: res.plan ?? plan.id, subscription: res.subscription ?? plan.name };
-                              localStorage.setItem('user', JSON.stringify(updatedUser));
-                              alert('Payment successful! Welcome to ' + plan.name + '!');
-                              navigate('/dashboard');
+                              try {
+                                const res = await fetch(`${API_URL}/api/payments/paypal/activate-subscription`, {
+                                  method: 'POST',
+                                  headers: { 'Content-Type': 'application/json' },
+                                  body: JSON.stringify({
+                                    subscriptionId: data.subscriptionID,
+                                    planId: plan.id,
+                                    email: user.email,
+                                  }),
+                                });
+                                const result = await res.json();
+                                if (res.ok) {
+                                  const updatedUser = { ...user, plan: result.plan, subscription: result.subscription };
+                                  localStorage.setItem('user', JSON.stringify(updatedUser));
+                                  alert('Subscription activated! Welcome to ' + plan.name + '!');
+                                  navigate('/dashboard');
+                                } else {
+                                  alert(result.detail || 'Activation failed');
+                                }
+                              } catch (err) {
+                                alert('Error activating subscription. Please contact support.');
+                              }
                             }}
                           />
                         </div>

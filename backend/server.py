@@ -2257,6 +2257,135 @@ async def paypal_capture_order(req: PaypalCaptureOrderRequest):
     }
 
 
+# ================== PayPal Subscriptions API ==================
+
+PAYPAL_SUBSCRIPTION_PLAN_IDS = {
+    os.getenv("PAYPAL_EXPLORER_PLAN_ID", ""): "explorer",
+    os.getenv("PAYPAL_LEARNER_PLAN_ID", ""): "learner",
+    os.getenv("PAYPAL_ACHIEVER_PLAN_ID", ""): "achiever",
+    os.getenv("PAYPAL_MASTER_PLAN_ID", ""): "master",
+}
+
+
+class ActivateSubscriptionRequest(BaseModel):
+    subscriptionId: str
+    planId: str  # our internal plan name: explorer, learner, achiever, master
+    email: str
+
+
+@api_router.post("/payments/paypal/activate-subscription")
+async def activate_subscription(req: ActivateSubscriptionRequest):
+    """Activate a PayPal subscription after user approval.
+    Called by frontend after PayPal subscription onApprove callback."""
+    email = req.email.strip().lower()
+    plan_id = req.planId
+
+    if plan_id not in PAYPAL_PLAN_MAPPING:
+        raise HTTPException(status_code=400, detail="Invalid planId")
+
+    user = await _get_user_by_email(email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Verify subscription with PayPal API
+    access_token = await get_paypal_access_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{PAYPAL_API_BASE}/v1/billing/subscriptions/{req.subscriptionId}",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+        if resp.status_code == 200:
+            sub_data = resp.json()
+            sub_status = sub_data.get("status", "")
+            if sub_status not in ("ACTIVE", "APPROVED"):
+                raise HTTPException(status_code=400, detail=f"Subscription not active (status={sub_status})")
+        else:
+            logging.getLogger(__name__).warning(f"PayPal sub verify failed: {resp.status_code} {resp.text}")
+
+    plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
+
+    update_fields = {
+        "plan": plan_name,
+        "subscription": subscription_label,
+        "paypal_subscription_id": req.subscriptionId,
+        "lastPayment": datetime.now(timezone.utc).isoformat(),
+        "monthly_usage": {
+            "liz_messages": 0,
+            "speaking_evals": 0,
+            "reset_date": datetime.now(timezone.utc).isoformat(),
+        },
+    }
+
+    await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+
+    await db.kofi_events.insert_one({
+        "provider": "paypal",
+        "kind": "subscription-activated",
+        "subscription_id": req.subscriptionId,
+        "plan_id": plan_id,
+        "email": email,
+        "processed_at": datetime.now(timezone.utc).isoformat(),
+    })
+
+    return {
+        "detail": "Subscription activated",
+        "plan": plan_name,
+        "subscription": subscription_label,
+    }
+
+
+@api_router.post("/payments/paypal/subscription-webhook")
+async def paypal_subscription_webhook(request: Request):
+    """Handle PayPal subscription webhooks for recurring payments."""
+    body = await request.json()
+    event_type = body.get("event_type", "")
+    resource = body.get("resource", {})
+
+    logger = logging.getLogger(__name__)
+    logger.info(f"PayPal webhook: {event_type}")
+
+    # Store raw event
+    await db.kofi_events.insert_one({
+        "provider": "paypal",
+        "kind": "webhook",
+        "event_type": event_type,
+        "payload": body,
+        "received_at": datetime.now(timezone.utc).isoformat(),
+    })
+
+    if event_type == "PAYMENT.SALE.COMPLETED":
+        # Monthly recurring payment succeeded - reset usage
+        billing_agreement_id = resource.get("billing_agreement_id", "")
+        if billing_agreement_id:
+            user = await db.users.find_one({"paypal_subscription_id": billing_agreement_id})
+            if user:
+                await db.users.update_one(
+                    {"id": user["id"]},
+                    {"$set": {
+                        "lastPayment": datetime.now(timezone.utc).isoformat(),
+                        "monthly_usage": {
+                            "liz_messages": 0,
+                            "speaking_evals": 0,
+                            "reset_date": datetime.now(timezone.utc).isoformat(),
+                        },
+                    }}
+                )
+                logger.info(f"Renewed subscription for {user.get('email')}")
+
+    elif event_type in ("BILLING.SUBSCRIPTION.CANCELLED", "BILLING.SUBSCRIPTION.SUSPENDED"):
+        sub_id = resource.get("id", "")
+        if sub_id:
+            user = await db.users.find_one({"paypal_subscription_id": sub_id})
+            if user:
+                await db.users.update_one(
+                    {"id": user["id"]},
+                    {"$set": {"plan": "free", "subscription": None, "paypal_subscription_id": None}}
+                )
+                logger.info(f"Cancelled/suspended subscription for {user.get('email')}")
+
+    return {"status": "ok"}
+
+
 
 
 

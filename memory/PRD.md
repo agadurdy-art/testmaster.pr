@@ -8,9 +8,9 @@ A mastery-based English learning platform following Cambridge Young Learners met
 ### Core Architecture
 - **Frontend:** React (CRA) with Shadcn/UI components
 - **Backend:** FastAPI (Python) with MongoDB
-- **Payments:** PayPal Orders API + Bank Transfer
+- **Payments:** PayPal Subscriptions API (recurring) + Bank Transfer
 
-### Pricing Structure (Updated Mar 5, 2026)
+### Pricing Structure
 
 | Plan | Price | Stages | Speaking | Liz AI | Mastery | Advanced |
 |------|-------|--------|----------|--------|---------|----------|
@@ -20,30 +20,34 @@ A mastery-based English learning platform following Cambridge Young Learners met
 | **Achiever** | $19/mo | All 8 | Unlimited | 150 msg | Yes | Yes |
 | **Master** | $29/mo | All 8 | Unlimited | Unlimited | Yes | Yes + Agent |
 
+### PayPal Subscription Plan IDs
+- Explorer: P-01067231X8887700NNGUZXZI
+- Learner: P-8PA72532LU348322JNGUZYWY
+- Achiever: P-0BT993836S704213PNGUZZJQ
+- Master: P-06T688388Y238120JNGUZZ4I
+- Client ID: AbYQyH9_NcTZlPDBtWpTha07Wn-VMTTmDEnP4XC_QlxJXiXnXn0r3Tb5yp8vFJAMoa_p-p87kfWp1mXD
+
 ### What's Implemented
 - [x] Stage 1 & Stage 2 content (24 units, 96 lessons)
 - [x] 243/243 vocabulary images (100% coverage)
-- [x] ElevenLabs TTS pre-generated audio
-- [x] Speaking evaluation with punctuation-safe scoring
 - [x] 4-tier pricing (Explorer/Learner/Achiever/Master)
 - [x] Plan-based access control (backend + frontend)
-- [x] Stage locking for free users
-- [x] Feature locking (Liz, Mastery, Advanced, Speaking)
-- [x] Pricing page with PayPal + Bank Transfer
+- [x] **PayPal Subscriptions API** (monthly recurring)
+- [x] Subscription activation endpoint
+- [x] Subscription webhook for renewals/cancellations
 - [x] Landing page pricing section
-- [x] Speaking credits per plan (Explorer:1, Learner:5, Achiever+:unlimited)
+- [x] Bank transfer payment option
 
-### Key Files
-- `/app/backend/plan_access.py` - Plan definitions
-- `/app/frontend/src/pages/PricingPage.js` - Pricing page
-- `/app/frontend/src/pages/LandingPage.js` - Landing with pricing section
-- `/app/frontend/src/pages/UnifiedCoursePage.js` - Stage locking
-- `/app/frontend/src/pages/Dashboard.js` - Feature locking
+### Key Endpoints
+- `POST /api/payments/paypal/activate-subscription` - Activate subscription
+- `POST /api/payments/paypal/subscription-webhook` - Webhook for renewals
+- `GET /api/plan/features` - All plan features (public)
+- `GET /api/user/plan-info/{email}` - User plan info
 
 ### Pending / Backlog
-- [ ] PayPal Subscriptions API (otomatik aylık yenileme)
-- [ ] Own AI Speaking Agent (Master plan)
-- [ ] Monthly usage tracking (soft limits)
+- [ ] Own AI Speaking Agent (Master plan) - Whisper + GPT-4o + TTS
+- [ ] Monthly usage tracking enforcement
+- [ ] Stages 3-8 content generation
 - [ ] Daily Habit SRS system
 - [ ] Teacher Control Panel
-- [ ] Stages 3-8 content generation
+- [ ] PayPal webhook configuration (user needs to add webhook URL in PayPal Dashboard)
