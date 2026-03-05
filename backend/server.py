@@ -1426,6 +1426,7 @@ async def get_user(user_id: str):
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+    user = await _check_plan_expiry(user)
     if isinstance(user.get('created_at'), str):
         user['created_at'] = datetime.fromisoformat(user['created_at'])
     user.pop("password_hash", None)
@@ -2073,8 +2074,30 @@ async def verify_email(payload: VerifyEmailRequest):
 # ================== Payments: Manual Credit and PayPal ==================
 
 
+async def _check_plan_expiry(user: dict) -> dict:
+    """If the user has a plan_expires_at in the past, downgrade to free."""
+    expires_at = user.get("plan_expires_at")
+    if expires_at and user.get("payment_method") == "bank_transfer":
+        try:
+            exp_dt = datetime.fromisoformat(expires_at) if isinstance(expires_at, str) else expires_at
+            if exp_dt < datetime.now(timezone.utc):
+                await db.users.update_one(
+                    {"id": user["id"]},
+                    {"$set": {"plan": "free", "subscription": None, "plan_expires_at": None, "payment_method": None}}
+                )
+                user["plan"] = "free"
+                user["subscription"] = None
+                user["plan_expires_at"] = None
+                user["payment_method"] = None
+        except (ValueError, TypeError):
+            pass
+    return user
+
+
 async def _get_user_by_email(email: str) -> Optional[dict]:
     user = await db.users.find_one({"email": email.lower().strip()}, {"_id": 0})
+    if user:
+        user = await _check_plan_expiry(user)
     return user
 
 
@@ -2407,6 +2430,8 @@ async def get_user_plan_info(user_email: str):
         "subscription": user.get("subscription"),
         "features": features,
         "monthly_usage": usage,
+        "plan_expires_at": user.get("plan_expires_at"),
+        "payment_method": user.get("payment_method"),
     }
 
 

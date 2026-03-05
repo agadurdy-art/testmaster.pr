@@ -23,11 +23,13 @@
 - [x] Pricing page with 3-language support (EN/VI/TR)
 - [x] Landing page pricing section
 - [x] PayPal webhook for renewals/cancellations
+- [x] **Bank transfer 30-day temporary plan activation** (auto-downgrade to free after expiry)
 
 ### Key Fixes (Mar 5, 2026)
 - Fixed empty example sentences for all 243 vocabulary words
 - Fixed Whisper pronunciation detection by adding target word prompt hint
 - Updated pricing page with full i18n support
+- Implemented 30-day expiry for bank transfer payments with auto-downgrade
 
 ### Pending / Backlog
 - [ ] Own AI Speaking Agent (Master plan)
@@ -35,3 +37,7 @@
 - [ ] Stages 3-8 content generation
 - [ ] Daily Habit SRS system
 - [ ] Teacher Control Panel
+- [ ] Booster Mode (remedial lessons)
+- [ ] Investigate user database ("not real users")
+- [ ] Stage 1 content re-enrichment
+- [ ] Re-enable Certification Gate
