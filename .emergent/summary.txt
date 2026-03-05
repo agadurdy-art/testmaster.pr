@@ -1,160 +1,93 @@
 <analysis>An analysis of the user and agent conversation has been done. Here is the summary:
 
 **original_problem_statement:**
-The user is building Testmaster, a mastery-based English learning platform. After initial bug fixes and feature implementations (speech evaluation, PDF generator), the core task shifted to building out the 12 units of **Stage 2: Starters (A1)**.
+The user initially requested to replace low-quality, AI-generated vocabulary images by scraping a specific website. After dissatisfaction with the scraped results and near-matches, the user's priority shifted. The new tasks included:
+1.  Generating the remaining vocabulary images using a higher-quality model (GPT Image 1).
+2.  Implementing a full-featured, multi-tiered subscription model with plan-based feature locking.
+3.  Integrating PayPal Subscriptions for recurring payments (now in LIVE mode).
+4.  Fixing critical bugs related to missing example sentences in vocabulary activities and inaccurate speech evaluation.
+5.  Internationalizing the new pricing page.
 
-The agent successfully implemented Stage 2, Unit 1, but the user provided two large rounds of detailed feedback focusing on content quality, game variety, UX, and pedagogical correctness. The current goal is to address this comprehensive feedback, perfecting Unit 1 to serve as the gold-standard template for the remaining 11 units. This involves upgrading the AI model, creating new game components, rewriting the entire content enrichment pipeline, and integrating new services for audio and images.
+The current task is to modify the existing bank transfer payment flow to grant only temporary (30-day) access to a subscription plan, rather than permanent access.
 
 **PRODUCT REQUIREMENTS:**
-1.  **Content Quality (Claude Sonnet 4.5):** All AI-generated content (reading, listening, games) must be high-quality, pedagogically sound for A1 level (6-year-old learners), and free of nonsensical or incorrect information. The AI model has been upgraded from GPT-4o to Claude Sonnet 4.5 to meet this requirement.
-2.  **Game Variety & Rotation:** Implement a wider variety of vocabulary and grammar games.
-    *   **Vocabulary:** At least 4 game types per lesson for lessons 1-3, with types rotating between lessons. Lesson 4 (review) should have summary games like Crossword and Word Search.
-    *   **Grammar:** 5 distinct game types per lesson.
-3.  **Reading & Listening Content:** Reading passages must follow the Cambridge Starters exam format (image-driven). Questions should be clear, well-formatted (using bold/color), and appropriate for the target age group.
-4.  **Visuals & Audio:**
-    *   Replace all emojis in the vocabulary section with high-quality stock photos.
-    *   Integrate ElevenLabs to generate child-friendly, slow-paced (e.g., 0.85x speed) audio for all vocabulary and listening activities in Stage 1 and 2.
-5.  **UX/UI Improvements:**
-    *   Fix UI bugs in games (e.g., Crossword auto-advance, Word Search layout).
-    *   Ensure all user-facing text inside lessons is large and readable for presentation on an interactive board.
-    *   Fix browser permission warnings to be in English, not Turkish.
+1.  **Subscription Model:** Implement a four-tier subscription model (Free, Explorer, Learner, Achiever, Master) that controls access to different stages and features.
+2.  **Payment Integration:** Fully integrate PayPal Subscriptions for automated, recurring monthly payments.
+3.  **Bank Transfer Logic:** Bank transfer payments should activate a plan for only 30 days, after which the user's plan should automatically revert to Free.
+4.  **Content Quality:** All vocabulary items must have a high-quality, relevant image and an example sentence. The speech evaluation must be accurate.
+5.  **Internationalization:** The pricing page must be available in English, Turkish, and Vietnamese.
 
 **User's preferred language**: The user's messages are in **Turkish**. The next agent MUST respond in Turkish for all  interactions.
 
 **what currently exists?**
-*   **Backend:** The data pipeline and enrichment scripts (, ) have been extensively rewritten to support the new requirements. The AI model has been switched to Claude Sonnet 4.5. The logic for game rotation, generating multiple game types, and handling review lessons has been implemented, though it has several outstanding bugs.
-*   **Frontend:** All stages are unlocked. Numerous new game components have been created: , , , , and . Existing components (, , , etc.) have been heavily modified to support larger text sizes, multiple prompts (for speaking), and improved question formatting via a new  helper component.
-*   **Content:** Stage 1 is stable. Stage 2, Unit 1 has been generated and re-enriched multiple times. It now contains a variety of games and improved content structure, but still has bugs related to data merging and AI generation quality.
+*   **Full-Stack Application:** A working React frontend, FastAPI backend, and MongoDB database.
+*   **Complete Content (Stages 1 & 2):** All lessons, activities, high-quality ElevenLabs audio, and 100% vocabulary image/sentence coverage are complete and in the database.
+*   **Live Subscription System:** A 4-tier subscription model is fully implemented. It's integrated with PayPal's LIVE subscription service. Backend and frontend logic correctly locks/unlocks features (e.g., course stages, Liz AI Teacher) based on the user's current plan.
+*   **Multi-Lingual Pricing Page:** A new  and a pricing section on the landing page exist, both fully translated into English, Turkish, and Vietnamese using the existing i18n framework.
+*   **Bug Fixes:** The speech evaluation is now more accurate (using prompts), and all vocabulary words have AI-generated example sentences.
 
 **Last working item**:
-*   **Last item agent was working:** The agent was fixing a critical data merging issue where enriched content for  and  was being discarded. The agent identified that these activity types were missing from the  in . After adding them, the agent noted that the AI was still only generating 1 reading question despite being prompted for 3.
+*   **Last item agent was working:** Implementing the user's request to make bank transfer payments a one-time, 30-day activation (Option C). The plan is to add a  field to the user model upon manual bank transfer approval. A backend check will then automatically downgrade the user's plan if the expiry date has passed.
 *   **Status:** IN PROGRESS
 *   **Agent Testing Done:** N
-*   **Which testing method agent to use?** backend testing agent.
-    1.  Re-run the enrichment and seeding process for Unit 1.
-    2.  Use  commands to inspect the  document for Stage 2, Unit 1.
-    3.  Verify that the  step in the  array now contains **3 questions**.
-    4.  Verify that the  step in Lesson 4 now contains an  array with content.
-    5.  After backend verification, use the screenshot tool to confirm the UI displays 3 reading questions.
+*   **Which testing method agent to use?** Backend testing agent. The agent should write a test to: 1. Simulate an admin approving a bank transfer and verify the  and  fields are correctly set in the database. 2. Create a test endpoint or utility to simulate time passing and call a protected API route to ensure the user is correctly downgraded back to the free plan.
 *   **User Testing Done:** N
 
 **All Pending/In progress Issue list**:
-This is the prioritized list of outstanding issues from the user's latest feedback (Chat Message 373).
-
-*   **Issue 1: Reading Questions Count (P0)**
-*   **Issue 2: Error Hunter Logic (P0)**
-*   **Issue 3: Microphone Permission Language (P0)**
-*   **Issue 4: Lesson 4 Examples Empty (P1)**
-*   **Issue 5: Vocabulary Images (P1)**
-*   **Issue 6: ElevenLabs Audio Integration (P1)**
-*   **Issue 7: Question Formatting & Simplicity (P1)**
-*   **Issue 8: Crossword UX & Bug (P2)**
-*   **Issue 9: WordSearch UX (P2)**
+*   **Issue 1: Implement 30-Day Expiry for Bank Transfers (P0)**
 
 **Issues Detail:**
-*   **Issue 1: Reading Questions Count (P0)**
-    *   **Description:** The reading section only shows 1 question, but the requirement is 3. The agent fixed a merging bug, but the AI itself seems to be generating only one question despite the prompt.
-    *   **Attempted fixes:** Added  to  in . Updated the enrichment prompt in  to explicitly ask for 3 questions.
+*   **Issue 1: Implement 30-Day Expiry for Bank Transfers (P0)**
+    *   **Description:** The current bank transfer approval process grants permanent access to a subscription tier. The user wants this changed so that it only grants access for 30 days, after which the plan should automatically revert to free.
+    *   **Attempted fixes:** The agent has analyzed the relevant files (, , ) to understand the current flow.
     *   **Next debug checklist:**
-        1.  Review the  method in .
-        2.  Strengthen the prompt to be more insistent on the JSON structure and the number of questions. Consider adding a post-generation validation step that retries if the question count is not 3.
-        3.  Check the raw output from the Claude Sonnet 4.5 model to see if it's a parsing error or a generation failure.
-    *   **Why fix this issue and what will be achieved with the fix?** To meet the pedagogical requirement of having sufficient comprehension checks for reading passages.
+        1.  Modify the  model in  to include a  field.
+        2.  In the admin endpoint that approves bank transfers (likely in ), update the logic to set  to the purchased plan and  to .
+        3.  Create a dependency or middleware in the backend that is used on all authenticated routes. This function will check if  exists and is in the past. If so, it will update the user's plan to free and set  to  before proceeding with the request.
+        4.  Update the frontend text in  to inform the user that a bank transfer provides a one-time 30-day activation.
+    *   **Why fix this issue and what will be achieved with the fix?** To align the bank transfer payment method with the user's business logic, treating it as a non-recurring purchase and encouraging users to use PayPal for automated subscriptions.
     *   **Status:** IN PROGRESS
-    *   **Is recurring issue?** Y
-    *   **Should Test frontend/backend/both after fix?** Both.
-*   **Issue 2: Error Hunter Logic (P0)**
-    *   **Description:** The Find the Mistake game () sometimes has multiple errors in a sentence or incorrectly marks a valid correction as wrong. The AI needs to generate sentences with only **one** clear, unambiguous error.
-    *   **Next debug checklist:**
-        1.  Revise the  prompt in .
-        2.  Specifically instruct the AI to generate  items where only a single, obvious grammar error (relevant to the lesson's topic) exists.
-        3.  Update the frontend component  to handle punctuation more robustly during answer comparison.
-    *   **Why fix this issue and what will be achieved with the fix?** Provides a fair and accurate evaluation for the user, preventing frustration from buggy game logic.
-    *   **Status:** IN PROGRESS
-    *   **Is recurring issue?** Y
-    *   **Should Test frontend/backend/both after fix?** Both.
-*   **Issue 3: Microphone Permission Language (P0)**
-    *   **Description:** The browser's microphone access denied warning in the Speaking activity appears in Turkish. It should be in English. This is likely a browser-level setting, but the agent should investigate if it can be influenced or if a custom, English-only warning can be displayed.
-    *   **Next debug checklist:**
-        1.  Examine .
-        2.  In the  function's  block, add a custom state for the error message (e.g., ).
-        3.  Render a custom, hardcoded English error message in the UI if  is true, instead of relying on the browser's default message.
-    *   **Why fix this issue and what will be achieved with the fix?** Ensures a consistent English-only experience throughout the application.
-    *   **Status:** NOT STARTED
     *   **Is recurring issue?** N
-    *   **Should Test frontend/backend/both after fix?** Frontend.
-*   **Issue 4: Lesson 4 Examples Empty (P1)**
-    *   **Description:** The grammar review section in Lesson 4 does not display any example sentences.
-    *   **Attempted fixes:** The agent identified that  activities were not being enriched. The agent added logic to handle this type in  and . However, the issue persists.
-    *   **Next debug checklist:**
-        1.  Trace the data flow for Lesson 4 in .
-        2.  Verify that the  step is correctly passed to the  function.
-        3.  Verify that the enriched  object (with examples) returned by the AI is correctly merged back into the lesson's .
-        4.  Check the final document in the  MongoDB collection.
-    *   **Why fix this issue and what will be achieved with the fix?** Review lessons need grammar examples to be effective.
-    *   **Status:** IN PROGRESS
-    *   **Is recurring issue?** Y
-    *   **Should Test frontend/backend/both after fix?** Both.
-*   **Issue 5: Vocabulary Images (P1)**
-    *   **Description:** Emojis are insufficient and often incorrect for vocabulary. The user wants to use stock photos instead.
-    *   **Next debug checklist:**
-        1.  Choose a stock photo API (e.g., Pexels, Unsplash, or a paid service).
-        2.  Call  to get the integration plan.
-        3.  Update  in the  method to call this new service to find a relevant image URL for each vocabulary word.
-        4.  Store the image URL in the vocabulary item data.
-        5.  Update the frontend Vocabulary component to display this image instead of the emoji.
-    *   **Why fix this issue and what will be achieved with the fix?** Greatly improves the visual quality and pedagogical accuracy of the vocabulary section.
-    *   **Status:** NOT STARTED
-    *   **Is recurring issue?** N
-    *   **Should Test frontend/backend/both after fix?** Both.
-*   **Issue 6: ElevenLabs Audio Integration (P1)**
-    *   **Description:** The user wants high-quality, child-friendly, slow-paced audio for all vocabulary and listening prompts in Stage 1 & 2.
-    *   **Next debug checklist:**
-        1.  Call  for ElevenLabs.
-        2.  Implement a new service in the backend to take text and generate an audio file URL using the ElevenLabs API. Configure it for a slow, natural, child-friendly voice.
-        3.  Modify the enrichment process () to generate audio for every vocabulary word's  and every  prompt.
-        4.  Store the audio URL in the respective data objects.
-        5.  Update the frontend components (, ) to include a play audio button.
-    *   **Why fix this issue and what will be achieved with the fix?** Adds a critical listening comprehension component to the platform, making it much more interactive and effective for language learners.
-    *   **Status:** NOT STARTED
-    *   **Is recurring issue?** N
-    *   **Should Test frontend/backend/both after fix?** Both.
-*   **And 4 more issues...** (The remaining issues are lower priority but should be tracked.)
+    *   **Should Test frontend/backend/both after fix?** Backend is critical. Frontend is a minor text change.
 
 **In progress Task List**:
-*   **Task 1: Finalize Stage 2, Unit 1 (P0)**
-    *   **Where to resume:** Address the 9 pending issues, starting with the highest priority ones (Reading questions, Error Hunter logic, Microphone message).
-    *   **What will be achieved with this?** Unit 1 will be fully functional and meet all user quality standards, serving as the definitive template for the rest of Stage 2.
+*   **Task 1: Implement 30-Day Expiry for Bank Transfers (P0)**
+    *   **Where to resume:** Resume by modifying the user model and the bank transfer approval endpoint in the backend as outlined in the checklist above.
+    *   **What will be achieved with this?** Bank transfers will grant temporary access, matching the user's request.
     *   **Status:** IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?** Both.
-    *   **Blocked on something:** The pending issues themselves.
+    *   **Should Test frontend/backend/both after fix?** Backend.
+    *   **Blocked on something:** None.
 
 **Upcoming and Future Tasks**
 **Upcoming Tasks:**
-*   **P0: Implement Stage 2 (Units 2-12):** Once Unit 1 is approved by the user, systematically generate, enrich, and seed the remaining 11 units using the perfected pipeline.
-*   **P1: Correct Unit Numbering:** In , correct the second UNIT 4 (Food I Like!) to UNIT 7 before generating that unit's content.
-*   **P2: Verify Old Vocabulary Word Completion Bug:** The original handoff mentioned a bug where typing one word marks all words as complete. This needs a dedicated regression test.
+*   **P1: Verify Old Vocabulary Word Completion Bug:** A bug from a previous session where completing one word in a vocabulary game marks all words as complete was never explicitly regression tested. This should be checked after the current task.
 
 **Future Tasks:**
-*   Implement the Daily Habit Spaced Repetition System (SRS).
-*   Implement the Booster Mode for remedial lessons.
-*   Implement the full logic for the Certification Gate to unlock stages (to be re-enabled after development).
-*   Build the Teacher Control Panel.
+*   **P2: Implement Daily Habit Spaced Repetition System (SRS).**
+*   **P2: Implement Booster Mode for remedial lessons.**
+*   **P2: Build the Teacher Control Panel.**
+*   **P2: Implement a custom Speaking Agent** as a cheaper, API-based alternative to ElevenLabs for conversational practice.
+*   **P2: Investigate user database:** The user mentioned they are not real users regarding the user list, which should be investigated later.
+*   **P2: Stage 1 Content Re-enrichment (On Hold):** Upgrade Stage 1 content to match Stage 2's quality.
+*   **P2: Re-enable Certification Gate** to unlock stages based on performance.
 
 **Completed work in this session**
-- Unlocked all course stages by modifying .
-- Fixed a  mismatch bug that prevented Stage 2 lessons from loading.
-- Debugged and fixed multiple critical flaws in the enrichment and data merging pipeline (, ).
-- Upgraded the core AI model from GPT-4o to **Claude Sonnet 4.5** for higher quality content generation.
-- **Created 5 new frontend game components:** , , , , .
-- Rewrote backend enrichment prompts to generate a rotating variety of vocabulary games and 5 distinct grammar games.
-- Refactored frontend components to significantly increase text size for better readability.
-- Implemented support for multiple (3) speaking prompts in .
-- Created a  helper component to render questions with bold/color/italics for better clarity.
-- Implemented UX fixes for the new Crossword and WordSearch games.
+- **Subscription & Pricing Model Implemented:**
+  - Created a 4-tier pricing model (Free, Explorer, Learner, Achiever, Master).
+  - Built a new, fully internationalized (EN, VI, TR) pricing page and added a pricing section to the landing page.
+  - Implemented plan-based feature locking across the entire application, controlled by backend logic.
+- **PayPal LIVE Integration:**
+  - Fully integrated PayPal Subscriptions for recurring payments using the user's LIVE credentials (Client ID, Secret, Plan IDs) and configured the live webhook.
+- **Vocabulary Content Overhaul:**
+  - Achieved 100% image coverage for all vocabulary words by scraping, using existing AI images, and generating 60+ new images with **GPT Image 1**.
+  - Identified and fixed a major data gap by AI-generating example sentences for **469 vocabulary words**.
+- **Critical Bug Fixes:**
+  - Resolved a speech evaluation bug by adding the target word as a  to the Whisper API, significantly improving recognition accuracy.
+- **Extensive Testing:**
+  - Used the testing agent to run comprehensive frontend and backend tests for the new subscription system, achieving 100% pass rates.
 
 **Earlier issues found/mentioned but not fixed**
-*   **Vocabulary Word Completion Bug:** A bug from a previous session where completing one word in a vocabulary game completes all of them was never explicitly tested and verified as fixed. This should be checked during the next testing cycle.
+*   **Vocabulary Word Completion Bug:** A P1 task from the initial handoff to regression test a bug where completing one vocabulary word marks the entire set as complete was not addressed, as the agent prioritized the user's more recent, urgent requests.
 
 **Known issue recurrence from previous fork**
 *   None.
@@ -163,66 +96,68 @@ This is the prioritized list of outstanding issues from the user's latest feedba
 
 
 **Key Technical Concepts**
-*   **AI Model Upgrade:** Switched from OpenAI GPT-4o to Anthropic's **Claude Sonnet 4.5** for higher-fidelity content generation.
-*   **Advanced Prompt Engineering:** The system now uses highly structured and detailed prompts to control game variety per lesson, ensure pedagogical correctness (e.g., single-error sentences), and match specific curriculum formats (e.g., Cambridge Starters).
-*   **Dynamic Component Rendering:** The frontend now dynamically renders a wide array of game components based on the  field provided by the backend API.
-*   **Complex Data Merging:** The  script is critical, responsible for intelligently combining the original lesson structure with the newly enriched, complex data from the AI, including multiple game types and arrays of prompts.
+*   **Payment Gateway Integration:** Deep integration with the PayPal Subscriptions API for creating and managing recurring payments in a LIVE environment.
+*   **Subscription Management:** Backend logic for tier-based feature access control (feature flagging) and automated plan expiry checks.
+*   **Internationalization (i18n):** Using  to provide a multi-lingual user experience on critical pages like pricing.
+*   **AI Content Generation:** Using  to programmatically generate missing database content (example sentences) and user-facing assets (vocabulary images).
 
 **key DB schema**
-*   ** collection:** The documents within this collection are now much richer. The  array contains steps with diverse structures, including different  fields (, , , etc.) and arrays of data (e.g., a  array in  steps).
+*   ** collection:**
+    *    (e.g., free, explorer, learner, achiever, master)
+    *    (To be implemented for temporary plans like bank transfers)
+*   ** collection:**
+    *    (Now 100% populated)
+    *    (Now 100% populated)
+    *    (Now 100% populated)
 
 **All files of reference**
-*   : The heart of the content generation. Contains all the new Claude Sonnet 4.5 prompts.
-*   : The critical script that merges original and AI content. The  here is key.
-*   : The main page for rendering all lesson activities and games.
-*   : The parent directory for all the new and updated game components.
-*   : The new helper for rendering user-friendly questions.
-*   : The source of truth for Stage 2 curriculum.
-
-**key api endpoints**
-*   : The main endpoint used to trigger the entire enrichment and database seeding process.
+*    (Core logic for payments)
+*    (User data model)
+*    (Subscription UI)
+*    (Bank transfer UI)
+*    (Contains LIVE PayPal credentials)
+*   
+*   
+*   
 
 **Critical Info for New Agent**
-*   You are inheriting a project mid-way through a major refactoring effort driven by user feedback. Your immediate task is to systematically work through the 9 pending issues listed above.
-*   **Start with Issue #1 (Reading Questions Count).** This is a blocker for content quality. The issue is likely in the prompt engineering within  or a limitation of the AI model that needs to be worked around.
-*   The user is technically savvy and provides excellent, detailed feedback. Communicate your plan clearly (in Turkish) before implementing, and address each of their points.
-*   Do not proceed to Stage 2 (Units 2-12) until all 9 issues are resolved for Unit 1 and the user gives explicit approval. Unit 1 is the template for everything that follows.
-*   The next big integrations will be a **stock photo API** and **ElevenLabs**. Be prepared to use  for both.
+*   Your immediate and highest priority is to implement the 30-day expiry logic for bank transfers.
+*   You are working with a LIVE PayPal integration. Do not alter the Plan IDs or credentials in  unless specifically instructed by the user. The current credentials are for the live environment.
+*   The user is Turkish and must be addressed in Turkish. They are technically savvy and provide direct, specific feedback. Do not deviate from their requests without asking for confirmation first.
+*   After completing the current task, you should propose tackling the P1 regression test for the Vocabulary Word Completion Bug.
 
 **documents and test reports created in this job**
-*   
-*   
-*   
+*    (Created, but content was explained directly to user)
+*    (Updated)
+*    (Passed)
+*    (Passed)
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User:** Requests plan for a large set of feedback (6 items).
-2.  **Agent:** Provides a plan to address the feedback.
-3.  **User:** Provides more specific instructions on game rotation and AI model preference (Sonnet 4.6).
-4.  **Agent:** Acknowledges and prepares to start.
-5.  **User:** Asks for a detailed plan *before* implementation and clarifies model is 4.6 not 4.5. Also notes reading parts should be visual like Starters exams.
-6.  **Agent:** Provides a very detailed plan, including options for handling visual content.
-7.  **User:** Asks how images will be generated.
-8.  **Agent:** Proposes 4 options for image generation.
-9.  **User:** Selects option 4 (AI for vocab, stock photos for reading) and gives the green light.
-10. **User:** (After a large batch of work) Provides a new, detailed list of 9 issues/feedback points, including bugs, UX improvements, and a request for ElevenLabs integration.
+10. **User:** How will the subscription logic work for bank transfers?
+9.  **User:** I choose Option C (30-day access). Also, can PayPal create QR codes?
+8.  **User:** Yes (approves implementing Option C).
+7.  **User:** The plans need to be recreated, I was in sandbox, now I'm making a business account for live mode.
+6.  **User:** I think it's done. Check if the Client ID is correct.
+5.  **User:** (Provides the LIVE secret key) I think the plan IDs are the same.
+4.  **User:** Check it out. (Shows screenshot of LIVE PayPal plans).
+3.  **User:** Are Stage 1 and Stage 2 ready to use?
+2.  **User:** The pricing page needs a language option and translations.
+1.  **User:** (Reports bugs) Sentences are missing and the speech evaluation isn't working correctly.
 
 **Project Health Check:**
-*   **Healthy but in Active Refactoring:** The application is running, but many new features and components are being actively developed and debugged.
-*   **Needs Improvement:** The data enrichment pipeline is the most critical area. It is powerful but brittle, with several known bugs related to AI generation quality and data merging that must be fixed.
+*   **Healthy:** The application is stable and key revenue-generating features (subscriptions) are live. The current work is a refinement of an existing payment flow.
 
 **3rd Party Integrations**
-*   **Anthropic Claude Sonnet 4.5:** Used for all content/game generation (via Emergent LLM Key). Replaced GPT-4o.
-*   **Emergent Integrations (Whisper):** Used for speech-to-text.
-*   **ElevenLabs (Requested):** To be integrated for text-to-speech.
-*   **Stock Photo API (Requested):** To be integrated for vocabulary images.
+*   **PayPal Subscriptions:** (LIVE) For recurring subscription payments. Requires User API Key.
+*   **Anthropic Claude Sonnet 4.5:** (AI Content Generation) - uses Emergent LLM Key.
+*   **OpenAI GPT Image 1:** (Image Generation) - uses Emergent LLM Key.
+*   **ElevenLabs:** (Text-to-Speech) - requires User API Key.
+*   **Emergent Integrations (Whisper):** (Speech-to-Text).
 
 **Testing status**
-*   **Testing agent used after significant changes:** YES. The agent has used the testing agent multiple times. The last run was 100% successful, but was *before* the user's latest 9-point feedback list, so many of the tests are now outdated.
+*   **Testing agent used after significant changes:** YES. Used successfully to verify the entire subscription and feature-locking flow.
 *   **Test files created:** None.
-*   **Known regressions:** The  logic and  question count appear to be regressions or persistent bugs.
-
-**Credentials to test flow:**
-*   Credentials can be found in .
+*   **Known regressions:** The Vocabulary Word Completion Bug from a previous fork remains untriaged and untested.
 
 **What agent forgot to execute**
-*   The agent has a large, pending list of 9 explicit user requests. The highest priority is fixing the  component to show 3 questions and improving the  game logic. The integrations for stock photos and ElevenLabs are also pending.</analysis>
+*   The agent did not perform the P1 regression test for the vocabulary word completion bug mentioned in the initial handoff summary. This was deprioritized in favor of the user's more urgent requests for the subscription model and bug fixes.</analysis>

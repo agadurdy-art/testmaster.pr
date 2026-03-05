@@ -3117,10 +3117,7 @@ async def upload_bank_payment(
     email: str = Form(...),
     screenshot: UploadFile = File(...),
 ):
-    """User uploads bank transfer screenshot; we auto-credit based on plan.
-
-    This trusts the user; screenshot is stored for later audit.
-    """
+    """User uploads bank transfer screenshot; plan activates for 30 days."""
     email_clean = email.strip().lower()
     user = await _get_user_by_email(email_clean)
     if not user:
@@ -3134,44 +3131,42 @@ async def upload_bank_payment(
     with open(filepath, "wb") as f:
         f.write(await screenshot.read())
 
-    # Map plan_id to credits
-    credits_map = {
-        "single": 1,
-        "starter": 2,
-        "booster": 5,
-        "pro": 8,
-    }
-    credits = credits_map.get(plan_id)
-    if credits is None:
+    if plan_id not in PAYPAL_PLAN_MAPPING:
         raise HTTPException(status_code=400, detail="Invalid plan_id")
 
+    plan_name, subscription_label = PAYPAL_PLAN_MAPPING[plan_id]
+    expires_at = (datetime.now(timezone.utc) + timedelta(days=30)).isoformat()
+
     update_fields: Dict[str, Any] = {
-        "examCredits": user.get("examCredits", 0) + credits,
+        "plan": plan_name,
+        "subscription": subscription_label,
+        "plan_expires_at": expires_at,
+        "payment_method": "bank_transfer",
         "lastPayment": datetime.now(timezone.utc).isoformat(),
+        "monthly_usage": {
+            "liz_messages": 0,
+            "speaking_evals": 0,
+            "reset_date": datetime.now(timezone.utc).isoformat(),
+        },
     }
-    if plan_id in {"starter", "booster", "pro"}:
-        update_fields["plan"] = "pro"
-        update_fields["subscription"] = plan_id.capitalize()
 
     await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
 
-    # Record bank payment event
-    await db.kofi_events.insert_one(
-        {
-            "provider": "bank",
-            "received_at": datetime.now(timezone.utc).isoformat(),
-            "email": email_clean,
-            "plan_id": plan_id,
-            "credits": credits,
-            "screenshot_path": filepath,
-        }
-    )
+    await db.kofi_events.insert_one({
+        "provider": "bank",
+        "received_at": datetime.now(timezone.utc).isoformat(),
+        "email": email_clean,
+        "plan_id": plan_id,
+        "plan_name": plan_name,
+        "expires_at": expires_at,
+        "screenshot_path": filepath,
+    })
 
     return {
-        "detail": "Bank payment recorded",
-        "examCredits": update_fields["examCredits"],
-        "plan": update_fields.get("plan", user.get("plan", "free")),
-        "subscription": update_fields.get("subscription", user.get("subscription")),
+        "detail": "Bank payment recorded. Plan active for 30 days.",
+        "plan": plan_name,
+        "subscription": subscription_label,
+        "expires_at": expires_at,
     }
 
 @api_router.get("/test_attempts/{attempt_id}")
