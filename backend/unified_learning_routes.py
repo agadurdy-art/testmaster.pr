@@ -30,6 +30,48 @@ mongo_url = os.environ.get('MONGO_URL')
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'ielts_ace')]
 
+ADMIN_EMAILS = ['aga.durdy@gmail.com', 'stemhousebenluc@gmail.com']
+
+
+async def _is_lesson_unlocked(lesson_id: str, user_id: str, user_email: str = None) -> bool:
+    """Check if a lesson is unlocked for the given user based on sequential completion."""
+    if user_email and user_email.lower() in ADMIN_EMAILS:
+        return True
+
+    lesson = await db.unified_lessons.find_one({"lesson_id": lesson_id}, {"_id": 0, "unit_id": 1, "lesson_number": 1, "stage_id": 1})
+    if not lesson:
+        return False
+
+    unit_id = lesson["unit_id"]
+    lesson_number = lesson.get("lesson_number", 1)
+    stage_id = lesson.get("stage_id", "")
+
+    progress = await db.unified_user_progress.find_one({"user_id": user_id}, {"_id": 0, "lesson_progress": 1})
+    lp = progress.get("lesson_progress", {}) if progress else {}
+
+    # First lesson in a unit? Check if unit is unlocked
+    if lesson_number == 1:
+        # Get all units in this stage sorted by unit_number
+        units = await db.unified_units.find({"stage_id": stage_id}, {"_id": 0, "unit_id": 1, "unit_number": 1}).sort("unit_number", 1).to_list(20)
+        unit_ids = [u["unit_id"] for u in units]
+        unit_index = unit_ids.index(unit_id) if unit_id in unit_ids else 0
+        if unit_index == 0:
+            return True  # First unit, first lesson — always open
+        # Check all lessons in previous unit are completed
+        prev_unit_id = unit_ids[unit_index - 1]
+        prev_lessons = await db.unified_lessons.find({"unit_id": prev_unit_id}, {"_id": 0, "lesson_id": 1}).to_list(20)
+        return all(lp.get(pl["lesson_id"], {}).get("completed") for pl in prev_lessons)
+
+    # Not first lesson: check if previous lesson in same unit is completed
+    all_lessons = await db.unified_lessons.find(
+        {"unit_id": unit_id}, {"_id": 0, "lesson_id": 1, "lesson_number": 1}
+    ).sort("lesson_number", 1).to_list(20)
+    for i, l in enumerate(all_lessons):
+        if l["lesson_id"] == lesson_id and i > 0:
+            prev_id = all_lessons[i - 1]["lesson_id"]
+            return bool(lp.get(prev_id, {}).get("completed"))
+    return True
+
 
 # ============ STAGE ROUTES ============
 
@@ -50,7 +92,7 @@ async def get_stage(stage_id: str):
     # Get units for this stage
     units = await db.unified_units.find(
         {"stage_id": stage_id}, {"_id": 0}
-    ).sort("order", 1).to_list(20)
+    ).sort("unit_number", 1).to_list(20)
     
     stage["units"] = units
     return stage
@@ -90,6 +132,15 @@ async def get_unit(unit_id: str):
 
 
 # ============ LESSON ROUTES ============
+
+@router.get("/lessons/{lesson_id}/lock-status")
+async def check_lesson_lock(lesson_id: str, user_id: str = None, email: str = None):
+    """Check if a lesson is unlocked for the given user."""
+    if not user_id:
+        return {"unlocked": False, "reason": "No user_id provided"}
+    unlocked = await _is_lesson_unlocked(lesson_id, user_id, email)
+    return {"unlocked": unlocked}
+
 
 @router.get("/lessons/{lesson_id}")
 async def get_lesson(lesson_id: str):

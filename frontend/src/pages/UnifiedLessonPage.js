@@ -2099,12 +2099,23 @@ export default function UnifiedLessonPage({ user }) {
   const [activityLoading, setActivityLoading] = useState(false);
   const [showRoadmap, setShowRoadmap] = useState(true);
   const [showCertificate, setShowCertificate] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
 
   useEffect(() => { loadLesson(); }, [lessonId]);
 
   const loadLesson = async () => {
     try {
       setLoading(true);
+      // Check lock status first
+      if (user?.id) {
+        const lockRes = await fetch(`${API_URL}/api/unified/lessons/${lessonId}/lock-status?user_id=${user.id}&email=${encodeURIComponent(user.email || '')}`);
+        const lockData = await lockRes.json();
+        if (!lockData.unlocked) {
+          setIsLocked(true);
+          setLoading(false);
+          return;
+        }
+      }
       const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}`);
       const data = await res.json();
       setLesson(data);
@@ -2250,6 +2261,20 @@ export default function UnifiedLessonPage({ user }) {
   };
 
   if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" /></div>;
+  if (isLocked) return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center" data-testid="lesson-locked-screen">
+      <div className="text-center max-w-md p-8">
+        <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Lock className="w-10 h-10 text-gray-400" />
+        </div>
+        <h2 className="text-2xl font-bold text-gray-900 mb-3">Lesson Locked</h2>
+        <p className="text-gray-600 mb-6">Complete the previous lesson first to unlock this one.</p>
+        <Button onClick={() => navigate(-1)} className="rounded-full px-6" data-testid="go-back-btn">
+          <ArrowLeft className="w-4 h-4 mr-2" /> Go Back
+        </Button>
+      </div>
+    </div>
+  );
   if (!lesson) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-600">Lesson not found</p></div>;
 
   const totalActivities = lesson.activity_flow?.length || 0;

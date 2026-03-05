@@ -7,20 +7,21 @@ import {
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
+const ADMIN_EMAILS = ['aga.durdy@gmail.com', 'stemhousebenluc@gmail.com'];
 
 // Unit card component - iOS 26 Glass Style
-function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
-  const isUnlocked = true; // All units unlocked for testing
+function UnitCard({ unit, lessons, userProgress, onLessonClick, isUnitUnlocked, isAdmin, getPrevUnitName }) {
   const completedLessons = lessons.filter(l => 
     userProgress?.lesson_progress?.[l.lesson_id]?.completed
   ).length;
-  const completionPercent = Math.round((completedLessons / lessons.length) * 100);
+  const completionPercent = lessons.length > 0 ? Math.round((completedLessons / lessons.length) * 100) : 0;
   
   return (
     <div 
-      className={`overflow-hidden rounded-3xl ${!isUnlocked ? 'opacity-60' : ''}`}
+      className={`overflow-hidden rounded-3xl ${!isUnitUnlocked ? 'opacity-60' : ''}`}
       style={{
         background: 'rgba(255, 255, 255, 0.70)',
         backdropFilter: 'blur(24px)',
@@ -32,15 +33,23 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
     >
       {/* Unit header */}
       <div 
-        className="p-4 text-white"
+        className="p-4 text-white relative"
         style={{ backgroundColor: unit.theme_color || '#FF6B6B' }}
       >
+        {!isUnitUnlocked && (
+          <div className="absolute inset-0 bg-gray-900/50 flex items-center justify-center z-10 backdrop-blur-sm">
+            <div className="text-center">
+              <Lock className="w-6 h-6 mx-auto mb-1" />
+              <p className="text-xs font-medium px-2">Complete {getPrevUnitName()} first</p>
+            </div>
+          </div>
+        )}
         <div className="flex items-center justify-between">
           <Badge variant="secondary" className="bg-white/20 text-white border-0 rounded-full">
             Unit {unit.number}
           </Badge>
-          {!isUnlocked && <Lock className="w-5 h-5" />}
-          {isUnlocked && completionPercent === 100 && (
+          {!isUnitUnlocked && <Lock className="w-5 h-5" />}
+          {isUnitUnlocked && completionPercent === 100 && (
             <CheckCircle className="w-5 h-5" />
           )}
         </div>
@@ -68,7 +77,12 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
       {/* Lesson list */}
       <div className="divide-y divide-gray-100/50">
         {lessons.map((lesson, index) => {
-          const isLessonUnlocked = true; // All lessons unlocked for testing
+          // Smart lock: first lesson in unit is unlocked if unit is unlocked, rest need previous lesson completed
+          const isFirstInUnit = index === 0;
+          const prevLessonCompleted = index > 0 
+            ? userProgress?.lesson_progress?.[lessons[index - 1].lesson_id]?.completed 
+            : true;
+          const isLessonUnlocked = isAdmin || (isUnitUnlocked && (isFirstInUnit || prevLessonCompleted));
           const isCompleted = userProgress?.lesson_progress?.[lesson.lesson_id]?.completed;
           const lessonProgress = userProgress?.lesson_progress?.[lesson.lesson_id];
           
@@ -78,7 +92,13 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
               className={`p-4 flex items-center justify-between cursor-pointer transition-all ${
                 isLessonUnlocked ? 'hover:bg-white/50' : 'opacity-50 cursor-not-allowed'
               }`}
-              onClick={() => isLessonUnlocked && onLessonClick(lesson)}
+              onClick={() => {
+                if (isLessonUnlocked) {
+                  onLessonClick(lesson);
+                } else {
+                  toast.error('Complete the previous lesson first!');
+                }
+              }}
               data-testid={`lesson-${lesson.lesson_id}`}
             >
               <div className="flex items-center gap-3">
@@ -129,9 +149,18 @@ function UnitCard({ unit, lessons, userProgress, onLessonClick }) {
   );
 }
 
-function checkUnitUnlocked(unit, userProgress) {
-  // Simplified - just check if any previous lessons are done
-  return true;
+function checkUnitUnlocked(unit, units, userProgress, isAdmin) {
+  if (isAdmin) return true;
+  // First unit is always unlocked
+  const unitIndex = units.findIndex(u => u.unit_id === unit.unit_id);
+  if (unitIndex === 0) return true;
+  
+  // Check if all lessons in the previous unit are completed
+  const prevUnit = units[unitIndex - 1];
+  const prevLessons = prevUnit.lessons || [];
+  if (prevLessons.length === 0) return true;
+  
+  return prevLessons.every(l => userProgress?.lesson_progress?.[l.lesson_id]?.completed);
 }
 
 export default function UnifiedStagePage({ user }) {
@@ -180,6 +209,9 @@ export default function UnifiedStagePage({ user }) {
   const handleLessonClick = (lesson) => {
     navigate(`/unified/lesson/${lesson.lesson_id}`);
   };
+
+  const isAdmin = ADMIN_EMAILS.includes(user?.email?.toLowerCase());
+  const units = stage?.units || [];
   
   if (loading) {
     return (
@@ -244,15 +276,22 @@ export default function UnifiedStagePage({ user }) {
       {/* Units */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {(stage.units || []).map((unit) => (
-            <UnitCard
-              key={unit.unit_id}
-              unit={unit}
-              lessons={unit.lessons || []}
-              userProgress={userProgress}
-              onLessonClick={handleLessonClick}
-            />
-          ))}
+          {(stage.units || []).map((unit, idx) => {
+            const isUnitUnlocked = checkUnitUnlocked(unit, stage.units || [], userProgress, isAdmin);
+            const prevUnit = idx > 0 ? (stage.units || [])[idx - 1] : null;
+            return (
+              <UnitCard
+                key={unit.unit_id}
+                unit={unit}
+                lessons={unit.lessons || []}
+                userProgress={userProgress}
+                onLessonClick={handleLessonClick}
+                isUnitUnlocked={isUnitUnlocked}
+                isAdmin={isAdmin}
+                getPrevUnitName={() => prevUnit ? `Unit ${prevUnit.unit_number || prevUnit.number}` : ''}
+              />
+            );
+          })}
         </div>
         
         {(!stage.units || stage.units.length === 0) && (
