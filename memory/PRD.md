@@ -61,6 +61,12 @@ Full-stack IELTS preparation platform with AI-powered features including vocabul
 - [x] Context-Aware Image Generation (55+ new illustrations)
 - [x] Admin Lesson Lock bypass verification
 
+## Admin Accounts (Auto-configured on startup)
+- aga.durdy@gmail.com - Master plan, 25 credits, full access
+- stemhousebenluc@gmail.com - Master plan, 25 credits, full access
+- admin@ieltsace.com - Master plan, 25 credits, full access
+All admin accounts are automatically set to master plan + 25 credits on every server startup.
+
 ## P1 - Pending
 - [ ] "Liz" AI as Bilingual Lesson Teacher (2-3 min intro in native language before lessons)
 - [ ] Vocabulary Word Completion Bug - Regression test needed

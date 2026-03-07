@@ -7496,6 +7496,14 @@ async def auto_seed_courses():
 async def auto_seed_unified_learning():
     """Auto-seed unified learning stages and content from JSON files on startup"""
     try:
+        # Ensure admin accounts have full access
+        for admin_email in ADMIN_EMAILS:
+            await db.users.update_one(
+                {"email": admin_email},
+                {"$set": {"plan": "master", "examCredits": 25, "verified": True, "email_verified": True}},
+            )
+        logger.info(f"✅ Admin accounts ensured: master plan + 25 credits")
+        
         stages_count = await db.unified_stages.count_documents({})
         lessons_count = await db.unified_lessons.count_documents({})
         units_count = await db.unified_units.count_documents({})

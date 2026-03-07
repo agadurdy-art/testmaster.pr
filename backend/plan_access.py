@@ -67,7 +67,22 @@ PLAN_PRICES_USD = {
 }
 
 
-def get_plan_features(plan_name: str) -> dict:
+ADMIN_EMAILS_FOR_BYPASS = [
+    "aga.durdy@gmail.com",
+    "stemhousebenluc@gmail.com",
+    "admin@ieltsace.com",
+]
+
+
+def is_admin_user(email: str) -> bool:
+    if not email:
+        return False
+    return email.lower() in [e.lower() for e in ADMIN_EMAILS_FOR_BYPASS] or "aga.durdy" in email.lower()
+
+
+def get_plan_features(plan_name: str, email: str = None) -> dict:
+    if email and is_admin_user(email):
+        return PLAN_FEATURES["master"]
     return PLAN_FEATURES.get(plan_name, PLAN_FEATURES["free"])
 
 
