@@ -125,8 +125,8 @@ export default function AdminPanel({ user }) {
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => navigate('/dashboard')}>
-              <ArrowLeft className="w-4 h-4 mr-2" /> Dashboard
+            <Button variant="ghost" onClick={() => navigate('/admin')}>
+              <ArrowLeft className="w-4 h-4 mr-2" /> Admin
             </Button>
             <div className="flex items-center gap-2">
               <Shield className="w-6 h-6 text-violet-600" />
@@ -183,7 +183,11 @@ export default function AdminPanel({ user }) {
                           <p className="text-sm text-gray-500 truncate">{u.email}</p>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`text-xs px-2 py-0.5 rounded-full ${
-                              u.plan === 'pro' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'
+                              u.plan === 'master' ? 'bg-purple-100 text-purple-700' :
+                              u.plan === 'achiever' ? 'bg-amber-100 text-amber-700' :
+                              u.plan === 'learner' ? 'bg-blue-100 text-blue-700' :
+                              u.plan === 'explorer' ? 'bg-green-100 text-green-700' :
+                              'bg-gray-100 text-gray-600'
                             }`}>
                               {u.plan || 'free'}
                             </span>
@@ -373,9 +377,13 @@ export default function AdminPanel({ user }) {
                   value={editForm.plan}
                   onChange={(e) => setEditForm({...editForm, plan: e.target.value})}
                   className="w-full border rounded-lg px-3 py-2"
+                  data-testid="plan-select"
                 >
                   <option value="free">Free</option>
-                  <option value="pro">Pro</option>
+                  <option value="explorer">Explorer ($4.99/mo)</option>
+                  <option value="learner">Learner ($9/mo)</option>
+                  <option value="achiever">Achiever ($19/mo)</option>
+                  <option value="master">Master ($29/mo)</option>
                 </select>
               </div>
               
