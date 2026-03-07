@@ -103,10 +103,14 @@ const LookWrite = ({
       onSkip={onSkip}
     >
       <Card className="p-8 text-center">
-        {/* Emoji Display */}
+        {/* Picture Display */}
         <div className="mb-6">
-          <div className="w-32 h-32 mx-auto bg-yellow-50 rounded-3xl flex items-center justify-center text-7xl shadow-inner">
-            {currentItem.emoji}
+          <div className="w-32 h-32 mx-auto bg-yellow-50 rounded-3xl flex items-center justify-center shadow-inner overflow-hidden">
+            {currentItem.image_url ? (
+              <img src={currentItem.image_url.startsWith('http') ? currentItem.image_url : `${process.env.REACT_APP_BACKEND_URL}/api${currentItem.image_url}`} alt="" className="w-full h-full object-contain p-2" />
+            ) : (
+              <span className="text-7xl">{currentItem.emoji}</span>
+            )}
           </div>
         </div>
 

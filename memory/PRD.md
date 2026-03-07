@@ -39,7 +39,15 @@ Full-stack IELTS preparation platform with AI-powered features including vocabul
 - [x] Downloaded and saved 4 VietQR code images for bank transfer plans
 - [x] Verified QR code modal shows correct QR for each plan (Explorer, Learner, Achiever, Master)
 - [x] Hardcoded Turkish text fix confirmed by user
-- [x] Fixed `option.toLowerCase is not a function` crash in Listening, Reading, Grammar, Vocab activities (wrapped all `.toLowerCase()` calls with `String()` for non-string values from DB)
+- [x] Fixed `option.toLowerCase is not a function` crash in Listening, Reading, Grammar, Vocab activities
+- [x] **Vocabulary Images in Games**: Games now use vocabulary section's real images instead of emojis
+  - Updated EmojiCard, ReadChoosePicture, ListenChoosePicture, FlashcardMatch, MemoryGame, LookWrite, UnscrambleLetters
+  - Consistency rule: all options must have images, otherwise all use emojis
+- [x] **Context-Aware Image Generation**: Generated 55+ new cartoon illustrations for missing distractor words
+  - Fixed "mouse" (computer mouse → animal mouse for pet lessons)
+  - Coverage: 58% → 81% of game items now show real images
+  - Images stored at /app/backend/static/vocab_images/
+- [x] Fixed wrong emoji mappings (115 corrections across 21 lessons)
 
 ## P0 - Resolved
 - [x] Bank Transfer QR Code Display - QR images were 0 bytes, now populated with real VietQR images

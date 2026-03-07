@@ -33,13 +33,19 @@ const ListenChoosePicture = ({
   // Generate options for current word
   useEffect(() => {
     if (currentItem) {
-      const correctOption = { word: currentItem.word, emoji: currentItem.emoji };
+      const correctOption = { word: currentItem.word, emoji: currentItem.emoji, image_url: currentItem.image_url };
       const distractorOptions = (currentItem.distractors || []).map(d => ({
         word: d.word || d,
-        emoji: d.emoji || '❓'
+        emoji: d.emoji || '❓',
+        image_url: d.image_url || null
       }));
-      const allOptions = [correctOption, ...distractorOptions];
-      setOptions(shuffleArray(allOptions).slice(0, 4));
+      const sliced = shuffleArray([correctOption, ...distractorOptions]).slice(0, 4);
+      // Only use images if ALL options have image_url
+      const allHaveImages = sliced.every(o => o.image_url);
+      if (!allHaveImages) {
+        sliced.forEach(o => { o.image_url = null; });
+      }
+      setOptions(sliced);
       // Auto-play audio
       setTimeout(() => speak(currentItem.word), 500);
     }
@@ -111,12 +117,13 @@ const ListenChoosePicture = ({
           <p className="text-sm text-gray-500 mt-3">Tap to listen again</p>
         </div>
 
-        {/* Emoji Options Grid */}
+        {/* Picture Options Grid */}
         <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
           {options.map((option) => (
             <EmojiCard
               key={option.word}
               emoji={option.emoji}
+              imageUrl={option.image_url}
               onClick={() => handleSelect(option)}
               isSelected={selectedAnswer === option.word}
               isCorrect={option.word.toLowerCase() === currentItem.word.toLowerCase()}

@@ -130,10 +130,14 @@ const UnscrambleLetters = ({
       onSkip={onSkip}
     >
       <Card className="p-8 text-center">
-        {/* Emoji Hint */}
+        {/* Picture Hint */}
         <div className="mb-6">
-          <div className="w-24 h-24 mx-auto bg-orange-50 rounded-2xl flex items-center justify-center text-5xl shadow-inner">
-            {currentItem.emoji}
+          <div className="w-24 h-24 mx-auto bg-orange-50 rounded-2xl flex items-center justify-center shadow-inner overflow-hidden">
+            {currentItem.image_url ? (
+              <img src={currentItem.image_url.startsWith('http') ? currentItem.image_url : `${process.env.REACT_APP_BACKEND_URL}/api${currentItem.image_url}`} alt="" className="w-full h-full object-contain p-2" />
+            ) : (
+              <span className="text-5xl">{currentItem.emoji}</span>
+            )}
           </div>
         </div>
 

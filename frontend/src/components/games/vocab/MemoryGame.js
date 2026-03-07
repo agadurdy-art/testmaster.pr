@@ -33,7 +33,7 @@ const MemoryGame = ({
     gameItems.forEach((item, idx) => {
       cardPairs.push(
         { id: `word-${idx}`, type: 'word', content: item.word, pairId: idx },
-        { id: `emoji-${idx}`, type: 'emoji', content: item.emoji, pairId: idx }
+        { id: `emoji-${idx}`, type: 'emoji', content: item.emoji, imageUrl: item.image_url, pairId: idx }
       );
     });
     
@@ -164,7 +164,11 @@ const MemoryGame = ({
                 {(isFlipped || isMatched) ? (
                   <div className="w-full h-full flex items-center justify-center p-2">
                     {card.type === 'emoji' ? (
-                      <span className="text-4xl">{card.content}</span>
+                      card.imageUrl ? (
+                        <img src={card.imageUrl.startsWith('http') ? card.imageUrl : `${process.env.REACT_APP_BACKEND_URL}/api${card.imageUrl}`} alt="" className="w-full h-full object-contain p-1" />
+                      ) : (
+                        <span className="text-4xl">{card.content}</span>
+                      )
                     ) : (
                       <span className="text-sm font-bold text-gray-700 text-center break-words">
                         {card.content}

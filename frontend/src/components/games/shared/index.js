@@ -180,9 +180,10 @@ export const OptionButton = ({
   );
 };
 
-// ═══════ EMOJI CARD - Glass Style ═══════
+// ═══════ EMOJI CARD - Glass Style (supports image_url) ═══════
 export const EmojiCard = ({
   emoji,
+  imageUrl,
   label,
   onClick,
   disabled,
@@ -206,20 +207,27 @@ export const EmojiCard = ({
   }
 
   const sizeClasses = {
-    sm: 'w-20 h-20 text-3xl',
-    md: 'w-28 h-28 text-5xl',
-    lg: 'w-32 h-32 text-6xl'
+    sm: 'w-20 h-20',
+    md: 'w-28 h-28',
+    lg: 'w-32 h-32'
   };
+
+  const API_URL = process.env.REACT_APP_BACKEND_URL || '';
+  const resolvedUrl = imageUrl ? (imageUrl.startsWith('http') ? imageUrl : `${API_URL}/api${imageUrl}`) : null;
 
   return (
     <button
       onClick={onClick}
       disabled={disabled || showFeedback}
-      className={`${sizeClasses[size]} rounded-3xl border-2 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 ${stateClasses}`}
+      className={`${sizeClasses[size]} rounded-3xl border-2 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 overflow-hidden ${stateClasses}`}
       data-testid={`emoji-card-${label || emoji}`}
     >
-      <span className="mb-1 drop-shadow-sm">{emoji}</span>
-      {label && <span className="text-xs text-slate-600 font-semibold">{label}</span>}
+      {resolvedUrl ? (
+        <img src={resolvedUrl} alt={label || ''} className="w-full h-full object-contain p-2" />
+      ) : (
+        <span className={`mb-1 drop-shadow-sm ${size === 'sm' ? 'text-3xl' : size === 'lg' ? 'text-6xl' : 'text-5xl'}`}>{emoji}</span>
+      )}
+      {label && <span className="text-xs text-slate-600 font-semibold absolute bottom-1">{label}</span>}
     </button>
   );
 };
