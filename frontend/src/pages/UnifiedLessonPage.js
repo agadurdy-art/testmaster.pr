@@ -850,9 +850,10 @@ function MatchingGame({ activity, onComplete, onSkip }) {
     setSelectedAnswer(option);
     setShowFeedback(true);
     const q = items[currentIdx];
+    const opt = String(option).toLowerCase().trim();
     const isCorrect = Array.isArray(q.correct_answer)
-      ? q.correct_answer.some(a => a.toLowerCase().trim() === option.toLowerCase().trim())
-      : option.toLowerCase().trim() === (q.correct_answer || '').toLowerCase().trim();
+      ? q.correct_answer.some(a => String(a).toLowerCase().trim() === opt)
+      : opt === String(q.correct_answer || '').toLowerCase().trim();
     if (isCorrect) setScore(s => s + 1);
   };
 
@@ -881,8 +882,9 @@ function MatchingGame({ activity, onComplete, onSkip }) {
   if (isMCQFormat) {
     const q = items[currentIdx];
     const isCorrectOption = (option) => {
-      if (Array.isArray(q.correct_answer)) return q.correct_answer.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
-      return option.toLowerCase().trim() === (q.correct_answer || '').toLowerCase().trim();
+      const opt = String(option).toLowerCase().trim();
+      if (Array.isArray(q.correct_answer)) return q.correct_answer.some(a => String(a).toLowerCase().trim() === opt);
+      return opt === String(q.correct_answer || '').toLowerCase().trim();
     };
 
     return (
@@ -1018,8 +1020,9 @@ function MicroReading({ activity, onComplete, onSkip }) {
     // Handle both 'correct_answer' and 'answer' field names from different content formats
     const correctAns = correctAnswer || q?.answer;
     if (!correctAns) return false;
-    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
-    return answer.toLowerCase().trim() === correctAns.toLowerCase().trim();
+    const ans = String(answer).toLowerCase().trim();
+    if (Array.isArray(correctAns)) return correctAns.some(a => String(a).toLowerCase().trim() === ans);
+    return ans === String(correctAns).toLowerCase().trim();
   };
 
   const handleAnswer = (answer) => {
@@ -1038,10 +1041,10 @@ function MicroReading({ activity, onComplete, onSkip }) {
   };
 
   const isCorrectOption = (option) => {
-    // Support both 'correct_answer' and 'answer' field names
     const correctAns = q.correct_answer || q.answer;
-    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
-    return option.toLowerCase().trim() === (correctAns || '').toLowerCase().trim();
+    const opt = String(option).toLowerCase().trim();
+    if (Array.isArray(correctAns)) return correctAns.some(a => String(a).toLowerCase().trim() === opt);
+    return opt === String(correctAns || '').toLowerCase().trim();
   };
 
   return (
@@ -1271,10 +1274,10 @@ function GrammarGame({ activity, onComplete, onSkip }) {
   const handleFillBlank = (option) => {
     if (showFeedback) return;
     setSelectedOption(option);
-    const optLower = option.toLowerCase().trim();
+    const optLower = String(option).toLowerCase().trim();
     const correct = Array.isArray(item.correct_answer)
-      ? item.correct_answer.some(a => a.toLowerCase().trim() === optLower)
-      : optLower === (item.correct_answer || '').toLowerCase().trim();
+      ? item.correct_answer.some(a => String(a).toLowerCase().trim() === optLower)
+      : optLower === String(item.correct_answer || '').toLowerCase().trim();
     setIsCorrect(correct);
     if (correct) setScore(s => s + 1);
     setShowFeedback(true);
@@ -1389,10 +1392,10 @@ function GrammarGame({ activity, onComplete, onSkip }) {
           <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
             {(item.options || []).map(option => {
               const isSelected = selectedOption === option;
-              const optLower = option.toLowerCase().trim();
+              const optLower = String(option).toLowerCase().trim();
               const isCorrectOption = Array.isArray(item.correct_answer)
-                ? item.correct_answer.some(a => a.toLowerCase().trim() === optLower)
-                : optLower === (item.correct_answer || '').toLowerCase().trim();
+                ? item.correct_answer.some(a => String(a).toLowerCase().trim() === optLower)
+                : optLower === String(item.correct_answer || '').toLowerCase().trim();
               let cls = 'border-gray-200 hover:border-amber-400 hover:bg-amber-50';
               if (showFeedback) {
                 if (isCorrectOption) cls = 'border-green-500 bg-green-50 text-green-800';
@@ -1449,11 +1452,11 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
   };
 
   const checkAnswer = (answer, correctAnswer) => {
-    // Support both 'correct_answer' and 'answer' field names
     const correctAns = correctAnswer || q?.answer;
     if (!correctAns) return false;
-    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === answer.toLowerCase().trim());
-    return answer.toLowerCase().trim() === correctAns.toLowerCase().trim();
+    const ans = String(answer).toLowerCase().trim();
+    if (Array.isArray(correctAns)) return correctAns.some(a => String(a).toLowerCase().trim() === ans);
+    return ans === String(correctAns).toLowerCase().trim();
   };
 
   const handleAnswer = (answer) => {
@@ -1472,8 +1475,9 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
 
   const isCorrectOption = (option) => {
     const correctAns = q.correct_answer || q.answer;
-    if (Array.isArray(correctAns)) return correctAns.some(a => a.toLowerCase().trim() === option.toLowerCase().trim());
-    return option.toLowerCase().trim() === (correctAns || '').toLowerCase().trim();
+    const opt = String(option).toLowerCase().trim();
+    if (Array.isArray(correctAns)) return correctAns.some(a => String(a).toLowerCase().trim() === opt);
+    return opt === String(correctAns || '').toLowerCase().trim();
   };
 
   return (
@@ -1923,16 +1927,16 @@ function ExitTicket({ activity, onComplete, onSkip }) {
   const calcScore = () => {
     let c = 0;
     questions.forEach(q => {
-      const userAns = answers[q.question_id]?.toLowerCase().trim();
+      const userAns = String(answers[q.question_id] || '').toLowerCase().trim();
       if (!userAns) return;
       let correct = false;
       if (Array.isArray(q.correct_answer)) {
-        correct = q.correct_answer.some(a => a.toLowerCase().trim() === userAns);
+        correct = q.correct_answer.some(a => String(a).toLowerCase().trim() === userAns);
       } else {
-        correct = userAns === q.correct_answer.toLowerCase().trim();
+        correct = userAns === String(q.correct_answer || '').toLowerCase().trim();
       }
       if (!correct && q.acceptable_answers && Array.isArray(q.acceptable_answers)) {
-        correct = q.acceptable_answers.some(a => a.toLowerCase().trim() === userAns);
+        correct = q.acceptable_answers.some(a => String(a).toLowerCase().trim() === userAns);
       }
       if (correct) c++;
     });
@@ -1963,8 +1967,8 @@ function ExitTicket({ activity, onComplete, onSkip }) {
           {questions.map((q, i) => {
             const userAnswer = answers[q.question_id] || '';
             const isCorrect = Array.isArray(q.correct_answer)
-              ? q.correct_answer.some(a => a.toLowerCase().trim() === userAnswer.toLowerCase().trim())
-              : userAnswer.toLowerCase().trim() === q.correct_answer.toLowerCase().trim();
+              ? q.correct_answer.some(a => String(a).toLowerCase().trim() === String(userAnswer).toLowerCase().trim())
+              : String(userAnswer).toLowerCase().trim() === String(q.correct_answer || '').toLowerCase().trim();
             const displayCorrect = Array.isArray(q.correct_answer) ? q.correct_answer.join(' / ') : q.correct_answer;
             return (
               <div key={q.question_id} className={`p-3 rounded-lg text-sm ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
@@ -1994,16 +1998,16 @@ function ExitTicket({ activity, onComplete, onSkip }) {
   const currentAnswer = answers[q.question_id];
   const checkCorrect = (ans, correctAns) => {
     if (!ans) return false;
-    const ansLower = ans.toLowerCase().trim();
+    const ansLower = String(ans).toLowerCase().trim();
     // Check main correct answer(s)
     if (Array.isArray(correctAns)) {
-      if (correctAns.some(a => a.toLowerCase().trim() === ansLower)) return true;
+      if (correctAns.some(a => String(a).toLowerCase().trim() === ansLower)) return true;
     } else {
-      if (ansLower === correctAns.toLowerCase().trim()) return true;
+      if (ansLower === String(correctAns || '').toLowerCase().trim()) return true;
     }
     // Check acceptable_answers for fill-blank
     if (q.acceptable_answers && Array.isArray(q.acceptable_answers)) {
-      if (q.acceptable_answers.some(a => a.toLowerCase().trim() === ansLower)) return true;
+      if (q.acceptable_answers.some(a => String(a).toLowerCase().trim() === ansLower)) return true;
     }
     return false;
   };

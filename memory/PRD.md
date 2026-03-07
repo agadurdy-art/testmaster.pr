@@ -39,6 +39,7 @@ Full-stack IELTS preparation platform with AI-powered features including vocabul
 - [x] Downloaded and saved 4 VietQR code images for bank transfer plans
 - [x] Verified QR code modal shows correct QR for each plan (Explorer, Learner, Achiever, Master)
 - [x] Hardcoded Turkish text fix confirmed by user
+- [x] Fixed `option.toLowerCase is not a function` crash in Listening, Reading, Grammar, Vocab activities (wrapped all `.toLowerCase()` calls with `String()` for non-string values from DB)
 
 ## P0 - Resolved
 - [x] Bank Transfer QR Code Display - QR images were 0 bytes, now populated with real VietQR images
