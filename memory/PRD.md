@@ -5,7 +5,7 @@ Full-stack IELTS preparation platform with AI-powered features including vocabul
 
 ## User Personas
 - **IELTS Students**: Primary users preparing for IELTS exam (Vietnamese, Turkish, English speakers)
-- **Admin Users**: aga.durdy@gmail.com, stemhousebenluc@gmail.com (bypass lesson lock)
+- **Admin Users**: aga.durdy@gmail.com, stemhousebenluc@gmail.com, admin@ieltsace.com (bypass lesson lock)
 
 ## Core Architecture
 - **Frontend**: React (CRA) + Tailwind CSS + Shadcn/UI
@@ -35,29 +35,39 @@ Full-stack IELTS preparation platform with AI-powered features including vocabul
 - Liz AI Teacher, Emily AI Mentor
 - Level test system
 
-## Completed (Latest Session - March 2026)
-- [x] Downloaded and saved 4 VietQR code images for bank transfer plans
-- [x] Verified QR code modal shows correct QR for each plan (Explorer, Learner, Achiever, Master)
-- [x] Hardcoded Turkish text fix confirmed by user
-- [x] Fixed `option.toLowerCase is not a function` crash in Listening, Reading, Grammar, Vocab activities
-- [x] **Vocabulary Images in Games**: Games now use vocabulary section's real images instead of emojis
-  - Updated EmojiCard, ReadChoosePicture, ListenChoosePicture, FlashcardMatch, MemoryGame, LookWrite, UnscrambleLetters
-  - Consistency rule: all options must have images, otherwise all use emojis
-- [x] **Context-Aware Image Generation**: Generated 55+ new cartoon illustrations for missing distractor words
-  - Fixed "mouse" (computer mouse → animal mouse for pet lessons)
-  - Coverage: 58% → 81% of game items now show real images
-  - Images stored at /app/backend/static/vocab_images/
-- [x] Fixed wrong emoji mappings (115 corrections across 21 lessons)
+## Completed (March 7, 2026)
+- [x] **Centralized Admin Panel** at /admin with 6 management modules
+  - User Management, Vocabulary Images, Feedback, Credits, Content Admin, Visual Generator
+  - Admin access control (aga.durdy@gmail.com, stemhousebenluc@gmail.com, admin@ieltsace.com)
+- [x] **Vocabulary Image Manager** at /admin/vocabulary-images
+  - Expandable Stage > Unit > Lesson > Word hierarchy
+  - Shows all 617 vocabulary words with current images (100% coverage)
+  - Upload new images (file upload) or paste image URLs
+  - Search functionality across all words
+  - Image preview modal
+  - Progress bars showing image coverage per unit
+- [x] **Auto-seed Unified Learning on Startup**
+  - Seeds 8 stages metadata if missing
+  - Loads all content from JSON files (stage1 + stage2, 24 unit files)
+  - Ensures production deployments have all lesson content
+  - Fixed: seed_content_v4.py now handles ALL stages (not just stage1)
+- [x] **ADMIN_EMAILS consistency fix** - backend and frontend now match
 
-## P0 - Resolved
-- [x] Bank Transfer QR Code Display - QR images were 0 bytes, now populated with real VietQR images
-- [x] Hardcoded Turkish Text in Question Bank - User confirmed fix is working
+## Completed (Previous Sessions)
+- [x] Bank Transfer QR Code Display
+- [x] Hardcoded Turkish Text in Question Bank
+- [x] Listening Activity Crash fix (.toLowerCase on numbers)
+- [x] Vocabulary Game Image Correction (58% -> 81% -> 100% coverage)
+- [x] Context-Aware Image Generation (55+ new illustrations)
+- [x] Admin Lesson Lock bypass verification
 
 ## P1 - Pending
-- [ ] Vocabulary Word Completion Bug - Regression test needed (completing one word may mark all as complete)
-- [ ] Map Generator Status - Report to user (no code found, likely a new feature request)
+- [ ] "Liz" AI as Bilingual Lesson Teacher (2-3 min intro in native language before lessons)
+- [ ] Vocabulary Word Completion Bug - Regression test needed
+- [ ] Map Generator Status - Report to user (no code found)
 
 ## P2 - Backlog
+- [ ] Automatic Visual Generation Pipeline
 - [ ] Bank Transfer Expiry Email Reminders (3 days before expiry)
 - [ ] Daily Habit Spaced Repetition System (SRS)
 - [ ] Booster Mode for remedial lessons
@@ -70,12 +80,18 @@ Full-stack IELTS preparation platform with AI-powered features including vocabul
 - POST /api/v1/payments/upload-bank-transfer - Bank transfer approval
 - GET /api/v1/users/me/plan - User plan with expiry check
 - GET /api/v1/unified-learning/check-lesson-lock-status - Lesson access check
-- GET /api/v1/unified-learning/stages/{stage_id} - Stage units (sorted by unit_number)
+- GET /api/unified/stages/{stage_id} - Stage units
+- GET /api/admin/vocabulary-groups - Vocabulary words grouped by lesson (admin)
+- POST /api/admin/vocabulary/update-image - Upload/update vocabulary image (admin)
 - POST /api/auth/register - User registration
 - POST /api/auth/login - User login
 
 ## Key Files
-- /app/backend/server.py - Monolithic backend
+- /app/backend/server.py - Monolithic backend (includes admin vocab endpoints)
+- /app/backend/seed_content_v4.py - Content seeder (all stages)
+- /app/frontend/src/pages/AdminDashboard.js - Central admin hub
+- /app/frontend/src/pages/VocabularyImageManager.js - Image management tool
+- /app/frontend/src/pages/AdminPanel.js - User management (at /admin/users)
 - /app/frontend/src/pages/PricingPage.js - Pricing with QR modal
-- /app/frontend/src/assets/payments/ - QR code images
 - /app/frontend/src/lib/i18n.js - Translations
+- /app/backend/content/ - 24 JSON content files (stage1 + stage2)
