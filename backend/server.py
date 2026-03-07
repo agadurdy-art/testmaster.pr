@@ -2735,7 +2735,7 @@ async def manual_credit(req: ManualCreditRequest):
 
 # ============ Admin Panel Endpoints ============
 
-ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@testmaster.pro"]  # Add your admin emails here
+ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@testmaster.pro", "admin@ieltsace.com", "stemhousebenluc@gmail.com"]  # Add your admin emails here
 
 def is_admin_email(email: str) -> bool:
     """Check if email belongs to an admin"""
@@ -3055,6 +3055,141 @@ async def admin_db_status(admin_email: str = None):
         "users": await db.users.count_documents({}),
         "test_attempts": await db.test_attempts.count_documents({})
     }
+
+# ============ ADMIN VOCABULARY IMAGE MANAGEMENT ============
+
+@api_router.get("/admin/vocabulary-groups")
+async def admin_get_vocabulary_groups(admin_email: str = None):
+    """Get all vocabulary words grouped by stage/unit/lesson for image management"""
+    if not admin_email or not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    stages = await db.unified_stages.find({}, {"_id": 0}).sort("number", 1).to_list(10)
+    
+    result = []
+    for stage in stages:
+        stage_id = stage["stage_id"]
+        units = await db.unified_units.find(
+            {"stage_id": stage_id}, {"_id": 0}
+        ).sort("unit_number", 1).to_list(20)
+        
+        stage_units = []
+        for unit in units:
+            unit_id = unit["unit_id"]
+            lessons = await db.unified_lessons.find(
+                {"unit_id": unit_id}, {"_id": 0, "lesson_id": 1, "title": 1, "number": 1, "activity_flow": 1}
+            ).sort("number", 1).to_list(10)
+            
+            unit_lessons = []
+            for lesson in lessons:
+                words = []
+                for act in lesson.get("activity_flow", []):
+                    if act.get("type") == "vocabulary" and act.get("data", {}).get("words"):
+                        for w in act["data"]["words"]:
+                            words.append({
+                                "word": w.get("word", ""),
+                                "definition": w.get("definition", ""),
+                                "image_emoji": w.get("image_emoji", ""),
+                                "image_url": w.get("image_url", ""),
+                            })
+                if words:
+                    unit_lessons.append({
+                        "lesson_id": lesson["lesson_id"],
+                        "title": lesson.get("title", ""),
+                        "number": lesson.get("number", 0),
+                        "words": words,
+                        "word_count": len(words),
+                        "image_count": sum(1 for w in words if w.get("image_url"))
+                    })
+            
+            if unit_lessons:
+                stage_units.append({
+                    "unit_id": unit_id,
+                    "title": unit.get("title", ""),
+                    "number": unit.get("unit_number") or unit.get("number", 0),
+                    "lessons": unit_lessons,
+                    "total_words": sum(l["word_count"] for l in unit_lessons),
+                    "total_images": sum(l["image_count"] for l in unit_lessons)
+                })
+        
+        if stage_units:
+            result.append({
+                "stage_id": stage_id,
+                "name": stage.get("name", ""),
+                "number": stage.get("number", 0),
+                "cefr_level": stage.get("cefr_level", ""),
+                "color": stage.get("color", "#666"),
+                "units": stage_units
+            })
+    
+    return {"groups": result}
+
+
+@api_router.post("/admin/vocabulary/update-image")
+async def admin_update_vocab_image(
+    admin_email: str = Form(...),
+    lesson_id: str = Form(...),
+    word: str = Form(...),
+    file: UploadFile = File(None),
+    image_url: str = Form(None)
+):
+    """Update vocabulary word image - either upload file or set URL"""
+    if not is_admin_email(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    new_image_url = image_url
+    
+    if file and file.filename:
+        # Save uploaded file
+        import hashlib
+        ext = file.filename.rsplit(".", 1)[-1] if "." in file.filename else "png"
+        file_hash = hashlib.md5(f"{lesson_id}_{word}_{file.filename}".encode()).hexdigest()
+        filename = f"{file_hash}.{ext}"
+        save_path = ROOT_DIR / "static" / "vocab_images" / filename
+        save_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        content = await file.read()
+        with open(save_path, "wb") as f:
+            f.write(content)
+        
+        new_image_url = f"/static/vocab_images/{filename}"
+    
+    if not new_image_url:
+        raise HTTPException(status_code=400, detail="No image file or URL provided")
+    
+    # Update the word's image_url in the lesson's activity_flow
+    lesson = await db.unified_lessons.find_one({"lesson_id": lesson_id})
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    updated = False
+    activity_flow = lesson.get("activity_flow", [])
+    for act in activity_flow:
+        if act.get("type") == "vocabulary" and act.get("data", {}).get("words"):
+            for w in act["data"]["words"]:
+                if w.get("word", "").lower() == word.lower():
+                    w["image_url"] = new_image_url
+                    updated = True
+    
+    # Also update in game activities that reference this word
+    for act in activity_flow:
+        if act.get("type") in ("micro_game_vocab",) and act.get("data"):
+            for item in act["data"].get("items", []):
+                if isinstance(item, dict):
+                    for opt in item.get("options", []):
+                        if isinstance(opt, dict) and opt.get("word", "").lower() == word.lower():
+                            opt["image_url"] = new_image_url
+    
+    if not updated:
+        raise HTTPException(status_code=404, detail=f"Word '{word}' not found in lesson {lesson_id}")
+    
+    await db.unified_lessons.update_one(
+        {"lesson_id": lesson_id},
+        {"$set": {"activity_flow": activity_flow, "updated_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    return {"status": "success", "word": word, "image_url": new_image_url}
+
 
 @api_router.post("/auth/forgot-password")
 async def forgot_password(payload: ForgotPasswordRequest):
@@ -7282,6 +7417,9 @@ async def startup_event():
         
         # ============ AUTO-SEED COURSES ON STARTUP ============
         await auto_seed_courses()
+        
+        # ============ AUTO-SEED UNIFIED LEARNING ON STARTUP ============
+        await auto_seed_unified_learning()
             
     except Exception as e:
         logger.error(f"Startup seed error: {e}")
@@ -7353,6 +7491,50 @@ async def auto_seed_courses():
         
     except Exception as e:
         logger.error(f"Auto-seed courses error: {e}")
+
+
+async def auto_seed_unified_learning():
+    """Auto-seed unified learning stages and content from JSON files on startup"""
+    try:
+        stages_count = await db.unified_stages.count_documents({})
+        lessons_count = await db.unified_lessons.count_documents({})
+        units_count = await db.unified_units.count_documents({})
+        
+        logger.info(f"🔄 Unified Learning: {stages_count} stages, {units_count} units, {lessons_count} lessons")
+        
+        # Seed stages metadata if missing
+        if stages_count < 8:
+            logger.info("⚠️ Stages missing, seeding all 8 stages...")
+            from seed_unified_learning import ALL_STAGES
+            for stage_data in ALL_STAGES:
+                await db.unified_stages.update_one(
+                    {"stage_id": stage_data["stage_id"]},
+                    {"$set": stage_data},
+                    upsert=True
+                )
+            new_count = await db.unified_stages.count_documents({})
+            logger.info(f"✅ Seeded {new_count} stages")
+        
+        # Count content JSON files available
+        import glob
+        content_dir = "/app/backend/content"
+        content_files = glob.glob(f"{content_dir}/stage*_unit*.json")
+        expected_units = len(content_files)
+        
+        if expected_units > 0 and units_count < expected_units:
+            logger.info(f"⚠️ Units ({units_count}) < expected ({expected_units}). Seeding content from JSON files...")
+            from seed_content_v4 import seed_from_content
+            await seed_from_content(target_db=db)
+            final_units = await db.unified_units.count_documents({})
+            final_lessons = await db.unified_lessons.count_documents({})
+            logger.info(f"✅ Unified Learning seeded: {final_units} units, {final_lessons} lessons")
+        else:
+            logger.info(f"✅ Unified Learning OK: {units_count} units, {lessons_count} lessons")
+        
+    except Exception as e:
+        logger.error(f"Auto-seed unified learning error: {e}")
+        import traceback
+        traceback.print_exc()
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

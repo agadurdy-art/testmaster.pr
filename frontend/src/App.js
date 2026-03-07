@@ -18,6 +18,8 @@ import PricingPage from './pages/PricingPage';
 import VerifyEmailPage from './pages/VerifyEmailPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import AdminCreditsPage from './pages/AdminCreditsPage';
+import AdminDashboard from './pages/AdminDashboard';
+import VocabularyImageManager from './pages/VocabularyImageManager';
 import LevelTest from './pages/LevelTest';
 import ComprehensiveLevelTest from './pages/ComprehensiveLevelTest';
 import AdaptiveLevelTest from './pages/AdaptiveLevelTest';
@@ -245,7 +247,9 @@ function AppWithSessionHandler() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />
         <Route path="/admin/feedback" element={<AdminFeedback user={user} />} />
-        <Route path="/admin" element={<AdminPanel user={user} />} />
+        <Route path="/admin/users" element={<AdminPanel user={user} />} />
+        <Route path="/admin/vocabulary-images" element={<VocabularyImageManager user={user} />} />
+        <Route path="/admin" element={<AdminDashboard user={user} />} />
         <Route 
           path="/dashboard" 
           element={user ? <Dashboard user={user} onLogout={handleLogout} /> : <Navigate to="/" />} 

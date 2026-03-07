@@ -267,12 +267,38 @@ COLLECTION_MAP = {
 }
 
 
-async def seed_from_content():
-    client = AsyncIOMotorClient(os.environ.get('MONGO_URL'))
-    db = client[os.environ.get('DB_NAME', 'ielts_ace')]
+STAGE_FILE_TO_DB_ID = {
+    "stage1": "stage_1",
+    "stage2": "stage_2_starters",
+    "stage3": "stage_3_movers",
+    "stage4": "stage_4_flyers",
+    "stage5": "stage_5_b1",
+    "stage6": "stage_6_b2",
+    "stage7": "stage_7_ielts_foundation",
+    "stage8": "stage_8_ielts_mastery",
+}
+
+
+def get_stage_id_from_file(fpath):
+    """Extract DB stage_id from content file path like stage2_unit01.json"""
+    import re
+    basename = os.path.basename(fpath)
+    m = re.match(r'(stage\d+)_unit', basename)
+    if m:
+        return STAGE_FILE_TO_DB_ID.get(m.group(1), m.group(1))
+    return None
+
+
+async def seed_from_content(target_db=None):
+    if target_db is not None:
+        db = target_db
+        client = None
+    else:
+        client = AsyncIOMotorClient(os.environ.get('MONGO_URL'))
+        db = client[os.environ.get('DB_NAME', 'ielts_ace')]
 
     content_dir = "/app/backend/content"
-    files = sorted(glob.glob(f"{content_dir}/stage1_unit*.json"))
+    files = sorted(glob.glob(f"{content_dir}/stage*_unit*.json"))
 
     if not files:
         print("No content files found!")
@@ -282,11 +308,15 @@ async def seed_from_content():
     print(f"SEEDING FROM AUTHORED CONTENT ({len(files)} files)")
     print("=" * 60)
 
-    # Clear all existing data for authored units
     all_unit_ids = []
     all_lesson_ids = []
 
     for fpath in files:
+        stage_id = get_stage_id_from_file(fpath)
+        if not stage_id:
+            print(f"WARNING: Cannot determine stage_id for {fpath}, skipping")
+            continue
+
         with open(fpath) as f:
             data = json.load(f)
 
@@ -295,7 +325,7 @@ async def seed_from_content():
             unit_num = unit_data["unit_num"]
             all_unit_ids.append(unit_id)
 
-            print(f"\nUnit {unit_num}: {unit_data['title']}")
+            print(f"\n[{stage_id}] Unit {unit_num}: {unit_data['title']}")
 
             # Clear old data for this unit
             await db.unified_units.delete_many({"unit_id": unit_id})
@@ -305,8 +335,9 @@ async def seed_from_content():
                 {"unit_id": unit_id},
                 {"$set": {
                     "unit_id": unit_id,
-                    "stage_id": "stage_1",
+                    "stage_id": stage_id,
                     "unit_number": unit_num,
+                    "number": unit_num,
                     "title": unit_data["title"],
                     "subtitle": unit_data.get("subtitle", ""),
                     "phonics_focus": unit_data.get("phonics_focus", []),
@@ -350,7 +381,7 @@ async def seed_from_content():
                     {"$set": {
                         "lesson_id": lesson_id,
                         "unit_id": unit_id,
-                        "stage_id": "stage_1",
+                        "stage_id": stage_id,
                         "number": lesson_num,
                         "title": lesson_data["title"],
                         "topic": lesson_data.get("topic", ""),
@@ -388,28 +419,32 @@ async def seed_from_content():
 
                 print(f"    -> {len(lesson_data['steps'])} steps seeded")
 
-    # Update stage metadata
-    await db.unified_stages.update_one(
-        {"stage_id": "stage_1"},
-        {"$set": {
-            "stage_id": "stage_1",
-            "name": "Foundations",
-            "cefr_level": "Pre-A1",
-            "description": "Build your English foundation from scratch!",
-            "target_audience": "Kindergarten / Ages 4-7 / Absolute beginners",
-            "total_units": await db.unified_units.count_documents({"stage_id": "stage_1"}),
-            "theme_color": "#F59E0B",
-            "created_at": TS
-        }},
-        upsert=True
-    )
+    # Update stage metadata for all seeded stages
+    seeded_stage_ids = set()
+    for fpath in files:
+        sid = get_stage_id_from_file(fpath)
+        if sid:
+            seeded_stage_ids.add(sid)
 
-    total = await db.unified_lessons.count_documents({"stage_id": "stage_1"})
+    for sid in seeded_stage_ids:
+        unit_count = await db.unified_units.count_documents({"stage_id": sid})
+        lesson_count = await db.unified_lessons.count_documents({"stage_id": sid})
+        await db.unified_stages.update_one(
+            {"stage_id": sid},
+            {"$set": {
+                "total_units": unit_count,
+                "updated_at": TS
+            }}
+        )
+        print(f"\n[{sid}] Updated: {unit_count} units, {lesson_count} lessons")
+
+    total = await db.unified_lessons.count_documents({})
     print(f"\n{'='*60}")
-    print(f"CONTENT SEED COMPLETE! {total} lessons in database")
+    print(f"CONTENT SEED COMPLETE! {total} total lessons in database")
     print(f"{'='*60}")
 
-    client.close()
+    if client:
+        client.close()
 
 
 if __name__ == "__main__":
