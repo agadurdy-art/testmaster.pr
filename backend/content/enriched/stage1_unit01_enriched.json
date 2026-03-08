@@ -79,7 +79,8 @@
                   "ipa": "/həˈloʊ/",
                   "definition": "A greeting",
                   "example": "Hello, Teacher!",
-                  "image_emoji": "👋"
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hello.png"
                 },
                 {
                   "word": "teacher",
@@ -809,14 +810,16 @@
                   "ipa": "/ˈmɔːrnɪŋ/",
                   "definition": "The start of the day",
                   "example": "Good morning!",
-                  "image_emoji": "🌅"
+                  "image_emoji": "🌅",
+                  "image_url": "/static/vocab_images/morning.png"
                 },
                 {
                   "word": "fine",
                   "ipa": "/faɪn/",
                   "definition": "Feeling good",
                   "example": "I am fine.",
-                  "image_emoji": "😊"
+                  "image_emoji": "😊",
+                  "image_url": "/static/vocab_images/fine.png"
                 },
                 {
                   "word": "ball",
@@ -1474,21 +1477,24 @@
                   "ipa": "/bɔɪ/",
                   "definition": "A male child",
                   "example": "He is a boy.",
-                  "image_emoji": "👦"
+                  "image_emoji": "👦",
+                  "image_url": "/static/vocab_images/boy.png"
                 },
                 {
                   "word": "girl",
                   "ipa": "/ɡɜːrl/",
                   "definition": "A female child",
                   "example": "She is a girl.",
-                  "image_emoji": "👧"
+                  "image_emoji": "👧",
+                  "image_url": "/static/vocab_images/girl.png"
                 },
                 {
                   "word": "friend",
                   "ipa": "/frend/",
                   "definition": "Someone you like",
                   "example": "This is my friend.",
-                  "image_emoji": "🤝"
+                  "image_emoji": "🤝",
+                  "image_url": "/static/vocab_images/friend.png"
                 },
                 {
                   "word": "dog",
@@ -1503,7 +1509,8 @@
                   "ipa": "/eɡ/",
                   "definition": "Food from a bird (Sound E)",
                   "example": "This is an egg.",
-                  "image_emoji": "🥚"
+                  "image_emoji": "🥚",
+                  "image_url": "/static/vocab_images/egg.png"
                 }
               ]
             },

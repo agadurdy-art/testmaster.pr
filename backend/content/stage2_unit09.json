@@ -42,7 +42,8 @@
                   "ipa": "",
                   "definition": "Taking in food.",
                   "example": "She is eating an apple.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/eating.png"
                 },
                 {
                   "word": "drinking",

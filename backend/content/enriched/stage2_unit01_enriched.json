@@ -74,28 +74,32 @@
                   "ipa": "/həˈloʊ/",
                   "definition": "A greeting word",
                   "example": "Hello, how are you?",
-                  "image_emoji": "👋"
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hello.png"
                 },
                 {
                   "word": "hi",
                   "ipa": "/haɪ/",
                   "definition": "A casual greeting",
                   "example": "Hi, I'm Sam.",
-                  "image_emoji": "👋"
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hi.png"
                 },
                 {
                   "word": "answer",
                   "ipa": "/ˈæn.sər/",
                   "definition": "To reply to a question",
                   "example": "I answer the question.",
-                  "image_emoji": "❓"
+                  "image_emoji": "❓",
+                  "image_url": "/static/vocab_images/answer.png"
                 },
                 {
                   "word": "listen",
                   "ipa": "/ˈlɪs.ən/",
                   "definition": "To hear attentively",
                   "example": "Listen to the teacher.",
-                  "image_emoji": "👂"
+                  "image_emoji": "👂",
+                  "image_url": "/static/vocab_images/listen.png"
                 }
               ]
             },
@@ -812,7 +816,8 @@
                   "ipa": "/neɪm/",
                   "definition": "What someone is called",
                   "example": "My name is Ben.",
-                  "image_emoji": "📛"
+                  "image_emoji": "📛",
+                  "image_url": "/static/vocab_images/name.png"
                 },
                 {
                   "word": "new",
@@ -826,7 +831,8 @@
                   "ipa": "/əʊld/",
                   "definition": "Having existed for a long time",
                   "example": "This book is old.",
-                  "image_emoji": "📚"
+                  "image_emoji": "📚",
+                  "image_url": "/static/vocab_images/old.png"
                 }
               ]
             },
@@ -1447,7 +1453,8 @@
                   "ipa": "/ˈælfəˌbɛt/",
                   "definition": "A set of letters",
                   "example": "We learn the alphabet.",
-                  "image_emoji": "🔤"
+                  "image_emoji": "🔤",
+                  "image_url": "/static/vocab_images/alphabet.png"
                 },
                 {
                   "word": "spell",
@@ -1462,7 +1469,8 @@
                   "ipa": "/ˈletər/",
                   "definition": "A symbol in words",
                   "example": "A is a letter.",
-                  "image_emoji": "✉️"
+                  "image_emoji": "✉️",
+                  "image_url": "/static/vocab_images/letter.png"
                 },
                 {
                   "word": "word",
@@ -2114,28 +2122,32 @@
                   "ipa": "",
                   "definition": "A word to greet someone.",
                   "example": "Say hello to mom.",
-                  "image_emoji": "👋"
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hello.png"
                 },
                 {
                   "word": "hi",
                   "ipa": "",
                   "definition": "A short way to say hello.",
                   "example": "Hi, how are you?",
-                  "image_emoji": "🙋"
+                  "image_emoji": "🙋",
+                  "image_url": "/static/vocab_images/hi.png"
                 },
                 {
                   "word": "answer",
                   "ipa": "",
                   "definition": "To say or write back.",
                   "example": "Can you answer my question?",
-                  "image_emoji": "✋"
+                  "image_emoji": "✋",
+                  "image_url": "/static/vocab_images/answer.png"
                 },
                 {
                   "word": "listen",
                   "ipa": "",
                   "definition": "To hear what sounds are made.",
                   "example": "Listen to the music.",
-                  "image_emoji": "👂"
+                  "image_emoji": "👂",
+                  "image_url": "/static/vocab_images/listen.png"
                 },
                 {
                   "word": "they",
@@ -2150,7 +2162,8 @@
                   "ipa": "",
                   "definition": "What you are called.",
                   "example": "My name is Lily.",
-                  "image_emoji": "📛"
+                  "image_emoji": "📛",
+                  "image_url": "/static/vocab_images/name.png"
                 },
                 {
                   "word": "new",
@@ -2164,14 +2177,16 @@
                   "ipa": "",
                   "definition": "Having lived for many years.",
                   "example": "The turtle is old.",
-                  "image_emoji": "📅"
+                  "image_emoji": "📅",
+                  "image_url": "/static/vocab_images/old.png"
                 },
                 {
                   "word": "alphabet",
                   "ipa": "",
                   "definition": "Letters from A to Z.",
                   "example": "He sings the alphabet song.",
-                  "image_emoji": "🔤"
+                  "image_emoji": "🔤",
+                  "image_url": "/static/vocab_images/alphabet.png"
                 },
                 {
                   "word": "spell",
@@ -2186,7 +2201,8 @@
                   "ipa": "",
                   "definition": "A message you can send.",
                   "example": "I wrote a letter.",
-                  "image_emoji": "📝"
+                  "image_emoji": "📝",
+                  "image_url": "/static/vocab_images/letter.png"
                 },
                 {
                   "word": "word",

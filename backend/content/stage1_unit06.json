@@ -218,7 +218,8 @@
                   "ipa": "/lʊk/",
                   "definition": "To see something",
                   "example": "Look at my hair!",
-                  "image_emoji": "👀"
+                  "image_emoji": "👀",
+                  "image_url": "/static/vocab_images/look.png"
                 }
               ]
             },

@@ -194,7 +194,8 @@
                   "ipa": "/ˈfɪŋɡər/",
                   "definition": "On your hand",
                   "example": "I have ten fingers.",
-                  "image_emoji": "☝️"
+                  "image_emoji": "☝️",
+                  "image_url": "/static/vocab_images/finger.png"
                 },
                 {
                   "word": "toe",
@@ -209,7 +210,8 @@
                   "ipa": "/lɔːŋ/",
                   "definition": "Great length",
                   "example": "My arms are long.",
-                  "image_emoji": "📏"
+                  "image_emoji": "📏",
+                  "image_url": "/static/vocab_images/long.png"
                 },
                 {
                   "word": "short",
@@ -338,14 +340,16 @@
                   "ipa": "/niː/",
                   "definition": "Middle of leg",
                   "example": "I have two knees.",
-                  "image_emoji": "🦵"
+                  "image_emoji": "🦵",
+                  "image_url": "/static/vocab_images/knee.png"
                 },
                 {
                   "word": "clap",
                   "ipa": "/klæp/",
                   "definition": "Hit hands together",
                   "example": "Clap your hands!",
-                  "image_emoji": "👏"
+                  "image_emoji": "👏",
+                  "image_url": "/static/vocab_images/clap.png"
                 },
                 {
                   "word": "stomp",

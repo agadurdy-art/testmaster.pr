@@ -216,7 +216,8 @@
                   "ipa": "/drɔː/",
                   "definition": "To make a picture",
                   "example": "I can draw a cat.",
-                  "image_emoji": "🎨"
+                  "image_emoji": "🎨",
+                  "image_url": "/static/vocab_images/draw.png"
                 }
               ]
             },
@@ -329,7 +330,8 @@
                   "ipa": "/ɪˈreɪsər/",
                   "definition": "Removes pencil marks",
                   "example": "I have a small eraser.",
-                  "image_emoji": "🧼"
+                  "image_emoji": "🧼",
+                  "image_url": "/static/vocab_images/eraser.png"
                 },
                 {
                   "word": "ruler",
@@ -344,7 +346,8 @@
                   "ipa": "/desk/",
                   "definition": "Where you sit and work",
                   "example": "My bag is on the desk.",
-                  "image_emoji": "🪑"
+                  "image_emoji": "🪑",
+                  "image_url": "/static/vocab_images/desk.png"
                 },
                 {
                   "word": "on",

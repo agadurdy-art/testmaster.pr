@@ -594,7 +594,8 @@
                   "ipa": "/drɔː/",
                   "definition": "Make a picture.",
                   "example": "I have a big drawing.",
-                  "image_emoji": "🎨"
+                  "image_emoji": "🎨",
+                  "image_url": "/static/vocab_images/draw.png"
                 }
               ]
             },
@@ -1034,7 +1035,8 @@
                   "ipa": "/ɪˈreɪ.sər/",
                   "definition": "Takes away pencil marks.",
                   "example": "What is in your pencil box? I have a small eraser.",
-                  "image_emoji": "🖌️"
+                  "image_emoji": "🖌️",
+                  "image_url": "/static/vocab_images/eraser.png"
                 },
                 {
                   "word": "ruler",
@@ -1049,7 +1051,8 @@
                   "ipa": "/desk/",
                   "definition": "Where you sit and work.",
                   "example": "It is on the big desk.",
-                  "image_emoji": "💻"
+                  "image_emoji": "💻",
+                  "image_url": "/static/vocab_images/desk.png"
                 },
                 {
                   "word": "on",

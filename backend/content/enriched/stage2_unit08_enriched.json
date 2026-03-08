@@ -1489,7 +1489,8 @@
                   "ipa": "",
                   "definition": "A lot of things.",
                   "example": "There are many apples.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/many.png"
                 },
                 {
                   "word": "some",

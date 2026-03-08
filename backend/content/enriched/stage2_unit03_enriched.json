@@ -77,7 +77,8 @@
                   "ipa": "",
                   "definition": "A table you use for work or study.",
                   "example": "My books are on the desk.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/desk.png"
                 },
                 {
                   "word": "chair",

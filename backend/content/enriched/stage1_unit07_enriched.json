@@ -554,7 +554,8 @@
                   "ipa": "/ˈfɪŋɡər/",
                   "definition": "On your hand",
                   "example": "Touch your finger to your nose.",
-                  "image_emoji": "✌"
+                  "image_emoji": "✌",
+                  "image_url": "/static/vocab_images/finger.png"
                 },
                 {
                   "word": "toe",
@@ -569,7 +570,8 @@
                   "ipa": "/lɔːŋ/",
                   "definition": "Big from end to end",
                   "example": "I have a long jump rope.",
-                  "image_emoji": "ᾟ7"
+                  "image_emoji": "ᾟ7",
+                  "image_url": "/static/vocab_images/long.png"
                 },
                 {
                   "word": "short",
@@ -1049,14 +1051,16 @@
                   "ipa": "/niː/",
                   "definition": "Bend in your leg",
                   "example": "I have two knees.",
-                  "image_emoji": "🦱"
+                  "image_emoji": "🦱",
+                  "image_url": "/static/vocab_images/knee.png"
                 },
                 {
                   "word": "clap",
                   "ipa": "/klæp/",
                   "definition": "Hands hit together",
                   "example": "Clap your hands.",
-                  "image_emoji": "👏"
+                  "image_emoji": "👏",
+                  "image_url": "/static/vocab_images/clap.png"
                 },
                 {
                   "word": "stomp",

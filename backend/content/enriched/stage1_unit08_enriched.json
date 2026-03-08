@@ -73,14 +73,16 @@
                   "ipa": "/fɑːm/",
                   "definition": "A big place with animals",
                   "example": "That is a farm.",
-                  "image_emoji": "🏡"
+                  "image_emoji": "🏡",
+                  "image_url": "/static/vocab_images/farm.png"
                 },
                 {
                   "word": "farmer",
                   "ipa": "/ˈfɑːrmər/",
                   "definition": "Person who takes care of animals",
                   "example": "Is that a farmer?",
-                  "image_emoji": "🧛"
+                  "image_emoji": "🧛",
+                  "image_url": "/static/vocab_images/farmer.png"
                 },
                 {
                   "word": "cow",
@@ -994,14 +996,16 @@
                   "ipa": "/ɛɡ/",
                   "definition": "Round thing from a chicken",
                   "example": "That is an egg from a chicken.",
-                  "image_emoji": "🥚"
+                  "image_emoji": "🥚",
+                  "image_url": "/static/vocab_images/egg.png"
                 },
                 {
                   "word": "mud",
                   "ipa": "/mʌd/",
                   "definition": "Wet soil on the ground",
                   "example": "Look at the mud! Is that a pig in it?",
-                  "image_emoji": "🪵"
+                  "image_emoji": "🪵",
+                  "image_url": "/static/vocab_images/mud.png"
                 }
               ]
             },

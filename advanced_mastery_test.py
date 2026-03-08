@@ -7,7 +7,7 @@ Tests the specific requirements from the review request
 import requests
 import json
 
-BACKEND_URL = "https://vocab-image-mgr.preview.emergentagent.com/api"
+BACKEND_URL = "https://vocab-coverage-check.preview.emergentagent.com/api"
 
 def test_authentication():
     """Test authentication with provided test credentials"""

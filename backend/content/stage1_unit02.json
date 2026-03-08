@@ -50,14 +50,16 @@
                   "ipa": "/neɪm/",
                   "definition": "What people call you",
                   "example": "My name is Ben.",
-                  "image_emoji": "🆔"
+                  "image_emoji": "🆔",
+                  "image_url": "/static/vocab_images/name.png"
                 },
                 {
                   "word": "boy",
                   "ipa": "/bɔɪ/",
                   "definition": "A male child",
                   "example": "I am a boy.",
-                  "image_emoji": "👦"
+                  "image_emoji": "👦",
+                  "image_url": "/static/vocab_images/boy.png"
                 },
                 {
                   "word": "fish",
@@ -202,14 +204,16 @@
                   "ipa": "/ɡɜːrl/",
                   "definition": "A female child",
                   "example": "She is a girl.",
-                  "image_emoji": "👧"
+                  "image_emoji": "👧",
+                  "image_url": "/static/vocab_images/girl.png"
                 },
                 {
                   "word": "he",
                   "ipa": "/hiː/",
                   "definition": "Pronoun for a boy",
                   "example": "He is Ben.",
-                  "image_emoji": "👨"
+                  "image_emoji": "👨",
+                  "image_url": "/static/vocab_images/he.png"
                 },
                 {
                   "word": "she",
@@ -345,28 +349,32 @@
                   "ipa": "/frend/",
                   "definition": "Someone you play with",
                   "example": "This is my friend.",
-                  "image_emoji": "🤝"
+                  "image_emoji": "🤝",
+                  "image_url": "/static/vocab_images/friend.png"
                 },
                 {
                   "word": "igloo",
                   "ipa": "/ˈɪɡluː/",
                   "definition": "A house made of ice (Sound I)",
                   "example": "It is an igloo.",
-                  "image_emoji": "❄️"
+                  "image_emoji": "❄️",
+                  "image_url": "/static/vocab_images/igloo.png"
                 },
                 {
                   "word": "jet",
                   "ipa": "/dʒet/",
                   "definition": "A very fast plane (Sound J)",
                   "example": "I see a jet.",
-                  "image_emoji": "🛩️"
+                  "image_emoji": "🛩️",
+                  "image_url": "/static/vocab_images/jet.png"
                 },
                 {
                   "word": "happy",
                   "ipa": "/ˈhæpi/",
                   "definition": "Feeling good",
                   "example": "I am happy.",
-                  "image_emoji": "😊"
+                  "image_emoji": "😊",
+                  "image_url": "/static/vocab_images/happy.png"
                 }
               ]
             },

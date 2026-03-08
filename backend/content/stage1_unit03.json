@@ -83,7 +83,8 @@
                   "ipa": "/ˈlaɪən/",
                   "definition": "A big cat (Sound L)",
                   "example": "It is a lion.",
-                  "image_emoji": "🦁"
+                  "image_emoji": "🦁",
+                  "image_url": "/static/vocab_images/lion.png"
                 }
               ]
             },
@@ -373,7 +374,8 @@
                   "ipa": "/ˈɒktəpəs/",
                   "definition": "Sea animal (Sound O)",
                   "example": "It is an octopus.",
-                  "image_emoji": "🐙"
+                  "image_emoji": "🐙",
+                  "image_url": "/static/vocab_images/octopus.png"
                 },
                 {
                   "word": "orange",

@@ -60,7 +60,8 @@
                   "ipa": "",
                   "definition": "Small seeds you can eat.",
                   "example": "We eat beans for dinner.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/beans.png"
                 },
                 {
                   "word": "bread",
@@ -168,7 +169,8 @@
                   "ipa": "",
                   "definition": "A drink made from fruit.",
                   "example": "I drink apple juice.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/juice.png"
                 },
                 {
                   "word": "milk",
@@ -183,14 +185,16 @@
                   "ipa": "",
                   "definition": "When something feels very warm.",
                   "example": "The soup is hot.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hot.png"
                 },
                 {
                   "word": "cold",
                   "ipa": "",
                   "definition": "The opposite of hot.",
                   "example": "The water is cold.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/cold.png"
                 }
               ]
             },
@@ -282,21 +286,24 @@
                   "ipa": "",
                   "definition": "When you enjoy something.",
                   "example": "I like ice cream.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/like.png"
                 },
                 {
                   "word": "don't like",
                   "ipa": "",
                   "definition": "Not to enjoy something.",
                   "example": "I don't like spinach.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/don't like.png"
                 },
                 {
                   "word": "favorite",
                   "ipa": "",
                   "definition": "The one you like best.",
                   "example": "Blue is my favorite color.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/favorite.png"
                 },
                 {
                   "word": "fruit",

@@ -87,7 +87,8 @@
                   "ipa": "",
                   "definition": "A girl child of a mother or father.",
                   "example": "I am her daughter.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/daughter.png"
                 },
                 {
                   "word": "baby",
@@ -809,7 +810,8 @@
                   "ipa": "",
                   "definition": "Your mom or dad's sister.",
                   "example": "My aunt is visiting us.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/aunt.png"
                 },
                 {
                   "word": "cousin",

@@ -540,7 +540,8 @@
                   "ipa": "/noʊ/",
                   "definition": "Not yes.",
                   "example": "I say no.",
-                  "image_emoji": "❌"
+                  "image_emoji": "❌",
+                  "image_url": "/static/vocab_images/no.png"
                 }
               ]
             },
@@ -964,7 +965,8 @@
                   "ipa": "/kjuːt/",
                   "definition": "Looks very nice.",
                   "example": "The puppy is cute.",
-                  "image_emoji": "😊"
+                  "image_emoji": "😊",
+                  "image_url": "/static/vocab_images/cute.png"
                 }
               ]
             },

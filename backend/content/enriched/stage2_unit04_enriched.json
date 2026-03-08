@@ -885,7 +885,8 @@
                   "ipa": "",
                   "definition": "To move your body to music.",
                   "example": "Let's dance to the music.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dance.png"
                 }
               ]
             },
@@ -1498,7 +1499,8 @@
                   "ipa": "",
                   "definition": "To be able to do something.",
                   "example": "I can jump high.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/can.png"
                 },
                 {
                   "word": "can't",
@@ -1520,7 +1522,8 @@
                   "ipa": "",
                   "definition": "To go up something.",
                   "example": "I climb the tree.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/climb.png"
                 }
               ]
             },

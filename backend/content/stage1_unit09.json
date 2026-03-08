@@ -214,7 +214,8 @@
                   "ipa": "/noʊ/",
                   "definition": "Negative answer",
                   "example": "No, I don't.",
-                  "image_emoji": "❌"
+                  "image_emoji": "❌",
+                  "image_url": "/static/vocab_images/no.png"
                 }
               ]
             },
@@ -351,7 +352,8 @@
                   "ipa": "/kjuːt/",
                   "definition": "Beautiful/Sweet",
                   "example": "The cat is cute.",
-                  "image_emoji": "🥰"
+                  "image_emoji": "🥰",
+                  "image_url": "/static/vocab_images/cute.png"
                 }
               ]
             },

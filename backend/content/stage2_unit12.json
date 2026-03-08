@@ -41,7 +41,8 @@
                   "ipa": "",
                   "definition": "A word to greet someone.",
                   "example": "Say hello to mom.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hello.png"
                 },
                 {
                   "word": "twelve",
@@ -64,7 +65,8 @@
                   "ipa": "",
                   "definition": "A table you use for work or study.",
                   "example": "My books are on the desk.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/desk.png"
                 }
               ]
             },
@@ -180,7 +182,8 @@
                   "ipa": "",
                   "definition": "A girl child of a mother or father.",
                   "example": "I am her daughter.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/daughter.png"
                 }
               ]
             },
@@ -272,21 +275,24 @@
                   "ipa": "",
                   "definition": "Taking in food.",
                   "example": "She is eating an apple.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/eating.png"
                 },
                 {
                   "word": "can",
                   "ipa": "",
                   "definition": "To be able to do something.",
                   "example": "I can jump high.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/can.png"
                 },
                 {
                   "word": "like",
                   "ipa": "",
                   "definition": "When you enjoy something.",
                   "example": "I like ice cream.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/like.png"
                 },
                 {
                   "word": "kitchen",

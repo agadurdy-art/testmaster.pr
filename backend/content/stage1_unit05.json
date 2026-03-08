@@ -53,14 +53,16 @@
                   "ipa": "/ˈmʌðər/",
                   "definition": "A female parent",
                   "example": "This is my mother.",
-                  "image_emoji": "👩"
+                  "image_emoji": "👩",
+                  "image_url": "/static/vocab_images/mother.png"
                 },
                 {
                   "word": "father",
                   "ipa": "/ˈfɑːðər/",
                   "definition": "A male parent",
                   "example": "This is my father.",
-                  "image_emoji": "👨"
+                  "image_emoji": "👨",
+                  "image_url": "/static/vocab_images/father.png"
                 },
                 {
                   "word": "umbrella",
@@ -355,14 +357,16 @@
                   "ipa": "/ˈɡrænpɑː/",
                   "definition": "Father of a parent",
                   "example": "He is my grandpa.",
-                  "image_emoji": "👴"
+                  "image_emoji": "👴",
+                  "image_url": "/static/vocab_images/grandpa.png"
                 },
                 {
                   "word": "grandma",
                   "ipa": "/ˈɡrænmɑː/",
                   "definition": "Mother of a parent",
                   "example": "She is my grandma.",
-                  "image_emoji": "👵"
+                  "image_emoji": "👵",
+                  "image_url": "/static/vocab_images/grandma.png"
                 },
                 {
                   "word": "baby",

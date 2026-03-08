@@ -80,14 +80,16 @@
                   "ipa": "/ˈmʌðər/",
                   "definition": "Your mom at home",
                   "example": "This is my mother.",
-                  "image_emoji": "👩"
+                  "image_emoji": "👩",
+                  "image_url": "/static/vocab_images/mother.png"
                 },
                 {
                   "word": "father",
                   "ipa": "/ˈfɑːðər/",
                   "definition": "Your dad at home",
                   "example": "My father is strong.",
-                  "image_emoji": "👨"
+                  "image_emoji": "👨",
+                  "image_url": "/static/vocab_images/father.png"
                 },
                 {
                   "word": "umbrella",
@@ -1031,14 +1033,16 @@
                   "ipa": "/ˈɡræn.pɑː/",
                   "definition": "Dad's dad",
                   "example": "This is my grandpa.",
-                  "image_emoji": "👴"
+                  "image_emoji": "👴",
+                  "image_url": "/static/vocab_images/grandpa.png"
                 },
                 {
                   "word": "grandma",
                   "ipa": "/ˈɡræn.mɑː/",
                   "definition": "Mom's mom",
                   "example": "I have a kind grandma.",
-                  "image_emoji": "👵"
+                  "image_emoji": "👵",
+                  "image_url": "/static/vocab_images/grandma.png"
                 },
                 {
                   "word": "baby",

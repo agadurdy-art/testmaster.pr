@@ -597,7 +597,8 @@
                   "ipa": "/lʊk/",
                   "definition": "To see with eyes",
                   "example": "I look with my eyes.",
-                  "image_emoji": "👀"
+                  "image_emoji": "👀",
+                  "image_url": "/static/vocab_images/look.png"
                 }
               ]
             },

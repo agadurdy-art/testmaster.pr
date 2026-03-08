@@ -74,7 +74,8 @@
                   "ipa": "/ˈhæpi/",
                   "definition": "Feeling very good",
                   "example": "How are you? I am happy.",
-                  "image_emoji": "😊"
+                  "image_emoji": "😊",
+                  "image_url": "/static/vocab_images/happy.png"
                 },
                 {
                   "word": "sad",
@@ -89,14 +90,16 @@
                   "ipa": "/haʊ/",
                   "definition": "Ask about feelings",
                   "example": "How are you today?",
-                  "image_emoji": "❓"
+                  "image_emoji": "❓",
+                  "image_url": "/static/vocab_images/how.png"
                 },
                 {
                   "word": "feel",
                   "ipa": "/fiːl/",
                   "definition": "Have an emotion",
                   "example": "I feel happy now.",
-                  "image_emoji": "❤️"
+                  "image_emoji": "❤️",
+                  "image_url": "/static/vocab_images/feel.png"
                 }
               ]
             },
@@ -559,7 +562,8 @@
                   "ipa": "/ˈhʌŋɡri/",
                   "definition": "Wanting to eat food.",
                   "example": "Are you hungry? Yes, I am.",
-                  "image_emoji": "🍲"
+                  "image_emoji": "🍲",
+                  "image_url": "/static/vocab_images/hungry.png"
                 },
                 {
                   "word": "thirsty",
@@ -574,7 +578,8 @@
                   "ipa": "/iːt/",
                   "definition": "To put food in mouth.",
                   "example": "Do you want to eat? Yes, I do.",
-                  "image_emoji": "🍴"
+                  "image_emoji": "🍴",
+                  "image_url": "/static/vocab_images/eat.png"
                 },
                 {
                   "word": "drink",
@@ -1020,14 +1025,16 @@
                   "ipa": "/mæd/",
                   "definition": "Very, very angry",
                   "example": "Are you mad? No, I am not.",
-                  "image_emoji": "😠"
+                  "image_emoji": "😠",
+                  "image_url": "/static/vocab_images/mad.png"
                 },
                 {
                   "word": "night",
                   "ipa": "/naɪt/",
                   "definition": "Dark time to sleep",
                   "example": "It is night. I am sleepy.",
-                  "image_emoji": "🌙"
+                  "image_emoji": "🌙",
+                  "image_url": "/static/vocab_images/night.png"
                 }
               ]
             },

@@ -46,14 +46,16 @@
                   "ipa": "/fɑːrm/",
                   "definition": "A place with animals",
                   "example": "This is a farm.",
-                  "image_emoji": "🚜"
+                  "image_emoji": "🚜",
+                  "image_url": "/static/vocab_images/farm.png"
                 },
                 {
                   "word": "farmer",
                   "ipa": "/ˈfɑːrmər/",
                   "definition": "A person who works on a farm",
                   "example": "He is a farmer.",
-                  "image_emoji": "👨‍🌾"
+                  "image_emoji": "👨‍🌾",
+                  "image_url": "/static/vocab_images/farmer.png"
                 },
                 {
                   "word": "cow",
@@ -345,14 +347,16 @@
                   "ipa": "/eɡ/",
                   "definition": "Chicken gives this",
                   "example": "I see ten eggs.",
-                  "image_emoji": "🥚"
+                  "image_emoji": "🥚",
+                  "image_url": "/static/vocab_images/egg.png"
                 },
                 {
                   "word": "mud",
                   "ipa": "/mʌd/",
                   "definition": "Wet dirt",
                   "example": "The pig likes mud.",
-                  "image_emoji": "💩"
+                  "image_emoji": "💩",
+                  "image_url": "/static/vocab_images/mud.png"
                 }
               ]
             },
