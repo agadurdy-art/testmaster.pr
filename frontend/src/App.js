@@ -76,6 +76,7 @@ import GameDemo from './pages/GameDemo';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
+import ErrorBoundary from './components/ErrorBoundary';
 
 
 // Language Leak Watcher Component (Development Only)
@@ -517,14 +518,16 @@ function AppWithSessionHandler() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <Router>
-        <div className="App min-h-screen bg-background text-foreground">
-          <LanguageLeakWatcher />
-          <AppWithSessionHandler />
-        </div>
-      </Router>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <Router>
+          <div className="App min-h-screen bg-background text-foreground">
+            <LanguageLeakWatcher />
+            <AppWithSessionHandler />
+          </div>
+        </Router>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
