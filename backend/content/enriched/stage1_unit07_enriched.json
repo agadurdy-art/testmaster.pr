@@ -74,28 +74,32 @@
                   "ipa": "/ɑːrm/",
                   "definition": "From shoulder to hand",
                   "example": "I have strong arms.",
-                  "image_emoji": "🤛"
+                  "image_emoji": "🤛",
+                  "image_url": "/static/vocab_images/arm.png"
                 },
                 {
                   "word": "leg",
                   "ipa": "/lɛɡ/",
                   "definition": "Helps you walk and run",
                   "example": "Touch your legs.",
-                  "image_emoji": "🥾"
+                  "image_emoji": "🥾",
+                  "image_url": "/static/vocab_images/leg.png"
                 },
                 {
                   "word": "hand",
                   "ipa": "/hænd/",
                   "definition": "At the end of your arm",
                   "example": "Clap your hands.",
-                  "image_emoji": "👋"
+                  "image_emoji": "👋",
+                  "image_url": "/static/vocab_images/hand.png"
                 },
                 {
                   "word": "foot",
                   "ipa": "/fʊt/",
                   "definition": "Bottom of your leg",
                   "example": "Stop with your feet.",
-                  "image_emoji": "🥾"
+                  "image_emoji": "🥾",
+                  "image_url": "/static/vocab_images/foot.png"
                 }
               ]
             },
@@ -557,7 +561,8 @@
                   "ipa": "/toʊ/",
                   "definition": "On your foot",
                   "example": "Wiggle your toes!",
-                  "image_emoji": "ᾛ5"
+                  "image_emoji": "ᾛ5",
+                  "image_url": "/static/vocab_images/gpt_toe.png"
                 },
                 {
                   "word": "long",
@@ -571,7 +576,8 @@
                   "ipa": "/ʃɔːrt/",
                   "definition": "Not big from end to end",
                   "example": "The pencil is short.",
-                  "image_emoji": "Ὅ0"
+                  "image_emoji": "Ὅ0",
+                  "image_url": "/static/vocab_images/gpt_short.png"
                 }
               ]
             },
@@ -1035,7 +1041,8 @@
                   "ipa": "/ˈʃəʊl.dər/",
                   "definition": "Where arm joins body",
                   "example": "Touch your shoulder.",
-                  "image_emoji": "👌"
+                  "image_emoji": "👌",
+                  "image_url": "/static/vocab_images/gpt_shoulder.png"
                 },
                 {
                   "word": "knee",
@@ -1056,7 +1063,8 @@
                   "ipa": "/stɒmp/",
                   "definition": "Foot hits ground hard",
                   "example": "Stomp your feet.",
-                  "image_emoji": "👢"
+                  "image_emoji": "👢",
+                  "image_url": "/static/vocab_images/gpt_stomp.png"
                 }
               ]
             },

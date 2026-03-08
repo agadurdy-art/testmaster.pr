@@ -77,37 +77,41 @@
                 {
                   "word": "shoulders",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The two parts between your neck and arms.",
+                  "example": "She shrugged her shoulders.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shoulders.png"
                 },
                 {
                   "word": "knees",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Two middle parts of your legs.",
+                  "example": "Bend your knees.",
                   "image_emoji": ""
                 },
                 {
                   "word": "toes",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Little parts on your feet.",
+                  "example": "I have ten toes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_toes.png"
                 },
                 {
                   "word": "arm",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A part of your body with your hand.",
+                  "example": "I broke my arm.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/arm.png"
                 },
                 {
                   "word": "leg",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The part of your body used for walking.",
+                  "example": "My leg is long.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/leg.png"
                 }
               ]
             },
@@ -855,29 +859,32 @@
                 {
                   "word": "jump",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "To move up off the ground.",
+                  "example": "I can jump high.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/jump.png"
                 },
                 {
                   "word": "run",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Moving fast on your feet.",
+                  "example": "They run in the park.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/run.png"
                 },
                 {
                   "word": "sing",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "To make music with your voice.",
+                  "example": "I love to sing.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_sing.png"
                 },
                 {
                   "word": "dance",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "To move your body to music.",
+                  "example": "Let's dance to the music.",
                   "image_emoji": ""
                 }
               ]
@@ -1489,29 +1496,30 @@
                 {
                   "word": "can",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "To be able to do something.",
+                  "example": "I can jump high.",
                   "image_emoji": ""
                 },
                 {
                   "word": "can't",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Not able to do something.",
+                  "example": "I can't fly.",
                   "image_emoji": ""
                 },
                 {
                   "word": "swim",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "To move through water.",
+                  "example": "I swim in the pool.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/swim.png"
                 },
                 {
                   "word": "climb",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "To go up something.",
+                  "example": "I climb the tree.",
                   "image_emoji": ""
                 }
               ]

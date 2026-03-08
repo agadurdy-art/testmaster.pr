@@ -93,14 +93,16 @@
                   "ipa": "/fɪʃ/",
                   "definition": "An animal that swims",
                   "example": "This is my fish.",
-                  "image_emoji": "🐟"
+                  "image_emoji": "🐟",
+                  "image_url": "/static/vocab_images/fish.png"
                 },
                 {
                   "word": "goat",
                   "ipa": "/ɡoʊt/",
                   "definition": "A farm animal",
                   "example": "She is my goat.",
-                  "image_emoji": "🐐"
+                  "image_emoji": "🐐",
+                  "image_url": "/static/vocab_images/goat.png"
                 }
               ]
             },
@@ -565,14 +567,16 @@
                   "ipa": "/ʃiː/",
                   "definition": "Says a girl",
                   "example": "She is my friend.",
-                  "image_emoji": "👧"
+                  "image_emoji": "👧",
+                  "image_url": "/static/vocab_images/gpt_she.png"
                 },
                 {
                   "word": "hat",
                   "ipa": "/hæt/",
                   "definition": "A cap for your head",
                   "example": "This is my hat.",
-                  "image_emoji": "🎩"
+                  "image_emoji": "🎩",
+                  "image_url": "/static/vocab_images/hat.png"
                 }
               ]
             },

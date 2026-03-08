@@ -7,8 +7,18 @@
       "unit_num": 2,
       "title": "My Name & Friends",
       "subtitle": "Identity and Phonics F-J",
-      "phonics_focus": ["F", "G", "H", "I", "J"],
-      "grammar_focus": ["My name is...", "He is / She is", "This is my..."],
+      "phonics_focus": [
+        "F",
+        "G",
+        "H",
+        "I",
+        "J"
+      ],
+      "grammar_focus": [
+        "My name is...",
+        "He is / She is",
+        "This is my..."
+      ],
       "lessons": [
         {
           "lesson_num": 1,
@@ -17,72 +27,152 @@
           "topic": "Identity and the sounds of F and G",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "video_url": "https://www.youtube.com/watch?v=u2T7S7mX0oM",
               "source_channel": "Super Simple Songs",
               "question_text": "How do we ask for a name?",
               "correct_answer": "what is your name?",
-              "options": ["what is your name?", "hello teacher", "i have an apple"],
+              "options": [
+                "what is your name?",
+                "hello teacher",
+                "i have an apple"
+              ],
               "image_emoji": "❓",
               "hint": "You ask this to meet a new friend."
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "name", "ipa": "/neɪm/", "definition": "What people call you", "example": "My name is Ben.", "image_emoji": "🆔"},
-                {"word": "boy", "ipa": "/bɔɪ/", "definition": "A male child", "example": "I am a boy.", "image_emoji": "👦"},
-                {"word": "fish", "ipa": "/fɪʃ/", "definition": "An animal that swims (Sound F)", "example": "The fish is red.", "image_emoji": "🐟"},
-                {"word": "goat", "ipa": "/ɡoʊt/", "definition": "A farm animal (Sound G)", "example": "The goat is white.", "image_emoji": "🐐"}
+                {
+                  "word": "name",
+                  "ipa": "/neɪm/",
+                  "definition": "What people call you",
+                  "example": "My name is Ben.",
+                  "image_emoji": "🆔"
+                },
+                {
+                  "word": "boy",
+                  "ipa": "/bɔɪ/",
+                  "definition": "A male child",
+                  "example": "I am a boy.",
+                  "image_emoji": "👦"
+                },
+                {
+                  "word": "fish",
+                  "ipa": "/fɪʃ/",
+                  "definition": "An animal that swims (Sound F)",
+                  "example": "The fish is red.",
+                  "image_emoji": "🐟",
+                  "image_url": "/static/vocab_images/fish.png"
+                },
+                {
+                  "word": "goat",
+                  "ipa": "/ɡoʊt/",
+                  "definition": "A farm animal (Sound G)",
+                  "example": "The goat is white.",
+                  "image_emoji": "🐐",
+                  "image_url": "/static/vocab_images/goat.png"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the animal that swims: 🐟",
               "correct_answer": "fish",
-              "options": ["fish", "goat", "boy", "apple"]
+              "options": [
+                "fish",
+                "goat",
+                "boy",
+                "apple"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "New Friend",
               "text": "Hello! What is your name? My name is Sam. I am a boy. I have a fish.",
               "questions": [
-                {"question": "What is the boy's name?", "answer": "sam", "options": ["sam", "ben"]}
+                {
+                  "question": "What is the boy's name?",
+                  "answer": "sam",
+                  "options": [
+                    "sam",
+                    "ben"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "My name is ___.",
               "explanation": "Use 'My name is' to tell your name.",
-              "examples": ["My name is Ben.", "My name is Sam."]
+              "examples": [
+                "My name is Ben.",
+                "My name is Sam."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "word_order",
-              "words": ["My", "name", "is", "Sam"],
+              "words": [
+                "My",
+                "name",
+                "is",
+                "Sam"
+              ],
               "correct_sentence": "My name is Sam."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "Hello, my name is Ben. I am a boy.",
-              "questions": [{"question": "Is Ben a boy?", "answer": "yes"}]
+              "questions": [
+                {
+                  "question": "Is Ben a boy?",
+                  "answer": "yes"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Say: Hello, my name is [Your Name].",
               "expected_text": "Hello my name is",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Choose the sound for 🐐:",
               "correct_answer": "G",
-              "options": ["G", "F", "A"]
+              "options": [
+                "G",
+                "F",
+                "A"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "What's Your Name? Song", "url": "https://www.youtube.com/watch?v=u2T7S7mX0oM", "type": "youtube"},
-            {"label": "Phonics F", "url": "https://www.youtube.com/watch?v=kq3cSbz8vRc", "type": "youtube"},
-            {"label": "Phonics G", "url": "https://www.youtube.com/watch?v=gEGREuCjFLM", "type": "youtube"}
+            {
+              "label": "What's Your Name? Song",
+              "url": "https://www.youtube.com/watch?v=u2T7S7mX0oM",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics F",
+              "url": "https://www.youtube.com/watch?v=kq3cSbz8vRc",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics G",
+              "url": "https://www.youtube.com/watch?v=gEGREuCjFLM",
+              "type": "youtube"
+            }
           ]
         },
         {
@@ -92,69 +182,140 @@
           "topic": "Gender pronouns and the sound of H",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "Recall Lesson 1: 👦 is a...",
               "correct_answer": "boy",
-              "options": ["boy", "fish", "goat"],
+              "options": [
+                "boy",
+                "fish",
+                "goat"
+              ],
               "hint": "A male child."
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "girl", "ipa": "/ɡɜːrl/", "definition": "A female child", "example": "She is a girl.", "image_emoji": "👧"},
-                {"word": "he", "ipa": "/hiː/", "definition": "Pronoun for a boy", "example": "He is Ben.", "image_emoji": "👨"},
-                {"word": "she", "ipa": "/ʃiː/", "definition": "Pronoun for a girl", "example": "She is Kim.", "image_emoji": "👩"},
-                {"word": "hat", "ipa": "/hæt/", "definition": "Something for your head (Sound H)", "example": "I have a hat.", "image_emoji": "👒"}
+                {
+                  "word": "girl",
+                  "ipa": "/ɡɜːrl/",
+                  "definition": "A female child",
+                  "example": "She is a girl.",
+                  "image_emoji": "👧"
+                },
+                {
+                  "word": "he",
+                  "ipa": "/hiː/",
+                  "definition": "Pronoun for a boy",
+                  "example": "He is Ben.",
+                  "image_emoji": "👨"
+                },
+                {
+                  "word": "she",
+                  "ipa": "/ʃiː/",
+                  "definition": "Pronoun for a girl",
+                  "example": "She is Kim.",
+                  "image_emoji": "👩",
+                  "image_url": "/static/vocab_images/gpt_she.png"
+                },
+                {
+                  "word": "hat",
+                  "ipa": "/hæt/",
+                  "definition": "Something for your head (Sound H)",
+                  "example": "I have a hat.",
+                  "image_emoji": "👒",
+                  "image_url": "/static/vocab_images/hat.png"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the item for your head: 👒",
               "correct_answer": "hat",
-              "options": ["hat", "girl", "fish", "goat"]
+              "options": [
+                "hat",
+                "girl",
+                "fish",
+                "goat"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "Friends",
               "text": "Look! He is Ben. He is a boy. She is Kim. She is a girl. Kim has a hat.",
               "questions": [
-                {"question": "Who has a hat?", "answer": "kim", "options": ["kim", "ben"]}
+                {
+                  "question": "Who has a hat?",
+                  "answer": "kim",
+                  "options": [
+                    "kim",
+                    "ben"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "He is... / She is...",
               "explanation": "Use 'He' for boys and 'She' for girls.",
-              "examples": ["He is a student.", "She is a teacher."]
+              "examples": [
+                "He is a student.",
+                "She is a teacher."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "fill_blank",
               "sentence": "Ben is a boy. ______ is a student.",
               "correct_answer": "He",
-              "options": ["He", "She", "I"],
+              "options": [
+                "He",
+                "She",
+                "I"
+              ],
               "hint": "Ben is a boy."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "She is a girl. Her name is Kim.",
-              "questions": [{"question": "Is Kim a girl?", "answer": "yes"}]
+              "questions": [
+                {
+                  "question": "Is Kim a girl?",
+                  "answer": "yes"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Say: She is a girl.",
               "expected_text": "She is a girl",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Match 👧:",
               "correct_answer": "girl",
-              "options": ["girl", "boy", "hat"]
+              "options": [
+                "girl",
+                "boy",
+                "hat"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Phonics H", "url": "https://www.youtube.com/watch?v=WR0gS4JxaYU", "type": "youtube"}
+            {
+              "label": "Phonics H",
+              "url": "https://www.youtube.com/watch?v=WR0gS4JxaYU",
+              "type": "youtube"
+            }
           ]
         },
         {
@@ -164,68 +325,142 @@
           "topic": "Introduction of others and sounds of I and J",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "Which sound is for 🐟?",
               "correct_answer": "F",
-              "options": ["F", "G", "H"],
+              "options": [
+                "F",
+                "G",
+                "H"
+              ],
               "hint": "F...ish."
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "friend", "ipa": "/frend/", "definition": "Someone you play with", "example": "This is my friend.", "image_emoji": "🤝"},
-                {"word": "igloo", "ipa": "/ˈɪɡluː/", "definition": "A house made of ice (Sound I)", "example": "It is an igloo.", "image_emoji": "❄️"},
-                {"word": "jet", "ipa": "/dʒet/", "definition": "A very fast plane (Sound J)", "example": "I see a jet.", "image_emoji": "🛩️"},
-                {"word": "happy", "ipa": "/ˈhæpi/", "definition": "Feeling good", "example": "I am happy.", "image_emoji": "😊"}
+                {
+                  "word": "friend",
+                  "ipa": "/frend/",
+                  "definition": "Someone you play with",
+                  "example": "This is my friend.",
+                  "image_emoji": "🤝"
+                },
+                {
+                  "word": "igloo",
+                  "ipa": "/ˈɪɡluː/",
+                  "definition": "A house made of ice (Sound I)",
+                  "example": "It is an igloo.",
+                  "image_emoji": "❄️"
+                },
+                {
+                  "word": "jet",
+                  "ipa": "/dʒet/",
+                  "definition": "A very fast plane (Sound J)",
+                  "example": "I see a jet.",
+                  "image_emoji": "🛩️"
+                },
+                {
+                  "word": "happy",
+                  "ipa": "/ˈhæpi/",
+                  "definition": "Feeling good",
+                  "example": "I am happy.",
+                  "image_emoji": "😊"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the fast plane: 🛩️",
               "correct_answer": "jet",
-              "options": ["jet", "igloo", "hat", "friend"]
+              "options": [
+                "jet",
+                "igloo",
+                "hat",
+                "friend"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "My Best Friend",
               "text": "This is my friend. His name is Leo. He is a boy. We are happy! Look at the jet!",
               "questions": [
-                {"question": "Are they happy?", "answer": "yes", "options": ["yes", "no"]}
+                {
+                  "question": "Are they happy?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "This is my ___.",
               "explanation": "Use 'This is my' to introduce a friend.",
-              "examples": ["This is my friend.", "This is my teacher."]
+              "examples": [
+                "This is my friend.",
+                "This is my teacher."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "word_order",
-              "words": ["This", "is", "my", "friend"],
+              "words": [
+                "This",
+                "is",
+                "my",
+                "friend"
+              ],
               "correct_sentence": "This is my friend."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "This is my friend. He has an igloo.",
-              "questions": [{"question": "What does the friend have?", "answer": "igloo"}]
+              "questions": [
+                {
+                  "question": "What does the friend have?",
+                  "answer": "igloo"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Say: This is my friend.",
               "expected_text": "This is my friend",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Sound for 🛩️:",
               "correct_answer": "J",
-              "options": ["J", "I", "H"]
+              "options": [
+                "J",
+                "I",
+                "H"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Phonics I", "url": "https://www.youtube.com/watch?v=xIbGWBMSaJ8", "type": "youtube"},
-            {"label": "Phonics J", "url": "https://www.youtube.com/watch?v=HwZbcSGliIc", "type": "youtube"}
+            {
+              "label": "Phonics I",
+              "url": "https://www.youtube.com/watch?v=xIbGWBMSaJ8",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics J",
+              "url": "https://www.youtube.com/watch?v=HwZbcSGliIc",
+              "type": "youtube"
+            }
           ]
         },
         {
@@ -236,59 +471,120 @@
           "is_review": true,
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "Phonics Review: Which word starts with 'H'?",
               "correct_answer": "hat",
-              "options": ["hat", "fish", "goat", "igloo"]
-            },
-            {
-              "step": 2, "type": "vocabulary_review",
-              "items": ["name", "boy", "girl", "he", "she", "friend", "fish", "goat", "hat", "igloo", "jet", "happy"]
-            },
-            {
-              "step": 3, "type": "micro_game_vocab",
-              "question_text": "Match 🤝:",
-              "correct_answer": "friend",
-              "options": ["friend", "boy", "hat", "jet"]
-            },
-            {
-              "step": 4, "type": "micro_reading",
-              "title": "Sam's Friends",
-              "text": "Hello! My name is Sam. I am a boy. She is Kim. She is my friend. She is happy. We see a goat and a fish.",
-              "questions": [
-                {"question": "Is Kim a friend?", "answer": "yes", "options": ["yes", "no"]}
+              "options": [
+                "hat",
+                "fish",
+                "goat",
+                "igloo"
               ]
             },
             {
-              "step": 5, "type": "grammar_review",
-              "patterns": ["My name is...", "He is / She is...", "This is my..."]
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "name",
+                "boy",
+                "girl",
+                "he",
+                "she",
+                "friend",
+                "fish",
+                "goat",
+                "hat",
+                "igloo",
+                "jet",
+                "happy"
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match 🤝:",
+              "correct_answer": "friend",
+              "options": [
+                "friend",
+                "boy",
+                "hat",
+                "jet"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Sam's Friends",
+              "text": "Hello! My name is Sam. I am a boy. She is Kim. She is my friend. She is happy. We see a goat and a fish.",
+              "questions": [
+                {
+                  "question": "Is Kim a friend?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "My name is...",
+                "He is / She is...",
+                "This is my..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
               "mode": "word_order",
-              "words": ["She", "is", "my", "friend"],
+              "words": [
+                "She",
+                "is",
+                "my",
+                "friend"
+              ],
               "correct_sentence": "She is my friend."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "What is your name? My name is Ben. I am happy.",
-              "questions": [{"question": "Who is happy?", "answer": "ben"}]
+              "questions": [
+                {
+                  "question": "Who is happy?",
+                  "answer": "ben"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Full Intro: Say your name and introduce a friend.",
               "expected_text": "My name is Ben this is my friend",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Mastery Final: He is a ____.",
               "correct_answer": "boy",
-              "options": ["boy", "girl", "she"]
+              "options": [
+                "boy",
+                "girl",
+                "she"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Phonics F-J Review", "url": "https://www.youtube.com/watch?v=u2T7S7mX0oM", "type": "youtube"}
+            {
+              "label": "Phonics F-J Review",
+              "url": "https://www.youtube.com/watch?v=u2T7S7mX0oM",
+              "type": "youtube"
+            }
           ]
         }
       ]

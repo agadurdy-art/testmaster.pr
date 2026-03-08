@@ -42,30 +42,34 @@
                 {
                   "word": "kitchen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The room where we make food.",
+                  "example": "Mom cooks in the kitchen.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/kitchen.png"
                 },
                 {
                   "word": "bathroom",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A room to wash and use the toilet.",
+                  "example": "The bathroom is clean.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bathroom.png"
                 },
                 {
                   "word": "bedroom",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A room where you sleep.",
+                  "example": "My bedroom is tidy.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bedroom.png"
                 },
                 {
                   "word": "living room",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A room to sit and relax.",
+                  "example": "We play in the living room.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/living_room.png"
                 }
               ]
             },
@@ -155,30 +159,34 @@
                 {
                   "word": "mirror",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Glass that reflects images.",
+                  "example": "Look in the mirror.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/mirror.png"
                 },
                 {
                   "word": "clock",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A tool that tells time.",
+                  "example": "The clock shows time.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/clock.png"
                 },
                 {
                   "word": "phone",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A tool to talk to people far away.",
+                  "example": "I call my friend on the phone.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_phone.png"
                 },
                 {
                   "word": "stairs",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Steps to go up or down.",
+                  "example": "Go up the stairs.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_stairs.png"
                 }
               ]
             },
@@ -268,30 +276,33 @@
                 {
                   "word": "there is",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Words to show one thing exists.",
+                  "example": "There is a car.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_there_is.png"
                 },
                 {
                   "word": "there are",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Words to show more than one thing exists.",
+                  "example": "There are two cats.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_there_are.png"
                 },
                 {
                   "word": "many",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A lot of things.",
+                  "example": "There are many apples.",
                   "image_emoji": ""
                 },
                 {
                   "word": "some",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A small amount or part of something.",
+                  "example": "I want some cake.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_some.png"
                 }
               ]
             },

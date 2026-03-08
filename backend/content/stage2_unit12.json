@@ -39,29 +39,31 @@
                 {
                   "word": "hello",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A word to greet someone.",
+                  "example": "Say hello to mom.",
                   "image_emoji": ""
                 },
                 {
                   "word": "twelve",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The number 12.",
+                  "example": "Twelve is after eleven.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/twelve.png"
                 },
                 {
                   "word": "purple",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A color made from red and blue.",
+                  "example": "Grapes are purple.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/purple.png"
                 },
                 {
                   "word": "desk",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A table you use for work or study.",
+                  "example": "My books are on the desk.",
                   "image_emoji": ""
                 }
               ]
@@ -152,29 +154,32 @@
                 {
                   "word": "arm",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A part of your body with your hand.",
+                  "example": "I broke my arm.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/arm.png"
                 },
                 {
                   "word": "shirt",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A piece of clothing for the top of your body.",
+                  "example": "He wears a blue shirt.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shirt.png"
                 },
                 {
                   "word": "giraffe",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "An animal with a long neck.",
+                  "example": "The giraffe is tall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/giraffe.png"
                 },
                 {
                   "word": "daughter",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A girl child of a mother or father.",
+                  "example": "I am her daughter.",
                   "image_emoji": ""
                 }
               ]
@@ -265,30 +270,31 @@
                 {
                   "word": "eating",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Taking in food.",
+                  "example": "She is eating an apple.",
                   "image_emoji": ""
                 },
                 {
                   "word": "can",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "To be able to do something.",
+                  "example": "I can jump high.",
                   "image_emoji": ""
                 },
                 {
                   "word": "like",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "When you enjoy something.",
+                  "example": "I like ice cream.",
                   "image_emoji": ""
                 },
                 {
                   "word": "kitchen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The room where we make food.",
+                  "example": "Mom cooks in the kitchen.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/kitchen.png"
                 }
               ]
             },

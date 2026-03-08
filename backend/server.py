@@ -7557,10 +7557,75 @@ async def auto_seed_unified_learning():
             else:
                 logger.info(f"✅ All lessons already merged with enriched content")
         
+        # Always restore image mappings after seed/merge to ensure images are preserved
+        await _restore_vocab_image_mappings()
+        
     except Exception as e:
         logger.error(f"Auto-seed unified learning error: {e}")
         import traceback
         traceback.print_exc()
+
+
+async def _restore_vocab_image_mappings():
+    """Restore image_urls and enrichment data from mapping files"""
+    import json as _json
+    mapping_dir = "/app/tools"
+    img_map_path = f"{mapping_dir}/image_mapping.json"
+    gpt_map_path = f"{mapping_dir}/gpt_image_mapping.json"
+    enrich_path = f"{mapping_dir}/vocab_enrichment.json"
+    
+    if not os.path.exists(img_map_path):
+        return
+    
+    with open(img_map_path) as f:
+        img_map = _json.load(f)
+    gpt_map = {}
+    if os.path.exists(gpt_map_path):
+        with open(gpt_map_path) as f:
+            gpt_map = _json.load(f)
+    enrich = {}
+    if os.path.exists(enrich_path):
+        with open(enrich_path) as f:
+            enrich = _json.load(f)
+    
+    all_images = {**img_map, **gpt_map}
+    
+    # Check if restoration is needed
+    sample = await db.unified_lessons.find_one(
+        {"activity_flow.type": "vocabulary", "activity_flow.data.words.image_url": {"$exists": True, "$ne": ""}},
+        {"_id": 1}
+    )
+    if sample:
+        logger.info("✅ Vocab images already present in DB")
+        return
+    
+    updated = 0
+    async for lesson_doc in db.unified_lessons.find({}, {"_id": 1, "activity_flow": 1}):
+        af = lesson_doc.get("activity_flow", [])
+        changed = False
+        for act in af:
+            if act.get("type") == "vocabulary" and act.get("data", {}).get("words"):
+                for w in act["data"]["words"]:
+                    word = w.get("word", "").lower().strip()
+                    if not word:
+                        continue
+                    if not w.get("image_url", "").strip() and word in all_images:
+                        w["image_url"] = all_images[word]
+                        changed = True
+                    if not w.get("definition", "").strip() and word in enrich and enrich[word].get("definition"):
+                        w["definition"] = enrich[word]["definition"]
+                        changed = True
+                    if not w.get("example", "").strip() and word in enrich and enrich[word].get("example"):
+                        w["example"] = enrich[word]["example"]
+                        changed = True
+        if changed:
+            await db.unified_lessons.update_one({"_id": lesson_doc["_id"]}, {"$set": {"activity_flow": af}})
+            updated += 1
+    
+    if updated > 0:
+        logger.info(f"✅ Restored vocab images/enrichment for {updated} lessons")
+    else:
+        logger.info("✅ No vocab restoration needed")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

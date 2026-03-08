@@ -81,7 +81,8 @@
                   "ipa": "/sæd/",
                   "definition": "Feeling not good",
                   "example": "Are you sad? No, I am not.",
-                  "image_emoji": "😢"
+                  "image_emoji": "😢",
+                  "image_url": "/static/vocab_images/gpt_sad.png"
                 },
                 {
                   "word": "how",
@@ -565,7 +566,8 @@
                   "ipa": "/ˈθɜːrsti/",
                   "definition": "Wanting to drink water.",
                   "example": "How are you? I am thirsty.",
-                  "image_emoji": "💦"
+                  "image_emoji": "💦",
+                  "image_url": "/static/vocab_images/gpt_thirsty.png"
                 },
                 {
                   "word": "eat",
@@ -579,7 +581,8 @@
                   "ipa": "/drɪŋk/",
                   "definition": "To have some water.",
                   "example": "Are you thirsty? Yes, I will drink.",
-                  "image_emoji": "🍷"
+                  "image_emoji": "🍷",
+                  "image_url": "/static/vocab_images/drink.png"
                 }
               ]
             },
@@ -1001,14 +1004,16 @@
                   "ipa": "/ˈæŋɡri/",
                   "definition": "Feeling very upset",
                   "example": "Are you angry? Yes, I am.",
-                  "image_emoji": "😡"
+                  "image_emoji": "😡",
+                  "image_url": "/static/vocab_images/angry.png"
                 },
                 {
                   "word": "sleepy",
                   "ipa": "/ˈsliːpi/",
                   "definition": "Wanting to sleep now",
                   "example": "How are you? I am sleepy.",
-                  "image_emoji": "😴"
+                  "image_emoji": "😴",
+                  "image_url": "/static/vocab_images/gpt_sleepy.png"
                 },
                 {
                   "word": "mad",

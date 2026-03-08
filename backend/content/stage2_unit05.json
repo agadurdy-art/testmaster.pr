@@ -42,30 +42,34 @@
                 {
                   "word": "giraffe",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "An animal with a long neck.",
+                  "example": "The giraffe is tall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/giraffe.png"
                 },
                 {
                   "word": "hippo",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A large, water-loving animal.",
+                  "example": "The hippo is big.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hippo.png"
                 },
                 {
                   "word": "zebra",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "An animal with black and white stripes.",
+                  "example": "The zebra has stripes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_zebra.png"
                 },
                 {
                   "word": "snake",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "An animal with no legs.",
+                  "example": "The snake is long.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/snake.png"
                 }
               ]
             },
@@ -155,30 +159,34 @@
                 {
                   "word": "spider",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A small bug with eight legs.",
+                  "example": "I see a spider.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/spider.png"
                 },
                 {
                   "word": "frog",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A small animal that hops.",
+                  "example": "The frog jumps high.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/frog.png"
                 },
                 {
                   "word": "lizard",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A small animal with a long tail.",
+                  "example": "A lizard is on the wall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/lizard.png"
                 },
                 {
                   "word": "tail",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The part that sticks out at the back of an animal.",
+                  "example": "The dog wags its tail.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_tail.png"
                 }
               ]
             },
@@ -268,29 +276,30 @@
                 {
                   "word": "long neck",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A neck that is tall.",
+                  "example": "Giraffes have long necks.",
                   "image_emoji": ""
                 },
                 {
                   "word": "big ears",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Very large ears on an animal or person.",
+                  "example": "The rabbit has big ears.",
                   "image_emoji": ""
                 },
                 {
                   "word": "scary",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Something that frightens you.",
+                  "example": "That movie is scary.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_scary.png"
                 },
                 {
                   "word": "funny",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Makes you laugh.",
+                  "example": "That joke is funny.",
                   "image_emoji": ""
                 }
               ]

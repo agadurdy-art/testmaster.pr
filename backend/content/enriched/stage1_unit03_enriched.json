@@ -79,28 +79,32 @@
                   "ipa": "/wʌn/",
                   "definition": "The number 1",
                   "example": "It is one.",
-                  "image_emoji": "1️⃣"
+                  "image_emoji": "1️⃣",
+                  "image_url": "/static/vocab_images/one.png"
                 },
                 {
                   "word": "two",
                   "ipa": "/tuː/",
                   "definition": "The number 2",
                   "example": "It is two.",
-                  "image_emoji": "2️⃣"
+                  "image_emoji": "2️⃣",
+                  "image_url": "/static/vocab_images/two.png"
                 },
                 {
                   "word": "three",
                   "ipa": "/θriː/",
                   "definition": "The number 3",
                   "example": "It is three.",
-                  "image_emoji": "3️⃣"
+                  "image_emoji": "3️⃣",
+                  "image_url": "/static/vocab_images/three.png"
                 },
                 {
                   "word": "kite",
                   "ipa": "/kaɪt/",
                   "definition": "A flying toy (Sound K)",
                   "example": "I have one kite.",
-                  "image_emoji": "🪁"
+                  "image_emoji": "🪁",
+                  "image_url": "/static/vocab_images/kite.png"
                 },
                 {
                   "word": "lion",
@@ -522,28 +526,32 @@
                   "ipa": "/sɪks/",
                   "definition": "Number after five.",
                   "example": "It is six balloons.",
-                  "image_emoji": "6️⃣"
+                  "image_emoji": "6️⃣",
+                  "image_url": "/static/vocab_images/six.png"
                 },
                 {
                   "word": "ten",
                   "ipa": "/tɛn/",
                   "definition": "Number after nine.",
                   "example": "It is ten apples.",
-                  "image_emoji": "🍎"
+                  "image_emoji": "🍎",
+                  "image_url": "/static/vocab_images/ten.png"
                 },
                 {
                   "word": "monkey",
                   "ipa": "/ˈmʌŋ.ki/",
                   "definition": "Animal that climbs trees.",
                   "example": "It is a monkey.",
-                  "image_emoji": "🐒"
+                  "image_emoji": "🐒",
+                  "image_url": "/static/vocab_images/monkey.png"
                 },
                 {
                   "word": "mouth",
                   "ipa": "/maʊθ/",
                   "definition": "Used for eating and talking.",
                   "example": "How many mouths do you have?",
-                  "image_emoji": "👄"
+                  "image_emoji": "👄",
+                  "image_url": "/static/vocab_images/mouth.png"
                 }
               ]
             },
@@ -1006,14 +1014,16 @@
                   "ipa": "/noʊz/",
                   "definition": "Smells and breathes air.",
                   "example": "It is 1 nose.",
-                  "image_emoji": "👃"
+                  "image_emoji": "👃",
+                  "image_url": "/static/vocab_images/nose.png"
                 },
                 {
                   "word": "nine",
                   "ipa": "/naɪn/",
                   "definition": "After eight, before ten.",
                   "example": "How many? It is nine.",
-                  "image_emoji": "9️⃣"
+                  "image_emoji": "9️⃣",
+                  "image_url": "/static/vocab_images/nine.png"
                 },
                 {
                   "word": "octopus",
@@ -1027,7 +1037,8 @@
                   "ipa": "/ˈɔːr.ɪndʒ/",
                   "definition": "Round fruit or color.",
                   "example": "There are five oranges.",
-                  "image_emoji": "🍊"
+                  "image_emoji": "🍊",
+                  "image_url": "/static/vocab_images/orange.png"
                 }
               ]
             },

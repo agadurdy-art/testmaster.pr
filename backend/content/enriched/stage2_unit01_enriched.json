@@ -804,7 +804,8 @@
                   "ipa": "/ðeɪ/",
                   "definition": "Used to refer to two or more people",
                   "example": "They are new.",
-                  "image_emoji": "👥"
+                  "image_emoji": "👥",
+                  "image_url": "/static/vocab_images/gpt_they.png"
                 },
                 {
                   "word": "name",
@@ -1453,7 +1454,8 @@
                   "ipa": "/spɛl/",
                   "definition": "Say letters in order",
                   "example": "He can spell 'cat'.",
-                  "image_emoji": "🔠"
+                  "image_emoji": "🔠",
+                  "image_url": "/static/vocab_images/gpt_spell.png"
                 },
                 {
                   "word": "letter",
@@ -1467,7 +1469,8 @@
                   "ipa": "/wɜrd/",
                   "definition": "A group of letters",
                   "example": "Dog is a word.",
-                  "image_emoji": "📝"
+                  "image_emoji": "📝",
+                  "image_url": "/static/vocab_images/gpt_word.png"
                 }
               ]
             },
@@ -2109,86 +2112,89 @@
                 {
                   "word": "hello",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A word to greet someone.",
+                  "example": "Say hello to mom.",
                   "image_emoji": "👋"
                 },
                 {
                   "word": "hi",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A short way to say hello.",
+                  "example": "Hi, how are you?",
                   "image_emoji": "🙋"
                 },
                 {
                   "word": "answer",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "To say or write back.",
+                  "example": "Can you answer my question?",
                   "image_emoji": "✋"
                 },
                 {
                   "word": "listen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "To hear what sounds are made.",
+                  "example": "Listen to the music.",
                   "image_emoji": "👂"
                 },
                 {
                   "word": "they",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": "👥"
+                  "definition": "The word for more than one person or thing.",
+                  "example": "They are my friends.",
+                  "image_emoji": "👥",
+                  "image_url": "/static/vocab_images/gpt_they.png"
                 },
                 {
                   "word": "name",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "What you are called.",
+                  "example": "My name is Lily.",
                   "image_emoji": "📛"
                 },
                 {
                   "word": "new",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Not old or used.",
+                  "example": "Look at my new toy!",
                   "image_emoji": "✨"
                 },
                 {
                   "word": "old",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Having lived for many years.",
+                  "example": "The turtle is old.",
                   "image_emoji": "📅"
                 },
                 {
                   "word": "alphabet",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Letters from A to Z.",
+                  "example": "He sings the alphabet song.",
                   "image_emoji": "🔤"
                 },
                 {
                   "word": "spell",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": "✏️"
+                  "definition": "To say or write letters in order.",
+                  "example": "Can you spell cat?",
+                  "image_emoji": "✏️",
+                  "image_url": "/static/vocab_images/gpt_spell.png"
                 },
                 {
                   "word": "letter",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A message you can send.",
+                  "example": "I wrote a letter.",
                   "image_emoji": "📝"
                 },
                 {
                   "word": "word",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": "💬"
+                  "definition": "A group of letters.",
+                  "example": "Read this word.",
+                  "image_emoji": "💬",
+                  "image_url": "/static/vocab_images/gpt_word.png"
                 }
               ]
             },

@@ -73,28 +73,32 @@
                   "ipa": "/pɛt/",
                   "definition": "Animal in your home",
                   "example": "I like my pet.",
-                  "image_emoji": "🐱"
+                  "image_emoji": "🐱",
+                  "image_url": "/static/vocab_images/gpt_pet.png"
                 },
                 {
                   "word": "cat",
                   "ipa": "/kæt/",
                   "definition": "Small pet says Meow",
                   "example": "Do you like cats?",
-                  "image_emoji": "🐱"
+                  "image_emoji": "🐱",
+                  "image_url": "/static/vocab_images/cat.png"
                 },
                 {
                   "word": "dog",
                   "ipa": "/dɒɡ/",
                   "definition": "Pet says Woof",
                   "example": "I don't like dogs.",
-                  "image_emoji": "🐶"
+                  "image_emoji": "🐶",
+                  "image_url": "/static/vocab_images/dog.png"
                 },
                 {
                   "word": "bird",
                   "ipa": "/bɜːrd/",
                   "definition": "Animal that flies",
                   "example": "I like birds.",
-                  "image_emoji": "🐦"
+                  "image_emoji": "🐦",
+                  "image_url": "/static/vocab_images/bird.png"
                 }
               ]
             },
@@ -512,21 +516,24 @@
                   "ipa": "/ˈræbɪt/",
                   "definition": "Pet with long ears.",
                   "example": "I like rabbits.",
-                  "image_emoji": "🐰"
+                  "image_emoji": "🐰",
+                  "image_url": "/static/vocab_images/gpt_rabbit.png"
                 },
                 {
                   "word": "mouse",
                   "ipa": "/maʊs/",
                   "definition": "Very small animal.",
                   "example": "I don't like mice.",
-                  "image_emoji": "🐭"
+                  "image_emoji": "🐭",
+                  "image_url": "/static/vocab_images/mouse.png"
                 },
                 {
                   "word": "turtle",
                   "ipa": "/ˈtɜːrtl/",
                   "definition": "Slow, shelled animal.",
                   "example": "Do you like turtles?",
-                  "image_emoji": "🐢"
+                  "image_emoji": "🐢",
+                  "image_url": "/static/vocab_images/gpt_turtle.png"
                 },
                 {
                   "word": "no",
@@ -933,21 +940,24 @@
                   "ipa": "/fɪʃ/",
                   "definition": "Animal in a pond.",
                   "example": "Do you like fish?",
-                  "image_emoji": "🐟"
+                  "image_emoji": "🐟",
+                  "image_url": "/static/vocab_images/fish.png"
                 },
                 {
                   "word": "water",
                   "ipa": "/ˈwɔːtər/",
                   "definition": "Where fish swim.",
                   "example": "I like playing in water.",
-                  "image_emoji": "💧"
+                  "image_emoji": "💧",
+                  "image_url": "/static/vocab_images/water.png"
                 },
                 {
                   "word": "yes",
                   "ipa": "/jɛs/",
                   "definition": "Saying 'I like it'.",
                   "example": "Do you like dogs? Yes!",
-                  "image_emoji": "👍"
+                  "image_emoji": "👍",
+                  "image_url": "/static/vocab_images/gpt_yes.png"
                 },
                 {
                   "word": "cute",

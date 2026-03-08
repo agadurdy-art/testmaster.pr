@@ -79,35 +79,40 @@
                   "ipa": "/rɛd/",
                   "definition": "Color of fire trucks.",
                   "example": "The apple is red.",
-                  "image_emoji": "🍎"
+                  "image_emoji": "🍎",
+                  "image_url": "/static/vocab_images/red.png"
                 },
                 {
                   "word": "blue",
                   "ipa": "/bluː/",
                   "definition": "Color of the sky.",
                   "example": "The sky is blue.",
-                  "image_emoji": "🌅"
+                  "image_emoji": "🌅",
+                  "image_url": "/static/vocab_images/blue.png"
                 },
                 {
                   "word": "pink",
                   "ipa": "/pɪŋk/",
                   "definition": "Light red color.",
                   "example": "I like pink flowers.",
-                  "image_emoji": "🌸"
+                  "image_emoji": "🌸",
+                  "image_url": "/static/vocab_images/pink.png"
                 },
                 {
                   "word": "pig",
                   "ipa": "/pɪɡ/",
                   "definition": "Farm animal that oinks.",
                   "example": "The pig is pink.",
-                  "image_emoji": "🐷"
+                  "image_emoji": "🐷",
+                  "image_url": "/static/vocab_images/gpt_pig.png"
                 },
                 {
                   "word": "queen",
                   "ipa": "/kwiːn/",
                   "definition": "A royal lady.",
                   "example": "Is the queen wearing blue?",
-                  "image_emoji": "👑"
+                  "image_emoji": "👑",
+                  "image_url": "/static/vocab_images/gpt_queen.png"
                 }
               ]
             },
@@ -551,28 +556,32 @@
                   "ipa": "/ɡriːn/",
                   "definition": "Color like leaves",
                   "example": "The leaf is green.",
-                  "image_emoji": "💚"
+                  "image_emoji": "💚",
+                  "image_url": "/static/vocab_images/green.png"
                 },
                 {
                   "word": "yellow",
                   "ipa": "/ˈjɛloʊ/",
                   "definition": "Color like sunshine",
                   "example": "I like yellow flowers.",
-                  "image_emoji": "💛"
+                  "image_emoji": "💛",
+                  "image_url": "/static/vocab_images/yellow.png"
                 },
                 {
                   "word": "rabbit",
                   "ipa": "/ˈræbɪt/",
                   "definition": "Animal with big ears",
                   "example": "Is it a rabbit?",
-                  "image_emoji": "🐇"
+                  "image_emoji": "🐇",
+                  "image_url": "/static/vocab_images/gpt_rabbit.png"
                 },
                 {
                   "word": "run",
                   "ipa": "/rʌn/",
                   "definition": "Move very fast",
                   "example": "The rabbit can run fast.",
-                  "image_emoji": "🏃"
+                  "image_emoji": "🏃",
+                  "image_url": "/static/vocab_images/run.png"
                 }
               ]
             },
@@ -1031,35 +1040,40 @@
                   "ipa": "/blæk/",
                   "definition": "Like the dark night.",
                   "example": "The cat is black.",
-                  "image_emoji": "⬛"
+                  "image_emoji": "⬛",
+                  "image_url": "/static/vocab_images/black.png"
                 },
                 {
                   "word": "orange",
                   "ipa": "/ˈɔːrɪndʒ/",
                   "definition": "Like a bright fruit.",
                   "example": "I like orange.",
-                  "image_emoji": "🍊"
+                  "image_emoji": "🍊",
+                  "image_url": "/static/vocab_images/orange.png"
                 },
                 {
                   "word": "sun",
                   "ipa": "/sʌn/",
                   "definition": "Shines in the sky.",
                   "example": "Is it yellow like the sun?",
-                  "image_emoji": "☀️"
+                  "image_emoji": "☀️",
+                  "image_url": "/static/vocab_images/sun.png"
                 },
                 {
                   "word": "tiger",
                   "ipa": "/ˈtaɪɡər/",
                   "definition": "Orange with black stripes.",
                   "example": "The tiger is orange.",
-                  "image_emoji": "🐯"
+                  "image_emoji": "🐯",
+                  "image_url": "/static/vocab_images/tiger.png"
                 },
                 {
                   "word": "ten",
                   "ipa": "/tɛn/",
                   "definition": "A number to count.",
                   "example": "I have ten oranges.",
-                  "image_emoji": "10⃣"
+                  "image_emoji": "10⃣",
+                  "image_url": "/static/vocab_images/ten.png"
                 }
               ]
             },

@@ -40,30 +40,33 @@
                 {
                   "word": "desk",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A table you use for work or study.",
+                  "example": "My books are on the desk.",
                   "image_emoji": ""
                 },
                 {
                   "word": "chair",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A piece of furniture to sit on.",
+                  "example": "I sit on the chair.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/chair.png"
                 },
                 {
                   "word": "board",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A flat surface for writing or drawing.",
+                  "example": "The board is white.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/board.png"
                 },
                 {
                   "word": "computer",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A machine for playing games and more.",
+                  "example": "The computer is new.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/computer.png"
                 }
               ]
             },
@@ -153,23 +156,26 @@
                 {
                   "word": "in",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "When something is inside.",
+                  "example": "The cat is in the box.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/in.png"
                 },
                 {
                   "word": "on",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Touching and supported by something.",
+                  "example": "The book is on the table.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/on.png"
                 },
                 {
                   "word": "under",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Below something.",
+                  "example": "The cat is under the table.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/under.png"
                 }
               ]
             },
@@ -259,29 +265,32 @@
                 {
                   "word": "behind",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "At the back of something.",
+                  "example": "The ball is behind the chair.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/behind.png"
                 },
                 {
                   "word": "next to",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Very close or beside something.",
+                  "example": "The cat is next to me.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/next_to.png"
                 },
                 {
                   "word": "wall",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A side of a room.",
+                  "example": "The wall is white.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_wall.png"
                 },
                 {
                   "word": "floor",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "The bottom part of a room.",
+                  "example": "The toy is on the floor.",
                   "image_emoji": ""
                 }
               ]

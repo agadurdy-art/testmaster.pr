@@ -74,28 +74,32 @@
                   "ipa": "/feɪs/",
                   "definition": "Front of your head",
                   "example": "This is my face.",
-                  "image_emoji": "👦"
+                  "image_emoji": "👦",
+                  "image_url": "/static/vocab_images/face.png"
                 },
                 {
                   "word": "eye",
                   "ipa": "/aɪ/",
                   "definition": "See with these",
                   "example": "I have big eyes.",
-                  "image_emoji": "👁"
+                  "image_emoji": "👁",
+                  "image_url": "/static/vocab_images/eye.png"
                 },
                 {
                   "word": "nose",
                   "ipa": "/noʊz/",
                   "definition": "Smell flowers with this",
                   "example": "This is my nose.",
-                  "image_emoji": "👃"
+                  "image_emoji": "👃",
+                  "image_url": "/static/vocab_images/nose.png"
                 },
                 {
                   "word": "mouth",
                   "ipa": "/maʊθ/",
                   "definition": "Talk and eat with this",
                   "example": "I have a small mouth.",
-                  "image_emoji": "👄"
+                  "image_emoji": "👄",
+                  "image_url": "/static/vocab_images/mouth.png"
                 }
               ]
             },
@@ -569,21 +573,24 @@
                   "ipa": "/ɪər/",
                   "definition": "Part for hearing",
                   "example": "I have big ears.",
-                  "image_emoji": "👂"
+                  "image_emoji": "👂",
+                  "image_url": "/static/vocab_images/ear.png"
                 },
                 {
                   "word": "hair",
                   "ipa": "/hɛər/",
                   "definition": "Grows on your head",
                   "example": "This is my hair.",
-                  "image_emoji": "💇‍♂️"
+                  "image_emoji": "💇‍♂️",
+                  "image_url": "/static/vocab_images/hair.png"
                 },
                 {
                   "word": "head",
                   "ipa": "/hɛd/",
                   "definition": "Top of your body",
                   "example": "This is my head.",
-                  "image_emoji": "👶"
+                  "image_emoji": "👶",
+                  "image_url": "/static/vocab_images/head.png"
                 },
                 {
                   "word": "look",
@@ -1026,7 +1033,8 @@
                   "ipa": "/smaɪl/",
                   "definition": "Happy face with mouth",
                   "example": "I have a big smile.",
-                  "image_emoji": "😀"
+                  "image_emoji": "😀",
+                  "image_url": "/static/vocab_images/gpt_smile.png"
                 },
                 {
                   "word": "big",
@@ -1040,7 +1048,8 @@
                   "ipa": "/smɔːl/",
                   "definition": "Tiny or little",
                   "example": "I have small eyes.",
-                  "image_emoji": "👀"
+                  "image_emoji": "👀",
+                  "image_url": "/static/vocab_images/gpt_small.png"
                 }
               ]
             },

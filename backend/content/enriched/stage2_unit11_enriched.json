@@ -76,29 +76,32 @@
                 {
                   "word": "basketball",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A game with a big orange ball.",
+                  "example": "He plays basketball outside.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/basketball.png"
                 },
                 {
                   "word": "football",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A game with a ball and goals.",
+                  "example": "I play football.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/football.png"
                 },
                 {
                   "word": "tennis",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A game with rackets and a ball.",
+                  "example": "They play tennis.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/tennis.png"
                 },
                 {
                   "word": "game",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A fun activity to play.",
+                  "example": "I play a game.",
                   "image_emoji": ""
                 }
               ]
@@ -795,30 +798,33 @@
                 {
                   "word": "guitar",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A musical instrument with strings.",
+                  "example": "She plays the guitar.",
                   "image_emoji": ""
                 },
                 {
                   "word": "piano",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A big instrument with keys you press.",
+                  "example": "He plays the piano.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/piano.png"
                 },
                 {
                   "word": "paint",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "To use color to make pictures.",
+                  "example": "I want to paint a tree.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_paint.png"
                 },
                 {
                   "word": "photo",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A picture taken with a camera.",
+                  "example": "This is a photo of me.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_photo.png"
                 }
               ]
             },
@@ -1421,30 +1427,32 @@
                 {
                   "word": "always",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Every time, without fail.",
+                  "example": "I always brush my teeth.",
                   "image_emoji": ""
                 },
                 {
                   "word": "never",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Not at any time.",
+                  "example": "I never eat bugs.",
                   "image_emoji": ""
                 },
                 {
                   "word": "sometimes",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Not always; only at times.",
+                  "example": "We sometimes go to the park.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_sometimes.png"
                 },
                 {
                   "word": "radio",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A machine that plays sound.",
+                  "example": "Music plays on the radio.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/radio.png"
                 }
               ]
             },

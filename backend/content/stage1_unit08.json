@@ -8,7 +8,11 @@
       "title": "Animals - Farm",
       "subtitle": "Farm Animals and Sounds",
       "phonics_focus": [],
-      "grammar_focus": ["That is a...", "Is that a...?", "It says [Sound]."],
+      "grammar_focus": [
+        "That is a...",
+        "Is that a...?",
+        "It says [Sound]."
+      ],
       "lessons": [
         {
           "lesson_num": 1,
@@ -17,67 +21,145 @@
           "topic": "Big animals and distance grammar",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "video_url": "https://www.youtube.com/watch?v=5oYKonuEJKM",
               "source_channel": "Super Simple Songs",
               "instruction": "Watch 'The Animals On The Farm' and answer:",
               "question_text": "Which animal do you see first?",
-              "correct_answer": "cow", "options": ["cow", "apple", "arm", "ten"],
-              "image_emoji": "🐄", "hint": "It says Moo!"
+              "correct_answer": "cow",
+              "options": [
+                "cow",
+                "apple",
+                "arm",
+                "ten"
+              ],
+              "image_emoji": "🐄",
+              "hint": "It says Moo!"
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "farm", "ipa": "/fɑːrm/", "definition": "A place with animals", "example": "This is a farm.", "image_emoji": "🚜"},
-                {"word": "farmer", "ipa": "/ˈfɑːrmər/", "definition": "A person who works on a farm", "example": "He is a farmer.", "image_emoji": "👨‍🌾"},
-                {"word": "cow", "ipa": "/kaʊ/", "definition": "A big farm animal", "example": "That is a cow.", "image_emoji": "🐄"},
-                {"word": "horse", "ipa": "/hɔːrs/", "definition": "An animal you can ride", "example": "That is a horse.", "image_emoji": "🐎"}
+                {
+                  "word": "farm",
+                  "ipa": "/fɑːrm/",
+                  "definition": "A place with animals",
+                  "example": "This is a farm.",
+                  "image_emoji": "🚜"
+                },
+                {
+                  "word": "farmer",
+                  "ipa": "/ˈfɑːrmər/",
+                  "definition": "A person who works on a farm",
+                  "example": "He is a farmer.",
+                  "image_emoji": "👨‍🌾"
+                },
+                {
+                  "word": "cow",
+                  "ipa": "/kaʊ/",
+                  "definition": "A big farm animal",
+                  "example": "That is a cow.",
+                  "image_emoji": "🐄",
+                  "image_url": "/static/vocab_images/cow.png"
+                },
+                {
+                  "word": "horse",
+                  "ipa": "/hɔːrs/",
+                  "definition": "An animal you can ride",
+                  "example": "That is a horse.",
+                  "image_emoji": "🐎",
+                  "image_url": "/static/vocab_images/horse.png"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the animal you ride: 🐎",
-              "correct_answer": "horse", "options": ["horse", "cow", "farmer", "farm"]
+              "correct_answer": "horse",
+              "options": [
+                "horse",
+                "cow",
+                "farmer",
+                "farm"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "The Farm",
               "text": "Look at the farm. That is a cow. It is big. That is a horse. It is brown. The farmer is happy.",
               "questions": [
-                {"question": "What color is the horse?", "answer": "brown", "options": ["brown", "pink"]}
+                {
+                  "question": "What color is the horse?",
+                  "answer": "brown",
+                  "options": [
+                    "brown",
+                    "pink"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "That is a ___.",
               "explanation": "Use 'That is' for something not close to you.",
-              "examples": ["That is a cow.", "That is a horse."]
+              "examples": [
+                "That is a cow.",
+                "That is a horse."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "word_order",
-              "words": ["That", "is", "a", "big", "cow"],
+              "words": [
+                "That",
+                "is",
+                "a",
+                "big",
+                "cow"
+              ],
               "correct_sentence": "That is a big cow."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "Look! That is a brown horse and a big cow.",
-              "questions": [{"question": "What animal is big?", "answer": "cow"}]
+              "questions": [
+                {
+                  "question": "What animal is big?",
+                  "answer": "cow"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Point and Say: That is a cow.",
               "expected_text": "that is a cow",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Match 🐄 sound:",
-              "correct_answer": "moo", "options": ["moo", "baa", "quack"]
+              "correct_answer": "moo",
+              "options": [
+                "moo",
+                "baa",
+                "quack"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Animals On The Farm", "url": "https://www.youtube.com/watch?v=5oYKonuEJKM", "type": "youtube"}
+            {
+              "label": "Animals On The Farm",
+              "url": "https://www.youtube.com/watch?v=5oYKonuEJKM",
+              "type": "youtube"
+            }
           ]
         },
         {
@@ -87,61 +169,135 @@
           "topic": "Small animals and colors",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "Recall Lesson 1: Match 👨‍🌾",
-              "correct_answer": "farmer", "options": ["farmer", "farm", "horse"],
+              "correct_answer": "farmer",
+              "options": [
+                "farmer",
+                "farm",
+                "horse"
+              ],
               "hint": "The person on the farm."
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "sheep", "ipa": "/ʃiːp/", "definition": "A white woolly animal", "example": "The sheep is white.", "image_emoji": "🐑"},
-                {"word": "duck", "ipa": "/dʌk/", "definition": "A bird that swims", "example": "The duck is yellow.", "image_emoji": "🦆"},
-                {"word": "white", "ipa": "/waɪt/", "definition": "Color of milk", "example": "I see a white sheep.", "image_emoji": "⚪"},
-                {"word": "swim", "ipa": "/swɪm/", "definition": "To move in water", "example": "The duck can swim.", "image_emoji": "🏊"}
+                {
+                  "word": "sheep",
+                  "ipa": "/ʃiːp/",
+                  "definition": "A white woolly animal",
+                  "example": "The sheep is white.",
+                  "image_emoji": "🐑",
+                  "image_url": "/static/vocab_images/sheep.png"
+                },
+                {
+                  "word": "duck",
+                  "ipa": "/dʌk/",
+                  "definition": "A bird that swims",
+                  "example": "The duck is yellow.",
+                  "image_emoji": "🦆",
+                  "image_url": "/static/vocab_images/duck.png"
+                },
+                {
+                  "word": "white",
+                  "ipa": "/waɪt/",
+                  "definition": "Color of milk",
+                  "example": "I see a white sheep.",
+                  "image_emoji": "⚪",
+                  "image_url": "/static/vocab_images/gpt_white.png"
+                },
+                {
+                  "word": "swim",
+                  "ipa": "/swɪm/",
+                  "definition": "To move in water",
+                  "example": "The duck can swim.",
+                  "image_emoji": "🏊",
+                  "image_url": "/static/vocab_images/swim.png"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the animal that swims: 🦆",
-              "correct_answer": "duck", "options": ["duck", "sheep", "horse", "cow"]
+              "correct_answer": "duck",
+              "options": [
+                "duck",
+                "sheep",
+                "horse",
+                "cow"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "White Sheep",
               "text": "I see one white sheep. I see two yellow ducks. The ducks can swim. I like the farm!",
               "questions": [
-                {"question": "How many ducks?", "answer": "two", "options": ["one", "two", "ten"]}
+                {
+                  "question": "How many ducks?",
+                  "answer": "two",
+                  "options": [
+                    "one",
+                    "two",
+                    "ten"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "Is that a ___?",
               "explanation": "Use this to ask a question about an animal.",
-              "examples": ["Is that a sheep?", "Is that a duck?"]
+              "examples": [
+                "Is that a sheep?",
+                "Is that a duck?"
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "fill_blank",
               "sentence": "______ that a duck?",
-              "correct_answer": "Is", "options": ["Is", "Am", "Are"],
+              "correct_answer": "Is",
+              "options": [
+                "Is",
+                "Am",
+                "Are"
+              ],
               "hint": "Question for one animal."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "Is that a white sheep? Yes, it is.",
-              "questions": [{"question": "What color is the sheep?", "answer": "white"}]
+              "questions": [
+                {
+                  "question": "What color is the sheep?",
+                  "answer": "white"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Ask: Is that a duck?",
               "expected_text": "is that a duck",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Match ⚪:",
-              "correct_answer": "white", "options": ["white", "red", "blue"]
+              "correct_answer": "white",
+              "options": [
+                "white",
+                "red",
+                "blue"
+              ]
             }
           ],
           "extra_links": []
@@ -153,61 +309,127 @@
           "topic": "Birds, pigs and animal sound recognition",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "What animal says Quack?",
-              "correct_answer": "duck", "options": ["duck", "sheep", "cow"],
+              "correct_answer": "duck",
+              "options": [
+                "duck",
+                "sheep",
+                "cow"
+              ],
               "image_emoji": "🦆"
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "pig", "ipa": "/pɪɡ/", "definition": "A pink farm animal", "example": "The pig is pink.", "image_emoji": "🐷"},
-                {"word": "chicken", "ipa": "/ˈtʃɪkɪn/", "definition": "A bird on the farm", "example": "That is a chicken.", "image_emoji": "🐔"},
-                {"word": "egg", "ipa": "/eɡ/", "definition": "Chicken gives this", "example": "I see ten eggs.", "image_emoji": "🥚"},
-                {"word": "mud", "ipa": "/mʌd/", "definition": "Wet dirt", "example": "The pig likes mud.", "image_emoji": "💩"}
+                {
+                  "word": "pig",
+                  "ipa": "/pɪɡ/",
+                  "definition": "A pink farm animal",
+                  "example": "The pig is pink.",
+                  "image_emoji": "🐷",
+                  "image_url": "/static/vocab_images/gpt_pig.png"
+                },
+                {
+                  "word": "chicken",
+                  "ipa": "/ˈtʃɪkɪn/",
+                  "definition": "A bird on the farm",
+                  "example": "That is a chicken.",
+                  "image_emoji": "🐔",
+                  "image_url": "/static/vocab_images/chicken.png"
+                },
+                {
+                  "word": "egg",
+                  "ipa": "/eɡ/",
+                  "definition": "Chicken gives this",
+                  "example": "I see ten eggs.",
+                  "image_emoji": "🥚"
+                },
+                {
+                  "word": "mud",
+                  "ipa": "/mʌd/",
+                  "definition": "Wet dirt",
+                  "example": "The pig likes mud.",
+                  "image_emoji": "💩"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the pink animal: 🐷",
-              "correct_answer": "pig", "options": ["pig", "chicken", "duck", "egg"]
+              "correct_answer": "pig",
+              "options": [
+                "pig",
+                "chicken",
+                "duck",
+                "egg"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "Pink Pig",
               "text": "Look at the pig. It is in the mud. That is a chicken. I see three eggs. The chicken is red and white.",
               "questions": [
-                {"question": "Where is the pig?", "answer": "in the mud", "options": ["in the mud", "in the water"]}
+                {
+                  "question": "Where is the pig?",
+                  "answer": "in the mud",
+                  "options": [
+                    "in the mud",
+                    "in the water"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "It says [Sound].",
               "explanation": "Tell the sound an animal makes.",
-              "examples": ["The cow says moo.", "The pig says oink."]
+              "examples": [
+                "The cow says moo.",
+                "The pig says oink."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "error_hunter",
               "sentence": "The cow say moo.",
               "has_error": true,
               "correct_sentence": "The cow says moo."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "Oink oink! That is a pink pig.",
-              "questions": [{"question": "What animal?", "answer": "pig"}]
+              "questions": [
+                {
+                  "question": "What animal?",
+                  "answer": "pig"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Say: The chicken says cluck.",
               "expected_text": "the chicken says cluck",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "What gives 🥚?",
-              "correct_answer": "chicken", "options": ["chicken", "horse", "pig"]
+              "correct_answer": "chicken",
+              "options": [
+                "chicken",
+                "horse",
+                "pig"
+              ]
             }
           ],
           "extra_links": []
@@ -220,57 +442,123 @@
           "is_review": true,
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "Mastery Check: Which animal is big and brown?",
-              "correct_answer": "horse", "options": ["horse", "duck", "chicken"],
+              "correct_answer": "horse",
+              "options": [
+                "horse",
+                "duck",
+                "chicken"
+              ],
               "image_emoji": "🐎"
             },
             {
-              "step": 2, "type": "vocabulary_review",
-              "items": ["farm", "farmer", "cow", "horse", "sheep", "duck", "pig", "chicken", "egg", "white", "mud", "swim"]
-            },
-            {
-              "step": 3, "type": "micro_game_vocab",
-              "question_text": "Match 🐑:",
-              "correct_answer": "sheep", "options": ["sheep", "cow", "pig", "duck"]
-            },
-            {
-              "step": 4, "type": "micro_reading",
-              "title": "A Day on the Farm",
-              "text": "Hello, I am a farmer. This is my farm. I have ten white sheep and two big cows. Look! That is a pink pig. The ducks can swim. I am very happy!",
-              "questions": [
-                {"question": "How many sheep?", "answer": "ten", "options": ["two", "ten", "six"]}
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "farm",
+                "farmer",
+                "cow",
+                "horse",
+                "sheep",
+                "duck",
+                "pig",
+                "chicken",
+                "egg",
+                "white",
+                "mud",
+                "swim"
               ]
             },
             {
-              "step": 5, "type": "grammar_review",
-              "patterns": ["That is a...", "Is that a...?", "It says..."]
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match 🐑:",
+              "correct_answer": "sheep",
+              "options": [
+                "sheep",
+                "cow",
+                "pig",
+                "duck"
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 4,
+              "type": "micro_reading",
+              "title": "A Day on the Farm",
+              "text": "Hello, I am a farmer. This is my farm. I have ten white sheep and two big cows. Look! That is a pink pig. The ducks can swim. I am very happy!",
+              "questions": [
+                {
+                  "question": "How many sheep?",
+                  "answer": "ten",
+                  "options": [
+                    "two",
+                    "ten",
+                    "six"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "That is a...",
+                "Is that a...?",
+                "It says..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
               "mode": "word_order",
-              "words": ["Is", "that", "a", "white", "sheep", "?"],
+              "words": [
+                "Is",
+                "that",
+                "a",
+                "white",
+                "sheep",
+                "?"
+              ],
               "correct_sentence": "Is that a white sheep?"
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "The cow says moo and the pig says oink.",
-              "questions": [{"question": "What does the cow say?", "answer": "moo"}]
+              "questions": [
+                {
+                  "question": "What does the cow say?",
+                  "answer": "moo"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Farm Tour: Say three animals you see on the farm.",
               "expected_text": "i see a cow a horse and a pig",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Final Check: Choose the bird.",
-              "correct_answer": "duck", "options": ["duck", "pig", "cow"]
+              "correct_answer": "duck",
+              "options": [
+                "duck",
+                "pig",
+                "cow"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Farm Animals Song", "url": "https://www.youtube.com/watch?v=5oYKonuEJKM", "type": "youtube"}
+            {
+              "label": "Farm Animals Song",
+              "url": "https://www.youtube.com/watch?v=5oYKonuEJKM",
+              "type": "youtube"
+            }
           ]
         }
       ]

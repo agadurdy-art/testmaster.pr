@@ -86,21 +86,24 @@
                   "ipa": "/ˈtiːtʃər/",
                   "definition": "Person who helps you learn",
                   "example": "I am a teacher.",
-                  "image_emoji": "👩‍🏫"
+                  "image_emoji": "👩‍🏫",
+                  "image_url": "/static/vocab_images/gpt_teacher.png"
                 },
                 {
                   "word": "student",
                   "ipa": "/ˈstuːdənt/",
                   "definition": "Person learning at school",
                   "example": "I am a student.",
-                  "image_emoji": "🙋‍♂️"
+                  "image_emoji": "🙋‍♂️",
+                  "image_url": "/static/vocab_images/gpt_student.png"
                 },
                 {
                   "word": "apple",
                   "ipa": "/ˈæpl/",
                   "definition": "A red/green fruit",
                   "example": "This is an apple.",
-                  "image_emoji": "🍎"
+                  "image_emoji": "🍎",
+                  "image_url": "/static/vocab_images/apple.png"
                 }
               ]
             },
@@ -820,14 +823,16 @@
                   "ipa": "/bɔːl/",
                   "definition": "A round toy (Sound B)",
                   "example": "I have a ball.",
-                  "image_emoji": "⚽"
+                  "image_emoji": "⚽",
+                  "image_url": "/static/vocab_images/ball.png"
                 },
                 {
                   "word": "cat",
                   "ipa": "/kæt/",
                   "definition": "A small pet (Sound C)",
                   "example": "I have a cat.",
-                  "image_emoji": "🐱"
+                  "image_emoji": "🐱",
+                  "image_url": "/static/vocab_images/cat.png"
                 }
               ]
             },
@@ -1490,7 +1495,8 @@
                   "ipa": "/dɔːɡ/",
                   "definition": "A pet (Sound D)",
                   "example": "This is a dog.",
-                  "image_emoji": "🐶"
+                  "image_emoji": "🐶",
+                  "image_url": "/static/vocab_images/dog.png"
                 },
                 {
                   "word": "egg",

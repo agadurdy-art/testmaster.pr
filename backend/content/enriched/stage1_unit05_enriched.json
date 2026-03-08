@@ -94,14 +94,16 @@
                   "ipa": "/ʌmˈbrɛlə/",
                   "definition": "Keeps you dry from rain",
                   "example": "I have an umbrella.",
-                  "image_emoji": "☂️"
+                  "image_emoji": "☂️",
+                  "image_url": "/static/vocab_images/gpt_umbrella.png"
                 },
                 {
                   "word": "van",
                   "ipa": "/væn/",
                   "definition": "Big car for family",
                   "example": "This is my van.",
-                  "image_emoji": "🛈"
+                  "image_emoji": "🛈",
+                  "image_url": "/static/vocab_images/gpt_van.png"
                 }
               ]
             },
@@ -575,28 +577,32 @@
                   "ipa": "/ˈbrʌðər/",
                   "definition": "A boy in your family.",
                   "example": "This is my brother.",
-                  "image_emoji": "👦"
+                  "image_emoji": "👦",
+                  "image_url": "/static/vocab_images/brother.png"
                 },
                 {
                   "word": "sister",
                   "ipa": "/ˈsɪstər/",
                   "definition": "A girl in your family.",
                   "example": "My sister is happy.",
-                  "image_emoji": "👧"
+                  "image_emoji": "👧",
+                  "image_url": "/static/vocab_images/sister.png"
                 },
                 {
                   "word": "watch",
                   "ipa": "/wɑːtʃ/",
                   "definition": "Shows the time on wrist.",
                   "example": "I have a watch.",
-                  "image_emoji": "⏱"
+                  "image_emoji": "⏱",
+                  "image_url": "/static/vocab_images/watch.png"
                 },
                 {
                   "word": "box",
                   "ipa": "/bɒks/",
                   "definition": "Put things in it.",
                   "example": "This is my box.",
-                  "image_emoji": "📦"
+                  "image_emoji": "📦",
+                  "image_url": "/static/vocab_images/box.png"
                 }
               ]
             },
@@ -1039,21 +1045,24 @@
                   "ipa": "/ˈbeɪ.bi/",
                   "definition": "A tiny child",
                   "example": "My baby is cute.",
-                  "image_emoji": "👶"
+                  "image_emoji": "👶",
+                  "image_url": "/static/vocab_images/baby.png"
                 },
                 {
                   "word": "yo-yo",
                   "ipa": "/ˈjoʊ.joʊ/",
                   "definition": "Up and down toy",
                   "example": "I have a yo-yo.",
-                  "image_emoji": "🪀"
+                  "image_emoji": "🪀",
+                  "image_url": "/static/vocab_images/gpt_yo-yo.png"
                 },
                 {
                   "word": "zebra",
                   "ipa": "/ˈziː.brə/",
                   "definition": "Stripy horse",
                   "example": "This is my zebra toy.",
-                  "image_emoji": "🦓"
+                  "image_emoji": "🦓",
+                  "image_url": "/static/vocab_images/gpt_zebra.png"
                 }
               ]
             },

@@ -7,8 +7,18 @@
       "unit_num": 1,
       "title": "Hello & My Sounds",
       "subtitle": "Greetings and Phonics A-E",
-      "phonics_focus": ["A", "B", "C", "D", "E"],
-      "grammar_focus": ["I am...", "I have...", "This is..."],
+      "phonics_focus": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "grammar_focus": [
+        "I am...",
+        "I have...",
+        "This is..."
+      ],
       "lessons": [
         {
           "lesson_num": 1,
@@ -17,70 +27,148 @@
           "topic": "Greetings and the sound of A",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "video_url": "https://www.youtube.com/watch?v=tVlcKp3bWH8",
               "question_text": "Watch the 'Hello' song. Which one is a greeting?",
               "correct_answer": "hello",
-              "options": ["hello", "apple", "cat", "dog"],
+              "options": [
+                "hello",
+                "apple",
+                "cat",
+                "dog"
+              ],
               "image_emoji": "👋",
               "hint": "You say this when you see someone."
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "hello", "ipa": "/həˈloʊ/", "definition": "A greeting", "example": "Hello, Teacher!", "image_emoji": "👋"},
-                {"word": "teacher", "ipa": "/ˈtiːtʃər/", "definition": "Person who helps you learn", "example": "I am a teacher.", "image_emoji": "👩‍🏫"},
-                {"word": "student", "ipa": "/ˈstuːdənt/", "definition": "Person learning at school", "example": "I am a student.", "image_emoji": "🙋‍♂️"},
-                {"word": "apple", "ipa": "/ˈæpl/", "definition": "A red/green fruit", "example": "This is an apple.", "image_emoji": "🍎"}
+                {
+                  "word": "hello",
+                  "ipa": "/həˈloʊ/",
+                  "definition": "A greeting",
+                  "example": "Hello, Teacher!",
+                  "image_emoji": "👋"
+                },
+                {
+                  "word": "teacher",
+                  "ipa": "/ˈtiːtʃər/",
+                  "definition": "Person who helps you learn",
+                  "example": "I am a teacher.",
+                  "image_emoji": "👩‍🏫",
+                  "image_url": "/static/vocab_images/gpt_teacher.png"
+                },
+                {
+                  "word": "student",
+                  "ipa": "/ˈstuːdənt/",
+                  "definition": "Person learning at school",
+                  "example": "I am a student.",
+                  "image_emoji": "🙋‍♂️",
+                  "image_url": "/static/vocab_images/gpt_student.png"
+                },
+                {
+                  "word": "apple",
+                  "ipa": "/ˈæpl/",
+                  "definition": "A red/green fruit",
+                  "example": "This is an apple.",
+                  "image_emoji": "🍎",
+                  "image_url": "/static/vocab_images/apple.png"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the person who helps you learn: 👩‍🏫",
               "correct_answer": "teacher",
-              "options": ["teacher", "student", "apple", "hello"]
+              "options": [
+                "teacher",
+                "student",
+                "apple",
+                "hello"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "Hello!",
               "text": "Hello! I am Ben. I am a student. Hello, Teacher! Hello, Apple!",
               "questions": [
-                {"question": "Is Ben a student?", "answer": "yes", "options": ["yes", "no"]}
+                {
+                  "question": "Is Ben a student?",
+                  "answer": "yes",
+                  "options": [
+                    "yes",
+                    "no"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "I am a ___.",
               "explanation": "Use 'I am' to tell who you are.",
-              "examples": ["I am a student.", "I am a teacher."]
+              "examples": [
+                "I am a student.",
+                "I am a teacher."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "word_order",
-              "words": ["I", "am", "a", "teacher"],
+              "words": [
+                "I",
+                "am",
+                "a",
+                "teacher"
+              ],
               "correct_sentence": "I am a teacher."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "Hello! I am a teacher.",
-              "questions": [{"question": "Who is speaking?", "answer": "teacher"}]
+              "questions": [
+                {
+                  "question": "Who is speaking?",
+                  "answer": "teacher"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Say: Hello, I am a student.",
               "expected_text": "Hello, I am a student",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "I ___ Ben.",
               "correct_answer": "am",
-              "options": ["am", "apple", "hello"]
+              "options": [
+                "am",
+                "apple",
+                "hello"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Hello Song", "url": "https://www.youtube.com/watch?v=tVlcKp3bWH8", "type": "youtube"},
-            {"label": "Phonics A", "url": "https://www.youtube.com/watch?v=BELlZKpi1Zs", "type": "youtube"}
+            {
+              "label": "Hello Song",
+              "url": "https://www.youtube.com/watch?v=tVlcKp3bWH8",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics A",
+              "url": "https://www.youtube.com/watch?v=BELlZKpi1Zs",
+              "type": "youtube"
+            }
           ]
         },
         {
@@ -90,70 +178,146 @@
           "topic": "Daily Greetings and sounds of B and C",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "Match the student from Lesson 1: 🙋‍♂️",
               "correct_answer": "student",
-              "options": ["student", "teacher", "apple"],
+              "options": [
+                "student",
+                "teacher",
+                "apple"
+              ],
               "hint": "The person who learns."
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "morning", "ipa": "/ˈmɔːrnɪŋ/", "definition": "The start of the day", "example": "Good morning!", "image_emoji": "🌅"},
-                {"word": "fine", "ipa": "/faɪn/", "definition": "Feeling good", "example": "I am fine.", "image_emoji": "😊"},
-                {"word": "ball", "ipa": "/bɔːl/", "definition": "A round toy (Sound B)", "example": "I have a ball.", "image_emoji": "⚽"},
-                {"word": "cat", "ipa": "/kæt/", "definition": "A small pet (Sound C)", "example": "I have a cat.", "image_emoji": "🐱"}
+                {
+                  "word": "morning",
+                  "ipa": "/ˈmɔːrnɪŋ/",
+                  "definition": "The start of the day",
+                  "example": "Good morning!",
+                  "image_emoji": "🌅"
+                },
+                {
+                  "word": "fine",
+                  "ipa": "/faɪn/",
+                  "definition": "Feeling good",
+                  "example": "I am fine.",
+                  "image_emoji": "😊"
+                },
+                {
+                  "word": "ball",
+                  "ipa": "/bɔːl/",
+                  "definition": "A round toy (Sound B)",
+                  "example": "I have a ball.",
+                  "image_emoji": "⚽",
+                  "image_url": "/static/vocab_images/ball.png"
+                },
+                {
+                  "word": "cat",
+                  "ipa": "/kæt/",
+                  "definition": "A small pet (Sound C)",
+                  "example": "I have a cat.",
+                  "image_emoji": "🐱",
+                  "image_url": "/static/vocab_images/cat.png"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the animal: 🐱",
               "correct_answer": "cat",
-              "options": ["cat", "ball", "apple", "teacher"]
+              "options": [
+                "cat",
+                "ball",
+                "apple",
+                "teacher"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "My Morning",
               "text": "Good morning! I am fine. I have a ball. I have a cat. Hello, Cat!",
               "questions": [
-                {"question": "How is he?", "answer": "fine", "options": ["fine", "apple"]}
+                {
+                  "question": "How is he?",
+                  "answer": "fine",
+                  "options": [
+                    "fine",
+                    "apple"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "I have a ___.",
               "explanation": "Use 'I have' for things you own.",
-              "examples": ["I have a ball.", "I have a cat."]
+              "examples": [
+                "I have a ball.",
+                "I have a cat."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "fill_blank",
               "sentence": "I have a ______.",
               "correct_answer": "cat",
-              "options": ["cat", "am", "fine", "morning"],
+              "options": [
+                "cat",
+                "am",
+                "fine",
+                "morning"
+              ],
               "hint": "It says meow."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "Good morning! I have a ball.",
-              "questions": [{"question": "What does he have?", "answer": "ball"}]
+              "questions": [
+                {
+                  "question": "What does he have?",
+                  "answer": "ball"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Say: Good morning, I am fine.",
               "expected_text": "Good morning, I am fine",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "What is 🌅?",
               "correct_answer": "morning",
-              "options": ["morning", "fine", "cat"]
+              "options": [
+                "morning",
+                "fine",
+                "cat"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Phonics B", "url": "https://www.youtube.com/watch?v=Vu1MN7OUzBs", "type": "youtube"},
-            {"label": "Phonics C", "url": "https://www.youtube.com/watch?v=SuL9Z_el20I", "type": "youtube"}
+            {
+              "label": "Phonics B",
+              "url": "https://www.youtube.com/watch?v=Vu1MN7OUzBs",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics C",
+              "url": "https://www.youtube.com/watch?v=SuL9Z_el20I",
+              "type": "youtube"
+            }
           ]
         },
         {
@@ -163,70 +327,146 @@
           "topic": "Identity and sounds of D and E",
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "What says meow?",
               "correct_answer": "cat",
-              "options": ["cat", "ball", "apple"],
+              "options": [
+                "cat",
+                "ball",
+                "apple"
+              ],
               "image_emoji": "🐱"
             },
             {
-              "step": 2, "type": "vocabulary",
+              "step": 2,
+              "type": "vocabulary",
               "items": [
-                {"word": "boy", "ipa": "/bɔɪ/", "definition": "A male child", "example": "He is a boy.", "image_emoji": "👦"},
-                {"word": "girl", "ipa": "/ɡɜːrl/", "definition": "A female child", "example": "She is a girl.", "image_emoji": "👧"},
-                {"word": "friend", "ipa": "/frend/", "definition": "Someone you like", "example": "This is my friend.", "image_emoji": "🤝"},
-                {"word": "dog", "ipa": "/dɔːɡ/", "definition": "A pet (Sound D)", "example": "This is a dog.", "image_emoji": "🐶"},
-                {"word": "egg", "ipa": "/eɡ/", "definition": "Food from a bird (Sound E)", "example": "This is an egg.", "image_emoji": "🥚"}
+                {
+                  "word": "boy",
+                  "ipa": "/bɔɪ/",
+                  "definition": "A male child",
+                  "example": "He is a boy.",
+                  "image_emoji": "👦"
+                },
+                {
+                  "word": "girl",
+                  "ipa": "/ɡɜːrl/",
+                  "definition": "A female child",
+                  "example": "She is a girl.",
+                  "image_emoji": "👧"
+                },
+                {
+                  "word": "friend",
+                  "ipa": "/frend/",
+                  "definition": "Someone you like",
+                  "example": "This is my friend.",
+                  "image_emoji": "🤝"
+                },
+                {
+                  "word": "dog",
+                  "ipa": "/dɔːɡ/",
+                  "definition": "A pet (Sound D)",
+                  "example": "This is a dog.",
+                  "image_emoji": "🐶",
+                  "image_url": "/static/vocab_images/dog.png"
+                },
+                {
+                  "word": "egg",
+                  "ipa": "/eɡ/",
+                  "definition": "Food from a bird (Sound E)",
+                  "example": "This is an egg.",
+                  "image_emoji": "🥚"
+                }
               ]
             },
             {
-              "step": 3, "type": "micro_game_vocab",
+              "step": 3,
+              "type": "micro_game_vocab",
               "question_text": "Match the friend: 🤝",
               "correct_answer": "friend",
-              "options": ["friend", "boy", "girl", "dog"]
+              "options": [
+                "friend",
+                "boy",
+                "girl",
+                "dog"
+              ]
             },
             {
-              "step": 4, "type": "micro_reading",
+              "step": 4,
+              "type": "micro_reading",
               "title": "My Friend",
               "text": "This is my friend. He is a boy. This is a dog. The dog is his friend too!",
               "questions": [
-                {"question": "Who is the boy?", "answer": "friend", "options": ["friend", "egg"]}
+                {
+                  "question": "Who is the boy?",
+                  "answer": "friend",
+                  "options": [
+                    "friend",
+                    "egg"
+                  ]
+                }
               ]
             },
             {
-              "step": 5, "type": "grammar_focus",
+              "step": 5,
+              "type": "grammar_focus",
               "rule_pattern": "This is my ___.",
               "explanation": "Use 'This is my' to introduce someone.",
-              "examples": ["This is my friend.", "This is my teacher."]
+              "examples": [
+                "This is my friend.",
+                "This is my teacher."
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 6,
+              "type": "grammar_game",
               "mode": "error_hunter",
               "sentence": "This are my friend.",
               "has_error": true,
               "correct_sentence": "This is my friend."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "This is a dog and an egg.",
-              "questions": [{"question": "What animal?", "answer": "dog"}]
+              "questions": [
+                {
+                  "question": "What animal?",
+                  "answer": "dog"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Say: This is my friend.",
               "expected_text": "This is my friend",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Match 👦:",
               "correct_answer": "boy",
-              "options": ["boy", "girl", "dog"]
+              "options": [
+                "boy",
+                "girl",
+                "dog"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Phonics D", "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "type": "youtube"},
-            {"label": "Phonics E", "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "type": "youtube"}
+            {
+              "label": "Phonics D",
+              "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              "type": "youtube"
+            },
+            {
+              "label": "Phonics E",
+              "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              "type": "youtube"
+            }
           ]
         },
         {
@@ -237,59 +477,123 @@
           "is_review": true,
           "steps": [
             {
-              "step": 1, "type": "warm_up",
+              "step": 1,
+              "type": "warm_up",
               "question_text": "Phonics check: Which word starts with 'A'?",
               "correct_answer": "apple",
-              "options": ["apple", "ball", "cat", "dog"]
-            },
-            {
-              "step": 2, "type": "vocabulary_review",
-              "items": ["hello", "teacher", "student", "morning", "fine", "boy", "girl", "friend", "apple", "ball", "cat", "dog", "egg"]
-            },
-            {
-              "step": 3, "type": "micro_game_vocab",
-              "question_text": "Match 🥚:",
-              "correct_answer": "egg",
-              "options": ["egg", "dog", "cat", "apple"]
-            },
-            {
-              "step": 4, "type": "micro_reading",
-              "title": "Ben's Day",
-              "text": "Good morning! I am Ben. I am a student. This is my friend. We have a ball and a dog. We are fine.",
-              "questions": [
-                {"question": "What pet do they have?", "answer": "dog", "options": ["dog", "cat", "egg"]}
+              "options": [
+                "apple",
+                "ball",
+                "cat",
+                "dog"
               ]
             },
             {
-              "step": 5, "type": "grammar_review",
-              "patterns": ["I am...", "I have...", "This is my..."]
+              "step": 2,
+              "type": "vocabulary_review",
+              "items": [
+                "hello",
+                "teacher",
+                "student",
+                "morning",
+                "fine",
+                "boy",
+                "girl",
+                "friend",
+                "apple",
+                "ball",
+                "cat",
+                "dog",
+                "egg"
+              ]
             },
             {
-              "step": 6, "type": "grammar_game",
+              "step": 3,
+              "type": "micro_game_vocab",
+              "question_text": "Match 🥚:",
+              "correct_answer": "egg",
+              "options": [
+                "egg",
+                "dog",
+                "cat",
+                "apple"
+              ]
+            },
+            {
+              "step": 4,
+              "type": "micro_reading",
+              "title": "Ben's Day",
+              "text": "Good morning! I am Ben. I am a student. This is my friend. We have a ball and a dog. We are fine.",
+              "questions": [
+                {
+                  "question": "What pet do they have?",
+                  "answer": "dog",
+                  "options": [
+                    "dog",
+                    "cat",
+                    "egg"
+                  ]
+                }
+              ]
+            },
+            {
+              "step": 5,
+              "type": "grammar_review",
+              "patterns": [
+                "I am...",
+                "I have...",
+                "This is my..."
+              ]
+            },
+            {
+              "step": 6,
+              "type": "grammar_game",
               "mode": "word_order",
-              "words": ["This", "is", "my", "dog"],
+              "words": [
+                "This",
+                "is",
+                "my",
+                "dog"
+              ],
               "correct_sentence": "This is my dog."
             },
             {
-              "step": 7, "type": "listening",
+              "step": 7,
+              "type": "listening",
               "audio_text": "Hello, I am a girl. I have an egg.",
-              "questions": [{"question": "Who is she?", "answer": "girl"}]
+              "questions": [
+                {
+                  "question": "Who is she?",
+                  "answer": "girl"
+                }
+              ]
             },
             {
-              "step": 8, "type": "production",
+              "step": 8,
+              "type": "production",
               "prompt": "Introduce yourself: Say your name, job (student), and your pet.",
               "expected_text": "Hello I am a student I have a cat",
               "mode": "speaking"
             },
             {
-              "step": 9, "type": "exit_ticket",
+              "step": 9,
+              "type": "exit_ticket",
               "question_text": "Mastery Final: Choose the greeting.",
               "correct_answer": "good morning",
-              "options": ["good morning", "dog", "ball", "egg"]
+              "options": [
+                "good morning",
+                "dog",
+                "ball",
+                "egg"
+              ]
             }
           ],
           "extra_links": [
-            {"label": "Phonics A-E Review", "url": "https://www.youtube.com/watch?v=BELlZKpi1Zs", "type": "youtube"}
+            {
+              "label": "Phonics A-E Review",
+              "url": "https://www.youtube.com/watch?v=BELlZKpi1Zs",
+              "type": "youtube"
+            }
           ]
         }
       ]

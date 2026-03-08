@@ -42,30 +42,33 @@
                 {
                   "word": "son",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A boy child of parents.",
+                  "example": "My son is happy.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_son.png"
                 },
                 {
                   "word": "daughter",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A girl child of a mother or father.",
+                  "example": "I am her daughter.",
                   "image_emoji": ""
                 },
                 {
                   "word": "baby",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A very young child.",
+                  "example": "The baby is sleeping.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/baby.png"
                 },
                 {
                   "word": "parent",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A mom or dad.",
+                  "example": "My parent reads to me.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_parent.png"
                 }
               ]
             },
@@ -155,23 +158,25 @@
                 {
                   "word": "uncle",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Your mom or dad's brother.",
+                  "example": "My uncle is funny.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_uncle.png"
                 },
                 {
                   "word": "aunt",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Your mom or dad's sister.",
+                  "example": "My aunt is visiting us.",
                   "image_emoji": ""
                 },
                 {
                   "word": "cousin",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A child of your aunt or uncle.",
+                  "example": "She is my cousin.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/cousin.png"
                 }
               ]
             },
@@ -261,30 +266,34 @@
                 {
                   "word": "man",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A grown-up boy.",
+                  "example": "The man is tall.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/man.png"
                 },
                 {
                   "word": "woman",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A grown-up girl.",
+                  "example": "The woman is happy.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_woman.png"
                 },
                 {
                   "word": "children",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "More than one child.",
+                  "example": "The children play.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/children.png"
                 },
                 {
                   "word": "person",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A human being.",
+                  "example": "She is a kind person.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_person.png"
                 }
               ]
             },

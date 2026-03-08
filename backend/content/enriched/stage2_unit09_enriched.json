@@ -75,30 +75,32 @@
                 {
                   "word": "eating",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Taking in food.",
+                  "example": "She is eating an apple.",
                   "image_emoji": ""
                 },
                 {
                   "word": "drinking",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Taking in liquid.",
+                  "example": "He is drinking juice.",
                   "image_emoji": ""
                 },
                 {
                   "word": "playing",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Having fun with toys or friends.",
+                  "example": "They are playing games.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_playing.png"
                 },
                 {
                   "word": "wearing",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Having clothes on.",
+                  "example": "She is wearing a dress.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_wearing.png"
                 }
               ]
             },
@@ -803,15 +805,16 @@
                 {
                   "word": "sleeping",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The time when you are not awake.",
+                  "example": "The cat is sleeping.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_sleeping.png"
                 },
                 {
                   "word": "drawing",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Making pictures with pencils or crayons.",
+                  "example": "She is drawing a house.",
                   "image_emoji": ""
                 },
                 {
@@ -819,13 +822,14 @@
                   "ipa": "",
                   "definition": "",
                   "example": "",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_watching_tv.png"
                 },
                 {
                   "word": "listening to music",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Hearing songs or sound.",
+                  "example": "She is listening to music.",
                   "image_emoji": ""
                 }
               ]
@@ -1436,30 +1440,33 @@
                 {
                   "word": "running",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Moving quickly on foot.",
+                  "example": "The dog is running fast.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_running.png"
                 },
                 {
                   "word": "singing",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Making music with your voice.",
+                  "example": "She is singing a song.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_singing.png"
                 },
                 {
                   "word": "dancing",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Moving your body to music.",
+                  "example": "She is dancing happily.",
                   "image_emoji": ""
                 },
                 {
                   "word": "reading",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Looking at words and understanding them.",
+                  "example": "She is reading a book.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_reading.png"
                 }
               ]
             },

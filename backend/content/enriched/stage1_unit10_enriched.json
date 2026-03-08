@@ -74,28 +74,32 @@
                   "ipa": "/bæɡ/",
                   "definition": "It carries your things.",
                   "example": "I have a blue bag.",
-                  "image_emoji": "🎒"
+                  "image_emoji": "🎒",
+                  "image_url": "/static/vocab_images/bag.png"
                 },
                 {
                   "word": "book",
                   "ipa": "/bʊk/",
                   "definition": "Pages you read together.",
                   "example": "What is in your book?",
-                  "image_emoji": "📚"
+                  "image_emoji": "📚",
+                  "image_url": "/static/vocab_images/book.png"
                 },
                 {
                   "word": "school",
                   "ipa": "/skuːl/",
                   "definition": "Place to have fun learning.",
                   "example": "It is on the school table.",
-                  "image_emoji": "🏫"
+                  "image_emoji": "🏫",
+                  "image_url": "/static/vocab_images/gpt_school.png"
                 },
                 {
                   "word": "open",
                   "ipa": "/ˈoʊ.pən/",
                   "definition": "Move to see inside.",
                   "example": "I open the book.",
-                  "image_emoji": "📝"
+                  "image_emoji": "📝",
+                  "image_url": "/static/vocab_images/open.png"
                 }
               ]
             },
@@ -566,21 +570,24 @@
                   "ipa": "/pɛn/",
                   "definition": "Writes with ink.",
                   "example": "I have a blue pen.",
-                  "image_emoji": "✉️"
+                  "image_emoji": "✉️",
+                  "image_url": "/static/vocab_images/pen.png"
                 },
                 {
                   "word": "pencil",
                   "ipa": "/ˈpɛnsəl/",
                   "definition": "For writing or drawing.",
                   "example": "It is on the table.",
-                  "image_emoji": "✏️"
+                  "image_emoji": "✏️",
+                  "image_url": "/static/vocab_images/pencil.png"
                 },
                 {
                   "word": "write",
                   "ipa": "/raɪt/",
                   "definition": "Make words or letters.",
                   "example": "What is in your notebook?",
-                  "image_emoji": "✍️"
+                  "image_emoji": "✍️",
+                  "image_url": "/static/vocab_images/gpt_write.png"
                 },
                 {
                   "word": "draw",
@@ -1034,7 +1041,8 @@
                   "ipa": "/ˈruː.lər/",
                   "definition": "Helps to measure things.",
                   "example": "I have a long ruler in my bag.",
-                  "image_emoji": "📎"
+                  "image_emoji": "📎",
+                  "image_url": "/static/vocab_images/ruler.png"
                 },
                 {
                   "word": "desk",
@@ -1048,7 +1056,8 @@
                   "ipa": "/ɒn/",
                   "definition": "Above another thing.",
                   "example": "The book is on the desk.",
-                  "image_emoji": "🛃"
+                  "image_emoji": "🛃",
+                  "image_url": "/static/vocab_images/on.png"
                 }
               ]
             },

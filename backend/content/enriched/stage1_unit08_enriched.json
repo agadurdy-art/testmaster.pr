@@ -87,14 +87,16 @@
                   "ipa": "/kaʊ/",
                   "definition": "Big animal that says Moo",
                   "example": "That is a cow. It says Moo!",
-                  "image_emoji": "🐮"
+                  "image_emoji": "🐮",
+                  "image_url": "/static/vocab_images/cow.png"
                 },
                 {
                   "word": "horse",
                   "ipa": "/hɔːrs/",
                   "definition": "Big animal you can ride",
                   "example": "Is that a horse?",
-                  "image_emoji": "🐴"
+                  "image_emoji": "🐴",
+                  "image_url": "/static/vocab_images/horse.png"
                 }
               ]
             },
@@ -549,28 +551,32 @@
                   "ipa": "/ʃiːp/",
                   "definition": "Fluffy, white farm animal",
                   "example": "That is a sheep. It says baa.",
-                  "image_emoji": "🐑"
+                  "image_emoji": "🐑",
+                  "image_url": "/static/vocab_images/sheep.png"
                 },
                 {
                   "word": "duck",
                   "ipa": "/dʌk/",
                   "definition": "Quacks and swims in water",
                   "example": "Is that a duck? It says quack.",
-                  "image_emoji": "🦆"
+                  "image_emoji": "🦆",
+                  "image_url": "/static/vocab_images/duck.png"
                 },
                 {
                   "word": "white",
                   "ipa": "/waɪt/",
                   "definition": "Color like a cloud",
                   "example": "That is a white sheep.",
-                  "image_emoji": "⬜"
+                  "image_emoji": "⬜",
+                  "image_url": "/static/vocab_images/gpt_white.png"
                 },
                 {
                   "word": "swim",
                   "ipa": "/swɪm/",
                   "definition": "Move in water like fish",
                   "example": "The duck can swim.",
-                  "image_emoji": "🌊"
+                  "image_emoji": "🌊",
+                  "image_url": "/static/vocab_images/swim.png"
                 }
               ]
             },
@@ -972,14 +978,16 @@
                   "ipa": "/pɪɡ/",
                   "definition": "Pink animal on the farm",
                   "example": "That is a pig. It says Oink.",
-                  "image_emoji": "🐷"
+                  "image_emoji": "🐷",
+                  "image_url": "/static/vocab_images/gpt_pig.png"
                 },
                 {
                   "word": "chicken",
                   "ipa": "/ˈtʃɪk.ɪn/",
                   "definition": "Farm bird with feathers",
                   "example": "Is that a chicken? It says Cluck.",
-                  "image_emoji": "🐔"
+                  "image_emoji": "🐔",
+                  "image_url": "/static/vocab_images/chicken.png"
                 },
                 {
                   "word": "egg",

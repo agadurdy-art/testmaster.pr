@@ -41,30 +41,34 @@
                 {
                   "word": "shirt",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A piece of clothing for the top of your body.",
+                  "example": "He wears a blue shirt.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shirt.png"
                 },
                 {
                   "word": "skirt",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A piece of clothing that hangs from the waist.",
+                  "example": "Her skirt is pink.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_skirt.png"
                 },
                 {
                   "word": "dress",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A piece of clothing for girls.",
+                  "example": "The dress is blue.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dress.png"
                 },
                 {
                   "word": "trousers",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Long pants for your legs.",
+                  "example": "I wear blue trousers.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_trousers.png"
                 }
               ]
             },
@@ -154,30 +158,34 @@
                 {
                   "word": "shoes",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Things you wear on your feet.",
+                  "example": "I like my new shoes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_shoes.png"
                 },
                 {
                   "word": "socks",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Clothing for your feet.",
+                  "example": "I wear socks with shoes.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_socks.png"
                 },
                 {
                   "word": "jacket",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A piece of clothing for cool weather.",
+                  "example": "I wear a warm jacket.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/jacket.png"
                 },
                 {
                   "word": "hat",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Something to cover your head.",
+                  "example": "I wear a hat.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/hat.png"
                 }
               ]
             },
@@ -267,29 +275,31 @@
                 {
                   "word": "glasses",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Something you wear to see better.",
+                  "example": "He wears glasses.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/glasses.png"
                 },
                 {
                   "word": "handbag",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A small bag for carrying things.",
+                  "example": "She has a handbag.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/handbag.png"
                 },
                 {
                   "word": "clean",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "To make something not dirty.",
+                  "example": "I clean my room.",
                   "image_emoji": ""
                 },
                 {
                   "word": "dirty",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Not clean.",
+                  "example": "The shirt is dirty.",
                   "image_emoji": ""
                 }
               ]

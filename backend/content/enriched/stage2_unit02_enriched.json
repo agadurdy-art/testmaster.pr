@@ -76,37 +76,42 @@
                 {
                   "word": "eleven",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A number after ten.",
+                  "example": "I see eleven stars.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/eleven.png"
                 },
                 {
                   "word": "twelve",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The number 12.",
+                  "example": "Twelve is after eleven.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/twelve.png"
                 },
                 {
                   "word": "thirteen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A number after twelve.",
+                  "example": "I see thirteen stars.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/thirteen.png"
                 },
                 {
                   "word": "fourteen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A number after thirteen.",
+                  "example": "He is fourteen today.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/fourteen.png"
                 },
                 {
                   "word": "fifteen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A number after fourteen.",
+                  "example": "She is fifteen now.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/fifteen.png"
                 }
               ]
             },
@@ -853,37 +858,42 @@
                 {
                   "word": "sixteen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The number after fifteen.",
+                  "example": "She has sixteen toys.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/sixteen.png"
                 },
                 {
                   "word": "seventeen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The number after sixteen.",
+                  "example": "I see seventeen stars.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/seventeen.png"
                 },
                 {
                   "word": "eighteen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The number after seventeen.",
+                  "example": "He has eighteen marbles.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/eighteen.png"
                 },
                 {
                   "word": "nineteen",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The number after eighteen.",
+                  "example": "I see nineteen stars.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/nineteen.png"
                 },
                 {
                   "word": "twenty",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The number 20.",
+                  "example": "I see twenty ducks.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/twenty.png"
                 }
               ]
             },
@@ -1498,44 +1508,49 @@
                 {
                   "word": "purple",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A color made from red and blue.",
+                  "example": "Grapes are purple.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/purple.png"
                 },
                 {
                   "word": "grey",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A color between black and white.",
+                  "example": "The sky is grey.",
                   "image_emoji": ""
                 },
                 {
                   "word": "brown",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A color like chocolate or wood.",
+                  "example": "The dog is brown.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/brown.png"
                 },
                 {
                   "word": "white",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The color of snow.",
+                  "example": "The paper is white.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_white.png"
                 },
                 {
                   "word": "black",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "The darkest color.",
+                  "example": "My cat is black.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/black.png"
                 },
                 {
                   "word": "rainbow",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A band of many colors in the sky.",
+                  "example": "Look, a rainbow in the sky!",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/gpt_rainbow.png"
                 }
               ]
             },

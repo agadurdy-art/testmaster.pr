@@ -77,30 +77,33 @@
                 {
                   "word": "chicken",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A type of bird or its meat.",
+                  "example": "We eat chicken.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/chicken.png"
                 },
                 {
                   "word": "rice",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Small white grains you can eat.",
+                  "example": "I eat rice for lunch.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/rice.png"
                 },
                 {
                   "word": "beans",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Small seeds you can eat.",
+                  "example": "We eat beans for dinner.",
                   "image_emoji": ""
                 },
                 {
                   "word": "bread",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A food made from flour and water.",
+                  "example": "I eat bread.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/bread.png"
                 }
               ]
             },
@@ -801,36 +804,38 @@
                 {
                   "word": "water",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A clear liquid to drink.",
+                  "example": "I drink water.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/water.png"
                 },
                 {
                   "word": "juice",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "A drink made from fruit.",
+                  "example": "I drink apple juice.",
                   "image_emoji": ""
                 },
                 {
                   "word": "milk",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "A white drink from cows.",
+                  "example": "I drink milk.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/milk.png"
                 },
                 {
                   "word": "hot",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "When something feels very warm.",
+                  "example": "The soup is hot.",
                   "image_emoji": ""
                 },
                 {
                   "word": "cold",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "The opposite of hot.",
+                  "example": "The water is cold.",
                   "image_emoji": ""
                 }
               ]
@@ -1468,30 +1473,31 @@
                 {
                   "word": "like",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "When you enjoy something.",
+                  "example": "I like ice cream.",
                   "image_emoji": ""
                 },
                 {
                   "word": "don't like",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "Not to enjoy something.",
+                  "example": "I don't like spinach.",
                   "image_emoji": ""
                 },
                 {
                   "word": "favorite",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
+                  "definition": "The one you like best.",
+                  "example": "Blue is my favorite color.",
                   "image_emoji": ""
                 },
                 {
                   "word": "fruit",
                   "ipa": "",
-                  "definition": "",
-                  "example": "",
-                  "image_emoji": ""
+                  "definition": "Food like apples and bananas.",
+                  "example": "I eat fruit.",
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/fruit.png"
                 }
               ]
             },
