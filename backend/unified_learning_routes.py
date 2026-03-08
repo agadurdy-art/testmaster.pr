@@ -30,7 +30,7 @@ mongo_url = os.environ.get('MONGO_URL')
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ.get('DB_NAME', 'ielts_ace')]
 
-ADMIN_EMAILS = ['aga.durdy@gmail.com', 'stemhousebenluc@gmail.com']
+ADMIN_EMAILS = ['aga.durdy@gmail.com', 'stemhousebenluc@gmail.com', 'admin@ieltsace.com', 'ieltsace@testmaster.pro']
 
 
 async def _is_lesson_unlocked(lesson_id: str, user_id: str, user_email: str = None) -> bool:

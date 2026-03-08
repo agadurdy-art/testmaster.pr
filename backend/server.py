@@ -7539,6 +7539,24 @@ async def auto_seed_unified_learning():
         else:
             logger.info(f"✅ Unified Learning OK: {units_count} units, {lessons_count} lessons")
         
+        # Check if enriched content needs to be merged
+        enriched_dir = f"{content_dir}/enriched"
+        enriched_files = glob.glob(f"{enriched_dir}/stage*_unit*_enriched.json")
+        if enriched_files:
+            # Check if any lesson is missing the enrichment context field
+            not_enriched = await db.unified_lessons.count_documents({"context": {"$exists": False}})
+            needs_enrich = await db.unified_lessons.count_documents({"$or": [
+                {"context": {"$exists": False}},
+                {"context.enriched": {"$ne": True}}
+            ]})
+            if needs_enrich > 0:
+                logger.info(f"⚠️ {needs_enrich} lessons not yet enriched. Running merge...")
+                from routes.content_enrichment import merge_and_seed_content
+                result = await merge_and_seed_content(stage="all")
+                logger.info(f"✅ Merge complete: {result.get('message', 'done')}")
+            else:
+                logger.info(f"✅ All lessons already merged with enriched content")
+        
     except Exception as e:
         logger.error(f"Auto-seed unified learning error: {e}")
         import traceback

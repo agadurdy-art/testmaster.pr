@@ -35,7 +35,13 @@ Full-stack IELTS preparation platform with AI-powered features including vocabul
 - Liz AI Teacher, Emily AI Mentor
 - Level test system
 
-## Completed (March 7, 2026)
+## Completed (March 8, 2026)
+- [x] **Stage 2 Auto-Enrichment on Deploy** - merge-and-seed now supports all stages (not just stage1)
+  - Auto-seed detects missing Stage 2 data and seeds from JSON content files
+  - Auto-merge detects unenriched lessons and merges enriched content (4 vocab games, 5 grammar games per lesson)
+  - Verified: full chain works - seeds 24 units + 96 lessons + enriches all on startup
+- [x] **ADMIN_EMAILS consistency** - unified_learning_routes.py now includes all admin emails
+- [x] **Admin plan dropdown** - all 5 plans available (Free, Explorer, Learner, Achiever, Master)
 - [x] **Centralized Admin Panel** at /admin with 6 management modules
   - User Management, Vocabulary Images, Feedback, Credits, Content Admin, Visual Generator
   - Admin access control (aga.durdy@gmail.com, stemhousebenluc@gmail.com, admin@ieltsace.com)

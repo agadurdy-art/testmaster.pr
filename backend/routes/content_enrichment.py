@@ -135,12 +135,14 @@ async def get_enrichment_status():
 
 
 @router.post("/merge-and-seed")
-async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
+async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None, stage: Optional[str] = "all"):
     """
     MERGE original content with enriched content and seed to database.
     
     Walks original lesson steps, selectively replaces game/quiz sections
     with enriched AI content, and saves merged activity_flow to DB.
+    
+    stage: "stage1", "stage2", or "all" (default)
     """
     from motor.motor_asyncio import AsyncIOMotorClient
     from services.content_merger import ContentMerger
@@ -155,6 +157,15 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
     
     if unit_numbers is None:
         unit_numbers = list(range(1, 13))
+    
+    # Determine which stages to process
+    stage_prefixes = []
+    if stage == "all":
+        stage_prefixes = ["stage1", "stage2"]
+    elif stage in ("stage1", "stage2"):
+        stage_prefixes = [stage]
+    else:
+        stage_prefixes = [stage]
     
     merger = ContentMerger()
     seeded_count = 0
@@ -271,10 +282,11 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
         # Unknown step type - pass through all data
         return {k: v for k, v in step.items() if k not in ('step', 'type')}
     
-    for unit_num in unit_numbers:
+    for stage_prefix in stage_prefixes:
+      for unit_num in unit_numbers:
         unit_str = str(unit_num).zfill(2)
-        original_path = f"{content_dir}/stage1_unit{unit_str}.json"
-        enriched_path = f"{enriched_dir}/stage1_unit{unit_str}_enriched.json"
+        original_path = f"{content_dir}/{stage_prefix}_unit{unit_str}.json"
+        enriched_path = f"{enriched_dir}/{stage_prefix}_unit{unit_str}_enriched.json"
         
         if not os.path.exists(original_path):
             continue
@@ -339,7 +351,8 @@ async def merge_and_seed_content(unit_numbers: Optional[List[int]] = None):
                     {"$set": {
                         "activity_flow": activity_flow,
                         "merged": True,
-                        "merged_at": TS
+                        "merged_at": TS,
+                        "context": {"enriched": True, "enriched_at": TS}
                     }}
                 )
                 seeded_count += 1
