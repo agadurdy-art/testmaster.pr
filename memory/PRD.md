@@ -1,109 +1,65 @@
-# IELTS Ace - AI-Powered IELTS Preparation Platform
+# IELTS Ace - AI-Powered English Learning Platform
 
 ## Original Problem Statement
-Full-stack IELTS preparation platform with AI-powered features including vocabulary, grammar, reading, listening, writing evaluation, speaking practice, and a comprehensive question bank. The platform uses a subscription model with PayPal and bank transfer payment options.
+A full-stack English learning platform (IELTS focused) with React frontend, FastAPI backend, and MongoDB. The platform provides structured learning stages with vocabulary, grammar, games, and AI-powered features.
 
-## User Personas
-- **IELTS Students**: Primary users preparing for IELTS exam (Vietnamese, Turkish, English speakers)
-- **Admin Users**: aga.durdy@gmail.com, stemhousebenluc@gmail.com, admin@ieltsace.com (bypass lesson lock)
-
-## Core Architecture
-- **Frontend**: React (CRA) + Tailwind CSS + Shadcn/UI
-- **Backend**: Monolithic FastAPI (server.py)
-- **Database**: MongoDB (ielts_database)
-- **3rd Party**: PayPal Subscriptions, Anthropic Claude 4.5 (Emergent LLM Key), OpenAI GPT Image 1, ElevenLabs TTS, Azure Speech, Emergent Whisper
-
-## Subscription Plans
-| Plan | Price | Old Name | QR Code File |
-|------|-------|----------|-------------|
-| Explorer | $4.99/mo | Single exam | Single exam 120k.png |
-| Learner | $9/mo | Starter | Starter plan 220k.png |
-| Achiever | $19/mo | Booster | Booster plan 460k.png |
-| Master | $29/mo | Pro | Pro plan 700k.png |
+## Architecture
+- **Frontend:** React (port 3000)
+- **Backend:** FastAPI (port 8001)
+- **Database:** MongoDB (ielts_database)
+- **Key Integrations:** PayPal, Claude Sonnet 4.5, OpenAI GPT Image 1, ElevenLabs, Whisper
 
 ## What's Been Implemented
-- Full lesson system with 8 learning stages (Pre-A1 to IELTS)
-- Smart Lock lesson progression (sequential unlock, admin bypass)
-- Bank transfer 30-day plan expiry system
-- Bank transfer QR code modal with plan-specific VietQR codes
-- PayPal recurring subscriptions
-- Question Bank (1420+ questions)
-- Writing Task evaluation with AI
-- Speaking practice with AI
-- Multi-language UI (EN, VI, TR)
-- Vocabulary games, grammar exercises, listening/reading activities
-- Liz AI Teacher, Emily AI Mentor
-- Level test system
 
-## Completed (March 8, 2026)
-- [x] **Stage 2 Auto-Enrichment on Deploy** - merge-and-seed now supports all stages (not just stage1)
-  - Auto-seed detects missing Stage 2 data and seeds from JSON content files
-  - Auto-merge detects unenriched lessons and merges enriched content (4 vocab games, 5 grammar games per lesson)
-  - Verified: full chain works - seeds 24 units + 96 lessons + enriches all on startup
-- [x] **ADMIN_EMAILS consistency** - unified_learning_routes.py now includes all admin emails
-- [x] **Admin plan dropdown** - all 5 plans available (Free, Explorer, Learner, Achiever, Master)
-- [x] **Centralized Admin Panel** at /admin with 6 management modules
-  - User Management, Vocabulary Images, Feedback, Credits, Content Admin, Visual Generator
-  - Admin access control (aga.durdy@gmail.com, stemhousebenluc@gmail.com, admin@ieltsace.com)
-- [x] **Vocabulary Image Manager** at /admin/vocabulary-images
-  - Expandable Stage > Unit > Lesson > Word hierarchy
-  - Shows all 617 vocabulary words with current images (100% coverage)
-  - Upload new images (file upload) or paste image URLs
-  - Search functionality across all words
-  - Image preview modal
-  - Progress bars showing image coverage per unit
-- [x] **Auto-seed Unified Learning on Startup**
-  - Seeds 8 stages metadata if missing
-  - Loads all content from JSON files (stage1 + stage2, 24 unit files)
-  - Ensures production deployments have all lesson content
-  - Fixed: seed_content_v4.py now handles ALL stages (not just stage1)
-- [x] **ADMIN_EMAILS consistency fix** - backend and frontend now match
+### Core Features
+- Multi-stage learning platform (8 stages, 24 units, 96 lessons)
+- Vocabulary with images, definitions, examples
+- Games: Crossword (rewritten), and others
+- Admin Panel at /admin with Vocabulary Image Manager and User Management
+- Auto-seeding system (idempotent, preserves data)
+- Data persistence via source JSON files
 
-## Completed (Previous Sessions)
-- [x] Bank Transfer QR Code Display
-- [x] Hardcoded Turkish Text in Question Bank
-- [x] Listening Activity Crash fix (.toLowerCase on numbers)
-- [x] Vocabulary Game Image Correction (58% -> 81% -> 100% coverage)
-- [x] Context-Aware Image Generation (55+ new illustrations)
-- [x] Admin Lesson Lock bypass verification
+### Completed (This Session - March 8, 2026)
+- P0: 100% vocabulary image coverage achieved (617/617 words)
+  - 14 new images generated (always, can't, dancing, dirty, drawing, drinking, floor, funny, game, grey, guitar, knees, listening to music, never, new)
+  - 5 existing images linked (big, big ears, clean, long neck, grey)
+  - Updated: mapping files, enriched JSON source files, database
 
-## Admin Accounts (Auto-configured on startup)
-- aga.durdy@gmail.com - Master plan, 25 credits, full access
-- stemhousebenluc@gmail.com - Master plan, 25 credits, full access
-- admin@ieltsace.com - Master plan, 25 credits, full access
-All admin accounts are automatically set to master plan + 25 credits on every server startup.
+### Previously Completed
+- Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
+- Critical Bug Fix: Missing & Unenriched Content for all stages
+- Critical Bug Fix: Crossword Game rewritten
+- Admin Panel: Plan dropdown fixed, admin auto-access on startup
+- ~80+ vocabulary images generated
 
-## P1 - Pending
-- [ ] "Liz" AI as Bilingual Lesson Teacher (2-3 min intro in native language before lessons)
-- [ ] Vocabulary Word Completion Bug - Regression test needed
-- [ ] Map Generator Status - Report to user (no code found)
+## Prioritized Backlog
 
-## P2 - Backlog
-- [ ] Automatic Visual Generation Pipeline
-- [ ] Bank Transfer Expiry Email Reminders (3 days before expiry)
-- [ ] Daily Habit Spaced Repetition System (SRS)
-- [ ] Booster Mode for remedial lessons
-- [ ] Teacher Control Panel
-- [ ] Custom Speaking Agent
-- [ ] User database investigation ("not real users" concern)
-- [ ] server.py refactoring into proper FastAPI project structure
+### P1 - Upcoming
+1. **"Liz" Bilingual Lesson Teacher:** AI tutor explains lesson topic in Turkish before 10-step activity flow
+2. **"Map Generator" Status Report:** Inform user - no existing feature found
+3. **Vocabulary Word Completion Bug:** Regression test - completing one word incorrectly marks all complete
 
-## Key API Endpoints
-- POST /api/v1/payments/upload-bank-transfer - Bank transfer approval
-- GET /api/v1/users/me/plan - User plan with expiry check
-- GET /api/v1/unified-learning/check-lesson-lock-status - Lesson access check
-- GET /api/unified/stages/{stage_id} - Stage units
-- GET /api/admin/vocabulary-groups - Vocabulary words grouped by lesson (admin)
-- POST /api/admin/vocabulary/update-image - Upload/update vocabulary image (admin)
-- POST /api/auth/register - User registration
-- POST /api/auth/login - User login
+### P2 - Future
+- Automatic Visual Generation Pipeline for new lessons
+- Bank Transfer Expiry Reminders (3 days before)
+- "Daily Habit" Spaced Repetition System (SRS)
+- "Booster Mode" for remedial lessons
+- Teacher Control Panel
+- Investigate user database ("not real users" comment)
 
 ## Key Files
-- /app/backend/server.py - Monolithic backend (includes admin vocab endpoints)
-- /app/backend/seed_content_v4.py - Content seeder (all stages)
-- /app/frontend/src/pages/AdminDashboard.js - Central admin hub
-- /app/frontend/src/pages/VocabularyImageManager.js - Image management tool
-- /app/frontend/src/pages/AdminPanel.js - User management (at /admin/users)
-- /app/frontend/src/pages/PricingPage.js - Pricing with QR modal
-- /app/frontend/src/lib/i18n.js - Translations
-- /app/backend/content/ - 24 JSON content files (stage1 + stage2)
+- `/app/backend/server.py` - Core backend
+- `/app/backend/content/enriched/*.json` - Source of truth for enriched content
+- `/app/tools/image_mapping.json` - Word-to-image mapping (301 entries)
+- `/app/tools/gpt_image_mapping.json` - GPT generated images mapping (79 entries)
+- `/app/backend/static/vocab_images/` - Physical image files (~540 files)
+
+## Admin Accounts
+- aga.durdy@gmail.com
+- admin@ieltsace.com
+- stemhousebenluc@gmail.com
+
+## Critical Notes
+- DATA PERSISTENCE: All content changes must be written to enriched JSON source files, not just DB
+- User communicates in Turkish
+- DB_NAME = ielts_database

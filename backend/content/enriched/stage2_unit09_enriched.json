@@ -85,7 +85,8 @@
                   "ipa": "",
                   "definition": "Taking in liquid.",
                   "example": "He is drinking juice.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/drinking.png"
                 },
                 {
                   "word": "playing",
@@ -125,7 +126,8 @@
                         },
                         {
                           "word": "dancing",
-                          "emoji": "💃"
+                          "emoji": "💃",
+                          "image_url": "/static/vocab_images/dancing.png"
                         }
                       ]
                     },
@@ -145,7 +147,8 @@
                           "word": "singing",
                           "emoji": "🎤"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/drinking.png"
                     },
                     {
                       "word": "playing",
@@ -198,7 +201,8 @@
                         },
                         {
                           "word": "drawing",
-                          "emoji": "🖍️"
+                          "emoji": "🖍️",
+                          "image_url": "/static/vocab_images/drawing.png"
                         },
                         {
                           "word": "smiling",
@@ -222,7 +226,8 @@
                           "word": "walking",
                           "emoji": "🚶"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/drinking.png"
                     },
                     {
                       "word": "playing",
@@ -271,7 +276,8 @@
                     },
                     {
                       "word": "drinking",
-                      "emoji": "🥤"
+                      "emoji": "🥤",
+                      "image_url": "/static/vocab_images/drinking.png"
                     },
                     {
                       "word": "playing",
@@ -294,7 +300,8 @@
                     {
                       "word": "drinking",
                       "emoji": "🥤",
-                      "definition": "having water or juice"
+                      "definition": "having water or juice",
+                      "image_url": "/static/vocab_images/drinking.png"
                     },
                     {
                       "word": "playing",
@@ -816,7 +823,8 @@
                   "ipa": "",
                   "definition": "Making pictures with pencils or crayons.",
                   "example": "She is drawing a house.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/drawing.png"
                 },
                 {
                   "word": "watching TV",
@@ -831,7 +839,8 @@
                   "ipa": "",
                   "definition": "Hearing songs or sound.",
                   "example": "She is listening to music.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/listening to music.png"
                 }
               ]
             },
@@ -847,7 +856,8 @@
                     },
                     {
                       "word": "drawing",
-                      "emoji": "✏️"
+                      "emoji": "✏️",
+                      "image_url": "/static/vocab_images/drawing.png"
                     },
                     {
                       "word": "watching TV",
@@ -855,7 +865,8 @@
                     },
                     {
                       "word": "listening to music",
-                      "emoji": "🎵"
+                      "emoji": "🎵",
+                      "image_url": "/static/vocab_images/listening to music.png"
                     }
                   ]
                 },
@@ -870,7 +881,8 @@
                     {
                       "word": "drawing",
                       "emoji": "✏️",
-                      "hint": "You make pictures with a pencil"
+                      "hint": "You make pictures with a pencil",
+                      "image_url": "/static/vocab_images/drawing.png"
                     },
                     {
                       "word": "watching TV",
@@ -880,7 +892,8 @@
                     {
                       "word": "listening to music",
                       "emoji": "🎵",
-                      "hint": "You hear songs"
+                      "hint": "You hear songs",
+                      "image_url": "/static/vocab_images/listening to music.png"
                     }
                   ]
                 },
@@ -1459,7 +1472,8 @@
                   "ipa": "",
                   "definition": "Moving your body to music.",
                   "example": "She is dancing happily.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dancing.png"
                 },
                 {
                   "word": "reading",
@@ -1487,7 +1501,8 @@
                     },
                     {
                       "word": "dancing",
-                      "emoji": "💃"
+                      "emoji": "💃",
+                      "image_url": "/static/vocab_images/dancing.png"
                     },
                     {
                       "word": "reading",
@@ -1523,7 +1538,8 @@
                         "danceing",
                         "dansing",
                         "danzing"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/dancing.png"
                     },
                     {
                       "word": "reading",
@@ -1591,7 +1607,8 @@
                           "word": "pointing",
                           "emoji": "☝️"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/dancing.png"
                     },
                     {
                       "word": "reading",
@@ -1603,7 +1620,8 @@
                         },
                         {
                           "word": "drawing",
-                          "emoji": "🎨"
+                          "emoji": "🎨",
+                          "image_url": "/static/vocab_images/drawing.png"
                         },
                         {
                           "word": "cooking",
@@ -2123,7 +2141,8 @@
                     {
                       "word": "drinking",
                       "definition": "Putting a liquid in your mouth and swallowing it",
-                      "emoji": "🥤"
+                      "emoji": "🥤",
+                      "image_url": "/static/vocab_images/drinking.png"
                     },
                     {
                       "word": "playing",
@@ -2148,7 +2167,8 @@
                     {
                       "word": "dancing",
                       "definition": "Moving your body to music",
-                      "emoji": "💃"
+                      "emoji": "💃",
+                      "image_url": "/static/vocab_images/dancing.png"
                     },
                     {
                       "word": "reading",
@@ -2168,7 +2188,8 @@
                     {
                       "word": "drawing",
                       "definition": "Making pictures with pencils or crayons",
-                      "emoji": "✏️"
+                      "emoji": "✏️",
+                      "image_url": "/static/vocab_images/drawing.png"
                     },
                     {
                       "word": "watching TV",
@@ -2178,7 +2199,8 @@
                     {
                       "word": "listening to music",
                       "definition": "Hearing songs with your ears",
-                      "emoji": "🎵"
+                      "emoji": "🎵",
+                      "image_url": "/static/vocab_images/listening to music.png"
                     },
                     {
                       "word": "eating",

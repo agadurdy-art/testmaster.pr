@@ -824,7 +824,8 @@
                   "ipa": "/njuː/",
                   "definition": "Not old or not known before",
                   "example": "Kim is new.",
-                  "image_emoji": "🆕"
+                  "image_emoji": "🆕",
+                  "image_url": "/static/vocab_images/new.png"
                 },
                 {
                   "word": "old",
@@ -852,7 +853,8 @@
                     },
                     {
                       "word": "new",
-                      "emoji": "🆕"
+                      "emoji": "🆕",
+                      "image_url": "/static/vocab_images/new.png"
                     },
                     {
                       "word": "old",
@@ -876,7 +878,8 @@
                     {
                       "word": "new",
                       "emoji": "🆕",
-                      "hint": "Not old, just got it"
+                      "hint": "Not old, just got it",
+                      "image_url": "/static/vocab_images/new.png"
                     },
                     {
                       "word": "old",
@@ -2170,7 +2173,8 @@
                   "ipa": "",
                   "definition": "Not old or used.",
                   "example": "Look at my new toy!",
-                  "image_emoji": "✨"
+                  "image_emoji": "✨",
+                  "image_url": "/static/vocab_images/new.png"
                 },
                 {
                   "word": "old",
@@ -2243,7 +2247,8 @@
                     {
                       "word": "new",
                       "definition": "Something you just got or just started",
-                      "emoji": "✨"
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/new.png"
                     },
                     {
                       "word": "spell",

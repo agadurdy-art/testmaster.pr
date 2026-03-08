@@ -1518,7 +1518,8 @@
                   "ipa": "",
                   "definition": "A color between black and white.",
                   "example": "The sky is grey.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/grey.png"
                 },
                 {
                   "word": "brown",
@@ -1566,7 +1567,8 @@
                     },
                     {
                       "word": "grey",
-                      "emoji": "🩶"
+                      "emoji": "🩶",
+                      "image_url": "/static/vocab_images/grey.png"
                     },
                     {
                       "word": "brown",
@@ -1605,7 +1607,8 @@
                         "gray",
                         "grae",
                         "grey"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/grey.png"
                     },
                     {
                       "word": "brown",
@@ -1682,7 +1685,8 @@
                           "word": "rock",
                           "emoji": "🪨"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/grey.png"
                     },
                     {
                       "word": "brown",
@@ -1734,7 +1738,8 @@
                         },
                         {
                           "word": "grey",
-                          "emoji": "🩶"
+                          "emoji": "🩶",
+                          "image_url": "/static/vocab_images/grey.png"
                         }
                       ]
                     },
@@ -2350,7 +2355,8 @@
                     {
                       "word": "grey",
                       "definition": "The color of elephants and clouds on rainy days",
-                      "emoji": "🩶"
+                      "emoji": "🩶",
+                      "image_url": "/static/vocab_images/grey.png"
                     },
                     {
                       "word": "black",

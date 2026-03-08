@@ -1042,7 +1042,8 @@
                   "ipa": "/bɪɡ/",
                   "definition": "Larger in size",
                   "example": "This is my big head.",
-                  "image_emoji": "👁"
+                  "image_emoji": "👁",
+                  "image_url": "/static/vocab_images/big.png"
                 },
                 {
                   "word": "small",
@@ -1067,7 +1068,8 @@
                       "distractors": [
                         {
                           "word": "big",
-                          "emoji": "🐘"
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
                         },
                         {
                           "word": "small",
@@ -1095,7 +1097,8 @@
                           "word": "tall",
                           "emoji": "🦒"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/big.png"
                     },
                     {
                       "word": "small",
@@ -1107,7 +1110,8 @@
                         },
                         {
                           "word": "big",
-                          "emoji": "🐘"
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
                         },
                         {
                           "word": "tinny",
@@ -1126,7 +1130,8 @@
                       "distractors": [
                         {
                           "word": "big",
-                          "emoji": "🐘"
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
                         },
                         {
                           "word": "small",
@@ -1154,7 +1159,8 @@
                           "word": "huge",
                           "emoji": "🌄"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/big.png"
                     },
                     {
                       "word": "small",
@@ -1166,7 +1172,8 @@
                         },
                         {
                           "word": "big",
-                          "emoji": "🐘"
+                          "emoji": "🐘",
+                          "image_url": "/static/vocab_images/big.png"
                         },
                         {
                           "word": "little",
@@ -1185,7 +1192,8 @@
                     },
                     {
                       "word": "big",
-                      "emoji": "🐘"
+                      "emoji": "🐘",
+                      "image_url": "/static/vocab_images/big.png"
                     },
                     {
                       "word": "small",

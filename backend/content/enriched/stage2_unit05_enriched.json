@@ -1426,14 +1426,16 @@
                   "ipa": "",
                   "definition": "A neck that is tall.",
                   "example": "Giraffes have long necks.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/long neck.png"
                 },
                 {
                   "word": "big ears",
                   "ipa": "",
                   "definition": "Very large ears on an animal or person.",
                   "example": "The rabbit has big ears.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/big ears.png"
                 },
                 {
                   "word": "scary",
@@ -1448,7 +1450,8 @@
                   "ipa": "",
                   "definition": "Makes you laugh.",
                   "example": "That joke is funny.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/funny.png"
                 }
               ]
             },
@@ -1460,11 +1463,13 @@
                   "items": [
                     {
                       "word": "long neck",
-                      "emoji": "🦒"
+                      "emoji": "🦒",
+                      "image_url": "/static/vocab_images/long neck.png"
                     },
                     {
                       "word": "big ears",
-                      "emoji": "🐘"
+                      "emoji": "🐘",
+                      "image_url": "/static/vocab_images/big ears.png"
                     },
                     {
                       "word": "scary",
@@ -1472,7 +1477,8 @@
                     },
                     {
                       "word": "funny",
-                      "emoji": "😄"
+                      "emoji": "😄",
+                      "image_url": "/static/vocab_images/funny.png"
                     }
                   ]
                 },
@@ -1486,7 +1492,8 @@
                         "long back",
                         "short neck",
                         "long tail"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/long neck.png"
                     },
                     {
                       "word": "big ears",
@@ -1495,7 +1502,8 @@
                         "big eyes",
                         "small ears",
                         "big nose"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/big ears.png"
                     },
                     {
                       "word": "scary",
@@ -1513,7 +1521,8 @@
                         "sunny",
                         "hungry",
                         "silly"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/funny.png"
                     }
                   ]
                 },
@@ -1536,7 +1545,8 @@
                           "word": "long tail",
                           "emoji": "🐒"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/long neck.png"
                     },
                     {
                       "word": "big ears",
@@ -1554,7 +1564,8 @@
                           "word": "big teeth",
                           "emoji": "🦷"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/big ears.png"
                     },
                     {
                       "word": "scary",
@@ -1590,7 +1601,8 @@
                           "word": "worried",
                           "emoji": "😟"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/funny.png"
                     }
                   ]
                 }
@@ -2160,17 +2172,20 @@
                     {
                       "word": "long neck",
                       "definition": "A body part that is very tall",
-                      "emoji": "🦒"
+                      "emoji": "🦒",
+                      "image_url": "/static/vocab_images/long neck.png"
                     },
                     {
                       "word": "big ears",
                       "definition": "Large body parts used for hearing",
-                      "emoji": "🐘"
+                      "emoji": "🐘",
+                      "image_url": "/static/vocab_images/big ears.png"
                     },
                     {
                       "word": "funny",
                       "definition": "Something that makes you laugh",
-                      "emoji": "😄"
+                      "emoji": "😄",
+                      "image_url": "/static/vocab_images/funny.png"
                     },
                     {
                       "word": "tail",

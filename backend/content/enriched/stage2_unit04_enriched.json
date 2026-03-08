@@ -87,7 +87,8 @@
                   "ipa": "",
                   "definition": "Two middle parts of your legs.",
                   "example": "Bend your knees.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/knees.png"
                 },
                 {
                   "word": "toes",
@@ -155,7 +156,8 @@
                           "word": "hat",
                           "emoji": "🎩"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/knees.png"
                     },
                     {
                       "word": "toes",
@@ -250,7 +252,8 @@
                           "word": "ice cream",
                           "emoji": "🍦"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/knees.png"
                     },
                     {
                       "word": "toes",
@@ -317,7 +320,8 @@
                     },
                     {
                       "word": "knees",
-                      "emoji": "🦵"
+                      "emoji": "🦵",
+                      "image_url": "/static/vocab_images/knees.png"
                     },
                     {
                       "word": "toes",
@@ -344,7 +348,8 @@
                     {
                       "word": "knees",
                       "emoji": "🦵",
-                      "definition": "The parts in the middle of your legs that bend"
+                      "definition": "The parts in the middle of your legs that bend",
+                      "image_url": "/static/vocab_images/knees.png"
                     },
                     {
                       "word": "toes",
@@ -1507,7 +1512,8 @@
                   "ipa": "",
                   "definition": "Not able to do something.",
                   "example": "I can't fly.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/can't.png"
                 },
                 {
                   "word": "swim",
@@ -1539,7 +1545,8 @@
                     },
                     {
                       "word": "can't",
-                      "emoji": "❌"
+                      "emoji": "❌",
+                      "image_url": "/static/vocab_images/can't.png"
                     },
                     {
                       "word": "swim",
@@ -1570,7 +1577,8 @@
                         "cat",
                         "ant",
                         "cent"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/can't.png"
                     },
                     {
                       "word": "swim",
@@ -1629,7 +1637,8 @@
                           "word": "question",
                           "emoji": "❓"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/can't.png"
                     },
                     {
                       "word": "swim",
@@ -2181,7 +2190,8 @@
                     {
                       "word": "knees",
                       "definition": "Body parts in the middle of your legs",
-                      "emoji": "🦵"
+                      "emoji": "🦵",
+                      "image_url": "/static/vocab_images/knees.png"
                     },
                     {
                       "word": "toes",

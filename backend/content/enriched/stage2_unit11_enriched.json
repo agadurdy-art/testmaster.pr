@@ -102,7 +102,8 @@
                   "ipa": "",
                   "definition": "A fun activity to play.",
                   "example": "I play a game.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/game.png"
                 }
               ]
             },
@@ -182,7 +183,8 @@
                           "word": "chair",
                           "emoji": "🪑"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/game.png"
                     }
                   ]
                 },
@@ -259,7 +261,8 @@
                           "word": "bag",
                           "emoji": "👜"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/game.png"
                     }
                   ]
                 },
@@ -280,7 +283,8 @@
                     },
                     {
                       "word": "game",
-                      "emoji": "🎮"
+                      "emoji": "🎮",
+                      "image_url": "/static/vocab_images/game.png"
                     }
                   ]
                 },
@@ -305,7 +309,8 @@
                     {
                       "word": "game",
                       "emoji": "🎮",
-                      "definition": "Something fun you play with rules, like a sport or video game"
+                      "definition": "Something fun you play with rules, like a sport or video game",
+                      "image_url": "/static/vocab_images/game.png"
                     }
                   ]
                 }
@@ -800,7 +805,8 @@
                   "ipa": "",
                   "definition": "A musical instrument with strings.",
                   "example": "She plays the guitar.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/guitar.png"
                 },
                 {
                   "word": "piano",
@@ -836,7 +842,8 @@
                   "items": [
                     {
                       "word": "guitar",
-                      "emoji": "🎸"
+                      "emoji": "🎸",
+                      "image_url": "/static/vocab_images/guitar.png"
                     },
                     {
                       "word": "piano",
@@ -858,7 +865,8 @@
                     {
                       "word": "guitar",
                       "emoji": "🎸",
-                      "hint": "You play music with this. It has strings."
+                      "hint": "You play music with this. It has strings.",
+                      "image_url": "/static/vocab_images/guitar.png"
                     },
                     {
                       "word": "piano",
@@ -1429,14 +1437,16 @@
                   "ipa": "",
                   "definition": "Every time, without fail.",
                   "example": "I always brush my teeth.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/always.png"
                 },
                 {
                   "word": "never",
                   "ipa": "",
                   "definition": "Not at any time.",
                   "example": "I never eat bugs.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/never.png"
                 },
                 {
                   "word": "sometimes",
@@ -1464,11 +1474,13 @@
                   "items": [
                     {
                       "word": "always",
-                      "emoji": "💯"
+                      "emoji": "💯",
+                      "image_url": "/static/vocab_images/always.png"
                     },
                     {
                       "word": "never",
-                      "emoji": "🚫"
+                      "emoji": "🚫",
+                      "image_url": "/static/vocab_images/never.png"
                     },
                     {
                       "word": "sometimes",
@@ -1490,7 +1502,8 @@
                         "also",
                         "away",
                         "alway"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/always.png"
                     },
                     {
                       "word": "never",
@@ -1499,7 +1512,8 @@
                         "ever",
                         "naver",
                         "newer"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/never.png"
                     },
                     {
                       "word": "sometimes",
@@ -1540,7 +1554,8 @@
                           "word": "book",
                           "emoji": "📖"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/always.png"
                     },
                     {
                       "word": "never",
@@ -1558,7 +1573,8 @@
                           "word": "apple",
                           "emoji": "🍎"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/never.png"
                     },
                     {
                       "word": "sometimes",
@@ -2118,7 +2134,8 @@
                     {
                       "word": "guitar",
                       "definition": "A musical instrument with strings",
-                      "emoji": "🎸"
+                      "emoji": "🎸",
+                      "image_url": "/static/vocab_images/guitar.png"
                     },
                     {
                       "word": "piano",
@@ -2133,12 +2150,14 @@
                     {
                       "word": "always",
                       "definition": "Every time, all the time",
-                      "emoji": "💯"
+                      "emoji": "💯",
+                      "image_url": "/static/vocab_images/always.png"
                     },
                     {
                       "word": "never",
                       "definition": "Not ever, zero times",
-                      "emoji": "🚫"
+                      "emoji": "🚫",
+                      "image_url": "/static/vocab_images/never.png"
                     },
                     {
                       "word": "sometimes",
@@ -2158,7 +2177,8 @@
                     {
                       "word": "game",
                       "definition": "A fun activity you play",
-                      "emoji": "🎮"
+                      "emoji": "🎮",
+                      "image_url": "/static/vocab_images/game.png"
                     },
                     {
                       "word": "photo",
@@ -2178,12 +2198,14 @@
                     {
                       "word": "guitar",
                       "definition": "A musical instrument with strings",
-                      "emoji": "🎸"
+                      "emoji": "🎸",
+                      "image_url": "/static/vocab_images/guitar.png"
                     },
                     {
                       "word": "always",
                       "definition": "Every time, all the time",
-                      "emoji": "💯"
+                      "emoji": "💯",
+                      "image_url": "/static/vocab_images/always.png"
                     },
                     {
                       "word": "sometimes",

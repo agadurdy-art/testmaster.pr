@@ -1426,14 +1426,16 @@
                   "ipa": "",
                   "definition": "To make something not dirty.",
                   "example": "I clean my room.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/clean.png"
                 },
                 {
                   "word": "dirty",
                   "ipa": "",
                   "definition": "Not clean.",
                   "example": "The shirt is dirty.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/dirty.png"
                 }
               ]
             },
@@ -1453,11 +1455,13 @@
                     },
                     {
                       "word": "clean",
-                      "emoji": "✨"
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/clean.png"
                     },
                     {
                       "word": "dirty",
-                      "emoji": "🟤"
+                      "emoji": "🟤",
+                      "image_url": "/static/vocab_images/dirty.png"
                     }
                   ]
                 },
@@ -1489,7 +1493,8 @@
                         "cleen",
                         "klean",
                         "clene"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/clean.png"
                     },
                     {
                       "word": "dirty",
@@ -1498,7 +1503,8 @@
                         "derty",
                         "dirfy",
                         "durty"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/dirty.png"
                     }
                   ]
                 },
@@ -1555,9 +1561,11 @@
                         },
                         {
                           "word": "new",
-                          "emoji": "🆕"
+                          "emoji": "🆕",
+                          "image_url": "/static/vocab_images/new.png"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/clean.png"
                     },
                     {
                       "word": "dirty",
@@ -1575,7 +1583,8 @@
                           "word": "sad",
                           "emoji": "😢"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/dirty.png"
                     }
                   ]
                 }
@@ -2135,12 +2144,14 @@
                     {
                       "word": "clean",
                       "definition": "Not dirty, nice and fresh",
-                      "emoji": "✨"
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/clean.png"
                     },
                     {
                       "word": "dirty",
                       "definition": "Not clean, has mud or marks",
-                      "emoji": "🟤"
+                      "emoji": "🟤",
+                      "image_url": "/static/vocab_images/dirty.png"
                     }
                   ]
                 },
@@ -2180,12 +2191,14 @@
                     {
                       "word": "clean",
                       "definition": "Not dirty, nice and fresh",
-                      "emoji": "✨"
+                      "emoji": "✨",
+                      "image_url": "/static/vocab_images/clean.png"
                     },
                     {
                       "word": "dirty",
                       "definition": "Not clean, has mud or marks",
-                      "emoji": "🟤"
+                      "emoji": "🟤",
+                      "image_url": "/static/vocab_images/dirty.png"
                     }
                   ]
                 },

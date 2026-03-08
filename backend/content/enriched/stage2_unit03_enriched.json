@@ -199,7 +199,8 @@
                         },
                         {
                           "word": "floor",
-                          "emoji": "🟫"
+                          "emoji": "🟫",
+                          "image_url": "/static/vocab_images/floor.png"
                         },
                         {
                           "word": "wall",
@@ -1520,7 +1521,8 @@
                   "ipa": "",
                   "definition": "The bottom part of a room.",
                   "example": "The toy is on the floor.",
-                  "image_emoji": ""
+                  "image_emoji": "",
+                  "image_url": "/static/vocab_images/floor.png"
                 }
               ]
             },
@@ -1544,7 +1546,8 @@
                     },
                     {
                       "word": "floor",
-                      "emoji": "⬜"
+                      "emoji": "⬜",
+                      "image_url": "/static/vocab_images/floor.png"
                     }
                   ]
                 },
@@ -1585,7 +1588,8 @@
                         "flor",
                         "floar",
                         "flour"
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/floor.png"
                     }
                   ]
                 },
@@ -1662,7 +1666,8 @@
                           "word": "carpet",
                           "emoji": "🟥"
                         }
-                      ]
+                      ],
+                      "image_url": "/static/vocab_images/floor.png"
                     }
                   ]
                 }
@@ -2216,7 +2221,8 @@
                     {
                       "word": "floor",
                       "definition": "You walk on this",
-                      "emoji": "🟫"
+                      "emoji": "🟫",
+                      "image_url": "/static/vocab_images/floor.png"
                     }
                   ]
                 },
@@ -2261,7 +2267,8 @@
                     {
                       "word": "floor",
                       "definition": "What you stand on",
-                      "emoji": "🟫"
+                      "emoji": "🟫",
+                      "image_url": "/static/vocab_images/floor.png"
                     }
                   ]
                 },

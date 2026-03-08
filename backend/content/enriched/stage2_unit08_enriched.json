@@ -219,7 +219,8 @@
                         },
                         {
                           "word": "floor",
-                          "emoji": "⬜"
+                          "emoji": "⬜",
+                          "image_url": "/static/vocab_images/floor.png"
                         },
                         {
                           "word": "ceiling",
