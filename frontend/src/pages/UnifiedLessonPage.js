@@ -41,6 +41,75 @@ import {
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
+// ═══════ FETCH WITH RETRY ═══════
+async function fetchRetry(url, options = {}, retries = 2) {
+  for (let i = 0; i <= retries; i++) {
+    try {
+      const res = await fetch(url, options);
+      return res;
+    } catch (err) {
+      if (i === retries) throw err;
+      await new Promise(r => setTimeout(r, 800 * (i + 1)));
+    }
+  }
+}
+
+// ═══════ ACTIVITY ERROR BOUNDARY ═══════
+class ActivityErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(err, info) { console.error('Activity crash:', err, info); }
+  componentDidUpdate(prevProps) {
+    if (prevProps.activityType !== this.props.activityType) {
+      this.setState({ hasError: false });
+    }
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <Card className="p-8 text-center" data-testid="activity-error-card">
+          <AlertCircle className="w-10 h-10 text-amber-500 mx-auto mb-3" />
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">Bu aktivitede bir sorun oluştu</h3>
+          <p className="text-sm text-gray-500 mb-4">Dersiniz kaybolmadı. Tekrar deneyebilir veya atlayabilirsiniz.</p>
+          <div className="flex gap-3 justify-center">
+            <Button variant="outline" onClick={() => this.setState({ hasError: false })} data-testid="activity-retry-btn">
+              <RefreshCw className="w-4 h-4 mr-2" /> Tekrar Dene
+            </Button>
+            {this.props.onSkip && (
+              <Button onClick={this.props.onSkip} data-testid="activity-skip-btn">
+                Atla <ChevronRight className="w-4 h-4 ml-1" />
+              </Button>
+            )}
+          </div>
+        </Card>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+// ═══════ LESSON PROGRESS PERSISTENCE ═══════
+const PROGRESS_KEY = 'lesson_progress_';
+function saveLessonProgress(lessonId, data) {
+  try { localStorage.setItem(PROGRESS_KEY + lessonId, JSON.stringify({ ...data, ts: Date.now() })); } catch {}
+}
+function loadLessonProgress(lessonId) {
+  try {
+    const raw = localStorage.getItem(PROGRESS_KEY + lessonId);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    // Expire after 24 hours
+    if (Date.now() - data.ts > 86400000) { localStorage.removeItem(PROGRESS_KEY + lessonId); return null; }
+    return data;
+  } catch { return null; }
+}
+function clearLessonProgress(lessonId) {
+  try { localStorage.removeItem(PROGRESS_KEY + lessonId); } catch {}
+}
+
 // ═══════ STAGE THEMES ═══════
 const STAGE_THEMES = {
   stage_1: { bg: 'from-amber-50 to-orange-50', accent: '#F59E0B', accentLight: '#FEF3C7', accentText: 'text-amber-700', headerBg: 'bg-gradient-to-r from-amber-400 to-orange-400', pathColor: '#F59E0B', cardBorder: 'border-amber-200', activeBg: 'bg-amber-50', activeRing: 'ring-amber-400', completedBg: 'bg-amber-500', badgeBg: 'bg-amber-100 text-amber-700', btnBg: 'bg-amber-500 hover:bg-amber-600' },
@@ -2107,12 +2176,30 @@ export default function UnifiedLessonPage({ user }) {
 
   useEffect(() => { loadLesson(); }, [lessonId]);
 
+  // Restore progress from localStorage on mount
+  useEffect(() => {
+    const saved = loadLessonProgress(lessonId);
+    if (saved?.completedActivities?.length > 0) {
+      setCompletedActivities(saved.completedActivities);
+      setActivityScores(saved.activityScores || {});
+      if (saved.currentActivityType) setCurrentActivityType(saved.currentActivityType);
+      setShowRoadmap(saved.showRoadmap ?? true);
+    }
+  }, [lessonId]);
+
+  // Save progress to localStorage whenever it changes
+  useEffect(() => {
+    if (completedActivities.length > 0 || Object.keys(activityScores).length > 0) {
+      saveLessonProgress(lessonId, { completedActivities, activityScores, currentActivityType, showRoadmap });
+    }
+  }, [completedActivities, activityScores, currentActivityType, showRoadmap, lessonId]);
+
   const loadLesson = async () => {
     try {
       setLoading(true);
       // Check lock status first
       if (user?.id) {
-        const lockRes = await fetch(`${API_URL}/api/unified/lessons/${lessonId}/lock-status?user_id=${user.id}&email=${encodeURIComponent(user.email || '')}`);
+        const lockRes = await fetchRetry(`${API_URL}/api/unified/lessons/${lessonId}/lock-status?user_id=${user.id}&email=${encodeURIComponent(user.email || '')}`);
         const lockData = await lockRes.json();
         if (!lockData.unlocked) {
           setIsLocked(true);
@@ -2120,11 +2207,17 @@ export default function UnifiedLessonPage({ user }) {
           return;
         }
       }
-      const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}`);
+      const res = await fetchRetry(`${API_URL}/api/unified/lessons/${lessonId}`);
       const data = await res.json();
       setLesson(data);
-      const first = data.activity_flow?.[0];
-      if (first) { setCurrentActivityType(first.type); await loadActivityData(first.type); }
+      // Only set first activity if no saved progress
+      const saved = loadLessonProgress(lessonId);
+      if (saved?.currentActivityType) {
+        await loadActivityData(saved.currentActivityType);
+      } else {
+        const first = data.activity_flow?.[0];
+        if (first) { setCurrentActivityType(first.type); await loadActivityData(first.type); }
+      }
       // Pre-fetch vocab and grammar for summary card
       try {
         if (data.summary_data?.words?.length) {
@@ -2134,8 +2227,8 @@ export default function UnifiedLessonPage({ user }) {
           });
         } else {
           const [vocabRes, grammarRes] = await Promise.all([
-            fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/vocabulary`),
-            fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/grammar_focus`)
+            fetchRetry(`${API_URL}/api/unified/lessons/${lessonId}/activity/vocabulary`),
+            fetchRetry(`${API_URL}/api/unified/lessons/${lessonId}/activity/grammar_focus`)
           ]);
           const vocabData = vocabRes.ok ? await vocabRes.json() : null;
           const grammarData = grammarRes.ok ? await grammarRes.json() : null;
@@ -2151,7 +2244,7 @@ export default function UnifiedLessonPage({ user }) {
   const loadActivityData = async (activityType) => {
     try {
       setActivityLoading(true);
-      const res = await fetch(`${API_URL}/api/unified/lessons/${lessonId}/activity/${activityType}`);
+      const res = await fetchRetry(`${API_URL}/api/unified/lessons/${lessonId}/activity/${activityType}`);
       const data = res.ok ? await res.json() : null;
       setCurrentActivityData(data);
       // Cache data for lesson summary
@@ -2173,7 +2266,7 @@ export default function UnifiedLessonPage({ user }) {
     }
     if (user?.id) {
       try {
-        await fetch(`${API_URL}/api/unified/progress/activity`, {
+        await fetchRetry(`${API_URL}/api/unified/progress/activity`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user.id, lesson_id: lessonId, activity_type: currentActivityType, score, crowns: typeof crownsOrPassed === 'number' ? crownsOrPassed : null, time_spent_seconds: 0 })
         });
@@ -2198,13 +2291,15 @@ export default function UnifiedLessonPage({ user }) {
   const handleLessonComplete = async () => {
     if (user?.id) {
       try {
-        await fetch(`${API_URL}/api/unified/progress/lesson`, {
+        await fetchRetry(`${API_URL}/api/unified/progress/lesson`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user.id, lesson_id: lessonId })
         });
         toast.success('Lesson completed! Points awarded.');
       } catch (e) { console.error('Error completing lesson:', e); }
     }
+    // Clear saved progress on lesson complete
+    clearLessonProgress(lessonId);
     // Check if this is a Final Gate lesson
     const isFinalGate = lesson?.title?.toLowerCase().includes('final gate') || lessonId?.includes('unit_12_lesson_04');
     if (isFinalGate) {
@@ -2349,7 +2444,11 @@ export default function UnifiedLessonPage({ user }) {
             <div className="lg:col-span-1">
               <LessonPath activities={lesson.activity_flow || []} currentActivity={currentActivityType} completedActivities={completedActivities} onActivityClick={handleActivityClick} theme={theme} />
             </div>
-            <div className="lg:col-span-3 lesson-content-area">{renderActivity()}</div>
+            <div className="lg:col-span-3 lesson-content-area">
+              <ActivityErrorBoundary activityType={currentActivityType} onSkip={handleActivitySkip}>
+                {renderActivity()}
+              </ActivityErrorBoundary>
+            </div>
           </div>
         </div>
       )}

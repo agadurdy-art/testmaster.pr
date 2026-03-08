@@ -24,6 +24,11 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - 14 new images generated (always, can't, dancing, dirty, drawing, drinking, floor, funny, game, grey, guitar, knees, listening to music, never, new)
   - 5 existing images linked (big, big ears, clean, long neck, grey)
   - Updated: mapping files, enriched JSON source files, database
+- White Screen Fix: 3-layer protection for lesson page stability
+  - Global ErrorBoundary: Catches any unhandled crash, shows friendly reload UI
+  - ActivityErrorBoundary: Catches activity-level crashes without losing lesson progress, offers "Retry" and "Skip"
+  - localStorage progress persistence: Lesson progress (completed activities, scores) saved locally, survives page reload (24h expiry)
+  - fetchRetry: All API calls in lesson page retry 2x on network failure with exponential backoff
 
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
