@@ -1,191 +1,277 @@
 /**
- * Crossword Game (Lesson 4 Review) - IMPROVED
- * - Auto-advance to next cell on input
- * - No word concatenation (proper spacing)
- * - Colorful design
+ * Crossword Game (Lesson 4 Review) - REWRITTEN
+ * - Direction-aware auto-advance (across=right, down=below)
+ * - Robust grid building with proper word intersections
+ * - Click cell to select word direction
  */
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
 import { Card } from '../../ui/card';
 import { Button } from '../../ui/button';
 import { Grid3X3, ChevronRight } from 'lucide-react';
 import { GameWrapper, GameComplete } from '../shared';
 
-const GRID_SIZE = 12;
-const CELL_COLORS = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-pink-50', 'bg-cyan-50', 'bg-amber-50', 'bg-rose-50', 'bg-indigo-50'];
+const CELL_COLORS = [
+  'bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-pink-50',
+  'bg-cyan-50', 'bg-amber-50', 'bg-rose-50', 'bg-indigo-50'
+];
 
-const buildGrid = (words) => {
-  const grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
+/**
+ * Build a crossword grid from a list of word items.
+ * Returns { grid, placements, rows, cols }
+ */
+function buildCrossword(items) {
+  const words = items
+    .filter(it => it.word && it.word.length >= 2)
+    .map(it => ({
+      ...it,
+      upper: it.word.toUpperCase().replace(/[^A-Z]/g, ''),
+    }))
+    .filter(it => it.upper.length >= 2)
+    .sort((a, b) => b.upper.length - a.upper.length)
+    .slice(0, 8);
+
+  if (words.length === 0) return { grid: [], placements: [], rows: 0, cols: 0 };
+
+  // Use a sparse map for building, then convert to dense grid
+  const cells = {}; // "r,c" -> { letter, wordIndices: [] }
   const placements = [];
-  const sorted = [...words].sort((a, b) => b.word.length - a.word.length).slice(0, 8);
 
-  for (let i = 0; i < sorted.length; i++) {
-    const w = sorted[i].word.toUpperCase().replace(/[^A-Z]/g, '');
-    if (w.length > GRID_SIZE || w.length < 2) continue;
+  const getCell = (r, c) => cells[`${r},${c}`] || null;
+  const setCell = (r, c, letter, wordIdx) => {
+    const key = `${r},${c}`;
+    if (cells[key]) {
+      cells[key].wordIndices.push(wordIdx);
+    } else {
+      cells[key] = { letter, wordIndices: [wordIdx] };
+    }
+  };
 
-    if (placements.length === 0) {
-      const row = Math.floor(GRID_SIZE / 2);
-      const col = Math.floor((GRID_SIZE - w.length) / 2);
-      for (let c = 0; c < w.length; c++) {
-        grid[row][col + c] = { letter: w[c], wordIndices: [0] };
+  // Check if we can place a word at (startR, startC) in given direction
+  const canPlace = (word, startR, startC, dir, skipIntersect) => {
+    for (let i = 0; i < word.length; i++) {
+      const r = dir === 'down' ? startR + i : startR;
+      const c = dir === 'across' ? startC + i : startC;
+      const existing = getCell(r, c);
+
+      if (existing) {
+        if (existing.letter !== word[i]) return false;
+        // This is an intersection point - OK
+      } else {
+        // Check adjacent cells perpendicular to direction
+        if (dir === 'across') {
+          const above = getCell(r - 1, c);
+          const below = getCell(r + 1, c);
+          if (above || below) return false; // Would create unintended adjacency
+        } else {
+          const left = getCell(r, c - 1);
+          const right = getCell(r, c + 1);
+          if (left || right) return false;
+        }
       }
-      placements.push({ ...sorted[i], word: w, row, col, direction: 'across', number: 1 });
-      continue;
     }
 
+    // Check cell before start and after end are empty
+    if (dir === 'across') {
+      if (getCell(startR, startC - 1)) return false;
+      if (getCell(startR, startC + word.length)) return false;
+    } else {
+      if (getCell(startR - 1, startC)) return false;
+      if (getCell(startR + word.length, startC)) return false;
+    }
+
+    return true;
+  };
+
+  // Place the first word across at origin
+  const first = words[0];
+  for (let i = 0; i < first.upper.length; i++) {
+    setCell(0, i, first.upper[i], 0);
+  }
+  placements.push({
+    ...first,
+    row: 0, col: 0, direction: 'across',
+    number: 1
+  });
+
+  // Place remaining words by finding intersections
+  let clueNum = 2;
+  for (let wi = 1; wi < words.length; wi++) {
+    const w = words[wi];
     let placed = false;
-    // Try to intersect with existing words
+
+    // Try to intersect with each placed word
     for (const p of placements) {
       if (placed) break;
-      for (let pi = 0; pi < p.word.length && !placed; pi++) {
-        for (let wi = 0; wi < w.length && !placed; wi++) {
-          if (p.word[pi] !== w[wi]) continue;
-          
-          const dir = p.direction === 'across' ? 'down' : 'across';
-          let startRow, startCol;
-          if (dir === 'down') {
-            startRow = p.row - wi;
-            startCol = p.col + pi;
+      const newDir = p.direction === 'across' ? 'down' : 'across';
+
+      for (let pi = 0; pi < p.upper.length && !placed; pi++) {
+        for (let li = 0; li < w.upper.length && !placed; li++) {
+          if (p.upper[pi] !== w.upper[li]) continue;
+
+          let startR, startC;
+          if (newDir === 'down') {
+            // p is across, intersect at p's column pi
+            startR = p.row - li;
+            startC = p.col + pi;
           } else {
-            startRow = p.row + pi;
-            startCol = p.col - wi;
-          }
-          
-          if (startRow < 0 || startCol < 0) continue;
-          if (dir === 'down' && startRow + w.length > GRID_SIZE) continue;
-          if (dir === 'across' && startCol + w.length > GRID_SIZE) continue;
-
-          // Check ALL cells for the new word - must not conflict
-          let canPlace = true;
-          for (let k = 0; k < w.length; k++) {
-            const r = dir === 'down' ? startRow + k : startRow;
-            const c = dir === 'across' ? startCol + k : startCol;
-            const cell = grid[r][c];
-            
-            if (cell) {
-              // Cell already has a letter - must match
-              if (cell.letter !== w[k]) { canPlace = false; break; }
-            } else {
-              // Empty cell - check neighbors don't create unwanted words
-              // For across word: check above and below
-              // For down word: check left and right
-              if (dir === 'across') {
-                const above = r > 0 ? grid[r-1][c] : null;
-                const below = r < GRID_SIZE - 1 ? grid[r+1][c] : null;
-                if (above && !above.wordIndices.some(wi2 => {
-                  const pp = placements[wi2];
-                  return pp && pp.direction === 'down' && pp.col === c;
-                })) { canPlace = false; break; }
-                if (below && !below.wordIndices.some(wi2 => {
-                  const pp = placements[wi2];
-                  return pp && pp.direction === 'down' && pp.col === c;
-                })) { canPlace = false; break; }
-              } else {
-                const left = c > 0 ? grid[r][c-1] : null;
-                const right = c < GRID_SIZE - 1 ? grid[r][c+1] : null;
-                if (left && !left.wordIndices.some(wi2 => {
-                  const pp = placements[wi2];
-                  return pp && pp.direction === 'across' && pp.row === r;
-                })) { canPlace = false; break; }
-                if (right && !right.wordIndices.some(wi2 => {
-                  const pp = placements[wi2];
-                  return pp && pp.direction === 'across' && pp.row === r;
-                })) { canPlace = false; break; }
-              }
-            }
-          }
-          
-          // Also check the cells BEFORE and AFTER the new word are empty
-          if (canPlace && dir === 'across') {
-            if (startCol > 0 && grid[startRow][startCol - 1]) canPlace = false;
-            if (startCol + w.length < GRID_SIZE && grid[startRow][startCol + w.length]) canPlace = false;
-          }
-          if (canPlace && dir === 'down') {
-            if (startRow > 0 && grid[startRow - 1][startCol]) canPlace = false;
-            if (startRow + w.length < GRID_SIZE && grid[startRow + w.length]?.[startCol]) canPlace = false;
+            // p is down, intersect at p's row pi
+            startR = p.row + pi;
+            startC = p.col - li;
           }
 
-          if (!canPlace) continue;
+          if (!canPlace(w.upper, startR, startC, newDir)) continue;
 
-          const num = placements.length + 1;
-          for (let k = 0; k < w.length; k++) {
-            const r = dir === 'down' ? startRow + k : startRow;
-            const c = dir === 'across' ? startCol + k : startCol;
-            if (grid[r][c]) {
-              grid[r][c].wordIndices.push(placements.length);
-            } else {
-              grid[r][c] = { letter: w[k], wordIndices: [placements.length] };
-            }
+          // Place the word
+          for (let i = 0; i < w.upper.length; i++) {
+            const r = newDir === 'down' ? startR + i : startR;
+            const c = newDir === 'across' ? startC + i : startC;
+            setCell(r, c, w.upper[i], placements.length);
           }
-          placements.push({ ...sorted[i], word: w, row: startRow, col: startCol, direction: dir, number: num });
+          placements.push({
+            ...w,
+            row: startR, col: startC, direction: newDir,
+            number: clueNum++
+          });
           placed = true;
         }
       }
     }
   }
-  
-  // Trim the grid to minimum bounding box
-  let minR = GRID_SIZE, maxR = 0, minC = GRID_SIZE, maxC = 0;
-  for (let r = 0; r < GRID_SIZE; r++) {
-    for (let c = 0; c < GRID_SIZE; c++) {
-      if (grid[r][c]) {
-        minR = Math.min(minR, r); maxR = Math.max(maxR, r);
-        minC = Math.min(minC, c); maxC = Math.max(maxC, c);
-      }
-    }
+
+  // Convert sparse map to dense grid
+  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+  for (const key of Object.keys(cells)) {
+    const [r, c] = key.split(',').map(Number);
+    minR = Math.min(minR, r);
+    maxR = Math.max(maxR, r);
+    minC = Math.min(minC, c);
+    maxC = Math.max(maxC, c);
   }
-  
-  return { grid, placements, bounds: { minR, maxR, minC, maxC } };
-};
+
+  const rows = maxR - minR + 1;
+  const cols = maxC - minC + 1;
+  const grid = Array.from({ length: rows }, () => Array(cols).fill(null));
+
+  for (const [key, val] of Object.entries(cells)) {
+    const [r, c] = key.split(',').map(Number);
+    grid[r - minR][c - minC] = val;
+  }
+
+  // Normalize placement coordinates
+  for (const p of placements) {
+    p.row -= minR;
+    p.col -= minC;
+  }
+
+  // Re-number placements by position (top-to-bottom, left-to-right)
+  const starts = placements.map((p, i) => ({ idx: i, r: p.row, c: p.col }));
+  starts.sort((a, b) => a.r !== b.r ? a.r - b.r : a.c - b.c);
+  const numberMap = {};
+  let num = 1;
+  for (const s of starts) {
+    const posKey = `${s.r},${s.c}`;
+    if (!numberMap[posKey]) numberMap[posKey] = num++;
+  }
+  for (const p of placements) {
+    p.number = numberMap[`${p.row},${p.col}`];
+  }
+
+  return { grid, placements, rows, cols };
+}
 
 const Crossword = ({ items, onComplete, onSkip }) => {
-  const [{ grid, placements, bounds }] = useState(() => buildGrid(items));
-  const [userInputs, setUserInputs] = useState(() => 
-    Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''))
+  const { grid, placements, rows, cols } = useMemo(() => buildCrossword(items), [items]);
+
+  const [userInputs, setUserInputs] = useState(() =>
+    Array.from({ length: rows }, () => Array(cols).fill(''))
   );
   const [checked, setChecked] = useState(false);
-  const [selectedClue, setSelectedClue] = useState(null);
+  const [activeWord, setActiveWord] = useState(null); // placement index
   const [isComplete, setIsComplete] = useState(false);
   const [score, setScore] = useState(0);
   const inputRefs = useRef({});
 
-  const getCellsInOrder = useCallback(() => {
+  // Get cells for a specific word placement
+  const getWordCells = useCallback((pIdx) => {
+    if (pIdx == null || !placements[pIdx]) return [];
+    const p = placements[pIdx];
     const cells = [];
-    for (let r = bounds.minR; r <= bounds.maxR; r++) {
-      for (let c = bounds.minC; c <= bounds.maxC; c++) {
-        if (grid[r][c]) cells.push({ r, c });
-      }
+    for (let i = 0; i < p.upper.length; i++) {
+      const r = p.direction === 'down' ? p.row + i : p.row;
+      const c = p.direction === 'across' ? p.col + i : p.col;
+      cells.push({ r, c });
     }
     return cells;
-  }, [grid, bounds]);
+  }, [placements]);
 
-  const handleInput = useCallback((row, col, value) => {
+  // When clicking a cell, select the word it belongs to
+  const handleCellClick = useCallback((r, c) => {
+    const cell = grid[r]?.[c];
+    if (!cell) return;
+
+    // If the cell belongs to multiple words, toggle between them
+    const wordIndices = cell.wordIndices;
+    if (wordIndices.length === 1) {
+      setActiveWord(wordIndices[0]);
+    } else {
+      // Toggle: if currently on one of these words, switch to the other
+      const nextIdx = wordIndices.find(wi => wi !== activeWord) ?? wordIndices[0];
+      setActiveWord(nextIdx);
+    }
+  }, [grid, activeWord]);
+
+  const handleInput = useCallback((r, c, value) => {
     const v = value.toUpperCase().slice(-1);
     setUserInputs(prev => {
-      const next = prev.map(r => [...r]);
-      next[row][col] = v;
+      const next = prev.map(row => [...row]);
+      next[r][c] = v;
       return next;
     });
-    
-    // Auto-advance to next empty cell
-    if (v) {
-      const cells = getCellsInOrder();
-      const currentIdx = cells.findIndex(c => c.r === row && c.c === col);
-      for (let i = currentIdx + 1; i < cells.length; i++) {
-        const next = cells[i];
-        if (!userInputs[next.r][next.c] || (next.r === row && next.c === col)) {
-          const key = `${next.r}-${next.c}`;
-          setTimeout(() => inputRefs.current[key]?.focus(), 10);
-          break;
-        }
+
+    // Auto-advance within the active word's direction
+    if (v && activeWord != null) {
+      const wordCells = getWordCells(activeWord);
+      const idx = wordCells.findIndex(cell => cell.r === r && cell.c === c);
+      // Find next empty cell in this word
+      for (let i = idx + 1; i < wordCells.length; i++) {
+        const next = wordCells[i];
+        const key = `${next.r}-${next.c}`;
+        setTimeout(() => inputRefs.current[key]?.focus(), 10);
+        return;
       }
     }
-  }, [getCellsInOrder, userInputs]);
+  }, [activeWord, getWordCells]);
+
+  const handleKeyDown = useCallback((e, r, c) => {
+    if (e.key === 'Backspace' && !userInputs[r]?.[c]) {
+      // Go back within active word
+      if (activeWord != null) {
+        const wordCells = getWordCells(activeWord);
+        const idx = wordCells.findIndex(cell => cell.r === r && cell.c === c);
+        if (idx > 0) {
+          const prev = wordCells[idx - 1];
+          const key = `${prev.r}-${prev.c}`;
+          inputRefs.current[key]?.focus();
+        }
+      }
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      let nr = r, nc = c;
+      if (e.key === 'ArrowRight') nc++;
+      if (e.key === 'ArrowLeft') nc--;
+      if (e.key === 'ArrowDown') nr++;
+      if (e.key === 'ArrowUp') nr--;
+      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr]?.[nc]) {
+        inputRefs.current[`${nr}-${nc}`]?.focus();
+      }
+    }
+  }, [activeWord, getWordCells, userInputs, grid, rows, cols]);
 
   const handleCheck = () => {
     let correct = 0, total = 0;
-    for (let r = 0; r < GRID_SIZE; r++) {
-      for (let c = 0; c < GRID_SIZE; c++) {
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
         if (grid[r][c]) {
           total++;
           if (userInputs[r][c] === grid[r][c].letter) correct++;
@@ -198,9 +284,9 @@ const Crossword = ({ items, onComplete, onSkip }) => {
 
   const handleReveal = () => {
     setUserInputs(prev => {
-      const next = prev.map(r => [...r]);
-      for (let r = 0; r < GRID_SIZE; r++) {
-        for (let c = 0; c < GRID_SIZE; c++) {
+      const next = prev.map(row => [...row]);
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
           if (grid[r][c]) next[r][c] = grid[r][c].letter;
         }
       }
@@ -216,60 +302,87 @@ const Crossword = ({ items, onComplete, onSkip }) => {
         score={Math.round(score / 100 * placements.length)}
         totalQuestions={placements.length}
         onContinue={() => onComplete(score)}
-        onRetry={() => { setUserInputs(Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''))); setChecked(false); setIsComplete(false); }}
+        onRetry={() => {
+          setUserInputs(Array.from({ length: rows }, () => Array(cols).fill('')));
+          setChecked(false);
+          setIsComplete(false);
+          setActiveWord(null);
+        }}
         title="Crossword Master!"
       />
     );
   }
 
-  const acrossClues = placements.filter(p => p.direction === 'across');
-  const downClues = placements.filter(p => p.direction === 'down');
-  const cols = bounds.maxC - bounds.minC + 1;
+  if (placements.length === 0) {
+    return (
+      <GameWrapper title="Crossword Puzzle" subtitle="Fill in the words" icon={Grid3X3} iconColor="purple" currentQuestion={1} totalQuestions={1} onSkip={onSkip}>
+        <div className="text-center py-8 text-gray-500">No words available for crossword</div>
+      </GameWrapper>
+    );
+  }
+
+  const acrossClues = placements.filter(p => p.direction === 'across').sort((a, b) => a.number - b.number);
+  const downClues = placements.filter(p => p.direction === 'down').sort((a, b) => a.number - b.number);
+
+  // Determine highlighted cells for the active word
+  const highlightedCells = new Set();
+  if (activeWord != null) {
+    for (const cell of getWordCells(activeWord)) {
+      highlightedCells.add(`${cell.r}-${cell.c}`);
+    }
+  }
+
+  const cellSize = cols > 8 ? 36 : 42;
 
   return (
     <GameWrapper title="Crossword Puzzle" subtitle="Fill in the words" icon={Grid3X3} iconColor="purple" currentQuestion={1} totalQuestions={1} onSkip={onSkip}>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <Card className="p-5 lg:col-span-3 overflow-auto">
-          <div className="inline-grid gap-0.5 mx-auto" style={{ gridTemplateColumns: `repeat(${cols}, 40px)` }}>
-            {Array.from({ length: bounds.maxR - bounds.minR + 1 }, (_, ri) => 
+        <Card className="p-5 lg:col-span-3 overflow-auto flex items-center justify-center">
+          <div
+            className="inline-grid gap-0.5"
+            style={{ gridTemplateColumns: `repeat(${cols}, ${cellSize}px)` }}
+            data-testid="crossword-grid"
+          >
+            {Array.from({ length: rows }, (_, ri) =>
               Array.from({ length: cols }, (_, ci) => {
-                const r = bounds.minR + ri;
-                const c = bounds.minC + ci;
-                const cell = grid[r]?.[c];
-                if (!cell) return <div key={`${r}-${c}`} className="w-10 h-10" />;
-                
-                const num = placements.find(p => p.row === r && p.col === c)?.number;
-                const isCorrect = checked && userInputs[r][c] === cell.letter;
-                const isWrong = checked && userInputs[r][c] && userInputs[r][c] !== cell.letter;
-                const isEmpty = checked && !userInputs[r][c];
+                const cell = grid[ri]?.[ci];
+                if (!cell) return <div key={`${ri}-${ci}`} style={{ width: cellSize, height: cellSize }} />;
+
+                const num = placements.find(p => p.row === ri && p.col === ci)?.number;
+                const isCorrect = checked && userInputs[ri][ci] === cell.letter;
+                const isWrong = checked && userInputs[ri][ci] && userInputs[ri][ci] !== cell.letter;
+                const isEmpty = checked && !userInputs[ri][ci];
+                const isHighlighted = highlightedCells.has(`${ri}-${ci}`);
                 const colorIdx = cell.wordIndices[0] % CELL_COLORS.length;
-                
+
                 return (
-                  <div key={`${r}-${c}`} className={`relative w-10 h-10 border-2 rounded-md transition-all ${
-                    isCorrect ? 'border-green-500 bg-green-100' : 
-                    isWrong ? 'border-red-500 bg-red-100' : 
-                    isEmpty ? 'border-orange-400 bg-orange-50' :
-                    `border-gray-300 ${CELL_COLORS[colorIdx]} hover:border-blue-400`
-                  }`}>
-                    {num && <span className="absolute -top-0.5 left-0.5 text-[9px] text-blue-600 font-bold z-10">{num}</span>}
+                  <div
+                    key={`${ri}-${ci}`}
+                    className={`relative border-2 rounded-md transition-all cursor-pointer ${
+                      isCorrect ? 'border-green-500 bg-green-100' :
+                      isWrong ? 'border-red-500 bg-red-100' :
+                      isEmpty ? 'border-orange-400 bg-orange-50' :
+                      isHighlighted ? 'border-blue-500 bg-blue-100' :
+                      `border-gray-300 ${CELL_COLORS[colorIdx]} hover:border-blue-400`
+                    }`}
+                    style={{ width: cellSize, height: cellSize }}
+                    onClick={() => handleCellClick(ri, ci)}
+                  >
+                    {num && (
+                      <span className="absolute -top-0.5 left-0.5 text-[9px] text-blue-600 font-bold z-10 select-none">
+                        {num}
+                      </span>
+                    )}
                     <input
-                      ref={el => inputRefs.current[`${r}-${c}`] = el}
-                      className="w-full h-full text-center font-bold text-lg uppercase bg-transparent outline-none"
+                      ref={el => inputRefs.current[`${ri}-${ci}`] = el}
+                      className="w-full h-full text-center font-bold text-lg uppercase bg-transparent outline-none cursor-pointer"
                       maxLength={1}
-                      value={userInputs[r][c]}
-                      onChange={(e) => handleInput(r, c, e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Backspace' && !userInputs[r][c]) {
-                          const cells = getCellsInOrder();
-                          const idx = cells.findIndex(ce => ce.r === r && ce.c === c);
-                          if (idx > 0) {
-                            const prev = cells[idx - 1];
-                            inputRefs.current[`${prev.r}-${prev.c}`]?.focus();
-                          }
-                        }
-                      }}
+                      value={userInputs[ri]?.[ci] || ''}
+                      onChange={(e) => handleInput(ri, ci, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(e, ri, ci)}
+                      onFocus={() => handleCellClick(ri, ci)}
                       disabled={checked}
-                      data-testid={`crossword-cell-${r}-${c}`}
+                      data-testid={`crossword-cell-${ri}-${ci}`}
                     />
                   </div>
                 );
@@ -285,12 +398,29 @@ const Crossword = ({ items, onComplete, onSkip }) => {
                 <h4 className="font-bold text-lg text-blue-700 mb-2 flex items-center gap-2">
                   <span className="bg-blue-100 px-2 py-0.5 rounded text-sm">→</span> Across
                 </h4>
-                {acrossClues.map(c => (
-                  <p key={c.number} className={`text-base cursor-pointer p-2.5 rounded-lg transition-all hover:bg-blue-50 ${selectedClue === c.number ? 'bg-blue-100 font-semibold border-l-4 border-blue-500' : ''}`}
-                    onClick={() => setSelectedClue(c.number)} data-testid={`clue-across-${c.number}`}>
-                    <strong className="text-blue-600">{c.number}.</strong> {c.definition || c.clue || `Means: ${c.word.toLowerCase()}`}
-                  </p>
-                ))}
+                {acrossClues.map(cl => {
+                  const pIdx = placements.indexOf(cl);
+                  return (
+                    <p
+                      key={cl.number}
+                      className={`text-base cursor-pointer p-2.5 rounded-lg transition-all hover:bg-blue-50 ${
+                        activeWord === pIdx ? 'bg-blue-100 font-semibold border-l-4 border-blue-500' : ''
+                      }`}
+                      onClick={() => {
+                        setActiveWord(pIdx);
+                        const cells = getWordCells(pIdx);
+                        if (cells.length > 0) {
+                          const first = cells.find(c => !userInputs[c.r]?.[c.c]) || cells[0];
+                          setTimeout(() => inputRefs.current[`${first.r}-${first.c}`]?.focus(), 10);
+                        }
+                      }}
+                      data-testid={`clue-across-${cl.number}`}
+                    >
+                      <strong className="text-blue-600">{cl.number}.</strong>{' '}
+                      {cl.definition || cl.clue || `Means: ${cl.word.toLowerCase()}`}
+                    </p>
+                  );
+                })}
               </div>
             )}
             {downClues.length > 0 && (
@@ -298,12 +428,29 @@ const Crossword = ({ items, onComplete, onSkip }) => {
                 <h4 className="font-bold text-lg text-purple-700 mb-2 flex items-center gap-2">
                   <span className="bg-purple-100 px-2 py-0.5 rounded text-sm">↓</span> Down
                 </h4>
-                {downClues.map(c => (
-                  <p key={c.number} className={`text-base cursor-pointer p-2.5 rounded-lg transition-all hover:bg-purple-50 ${selectedClue === c.number ? 'bg-purple-100 font-semibold border-l-4 border-purple-500' : ''}`}
-                    onClick={() => setSelectedClue(c.number)} data-testid={`clue-down-${c.number}`}>
-                    <strong className="text-purple-600">{c.number}.</strong> {c.definition || c.clue || `Means: ${c.word.toLowerCase()}`}
-                  </p>
-                ))}
+                {downClues.map(cl => {
+                  const pIdx = placements.indexOf(cl);
+                  return (
+                    <p
+                      key={cl.number}
+                      className={`text-base cursor-pointer p-2.5 rounded-lg transition-all hover:bg-purple-50 ${
+                        activeWord === pIdx ? 'bg-purple-100 font-semibold border-l-4 border-purple-500' : ''
+                      }`}
+                      onClick={() => {
+                        setActiveWord(pIdx);
+                        const cells = getWordCells(pIdx);
+                        if (cells.length > 0) {
+                          const first = cells.find(c => !userInputs[c.r]?.[c.c]) || cells[0];
+                          setTimeout(() => inputRefs.current[`${first.r}-${first.c}`]?.focus(), 10);
+                        }
+                      }}
+                      data-testid={`clue-down-${cl.number}`}
+                    >
+                      <strong className="text-purple-600">{cl.number}.</strong>{' '}
+                      {cl.definition || cl.clue || `Means: ${cl.word.toLowerCase()}`}
+                    </p>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -311,8 +458,12 @@ const Crossword = ({ items, onComplete, onSkip }) => {
           <div className="flex gap-3 mt-6">
             {!checked ? (
               <>
-                <Button onClick={handleCheck} className="bg-green-600 hover:bg-green-700" data-testid="crossword-check-btn">Check</Button>
-                <Button variant="outline" onClick={handleReveal} data-testid="crossword-reveal-btn">Show Answers</Button>
+                <Button onClick={handleCheck} className="bg-green-600 hover:bg-green-700" data-testid="crossword-check-btn">
+                  Check
+                </Button>
+                <Button variant="outline" onClick={handleReveal} data-testid="crossword-reveal-btn">
+                  Show Answers
+                </Button>
               </>
             ) : (
               <Button onClick={() => setIsComplete(true)} data-testid="crossword-continue-btn">
