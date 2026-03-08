@@ -27,6 +27,7 @@ const MemoryGame = ({
 
   // Initialize cards (use only first 6 items to keep grid manageable)
   useEffect(() => {
+    if (!items?.length) return;
     const gameItems = items.slice(0, 6);
     let cardPairs = [];
     
@@ -72,6 +73,7 @@ const MemoryGame = ({
 
   // Check completion
   useEffect(() => {
+    if (!items?.length) return;
     const gameItems = items.slice(0, 6);
     if (matched.length > 0 && matched.length === gameItems.length) {
       setTimeout(() => setIsComplete(true), 500);
@@ -97,8 +99,8 @@ const MemoryGame = ({
   };
 
   const calculateScore = () => {
-    const gameItems = items.slice(0, 6);
-    const minMoves = gameItems.length;
+    const gameItems = (items || []).slice(0, 6);
+    const minMoves = Math.max(gameItems.length, 1);
     const efficiency = Math.max(0, 100 - ((moves - minMoves) * 8));
     return Math.max(50, Math.min(100, efficiency));
   };
@@ -115,7 +117,7 @@ const MemoryGame = ({
     );
   }
 
-  const gameItems = items.slice(0, 6);
+  const gameItems = (items || []).slice(0, 6);
 
   return (
     <GameWrapper

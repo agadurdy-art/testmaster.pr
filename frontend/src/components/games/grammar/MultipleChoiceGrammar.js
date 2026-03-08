@@ -21,6 +21,7 @@ const MultipleChoiceGrammar = ({
   const [shuffledOptions, setShuffledOptions] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
 
+  if (!items?.length) return null;
   const currentItem = items[currentIdx];
 
   React.useEffect(() => {

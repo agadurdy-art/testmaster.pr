@@ -24,7 +24,7 @@ const BOARD_COLORS = [
 
 const BoardGame = ({ items, onComplete, onSkip }) => {
   const questions = items || [];
-  const boardSize = Math.min(questions.length + 2, 12);
+  const boardSize = Math.min(Math.max(questions.length, 1) + 2, 12);
   const [position, setPosition] = useState(0);
   const [diceValue, setDiceValue] = useState(null);
   const [rolling, setRolling] = useState(false);

@@ -26,6 +26,7 @@ const FillTheBlank = ({
   const [shuffledOptions, setShuffledOptions] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
 
+  if (!items?.length) return null;
   const currentItem = items[currentIdx];
 
   // Shuffle options when item changes

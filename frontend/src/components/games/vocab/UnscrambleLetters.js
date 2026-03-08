@@ -26,6 +26,7 @@ const UnscrambleLetters = ({
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
+  if (!items?.length) return null;
   const currentItem = items[currentIdx];
 
   // Scramble letters when word changes

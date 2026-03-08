@@ -181,10 +181,11 @@ function buildCrossword(items) {
 }
 
 const Crossword = ({ items, onComplete, onSkip }) => {
-  const { grid, placements, rows, cols } = useMemo(() => buildCrossword(items), [items]);
+  const safeItems = items?.length ? items : [];
+  const { grid, placements, rows, cols } = useMemo(() => buildCrossword(safeItems), [safeItems]);
 
   const [userInputs, setUserInputs] = useState(() =>
-    Array.from({ length: rows }, () => Array(cols).fill(''))
+    Array.from({ length: Math.max(rows, 1) }, () => Array(Math.max(cols, 1)).fill(''))
   );
   const [checked, setChecked] = useState(false);
   const [activeWord, setActiveWord] = useState(null); // placement index

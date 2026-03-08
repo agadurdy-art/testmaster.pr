@@ -26,6 +26,7 @@ const LookWrite = ({
   const [attempts, setAttempts] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
+  if (!items?.length) return null;
   const currentItem = items[currentIdx];
 
   const handleCheck = () => {

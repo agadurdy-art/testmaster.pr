@@ -21,7 +21,8 @@ const DIRECTIONS = [
 const buildWordSearch = (words) => {
   const grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(''));
   const placed = [];
-  const sorted = [...words].sort((a, b) => b.word.length - a.word.length);
+  if (!words?.length) return { grid, placed };
+  const sorted = [...words].filter(w => w.word).sort((a, b) => b.word.length - a.word.length);
 
   for (const item of sorted) {
     const w = item.word.toUpperCase();

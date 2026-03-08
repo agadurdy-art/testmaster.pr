@@ -28,6 +28,7 @@ const ListenChooseWord = ({
   const [options, setOptions] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
 
+  if (!items?.length) return null;
   const currentItem = items[currentIdx];
 
   // Generate options for current word

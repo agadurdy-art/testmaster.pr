@@ -72,15 +72,15 @@ class ActivityErrorBoundary extends React.Component {
       return (
         <Card className="p-8 text-center" data-testid="activity-error-card">
           <AlertCircle className="w-10 h-10 text-amber-500 mx-auto mb-3" />
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Bu aktivitede bir sorun oluştu</h3>
-          <p className="text-sm text-gray-500 mb-4">Dersiniz kaybolmadı. Tekrar deneyebilir veya atlayabilirsiniz.</p>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">Something went wrong with this activity</h3>
+          <p className="text-sm text-gray-500 mb-4">Your lesson progress is saved. You can retry or skip this activity.</p>
           <div className="flex gap-3 justify-center">
             <Button variant="outline" onClick={() => this.setState({ hasError: false })} data-testid="activity-retry-btn">
-              <RefreshCw className="w-4 h-4 mr-2" /> Tekrar Dene
+              <RefreshCw className="w-4 h-4 mr-2" /> Retry
             </Button>
             {this.props.onSkip && (
               <Button onClick={this.props.onSkip} data-testid="activity-skip-btn">
-                Atla <ChevronRight className="w-4 h-4 ml-1" />
+                Skip <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             )}
           </div>
@@ -745,6 +745,16 @@ function VocabGamesPlayer({ activity, onComplete, onSkip }) {
     const gameType = currentGame?.game_type;
     const items = currentGame?.items || [];
 
+    // Guard: skip games with no items
+    if (!items.length) {
+      return (
+        <Card className="p-8 text-center">
+          <p className="text-gray-500 mb-4">This game has no items available.</p>
+          <Button onClick={handleSkip}>Skip to Next</Button>
+        </Card>
+      );
+    }
+
     switch (gameType) {
       case 'listen_choose_word':
         return <ListenChooseWord items={items} onComplete={handleGameComplete} onSkip={handleSkip} />;
@@ -840,6 +850,15 @@ function GrammarGamesPlayer({ activity, onComplete, onSkip }) {
   const renderGame = () => {
     const gameType = currentGame?.game_type;
     const items = currentGame?.items || [];
+
+    if (!items.length) {
+      return (
+        <Card className="p-8 text-center">
+          <p className="text-gray-500 mb-4">This game has no items available.</p>
+          <Button onClick={handleSkip}>Skip to Next</Button>
+        </Card>
+      );
+    }
 
     switch (gameType) {
       case 'word_order':

@@ -32,10 +32,10 @@ class ErrorBoundary extends React.Component {
               <i className="fas fa-exclamation-triangle" style={{ color: '#f59e0b' }}></i>
             </div>
             <h2 style={{ fontSize: 22, fontWeight: 600, marginBottom: 8 }}>
-              Bir sorun oluştu
+              Something went wrong
             </h2>
             <p style={{ fontSize: 14, color: '#94a3b8', marginBottom: 24 }}>
-              Sayfa beklenmedik bir hatayla karşılaştı. Yeniden yükleyerek devam edebilirsiniz.
+              The page encountered an unexpected error. You can reload to continue.
             </p>
             <button
               data-testid="error-boundary-reload-btn"
@@ -51,7 +51,7 @@ class ErrorBoundary extends React.Component {
                 cursor: 'pointer'
               }}
             >
-              Sayfayı Yenile
+              Reload Page
             </button>
           </div>
         </div>
