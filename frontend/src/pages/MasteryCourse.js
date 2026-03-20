@@ -706,6 +706,50 @@ export default function MasteryCourse({ user }) {
           </div>
         )}
         
+        {/* Interactive Vocabulary Engine */}
+        {user && (
+          <div className="mt-6 p-5 bg-gradient-to-r from-violet-50 to-purple-50 rounded-xl border border-violet-200">
+            <h4 className="font-bold text-violet-900 mb-1 flex items-center gap-2">
+              <Target className="w-4 h-4" /> Interactive Vocabulary Practice
+            </h4>
+            <p className="text-sm text-violet-600 mb-4">Master these words through interactive exercises</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <Button
+                data-testid="vocab-engine-learn-btn"
+                variant="outline"
+                className="border-violet-300 text-violet-700 hover:bg-violet-100"
+                onClick={() => navigate(`/vocabulary/learn/${selectedModule.id}`)}
+              >
+                <BookOpen className="w-4 h-4 mr-1" /> Learn
+              </Button>
+              <Button
+                data-testid="vocab-engine-practice-btn"
+                variant="outline"
+                className="border-blue-300 text-blue-700 hover:bg-blue-100"
+                onClick={() => navigate(`/vocabulary/practice/${selectedModule.id}`)}
+              >
+                <PenTool className="w-4 h-4 mr-1" /> Practice
+              </Button>
+              <Button
+                data-testid="vocab-engine-quiz-btn"
+                variant="outline"
+                className="border-amber-300 text-amber-700 hover:bg-amber-100"
+                onClick={() => navigate(`/vocabulary/quiz/${selectedModule.id}`)}
+              >
+                <HelpCircle className="w-4 h-4 mr-1" /> Quiz
+              </Button>
+              <Button
+                data-testid="vocab-engine-production-btn"
+                variant="outline"
+                className="border-green-300 text-green-700 hover:bg-green-100"
+                onClick={() => navigate(`/vocabulary/production/${selectedModule.id}`)}
+              >
+                <Award className="w-4 h-4 mr-1" /> Production
+              </Button>
+            </div>
+          </div>
+        )}
+        
         <div className="mt-6 flex justify-end">
           <Button onClick={() => setCurrentSection('grammar')} className="bg-gradient-to-r from-violet-500 to-purple-600">
             Next: Grammar <ChevronRight className="w-4 h-4 ml-1" />

@@ -5530,6 +5530,10 @@ Return JSON only:
 async def get_vocabulary_slides(module_id: str):
     """Get vocabulary data formatted as slides for Learn Mode"""
     module = await db.advanced_mastery_modules.find_one({"id": module_id}, {"_id": 0})
+    source = "advanced"
+    if not module:
+        module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
+        source = "mastery"
     if not module:
         raise HTTPException(status_code=404, detail="Module not found")
     
@@ -5540,70 +5544,107 @@ async def get_vocabulary_slides(module_id: str):
     
     slides = []
     
-    # Advanced terms
-    for item in vocab.get("advanced_terms", []):
-        pron = pronunciation_map.get(item["term"].lower(), {})
-        slides.append({
-            "id": f"term-{len(slides)}",
-            "category": "Advanced Term",
-            "word": item["term"],
-            "meaning": item["meaning"],
-            "example": item["example"],
-            "usage": item.get("usage", ""),
-            "collocations": item.get("collocations", []),
-            "ipa": pron.get("ipa", ""),
-            "stress": pron.get("stress", ""),
-            "audio_tip": pron.get("audio_tip", ""),
-            "common_mistake": pron.get("common_mistake", ""),
-        })
+    if source == "mastery":
+        # Mastery course: nouns, verbs, adjectives, adverbs
+        for category in ["nouns", "verbs", "adjectives", "adverbs"]:
+            for item in vocab.get(category, []):
+                slides.append({
+                    "id": f"{category}-{len(slides)}",
+                    "category": category.title().rstrip("s"),
+                    "word": item.get("word", ""),
+                    "meaning": item.get("meaning", ""),
+                    "example": item.get("example", ""),
+                    "usage": "",
+                    "collocations": [],
+                    "ipa": "", "stress": "", "audio_tip": "", "common_mistake": "",
+                })
+        # Mastery collocations
+        for item in module.get("collocations", []):
+            if isinstance(item, dict):
+                slides.append({
+                    "id": f"colloc-{len(slides)}",
+                    "category": "Collocation",
+                    "word": item.get("collocation", item.get("phrase", "")),
+                    "meaning": item.get("meaning", ""),
+                    "example": item.get("example", ""),
+                    "usage": "", "collocations": [], "ipa": "", "stress": "", "audio_tip": "", "common_mistake": "",
+                })
+        # Mastery idiom
+        idiom = module.get("idiom", {})
+        if isinstance(idiom, dict) and idiom.get("phrase"):
+            slides.append({
+                "id": f"idiom-{len(slides)}",
+                "category": "Idiom",
+                "word": idiom.get("phrase", ""),
+                "meaning": idiom.get("meaning", ""),
+                "example": idiom.get("example", ""),
+                "usage": "", "collocations": [], "ipa": "", "stress": "", "audio_tip": "", "common_mistake": "",
+            })
+    else:
+        # Advanced mastery: advanced_terms, idioms, collocations, phrasal_verbs
+        for item in vocab.get("advanced_terms", []):
+            pron = pronunciation_map.get(item["term"].lower(), {})
+            slides.append({
+                "id": f"term-{len(slides)}",
+                "category": "Advanced Term",
+                "word": item["term"],
+                "meaning": item["meaning"],
+                "example": item["example"],
+                "usage": item.get("usage", ""),
+                "collocations": item.get("collocations", []),
+                "ipa": pron.get("ipa", ""),
+                "stress": pron.get("stress", ""),
+                "audio_tip": pron.get("audio_tip", ""),
+                "common_mistake": pron.get("common_mistake", ""),
+            })
     
-    # Idioms
-    for item in vocab.get("idioms", []):
-        slides.append({
-            "id": f"idiom-{len(slides)}",
-            "category": "Idiom",
-            "word": item["idiom"],
-            "meaning": item["meaning"],
-            "example": item["example"],
-            "usage": item.get("usage_context", ""),
-            "collocations": [],
-            "ipa": "",
-            "stress": "",
-            "audio_tip": "",
-            "common_mistake": "",
-        })
+        # Idioms
+        for item in vocab.get("idioms", []):
+            slides.append({
+                "id": f"idiom-{len(slides)}",
+                "category": "Idiom",
+                "word": item["idiom"],
+                "meaning": item["meaning"],
+                "example": item["example"],
+                "usage": item.get("usage_context", ""),
+                "collocations": [],
+                "ipa": "",
+                "stress": "",
+                "audio_tip": "",
+                "common_mistake": "",
+            })
     
-    # Collocations
-    for item in vocab.get("collocations", []):
-        slides.append({
-            "id": f"colloc-{len(slides)}",
-            "category": f"Collocation ({item.get('type', '')})",
-            "word": item["collocation"],
-            "meaning": "",
-            "example": item["example"],
-            "usage": "",
-            "collocations": item.get("alternatives", []),
-            "ipa": "",
-            "stress": "",
-            "audio_tip": "",
-            "common_mistake": "",
-        })
+        # Collocations
+        for item in vocab.get("collocations", []):
+            slides.append({
+                "id": f"colloc-{len(slides)}",
+                "category": f"Collocation ({item.get('type', '')})",
+                "word": item["collocation"],
+                "meaning": "",
+                "example": item["example"],
+                "usage": "",
+                "collocations": item.get("alternatives", []),
+                "ipa": "",
+                "stress": "",
+                "audio_tip": "",
+                "common_mistake": "",
+            })
     
-    # Phrasal verbs
-    for item in vocab.get("phrasal_verbs", []):
-        slides.append({
-            "id": f"phrasal-{len(slides)}",
-            "category": "Phrasal Verb",
-            "word": item["phrasal_verb"],
-            "meaning": item["meaning"],
-            "example": item["example"],
-            "usage": f"Formal alternative: {item.get('formal_alternative', '')}",
-            "collocations": [],
-            "ipa": "",
-            "stress": "",
-            "audio_tip": "",
-            "common_mistake": "",
-        })
+        # Phrasal verbs
+        for item in vocab.get("phrasal_verbs", []):
+            slides.append({
+                "id": f"phrasal-{len(slides)}",
+                "category": "Phrasal Verb",
+                "word": item["phrasal_verb"],
+                "meaning": item["meaning"],
+                "example": item["example"],
+                "usage": f"Formal alternative: {item.get('formal_alternative', '')}",
+                "collocations": [],
+                "ipa": "",
+                "stress": "",
+                "audio_tip": "",
+                "common_mistake": "",
+            })
     
     # Word formation data
     word_formations = []
@@ -5632,11 +5673,96 @@ async def get_vocabulary_practice(module_id: str):
     import random
     
     module = await db.advanced_mastery_modules.find_one({"id": module_id}, {"_id": 0})
+    source = "advanced"
+    if not module:
+        module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
+        source = "mastery"
     if not module:
         raise HTTPException(status_code=404, detail="Module not found")
     
     vocab = module.get("vocabulary", {})
     exercises = []
+    
+    if source == "mastery":
+        import re
+        # Mastery: generate exercises from nouns, verbs, adjectives, adverbs
+        all_words = []
+        for cat in ["nouns", "verbs", "adjectives", "adverbs"]:
+            for item in vocab.get(cat, []):
+                all_words.append({**item, "category": cat})
+        
+        # 1. Fill-in-the-blank
+        for item in all_words:
+            word = item.get("word", "")
+            sentence = item.get("example", "")
+            if not word or not sentence:
+                continue
+            blanked = re.sub(re.escape(word), "______", sentence, flags=re.IGNORECASE, count=1)
+            if blanked != sentence:
+                other_words = [w["word"] for w in all_words if w["word"] != word]
+                distractors = random.sample(other_words, min(3, len(other_words)))
+                options = [word] + distractors
+                random.shuffle(options)
+                exercises.append({
+                    "id": f"fib-{len(exercises)}",
+                    "type": "fill_blank",
+                    "instruction": "Fill in the blank with the correct word:",
+                    "sentence": blanked,
+                    "answer": word,
+                    "options": options,
+                    "hint": item.get("meaning", ""),
+                })
+        
+        # 2. Matching - words to meanings
+        if len(all_words) >= 4:
+            match_items = random.sample(all_words, min(5, len(all_words)))
+            terms_list = [{"id": f"m-{i}", "text": item["word"]} for i, item in enumerate(match_items)]
+            defs_list = [{"id": f"m-{i}", "text": item["meaning"]} for i, item in enumerate(match_items)]
+            shuffled_defs = defs_list.copy()
+            random.shuffle(shuffled_defs)
+            exercises.append({
+                "id": f"match-{len(exercises)}",
+                "type": "matching",
+                "instruction": "Match each word with its correct meaning:",
+                "terms": terms_list,
+                "definitions": shuffled_defs,
+                "answers": {t["id"]: t["id"] for t in terms_list},
+            })
+        
+        # 3. Collocation exercises
+        collocations = module.get("collocations", [])
+        if isinstance(collocations, list):
+            for item in collocations:
+                if not isinstance(item, dict):
+                    continue
+                col = item.get("collocation", item.get("phrase", ""))
+                example = item.get("example", "")
+                if col and example:
+                    blanked = re.sub(re.escape(col), "______", example, flags=re.IGNORECASE, count=1)
+                    if blanked != example:
+                        other_cols = [c.get("collocation", c.get("phrase", "")) for c in collocations if c.get("collocation", c.get("phrase", "")) != col]
+                        distractors = random.sample(other_cols, min(3, len(other_cols))) if other_cols else []
+                        options = [col] + distractors
+                        random.shuffle(options)
+                        exercises.append({
+                            "id": f"fib-col-{len(exercises)}",
+                            "type": "fill_blank",
+                            "instruction": "Complete with the correct collocation:",
+                            "sentence": blanked,
+                            "answer": col,
+                            "options": options,
+                            "hint": item.get("meaning", ""),
+                        })
+        
+        random.shuffle(exercises)
+        return {
+            "module_id": module_id,
+            "module_title": module.get("title", ""),
+            "exercises": exercises,
+            "total_exercises": len(exercises),
+        }
+    
+    # Advanced mastery original logic below
     
     # 1. Fill-in-the-blank from advanced terms
     terms = vocab.get("advanced_terms", [])
@@ -5765,6 +5891,10 @@ async def get_vocabulary_practice(module_id: str):
 async def get_vocabulary_quiz(module_id: str):
     """Get mastery quiz questions for a module"""
     module = await db.advanced_mastery_modules.find_one({"id": module_id}, {"_id": 0})
+    source = "advanced"
+    if not module:
+        module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
+        source = "mastery"
     if not module:
         raise HTTPException(status_code=404, detail="Module not found")
     
@@ -5823,6 +5953,8 @@ async def submit_vocabulary_quiz(submission: VocabQuizSubmission):
     
     # Auto-add wrong answers to review bank
     module = await db.advanced_mastery_modules.find_one({"id": submission.module_id}, {"_id": 0})
+    if not module:
+        module = await db.mastery_course_modules.find_one({"id": submission.module_id}, {"_id": 0})
     if module:
         questions = module.get("quiz", {}).get("questions", [])
         for i, q in enumerate(questions[:10]):
