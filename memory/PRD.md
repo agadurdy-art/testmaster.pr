@@ -31,6 +31,13 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - fetchRetry: All API calls in lesson page retry 2x on network failure with exponential backoff
   - ROOT CAUSE FIX: Added null/empty array guards to ALL 14+ game components (vocab, grammar, review) preventing crashes from missing data
   - Verified: Board game items use question/answer format (not word/sentence) - all games now handle both formats safely
+- Mastery Course Interactive Vocabulary Engine integration (31/31 tests passed)
+  - Vocabulary engine (Learn, Practice, Quiz, Production modes) now works for Mastery Course
+  - Backend: vocabulary-engine endpoints check both advanced_mastery_modules and mastery_course_modules
+  - Mastery vocab data (nouns/verbs/adjectives/adverbs/collocations/idiom) transformed to slide format
+  - Practice: fill_blank + matching exercises auto-generated from mastery vocab data
+  - Frontend: MasteryCourse.js has "Interactive Vocabulary Practice" buttons
+  - No regression: Advanced Mastery vocabulary engine still works
 
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
