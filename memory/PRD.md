@@ -38,6 +38,11 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - Practice: fill_blank + matching exercises auto-generated from mastery vocab data
   - Frontend: MasteryCourse.js has "Interactive Vocabulary Practice" buttons
   - No regression: Advanced Mastery vocabulary engine still works
+- Word Search game REWRITTEN: Drag-select mechanism replacing buggy click-toggle
+  - Pointer events (pointerDown/Move/Up) for natural swipe selection
+  - Straight line validation (horizontal, vertical, diagonal)
+  - Full word names displayed (truncation removed)
+- Crossword game direction fix: isAutoAdvancing ref prevents direction switching at intersections during auto-advance
 
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
