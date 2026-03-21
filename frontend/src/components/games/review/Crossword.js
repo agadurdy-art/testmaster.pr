@@ -192,6 +192,7 @@ const Crossword = ({ items, onComplete, onSkip }) => {
   const [isComplete, setIsComplete] = useState(false);
   const [score, setScore] = useState(0);
   const inputRefs = useRef({});
+  const isAutoAdvancing = useRef(false);
 
   // Get cells for a specific word placement
   const getWordCells = useCallback((pIdx) => {
@@ -208,6 +209,9 @@ const Crossword = ({ items, onComplete, onSkip }) => {
 
   // When clicking a cell, select the word it belongs to
   const handleCellClick = useCallback((r, c) => {
+    // Skip direction change during auto-advance
+    if (isAutoAdvancing.current) return;
+
     const cell = grid[r]?.[c];
     if (!cell) return;
 
@@ -238,7 +242,12 @@ const Crossword = ({ items, onComplete, onSkip }) => {
       for (let i = idx + 1; i < wordCells.length; i++) {
         const next = wordCells[i];
         const key = `${next.r}-${next.c}`;
-        setTimeout(() => inputRefs.current[key]?.focus(), 10);
+        isAutoAdvancing.current = true;
+        setTimeout(() => {
+          inputRefs.current[key]?.focus();
+          // Reset flag after focus event has fired
+          setTimeout(() => { isAutoAdvancing.current = false; }, 20);
+        }, 10);
         return;
       }
     }
