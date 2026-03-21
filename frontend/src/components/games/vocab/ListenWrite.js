@@ -31,12 +31,13 @@ const ListenWrite = ({
   if (!items?.length) return null;
   const currentItem = items[currentIdx];
 
-  // Auto-play audio on new word
+  // Auto-play audio on new word (once per word)
   useEffect(() => {
     if (currentItem && !showFeedback) {
-      setTimeout(() => speak(currentItem.word), 500);
+      const timer = setTimeout(() => speak(currentItem.word), 500);
+      return () => { clearTimeout(timer); window.speechSynthesis.cancel(); };
     }
-  }, [currentIdx, currentItem, showFeedback]);
+  }, [currentIdx]); // Only trigger on word change, not on feedback toggle
 
   const handleCheck = () => {
     const correct = input.toLowerCase().trim() === currentItem.word.toLowerCase();

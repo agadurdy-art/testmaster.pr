@@ -43,6 +43,11 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - Straight line validation (horizontal, vertical, diagonal)
   - Full word names displayed (truncation removed)
 - Crossword game direction fix: isAutoAdvancing ref prevents direction switching at intersections during auto-advance
+- Audio loop fix: All listening/TTS audio now stops on activity change and component unmount
+  - ListeningActivity: audioRef with pause/cancel cleanup
+  - VocabularyLearning: vocabAudioRef with playback tracking
+  - Main component: speechSynthesis.cancel() on every activity switch
+  - Game components (ListenWrite, ListenChooseWord, ListenChoosePicture, AnimalSounds): useEffect cleanup + dependency fix
 
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)

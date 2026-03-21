@@ -414,6 +414,7 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
   const [pronLoading, setPronLoading] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+  const vocabAudioRef = useRef(null);
 
   // Handle both normal words and review_words (string array)
   const rawWords = activity?.words || [];
@@ -422,12 +423,27 @@ function VocabularyModule({ activity, onComplete, onSkip }) {
   const isReview = activity?.is_review === true && rawWords.length === 0;
   const w = words[idx];
 
-  const speakWord = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u); };
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (vocabAudioRef.current) { vocabAudioRef.current.pause(); vocabAudioRef.current = null; }
+      speechSynthesis.cancel();
+    };
+  }, []);
+
+  const speakWord = (text) => {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = 0.8; speechSynthesis.speak(u);
+  };
 
   const playAudioUrl = (url) => {
     if (!url) return false;
+    // Stop previous
+    if (vocabAudioRef.current) { vocabAudioRef.current.pause(); }
+    speechSynthesis.cancel();
     const fullUrl = url.startsWith('/') ? `${API_URL}/api${url}` : url;
     const audio = new Audio(fullUrl);
+    vocabAudioRef.current = audio;
     audio.play().catch(() => {});
     return true;
   };
@@ -1520,23 +1536,43 @@ function ListeningActivity({ activity, onComplete, onSkip }) {
   const [showFeedback, setShowFeedback] = useState(false);
   const [correct, setCorrect] = useState(0);
   const [phase, setPhase] = useState('listen'); // listen -> questions
+  const [hasPlayed, setHasPlayed] = useState(false);
   const questions = activity?.questions || [];
   const transcript = activity?.transcript || activity?.audio_script || activity?.audio_text || '';
   const q = questions[currentQ];
+  const audioRef = useRef(null);
 
-  const speakText = (text) => { const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.85; speechSynthesis.speak(u); };
+  // Cleanup audio on unmount or activity change
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) { audioRef.current.pause(); audioRef.current = null; }
+      speechSynthesis.cancel();
+    };
+  }, []);
+
+  const speakText = (text) => {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.85;
+    speechSynthesis.speak(u);
+  };
 
   const playListeningAudio = () => {
-    // Use ElevenLabs audio if available, fallback to browser TTS
+    // Stop any existing audio first
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current = null; }
+    speechSynthesis.cancel();
+
     const audioUrl = activity?.audio_url;
     if (audioUrl) {
       const fullUrl = audioUrl.startsWith('/') ? `${process.env.REACT_APP_BACKEND_URL}/api${audioUrl}` : audioUrl;
       const audio = new Audio(fullUrl);
       audio.playbackRate = 0.9;
+      audioRef.current = audio;
       audio.play().catch(() => speakText(transcript));
     } else {
       speakText(transcript);
     }
+    setHasPlayed(true);
   };
 
   const checkAnswer = (answer, correctAnswer) => {
@@ -2192,6 +2228,13 @@ export default function UnifiedLessonPage({ user }) {
   const [showRoadmap, setShowRoadmap] = useState(true);
   const [showCertificate, setShowCertificate] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
+
+  // Stop all audio when activity changes or component unmounts
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    };
+  }, [currentActivityType]);
 
   useEffect(() => { loadLesson(); }, [lessonId]);
 

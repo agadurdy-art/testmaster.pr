@@ -77,9 +77,10 @@ const AnimalSounds = ({
       setOptions(shuffleArray(allOptions));
       
       // Auto-play sound
-      setTimeout(() => playAnimalSound(currentItem.word), 500);
+      const timer = setTimeout(() => playAnimalSound(currentItem.word), 500);
+      return () => { clearTimeout(timer); window.speechSynthesis.cancel(); };
     }
-  }, [currentIdx, currentItem, items]);
+  }, [currentIdx]);
 
   const handlePlaySound = () => {
     if (currentItem) {

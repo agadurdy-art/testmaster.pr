@@ -48,9 +48,10 @@ const ListenChoosePicture = ({
       }
       setOptions(sliced);
       // Auto-play audio
-      setTimeout(() => speak(currentItem.word), 500);
+      const timer = setTimeout(() => speak(currentItem.word), 500);
+      return () => { clearTimeout(timer); window.speechSynthesis.cancel(); };
     }
-  }, [currentIdx, currentItem]);
+  }, [currentIdx]);
 
   const handleSelect = (option) => {
     if (showFeedback) return;

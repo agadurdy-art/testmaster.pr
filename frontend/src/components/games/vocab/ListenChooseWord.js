@@ -37,9 +37,10 @@ const ListenChooseWord = ({
       const allOptions = [currentItem.word, ...(currentItem.distractors || [])];
       setOptions(shuffleArray(allOptions).slice(0, 4));
       // Auto-play audio
-      setTimeout(() => speak(currentItem.word), 500);
+      const timer = setTimeout(() => speak(currentItem.word), 500);
+      return () => { clearTimeout(timer); window.speechSynthesis.cancel(); };
     }
-  }, [currentIdx, currentItem]);
+  }, [currentIdx]);
 
   const handleSelect = (option) => {
     if (showFeedback) return;
