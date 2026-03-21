@@ -48,6 +48,9 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - VocabularyLearning: vocabAudioRef with playback tracking
   - Main component: speechSynthesis.cancel() on every activity switch
   - Game components (ListenWrite, ListenChooseWord, ListenChoosePicture, AnimalSounds): useEffect cleanup + dependency fix
+- Mastery Course listening topic mismatch fixed: 9 modules had wrong listening content
+  - 16/17 modules now correctly matched (6↔7, 8↔11, 9↔16, 13↔14, 17↔9)
+  - Module 13 (Transportation) still has "Language Learning" - no transportation listening exists in DB, needs new content
 
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
