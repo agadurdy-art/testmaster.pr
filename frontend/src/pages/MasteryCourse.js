@@ -920,7 +920,7 @@ export default function MasteryCourse({ user }) {
     const listening = selectedModule?.listening;
     const moduleNum = selectedModule?.module_number || 1;
     const hasAudio = moduleNum >= 1 && moduleNum <= 17;
-    const audioPath = `/audio/mastery_course/module_${moduleNum}_listening.mp3`;
+    const audioPath = `${API_URL}/api/static/audio/mastery_course/module_${moduleNum}_listening.mp3`;
     
     const handleListeningAnswer = (qIdx, answer) => {
       setListeningAnswers(prev => ({ ...prev, [qIdx]: answer }));
