@@ -59,6 +59,20 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - Fixed in: `WordOrder.js` (standalone component) AND `UnifiedLessonPage.js` (inline GrammarGame)
   - Verified: 10/10 backend tests passed
 
+- **5-Stage Grammar Practice Engine (COMPLETE)** - PhD-level grammar learning system
+  - **Stage 1: Learn** - 7 slide types: Context Discovery, Form, Meaning, Examples, Common Mistakes, IELTS Tips, Concept Check (CCQ)
+  - **Stage 2: Controlled Practice** - 4 exercise types: Recognition (spot the grammar), Gap Fill, Transformation, Error Correction
+  - **Stage 3: Checkpoint Quiz** - 10 mixed questions with timer, difficulty levels, mastery scoring + diagnostic report
+  - **Stage 4: Guided Production** - 5 scaffolded writing prompts with word bank + AI evaluation (GPT-4o)
+  - **Stage 5: Free Production** - 3 open-ended prompts for real communication + AI evaluation
+  - **Multi-language Translation Toggle** - Globe icon allows switching explanations to Vietnamese, Turkish, Korean, etc.
+  - **AI Content Generation** - All content generated from minimal grammar data via GPT-4o, cached in MongoDB
+  - **AI Evaluation** - Student writing evaluated with 1-5 star score, grammar check, feedback, corrections
+  - **Backend:** `/app/backend/routes/grammar_engine.py` - 8 endpoints (learn, practice, quiz, guided-prompts, free-prompts, evaluate, translate, progress)
+  - **Frontend:** 4 new pages (GrammarLearnMode, GrammarPracticeMode, GrammarQuizMode, GrammarProductionMode)
+  - **MasteryCourse Integration:** 5 buttons (Learn, Practice, Quiz, Guided, Free) in Grammar section
+  - Verified: 25/25 backend tests passed, all 5 frontend pages tested
+
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
 - Critical Bug Fix: Missing & Unenriched Content for all stages
@@ -69,11 +83,11 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 ## Prioritized Backlog
 
 ### P0 - Upcoming
-1. **Grammar Practice Engine (Plan B):** 4-stage engine (Learn -> Practice -> Quiz -> Production) similar to vocabulary engine, for Mastery and Advanced courses
+1. **Grammar Engine -> Advanced Course:** Port grammar engine to Advanced Mastery Course
 2. **Vocabulary Engine -> Beginner Course:** Port vocabulary engine to Beginner course
 
 ### P1 - Upcoming
-1. **"Liz" Bilingual Lesson Teacher:** AI tutor explains lesson topic in Turkish before 10-step activity flow
+1. **"Liz" Bilingual Lesson Teacher:** AI tutor explains lesson topic in user's language before 10-step activity flow
 2. **"Map Generator" Status Report:** Inform user - no existing feature found
 3. **Vocabulary Word Completion Bug:** Regression test - completing one word incorrectly marks all complete
 
@@ -88,6 +102,11 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 
 ## Key Files
 - `/app/backend/server.py` - Core backend
+- `/app/backend/routes/grammar_engine.py` - Grammar Practice Engine (8 API endpoints)
+- `/app/frontend/src/pages/GrammarLearnMode.js` - Grammar Learn (7 slide types + translation)
+- `/app/frontend/src/pages/GrammarPracticeMode.js` - Controlled Practice (4 exercise types)
+- `/app/frontend/src/pages/GrammarQuizMode.js` - Checkpoint Quiz (timer + diagnostics)
+- `/app/frontend/src/pages/GrammarProductionMode.js` - Guided + Free Production (AI evaluation)
 - `/app/backend/content/enriched/*.json` - Source of truth for enriched content
 - `/app/tools/image_mapping.json` - Word-to-image mapping (301 entries)
 - `/app/tools/gpt_image_mapping.json` - GPT generated images mapping (79 entries)
