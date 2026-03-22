@@ -84,8 +84,7 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 ## Prioritized Backlog
 
 ### P0 - Upcoming
-1. **Grammar Engine -> Advanced Course:** Port grammar engine to Advanced Mastery Course
-2. **Vocabulary Engine -> Beginner Course:** Port vocabulary engine to Beginner course
+1. **Vocabulary Engine -> Beginner Course:** Port vocabulary engine to Beginner course
 
 ### P1 - Upcoming
 1. **"Liz" Bilingual Lesson Teacher:** AI tutor explains lesson topic in user's language before 10-step activity flow

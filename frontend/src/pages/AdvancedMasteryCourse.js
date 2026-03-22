@@ -9,7 +9,7 @@ import {
   BookOpen, ChevronLeft, ChevronRight, Home, Trophy, Star, Mic, 
   PenTool, HelpCircle, GraduationCap, Target, Sparkles, Volume2,
   Brain, Award, TrendingUp, CheckCircle, XCircle, Lightbulb, Zap, AlertCircle,
-  Headphones, Play, Pause, RotateCcw, Globe
+  Headphones, Play, Pause, RotateCcw, Globe, Layers
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
@@ -1035,6 +1035,58 @@ export default function AdvancedMasteryCourse({ user }) {
         <div className="p-4 bg-amber-50 rounded-xl mb-4">
           <h4 className="font-semibold text-amber-800 mb-2">💡 Why This Works</h4>
           <p className="text-gray-700">{selectedModule.grammar.why_it_works}</p>
+        </div>
+      )}
+
+      {/* Interactive Grammar Engine */}
+      {user && (
+        <div className="mt-4 p-5 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-200">
+          <h4 className="font-bold text-indigo-900 mb-1 flex items-center gap-2">
+            <Layers className="w-4 h-4" /> Interactive Grammar Practice
+          </h4>
+          <p className="text-sm text-indigo-600 mb-4">Master this grammar through 5 stages of practice</p>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <Button
+              data-testid="grammar-engine-learn-btn"
+              variant="outline"
+              className="border-indigo-300 text-indigo-700 hover:bg-indigo-100"
+              onClick={() => navigate(`/grammar/learn/${selectedModule.id}`)}
+            >
+              <BookOpen className="w-4 h-4 mr-1" /> Learn
+            </Button>
+            <Button
+              data-testid="grammar-engine-practice-btn"
+              variant="outline"
+              className="border-purple-300 text-purple-700 hover:bg-purple-100"
+              onClick={() => navigate(`/grammar/practice/${selectedModule.id}`)}
+            >
+              <PenTool className="w-4 h-4 mr-1" /> Practice
+            </Button>
+            <Button
+              data-testid="grammar-engine-quiz-btn"
+              variant="outline"
+              className="border-amber-300 text-amber-700 hover:bg-amber-100"
+              onClick={() => navigate(`/grammar/quiz/${selectedModule.id}`)}
+            >
+              <HelpCircle className="w-4 h-4 mr-1" /> Quiz
+            </Button>
+            <Button
+              data-testid="grammar-engine-guided-btn"
+              variant="outline"
+              className="border-green-300 text-green-700 hover:bg-green-100"
+              onClick={() => navigate(`/grammar/guided/${selectedModule.id}`)}
+            >
+              <Target className="w-4 h-4 mr-1" /> Guided
+            </Button>
+            <Button
+              data-testid="grammar-engine-free-btn"
+              variant="outline"
+              className="border-emerald-300 text-emerald-700 hover:bg-emerald-100"
+              onClick={() => navigate(`/grammar/free/${selectedModule.id}`)}
+            >
+              <Award className="w-4 h-4 mr-1" /> Free
+            </Button>
+          </div>
         </div>
       )}
 
