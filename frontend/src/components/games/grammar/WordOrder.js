@@ -61,7 +61,7 @@ const WordOrder = ({
   };
 
   const handleCheck = () => {
-    const normalize = (s) => s.replace(/[.!?,;:]+$/g, '').trim().toLowerCase();
+    const normalize = (s) => s.replace(/\s+([.!?,;:'""])/g, '$1').replace(/(['""])\s+/g, '$1').replace(/\s+/g, ' ').replace(/[.!?,;:]+$/g, '').trim().toLowerCase();
     const answer = normalize(selectedWords.map(w => w.word).join(' '));
     const correct = answer === normalize(currentItem.correctSentence || '');
     setIsCorrect(correct);

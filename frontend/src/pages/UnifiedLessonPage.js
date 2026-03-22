@@ -1365,7 +1365,7 @@ function GrammarGame({ activity, onComplete, onSkip }) {
   };
 
   const checkWordOrder = () => {
-    const normalize = (s) => s.replace(/[.!?,;:]+$/g, '').trim().toLowerCase();
+    const normalize = (s) => s.replace(/\s+([.!?,;:'""])/g, '$1').replace(/(['""])\s+/g, '$1').replace(/\s+/g, ' ').replace(/[.!?,;:]+$/g, '').trim().toLowerCase();
     const userSentence = normalize(selectedWords.join(' '));
     const correctSentence = normalize(item.correct_sentence || '');
     const correct = userSentence === correctSentence;
