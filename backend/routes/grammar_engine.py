@@ -986,3 +986,180 @@ async def submit_grammar_quiz(module_id: str, req: QuizSubmitRequest):
     ))
 
     return result
+
+
+# ═══════════════════════════════════════════
+# SMART REVIEW (Targeted Practice)
+# ═══════════════════════════════════════════
+
+class SmartReviewRequest(BaseModel):
+    weak_areas: list  # e.g. ["form", "usage"]
+    quiz_score: Optional[int] = None
+
+
+@router.post("/{module_id}/smart-review")
+async def generate_smart_review(module_id: str, req: SmartReviewRequest):
+    """Generate targeted practice exercises based on weak areas from quiz diagnostics"""
+    if not req.weak_areas:
+        raise HTTPException(status_code=400, detail="No weak areas provided")
+
+    # Build cache key from sorted weak areas
+    cache_key = f"smart_review_{'_'.join(sorted(req.weak_areas))}"
+    cached = await get_cached(module_id, cache_key)
+    if cached:
+        return cached
+
+    grammar, module_title, source = await get_module_grammar(module_id)
+
+    area_descriptions = {
+        "form": "sentence structure, word order, verb forms, subject-verb agreement",
+        "meaning": "what the grammar expresses, the difference between similar structures, when NOT to use it",
+        "usage": "choosing the right grammar for the right context, real-world application, IELTS task situations",
+        "recognition": "identifying the grammar in text, distinguishing it from similar structures",
+    }
+
+    weak_desc = "\n".join([f"- {a}: {area_descriptions.get(a, a)}" for a in req.weak_areas])
+
+    system = """You are a PhD-level English grammar teacher creating TARGETED review exercises.
+The student has taken a quiz and struggled with specific areas. Create focused exercises that directly address their weaknesses.
+Make exercises progressively harder. Be precise and diagnostic.
+Always respond with valid JSON only, no markdown."""
+
+    prompt = f"""The student scored {req.quiz_score or 'unknown'}% on the quiz for:
+
+Grammar: {grammar.get('title', '')}
+Topic: {module_title}
+Explanation: {grammar.get('explanation', '')}
+
+Their WEAK AREAS are:
+{weak_desc}
+
+Generate TARGETED review exercises focusing ONLY on these weak areas.
+
+Return JSON:
+{{
+  "title": "Smart Review: {grammar.get('title', '')}",
+  "module_topic": "{module_title}",
+  "weak_areas": {json.dumps(req.weak_areas)},
+  "review_message": "A 1-2 sentence encouraging message explaining what they'll practice and why",
+  "exercises": [
+    {{
+      "id": "sr-1",
+      "type": "multiple_choice",
+      "targets_area": "{req.weak_areas[0]}",
+      "difficulty": "easy",
+      "question": "A clear question testing the weak area",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correct_index": 0,
+      "explanation": "Detailed explanation of WHY this is correct, specifically addressing the weak area",
+      "tip": "A specific learning tip for this weak area"
+    }},
+    {{
+      "id": "sr-2",
+      "type": "gap_fill",
+      "targets_area": "{req.weak_areas[0]}",
+      "difficulty": "easy",
+      "sentence": "Sentence with ___ to fill.",
+      "options": ["opt1", "opt2", "opt3", "opt4"],
+      "correct": "correct_option",
+      "explanation": "Why this is correct",
+      "tip": "Tip"
+    }},
+    {{
+      "id": "sr-3",
+      "type": "multiple_choice",
+      "targets_area": "{req.weak_areas[-1]}",
+      "difficulty": "medium",
+      "question": "A medium difficulty question",
+      "options": ["A", "B", "C", "D"],
+      "correct_index": 1,
+      "explanation": "Explanation",
+      "tip": "Tip"
+    }},
+    {{
+      "id": "sr-4",
+      "type": "error_detection",
+      "targets_area": "{req.weak_areas[0]}",
+      "difficulty": "medium",
+      "sentence": "A sentence that may or may not have an error",
+      "has_error": true,
+      "error_word": "the wrong word",
+      "correct_word": "the right word",
+      "explanation": "Explanation focusing on the weak area",
+      "tip": "Tip"
+    }},
+    {{
+      "id": "sr-5",
+      "type": "gap_fill",
+      "targets_area": "{req.weak_areas[-1]}",
+      "difficulty": "medium",
+      "sentence": "Another gap fill ___.",
+      "options": ["a", "b", "c", "d"],
+      "correct": "b",
+      "explanation": "Why",
+      "tip": "Tip"
+    }},
+    {{
+      "id": "sr-6",
+      "type": "multiple_choice",
+      "targets_area": "{req.weak_areas[0]}",
+      "difficulty": "hard",
+      "question": "A challenging question that really tests deep understanding",
+      "options": ["A", "B", "C", "D"],
+      "correct_index": 2,
+      "explanation": "Detailed explanation of the nuance",
+      "tip": "Advanced tip"
+    }},
+    {{
+      "id": "sr-7",
+      "type": "context_choice",
+      "targets_area": "{req.weak_areas[-1]}",
+      "difficulty": "hard",
+      "context": "A real IELTS-like paragraph or situation",
+      "question": "Which option best fits this context?",
+      "options": ["Option using grammar A", "Option using grammar B", "Option using grammar C"],
+      "correct_index": 0,
+      "explanation": "Why this grammar fits best in this academic/professional context",
+      "tip": "IELTS strategy tip"
+    }},
+    {{
+      "id": "sr-8",
+      "type": "sentence_correction",
+      "targets_area": "{req.weak_areas[0]}",
+      "difficulty": "hard",
+      "wrong_sentence": "A sentence with a subtle grammar error in the weak area",
+      "correct_sentence": "The corrected version",
+      "explanation": "Detailed explanation of the subtle error",
+      "tip": "How to avoid this in IELTS writing"
+    }}
+  ],
+  "summary_tips": [
+    "Key tip 1 for improving {req.weak_areas[0]}",
+    "Key tip 2 for improving {req.weak_areas[-1] if len(req.weak_areas) > 1 else req.weak_areas[0]}",
+    "General strategy tip for mastering this grammar"
+  ]
+}}
+
+IMPORTANT:
+- Generate EXACTLY 8 exercises
+- Focus exercises on the WEAK AREAS: {', '.join(req.weak_areas)}
+- Progress from easy (2) -> medium (3) -> hard (3)
+- Each exercise must have a specific learning tip
+- All content relates to: {grammar.get('title', '')} in context of {module_title}
+- Make explanations teach, not just tell"""
+
+    try:
+        raw = await call_llm(system, prompt)
+        text = raw.strip()
+        if text.startswith("```"):
+            text = text.split("\n", 1)[1] if "\n" in text else text[3:]
+            text = text.rsplit("```", 1)[0]
+        data = json.loads(text)
+        await set_cached(module_id, cache_key, data)
+        return data
+    except json.JSONDecodeError:
+        logger.error(f"Failed to parse Smart Review JSON for {module_id}")
+        raise HTTPException(status_code=500, detail="Failed to generate smart review")
+    except Exception as e:
+        logger.error(f"LLM error for smart review {module_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to generate smart review")

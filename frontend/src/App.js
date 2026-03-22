@@ -71,6 +71,7 @@ import GrammarLearnMode from './pages/GrammarLearnMode';
 import GrammarPracticeMode from './pages/GrammarPracticeMode';
 import GrammarQuizMode from './pages/GrammarQuizMode';
 import GrammarProductionMode from './pages/GrammarProductionMode';
+import GrammarSmartReview from './pages/GrammarSmartReview';
 import ReviewBank from './pages/ReviewBank';
 import UnifiedCoursePage from './pages/UnifiedCoursePage';
 import UnifiedStagePage from './pages/UnifiedStagePage';
@@ -392,6 +393,10 @@ function AppWithSessionHandler() {
         <Route 
           path="/grammar/free/:moduleId" 
           element={user ? <GrammarProductionMode user={user} stage="free" /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/smart-review/:moduleId" 
+          element={user ? <GrammarSmartReview user={user} /> : <Navigate to="/" />} 
         />
         
         {/* Unified Learning System Routes */}

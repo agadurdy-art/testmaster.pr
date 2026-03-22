@@ -132,7 +132,15 @@ export default function GrammarQuizMode({ user }) {
           </div>
 
           <div className="flex gap-3">
-            {result.score < 70 && (
+            {result.weak_areas?.length > 0 && (
+              <Button variant="outline" 
+                onClick={() => navigate(`/grammar/smart-review/${moduleId}`, { state: { weak_areas: result.weak_areas, quiz_score: result.score } })} 
+                className="flex-1 border-orange-300 text-orange-700 hover:bg-orange-50" 
+                data-testid="smart-review-btn">
+                <Target className="w-4 h-4 mr-1" /> Smart Review
+              </Button>
+            )}
+            {result.score < 70 && !result.weak_areas?.length && (
               <Button variant="outline" onClick={() => navigate(`/grammar/practice/${moduleId}`)} className="flex-1" data-testid="back-to-practice-btn">
                 <RotateCcw className="w-4 h-4 mr-1" /> Review Practice
               </Button>
