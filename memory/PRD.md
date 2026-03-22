@@ -52,6 +52,13 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - 16/17 modules now correctly matched (6↔7, 8↔11, 9↔16, 13↔14, 17↔9)
   - Module 13 (Transportation) still has "Language Learning" - no transportation listening exists in DB, needs new content
 
+### Completed (March 22, 2026)
+- Word Order Grammar Game Bug Fix: User's correct answers were marked wrong when punctuation (. , ? !) was stored as separate word tokens
+  - Root cause: `normalize()` function didn't remove spaces before punctuation when joining word tokens
+  - Fix: Added regex `.replace(/\s+([.!?,;:'""])/g, '$1')` to normalize in BOTH locations
+  - Fixed in: `WordOrder.js` (standalone component) AND `UnifiedLessonPage.js` (inline GrammarGame)
+  - Verified: 10/10 backend tests passed
+
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
 - Critical Bug Fix: Missing & Unenriched Content for all stages
@@ -61,12 +68,17 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 
 ## Prioritized Backlog
 
+### P0 - Upcoming
+1. **Grammar Practice Engine (Plan B):** 4-stage engine (Learn -> Practice -> Quiz -> Production) similar to vocabulary engine, for Mastery and Advanced courses
+2. **Vocabulary Engine -> Beginner Course:** Port vocabulary engine to Beginner course
+
 ### P1 - Upcoming
 1. **"Liz" Bilingual Lesson Teacher:** AI tutor explains lesson topic in Turkish before 10-step activity flow
 2. **"Map Generator" Status Report:** Inform user - no existing feature found
 3. **Vocabulary Word Completion Bug:** Regression test - completing one word incorrectly marks all complete
 
 ### P2 - Future
+- Generate ElevenLabs Audio for All Mastery Modules
 - Automatic Visual Generation Pipeline for new lessons
 - Bank Transfer Expiry Reminders (3 days before)
 - "Daily Habit" Spaced Repetition System (SRS)
