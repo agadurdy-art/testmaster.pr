@@ -10,7 +10,8 @@ import {
   BookOpen, Volume2, Mic, Square, ChevronLeft, ChevronRight, 
   CheckCircle, XCircle, ArrowLeft, Loader2, GraduationCap,
   MessageSquare, PenTool, AlertCircle, Trophy, Star, Home,
-  Languages, FileText, HelpCircle, Headphones, Play, Pause, Lightbulb, RotateCcw
+  Languages, FileText, HelpCircle, Headphones, Play, Pause, Lightbulb, RotateCcw,
+  Target, Award, Layers
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SideBySideReader from '../components/test/SideBySideReader';
@@ -859,6 +860,50 @@ export default function BeginnerCourse({ user }) {
           </div>
         ))}
       </div>
+      
+      {/* Interactive Vocabulary Engine */}
+      {user && selectedLesson && (
+        <div className="mt-6 p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
+          <h4 className="font-bold text-green-900 mb-1 flex items-center gap-2">
+            <Layers className="w-4 h-4" /> Interactive Vocabulary Practice
+          </h4>
+          <p className="text-sm text-green-600 mb-4">Master these words through interactive exercises</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <Button
+              data-testid="vocab-engine-learn-btn"
+              variant="outline"
+              className="border-green-300 text-green-700 hover:bg-green-100"
+              onClick={() => navigate(`/vocabulary/learn/${selectedLesson.id}`)}
+            >
+              <BookOpen className="w-4 h-4 mr-1" /> Learn
+            </Button>
+            <Button
+              data-testid="vocab-engine-practice-btn"
+              variant="outline"
+              className="border-emerald-300 text-emerald-700 hover:bg-emerald-100"
+              onClick={() => navigate(`/vocabulary/practice/${selectedLesson.id}`)}
+            >
+              <PenTool className="w-4 h-4 mr-1" /> Practice
+            </Button>
+            <Button
+              data-testid="vocab-engine-quiz-btn"
+              variant="outline"
+              className="border-amber-300 text-amber-700 hover:bg-amber-100"
+              onClick={() => navigate(`/vocabulary/quiz/${selectedLesson.id}`)}
+            >
+              <HelpCircle className="w-4 h-4 mr-1" /> Quiz
+            </Button>
+            <Button
+              data-testid="vocab-engine-production-btn"
+              variant="outline"
+              className="border-blue-300 text-blue-700 hover:bg-blue-100"
+              onClick={() => navigate(`/vocabulary/production/${selectedLesson.id}`)}
+            >
+              <Award className="w-4 h-4 mr-1" /> Production
+            </Button>
+          </div>
+        </div>
+      )}
       
       <div className="mt-6 flex justify-end">
         <Button onClick={() => setCurrentSection('grammar')} className="bg-gradient-to-r from-green-500 to-emerald-600 text-white">

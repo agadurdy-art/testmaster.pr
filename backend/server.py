@@ -5546,16 +5546,45 @@ async def get_vocabulary_slides(module_id: str):
         module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
         source = "mastery"
     if not module:
+        module = await db.beginner_english_lessons.find_one({"id": module_id}, {"_id": 0})
+        source = "beginner"
+    if not module:
         raise HTTPException(status_code=404, detail="Module not found")
     
     vocab = module.get("vocabulary", {})
     pronunciation_map = {}
-    for p in vocab.get("pronunciation_guide", []):
-        pronunciation_map[p["word"].lower()] = p
+    if isinstance(vocab, dict):
+        for p in vocab.get("pronunciation_guide", []):
+            pronunciation_map[p["word"].lower()] = p
     
     slides = []
     
-    if source == "mastery":
+    if source == "beginner":
+        # Beginner course: simple [{word, meaning, example}] list
+        vocab_list = vocab if isinstance(vocab, list) else []
+        for i, item in enumerate(vocab_list):
+            slides.append({
+                "id": f"word-{i}",
+                "category": "Vocabulary",
+                "word": item.get("word", ""),
+                "meaning": item.get("meaning", ""),
+                "example": item.get("example", ""),
+                "usage": "",
+                "collocations": [],
+                "ipa": "", "stress": "", "audio_tip": "", "common_mistake": "",
+            })
+        # Also add common_mistake if available
+        cm = module.get("common_mistake", {})
+        if isinstance(cm, dict) and cm.get("incorrect"):
+            slides.append({
+                "id": f"mistake-{len(slides)}",
+                "category": "Common Mistake",
+                "word": f"{cm.get('incorrect', '')} vs {cm.get('correct', '')}",
+                "meaning": cm.get("tip", ""),
+                "example": f"Correct: {cm.get('correct', '')}",
+                "usage": "", "collocations": [], "ipa": "", "stress": "", "audio_tip": "", "common_mistake": cm.get("incorrect", ""),
+            })
+    elif source == "mastery":
         # Mastery course: nouns, verbs, adjectives, adverbs
         for category in ["nouns", "verbs", "adjectives", "adverbs"]:
             for item in vocab.get(category, []):
@@ -5689,12 +5718,59 @@ async def get_vocabulary_practice(module_id: str):
         module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
         source = "mastery"
     if not module:
+        module = await db.beginner_english_lessons.find_one({"id": module_id}, {"_id": 0})
+        source = "beginner"
+    if not module:
         raise HTTPException(status_code=404, detail="Module not found")
     
     vocab = module.get("vocabulary", {})
     exercises = []
     
-    if source == "mastery":
+    if source == "beginner":
+        import re
+        # Beginner: simple [{word, meaning, example}] list
+        vocab_list = vocab if isinstance(vocab, list) else []
+        all_words = [{"word": item.get("word", ""), "meaning": item.get("meaning", ""), "example": item.get("example", ""), "category": "vocabulary"} for item in vocab_list]
+        
+        # Fill-in-the-blank
+        for item in all_words:
+            word = item.get("word", "")
+            sentence = item.get("example", "")
+            if not word or not sentence:
+                continue
+            blanked = re.sub(re.escape(word), "______", sentence, flags=re.IGNORECASE, count=1)
+            if blanked != sentence:
+                other_words = [w["word"] for w in all_words if w["word"].lower() != word.lower()]
+                distractors = (other_words + ["something", "nothing"])[:3]
+                options = [word] + distractors
+                random.shuffle(options)
+                exercises.append({
+                    "type": "fill_blank",
+                    "sentence": blanked,
+                    "correct": word,
+                    "options": options,
+                    "word": word,
+                })
+        
+        # Meaning matching
+        for item in all_words:
+            word = item.get("word", "")
+            meaning = item.get("meaning", "")
+            if not word or not meaning:
+                continue
+            other_meanings = [w["meaning"] for w in all_words if w["word"].lower() != word.lower() and w["meaning"]]
+            distractors = (other_meanings + ["Not related"])[:3]
+            options = [meaning] + distractors
+            random.shuffle(options)
+            exercises.append({
+                "type": "meaning_match",
+                "word": word,
+                "correct": meaning,
+                "options": options,
+            })
+        
+        random.shuffle(exercises)
+    elif source == "mastery":
         import re
         # Mastery: generate exercises from nouns, verbs, adjectives, adverbs
         all_words = []
@@ -5766,6 +5842,14 @@ async def get_vocabulary_practice(module_id: str):
                         })
         
         random.shuffle(exercises)
+        return {
+            "module_id": module_id,
+            "module_title": module.get("title", ""),
+            "exercises": exercises,
+            "total_exercises": len(exercises),
+        }
+    elif source == "beginner":
+        # Return beginner exercises
         return {
             "module_id": module_id,
             "module_title": module.get("title", ""),
@@ -5907,7 +5991,44 @@ async def get_vocabulary_quiz(module_id: str):
         module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
         source = "mastery"
     if not module:
+        module = await db.beginner_english_lessons.find_one({"id": module_id}, {"_id": 0})
+        source = "beginner"
+    if not module:
         raise HTTPException(status_code=404, detail="Module not found")
+    
+    if source == "beginner":
+        import random
+        # Generate quiz from vocabulary for beginner
+        vocab_list = module.get("vocabulary", [])
+        if not isinstance(vocab_list, list):
+            vocab_list = []
+        questions = []
+        for i, item in enumerate(vocab_list):
+            word = item.get("word", "")
+            meaning = item.get("meaning", "")
+            example = item.get("example", "")
+            if not word or not meaning:
+                continue
+            other_meanings = [w["meaning"] for w in vocab_list if w.get("word") != word and w.get("meaning")]
+            distractors = (other_meanings + ["Not applicable", "Unknown meaning"])[:3]
+            options = [meaning] + distractors
+            random.shuffle(options)
+            correct_idx = options.index(meaning)
+            questions.append({
+                "id": f"q-{i}",
+                "question": f"What does '{word}' mean?",
+                "options": options,
+                "correct_answer": correct_idx,
+                "explanation": f"'{word}' means: {meaning}. Example: {example}",
+            })
+        return {
+            "module_id": module_id,
+            "module_title": module.get("title", ""),
+            "questions": questions[:10],
+            "total_questions": len(questions[:10]),
+            "passing_score": 80,
+            "reading_passage": "",
+        }
     
     quiz = module.get("quiz", {})
     questions = quiz.get("questions", [])
