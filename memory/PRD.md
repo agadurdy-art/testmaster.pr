@@ -71,7 +71,8 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
   - **Backend:** `/app/backend/routes/grammar_engine.py` - 8 endpoints (learn, practice, quiz, guided-prompts, free-prompts, evaluate, translate, progress)
   - **Frontend:** 4 new pages (GrammarLearnMode, GrammarPracticeMode, GrammarQuizMode, GrammarProductionMode)
   - **MasteryCourse Integration:** 5 buttons (Learn, Practice, Quiz, Guided, Free) in Grammar section
-  - Verified: 25/25 backend tests passed, all 5 frontend pages tested
+  - **Smart Review System:** Quiz diagnostik verilerine göre zayıf alanlara özel AI-generated alıştırmalar (8 egzersiz, easy→medium→hard progression)
+  - Verified: 25/25 + 18/18 backend tests passed (43 total)
 
 ### Previously Completed
 - Critical Bug Fix: Persistent Data Loss (data now written to source JSON files)
@@ -107,7 +108,7 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 - `/app/frontend/src/pages/GrammarPracticeMode.js` - Controlled Practice (4 exercise types)
 - `/app/frontend/src/pages/GrammarQuizMode.js` - Checkpoint Quiz (timer + diagnostics)
 - `/app/frontend/src/pages/GrammarProductionMode.js` - Guided + Free Production (AI evaluation)
-- `/app/backend/content/enriched/*.json` - Source of truth for enriched content
+- `/app/frontend/src/pages/GrammarSmartReview.js` - Smart Review (targeted weak-area exercises)
 - `/app/tools/image_mapping.json` - Word-to-image mapping (301 entries)
 - `/app/tools/gpt_image_mapping.json` - GPT generated images mapping (79 entries)
 - `/app/backend/static/vocab_images/` - Physical image files (~540 files)
