@@ -15,7 +15,7 @@ import requests
 import os
 import uuid
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://vocab-coverage-check.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://vocab-fix-stable.preview.emergentagent.com').rstrip('/')
 
 # Admin emails that bypass all locks
 ADMIN_EMAILS = ['aga.durdy@gmail.com', 'stemhousebenluc@gmail.com']

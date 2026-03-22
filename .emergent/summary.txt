@@ -1,148 +1,150 @@
-<analysis>An analysis of the user and agent conversation has been done. Here is the summary:
+<analysis>**original_problem_statement:**
+The user's initial goal was to enhance the application by improving content quality and adding new features. This session started by resolving a recurring data integrity issue with vocabulary images, then pivoted to fixing several critical user-experience bugs, including frequent white screen crashes, broken game mechanics, and persistent audio playback problems. After stabilizing the application, the focus shifted to implementing a user-requested feature (porting the vocabulary engine to another course) and generating new AI-driven content (a full listening lesson with script and audio). The user is now asking for estimates and plans for the next wave of major features.
 
-**original_problem_statement:**
-The user's initial high-level goals were to improve application content quality and add features. This session's focus shifted from new feature development to fixing critical post-deployment bugs and data persistence issues.
+PRODUCT REQUIREMENTS from this session:
+1.  **P0 - Fix Vocabulary Coverage:** Ensure 100% of vocabulary words have images, resolving a recurring issue from a previous fork.
+2.  **P0 - Fix White Screen Crashes:** Find and eliminate the root cause of the application frequently crashing to a blank white page, especially in lessons.
+3.  **P1 - Fix Review Game Bugs:** Correct a direction-locking issue in the Crossword game and improve the word selection mechanism in the Word Search game.
+4.  **P1 - Fix Audio Playback Bugs:** Prevent listening audio from looping endlessly or continuing to play after the user navigates away.
+5.  **P2 - Fix Mastery Course Content:** Correct the mismatched listening topics in the Mastery Course modules.
+6.  **P2 - Implement Vocabulary Engine in Mastery Course:** Port the existing interactive vocabulary engine from the Advanced course to the Mastery course.
+7.  **P2 - Generate Missing Content:** Create a new listening lesson, including a script and a professional audio voiceover using ElevenLabs, for a module that was missing content.
 
-The main requests addressed were:
-1.  **Build a Centralized Admin Panel:** The initial task was to create an admin dashboard with a vocabulary image manager.
-2.  **Fix Lessons Not Showing Bug:** After deployment, users couldn't access lessons, which showed Coming Soon.
-3.  **Fix Content Enrichment Bug:** Stage 2 content was missing games, definitions, and examples post-deployment.
-4.  **Fix Crossword Game:** A critical bug made the crossword puzzle unusable, with incorrect layouts and navigation.
-5.  **Fix Persistent Data Loss:** The most critical issue was that all generated images and enriched vocabulary data were being wiped on every server restart.
-6.  **Fix Admin Panel Dropdown:** The user management plan selection was limited to only two options.
-7.  **Grant Full Access to Admins:** Ensure admin accounts have access to all features and content.
-8.  **Generate Missing Vocabulary Images:** After fixing the data loss, the user requested the generation of all remaining missing images (~80 words).
-
-**User's preferred language**: The user's messages are in **Turkish**. The next agent MUST respond in Turkish for all  interactions.
+**User's preferred language**: The user primarily communicates in **Turkish**. The next agent MUST respond in Turkish for all  interactions.
 
 **what currently exists?**
 *   A full-stack application with a React frontend, a monolithic FastAPI backend (), and a MongoDB database.
-*   A robust, idempotent auto-seeding and content enrichment system that runs on server startup. It correctly populates the database with content for all stages (1 and 2), including games, definitions, examples, and image URLs.
-*   **Permanent Data Storage:** All generated and enriched content (image URLs, definitions, examples) is now saved directly into the source JSON files located at . This prevents data loss on server restarts or redeployments.
-*   A fully functional centralized Admin Panel at , which includes a Vocabulary Image Manager and an improved User Management page that allows assigning all available subscription plans.
-*   A startup process that automatically grants full master plan access and credits to all designated admin accounts.
-*   A fully fixed and functional Crossword game component.
-*   Nearly 100% image coverage for all vocabulary words across all lessons after a targeted generation of ~80 missing images.
+*   A robust, idempotent auto-seeding system that persists generated content (images, etc.) to source JSON files, preventing data loss on redeploys.
+*   **100% Vocabulary Image Coverage:** All 617 vocabulary words now have an associated image, with data persisted in source files.
+*   **Stable Frontend:** A global React  prevents the entire application from crashing. The root cause of the crashes—game components failing on empty data—has been fixed by adding null/empty data guards to over 14 components.
+*   **Functional Interactive Vocabulary Engine:** A 4-mode (Learn, Practice, Quiz, Production) vocabulary engine is now successfully integrated and working in both the  and  pages.
+*   **Improved Game Experience:** The Crossword and Word Search review games have been fixed. The Word Search game now features an intuitive drag-to-select mechanic.
+*   **Reliable Audio Playback:** A centralized audio management system is in place, ensuring that audio and text-to-speech are properly stopped when a user navigates between activities or pages, preventing overlapping or looping sounds.
+*   **Corrected Course Content:** All 17 modules in the Mastery Course now have correctly matched listening lesson content, including a newly generated lesson for Transportation (Module 13) complete with an AI-generated script and an ElevenLabs audio track.
 
 **Last working item**:
-*   **Last item agent was working:** The agent finished generating ~80 images for previously uncovered vocabulary words. It successfully updated the database and, most importantly, wrote these new image mappings back to the source JSON files to ensure they are permanently saved. The agent was in the final verification step to confirm 100% coverage.
-*   **Status:** IN PROGRESS
-*   **Agent Testing Done:** Y
-*   **Which testing method agent to use?** Backend testing agent. The agent should run a final check by calling the  endpoint and parsing the output to confirm that zero words are missing an .
-*   **User Testing Done:** N
+- **Last item agent was working:** Generating new AI content (script and questions) and a professional audio voiceover (using ElevenLabs) for Mastery Course Module 13 (Transportation). This was the last module with mismatched content.
+- **Status:** COMPLETED
+- **Agent Testing Done:** Y (Agent verified the audio file was created, saved, linked in the DB, and accessible via the correct API endpoint with ).
+- **Which testing method agent to use?** NA (The user can manually verify this content fix by navigating to Mastery Course -> Module 13 -> Listening).
+- **User Testing Done:** N
 
 **All Pending/In progress Issue list**:
-*   There are no outstanding bugs reported by the user. The primary focus was on fixing data persistence and content issues, which have been resolved.
+*   There are no outstanding issues or bugs. All user-reported problems in this session have been resolved.
 
 **In progress Task List**:
-*   **Task 1: Finalize and Verify 100% Vocabulary Image Coverage (P0)**
-    *   **Description:** The agent generated all missing vocabulary images and implemented a permanent storage solution. The final step is to run a definitive check to ensure image coverage is now 100% and that no words are missing images.
-    *   **Where to resume:** Run a script or use  with  to hit the  endpoint and count the number of items where  is null or empty. Confirm this count is zero.
-    - **What will be achieved with this?** This will close out the data content task, confirming that all vocabulary words have a corresponding image and that the data is permanently stored.
-    *   **Status:** IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?** Backend.
-    *   **Blocked on something:** None.
+*   There are no tasks currently in progress.
 
 **Upcoming and Future Tasks**
 **Upcoming Tasks:**
-*   **P1: Implement Liz as a Bilingual Lesson Teacher:** The user chose Option A: at the beginning of each lesson, the AI tutor Liz will provide a 2-3 minute explanation of the lesson's topic in the user's native language (e.g., Turkish) before the student starts the 10-step activity flow.
-*   **P1: Report on Map Generator Status:** The agent from a previous session investigated a Map Generator but never reported the findings. The next agent must inform the user that no existing feature was found and ask if this is a new feature request.
-*   **P1: Verify Vocabulary Word Completion Bug:** A regression test from a previous fork remains pending. The task is to test for a bug where completing one vocabulary word in an activity incorrectly marks all words as complete.
+*   **P0: Build Grammar Practice Engine (Plan B):** The user wants to build a more serious, learning-focused grammar engine, distinct from the simple games in the unified journey. The agent proposed Plan B: a 4-stage engine (Learn -> Practice -> Quiz -> Production), similar to the vocabulary engine, which the user liked. This is the next major feature to plan and implement for both Mastery and Advanced courses.
+*   **P1: Integrate Vocabulary Engine into Beginner Course:** As a follow-up, the user requested an estimate for porting the now-generic Vocabulary Engine to the Beginner course as well.
+*   **P1: Implement Liz as a Bilingual Lesson Teacher:** (From previous fork) At the beginning of each lesson, the AI tutor Liz will provide a 2-3 minute explanation of the lesson's topic in the user's native language.
+*   **P1: Report on Map Generator Status:** (From previous fork) The agent must finally report to the user that no existing Map Generator feature was found and ask if this is a new feature request.
+*   **P1: Regression Test Vocabulary Word Completion Bug:** (From previous fork) A pending regression test for a bug where completing one vocabulary word incorrectly marks all words as complete.
 
 **Future Tasks:**
-*   **P2: Automatic Visual Generation Pipeline:** Build a backend service that automatically generates context-aware images for all words in a newly created lesson.
-*   **P2: Bank Transfer Expiry Reminders:** Implement an automated email reminder 3 days before a bank transfer plan expires.
+*   **P2: Generate ElevenLabs Audio for All Modules:** As an optional enhancement, generate professional audio for the remaining 16 Mastery course listening modules.
+*   **P2: Automatic Visual Generation Pipeline:** Build a backend service to auto-generate images for new lessons.
+*   **P2: Bank Transfer Expiry Reminders:** Implement automated email reminders.
 *   **P2: Daily Habit Spaced Repetition System (SRS).**
 *   **P2: Booster Mode for remedial lessons.**
 *   **P2: Build the Teacher Control Panel.**
 *   **P2: Investigate user database:** Follow up on the user's comment that they are not real users.
 
 **Completed work in this session**
-- **Critical Bug Fix - Persistent Data Loss (FIXED & VERIFIED):**
-    - Diagnosed that the auto-seeding script was destructively rewriting the database on every restart, deleting all generated images and content.
-    - Re-engineered the seeding logic ( in  and ) to be idempotent, only adding missing data while preserving existing content.
-    - Critically, all generated content (image URLs, definitions, examples) is now written back to the source JSON files in , ensuring data persists permanently across deployments.
-- **Critical Bug Fix - Missing & Unenriched Content (FIXED & VERIFIED):**
-    - Fixed the startup logic to correctly seed and enrich content for **all** stages (not just Stage 1), resolving why lessons appeared as Coming Soon and lacked game content.
-- **Critical Bug Fix - Crossword Game (FIXED & VERIFIED):**
-    - Completely rewrote the  component to resolve major bugs in layout, word intersection, and directional navigation, making the game fully playable.
-- **Vocabulary Image Generation (DONE):**
-    - Generated ~80 new, high-quality images for all remaining uncovered vocabulary words, following specific user guidelines (no text, child-friendly).
-- **Admin Panel Enhancements (DONE & VERIFIED):**
-    - Fixed the User Management page () to include a dropdown with all five subscription plans.
-    - Implemented a system in  to automatically grant all admin accounts full master plan access and 25 credits on startup.
+- **Vocabulary Image Coverage (100%):** Resolved a recurring data issue by generating 14 new images, linking 5 existing ones, and updating all data layers (JSON, DB). Verified 100% coverage via API.
+- **White Screen Crash Fix (Root Cause Solved):**
+    - Implemented a global React  in  to catch errors and prevent app-wide crashes.
+    - Identified and fixed the root cause: 14+ game components were not robust against empty/null data. Added null guards to all game components (, , ).
+- **Review Games Bug Fixes:**
+    - **:** Fixed a bug where the cursor's auto-advance direction would not respect the user's intended writing direction.
+    - **:** Replaced the buggy click-to-select mechanism with a modern, intuitive drag-to-select feature.
+- **Audio Playback Bug Fix:** Implemented a centralized audio management system using  and  cleanup functions across  and all audio-playing components to prevent looping and sound continuing after navigation.
+- **Mastery Course Content Fix:** Corrected mismatched listening topics for 9 modules in the  collection via a data swap in the MongoDB.
+- **New Content Generation (Module 13):** Generated a new AI script and used **ElevenLabs** to create a high-quality audio file for the Transportation listening lesson, ensuring all 17 Mastery modules are complete and correct.
+- **Feature: Vocabulary Engine for Mastery Course:** Successfully integrated the 4-mode interactive vocabulary engine into  and generalized the backend endpoints in  to support it. Verified with 31/31 passing tests.
 
 **Earlier issues found/mentioned but not fixed**
-*   **Vocabulary Word Completion Bug:** This P1 regression test from a previous session remains pending. It was not addressed in this session.
+*   **Vocabulary Word Completion Bug:** This P1 regression test from a previous session remains pending.
+*   **Map Generator Status:** The agent has still not reported back to the user about this query from a previous session.
 
 **Known issue recurrence from previous fork**
-*   None.
+- **Vocabulary Image Coverage:** The session started by fixing an issue where image coverage was reported as 100% but was not. The issue was that some existing images were unlinked and others were never generated. This has now been definitively fixed and verified via an API check script.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-*   **Idempotent Data Seeding:** The core solution to the data loss problem. Startup scripts now safely run by checking for existing data before making changes, preventing destructive overwrites.
-*   **Data Persistence via Source File Modification:** The most critical architectural decision made. Instead of relying solely on the database (which gets reset in some environments), the application now treats the source JSON files as the permanent store for generated content, writing changes back to them.
-*   **Monolithic Startup Orchestration:**  now runs a complex but robust sequence on startup: seed basic content, merge enriched data, and configure admin users, ensuring the application is always in a correct and complete state.
+*   **Error Boundaries:** A key React concept was implemented to catch JavaScript errors, display a fallback UI, and prevent app-wide white screen crashes.
+*   **State Persistence ():** Implemented in  to save a user's progress within a lesson, allowing them to resume after a page refresh.
+*   **Defensive Programming (Null Guards):** Added  checks to all game components to prevent crashes when receiving empty or undefined data.
+*   **Audio Context Management:** Used  to hold a mutable reference to  objects and  cleanup functions to explicitly stop audio and TTS (, ) on component unmount or state change.
+*   **Gesture Handling:** Implemented a new interaction model in  using , , and  events for word selection.
+*   **Generative AI for Content & Audio:** Used a combination of an LLM (for script/questions) and a TTS service (**ElevenLabs**) to create a complete, new educational lesson.
 
 **key DB schema**
-*   ** collection:** The schema is unchanged, but the data within is now comprehensive and reliably populated by the startup scripts. Flags like  are used to manage the state.
-*   ** collection:** The startup script now modifies documents in this collection for users in the  list, setting their  to master and  to 25.
+*   **:** The  sub-document was updated for 9 modules to correct mismatched topics. A new  document, with a new , was added to the Module 13 document.
 
 **All files of reference**
-*    (Core logic for startup and data persistence)
-*    (The script that handles seeding and writing back to JSON)
-*   All JSON files in  (The new source of truth for content)
-*    (Rewritten component)
-*    (Modified admin UI)
-*    (New admin tool)
+*   
+*   
+*   All files within 
+*   
+*   
+*   
 
 **Areas that need refactoring**:
-*   The startup logic in  has grown significantly. It could be beneficial to extract this complex data seeding and configuration sequence into a separate, dedicated module (e.g., ) for better organization and maintainability.
-*   The  monolith remains a candidate for future refactoring into a standard FastAPI project structure with routers, models, and services in separate directories.
+*    is now over 3000 lines and manages an enormous amount of state. It should be broken down into smaller components and custom hooks (e.g., a  hook to manage ).
+*   The game components in  have repeated logic for scoring and completion modals that could be abstracted into a higher-order component or a more robust .
 
 **key api endpoints**
-*   ****: Fetches all vocabulary words, now with near-100% complete data (including image URLs). Used for the admin panel and for verification.
-*   ****: Uploads a new image for a word and updates the database (the startup script then persists this to JSON).
-*   ****: Admin endpoint to manually trigger content enrichment.
-*   ****: Returns all data for a stage; this now reliably returns complete and enriched content.
+*   ****: Modified to support both  and .
+*   ****: Modified to support both course types.
+*   ****: Modified to support both course types.
+*   ****: New static endpoint serving the generated audio file.
 
 **Critical Info for New Agent**
-*   **DATA PERSISTENCE IS PARAMOUNT:** The biggest issue solved was data loss. The current system now writes all generated content (images, definitions) back to the source JSON files in . Any future work that modifies content **must** follow this pattern. Do not only update the database, or the changes will be lost on the next deploy.
-*   **USER SENSITIVITY:** The user was extremely frustrated with rework and potential costs from lost data. Be extra cautious with any data-modifying scripts. Always explain your plan and get approval before running anything that could have an impact on existing data or incur costs.
-*   **Admin Access:** Admin users are defined in the  list in . They automatically receive full access on every server start.
+*   **Stability is Priority #1:** The user has been very frustrated with crashes. The application is now significantly more stable due to  and numerous null guards. Do not introduce changes that could compromise this stability. Any new component handling dynamic data must be defensive.
+*   **Audio Management Pattern:** A global audio cleanup pattern is now established. Any new component that plays audio must implement a  cleanup function to call  and  to prevent audio from leaking between pages or activities.
+*   **User's Next Priority:** The user has approved moving forward with a plan for a new **Grammar Practice Engine**. This is the highest priority upcoming task.
 
 **documents and test reports created in this job**
-*    (From testing the initial admin panel implementation)
-*   ,  (Used to restore lost data, now integrated into main JSON files)
+*   
+*   
+*   
+*   
+*   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User:** Asks if we are sure ~79 words are missing images, fearing they might have been lost again. Asks which words are missing.
-2.  **Agent:** Confirms 76 words were genuinely never generated and lists their distribution across stages. Asks for permission to generate them.
-3.  **User:** Approves image generation with very specific rules: no text in images, simple, child-friendly, and containing only the relevant objects.
-4.  **Agent:** Acknowledges the rules and begins generating images in batches.
-5.  ... (Agent provides updates as it generates images)
-6.  **Agent:** Announces that all 80 images have been produced and is now updating the mapping files and database.
-7.  **Agent:** Confirms that vocabulary coverage is now at 94% and lists the 19 remaining missing words.
-8.  **Agent:** Proceeds to generate the final batch of images for the remaining 19 words.
+1.  **USER:** Asks for cost/effort to integrate the Advanced vocab engine into the Mastery course.
+2.  **AGENT:** Provides estimate.
+3.  **USER:** Approves the integration (evet yap).
+4.  **USER:** Reports bugs in Crossword (direction issue) and Word Search (selection issue).
+5.  **AGENT:** Proposes plan to fix both games.
+6.  **USER:** Approves the game fixes (Tabi).
+7.  **USER:** Reports that listening audio loops and doesn't stop.
+8.  **USER:** Reports that listening topics are mismatched in the Mastery Course and asks the agent to investigate and propose a solution.
+9.  **AGENT:** Identifies the mismatched modules and proposes a swap plan.
+10. **USER:** Approves the swap plan (evet).
+11. **PENDING:** Asks for new content (script + audio via ElevenLabs) to be generated for Module 13, which has no matching topic.
 
 **Project Health Check:**
-*   **Broken:** None. All user-reported issues and critical bugs have been resolved. The application is significantly more stable and robust than at the start of the session.
-*   **Mocked:** N/A
+*   **Broken:** None. All user-reported issues have been resolved. The application is significantly more stable.
+*   **Mocked:** N/A.
 
 **3rd Party Integrations**
-*   **PayPal Subscriptions:** (LIVE) For recurring subscription payments. Requires User API Key.
+*   **PayPal Subscriptions:** (LIVE) Requires User API Key.
 *   **Anthropic Claude Sonnet 4.5:** (AI Content Generation) - uses Emergent LLM Key.
-*   **OpenAI GPT Image 1:** (Image Generation) - uses Emergent LLM Key. Used extensively in this session.
-*   **ElevenLabs:** (Text-to-Speech) - requires User API Key.
+*   **OpenAI GPT Image 1:** (Image Generation) - uses Emergent LLM Key.
+*   **ElevenLabs:** (Text-to-Speech) - requires User API Key. Used in this session to generate new content.
 *   **Emergent Integrations (Whisper):** (Speech-to-Text).
 
 **Testing status**
-*   **Testing agent used after significant changes:** YES. It was used to test the initial implementation of the Admin Panel and successfully found and fixed a bug related to the admin email list.
+*   **Testing agent used after significant changes:** YES. Used 3 times to verify major bug fixes (white screen, review games) and the vocabulary engine feature. All tests passed.
 *   **Troubleshoot agent used after agent stuck in loop:** NO
 *   **Test files created:** None.
-*   **Known regressions:** A Vocabulary Word Completion Bug from a previous fork has still not been regression tested.
+*   **Known regressions:** The Vocabulary Word Completion Bug from a previous fork has still not been regression tested.
 
 **Credentials to test flow:**
 *   **Admin Accounts (full access):** , , 

@@ -108,7 +108,7 @@
   },
 
   "test_credentials": {
-    "api_url": "https://vocab-coverage-check.preview.emergentagent.com",
+    "api_url": "https://vocab-fix-stable.preview.emergentagent.com",
     "mastery_module_ids": "mastery-module-1 through mastery-module-17",
     "advanced_module_ids": "advanced-module-1 (for regression)"
   },
