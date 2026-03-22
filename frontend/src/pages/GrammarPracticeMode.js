@@ -333,13 +333,23 @@ export default function GrammarPracticeMode({ user }) {
       case 'gap_fill': return <GapFillSection key={sectionKey} items={currentSection.items} onComplete={handleSectionComplete} />;
       case 'error_correction': return <ErrorCorrectionSection key={sectionKey} items={currentSection.items} onComplete={handleSectionComplete} />;
       case 'transformation':
-        const transformItems = (currentSection.items || []).map(item => ({
-          ...item,
-          sentence: (item.original || '') + ' ___',
-          options: [item.model_answer, ...(item.acceptable_answers || []).slice(0, 2), 'None of these'].filter(Boolean).slice(0, 4),
-          correct: item.model_answer || '',
-          hint: item.target_hint || '',
-        }));
+        const transformItems = (currentSection.items || []).map(item => {
+          // Deduplicate options and ensure model_answer is included
+          const allOpts = [item.model_answer, ...(item.acceptable_answers || [])].filter(Boolean);
+          const uniqueOpts = [...new Set(allOpts.map(o => o.trim()))];
+          // Add distractors if needed to reach 4 options
+          const distractors = ['None of these'];
+          const finalOpts = [...uniqueOpts, ...distractors].slice(0, 4);
+          // Shuffle options so correct isn't always first
+          const shuffled = finalOpts.sort(() => Math.random() - 0.5);
+          return {
+            ...item,
+            sentence: (item.original || '') + ' ___',
+            options: shuffled,
+            correct: item.model_answer || '',
+            hint: item.target_hint || '',
+          };
+        });
         return <GapFillSection key={sectionKey} items={transformItems} onComplete={handleSectionComplete} />;
       default: return <GapFillSection key={sectionKey} items={currentSection.items} onComplete={handleSectionComplete} />;
     }

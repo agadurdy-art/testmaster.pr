@@ -385,7 +385,10 @@ IMPORTANT:
 - Progress from easy (recognition) to hard (error correction)
 - Exactly the number of items shown above
 - Keep sentences at IELTS Band 5.5-7.0 complexity
-- Make all options plausible (no obviously wrong answers)"""
+- Make all options plausible (no obviously wrong answers)
+- ALL options and sentences must be REAL, COMPLETE English text - NOT placeholders
+- For transformation: make model_answer and acceptable_answers DIFFERENT from each other (no duplicates)
+- Each acceptable_answer should express the idea in a slightly different but still correct way"""
 
     try:
         raw = await call_llm(system, prompt)
@@ -437,10 +440,10 @@ Generate a JSON object with EXACTLY this structure:
     {{
       "id": "q1",
       "type": "multiple_choice",
-      "question": "Choose the correct sentence.",
-      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "question": "Choose the grammatically correct sentence.",
+      "options": ["A real English sentence using the grammar correctly", "A similar sentence with a grammar error", "Another sentence with a different error", "A fourth sentence with yet another error"],
       "correct_index": 0,
-      "explanation": "Why A is correct",
+      "explanation": "Explain why the first option is correct and what errors the others have",
       "difficulty": "easy",
       "tests": "form"
     }},
@@ -448,93 +451,91 @@ Generate a JSON object with EXACTLY this structure:
       "id": "q2",
       "type": "multiple_choice",
       "question": "Which sentence correctly uses {grammar.get('title', '')}?",
-      "options": ["A", "B", "C", "D"],
-      "correct_index": 1,
-      "explanation": "Explanation",
+      "options": ["Real sentence A with correct grammar", "Real sentence B with error", "Real sentence C with error", "Real sentence D with error"],
+      "correct_index": 0,
+      "explanation": "Explanation with grammar rule reference",
       "difficulty": "easy",
       "tests": "form"
     }},
     {{
       "id": "q3",
       "type": "gap_fill",
-      "sentence": "Complete: She ___ (verb form) ...",
-      "options": ["opt1", "opt2", "opt3", "opt4"],
-      "correct": "correct_option",
-      "explanation": "Why",
+      "sentence": "A natural sentence about {module_title} with ___ blank for the target grammar.",
+      "options": ["correct form", "wrong form 1", "wrong form 2", "wrong form 3"],
+      "correct": "correct form",
+      "explanation": "Why this form is correct in this context",
       "difficulty": "medium",
       "tests": "form"
     }},
     {{
       "id": "q4",
       "type": "gap_fill",
-      "sentence": "Another gap fill ___.",
-      "options": ["a", "b", "c", "d"],
-      "correct": "b",
-      "explanation": "Why",
+      "sentence": "Another context sentence about {module_title} where ___ requires the grammar.",
+      "options": ["word1", "word2", "word3", "word4"],
+      "correct": "word2",
+      "explanation": "Why this word fits the grammar rule",
       "difficulty": "medium",
       "tests": "usage"
     }},
     {{
       "id": "q5",
       "type": "error_detection",
-      "sentence": "Sentence with an error.",
+      "sentence": "A complete sentence about {module_title} that contains a subtle grammar error.",
       "has_error": true,
-      "error_word": "wrong word",
-      "correct_word": "right word",
-      "explanation": "Why this is wrong",
+      "error_word": "the specific wrong word",
+      "correct_word": "what it should be",
+      "explanation": "Why this is an error and how to fix it",
       "difficulty": "medium",
       "tests": "form"
     }},
     {{
       "id": "q6",
       "type": "error_detection",
-      "sentence": "A correct sentence (no error).",
+      "sentence": "A grammatically perfect sentence using {grammar.get('title', '')} correctly.",
       "has_error": false,
       "error_word": "",
       "correct_word": "",
-      "explanation": "This sentence is grammatically correct because...",
+      "explanation": "This sentence is correct because it properly uses...",
       "difficulty": "medium",
       "tests": "recognition"
     }},
     {{
       "id": "q7",
-      "type": "usage_choice",
-      "context": "Describe a situation where you need to choose the right grammar",
-      "question": "Which grammar structure is best here and why?",
-      "options": ["Structure A", "Structure B", "Structure C"],
+      "type": "multiple_choice",
+      "question": "Read the context and choose the best completion: [A specific IELTS-like context about {module_title}]",
+      "options": ["A complete sentence using one grammar form", "A complete sentence using a different grammar form", "A complete sentence using yet another form", "A complete sentence with a common error"],
       "correct_index": 0,
-      "explanation": "Why this structure fits the context",
+      "explanation": "Why this grammar form is most appropriate in this academic context",
       "difficulty": "hard",
       "tests": "usage"
     }},
     {{
       "id": "q8",
       "type": "multiple_choice",
-      "question": "A harder question testing nuanced understanding",
-      "options": ["A", "B", "C", "D"],
+      "question": "A nuanced question about when NOT to use {grammar.get('title', '')}",
+      "options": ["Real sentence A", "Real sentence B", "Real sentence C", "Real sentence D"],
       "correct_index": 2,
-      "explanation": "Explanation of nuance",
+      "explanation": "Detailed explanation of the grammatical nuance",
       "difficulty": "hard",
       "tests": "meaning"
     }},
     {{
       "id": "q9",
       "type": "gap_fill",
-      "sentence": "A challenging gap fill ___.",
-      "options": ["a", "b", "c", "d"],
-      "correct": "c",
-      "explanation": "Why",
+      "sentence": "In a formal IELTS essay about {module_title}, the writer states: ___.",
+      "options": ["form1", "form2", "form3", "form4"],
+      "correct": "form3",
+      "explanation": "Why this form is needed in formal academic writing",
       "difficulty": "hard",
       "tests": "form"
     }},
     {{
       "id": "q10",
-      "type": "usage_choice",
-      "context": "A real IELTS-like context",
-      "question": "Which option best completes this paragraph?",
-      "options": ["Option with grammar A", "Option with grammar B", "Option with grammar C"],
-      "correct_index": 1,
-      "explanation": "Why B is the most appropriate in this academic context",
+      "type": "multiple_choice",
+      "question": "Which sentence would score highest in an IELTS Writing Task 2 about {module_title}?",
+      "options": ["A Band 5.5 level sentence with basic grammar", "A Band 6.5 sentence with some complexity", "A Band 7.5 sentence using {grammar.get('title', '')} naturally and accurately"],
+      "correct_index": 2,
+      "explanation": "Why this demonstrates Band 7+ grammar control",
       "difficulty": "hard",
       "tests": "usage"
     }}
@@ -543,11 +544,14 @@ Generate a JSON object with EXACTLY this structure:
 
 IMPORTANT:
 - EXACTLY 10 questions
-- Mix of easy (3), medium (3), hard (4) 
+- Mix of easy (2), medium (4), hard (4) 
 - Test different aspects: form, meaning, usage, recognition
 - All related to: {grammar.get('title', '')} in context of {module_title}
 - Questions should be progressively harder
-- Make distractors plausible"""
+- Make distractors plausible
+- ALL options must be REAL English sentences or words, NOT placeholder text like "Option A" or "Structure B"
+- Every option should be a complete, natural English sentence or phrase
+- Do NOT use labels like "grammar A", "grammar B" in the options"""
 
     try:
         raw = await call_llm(system, prompt)
