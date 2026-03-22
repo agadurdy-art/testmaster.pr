@@ -14,25 +14,30 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 function RecognitionSection({ items, onComplete }) {
   const [idx, setIdx] = useState(0);
-  const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const scoreRef = React.useRef(0);
 
-  if (!items?.length) return null;
+  if (!items?.length) return <p className="text-gray-500">No exercises available.</p>;
   const item = items[idx];
+  if (!item) return <p className="text-gray-500">Loading...</p>;
 
   const handleSelect = (optIdx) => {
     if (showFeedback) return;
     setSelected(optIdx);
     setShowFeedback(true);
-    if (optIdx === item.correct_index) setScore(s => s + 1);
+    if (optIdx === item.correct_index) scoreRef.current += 1;
   };
 
   const handleNext = () => {
-    setSelected(null);
-    setShowFeedback(false);
-    if (idx < items.length - 1) setIdx(i => i + 1);
-    else onComplete(Math.round((score / items.length) * 100));
+    if (idx < items.length - 1) {
+      setSelected(null);
+      setShowFeedback(false);
+      setIdx(i => i + 1);
+    } else {
+      const pct = items.length > 0 ? Math.round((scoreRef.current / items.length) * 100) : 0;
+      onComplete(pct);
+    }
   };
 
   return (
@@ -80,25 +85,30 @@ function RecognitionSection({ items, onComplete }) {
 
 function GapFillSection({ items, onComplete }) {
   const [idx, setIdx] = useState(0);
-  const [score, setScore] = useState(0);
   const [selected, setSelected] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const scoreRef = React.useRef(0);
 
-  if (!items?.length) return null;
+  if (!items?.length) return <p className="text-gray-500">No exercises available.</p>;
   const item = items[idx];
+  if (!item) return <p className="text-gray-500">Loading...</p>;
 
   const handleSelect = (opt) => {
     if (showFeedback) return;
     setSelected(opt);
     setShowFeedback(true);
-    if (opt.toLowerCase().trim() === item.correct?.toLowerCase().trim()) setScore(s => s + 1);
+    if (opt.toLowerCase().trim() === item.correct?.toLowerCase().trim()) scoreRef.current += 1;
   };
 
   const handleNext = () => {
-    setSelected(null);
-    setShowFeedback(false);
-    if (idx < items.length - 1) setIdx(i => i + 1);
-    else onComplete(Math.round((score / items.length) * 100));
+    if (idx < items.length - 1) {
+      setSelected(null);
+      setShowFeedback(false);
+      setIdx(i => i + 1);
+    } else {
+      const pct = items.length > 0 ? Math.round((scoreRef.current / items.length) * 100) : 0;
+      onComplete(pct);
+    }
   };
 
   const renderSentence = () => {
@@ -157,12 +167,13 @@ function GapFillSection({ items, onComplete }) {
 
 function ErrorCorrectionSection({ items, onComplete }) {
   const [idx, setIdx] = useState(0);
-  const [score, setScore] = useState(0);
   const [selectedWord, setSelectedWord] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const scoreRef = React.useRef(0);
 
-  if (!items?.length) return null;
+  if (!items?.length) return <p className="text-gray-500">No exercises available.</p>;
   const item = items[idx];
+  if (!item) return <p className="text-gray-500">Loading...</p>;
   const words = (item.sentence || '').split(/\s+/);
 
   const handleWordClick = (word) => {
@@ -170,14 +181,18 @@ function ErrorCorrectionSection({ items, onComplete }) {
     setSelectedWord(word);
     setShowFeedback(true);
     const clean = (s) => s.toLowerCase().replace(/[.,!?;:'"]/g, '');
-    if (clean(word) === clean(item.error_word || '')) setScore(s => s + 1);
+    if (clean(word) === clean(item.error_word || '')) scoreRef.current += 1;
   };
 
   const handleNext = () => {
-    setSelectedWord(null);
-    setShowFeedback(false);
-    if (idx < items.length - 1) setIdx(i => i + 1);
-    else onComplete(Math.round((score / items.length) * 100));
+    if (idx < items.length - 1) {
+      setSelectedWord(null);
+      setShowFeedback(false);
+      setIdx(i => i + 1);
+    } else {
+      const pct = items.length > 0 ? Math.round((scoreRef.current / items.length) * 100) : 0;
+      onComplete(pct);
+    }
   };
 
   const clean = (s) => s.toLowerCase().replace(/[.,!?;:'"]/g, '');
@@ -311,21 +326,22 @@ export default function GrammarPracticeMode({ user }) {
   if (!currentSection) return null;
 
   const renderSection = () => {
+    if (!currentSection?.items?.length) return <p className="text-gray-500 text-center">No exercises available for this section.</p>;
+    const sectionKey = `${currentSection.type}-${currentSectionIdx}`;
     switch (currentSection.type) {
-      case 'recognition': return <RecognitionSection items={currentSection.items} onComplete={handleSectionComplete} />;
-      case 'gap_fill': return <GapFillSection items={currentSection.items} onComplete={handleSectionComplete} />;
-      case 'error_correction': return <ErrorCorrectionSection items={currentSection.items} onComplete={handleSectionComplete} />;
+      case 'recognition': return <RecognitionSection key={sectionKey} items={currentSection.items} onComplete={handleSectionComplete} />;
+      case 'gap_fill': return <GapFillSection key={sectionKey} items={currentSection.items} onComplete={handleSectionComplete} />;
+      case 'error_correction': return <ErrorCorrectionSection key={sectionKey} items={currentSection.items} onComplete={handleSectionComplete} />;
       case 'transformation':
-        // Transformation uses gap_fill UI with model_answer display
-        const transformItems = currentSection.items?.map(item => ({
+        const transformItems = (currentSection.items || []).map(item => ({
           ...item,
-          sentence: item.original + ' ___',
-          options: [item.model_answer, ...(item.acceptable_answers || []).slice(0, 2), 'None of these'].slice(0, 4),
-          correct: item.model_answer,
-          hint: item.target_hint,
+          sentence: (item.original || '') + ' ___',
+          options: [item.model_answer, ...(item.acceptable_answers || []).slice(0, 2), 'None of these'].filter(Boolean).slice(0, 4),
+          correct: item.model_answer || '',
+          hint: item.target_hint || '',
         }));
-        return <GapFillSection items={transformItems} onComplete={handleSectionComplete} />;
-      default: return <GapFillSection items={currentSection.items} onComplete={handleSectionComplete} />;
+        return <GapFillSection key={sectionKey} items={transformItems} onComplete={handleSectionComplete} />;
+      default: return <GapFillSection key={sectionKey} items={currentSection.items} onComplete={handleSectionComplete} />;
     }
   };
 
