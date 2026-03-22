@@ -530,6 +530,17 @@ except Exception as e:
     import traceback
     traceback.print_exc()
 
+# Grammar Engine routes
+try:
+    from routes.grammar_engine import router as grammar_engine_router, set_db as set_grammar_db
+    set_grammar_db(db)
+    app.include_router(grammar_engine_router)
+    print("✅ Grammar Engine routes loaded")
+except Exception as e:
+    print(f"⚠️  Could not load Grammar Engine routes: {e}")
+    import traceback
+    traceback.print_exc()
+
 
 
 # ============ Models ============

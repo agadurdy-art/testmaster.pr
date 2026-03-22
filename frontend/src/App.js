@@ -67,6 +67,10 @@ import VocabularyLearnMode from './pages/VocabularyLearnMode';
 import VocabularyPracticeMode from './pages/VocabularyPracticeMode';
 import VocabularyQuizMode from './pages/VocabularyQuizMode';
 import VocabularyProductionMode from './pages/VocabularyProductionMode';
+import GrammarLearnMode from './pages/GrammarLearnMode';
+import GrammarPracticeMode from './pages/GrammarPracticeMode';
+import GrammarQuizMode from './pages/GrammarQuizMode';
+import GrammarProductionMode from './pages/GrammarProductionMode';
 import ReviewBank from './pages/ReviewBank';
 import UnifiedCoursePage from './pages/UnifiedCoursePage';
 import UnifiedStagePage from './pages/UnifiedStagePage';
@@ -366,6 +370,28 @@ function AppWithSessionHandler() {
         <Route 
           path="/review-bank" 
           element={user ? <ReviewBank user={user} /> : <Navigate to="/" />} 
+        />
+        
+        {/* Grammar Engine Routes */}
+        <Route 
+          path="/grammar/learn/:moduleId" 
+          element={user ? <GrammarLearnMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/practice/:moduleId" 
+          element={user ? <GrammarPracticeMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/quiz/:moduleId" 
+          element={user ? <GrammarQuizMode user={user} /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/guided/:moduleId" 
+          element={user ? <GrammarProductionMode user={user} stage="guided" /> : <Navigate to="/" />} 
+        />
+        <Route 
+          path="/grammar/free/:moduleId" 
+          element={user ? <GrammarProductionMode user={user} stage="free" /> : <Navigate to="/" />} 
         />
         
         {/* Unified Learning System Routes */}
