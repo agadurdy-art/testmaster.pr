@@ -60,7 +60,7 @@ const LanguageSwitcher = () => {
 };
 
 // ENHANCED READING QUESTIONS - 10 questions covering Band 2.0 to 9.0
-const readingQuestions = [
+const defaultReadingQuestions = [
   // Band 2.0-3.0 (Elementary)
   {
     id: 1,
@@ -69,7 +69,6 @@ const readingQuestions = [
     passage: "My name is John. I am a teacher. I work at a school. I like my job. I have many students.",
     question: "What is John's job?",
     options: ["A) Doctor", "B) Teacher", "C) Student", "D) Driver"],
-    correct: "B",
     skill: "basic_comprehension",
     passageExcerpt: "I am a teacher",
     explanation: "The passage directly states 'I am a teacher.' This is a straightforward factual question.",
@@ -82,7 +81,6 @@ const readingQuestions = [
     passage: "The library opens at 9:00 AM and closes at 6:00 PM every day except Sunday. On Sunday, it is closed.",
     question: "When is the library closed?",
     options: ["A) Monday", "B) Saturday", "C) Sunday", "D) Every day"],
-    correct: "C",
     skill: "time_information",
     passageExcerpt: "On Sunday, it is closed",
     explanation: "The passage explicitly states 'On Sunday, it is closed.' The word 'except' indicates Sunday is different from other days.",
@@ -97,7 +95,6 @@ const readingQuestions = [
     passage: "Sarah goes to the gym three times a week to stay healthy. She usually runs for 30 minutes and then does some exercises. After her workout, she feels energetic and happy.",
     question: "How often does Sarah go to the gym?",
     options: ["A) Every day", "B) Once a week", "C) Three times a week", "D) Twice a month"],
-    correct: "C",
     skill: "frequency_detail",
     passageExcerpt: "goes to the gym three times a week",
     explanation: "The frequency 'three times a week' is stated directly at the beginning of the passage.",
@@ -110,7 +107,6 @@ const readingQuestions = [
     passage: "Scientists have discovered that regular exercise not only improves physical health but also has significant benefits for mental well-being. Studies show that just 30 minutes of moderate exercise can reduce stress and improve mood.",
     question: "According to the passage, what is one benefit of regular exercise?",
     options: ["A) It makes you taller", "B) It reduces stress", "C) It helps you sleep longer", "D) It increases appetite"],
-    correct: "B",
     skill: "detail_comprehension",
     passageExcerpt: "can reduce stress and improve mood",
     explanation: "The passage states exercise 'can reduce stress and improve mood.' Option B matches this information directly.",
@@ -130,7 +126,6 @@ const readingQuestions = [
       "C) Increased office space needs",
       "D) More vacation time required"
     ],
-    correct: "B",
     skill: "inference",
     passageExcerpt: "it also presents challenges such as maintaining work-life balance",
     explanation: "The passage lists 'maintaining work-life balance' as one of the challenges. The word 'However' signals a contrast between benefits and drawbacks.",
@@ -148,7 +143,6 @@ const readingQuestions = [
       "C) They don't have enough features",
       "D) They are difficult to use"
     ],
-    correct: "B",
     skill: "critical_analysis",
     passageExcerpt: "may be detrimental to interpersonal relationships and cognitive development",
     explanation: "'Detrimental' means harmful. The passage states critics worry about harm to relationships and cognitive (brain) development.",
@@ -168,7 +162,6 @@ const readingQuestions = [
       "C) Avoid making any decisions",
       "D) Change their opinions frequently"
     ],
-    correct: "B",
     skill: "complex_inference",
     passageExcerpt: "the tendency to seek out information that supports one's existing beliefs",
     explanation: "The passage defines confirmation bias in the dash—this is the key information. 'Seek out' means 'favor' or 'look for'.",
@@ -186,7 +179,6 @@ const readingQuestions = [
       "C) Reducing traffic congestion",
       "D) Building taller buildings"
     ],
-    correct: "B",
     skill: "paradox_understanding",
     passageExcerpt: "simultaneously accommodating population growth while preserving environmental sustainability",
     explanation: "The 'paradox' is described as needing to do two things at once: grow (population) while protecting (environment). This is the 'balance' mentioned in option B.",
@@ -206,7 +198,6 @@ const readingQuestions = [
       "C) How to make AI more affordable",
       "D) When AI was first invented"
     ],
-    correct: "B",
     skill: "abstract_reasoning",
     passageExcerpt: "whether computational processes can be said to 'comprehend' in any meaningful sense, or whether they merely simulate comprehension",
     explanation: "The passage asks whether AI truly 'comprehends' (understands) or just 'simulates' (imitates) comprehension. Option B captures this distinction.",
@@ -224,7 +215,6 @@ const readingQuestions = [
       "C) They help people make better decisions",
       "D) They encourage more research"
     ],
-    correct: "B",
     skill: "sophisticated_analysis",
     passageExcerpt: "resultant narrative frameworks can inadvertently perpetuate cognitive distortions that impede nuanced understanding",
     explanation: "'Cognitive distortions that impede understanding' = misleading frameworks that prevent understanding. 'Obscures rather than illuminates' reinforces this negative outcome.",
@@ -273,6 +263,7 @@ export default function ComprehensiveLevelTest({ user }) {
   // Stage management - supports both full and individual tests
   const [stage, setStage] = useState('select'); // select, intro, reading, listening, writing, speaking, evaluating, results
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [readingQuestions, setReadingQuestions] = useState(defaultReadingQuestions);
   const [readingAnswers, setReadingAnswers] = useState({});
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set()); // For question navigation
   const [currentSpeakingPrompt, setCurrentSpeakingPrompt] = useState(0);
@@ -309,6 +300,24 @@ export default function ComprehensiveLevelTest({ user }) {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
+
+  useEffect(() => {
+    const loadReadingQuestions = async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/level-test/comprehensive-reading-questions`);
+        if (!response.ok) throw new Error('Could not load reading questions.');
+        const data = await response.json();
+        if (Array.isArray(data.questions) && data.questions.length > 0) {
+          setReadingQuestions(data.questions);
+        }
+      } catch (error) {
+        console.error('Reading question load error:', error);
+        toast.error('Could not load the latest reading questions. Using built-in questions.');
+      }
+    };
+
+    loadReadingQuestions();
+  }, []);
 
   // Toggle flag for a question
   const toggleFlagQuestion = (questionId) => {
@@ -447,25 +456,25 @@ export default function ComprehensiveLevelTest({ user }) {
         id: 'q1', section_id: 'listening_1', section_title: 'Daily Schedule',
         audio_url: '/audio/listening/listening_1.mp3', level: 'A1-A2', band_range: '2.0-3.5',
         type: 'mcq', question: "What time does Sarah wake up?",
-        options: ["A) 6 o'clock", "B) 7 o'clock", "C) 8 o'clock", "D) 9 o'clock"], correct: 'B'
+        options: ["A) 6 o'clock", "B) 7 o'clock", "C) 8 o'clock", "D) 9 o'clock"]
       },
       {
         id: 'q2', section_id: 'listening_1', section_title: 'Daily Schedule',
         audio_url: '/audio/listening/listening_1.mp3', level: 'A1-A2', band_range: '2.0-3.5',
         type: 'mcq', question: "What does Sarah have for breakfast?",
-        options: ["A) Eggs and coffee", "B) Cereal and milk", "C) Toast and tea", "D) Fruit and juice"], correct: 'C'
+        options: ["A) Eggs and coffee", "B) Cereal and milk", "C) Toast and tea", "D) Fruit and juice"]
       },
       {
         id: 'q3', section_id: 'listening_2', section_title: 'At the Train Station',
         audio_url: '/audio/listening/listening_2.mp3', level: 'A2', band_range: '3.5-4.5',
         type: 'mcq', question: "Which platform does the train to London leave from?",
-        options: ["A) Platform 1", "B) Platform 2", "C) Platform 3", "D) Platform 4"], correct: 'C'
+        options: ["A) Platform 1", "B) Platform 2", "C) Platform 3", "D) Platform 4"]
       },
       {
         id: 'q4', section_id: 'listening_2', section_title: 'At the Train Station',
         audio_url: '/audio/listening/listening_2.mp3', level: 'A2', band_range: '3.5-4.5',
         type: 'mcq', question: "How long does the journey take?",
-        options: ["A) 1 hour", "B) 1 hour 20 minutes", "C) 2 hours", "D) 2 hours 15 minutes"], correct: 'B'
+        options: ["A) 1 hour", "B) 1 hour 20 minutes", "C) 2 hours", "D) 2 hours 15 minutes"]
       }
     ]);
   };
@@ -819,6 +828,7 @@ export default function ComprehensiveLevelTest({ user }) {
       let readingBand = null;
       let readingCorrect = 0;
       let skillBreakdown = {};
+      let readingResults = null;
       let listeningBand = null;
       let listeningResults = null;
       let writingBand = null;
@@ -827,23 +837,18 @@ export default function ComprehensiveLevelTest({ user }) {
       
       // Evaluate Reading if applicable
       if (testMode === 'full' || testMode === 'reading') {
-        let totalReadingPoints = 0;
-        readingQuestions.forEach(q => {
-          const userAnswer = readingAnswers[q.id];
-          const isCorrect = userAnswer === q.correct;
-          
-          if (isCorrect) {
-            readingCorrect++;
-            totalReadingPoints += q.band;
-          }
-          
-          if (!skillBreakdown[q.skill]) {
-            skillBreakdown[q.skill] = { correct: 0, total: 0 };
-          }
-          skillBreakdown[q.skill].total++;
-          if (isCorrect) skillBreakdown[q.skill].correct++;
+        const readingResponse = await fetch(`${API_URL}/api/level-test/evaluate-reading`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ answers: readingAnswers })
         });
-        readingBand = totalReadingPoints / readingQuestions.length;
+        if (!readingResponse.ok) {
+          throw new Error('Reading evaluation failed.');
+        }
+        readingResults = await readingResponse.json();
+        readingBand = readingResults.band;
+        readingCorrect = readingResults.correct;
+        skillBreakdown = readingResults.skill_breakdown || {};
       }
 
       // Evaluate Listening if applicable
@@ -960,7 +965,8 @@ export default function ComprehensiveLevelTest({ user }) {
           band: readingBand,
           correct: readingCorrect,
           total: readingQuestions.length,
-          skill_breakdown: skillBreakdown
+          skill_breakdown: skillBreakdown,
+          question_results: readingResults?.question_results || []
         } : null,
         listening: listeningResults,
         writing: writingResults,
@@ -2274,11 +2280,9 @@ export default function ComprehensiveLevelTest({ user }) {
                       {language === 'vi' ? 'Đáp Án Chi Tiết' : language === 'tr' ? 'Detaylı Cevap İncelemesi' : 'Answer Review - Locate & Explain'}
                     </h3>
                     <div className="space-y-2">
-                      {readingQuestions.map((q, idx) => {
-                        const userAnswer = readingAnswers[q.id];
-                        const isCorrect = userAnswer === q.correct;
-                        const userAnswerText = q.options.find(opt => opt.startsWith(userAnswer))?.substring(3) || userAnswer;
-                        const correctAnswerText = q.options.find(opt => opt.startsWith(q.correct))?.substring(3) || q.correct;
+                      {(results.reading.question_results || []).map((q, idx) => {
+                        const userAnswerText = q.options.find(opt => opt.startsWith(q.user_answer))?.substring(3) || q.user_answer;
+                        const correctAnswerText = q.options.find(opt => opt.startsWith(q.correct_answer))?.substring(3) || q.correct_answer;
                         
                         return (
                           <LocateExplain
@@ -2287,10 +2291,10 @@ export default function ComprehensiveLevelTest({ user }) {
                             questionText={q.question}
                             userAnswer={userAnswerText}
                             correctAnswer={correctAnswerText}
-                            isCorrect={isCorrect}
+                            isCorrect={q.is_correct}
                             passageExcerpt={q.passageExcerpt}
                             explanation={q.explanation}
-                            wrongExplanation={!isCorrect ? `You selected "${userAnswerText}" but the passage indicates "${correctAnswerText}".` : null}
+                            wrongExplanation={!q.is_correct ? `You selected "${userAnswerText}" but the passage indicates "${correctAnswerText}".` : null}
                             skillTip={q.skillTip}
                             language={language}
                           />

@@ -132,12 +132,13 @@ export const getCourse = async (courseId) => {
   return response.data;
 };
 
-export const manualCreditSimple = async ({ email, plan, exam_credits }) => {
+export const manualCreditSimple = async ({ email, plan, exam_credits, admin_email }) => {
   const response = await api.post('/payments/manual-credit-simple', {
     email,
     plan,
     exam_credits,
-    admin_token: ''
+    admin_token: '',
+    admin_email,
   });
   return response.data;
 };

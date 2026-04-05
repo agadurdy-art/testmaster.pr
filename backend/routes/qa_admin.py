@@ -4,11 +4,12 @@ QA Admin Routes
 Admin endpoints for QA workflow, evidence packs, and test approval.
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Query
 from typing import Optional, List
 from datetime import datetime
 import os
 import base64
+from security_utils import require_admin_email, validate_upload_filename
 
 router = APIRouter(prefix="/api/admin/qa", tags=["QA Workflow"])
 
@@ -45,11 +46,12 @@ def get_test_data(test_id: str):
 # ============ EVIDENCE PACK ENDPOINTS ============
 
 @router.get("/evidence/{test_id}")
-async def get_evidence_pack(test_id: str):
+async def get_evidence_pack(test_id: str, admin_email: str = Query(...)):
     """
     Generate/retrieve QA Evidence Pack for a test.
     Contains all evidence needed for PDF vs UI comparison.
     """
+    require_admin_email(admin_email)
     test_data, book_id, test_num = get_test_data(test_id)
     
     if test_data is None:
@@ -64,8 +66,9 @@ async def get_evidence_pack(test_id: str):
 
 
 @router.get("/evidence/{test_id}/summary")
-async def get_evidence_summary(test_id: str):
+async def get_evidence_summary(test_id: str, admin_email: str = Query(...)):
     """Get summary of evidence pack (for list views)"""
+    require_admin_email(admin_email)
     test_data, book_id, test_num = get_test_data(test_id)
     
     if test_data is None:
@@ -88,8 +91,9 @@ async def get_evidence_summary(test_id: str):
 # ============ STATUS ENDPOINTS ============
 
 @router.get("/status/all")
-async def get_all_test_statuses():
+async def get_all_test_statuses(admin_email: str = Query(...)):
     """Get status of all tests"""
+    require_admin_email(admin_email)
     from routes.cambridge import CAMBRIDGE_TESTS
     
     results = []
@@ -117,8 +121,9 @@ async def get_all_test_statuses():
 
 
 @router.get("/status/{test_id}")
-async def get_test_status(test_id: str):
+async def get_test_status(test_id: str, admin_email: str = Query(...)):
     """Get current status of a test"""
+    require_admin_email(admin_email)
     test_data, _, _ = get_test_data(test_id)
     
     if test_data is None:
@@ -134,8 +139,9 @@ async def get_test_status(test_id: str):
 
 
 @router.get("/publishable")
-async def get_publishable_tests():
+async def get_publishable_tests(admin_email: str = Query(...)):
     """Get list of only publishable tests (APPROVED/PUBLISHED)"""
+    require_admin_email(admin_email)
     from routes.cambridge import CAMBRIDGE_TESTS
     
     publishable = []
@@ -163,6 +169,7 @@ async def get_publishable_tests():
 
 @router.post("/approve")
 async def approve_test(
+    admin_email: str = Form(...),
     test_id: str = Form(...),
     approved_by: str = Form(...),
     notes: Optional[str] = Form(None)
@@ -175,6 +182,7 @@ async def approve_test(
     - All visuals must be filled
     - Cue card must be complete
     """
+    require_admin_email(admin_email)
     test_data, book_id, test_num = get_test_data(test_id)
     
     if test_data is None:
@@ -202,8 +210,13 @@ async def approve_test(
 
 
 @router.post("/publish/{test_id}")
-async def publish_test(test_id: str, published_by: str = Form(...)):
+async def publish_test(
+    test_id: str,
+    published_by: str = Form(...),
+    admin_email: str = Form(...),
+):
     """Publish an approved test to users"""
+    require_admin_email(admin_email)
     test_data, _, _ = get_test_data(test_id)
     
     if test_data is None:
@@ -223,9 +236,11 @@ async def publish_test(test_id: str, published_by: str = Form(...)):
 async def revoke_approval(
     test_id: str,
     reason: str = Form(...),
-    revoked_by: str = Form(...)
+    revoked_by: str = Form(...),
+    admin_email: str = Form(...),
 ):
     """Revoke approval (e.g., content changed after approval)"""
+    require_admin_email(admin_email)
     response = _qa_service.revoke_approval(test_id, reason, revoked_by)
     
     return {
@@ -239,11 +254,12 @@ async def revoke_approval(
 # ============ VISUAL ATTACHMENT ENDPOINTS ============
 
 @router.get("/visuals/{test_id}/slots")
-async def get_visual_slots(test_id: str):
+async def get_visual_slots(test_id: str, admin_email: str = Query(...)):
     """
     Get required visual slots for a test.
     Shows which slots are filled and which are missing.
     """
+    require_admin_email(admin_email)
     test_data, _, _ = get_test_data(test_id)
     
     if test_data is None:
@@ -262,6 +278,7 @@ async def get_visual_slots(test_id: str):
 
 @router.post("/visuals/attach")
 async def attach_visual(
+    admin_email: str = Form(...),
     test_id: str = Form(...),
     slot_name: str = Form(...),
     source: str = Form(...),
@@ -278,6 +295,7 @@ async def attach_visual(
     
     AI VISUALS ARE BLOCKED.
     """
+    require_admin_email(admin_email)
     # Validate source
     if source not in ['user_upload', 'pdf_crop']:
         raise HTTPException(
@@ -288,6 +306,7 @@ async def attach_visual(
     # Handle upload
     image_data = None
     if source == 'user_upload' and image:
+        validate_upload_filename(image.filename)
         contents = await image.read()
         image_data = base64.b64encode(contents).decode('utf-8')
     
@@ -320,8 +339,9 @@ async def attach_visual(
 # ============ CUE CARD EDITOR ENDPOINTS ============
 
 @router.get("/cuecard/{test_id}")
-async def get_cue_card(test_id: str):
+async def get_cue_card(test_id: str, admin_email: str = Query(...)):
     """Get current cue card for a test"""
+    require_admin_email(admin_email)
     test_data, _, _ = get_test_data(test_id)
     
     if test_data is None:
@@ -364,6 +384,7 @@ async def get_cue_card(test_id: str):
 
 @router.post("/cuecard/edit")
 async def edit_cue_card(
+    admin_email: str = Form(...),
     test_id: str = Form(...),
     topic: str = Form(...),
     bullets: str = Form(...),  # JSON array string
@@ -374,6 +395,7 @@ async def edit_cue_card(
     Edit cue card for a test.
     For fixing extraction errors only - not for rewriting content.
     """
+    require_admin_email(admin_email)
     import json
     
     try:
@@ -408,11 +430,12 @@ async def edit_cue_card(
 # ============ VALIDATION ENDPOINTS ============
 
 @router.get("/validate/{test_id}")
-async def validate_test(test_id: str):
+async def validate_test(test_id: str, admin_email: str = Query(...)):
     """
     Run full validation on a test.
     Checks visuals, cue card, and all content.
     """
+    require_admin_email(admin_email)
     test_data, book_id, test_num = get_test_data(test_id)
     
     if test_data is None:
@@ -439,6 +462,7 @@ async def validate_test(test_id: str):
 
 @router.post("/validate/visual")
 async def validate_visual_source(
+    admin_email: str = Form(...),
     source: str = Form(...),
     image_url: Optional[str] = Form(None)
 ):
@@ -446,6 +470,7 @@ async def validate_visual_source(
     Validate a visual source before attachment.
     BLOCKS AI-generated visuals.
     """
+    require_admin_email(admin_email)
     # Check source type
     if source not in ['user_upload', 'pdf_crop']:
         return {

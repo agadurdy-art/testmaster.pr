@@ -16,13 +16,23 @@ import json
 import uuid
 from typing import Dict, List, Any
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+from fastapi import HTTPException
+from security_utils import (
+    ANTI_INFLATION_INSTRUCTION,
+    clamp_band_scores,
+    enforce_min_words,
+    sanitize_ai_input,
+)
 
 # Initialize LlmChat for evaluation
 def get_llm_chat():
     return LlmChat(
-        api_key=os.getenv("EMERGENT_LLM_KEY"),
+        api_key=(os.getenv("EMERGENT_LLM_KEY") or "").strip(),
         session_id=str(uuid.uuid4()),
-        system_message="You are an IELTS writing examiner providing accurate band score assessments."
+        system_message=(
+            "You are an IELTS writing examiner providing accurate band score assessments.\n\n"
+            f"{ANTI_INFLATION_INSTRUCTION}"
+        ),
     ).with_model("openai", "gpt-4o-mini")
 
 # Writing tasks with progressive difficulty
@@ -99,26 +109,10 @@ async def evaluate_writing_response(
         return {"error": "Task not found"}
     
     # Word count check
-    word_count = len(response_text.strip().split()) if response_text else 0
+    sanitized_response = sanitize_ai_input(response_text)
+    word_count = len(sanitized_response.strip().split()) if sanitized_response else 0
     
-    # Handle empty or very short responses
-    if word_count < 5:
-        return {
-            "band_score": 2.0,
-            "word_count": word_count,
-            "criteria_scores": {
-                "task_response": 2.0,
-                "coherence_cohesion": 2.0,
-                "lexical_resource": 2.0,
-                "grammar": 2.0
-            },
-            "feedback": "Your response is too short. Please write more to demonstrate your English ability.",
-            "tips": [
-                "Try to write at least the minimum number of words required.",
-                "Re-read the task instructions carefully.",
-                "Practice writing simple sentences about the topic."
-            ]
-        }
+    enforce_min_words(sanitized_response, 50, "Writing response")
     
     # Determine expected level from task
     task_level = task["level"]
@@ -126,6 +120,9 @@ async def evaluate_writing_response(
     max_words = task["max_words"]
     
     # Construct evaluation prompt
+    if not os.getenv("EMERGENT_LLM_KEY", "").strip():
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
+
     evaluation_prompt = f"""
     You are an IELTS writing examiner. Evaluate the following writing response using official IELTS band descriptors.
     
@@ -136,7 +133,7 @@ async def evaluate_writing_response(
     MAX WORDS: {max_words}
     
     STUDENT'S RESPONSE:
-    "{response_text}"
+    "{sanitized_response}"
     
     WORD COUNT: {word_count}
     
@@ -192,7 +189,7 @@ async def evaluate_writing_response(
         
         evaluation = json.loads(result_text.strip())
         
-        return {
+        return clamp_band_scores({
             "band_score": evaluation.get("overall_band", 4.0),
             "word_count": word_count,
             "criteria_scores": {
@@ -207,51 +204,16 @@ async def evaluate_writing_response(
                 "Use a variety of vocabulary.",
                 "Check your grammar before submitting."
             ])
-        }
+        })
         
     except json.JSONDecodeError as e:
         print(f"JSON parse error in writing evaluation: {e}")
-        # Fallback evaluation based on word count
-        base_band = 4.0
-        if word_count >= min_words:
-            base_band = 5.0
-        if word_count >= max_words * 0.8:
-            base_band = 5.5
-        
-        return {
-            "band_score": base_band,
-            "word_count": word_count,
-            "criteria_scores": {
-                "task_response": base_band,
-                "coherence_cohesion": base_band,
-                "lexical_resource": base_band,
-                "grammar": base_band
-            },
-            "feedback": "Your response has been recorded. Keep practicing to improve your writing skills.",
-            "tips": [
-                "Make sure to address all parts of the question.",
-                "Use linking words to connect your ideas.",
-                "Proofread for grammar mistakes."
-            ]
-        }
+        raise HTTPException(status_code=503, detail="AI evaluation returned an invalid response.")
     except Exception as e:
         print(f"Error in writing evaluation: {e}")
-        return {
-            "band_score": 4.0,
-            "word_count": word_count,
-            "criteria_scores": {
-                "task_response": 4.0,
-                "coherence_cohesion": 4.0,
-                "lexical_resource": 4.0,
-                "grammar": 4.0
-            },
-            "feedback": "Your response has been recorded.",
-            "tips": [
-                "Practice writing regularly.",
-                "Read model answers to improve.",
-                "Focus on one skill at a time."
-            ]
-        }
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
 
 
 async def evaluate_all_writing_tasks(
