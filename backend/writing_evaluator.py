@@ -98,6 +98,10 @@ async def evaluate_writing_response(
     if not task:
         return {"error": "Task not found"}
     
+    # Sanitize AI input
+    from security_utils import sanitize_ai_input, clamp_band_scores
+    response_text = sanitize_ai_input(response_text or "")
+    
     # Word count check
     word_count = len(response_text.strip().split()) if response_text else 0
     
@@ -191,6 +195,9 @@ async def evaluate_writing_response(
             result_text = result_text[:-3]
         
         evaluation = json.loads(result_text.strip())
+        
+        # Clamp band scores to valid IELTS range (1.0 - 9.0)
+        evaluation = clamp_band_scores(evaluation)
         
         return {
             "band_score": evaluation.get("overall_band", 4.0),

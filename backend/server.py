@@ -13,6 +13,7 @@ from typing import List, Optional, Dict, Any, Union
 import uuid
 from datetime import datetime, timezone, timedelta
 import hashlib
+import bcrypt
 import hmac
 import urllib.parse
 from emergentintegrations.llm.chat import LlmChat, UserMessage
@@ -715,17 +716,29 @@ class FeedbackResponse(BaseModel):
 # Password hashing helpers
 
 def hash_password(password: str) -> str:
-    """Hash password using SHA256 (for demo; use stronger algorithms in production)."""
+    """Hash password using bcrypt."""
     if not isinstance(password, str):
         password = str(password)
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def _hash_password_sha256(password: str) -> str:
+    """Legacy SHA-256 hash for migration check only."""
     return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
 
 def verify_password(password: str, password_hash: str) -> bool:
-    """Verify password against stored hash using constant-time comparison."""
+    """Verify password against stored hash. Supports bcrypt and legacy SHA-256."""
     if not password_hash:
         return False
-    computed = hash_password(password)
+    # Try bcrypt first
+    if password_hash.startswith("$2"):
+        try:
+            return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))
+        except Exception:
+            return False
+    # Fallback to legacy SHA-256
+    computed = _hash_password_sha256(password)
     return hmac.compare_digest(computed, password_hash)
 
 # ============ Helper Functions ============
@@ -1353,6 +1366,12 @@ async def login_user(input: UserLogin):
     if not verify_password(input.password, pwd_hash):
         logger.warning(f"Password verification failed for: {email}")
         raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    # Migrate legacy SHA-256 hash to bcrypt on successful login
+    if pwd_hash and not pwd_hash.startswith("$2"):
+        new_hash = hash_password(input.password)
+        await db.users.update_one({"email": email}, {"$set": {"password_hash": new_hash}})
+        logger.info(f"Migrated password hash to bcrypt for: {email}")
 
     logger.info(f"Login successful for: {email}")
     
@@ -2478,21 +2497,25 @@ async def start_speaking_session(request: Request):
     FREE_TRIAL_SECONDS = 180
     free_used = int(user.get("ai_interview_free_seconds_used", 0) or 0)
 
-    # If user has not yet consumed their free trial, grant a free session
+    # If user has not yet consumed their free trial, grant a free session (atomic)
     if free_used < FREE_TRIAL_SECONDS:
-        await db.users.update_one(
-            {"id": user["id"]},
+        atomic = await db.users.update_one(
+            {"id": user["id"], "ai_interview_free_seconds_used": {"$lt": FREE_TRIAL_SECONDS}},
             {"$set": {"ai_interview_free_seconds_used": FREE_TRIAL_SECONDS}},
         )
-        updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
-        return {
-            "detail": "Free trial speaking session started",
-            "remainingCredits": updated.get("examCredits", 0),
-            "plan": updated.get("plan", "free"),
-            "freeTrial": True,
-            "freeTrialSecondsUsed": updated.get("ai_interview_free_seconds_used", FREE_TRIAL_SECONDS),
-            "freeTrialSecondsTotal": FREE_TRIAL_SECONDS,
-        }
+        if atomic.modified_count == 0:
+            # Race condition: another request already consumed the trial
+            pass
+        else:
+            updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
+            return {
+                "detail": "Free trial speaking session started",
+                "remainingCredits": updated.get("examCredits", 0),
+                "plan": updated.get("plan", "free"),
+                "freeTrial": True,
+                "freeTrialSecondsUsed": updated.get("ai_interview_free_seconds_used", FREE_TRIAL_SECONDS),
+                "freeTrialSecondsTotal": FREE_TRIAL_SECONDS,
+            }
 
     # Otherwise consume 1 speaking credit if available
     result = await db.users.update_one(
@@ -2746,14 +2769,13 @@ async def manual_credit(req: ManualCreditRequest):
 
 # ============ Admin Panel Endpoints ============
 
-ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@testmaster.pro", "admin@ieltsace.com", "stemhousebenluc@gmail.com"]  # Add your admin emails here
+from security_utils import is_admin_email as _su_is_admin, require_admin_email as _su_require_admin
+
+ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@testmaster.pro", "admin@ieltsace.com", "stemhousebenluc@gmail.com"]  # Kept as fallback
 
 def is_admin_email(email: str) -> bool:
-    """Check if email belongs to an admin"""
-    if not email:
-        return False
-    email_lower = email.lower()
-    return any(admin.lower() in email_lower or email_lower == admin.lower() for admin in ADMIN_EMAILS)
+    """Check if email belongs to an admin using centralized security_utils."""
+    return _su_is_admin(email)
 
 @api_router.get("/admin/users")
 async def admin_get_all_users(admin_email: str = None):
@@ -3262,22 +3284,6 @@ async def reset_password(payload: ResetPasswordRequest):
     await db.password_resets.delete_one({"_id": record["_id"]})
 
 
-@api_router.post("/auth/direct-reset")
-async def direct_reset(payload: DirectResetRequest):
-    """Legacy direct reset endpoint (no email). Kept for backwards compatibility.
-
-    Frontend should use the email-based reset flow instead.
-    """
-    email = payload.email.strip().lower()
-
-    if len(payload.new_password) < 8:
-        raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
-
-    password_hash = hash_password(payload.new_password)
-    await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
-
-    return {"detail": "If this email exists, the password has been updated."}
-
 # Get a specific test attempt
 
 
@@ -3289,6 +3295,8 @@ async def upload_bank_payment(
     screenshot: UploadFile = File(...),
 ):
     """User uploads bank transfer screenshot; plan activates for 30 days."""
+    from security_utils import validate_upload_filename
+    validate_upload_filename(screenshot.filename)
     email_clean = email.strip().lower()
     user = await _get_user_by_email(email_clean)
     if not user:
@@ -3982,19 +3990,80 @@ async def create_test(test_data: CreateTestRequest):
 
 # ============ Level Test Evaluation ============
 
+# Secure endpoint: serve reading questions WITHOUT answer keys
+@api_router.get("/level-test/reading-questions")
+async def get_level_test_reading_questions():
+    """Return reading questions without correct answers for the simple level test."""
+    from level_test_reading_data import LEVEL_TEST_READING_QUESTIONS, strip_answer_keys
+    return {"questions": strip_answer_keys(LEVEL_TEST_READING_QUESTIONS)}
+
+
+@api_router.get("/comprehensive-level-test/reading-questions")
+async def get_comprehensive_reading_questions():
+    """Return reading questions without correct answers for the comprehensive level test."""
+    from level_test_reading_data import COMPREHENSIVE_READING_QUESTIONS, strip_answer_keys
+    return {"questions": strip_answer_keys(COMPREHENSIVE_READING_QUESTIONS)}
+
+
+@api_router.post("/comprehensive-level-test/evaluate-reading")
+async def evaluate_comprehensive_reading(payload: Dict[str, Any] = Body(...)):
+    """Evaluate reading answers server-side and return results with correct answers."""
+    from level_test_reading_data import COMPREHENSIVE_READING_QUESTIONS
+    answers = payload.get("answers", {})
+    results = []
+    total_points = 0
+    correct_count = 0
+    skill_breakdown = {}
+    for q in COMPREHENSIVE_READING_QUESTIONS:
+        user_answer = answers.get(str(q["id"]), "")
+        is_correct = user_answer.upper() == q["correct"].upper() if user_answer else False
+        if is_correct:
+            correct_count += 1
+            total_points += q.get("band", 0)
+        skill = q.get("skill", "general")
+        if skill not in skill_breakdown:
+            skill_breakdown[skill] = {"correct": 0, "total": 0}
+        skill_breakdown[skill]["total"] += 1
+        if is_correct:
+            skill_breakdown[skill]["correct"] += 1
+        results.append({
+            "id": q["id"],
+            "is_correct": is_correct,
+            "user_answer": user_answer,
+            "correct_answer": q["correct"],
+            "band": q.get("band", 0),
+            "skill": skill,
+            "passage": q.get("passage", ""),
+            "question": q.get("question", ""),
+            "options": q.get("options", []),
+            "passageExcerpt": q.get("passageExcerpt", ""),
+            "explanation": q.get("explanation", ""),
+            "skillTip": q.get("skillTip", ""),
+        })
+    band = total_points / len(COMPREHENSIVE_READING_QUESTIONS) if COMPREHENSIVE_READING_QUESTIONS else 0
+    return {
+        "correct_count": correct_count,
+        "total": len(COMPREHENSIVE_READING_QUESTIONS),
+        "band": round(band * 2) / 2,
+        "skill_breakdown": skill_breakdown,
+        "questions": results,
+    }
+
+
 class LevelTestRequest(BaseModel):
     user_id: Optional[str] = None
     reading_answers: Dict[str, str]
-    reading_questions: List[Dict[str, Any]]
+    reading_questions: Optional[List[Dict[str, Any]]] = None
     speaking_responses: List[Dict[str, Any]]
 
 @api_router.post("/level-test/evaluate")
 async def evaluate_level_test(request: LevelTestRequest):
     """Evaluate user's English level based on reading and speaking responses"""
+    from level_test_reading_data import LEVEL_TEST_READING_QUESTIONS
     
-    # Calculate reading score
+    # Use server-side answer keys (ignore any frontend-supplied questions)
     correct_count = 0
-    for q in request.reading_questions:
+    for q in LEVEL_TEST_READING_QUESTIONS:
         user_answer = request.reading_answers.get(str(q["id"]), "")
         if user_answer.upper() == q["correct"].upper():
             correct_count += 1
@@ -5686,21 +5755,22 @@ async def get_vocabulary_slides(module_id: str):
                 "common_mistake": "",
             })
     
-    # Word formation data
+    # Word formation data (only for dict-based vocab, not beginner lists)
     word_formations = []
-    for item in vocab.get("word_formation", []):
-        word_formations.append({
-            "root": item.get("root", ""),
-            "noun": item.get("noun", ""),
-            "verb": item.get("verb", ""),
-            "adjective": item.get("adjective", ""),
-            "adverb": item.get("adverb", ""),
-        })
+    if isinstance(vocab, dict):
+        for item in vocab.get("word_formation", []):
+            word_formations.append({
+                "root": item.get("root", ""),
+                "noun": item.get("noun", ""),
+                "verb": item.get("verb", ""),
+                "adjective": item.get("adjective", ""),
+                "adverb": item.get("adverb", ""),
+            })
     
     return {
         "module_id": module_id,
         "module_title": module.get("title", ""),
-        "module_number": module.get("module_number", 0),
+        "module_number": module.get("module_number", module.get("lesson_number", 0)),
         "slides": slides,
         "word_formations": word_formations,
         "total_slides": len(slides),
@@ -5733,7 +5803,7 @@ async def get_vocabulary_practice(module_id: str):
         all_words = [{"word": item.get("word", ""), "meaning": item.get("meaning", ""), "example": item.get("example", ""), "category": "vocabulary"} for item in vocab_list]
         
         # Fill-in-the-blank
-        for item in all_words:
+        for i, item in enumerate(all_words):
             word = item.get("word", "")
             sentence = item.get("example", "")
             if not word or not sentence:
@@ -5745,15 +5815,17 @@ async def get_vocabulary_practice(module_id: str):
                 options = [word] + distractors
                 random.shuffle(options)
                 exercises.append({
+                    "id": f"fib-{len(exercises)}",
                     "type": "fill_blank",
+                    "instruction": "Fill in the blank with the correct word:",
                     "sentence": blanked,
-                    "correct": word,
+                    "answer": word,
                     "options": options,
-                    "word": word,
+                    "hint": item.get("meaning", ""),
                 })
         
         # Meaning matching
-        for item in all_words:
+        for i, item in enumerate(all_words):
             word = item.get("word", "")
             meaning = item.get("meaning", "")
             if not word or not meaning:
@@ -5763,13 +5835,22 @@ async def get_vocabulary_practice(module_id: str):
             options = [meaning] + distractors
             random.shuffle(options)
             exercises.append({
+                "id": f"mm-{len(exercises)}",
                 "type": "meaning_match",
+                "instruction": "Choose the correct meaning:",
                 "word": word,
-                "correct": meaning,
+                "answer": meaning,
                 "options": options,
+                "hint": "",
             })
         
         random.shuffle(exercises)
+        return {
+            "module_id": module_id,
+            "module_title": module.get("title", ""),
+            "exercises": exercises,
+            "total_exercises": len(exercises),
+        }
     elif source == "mastery":
         import re
         # Mastery: generate exercises from nouns, verbs, adjectives, adverbs
@@ -5848,15 +5929,6 @@ async def get_vocabulary_practice(module_id: str):
             "exercises": exercises,
             "total_exercises": len(exercises),
         }
-    elif source == "beginner":
-        # Return beginner exercises
-        return {
-            "module_id": module_id,
-            "module_title": module.get("title", ""),
-            "exercises": exercises,
-            "total_exercises": len(exercises),
-        }
-    
     # Advanced mastery original logic below
     
     # 1. Fill-in-the-blank from advanced terms
@@ -7139,7 +7211,7 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=[o.strip() for o in os.environ.get('CORS_ORIGINS', '').split(',') if o.strip()] or ["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )

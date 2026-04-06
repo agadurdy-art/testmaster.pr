@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
@@ -7,49 +7,8 @@ import { Mic, Square, Play, ChevronRight, CheckCircle, Award, BookOpen, MessageS
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
 
-// Reading questions of varying difficulty
-const readingQuestions = [
-  {
-    id: 1,
-    level: 'elementary',
-    passage: "The weather today is sunny and warm. Many people are going to the park to enjoy the day. Children are playing on the grass while their parents sit on benches.",
-    question: "What are the children doing in the park?",
-    options: ["A) Sitting on benches", "B) Playing on the grass", "C) Going home", "D) Reading books"],
-    correct: "B"
-  },
-  {
-    id: 2,
-    level: 'pre-intermediate',
-    passage: "Scientists have discovered that regular exercise not only improves physical health but also has significant benefits for mental well-being. Studies show that just 30 minutes of moderate exercise can reduce stress and improve mood.",
-    question: "According to the passage, what is one benefit of regular exercise?",
-    options: ["A) It makes you taller", "B) It reduces stress", "C) It helps you sleep longer", "D) It increases appetite"],
-    correct: "B"
-  },
-  {
-    id: 3,
-    level: 'intermediate',
-    passage: "The proliferation of smartphones has fundamentally altered the way humans communicate and access information. While these devices offer unprecedented connectivity, critics argue that excessive screen time may be detrimental to interpersonal relationships and cognitive development, particularly among younger users.",
-    question: "What concern do critics have about smartphones?",
-    options: ["A) They are too expensive", "B) They may harm relationships and brain development", "C) They don't have enough features", "D) They are difficult to use"],
-    correct: "B"
-  },
-  {
-    id: 4,
-    level: 'upper-intermediate',
-    passage: "The phenomenon of confirmation bias—the tendency to seek out information that supports one's existing beliefs while dismissing contradictory evidence—poses a significant challenge to objective decision-making. This cognitive bias is particularly pronounced in politically charged discussions, where individuals often interpret ambiguous information in ways that reinforce their preconceptions.",
-    question: "What does confirmation bias cause people to do?",
-    options: ["A) Accept all information equally", "B) Favor information that supports their existing beliefs", "C) Avoid making any decisions", "D) Change their opinions frequently"],
-    correct: "B"
-  },
-  {
-    id: 5,
-    level: 'advanced',
-    passage: "The epistemological implications of artificial intelligence have sparked considerable debate among philosophers and technologists alike. As machine learning algorithms demonstrate increasingly sophisticated pattern recognition capabilities, questions arise regarding the nature of understanding itself—whether computational processes can be said to 'comprehend' in any meaningful sense, or whether they merely simulate comprehension through statistical correlation.",
-    question: "What philosophical question does AI raise according to the passage?",
-    options: ["A) Whether computers will replace humans", "B) Whether machines can truly understand or just imitate understanding", "C) How to make AI more affordable", "D) When AI was first invented"],
-    correct: "B"
-  }
-];
+// Reading questions loaded from server (no answer keys)
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Speaking prompts
 const speakingPrompts = [
@@ -61,6 +20,8 @@ export default function LevelTest({ user, onShowAuth }) {
   const navigate = useNavigate();
   const { t } = useI18n();
   
+  const [readingQuestions, setReadingQuestions] = useState([]);
+  const [questionsLoading, setQuestionsLoading] = useState(true);
   const [stage, setStage] = useState('intro');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [readingAnswers, setReadingAnswers] = useState({});
@@ -76,6 +37,24 @@ export default function LevelTest({ user, onShowAuth }) {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const audioRef = useRef(null);
+
+  // Load reading questions from server (without answer keys)
+  useEffect(() => {
+    async function loadQuestions() {
+      try {
+        const res = await fetch(`${API_URL}/api/level-test/reading-questions`);
+        if (res.ok) {
+          const data = await res.json();
+          setReadingQuestions(data.questions || []);
+        }
+      } catch (e) {
+        console.error('Failed to load reading questions:', e);
+      } finally {
+        setQuestionsLoading(false);
+      }
+    }
+    loadQuestions();
+  }, []);
 
   const handleReadingAnswer = (questionId, answer) => {
     setReadingAnswers(prev => ({ ...prev, [questionId]: answer }));
@@ -172,7 +151,6 @@ export default function LevelTest({ user, onShowAuth }) {
         body: JSON.stringify({
           user_id: user?.id,
           reading_answers: readingAnswers,
-          reading_questions: readingQuestions.map(q => ({ id: q.id, level: q.level, correct: q.correct })),
           speaking_responses: [...speakingResponses, { promptId: speakingPrompts[currentSpeakingPrompt].id, prompt: speakingPrompts[currentSpeakingPrompt].prompt, response: currentTranscript }]
         })
       });

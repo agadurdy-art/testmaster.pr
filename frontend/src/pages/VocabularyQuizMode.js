@@ -23,6 +23,8 @@ export default function VocabularyQuizMode({ user }) {
   const [submitted, setSubmitted] = useState(false);
   const [result, setResult] = useState(null);
 
+  const backPath = moduleId?.startsWith('beginner-') ? '/beginner-course' : moduleId?.startsWith('mastery-') ? '/mastery-course' : '/advanced-mastery';
+
   useEffect(() => { fetchQuiz(); }, [moduleId]);
 
   const fetchQuiz = async () => {
@@ -33,7 +35,7 @@ export default function VocabularyQuizMode({ user }) {
         setData(d);
         if (d.reading_passage) setPassage(d.reading_passage);
       }
-      else { toast.error('Failed to load quiz'); navigate('/advanced-mastery'); }
+      else { toast.error('Failed to load quiz'); navigate(backPath); }
     } catch { toast.error('Connection error'); }
     finally { setLoading(false); }
   };
@@ -87,7 +89,7 @@ export default function VocabularyQuizMode({ user }) {
       <div className="min-h-screen bg-[#F5F5F7] flex flex-col" data-testid="quiz-results-screen">
         <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-xl border-b border-black/[0.04]">
           <div className="flex items-center justify-between px-4 py-3 max-w-3xl mx-auto">
-            <button onClick={() => navigate('/advanced-mastery')} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-from-quiz-results"><ChevronLeft className="w-4 h-4" /> Course</button>
+            <button onClick={() => navigate(backPath)} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-from-quiz-results"><ChevronLeft className="w-4 h-4" /> Course</button>
             <p className="text-[15px] font-semibold text-[#1D1D1F]">Quiz Results</p>
             <div />
           </div>
@@ -137,7 +139,7 @@ export default function VocabularyQuizMode({ user }) {
 
             <div className="flex gap-3">
               {!result.passed && <button onClick={handleRetry} className="flex-1 h-12 rounded-full bg-white shadow-[0_1px_6px_rgba(0,0,0,0.06)] text-[14px] font-semibold text-[#3A3A3C] flex items-center justify-center gap-2" data-testid="retry-quiz-btn"><RotateCcw className="w-4 h-4" /> Retry</button>}
-              <button onClick={() => navigate('/advanced-mastery')} className="flex-1 h-12 rounded-full bg-orange-500 shadow-[0_2px_10px_rgba(234,88,12,0.3)] text-[14px] font-semibold text-white flex items-center justify-center gap-2" data-testid="back-to-modules-btn"><BookOpen className="w-4 h-4" /> {result.passed ? 'Next Module' : 'Back to Course'}</button>
+              <button onClick={() => navigate(backPath)} className="flex-1 h-12 rounded-full bg-orange-500 shadow-[0_2px_10px_rgba(234,88,12,0.3)] text-[14px] font-semibold text-white flex items-center justify-center gap-2" data-testid="back-to-modules-btn"><BookOpen className="w-4 h-4" /> {result.passed ? 'Next Module' : 'Back to Course'}</button>
             </div>
           </div>
         </div>
@@ -152,7 +154,7 @@ export default function VocabularyQuizMode({ user }) {
     <div className="min-h-screen bg-[#F5F5F7] flex flex-col" data-testid="vocabulary-quiz-mode">
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-xl border-b border-black/[0.04]">
         <div className="flex items-center justify-between px-4 py-3 max-w-3xl mx-auto">
-          <button onClick={() => navigate('/advanced-mastery')} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-from-quiz"><ChevronLeft className="w-4 h-4" /> Back</button>
+          <button onClick={() => navigate(backPath)} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-from-quiz"><ChevronLeft className="w-4 h-4" /> Back</button>
           <p className="text-[15px] font-semibold text-[#1D1D1F]">Mastery Quiz</p>
           <Badge className="bg-violet-50 text-violet-600 border-violet-200 text-[12px] font-semibold">{answeredCount}/{data.questions.length}</Badge>
         </div>
@@ -180,16 +182,15 @@ export default function VocabularyQuizMode({ user }) {
             <p className="text-[16px] text-[#1D1D1F] leading-relaxed" data-testid="quiz-question-text">{question.question}</p>
           </div>
 
-          {/* Multiple choice options */}
-          {question.type === 'multiple_choice' && question.options && (
+          {/* Multiple choice options - default for questions without type or with type='multiple_choice' */}
+          {(!question.type || question.type === 'multiple_choice') && question.options && (
             <div className="space-y-2.5" data-testid="quiz-options-mc">
               {question.options.map((option, i) => {
-                const letter = option.charAt(0);
-                const sel = answers[question.id] === letter;
+                const sel = answers[question.id] === i;
                 return (
-                  <button key={i} onClick={() => selectAnswer(question.id, letter)}
+                  <button key={i} onClick={() => selectAnswer(question.id, i)}
                     className={`w-full p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${sel ? 'bg-violet-50 border-violet-300 text-violet-700' : 'bg-white border-black/[0.06] text-[#3A3A3C] hover:bg-violet-50/40 hover:border-violet-200'}`}
-                    data-testid={`quiz-option-${letter}`}>
+                    data-testid={`quiz-option-${i}`}>
                     <span className="text-[14px] font-medium">{option}</span>
                   </button>
                 );

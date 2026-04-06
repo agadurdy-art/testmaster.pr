@@ -60,177 +60,7 @@ const LanguageSwitcher = () => {
 };
 
 // ENHANCED READING QUESTIONS - 10 questions covering Band 2.0 to 9.0
-const readingQuestions = [
-  // Band 2.0-3.0 (Elementary)
-  {
-    id: 1,
-    level: 'A1',
-    band: 2.5,
-    passage: "My name is John. I am a teacher. I work at a school. I like my job. I have many students.",
-    question: "What is John's job?",
-    options: ["A) Doctor", "B) Teacher", "C) Student", "D) Driver"],
-    correct: "B",
-    skill: "basic_comprehension",
-    passageExcerpt: "I am a teacher",
-    explanation: "The passage directly states 'I am a teacher.' This is a straightforward factual question.",
-    skillTip: "For 'What is/are' questions, look for direct statements using 'is', 'am', or 'are'."
-  },
-  {
-    id: 2,
-    level: 'A1',
-    band: 3.0,
-    passage: "The library opens at 9:00 AM and closes at 6:00 PM every day except Sunday. On Sunday, it is closed.",
-    question: "When is the library closed?",
-    options: ["A) Monday", "B) Saturday", "C) Sunday", "D) Every day"],
-    correct: "C",
-    skill: "time_information",
-    passageExcerpt: "On Sunday, it is closed",
-    explanation: "The passage explicitly states 'On Sunday, it is closed.' The word 'except' indicates Sunday is different from other days.",
-    skillTip: "Pay attention to words like 'except', 'but', 'however' - they often indicate exceptions or important information."
-  },
-  
-  // Band 3.5-4.5 (Pre-intermediate)
-  {
-    id: 3,
-    level: 'A2',
-    band: 4.0,
-    passage: "Sarah goes to the gym three times a week to stay healthy. She usually runs for 30 minutes and then does some exercises. After her workout, she feels energetic and happy.",
-    question: "How often does Sarah go to the gym?",
-    options: ["A) Every day", "B) Once a week", "C) Three times a week", "D) Twice a month"],
-    correct: "C",
-    skill: "frequency_detail",
-    passageExcerpt: "goes to the gym three times a week",
-    explanation: "The frequency 'three times a week' is stated directly at the beginning of the passage.",
-    skillTip: "Frequency questions often contain phrases like 'times a week/month', 'every day', 'once', 'twice', etc."
-  },
-  {
-    id: 4,
-    level: 'A2',
-    band: 4.5,
-    passage: "Scientists have discovered that regular exercise not only improves physical health but also has significant benefits for mental well-being. Studies show that just 30 minutes of moderate exercise can reduce stress and improve mood.",
-    question: "According to the passage, what is one benefit of regular exercise?",
-    options: ["A) It makes you taller", "B) It reduces stress", "C) It helps you sleep longer", "D) It increases appetite"],
-    correct: "B",
-    skill: "detail_comprehension",
-    passageExcerpt: "can reduce stress and improve mood",
-    explanation: "The passage states exercise 'can reduce stress and improve mood.' Option B matches this information directly.",
-    skillTip: "When asked for 'one benefit', scan for positive outcome words like 'improve', 'reduce (negative)', 'help', 'benefit'."
-  },
-  
-  // Band 5.0-5.5 (Intermediate)
-  {
-    id: 5,
-    level: 'B1',
-    band: 5.0,
-    passage: "Remote work has become increasingly popular in recent years, offering employees flexibility and eliminating commute time. However, it also presents challenges such as maintaining work-life balance and staying connected with colleagues. Companies must adapt their management strategies to support remote teams effectively.",
-    question: "What challenge does remote work present according to the passage?",
-    options: [
-      "A) Higher salary costs",
-      "B) Difficulty maintaining work-life balance",
-      "C) Increased office space needs",
-      "D) More vacation time required"
-    ],
-    correct: "B",
-    skill: "inference",
-    passageExcerpt: "it also presents challenges such as maintaining work-life balance",
-    explanation: "The passage lists 'maintaining work-life balance' as one of the challenges. The word 'However' signals a contrast between benefits and drawbacks.",
-    skillTip: "Words like 'However', 'but', 'although' often introduce contrasting information - pay attention to what follows them."
-  },
-  {
-    id: 6,
-    level: 'B1',
-    band: 5.5,
-    passage: "The proliferation of smartphones has fundamentally altered the way humans communicate and access information. While these devices offer unprecedented connectivity, critics argue that excessive screen time may be detrimental to interpersonal relationships and cognitive development, particularly among younger users.",
-    question: "What concern do critics have about smartphones?",
-    options: [
-      "A) They are too expensive",
-      "B) They may harm relationships and brain development",
-      "C) They don't have enough features",
-      "D) They are difficult to use"
-    ],
-    correct: "B",
-    skill: "critical_analysis",
-    passageExcerpt: "may be detrimental to interpersonal relationships and cognitive development",
-    explanation: "'Detrimental' means harmful. The passage states critics worry about harm to relationships and cognitive (brain) development.",
-    skillTip: "Learn to recognize formal vocabulary: 'detrimental' = harmful, 'cognitive' = related to thinking/brain."
-  },
-  
-  // Band 6.0-6.5 (Upper-intermediate)
-  {
-    id: 7,
-    level: 'B2',
-    band: 6.0,
-    passage: "The phenomenon of confirmation bias—the tendency to seek out information that supports one's existing beliefs while dismissing contradictory evidence—poses a significant challenge to objective decision-making. This cognitive bias is particularly pronounced in politically charged discussions, where individuals often interpret ambiguous information in ways that reinforce their preconceptions.",
-    question: "What does confirmation bias cause people to do?",
-    options: [
-      "A) Accept all information equally",
-      "B) Favor information that supports their existing beliefs",
-      "C) Avoid making any decisions",
-      "D) Change their opinions frequently"
-    ],
-    correct: "B",
-    skill: "complex_inference",
-    passageExcerpt: "the tendency to seek out information that supports one's existing beliefs",
-    explanation: "The passage defines confirmation bias in the dash—this is the key information. 'Seek out' means 'favor' or 'look for'.",
-    skillTip: "Information between dashes (—) or parentheses often provides definitions or explanations of difficult terms."
-  },
-  {
-    id: 8,
-    level: 'B2',
-    band: 6.5,
-    passage: "Contemporary urban planning faces the paradox of simultaneously accommodating population growth while preserving environmental sustainability. Innovative solutions such as vertical gardens, green roofs, and mixed-use developments represent attempts to reconcile these competing demands, though their long-term efficacy remains subject to empirical validation.",
-    question: "What challenge do urban planners face?",
-    options: [
-      "A) Finding enough construction workers",
-      "B) Balancing population growth with environmental protection",
-      "C) Reducing traffic congestion",
-      "D) Building taller buildings"
-    ],
-    correct: "B",
-    skill: "paradox_understanding",
-    passageExcerpt: "simultaneously accommodating population growth while preserving environmental sustainability",
-    explanation: "The 'paradox' is described as needing to do two things at once: grow (population) while protecting (environment). This is the 'balance' mentioned in option B.",
-    skillTip: "The word 'paradox' indicates a conflict between two things. Look for what these two conflicting elements are."
-  },
-  
-  // Band 7.0-8.0 (Advanced)
-  {
-    id: 9,
-    level: 'C1',
-    band: 7.5,
-    passage: "The epistemological implications of artificial intelligence have sparked considerable debate among philosophers and technologists alike. As machine learning algorithms demonstrate increasingly sophisticated pattern recognition capabilities, questions arise regarding the nature of understanding itself—whether computational processes can be said to 'comprehend' in any meaningful sense, or whether they merely simulate comprehension through statistical correlation.",
-    question: "What philosophical question does AI raise according to the passage?",
-    options: [
-      "A) Whether computers will replace humans",
-      "B) Whether machines can truly understand or just imitate understanding",
-      "C) How to make AI more affordable",
-      "D) When AI was first invented"
-    ],
-    correct: "B",
-    skill: "abstract_reasoning",
-    passageExcerpt: "whether computational processes can be said to 'comprehend' in any meaningful sense, or whether they merely simulate comprehension",
-    explanation: "The passage asks whether AI truly 'comprehends' (understands) or just 'simulates' (imitates) comprehension. Option B captures this distinction.",
-    skillTip: "In advanced passages, look for philosophical questions often framed as 'whether X or Y' constructions."
-  },
-  {
-    id: 10,
-    level: 'C2',
-    band: 8.5,
-    passage: "The reification of abstract concepts in contemporary discourse often obscures rather than illuminates substantive analysis. When complex socioeconomic phenomena are reduced to simplistic metaphors or personified as autonomous agents, the resultant narrative frameworks can inadvertently perpetuate cognitive distortions that impede nuanced understanding and forestall pragmatic solutions.",
-    question: "According to the passage, what problem occurs when complex ideas are oversimplified?",
-    options: [
-      "A) They become easier for everyone to understand",
-      "B) They create misleading frameworks that prevent proper understanding",
-      "C) They help people make better decisions",
-      "D) They encourage more research"
-    ],
-    correct: "B",
-    skill: "sophisticated_analysis",
-    passageExcerpt: "resultant narrative frameworks can inadvertently perpetuate cognitive distortions that impede nuanced understanding",
-    explanation: "'Cognitive distortions that impede understanding' = misleading frameworks that prevent understanding. 'Obscures rather than illuminates' reinforces this negative outcome.",
-    skillTip: "In complex texts, identify the main verb direction: 'obscures' (negative), 'illuminates' (positive). Here the text favors the negative outcome."
-  }
-];
+// Reading questions loaded from server (no answer keys)
 
 // ENHANCED SPEAKING PROMPTS - 3 questions covering A1 to C2
 const speakingPrompts = [
@@ -266,6 +96,10 @@ const speakingPrompts = [
 export default function ComprehensiveLevelTest({ user }) {
   const navigate = useNavigate();
   const { t, language } = useI18n();  // Get language from i18n context
+  
+  // Reading questions loaded from server
+  const [readingQuestions, setReadingQuestions] = useState([]);
+  const [questionsLoading, setQuestionsLoading] = useState(true);
   
   // Test mode selection: "full" | "reading" | "listening" | "writing" | "speaking"
   const [testMode, setTestMode] = useState(null);
@@ -335,6 +169,24 @@ export default function ComprehensiveLevelTest({ user }) {
       return newSet;
     });
   };
+
+  // Load reading questions from server (without answer keys)
+  useEffect(() => {
+    async function loadQuestions() {
+      try {
+        const res = await fetch(`${API_URL}/api/comprehensive-level-test/reading-questions`);
+        if (res.ok) {
+          const data = await res.json();
+          setReadingQuestions(data.questions || []);
+        }
+      } catch (e) {
+        console.error('Failed to load reading questions:', e);
+      } finally {
+        setQuestionsLoading(false);
+      }
+    }
+    loadQuestions();
+  }, []);
 
   // Cleanup audio when component unmounts
   useEffect(() => {
@@ -827,23 +679,24 @@ export default function ComprehensiveLevelTest({ user }) {
       
       // Evaluate Reading if applicable
       if (testMode === 'full' || testMode === 'reading') {
-        let totalReadingPoints = 0;
-        readingQuestions.forEach(q => {
-          const userAnswer = readingAnswers[q.id];
-          const isCorrect = userAnswer === q.correct;
-          
-          if (isCorrect) {
-            readingCorrect++;
-            totalReadingPoints += q.band;
+        try {
+          const readingResponse = await fetch(`${API_URL}/api/comprehensive-level-test/evaluate-reading`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ answers: readingAnswers })
+          });
+          if (readingResponse.ok) {
+            const readingResult = await readingResponse.json();
+            readingCorrect = readingResult.correct_count;
+            readingBand = readingResult.band;
+            skillBreakdown = readingResult.skill_breakdown || {};
+            // Enrich readingQuestions with server results for display
+            setReadingQuestions(readingResult.questions || []);
           }
-          
-          if (!skillBreakdown[q.skill]) {
-            skillBreakdown[q.skill] = { correct: 0, total: 0 };
-          }
-          skillBreakdown[q.skill].total++;
-          if (isCorrect) skillBreakdown[q.skill].correct++;
-        });
-        readingBand = totalReadingPoints / readingQuestions.length;
+        } catch (e) {
+          console.error('Reading evaluation error:', e);
+          readingBand = 4.0;
+        }
       }
 
       // Evaluate Listening if applicable
@@ -2275,10 +2128,11 @@ export default function ComprehensiveLevelTest({ user }) {
                     </h3>
                     <div className="space-y-2">
                       {readingQuestions.map((q, idx) => {
-                        const userAnswer = readingAnswers[q.id];
-                        const isCorrect = userAnswer === q.correct;
-                        const userAnswerText = q.options.find(opt => opt.startsWith(userAnswer))?.substring(3) || userAnswer;
-                        const correctAnswerText = q.options.find(opt => opt.startsWith(q.correct))?.substring(3) || q.correct;
+                        const userAnswer = q.user_answer || readingAnswers[q.id];
+                        const correctKey = q.correct_answer || q.correct;
+                        const isCorrect = q.is_correct !== undefined ? q.is_correct : (userAnswer === correctKey);
+                        const userAnswerText = q.options?.find(opt => opt.startsWith(userAnswer))?.substring(3) || userAnswer;
+                        const correctAnswerText = q.options?.find(opt => opt.startsWith(correctKey))?.substring(3) || correctKey;
                         
                         return (
                           <LocateExplain

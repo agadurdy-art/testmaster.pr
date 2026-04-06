@@ -14,12 +14,14 @@ router = APIRouter(prefix="/api/admin/vocab-images", tags=["admin-vocab-images"]
 client = MongoClient(os.environ.get("MONGO_URL"))
 db = client[os.environ.get("DB_NAME", "ielts_database")]
 
-ADMIN_EMAILS = ["aga.durdy@gmail.com", "stemhousebenluc@gmail.com", "admin@ieltsace.com"]
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from security_utils import require_admin_email, validate_upload_filename
+
 VOCAB_DIR = "/app/backend/static/vocab_images"
 
 def check_admin(email: str):
-    if not email or email.lower() not in [e.lower() for e in ADMIN_EMAILS]:
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(email)
 
 
 @router.get("/lessons")

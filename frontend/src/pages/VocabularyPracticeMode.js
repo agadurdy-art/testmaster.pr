@@ -24,13 +24,15 @@ export default function VocabularyPracticeMode({ user }) {
   const [matchState, setMatchState] = useState({ selectedTerm: null, selectedDef: null, matches: {} });
   const [completed, setCompleted] = useState(false);
 
+  const backPath = moduleId?.startsWith('beginner-') ? '/beginner-course' : moduleId?.startsWith('mastery-') ? '/mastery-course' : '/advanced-mastery';
+
   useEffect(() => { fetchExercises(); }, [moduleId]);
 
   const fetchExercises = async () => {
     try {
       const res = await fetch(`${API_URL}/api/vocabulary-engine/${moduleId}/practice`);
       if (res.ok) setData(await res.json());
-      else { toast.error('Failed to load exercises'); navigate('/advanced-mastery'); }
+      else { toast.error('Failed to load exercises'); navigate(backPath); }
     } catch { toast.error('Connection error'); }
     finally { setLoading(false); }
   };
@@ -129,7 +131,7 @@ export default function VocabularyPracticeMode({ user }) {
     <div className="min-h-screen bg-[#F5F5F7] flex flex-col" data-testid="vocabulary-practice-mode">
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-xl border-b border-black/[0.04]">
         <div className="flex items-center justify-between px-4 py-3 max-w-3xl mx-auto">
-          <button onClick={() => navigate('/advanced-mastery')} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-to-course-practice-btn"><ChevronLeft className="w-4 h-4" /> Back</button>
+          <button onClick={() => navigate(backPath)} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-to-course-practice-btn"><ChevronLeft className="w-4 h-4" /> Back</button>
           <p className="text-[15px] font-semibold text-[#1D1D1F]">Practice</p>
           <div className="flex items-center gap-3">
             <Badge className="bg-green-50 text-green-600 border-green-200 text-[12px] font-semibold" data-testid="practice-score-badge"><Zap className="w-3 h-3 mr-1" />{score}/{totalAnswered}</Badge>
@@ -142,6 +144,7 @@ export default function VocabularyPracticeMode({ user }) {
       <div className="flex-1 flex items-center justify-center px-4 py-8">
         <div className="w-full max-w-xl">
           {currentExercise.type === 'fill_blank' && <FillBlankExercise exercise={currentExercise} selectedAnswer={selectedAnswer} isChecked={isChecked} showHint={showHint} onSelect={checkFillBlank} onShowHint={() => setShowHint(true)} />}
+          {currentExercise.type === 'meaning_match' && <MeaningMatchExercise exercise={currentExercise} selectedAnswer={selectedAnswer} isChecked={isChecked} onSelect={checkFillBlank} />}
           {currentExercise.type === 'matching' && <MatchingExercise exercise={currentExercise} matchState={matchState} isChecked={isChecked} onSelect={handleMatchSelect} onCheck={checkMatching} />}
           {isChecked && (
             <div className="mt-6 flex justify-end">
@@ -180,6 +183,35 @@ function FillBlankExercise({ exercise, selectedAnswer, isChecked, showHint, onSe
           return (
             <button key={i} onClick={() => onSelect(opt)} disabled={isChecked}
               className={`p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls} disabled:cursor-default`} data-testid={`option-${i}`}>
+              <span className="text-[14px] font-medium">{opt}</span>
+              {isChecked && opt === exercise.answer && <CheckCircle className="w-4 h-4 inline ml-2 text-green-500" />}
+              {isChecked && opt === selectedAnswer && opt !== exercise.answer && <XCircle className="w-4 h-4 inline ml-2 text-red-400" />}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function MeaningMatchExercise({ exercise, selectedAnswer, isChecked, onSelect }) {
+  return (
+    <div data-testid="meaning-match-exercise">
+      <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">{exercise.instruction}</p>
+      <div className="bg-white rounded-[20px] p-6 mb-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+        <p className="text-[20px] font-bold text-[#1D1D1F] text-center">{exercise.word}</p>
+      </div>
+      <div className="grid grid-cols-1 gap-3" data-testid="meaning-match-options">
+        {exercise.options.map((opt, i) => {
+          let cls = 'bg-white border-black/[0.06] text-[#1D1D1F] hover:border-teal-300 hover:bg-teal-50/40';
+          if (isChecked) {
+            if (opt === exercise.answer) cls = 'bg-green-50 border-green-300 text-green-700';
+            else if (opt === selectedAnswer) cls = 'bg-red-50 border-red-300 text-red-600';
+            else cls = 'bg-white border-black/[0.04] text-[#AEAEB2]';
+          }
+          return (
+            <button key={i} onClick={() => onSelect(opt)} disabled={isChecked}
+              className={`p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${cls} disabled:cursor-default`} data-testid={`meaning-option-${i}`}>
               <span className="text-[14px] font-medium">{opt}</span>
               {isChecked && opt === exercise.answer && <CheckCircle className="w-4 h-4 inline ml-2 text-green-500" />}
               {isChecked && opt === selectedAnswer && opt !== exercise.answer && <XCircle className="w-4 h-4 inline ml-2 text-red-400" />}

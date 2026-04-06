@@ -24,7 +24,8 @@ export default function VocabularyProductionMode({ user }) {
   const [results, setResults] = useState([]);
   const [completed, setCompleted] = useState(false);
 
-  const words = slides.filter(s => s.category === 'Advanced Term');
+  const backPath = moduleId?.startsWith('beginner-') ? '/beginner-course' : moduleId?.startsWith('mastery-') ? '/mastery-course' : '/advanced-mastery';
+  const words = slides.filter(s => s.word && s.meaning);
 
   useEffect(() => { fetchData(); }, [moduleId]);
 
@@ -32,7 +33,7 @@ export default function VocabularyProductionMode({ user }) {
     try {
       const res = await fetch(`${API_URL}/api/vocabulary-engine/${moduleId}/slides`);
       if (res.ok) { const d = await res.json(); setSlides(d.slides); setModuleTitle(d.module_title); }
-      else { toast.error('Failed to load vocabulary'); navigate('/advanced-mastery'); }
+      else { toast.error('Failed to load vocabulary'); navigate(backPath); }
     } catch { toast.error('Connection error'); }
     finally { setLoading(false); }
   };
@@ -67,7 +68,7 @@ export default function VocabularyProductionMode({ user }) {
   const handleFinish = async () => {
     if (user) { try { await fetch(`${API_URL}/api/vocabulary-engine/progress`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: user.id, module_id: moduleId, section: 'production', completed: true }) }); } catch {} }
     toast.success('Production Mode completed!');
-    navigate('/advanced-mastery');
+    navigate(backPath);
   };
 
   if (loading) return <div className="min-h-screen bg-[#F5F5F7] flex items-center justify-center" data-testid="production-mode-loading"><div className="animate-spin rounded-full h-8 w-8 border-[3px] border-gray-200 border-t-sky-500" /></div>;
@@ -104,7 +105,7 @@ export default function VocabularyProductionMode({ user }) {
     <div className="min-h-screen bg-[#F5F5F7] flex flex-col" data-testid="vocabulary-production-mode">
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-xl border-b border-black/[0.04]">
         <div className="flex items-center justify-between px-4 py-3 max-w-3xl mx-auto">
-          <button onClick={() => navigate('/advanced-mastery')} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-from-production"><ChevronLeft className="w-4 h-4" /> Back</button>
+          <button onClick={() => navigate(backPath)} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-from-production"><ChevronLeft className="w-4 h-4" /> Back</button>
           <p className="text-[15px] font-semibold text-[#1D1D1F]">AI Writing</p>
           <span className="text-[13px] text-[#86868B] tabular-nums" data-testid="production-counter">{currentWordIdx + 1}/{words.length}</span>
         </div>

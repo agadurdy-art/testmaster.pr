@@ -20,13 +20,15 @@ export default function VocabularyLearnMode({ user }) {
   const [viewedSlides, setViewedSlides] = useState(new Set([0]));
   const [showWordFormation, setShowWordFormation] = useState(false);
 
+  const backPath = moduleId?.startsWith('beginner-') ? '/beginner-course' : moduleId?.startsWith('mastery-') ? '/mastery-course' : '/advanced-mastery';
+
   useEffect(() => { fetchSlides(); }, [moduleId]);
 
   const fetchSlides = async () => {
     try {
       const res = await fetch(`${API_URL}/api/vocabulary-engine/${moduleId}/slides`);
       if (res.ok) setData(await res.json());
-      else { toast.error('Failed to load vocabulary'); navigate('/advanced-mastery'); }
+      else { toast.error('Failed to load vocabulary'); navigate(backPath); }
     } catch { toast.error('Connection error'); }
     finally { setLoading(false); }
   };
@@ -97,7 +99,7 @@ export default function VocabularyLearnMode({ user }) {
       {/* iOS-style top bar */}
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-xl border-b border-black/[0.04]">
         <div className="flex items-center justify-between px-4 py-3 max-w-3xl mx-auto">
-          <button onClick={() => navigate('/advanced-mastery')} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-to-course-btn">
+          <button onClick={() => navigate(backPath)} className="flex items-center gap-1.5 text-sm text-orange-500 font-medium" data-testid="back-to-course-btn">
             <ChevronLeft className="w-4 h-4" /> Back
           </button>
           <div className="text-center">

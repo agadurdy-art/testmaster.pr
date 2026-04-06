@@ -4,11 +4,15 @@ QA Admin Routes
 Admin endpoints for QA workflow, evidence packs, and test approval.
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Query
 from typing import Optional, List
 from datetime import datetime
 import os
+import sys
 import base64
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from security_utils import require_admin_email
 
 router = APIRouter(prefix="/api/admin/qa", tags=["QA Workflow"])
 

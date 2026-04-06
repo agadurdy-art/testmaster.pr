@@ -6,6 +6,11 @@ Debug and validation endpoints for test management.
 
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from security_utils import require_admin_email
 
 router = APIRouter(prefix="/api/admin/tests", tags=["Test Admin"])
 
