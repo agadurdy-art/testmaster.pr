@@ -551,7 +551,7 @@ class User(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     email: str
     name: str
-    password_hash: Optional[str] = None
+    password_hash: Optional[str] = Field(default=None, exclude=True)
     verified: bool = False  # Changed default to False for new users
     email_verified: bool = False  # New field for clarity
     google_id: Optional[str] = None
