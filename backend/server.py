@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import ReturnDocument
 import os
 import logging
 import asyncio
@@ -15,12 +16,24 @@ from datetime import datetime, timezone, timedelta
 import hashlib
 import hmac
 import urllib.parse
+import re
+import bcrypt
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 from emergentintegrations.llm.openai import OpenAISpeechToText
 import resend
 import io
 import httpx
+from security_utils import (
+    ANTI_INFLATION_INSTRUCTION,
+    clamp_band_scores,
+    enforce_min_words,
+    parse_admin_emails,
+    require_admin_email,
+    sanitize_ai_input,
+    validate_upload_filename,
+    verify_paypal_webhook_signature,
+)
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -34,6 +47,7 @@ db = client[os.environ['DB_NAME']]
 PAYPAL_CLIENT_ID = os.getenv("PAYPAL_CLIENT_ID")
 PAYPAL_CLIENT_SECRET = os.getenv("PAYPAL_CLIENT_SECRET")
 PAYPAL_API_BASE = os.getenv("PAYPAL_API_BASE", "https://api-m.paypal.com")
+PAYPAL_WEBHOOK_ID = os.getenv("PAYPAL_WEBHOOK_ID", "").strip()
 
 # Facebook Login configuration
 FACEBOOK_APP_ID = os.getenv("FACEBOOK_APP_ID")
@@ -648,11 +662,6 @@ class ForgotPasswordRequest(BaseModel):
     email: str
 
 
-class DirectResetRequest(BaseModel):
-    email: str
-    new_password: str
-
-
 class ResetPasswordRequest(BaseModel):
     token: str
     new_password: str
@@ -684,7 +693,8 @@ class ManualCreditRequest(BaseModel):
     email: str
     plan: Optional[str] = None
     exam_credits: Optional[int] = None
-    admin_token: str
+    admin_token: str = ""
+    admin_email: Optional[str] = None
 
 
 # Feedback Models
@@ -715,57 +725,79 @@ class FeedbackResponse(BaseModel):
 # Password hashing helpers
 
 def hash_password(password: str) -> str:
-    """Hash password using SHA256 (for demo; use stronger algorithms in production)."""
+    """Hash password using bcrypt."""
     if not isinstance(password, str):
         password = str(password)
-    return hashlib.sha256(password.encode("utf-8")).hexdigest()
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def is_legacy_sha256_hash(password_hash: Optional[str]) -> bool:
+    return bool(password_hash and re.fullmatch(r"[a-fA-F0-9]{64}", password_hash))
 
 
 def verify_password(password: str, password_hash: str) -> bool:
-    """Verify password against stored hash using constant-time comparison."""
+    """Verify password against stored hash, supporting legacy SHA-256 hashes."""
     if not password_hash:
         return False
-    computed = hash_password(password)
-    return hmac.compare_digest(computed, password_hash)
+
+    if is_legacy_sha256_hash(password_hash):
+        legacy_hash = hashlib.sha256(password.encode("utf-8")).hexdigest()
+        return hmac.compare_digest(legacy_hash, password_hash)
+
+    try:
+        return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))
+    except ValueError:
+        return False
+
+
+def strict_ai_system_message(base_message: str) -> str:
+    return f"{base_message.strip()}\n\n{ANTI_INFLATION_INSTRUCTION}"
+
+
+def require_ai_service_key() -> str:
+    api_key = os.getenv("EMERGENT_LLM_KEY", "").strip()
+    if not api_key:
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
+    return api_key
 
 # ============ Helper Functions ============
 
 def calculate_band_score(percentage: float) -> float:
     """Convert percentage to IELTS band score (1-9)"""
+    band_score = 1.0
     if percentage >= 95:
-        return 9.0
+        band_score = 9.0
     elif percentage >= 90:
-        return 8.5
+        band_score = 8.5
     elif percentage >= 85:
-        return 8.0
+        band_score = 8.0
     elif percentage >= 80:
-        return 7.5
+        band_score = 7.5
     elif percentage >= 75:
-        return 7.0
+        band_score = 7.0
     elif percentage >= 70:
-        return 6.5
+        band_score = 6.5
     elif percentage >= 65:
-        return 6.0
+        band_score = 6.0
     elif percentage >= 60:
-        return 5.5
+        band_score = 5.5
     elif percentage >= 55:
-        return 5.0
+        band_score = 5.0
     elif percentage >= 50:
-        return 4.5
+        band_score = 4.5
     elif percentage >= 45:
-        return 4.0
+        band_score = 4.0
     elif percentage >= 40:
-        return 3.5
+        band_score = 3.5
     elif percentage >= 35:
-        return 3.0
+        band_score = 3.0
     elif percentage >= 30:
-        return 2.5
+        band_score = 2.5
     elif percentage >= 25:
-        return 2.0
+        band_score = 2.0
     elif percentage >= 20:
-        return 1.5
-    else:
-        return 1.0
+        band_score = 1.5
+    return clamp_band_scores({"band_score": band_score})["band_score"]
 
 
 # ============ Email (stub) =========
@@ -1005,20 +1037,28 @@ async def evaluate_with_ai(test_type: str, question: str, user_answer: str, mode
 
 {EVALUATION_MODE_PROMPT}"""
 
+    sanitized_question = sanitize_ai_input(question)
+    sanitized_answer = sanitize_ai_input(user_answer)
+
+    if test_type == "writing":
+        enforce_min_words(sanitized_answer, 50, "Writing response")
+    else:
+        enforce_min_words(sanitized_answer, 10, "Speaking response")
+
     chat = LlmChat(
-        api_key=os.getenv("EMERGENT_LLM_KEY"),
+        api_key=require_ai_service_key(),
         session_id=str(uuid.uuid4()),
-        system_message=system_message,
+        system_message=strict_ai_system_message(system_message),
     ).with_model("openai", "gpt-4o")
     
     if test_type == "writing":
         prompt = f"""Evaluate this IELTS writing task with STRICT Cambridge criteria.
 
 Question:
-{question}
+{sanitized_question}
 
 Student's Answer:
-{user_answer}
+{sanitized_answer}
 
 IMPORTANT CHECKS BEFORE SCORING:
 1. Does the response address ALL parts of the question?
@@ -1056,10 +1096,10 @@ Return ONLY a JSON object with this structure (no extra text, no markdown, no ``
         prompt = f"""Evaluate this IELTS speaking response with STRICT Cambridge criteria.
 
 Question:
-{question}
+{sanitized_question}
 
 Student's Response:
-{user_answer}
+{sanitized_answer}
 
 IMPORTANT CHECKS BEFORE SCORING:
 1. Does the response directly address the question asked?
@@ -1096,11 +1136,14 @@ Return ONLY a JSON object with this structure (no extra text, no markdown, no ``
 """
     
     message = UserMessage(text=prompt)
-    response = await chat.send_message(message)
+    try:
+        response = await chat.send_message(message)
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.") from exc
 
     # Normalise response to a Python dict
     if isinstance(response, dict):
-        return response
+        return clamp_band_scores(response)
 
     if isinstance(response, str):
         # Try to strip Markdown code fences if present
@@ -1112,11 +1155,11 @@ Return ONLY a JSON object with this structure (no extra text, no markdown, no ``
                 cleaned_lines = cleaned_lines[:-1]
             cleaned = "\n".join(cleaned_lines).strip()
         try:
-            return json.loads(cleaned)
-        except Exception:
-            return {"band_score": 5.0, "overall_feedback": response}
+            return clamp_band_scores(json.loads(cleaned))
+        except Exception as exc:
+            raise HTTPException(status_code=503, detail="AI evaluation returned an invalid response.") from exc
 
-    return {"band_score": 5.0, "overall_feedback": str(response)}
+    raise HTTPException(status_code=503, detail="AI evaluation returned an invalid response.")
 
 # ============ Routes ============
 
@@ -1338,7 +1381,7 @@ async def facebook_login(payload: FacebookLoginRequest):
 
 @api_router.post("/auth/login", response_model=User)
 async def login_user(input: UserLogin):
-    """Login user - allows both verified and unverified users to login."""
+    """Log in a user and transparently upgrade legacy password hashes."""
     email = input.email.strip().lower()
     logger.info(f"Login attempt for email: {email}")
     
@@ -1353,6 +1396,13 @@ async def login_user(input: UserLogin):
     if not verify_password(input.password, pwd_hash):
         logger.warning(f"Password verification failed for: {email}")
         raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    if is_legacy_sha256_hash(pwd_hash):
+        await db.users.update_one(
+            {"id": user["id"]},
+            {"$set": {"password_hash": hash_password(input.password)}},
+        )
+        user["password_hash"] = None
 
     logger.info(f"Login successful for: {email}")
     
@@ -2372,6 +2422,14 @@ async def activate_subscription(req: ActivateSubscriptionRequest):
 async def paypal_subscription_webhook(request: Request):
     """Handle PayPal subscription webhooks for recurring payments."""
     body = await request.json()
+    access_token = await get_paypal_access_token()
+    await verify_paypal_webhook_signature(
+        request_body=body,
+        request_headers=dict(request.headers),
+        api_base=PAYPAL_API_BASE,
+        access_token=access_token,
+        webhook_id=PAYPAL_WEBHOOK_ID,
+    )
     event_type = body.get("event_type", "")
     resource = body.get("resource", {})
 
@@ -2478,32 +2536,37 @@ async def start_speaking_session(request: Request):
     FREE_TRIAL_SECONDS = 180
     free_used = int(user.get("ai_interview_free_seconds_used", 0) or 0)
 
-    # If user has not yet consumed their free trial, grant a free session
+    # If user has not yet consumed their free trial, grant a free session atomically.
     if free_used < FREE_TRIAL_SECONDS:
-        await db.users.update_one(
-            {"id": user["id"]},
+        updated = await db.users.find_one_and_update(
+            {
+                "id": user["id"],
+                "ai_interview_free_seconds_used": {"$lt": FREE_TRIAL_SECONDS},
+            },
             {"$set": {"ai_interview_free_seconds_used": FREE_TRIAL_SECONDS}},
+            projection={"_id": 0},
+            return_document=ReturnDocument.AFTER,
         )
-        updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
-        return {
-            "detail": "Free trial speaking session started",
-            "remainingCredits": updated.get("examCredits", 0),
-            "plan": updated.get("plan", "free"),
-            "freeTrial": True,
-            "freeTrialSecondsUsed": updated.get("ai_interview_free_seconds_used", FREE_TRIAL_SECONDS),
-            "freeTrialSecondsTotal": FREE_TRIAL_SECONDS,
-        }
+        if updated:
+            return {
+                "detail": "Free trial speaking session started",
+                "remainingCredits": updated.get("examCredits", 0),
+                "plan": updated.get("plan", "free"),
+                "freeTrial": True,
+                "freeTrialSecondsUsed": updated.get("ai_interview_free_seconds_used", FREE_TRIAL_SECONDS),
+                "freeTrialSecondsTotal": FREE_TRIAL_SECONDS,
+            }
 
-    # Otherwise consume 1 speaking credit if available
-    result = await db.users.update_one(
+    updated = await db.users.find_one_and_update(
         {"id": user["id"], "examCredits": {"$gt": 0}},
         {"$inc": {"examCredits": -1}},
+        projection={"_id": 0},
+        return_document=ReturnDocument.AFTER,
     )
 
-    if result.modified_count == 0:
+    if not updated:
         raise HTTPException(status_code=402, detail="No speaking credits left. Please purchase a plan.")
 
-    updated = await db.users.find_one({"id": user["id"]}, {"_id": 0})
     return {
         "detail": "Speaking session started",
         "remainingCredits": updated.get("examCredits", 0),
@@ -2618,6 +2681,14 @@ async def paypal_ipn(request: Request):
     We rely on amount + payer email to map to user and plan.
     """
     payload = await request.json()
+    access_token = await get_paypal_access_token()
+    await verify_paypal_webhook_signature(
+        request_body=payload,
+        request_headers=dict(request.headers),
+        api_base=PAYPAL_API_BASE,
+        access_token=access_token,
+        webhook_id=PAYPAL_WEBHOOK_ID,
+    )
     event_type = payload.get("event_type")
     logger.info(f"PayPal webhook event_type={event_type}")
 
@@ -2697,7 +2768,8 @@ async def paypal_ipn(request: Request):
 
 @api_router.post("/payments/manual-credit-simple")
 async def manual_credit_simple(req: ManualCreditRequest):
-    """Simpler admin endpoint: same as manual-credit, but without token for now."""
+    """Admin endpoint to update plan or credits for a user."""
+    require_admin_email(req.admin_email)
     user = await _get_user_by_email(req.email)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -2746,20 +2818,10 @@ async def manual_credit(req: ManualCreditRequest):
 
 # ============ Admin Panel Endpoints ============
 
-ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@testmaster.pro", "admin@ieltsace.com", "stemhousebenluc@gmail.com"]  # Add your admin emails here
-
-def is_admin_email(email: str) -> bool:
-    """Check if email belongs to an admin"""
-    if not email:
-        return False
-    email_lower = email.lower()
-    return any(admin.lower() in email_lower or email_lower == admin.lower() for admin in ADMIN_EMAILS)
-
 @api_router.get("/admin/users")
 async def admin_get_all_users(admin_email: str = None):
     """Get all users with their details for admin panel"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     users = await db.users.find({}, {"_id": 0, "password_hash": 0}).to_list(1000)
     
@@ -2789,8 +2851,7 @@ async def admin_get_all_users(admin_email: str = None):
 @api_router.get("/admin/users/{user_id}")
 async def admin_get_user_detail(user_id: str, admin_email: str = None):
     """Get detailed user info including all test attempts"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     user = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
     if not user:
@@ -2827,8 +2888,7 @@ async def admin_get_user_detail(user_id: str, admin_email: str = None):
 @api_router.put("/admin/users/{user_id}")
 async def admin_update_user(user_id: str, admin_email: str = None, plan: str = None, exam_credits: int = None, add_credits: int = None):
     """Update user subscription and credits"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
     if not user:
@@ -2854,8 +2914,7 @@ async def admin_update_user(user_id: str, admin_email: str = None, plan: str = N
 @api_router.delete("/admin/users/{user_id}")
 async def admin_delete_user(user_id: str, admin_email: str = None):
     """Delete a user and their test attempts"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     user = await db.users.find_one({"id": user_id}, {"_id": 0})
     if not user:
@@ -2874,8 +2933,7 @@ async def admin_delete_user(user_id: str, admin_email: str = None):
 @api_router.post("/admin/seed-advanced-mastery")
 async def admin_seed_advanced_mastery(admin_email: str = None):
     """Seed Advanced Mastery course modules to database"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     try:
         # Import seed data
@@ -2916,8 +2974,7 @@ async def admin_seed_advanced_mastery(admin_email: str = None):
 @api_router.post("/admin/seed-mastery")
 async def admin_seed_mastery(admin_email: str = None, force: bool = False):
     """Seed Mastery course modules to database"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     try:
         # Import seed data
@@ -2959,8 +3016,7 @@ async def admin_seed_mastery(admin_email: str = None, force: bool = False):
 @api_router.post("/admin/seed-beginner")
 async def admin_seed_beginner(admin_email: str = None):
     """Seed Beginner English course lessons to database"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     try:
         # Import seed data
@@ -3001,8 +3057,7 @@ async def admin_seed_beginner(admin_email: str = None):
 @api_router.post("/admin/seed-all-courses")
 async def admin_seed_all_courses(admin_email: str = None, force: bool = False):
     """Seed all course data to database at once"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     results = {}
     
@@ -3056,8 +3111,7 @@ async def admin_seed_all_courses(admin_email: str = None, force: bool = False):
 @api_router.get("/admin/db-status")
 async def admin_db_status(admin_email: str = None):
     """Get database status - count of all course modules"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     return {
         "advanced_mastery_modules": await db.advanced_mastery_modules.count_documents({}),
@@ -3072,8 +3126,7 @@ async def admin_db_status(admin_email: str = None):
 @api_router.get("/admin/vocabulary-groups")
 async def admin_get_vocabulary_groups(admin_email: str = None):
     """Get all vocabulary words grouped by stage/unit/lesson for image management"""
-    if not admin_email or not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     stages = await db.unified_stages.find({}, {"_id": 0}).sort("number", 1).to_list(10)
     
@@ -3145,12 +3198,12 @@ async def admin_update_vocab_image(
     image_url: str = Form(None)
 ):
     """Update vocabulary word image - either upload file or set URL"""
-    if not is_admin_email(admin_email):
-        raise HTTPException(status_code=403, detail="Admin access required")
+    require_admin_email(admin_email)
     
     new_image_url = image_url
     
     if file and file.filename:
+        validate_upload_filename(file.filename)
         # Save uploaded file
         import hashlib
         ext = file.filename.rsplit(".", 1)[-1] if "." in file.filename else "png"
@@ -3262,22 +3315,6 @@ async def reset_password(payload: ResetPasswordRequest):
     await db.password_resets.delete_one({"_id": record["_id"]})
 
 
-@api_router.post("/auth/direct-reset")
-async def direct_reset(payload: DirectResetRequest):
-    """Legacy direct reset endpoint (no email). Kept for backwards compatibility.
-
-    Frontend should use the email-based reset flow instead.
-    """
-    email = payload.email.strip().lower()
-
-    if len(payload.new_password) < 8:
-        raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
-
-    password_hash = hash_password(payload.new_password)
-    await db.users.update_one({"email": email}, {"$set": {"password_hash": password_hash}})
-
-    return {"detail": "If this email exists, the password has been updated."}
-
 # Get a specific test attempt
 
 
@@ -3289,6 +3326,7 @@ async def upload_bank_payment(
     screenshot: UploadFile = File(...),
 ):
     """User uploads bank transfer screenshot; plan activates for 30 days."""
+    validate_upload_filename(screenshot.filename)
     email_clean = email.strip().lower()
     user = await _get_user_by_email(email_clean)
     if not user:
@@ -3985,8 +4023,64 @@ async def create_test(test_data: CreateTestRequest):
 class LevelTestRequest(BaseModel):
     user_id: Optional[str] = None
     reading_answers: Dict[str, str]
-    reading_questions: List[Dict[str, Any]]
     speaking_responses: List[Dict[str, Any]]
+
+
+@api_router.get("/level-test/reading-questions")
+async def get_level_test_reading_questions():
+    return {"questions": strip_answer_keys(LEVEL_TEST_READING_QUESTIONS)}
+
+
+@api_router.get("/level-test/comprehensive-reading-questions")
+async def get_comprehensive_level_test_reading_questions():
+    return {"questions": strip_answer_keys(COMPREHENSIVE_READING_QUESTIONS)}
+
+
+@api_router.post("/level-test/evaluate-reading")
+async def evaluate_comprehensive_reading(answers: Dict[str, str] = Body(..., embed=True)):
+    correct_count = 0
+    total_band = 0.0
+    skill_breakdown: Dict[str, Dict[str, int]] = {}
+    question_results: List[Dict[str, Any]] = []
+
+    for question in COMPREHENSIVE_READING_QUESTIONS:
+        user_answer = (answers.get(str(question["id"])) or "").strip().upper()
+        correct_answer = question["correct"].strip().upper()
+        is_correct = user_answer == correct_answer
+        skill = question["skill"]
+
+        skill_breakdown.setdefault(skill, {"correct": 0, "total": 0})
+        skill_breakdown[skill]["total"] += 1
+
+        if is_correct:
+            correct_count += 1
+            total_band += float(question["band"])
+            skill_breakdown[skill]["correct"] += 1
+        question_results.append(
+            {
+                "id": question["id"],
+                "question": question["question"],
+                "user_answer": user_answer,
+                "correct_answer": correct_answer,
+                "options": question["options"],
+                "passageExcerpt": question["passageExcerpt"],
+                "explanation": question["explanation"],
+                "skillTip": question["skillTip"],
+                "is_correct": is_correct,
+            }
+        )
+
+    total_questions = len(COMPREHENSIVE_READING_QUESTIONS)
+    reading_band = total_band / total_questions if total_questions else 1.0
+    return clamp_band_scores(
+        {
+            "band": reading_band,
+            "correct": correct_count,
+            "total": total_questions,
+            "skill_breakdown": skill_breakdown,
+            "question_results": question_results,
+        }
+    )
 
 @api_router.post("/level-test/evaluate")
 async def evaluate_level_test(request: LevelTestRequest):
@@ -3994,25 +4088,32 @@ async def evaluate_level_test(request: LevelTestRequest):
     
     # Calculate reading score
     correct_count = 0
-    for q in request.reading_questions:
-        user_answer = request.reading_answers.get(str(q["id"]), "")
-        if user_answer.upper() == q["correct"].upper():
+    reading_question_map = {str(question["id"]): question for question in LEVEL_TEST_READING_QUESTIONS}
+    for question_id, question in reading_question_map.items():
+        user_answer = request.reading_answers.get(question_id, "")
+        if user_answer.upper() == question["correct"].upper():
             correct_count += 1
     
     reading_score = correct_count
     
     # Prepare speaking responses for AI evaluation
-    speaking_text = "\n\n".join([
-        f"Prompt: {resp['prompt']}\nResponse: {resp['response']}"
-        for resp in request.speaking_responses
-    ])
+    speaking_text = "\n\n".join(
+        [
+            f"Prompt: {resp['prompt']}\nResponse: {sanitize_ai_input(resp['response'])}"
+            for resp in request.speaking_responses
+        ]
+    )
+    enforce_min_words(speaking_text, 10, "Speaking response")
     
     # Use Claude to evaluate speaking and determine overall level
     try:
         chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
-            model="claude-3-sonnet-20240229"
-        )
+            api_key=require_ai_service_key(),
+            session_id=str(uuid.uuid4()),
+            system_message=strict_ai_system_message(
+                "You are an experienced English language assessor. Return only valid JSON."
+            ),
+        ).with_model("openai", "gpt-4o")
         
         evaluation_prompt = f"""You are an experienced English language assessor. Evaluate the following test responses and determine the student's English proficiency level.
 
@@ -4039,14 +4140,14 @@ Respond in this exact JSON format:
         response = await chat.send_message(UserMessage(text=evaluation_prompt))
         
         # Parse the response
-        response_text = response.text.strip()
+        response_text = str(response).strip()
         # Extract JSON from response (handle markdown code blocks)
         if "```json" in response_text:
             response_text = response_text.split("```json")[1].split("```")[0].strip()
         elif "```" in response_text:
             response_text = response_text.split("```")[1].split("```")[0].strip()
         
-        result = json.loads(response_text)
+        result = clamp_band_scores(json.loads(response_text))
         result["reading_score"] = reading_score
         
         # Save result to user profile if user_id provided
@@ -4064,28 +4165,7 @@ Respond in this exact JSON format:
         
     except Exception as e:
         logging.getLogger(__name__).error(f"Level test evaluation error: {e}")
-        
-        # Fallback evaluation based on reading score alone
-        level_map = {
-            0: "Beginner",
-            1: "Elementary", 
-            2: "Pre-Intermediate",
-            3: "Intermediate",
-            4: "Upper-Intermediate",
-            5: "Advanced"
-        }
-        
-        return {
-            "level": level_map.get(reading_score, "Intermediate"),
-            "reading_score": reading_score,
-            "reading_feedback": f"You answered {reading_score} out of 5 questions correctly.",
-            "speaking_feedback": "Your speaking responses have been recorded. Practice regularly to improve fluency and vocabulary range.",
-            "recommendations": [
-                "Practice reading academic texts daily",
-                "Record yourself speaking and listen back",
-                "Take full IELTS practice tests to build familiarity"
-            ]
-        }
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
 
 
 
@@ -4103,6 +4183,11 @@ from adaptive_level_test_routes import (
 )
 from adaptive_level_test_data import READING_QUESTIONS, BAND_SCORE_RANGES
 from comprehensive_test_data import WRITING_PROMPTS, SPEAKING_PROMPTS
+from level_test_reading_data import (
+    COMPREHENSIVE_READING_QUESTIONS,
+    LEVEL_TEST_READING_QUESTIONS,
+    strip_answer_keys,
+)
 
 @api_router.post("/adaptive-level-test/start")
 async def start_adaptive_test(request: InitialAssessmentRequest):
@@ -4386,15 +4471,19 @@ class WritingPracticeRequest(BaseModel):
 async def evaluate_writing_practice(request: WritingPracticeRequest):
     """Evaluate IELTS writing practice submission with detailed teacher-style feedback"""
     try:
+        sanitized_prompt = sanitize_ai_input(request.prompt)
+        sanitized_essay = sanitize_ai_input(request.essay)
+        enforce_min_words(sanitized_essay, 50, "Writing response")
+
         chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            api_key=require_ai_service_key(),
             session_id=str(uuid.uuid4()),
-            system_message="""You are a qualified IELTS teacher, not just an evaluator. You must think step by step like a real teacher:
+            system_message=strict_ai_system_message("""You are a qualified IELTS teacher, not just an evaluator. You must think step by step like a real teacher:
 - First check whether the student's response is valid before giving any score
 - If the task is invalid (off-topic, too short, missing required elements), the band score MUST be limited
 - Be honest and strict - do NOT give generous scores by default
 - Prioritize feedback on the most important errors, not every small mistake
-- Adjust your tone based on student level: supportive for weak students, precise for advanced"""
+- Adjust your tone based on student level: supportive for weak students, precise for advanced""")
         ).with_model("openai", "gpt-4o")
         
         task_type_desc = {
@@ -4413,12 +4502,12 @@ CRITICAL INSTRUCTION: You MUST be consistent and strict across ALL evaluations. 
 ====================================
 TASK PROMPT:
 ====================================
-{request.prompt}
+{sanitized_prompt}
 
 ====================================
 STUDENT'S RESPONSE ({request.word_count} words):
 ====================================
-{request.essay}
+{sanitized_essay}
 
 ====================================
 IELTS TEACHER EVALUATION FRAMEWORK
@@ -4519,7 +4608,7 @@ Remember:
         
         # Handle different response formats
         if isinstance(response, dict):
-            return response
+            return clamp_band_scores(response)
         
         response_text = str(response).strip()
         
@@ -4534,41 +4623,15 @@ Remember:
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
             result = json.loads(json_match.group())
-            return result
-        
-        # Fallback response with validity check
-        word_count_valid = request.word_count >= min_words
-        band_cap = 4.0 if not word_count_valid else None
-        
-        return {
-            "validity_check": {
-                "is_valid": word_count_valid,
-                "word_count_valid": word_count_valid,
-                "on_topic": True,
-                "has_required_elements": True,
-                "validity_issues": [] if word_count_valid else [f"Word count ({request.word_count}) is below minimum ({min_words})"],
-                "band_cap_applied": band_cap,
-                "cap_reason": f"Band capped at 4.0 due to insufficient word count" if band_cap else None
-            },
-            "overall_band": min(4.0, 5.5) if not word_count_valid else 5.5,
-            "band_confidence": "medium",
-            "scores": {
-                "task_achievement": 4.0 if not word_count_valid else 5.5,
-                "coherence_cohesion": 5.0,
-                "lexical_resource": 5.0,
-                "grammar": 5.0
-            },
-            "teacher_summary": "I've reviewed your writing. Let me share some feedback to help you improve." if word_count_valid else f"I notice your response is only {request.word_count} words. For this task, you need at least {min_words} words. This significantly affects your score.",
-            "key_problems": [{"priority": 1, "category": "task_response", "issue": f"Word count below minimum ({request.word_count}/{min_words})", "impact": "Band capped at 4.0"}] if not word_count_valid else [],
-            "strengths": ["You attempted the task"],
-            "corrections": [],
-            "next_steps": [f"Write at least {min_words} words", "Develop your ideas more fully", "Practice time management"],
-            "improved_paragraph": "Unable to generate improved version. Please try again."
-        }
+            return clamp_band_scores(result)
+
+        raise HTTPException(status_code=503, detail="AI evaluation returned an invalid response.")
         
     except Exception as e:
         logging.getLogger(__name__).error(f"Writing evaluation error: {e}")
-        raise HTTPException(status_code=500, detail="Failed to evaluate writing")
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
 
 
 # ============ Level Test Evaluation & Recommendations ============
@@ -4593,8 +4656,14 @@ async def evaluate_level_test_speaking(request: LevelTestSpeakingEvaluation):
     OPTIMIZED: Uses simpler, faster evaluation for better user experience.
     """
     try:
+        sanitized_responses = []
+        for response in request.responses:
+            transcript = sanitize_ai_input(response.get("transcript", ""))
+            enforce_min_words(transcript, 10, "Speaking response")
+            sanitized_responses.append({**response, "transcript": transcript})
+
         # First, provide quick estimation based on transcript length and content
-        responses = request.responses
+        responses = sanitized_responses
         total_words = 0
         total_responses = len(responses)
         
@@ -4621,9 +4690,11 @@ async def evaluate_level_test_speaking(request: LevelTestSpeakingEvaluation):
         
         # Use a simpler, faster prompt
         chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            api_key=require_ai_service_key(),
             session_id=str(uuid.uuid4()),
-            system_message="You are an IELTS speaking examiner. Evaluate quickly and return only JSON."
+            system_message=strict_ai_system_message(
+                "You are an IELTS speaking examiner. Evaluate quickly and return only JSON."
+            )
         ).with_model("openai", "gpt-4o-mini")  # Faster model
         
         # Format responses concisely
@@ -4654,56 +4725,23 @@ Return this JSON (fill in values):
             
             json_match = re.search(r'\{[\s\S]*\}', response_text)
             if json_match:
-                result = json.loads(json_match.group())
+                result = clamp_band_scores(json.loads(json_match.group()))
                 # Add missing fields with defaults
                 result.setdefault("pronunciation_issues", [])
                 result.setdefault("vocabulary_gaps", [])
                 return result
                 
         except asyncio.TimeoutError:
-            logger.warning("Speaking evaluation timed out, using quick estimation")
+            logger.warning("Speaking evaluation timed out.")
         except Exception as e:
-            logger.warning(f"AI evaluation failed: {e}, using quick estimation")
-        
-        # Fallback: Return quick estimation if AI is slow/fails
-        language = request.language
-        
-        if language == "vi":
-            strengths = ["Phát âm cơ bản rõ ràng", "Có thể diễn đạt ý tưởng đơn giản"]
-            weaknesses = ["Cần mở rộng vốn từ vựng", "Cần cải thiện ngữ pháp phức tạp"]
-            recommendations = ["Luyện nói 15-20 phút mỗi ngày", "Học thêm từ vựng học thuật"]
-            feedback = f"Trình độ nói của bạn ước tính khoảng Band {quick_band}. Tiếp tục luyện tập để cải thiện!"
-        elif language == "tr":
-            strengths = ["Temel telaffuz anlaşılır", "Basit fikirler ifade edilebilir"]
-            weaknesses = ["Kelime dağarcığı genişletilmeli", "Karmaşık dilbilgisi geliştirilmeli"]
-            recommendations = ["Günde 15-20 dakika konuşma pratiği yapın", "Akademik kelimeler öğrenin"]
-            feedback = f"Konuşma seviyeniz yaklaşık Band {quick_band} olarak tahmin edilmektedir. Pratik yapmaya devam edin!"
-        else:
-            strengths = ["Basic pronunciation is clear", "Able to express simple ideas"]
-            weaknesses = ["Vocabulary range needs expansion", "Complex grammar needs practice"]
-            recommendations = ["Practice speaking 15-20 minutes daily", "Learn academic vocabulary"]
-            feedback = f"Your speaking level is estimated at Band {quick_band}. Keep practicing to improve!"
-        
-        return {
-            "overall_band": quick_band,
-            "criteria_scores": {
-                "fluency_coherence": quick_band,
-                "lexical_resource": quick_band - 0.5,
-                "grammatical_range_accuracy": quick_band,
-                "pronunciation": quick_band + 0.5
-            },
-            "cefr_level": "A2" if quick_band < 4.5 else "B1" if quick_band < 5.5 else "B2" if quick_band < 7.0 else "C1",
-            "strengths": strengths,
-            "weaknesses": weaknesses,
-            "pronunciation_issues": [],
-            "improvement_recommendations": recommendations,
-            "vocabulary_gaps": [],
-            "detailed_feedback": feedback
-        }
+            logger.warning(f"AI evaluation failed: {e}")
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
         
     except Exception as e:
         logger.error(f"Speaking evaluation error: {e}")
-        raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(e)}")
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
 
 @api_router.post("/level-test/recommend-courses")
 async def recommend_courses(request: CourseRecommendationRequest):
@@ -4761,9 +4799,11 @@ async def recommend_courses(request: CourseRecommendationRequest):
         
         # Generate personalized learning roadmap using AI
         chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            api_key=require_ai_service_key(),
             session_id=str(uuid.uuid4()),
-            system_message="You are an expert IELTS preparation advisor creating personalized study plans."
+            system_message=strict_ai_system_message(
+                "You are an expert IELTS preparation advisor creating personalized study plans."
+            )
         ).with_model("openai", "gpt-5.1")  # Using GPT-5.1 instead of Claude
         
         weaknesses_text = "\n".join([f"- {w}" for w in request.weaknesses])
@@ -5306,10 +5346,20 @@ class SpeakingPracticeRequest(BaseModel):
 async def evaluate_speaking_practice(request: SpeakingPracticeRequest):
     """Evaluate IELTS speaking practice with detailed feedback"""
     try:
+        sanitized_responses = []
+        combined_answer = []
+        for response in request.responses:
+            answer = sanitize_ai_input(response.get("answer", ""))
+            enforce_min_words(answer, 10, "Speaking response")
+            sanitized_responses.append({**response, "answer": answer})
+            combined_answer.append(answer)
+
         chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            api_key=require_ai_service_key(),
             session_id=str(uuid.uuid4()),
-            system_message="You are an experienced IELTS examiner providing detailed speaking feedback."
+            system_message=strict_ai_system_message(
+                "You are an experienced IELTS examiner providing detailed speaking feedback."
+            )
         ).with_model("openai", "gpt-4o")
         
         part_desc = {
@@ -5321,7 +5371,7 @@ async def evaluate_speaking_practice(request: SpeakingPracticeRequest):
         # Format responses for evaluation
         responses_text = "\n\n".join([
             f"Question: {r.get('question', 'N/A')}\nAnswer: {r.get('answer', 'No response')}"
-            for r in request.responses
+            for r in sanitized_responses
         ])
         
         prompt = f"""You are an experienced IELTS Speaking examiner. Evaluate this IELTS {part_desc} practice.
@@ -5358,7 +5408,7 @@ Be encouraging but honest. Provide actionable feedback."""
         
         # Handle different response formats
         if isinstance(response, dict):
-            return response
+            return clamp_band_scores(response)
         
         response_text = str(response).strip()
         
@@ -5373,26 +5423,15 @@ Be encouraging but honest. Provide actionable feedback."""
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
             result = json.loads(json_match.group())
-            return result
-        
-        # Fallback response
-        return {
-            "overall_band": 5.5,
-            "scores": {
-                "fluency_coherence": 5.5,
-                "lexical_resource": 5.5,
-                "grammar": 5.5,
-                "pronunciation": 5.5
-            },
-            "strengths": ["You attempted to answer all questions", "You showed willingness to communicate"],
-            "improvements": ["Extend your answers with more details", "Use more varied vocabulary"],
-            "pronunciation_tips": "Practice word stress patterns and intonation.",
-            "model_answer": "Unable to generate model answer. Please try again."
-        }
+            return clamp_band_scores(result)
+
+        raise HTTPException(status_code=503, detail="AI evaluation returned an invalid response.")
         
     except Exception as e:
         logging.getLogger(__name__).error(f"Speaking evaluation error: {e}")
-        raise HTTPException(status_code=500, detail="Failed to evaluate speaking")
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
 
 
 # ============ MASTERY COURSE ENDPOINTS (Band 4.5-6.5) ============
@@ -5422,9 +5461,11 @@ async def evaluate_mastery_speaking(request: MasterySpeakingRequest):
     """Evaluate speaking response for mastery course (Band 4.5-6.5) with comprehensive feedback"""
     try:
         chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            api_key=require_ai_service_key(),
             session_id=str(uuid.uuid4()),
-            system_message="You are an expert IELTS examiner providing detailed, educational feedback."
+            system_message=strict_ai_system_message(
+                "You are an expert IELTS examiner providing detailed, educational feedback."
+            )
         ).with_model("openai", "gpt-4o")
         
         prompt = f"""You are an IELTS Speaking examiner providing comprehensive feedback for a Band 4.5-6.5 student.
@@ -5463,12 +5504,14 @@ Return JSON only:
         import re
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
-            return json.loads(json_match.group())
-        
-        return {"band_score": 5, "overall_feedback": "Good effort! Keep practicing.", "improvement_tip": "Use more topic vocabulary.", "mistakes": [], "vocabulary_to_use": [], "lesson_reference": "Review the vocabulary section"}
+            return clamp_band_scores(json.loads(json_match.group()))
+
+        raise HTTPException(status_code=503, detail="AI evaluation returned an invalid response.")
     except Exception as e:
         logging.getLogger(__name__).error(f"Mastery speaking evaluation error: {e}")
-        return {"band_score": 5, "overall_feedback": "Good try! Keep practicing.", "improvement_tip": "Practice speaking regularly.", "mistakes": [], "vocabulary_to_use": []}
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
 
 class MasteryWritingRequest(BaseModel):
     task: str
@@ -5481,9 +5524,11 @@ async def evaluate_mastery_writing(request: MasteryWritingRequest):
     """Evaluate writing response for mastery course (Band 4.5-6.5) with comprehensive feedback"""
     try:
         chat = LlmChat(
-            api_key=os.getenv("EMERGENT_LLM_KEY"),
+            api_key=require_ai_service_key(),
             session_id=str(uuid.uuid4()),
-            system_message="You are an expert IELTS Writing examiner providing detailed, educational feedback."
+            system_message=strict_ai_system_message(
+                "You are an expert IELTS Writing examiner providing detailed, educational feedback."
+            )
         ).with_model("openai", "gpt-4o")
         
         prompt = f"""You are an IELTS Writing Task 2 examiner providing comprehensive feedback for a Band 4.5-6.5 student.
@@ -5515,6 +5560,9 @@ Return JSON only:
     "next_steps": ["<step 1 to improve>", "<step 2 to improve>"]
 }}"""
 
+        sanitized_response = sanitize_ai_input(request.user_response)
+        enforce_min_words(sanitized_response, 50, "Writing response")
+        prompt = prompt.replace(request.user_response, sanitized_response)
         response = await chat.send_message(UserMessage(text=prompt))
         response_text = str(response).strip()
         if "```json" in response_text:
@@ -5525,12 +5573,14 @@ Return JSON only:
         import re
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
-            return json.loads(json_match.group())
-        
-        return {"band_score": 5, "overall_feedback": "Good effort! Keep writing.", "mistakes": [], "good_points": [], "vocabulary_suggestions": [], "next_steps": ["Practice more essays"]}
+            return clamp_band_scores(json.loads(json_match.group()))
+
+        raise HTTPException(status_code=503, detail="AI evaluation returned an invalid response.")
     except Exception as e:
         logging.getLogger(__name__).error(f"Mastery writing evaluation error: {e}")
-        return {"band_score": 5, "overall_feedback": "Good effort!", "mistakes": [], "good_points": [], "vocabulary_suggestions": [], "next_steps": []}
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail="AI evaluation is temporarily unavailable.")
 
 
 
@@ -7139,9 +7189,9 @@ app.include_router(api_router)
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[origin.strip() for origin in os.environ.get("CORS_ORIGINS", "").split(",") if origin.strip()],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "X-User-Email"],
 )
 
 logging.basicConfig(
@@ -7761,7 +7811,7 @@ async def auto_seed_unified_learning():
     """Auto-seed unified learning stages and content from JSON files on startup"""
     try:
         # Ensure admin accounts have full access
-        for admin_email in ADMIN_EMAILS:
+        for admin_email in parse_admin_emails():
             await db.users.update_one(
                 {"email": admin_email},
                 {"$set": {"plan": "master", "examCredits": 25, "verified": True, "email_verified": True}},

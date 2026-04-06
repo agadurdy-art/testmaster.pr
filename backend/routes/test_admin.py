@@ -6,6 +6,7 @@ Debug and validation endpoints for test management.
 
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
+from security_utils import require_admin_email
 
 router = APIRouter(prefix="/api/admin/tests", tags=["Test Admin"])
 
@@ -38,22 +39,24 @@ def get_stats_aggregator():
 # ============ DEBUG ENDPOINTS ============
 
 @router.get("/debug/{test_id}")
-async def debug_test(test_id: str):
+async def debug_test(test_id: str, admin_email: str = Query(...)):
     """
     ADMIN DEBUG PAGE DATA
     Get detailed debug info for a specific test.
     Shows: validation status, missing fields, counts per skill.
     """
+    require_admin_email(admin_email)
     aggregator = get_stats_aggregator()
     return aggregator.get_test_debug_info(test_id)
 
 
 @router.get("/validate/{test_id}")
-async def validate_test(test_id: str):
+async def validate_test(test_id: str, admin_email: str = Query(...)):
     """
     Run validation on a specific test.
     Returns validation result with errors/warnings.
     """
+    require_admin_email(admin_email)
     from routes.cambridge import CAMBRIDGE_TESTS
     from services.test_normalizer import TestNormalizer
     
@@ -87,10 +90,11 @@ async def validate_test(test_id: str):
 
 
 @router.get("/list")
-async def list_all_tests():
+async def list_all_tests(admin_email: str = Query(...)):
     """
     List all tests with their validation status.
     """
+    require_admin_email(admin_email)
     aggregator = get_stats_aggregator()
     stats = aggregator.get_stats()
     
@@ -103,20 +107,22 @@ async def list_all_tests():
 
 
 @router.get("/stats")
-async def get_aggregated_stats():
+async def get_aggregated_stats(admin_email: str = Query(...)):
     """
     Get auto-computed stats for all tests.
     Updates automatically when tests are added/removed.
     """
+    require_admin_email(admin_email)
     aggregator = get_stats_aggregator()
     return aggregator.get_stats()
 
 
 @router.post("/refresh-stats")
-async def refresh_stats():
+async def refresh_stats(admin_email: str = Query(...)):
     """
     Force refresh of stats cache.
     """
+    require_admin_email(admin_email)
     aggregator = get_stats_aggregator()
     stats = aggregator.refresh()
     
@@ -130,17 +136,19 @@ async def refresh_stats():
 # ============ PRACTICE MODE ENDPOINTS ============
 
 @router.get("/practice/pool-stats")
-async def get_practice_pool_stats():
+async def get_practice_pool_stats(admin_email: str = Query(...)):
     """
     Get practice pool statistics.
     Shows how many questions available for each skill/type.
     """
+    require_admin_email(admin_email)
     service = get_practice_service()
     return service.get_pool_stats()
 
 
 @router.get("/practice/random")
 async def get_practice_questions(
+    admin_email: str = Query(...),
     skill: str = Query(..., description="Skill: listening, reading, writing, speaking"),
     count: int = Query(10, ge=1, le=50),
     question_type: Optional[str] = Query(None, description="Filter by question type")
@@ -152,16 +160,18 @@ async def get_practice_questions(
     - Speaking Part 1 & 3: Returns questions for TTS (NOT for display)
     - Speaking Part 2: Returns visible cue card
     """
+    require_admin_email(admin_email)
     service = get_practice_service()
     return service.get_random_practice(skill, count, question_type)
 
 
 @router.post("/practice/refresh")
-async def refresh_practice_pool():
+async def refresh_practice_pool(admin_email: str = Query(...)):
     """
     Rebuild practice pool from all tests.
     Call after adding/removing tests.
     """
+    require_admin_email(admin_email)
     global _practice_service
     from routes.cambridge import CAMBRIDGE_TESTS
     _practice_service = PracticeService(CAMBRIDGE_TESTS)
@@ -176,11 +186,12 @@ async def refresh_practice_pool():
 # ============ CANONICAL PREVIEW ============
 
 @router.get("/canonical/{test_id}")
-async def get_canonical_preview(test_id: str):
+async def get_canonical_preview(test_id: str, admin_email: str = Query(...)):
     """
     Get canonical (normalized) preview of a test.
     Shows how the test data looks after normalization.
     """
+    require_admin_email(admin_email)
     from routes.cambridge import CAMBRIDGE_TESTS
     from services.test_normalizer import TestNormalizer
     
