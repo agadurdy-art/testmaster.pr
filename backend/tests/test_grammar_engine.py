@@ -13,7 +13,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://vocab-fix-stable.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://prod-security-flows.preview.emergentagent.com')
 
 class TestGrammarEngineLearn:
     """Test Grammar Engine Learn Stage (Stage 1)"""
