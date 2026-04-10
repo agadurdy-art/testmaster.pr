@@ -9,6 +9,7 @@ import os
 import json
 from pathlib import Path
 import tempfile
+from plan_access import normalize_plan_name, plan_meets_minimum
 
 # Import QB evaluation functions directly
 from routes.speaking_qb import (
@@ -31,12 +32,12 @@ async def evaluate_speaking_response(
     question: str = Form(...),
     part: int = Form(...),
     question_index: int = Form(0),
-    user_plan: str = Form("free")  # "free", "booster", "pro"
+    user_plan: str = Form("free")
 ):
     """
     Evaluate a single speaking response using QB protocols.
     Free tier: Whisper + GPT-4o
-    Premium tier (booster/pro): Azure pronunciation + detailed analysis
+    Premium tier (learner+): Azure pronunciation + detailed analysis
     """
     try:
         audio_content = await audio.read()
@@ -46,7 +47,8 @@ async def evaluate_speaking_response(
             temp_path = temp_file.name
         
         # Check if premium evaluation
-        is_premium = user_plan in ["booster", "pro"] and AZURE_SPEECH_KEY
+        normalized_plan = normalize_plan_name(user_plan)
+        is_premium = plan_meets_minimum(normalized_plan, "learner") and AZURE_SPEECH_KEY
         
         if is_premium:
             # Use QB premium evaluation with Azure
@@ -324,7 +326,8 @@ async def evaluate_full_speaking_test(
     """
     try:
         questions_data = json.loads(questions)
-        is_premium = user_plan in ["booster", "pro"] and AZURE_SPEECH_KEY
+        normalized_plan = normalize_plan_name(user_plan)
+        is_premium = plan_meets_minimum(normalized_plan, "learner") and AZURE_SPEECH_KEY
         
         all_results = []
         

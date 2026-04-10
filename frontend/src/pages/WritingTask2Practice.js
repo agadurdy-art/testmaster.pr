@@ -11,6 +11,7 @@ import {
   Eye, EyeOff, BookOpen, Award, Layers, Star
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -179,6 +180,11 @@ export default function WritingTask2Practice() {
           strengths: data.evaluation.strengths || [],
           weaknesses: data.evaluation.weaknesses || [],
           suggestions: data.evaluation.improvement_suggestions || [],
+          high_priority_fixes: data.evaluation.high_priority_fixes || [],
+          response_diagnosis: data.evaluation.response_diagnosis || {},
+          band_justification: data.evaluation.band_justification || '',
+          line_by_line_corrections: data.evaluation.line_by_line_corrections || [],
+          rewrite_guidance: data.evaluation.rewrite_guidance || {},
           vocabulary_to_use: data.evaluation.vocabulary_to_use || [],
           grammar_corrections: data.evaluation.grammar_corrections || [],
           examiner_comment: data.evaluation.examiner_comment || ''
@@ -532,14 +538,7 @@ export default function WritingTask2Practice() {
                             <div 
                               key={idx}
                               className="p-2 bg-white rounded-lg border border-purple-100 cursor-pointer hover:border-purple-300 transition-colors"
-                              onClick={() => {
-                                const routes = {
-                                  beginner: '/beginner-english',
-                                  mastery: '/mastery-course',
-                                  advanced: '/advanced-mastery'
-                                };
-                                navigate(routes[lesson.stage] || '/dashboard');
-                              }}
+                              onClick={() => navigate(getRecommendedLessonPath(lesson))}
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex-1">
@@ -562,6 +561,77 @@ export default function WritingTask2Practice() {
                       </div>
                     )}
                   </div>
+
+                  {evaluation.band_justification && (
+                    <div className="mt-4 p-3 bg-slate-50 rounded-lg border">
+                      <h4 className="font-semibold text-slate-800 mb-2 text-xs">📏 Band Justification</h4>
+                      <p className="text-xs text-gray-700">{evaluation.band_justification}</p>
+                    </div>
+                  )}
+
+                  {evaluation.high_priority_fixes?.length > 0 && (
+                    <div className="mt-4 p-3 bg-rose-50 rounded-lg">
+                      <h4 className="font-semibold text-rose-800 mb-2 text-xs">🚨 Highest-Priority Fixes</h4>
+                      <ul className="space-y-1">
+                        {evaluation.high_priority_fixes.map((fix, idx) => (
+                          <li key={idx} className="text-xs text-rose-700">• {fix}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {evaluation.response_diagnosis && Object.keys(evaluation.response_diagnosis).length > 0 && (
+                    <div className="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                      <h4 className="font-semibold text-indigo-800 mb-2 text-xs">🧭 Response Diagnosis</h4>
+                      <div className="space-y-2">
+                        {Object.entries(evaluation.response_diagnosis).map(([key, value]) => (
+                          <div key={key} className="bg-white rounded border p-2">
+                            <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">{key.replace(/_/g, ' ')}</p>
+                            <p className="text-xs text-gray-700 mt-1">{value}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {evaluation.line_by_line_corrections?.length > 0 && (
+                    <div className="mt-4 p-3 bg-white rounded-lg border">
+                      <h4 className="font-semibold text-gray-900 mb-2 text-xs">✍️ Line-by-Line Corrections</h4>
+                      <div className="space-y-2">
+                        {evaluation.line_by_line_corrections.map((item, idx) => (
+                          <div key={idx} className="rounded border p-2 bg-gray-50">
+                            <p className="text-xs text-red-700"><strong>Original:</strong> {item.original}</p>
+                            <p className="text-xs text-amber-700 mt-1"><strong>Issue:</strong> {item.issue}</p>
+                            <p className="text-xs text-green-700 mt-1"><strong>Improved:</strong> {item.improved}</p>
+                            <p className="text-xs text-gray-600 mt-1">{item.why}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {evaluation.rewrite_guidance && Object.keys(evaluation.rewrite_guidance).length > 0 && (
+                    <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-100">
+                      <h4 className="font-semibold text-green-800 mb-2 text-xs">🔁 Rewrite Guidance</h4>
+                      <div className="space-y-2">
+                        {Object.entries(evaluation.rewrite_guidance).map(([key, value]) => (
+                          Array.isArray(value) ? (
+                            <div key={key}>
+                              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide mb-1">{key.replace(/_/g, ' ')}</p>
+                              <ul className="space-y-1">
+                                {value.map((item, idx) => <li key={idx} className="text-xs text-gray-700">• {item}</li>)}
+                              </ul>
+                            </div>
+                          ) : (
+                            <div key={key} className="bg-white rounded border p-2">
+                              <p className="text-[11px] font-semibold text-gray-600 uppercase tracking-wide">{key.replace(/_/g, ' ')}</p>
+                              <p className="text-xs text-gray-700 mt-1">{value}</p>
+                            </div>
+                          )
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </Card>
               )}
 

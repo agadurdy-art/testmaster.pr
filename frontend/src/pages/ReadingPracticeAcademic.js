@@ -9,6 +9,7 @@ import {
   Play, Pause, RotateCcw
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { buildReadingPracticeDiagnostics } from '../lib/qbDiagnostics';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -115,13 +116,22 @@ export default function ReadingPracticeAcademic({ user }) {
 
     const percentage = (correct / questions.length) * 100;
     const estimatedBand = percentage >= 90 ? 9.0 : percentage >= 80 ? 8.0 : percentage >= 70 ? 7.0 : percentage >= 60 ? 6.0 : 5.0;
+    const diagnostics = buildReadingPracticeDiagnostics({
+      percentage,
+      estimatedBand,
+      questionResults,
+      moduleContent
+    });
 
     setResults({
       correct,
       total: questions.length,
       percentage,
       estimatedBand,
-      questionResults
+      questionResults,
+      rootCauseAnalysis: diagnostics.rootCauseAnalysis,
+      studyPlan: diagnostics.studyPlan,
+      recommendedLessons: diagnostics.recommendedLessons
     });
     setSubmitted(true);
     setTimerActive(false);
@@ -336,6 +346,23 @@ export default function ReadingPracticeAcademic({ user }) {
                     </div>
                   </div>
 
+                  {results?.rootCauseAnalysis?.length > 0 && (
+                    <div className="mb-4 p-3 bg-rose-50 rounded-lg border border-rose-200">
+                      <p className="text-sm font-medium text-rose-800 mb-2">Root Cause Analysis</p>
+                      <div className="space-y-2">
+                        {results.rootCauseAnalysis.map((cause, idx) => (
+                          <div key={idx} className="bg-white rounded border p-2">
+                            <div className="flex items-center justify-between gap-2">
+                              <p className="text-sm font-medium text-gray-900">{cause.label}</p>
+                              <Badge className="bg-rose-100 text-rose-700">{cause.count} misses</Badge>
+                            </div>
+                            <p className="text-xs text-gray-600 mt-1">{cause.explanation}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Module-specific Course Recommendation */}
                   <div className="mb-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
                     <p className="text-sm font-medium text-amber-800 flex items-center gap-2">
@@ -348,11 +375,26 @@ export default function ReadingPracticeAcademic({ user }) {
                       variant="outline" 
                       size="sm" 
                       className="mt-2 text-amber-700 border-amber-300"
-                      onClick={() => navigate('/advanced-mastery')}
+                      onClick={() => navigate(results?.recommendedLessons?.[0]?.route || '/advanced-mastery')}
                     >
                       Advanced Mastery → Reading <ChevronRight className="w-3 h-3 ml-1" />
                     </Button>
                   </div>
+
+                  {results?.studyPlan && (
+                    <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <p className="text-sm font-medium text-blue-800 mb-2">3-Day Recovery Plan</p>
+                      <ul className="space-y-2">
+                        {results.studyPlan.three_day_plan?.map((item, idx) => (
+                          <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="text-xs text-blue-700 mt-3">{results.studyPlan.retest_strategy}</p>
+                    </div>
+                  )}
 
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={() => selectModule(selectedModule)} className="flex-1">

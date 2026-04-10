@@ -1112,7 +1112,7 @@ export default function LandingPage({ onLogin, user, showLogin }) {
                   {lessons.length > 0 ? (
                     <div className="grid sm:grid-cols-3 gap-3">
                       {lessons.map((lesson, idx) => {
-                        const isLocked = idx >= 3;
+                        const isLocked = idx >= 1;
                         const lockText = {
                           en: 'Sign up to unlock',
                           vi: 'Đăng ký để mở khóa',

@@ -67,6 +67,23 @@ PLAN_PRICES_USD = {
 }
 
 
+LEGACY_PLAN_ALIASES = {
+    "starter": "learner",
+    "booster": "achiever",
+    "pro": "master",
+}
+
+
+def normalize_plan_name(plan_name: str) -> str:
+    normalized = (plan_name or "free").strip().lower()
+    return LEGACY_PLAN_ALIASES.get(normalized, normalized or "free")
+
+
+def get_plan_label(plan_name: str) -> str:
+    normalized = normalize_plan_name(plan_name)
+    return normalized.replace("_", " ").title()
+
+
 ADMIN_EMAILS_FOR_BYPASS = [
     "aga.durdy@gmail.com",
     "stemhousebenluc@gmail.com",
@@ -83,7 +100,7 @@ def is_admin_user(email: str) -> bool:
 def get_plan_features(plan_name: str, email: str = None) -> dict:
     if email and is_admin_user(email):
         return PLAN_FEATURES["master"]
-    return PLAN_FEATURES.get(plan_name, PLAN_FEATURES["free"])
+    return PLAN_FEATURES.get(normalize_plan_name(plan_name), PLAN_FEATURES["free"])
 
 
 def has_feature_access(user_plan: str, feature: str) -> bool:
@@ -107,7 +124,7 @@ def can_access_stage(user_plan: str, stage_id: str) -> bool:
 
 
 def get_plan_tier(plan_name: str) -> int:
-    return PLAN_TIERS.get(plan_name, 0)
+    return PLAN_TIERS.get(normalize_plan_name(plan_name), 0)
 
 
 def plan_meets_minimum(user_plan: str, required_plan: str) -> bool:

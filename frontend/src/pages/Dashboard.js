@@ -9,6 +9,7 @@ import {
   Play, ArrowRight, History, Lightbulb, CheckCircle, Mail, HelpCircle, Lock, Gamepad2, AlertTriangle
 } from 'lucide-react';
 import { getTests, getUserProgress, getUser } from '../lib/api';
+import { normalizePlanName, planMeetsMinimum } from '../lib/planAccess';
 import { toast } from 'sonner';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useI18n } from '../lib/i18n';
@@ -198,10 +199,9 @@ export default function Dashboard({ user, onLogout }) {
   
   // Check if user is verified
   const isVerified = user?.verified || user?.email_verified;
-  const userPlan = user?.plan || 'free';
+  const userPlan = normalizePlanName(user?.plan || 'free');
   
   // Plan-based feature access check
-  const PLAN_TIER = { free: 0, explorer: 1, learner: 2, achiever: 3, master: 4 };
   const FEATURE_MIN_PLAN = {
     'Learning Stages': 'explorer',
     'Liz AI Teacher': 'learner',
@@ -213,7 +213,7 @@ export default function Dashboard({ user, onLogout }) {
   const canAccessByPlan = (featureName) => {
     const minPlan = FEATURE_MIN_PLAN[featureName];
     if (!minPlan) return true;
-    return (PLAN_TIER[userPlan] || 0) >= (PLAN_TIER[minPlan] || 0);
+    return planMeetsMinimum(userPlan, minPlan);
   };
   
   // Handler for locked content
@@ -221,6 +221,14 @@ export default function Dashboard({ user, onLogout }) {
     if (!isVerified) {
       setLockedFeatureName(featureName);
       setShowLockedModal(true);
+      return true;
+    }
+    if (featureName === 'Mastery Course') {
+      navigate('/mastery-course?lesson=1&preview=true');
+      return true;
+    }
+    if (featureName === 'Advanced Mastery') {
+      navigate('/advanced-mastery?lesson=1&preview=true');
       return true;
     }
     if (!canAccessByPlan(featureName)) {

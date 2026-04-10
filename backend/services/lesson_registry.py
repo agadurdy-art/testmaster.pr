@@ -13,7 +13,11 @@ Courses:
 """
 
 from typing import List, Dict, Optional, Any
-from motor.motor_asyncio import AsyncIOMotorDatabase
+try:
+    from motor.motor_asyncio import AsyncIOMotorDatabase
+except ModuleNotFoundError:  # pragma: no cover - test environments may not install motor
+    AsyncIOMotorDatabase = Any
+import re
 
 
 class LessonRegistry:
@@ -45,6 +49,24 @@ class LessonRegistry:
         "beginner": "4.0-5.0",
         "mastery": "5.5-6.5",
         "advanced": "7.0-9.0"
+    }
+
+    STAGE_META = {
+        "beginner": {
+            "course_name": "Beginner English Course",
+            "course_path": "/beginner-course",
+            "label": "Beginner"
+        },
+        "mastery": {
+            "course_name": "IELTS Mastery Course",
+            "course_path": "/mastery-course",
+            "label": "Mastery"
+        },
+        "advanced": {
+            "course_name": "Advanced Mastery Course",
+            "course_path": "/advanced-mastery",
+            "label": "Advanced"
+        }
     }
     
     def __init__(self, db: AsyncIOMotorDatabase):
@@ -183,7 +205,10 @@ class LessonRegistry:
         self,
         weaknesses: List[str],
         current_band: float,
-        skill: Optional[str] = None
+        skill: Optional[str] = None,
+        topic: Optional[str] = None,
+        context: Optional[str] = None,
+        limit: int = 5
     ) -> List[Dict[str, Any]]:
         """
         Get recommended lessons based on identified weaknesses.
@@ -198,14 +223,8 @@ class LessonRegistry:
             List of recommended lessons with relevance scores
         """
         recommendations = []
-        
-        # Determine target stages based on current band
-        if current_band < 5.0:
-            target_stages = ["beginner"]
-        elif current_band < 6.5:
-            target_stages = ["beginner", "mastery"]
-        else:
-            target_stages = ["mastery", "advanced"]
+        target_stages = self._get_target_stages(current_band)
+        target_stage_weights = {stage: len(target_stages) - index for index, stage in enumerate(target_stages)}
         
         # Search keywords based on weaknesses
         weakness_keywords = {
@@ -220,6 +239,11 @@ class LessonRegistry:
             "listening": ["listening", "audio", "comprehension", "note"]
         }
         
+        normalized_context = " ".join(
+            text for text in [topic or "", context or ""] if text
+        ).strip().lower()
+        context_terms = self._extract_search_terms(normalized_context)
+
         for stage in target_stages:
             collection_name = self.STAGE_TO_COLLECTION.get(stage)
             if not collection_name:
@@ -229,43 +253,163 @@ class LessonRegistry:
             lessons = await collection.find({}, {"_id": 0}).to_list(100)
             
             for lesson in lessons:
-                relevance_score = 0
+                relevance_score = target_stage_weights.get(stage, 1) * 2
                 matched_weaknesses = []
+                matched_context_terms = []
                 
                 # Check lesson content against weaknesses
                 lesson_text = str(lesson).lower()
+                lesson_title = str(lesson.get("topic") or lesson.get("title") or "").lower()
                 
                 for weakness in weaknesses:
                     keywords = weakness_keywords.get(weakness.lower(), [weakness.lower()])
                     for keyword in keywords:
                         if keyword in lesson_text:
-                            relevance_score += 1
+                            relevance_score += 3 if keyword in lesson_title else 2
                             if weakness not in matched_weaknesses:
                                 matched_weaknesses.append(weakness)
                             break
                 
                 # Check skill-specific content
                 if skill:
-                    if skill.lower() in lesson:
+                    skill_key = skill.lower()
+                    if lesson.get(skill_key):
+                        relevance_score += 4
+                    elif skill_key in lesson_text:
                         relevance_score += 2
+
+                for term in context_terms:
+                    if term in lesson_title:
+                        relevance_score += 3
+                        matched_context_terms.append(term)
+                    elif term in lesson_text:
+                        relevance_score += 1
+                        matched_context_terms.append(term)
                 
                 if relevance_score > 0:
-                    recommendations.append({
-                        "lesson_id": lesson.get("id"),
-                        "title": lesson.get("topic") or lesson.get("title"),
-                        "stage": stage,
-                        "band_level": self.STAGE_TO_BAND[stage],
-                        "relevance_score": relevance_score,
-                        "addresses_weaknesses": matched_weaknesses,
-                        "learning_goals": lesson.get("learning_goals", []),
-                        "module_number": lesson.get("lesson_number") or lesson.get("module_number")
-                    })
+                    recommendations.append(
+                        self._build_recommendation(
+                            lesson=lesson,
+                            stage=stage,
+                            relevance_score=relevance_score,
+                            matched_weaknesses=matched_weaknesses,
+                            matched_context_terms=matched_context_terms,
+                            skill=skill,
+                            topic=topic,
+                            current_band=current_band
+                        )
+                    )
         
         # Sort by relevance score (highest first)
-        recommendations.sort(key=lambda x: x["relevance_score"], reverse=True)
+        recommendations.sort(
+            key=lambda x: (
+                x["relevance_score"],
+                1 if x.get("context_matches") else 0,
+                1 if x.get("addresses_weaknesses") else 0
+            ),
+            reverse=True
+        )
         
-        # Return top 5 recommendations
-        return recommendations[:5]
+        # Prefer unique lessons even if multiple heuristics hit the same module.
+        unique_recommendations = []
+        seen_lesson_ids = set()
+        for recommendation in recommendations:
+            lesson_id = recommendation.get("lesson_id")
+            if not lesson_id or lesson_id in seen_lesson_ids:
+                continue
+            seen_lesson_ids.add(lesson_id)
+            unique_recommendations.append(recommendation)
+
+        return unique_recommendations[:limit]
+
+    def _get_target_stages(self, current_band: float) -> List[str]:
+        if current_band < 5.0:
+            return ["beginner"]
+        if current_band < 6.5:
+            return ["mastery", "beginner"]
+        return ["advanced", "mastery"]
+
+    def _extract_search_terms(self, text: str) -> List[str]:
+        if not text:
+            return []
+        terms = re.findall(r"[a-zA-Z][a-zA-Z\\-]+", text.lower())
+        return [term for term in terms if len(term) >= 4]
+
+    def _build_recommendation(
+        self,
+        lesson: Dict[str, Any],
+        stage: str,
+        relevance_score: int,
+        matched_weaknesses: List[str],
+        matched_context_terms: List[str],
+        skill: Optional[str],
+        topic: Optional[str],
+        current_band: float,
+    ) -> Dict[str, Any]:
+        stage_meta = self.STAGE_META[stage]
+        lesson_identifier = lesson.get("id")
+        lesson_number = lesson.get("lesson_number")
+        module_number = lesson.get("module_number")
+        entry_number = lesson_number or module_number
+        lesson_path = self._build_lesson_path(stage, lesson_identifier, entry_number)
+        reason_parts = []
+
+        if matched_weaknesses:
+            reason_parts.append(f"Targets {', '.join(matched_weaknesses[:2])}")
+        if matched_context_terms:
+            reason_parts.append(f"Matches topic: {', '.join(matched_context_terms[:2])}")
+        if skill:
+            reason_parts.append(f"Best next {skill} lesson")
+        if not reason_parts:
+            reason_parts.append("Matches your current band range")
+
+        unit_label = f"Lesson {entry_number}" if stage == "beginner" else f"Module {entry_number}"
+
+        return {
+            "lesson_id": lesson_identifier,
+            "title": lesson.get("topic") or lesson.get("title"),
+            "stage": stage,
+            "course_stage": stage,
+            "course": stage_meta["course_name"],
+            "course_name": stage_meta["course_name"],
+            "course_path": stage_meta["course_path"],
+            "route": lesson_path,
+            "url": lesson_path,
+            "lesson_path": lesson_path,
+            "band_level": self.STAGE_TO_BAND[stage],
+            "recommended_for_band": self._band_label_for_score(current_band),
+            "relevance_score": relevance_score,
+            "addresses_weaknesses": matched_weaknesses,
+            "context_matches": matched_context_terms,
+            "learning_goals": lesson.get("learning_goals", []),
+            "lesson_number": lesson_number,
+            "module_number": module_number,
+            "unit_label": unit_label,
+            "reason": " • ".join(reason_parts),
+            "why_now": f"{stage_meta['label']} course is the best fit for your current band and weaknesses.",
+            "skill_focus": skill,
+            "topic_focus": topic,
+        }
+
+    def _build_lesson_path(
+        self,
+        stage: str,
+        lesson_id: Optional[str],
+        entry_number: Optional[Any],
+    ) -> str:
+        base_path = self.STAGE_META[stage]["course_path"]
+        if stage == "beginner":
+            target = lesson_id or entry_number or 1
+        else:
+            target = entry_number or lesson_id or 1
+        return f"{base_path}?lesson={target}"
+
+    def _band_label_for_score(self, score: float) -> str:
+        if score < 5.0:
+            return "4.0-5.0"
+        if score < 6.5:
+            return "5.5-6.5"
+        return "7.0-9.0"
     
     async def get_skill_objectives(
         self,

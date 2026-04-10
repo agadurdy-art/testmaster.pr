@@ -18,6 +18,7 @@ import ThemeToggle from '../components/ThemeToggle';
 import { WritingEvaluationResult, ReadingEvaluationResult } from '../components/EvaluationResult';
 import { useI18n } from '../lib/i18n';
 import { getEnglishOnlyNotice } from '../lib/languageLock';
+import { canAccessCourse, canAccessCourseLesson } from '../lib/planAccess';
 import { 
   markSectionComplete, 
   getLessonProgress, 
@@ -66,6 +67,7 @@ export default function AdvancedMasteryCourse({ user }) {
   const [speakingResponse, setSpeakingResponse] = useState('');
   const [speakingFeedback, setSpeakingFeedback] = useState(null);
   const [speakingLoading, setSpeakingLoading] = useState(false);
+  const [speakingAudioBlob, setSpeakingAudioBlob] = useState(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   
@@ -92,6 +94,8 @@ export default function AdvancedMasteryCourse({ user }) {
   const [listeningProgress, setListeningProgress] = useState(0);
   const [showTranscript, setShowTranscript] = useState(false);
   const listeningAudioRef = useRef(null);
+  const hasFullCourseAccess = canAccessCourse(user, 'achiever');
+  const canAccessModule = (module) => canAccessCourseLesson(user, 'achiever', module?.module_number);
 
   useEffect(() => { 
     loadModules();
@@ -117,6 +121,11 @@ export default function AdvancedMasteryCourse({ user }) {
         String(m.module_number) === lessonIdFromUrl
       );
       if (targetModule) {
+        if (!canAccessModule(targetModule)) {
+          toast.info('Free preview includes only Lesson 1 of this course.');
+          navigate('/pricing?from=Advanced%20Mastery');
+          return;
+        }
         setSelectedModule(targetModule);
         setView('module-detail');
       }
@@ -159,8 +168,14 @@ export default function AdvancedMasteryCourse({ user }) {
   };
 
   const selectModule = async (module) => {
+    if (!canAccessModule(module)) {
+      toast.info('Free preview includes only Lesson 1 of this course.');
+      navigate('/pricing?from=Advanced%20Mastery');
+      return;
+    }
     try {
-      const res = await fetch(`${API_URL}/api/advanced-mastery/modules/${module.id}`);
+      const params = new URLSearchParams({ user_plan: user?.plan || 'free' });
+      const res = await fetch(`${API_URL}/api/advanced-mastery/modules/${module.id}?${params.toString()}`);
       if (res.ok) {
         const data = await res.json();
         setSelectedModule(data);
@@ -369,6 +384,7 @@ export default function AdvancedMasteryCourse({ user }) {
       
       mediaRecorderRef.current.onstop = async () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        setSpeakingAudioBlob(audioBlob);
         // For now, we'll use text input - transcription can be added later
         toast.info('Recording saved! Please type your response below for evaluation.');
         stream.getTracks().forEach(t => t.stop());
@@ -379,6 +395,20 @@ export default function AdvancedMasteryCourse({ user }) {
     } catch (e) {
       toast.error('Microphone access denied');
     }
+  };
+
+  const blobToBase64 = async (blob) => {
+    if (!blob) return null;
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result || '';
+        const base64 = typeof result === 'string' ? result.split(',')[1] : null;
+        resolve(base64 || null);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
   };
 
   const stopRecording = () => {
@@ -399,6 +429,7 @@ export default function AdvancedMasteryCourse({ user }) {
       const speaking = selectedModule.speaking;
       const question = speaking?.part3?.question || speaking?.part2?.cue_card || '';
       const modelAnswer = speaking?.part3?.band8_sample || speaking?.part2?.model_answer || '';
+      const audioData = await blobToBase64(speakingAudioBlob);
       
       const res = await fetch(`${API_URL}/api/advanced-mastery/evaluate-speaking`, {
         method: 'POST',
@@ -408,7 +439,10 @@ export default function AdvancedMasteryCourse({ user }) {
           model_answer: modelAnswer,
           user_response: speakingResponse,
           module_title: selectedModule.title,
-          part: speaking?.part3 ? 'part3' : 'part2'
+          module_number: selectedModule.module_number,
+          user_plan: user?.plan || 'free',
+          part: speaking?.part3 ? 'part3' : 'part2',
+          audio_data: audioData,
         })
       });
       if (res.ok) {
@@ -434,43 +468,65 @@ export default function AdvancedMasteryCourse({ user }) {
     }
     setWritingLoading(true);
     try {
-      // Use track-specific evaluation API
-      const res = await fetch(`${API_URL}/api/courses/evaluate/writing`, {
+      const academicTask = selectedModule?.writing?.question || selectedModule?.writing?.prompt || '';
+      const academicModel = selectedModule?.writing?.model_essay || selectedModule?.writing?.band75_excerpt || '';
+      const generalTask = strategicWriting?.writing_scenario?.prompt || '';
+      const generalModel = strategicWriting?.writing_scenario?.model_answer?.band_8 || '';
+      const payload = writingTrack === 'general'
+        ? {
+            task: generalTask,
+            model_essay: generalModel,
+            user_response: writingResponse,
+            module_title: selectedModule.title,
+            module_number: selectedModule.module_number,
+            user_plan: user?.plan || 'free',
+            track: 'general',
+            task_type: 'task1_letter',
+          }
+        : {
+            task: academicTask,
+            model_essay: academicModel,
+            user_response: writingResponse,
+            module_title: selectedModule.title,
+            module_number: selectedModule.module_number,
+            user_plan: user?.plan || 'free',
+            track: 'academic',
+            task_type: 'task2_essay',
+          };
+
+      const res = await fetch(`${API_URL}/api/advanced-mastery/evaluate-writing`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          response: writingResponse,
-          task_type: 'task2',
-          track: writingTrack,
-          context: writingTrack === 'general' ? 'formal' : null
-        })
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
-        const data = await res.json();
-        if (data.success && data.evaluation) {
-          // Transform evaluation to component-expected format
-          const evaluation = data.evaluation;
-          setWritingFeedback({
-            skill: 'writing',
-            track: evaluation.track,
-            overall_band: evaluation.overall_band,
-            criteria: evaluation.criteria_scores ? {
-              task_response: evaluation.criteria_scores.task_achievement?.score || evaluation.criteria_scores.task_achievement,
-              coherence: evaluation.criteria_scores.coherence_cohesion?.score || evaluation.criteria_scores.coherence_cohesion,
-              lexical_resource: evaluation.criteria_scores.lexical_resource?.score || evaluation.criteria_scores.lexical_resource,
-              grammar: evaluation.criteria_scores.grammatical_range?.score || evaluation.criteria_scores.grammatical_range
-            } : {},
-            strengths: evaluation.track_specific_feedback?.filter(f => f.includes('Good') || f.includes('Appropriate')) || [],
-            weaknesses: evaluation.track_specific_feedback?.filter(f => !f.includes('Good') && !f.includes('Appropriate')) || [],
-            mistakes: [],
-            corrections: [],
-            recommended_lessons: [],
-            improvement_suggestions: evaluation.improvement_suggestions || []
-          });
-          toast.success('Essay evaluated!');
-        } else {
-          toast.error('Evaluation failed');
-        }
+        const evaluation = await res.json();
+        setWritingFeedback({
+          ...evaluation,
+          skill: 'writing',
+          track: evaluation.track || writingTrack,
+          overall_band: evaluation.overall_band || evaluation.band_score || 0,
+          criteria_scores: evaluation.criteria_scores || {
+            task_achievement: evaluation.task_achievement || {},
+            coherence_cohesion: evaluation.coherence_cohesion || {},
+            lexical_resource: evaluation.lexical_resource || {},
+            grammatical_range: evaluation.grammatical_range || {},
+          },
+          strengths: evaluation.strengths || [],
+          weaknesses: evaluation.areas_to_improve || evaluation.weaknesses || [],
+          mistakes: evaluation.mistakes || [],
+          corrections: evaluation.corrections || [],
+          recommended_lessons: evaluation.recommended_lessons || [],
+          improvement_suggestions: evaluation.improvement_suggestions || evaluation.areas_to_improve || [],
+          line_by_line_corrections: evaluation.line_by_line_corrections || [],
+          grammar_upgrade_examples: evaluation.grammar_upgrade_examples || [],
+          advanced_vocabulary_suggestions: evaluation.advanced_vocabulary_suggestions || [],
+          band_justification: evaluation.band_justification || '',
+          overall_feedback: evaluation.overall_feedback || '',
+        });
+        toast.success('Essay evaluated!');
+      } else {
+        toast.error('Evaluation failed');
       }
     } catch (e) {
       console.error('Evaluation error:', e);
@@ -572,6 +628,11 @@ export default function AdvancedMasteryCourse({ user }) {
               This comprehensive curriculum is designed for learners at Band 6.0-6.5 targeting Band 7.0-9.0. 
               Master sophisticated vocabulary, complex grammar structures, and examiner-level execution across all IELTS themes.
             </p>
+            {!hasFullCourseAccess && (
+              <p className="text-sm text-amber-700 mt-2">
+                Free preview: Lesson 1 is open. Upgrade to Achiever for the full course.
+              </p>
+            )}
           </div>
         </div>
       </Card>
@@ -581,13 +642,21 @@ export default function AdvancedMasteryCourse({ user }) {
         {modules.map((module) => {
           const moduleProgress = getLessonProgress('advanced', module.module_number);
           const isComplete = isLessonCompleted('advanced', module.module_number);
+          const isLocked = !canAccessModule(module);
           
           return (
             <Card 
               key={module.id}
-              className={`p-5 bg-white border-0 shadow-lg hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl ${isComplete ? 'ring-2 ring-green-400' : ''}`}
+              className={`p-5 bg-white border-0 shadow-lg hover:shadow-xl cursor-pointer group transition-all duration-300 hover:-translate-y-1 rounded-2xl relative ${isComplete ? 'ring-2 ring-green-400' : ''} ${isLocked ? 'opacity-70' : ''}`}
               onClick={() => selectModule(module)}
             >
+              {isLocked && (
+                <div className="absolute inset-0 rounded-2xl bg-white/50 flex items-center justify-center">
+                  <div className="px-3 py-1.5 rounded-full bg-white shadow text-xs font-medium text-gray-700">
+                    Upgrade to unlock
+                  </div>
+                </div>
+              )}
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform relative">
                   {module.module_number}
@@ -1503,11 +1572,111 @@ export default function AdvancedMasteryCourse({ user }) {
 
             <p className="text-gray-700 mb-3">{speakingFeedback.overall_feedback}</p>
 
+            {speakingFeedback.response_diagnosis && (
+              <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-2">
+                <div className="p-3 bg-white rounded-lg">
+                  <p className="text-xs text-gray-500">Relevance</p>
+                  <p className="font-semibold capitalize">{speakingFeedback.response_diagnosis.relevance}</p>
+                </div>
+                <div className="p-3 bg-white rounded-lg">
+                  <p className="text-xs text-gray-500">Development</p>
+                  <p className="font-semibold capitalize">{speakingFeedback.response_diagnosis.development}</p>
+                </div>
+                <div className="p-3 bg-white rounded-lg">
+                  <p className="text-xs text-gray-500">Template Risk</p>
+                  <p className="font-semibold capitalize">{speakingFeedback.response_diagnosis.template_risk}</p>
+                </div>
+              </div>
+            )}
+
+            {speakingFeedback.response_metrics && (
+              <div className="mb-4 p-3 bg-white rounded-lg border border-gray-200">
+                <p className="text-xs text-gray-500 uppercase mb-2">Response Metrics</p>
+                <div className="grid grid-cols-3 gap-3 text-sm text-gray-700">
+                  <div>Words: <span className="font-semibold">{speakingFeedback.response_metrics.word_count}</span></div>
+                  <div>Sentences: <span className="font-semibold">{speakingFeedback.response_metrics.sentence_count}</span></div>
+                  <div>Template risk: <span className="font-semibold">{speakingFeedback.response_metrics.template_risk}</span></div>
+                </div>
+              </div>
+            )}
+
+            {speakingFeedback.pronunciation_estimated !== undefined && (
+              <div className={`mb-4 p-3 rounded-lg ${speakingFeedback.pronunciation_estimated ? 'bg-amber-50' : 'bg-emerald-50'}`}>
+                <p className="text-sm text-gray-800">
+                  {speakingFeedback.pronunciation_estimated
+                    ? 'Pronunciation is estimated mainly from transcript evidence.'
+                    : 'Pronunciation includes Azure acoustic analysis.'}
+                </p>
+              </div>
+            )}
+
+            {speakingFeedback.azure_scores && (
+              <div className="mb-4 p-3 bg-cyan-50 rounded-lg border border-cyan-200">
+                <p className="text-sm font-semibold text-cyan-700 mb-2">Azure Pronunciation Snapshot</p>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-gray-700">
+                  <div>Pron: <span className="font-semibold">{speakingFeedback.azure_scores.pronunciation}</span></div>
+                  <div>Accuracy: <span className="font-semibold">{speakingFeedback.azure_scores.accuracy}</span></div>
+                  <div>Fluency: <span className="font-semibold">{speakingFeedback.azure_scores.fluency}</span></div>
+                  <div>Complete: <span className="font-semibold">{speakingFeedback.azure_scores.completeness}</span></div>
+                  <div>Prosody: <span className="font-semibold">{speakingFeedback.azure_scores.prosody}</span></div>
+                </div>
+              </div>
+            )}
+
             {speakingFeedback.suggested_improvements && (
               <div className="mt-3 p-3 bg-white rounded-lg">
                 <p className="text-sm font-medium text-gray-800 mb-1">Suggestions:</p>
                 <ul className="text-sm text-gray-600 list-disc list-inside">
                   {speakingFeedback.suggested_improvements.map((s, i) => <li key={i}>{s}</li>)}
+                </ul>
+              </div>
+            )}
+
+            {speakingFeedback.high_priority_fixes && speakingFeedback.high_priority_fixes.length > 0 && (
+              <div className="mt-3 p-3 bg-orange-50 rounded-lg">
+                <p className="text-sm font-medium text-orange-800 mb-1">High-Priority Fixes</p>
+                <ul className="text-sm text-orange-700 list-disc list-inside">
+                  {speakingFeedback.high_priority_fixes.map((s, i) => <li key={i}>{s}</li>)}
+                </ul>
+              </div>
+            )}
+
+            {speakingFeedback.line_by_line_corrections && speakingFeedback.line_by_line_corrections.length > 0 && (
+              <div className="mt-3 p-3 bg-rose-50 rounded-lg">
+                <p className="text-sm font-medium text-rose-800 mb-2">Line-by-Line Coaching</p>
+                <div className="space-y-2">
+                  {speakingFeedback.line_by_line_corrections.map((item, i) => (
+                    <div key={i} className="p-3 bg-white rounded-lg border border-rose-100">
+                      <p className="text-sm text-red-600 line-through">{item.original}</p>
+                      <p className="text-sm text-green-700 font-medium">✓ {item.corrected}</p>
+                      {item.issue && <p className="text-xs font-semibold text-rose-600 mt-1">{item.issue}</p>}
+                      {item.explanation && <p className="text-xs text-gray-600 mt-1">{item.explanation}</p>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {speakingFeedback.next_answer_blueprint && speakingFeedback.next_answer_blueprint.length > 0 && (
+              <div className="mt-3 p-3 bg-indigo-50 rounded-lg">
+                <p className="text-sm font-medium text-indigo-800 mb-1">Next Answer Blueprint</p>
+                <ol className="text-sm text-indigo-700 list-decimal list-inside space-y-1">
+                  {speakingFeedback.next_answer_blueprint.map((s, i) => <li key={i}>{s}</li>)}
+                </ol>
+              </div>
+            )}
+
+            {speakingFeedback.band_justification && (
+              <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+                <p className="text-sm text-blue-800"><strong>Band Justification:</strong> {speakingFeedback.band_justification}</p>
+              </div>
+            )}
+
+            {speakingFeedback.cap_reasons && speakingFeedback.cap_reasons.length > 0 && (
+              <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                <p className="text-sm font-medium text-gray-800 mb-1">Band Cap Reasons</p>
+                <ul className="text-sm text-gray-600 list-disc list-inside">
+                  {speakingFeedback.cap_reasons.map((s, i) => <li key={i}>{s}</li>)}
                 </ul>
               </div>
             )}
@@ -1783,6 +1952,44 @@ export default function AdvancedMasteryCourse({ user }) {
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {writingFeedback.line_by_line_corrections && writingFeedback.line_by_line_corrections.length > 0 && (
+            <div className="mt-4 p-4 bg-rose-50 rounded-lg border border-rose-200">
+              <p className="text-sm font-semibold text-rose-700 uppercase tracking-wide mb-3">Line-by-Line Corrections</p>
+              <div className="space-y-3">
+                {writingFeedback.line_by_line_corrections.map((item, i) => (
+                  <div key={i} className="p-3 bg-white rounded-lg border border-rose-100">
+                    <p className="text-sm text-red-600 line-through mb-1">{item.original}</p>
+                    <p className="text-sm text-green-700 font-medium mb-1">→ {item.corrected}</p>
+                    {item.issue && <p className="text-xs font-semibold text-rose-600 mb-1">{item.issue}</p>}
+                    {item.explanation && <p className="text-xs text-gray-600">{item.explanation}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {writingFeedback.grammar_upgrade_examples && writingFeedback.grammar_upgrade_examples.length > 0 && (
+            <div className="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+              <p className="text-sm font-semibold text-purple-700 uppercase tracking-wide mb-3">Sentence Upgrades</p>
+              <div className="space-y-3">
+                {writingFeedback.grammar_upgrade_examples.map((item, i) => (
+                  <div key={i} className="p-3 bg-white rounded-lg border border-purple-100">
+                    <p className="text-sm text-red-600 line-through mb-1">{item.original}</p>
+                    <p className="text-sm text-green-700 font-medium mb-1">→ {item.upgraded}</p>
+                    {item.explanation && <p className="text-xs text-gray-600">{item.explanation}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {writingFeedback.band_justification && (
+            <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="text-sm font-semibold text-blue-700 uppercase tracking-wide mb-2">Band Justification</p>
+              <p className="text-sm text-gray-700">{writingFeedback.band_justification}</p>
             </div>
           )}
         </div>

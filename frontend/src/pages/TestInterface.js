@@ -9,6 +9,7 @@ import { getTests, submitTest, transcribeAudio, evaluateWriting, evaluateSpeakin
 import { formatTime } from '../lib/utils';
 import { toast } from 'sonner';
 import { useI18n } from '../lib/i18n';
+import { canAccessPremiumTests, normalizePlanName } from '../lib/planAccess';
 import NotebookPanel from '../components/NotebookPanel';
 import HighlightableText from '../components/HighlightableText';
 import QuestionNavigation from '../components/test/QuestionNavigation';
@@ -78,7 +79,7 @@ function ElevenLabsExaminer() {
   const speakingQuestionTimeoutRef = useRef(null);
 
   // Premium access / free trial helper functions
-  const canAccessPremium = (user?.plan === 'pro') || ((user?.examCredits ?? 0) > 0);
+  const canAccessPremium = canAccessPremiumTests(user);
   const hasFreeTrial = (user?.ai_interview_free_seconds_used ?? 0) < 180;
   
   const isPremiumTest = (title) => {
@@ -168,7 +169,7 @@ function ElevenLabsExaminer() {
       const updatedUser = {
         ...user,
         examCredits: data.remainingCredits,
-        plan: data.plan,
+        plan: normalizePlanName(data.plan),
         ai_interview_free_seconds_used:
           data.freeTrialSecondsUsed ?? user.ai_interview_free_seconds_used ?? 0,
       };
@@ -607,7 +608,7 @@ function ElevenLabsExaminer() {
             {availableTests.map((testOption) => {
               const isPremium = testOption.title && /Test\s*(\d+)/i.test(testOption.title) &&
                 parseInt(testOption.title.match(/Test\s*(\d+)/i)[1], 10) >= 2;
-              const premiumLocked = isPremium && !(user?.plan === 'pro' || (user?.examCredits ?? 0) > 0);
+              const premiumLocked = isPremium && !canAccessPremiumTests(user);
               return (
                 <Button
                   key={testOption.id}
@@ -646,7 +647,7 @@ function ElevenLabsExaminer() {
             {availableTests.map((testOption) => {
               const isPremium = testOption.title && /Test\s*(\d+)/i.test(testOption.title) &&
                 parseInt(testOption.title.match(/Test\s*(\d+)/i)[1], 10) >= 2;
-              const premiumLocked = isPremium && !(user?.plan === 'pro' || (user?.examCredits ?? 0) > 0);
+              const premiumLocked = isPremium && !canAccessPremiumTests(user);
               return (
                 <Button
                   key={testOption.id}
@@ -686,7 +687,7 @@ function ElevenLabsExaminer() {
             {availableTests.map((testOption) => {
               const isPremium = testOption.title && /Test\s*(\d+)/i.test(testOption.title) &&
                 parseInt(testOption.title.match(/Test\s*(\d+)/i)[1], 10) >= 2;
-              const premiumLocked = isPremium && !(user?.plan === 'pro' || (user?.examCredits ?? 0) > 0);
+              const premiumLocked = isPremium && !canAccessPremiumTests(user);
               return (
                 <Button
                   key={testOption.id}
@@ -728,7 +729,7 @@ function ElevenLabsExaminer() {
             {availableTests.map((testOption) => {
               const isPremium = testOption.title && /Test\s*(\d+)/i.test(testOption.title) &&
                 parseInt(testOption.title.match(/Test\s*(\d+)/i)[1], 10) >= 2;
-              const premiumLocked = isPremium && !(user?.plan === 'pro' || (user?.examCredits ?? 0) > 0);
+              const premiumLocked = isPremium && !canAccessPremiumTests(user);
               return (
                 <Button
                   key={testOption.id}

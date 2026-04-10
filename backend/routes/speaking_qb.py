@@ -694,7 +694,7 @@ Be fair, objective, and follow Cambridge IELTS standards strictly. Do not be ove
         evaluation["evaluated_at"] = datetime.now(timezone.utc).isoformat()
         
         # Generate lesson recommendations
-        evaluation["recommended_lessons"] = generate_speaking_recommendations(
+        evaluation["recommended_lessons"] = await generate_speaking_recommendations(
             track, 
             band_range, 
             evaluation.get("weaknesses", []),
@@ -724,62 +724,26 @@ Be fair, objective, and follow Cambridge IELTS standards strictly. Do not be ove
         }
 
 
-def generate_speaking_recommendations(
+async def generate_speaking_recommendations(
     track: str,
     band_range: str,
     weaknesses: List[str],
     topic: str
 ) -> List[Dict[str, Any]]:
-    """Generate lesson recommendations based on evaluation."""
-    recommendations = []
-    
-    # Map band ranges to course stages
-    band_to_stage = {
-        "4.0-5.0": "beginner",
-        "5.5-6.5": "mastery",
-        "7.0-9.0": "advanced"
-    }
-    stage = band_to_stage.get(band_range, "mastery")
-    
-    # Weakness-based recommendations
-    weakness_lessons = {
-        "fluency": {"title": "Speaking Fluency Strategies", "desc": "Practice smooth delivery"},
-        "coherence": {"title": "Organizing Your Response", "desc": "Structure ideas logically"},
-        "vocabulary": {"title": "Academic Vocabulary Building", "desc": "Expand word choice"},
-        "lexical": {"title": "Lexical Resource Enhancement", "desc": "Use precise vocabulary"},
-        "grammar": {"title": "Grammar for Speaking", "desc": "Complex structures practice"},
-        "pronunciation": {"title": "Pronunciation Practice", "desc": "Clear articulation"},
-        "hesitation": {"title": "Reducing Hesitation", "desc": "Speak with confidence"},
-        "ideas": {"title": "Idea Development", "desc": "Expand your answers"}
-    }
-    
-    for weakness in weaknesses[:3]:
-        weakness_lower = weakness.lower()
-        for key, lesson in weakness_lessons.items():
-            if key in weakness_lower:
-                recommendations.append({
-                    "lesson_id": f"{stage}_speaking_{key}",
-                    "title": lesson["title"],
-                    "description": lesson["desc"],
-                    "track": track,
-                    "stage": stage,
-                    "relevance": "weakness",
-                    "url": f"/{stage}-course?section=speaking"
-                })
-                break
-    
-    # Topic-based recommendation
-    if topic:
-        recommendations.append({
-            "lesson_id": f"{stage}_{topic}_speaking",
-            "title": f"{topic.replace('_', ' ').title()} - Speaking Practice",
-            "track": track,
-            "stage": stage,
-            "relevance": "topic",
-            "url": f"/{stage}-course?module={topic}&section=speaking"
-        })
-    
-    return recommendations[:5]
+    """Generate course-linked speaking recommendations."""
+    from server import db
+    from services.lesson_registry import LessonRegistry
+
+    registry = LessonRegistry(db)
+    band_score = 4.5 if band_range == "4.0-5.0" else 6.0 if band_range == "5.5-6.5" else 7.5
+    return await registry.get_recommended_lessons(
+        weaknesses=weaknesses or ["speaking", "fluency"],
+        current_band=band_score,
+        skill="speaking",
+        topic=topic,
+        context=f"{track} speaking practice about {topic or 'general topics'}",
+        limit=3,
+    )
 
 
 # ============ API ENDPOINTS ============

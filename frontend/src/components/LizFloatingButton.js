@@ -1,12 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GraduationCap, Lock } from 'lucide-react';
-
-const ALLOWED_PLANS = ['learner', 'achiever', 'master'];
+import { canAccessLiz } from '../lib/lizAccess';
 
 export default function LizFloatingButton({ user }) {
   const navigate = useNavigate();
-  const hasAccess = user && ALLOWED_PLANS.includes(user.plan);
+  const hasAccess = canAccessLiz(user);
 
   return (
     <button

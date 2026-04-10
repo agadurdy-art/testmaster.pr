@@ -176,5 +176,33 @@ COMPREHENSIVE_READING_QUESTIONS = [
 ]
 
 
+def calculate_comprehensive_reading_band(correct_questions):
+    """
+    Convert progressive reading-question difficulty into an IELTS-style band.
+
+    The previous implementation averaged raw question difficulty points over the
+    number of questions, which capped a perfect 10/10 at 5.5 because the item
+    weights summed to 53.0 across 10 questions. This function instead:
+
+    1. Sums the difficulty weights of correctly answered questions.
+    2. Normalizes that against the maximum available weight.
+    3. Maps the normalized score onto the 2.0-9.0 IELTS band range.
+
+    This preserves progressive difficulty while ensuring:
+    - 0 correct -> 2.0
+    - all correct -> 9.0
+    - isolated hard-question guesses do not inflate the result excessively
+    """
+    max_points = sum(question.get("band", 0) for question in COMPREHENSIVE_READING_QUESTIONS)
+    if max_points <= 0:
+        return 2.0
+
+    earned_points = sum(question.get("band", 0) for question in correct_questions)
+    normalized = earned_points / max_points
+
+    band = 2.0 + (normalized * 7.0)
+    return round(band * 2) / 2
+
+
 def strip_answer_keys(questions):
     return [{key: value for key, value in question.items() if key != "correct"} for question in questions]

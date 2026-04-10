@@ -221,7 +221,7 @@ export const translations = {
     backToDashboard: 'Back to Dashboard',
 
     // Paywall / speaking messages
-    paywallNeedProOrCredits: 'This practice test is part of Test 2+. Please upgrade to Pro or add speaking credits to unlock it.',
+    paywallNeedProOrCredits: 'This practice test is part of Test 2+. Please upgrade to Learner or above, or add speaking credits to unlock it.',
     paywallSpeakingNoCredits: 'You have no speaking credits left and your free trial is used. Please purchase a plan on the Pricing page.',
     speakingFreeTrialAvailable: 'You still have a free AI speaking trial – your first session will be free.',
     speakingFreeTrialStarted: 'Free trial speaking session started. Enjoy your first AI interview!',
@@ -646,7 +646,7 @@ export const translations = {
     backToDashboard: 'Quay lai Bang dieu khien',
 
     // Paywall / speaking messages
-    paywallNeedProOrCredits: 'Bài luyện này thuộc Test 2 trở lên. Hãy nâng cấp gói Pro hoặc mua thêm lượt thi để mở khóa.',
+    paywallNeedProOrCredits: 'Bài luyện này thuộc Test 2 trở lên. Hãy nâng cấp lên gói Learner trở lên hoặc mua thêm lượt thi để mở khóa.',
     paywallSpeakingNoCredits: 'Bạn không còn lượt thi nói và đã dùng hết lượt thử miễn phí. Vui lòng mua gói ở trang Giá.',
     speakingFreeTrialAvailable: 'Bạn vẫn còn lượt thử miễn phí với giám khảo AI – phiên phỏng vấn đầu tiên sẽ miễn phí.',
     speakingFreeTrialStarted: 'Đã bắt đầu phiên thử miễn phí. Chúc bạn có một buổi phỏng vấn AI hiệu quả!',

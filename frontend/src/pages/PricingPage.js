@@ -5,6 +5,7 @@ import { Button } from '../components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 import { uploadBankPayment } from '../lib/api';
 import { useI18n, LANGUAGES } from '../lib/i18n';
+import { getPlanLabel, normalizePlanName, planMeetsMinimum } from '../lib/planAccess';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import {
   ArrowLeft, Check, X, Compass, BookOpen, Award, Crown, Building2, Mail, Globe, QrCode, Upload
@@ -42,7 +43,7 @@ export default function PricingPage({ user }) {
   const [langOpen, setLangOpen] = useState(false);
 
   const fromFeature = searchParams.get('from');
-  const currentPlan = user?.plan || 'free';
+  const currentPlan = normalizePlanName(user?.plan || 'free');
 
   const plans = [
     {
@@ -119,7 +120,7 @@ export default function PricingPage({ user }) {
       formData.append('screenshot', file);
       try {
         await uploadBankPayment(formData);
-        const updatedUser = { ...user, plan: selectedPlan.id, subscription: selectedPlan.name };
+        const updatedUser = { ...user, plan: normalizePlanName(selectedPlan.id), subscription: selectedPlan.name };
         localStorage.setItem('user', JSON.stringify(updatedUser));
         alert(t('paymentSubmitted'));
         setBankModalOpen(false);
@@ -129,9 +130,8 @@ export default function PricingPage({ user }) {
     fileInput.click();
   };
 
-  const planTier = { free: 0, explorer: 1, learner: 2, achiever: 3, master: 4 };
   const isCurrentPlan = (planId) => currentPlan === planId;
-  const isDowngrade = (planId) => (planTier[planId] || 0) < (planTier[currentPlan] || 0);
+  const isDowngrade = (planId) => !planMeetsMinimum(planId, currentPlan);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950">
@@ -194,7 +194,7 @@ export default function PricingPage({ user }) {
 
         <div className="text-center mb-10">
           <p className="text-gray-400 text-sm mb-2">
-            {t('currentlyOn')}: <span className="font-semibold text-white capitalize">{currentPlan === 'free' ? t('freeStageOnly') : currentPlan}</span>
+            {t('currentlyOn')}: <span className="font-semibold text-white capitalize">{currentPlan === 'free' ? t('freeStageOnly') : getPlanLabel(currentPlan)}</span>
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">{t('levelUpEnglish')}</h2>
           <p className="text-gray-400 max-w-xl mx-auto text-sm">{t('allPlansMonthlyCancelAnytime')}</p>
@@ -267,7 +267,7 @@ export default function PricingPage({ user }) {
                                 });
                                 const result = await res.json();
                                 if (res.ok) {
-                                  const updatedUser = { ...user, plan: result.plan, subscription: result.subscription };
+                                  const updatedUser = { ...user, plan: normalizePlanName(result.plan), subscription: result.subscription };
                                   localStorage.setItem('user', JSON.stringify(updatedUser));
                                   alert(t('subscriptionActivated') + ' ' + plan.name + '!');
                                   navigate('/dashboard');

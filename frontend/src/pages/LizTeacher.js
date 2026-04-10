@@ -8,6 +8,7 @@ import {
   GraduationCap, ChevronUp, ClipboardList,
   CheckCircle2, Clock, X, Star, FileText
 } from 'lucide-react';
+import { canAccessLiz } from '../lib/lizAccess';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const LIZ_AVATAR = 'https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png';
@@ -196,13 +197,11 @@ function HomeworkCard({ hw, onSubmit, onDelete, submitting }) {
   );
 }
 
-const ALLOWED_PLANS = ['booster', 'pro'];
-
 export default function LizTeacher({ user }) {
   const navigate = useNavigate();
 
-  // Plan gate - only booster and pro users can access
-  if (!user || !ALLOWED_PLANS.includes(user.plan)) {
+  // Plan gate - learner and above can access Liz
+  if (!canAccessLiz(user)) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-50 via-teal-50/20 to-white flex flex-col items-center justify-center px-4" data-testid="liz-upgrade-gate">
         <div className="max-w-md text-center space-y-6">
@@ -213,8 +212,9 @@ export default function LizTeacher({ user }) {
           <p className="text-slate-500 text-sm leading-relaxed">
             Liz is your personal IELTS teacher who speaks to you, tracks your progress,
             assigns homework, and builds structured study plans. Available for
-            <span className="font-semibold text-violet-600"> Booster</span> and
-            <span className="font-semibold text-orange-500"> Pro</span> members.
+            <span className="font-semibold text-violet-600"> Learner</span>,
+            <span className="font-semibold text-fuchsia-600"> Achiever</span>, and
+            <span className="font-semibold text-orange-500"> Master</span> members.
           </p>
           <div className="flex flex-col gap-3">
             <Button
@@ -239,9 +239,11 @@ export default function LizTeacher({ user }) {
   const [status, setStatus] = useState('idle');
   const [messages, setMessages] = useState([]);
   const [latestLiz, setLatestLiz] = useState('');
+  const [voiceInsight, setVoiceInsight] = useState(null);
   const [input, setInput] = useState('');
   const [sessionId, setSessionId] = useState(null);
   const [sessions, setSessions] = useState([]);
+  const [lizStatus, setLizStatus] = useState(null);
   const [showSessions, setShowSessions] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [showHomework, setShowHomework] = useState(false);
@@ -266,6 +268,14 @@ export default function LizTeacher({ user }) {
     fetch(`${API_URL}/api/liz/sessions/${user.id}`)
       .then(r => r.json())
       .then(d => { if (d.success) setSessions(d.sessions || []); })
+      .catch(() => {});
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (!user?.id) return;
+    fetch(`${API_URL}/api/liz/status/${user.id}`)
+      .then(r => r.json())
+      .then(d => { if (d.success) setLizStatus(d); })
       .catch(() => {});
   }, [user?.id]);
 
@@ -322,6 +332,22 @@ export default function LizTeacher({ user }) {
     }
   }, [autoVoice, playAudio]);
 
+  const blobToBase64 = useCallback((blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result;
+        if (typeof result !== 'string') {
+          reject(new Error('Could not read audio blob'));
+          return;
+        }
+        resolve(result.split(',')[1] || '');
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }, []);
+
   const greetStudent = async () => {
     setHasGreeted(true);
     setStatus('thinking');
@@ -335,6 +361,7 @@ export default function LizTeacher({ user }) {
       if (data.success) {
         setSessionId(data.session_id);
         setLatestLiz(data.greeting);
+        setVoiceInsight(null);
         setMessages([{ role: 'assistant', content: data.greeting, timestamp: new Date().toISOString() }]);
         if (data.audio && autoVoice) {
           await playAudio(data.audio);
@@ -349,7 +376,7 @@ export default function LizTeacher({ user }) {
     }
   };
 
-  const sendMessage = async (text, isVoice = false) => {
+  const sendMessage = async (text, isVoice = false, audioData = null) => {
     if (!text?.trim() || status === 'thinking' || status === 'speaking') return;
     const trimmed = text.trim();
     setMessages(prev => [...prev, { role: 'user', content: trimmed, timestamp: new Date().toISOString() }]);
@@ -360,18 +387,27 @@ export default function LizTeacher({ user }) {
       const res = await fetch(`${API_URL}/api/liz/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice })
+        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice, audio_data: audioData })
       });
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         setSessionId(data.session_id);
         setLatestLiz(data.response);
+        if (data.usage) {
+          setLizStatus(prev => ({
+            ...(prev || {}),
+            ...data.usage,
+            has_access: true,
+          }));
+        }
         setMessages(prev => [...prev, { role: 'assistant', content: data.response, timestamp: new Date().toISOString() }]);
         // Refresh homework if new one was assigned
         if (data.homework_assigned?.length > 0) fetchHomework();
+        setVoiceInsight(data.voice_pronunciation || null);
         // Auto-TTS
         await speakText(data.response);
       } else {
+        setLatestLiz(data.detail || "I couldn't process that right now.");
         setStatus('idle');
       }
     } catch {
@@ -409,12 +445,13 @@ export default function LizTeacher({ user }) {
   const transcribeAudio = async (blob) => {
     setStatus('transcribing');
     try {
+      const audioData = await blobToBase64(blob);
       const formData = new FormData();
       formData.append('file', blob, 'recording.webm');
       const res = await fetch(`${API_URL}/api/liz/stt`, { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.text?.trim()) {
-        await sendMessage(data.text, true);
+        await sendMessage(data.text, true, audioData);
       } else {
         setStatus('idle');
       }
@@ -483,6 +520,7 @@ export default function LizTeacher({ user }) {
         const msgs = data.messages || [];
         setMessages(msgs);
         setSessionId(sid);
+        setVoiceInsight(null);
         setShowSessions(false);
         setHasGreeted(true);
         const lastLiz = [...msgs].reverse().find(m => m.role === 'assistant');
@@ -495,6 +533,7 @@ export default function LizTeacher({ user }) {
     setMessages([]);
     setSessionId(null);
     setLatestLiz('');
+    setVoiceInsight(null);
     setShowSessions(false);
     setHasGreeted(false);
   };
@@ -529,6 +568,13 @@ export default function LizTeacher({ user }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {lizStatus?.has_access && (
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-[11px] text-slate-500">
+                <span>{lizStatus.plan}</span>
+                <span>·</span>
+                <span>{lizStatus.remaining_messages ?? 0} messages left</span>
+              </div>
+            )}
             {/* Homework button with badge */}
             <button
               onClick={() => setShowHomework(v => !v)}
@@ -580,6 +626,19 @@ export default function LizTeacher({ user }) {
 
         {/* Current Liz Speech */}
         <SpeechDisplay text={latestLiz} status={status} />
+
+        {lizStatus?.has_access && (
+          <div className="text-[11px] text-slate-400" data-testid="liz-usage-note">
+            {lizStatus.remaining_messages ?? 0} messages remaining this month
+          </div>
+        )}
+
+        {voiceInsight && (
+          <div className="max-w-xl w-full bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-800" data-testid="liz-voice-insight">
+            <span className="font-semibold">Voice snapshot:</span>{' '}
+            Pronunciation {voiceInsight.pronunciation}/100, Fluency {voiceInsight.fluency}/100, Accuracy {voiceInsight.accuracy}/100.
+          </div>
+        )}
 
         {/* Lesson mode buttons (only on fresh start, no messages yet) */}
         {messages.length <= 1 && status === 'idle' && latestLiz && (

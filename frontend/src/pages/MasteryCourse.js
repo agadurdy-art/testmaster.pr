@@ -18,6 +18,7 @@ import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
 import { useI18n } from '../lib/i18n';
 import { getEnglishOnlyNotice } from '../lib/languageLock';
+import { canAccessCourse, canAccessCourseLesson } from '../lib/planAccess';
 import { 
   markSectionComplete, 
   getLessonProgress, 
@@ -92,6 +93,8 @@ export default function MasteryCourse({ user }) {
   const [speakingResponse, setSpeakingResponse] = useState('');
   const [speakingFeedback, setSpeakingFeedback] = useState(null);
   const [evaluatingSpeaking, setEvaluatingSpeaking] = useState(false);
+  const [speakingAudioBlob, setSpeakingAudioBlob] = useState(null);
+  const [selectedSpeakingPrompt, setSelectedSpeakingPrompt] = useState('part1');
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   
@@ -117,6 +120,9 @@ export default function MasteryCourse({ user }) {
   const [showTranscript, setShowTranscript] = useState(false);
   const [listeningAnswers, setListeningAnswers] = useState({});
   const [showListeningResults, setShowListeningResults] = useState(false);
+  const hasFullCourseAccess = canAccessCourse(user, 'learner');
+
+  const canAccessModule = (module) => canAccessCourseLesson(user, 'learner', module?.module_number);
 
   useEffect(() => {
     fetchModules();
@@ -143,6 +149,11 @@ export default function MasteryCourse({ user }) {
         String(m.module_number) === lessonIdFromUrl
       );
       if (targetModule) {
+        if (!canAccessModule(targetModule)) {
+          toast.info('Free plan can preview only Lesson 1 of this course.');
+          navigate('/pricing?from=Mastery%20Course');
+          return;
+        }
         setSelectedModule(targetModule);
         setView('module-detail');
       }
@@ -276,9 +287,15 @@ export default function MasteryCourse({ user }) {
   };
 
   const selectModule = (module) => {
+    if (!canAccessModule(module)) {
+      toast.info('Free plan can preview only Lesson 1 of this course.');
+      navigate('/pricing?from=Mastery%20Course');
+      return;
+    }
     setSelectedModule(module);
     setView('module-detail');
     setCurrentSection('vocabulary');
+    setSelectedSpeakingPrompt(module?.speaking?.part1?.question ? 'part1' : module?.speaking?.part2?.cue_card ? 'part2' : module?.speaking?.part3?.question ? 'part3' : module?.speaking?.part3?.questions?.length ? 'part3-0' : 'part1');
     
     // Fetch module-specific language booster (use title as topic)
     fetchModuleLanguageBooster(module.title || module.topic);
@@ -286,6 +303,7 @@ export default function MasteryCourse({ user }) {
     setQuizSubmitted(false);
     setSpeakingResponse('');
     setSpeakingFeedback(null);
+    setSpeakingAudioBlob(null);
     setWritingResponse('');
     setWritingFeedback(null);
   };
@@ -359,6 +377,7 @@ export default function MasteryCourse({ user }) {
   const transcribeRecording = async (audioBlob) => {
     toast.info('Transcribing...');
     try {
+      setSpeakingAudioBlob(audioBlob);
       const formData = new FormData();
       formData.append('file', new File([audioBlob], 'recording.webm', { type: 'audio/webm' }));
       const response = await fetch(`${API_URL}/api/transcribe-audio`, { method: 'POST', body: formData });
@@ -371,18 +390,90 @@ export default function MasteryCourse({ user }) {
     }
   };
 
+  const blobToBase64 = async (blob) => {
+    if (!blob) return null;
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result || '';
+        const base64 = typeof result === 'string' ? result.split(',')[1] : null;
+        resolve(base64 || null);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  const getSpeakingPrompts = () => {
+    if (!selectedModule?.speaking) return [];
+    const prompts = [];
+
+    if (selectedModule.speaking.part1?.question) {
+      prompts.push({
+        id: 'part1',
+        label: 'Part 1',
+        question: selectedModule.speaking.part1.question,
+        modelAnswer: selectedModule.speaking.part1.model_answer || '',
+      });
+    }
+    if (selectedModule.speaking.part2?.cue_card) {
+      prompts.push({
+        id: 'part2',
+        label: 'Part 2',
+        question: selectedModule.speaking.part2.cue_card,
+        modelAnswer: selectedModule.speaking.part2.model_answer || '',
+      });
+    }
+    if (selectedModule.speaking.part3?.question) {
+      prompts.push({
+        id: 'part3',
+        label: 'Part 3',
+        question: selectedModule.speaking.part3.question,
+        modelAnswer: selectedModule.speaking.part3.model_answer || '',
+      });
+    }
+    if (selectedModule.speaking.part3?.questions?.length) {
+      selectedModule.speaking.part3.questions.forEach((item, index) => {
+        prompts.push({
+          id: `part3-${index}`,
+          label: `Part 3.${index + 1}`,
+          question: item.question,
+          modelAnswer: item.model_answer || '',
+        });
+      });
+    }
+
+    return prompts;
+  };
+
   // Evaluate speaking
-  const evaluateSpeaking = async (question, modelAnswer) => {
+  const evaluateSpeaking = async () => {
     if (!speakingResponse.trim()) {
       toast.error('Please record or type your answer first');
       return;
     }
+    const speakingPrompts = getSpeakingPrompts();
+    const activePrompt = speakingPrompts.find((item) => item.id === selectedSpeakingPrompt) || speakingPrompts[0];
+    if (!activePrompt) {
+      toast.error('No speaking prompt available');
+      return;
+    }
     setEvaluatingSpeaking(true);
     try {
+      const audioData = await blobToBase64(speakingAudioBlob);
       const response = await fetch(`${API_URL}/api/mastery-course/evaluate-speaking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, model_answer: modelAnswer, user_response: speakingResponse, module_title: selectedModule.title })
+        body: JSON.stringify({
+          question: activePrompt.question,
+          model_answer: activePrompt.modelAnswer,
+          user_response: speakingResponse,
+          module_title: selectedModule.title,
+          module_number: selectedModule.module_number,
+          user_plan: user?.plan || 'free',
+          prompt_type: activePrompt.label,
+          audio_data: audioData,
+        })
       });
       if (!response.ok) throw new Error('Evaluation failed');
       const data = await response.json();
@@ -402,15 +493,36 @@ export default function MasteryCourse({ user }) {
     }
     setEvaluatingWriting(true);
     try {
+      const academicTask = selectedModule?.writing?.question || '';
+      const academicModel = selectedModule?.writing?.model_essay || '';
+      const generalTask = languageBooster?.writing_task?.prompt || '';
+      const generalModel =
+        languageBooster?.writing_task?.model_answer?.band_8 ||
+        languageBooster?.writing_task?.model_answer?.band_6 ||
+        '';
+      const payload = writingTrack === 'general'
+        ? {
+            task: generalTask,
+            model_essay: generalModel,
+            user_response: writingResponse,
+            module_title: selectedModule.title,
+            module_number: selectedModule.module_number,
+            user_plan: user?.plan || 'free',
+            task_type: 'general_task_1',
+          }
+        : {
+            task: academicTask,
+            model_essay: academicModel,
+            user_response: writingResponse,
+            module_title: selectedModule.title,
+            module_number: selectedModule.module_number,
+            user_plan: user?.plan || 'free',
+            task_type: 'academic_task_2',
+          };
       const response = await fetch(`${API_URL}/api/mastery-course/evaluate-writing`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          task: selectedModule.writing.question,
-          model_essay: selectedModule.writing.model_essay,
-          user_response: writingResponse,
-          module_title: selectedModule.title
-        })
+        body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Evaluation failed');
       const data = await response.json();
@@ -497,6 +609,11 @@ export default function MasteryCourse({ user }) {
         <p className={`text-sm ${textSecondary} mt-2 max-w-2xl mx-auto`}>
           Master vocabulary, grammar, reading, speaking, and writing skills across all core IELTS topics.
         </p>
+        {!hasFullCourseAccess && (
+          <p className="text-sm text-violet-600 mt-3">
+            Free preview: Lesson 1 is open. Upgrade to Learner for the full course.
+          </p>
+        )}
       </div>
       
       {loading ? (
@@ -507,13 +624,21 @@ export default function MasteryCourse({ user }) {
             const config = MODULE_CONFIG[module.title] || { icon: '📚', color: 'from-gray-500 to-gray-600' };
             const moduleProgress = getLessonProgress('mastery', module.module_number);
             const isComplete = isLessonCompleted('mastery', module.module_number);
+            const isLocked = !canAccessModule(module);
             
             return (
               <Card 
                 key={module.id}
-                className={`p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border shadow-md ${bgCard} ${isComplete ? 'ring-2 ring-green-400' : ''}`}
+                className={`p-5 cursor-pointer hover:shadow-lg transition-all hover:-translate-y-1 border shadow-md relative ${bgCard} ${isComplete ? 'ring-2 ring-green-400' : ''} ${isLocked ? 'opacity-70' : ''}`}
                 onClick={() => selectModule(module)}
               >
+                {isLocked && (
+                  <div className="absolute inset-0 rounded-xl bg-white/50 flex items-center justify-center">
+                    <div className="px-3 py-1.5 rounded-full bg-white shadow text-xs font-medium text-gray-700">
+                      Upgrade to unlock
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-start gap-4">
                   <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${config.color} flex items-center justify-center text-2xl shadow-lg flex-shrink-0 relative`}>
                     {config.icon}
@@ -1371,7 +1496,8 @@ export default function MasteryCourse({ user }) {
   // Speaking Section
   const renderSpeaking = () => {
     const speaking = selectedModule.speaking;
-    const currentQ = speaking?.part1 || speaking?.part2 || speaking?.part3;
+    const speakingPrompts = getSpeakingPrompts();
+    const activeSpeakingPrompt = speakingPrompts.find((item) => item.id === selectedSpeakingPrompt) || speakingPrompts[0];
     
     return (
       <Card className="p-6 bg-white border-0 shadow-lg">
@@ -1468,6 +1594,26 @@ export default function MasteryCourse({ user }) {
         
         {/* Recording */}
         <div className="p-4 bg-gray-50 rounded-xl mb-4">
+          {speakingPrompts.length > 1 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {speakingPrompts.map((prompt) => (
+                <Button
+                  key={prompt.id}
+                  variant={selectedSpeakingPrompt === prompt.id ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedSpeakingPrompt(prompt.id)}
+                >
+                  {prompt.label}
+                </Button>
+              ))}
+            </div>
+          )}
+          {activeSpeakingPrompt && (
+            <div className="mb-4 p-3 bg-white rounded-lg border border-violet-200">
+              <p className="text-xs font-semibold text-violet-600 uppercase mb-1">Selected Prompt</p>
+              <p className="text-sm text-gray-800 whitespace-pre-line">{activeSpeakingPrompt.question}</p>
+            </div>
+          )}
           <p className="text-sm text-gray-600 mb-3">Practice your answer:</p>
           <div className="flex gap-3 mb-3">
             {!recording ? (
@@ -1481,7 +1627,7 @@ export default function MasteryCourse({ user }) {
             )}
           </div>
           <Textarea value={speakingResponse} onChange={(e) => setSpeakingResponse(e.target.value)} placeholder="Or type your answer..." className="min-h-[100px]" />
-          <Button onClick={() => evaluateSpeaking(currentQ?.question || currentQ?.cue_card, currentQ?.model_answer)} disabled={!speakingResponse.trim() || evaluatingSpeaking} className="mt-3 bg-gradient-to-r from-violet-500 to-purple-600">
+          <Button onClick={evaluateSpeaking} disabled={!speakingResponse.trim() || evaluatingSpeaking} className="mt-3 bg-gradient-to-r from-violet-500 to-purple-600">
             {evaluatingSpeaking ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null} Get Feedback
           </Button>
         </div>
@@ -1522,6 +1668,57 @@ export default function MasteryCourse({ user }) {
             </div>
             
             <p className="text-gray-700 mb-4">{speakingFeedback.overall_feedback || speakingFeedback.feedback}</p>
+
+            {speakingFeedback.response_diagnosis && (
+              <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-2">
+                <div className="p-3 bg-white rounded-lg">
+                  <p className="text-xs text-gray-500">Relevance</p>
+                  <p className="font-semibold capitalize">{speakingFeedback.response_diagnosis.relevance}</p>
+                </div>
+                <div className="p-3 bg-white rounded-lg">
+                  <p className="text-xs text-gray-500">Development</p>
+                  <p className="font-semibold capitalize">{speakingFeedback.response_diagnosis.development}</p>
+                </div>
+                <div className="p-3 bg-white rounded-lg">
+                  <p className="text-xs text-gray-500">Template Risk</p>
+                  <p className="font-semibold capitalize">{speakingFeedback.response_diagnosis.template_risk}</p>
+                </div>
+              </div>
+            )}
+
+            {speakingFeedback.response_metrics && (
+              <div className="mb-4 p-3 bg-white rounded-lg border border-gray-200">
+                <p className="text-xs text-gray-500 uppercase mb-2">Response Metrics</p>
+                <div className="grid grid-cols-3 gap-3 text-sm text-gray-700">
+                  <div>Words: <span className="font-semibold">{speakingFeedback.response_metrics.word_count}</span></div>
+                  <div>Sentences: <span className="font-semibold">{speakingFeedback.response_metrics.sentence_count}</span></div>
+                  <div>Template risk: <span className="font-semibold">{speakingFeedback.response_metrics.template_risk}</span></div>
+                </div>
+              </div>
+            )}
+
+            {speakingFeedback.pronunciation_estimated !== undefined && (
+              <div className={`mb-4 p-3 rounded-lg ${speakingFeedback.pronunciation_estimated ? 'bg-amber-50' : 'bg-emerald-50'}`}>
+                <p className="text-sm text-gray-800">
+                  {speakingFeedback.pronunciation_estimated
+                    ? 'Pronunciation is estimated mainly from transcript evidence.'
+                    : 'Pronunciation includes Azure acoustic analysis.'}
+                </p>
+              </div>
+            )}
+
+            {speakingFeedback.azure_scores && (
+              <div className="mb-4 p-3 bg-cyan-50 rounded-lg border border-cyan-200">
+                <p className="text-sm font-semibold text-cyan-700 mb-2">Azure Pronunciation Snapshot</p>
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-gray-700">
+                  <div>Pron: <span className="font-semibold">{speakingFeedback.azure_scores.pronunciation}</span></div>
+                  <div>Accuracy: <span className="font-semibold">{speakingFeedback.azure_scores.accuracy}</span></div>
+                  <div>Fluency: <span className="font-semibold">{speakingFeedback.azure_scores.fluency}</span></div>
+                  <div>Complete: <span className="font-semibold">{speakingFeedback.azure_scores.completeness}</span></div>
+                  <div>Prosody: <span className="font-semibold">{speakingFeedback.azure_scores.prosody}</span></div>
+                </div>
+              </div>
+            )}
             
             {/* Mistakes with Corrections */}
             {speakingFeedback.mistakes && speakingFeedback.mistakes.length > 0 && (
@@ -1554,6 +1751,61 @@ export default function MasteryCourse({ user }) {
             {speakingFeedback.improvement_tip && (
               <div className="p-3 bg-yellow-50 rounded-lg mb-3">
                 <p className="text-sm text-yellow-800">💡 <strong>Tip:</strong> {speakingFeedback.improvement_tip}</p>
+              </div>
+            )}
+
+            {speakingFeedback.high_priority_fixes && speakingFeedback.high_priority_fixes.length > 0 && (
+              <div className="p-3 bg-orange-50 rounded-lg mb-3">
+                <h5 className="font-semibold text-orange-700 mb-2">🎯 High-Priority Fixes</h5>
+                <ul className="space-y-1 text-sm text-orange-800">
+                  {speakingFeedback.high_priority_fixes.map((item, idx) => (
+                    <li key={idx}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {speakingFeedback.line_by_line_corrections && speakingFeedback.line_by_line_corrections.length > 0 && (
+              <div className="p-3 bg-rose-50 rounded-lg mb-3">
+                <h5 className="font-semibold text-rose-700 mb-2">✍️ Line-by-Line Coaching</h5>
+                <div className="space-y-2">
+                  {speakingFeedback.line_by_line_corrections.map((item, idx) => (
+                    <div key={idx} className="p-3 bg-white rounded-lg border border-rose-100">
+                      <p className="text-sm text-red-600 line-through">{item.original}</p>
+                      <p className="text-sm text-green-700 font-medium">✓ {item.corrected}</p>
+                      {item.issue && <p className="text-xs font-semibold text-rose-600 mt-1">{item.issue}</p>}
+                      {item.explanation && <p className="text-xs text-gray-600 mt-1">{item.explanation}</p>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {speakingFeedback.next_answer_blueprint && speakingFeedback.next_answer_blueprint.length > 0 && (
+              <div className="p-3 bg-indigo-50 rounded-lg mb-3">
+                <h5 className="font-semibold text-indigo-700 mb-2">🧭 Next Answer Blueprint</h5>
+                <ol className="text-sm text-indigo-800 space-y-1 list-decimal list-inside">
+                  {speakingFeedback.next_answer_blueprint.map((step, idx) => (
+                    <li key={idx}>{step}</li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {speakingFeedback.band_justification && (
+              <div className="p-3 bg-blue-50 rounded-lg mb-3">
+                <p className="text-sm text-blue-800">📏 <strong>Band Justification:</strong> {speakingFeedback.band_justification}</p>
+              </div>
+            )}
+
+            {speakingFeedback.cap_reasons && speakingFeedback.cap_reasons.length > 0 && (
+              <div className="p-3 bg-gray-50 rounded-lg mb-3">
+                <p className="text-sm font-semibold text-gray-700 mb-1">Band Cap Reasons</p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {speakingFeedback.cap_reasons.map((reason, idx) => (
+                    <li key={idx}>• {reason}</li>
+                  ))}
+                </ul>
               </div>
             )}
             
@@ -1884,6 +2136,44 @@ export default function MasteryCourse({ user }) {
                   <li key={idx}>{step}</li>
                 ))}
               </ol>
+            </div>
+          )}
+
+          {writingFeedback.line_by_line_corrections && writingFeedback.line_by_line_corrections.length > 0 && (
+            <div className="p-3 bg-rose-50 rounded-lg mt-3">
+              <h5 className="font-semibold text-rose-700 mb-3">✍️ Line-by-Line Corrections</h5>
+              <div className="space-y-3">
+                {writingFeedback.line_by_line_corrections.map((item, idx) => (
+                  <div key={idx} className="p-3 bg-white rounded-lg border border-rose-100">
+                    <p className="text-sm text-red-600 line-through mb-1">{item.original}</p>
+                    <p className="text-sm text-green-700 font-medium mb-1">✓ {item.corrected}</p>
+                    {item.issue && <p className="text-xs font-semibold text-rose-600 mb-1">{item.issue}</p>}
+                    {item.explanation && <p className="text-xs text-gray-600">{item.explanation}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {writingFeedback.grammar_upgrade_examples && writingFeedback.grammar_upgrade_examples.length > 0 && (
+            <div className="p-3 bg-purple-50 rounded-lg mt-3">
+              <h5 className="font-semibold text-purple-700 mb-3">✨ Sentence Upgrades</h5>
+              <div className="space-y-3">
+                {writingFeedback.grammar_upgrade_examples.map((item, idx) => (
+                  <div key={idx} className="p-3 bg-white rounded-lg border border-purple-100">
+                    <p className="text-sm text-red-600 line-through mb-1">{item.original}</p>
+                    <p className="text-sm text-green-700 font-medium mb-1">✓ {item.upgraded}</p>
+                    {item.explanation && <p className="text-xs text-gray-600">{item.explanation}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {writingFeedback.band_justification && (
+            <div className="p-3 bg-blue-50 rounded-lg mt-3">
+              <h5 className="font-semibold text-blue-700 mb-2">📏 Band Justification</h5>
+              <p className="text-sm text-gray-700">{writingFeedback.band_justification}</p>
             </div>
           )}
         </div>

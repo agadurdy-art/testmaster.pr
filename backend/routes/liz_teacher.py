@@ -9,16 +9,25 @@ import os
 import re
 import uuid
 import tempfile
+import logging
+import base64
 from datetime import datetime, timezone, timedelta
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from pydantic import BaseModel
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+from plan_access import get_plan_features
 
 router = APIRouter(prefix="/api/liz", tags=["liz-teacher"])
 
 db = None
+logger = logging.getLogger(__name__)
+LIZ_DEFAULT_MODEL = os.environ.get("LIZ_DEFAULT_MODEL", "gpt-4o-mini")
+LIZ_DEEP_MODEL = os.environ.get("LIZ_DEEP_MODEL", "gpt-4o")
+LIZ_ALLOWED_HOMEWORK_TYPES = {"vocabulary", "writing", "grammar", "speaking"}
+LIZ_HISTORY_TURNS = 6
+LIZ_CONTEXT_MESSAGE_CHARS = 240
 
 LIZ_SYSTEM_PROMPT = """You are Liz, a professional IELTS teacher and personal study coach on the "IELTS Ace" platform.
 
@@ -142,6 +151,7 @@ class ChatRequest(BaseModel):
     session_id: Optional[str] = None
     user_id: str
     is_voice: bool = False
+    audio_data: Optional[str] = None
 
 
 class NewSessionRequest(BaseModel):
@@ -168,26 +178,52 @@ class HomeworkAssignRequest(BaseModel):
 HOMEWORK_PATTERN = re.compile(r'\[HOMEWORK\](.*?)\[/HOMEWORK\]', re.DOTALL)
 
 
+def _sanitize_homework_text(value: str, max_length: int) -> str:
+    cleaned = re.sub(r"\s+", " ", (value or "")).strip()
+    return cleaned[:max_length]
+
+
+def build_recent_conversation_context(messages: List[Dict[str, Any]]) -> str:
+    """Compress recent turns into a bounded prompt block."""
+    if not messages:
+        return ""
+
+    recent = messages[-(LIZ_HISTORY_TURNS * 2):]
+    history_lines = []
+    for msg in recent:
+        role = "Student" if msg.get("role") == "user" else "Liz"
+        content = _sanitize_homework_text(msg.get("content", ""), LIZ_CONTEXT_MESSAGE_CHARS)
+        if content:
+            history_lines.append(f"{role}: {content}")
+
+    if not history_lines:
+        return ""
+
+    return "\n\n## Recent Conversation:\n" + "\n".join(history_lines)
+
+
 def parse_homework_from_response(response: str, user_id: str, session_id: str):
     """Parse [HOMEWORK] blocks from Liz's response. Returns (cleaned_response, homework_list)."""
     matches = HOMEWORK_PATTERN.findall(response)
     homework_list = []
-    for match in matches:
+    for match in matches[:1]:
         hw = {"user_id": user_id, "session_id": session_id, "status": "pending",
               "homework_id": str(uuid.uuid4()), "created_at": datetime.now(timezone.utc).isoformat()}
         for line in match.strip().split("\n"):
             line = line.strip()
             if line.lower().startswith("type:"):
-                hw["type"] = line.split(":", 1)[1].strip().lower()
+                hw_type = line.split(":", 1)[1].strip().lower()
+                hw["type"] = hw_type if hw_type in LIZ_ALLOWED_HOMEWORK_TYPES else "vocabulary"
             elif line.lower().startswith("title:"):
-                hw["title"] = line.split(":", 1)[1].strip()
+                hw["title"] = _sanitize_homework_text(line.split(":", 1)[1], 120)
             elif line.lower().startswith("task:"):
-                hw["task"] = line.split(":", 1)[1].strip()
+                hw["task"] = _sanitize_homework_text(line.split(":", 1)[1], 500)
             elif line.lower().startswith("due:"):
                 try:
                     days = int(line.split(":", 1)[1].strip())
                 except ValueError:
                     days = 2
+                days = min(max(days, 1), 14)
                 hw["due_date"] = (datetime.now(timezone.utc) + timedelta(days=days)).isoformat()
         if hw.get("title") and hw.get("task"):
             hw.setdefault("type", "vocabulary")
@@ -224,6 +260,127 @@ async def get_homework_context(user_id: str) -> str:
 
 def get_api_key():
     return os.environ.get("EMERGENT_LLM_KEY", "")
+
+
+def get_liz_model(task: str = "chat") -> str:
+    """Return the default model for Liz tasks.
+
+    Keep everyday teacher interactions on a cheaper model and reserve the
+    heavier model for future deep-analysis surfaces.
+    """
+    if task in {"chat", "greet", "homework_review"}:
+        return LIZ_DEFAULT_MODEL
+    return LIZ_DEEP_MODEL
+
+
+def select_chat_model(message: str, is_voice: bool = False) -> str:
+    """Route heavier teacher tasks to the stronger model."""
+    normalized = (message or "").lower()
+    deep_keywords = [
+        "study plan", "analyze my progress", "weekly plan", "band prediction",
+        "evaluate my writing", "evaluate my speaking", "detailed feedback",
+        "essay", "cue card", "part 3", "homework review"
+    ]
+    if is_voice or any(keyword in normalized for keyword in deep_keywords):
+        return LIZ_DEEP_MODEL
+    return LIZ_DEFAULT_MODEL
+
+
+async def get_liz_user_access(user_id: str) -> dict:
+    """Resolve the student's current plan and whether Liz is enabled."""
+    if db is None:
+        return {
+            "user": None,
+            "plan": "free",
+            "features": get_plan_features("free"),
+            "has_access": False,
+        }
+
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "id": 1, "name": 1, "email": 1, "plan": 1})
+    plan = (user or {}).get("plan", "free")
+    email = (user or {}).get("email")
+    features = get_plan_features(plan, email)
+    has_access = int(features.get("max_liz_messages", 0) or 0) > 0
+
+    return {
+        "user": user,
+        "plan": plan,
+        "features": features,
+        "has_access": has_access,
+    }
+
+
+async def get_liz_usage_stats(user_id: str, max_messages: int) -> dict:
+    """Count user-originated Liz messages for the current UTC month."""
+    if db is None:
+        return {"used_messages": 0, "remaining_messages": max_messages, "resets_at": None}
+
+    now = datetime.now(timezone.utc)
+    month_start = datetime(now.year, now.month, 1, tzinfo=timezone.utc)
+    next_month = datetime(now.year + (1 if now.month == 12 else 0), 1 if now.month == 12 else now.month + 1, 1, tzinfo=timezone.utc)
+
+    sessions = await db.liz_sessions.find(
+        {"user_id": user_id, "created_at": {"$gte": month_start.isoformat()}},
+        {"_id": 0, "messages": 1}
+    ).to_list(200)
+
+    used = 0
+    for session in sessions:
+        for msg in session.get("messages", []):
+            if msg.get("role") == "user":
+                timestamp = msg.get("timestamp") or session.get("created_at")
+                if timestamp and timestamp >= month_start.isoformat():
+                    used += 1
+
+    remaining = max(max_messages - used, 0)
+    return {
+        "used_messages": used,
+        "remaining_messages": remaining,
+        "resets_at": next_month.isoformat(),
+    }
+
+
+async def ensure_liz_access(user_id: str) -> dict:
+    access = await get_liz_user_access(user_id)
+    if not access["has_access"]:
+        raise HTTPException(status_code=403, detail="Liz Teacher is available on Learner, Achiever, and Master plans.")
+    access["usage"] = await get_liz_usage_stats(user_id, int(access["features"].get("max_liz_messages", 0) or 0))
+    return access
+
+
+async def build_voice_pronunciation_context(audio_data_b64: Optional[str]) -> tuple[str, Optional[dict]]:
+    """Optional Azure pronunciation analysis for Liz voice turns."""
+    if not audio_data_b64 or not os.getenv("AZURE_SPEECH_KEY"):
+        return "", None
+
+    try:
+        from routes.speaking_qb import azure_pronunciation_assessment
+
+        audio_bytes = base64.b64decode(audio_data_b64)
+        azure_result = await azure_pronunciation_assessment(audio_bytes, reference_text=None, language="en-US")
+        if not azure_result or not azure_result.get("success"):
+            return "", None
+
+        azure_scores = {
+            "pronunciation": round(float(azure_result.get("pronunciation_score", 0)), 1),
+            "accuracy": round(float(azure_result.get("accuracy_score", 0)), 1),
+            "fluency": round(float(azure_result.get("fluency_score", 0)), 1),
+            "completeness": round(float(azure_result.get("completeness_score", 0)), 1),
+            "prosody": round(float(azure_result.get("prosody_score", 0)), 1),
+        }
+        azure_context = (
+            "\n\n## Acoustic Pronunciation Signals\n"
+            f"- Pronunciation: {azure_scores['pronunciation']}/100\n"
+            f"- Accuracy: {azure_scores['accuracy']}/100\n"
+            f"- Fluency: {azure_scores['fluency']}/100\n"
+            f"- Completeness: {azure_scores['completeness']}/100\n"
+            f"- Prosody: {azure_scores['prosody']}/100\n"
+            "Use these scores when you comment on pronunciation and fluency."
+        )
+        return azure_context, azure_scores
+    except Exception as exc:
+        logger.warning("Liz Azure pronunciation unavailable: %s", exc)
+        return "", None
 
 
 async def get_user_context(user_id: str) -> str:
@@ -308,16 +465,12 @@ async def get_user_context(user_id: str) -> str:
             date_str = str(dt)[:10]
             activity_dates.add(date_str)
 
-    # Check chat sessions for activity
+    # Check Liz sessions for activity
     sessions = await db.liz_sessions.find(
         {"user_id": user_id}, {"_id": 0, "created_at": 1}
     ).to_list(50)
-    # Also check old emily sessions
-    emily_sessions = await db.emily_sessions.find(
-        {"user_id": user_id}, {"_id": 0, "created_at": 1}
-    ).to_list(50)
 
-    for s in sessions + emily_sessions:
+    for s in sessions:
         dt = s.get("created_at")
         if dt:
             date_str = str(dt)[:10]
@@ -449,6 +602,9 @@ async def chat_with_liz(req: ChatRequest):
     api_key = get_api_key()
     if not api_key:
         raise HTTPException(status_code=500, detail="LLM API key not configured")
+    access = await ensure_liz_access(req.user_id)
+    if access["usage"]["remaining_messages"] <= 0:
+        raise HTTPException(status_code=402, detail="You have reached your Liz Teacher monthly message limit for this plan.")
 
     session = await get_or_create_session(req.user_id, req.session_id)
     session_id = session["session_id"]
@@ -460,22 +616,21 @@ async def chat_with_liz(req: ChatRequest):
     # Add voice context if this is a spoken message
     if req.is_voice:
         system_msg += "\n\n## Voice Mode Active\nThe student is speaking to you via voice. Their message was transcribed from speech. When evaluating, consider natural speech patterns. Keep your response conversational but still structured. This is similar to an IELTS Speaking test scenario."
+        azure_context, azure_scores = await build_voice_pronunciation_context(req.audio_data)
+        if azure_context:
+            system_msg += azure_context
+    else:
+        azure_scores = None
 
     # Build conversation context from history
     prev_messages = session.get("messages", [])
-    if prev_messages:
-        recent = prev_messages[-16:]
-        history_lines = []
-        for msg in recent:
-            role = "Student" if msg["role"] == "user" else "Liz"
-            history_lines.append(f"{role}: {msg['content']}")
-        system_msg += "\n\n## Recent Conversation:\n" + "\n".join(history_lines)
+    system_msg += build_recent_conversation_context(prev_messages)
 
     chat = LlmChat(
         api_key=api_key,
         session_id=f"liz_{session_id}_{datetime.now(timezone.utc).strftime('%H%M%S')}",
         system_message=system_msg
-    ).with_model("openai", "gpt-4o")
+    ).with_model("openai", select_chat_model(req.message, req.is_voice))
 
     response = await chat.send_message(UserMessage(text=req.message))
 
@@ -500,15 +655,38 @@ async def chat_with_liz(req: ChatRequest):
         "success": True,
         "session_id": session_id,
         "response": display_response,
-        "homework_assigned": [{"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]} for h in hw_list]
+        "homework_assigned": [{"homework_id": h["homework_id"], "title": h["title"], "type": h["type"]} for h in hw_list],
+        "voice_pronunciation": azure_scores,
+        "usage": await get_liz_usage_stats(req.user_id, int(access["features"].get("max_liz_messages", 0) or 0)),
     }
 
 
 @router.post("/new-session")
 async def create_new_session(req: NewSessionRequest):
     """Start a new chat session."""
+    await ensure_liz_access(req.user_id)
     session = await get_or_create_session(req.user_id)
     return {"success": True, "session_id": session["session_id"]}
+
+
+@router.get("/status/{user_id}")
+async def get_liz_status(user_id: str):
+    """Return Liz availability, plan info, and monthly usage."""
+    access = await get_liz_user_access(user_id)
+    max_messages = int(access["features"].get("max_liz_messages", 0) or 0)
+    usage = await get_liz_usage_stats(user_id, max_messages)
+    return {
+        "success": True,
+        "plan": access["plan"],
+        "has_access": access["has_access"],
+        "max_messages": max_messages,
+        "used_messages": usage["used_messages"],
+        "remaining_messages": usage["remaining_messages"],
+        "resets_at": usage["resets_at"],
+        "default_model": LIZ_DEFAULT_MODEL,
+        "deep_model": LIZ_DEEP_MODEL,
+        "azure_pronunciation_enabled": bool(os.getenv("AZURE_SPEECH_KEY")),
+    }
 
 
 @router.post("/greet")
@@ -518,6 +696,7 @@ async def greet_student(req: NewSessionRequest):
     api_key = get_api_key()
     if not api_key:
         raise HTTPException(status_code=500, detail="LLM API key not configured")
+    await ensure_liz_access(req.user_id)
 
     session = await get_or_create_session(req.user_id)
     user_context = await get_user_context(req.user_id)
@@ -537,7 +716,7 @@ Student Profile:
         api_key=api_key,
         session_id=f"liz_greet_{session['session_id']}",
         system_message=greeting_system
-    ).with_model("openai", "gpt-4o")
+    ).with_model("openai", get_liz_model("greet"))
 
     greeting = await chat.send_message(UserMessage(text="Greet me and suggest today's lesson."))
 
@@ -570,6 +749,7 @@ Student Profile:
 @router.get("/history/{session_id}")
 async def get_chat_history(session_id: str, user_id: str):
     """Get chat history for a session."""
+    await ensure_liz_access(user_id)
     session = await db.liz_sessions.find_one(
         {"session_id": session_id, "user_id": user_id},
         {"_id": 0}
@@ -586,6 +766,7 @@ async def get_chat_history(session_id: str, user_id: str):
 @router.get("/sessions/{user_id}")
 async def get_user_sessions(user_id: str):
     """Get all chat sessions for a user."""
+    await ensure_liz_access(user_id)
     sessions = await db.liz_sessions.find(
         {"user_id": user_id},
         {"_id": 0, "session_id": 1, "created_at": 1, "messages": {"$slice": 1}}
@@ -673,6 +854,7 @@ async def speech_to_text(file: UploadFile = File(...)):
 @router.get("/homework/{user_id}")
 async def get_homework(user_id: str, status: Optional[str] = None):
     """Get student's homework list."""
+    await ensure_liz_access(user_id)
     query = {"user_id": user_id}
     if status:
         query["status"] = status
@@ -685,6 +867,7 @@ async def get_homework(user_id: str, status: Optional[str] = None):
 @router.post("/homework/assign")
 async def assign_homework(req: HomeworkAssignRequest):
     """Manually assign homework (fallback if auto-detection missed it)."""
+    await ensure_liz_access(req.user_id)
     hw = {
         "homework_id": str(uuid.uuid4()),
         "user_id": req.user_id,
@@ -703,6 +886,7 @@ async def assign_homework(req: HomeworkAssignRequest):
 @router.post("/homework/{homework_id}/submit")
 async def submit_homework(homework_id: str, req: HomeworkSubmitRequest):
     """Student submits their homework answer."""
+    await ensure_liz_access(req.user_id)
     hw = await db.liz_homework.find_one(
         {"homework_id": homework_id, "user_id": req.user_id}, {"_id": 0}
     )
@@ -741,7 +925,7 @@ Keep feedback concise but specific."""
                 api_key=api_key,
                 session_id=f"liz_review_{homework_id}",
                 system_message="You are Liz, a professional IELTS teacher reviewing a student's homework. Be specific and constructive."
-            ).with_model("openai", "gpt-4o")
+            ).with_model("openai", get_liz_model("homework_review"))
             feedback = await chat.send_message(UserMessage(text=review_prompt))
 
             # Try to extract score
@@ -767,6 +951,7 @@ Keep feedback concise but specific."""
 @router.delete("/homework/{homework_id}")
 async def delete_homework(homework_id: str, user_id: str):
     """Remove a homework assignment."""
+    await ensure_liz_access(user_id)
     result = await db.liz_homework.delete_one(
         {"homework_id": homework_id, "user_id": user_id}
     )

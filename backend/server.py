@@ -16,12 +16,14 @@ import hashlib
 import bcrypt
 import hmac
 import urllib.parse
+import base64
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import json
 from emergentintegrations.llm.openai import OpenAISpeechToText
 import resend
 import io
 import httpx
+import re
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -556,7 +558,7 @@ class User(BaseModel):
     email_verified: bool = False  # New field for clarity
     google_id: Optional[str] = None
     facebook_id: Optional[str] = None
-    plan: str = Field(default="free", description="Subscription plan: free or pro")
+    plan: str = Field(default="free", description="Subscription plan: free, explorer, learner, achiever, or master")
     examCredits: int = Field(default=0, description="Number of AI speaking exam credits")
     ai_interview_free_seconds_used: int = Field(default=0, description="Total free AI interviewer seconds used")
     ai_mentor_messages_used: int = Field(default=0, description="AI mentor messages used (limit 3 for unverified)")
@@ -2131,6 +2133,70 @@ async def _get_user_by_email(email: str) -> Optional[dict]:
     return user
 
 
+def _course_preview_allowed(user_plan: Optional[str], required_plan: str, module_number: Optional[int]) -> bool:
+    if plan_meets_minimum(normalize_plan_name(user_plan), required_plan):
+        return True
+    return int(module_number or 0) == 1
+
+
+def _enforce_course_access(user_plan: Optional[str], required_plan: str, module_number: Optional[int], feature_name: str) -> None:
+    if _course_preview_allowed(user_plan, required_plan, module_number):
+        return
+    raise HTTPException(
+        status_code=403,
+        detail=f"{feature_name} requires the {get_plan_label(required_plan)} plan or higher. Free users can preview Lesson 1 only.",
+    )
+
+
+def _speaking_word_count(text: Optional[str]) -> int:
+    return len(re.findall(r"\b\w+\b", text or ""))
+
+
+def _speaking_sentence_count(text: Optional[str]) -> int:
+    parts = [part.strip() for part in re.split(r"[.!?]+|\n+", text or "") if part.strip()]
+    return len(parts)
+
+
+def _speaking_template_risk(response_text: Optional[str], model_answer: Optional[str]) -> float:
+    response_words = {word.lower() for word in re.findall(r"\b[a-zA-Z']+\b", response_text or "") if len(word) > 2}
+    model_words = {word.lower() for word in re.findall(r"\b[a-zA-Z']+\b", model_answer or "") if len(word) > 2}
+    if not response_words or not model_words:
+        return 0.0
+    overlap = len(response_words & model_words) / max(1, len(response_words))
+    return round(overlap, 2)
+
+
+def _apply_speaking_band_cap(raw_band: float, *, word_count: int, sentence_count: int, template_risk: float, track: str) -> Dict[str, Any]:
+    cap = 9.0
+    reasons: List[str] = []
+
+    if track == "advanced":
+        if word_count < 30 or sentence_count < 2:
+            cap = min(cap, 5.0)
+            reasons.append("Response is too short or underdeveloped for a high advanced-course band.")
+        elif word_count < 55:
+            cap = min(cap, 6.0)
+            reasons.append("Response needs more development and supporting detail.")
+    else:
+        if word_count < 18 or sentence_count < 1:
+            cap = min(cap, 4.5)
+            reasons.append("Response is too short for a strong speaking score.")
+        elif word_count < 35:
+            cap = min(cap, 5.5)
+            reasons.append("Response needs more extension and clearer support.")
+
+    if template_risk >= 0.72:
+        cap = min(cap, 4.5 if track == "advanced" else 5.0)
+        reasons.append("Response overlaps too closely with the model answer and may be memorized.")
+
+    final_band = round(min(raw_band, cap) * 2) / 2
+    return {
+        "band_score": final_band,
+        "band_cap": cap if final_band < raw_band else None,
+        "cap_reasons": reasons,
+    }
+
+
 # NOTE: SePay/VietQR integration has been disabled. Manual credits and PayPal are used instead.
 
 @api_router.get("/payments/orders/{order_id}")
@@ -2142,7 +2208,15 @@ async def get_payment_order(order_id: str):
 
 
 # PayPal Smart Buttons -> Orders API mappings
-from plan_access import PLAN_PRICES_USD, get_plan_features, plan_meets_minimum, can_access_stage, PLAN_FEATURES
+from plan_access import (
+    PLAN_PRICES_USD,
+    get_plan_features,
+    plan_meets_minimum,
+    can_access_stage,
+    PLAN_FEATURES,
+    normalize_plan_name,
+    get_plan_label,
+)
 
 PAYPAL_PLAN_PRICES = {
     "explorer": PLAN_PRICES_USD["explorer"],
@@ -2451,7 +2525,7 @@ async def get_user_plan_info(user_email: str):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    plan = user.get("plan", "free")
+    plan = normalize_plan_name(user.get("plan", "free"))
     features = get_plan_features(plan)
     usage = user.get("monthly_usage", {"liz_messages": 0, "speaking_evals": 0})
     
@@ -2551,6 +2625,17 @@ def _map_kofi_tier_to_credits(tier_name: str) -> int:
     return 0
 
 
+def _map_legacy_subscription_tier_to_plan(tier_name: str) -> str:
+    name = (tier_name or "").strip().lower()
+    if "starter" in name:
+        return "learner"
+    if "booster" in name:
+        return "achiever"
+    if "pro" in name:
+        return "master"
+    return "free"
+
+
 @api_router.post("/payments/kofi/ipn")
 async def kofi_ipn(request: Request):
     """Handle Ko-fi webhook.
@@ -2613,7 +2698,7 @@ async def kofi_ipn(request: Request):
     if kofi_type.lower() == "subscription":
         credits = _map_kofi_tier_to_credits(tier_name)
         if credits > 0:
-            update_fields["plan"] = "pro"
+            update_fields["plan"] = _map_legacy_subscription_tier_to_plan(tier_name)
             update_fields["subscription"] = tier_name
             update_fields["examCredits"] = user.get("examCredits", 0) + credits
 
@@ -2692,15 +2777,15 @@ async def paypal_ipn(request: Request):
     if abs(amount - 4.99) < 0.01:
         update_fields["examCredits"] = user.get("examCredits", 0) + 1
     elif abs(amount - 9.0) < 0.01:
-        update_fields["plan"] = "pro"
+        update_fields["plan"] = "learner"
         update_fields["subscription"] = "Starter"
         update_fields["examCredits"] = user.get("examCredits", 0) + 2
     elif abs(amount - 19.0) < 0.01:
-        update_fields["plan"] = "pro"
+        update_fields["plan"] = "achiever"
         update_fields["subscription"] = "Booster"
         update_fields["examCredits"] = user.get("examCredits", 0) + 5
     elif abs(amount - 29.0) < 0.01:
-        update_fields["plan"] = "pro"
+        update_fields["plan"] = "master"
         update_fields["subscription"] = "Pro"
         update_fields["examCredits"] = user.get("examCredits", 0) + 8
 
@@ -2727,7 +2812,10 @@ async def manual_credit_simple(req: ManualCreditRequest):
 
     update_fields: Dict[str, Any] = {}
     if req.plan:
-        update_fields["plan"] = req.plan
+        normalized_plan = normalize_plan_name(req.plan)
+        if normalized_plan not in PLAN_FEATURES:
+            raise HTTPException(status_code=400, detail="Invalid plan")
+        update_fields["plan"] = normalized_plan
     if req.exam_credits is not None:
         update_fields["examCredits"] = req.exam_credits
 
@@ -2756,7 +2844,10 @@ async def manual_credit(req: ManualCreditRequest):
 
     update_fields: Dict[str, Any] = {}
     if req.plan:
-        update_fields["plan"] = req.plan
+        normalized_plan = normalize_plan_name(req.plan)
+        if normalized_plan not in PLAN_FEATURES:
+            raise HTTPException(status_code=400, detail="Invalid plan")
+        update_fields["plan"] = normalized_plan
     if req.exam_credits is not None:
         update_fields["examCredits"] = req.exam_credits
 
@@ -2776,6 +2867,351 @@ ADMIN_EMAILS = ["aga.durdy@gmail.com", "ieltsace@testmaster.pro", "admin@ieltsac
 def is_admin_email(email: str) -> bool:
     """Check if email belongs to an admin using centralized security_utils."""
     return _su_is_admin(email)
+
+
+def _parse_admin_dt(value):
+    if not value:
+        return None
+    if isinstance(value, datetime):
+        return value
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _summarize_progress_by_type(attempts: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
+    progress_by_type: Dict[str, Dict[str, Any]] = {}
+    for attempt in attempts:
+        test_type = attempt.get("test_type", "unknown")
+        band_score = float(attempt.get("band_score", 0) or 0)
+        entry = progress_by_type.setdefault(test_type, {"count": 0, "total_band": 0.0, "best_band": 0.0})
+        entry["count"] += 1
+        entry["total_band"] += band_score
+        entry["best_band"] = max(entry["best_band"], band_score)
+
+    for entry in progress_by_type.values():
+        entry["avg_band"] = round(entry["total_band"] / entry["count"], 1) if entry["count"] else 0.0
+        entry["best_band"] = round(entry["best_band"], 1)
+        entry.pop("total_band", None)
+
+    return progress_by_type
+
+
+def _normalize_admin_user(user: Dict[str, Any]) -> Dict[str, Any]:
+    normalized_plan = normalize_plan_name(user.get("plan"))
+    normalized = {**user}
+    normalized["plan"] = normalized_plan
+    normalized["plan_label"] = get_plan_label(normalized_plan)
+    normalized["legacy_plan"] = user.get("plan") if user.get("plan") != normalized_plan else None
+    normalized["plan_features"] = get_plan_features(normalized_plan, user.get("email"))
+    return normalized
+
+
+def _build_admin_plan_update(user: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    email = (user.get("email") or "").strip().lower()
+    if not is_admin_email(email):
+        return None
+
+    current_credits = int(user.get("examCredits", 0) or 0)
+    return {
+        "plan": "master",
+        "subscription": "Admin",
+        "paypal_subscription_id": None,
+        "plan_expires_at": None,
+        "payment_method": None,
+        "examCredits": max(current_credits, 25),
+        "verified": True,
+        "email_verified": True,
+    }
+
+
+async def ensure_admin_accounts_on_master() -> Dict[str, int]:
+    admin_count = 0
+    unchanged_users = 0
+
+    cursor = db.users.find(
+        {},
+        {
+            "_id": 0,
+            "id": 1,
+            "email": 1,
+            "plan": 1,
+            "subscription": 1,
+            "paypal_subscription_id": 1,
+            "plan_expires_at": 1,
+            "payment_method": 1,
+            "examCredits": 1,
+            "verified": 1,
+            "email_verified": 1,
+        },
+    )
+
+    async for user in cursor:
+        update_fields = _build_admin_plan_update(user)
+        if not update_fields:
+            unchanged_users += 1
+            continue
+
+        current_state = {key: user.get(key) for key in update_fields}
+        if current_state != update_fields:
+            await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
+        admin_count += 1
+
+    logger.info("✅ Admin plan policy enforced: %s admin accounts on master, %s non-admin users preserved", admin_count, unchanged_users)
+    return {"admin_master": admin_count, "preserved_users": unchanged_users}
+
+
+async def enforce_current_plan_policy() -> Dict[str, int]:
+    return await ensure_admin_accounts_on_master()
+
+
+def _build_learning_platform_summary(progress: Dict[str, Any]) -> Dict[str, Any]:
+    level_progress = progress.get("level_progress", []) if progress else []
+    completed_lessons = []
+    level_summaries = []
+
+    for level in level_progress:
+        units = level.get("unit_progress", [])
+        level_completed = 0
+        level_units = []
+        for unit in units:
+            lesson_progress = unit.get("lesson_progress", [])
+            unit_completed = sum(1 for lesson in lesson_progress if lesson.get("completed"))
+            level_completed += unit_completed
+            level_units.append({
+                "unit_id": unit.get("unit_id"),
+                "completed": bool(unit.get("completed")),
+                "lessons_completed": unit_completed,
+                "lesson_total": len(lesson_progress),
+                "quiz_attempts": len(unit.get("quiz_attempts", [])),
+            })
+            for lesson in lesson_progress:
+                if lesson.get("completed"):
+                    completed_lessons.append({
+                        "level_id": level.get("level_id"),
+                        "unit_id": unit.get("unit_id"),
+                        "lesson_id": lesson.get("lesson_id"),
+                        "completed_at": lesson.get("completion_date"),
+                        "score": lesson.get("score"),
+                        "time_spent_minutes": lesson.get("time_spent_minutes", 0),
+                    })
+
+        level_summaries.append({
+            "level_id": level.get("level_id"),
+            "completed": bool(level.get("completed")),
+            "current_unit_number": level.get("current_unit_number"),
+            "units_started": len(units),
+            "completed_lessons": level_completed,
+            "units": level_units,
+        })
+
+    completed_lessons.sort(key=lambda item: _parse_admin_dt(item.get("completed_at")) or datetime.min, reverse=True)
+    return {
+        "current_level_id": progress.get("current_level_id") if progress else None,
+        "current_unit_id": progress.get("current_unit_id") if progress else None,
+        "current_lesson_id": progress.get("current_lesson_id") if progress else None,
+        "total_hours_studied": round(progress.get("total_hours_studied", 0.0) or 0.0, 1) if progress else 0.0,
+        "last_updated": progress.get("last_updated") if progress else None,
+        "levels_started": len(level_summaries),
+        "lessons_completed": len(completed_lessons),
+        "levels": level_summaries,
+        "recent_completed_lessons": completed_lessons[:12],
+    }
+
+
+def _build_vocab_grammar_summary(progress_rows: List[Dict[str, Any]], quiz_progress: Dict[str, Any]) -> Dict[str, Any]:
+    lessons = []
+    completed_items_total = 0
+    for row in progress_rows:
+        completed_items = row.get("completed_items", [])
+        completed_items_total += len(completed_items)
+        lessons.append({
+            "lesson_id": row.get("lesson_id"),
+            "completed_items": completed_items,
+            "practice_scores": row.get("practice_scores", {}),
+            "updated_at": row.get("updated_at"),
+        })
+    lessons.sort(key=lambda item: _parse_admin_dt(item.get("updated_at")) or datetime.min, reverse=True)
+    return {
+        "lessons_started": len(progress_rows),
+        "completed_item_count": completed_items_total,
+        "recent_lessons": lessons[:12],
+        "quiz_progress": quiz_progress or {
+            "weak_units": [],
+            "total_questions": 0,
+            "correct_answers": 0,
+            "accuracy": 0,
+        },
+    }
+
+
+def _build_vocabulary_engine_summary(progress_rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    modules = []
+    for row in progress_rows:
+        sections_complete = [
+            section
+            for section in ("learn", "practice", "quiz")
+            if row.get(f"{section}_completed")
+        ]
+        modules.append({
+            "module_id": row.get("module_id"),
+            "sections_completed": sections_complete,
+            "progress_percent": round((len(sections_complete) / 3) * 100),
+            "last_activity_at": max(
+                [
+                    row.get("learn_completed_at"),
+                    row.get("practice_completed_at"),
+                    row.get("quiz_completed_at"),
+                ],
+                key=lambda value: _parse_admin_dt(value) or datetime.min,
+            ),
+        })
+    modules.sort(key=lambda item: _parse_admin_dt(item.get("last_activity_at")) or datetime.min, reverse=True)
+    return {
+        "modules_started": len(progress_rows),
+        "modules_completed": sum(1 for module in modules if module["progress_percent"] >= 100),
+        "recent_modules": modules[:12],
+    }
+
+
+def _build_grammar_engine_summary(progress_rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    grouped: Dict[str, Dict[str, Any]] = {}
+    for row in progress_rows:
+        module = grouped.setdefault(row.get("module_id"), {
+            "module_id": row.get("module_id"),
+            "stages": {},
+            "last_activity_at": None,
+        })
+        module["stages"][row.get("stage")] = {
+            "completed": bool(row.get("completed")),
+            "score": row.get("score"),
+            "diagnostics": row.get("diagnostics"),
+            "updated_at": row.get("updated_at"),
+        }
+        row_time = row.get("updated_at")
+        if (_parse_admin_dt(row_time) or datetime.min) > (_parse_admin_dt(module["last_activity_at"]) or datetime.min):
+            module["last_activity_at"] = row_time
+
+    modules = []
+    for module in grouped.values():
+        completed_stages = sum(1 for stage in module["stages"].values() if stage.get("completed"))
+        modules.append({
+            **module,
+            "completed_stage_count": completed_stages,
+        })
+
+    modules.sort(key=lambda item: _parse_admin_dt(item.get("last_activity_at")) or datetime.min, reverse=True)
+    return {
+        "modules_started": len(modules),
+        "recent_modules": modules[:12],
+    }
+
+
+def _build_completion_summary(completions: List[Dict[str, Any]]) -> Dict[str, Any]:
+    by_category: Dict[str, Dict[str, Any]] = {}
+    for completion in completions:
+        category = completion.get("category", "unknown")
+        entry = by_category.setdefault(category, {"count": 0, "best_band": 0.0})
+        entry["count"] += 1
+        entry["best_band"] = max(entry["best_band"], float(completion.get("band_score", 0) or 0))
+    for entry in by_category.values():
+        entry["best_band"] = round(entry["best_band"], 1)
+    return {
+        "total": len(completions),
+        "by_category": by_category,
+        "recent": completions[:12],
+    }
+
+
+def _build_liz_summary(sessions: List[Dict[str, Any]]) -> Dict[str, Any]:
+    summarized = []
+    for session in sessions:
+        messages = session.get("messages", [])
+        summarized.append({
+            "id": session.get("id"),
+            "title": session.get("title"),
+            "created_at": session.get("created_at"),
+            "last_updated": session.get("last_updated"),
+            "message_count": len(messages),
+            "last_message": messages[-1].get("content")[:180] if messages else None,
+        })
+    summarized.sort(key=lambda item: _parse_admin_dt(item.get("last_updated")) or datetime.min, reverse=True)
+    return {
+        "sessions_count": len(summarized),
+        "recent_sessions": summarized[:8],
+    }
+
+
+def _build_recent_activity_timeline(
+    attempts: List[Dict[str, Any]],
+    learning_summary: Dict[str, Any],
+    vocab_summary: Dict[str, Any],
+    vocabulary_engine_summary: Dict[str, Any],
+    grammar_engine_summary: Dict[str, Any],
+    completion_summary: Dict[str, Any],
+    liz_summary: Dict[str, Any],
+) -> List[Dict[str, Any]]:
+    timeline: List[Dict[str, Any]] = []
+
+    for attempt in attempts[:20]:
+        timeline.append({
+            "time": attempt.get("completed_at"),
+            "type": "test_attempt",
+            "label": f"{attempt.get('test_type', 'unknown').title()} test",
+            "details": f"Band {round(float(attempt.get('band_score', 0) or 0), 1)}",
+        })
+
+    for lesson in learning_summary.get("recent_completed_lessons", [])[:10]:
+        timeline.append({
+            "time": lesson.get("completed_at"),
+            "type": "lesson_completion",
+            "label": f"Lesson {lesson.get('lesson_id')}",
+            "details": f"Completed in {lesson.get('unit_id')} ({lesson.get('level_id')})",
+        })
+
+    for lesson in vocab_summary.get("recent_lessons", [])[:8]:
+        timeline.append({
+            "time": lesson.get("updated_at"),
+            "type": "vocab_grammar",
+            "label": f"Vocab/Grammar {lesson.get('lesson_id')}",
+            "details": f"{len(lesson.get('completed_items', []))} completed items",
+        })
+
+    for module in vocabulary_engine_summary.get("recent_modules", [])[:8]:
+        timeline.append({
+            "time": module.get("last_activity_at"),
+            "type": "vocabulary_engine",
+            "label": f"Vocabulary module {module.get('module_id')}",
+            "details": f"{module.get('progress_percent', 0)}% complete",
+        })
+
+    for module in grammar_engine_summary.get("recent_modules", [])[:8]:
+        timeline.append({
+            "time": module.get("last_activity_at"),
+            "type": "grammar_engine",
+            "label": f"Grammar module {module.get('module_id')}",
+            "details": f"{module.get('completed_stage_count', 0)} stages completed",
+        })
+
+    for completion in completion_summary.get("recent", [])[:8]:
+        timeline.append({
+            "time": completion.get("completed_at"),
+            "type": "full_test",
+            "label": f"{completion.get('category', 'unknown').replace('_', ' ').title()} completion",
+            "details": completion.get("test_id"),
+        })
+
+    for session in liz_summary.get("recent_sessions", [])[:6]:
+        timeline.append({
+            "time": session.get("last_updated"),
+            "type": "liz_session",
+            "label": session.get("title") or "Liz session",
+            "details": f"{session.get('message_count', 0)} messages",
+        })
+
+    timeline.sort(key=lambda item: _parse_admin_dt(item.get("time")) or datetime.min, reverse=True)
+    return [item for item in timeline if item.get("time")][:25]
 
 @api_router.get("/admin/users")
 async def admin_get_all_users(admin_email: str = None):
@@ -2798,8 +3234,9 @@ async def admin_get_all_users(admin_email: str = None):
         total_tests = len(attempts)
         avg_band = sum(a.get("band_score", 0) for a in attempts) / total_tests if total_tests > 0 else 0
         
+        normalized_user = _normalize_admin_user(user)
         enriched_users.append({
-            **user,
+            **normalized_user,
             "total_tests": total_tests,
             "avg_band": round(avg_band, 1),
             "last_active": attempts[0].get("completed_at") if attempts else user.get("created_at"),
@@ -2817,33 +3254,60 @@ async def admin_get_user_detail(user_id: str, admin_email: str = None):
     user = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    
-    # Get all test attempts
-    attempts = await db.test_attempts.find(
-        {"user_id": user_id}, 
-        {"_id": 0}
-    ).sort("completed_at", -1).to_list(100)
-    
-    # Get progress stats per test type
-    progress_by_type = {}
-    for attempt in attempts:
-        t_type = attempt.get("test_type", "unknown")
-        if t_type not in progress_by_type:
-            progress_by_type[t_type] = {"count": 0, "total_band": 0, "best_band": 0}
-        progress_by_type[t_type]["count"] += 1
-        progress_by_type[t_type]["total_band"] += attempt.get("band_score", 0)
-        progress_by_type[t_type]["best_band"] = max(progress_by_type[t_type]["best_band"], attempt.get("band_score", 0))
-    
-    for t_type in progress_by_type:
-        progress_by_type[t_type]["avg_band"] = round(
-            progress_by_type[t_type]["total_band"] / progress_by_type[t_type]["count"], 1
-        ) if progress_by_type[t_type]["count"] > 0 else 0
-    
+
+    attempts = await db.test_attempts.find({"user_id": user_id}, {"_id": 0}).sort("completed_at", -1).to_list(200)
+    progress_by_type = _summarize_progress_by_type(attempts)
+
+    learning_progress = await db.user_learning_progress.find_one({"user_id": user_id}, {"_id": 0}) or {}
+    vocab_grammar_progress = await db.vocab_grammar_progress.find({"user_id": user_id}, {"_id": 0}).to_list(200)
+    vocab_grammar_quiz_progress = await db.vocab_grammar_quiz_progress.find_one({"user_id": user_id}, {"_id": 0}) or {}
+    vocabulary_progress = await db.vocabulary_progress.find({"user_id": user_id}, {"_id": 0}).to_list(200)
+    grammar_engine_progress = await db.grammar_engine_progress.find({"user_id": user_id}, {"_id": 0}).to_list(300)
+    completions = await db.user_completions.find({"user_id": user_id}, {"_id": 0}).sort("completed_at", -1).to_list(200)
+    liz_sessions = await db.liz_sessions.find(
+        {"user_id": user_id},
+        {"_id": 0, "id": 1, "title": 1, "created_at": 1, "last_updated": 1, "messages": 1},
+    ).sort("last_updated", -1).to_list(20)
+    review_bank_count = await db.review_bank.count_documents({"user_id": user_id})
+
+    normalized_user = _normalize_admin_user(user)
+    learning_summary = _build_learning_platform_summary(learning_progress)
+    vocab_summary = _build_vocab_grammar_summary(vocab_grammar_progress, vocab_grammar_quiz_progress)
+    vocabulary_engine_summary = _build_vocabulary_engine_summary(vocabulary_progress)
+    grammar_engine_summary = _build_grammar_engine_summary(grammar_engine_progress)
+    completion_summary = _build_completion_summary(completions)
+    liz_summary = _build_liz_summary(liz_sessions)
+
     return {
-        "user": user,
+        "user": normalized_user,
         "test_attempts": attempts,
         "progress_by_type": progress_by_type,
-        "total_tests": len(attempts)
+        "total_tests": len(attempts),
+        "activity_summary": {
+            "tests_taken": len(attempts),
+            "full_tests_completed": completion_summary.get("total", 0),
+            "learning_lessons_completed": learning_summary.get("lessons_completed", 0),
+            "vocab_grammar_lessons_started": vocab_summary.get("lessons_started", 0),
+            "vocabulary_modules_started": vocabulary_engine_summary.get("modules_started", 0),
+            "grammar_modules_started": grammar_engine_summary.get("modules_started", 0),
+            "liz_sessions": liz_summary.get("sessions_count", 0),
+            "review_bank_items": review_bank_count,
+        },
+        "learning_platform": learning_summary,
+        "vocab_grammar": vocab_summary,
+        "vocabulary_engine": vocabulary_engine_summary,
+        "grammar_engine": grammar_engine_summary,
+        "full_test_completions": completion_summary,
+        "liz_activity": liz_summary,
+        "recent_activity": _build_recent_activity_timeline(
+            attempts,
+            learning_summary,
+            vocab_summary,
+            vocabulary_engine_summary,
+            grammar_engine_summary,
+            completion_summary,
+            liz_summary,
+        ),
     }
 
 @api_router.put("/admin/users/{user_id}")
@@ -2858,7 +3322,10 @@ async def admin_update_user(user_id: str, admin_email: str = None, plan: str = N
     
     update_fields = {}
     if plan:
-        update_fields["plan"] = plan
+        normalized_plan = normalize_plan_name(plan)
+        if normalized_plan not in PLAN_FEATURES:
+            raise HTTPException(status_code=400, detail="Invalid plan")
+        update_fields["plan"] = normalized_plan
     if exam_credits is not None:
         update_fields["examCredits"] = exam_credits
     if add_credits is not None:
@@ -2871,6 +3338,7 @@ async def admin_update_user(user_id: str, admin_email: str = None, plan: str = N
     
     # Get updated user
     updated_user = await db.users.find_one({"id": user_id}, {"_id": 0, "password_hash": 0})
+    updated_user = _normalize_admin_user(updated_user)
     return {"detail": "User updated", "user": updated_user}
 
 @api_router.delete("/admin/users/{user_id}")
@@ -3878,6 +4346,63 @@ class GrammarVocabEvaluateRequest(BaseModel):
     answers: Dict[str, str]
     user_id: Optional[str] = None
 
+
+def _build_vocab_grammar_root_cause_analysis(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    unit_counts: Dict[str, Dict[str, Any]] = {}
+    for result in results:
+        if result.get("is_correct"):
+            continue
+        key = result.get("unit_id") or "general-review"
+        unit_counts.setdefault(key, {
+            "code": key,
+            "label": result.get("unit_title") or key.replace("-", " ").title(),
+            "count": 0,
+        })
+        unit_counts[key]["count"] += 1
+
+    return [
+        {
+            **entry,
+            "impact": "high" if entry["count"] >= 3 else "medium" if entry["count"] == 2 else "targeted",
+            "what_it_means": f"You need focused review on {entry['label'].lower()} before the next mixed quiz.",
+        }
+        for entry in sorted(unit_counts.values(), key=lambda item: item["count"], reverse=True)[:4]
+    ]
+
+
+def _build_vocab_grammar_study_plan(
+    score: float,
+    recommended_lessons: List[Dict[str, Any]],
+    root_cause_analysis: List[Dict[str, Any]],
+) -> Dict[str, Any]:
+    primary_lesson = recommended_lessons[0] if recommended_lessons else {}
+    top_cause = root_cause_analysis[0] if root_cause_analysis else {}
+    return {
+        "target_score": min(100, round(score + (20 if score < 70 else 10))),
+        "priority_skill": top_cause.get("label") or "Vocabulary & grammar control",
+        "roadmap_steps": [
+            {
+                "title": "Review the top weak unit",
+                "why_now": f"Start with {primary_lesson.get('title', 'the top weak unit')} before doing another mixed quiz.",
+                "route": f"/vocab-grammar?lesson={primary_lesson.get('id')}" if primary_lesson.get("id") else "/vocab-grammar",
+            },
+            {
+                "title": "Redo every wrong item",
+                "why_now": "Write the correct form and one new example sentence for each mistake.",
+            },
+            {
+                "title": "Retake a mixed quiz",
+                "why_now": "Confirm that the same unit is no longer your main weak area.",
+            },
+        ],
+        "three_day_plan": [
+            "Day 1: Review the top weak unit and note the rules or collocations you missed.",
+            "Day 2: Rewrite each wrong answer with one extra example sentence.",
+            "Day 3: Take another mixed quiz and compare weak units.",
+        ],
+        "retest_strategy": "Do not just memorise the right option. Rebuild the rule or usage pattern before retaking.",
+    }
+
 @api_router.post("/question-bank/grammar-vocab/evaluate")
 async def evaluate_grammar_vocab_quiz(request: GrammarVocabEvaluateRequest):
     """Evaluate grammar & vocab quiz answers and provide feedback."""
@@ -3919,6 +4444,9 @@ async def evaluate_grammar_vocab_quiz(request: GrammarVocabEvaluateRequest):
         )
         if lesson:
             recommended_lessons.append(lesson)
+
+    root_cause_analysis = _build_vocab_grammar_root_cause_analysis(results)
+    study_plan = _build_vocab_grammar_study_plan(score, recommended_lessons, root_cause_analysis)
     
     # Save progress if user_id provided
     if user_id and total > 0:
@@ -3939,7 +4467,9 @@ async def evaluate_grammar_vocab_quiz(request: GrammarVocabEvaluateRequest):
         "results": results,
         "weak_units": weak_units,
         "recommended_lessons": recommended_lessons,
-        "recommendation": f"Review these units: {', '.join(weak_units)}" if weak_units else "Great job! Keep practicing!"
+        "recommendation": f"Review these units: {', '.join(weak_units)}" if weak_units else "Great job! Keep practicing!",
+        "root_cause_analysis": root_cause_analysis,
+        "study_plan": study_plan,
     }
 
 @api_router.get("/question-bank/grammar-vocab/weak-areas/{user_id}")
@@ -4008,18 +4538,21 @@ async def get_comprehensive_reading_questions():
 @api_router.post("/comprehensive-level-test/evaluate-reading")
 async def evaluate_comprehensive_reading(payload: Dict[str, Any] = Body(...)):
     """Evaluate reading answers server-side and return results with correct answers."""
-    from level_test_reading_data import COMPREHENSIVE_READING_QUESTIONS
+    from level_test_reading_data import (
+        COMPREHENSIVE_READING_QUESTIONS,
+        calculate_comprehensive_reading_band,
+    )
     answers = payload.get("answers", {})
     results = []
-    total_points = 0
     correct_count = 0
+    correct_questions = []
     skill_breakdown = {}
     for q in COMPREHENSIVE_READING_QUESTIONS:
         user_answer = answers.get(str(q["id"]), "")
         is_correct = user_answer.upper() == q["correct"].upper() if user_answer else False
         if is_correct:
             correct_count += 1
-            total_points += q.get("band", 0)
+            correct_questions.append(q)
         skill = q.get("skill", "general")
         if skill not in skill_breakdown:
             skill_breakdown[skill] = {"correct": 0, "total": 0}
@@ -4040,11 +4573,13 @@ async def evaluate_comprehensive_reading(payload: Dict[str, Any] = Body(...)):
             "explanation": q.get("explanation", ""),
             "skillTip": q.get("skillTip", ""),
         })
-    band = total_points / len(COMPREHENSIVE_READING_QUESTIONS) if COMPREHENSIVE_READING_QUESTIONS else 0
+
+    band = calculate_comprehensive_reading_band(correct_questions)
+
     return {
         "correct_count": correct_count,
         "total": len(COMPREHENSIVE_READING_QUESTIONS),
-        "band": round(band * 2) / 2,
+        "band": band,
         "skill_breakdown": skill_breakdown,
         "questions": results,
     }
@@ -4643,7 +5178,7 @@ Remember:
 # ============ Level Test Evaluation & Recommendations ============
 
 class LevelTestSpeakingEvaluation(BaseModel):
-    responses: List[Dict[str, Any]]  # [{"level": "A1-A2", "transcript": "..."}]
+    responses: List[Dict[str, Any]]  # [{"level": "A1-A2", "transcript": "...", "audio_data": "..."}]
     language: Optional[str] = "en"  # en, vi, tr
 
 class CourseRecommendationRequest(BaseModel):
@@ -4659,115 +5194,263 @@ async def evaluate_level_test_speaking(request: LevelTestSpeakingEvaluation):
     """
     Evaluate speaking responses from comprehensive level test.
     Returns detailed band score, weaknesses, and specific improvement areas.
-    OPTIMIZED: Uses simpler, faster evaluation for better user experience.
+    Uses Azure pronunciation data when audio is provided; otherwise marks
+    pronunciation as estimated from transcript-only evidence.
     """
     try:
-        # First, provide quick estimation based on transcript length and content
         responses = request.responses
-        total_words = 0
         total_responses = len(responses)
-        
-        for r in responses:
-            transcript = r.get('transcript', '')
-            words = len(transcript.split())
-            total_words += words
-        
-        avg_words = total_words / max(total_responses, 1)
-        
-        # Quick band estimation based on response length and complexity
-        # This gives immediate feedback while AI processes
+        total_words = 0
+        answered_prompts = 0
+
+        for response_item in responses:
+            transcript = (response_item.get("transcript") or "").strip()
+            if transcript:
+                answered_prompts += 1
+                total_words += len(transcript.split())
+
+        avg_words = total_words / max(answered_prompts, 1)
+
         quick_band = 4.0
-        if avg_words > 100:
+        if answered_prompts >= 3 and avg_words >= 90:
             quick_band = 6.5
-        elif avg_words > 70:
+        elif answered_prompts >= 2 and avg_words >= 60:
             quick_band = 6.0
-        elif avg_words > 50:
+        elif answered_prompts >= 2 and avg_words >= 40:
             quick_band = 5.5
-        elif avg_words > 30:
+        elif answered_prompts >= 1 and avg_words >= 25:
             quick_band = 5.0
-        elif avg_words > 15:
+        elif answered_prompts >= 1 and avg_words >= 12:
             quick_band = 4.5
-        
-        # Use a simpler, faster prompt
+
+        azure_scores = None
+        azure_failures = []
+
+        if os.getenv("AZURE_SPEECH_KEY"):
+            try:
+                from routes.speaking_qb import azure_pronunciation_assessment
+
+                valid_azure_results = []
+                for response_item in responses:
+                    audio_b64 = response_item.get("audio_data")
+                    transcript = (response_item.get("transcript") or "").strip()
+                    if not audio_b64 or not transcript:
+                        continue
+                    try:
+                        audio_bytes = base64.b64decode(audio_b64)
+                        azure_result = await azure_pronunciation_assessment(
+                            audio_data=audio_bytes,
+                            reference_text=transcript,
+                            language="en-US",
+                        )
+                        if azure_result.get("success"):
+                            valid_azure_results.append(azure_result)
+                        else:
+                            azure_failures.append(azure_result.get("error", "Unknown Azure error"))
+                    except Exception as exc:
+                        azure_failures.append(str(exc))
+
+                if valid_azure_results:
+                    azure_scores = {
+                        "pronunciation": round(
+                            sum(item.get("pronunciation_score", 0) for item in valid_azure_results) / len(valid_azure_results),
+                            1,
+                        ),
+                        "accuracy": round(
+                            sum(item.get("accuracy_score", 0) for item in valid_azure_results) / len(valid_azure_results),
+                            1,
+                        ),
+                        "fluency": round(
+                            sum(item.get("fluency_score", 0) for item in valid_azure_results) / len(valid_azure_results),
+                            1,
+                        ),
+                        "completeness": round(
+                            sum(item.get("completeness_score", 0) for item in valid_azure_results) / len(valid_azure_results),
+                            1,
+                        ),
+                        "prosody": round(
+                            sum(item.get("prosody_score", 0) for item in valid_azure_results) / len(valid_azure_results),
+                            1,
+                        ),
+                    }
+            except Exception as exc:
+                azure_failures.append(str(exc))
+
+        def pronunciation_score_to_band(score: float) -> float:
+            if score >= 90:
+                return 8.5
+            if score >= 80:
+                return 7.5
+            if score >= 70:
+                return 6.5
+            if score >= 60:
+                return 5.5
+            if score >= 50:
+                return 5.0
+            if score > 0:
+                return 4.5
+            return 4.0
+
+        responses_text = "\n\n".join(
+            [
+                f"Prompt {idx}: {response_item.get('prompt', 'N/A')}\n"
+                f"Level hint: {response_item.get('level', 'unknown')}\n"
+                f"Transcript: {response_item.get('transcript', '').strip() or '[No response]'}"
+                for idx, response_item in enumerate(responses, 1)
+            ]
+        )
+
+        azure_context = ""
+        if azure_scores:
+            azure_context = f"""
+AZURE PRONUNCIATION SIGNALS:
+- Pronunciation: {azure_scores['pronunciation']}/100
+- Accuracy: {azure_scores['accuracy']}/100
+- Fluency: {azure_scores['fluency']}/100
+- Completeness: {azure_scores['completeness']}/100
+- Prosody: {azure_scores['prosody']}/100
+
+IMPORTANT:
+- Use Azure data for pronunciation/fluency evidence.
+- Do NOT invent acoustic issues that contradict Azure scores.
+"""
+        else:
+            azure_context = """
+NO RELIABLE ACOUSTIC DATA:
+- Pronunciation must be treated as ESTIMATED from transcript/transcription clarity only.
+- Do not claim precise stress, prosody, or phoneme-level issues.
+- Keep pronunciation claims conservative.
+"""
+
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
-            system_message="You are an IELTS speaking examiner. Evaluate quickly and return only JSON."
-        ).with_model("openai", "gpt-4o-mini")  # Faster model
-        
-        # Format responses concisely
-        responses_text = ""
-        for idx, r in enumerate(request.responses, 1):
-            transcript = r.get('transcript', '')[:200]  # Limit length for speed
-            responses_text += f"Q{idx}: {transcript}\n"
-        
-        # Shorter, faster prompt
-        evaluation_prompt = f"""Evaluate this IELTS speaking test. Return ONLY JSON:
+            system_message="You are a strict IELTS speaking examiner. Return only valid JSON."
+        ).with_model("openai", "gpt-4o-mini")
 
+        evaluation_prompt = f"""Evaluate this IELTS speaking test strictly.
+
+RESPONSES:
 {responses_text}
 
-Return this JSON (fill in values):
-{{"overall_band": 5.5, "criteria_scores": {{"fluency_coherence": 5.5, "lexical_resource": 5.0, "grammatical_range_accuracy": 5.5, "pronunciation": 5.5}}, "cefr_level": "B1", "strengths": ["strength1", "strength2"], "weaknesses": ["weakness1", "weakness2"], "improvement_recommendations": ["tip1", "tip2"], "detailed_feedback": "2-3 sentence feedback"}}"""
+SUMMARY SIGNALS:
+- Answered prompts: {answered_prompts}/{total_responses}
+- Total words: {total_words}
+- Average words per answered prompt: {avg_words:.1f}
+{azure_context}
+
+SCORING RULES:
+- Short, thin, underdeveloped answers cannot score highly.
+- Irrelevant or generic answers must be capped.
+- If there is no acoustic data, pronunciation is only an estimate.
+- Higher bands require clear evidence of range, coherence, and control.
+
+Return ONLY this JSON:
+{{"overall_band": 5.5, "criteria_scores": {{"fluency_coherence": 5.5, "lexical_resource": 5.0, "grammatical_range_accuracy": 5.5, "pronunciation": 5.0}}, "cefr_level": "B1", "strengths": ["strength1", "strength2"], "weaknesses": ["weakness1", "weakness2"], "improvement_recommendations": ["tip1", "tip2"], "detailed_feedback": "2-3 sentence feedback"}}"""
 
         try:
             response = await asyncio.wait_for(
                 chat.send_message(UserMessage(text=evaluation_prompt)),
                 timeout=15.0  # 15 second timeout
             )
-            
             response_text = str(response)
-            
             import re
             response_text = re.sub(r'```json\s*', '', response_text)
             response_text = re.sub(r'```\s*', '', response_text)
-            
             json_match = re.search(r'\{[\s\S]*\}', response_text)
             if json_match:
                 result = json.loads(json_match.group())
-                # Add missing fields with defaults
+                criteria_scores = result.setdefault("criteria_scores", {})
+                criteria_scores.setdefault("fluency_coherence", quick_band)
+                criteria_scores.setdefault("lexical_resource", max(4.0, quick_band - 0.5))
+                criteria_scores.setdefault("grammatical_range_accuracy", quick_band)
+
+                if azure_scores:
+                    criteria_scores["pronunciation"] = pronunciation_score_to_band(azure_scores["pronunciation"])
+                else:
+                    criteria_scores["pronunciation"] = min(
+                        float(criteria_scores.get("pronunciation", quick_band)),
+                        quick_band,
+                    )
+
+                criteria_values = [
+                    float(criteria_scores["fluency_coherence"]),
+                    float(criteria_scores["lexical_resource"]),
+                    float(criteria_scores["grammatical_range_accuracy"]),
+                    float(criteria_scores["pronunciation"]),
+                ]
+                result["overall_band"] = round((sum(criteria_values) / len(criteria_values)) * 2) / 2
+                result["cefr_level"] = (
+                    "A2" if result["overall_band"] < 4.5 else
+                    "B1" if result["overall_band"] < 5.5 else
+                    "B2" if result["overall_band"] < 7.0 else
+                    "C1"
+                )
                 result.setdefault("pronunciation_issues", [])
                 result.setdefault("vocabulary_gaps", [])
+                result["scoring_source"] = "hybrid_azure_llm" if azure_scores else "transcript_llm"
+                result["pronunciation_estimated"] = not bool(azure_scores)
+                if azure_scores:
+                    result["azure_scores"] = azure_scores
+                if azure_failures:
+                    result["acoustic_warnings"] = azure_failures[:3]
                 return result
-                
         except asyncio.TimeoutError:
             logger.warning("Speaking evaluation timed out, using quick estimation")
         except Exception as e:
             logger.warning(f"AI evaluation failed: {e}, using quick estimation")
-        
-        # Fallback: Return quick estimation if AI is slow/fails
+
         language = request.language
-        
         if language == "vi":
             strengths = ["Phát âm cơ bản rõ ràng", "Có thể diễn đạt ý tưởng đơn giản"]
             weaknesses = ["Cần mở rộng vốn từ vựng", "Cần cải thiện ngữ pháp phức tạp"]
             recommendations = ["Luyện nói 15-20 phút mỗi ngày", "Học thêm từ vựng học thuật"]
-            feedback = f"Trình độ nói của bạn ước tính khoảng Band {quick_band}. Tiếp tục luyện tập để cải thiện!"
+            feedback = f"Đây là điểm nói ước tính khoảng Band {quick_band}. Điểm này dựa trên nội dung transcript"
+            if azure_scores:
+                feedback += " và tín hiệu phát âm từ audio."
+            else:
+                feedback += " và chưa có phân tích phát âm âm thanh chi tiết."
         elif language == "tr":
             strengths = ["Temel telaffuz anlaşılır", "Basit fikirler ifade edilebilir"]
             weaknesses = ["Kelime dağarcığı genişletilmeli", "Karmaşık dilbilgisi geliştirilmeli"]
             recommendations = ["Günde 15-20 dakika konuşma pratiği yapın", "Akademik kelimeler öğrenin"]
-            feedback = f"Konuşma seviyeniz yaklaşık Band {quick_band} olarak tahmin edilmektedir. Pratik yapmaya devam edin!"
+            feedback = f"Bu yaklaşık Band {quick_band} düzeyinde bir konuşma tahminidir."
+            if azure_scores:
+                feedback += " İçerik ve ses telaffuz sinyalleri birlikte kullanıldı."
+            else:
+                feedback += " Ayrıntılı akustik telaffuz analizi yok."
         else:
             strengths = ["Basic pronunciation is clear", "Able to express simple ideas"]
             weaknesses = ["Vocabulary range needs expansion", "Complex grammar needs practice"]
             recommendations = ["Practice speaking 15-20 minutes daily", "Learn academic vocabulary"]
-            feedback = f"Your speaking level is estimated at Band {quick_band}. Keep practicing to improve!"
-        
+            feedback = f"This is an estimated speaking result around Band {quick_band}."
+            if azure_scores:
+                feedback += " It uses both transcript evidence and Azure pronunciation signals."
+            else:
+                feedback += " It uses transcript evidence only, so pronunciation remains estimated."
+
+        pronunciation_band = pronunciation_score_to_band(azure_scores["pronunciation"]) if azure_scores else quick_band
+        overall_band = round(((quick_band + max(4.0, quick_band - 0.5) + quick_band + pronunciation_band) / 4) * 2) / 2
+
         return {
-            "overall_band": quick_band,
+            "overall_band": overall_band,
             "criteria_scores": {
                 "fluency_coherence": quick_band,
                 "lexical_resource": quick_band - 0.5,
                 "grammatical_range_accuracy": quick_band,
-                "pronunciation": quick_band + 0.5
+                "pronunciation": pronunciation_band,
             },
-            "cefr_level": "A2" if quick_band < 4.5 else "B1" if quick_band < 5.5 else "B2" if quick_band < 7.0 else "C1",
+            "cefr_level": "A2" if overall_band < 4.5 else "B1" if overall_band < 5.5 else "B2" if overall_band < 7.0 else "C1",
             "strengths": strengths,
             "weaknesses": weaknesses,
             "pronunciation_issues": [],
             "improvement_recommendations": recommendations,
             "vocabulary_gaps": [],
-            "detailed_feedback": feedback
+            "detailed_feedback": feedback,
+            "scoring_source": "hybrid_fallback" if azure_scores else "transcript_fallback",
+            "pronunciation_estimated": not bool(azure_scores),
+            "azure_scores": azure_scores,
+            "acoustic_warnings": azure_failures[:3],
         }
         
     except Exception as e:
@@ -4937,7 +5620,12 @@ Make it motivating but realistic. Address their specific weaknesses.{language_no
 
 # ============ LISTENING MODULE (Level Assessment) ============
 
-from listening_data import get_listening_sections, get_all_listening_questions
+from listening_data import (
+    calculate_listening_band,
+    get_all_listening_questions,
+    get_listening_sections,
+    get_question_band_value,
+)
 
 @api_router.get("/level-test/listening-sections")
 async def get_listening_sections_endpoint():
@@ -5004,9 +5692,8 @@ async def evaluate_listening(request: ListeningEvaluationRequest):
                 correct_answer = q["correct"].strip().upper()
                 is_correct = user_answer == correct_answer
                 
-                # Get band value from section
-                band_range = section["band_range"]
-                avg_band = (float(band_range.split("-")[0]) + float(band_range.split("-")[1])) / 2
+                # Progressive question difficulty contributes proportionally to the final band.
+                avg_band = get_question_band_value(section)
                 
                 if is_correct:
                     correct_count += 1
@@ -5045,23 +5732,8 @@ async def evaluate_listening(request: ListeningEvaluationRequest):
                     "explanation": explanation
                 })
         
-        # Calculate listening band score
-        if total_count > 0:
-            percentage = (correct_count / total_count) * 100
-            listening_band = (total_band_points / total_count) if correct_count > 0 else 2.0
-            # Adjust band based on performance
-            if percentage >= 90:
-                listening_band = min(9.0, listening_band + 1.0)
-            elif percentage >= 70:
-                listening_band = min(8.0, listening_band + 0.5)
-            elif percentage < 40:
-                listening_band = max(2.0, listening_band - 1.0)
-        else:
-            percentage = 0
-            listening_band = 2.0
-        
-        # Round to nearest 0.5
-        listening_band = round(listening_band * 2) / 2
+        percentage = (correct_count / total_count) * 100 if total_count > 0 else 0
+        listening_band = calculate_listening_band(correct_count, total_count, total_band_points)
         
         # Identify weak skills (less than 50% correct)
         for skill, data in skill_breakdown.items():
@@ -5473,11 +6145,12 @@ async def get_mastery_modules():
     return modules
 
 @api_router.get("/mastery-course/modules/{module_id}")
-async def get_mastery_module(module_id: str):
+async def get_mastery_module(module_id: str, user_plan: str = "free"):
     """Get a specific mastery course module"""
     module = await db.mastery_course_modules.find_one({"id": module_id}, {"_id": 0})
     if not module:
         raise HTTPException(status_code=404, detail="Module not found")
+    _enforce_course_access(user_plan, "learner", module.get("module_number"), "Mastery Course")
     return module
 
 class MasterySpeakingRequest(BaseModel):
@@ -5485,11 +6158,49 @@ class MasterySpeakingRequest(BaseModel):
     model_answer: str
     user_response: str
     module_title: str
+    module_number: Optional[int] = None
+    user_plan: Optional[str] = "free"
+    prompt_type: Optional[str] = ""
+    audio_data: Optional[str] = None
 
 @api_router.post("/mastery-course/evaluate-speaking")
 async def evaluate_mastery_speaking(request: MasterySpeakingRequest):
     """Evaluate speaking response for mastery course (Band 4.5-6.5) with comprehensive feedback"""
     try:
+        _enforce_course_access(request.user_plan, "learner", request.module_number, "Mastery Course")
+        word_count = _speaking_word_count(request.user_response)
+        sentence_count = _speaking_sentence_count(request.user_response)
+        template_risk = _speaking_template_risk(request.user_response, request.model_answer)
+        azure_scores = None
+        acoustic_context = "No acoustic pronunciation analysis was available. Be conservative when judging pronunciation and fluency."
+
+        if request.audio_data and os.getenv("AZURE_SPEECH_KEY"):
+            try:
+                from routes.speaking_qb import azure_pronunciation_assessment
+
+                audio_bytes = base64.b64decode(request.audio_data)
+                azure_result = await azure_pronunciation_assessment(
+                    audio_bytes,
+                    request.user_response,
+                    request.question,
+                    "en-US",
+                )
+                if azure_result and azure_result.get("success"):
+                    azure_scores = {
+                        "pronunciation": round(float(azure_result.get("pronunciation_score", 0)), 1),
+                        "accuracy": round(float(azure_result.get("accuracy_score", 0)), 1),
+                        "fluency": round(float(azure_result.get("fluency_score", 0)), 1),
+                        "completeness": round(float(azure_result.get("completeness_score", 0)), 1),
+                        "prosody": round(float(azure_result.get("prosody_score", 0)), 1),
+                    }
+                    acoustic_context = (
+                        f"Azure acoustic analysis is available. Pronunciation={azure_scores['pronunciation']}/100, "
+                        f"Accuracy={azure_scores['accuracy']}/100, Fluency={azure_scores['fluency']}/100, "
+                        f"Completeness={azure_scores['completeness']}/100, Prosody={azure_scores['prosody']}/100."
+                    )
+            except Exception as azure_error:
+                logging.getLogger(__name__).warning(f"Mastery speaking Azure analysis unavailable: {azure_error}")
+
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
@@ -5499,11 +6210,18 @@ async def evaluate_mastery_speaking(request: MasterySpeakingRequest):
         prompt = f"""You are an IELTS Speaking examiner providing comprehensive feedback for a Band 4.5-6.5 student.
 
 Topic: {request.module_title}
+Prompt Type: {request.prompt_type or "general"}
 Question: {request.question}
 Model Answer: {request.model_answer}
 Student's Response: {request.user_response}
+Acoustic Context: {acoustic_context}
 
 Provide detailed, educational feedback. Identify specific mistakes and show how to correct them.
+
+Response Signals:
+- Word count: {word_count}
+- Sentence count: {sentence_count}
+- Template-overlap risk vs model answer: {template_risk}
 
 Return JSON only:
 {{
@@ -5512,18 +6230,25 @@ Return JSON only:
     "vocabulary": {{"score": <number>, "feedback": "<specific feedback>"}},
     "grammar": {{"score": <number>, "feedback": "<specific feedback>"}},
     "pronunciation": {{"score": <number>, "feedback": "<specific feedback>"}},
+    "response_diagnosis": {{"relevance": "<strong/partial/weak>", "development": "<strong/moderate/limited>", "template_risk": "<low/medium/high>"}},
     "overall_feedback": "<2-3 sentences summarizing performance>",
+    "band_justification": "<Why this band is fair given response quality and development>",
     "mistakes": [
         {{"original": "<what student said wrong>", "corrected": "<correct version>", "explanation": "<why this is better>"}}
     ],
+    "line_by_line_corrections": [
+        {{"original": "<student sentence>", "corrected": "<improved sentence>", "issue": "<main issue>", "explanation": "<clear teaching explanation>"}}
+    ],
+    "high_priority_fixes": ["<top fix 1>", "<top fix 2>"],
     "vocabulary_to_use": ["<word1 from lesson>", "<word2 from lesson>", "<word3 from lesson>"],
     "model_phrases": ["<useful phrase 1>", "<useful phrase 2>"],
+    "next_answer_blueprint": ["<opening move>", "<detail to add>", "<closing move>"],
     "improvement_tip": "<One specific actionable tip>",
     "lesson_reference": "<Which part of the lesson to review for improvement>"
 }}"""
 
         response = await chat.send_message(UserMessage(text=prompt))
-        response_text = str(response).strip()
+        response_text = (response.text if hasattr(response, "text") else str(response)).strip()
         if "```json" in response_text:
             response_text = response_text.split("```json")[1].split("```")[0].strip()
         elif "```" in response_text:
@@ -5532,32 +6257,121 @@ Return JSON only:
         import re
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
-            return json.loads(json_match.group())
+            parsed = json.loads(json_match.group())
+            raw_band = float(parsed.get("band_score", 5) or 5)
+            band_cap = _apply_speaking_band_cap(
+                raw_band,
+                word_count=word_count,
+                sentence_count=sentence_count,
+                template_risk=template_risk,
+                track="mastery",
+            )
+            parsed["band_score"] = band_cap["band_score"]
+            parsed["band_cap"] = band_cap["band_cap"]
+            parsed["cap_reasons"] = band_cap["cap_reasons"]
+            parsed.setdefault("response_diagnosis", {
+                "relevance": "partial" if word_count < 35 else "strong",
+                "development": "limited" if word_count < 18 else "moderate" if word_count < 35 else "strong",
+                "template_risk": "high" if template_risk >= 0.72 else "medium" if template_risk >= 0.45 else "low",
+            })
+            parsed.setdefault("line_by_line_corrections", parsed.get("mistakes", []))
+            parsed.setdefault("high_priority_fixes", [])
+            parsed.setdefault("next_answer_blueprint", [])
+            parsed["response_metrics"] = {
+                "word_count": word_count,
+                "sentence_count": sentence_count,
+                "template_risk": template_risk,
+            }
+            parsed["scoring_source"] = "azure_plus_llm" if azure_scores else "llm_transcript_only"
+            parsed["pronunciation_estimated"] = azure_scores is None
+            if azure_scores:
+                parsed["azure_scores"] = azure_scores
+                pronunciation_band = max(4.5, min(6.5, round((azure_scores["pronunciation"] / 100 * 2) + 4.5, 1)))
+                if isinstance(parsed.get("pronunciation"), dict):
+                    parsed["pronunciation"]["score"] = pronunciation_band
+                    parsed["pronunciation"]["feedback"] = (
+                        parsed["pronunciation"].get("feedback", "") + f" Azure acoustic score: {azure_scores['pronunciation']}/100."
+                    ).strip()
+            return parsed
         
-        return {"band_score": 5, "overall_feedback": "Good effort! Keep practicing.", "improvement_tip": "Use more topic vocabulary.", "mistakes": [], "vocabulary_to_use": [], "lesson_reference": "Review the vocabulary section"}
+        return {
+            "band_score": 5,
+            "overall_feedback": "Good effort! Keep practicing.",
+            "improvement_tip": "Use more topic vocabulary.",
+            "mistakes": [],
+            "line_by_line_corrections": [],
+            "high_priority_fixes": [],
+            "vocabulary_to_use": [],
+            "next_answer_blueprint": [],
+            "band_justification": "This estimate is conservative because the response needs stronger development.",
+            "response_diagnosis": {
+                "relevance": "partial",
+                "development": "limited" if word_count < 18 else "moderate",
+                "template_risk": "high" if template_risk >= 0.72 else "medium" if template_risk >= 0.45 else "low",
+            },
+            "response_metrics": {
+                "word_count": word_count,
+                "sentence_count": sentence_count,
+                "template_risk": template_risk,
+            },
+            "lesson_reference": "Review the vocabulary section",
+            "scoring_source": "azure_plus_llm" if azure_scores else "llm_transcript_only",
+            "pronunciation_estimated": azure_scores is None,
+            "azure_scores": azure_scores,
+        }
     except Exception as e:
         logging.getLogger(__name__).error(f"Mastery speaking evaluation error: {e}")
-        return {"band_score": 5, "overall_feedback": "Good try! Keep practicing.", "improvement_tip": "Practice speaking regularly.", "mistakes": [], "vocabulary_to_use": []}
+        return {
+            "band_score": 5,
+            "overall_feedback": "Good try! Keep practicing.",
+            "improvement_tip": "Practice speaking regularly.",
+            "mistakes": [],
+            "line_by_line_corrections": [],
+            "high_priority_fixes": [],
+            "vocabulary_to_use": [],
+            "next_answer_blueprint": [],
+            "band_justification": "Fallback estimate only. The response needs clearer support and stronger development.",
+            "response_diagnosis": {
+                "relevance": "partial",
+                "development": "limited" if word_count < 18 else "moderate",
+                "template_risk": "high" if template_risk >= 0.72 else "medium" if template_risk >= 0.45 else "low",
+            },
+            "response_metrics": {
+                "word_count": word_count,
+                "sentence_count": sentence_count,
+                "template_risk": template_risk,
+            },
+            "scoring_source": "fallback",
+            "pronunciation_estimated": True,
+        }
 
 class MasteryWritingRequest(BaseModel):
     task: str
     model_essay: str
     user_response: str
     module_title: str
+    module_number: Optional[int] = None
+    user_plan: Optional[str] = "free"
+    task_type: Optional[str] = "academic_task_2"
 
 @api_router.post("/mastery-course/evaluate-writing")
 async def evaluate_mastery_writing(request: MasteryWritingRequest):
     """Evaluate writing response for mastery course (Band 4.5-6.5) with comprehensive feedback"""
     try:
+        _enforce_course_access(request.user_plan, "learner", request.module_number, "Mastery Course")
         chat = LlmChat(
             api_key=os.getenv("EMERGENT_LLM_KEY"),
             session_id=str(uuid.uuid4()),
             system_message="You are an expert IELTS Writing examiner providing detailed, educational feedback."
         ).with_model("openai", "gpt-4o")
         
-        prompt = f"""You are an IELTS Writing Task 2 examiner providing comprehensive feedback for a Band 4.5-6.5 student.
+        task_label = "IELTS General Training Writing Task 1 letter" if request.task_type == "general_task_1" else "IELTS Academic Writing Task 2 essay"
+        track_name = "general" if request.task_type == "general_task_1" else "academic"
+
+        prompt = f"""You are an examiner providing comprehensive feedback for a Band 4.5-6.5 student.
 
 Topic: {request.module_title}
+Task Type: {task_label}
 Task: {request.task}
 Model Essay: {request.model_essay}
 Student's Essay: {request.user_response}
@@ -5567,6 +6381,7 @@ Provide detailed, educational feedback. Identify specific mistakes and show how 
 Return JSON only:
 {{
     "band_score": <4.5-6.5>,
+    "track": "{track_name}",
     "task_achievement": {{"score": <number>, "feedback": "<specific feedback>"}},
     "coherence": {{"score": <number>, "feedback": "<specific feedback>"}},
     "lexical": {{"score": <number>, "feedback": "<specific feedback>"}},
@@ -5580,12 +6395,23 @@ Return JSON only:
         {{"basic": "<simple word used>", "advanced": "<better alternative from lesson>", "example": "<example sentence>"}}
     ],
     "structure_tip": "<Advice on essay structure>",
+    "band_justification": "<Why this band is fair based on the student's actual writing>",
+    "corrections": [
+        {{"before": "<student sentence>", "after": "<improved version>", "reason": "<brief reason>"}}
+    ],
+    "line_by_line_corrections": [
+        {{"original": "<line or sentence from student>", "corrected": "<better version>", "issue": "<main issue>", "explanation": "<clear teaching explanation>"}}
+    ],
+    "grammar_upgrade_examples": [
+        {{"original": "<simple sentence>", "upgraded": "<better sentence>", "explanation": "<what improved>"}}
+    ],
     "lesson_reference": "<Which part of the lesson to review>",
-    "next_steps": ["<step 1 to improve>", "<step 2 to improve>"]
+    "next_steps": ["<step 1 to improve>", "<step 2 to improve>"],
+    "improvement_suggestions": ["<revision action 1>", "<revision action 2>"]
 }}"""
 
         response = await chat.send_message(UserMessage(text=prompt))
-        response_text = str(response).strip()
+        response_text = (response.text if hasattr(response, "text") else str(response)).strip()
         if "```json" in response_text:
             response_text = response_text.split("```json")[1].split("```")[0].strip()
         elif "```" in response_text:
@@ -5594,12 +6420,42 @@ Return JSON only:
         import re
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
-            return json.loads(json_match.group())
+            parsed = json.loads(json_match.group())
+            parsed.setdefault("track", track_name)
+            parsed.setdefault("corrections", [])
+            parsed.setdefault("line_by_line_corrections", [])
+            parsed.setdefault("grammar_upgrade_examples", [])
+            parsed.setdefault("improvement_suggestions", parsed.get("next_steps", []))
+            return parsed
         
-        return {"band_score": 5, "overall_feedback": "Good effort! Keep writing.", "mistakes": [], "good_points": [], "vocabulary_suggestions": [], "next_steps": ["Practice more essays"]}
+        return {
+            "band_score": 5,
+            "track": track_name,
+            "overall_feedback": "Good effort! Keep writing.",
+            "mistakes": [],
+            "good_points": [],
+            "vocabulary_suggestions": [],
+            "next_steps": ["Practice more essays"],
+            "improvement_suggestions": ["Practice more essays"],
+            "corrections": [],
+            "line_by_line_corrections": [],
+            "grammar_upgrade_examples": [],
+        }
     except Exception as e:
         logging.getLogger(__name__).error(f"Mastery writing evaluation error: {e}")
-        return {"band_score": 5, "overall_feedback": "Good effort!", "mistakes": [], "good_points": [], "vocabulary_suggestions": [], "next_steps": []}
+        return {
+            "band_score": 5,
+            "track": track_name,
+            "overall_feedback": "Good effort!",
+            "mistakes": [],
+            "good_points": [],
+            "vocabulary_suggestions": [],
+            "next_steps": [],
+            "improvement_suggestions": [],
+            "corrections": [],
+            "line_by_line_corrections": [],
+            "grammar_upgrade_examples": [],
+        }
 
 
 
@@ -6102,22 +6958,7 @@ async def get_vocabulary_quiz(module_id: str):
             "reading_passage": "",
         }
     
-    quiz = module.get("quiz", {})
-    questions = quiz.get("questions", [])
-    
-    # Filter vocabulary-related questions and take up to 10
-    vocab_questions = [q for q in questions if "vocabulary" in q.get("question", "").lower() or "collocation" in q.get("question", "").lower()]
-    other_questions = [q for q in questions if q not in vocab_questions]
-    
-    # Ensure 10 questions: prioritize vocab, fill with others
-    selected = vocab_questions[:10]
-    if len(selected) < 10:
-        remaining = 10 - len(selected)
-        selected += other_questions[:remaining]
-    
-    # Add IDs to questions
-    for i, q in enumerate(selected):
-        q["id"] = f"q-{i}"
+    selected = _select_vocabulary_quiz_questions(module)
     
     # Get reading passage for TFNG questions
     reading_passage = module.get("reading", {}).get("text", "")
@@ -6125,8 +6966,8 @@ async def get_vocabulary_quiz(module_id: str):
     return {
         "module_id": module_id,
         "module_title": module.get("title", ""),
-        "questions": selected[:10],
-        "total_questions": len(selected[:10]),
+        "questions": selected,
+        "total_questions": len(selected),
         "passing_score": 80,
         "reading_passage": reading_passage,
     }
@@ -6138,6 +6979,103 @@ class VocabQuizSubmission(BaseModel):
     answers: dict
     score: int
     total: int
+
+
+def _normalize_vocab_option_text(option):
+    if not isinstance(option, str):
+        return ""
+    return re.sub(r"^[A-D]\)\s*", "", option, flags=re.IGNORECASE).strip()
+
+
+def _get_vocab_quiz_correct_answer_meta(question):
+    raw_answer = question.get("answer", question.get("correct_answer", question.get("correct")))
+
+    if question.get("type") == "fill_blank":
+        return {
+            "type": "fill_blank",
+            "raw_answer": raw_answer,
+            "normalized_text": str(raw_answer or "").strip().lower(),
+        }
+
+    if isinstance(question.get("correct_index"), int):
+        correct_index = question["correct_index"]
+        options = question.get("options") or []
+        return {
+            "type": "multiple_choice",
+            "raw_answer": raw_answer,
+            "correct_index": correct_index,
+            "normalized_text": _normalize_vocab_option_text(options[correct_index] if len(options) > correct_index else "").lower(),
+        }
+
+    if isinstance(raw_answer, int):
+        options = question.get("options") or []
+        return {
+            "type": "multiple_choice",
+            "raw_answer": raw_answer,
+            "correct_index": raw_answer,
+            "normalized_text": _normalize_vocab_option_text(options[raw_answer] if len(options) > raw_answer else "").lower(),
+        }
+
+    raw_text = str(raw_answer or "").strip()
+    label_match = re.match(r"^([A-D])(?:\)|\.)?$", raw_text, flags=re.IGNORECASE)
+    if label_match:
+        correct_index = ord(label_match.group(1).upper()) - ord("A")
+        options = question.get("options") or []
+        return {
+            "type": "multiple_choice",
+            "raw_answer": raw_answer,
+            "correct_index": correct_index,
+            "normalized_text": _normalize_vocab_option_text(options[correct_index] if len(options) > correct_index else "").lower(),
+        }
+
+    normalized_text = _normalize_vocab_option_text(raw_text).lower()
+    options = question.get("options") or []
+    correct_index = next(
+        (idx for idx, option in enumerate(options) if _normalize_vocab_option_text(option).lower() == normalized_text),
+        None
+    )
+    return {
+        "type": "multiple_choice",
+        "raw_answer": raw_answer,
+        "correct_index": correct_index,
+        "normalized_text": normalized_text,
+    }
+
+
+def _is_vocab_quiz_answer_correct(question, user_answer):
+    meta = _get_vocab_quiz_correct_answer_meta(question)
+
+    if meta["type"] == "fill_blank":
+        return str(user_answer or "").strip().lower() == meta["normalized_text"]
+
+    if isinstance(user_answer, int) and meta.get("correct_index") is not None:
+        return user_answer == meta["correct_index"]
+
+    return _normalize_vocab_option_text(str(user_answer or "")).lower() == meta["normalized_text"]
+
+
+def _select_vocabulary_quiz_questions(module):
+    quiz = module.get("quiz", {})
+    questions = list(quiz.get("questions", []))
+    vocab_questions = [
+        question for question in questions
+        if "vocabulary" in question.get("question", "").lower() or "collocation" in question.get("question", "").lower()
+    ]
+    other_questions = [question for question in questions if question not in vocab_questions]
+
+    selected = vocab_questions[:10]
+    if len(selected) < 10:
+        selected += other_questions[: 10 - len(selected)]
+
+    prepared = []
+    for index, question in enumerate(selected[:10]):
+        prepared_question = dict(question)
+        prepared_question["id"] = f"q-{index}"
+        correct_meta = _get_vocab_quiz_correct_answer_meta(prepared_question)
+        if correct_meta["type"] != "fill_blank" and correct_meta.get("correct_index") is not None:
+            prepared_question["correct_index"] = correct_meta["correct_index"]
+        prepared.append(prepared_question)
+    return prepared
 
 @api_router.post("/vocabulary-engine/quiz/submit")
 async def submit_vocabulary_quiz(submission: VocabQuizSubmission):
@@ -6160,11 +7098,10 @@ async def submit_vocabulary_quiz(submission: VocabQuizSubmission):
     if not module:
         module = await db.mastery_course_modules.find_one({"id": submission.module_id}, {"_id": 0})
     if module:
-        questions = module.get("quiz", {}).get("questions", [])
-        for i, q in enumerate(questions[:10]):
-            qid = f"q-{i}"
+        for q in _select_vocabulary_quiz_questions(module):
+            qid = q["id"]
             user_ans = submission.answers.get(qid)
-            if user_ans and user_ans != q.get("answer"):
+            if user_ans not in (None, "") and not _is_vocab_quiz_answer_correct(q, user_ans):
                 # Extract keyword from question for review
                 word = q.get("question", "")[:60]
                 await db.review_bank.update_one(
@@ -6393,11 +7330,12 @@ async def get_advanced_mastery_modules():
     return modules
 
 @api_router.get("/advanced-mastery/modules/{module_id}")
-async def get_advanced_mastery_module(module_id: str):
+async def get_advanced_mastery_module(module_id: str, user_plan: str = "free"):
     """Get a specific Advanced IELTS Mastery module"""
     module = await db.advanced_mastery_modules.find_one({"id": module_id}, {"_id": 0})
     if not module:
         raise HTTPException(status_code=404, detail="Module not found")
+    _enforce_course_access(user_plan, "achiever", module.get("module_number"), "Advanced Mastery")
     return module
 
 class AdvancedSpeakingRequest(BaseModel):
@@ -6405,12 +7343,49 @@ class AdvancedSpeakingRequest(BaseModel):
     model_answer: str
     user_response: str
     module_title: str
+    module_number: Optional[int] = None
+    user_plan: Optional[str] = "free"
     part: str = "part3"  # part2 or part3
+    audio_data: Optional[str] = None
 
 @api_router.post("/advanced-mastery/evaluate-speaking")
 async def evaluate_advanced_speaking(request: AdvancedSpeakingRequest):
     """Evaluate speaking response for Advanced IELTS Mastery course with IELTS Core Mindset"""
     try:
+        _enforce_course_access(request.user_plan, "achiever", request.module_number, "Advanced Mastery")
+        word_count = _speaking_word_count(request.user_response)
+        sentence_count = _speaking_sentence_count(request.user_response)
+        template_risk = _speaking_template_risk(request.user_response, request.model_answer)
+        azure_scores = None
+        acoustic_context = "No reliable acoustic pronunciation data was available. Treat pronunciation as estimated from transcript evidence only."
+
+        if request.audio_data and os.getenv("AZURE_SPEECH_KEY") and plan_meets_minimum(request.user_plan, "learner"):
+            try:
+                from routes.speaking_qb import azure_pronunciation_assessment
+
+                audio_bytes = base64.b64decode(request.audio_data)
+                azure_result = await azure_pronunciation_assessment(
+                    audio_bytes,
+                    request.user_response,
+                    request.question,
+                    "en-US",
+                )
+                if azure_result and azure_result.get("success"):
+                    azure_scores = {
+                        "pronunciation": round(float(azure_result.get("pronunciation_score", 0)), 1),
+                        "accuracy": round(float(azure_result.get("accuracy_score", 0)), 1),
+                        "fluency": round(float(azure_result.get("fluency_score", 0)), 1),
+                        "completeness": round(float(azure_result.get("completeness_score", 0)), 1),
+                        "prosody": round(float(azure_result.get("prosody_score", 0)), 1),
+                    }
+                    acoustic_context = (
+                        f"Azure acoustic analysis is available. Pronunciation={azure_scores['pronunciation']}/100, "
+                        f"Accuracy={azure_scores['accuracy']}/100, Fluency={azure_scores['fluency']}/100, "
+                        f"Completeness={azure_scores['completeness']}/100, Prosody={azure_scores['prosody']}/100."
+                    )
+            except Exception as azure_error:
+                logging.getLogger(__name__).warning(f"Advanced mastery Azure analysis unavailable: {azure_error}")
+
         # Use IELTS Core Mindset with Evaluation Mode
         system_message = f"""{IELTS_CORE_MINDSET}
 
@@ -6431,6 +7406,11 @@ Part: {request.part}
 Question: {request.question}
 Model Answer (Band 8+): {request.model_answer}
 Student's Response: {request.user_response}
+Acoustic Context: {acoustic_context}
+Response Signals:
+- Word count: {word_count}
+- Sentence count: {sentence_count}
+- Template-overlap risk vs model answer: {template_risk}
 
 IMPORTANT CHECKS BEFORE SCORING:
 1. Does the response DIRECTLY address the question?
@@ -6450,16 +7430,22 @@ Return JSON only:
     "lexical_resource": {{"score": <5-9>, "feedback": "<specific feedback with evidence>"}},
     "grammatical_range": {{"score": <5-9>, "feedback": "<specific feedback with evidence>"}},
     "pronunciation": {{"score": <5-9>, "feedback": "<assessment based on transcription clarity>"}},
+    "response_diagnosis": {{"relevance": "<strong/partial/weak>", "development": "<strong/moderate/limited>", "template_risk": "<low/medium/high>"}},
     "major_issues": ["<critical problem 1>", "<critical problem 2>"],
     "overall_feedback": "<3-4 sentences: honest assessment, specific improvements needed>",
     "band_justification": "<Why this band would survive Cambridge moderation>",
+    "line_by_line_corrections": [
+        {{"original": "<student sentence>", "corrected": "<stronger version>", "issue": "<main issue>", "explanation": "<clear examiner-style explanation>"}}
+    ],
+    "high_priority_fixes": ["<top fix 1>", "<top fix 2>"],
     "advanced_vocabulary_used": ["<list of advanced words/phrases the student used>"],
     "suggested_improvements": ["<specific actionable suggestion 1>", "<specific actionable suggestion 2>"],
+    "next_answer_blueprint": ["<clear opening move>", "<specific extension idea>", "<strong finishing move>"],
     "model_phrase_to_learn": "<One exemplary phrase from the model answer the student should study>"
 }}"""
 
         response = await chat.send_message(UserMessage(text=prompt))
-        response_text = str(response).strip()
+        response_text = (response.text if hasattr(response, "text") else str(response)).strip()
         if "```json" in response_text:
             response_text = response_text.split("```json")[1].split("```")[0].strip()
         elif "```" in response_text:
@@ -6468,7 +7454,36 @@ Return JSON only:
         import re
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
-            return json.loads(json_match.group())
+            parsed = json.loads(json_match.group())
+            raw_band = float(parsed.get("band_score", 5.5) or 5.5)
+            band_cap = _apply_speaking_band_cap(
+                raw_band,
+                word_count=word_count,
+                sentence_count=sentence_count,
+                template_risk=template_risk,
+                track="advanced",
+            )
+            parsed["band_score"] = band_cap["band_score"]
+            parsed["band_cap"] = band_cap["band_cap"]
+            parsed["cap_reasons"] = band_cap["cap_reasons"]
+            parsed.setdefault("response_diagnosis", {
+                "relevance": "partial" if word_count < 55 else "strong",
+                "development": "limited" if word_count < 30 else "moderate" if word_count < 55 else "strong",
+                "template_risk": "high" if template_risk >= 0.72 else "medium" if template_risk >= 0.45 else "low",
+            })
+            parsed.setdefault("line_by_line_corrections", [])
+            parsed.setdefault("high_priority_fixes", parsed.get("major_issues", []))
+            parsed.setdefault("next_answer_blueprint", [])
+            parsed["response_metrics"] = {
+                "word_count": word_count,
+                "sentence_count": sentence_count,
+                "template_risk": template_risk,
+            }
+            parsed["scoring_source"] = "azure_plus_llm" if azure_scores else "llm_transcript_only"
+            parsed["pronunciation_estimated"] = azure_scores is None
+            if azure_scores:
+                parsed["azure_scores"] = azure_scores
+            return parsed
         
         return {
             "band_score": 5.5,
@@ -6477,16 +7492,49 @@ Return JSON only:
             "grammatical_range": {"score": 5.5, "feedback": "Basic structures need improvement."},
             "pronunciation": {"score": 5.5, "feedback": "Clarity needs work."},
             "overall_feedback": "Response needs more development and sophistication for Band 7+ target.",
+            "response_diagnosis": {
+                "relevance": "partial",
+                "development": "limited" if word_count < 30 else "moderate",
+                "template_risk": "high" if template_risk >= 0.72 else "medium" if template_risk >= 0.45 else "low",
+            },
+            "line_by_line_corrections": [],
+            "high_priority_fixes": ["Add clearer support for your main idea."],
             "advanced_vocabulary_used": [],
             "suggested_improvements": ["Address the question more directly", "Use more topic-specific vocabulary"],
-            "model_phrase_to_learn": "Review the model answer for advanced phrasing."
+            "next_answer_blueprint": ["State your main idea clearly", "Develop it with one example", "Finish with a direct conclusion"],
+            "model_phrase_to_learn": "Review the model answer for advanced phrasing.",
+            "band_justification": "The response is understandable but does not show enough development or sophistication for a higher band.",
+            "response_metrics": {
+                "word_count": word_count,
+                "sentence_count": sentence_count,
+                "template_risk": template_risk,
+            },
+            "scoring_source": "azure_plus_llm" if azure_scores else "llm_transcript_only",
+            "pronunciation_estimated": azure_scores is None,
+            "azure_scores": azure_scores,
         }
     except Exception as e:
         logging.getLogger(__name__).error(f"Advanced speaking evaluation error: {e}")
         return {
             "band_score": 5.5,
             "overall_feedback": "Evaluation error. Keep practicing with complex topics.",
-            "suggested_improvements": ["Practice speaking regularly with complex topics"]
+            "suggested_improvements": ["Practice speaking regularly with complex topics"],
+            "line_by_line_corrections": [],
+            "high_priority_fixes": ["Develop your ideas more fully.", "Use clearer topic-specific vocabulary."],
+            "next_answer_blueprint": ["Answer the question directly", "Add one reason and example", "Close clearly"],
+            "band_justification": "Fallback estimate only. The response needs stronger development and clearer examiner-style control.",
+            "response_diagnosis": {
+                "relevance": "partial",
+                "development": "limited" if word_count < 30 else "moderate",
+                "template_risk": "high" if template_risk >= 0.72 else "medium" if template_risk >= 0.45 else "low",
+            },
+            "response_metrics": {
+                "word_count": word_count,
+                "sentence_count": sentence_count,
+                "template_risk": template_risk,
+            },
+            "scoring_source": "fallback",
+            "pronunciation_estimated": True,
         }
 
 class AdvancedWritingRequest(BaseModel):
@@ -6494,12 +7542,17 @@ class AdvancedWritingRequest(BaseModel):
     model_essay: str
     user_response: str
     module_title: str
+    module_number: Optional[int] = None
+    user_plan: Optional[str] = "free"
+    track: Optional[str] = "academic"
+    task_type: Optional[str] = "task2"
     examiner_analysis: dict = None
 
 @api_router.post("/advanced-mastery/evaluate-writing")
 async def evaluate_advanced_writing(request: AdvancedWritingRequest):
     """Evaluate writing response for Advanced IELTS Mastery course with IELTS Core Mindset"""
     try:
+        _enforce_course_access(request.user_plan, "achiever", request.module_number, "Advanced Mastery")
         # Use IELTS Core Mindset with Evaluation Mode
         system_message = f"""{IELTS_CORE_MINDSET}
 
@@ -6520,9 +7573,13 @@ Additional context: This is an ADVANCED course for students targeting Band 7-9. 
         # Count words
         word_count = len(request.user_response.split())
         
-        prompt = f"""Evaluate this IELTS Writing Task 2 essay with STRICT Cambridge criteria.
+        task_label = "IELTS General Training" if request.track == "general" else "IELTS Academic"
+
+        prompt = f"""Evaluate this {task_label} writing response with STRICT Cambridge criteria.
 
 Topic: {request.module_title}
+Track: {request.track}
+Task Type: {request.task_type}
 Task: {request.task}
 Model Essay (Band 7.5+): {request.model_essay}{examiner_notes}
 Student's Essay ({word_count} words): {request.user_response}
@@ -6543,6 +7600,7 @@ Apply band caps if needed:
 Return JSON only:
 {{
     "band_score": <5.0-9.0 - be strict>,
+    "track": "{request.track}",
     "validity_check": {{
         "word_count": {word_count},
         "meets_word_count": <true/false>,
@@ -6560,14 +7618,24 @@ Return JSON only:
     "band_justification": "<Why this band would survive Cambridge moderation>",
     "strengths": ["<genuine strength 1>", "<genuine strength 2>"],
     "areas_to_improve": ["<specific actionable improvement 1>", "<specific actionable improvement 2>"],
+    "mistakes": [
+        {{"original": "<exact sentence or phrase from student>", "corrected": "<better version>", "explanation": "<what is wrong and why>"}}
+    ],
+    "corrections": [
+        {{"before": "<student sentence>", "after": "<corrected sentence>", "reason": "<brief reason>"}}
+    ],
+    "line_by_line_corrections": [
+        {{"original": "<line or sentence from student>", "corrected": "<improved version>", "issue": "<main issue category>", "explanation": "<clear teaching explanation>"}}
+    ],
     "advanced_vocabulary_suggestions": ["<appropriate advanced word/phrase 1>", "<appropriate advanced word/phrase 2>"],
     "grammar_upgrade_examples": [
-        {{"original": "<student's sentence>", "upgraded": "<Band 8 version>"}}
-    ]
+        {{"original": "<student's sentence>", "upgraded": "<Band 8 version>", "explanation": "<what improved>"}}
+    ],
+    "improvement_suggestions": ["<specific revision action 1>", "<specific revision action 2>"]
 }}"""
 
         response = await chat.send_message(UserMessage(text=prompt))
-        response_text = str(response).strip()
+        response_text = (response.text if hasattr(response, "text") else str(response)).strip()
         if "```json" in response_text:
             response_text = response_text.split("```json")[1].split("```")[0].strip()
         elif "```" in response_text:
@@ -6576,36 +7644,70 @@ Return JSON only:
         import re
         json_match = re.search(r'\{[\s\S]*\}', response_text)
         if json_match:
-            return json.loads(json_match.group())
+            parsed = json.loads(json_match.group())
+            parsed.setdefault("track", request.track)
+            parsed.setdefault("skill", "writing")
+            parsed.setdefault("criteria_scores", {
+                "task_achievement": parsed.get("task_achievement", {}),
+                "coherence_cohesion": parsed.get("coherence_cohesion", {}),
+                "lexical_resource": parsed.get("lexical_resource", {}),
+                "grammatical_range": parsed.get("grammatical_range", {}),
+            })
+            parsed.setdefault("mistakes", [])
+            parsed.setdefault("corrections", [])
+            parsed.setdefault("line_by_line_corrections", [])
+            parsed.setdefault("grammar_upgrade_examples", [])
+            parsed.setdefault("improvement_suggestions", parsed.get("areas_to_improve", []))
+            return parsed
         
         return {
+            "skill": "writing",
+            "track": request.track,
             "band_score": 5.5,
             "task_achievement": {"score": 5.5, "feedback": "Response needs to address all parts more fully."},
             "coherence_cohesion": {"score": 5.5, "feedback": "Paragraph organization needs improvement."},
             "lexical_resource": {"score": 5.5, "feedback": "Vocabulary range is limited for Band 7+ target."},
             "grammatical_range": {"score": 5.5, "feedback": "Complex structures need more control."},
+            "criteria_scores": {
+                "task_achievement": {"score": 5.5, "feedback": "Response needs to address all parts more fully."},
+                "coherence_cohesion": {"score": 5.5, "feedback": "Paragraph organization needs improvement."},
+                "lexical_resource": {"score": 5.5, "feedback": "Vocabulary range is limited for Band 7+ target."},
+                "grammatical_range": {"score": 5.5, "feedback": "Complex structures need more control."},
+            },
             "overall_feedback": "Essay needs more development and sophistication for Band 7+ target.",
             "strengths": ["Attempted to answer the question"],
             "areas_to_improve": ["Address all parts of the question", "Use more topic-specific vocabulary"],
+            "mistakes": [],
+            "corrections": [],
+            "line_by_line_corrections": [],
             "advanced_vocabulary_suggestions": ["Review the module vocabulary"],
-            "grammar_upgrade_examples": []
+            "grammar_upgrade_examples": [],
+            "improvement_suggestions": ["Address all parts of the question", "Use more topic-specific vocabulary"],
         }
     except Exception as e:
         logging.getLogger(__name__).error(f"Advanced writing evaluation error: {e}")
         return {
+            "skill": "writing",
+            "track": request.track,
             "band_score": 5.5,
             "overall_feedback": "Evaluation error. Keep practicing with complex topics.",
-            "areas_to_improve": ["Practice writing regularly with complex topics"]
+            "areas_to_improve": ["Practice writing regularly with complex topics"],
+            "improvement_suggestions": ["Practice writing regularly with complex topics"],
+            "line_by_line_corrections": [],
+            "grammar_upgrade_examples": [],
         }
 
 class AdvancedQuizRequest(BaseModel):
     module_id: str
+    module_number: Optional[int] = None
+    user_plan: Optional[str] = "free"
     answers: dict  # {question_index: answer}
 
 @api_router.post("/advanced-mastery/evaluate-quiz")
 async def evaluate_advanced_quiz(request: AdvancedQuizRequest):
     """Evaluate quiz answers for Advanced IELTS Mastery module"""
     try:
+        _enforce_course_access(request.user_plan, "achiever", request.module_number, "Advanced Mastery")
         module = await db.advanced_mastery_modules.find_one({"id": request.module_id}, {"_id": 0})
         if not module:
             raise HTTPException(status_code=404, detail="Module not found")
@@ -7832,13 +8934,7 @@ async def auto_seed_courses():
 async def auto_seed_unified_learning():
     """Auto-seed unified learning stages and content from JSON files on startup"""
     try:
-        # Ensure admin accounts have full access
-        for admin_email in ADMIN_EMAILS:
-            await db.users.update_one(
-                {"email": admin_email},
-                {"$set": {"plan": "master", "examCredits": 25, "verified": True, "email_verified": True}},
-            )
-        logger.info(f"✅ Admin accounts ensured: master plan + 25 credits")
+        await enforce_current_plan_policy()
         
         stages_count = await db.unified_stages.count_documents({})
         lessons_count = await db.unified_lessons.count_documents({})

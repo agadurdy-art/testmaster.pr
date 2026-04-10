@@ -10,6 +10,7 @@ import {
   User, MessageSquare, FileText, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -781,7 +782,7 @@ export default function SpeakingPracticeQB({ user }) {
                   {results.recommended_lessons.map((l, i) => (
                     <div key={i} className="flex items-center justify-between bg-white p-3 rounded-lg border">
                       <div><p className="font-medium text-gray-900">{l.title}</p><p className="text-xs text-gray-500">{l.track} • {l.stage}</p></div>
-                      <Button variant="outline" size="sm" onClick={() => navigate(l.url || '/mastery-course')}>Go <ChevronRight className="w-3 h-3 ml-1" /></Button>
+                      <Button variant="outline" size="sm" onClick={() => navigate(getRecommendedLessonPath(l))}>Go <ChevronRight className="w-3 h-3 ml-1" /></Button>
                     </div>
                   ))}
                 </div>

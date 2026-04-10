@@ -11,6 +11,89 @@ import { toast } from 'sonner';
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const PASSING_SCORE = 80;
 
+function normalizeOptionLabel(option) {
+  if (typeof option !== 'string') return '';
+  return option.replace(/^[A-D]\)\s*/i, '').trim();
+}
+
+function getCorrectMeta(question) {
+  const rawAnswer = question.answer ?? question.correct_answer ?? question.correct;
+
+  if (question.type === 'fill_blank') {
+    return {
+      type: 'fill_blank',
+      rawAnswer: String(rawAnswer || ''),
+      normalizedText: String(rawAnswer || '').trim().toLowerCase(),
+    };
+  }
+
+  if (typeof question.correct_index === 'number') {
+    return {
+      type: 'multiple_choice',
+      rawAnswer,
+      normalizedIndex: question.correct_index,
+      normalizedText: normalizeOptionLabel(question.options?.[question.correct_index] || '').toLowerCase(),
+    };
+  }
+
+  if (typeof rawAnswer === 'number') {
+    return {
+      type: 'multiple_choice',
+      rawAnswer,
+      normalizedIndex: rawAnswer,
+      normalizedText: normalizeOptionLabel(question.options?.[rawAnswer] || '').toLowerCase(),
+    };
+  }
+
+  const rawText = String(rawAnswer || '').trim();
+  const labelMatch = rawText.match(/^([A-D])(?:\)|\.)?$/i);
+  if (labelMatch) {
+    const normalizedIndex = labelMatch[1].toUpperCase().charCodeAt(0) - 65;
+    return {
+      type: 'multiple_choice',
+      rawAnswer,
+      normalizedIndex,
+      normalizedText: normalizeOptionLabel(question.options?.[normalizedIndex] || '').toLowerCase(),
+    };
+  }
+
+  const normalizedText = normalizeOptionLabel(rawText).toLowerCase();
+  const optionIndex = Array.isArray(question.options)
+    ? question.options.findIndex((option) => normalizeOptionLabel(option).toLowerCase() === normalizedText)
+    : -1;
+
+  return {
+    type: 'multiple_choice',
+    rawAnswer,
+    normalizedIndex: optionIndex >= 0 ? optionIndex : undefined,
+    normalizedText,
+  };
+}
+
+function isCorrectAnswer(question, userAnswer) {
+  const meta = getCorrectMeta(question);
+
+  if (meta.type === 'fill_blank') {
+    return String(userAnswer || '').trim().toLowerCase() === meta.normalizedText;
+  }
+
+  if (typeof userAnswer === 'number' && meta.normalizedIndex !== undefined) {
+    return userAnswer === meta.normalizedIndex;
+  }
+
+  return normalizeOptionLabel(String(userAnswer || '')).toLowerCase() === meta.normalizedText;
+}
+
+function getDisplayCorrectAnswer(question) {
+  const meta = getCorrectMeta(question);
+
+  if (meta.type === 'fill_blank') return meta.rawAnswer || '';
+  if (meta.normalizedIndex !== undefined && question.options?.[meta.normalizedIndex] !== undefined) {
+    return question.options[meta.normalizedIndex];
+  }
+  return meta.rawAnswer || '';
+}
+
 export default function VocabularyQuizMode({ user }) {
   const { moduleId } = useParams();
   const navigate = useNavigate();
@@ -54,11 +137,7 @@ export default function VocabularyQuizMode({ user }) {
       }
       // Check correctness
       const userAns = mergedAnswers[q.id] || '';
-      if (q.type === 'fill_blank') {
-        if (userAns.trim().toLowerCase() === q.answer.trim().toLowerCase()) correct++;
-      } else {
-        if (userAns === q.answer) correct++;
-      }
+      if (isCorrectAnswer(q, userAns)) correct++;
     });
 
     const total = data.questions.length;
@@ -76,7 +155,7 @@ export default function VocabularyQuizMode({ user }) {
 
   const isQuestionAnswered = (q) => {
     if (q.type === 'fill_blank') return !!fillInputs[q.id]?.trim();
-    return !!answers[q.id];
+    return answers[q.id] !== undefined;
   };
   const answeredCount = data ? data.questions.filter(isQuestionAnswered).length : 0;
 
@@ -115,20 +194,17 @@ export default function VocabularyQuizMode({ user }) {
               <p className="text-[12px] text-[#AEAEB2] uppercase tracking-wider font-semibold mb-3">Review</p>
               {data.questions.map((q, i) => {
                 const userAns = answers[q.id] || '';
-                let isCorrect;
-                if (q.type === 'fill_blank') {
-                  isCorrect = userAns.trim().toLowerCase() === q.answer.trim().toLowerCase();
-                } else {
-                  isCorrect = userAns === q.answer;
-                }
+                const isCorrect = isCorrectAnswer(q, userAns);
+                const displayCorrectAnswer = getDisplayCorrectAnswer(q);
+                const displayUserAnswer = typeof userAns === 'number' ? (q.options?.[userAns] || userAns) : userAns;
                 return (
                   <div key={i} className={`p-3 rounded-2xl mb-2 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
                     <div className="flex items-start gap-2">
                       {isCorrect ? <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 shrink-0" /> : <XCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />}
                       <div className="min-w-0">
                         <p className="text-[13px] text-[#1D1D1F] leading-snug">{q.question}</p>
-                        {!isCorrect && <p className="text-[12px] text-green-600 mt-1">Correct: {q.answer}</p>}
-                        {!isCorrect && userAns && <p className="text-[12px] text-red-400 mt-0.5">Your answer: {userAns}</p>}
+                        {!isCorrect && <p className="text-[12px] text-green-600 mt-1">Correct: {displayCorrectAnswer}</p>}
+                        {!isCorrect && displayUserAnswer !== '' && <p className="text-[12px] text-red-400 mt-0.5">Your answer: {displayUserAnswer}</p>}
                         {q.explanation && <p className="text-[12px] text-[#AEAEB2] mt-1">{q.explanation}</p>}
                       </div>
                     </div>

@@ -240,6 +240,46 @@ export default function VocabGrammarQuiz({ user }) {
               </div>
             )}
 
+            {results.root_cause_analysis?.length > 0 && (
+              <div className="bg-rose-50 border border-rose-200 rounded-xl p-5 mb-6 text-left">
+                <div className="flex items-center gap-2 text-rose-700 font-semibold mb-3">
+                  <AlertCircle className="w-5 h-5" />
+                  Root Cause Analysis
+                </div>
+                <div className="space-y-2">
+                  {results.root_cause_analysis.map((cause, i) => (
+                    <div key={i} className="bg-white rounded-lg p-3 border border-rose-100">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-medium text-gray-800">{cause.label}</p>
+                        <Badge variant="outline" className="text-xs">{cause.count} misses</Badge>
+                      </div>
+                      <p className="text-xs text-gray-600 mt-1">{cause.what_it_means}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {results.study_plan && (
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-6 text-left">
+                <div className="flex items-center gap-2 text-blue-700 font-semibold mb-3">
+                  <Lightbulb className="w-5 h-5" />
+                  3-Day Recovery Plan
+                </div>
+                <ul className="space-y-2">
+                  {results.study_plan.three_day_plan?.map((item, i) => (
+                    <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                {results.study_plan.retest_strategy && (
+                  <p className="text-xs text-blue-700 mt-3">{results.study_plan.retest_strategy}</p>
+                )}
+              </div>
+            )}
+
             {/* Weak Areas - Fallback if no recommended_lessons */}
             {(!results.recommended_lessons || results.recommended_lessons.length === 0) && 
              results.weak_units && results.weak_units.length > 0 && (

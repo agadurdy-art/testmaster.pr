@@ -901,6 +901,208 @@ async def submit_test(test_id: str, attempt_id: str, answers: Dict[str, Any]):
 # Store generated tasks temporarily for model answer retrieval
 _task_cache = {}
 
+CURATED_TASK1_PROCESS_VISUALS = [
+    {
+        "asset": "academic_set_d_process.png",
+        "title": "Coffee bean processing system",
+        "task_description": "The diagram below shows the stages involved in processing coffee beans for commercial use.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Coffee beans are fed into the input hopper."},
+            {"name": "The beans are washed in a water tank."},
+            {"name": "They are dried inside a rotating drum."},
+            {"name": "The dried beans are roasted in a heated chamber."},
+            {"name": "They are then ground in a mill."},
+            {"name": "The output is sorted into waste, Grade A, Grade B and final product streams."},
+        ],
+    },
+    {
+        "asset": "visual_010_process_plastic_recycling.png",
+        "title": "Plastic bottle recycling process",
+        "task_description": "The diagram below illustrates how used plastic bottles are recycled and turned into new products.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Used plastic bottles are collected."},
+            {"name": "The bottles are sorted."},
+            {"name": "They are cleaned thoroughly."},
+            {"name": "The material is shredded into small pieces."},
+            {"name": "The plastic is melted."},
+            {"name": "Pellets are produced from the melted material."},
+            {"name": "The pellets are used to manufacture new items."},
+        ],
+    },
+    {
+        "asset": "visual_014_process_sugar_production.png",
+        "title": "Brick manufacturing process",
+        "task_description": "The diagram below shows the process of manufacturing bricks for the construction industry.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Clay is extracted."},
+            {"name": "The raw material is crushed and mixed."},
+            {"name": "The mixture is moulded into brick shapes."},
+            {"name": "The bricks are dried."},
+            {"name": "They are fired in a kiln."},
+            {"name": "After firing, the bricks are cooled."},
+            {"name": "The finished bricks are packaged."},
+        ],
+    },
+    {
+        "asset": "visual_022_process_biofuel_ethanol.png",
+        "title": "Waste food conversion into biogas",
+        "task_description": "The diagram below shows how waste food is converted into biogas and useful by-products.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Food waste is collected."},
+            {"name": "It is crushed before entering a fermentation tank."},
+            {"name": "Gas is produced during fermentation."},
+            {"name": "The gas is stored."},
+            {"name": "The stored gas is used for electricity generation."},
+            {"name": "A fertilizer by-product is also produced."},
+        ],
+    },
+    {
+        "asset": "visual_008_diagram_persian_qanat.png",
+        "title": "Honey production and retail distribution",
+        "task_description": "The diagram below illustrates how honey is produced and prepared for retail sale.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Flowers provide nectar for bees."},
+            {"name": "Bees collect nectar and return to the hive."},
+            {"name": "Honey is produced inside the hive."},
+            {"name": "The honey is filtered."},
+            {"name": "It is bottled."},
+            {"name": "The bottles are placed on supermarket shelves."},
+        ],
+    },
+]
+
+CURATED_TASK1_MAP_VISUALS = [
+    {
+        "asset": "visual_003_map_housing_estate.png",
+        "title": "Residential housing estate development",
+        "task_description": "The maps below show a residential housing estate before and after redevelopment.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before redevelopment",
+        "time_after": "After redevelopment",
+        "features_before": [
+            "A lake near the centre",
+            "Apartment blocks on the eastern side",
+            "Housing for the elderly",
+            "West entrance and south entrance",
+            "London Road and the main road",
+        ],
+        "features_after": [
+            "Updated housing layout around the estate",
+            "The central lake retained",
+            "Apartment and elderly housing areas reorganised",
+            "Road access maintained from the west and south",
+            "A more structured internal road pattern",
+        ],
+    },
+    {
+        "asset": "academic_set_c_campus.png",
+        "title": "University campus expansion",
+        "task_description": "The maps below show a university campus before and after expansion.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before expansion",
+        "time_after": "After expansion",
+        "features_before": [
+            "Two libraries",
+            "An open field in the centre",
+            "A student centre to the south",
+            "Limited footpaths",
+            "Bike parking on the eastern side",
+        ],
+        "features_after": [
+            "Additional student centres",
+            "New footpaths crossing the centre",
+            "Bike parking reorganised",
+            "The open field removed",
+            "The library area connected to a new building",
+        ],
+    },
+    {
+        "asset": "visual_015_map_airport_before_after.png",
+        "title": "Airport terminal area redevelopment",
+        "task_description": "The maps below compare an airport terminal area before and after redevelopment.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before redevelopment",
+        "time_after": "After redevelopment",
+        "features_before": [
+            "A smaller terminal",
+            "A taxi rank",
+            "A large car park",
+            "A hotel",
+            "Narrower access roads",
+        ],
+        "features_after": [
+            "An expanded terminal with more gates",
+            "A shuttle bus route",
+            "The hotel retained",
+            "The car park reorganised",
+            "Wider access roads and improved circulation",
+        ],
+    },
+    {
+        "asset": "visual_020_map_farley_house.png",
+        "title": "Recreation area development",
+        "task_description": "The maps below show a recreation area before and after development.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before development",
+        "time_after": "After development",
+        "features_before": [
+            "Walking trails",
+            "A visitor centre",
+            "A picnic area",
+            "A parking lot",
+            "A large wild zone",
+        ],
+        "features_after": [
+            "An observation tower added",
+            "A water feature introduced",
+            "The wild zone reduced",
+            "The visitor centre and trails retained",
+            "The parking lot kept in place",
+        ],
+    },
+    {
+        "asset": "ielts17_writing_task1_maps_full.png",
+        "title": "Island tourist facilities",
+        "task_description": "The maps below show an island before and after the construction of tourist facilities.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before construction",
+        "time_after": "After construction",
+        "features_before": [
+            "A reception building",
+            "A swimming area on the western side",
+            "Large undeveloped central land",
+            "No accommodation",
+            "No internal roads or paths",
+        ],
+        "features_after": [
+            "A reception building and restaurant",
+            "Accommodation huts around the perimeter",
+            "Footpaths connecting the island",
+            "Boats on the eastern and southern edges",
+            "The swimming area retained on the west",
+        ],
+    },
+]
+
+
+def _build_curated_task1_visual(visual_type: str, topic: str, band_level: str) -> Dict[str, Any]:
+    bank = CURATED_TASK1_PROCESS_VISUALS if visual_type == "process" else CURATED_TASK1_MAP_VISUALS
+    base = random.choice(bank).copy()
+    asset = base.pop("asset")
+    task_data = {
+        **base,
+        "visual_type": visual_type,
+        "topic": topic,
+        "band_level": band_level,
+        "metadata": {
+            "source": "curated_static_bank",
+            "asset": asset,
+        },
+        "band_calibration": {
+            "target_band": band_level,
+            "complexity": "authentic_curated",
+        },
+    }
+    return {
+        "task_data": task_data,
+        "image_url": f"/static/visuals/{asset}",
+    }
+
 @router.get("/writing/task1/generate-authentic")
 async def generate_task1_authentic(
     visual_type: str = Query(..., description="Type of visual (line_graph, bar_chart, pie_chart, table, process, map)"),
@@ -925,6 +1127,7 @@ async def generate_task1_authentic(
     try:
         task_data = None
         svg = None
+        image_url = None
         
         # ============ LINE GRAPH ============
         if visual_type == "line_graph":
@@ -974,52 +1177,15 @@ async def generate_task1_authentic(
         
         # ============ PROCESS ============
         elif visual_type == "process":
-            task_data = authentic_task_generator.generate_process_task(topic, band_level)
-            # Convert stages to steps format
-            steps = [
-                {"label": f"Stage {idx+1}", "description": stage.get("name", stage.get("description", ""))}
-                for idx, stage in enumerate(task_data["stages"])
-            ]
-            svg = chart_generator.generate_process_diagram(
-                title=task_data["title"],
-                steps=steps
-            )
-        
+            curated = _build_curated_task1_visual(visual_type, topic, band_level)
+            task_data = curated["task_data"]
+            image_url = curated["image_url"]
+
         # ============ MAP ============
         elif visual_type == "map":
-            task_data = authentic_task_generator.generate_map_task(topic, band_level)
-            # Convert feature lists to element dicts for map rendering
-            before_elements = []
-            after_elements = []
-            
-            # Generate simple building/area layouts
-            for idx, feature in enumerate(task_data["features_before"]):
-                before_elements.append({
-                    "type": "area",
-                    "x": 30 + (idx % 3) * 120,
-                    "y": 30 + (idx // 3) * 100,
-                    "width": 100,
-                    "height": 60,
-                    "label": feature,
-                    "fill": "#86efac" if "park" in feature.lower() or "forest" in feature.lower() else "#94a3b8"
-                })
-            
-            for idx, feature in enumerate(task_data["features_after"]):
-                after_elements.append({
-                    "type": "area",
-                    "x": 30 + (idx % 3) * 120,
-                    "y": 30 + (idx // 3) * 100,
-                    "width": 100,
-                    "height": 60,
-                    "label": feature,
-                    "fill": "#fbbf24" if "new" in feature.lower() or "modern" in feature.lower() else "#60a5fa"
-                })
-            
-            svg = chart_generator.generate_map_comparison(
-                title=task_data["title"],
-                before_elements=before_elements,
-                after_elements=after_elements
-            )
+            curated = _build_curated_task1_visual(visual_type, topic, band_level)
+            task_data = curated["task_data"]
+            image_url = curated["image_url"]
         
         else:
             raise HTTPException(status_code=400, detail=f"Unknown visual type: {visual_type}")
@@ -1046,6 +1212,7 @@ async def generate_task1_authentic(
             "topic": topic,
             "band_level": band_level,
             "svg": svg,
+            "image_url": image_url,
             "task_description": task_data["task_description"],
             "band_calibration": task_data.get("band_calibration", {}),
             "metadata": task_data.get("metadata", {})
@@ -1194,6 +1361,19 @@ async def evaluate_writing(request: WritingEvaluationRequest):
 ORIGINAL TASK:
 {request.task_description}
 """
+
+    visual_guidance = ""
+    if request.task_type == "task1":
+        visual_type = (request.visual_type or "chart").lower()
+        visual_guidance_map = {
+            "line_graph": "Check trend coverage, comparison quality, and whether the overview captures the main direction of change.",
+            "bar_chart": "Check whether the answer groups categories intelligently and compares the highest/lowest values clearly.",
+            "pie_chart": "Check whether proportions are compared accurately and whether dominant/minor segments are highlighted.",
+            "table": "Check whether the response selects the most important figures instead of listing every number mechanically.",
+            "process": "Check whether the stages are sequenced logically, passive voice is used appropriately, and no important stage is omitted.",
+            "map": "Check whether location language is precise, changes are tracked clearly, and the overview captures the main development pattern."
+        }
+        visual_guidance = visual_guidance_map.get(visual_type, "Check overview quality, accurate reporting, and useful comparisons.")
     
     # Build evaluation prompt based on task type
     if request.task_type == "task1":
@@ -1240,6 +1420,7 @@ IMPORTANT RULES:
 - Look for COMPARISONS between data
 - Detect and penalize TEMPLATE language
 - Be STRICT - real IELTS is strict
+- Specific visual focus: {visual_guidance}
 
 Return ONLY this JSON (no other text):
 {{
@@ -1275,6 +1456,36 @@ Return ONLY this JSON (no other text):
         "Actionable suggestion 2",
         "Actionable suggestion 3"
     ],
+    "high_priority_fixes": [
+        "The first thing the student should fix next time",
+        "The second fix that would raise the band fastest",
+        "The third fix"
+    ],
+    "response_diagnosis": {{
+        "overview_quality": "Brief verdict on the overview",
+        "data_selection": "Did the student choose the right key features?",
+        "comparison_quality": "How well were comparisons made?",
+        "task_risk": "Biggest reason this response is capped at the current band"
+    }},
+    "band_justification": "2-3 sentences explaining exactly why this is the current band and what is missing for the next band.",
+    "line_by_line_corrections": [
+        {{
+            "original": "Original sentence from the response",
+            "issue": "What is wrong or weak here",
+            "improved": "Improved version of the sentence",
+            "why": "Why this version is better for IELTS Task 1"
+        }}
+    ],
+    "rewrite_guidance": {{
+        "overview": "A better 1-2 sentence overview the student could use",
+        "body_paragraph_1": "A stronger version of the first body paragraph",
+        "body_paragraph_2": "A stronger version of the second body paragraph",
+        "data_language": [
+            "Useful phrase 1",
+            "Useful phrase 2",
+            "Useful phrase 3"
+        ]
+    }},
     "vocabulary_to_use": ["advanced word 1", "advanced word 2", "advanced word 3"],
     "grammar_corrections": [
         {{"original": "error from text", "corrected": "correct version", "explanation": "brief explanation"}}
@@ -1325,6 +1536,7 @@ CRITICAL EVALUATION POINTS:
 - Are IDEAS SUPPORTED with examples/evidence?
 - Is there a PROPER CONCLUSION that summarizes?
 - Penalize memorized templates and generic content
+- Give teaching-grade feedback, not just scores. The student should know exactly how to rewrite weaker sentences and paragraphs.
 
 Return ONLY this JSON (no other text):
 {{
@@ -1360,6 +1572,32 @@ Return ONLY this JSON (no other text):
         "How to improve vocabulary usage",
         "How to improve grammar"
     ],
+    "high_priority_fixes": [
+        "The first fix that would improve the band fastest",
+        "The second fix",
+        "The third fix"
+    ],
+    "response_diagnosis": {{
+        "thesis_strength": "How clear and controlled the thesis is",
+        "idea_development": "How well ideas are extended and supported",
+        "cohesion_risk": "Main organizational weakness",
+        "task_risk": "Biggest reason the essay is capped at this band"
+    }},
+    "band_justification": "2-3 sentences explaining why this band is deserved and what blocks the next band.",
+    "line_by_line_corrections": [
+        {{
+            "original": "Original sentence from the essay",
+            "issue": "What is weak or incorrect here",
+            "improved": "Improved version of the sentence",
+            "why": "Why this version is stronger"
+        }}
+    ],
+    "rewrite_guidance": {{
+        "introduction": "A stronger introduction or thesis statement",
+        "body_paragraph_1": "A stronger version of one body paragraph",
+        "body_paragraph_2": "A stronger version of another body paragraph",
+        "conclusion": "A stronger conclusion"
+    }},
     "vocabulary_to_use": ["advanced academic word 1", "word 2", "word 3", "word 4", "word 5"],
     "grammar_corrections": [
         {{"original": "error from essay", "corrected": "correct version", "explanation": "why this is wrong"}}
@@ -1417,6 +1655,11 @@ Return ONLY this JSON (no other text):
             "strengths": [],
             "weaknesses": [],
             "improvement_suggestions": [],
+            "high_priority_fixes": [],
+            "response_diagnosis": {},
+            "band_justification": "",
+            "line_by_line_corrections": [],
+            "rewrite_guidance": {},
             "vocabulary_to_use": [],
             "grammar_corrections": [],
             "examiner_comment": "Evaluation completed."
@@ -1426,6 +1669,8 @@ Return ONLY this JSON (no other text):
         for key, default_value in default_evaluation.items():
             if key not in evaluation:
                 evaluation[key] = default_value
+        if "suggestions" not in evaluation:
+            evaluation["suggestions"] = evaluation.get("improvement_suggestions", [])
         
         # ============ LESSON RECOMMENDATIONS (ULTRA MASTER PROMPT + DUAL-TRACK) ============
         # Fetch recommended lessons based on weaknesses AND track
@@ -1472,56 +1717,25 @@ Return ONLY this JSON (no other text):
             if weakness_keywords:
                 overall_band = evaluation.get("overall_band", 5.5)
                 
-                # Use track-specific recommendations for General Training
-                if request.track == "general":
-                    from services.dual_track_courses import get_dual_track_manager
-                    from server import db as main_db
-                    
-                    manager = get_dual_track_manager(main_db)
-                    recommendations = await manager.get_recommended_lessons_by_track(
-                        track="general",
-                        weaknesses=weakness_keywords,
-                        band_level=request.band_level
-                    )
-                    
-                    # Format for frontend - TRACK-SPECIFIC (CRITICAL: Never suggest Academic lessons for General track)
-                    recommended_lessons = [
-                        {
-                            "lesson_id": r["lesson_id"],
-                            "lesson_anchor_id": f"gt-{r['level']}-{r['lesson_id']}",  # Track-specific anchor
-                            "title": r["title"],
-                            "stage": r["level"],  # Using 'level' from dual-track
-                            "band_level": r.get("band_target", request.band_level),
-                            "track": "general",  # HARD-ENFORCE: Always "general" for General track
-                            "reason": f"Addresses: {', '.join(r.get('addresses_weaknesses', []))}"
-                        }
-                        for r in recommendations[:3]
-                    ]
-                else:
-                    # Academic track - use existing lesson registry
-                    from services.lesson_registry import LessonRegistry
-                    from server import db as main_db
-                    
-                    registry = LessonRegistry(main_db)
-                    recommendations = await registry.get_recommended_lessons(
-                        weaknesses=weakness_keywords,
-                        current_band=float(overall_band),
-                        skill="writing"
-                    )
-                    
-                    # Format for frontend - TRACK-SPECIFIC (CRITICAL: Never suggest General lessons for Academic track)
-                    recommended_lessons = [
-                        {
-                            "lesson_id": r["lesson_id"],
-                            "lesson_anchor_id": f"ac-{r['stage']}-{r['lesson_id']}",  # Track-specific anchor
-                            "title": r["title"],
-                            "stage": r["stage"],
-                            "band_level": r["band_level"],
-                            "track": "academic",  # HARD-ENFORCE: Always "academic" for Academic track
-                            "reason": f"Addresses: {', '.join(r['addresses_weaknesses'])}"
-                        }
-                        for r in recommendations[:3]
-                    ]
+                from services.lesson_registry import LessonRegistry
+                from server import db as main_db
+
+                registry = LessonRegistry(main_db)
+                context = request.task_description or request.topic or ""
+                recommendations = await registry.get_recommended_lessons(
+                    weaknesses=weakness_keywords,
+                    current_band=float(overall_band),
+                    skill="writing",
+                    topic=request.topic,
+                    context=f"{request.track} writing task {request.task_type}: {context}",
+                    limit=3,
+                )
+
+                recommended_lessons = []
+                for recommendation in recommendations:
+                    recommendation["track"] = request.track
+                    recommendation["lesson_anchor_id"] = f"{request.track[:2]}-{recommendation['stage']}-{recommendation['lesson_id']}"
+                    recommended_lessons.append(recommendation)
         except Exception as rec_error:
             print(f"Warning: Could not fetch lesson recommendations: {rec_error}")
         
@@ -1549,6 +1763,12 @@ Return ONLY this JSON (no other text):
                 "strengths": ["Response submitted successfully"],
                 "weaknesses": ["Detailed analysis unavailable"],
                 "improvement_suggestions": ["Try submitting again for detailed feedback"],
+                "high_priority_fixes": [],
+                "response_diagnosis": {},
+                "band_justification": "",
+                "line_by_line_corrections": [],
+                "rewrite_guidance": {},
+                "suggestions": ["Try submitting again for detailed feedback"],
                 "vocabulary_to_use": [],
                 "grammar_corrections": [],
                 "examiner_comment": "Your response has been received. Please try again for detailed feedback."

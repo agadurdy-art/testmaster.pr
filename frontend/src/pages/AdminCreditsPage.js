@@ -75,7 +75,10 @@ export default function AdminCreditsPage({ user }) {
             >
               <option value="">(no change)</option>
               <option value="free">Free</option>
-              <option value="pro">Pro</option>
+              <option value="explorer">Explorer</option>
+              <option value="learner">Learner</option>
+              <option value="achiever">Achiever</option>
+              <option value="master">Master</option>
             </select>
           </div>
           <div>

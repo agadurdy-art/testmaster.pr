@@ -11,6 +11,7 @@ import {
   ListChecks, Eye, FileText, MessageSquare
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { canAccessPremiumTests, normalizePlanName } from '../lib/planAccess';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -25,7 +26,7 @@ const SECTION_TIMES = {
 // Check if user has premium plan
 const isPremiumUser = (user) => {
   if (!user) return false;
-  return user.plan === 'pro' || user.plan === 'booster' || (user.examCredits ?? 0) > 0;
+  return canAccessPremiumTests(user);
 };
 
 export default function CambridgeTestInterface() {
@@ -818,7 +819,7 @@ export default function CambridgeTestInterface() {
       formData.append('part', String(currentPart + 1));
       formData.append('question_index', String(questionIndex));
       // Send user plan for premium evaluation (Azure pronunciation analysis)
-      formData.append('user_plan', user?.plan || 'free');
+      formData.append('user_plan', normalizePlanName(user?.plan || 'free'));
 
       const evalResponse = await fetch(`${API_URL}/api/cambridge/speaking/evaluate`, {
         method: 'POST',

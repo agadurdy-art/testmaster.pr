@@ -202,3 +202,39 @@ def get_all_listening_questions():
 def get_listening_sections():
     """Get all listening sections with metadata"""
     return LISTENING_SECTIONS
+
+
+def get_question_band_value(section):
+    """Return the average band weight for a listening question in a section."""
+    band_range = section["band_range"]
+    low, high = band_range.split("-")
+    return (float(low) + float(high)) / 2
+
+
+def calculate_listening_band(correct_question_count, total_question_count, earned_band_points):
+    """
+    Convert progressive listening-question difficulty into an IELTS-style band.
+
+    The previous implementation divided earned difficulty points by total
+    question count, then added a coarse percentage bonus. That capped a perfect
+    10/10 at Band 6.0 because the section averages summed to 52.0 across 10
+    questions. Here we normalize earned difficulty against the maximum
+    available difficulty and map the result directly to the 2.0-9.0 range.
+    """
+    if total_question_count <= 0:
+        return 2.0
+
+    max_points = 0.0
+    for section in LISTENING_SECTIONS:
+        question_weight = get_question_band_value(section)
+        max_points += question_weight * len(section["questions"])
+
+    if max_points <= 0:
+        return 2.0
+
+    if correct_question_count <= 0:
+        return 2.0
+
+    normalized = earned_band_points / max_points
+    band = 2.0 + (normalized * 7.0)
+    return round(band * 2) / 2

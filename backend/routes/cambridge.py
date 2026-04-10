@@ -10,6 +10,7 @@ from pathlib import Path
 import os
 import json
 import uuid
+from collections import Counter
 
 router = APIRouter(prefix="/api/cambridge", tags=["cambridge"])
 
@@ -391,6 +392,25 @@ Provide honest, calibrated scoring. Be specific with examples from the candidate
         
         evaluation = json.loads(response_text.strip())
         
+        root_cause_analysis = build_root_cause_analysis(
+            reason_counts,
+            {
+                "listening": listening_results.get("details", []),
+                "reading": reading_results.get("details", []),
+            }
+        )
+        study_plan = build_study_plan(
+            overall_band=overall_band,
+            skill_breakdown=skill_breakdown,
+            fastest_gain=fastest_gain,
+            recommended_lessons=recommended_lessons,
+            reason_summary=reason_counts,
+            question_results={
+                "listening": listening_results.get("details", []),
+                "reading": reading_results.get("details", []),
+            },
+        )
+
         return {
             "success": True,
             "task_number": task_number,
@@ -539,7 +559,7 @@ Be specific, constructive, and mention actual question types by name."""
         teacher_feedback = json.loads(response_text.strip())
         
         # ============ RECOMMENDED LESSONS ============
-        recommended_lessons = generate_lesson_recommendations(skill_breakdown, "academic")
+        recommended_lessons = await generate_lesson_recommendations(skill_breakdown, "academic")
         
         # ============ CALCULATE BAND SCORE ============
         overall_band = calculate_band_from_percentage(overall_percentage)
@@ -647,7 +667,9 @@ Be specific, constructive, and mention actual question types by name."""
             },
             "fastest_gain": fastest_gain,
             "integrity_warnings": integrity_warnings,
-            "reason_summary": reason_counts
+            "reason_summary": reason_counts,
+            "root_cause_analysis": root_cause_analysis,
+            "study_plan": study_plan,
         }
         
     except Exception as e:
@@ -1090,87 +1112,184 @@ def generate_explanation(qtype: str, correct_ans, is_correct: bool) -> str:
     return f"The correct answer is '{ans_text}'. This can be found directly in the text/audio."
 
 
-def generate_lesson_recommendations(skill_breakdown: list, track: str) -> list:
-    """Generate lesson recommendations based on weak areas"""
-    recommendations = []
-    
-    # Find weakest skills
+async def generate_lesson_recommendations(skill_breakdown: list, track: str) -> list:
+    """Generate course-linked lesson recommendations based on weak areas."""
+    from server import db
+    from services.lesson_registry import LessonRegistry
+
     weak_skills = [s for s in skill_breakdown if s["total"] > 0 and (s["correct"] / s["total"]) < 0.6]
     weak_skills.sort(key=lambda x: x["correct"] / x["total"] if x["total"] > 0 else 0)
-    
-    # Map question types to course lessons
-    lesson_mapping = {
-        "true_false_ng": {
-            "lesson_id": "tfng-mastery",
-            "title": "True/False/Not Given Mastery",
-            "route": "/mastery?section=reading&lesson=tfng",
-            "course": "IELTS Reading Mastery"
+    if not weak_skills:
+        return []
+
+    weakness_map = {
+        "true_false_ng": ["reading", "coherence"],
+        "yes_no_ng": ["reading", "coherence"],
+        "matching_headings": ["reading", "main ideas"],
+        "matching_information": ["reading", "specific information"],
+        "sentence_completion": ["reading", "vocabulary"],
+        "summary_completion": ["reading", "coherence"],
+        "note_completion": ["listening", "specific information"],
+        "form_completion": ["listening", "spelling"],
+        "multiple_choice": ["reading", "listening", "inference"],
+    }
+
+    weakness_inputs = []
+    context_terms = []
+    for skill_item in weak_skills[:4]:
+        qtype = skill_item["skill_id"].split("_", 1)[-1] if "_" in skill_item["skill_id"] else skill_item["skill_id"]
+        weakness_inputs.extend(weakness_map.get(qtype, [qtype.replace("_", " ")]))
+        context_terms.append(skill_item["label"])
+
+    registry = LessonRegistry(db)
+    recommendations = await registry.get_recommended_lessons(
+        weaknesses=list(dict.fromkeys(weakness_inputs)),
+        current_band=5.5,
+        skill=None,
+        topic=None,
+        context=", ".join(context_terms),
+        limit=3,
+    )
+
+    for recommendation, skill_item in zip(recommendations, weak_skills):
+        accuracy = int(skill_item["correct"] / skill_item["total"] * 100) if skill_item["total"] > 0 else 0
+        recommendation["reason"] = f"Your {skill_item['label']} accuracy is {skill_item['correct']}/{skill_item['total']} ({accuracy}%). {recommendation['reason']}"
+        recommendation["priority"] = "high" if accuracy < 40 else "medium"
+
+    return recommendations
+
+
+def build_root_cause_analysis(reason_summary: Dict[str, int], question_results: Dict[str, list]) -> list:
+    """Summarize the main root causes behind wrong answers."""
+    cause_labels = {
+        "SPELLING_ERROR": "Spelling accuracy",
+        "DISTRACTOR_TRAP": "Distractor trap",
+        "NEAR_MISS": "Precision gap",
+        "UNANSWERED": "Time management",
+        "WRONG_ANSWER": "Core comprehension error",
+    }
+    sample_by_reason = {}
+    all_details = (question_results.get("listening") or []) + (question_results.get("reading") or [])
+    for detail in all_details:
+        code = detail.get("reason_code")
+        if code and code not in sample_by_reason and not detail.get("is_correct"):
+            question_type = detail.get("question_type") or detail.get("type") or "question"
+            sample_by_reason[code] = {
+                "question_type": question_type,
+                "question_id": detail.get("question_id"),
+            }
+
+    analysis = []
+    for code, count in sorted(reason_summary.items(), key=lambda item: item[1], reverse=True):
+        label = cause_labels.get(code, code.replace("_", " ").title())
+        sample = sample_by_reason.get(code, {})
+        analysis.append({
+            "code": code,
+            "label": label,
+            "count": count,
+            "impact": "high" if count >= 4 else "medium" if count >= 2 else "low",
+            "what_it_means": {
+                "SPELLING_ERROR": "You likely heard the right answer but wrote it inaccurately.",
+                "DISTRACTOR_TRAP": "You followed an early tempting answer instead of the final evidence.",
+                "NEAR_MISS": "Your answer was close, but not precise enough for IELTS marking.",
+                "UNANSWERED": "You lost marks without giving yourself a chance to score them.",
+                "WRONG_ANSWER": "The main idea or evidence was misunderstood."
+            }.get(code, "This error pattern is costing you repeated marks."),
+            "sample_question_type": sample.get("question_type"),
+            "sample_question_id": sample.get("question_id"),
+        })
+    return analysis
+
+
+def build_study_plan(
+    overall_band: float,
+    skill_breakdown: list,
+    fastest_gain: list,
+    recommended_lessons: list,
+    reason_summary: Dict[str, int],
+    question_results: Dict[str, list],
+) -> Dict[str, Any]:
+    """Build a prescriptive roadmap from the diagnostic data."""
+    weakest_skills = [
+        item for item in skill_breakdown
+        if item.get("total", 0) > 0
+    ]
+    weakest_skills.sort(key=lambda item: (item.get("correct", 0) / item.get("total", 1)))
+    priority_skill = weakest_skills[0] if weakest_skills else None
+    top_reason = next(iter(sorted(reason_summary.items(), key=lambda item: item[1], reverse=True)), None)
+    target_band = min(9.0, round((overall_band + 0.5) * 2) / 2)
+    expected_gain = sum(item.get("wrong_count", 0) for item in fastest_gain[:2])
+    primary_lessons = recommended_lessons[:3]
+
+    roadmap_steps = []
+    if priority_skill:
+        roadmap_steps.append({
+            "title": f"Fix {priority_skill['label']}",
+            "focus": priority_skill["label"],
+            "why_now": "This is currently your lowest-performing question family.",
+            "action": "Review the linked lesson, then revisit only the wrong questions from this skill.",
+            "expected_gain": f"Recover up to {priority_skill['total'] - priority_skill['correct']} marks here.",
+        })
+    if top_reason:
+        roadmap_steps.append({
+            "title": f"Break the {top_reason[0].replace('_', ' ').title()} pattern",
+            "focus": top_reason[0].replace("_", " ").title(),
+            "why_now": f"This mistake pattern appeared {top_reason[1]} times.",
+            "action": "Study the explanation pattern, then retry those items under timed conditions.",
+            "expected_gain": f"Removing this pattern could recover up to {top_reason[1]} marks.",
+        })
+    if primary_lessons:
+        for lesson in primary_lessons:
+            roadmap_steps.append({
+                "title": f"Study {lesson['title']}",
+                "focus": lesson.get("course_name") or lesson.get("course"),
+                "why_now": lesson.get("reason") or "This lesson directly targets your current weaknesses.",
+                "action": f"Open {lesson.get('unit_label', 'the lesson')} and complete the section tied to your weak skill.",
+                "expected_gain": lesson.get("why_now") or "Build accuracy before retesting.",
+                "lesson_path": lesson.get("lesson_path") or lesson.get("route") or lesson.get("url"),
+            })
+
+    day_plan = [
+        {
+            "day": 1,
+            "title": "Audit your mistakes",
+            "tasks": [
+                "Review every wrong answer and group them by question type.",
+                "Read the root-cause section and mark repeated patterns."
+            ],
         },
-        "yes_no_ng": {
-            "lesson_id": "ynng-mastery",
-            "title": "Yes/No/Not Given Strategies",
-            "route": "/mastery?section=reading&lesson=ynng",
-            "course": "IELTS Reading Mastery"
+        {
+            "day": 2,
+            "title": "Study the highest-impact lesson",
+            "tasks": [
+                primary_lessons[0]["title"] if primary_lessons else "Study the top recommended lesson.",
+                "Write down 3 rules you will apply in the next test."
+            ],
         },
-        "matching_headings": {
-            "lesson_id": "headings-mastery",
-            "title": "Matching Headings Technique",
-            "route": "/mastery?section=reading&lesson=headings",
-            "course": "IELTS Reading Mastery"
+        {
+            "day": 3,
+            "title": "Targeted retest",
+            "tasks": [
+                "Retry only the wrong questions from your weakest skill.",
+                "Do one short timed set to check whether the same pattern repeats."
+            ],
         },
-        "matching_information": {
-            "lesson_id": "matching-info",
-            "title": "Matching Information Practice",
-            "route": "/mastery?section=reading&lesson=matching",
-            "course": "IELTS Reading Mastery"
-        },
-        "sentence_completion": {
-            "lesson_id": "sentence-comp",
-            "title": "Sentence Completion Skills",
-            "route": "/mastery?section=reading&lesson=sentence",
-            "course": "IELTS Reading Mastery"
-        },
-        "summary_completion": {
-            "lesson_id": "summary-comp",
-            "title": "Summary Completion Strategy",
-            "route": "/mastery?section=reading&lesson=summary",
-            "course": "IELTS Reading Mastery"
-        },
-        "note_completion": {
-            "lesson_id": "note-comp",
-            "title": "Note Completion Listening",
-            "route": "/mastery?section=listening&lesson=notes",
-            "course": "IELTS Listening Mastery"
-        },
-        "form_completion": {
-            "lesson_id": "form-comp",
-            "title": "Form Completion Skills",
-            "route": "/mastery?section=listening&lesson=forms",
-            "course": "IELTS Listening Mastery"
-        },
-        "multiple_choice": {
-            "lesson_id": "mc-strategy",
-            "title": "Multiple Choice Strategy",
-            "route": "/mastery?section=skills&lesson=mc",
-            "course": "IELTS Skills Mastery"
+    ]
+
+    return {
+        "target_band": target_band,
+        "estimated_weeks": 2 if overall_band >= 6.5 else 3,
+        "priority_skill": priority_skill["label"] if priority_skill else None,
+        "top_root_cause": top_reason[0] if top_reason else None,
+        "expected_mark_recovery": expected_gain,
+        "roadmap_steps": roadmap_steps[:5],
+        "three_day_plan": day_plan,
+        "retest_strategy": {
+            "immediate": "Retry only the question types with the highest wrong count after lesson review.",
+            "timed_recheck": "Run a short timed mini-test after 2-3 focused sessions.",
+            "full_retake": "Take a full test only after your top two weak areas stabilize."
         }
     }
-    
-    for skill in weak_skills[:5]:
-        qtype = skill["skill_id"].split("_", 1)[-1] if "_" in skill["skill_id"] else skill["skill_id"]
-        
-        if qtype in lesson_mapping:
-            lesson = lesson_mapping[qtype]
-            recommendations.append({
-                "lesson_id": lesson["lesson_id"],
-                "title": lesson["title"],
-                "course": lesson["course"],
-                "route": lesson["route"],
-                "reason": f"Your {skill['label']} accuracy is {skill['correct']}/{skill['total']} ({int(skill['correct']/skill['total']*100) if skill['total'] > 0 else 0}%)",
-                "priority": "high" if (skill["correct"] / skill["total"] if skill["total"] > 0 else 0) < 0.4 else "medium"
-            })
-    
-    return recommendations
 
 
 print("✅ Cambridge IELTS routes loaded")

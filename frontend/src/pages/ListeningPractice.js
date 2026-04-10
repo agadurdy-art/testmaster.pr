@@ -10,6 +10,7 @@ import {
   ChevronDown, ChevronUp, SkipBack, SkipForward
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -636,6 +637,23 @@ export default function ListeningPractice({ user }) {
                     </div>
                   )}
 
+                  {results.root_cause_analysis?.length > 0 && (
+                    <div className="mb-4 p-3 bg-rose-50 rounded-lg border border-rose-200">
+                      <p className="text-sm font-medium text-rose-800 mb-2">Root Cause Analysis</p>
+                      <div className="space-y-2">
+                        {results.root_cause_analysis.map((cause, i) => (
+                          <div key={i} className="bg-white p-2 rounded border">
+                            <div className="flex items-center justify-between gap-2">
+                              <p className="text-sm font-medium text-gray-900">{cause.label}</p>
+                              <Badge className="bg-rose-100 text-rose-700">{cause.count} misses</Badge>
+                            </div>
+                            <p className="text-xs text-gray-600 mt-1">{cause.what_it_means}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Course Recommendations */}
                   {results.recommended_lessons?.length > 0 && (
                     <div className="mb-4 p-3 bg-green-50 rounded-lg border border-green-200">
@@ -652,13 +670,30 @@ export default function ListeningPractice({ user }) {
                             <Button 
                               variant="outline" 
                               size="sm"
-                              onClick={() => navigate(lesson.url || '/mastery-course')}
+                              onClick={() => navigate(getRecommendedLessonPath(lesson))}
                             >
                               Go to Lesson <ChevronRight className="w-3 h-3 ml-1" />
                             </Button>
                           </div>
                         ))}
                       </div>
+                    </div>
+                  )}
+
+                  {results.study_plan && (
+                    <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <p className="text-sm font-medium text-blue-800 mb-2">3-Day Recovery Plan</p>
+                      <ul className="space-y-2">
+                        {results.study_plan.three_day_plan?.map((item, i) => (
+                          <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      {results.study_plan.retest_strategy && (
+                        <p className="text-xs text-blue-700 mt-3">{results.study_plan.retest_strategy}</p>
+                      )}
                     </div>
                   )}
 
