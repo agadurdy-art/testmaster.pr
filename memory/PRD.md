@@ -24,51 +24,68 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 - Global ErrorBoundary + activity-level error boundaries
 - Centralized audio management (prevent loops/leaking)
 
-### Completed (April 6, 2026)
-- **P0: Beginner Course Vocabulary Engine Fix:**
-  - Seeded 14 beginner lessons into `beginner_english_lessons` collection
-  - Fixed slides endpoint: guarded `word_formation` with `isinstance(vocab, dict)` check
-  - Fixed practice endpoint: added `return` statement in beginner block (was falling through to advanced logic)
-  - Normalized exercise schema: uses `answer`/`id`/`instruction` keys (frontend-compatible)
-  - Fixed all 4 vocabulary mode components: smart `backPath` navigation (beginner→/beginner-course, mastery→/mastery-course, advanced→/advanced-mastery)
-  - Fixed VocabularyProductionMode word filter: `s.word && s.meaning` instead of `s.category === 'Advanced Term'`
-  - All 42 endpoints (14 lessons × 3 stages) return 200 OK
+### Completed (April 10, 2026) — Deploy Readiness Pass
+- **Plan System Normalization:**
+  - Legacy plan aliases: starter→learner, booster→achiever, pro→master
+  - `normalize_plan_name()` and `get_plan_label()` added to plan_access.py
+  - Frontend helpers: `planAccess.js`, `lizAccess.js`, `recommendationRouting.js`
+  - Active hierarchy: free < explorer < learner < achiever < master
 
-- **Security Hardening (PR #2 Applied):**
-  - **Bcrypt Password Hashing:** Replaced SHA-256 with bcrypt. Added login-time migration (SHA-256 → bcrypt on successful login). Both hash types supported via `verify_password()`
-  - **Direct-Reset Removed:** `/auth/direct-reset` endpoint deleted (insecure - no email verification)
-  - **CORS Tightened:** `allow_origins` now filters empty strings; falls back to `["*"]` only if `CORS_ORIGINS` env is unset
-  - **Upload Validation:** `validate_upload_filename()` in security_utils - only .jpg/.jpeg/.png/.pdf allowed
-  - **AI Input Sanitization:** `sanitize_ai_input()` strips prompt injection patterns from user text before LLM calls
-  - **Band Score Clamping:** `clamp_band_scores()` ensures all IELTS scores stay within 1.0-9.0 range
-  - **Level-Test Answer Keys Server-Side:** Reading questions served WITHOUT `correct` field. Server-side evaluation at `/comprehensive-level-test/evaluate-reading`
-  - **Atomic Speaking Session:** Free trial allocation uses atomic `update_one` with condition to prevent race conditions
-  - **Centralized Admin Validation:** `security_utils.py` with `require_admin_email()` used across all admin routes
-  - **User Model:** `password_hash` excluded from API responses via `Field(exclude=True)`
-  - Tests: 15/15 passed
+- **Liz Teacher Hardening:**
+  - Plan-based access control (`ensure_liz_access`, 403 for free users)
+  - Monthly usage tracking (`get_liz_usage_stats`)
+  - Model cost optimization: gpt-4o-mini default, gpt-4o for deep tasks
+  - Azure pronunciation integration for voice turns
+  - `/api/liz/status/{user_id}` endpoint added
+  - Emily Teacher removed (single teacher surface: Liz)
+
+- **Grammar Engine Validation Layer:**
+  - `PLACEHOLDER_PATTERNS` + `_is_meaningful_text()` for content validation
+  - `_validate_learn_payload`, `_validate_practice_payload`, `_validate_quiz_payload`, `_validate_prompt_payload`
+  - Cache reads now validate before returning (reject bogus cached content)
+
+- **Cambridge Test Diagnostics:**
+  - `build_root_cause_analysis()` — categorizes wrong answers by pattern (spelling, distractor, near-miss, unanswered)
+  - `build_study_plan()` — prescriptive roadmap with target band, 3-day plan, retest strategy
+  - Both included in `/api/cambridge/evaluate/full-test` response
+
+- **Writing Task 1 Curated Visuals:**
+  - Process and Map types now use static curated image bank instead of generated SVG
+  - 5 process visuals + 5 map visuals with authentic IELTS task descriptions
+  - `image_url` field added to generate-authentic response
+
+- **Lesson Registry Enhanced:**
+  - `STAGE_META` with course_name, course_path, label for each stage
+  - `_build_recommendation()` with full lesson path, unit label, reason, context matching
+  - `_build_lesson_path()` for course-driven URL generation
+  - Context-aware search terms for better recommendation relevance
+
+### Completed (April 6, 2026)
+- **Beginner Course Vocabulary Engine Fix**
+- **Security Hardening (PR #2):** bcrypt, server-side level test, upload validation, CORS, admin protection
 
 ### Previously Completed
 - 100% vocabulary image coverage (617/617 words)
-- White Screen crash fix (ErrorBoundary + null guards on 14+ game components)
+- White Screen crash fix (ErrorBoundary + null guards)
 - Mastery Course Vocabulary Engine integration
 - Word Search drag-select rewrite
-- Crossword direction fix
-- Audio loop fix
-- Mastery Course listening topic mismatch fix
-- Word Order grammar game bug fix
+- Crossword direction fix, Audio loop fix
 - Grammar Engine for Mastery & Advanced courses
 - ElevenLabs audio for Module 13
 
 ## Prioritized Backlog
 
+### P0 - Next
+1. **Grammar Practice Engine (Plan B):** 4-stage grammar engine for Beginner course
+2. **Vocabulary Word Completion Bug:** Regression test pending
+
 ### P1 - Upcoming
-1. **"Liz" Bilingual Lesson Teacher:** AI tutor explains lesson topic in user's language
-2. **"Map Generator" Status Report:** Inform user - no existing feature found
-3. **Vocabulary Word Completion Bug:** Regression test pending
+3. **"Map Generator" Status Report:** Inform user - no existing feature found
+4. **"Liz" Bilingual Lesson Teacher:** AI tutor explains lesson topic in user's language
 
 ### P2 - Future
 - Generate ElevenLabs Audio for All Mastery Modules
-- Automatic Visual Generation Pipeline for new lessons
+- Automatic Visual Generation Pipeline
 - Bank Transfer Expiry Reminders
 - "Daily Habit" Spaced Repetition System (SRS)
 - "Booster Mode" for remedial lessons
@@ -76,14 +93,18 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 - Investigate user database
 
 ## Key Files
-- `/app/backend/server.py` - Core backend
-- `/app/backend/security_utils.py` - Security utilities (admin validation, upload validation, AI sanitization, band clamping, PayPal webhook verification)
-- `/app/backend/level_test_reading_data.py` - Server-side reading question data with answer keys
-- `/app/backend/routes/grammar_engine.py` - Grammar Practice Engine
-- `/app/frontend/src/pages/Vocabulary*Mode.js` - Vocabulary engine (4 pages)
-- `/app/frontend/src/pages/Grammar*Mode.js` - Grammar engine (4 pages)
-- `/app/frontend/src/pages/LevelTest.js` - Level test (questions loaded from API)
-- `/app/frontend/src/pages/ComprehensiveLevelTest.js` - Comprehensive level test (questions from API)
+- `/app/backend/server.py` - Core backend (~8000 lines)
+- `/app/backend/plan_access.py` - Plan tiers, features, legacy aliases, normalization
+- `/app/backend/security_utils.py` - Security utilities
+- `/app/backend/level_test_reading_data.py` - Server-side answer keys
+- `/app/backend/routes/liz_teacher.py` - Liz AI Teacher (plan-gated, model-optimized)
+- `/app/backend/routes/grammar_engine.py` - Grammar Engine with validation layer
+- `/app/backend/routes/cambridge.py` - Cambridge tests with diagnostics
+- `/app/backend/routes/question_bank.py` - QB with curated visual bank
+- `/app/backend/services/lesson_registry.py` - Enhanced lesson recommendations
+- `/app/frontend/src/lib/planAccess.js` - Frontend plan tier helpers
+- `/app/frontend/src/lib/lizAccess.js` - Liz access control
+- `/app/frontend/src/lib/recommendationRouting.js` - Lesson path builder
 
 ## Admin Accounts
 - aga.durdy@gmail.com
@@ -91,8 +112,13 @@ A full-stack English learning platform (IELTS focused) with React frontend, Fast
 - stemhousebenluc@gmail.com
 
 ## Critical Notes
-- DATA PERSISTENCE: All content changes must be written to enriched JSON source files, not just DB
+- DATA PERSISTENCE: All content changes must be written to enriched JSON source files
 - User communicates in Turkish
 - DB_NAME = ielts_database
 - Passwords: bcrypt preferred, SHA-256 legacy supported with auto-migration
-- Level test answer keys are SERVER-SIDE only (never sent to frontend)
+- Level test answer keys are SERVER-SIDE only
+- Plan normalization: starter→learner, booster→achiever, pro→master
+- Liz Teacher: gpt-4o-mini default, gpt-4o for deep tasks only
+- Emily Teacher REMOVED — only Liz remains
+- Grammar cache validates content before returning (rejects placeholders)
+- Process/Map visuals use curated static bank, other charts use SVG generation
