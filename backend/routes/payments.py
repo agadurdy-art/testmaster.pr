@@ -131,17 +131,6 @@ async def _get_user_by_email(email: str) -> Optional[dict]:
     return user
 
 
-def _map_kofi_tier_to_credits(tier_name: str) -> int:
-    name = (tier_name or "").strip().lower()
-    if "starter" in name:
-        return 2
-    if "booster" in name:
-        return 5
-    if "pro" in name:
-        return 8
-    return 0
-
-
 # ============ Payment Order Retrieval ============
 
 @router.get("/payments/orders/{order_id}")
@@ -375,56 +364,7 @@ async def start_speaking_session(request: Request):
     }
 
 
-# ============ Ko-fi IPN ============
-
-@router.post("/payments/kofi/ipn")
-async def kofi_ipn(request: Request):
-    form = await request.form()
-    raw_data = form.get("data")
-    if not raw_data:
-        raise HTTPException(status_code=400, detail="Missing data field")
-    try:
-        payload = json.loads(raw_data)
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=400, detail="Invalid JSON in data field")
-    verification_token = os.getenv("KOFI_VERIFICATION_TOKEN")
-    if verification_token:
-        if payload.get("verification_token") != verification_token:
-            raise HTTPException(status_code=401, detail="Invalid verification token")
-    kofi_type = (payload.get("type") or "").strip()
-    email = (payload.get("email") or "").strip().lower()
-    if not email:
-        raise HTTPException(status_code=400, detail="Missing email in payload")
-    tier_name = payload.get("tier_name") or ""
-    amount_str = payload.get("amount") or "0"
-    try:
-        amount = float(str(amount_str))
-    except ValueError:
-        amount = 0.0
-    logger.info(f"Ko-fi webhook: type={kofi_type}, email={email}, tier={tier_name}, amount={amount}")
-    await db.kofi_events.insert_one({
-        "received_at": datetime.now(timezone.utc).isoformat(),
-        "type": kofi_type, "email": email, "tier_name": tier_name,
-        "amount": amount, "payload": payload,
-    })
-    user = await db.users.find_one({"email": email}, {"_id": 0})
-    if not user:
-        logger.warning(f"Ko-fi payment for unknown email: {email}")
-        return {"detail": "No matching user; event recorded."}
-    update_fields: Dict[str, Any] = {}
-    if kofi_type.lower() == "subscription":
-        credits = _map_kofi_tier_to_credits(tier_name)
-        if credits > 0:
-            update_fields["plan"] = "pro"
-            update_fields["subscription"] = tier_name
-            update_fields["examCredits"] = user.get("examCredits", 0) + credits
-    elif kofi_type.lower() in {"shop order", "donation"}:
-        if abs(amount - 4.99) < 0.01:
-            update_fields["examCredits"] = user.get("examCredits", 0) + 1
-    if update_fields:
-        update_fields["lastPayment"] = datetime.now(timezone.utc).isoformat()
-        await db.users.update_one({"id": user["id"]}, {"$set": update_fields})
-    return {"detail": "OK"}
+# ============ Ko-fi IPN — REMOVED (only PayPal and bank transfer are active) ============
 
 
 # ============ PayPal IPN ============
