@@ -186,12 +186,15 @@ export default function VocabularyQuizMode({ user }) {
           {(!question.type || question.type === 'multiple_choice') && question.options && (
             <div className="space-y-2.5" data-testid="quiz-options-mc">
               {question.options.map((option, i) => {
-                const sel = answers[question.id] === i;
+                const label = String.fromCharCode(65 + i);
+                const hasPrefix = /^[A-D]\)\s/.test(option);
+                const displayText = hasPrefix ? option : `${label}) ${option}`;
+                const sel = answers[question.id] === label;
                 return (
-                  <button key={i} onClick={() => selectAnswer(question.id, i)}
+                  <button key={i} onClick={() => selectAnswer(question.id, label)}
                     className={`w-full p-4 rounded-2xl border text-left transition-all shadow-[0_1px_4px_rgba(0,0,0,0.04)] ${sel ? 'bg-violet-50 border-violet-300 text-violet-700' : 'bg-white border-black/[0.06] text-[#3A3A3C] hover:bg-violet-50/40 hover:border-violet-200'}`}
                     data-testid={`quiz-option-${i}`}>
-                    <span className="text-[14px] font-medium">{option}</span>
+                    <span className="text-[14px] font-medium">{displayText}</span>
                   </button>
                 );
               })}

@@ -156,7 +156,7 @@ export default function WritingTask1Practice() {
       
       if (data.svg || data.image_url) {
         setSvgContent(data.svg || '');
-        setImageUrl(data.image_url ? `${API_URL}${data.image_url}` : '');
+        setImageUrl(data.image_url ? `${API_URL}/api${data.image_url}` : '');
         setTaskData(data);
         
         // Generate model answer in background

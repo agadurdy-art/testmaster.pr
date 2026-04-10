@@ -315,10 +315,12 @@ else:
 # Mount static files for visuals (maps, diagrams, charts)
 static_visuals_path = ROOT_DIR / "static" / "visuals"
 if static_visuals_path.exists():
+    app.mount("/api/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals_api")
     app.mount("/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals")
-    print("✅ Static visual files mounted at /static/visuals")
+    print("✅ Static visual files mounted at /api/static/visuals and /static/visuals")
 else:
     os.makedirs(static_visuals_path, exist_ok=True)
+    app.mount("/api/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals_api")
     app.mount("/static/visuals", StaticFiles(directory=str(static_visuals_path)), name="visuals")
     print("✅ Static visual files directory created and mounted")
 
@@ -4379,10 +4381,12 @@ async def get_vocabulary_quiz(module_id: str):
             options = [meaning] + distractors
             random.shuffle(options)
             correct_idx = options.index(meaning)
+            answer_label = chr(65 + correct_idx)  # 0->A, 1->B, 2->C, 3->D
             questions.append({
                 "id": f"q-{i}",
                 "question": f"What does '{word}' mean?",
                 "options": options,
+                "answer": answer_label,
                 "correct_answer": correct_idx,
                 "explanation": f"'{word}' means: {meaning}. Example: {example}",
             })
