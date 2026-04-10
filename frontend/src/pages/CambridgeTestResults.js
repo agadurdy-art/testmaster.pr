@@ -10,6 +10,7 @@ import {
   AlertTriangle, Zap, Info, Activity, Dumbbell, MessageCircle, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { getRecommendedLessonPath } from '../lib/recommendationRouting';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -33,6 +34,8 @@ export default function CambridgeTestResults() {
   const [integrityWarnings, setIntegrityWarnings] = useState([]);
   const [showBandTooltip, setShowBandTooltip] = useState(null);
   const [reasonSummary, setReasonSummary] = useState({});
+  const [rootCauseAnalysis, setRootCauseAnalysis] = useState([]);
+  const [studyPlan, setStudyPlan] = useState(null);
   
   // Speaking P2 state
   const [fluencyInsights, setFluencyInsights] = useState(null);
@@ -99,6 +102,8 @@ export default function CambridgeTestResults() {
         setFastestGain(data.fastest_gain || []);
         setIntegrityWarnings(data.integrity_warnings || []);
         setReasonSummary(data.reason_summary || {});
+        setRootCauseAnalysis(data.root_cause_analysis || []);
+        setStudyPlan(data.study_plan || null);
         
       } else {
         toast.error('Could not evaluate test');
@@ -694,6 +699,36 @@ export default function CambridgeTestResults() {
           </Card>
         )}
 
+        {rootCauseAnalysis.length > 0 && (
+          <Card className="p-6 mb-6 bg-gradient-to-br from-rose-50 to-orange-50 border-rose-200 rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-orange-500 flex items-center justify-center shadow-lg">
+                <AlertTriangle className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-rose-900">Root Cause Analysis</h3>
+                <p className="text-sm text-rose-600">Why marks were lost, not just where.</p>
+              </div>
+            </div>
+            <div className="space-y-3">
+              {rootCauseAnalysis.map((cause, idx) => (
+                <div key={idx} className="bg-white rounded-xl p-4 border border-rose-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold text-gray-900">{cause.label}</h4>
+                    <Badge className={cause.impact === 'high' ? 'bg-red-100 text-red-700' : cause.impact === 'medium' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'}>
+                      {cause.count}x
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-gray-600">{cause.what_it_means}</p>
+                  {cause.sample_question_type && (
+                    <p className="text-xs text-rose-600 mt-2">Sample pattern: {cause.sample_question_type.replace(/_/g, ' ')}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
+
         {/* Mistake Analysis & Targeted Retry (merged) */}
         {Object.keys(reasonSummary).length > 0 && (
           <Card data-testid="reason-summary-card" className="p-6 mb-6 bg-white border-0 shadow-lg rounded-2xl">
@@ -948,7 +983,7 @@ export default function CambridgeTestResults() {
                 <div 
                   key={idx}
                   className="flex items-center gap-4 p-4 bg-white rounded-xl hover:bg-indigo-50 cursor-pointer transition-all border border-indigo-100"
-                  onClick={() => navigate(lesson.route || '/mastery')}
+                  onClick={() => navigate(getRecommendedLessonPath(lesson))}
                 >
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                     lesson.priority === 'high' ? 'bg-red-100' : 'bg-indigo-100'
@@ -960,7 +995,7 @@ export default function CambridgeTestResults() {
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-900">{lesson.title}</h4>
                     <p className="text-sm text-gray-500">{lesson.reason}</p>
-                    <p className="text-xs text-indigo-600 mt-1">{lesson.course}</p>
+                    <p className="text-xs text-indigo-600 mt-1">{lesson.course || lesson.course_name}</p>
                   </div>
                   {lesson.priority === 'high' && (
                     <Badge className="bg-red-100 text-red-700 text-xs">Priority</Badge>
@@ -969,6 +1004,66 @@ export default function CambridgeTestResults() {
                 </div>
               ))}
             </div>
+          </Card>
+        )}
+
+        {studyPlan?.roadmap_steps?.length > 0 && (
+          <Card className="p-6 mb-6 bg-gradient-to-br from-violet-50 to-indigo-50 border-violet-200 rounded-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center shadow-lg">
+                <MapPin className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-violet-900">Study Roadmap</h3>
+                <p className="text-sm text-violet-600">A concrete path from Band {results?.overall?.toFixed?.(1) || results?.overall || '-'} toward Band {studyPlan.target_band}</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-3 mb-4">
+              <div className="bg-white rounded-xl p-4 border border-violet-100">
+                <p className="text-xs uppercase tracking-wide text-gray-500">Priority Skill</p>
+                <p className="text-lg font-bold text-violet-700">{studyPlan.priority_skill || 'N/A'}</p>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-violet-100">
+                <p className="text-xs uppercase tracking-wide text-gray-500">Expected Mark Recovery</p>
+                <p className="text-lg font-bold text-violet-700">+{studyPlan.expected_mark_recovery || 0}</p>
+              </div>
+              <div className="bg-white rounded-xl p-4 border border-violet-100">
+                <p className="text-xs uppercase tracking-wide text-gray-500">Estimated Recovery Window</p>
+                <p className="text-lg font-bold text-violet-700">{studyPlan.estimated_weeks || 0} weeks</p>
+              </div>
+            </div>
+            <div className="space-y-3 mb-4">
+              {studyPlan.roadmap_steps.map((step, idx) => (
+                <div key={idx} className="bg-white rounded-xl p-4 border border-violet-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold text-gray-900">{idx + 1}. {step.title}</h4>
+                    {step.lesson_path && (
+                      <Button size="sm" variant="outline" onClick={() => navigate(step.lesson_path)}>
+                        Open Lesson
+                      </Button>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-600 mb-1">{step.why_now}</p>
+                  <p className="text-sm text-gray-700"><strong>Action:</strong> {step.action}</p>
+                  <p className="text-xs text-violet-700 mt-2">{step.expected_gain}</p>
+                </div>
+              ))}
+            </div>
+            {studyPlan.three_day_plan?.length > 0 && (
+              <div className="bg-white rounded-xl p-4 border border-violet-100">
+                <h4 className="font-semibold text-gray-900 mb-3">3-Day Recovery Plan</h4>
+                <div className="space-y-3">
+                  {studyPlan.three_day_plan.map((day) => (
+                    <div key={day.day}>
+                      <p className="font-medium text-violet-700">Day {day.day}: {day.title}</p>
+                      <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                        {day.tasks.map((task, idx) => <li key={idx}>• {task}</li>)}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </Card>
         )}
 

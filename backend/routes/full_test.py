@@ -22,6 +22,7 @@ try:
         classify_reason_code, compare_answers as cambridge_compare,
         calculate_band_from_percentage, get_skill_tip,
         generate_explanation, generate_lesson_recommendations,
+        build_root_cause_analysis, build_study_plan,
         extract_evidence_text
     )
     CAMBRIDGE_HELPERS_AVAILABLE = True
@@ -586,7 +587,20 @@ async def evaluate_full_test(
         results["reason_summary"] = reason_counts
 
         # Recommended lessons
-        results["recommended_lessons"] = generate_lesson_recommendations(skill_breakdown, test.get("test_type", "academic"))
+        results["recommended_lessons"] = await generate_lesson_recommendations(skill_breakdown, test.get("test_type", "academic"))
+
+        results["root_cause_analysis"] = build_root_cause_analysis(
+            reason_counts,
+            results["question_results"]
+        )
+        results["study_plan"] = build_study_plan(
+            overall_band=results.get("overall", {}).get("band", 0),
+            skill_breakdown=skill_breakdown,
+            fastest_gain=results["fastest_gain"],
+            recommended_lessons=results["recommended_lessons"],
+            reason_summary=reason_counts,
+            question_results=results["question_results"],
+        )
 
         # AI Teacher Feedback
         teacher_feedback = await generate_ai_teacher_feedback(results, skill_breakdown, test)
@@ -598,6 +612,8 @@ async def evaluate_full_test(
         results["integrity_warnings"] = []
         results["reason_summary"] = {}
         results["recommended_lessons"] = []
+        results["root_cause_analysis"] = []
+        results["study_plan"] = {}
         results["teacher_feedback"] = None
 
     # Summary

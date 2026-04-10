@@ -11,6 +11,18 @@ import {
 import api from '../lib/api';
 import { toast } from 'sonner';
 
+const PLAN_STYLES = {
+  master: 'bg-purple-100 text-purple-700',
+  achiever: 'bg-amber-100 text-amber-700',
+  learner: 'bg-blue-100 text-blue-700',
+  explorer: 'bg-green-100 text-green-700',
+  free: 'bg-gray-100 text-gray-600',
+};
+
+const getPlanBadgeClass = (plan) => PLAN_STYLES[plan] || PLAN_STYLES.free;
+const getPlanLabel = (userLike) => userLike?.plan_label || userLike?.plan || 'free';
+const formatAdminDate = (value) => (value ? new Date(value).toLocaleString() : 'Unknown');
+
 export default function AdminPanel({ user }) {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
@@ -183,13 +195,9 @@ export default function AdminPanel({ user }) {
                           <p className="text-sm text-gray-500 truncate">{u.email}</p>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`text-xs px-2 py-0.5 rounded-full ${
-                              u.plan === 'master' ? 'bg-purple-100 text-purple-700' :
-                              u.plan === 'achiever' ? 'bg-amber-100 text-amber-700' :
-                              u.plan === 'learner' ? 'bg-blue-100 text-blue-700' :
-                              u.plan === 'explorer' ? 'bg-green-100 text-green-700' :
-                              'bg-gray-100 text-gray-600'
+                              getPlanBadgeClass(u.plan)
                             }`}>
-                              {u.plan || 'free'}
+                              {getPlanLabel(u)}
                             </span>
                             <span className="text-xs text-gray-400">
                               {u.examCredits || 0} credits
@@ -233,6 +241,11 @@ export default function AdminPanel({ user }) {
                         <p className="text-sm text-gray-400 flex items-center gap-1">
                           <Calendar className="w-3 h-3" /> Joined {userDetail.user?.created_at ? new Date(userDetail.user.created_at).toLocaleDateString() : 'Unknown'}
                         </p>
+                        {userDetail.user?.legacy_plan && (
+                          <p className="text-xs text-amber-600 mt-1">
+                            Legacy plan migrated from <span className="font-medium">{userDetail.user.legacy_plan}</span>
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="flex gap-2">
@@ -268,7 +281,7 @@ export default function AdminPanel({ user }) {
                         <Crown className="w-5 h-5 text-amber-600" />
                         <span className="text-sm font-medium text-amber-800">Plan</span>
                       </div>
-                      <p className="text-2xl font-bold text-amber-900 capitalize">{userDetail.user?.plan || 'Free'}</p>
+                      <p className="text-2xl font-bold text-amber-900 capitalize">{getPlanLabel(userDetail.user)}</p>
                     </div>
                     <div className="p-4 bg-gradient-to-br from-violet-50 to-purple-50 rounded-xl">
                       <div className="flex items-center gap-2 mb-2">
@@ -283,6 +296,30 @@ export default function AdminPanel({ user }) {
                         <span className="text-sm font-medium text-cyan-800">Tests</span>
                       </div>
                       <p className="text-2xl font-bold text-cyan-900">{userDetail.total_tests || 0}</p>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
+                  <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                    <Eye className="w-5 h-5 text-violet-600" /> Activity Overview
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="p-4 bg-violet-50 rounded-xl">
+                      <p className="text-xs uppercase tracking-wide text-violet-700">Learning Lessons</p>
+                      <p className="text-2xl font-bold text-violet-900">{userDetail.activity_summary?.learning_lessons_completed || 0}</p>
+                    </div>
+                    <div className="p-4 bg-cyan-50 rounded-xl">
+                      <p className="text-xs uppercase tracking-wide text-cyan-700">Full Tests</p>
+                      <p className="text-2xl font-bold text-cyan-900">{userDetail.activity_summary?.full_tests_completed || 0}</p>
+                    </div>
+                    <div className="p-4 bg-emerald-50 rounded-xl">
+                      <p className="text-xs uppercase tracking-wide text-emerald-700">Liz Sessions</p>
+                      <p className="text-2xl font-bold text-emerald-900">{userDetail.activity_summary?.liz_sessions || 0}</p>
+                    </div>
+                    <div className="p-4 bg-amber-50 rounded-xl">
+                      <p className="text-xs uppercase tracking-wide text-amber-700">Review Bank</p>
+                      <p className="text-2xl font-bold text-amber-900">{userDetail.activity_summary?.review_bank_items || 0}</p>
                     </div>
                   </div>
                 </Card>
@@ -347,12 +384,199 @@ export default function AdminPanel({ user }) {
                     )}
                   </div>
                 </Card>
+
+                <div className="grid xl:grid-cols-2 gap-6">
+                  <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
+                    <h3 className="font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                    <div className="space-y-3 max-h-[360px] overflow-y-auto">
+                      {userDetail.recent_activity?.length > 0 ? (
+                        userDetail.recent_activity.map((activity, idx) => (
+                          <div key={`${activity.type}-${idx}`} className="p-3 bg-gray-50 rounded-xl">
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="font-medium text-gray-900">{activity.label}</p>
+                                <p className="text-sm text-gray-500">{activity.details}</p>
+                              </div>
+                              <span className="text-xs text-gray-400 whitespace-nowrap">{formatAdminDate(activity.time)}</span>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-center text-gray-500 py-4">No tracked activity yet</p>
+                      )}
+                    </div>
+                  </Card>
+
+                  <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
+                    <h3 className="font-semibold text-gray-900 mb-4">Learning Platform</h3>
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div className="p-3 bg-gray-50 rounded-xl">
+                        <p className="text-xs text-gray-500">Current lesson</p>
+                        <p className="font-semibold text-gray-900">{userDetail.learning_platform?.current_lesson_id || '-'}</p>
+                      </div>
+                      <div className="p-3 bg-gray-50 rounded-xl">
+                        <p className="text-xs text-gray-500">Hours studied</p>
+                        <p className="font-semibold text-gray-900">{userDetail.learning_platform?.total_hours_studied || 0}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3 max-h-[260px] overflow-y-auto">
+                      {userDetail.learning_platform?.recent_completed_lessons?.length > 0 ? (
+                        userDetail.learning_platform.recent_completed_lessons.map((lesson) => (
+                          <div key={`${lesson.level_id}-${lesson.lesson_id}`} className="p-3 border rounded-xl">
+                            <p className="font-medium text-gray-900">{lesson.lesson_id}</p>
+                            <p className="text-xs text-gray-500">{lesson.level_id} / {lesson.unit_id}</p>
+                            <p className="text-xs text-gray-400 mt-1">
+                              {formatAdminDate(lesson.completed_at)}
+                              {lesson.score != null ? ` • score ${lesson.score}` : ''}
+                              {lesson.time_spent_minutes ? ` • ${lesson.time_spent_minutes} min` : ''}
+                            </p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-center text-gray-500 py-4">No saved lesson completions</p>
+                      )}
+                    </div>
+                  </Card>
+                </div>
+
+                <div className="grid xl:grid-cols-2 gap-6">
+                  <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
+                    <h3 className="font-semibold text-gray-900 mb-4">Vocabulary & Grammar Course</h3>
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      <div className="p-3 bg-gray-50 rounded-xl">
+                        <p className="text-xs text-gray-500">Lessons started</p>
+                        <p className="font-semibold text-gray-900">{userDetail.vocab_grammar?.lessons_started || 0}</p>
+                      </div>
+                      <div className="p-3 bg-gray-50 rounded-xl">
+                        <p className="text-xs text-gray-500">Quiz accuracy</p>
+                        <p className="font-semibold text-gray-900">{userDetail.vocab_grammar?.quiz_progress?.accuracy || 0}%</p>
+                      </div>
+                    </div>
+                    {userDetail.vocab_grammar?.quiz_progress?.weak_units?.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-xs font-medium text-gray-500 mb-2">Weak units</p>
+                        <div className="flex flex-wrap gap-2">
+                          {userDetail.vocab_grammar.quiz_progress.weak_units.map((unit) => (
+                            <span key={unit} className="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-700">{unit}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div className="space-y-3 max-h-[260px] overflow-y-auto">
+                      {userDetail.vocab_grammar?.recent_lessons?.length > 0 ? (
+                        userDetail.vocab_grammar.recent_lessons.map((lesson) => (
+                          <div key={lesson.lesson_id} className="p-3 border rounded-xl">
+                            <p className="font-medium text-gray-900">{lesson.lesson_id}</p>
+                            <p className="text-sm text-gray-500">{lesson.completed_items?.length || 0} completed items</p>
+                            <p className="text-xs text-gray-400 mt-1">{formatAdminDate(lesson.updated_at)}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-center text-gray-500 py-4">No saved vocab/grammar activity</p>
+                      )}
+                    </div>
+                  </Card>
+
+                  <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
+                    <h3 className="font-semibold text-gray-900 mb-4">Vocabulary & Grammar Engines</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-sm font-medium text-gray-700 mb-2">Vocabulary engine</p>
+                        <div className="space-y-2 max-h-[150px] overflow-y-auto">
+                          {userDetail.vocabulary_engine?.recent_modules?.length > 0 ? (
+                            userDetail.vocabulary_engine.recent_modules.map((module) => (
+                              <div key={module.module_id} className="p-3 bg-gray-50 rounded-xl">
+                                <div className="flex items-center justify-between gap-2">
+                                  <p className="font-medium text-gray-900">{module.module_id}</p>
+                                  <span className="text-xs text-gray-500">{module.progress_percent}%</span>
+                                </div>
+                                <p className="text-xs text-gray-500 mt-1">{module.sections_completed?.join(', ') || 'No sections complete'}</p>
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-sm text-gray-500">No vocabulary engine activity</p>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-700 mb-2">Grammar engine</p>
+                        <div className="space-y-2 max-h-[150px] overflow-y-auto">
+                          {userDetail.grammar_engine?.recent_modules?.length > 0 ? (
+                            userDetail.grammar_engine.recent_modules.map((module) => (
+                              <div key={module.module_id} className="p-3 bg-gray-50 rounded-xl">
+                                <div className="flex items-center justify-between gap-2">
+                                  <p className="font-medium text-gray-900">{module.module_id}</p>
+                                  <span className="text-xs text-gray-500">{module.completed_stage_count} stages</span>
+                                </div>
+                                <p className="text-xs text-gray-400 mt-1">{formatAdminDate(module.last_activity_at)}</p>
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-sm text-gray-500">No grammar engine activity</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+
+                <div className="grid xl:grid-cols-2 gap-6">
+                  <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
+                    <h3 className="font-semibold text-gray-900 mb-4">Full Test History</h3>
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      {Object.entries(userDetail.full_test_completions?.by_category || {}).map(([category, stats]) => (
+                        <div key={category} className="p-3 bg-gray-50 rounded-xl">
+                          <p className="text-xs uppercase tracking-wide text-gray-500">{category.replace('_', ' ')}</p>
+                          <p className="font-semibold text-gray-900">{stats.count} completed</p>
+                          <p className="text-xs text-gray-500">Best band {stats.best_band}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="space-y-3 max-h-[260px] overflow-y-auto">
+                      {userDetail.full_test_completions?.recent?.length > 0 ? (
+                        userDetail.full_test_completions.recent.map((item, idx) => (
+                          <div key={`${item.test_id}-${idx}`} className="p-3 border rounded-xl">
+                            <p className="font-medium text-gray-900">{item.test_id}</p>
+                            <p className="text-sm text-gray-500">{item.category}</p>
+                            <p className="text-xs text-gray-400 mt-1">{formatAdminDate(item.completed_at)}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-center text-gray-500 py-4">No full test completions</p>
+                      )}
+                    </div>
+                  </Card>
+
+                  <Card className="bg-white border-0 shadow-lg rounded-2xl p-6">
+                    <h3 className="font-semibold text-gray-900 mb-4">Liz Teacher Sessions</h3>
+                    <div className="space-y-3 max-h-[320px] overflow-y-auto">
+                      {userDetail.liz_activity?.recent_sessions?.length > 0 ? (
+                        userDetail.liz_activity.recent_sessions.map((session) => (
+                          <div key={session.id} className="p-3 border rounded-xl">
+                            <div className="flex items-start justify-between gap-3">
+                              <div>
+                                <p className="font-medium text-gray-900">{session.title || 'Untitled session'}</p>
+                                <p className="text-xs text-gray-500">{session.message_count} messages</p>
+                                {session.last_message && (
+                                  <p className="text-sm text-gray-500 mt-2 line-clamp-2">{session.last_message}</p>
+                                )}
+                              </div>
+                              <span className="text-xs text-gray-400 whitespace-nowrap">{formatAdminDate(session.last_updated)}</span>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-center text-gray-500 py-4">No Liz activity</p>
+                      )}
+                    </div>
+                  </Card>
+                </div>
               </div>
             ) : (
               <Card className="bg-white border-0 shadow-lg rounded-2xl p-8 text-center">
                 <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-gray-700 mb-2">Select a User</h3>
-                <p className="text-gray-500">Click on a user from the list to view their details and manage their subscription.</p>
+                <p className="text-gray-500">Click on a user from the list to view their detailed learning activity and manage their plan.</p>
               </Card>
             )}
           </div>

@@ -752,10 +752,17 @@ async def evaluate_listening_answers(
     
     # Get lesson recommendations based on weaknesses
     weak_skills = identify_weak_skills(detailed_results)
-    recommended_lessons = get_listening_lesson_recommendations(
+    recommended_lessons = await get_listening_lesson_recommendations(
         listening_set.get("topic"),
         weak_skills,
         band_range or listening_set["band_range"]
+    )
+    root_cause_analysis = build_listening_root_cause_analysis(detailed_results)
+    study_plan = build_listening_study_plan(
+        estimated_band=estimated_band,
+        weak_skills=weak_skills,
+        recommended_lessons=recommended_lessons,
+        root_cause_analysis=root_cause_analysis,
     )
     
     return {
@@ -772,7 +779,9 @@ async def evaluate_listening_answers(
         "detailed_results": detailed_results,
         "weak_skills": weak_skills,
         "recommended_lessons": recommended_lessons,
-        "feedback": generate_overall_feedback(percentage, weak_skills)
+        "feedback": generate_overall_feedback(percentage, weak_skills),
+        "root_cause_analysis": root_cause_analysis,
+        "study_plan": study_plan,
     }
 
 
@@ -841,67 +850,98 @@ def identify_weak_skills(results: List[Dict]) -> List[str]:
     return weak_skills
 
 
-def get_listening_lesson_recommendations(
+def build_listening_root_cause_analysis(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Summarize the main listening failure patterns."""
+    explanation_map = {
+        "numbers": "Exact figures are slipping. Slow down and capture digits deliberately.",
+        "spelling": "You hear the word, but the final written form is not stable enough yet.",
+        "dates": "Calendar detail is breaking down across day, month, or year.",
+        "prices": "Currency values and decimal detail need tighter checking.",
+        "time": "Schedule language and clock references need more control.",
+        "specific information": "You need stronger evidence capture for direct factual details.",
+        "inference": "You are missing implied meaning or speaker attitude.",
+        "main idea": "You need a stronger grasp of overall message before chasing details.",
+        "matching": "Matching speaker/detail questions need more structured elimination."
+    }
+    skill_counts: Dict[str, int] = {}
+
+    for result in results:
+        if result.get("is_correct"):
+            continue
+        skills = result.get("skill_tested") or ["specific information"]
+        for skill in skills:
+            normalized = str(skill).lower()
+            skill_counts[normalized] = skill_counts.get(normalized, 0) + 1
+
+    return [
+        {
+            "code": code,
+            "label": code.replace("_", " ").title(),
+            "count": count,
+            "impact": "high" if count >= 3 else "medium" if count == 2 else "targeted",
+            "what_it_means": explanation_map.get(code, "This listening sub-skill needs more targeted practice."),
+        }
+        for code, count in sorted(skill_counts.items(), key=lambda item: item[1], reverse=True)[:4]
+    ]
+
+
+def build_listening_study_plan(
+    estimated_band: float,
+    weak_skills: List[str],
+    recommended_lessons: List[Dict[str, Any]],
+    root_cause_analysis: List[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Create an actionable listening roadmap from the weak skill profile."""
+    top_cause = root_cause_analysis[0] if root_cause_analysis else {}
+    primary_lesson = recommended_lessons[0] if recommended_lessons else {}
+
+    return {
+        "target_band": round(min(9.0, estimated_band + (1.0 if estimated_band < 6.5 else 0.5)), 1),
+        "priority_skill": top_cause.get("label") or (weak_skills[0] if weak_skills else "Listening"),
+        "top_root_cause": top_cause.get("code"),
+        "roadmap_steps": [
+            {
+                "title": "Review the top lesson match",
+                "why_now": primary_lesson.get("reason") or "Start with the lesson that targets your biggest listening gap.",
+                "route": primary_lesson.get("lesson_path"),
+            },
+            {
+                "title": "Replay every wrong item with evidence",
+                "why_now": "Write the exact word or phrase that proves the correct answer before moving on.",
+            },
+            {
+                "title": "Do a fresh timed set",
+                "why_now": "Check whether the weak skill improves on unfamiliar audio, not just on repetition.",
+            },
+        ],
+        "three_day_plan": [
+            "Day 1: Review the linked lesson and note the main error pattern behind your misses.",
+            "Day 2: Replay the wrong items and record the exact evidence for each correction.",
+            "Day 3: Take a new listening set and compare your weakest skill before and after review.",
+        ],
+        "retest_strategy": "If the same weak skill appears again, slow down note capture and prioritise exact evidence over speed.",
+    }
+
+
+async def get_listening_lesson_recommendations(
     topic: str,
     weak_skills: List[str],
     band_range: str
 ) -> List[Dict[str, Any]]:
-    """Get lesson recommendations based on topic and weaknesses."""
-    recommendations = []
-    
-    # Map band ranges to course stages
-    band_to_stage = {
-        "4.0-5.0": "beginner",
-        "5.5-6.5": "mastery",
-        "7.0-9.0": "advanced"
-    }
-    stage = band_to_stage.get(band_range, "mastery")
-    
-    # Topic-based recommendations
-    if topic:
-        recommendations.append({
-            "lesson_id": f"{stage}_{topic}_listening",
-            "title": f"{topic.replace('_', ' ').title()} - Listening Practice",
-            "stage": stage,
-            "band_level": band_range,
-            "relevance": "topic_match",
-            "url": f"/{stage}-course?module={topic}&section=listening"
-        })
-    
-    # Skill-based recommendations
-    skill_lessons = {
-        "numbers": {
-            "title": "Numbers and Dates in Listening",
-            "description": "Practice recognizing numbers, prices, and dates"
-        },
-        "spelling": {
-            "title": "Spelling and Names Practice",
-            "description": "Improve spelling recognition in conversations"
-        },
-        "inference": {
-            "title": "Understanding Implied Meaning",
-            "description": "Learn to identify what speakers mean, not just what they say"
-        },
-        "main idea": {
-            "title": "Identifying Main Ideas",
-            "description": "Focus on overall message comprehension"
-        }
-    }
-    
-    for skill in weak_skills[:3]:  # Limit to top 3 weaknesses
-        if skill in skill_lessons:
-            lesson = skill_lessons[skill]
-            recommendations.append({
-                "lesson_id": f"{stage}_listening_{skill.replace(' ', '_')}",
-                "title": lesson["title"],
-                "stage": stage,
-                "band_level": band_range,
-                "relevance": "skill_weakness",
-                "description": lesson["description"],
-                "url": f"/{stage}-course?section=listening"
-            })
-    
-    return recommendations[:5]  # Return max 5 recommendations
+    """Get course-linked lesson recommendations based on topic and weaknesses."""
+    from server import db
+    from services.lesson_registry import LessonRegistry
+
+    registry = LessonRegistry(db)
+    band_score = 4.5 if band_range == "4.0-5.0" else 6.0 if band_range == "5.5-6.5" else 7.5
+    return await registry.get_recommended_lessons(
+        weaknesses=weak_skills or ["listening"],
+        current_band=band_score,
+        skill="listening",
+        topic=topic,
+        context=f"listening practice about {topic or 'general listening'}",
+        limit=3,
+    )
 
 
 def generate_overall_feedback(percentage: float, weak_skills: List[str]) -> str:

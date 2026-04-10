@@ -663,6 +663,21 @@ export default function ComprehensiveLevelTest({ user }) {
     }
   };
 
+  const blobToBase64 = (blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result;
+      if (typeof result !== 'string') {
+        reject(new Error('Failed to convert audio to base64'));
+        return;
+      }
+      const [, base64Data = ''] = result.split(',');
+      resolve(base64Data);
+    };
+    reader.onerror = () => reject(reader.error || new Error('Failed to read blob'));
+    reader.readAsDataURL(blob);
+  });
+
   const evaluateTest = async () => {
     try {
       setStage('results');
@@ -752,14 +767,19 @@ export default function ComprehensiveLevelTest({ user }) {
         // Only evaluate if we have speaking responses
         if (speakingResponses.length > 0) {
           try {
+            const speakingPayload = await Promise.all(
+              speakingResponses.map(async (responseItem) => ({
+                level: responseItem.level,
+                prompt: responseItem.prompt,
+                transcript: responseItem.transcript,
+                audio_data: responseItem.audio instanceof Blob ? await blobToBase64(responseItem.audio) : null
+              }))
+            );
             const speakingEvaluationResponse = await fetch(`${API_URL}/api/level-test/evaluate-speaking`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                responses: speakingResponses.map(r => ({
-                  level: r.level,
-                  transcript: r.transcript
-                })),
+                responses: speakingPayload,
                 language: language
               })
             });
@@ -1963,6 +1983,20 @@ export default function ComprehensiveLevelTest({ user }) {
     const isStillEvaluating = evaluating;
     const isSingleSkillTest = testMode !== 'full';
     const SkillIconComponent = getSkillIcon();
+    const shortTestNoticeTitle =
+      language === 'vi' ? 'Lưu ý về bài kiểm tra ngắn' :
+      language === 'tr' ? 'Kısa test notu' :
+      'Short test note';
+    const shortTestNoticeBody =
+      language === 'vi'
+        ? 'Đây là bài kiểm tra ngắn để ước tính nhanh trình độ hiện tại của bạn. Kết quả hữu ích để định hướng, nhưng không chính xác bằng bài Full Test.'
+        : language === 'tr'
+          ? 'Bu, mevcut seviyenizi hızlıca tahmin eden kısa bir testtir. Sonuç yön gösterir, ancak Full Test kadar kesin değildir.'
+          : 'This is a short test designed to estimate your current level quickly. It is useful for direction, but it is less precise than the Full Test.';
+    const shortTestNoticeCta =
+      language === 'vi' ? 'Kết quả chính xác hơn? Hãy làm Full Test.' :
+      language === 'tr' ? 'Daha doğru sonuç mu istiyorsunuz? Full Test yapın.' :
+      'Want a more reliable result? Take the Full Test.';
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 py-12 px-4">
@@ -1999,21 +2033,55 @@ export default function ComprehensiveLevelTest({ user }) {
 
           {/* Single Skill Result Display */}
           {isSingleSkillTest && !isStillEvaluating && (
-            <Card className={`p-8 bg-gradient-to-br ${getBandColor(getSkillBand())} text-white shadow-2xl mb-8`}>
-              <div className="text-center">
-                <p className="text-white/90 text-lg mb-2">
-                  {language === 'vi' ? `Band ${getSkillName()} Của Bạn` :
-                   language === 'tr' ? `${getSkillName()} Bandınız` :
-                   `Your ${getSkillName()} Band`}
-                </p>
-                <div className="text-7xl font-bold mb-2">
-                  {getSkillBand().toFixed(1)}
+            <div className="space-y-4 mb-8">
+              <Card className={`p-8 bg-gradient-to-br ${getBandColor(getSkillBand())} text-white shadow-2xl`}>
+                <div className="text-center">
+                  <p className="text-white/90 text-lg mb-2">
+                    {language === 'vi' ? `Band ${getSkillName()} Ước Tính` :
+                     language === 'tr' ? `Tahmini ${getSkillName()} Bandınız` :
+                     `Estimated ${getSkillName()} Band`}
+                  </p>
+                  <div className="text-7xl font-bold mb-2">
+                    {getSkillBand().toFixed(1)}
+                  </div>
+                  <p className="text-2xl font-semibold text-white/95 mb-2">
+                    {getBandLabel(getSkillBand())}
+                  </p>
+                  <p className="text-sm text-white/85 max-w-2xl mx-auto">
+                    {shortTestNoticeBody}
+                  </p>
                 </div>
-                <p className="text-2xl font-semibold text-white/95 mb-4">
-                  {getBandLabel(getSkillBand())}
-                </p>
-              </div>
-            </Card>
+              </Card>
+
+              <Card className="p-5 bg-amber-50 border-amber-200 shadow-sm">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-amber-900 mb-1">{shortTestNoticeTitle}</p>
+                    <p className="text-sm text-amber-800 mb-3">{shortTestNoticeBody}</p>
+                    <p className="text-sm font-medium text-amber-900">{shortTestNoticeCta}</p>
+                  </div>
+                  <Button
+                    onClick={() => {
+                      setTestMode('full');
+                      setStage('intro');
+                      setCurrentQuestion(0);
+                      setReadingAnswers({});
+                      setListeningAnswers({});
+                      setWritingResponses({});
+                      setSpeakingResponses([]);
+                      setCurrentListeningSection(0);
+                      setCurrentWritingTask(0);
+                      setCurrentSpeakingPrompt(0);
+                      setResults(null);
+                    }}
+                    className="bg-amber-600 hover:bg-amber-700 text-white"
+                  >
+                    {language === 'vi' ? 'Làm Full Test' : language === 'tr' ? 'Full Test Yap' : 'Take Full Test'}
+                  </Button>
+                </div>
+              </Card>
+            </div>
           )}
 
           {/* Full Test Result Display - Overall Band Score */}
@@ -2344,9 +2412,28 @@ export default function ComprehensiveLevelTest({ user }) {
                     <Mic className="w-5 h-5 text-purple-600" />
                     {language === 'vi' ? 'Kết Quả Chi Tiết' : language === 'tr' ? 'Detaylı Sonuçlar' : 'Detailed Results'}
                   </h3>
-                  {results.speaking.criteria_breakdown && (
+                  <div className={`mb-4 p-3 rounded-lg text-sm ${
+                    results.speaking.pronunciation_estimated
+                      ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                      : 'bg-green-50 text-green-800 border border-green-200'
+                  }`}>
+                    {results.speaking.pronunciation_estimated ? (
+                      language === 'vi'
+                        ? 'Phát âm hiện đang là điểm ước tính từ transcript. Để có đánh giá phát âm đáng tin cậy hơn, cần phân tích âm thanh.'
+                        : language === 'tr'
+                          ? 'Telaffuz şu anda transcript üzerinden tahmin ediliyor. Daha güvenilir telaffuz puanı için ses analizi gerekir.'
+                          : 'Pronunciation is currently estimated from the transcript. Reliable pronunciation scoring requires acoustic audio analysis.'
+                    ) : (
+                      language === 'vi'
+                        ? 'Điểm phát âm này có hỗ trợ từ phân tích âm thanh Azure.'
+                        : language === 'tr'
+                          ? 'Telaffuz puanı Azure ses analizi ile desteklendi.'
+                          : 'This pronunciation score is supported by Azure acoustic analysis.'
+                    )}
+                  </div>
+                  {results.speaking.criteria_scores && (
                     <div className="grid grid-cols-2 gap-4 mb-4">
-                      {Object.entries(results.speaking.criteria_breakdown).map(([criterion, score]) => (
+                      {Object.entries(results.speaking.criteria_scores).map(([criterion, score]) => (
                         <div key={criterion} className="p-3 bg-purple-50 rounded-lg">
                           <p className="text-xs text-gray-500 capitalize">{criterion.replace(/_/g, ' ')}</p>
                           <p className="text-lg font-bold text-purple-600">{score?.toFixed(1) || 'N/A'}</p>
@@ -2354,8 +2441,23 @@ export default function ComprehensiveLevelTest({ user }) {
                       ))}
                     </div>
                   )}
+                  {results.speaking.azure_scores && (
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      {Object.entries(results.speaking.azure_scores).map(([metric, score]) => (
+                        <div key={metric} className="p-3 bg-green-50 rounded-lg">
+                          <p className="text-xs text-gray-500 capitalize">{metric.replace(/_/g, ' ')}</p>
+                          <p className="text-lg font-bold text-green-700">{score}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {results.speaking.feedback && (
                     <p className="text-sm text-gray-600 mb-4">{results.speaking.feedback}</p>
+                  )}
+                  {results.speaking.acoustic_warnings && results.speaking.acoustic_warnings.length > 0 && (
+                    <p className="text-xs text-gray-500 mb-4">
+                      {results.speaking.acoustic_warnings[0]}
+                    </p>
                   )}
                   {results.speaking.weaknesses && results.speaking.weaknesses.length > 0 && (
                     <div>
