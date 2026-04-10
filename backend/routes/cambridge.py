@@ -647,7 +647,19 @@ Be specific, constructive, and mention actual question types by name."""
             },
             "fastest_gain": fastest_gain,
             "integrity_warnings": integrity_warnings,
-            "reason_summary": reason_counts
+            "reason_summary": reason_counts,
+            "root_cause_analysis": build_root_cause_analysis(
+                reason_counts,
+                {"listening": listening_results.get("details", []), "reading": reading_results.get("details", [])}
+            ),
+            "study_plan": build_study_plan(
+                overall_band=overall_band,
+                skill_breakdown=skill_breakdown,
+                fastest_gain=fastest_gain,
+                recommended_lessons=recommended_lessons,
+                reason_summary=reason_counts,
+                question_results={"listening": listening_results.get("details", []), "reading": reading_results.get("details", [])},
+            ),
         }
         
     except Exception as e:
@@ -1171,6 +1183,115 @@ def generate_lesson_recommendations(skill_breakdown: list, track: str) -> list:
             })
     
     return recommendations
+
+
+def build_root_cause_analysis(reason_summary, question_results):
+    """Summarize the main root causes behind wrong answers."""
+    cause_labels = {
+        "SPELLING_ERROR": "Spelling accuracy",
+        "DISTRACTOR_TRAP": "Distractor trap",
+        "NEAR_MISS": "Precision gap",
+        "UNANSWERED": "Time management",
+        "WRONG_ANSWER": "Core comprehension error",
+    }
+    sample_by_reason = {}
+    all_details = (question_results.get("listening") or []) + (question_results.get("reading") or [])
+    for detail in all_details:
+        code = detail.get("reason_code")
+        if code and code not in sample_by_reason and not detail.get("is_correct"):
+            question_type = detail.get("question_type") or detail.get("type") or "question"
+            sample_by_reason[code] = {
+                "question_type": question_type,
+                "question_id": detail.get("question_id"),
+            }
+    analysis = []
+    for code, count in sorted(reason_summary.items(), key=lambda item: item[1], reverse=True):
+        label = cause_labels.get(code, code.replace("_", " ").title())
+        sample = sample_by_reason.get(code, {})
+        analysis.append({
+            "code": code,
+            "label": label,
+            "count": count,
+            "impact": "high" if count >= 4 else "medium" if count >= 2 else "low",
+            "what_it_means": {
+                "SPELLING_ERROR": "You likely heard the right answer but wrote it inaccurately.",
+                "DISTRACTOR_TRAP": "You followed an early tempting answer instead of the final evidence.",
+                "NEAR_MISS": "Your answer was close, but not precise enough for IELTS marking.",
+                "UNANSWERED": "You lost marks without giving yourself a chance to score them.",
+                "WRONG_ANSWER": "The main idea or evidence was misunderstood."
+            }.get(code, "This error pattern is costing you repeated marks."),
+            "sample_question_type": sample.get("question_type"),
+            "sample_question_id": sample.get("question_id"),
+        })
+    return analysis
+
+
+def build_study_plan(overall_band, skill_breakdown, fastest_gain, recommended_lessons, reason_summary, question_results):
+    """Build a prescriptive roadmap from the diagnostic data."""
+    weakest_skills = [item for item in skill_breakdown if item.get("total", 0) > 0]
+    weakest_skills.sort(key=lambda item: (item.get("correct", 0) / item.get("total", 1)))
+    priority_skill = weakest_skills[0] if weakest_skills else None
+    top_reason = next(iter(sorted(reason_summary.items(), key=lambda item: item[1], reverse=True)), None)
+    target_band = min(9.0, round((overall_band + 0.5) * 2) / 2)
+    expected_gain = sum(item.get("wrong_count", 0) for item in fastest_gain[:2])
+    primary_lessons = recommended_lessons[:3]
+
+    roadmap_steps = []
+    if priority_skill:
+        roadmap_steps.append({
+            "title": f"Fix {priority_skill['label']}",
+            "focus": priority_skill["label"],
+            "why_now": "This is currently your lowest-performing question family.",
+            "action": "Review the linked lesson, then revisit only the wrong questions from this skill.",
+            "expected_gain": f"Recover up to {priority_skill['total'] - priority_skill['correct']} marks here.",
+        })
+    if top_reason:
+        roadmap_steps.append({
+            "title": f"Break the {top_reason[0].replace('_', ' ').title()} pattern",
+            "focus": top_reason[0].replace("_", " ").title(),
+            "why_now": f"This mistake pattern appeared {top_reason[1]} times.",
+            "action": "Study the explanation pattern, then retry those items under timed conditions.",
+            "expected_gain": f"Removing this pattern could recover up to {top_reason[1]} marks.",
+        })
+    for lesson in primary_lessons:
+        roadmap_steps.append({
+            "title": f"Study {lesson.get('title', 'Recommended Lesson')}",
+            "focus": lesson.get("course_name") or lesson.get("course"),
+            "why_now": lesson.get("reason") or "This lesson directly targets your current weaknesses.",
+            "action": f"Open {lesson.get('unit_label', 'the lesson')} and complete the section tied to your weak skill.",
+            "expected_gain": lesson.get("why_now") or "Build accuracy before retesting.",
+            "lesson_path": lesson.get("lesson_path") or lesson.get("route") or lesson.get("url"),
+        })
+
+    day_plan = [
+        {"day": 1, "title": "Audit your mistakes", "tasks": [
+            "Review every wrong answer and group them by question type.",
+            "Read the root-cause section and mark repeated patterns."
+        ]},
+        {"day": 2, "title": "Study the highest-impact lesson", "tasks": [
+            primary_lessons[0]["title"] if primary_lessons else "Study the top recommended lesson.",
+            "Write down 3 rules you will apply in the next test."
+        ]},
+        {"day": 3, "title": "Targeted retest", "tasks": [
+            "Retry only the wrong questions from your weakest skill.",
+            "Do one short timed set to check whether the same pattern repeats."
+        ]},
+    ]
+
+    return {
+        "target_band": target_band,
+        "estimated_weeks": 2 if overall_band >= 6.5 else 3,
+        "priority_skill": priority_skill["label"] if priority_skill else None,
+        "top_root_cause": top_reason[0] if top_reason else None,
+        "expected_mark_recovery": expected_gain,
+        "roadmap_steps": roadmap_steps[:5],
+        "three_day_plan": day_plan,
+        "retest_strategy": {
+            "immediate": "Retry only the question types with the highest wrong count after lesson review.",
+            "timed_recheck": "Run a short timed mini-test after 2-3 focused sessions.",
+            "full_retake": "Take a full test only after your top two weak areas stabilize."
+        }
+    }
 
 
 print("✅ Cambridge IELTS routes loaded")

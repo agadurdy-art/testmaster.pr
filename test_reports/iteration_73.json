@@ -1,0 +1,72 @@
+{
+  "summary": "Deploy-readiness testing completed. All 20 backend tests passed. Verified: (1) Plan normalization with legacy aliases (starter→learner, booster→achiever, pro→master), (2) Liz Teacher plan-gated access with 403 for free users and model selection (gpt-4o-mini default), (3) Grammar Engine validation layer with PLACEHOLDER_PATTERNS, (4) Cambridge diagnostics (root_cause_analysis, study_plan in full-test evaluation), (5) Curated static visuals for process/map types returning image_url instead of SVG, (6) Lesson Registry STAGE_META, (7) Emily Teacher removal (404 on all /api/emily/* endpoints), (8) Frontend lib helpers verified.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_deploy_readiness_iter73.py",
+    "/app/test_reports/pytest/deploy_readiness_iter73_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_deploy_readiness_iter73.py"
+  ],
+  "success_rate": {
+    "backend": "100% (20/20 tests passed)",
+    "frontend": "N/A (backend only testing requested)"
+  },
+  "test_credentials": {
+    "email": "tester@test.com",
+    "password": "tester123",
+    "note": "Test user was created during testing as it did not exist in DB"
+  },
+  "seed_data_creation": "Created test user tester@test.com during testing",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Deploy-readiness features fully tested. Key verified endpoints: (1) GET /api/plan/features - returns all plan tiers with features and prices. (2) GET /api/liz/status/{user_id} - returns plan info, has_access, usage stats, model info. (3) POST /api/liz/chat - returns 403 for free plan users. (4) GET /api/question-bank/stats - returns valid question counts. (5) GET /api/question-bank/writing/task1/generate-authentic?visual_type=process - returns curated image_url. (6) GET /api/question-bank/writing/task1/generate-authentic?visual_type=map - returns curated image_url. (7) POST /api/cambridge/evaluate/full-test - returns root_cause_analysis and study_plan. (8) GET /api/grammar-engine/{module_id}/learn - returns validated slides. (9) /api/emily/* - all return 404 (Emily removed). Frontend lib helpers verified: planAccess.js, recommendationRouting.js, lizAccess.js.",
+  "features_tested": {
+    "plan_normalization": {
+      "status": "PASS",
+      "details": "LEGACY_PLAN_ALIASES correctly maps starter→learner, booster→achiever, pro→master. normalize_plan_name() handles edge cases (null, empty, whitespace, case-insensitive)."
+    },
+    "liz_teacher_access_control": {
+      "status": "PASS",
+      "details": "GET /api/liz/status returns plan info, has_access, usage stats. POST /api/liz/chat returns 403 for free users. Model selection uses gpt-4o-mini for chat, gpt-4o for complex tasks."
+    },
+    "grammar_engine_validation": {
+      "status": "PASS",
+      "details": "PLACEHOLDER_PATTERNS exist with 11 patterns. _is_meaningful_text() correctly rejects placeholder content."
+    },
+    "cambridge_diagnostics": {
+      "status": "PASS",
+      "details": "POST /api/cambridge/evaluate/full-test returns root_cause_analysis (list) and study_plan (dict with target_band, roadmap_steps, three_day_plan)."
+    },
+    "curated_task1_visuals": {
+      "status": "PASS",
+      "details": "Process and map types return image_url from /static/visuals/ instead of SVG. Line graph still returns SVG."
+    },
+    "lesson_registry_stage_meta": {
+      "status": "PASS",
+      "details": "STAGE_META contains beginner, mastery, advanced with course_name, course_path, label."
+    },
+    "emily_teacher_removal": {
+      "status": "PASS",
+      "details": "All /api/emily/* endpoints return 404 (GET and POST)."
+    },
+    "frontend_lib_helpers": {
+      "status": "PASS",
+      "details": "planAccess.js, recommendationRouting.js, lizAccess.js all exist with expected exports."
+    },
+    "auth_flow": {
+      "status": "PASS",
+      "details": "Login with test credentials works correctly."
+    }
+  }
+}

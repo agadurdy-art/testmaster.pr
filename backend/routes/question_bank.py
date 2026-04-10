@@ -901,6 +901,139 @@ async def submit_test(test_id: str, attempt_id: str, answers: Dict[str, Any]):
 # Store generated tasks temporarily for model answer retrieval
 _task_cache = {}
 
+CURATED_TASK1_PROCESS_VISUALS = [
+    {
+        "asset": "academic_set_d_process.png",
+        "title": "Coffee bean processing system",
+        "task_description": "The diagram below shows the stages involved in processing coffee beans for commercial use.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Coffee beans are fed into the input hopper."},
+            {"name": "The beans are washed in a water tank."},
+            {"name": "They are dried inside a rotating drum."},
+            {"name": "The dried beans are roasted in a heated chamber."},
+            {"name": "They are then ground in a mill."},
+            {"name": "The output is sorted into waste, Grade A, Grade B and final product streams."},
+        ],
+    },
+    {
+        "asset": "visual_010_process_plastic_recycling.png",
+        "title": "Plastic bottle recycling process",
+        "task_description": "The diagram below illustrates how used plastic bottles are recycled and turned into new products.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Used plastic bottles are collected."},
+            {"name": "The bottles are sorted."},
+            {"name": "They are cleaned thoroughly."},
+            {"name": "The material is shredded into small pieces."},
+            {"name": "The plastic is melted."},
+            {"name": "Pellets are produced from the melted material."},
+            {"name": "The pellets are used to manufacture new items."},
+        ],
+    },
+    {
+        "asset": "visual_014_process_sugar_production.png",
+        "title": "Brick manufacturing process",
+        "task_description": "The diagram below shows the process of manufacturing bricks for the construction industry.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Clay is extracted."},
+            {"name": "The raw material is crushed and mixed."},
+            {"name": "The mixture is moulded into brick shapes."},
+            {"name": "The bricks are dried."},
+            {"name": "They are fired in a kiln."},
+            {"name": "After firing, the bricks are cooled."},
+            {"name": "The finished bricks are packaged."},
+        ],
+    },
+    {
+        "asset": "visual_022_process_biofuel_ethanol.png",
+        "title": "Waste food conversion into biogas",
+        "task_description": "The diagram below shows how waste food is converted into biogas and useful by-products.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Food waste is collected."},
+            {"name": "It is crushed before entering a fermentation tank."},
+            {"name": "Gas is produced during fermentation."},
+            {"name": "The gas is stored."},
+            {"name": "The stored gas is used for electricity generation."},
+            {"name": "A fertilizer by-product is also produced."},
+        ],
+    },
+    {
+        "asset": "visual_008_diagram_persian_qanat.png",
+        "title": "Honey production and retail distribution",
+        "task_description": "The diagram below illustrates how honey is produced and prepared for retail sale.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "stages": [
+            {"name": "Flowers provide nectar for bees."},
+            {"name": "Bees collect nectar and return to the hive."},
+            {"name": "Honey is produced inside the hive."},
+            {"name": "The honey is filtered."},
+            {"name": "It is bottled."},
+            {"name": "The bottles are placed on supermarket shelves."},
+        ],
+    },
+]
+
+CURATED_TASK1_MAP_VISUALS = [
+    {
+        "asset": "visual_003_map_housing_estate.png",
+        "title": "Residential housing estate development",
+        "task_description": "The maps below show a residential housing estate before and after redevelopment.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before redevelopment",
+        "time_after": "After redevelopment",
+        "features_before": ["A lake near the centre", "Apartment blocks on the eastern side", "Housing for the elderly", "West entrance and south entrance", "London Road and the main road"],
+        "features_after": ["Updated housing layout around the estate", "The central lake retained", "Apartment and elderly housing areas reorganised", "Road access maintained from the west and south", "A more structured internal road pattern"],
+    },
+    {
+        "asset": "academic_set_c_campus.png",
+        "title": "University campus expansion",
+        "task_description": "The maps below show a university campus before and after expansion.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before expansion",
+        "time_after": "After expansion",
+        "features_before": ["Two libraries", "An open field in the centre", "A student centre to the south", "Limited footpaths", "Bike parking on the eastern side"],
+        "features_after": ["Additional student centres", "New footpaths crossing the centre", "Bike parking reorganised", "The open field removed", "The library area connected to a new building"],
+    },
+    {
+        "asset": "visual_015_map_airport_before_after.png",
+        "title": "Airport terminal area redevelopment",
+        "task_description": "The maps below compare an airport terminal area before and after redevelopment.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before redevelopment",
+        "time_after": "After redevelopment",
+        "features_before": ["A smaller terminal", "A taxi rank", "A large car park", "A hotel", "Narrower access roads"],
+        "features_after": ["An expanded terminal with more gates", "A shuttle bus route", "The hotel retained", "The car park reorganised", "Wider access roads and improved circulation"],
+    },
+    {
+        "asset": "visual_020_map_farley_house.png",
+        "title": "Recreation area development",
+        "task_description": "The maps below show a recreation area before and after development.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before development",
+        "time_after": "After development",
+        "features_before": ["Walking trails", "A visitor centre", "A picnic area", "A parking lot", "A large wild zone"],
+        "features_after": ["An observation tower added", "A water feature introduced", "The wild zone reduced", "The visitor centre and trails retained", "The parking lot kept in place"],
+    },
+    {
+        "asset": "ielts17_writing_task1_maps_full.png",
+        "title": "Island tourist facilities",
+        "task_description": "The maps below show an island before and after the construction of tourist facilities.\n\nSummarise the information by selecting and reporting the main features, and make comparisons where relevant.\n\nWrite at least 150 words.",
+        "time_before": "Before construction",
+        "time_after": "After construction",
+        "features_before": ["A reception building", "A swimming area on the western side", "Large undeveloped central land", "No accommodation", "No internal roads or paths"],
+        "features_after": ["A reception building and restaurant", "Accommodation huts around the perimeter", "Footpaths connecting the island", "Boats on the eastern and southern edges", "The swimming area retained on the west"],
+    },
+]
+
+
+def _build_curated_task1_visual(visual_type: str, topic: str, band_level: str):
+    bank = CURATED_TASK1_PROCESS_VISUALS if visual_type == "process" else CURATED_TASK1_MAP_VISUALS
+    base = random.choice(bank).copy()
+    asset = base.pop("asset")
+    task_data = {
+        **base,
+        "visual_type": visual_type,
+        "topic": topic,
+        "band_level": band_level,
+        "metadata": {"source": "curated_static_bank", "asset": asset},
+        "band_calibration": {"target_band": band_level, "complexity": "authentic_curated"},
+    }
+    return {"task_data": task_data, "image_url": f"/static/visuals/{asset}"}
+
 @router.get("/writing/task1/generate-authentic")
 async def generate_task1_authentic(
     visual_type: str = Query(..., description="Type of visual (line_graph, bar_chart, pie_chart, table, process, map)"),
@@ -925,6 +1058,7 @@ async def generate_task1_authentic(
     try:
         task_data = None
         svg = None
+        image_url = None
         
         # ============ LINE GRAPH ============
         if visual_type == "line_graph":
@@ -974,52 +1108,15 @@ async def generate_task1_authentic(
         
         # ============ PROCESS ============
         elif visual_type == "process":
-            task_data = authentic_task_generator.generate_process_task(topic, band_level)
-            # Convert stages to steps format
-            steps = [
-                {"label": f"Stage {idx+1}", "description": stage.get("name", stage.get("description", ""))}
-                for idx, stage in enumerate(task_data["stages"])
-            ]
-            svg = chart_generator.generate_process_diagram(
-                title=task_data["title"],
-                steps=steps
-            )
+            curated = _build_curated_task1_visual(visual_type, topic, band_level)
+            task_data = curated["task_data"]
+            image_url = curated["image_url"]
         
         # ============ MAP ============
         elif visual_type == "map":
-            task_data = authentic_task_generator.generate_map_task(topic, band_level)
-            # Convert feature lists to element dicts for map rendering
-            before_elements = []
-            after_elements = []
-            
-            # Generate simple building/area layouts
-            for idx, feature in enumerate(task_data["features_before"]):
-                before_elements.append({
-                    "type": "area",
-                    "x": 30 + (idx % 3) * 120,
-                    "y": 30 + (idx // 3) * 100,
-                    "width": 100,
-                    "height": 60,
-                    "label": feature,
-                    "fill": "#86efac" if "park" in feature.lower() or "forest" in feature.lower() else "#94a3b8"
-                })
-            
-            for idx, feature in enumerate(task_data["features_after"]):
-                after_elements.append({
-                    "type": "area",
-                    "x": 30 + (idx % 3) * 120,
-                    "y": 30 + (idx // 3) * 100,
-                    "width": 100,
-                    "height": 60,
-                    "label": feature,
-                    "fill": "#fbbf24" if "new" in feature.lower() or "modern" in feature.lower() else "#60a5fa"
-                })
-            
-            svg = chart_generator.generate_map_comparison(
-                title=task_data["title"],
-                before_elements=before_elements,
-                after_elements=after_elements
-            )
+            curated = _build_curated_task1_visual(visual_type, topic, band_level)
+            task_data = curated["task_data"]
+            image_url = curated["image_url"]
         
         else:
             raise HTTPException(status_code=400, detail=f"Unknown visual type: {visual_type}")
@@ -1046,6 +1143,7 @@ async def generate_task1_authentic(
             "topic": topic,
             "band_level": band_level,
             "svg": svg,
+            "image_url": image_url,
             "task_description": task_data["task_description"],
             "band_calibration": task_data.get("band_calibration", {}),
             "metadata": task_data.get("metadata", {})
