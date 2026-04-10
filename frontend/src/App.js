@@ -1,87 +1,103 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import LandingPage from './pages/LandingPage';
 import { loginWithEmergentSession } from './lib/api';
 import { toast } from 'sonner';
-import Dashboard from './pages/Dashboard';
-import TestInterface from './pages/TestInterface';
-import Results from './pages/Results';
-import TipsPage from './pages/TipsPage';
-import CoursesPage from './pages/CoursesPage';
-import CourseDetail from './pages/CourseDetail';
-import Profile from './pages/Profile';
-import ContentAdmin from './pages/ContentAdmin';
-import AdminPanel from './pages/AdminPanel';
-import AdminFeedback from './pages/AdminFeedback';
-import PricingPage from './pages/PricingPage';
-import VerifyEmailPage from './pages/VerifyEmailPage';
-import ResetPasswordPage from './pages/ResetPasswordPage';
-import AdminCreditsPage from './pages/AdminCreditsPage';
-import AdminDashboard from './pages/AdminDashboard';
-import VocabularyImageManager from './pages/VocabularyImageManager';
-import LevelTest from './pages/LevelTest';
-import ComprehensiveLevelTest from './pages/ComprehensiveLevelTest';
-import AdaptiveLevelTest from './pages/AdaptiveLevelTest';
-import VocabGrammarCourse from './pages/VocabGrammarCourse';
-import VocabGrammarQuiz from './pages/VocabGrammarQuiz';
-import WritingPractice from './pages/WritingPractice';
-import SpeakingPractice from './pages/SpeakingPractice';
-import Progress from './pages/Progress';
-import BeginnerCourse from './pages/BeginnerCourse';
-import MasteryCourse from './pages/MasteryCourse';
-import AdvancedMasteryCourse from './pages/AdvancedMasteryCourse';
-import LessonPreview from './pages/LessonPreview';
-import FeatureShowcase from './pages/FeatureShowcase';
 import { Toaster } from './components/ui/sonner';
 import MobileBottomNav from './components/MobileBottomNav';
-import LearningPlatform from './pages/LearningPlatform';
-import LevelDetail from './pages/LevelDetail';
-import UnitDetail from './pages/UnitDetail';
-import LessonView from './pages/LessonView';
 import { ThemeProvider } from './contexts/ThemeContext';
-import QuestionBank from './pages/QuestionBank';
-import WritingTask1Practice from './pages/WritingTask1Practice';
-import GameBank from './pages/GameBank';
-import WritingTask2Practice from './pages/WritingTask2Practice';
-import GeneralTask1Practice from './pages/GeneralTask1Practice';
-import GeneralTask2Practice from './pages/GeneralTask2Practice';
-import ReadingPracticeAcademic from './pages/ReadingPracticeAcademic';
-import ReadingPracticeGeneral from './pages/ReadingPracticeGeneral';
-import ReadingPracticeMasteryAcademic from './pages/ReadingPracticeMasteryAcademic';
-import ReadingPracticeMasteryGeneral from './pages/ReadingPracticeMasteryGeneral';
-import ReadingPracticeByType from './pages/ReadingPracticeByType';
-import ListeningPractice from './pages/ListeningPractice';
-import SpeakingPracticeQB from './pages/SpeakingPracticeQB';
-import PracticeMode from './pages/PracticeMode';
-import FullTestMode from './pages/FullTestMode';
-import FullTestInterface from './pages/FullTestInterface';
-import FullTestResults from './pages/FullTestResults';
-import VisualGenerator from './pages/VisualGenerator';
-import CambridgeTestInterface from './pages/CambridgeTestInterface';
-import CambridgeTestResults from './pages/CambridgeTestResults';
-import FocusPlan from './pages/FocusPlan';
-import LizTeacher from './pages/LizTeacher';
-import LizFloatingButton from './components/LizFloatingButton';
-import VocabularyLearnMode from './pages/VocabularyLearnMode';
-import VocabularyPracticeMode from './pages/VocabularyPracticeMode';
-import VocabularyQuizMode from './pages/VocabularyQuizMode';
-import VocabularyProductionMode from './pages/VocabularyProductionMode';
-import GrammarLearnMode from './pages/GrammarLearnMode';
-import GrammarPracticeMode from './pages/GrammarPracticeMode';
-import GrammarQuizMode from './pages/GrammarQuizMode';
-import GrammarProductionMode from './pages/GrammarProductionMode';
-import GrammarSmartReview from './pages/GrammarSmartReview';
-import ReviewBank from './pages/ReviewBank';
-import UnifiedCoursePage from './pages/UnifiedCoursePage';
-import UnifiedStagePage from './pages/UnifiedStagePage';
-import UnifiedLessonPage from './pages/UnifiedLessonPage';
-import DailyHabitPage from './pages/DailyHabitPage';
-import GameDemo from './pages/GameDemo';
 import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
 import ErrorBoundary from './components/ErrorBoundary';
+
+// Critical pages - loaded immediately
+import Dashboard from './pages/Dashboard';
+
+// All other pages - lazy loaded on demand
+const TestInterface = lazy(() => import('./pages/TestInterface'));
+const Results = lazy(() => import('./pages/Results'));
+const TipsPage = lazy(() => import('./pages/TipsPage'));
+const CoursesPage = lazy(() => import('./pages/CoursesPage'));
+const CourseDetail = lazy(() => import('./pages/CourseDetail'));
+const Profile = lazy(() => import('./pages/Profile'));
+const ContentAdmin = lazy(() => import('./pages/ContentAdmin'));
+const AdminPanel = lazy(() => import('./pages/AdminPanel'));
+const AdminFeedback = lazy(() => import('./pages/AdminFeedback'));
+const PricingPage = lazy(() => import('./pages/PricingPage'));
+const VerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'));
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
+const AdminCreditsPage = lazy(() => import('./pages/AdminCreditsPage'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const VocabularyImageManager = lazy(() => import('./pages/VocabularyImageManager'));
+const LevelTest = lazy(() => import('./pages/LevelTest'));
+const ComprehensiveLevelTest = lazy(() => import('./pages/ComprehensiveLevelTest'));
+const AdaptiveLevelTest = lazy(() => import('./pages/AdaptiveLevelTest'));
+const VocabGrammarCourse = lazy(() => import('./pages/VocabGrammarCourse'));
+const VocabGrammarQuiz = lazy(() => import('./pages/VocabGrammarQuiz'));
+const WritingPractice = lazy(() => import('./pages/WritingPractice'));
+const SpeakingPractice = lazy(() => import('./pages/SpeakingPractice'));
+const Progress = lazy(() => import('./pages/Progress'));
+const BeginnerCourse = lazy(() => import('./pages/BeginnerCourse'));
+const MasteryCourse = lazy(() => import('./pages/MasteryCourse'));
+const AdvancedMasteryCourse = lazy(() => import('./pages/AdvancedMasteryCourse'));
+const LessonPreview = lazy(() => import('./pages/LessonPreview'));
+const FeatureShowcase = lazy(() => import('./pages/FeatureShowcase'));
+const LearningPlatform = lazy(() => import('./pages/LearningPlatform'));
+const LevelDetail = lazy(() => import('./pages/LevelDetail'));
+const UnitDetail = lazy(() => import('./pages/UnitDetail'));
+const LessonView = lazy(() => import('./pages/LessonView'));
+const QuestionBank = lazy(() => import('./pages/QuestionBank'));
+const WritingTask1Practice = lazy(() => import('./pages/WritingTask1Practice'));
+const GameBank = lazy(() => import('./pages/GameBank'));
+const WritingTask2Practice = lazy(() => import('./pages/WritingTask2Practice'));
+const GeneralTask1Practice = lazy(() => import('./pages/GeneralTask1Practice'));
+const GeneralTask2Practice = lazy(() => import('./pages/GeneralTask2Practice'));
+const ReadingPracticeAcademic = lazy(() => import('./pages/ReadingPracticeAcademic'));
+const ReadingPracticeGeneral = lazy(() => import('./pages/ReadingPracticeGeneral'));
+const ReadingPracticeMasteryAcademic = lazy(() => import('./pages/ReadingPracticeMasteryAcademic'));
+const ReadingPracticeMasteryGeneral = lazy(() => import('./pages/ReadingPracticeMasteryGeneral'));
+const ReadingPracticeByType = lazy(() => import('./pages/ReadingPracticeByType'));
+const ListeningPractice = lazy(() => import('./pages/ListeningPractice'));
+const SpeakingPracticeQB = lazy(() => import('./pages/SpeakingPracticeQB'));
+const PracticeMode = lazy(() => import('./pages/PracticeMode'));
+const FullTestMode = lazy(() => import('./pages/FullTestMode'));
+const FullTestInterface = lazy(() => import('./pages/FullTestInterface'));
+const FullTestResults = lazy(() => import('./pages/FullTestResults'));
+const VisualGenerator = lazy(() => import('./pages/VisualGenerator'));
+const CambridgeTestInterface = lazy(() => import('./pages/CambridgeTestInterface'));
+const CambridgeTestResults = lazy(() => import('./pages/CambridgeTestResults'));
+const FocusPlan = lazy(() => import('./pages/FocusPlan'));
+const LizTeacher = lazy(() => import('./pages/LizTeacher'));
+const LizFloatingButton = lazy(() => import('./components/LizFloatingButton'));
+const VocabularyLearnMode = lazy(() => import('./pages/VocabularyLearnMode'));
+const VocabularyPracticeMode = lazy(() => import('./pages/VocabularyPracticeMode'));
+const VocabularyQuizMode = lazy(() => import('./pages/VocabularyQuizMode'));
+const VocabularyProductionMode = lazy(() => import('./pages/VocabularyProductionMode'));
+const GrammarLearnMode = lazy(() => import('./pages/GrammarLearnMode'));
+const GrammarPracticeMode = lazy(() => import('./pages/GrammarPracticeMode'));
+const GrammarQuizMode = lazy(() => import('./pages/GrammarQuizMode'));
+const GrammarProductionMode = lazy(() => import('./pages/GrammarProductionMode'));
+const GrammarSmartReview = lazy(() => import('./pages/GrammarSmartReview'));
+const ReviewBank = lazy(() => import('./pages/ReviewBank'));
+const UnifiedCoursePage = lazy(() => import('./pages/UnifiedCoursePage'));
+const UnifiedStagePage = lazy(() => import('./pages/UnifiedStagePage'));
+const UnifiedLessonPage = lazy(() => import('./pages/UnifiedLessonPage'));
+const DailyHabitPage = lazy(() => import('./pages/DailyHabitPage'));
+const GameDemo = lazy(() => import('./pages/GameDemo'));
+
+// Page loading spinner
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-3">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-violet-600"></div>
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    </div>
+  );
+}
 
 
 // Language Leak Watcher Component (Development Only)
@@ -246,6 +262,7 @@ function AppWithSessionHandler() {
 
   return (
     <>
+      <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
         <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
@@ -537,7 +554,10 @@ function AppWithSessionHandler() {
           element={user ? <VisualGenerator /> : <Navigate to="/" />} 
         />
       </Routes>
-      {user && !location.pathname.startsWith('/liz') && <LizFloatingButton user={user} />}
+      </Suspense>
+      {user && !location.pathname.startsWith('/liz') && (
+        <Suspense fallback={null}><LizFloatingButton user={user} /></Suspense>
+      )}
       <EmergentBadgeWrapper />
       <MobileNavWrapper user={user} />
       <Toaster position="top-right" />
