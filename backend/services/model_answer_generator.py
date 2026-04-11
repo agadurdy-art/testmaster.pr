@@ -591,53 +591,98 @@ Write more naturally, as a native academic writer would. Focus on the specific d
     
     @classmethod
     def _generate_process_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate model answer for process diagrams."""
-        title = task_data.get("title", "The process diagram")
-        stages = task_data.get("stages", [])
-        
-        intro = f"The diagram illustrates the process of {title.lower().replace('the process of ', '').replace('process:', '')}. There are {len(stages)} main stages involved in this procedure."
-        
-        body_sentences = []
-        sequence_words = ["Initially", "Following this", "Subsequently", "After that", "Next", "Then", "Finally"]
-        
-        for idx, stage in enumerate(stages[:len(sequence_words)]):
-            stage_name = stage.get("name", stage.get("description", f"Stage {idx+1}"))
-            seq_word = sequence_words[min(idx, len(sequence_words)-1)]
-            body_sentences.append(f"{seq_word}, {stage_name.lower()}.")
-        
-        full_text = f"{intro}\n\n{' '.join(body_sentences)}"
-        
-        return {
-            "full_text": full_text,
-            "structure": {"introduction": intro, "body": ' '.join(body_sentences)},
-            "estimated_band": "8.0",
-            "word_count": len(full_text.split())
-        }
-    
+        """Generate model answer for process diagrams using AI."""
+        return cls._generate_ai_model_answer(task_data, "process")
+
     @classmethod
     def _generate_map_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate model answer for map comparisons."""
-        title = task_data.get("title", "The maps")
-        before = task_data.get("features_before", [])
-        after = task_data.get("features_after", [])
-        time_before = task_data.get("time_before", "the past")
-        time_after = task_data.get("time_after", "the present")
-        
-        intro = f"The two maps compare the changes that have taken place in the area between {time_before} and {time_after}. Overall, the area has undergone significant development and transformation."
-        
-        body1 = f"In {time_before}, the area contained {', '.join(before[:3])}."
-        body2 = f"By {time_after}, substantial changes had occurred. The area now features {', '.join(after[:3])}."
-        
-        conclusion = "These changes indicate a shift from a more rural/traditional setting to a more developed/modern environment."
-        
-        full_text = f"{intro}\n\n{body1} {body2}\n\n{conclusion}"
-        
+        """Generate model answer for map comparisons using AI."""
+        return cls._generate_ai_model_answer(task_data, "map")
+
+    @classmethod
+    def _generate_ai_model_answer(cls, task_data: Dict[str, Any], visual_type: str) -> Dict[str, Any]:
+        """Use AI to generate a proper Band 8 model answer for process/map visuals."""
+        import asyncio
+
+        title = task_data.get("title", "")
+        task_desc = task_data.get("task_description", "")
+        time_before = task_data.get("time_before", "")
+        time_after = task_data.get("time_after", "")
+
+        if visual_type == "map":
+            context = f"""TASK: {task_desc}
+VISUAL TYPE: Map comparison (before/after)
+TITLE: {title}
+TIME BEFORE: {time_before}
+TIME AFTER: {time_after}"""
+        else:
+            context = f"""TASK: {task_desc}
+VISUAL TYPE: Process diagram
+TITLE: {title}"""
+
+        prompt = f"""Write a Band 8 IELTS Writing Task 1 model answer.
+
+{context}
+
+STRICT RULES:
+1. Write EXACTLY 170-200 words
+2. Paragraph 1: Paraphrase the task + clear overview of main changes
+3. Paragraph 2: Describe the first period/stage details
+4. Paragraph 3: Describe changes/later stages with comparisons
+5. Use varied vocabulary: "underwent significant transformation", "was converted into", "was replaced by"
+6. Use passive voice and past tense for map changes
+7. Use sequencing language for processes
+8. Do NOT use template phrases like "Overall, it is clear that"
+9. Include specific references to features visible in the visual
+10. This must read like a real Band 8 answer, not a generic template
+
+Write ONLY the essay text. No titles, no labels, no word count."""
+
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                import concurrent.futures
+                with concurrent.futures.ThreadPoolExecutor() as pool:
+                    result = pool.submit(cls._sync_ai_call, prompt).result(timeout=30)
+            else:
+                result = loop.run_until_complete(cls._async_ai_call(prompt))
+        except Exception as e:
+            print(f"AI model answer generation failed: {e}")
+            if visual_type == "map":
+                result = f"The two maps illustrate the changes that took place in {title.lower()} between {time_before} and {time_after}. Overall, the area underwent considerable development, with several new facilities being added while some original features were retained.\n\nIn the earlier period, the area was relatively undeveloped with basic infrastructure. The layout was simple with limited facilities available to residents or visitors.\n\nBy {time_after}, the area had been significantly transformed. New buildings and infrastructure had been constructed, the road network was expanded, and additional amenities were introduced. Despite these changes, certain features from the original layout remained intact, indicating that the redevelopment aimed to modernise the area while preserving some of its original character."
+            else:
+                result = f"The diagram illustrates the process of {title.lower()}. Overall, this is a multi-stage procedure that involves several sequential steps from beginning to end.\n\nAt the initial stage, raw materials are collected and prepared for processing. This preparation phase is essential as it ensures the quality of the final product.\n\nSubsequently, the materials undergo several transformation stages. Each step builds upon the previous one, gradually converting the raw input into the finished product. The final stage involves quality checking and packaging before the product is distributed to consumers or end users."
+
+        word_count = len(result.split())
         return {
-            "full_text": full_text,
-            "structure": {"introduction": intro, "body": f"{body1} {body2}", "conclusion": conclusion},
+            "full_text": result,
+            "structure": {"full_answer": result},
             "estimated_band": "8.0",
-            "word_count": len(full_text.split())
+            "word_count": word_count
         }
+
+    @classmethod
+    def _sync_ai_call(cls, prompt: str) -> str:
+        import os
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        import uuid
+        import asyncio
+        loop = asyncio.new_event_loop()
+        try:
+            return loop.run_until_complete(cls._async_ai_call(prompt))
+        finally:
+            loop.close()
+
+    @classmethod
+    async def _async_ai_call(cls, prompt: str) -> str:
+        import os, uuid
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+        llm = LlmChat(
+            api_key=os.environ.get("EMERGENT_LLM_KEY", ""),
+            session_id=f"model_answer_{uuid.uuid4()}",
+            system_message="You are an IELTS examiner writing model answers. Write naturally, avoid templates."
+        ).with_model("openai", "gpt-4o-mini")
+        return await llm.send_message(UserMessage(text=prompt))
     
     @classmethod
     def _generate_pie_model(cls, task_data: Dict[str, Any]) -> Dict[str, Any]:

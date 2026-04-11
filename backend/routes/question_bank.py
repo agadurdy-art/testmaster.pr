@@ -1212,49 +1212,58 @@ ORIGINAL TASK:
     
     # Build evaluation prompt based on task type
     if request.task_type == "task1":
-        evaluation_prompt = f"""You are an official IELTS examiner with 15+ years of experience. Evaluate this Writing Task 1 response using the official IELTS band descriptors.
+        evaluation_prompt = f"""You are a senior IELTS examiner. Your evaluation must be STRICT and HONEST.
 
-{task_context}
+TASK: Academic Writing Task 1 — {request.visual_type or 'chart/graph'} about "{request.topic or 'general'}"
+WORD COUNT: {word_count} words (minimum 150)
 
-TASK TYPE: Academic Writing Task 1 (Visual Description)
-Visual Type: {request.visual_type or 'chart/graph'}
-Topic: {request.topic or 'general'}
-Target Band: {request.band_level}
-Word Count: {word_count} words (minimum 150 required)
-
-CANDIDATE'S RESPONSE:
+STUDENT'S RESPONSE:
 \"\"\"
 {response_text}
 \"\"\"
 
-OFFICIAL IELTS TASK 1 BAND DESCRIPTORS:
+EVALUATION PROTOCOL:
 
-TASK ACHIEVEMENT (TA):
-- Band 9: Fully satisfies all requirements; covers all features appropriately; presents a clear overview
-- Band 7: Covers requirements; presents clear overview; highlights key features appropriately
-- Band 5: Generally addresses task but format may be inappropriate; no overview or unclear overview
+STEP 1 — RELEVANCE CHECK (do this FIRST):
+- Does the response describe the visual type stated above?
+- If the response is about a DIFFERENT topic, or is random text, or does NOT describe the visual: ALL criteria = Band 3 maximum. State "OFF-TOPIC" in examiner_comment.
 
-COHERENCE AND COHESION (CC):
-- Band 9: Uses cohesion in a way that attracts no attention; skillfully manages paragraphing
-- Band 7: Logically organizes information; clear progression; uses range of cohesive devices
-- Band 5: Presents information with some organization; may be repetitive; inadequate paragraphing
+STEP 2 — WORD COUNT CHECK:
+- Under 120 words: Maximum Band 5.0 overall (penalize Task Achievement heavily)
+- 120-149 words: Maximum Band 6.0 overall
+- 150+ words: No penalty
 
-LEXICAL RESOURCE (LR):
-- Band 9: Uses vocabulary with full flexibility; rare minor errors occur only as slips
-- Band 7: Uses sufficient vocabulary for flexibility; uses less common items with awareness
-- Band 5: Uses limited vocabulary but minimally adequate; may make noticeable errors
+STEP 3 — IELTS BAND DESCRIPTORS:
 
-GRAMMATICAL RANGE AND ACCURACY (GRA):
-- Band 9: Uses wide range of structures; rare minor errors; full flexibility
-- Band 7: Uses variety of complex structures; frequent error-free sentences
-- Band 5: Uses limited range of structures; attempts complex sentences but errors distract
+TASK ACHIEVEMENT:
+- Band 8: Covers all requirements of the task sufficiently; presents, highlights and illustrates key features/bullet points clearly and appropriately; could be used as a model answer
+- Band 7: Covers requirements; presents clear overview; could be slightly more developed
+- Band 6: Addresses requirements but some features are inadequately covered; overview present but unclear
+- Band 5: Generally addresses task; no clear overview; tendency to focus on details
+- Band 4: Task is attempted but does not cover requirements; no overview; format may be confused
 
-IMPORTANT RULES:
-- Penalize heavily for NO OVERVIEW (essential for Task 1)
-- Check for ACCURATE data reporting
-- Look for COMPARISONS between data
-- Detect and penalize TEMPLATE language
-- Be STRICT - real IELTS is strict
+COHERENCE AND COHESION:
+- Band 8: Sequences information logically; manages all aspects of cohesion well; uses paragraphing sufficiently and appropriately
+- Band 6: Arranges information coherently; uses cohesive devices effectively but cohesion within sentences may be faulty
+- Band 4: Presents information but not arranged coherently; uses some basic cohesive devices but inaccurately
+
+LEXICAL RESOURCE:
+- Band 8: Uses a wide range of vocabulary fluently and flexibly; skillfully uses uncommon items; rare errors
+- Band 6: Uses adequate range for the task; attempts less common vocabulary with some inaccuracy
+- Band 4: Uses only basic vocabulary; may use inappropriate words; errors cause strain for the reader
+
+GRAMMATICAL RANGE AND ACCURACY:
+- Band 8: Uses wide range of structures; majority of sentences are error-free; makes very occasional errors
+- Band 6: Uses mix of simple and complex forms; makes some errors in grammar but they rarely reduce communication
+- Band 4: Uses only limited range of structures; subordinate clauses are rare; some structures are accurate but errors predominate
+
+STRICT RULES:
+- If no overview paragraph exists → TA maximum Band 5
+- If data is inaccurate or invented → TA maximum Band 5
+- If no comparisons between features → CC maximum Band 6
+- Detect template language ("Overall, it is clear that") → penalize LR by 0.5
+- Every grammar error you find MUST appear in line_by_line_corrections
+- overall_band = average of 4 criteria, rounded to nearest 0.5
 
 CRITICAL LINE-BY-LINE RULES:
 - "line_by_line_corrections" is the MOST IMPORTANT part of your evaluation
