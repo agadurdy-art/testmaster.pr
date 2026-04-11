@@ -600,10 +600,9 @@ export default function WritingTask2Practice() {
                       <div className="space-y-2">
                         {evaluation.line_by_line_corrections.map((item, idx) => (
                           <div key={idx} className="rounded border p-2 bg-gray-50">
-                            <p className="text-xs text-red-700"><strong>Original:</strong> {item.original}</p>
+                            <p className="text-xs text-red-700"><strong>Original:</strong> {item.original_line || item.original}</p>
                             <p className="text-xs text-amber-700 mt-1"><strong>Issue:</strong> {item.issue}</p>
-                            <p className="text-xs text-green-700 mt-1"><strong>Improved:</strong> {item.improved}</p>
-                            <p className="text-xs text-gray-600 mt-1">{item.why}</p>
+                            <p className="text-xs text-green-700 mt-1"><strong>Corrected:</strong> {item.corrected_line || item.improved}</p>
                           </div>
                         ))}
                       </div>
