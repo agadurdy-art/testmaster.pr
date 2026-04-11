@@ -1257,10 +1257,11 @@ IMPORTANT RULES:
 - Be STRICT - real IELTS is strict
 
 CRITICAL LINE-BY-LINE RULES:
-- For "line_by_line_corrections": You MUST quote the ACTUAL sentence from the student's text in "original_line"
-- Then write the FULL corrected sentence in "corrected_line" — NOT just a description
-- Provide at least 3 line-by-line corrections if errors exist
-- Do NOT leave original_line or corrected_line empty
+- "line_by_line_corrections" is the MOST IMPORTANT part of your evaluation
+- You MUST find 3-5 actual sentences from the student's text that contain errors
+- For each, copy the EXACT sentence into "original_line", write the corrected version in "corrected_line"
+- NEVER leave original_line or corrected_line empty or as descriptions
+- If the student wrote "The map show changes" then original_line = "The map show changes" and corrected_line = "The maps show changes"
 
 Return ONLY this JSON (no other text):
 {{
@@ -1281,30 +1282,20 @@ Return ONLY this JSON (no other text):
         "score": 7,
         "feedback": "Feedback on sentence variety, accuracy, and complexity"
     }},
-    "strengths": [
-        "Specific strength 1",
-        "Specific strength 2",
-        "Specific strength 3"
-    ],
-    "weaknesses": [
-        "Specific weakness 1",
-        "Specific weakness 2",
-        "Specific weakness 3"
-    ],
-    "improvement_suggestions": [
-        "Actionable suggestion 1",
-        "Actionable suggestion 2",
-        "Actionable suggestion 3"
-    ],
-    "vocabulary_to_use": ["advanced word 1", "advanced word 2", "advanced word 3"],
+    "strengths": ["strength 1", "strength 2", "strength 3"],
+    "weaknesses": ["weakness 1", "weakness 2", "weakness 3"],
+    "improvement_suggestions": ["suggestion 1", "suggestion 2", "suggestion 3"],
+    "vocabulary_to_use": ["word 1", "word 2", "word 3"],
     "grammar_corrections": [
         {{"original": "error from text", "corrected": "correct version", "explanation": "brief explanation"}}
     ],
     "line_by_line_corrections": [
-        {{"original_line": "COPY the EXACT sentence from the student text that contains an error", "corrected_line": "Write the FULL corrected version of that same sentence", "issue": "Explain the grammar or vocabulary error"}}
+        {{"original_line": "The map show a airport before and after.", "corrected_line": "The maps show an airport before and after redevelopment.", "issue": "Subject-verb agreement: 'map' should be 'maps'; article 'a' before vowel should be 'an'"}},
+        {{"original_line": "In first map there is small terminal.", "corrected_line": "In the first map, there is a small terminal.", "issue": "Missing articles 'the' and 'a'; missing comma after introductory phrase"}},
+        {{"original_line": "The car park get reorganised.", "corrected_line": "The car park was reorganised.", "issue": "Incorrect tense: 'get' should be past passive 'was'"}}
     ],
     "high_priority_fixes": [
-        "The single most important fix described in 1-2 sentences",
+        "The single most important fix in 1-2 sentences",
         "Second priority fix"
     ],
     "rewrite_guidance": {{
@@ -1313,7 +1304,7 @@ Return ONLY this JSON (no other text):
         "key_linking_phrases": "2-3 linking phrases the student should add"
     }},
     "response_diagnosis": {{
-        "main_issue": "The root cause of the low score (e.g. no overview, weak data, off-topic)",
+        "main_issue": "The root cause of the low score",
         "band_ceiling_reason": "What is preventing a higher band",
         "quick_win": "One thing to fix that would raise the band by 0.5"
     }},
@@ -1365,10 +1356,11 @@ CRITICAL EVALUATION POINTS:
 - Penalize memorized templates and generic content
 
 CRITICAL LINE-BY-LINE RULES:
-- For "line_by_line_corrections": You MUST quote the ACTUAL sentence from the student's text in "original_line"
-- Then write the FULL corrected sentence in "corrected_line" — NOT just a description
-- Provide at least 3 line-by-line corrections if errors exist
-- Do NOT leave original_line or corrected_line empty
+- "line_by_line_corrections" is the MOST IMPORTANT part of your evaluation
+- You MUST find 3-5 actual sentences from the student's essay that contain errors
+- For each, copy the EXACT sentence into "original_line", write the corrected version in "corrected_line"
+- NEVER leave original_line or corrected_line empty or as descriptions
+- Example: original_line = "Education is important for develop country." corrected_line = "Education is important for developing countries."
 
 Return ONLY this JSON (no other text):
 {{
@@ -1389,30 +1381,20 @@ Return ONLY this JSON (no other text):
         "score": 7,
         "feedback": "Feedback on sentence variety, complexity, and accuracy"
     }},
-    "strengths": [
-        "Specific strength in argumentation or language",
-        "Specific strength 2",
-        "Specific strength 3"
-    ],
-    "weaknesses": [
-        "Specific area needing improvement",
-        "Specific weakness 2",
-        "Specific weakness 3"
-    ],
-    "improvement_suggestions": [
-        "How to improve the argument structure",
-        "How to improve vocabulary usage",
-        "How to improve grammar"
-    ],
-    "vocabulary_to_use": ["advanced academic word 1", "word 2", "word 3", "word 4", "word 5"],
+    "strengths": ["strength 1", "strength 2", "strength 3"],
+    "weaknesses": ["weakness 1", "weakness 2", "weakness 3"],
+    "improvement_suggestions": ["suggestion 1", "suggestion 2", "suggestion 3"],
+    "vocabulary_to_use": ["word 1", "word 2", "word 3"],
     "grammar_corrections": [
         {{"original": "error from essay", "corrected": "correct version", "explanation": "why this is wrong"}}
     ],
     "line_by_line_corrections": [
-        {{"original_line": "COPY the EXACT sentence from the student text that contains an error", "corrected_line": "Write the FULL corrected version of that same sentence", "issue": "Explain the grammar or vocabulary error"}}
+        {{"original_line": "Education is important for develop country.", "corrected_line": "Education is important for developing countries.", "issue": "Word form error: 'develop' should be 'developing' (adjective); 'country' should be plural 'countries'"}},
+        {{"original_line": "Many people thinks that technology is bad.", "corrected_line": "Many people think that technology is harmful.", "issue": "Subject-verb agreement: 'people' is plural so 'thinks' should be 'think'; 'bad' upgraded to 'harmful'"}},
+        {{"original_line": "In the conclusion I want to say education help us.", "corrected_line": "In conclusion, education helps individuals and society.", "issue": "Missing comma; 'help' needs -s for third person; vague 'us' improved to specific noun"}}
     ],
     "high_priority_fixes": [
-        "The single most important fix described in 1-2 sentences",
+        "Most important fix in 1-2 sentences",
         "Second priority fix"
     ],
     "rewrite_guidance": {{
@@ -1421,7 +1403,7 @@ Return ONLY this JSON (no other text):
         "key_linking_phrases": "2-3 linking phrases the student should add"
     }},
     "response_diagnosis": {{
-        "main_issue": "The root cause of the low score (e.g. weak thesis, no examples, repetitive vocabulary)",
+        "main_issue": "The root cause of the low score",
         "band_ceiling_reason": "What is preventing a higher band",
         "quick_win": "One thing to fix that would raise the band by 0.5"
     }},
