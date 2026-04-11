@@ -209,8 +209,11 @@ class ModelAnswerGenerator:
         metadata = task_data.get("metadata", {})
         band_calibration = task_data.get("band_calibration", {})
         
-        # Build Layer A: Examiner-Style Model Answer
+        # Build Layer A: Examiner-Style Model Answer (Band 8)
         layer_a = cls._generate_examiner_model(task_data, visual_type)
+        
+        # Build Layer A6: Band 6 Example Answer
+        layer_a6 = cls._generate_band6_model(task_data, visual_type)
         
         # Build Layer B: Academic Reasoning Notes
         layer_b = cls._generate_reasoning_notes(task_data, layer_a)
@@ -223,6 +226,7 @@ class ModelAnswerGenerator:
         
         return {
             "layer_a_examiner_model": layer_a,
+            "layer_a6_band6_model": layer_a6,
             "layer_b_reasoning_notes": layer_b,
             "layer_c_alternatives": layer_c,
             "quality_check": {
@@ -233,8 +237,77 @@ class ModelAnswerGenerator:
         }
     
     @classmethod
+    def _generate_band6_model(cls, task_data: Dict[str, Any], visual_type: str = "line_graph") -> Dict[str, Any]:
+        """Generate a realistic Band 6 example answer with typical Band 6 characteristics."""
+        title = task_data.get("title", "")
+        task_desc = task_data.get("task_description", "")
+        time_before = task_data.get("time_before", "")
+        time_after = task_data.get("time_after", "")
+
+        if visual_type in ("process", "map"):
+            if visual_type == "map":
+                context = f"TASK: {task_desc}\nTITLE: {title}\nTIME: {time_before} → {time_after}"
+            else:
+                context = f"TASK: {task_desc}\nTITLE: {title}"
+        else:
+            datasets = task_data.get("datasets", [])
+            years = task_data.get("x_values", [])
+            context = f"TASK: {task_desc}\nTITLE: {title}\nDATA: Categories: {[ds.get('label') for ds in datasets]}, Time: {years}"
+
+        prompt = f"""Write a Band 6 IELTS Writing Task 1 response. This must be a REALISTIC Band 6 — NOT a good answer. It should have the typical weaknesses of a Band 6 candidate.
+
+{context}
+
+BAND 6 CHARACTERISTICS YOU MUST INCLUDE:
+1. Overview is present but VAGUE or incomplete (e.g. "There were many changes")
+2. Key features are mentioned but NOT all highlighted — some important data missed
+3. Use REPETITIVE linking words: "Furthermore", "In addition", "Moreover" — overused
+4. Include 3-4 grammar errors: subject-verb agreement, article errors, wrong tense
+5. Vocabulary is ADEQUATE but BASIC — overuse "increased", "decreased", "changed", "a lot"
+6. Some mechanical description without meaningful comparison
+7. Write 155-175 words (barely meeting minimum)
+8. Use mostly SIMPLE sentences with only 1-2 complex structures
+9. At least one run-on sentence or comma splice
+
+DO NOT write a good answer. This must clearly deserve Band 6, not Band 7.
+
+Write ONLY the essay text, no labels or explanations."""
+
+        try:
+            import asyncio
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    import concurrent.futures
+                    with concurrent.futures.ThreadPoolExecutor() as pool:
+                        result = pool.submit(cls._sync_ai_call, prompt).result(timeout=30)
+                else:
+                    result = loop.run_until_complete(cls._async_ai_call(prompt))
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                result = loop.run_until_complete(cls._async_ai_call(prompt))
+                loop.close()
+        except Exception as e:
+            print(f"Band 6 model generation failed: {e}")
+            result = f"The {visual_type} shows information about {title.lower()}. Overall, there were some changes. In the first period, there was some basic features. The area had buildings and roads. Furthermore, the layout was simple. In addition, there was not many facilities for people to use. After the changes, the area changed a lot. New buildings was built and the roads become wider. Furthermore, more facilities was added to the area. In addition, the overall appearance of the area improved. In conclusion, the area underwent some development over the time period shown."
+
+        word_count = len(result.split())
+        return {
+            "full_text": result,
+            "estimated_band": "6.0",
+            "word_count": word_count,
+            "band_characteristics": [
+                "Vague or incomplete overview",
+                "Repetitive linking devices",
+                "Basic vocabulary with limited range",
+                "Several grammar errors (articles, tenses, subject-verb)",
+                "Mostly simple sentence structures"
+            ]
+        }
+
+    @classmethod
     def _generate_examiner_model(cls, task_data: Dict[str, Any], visual_type: str = "line_graph") -> Dict[str, Any]:
-        """Generate Layer A: Examiner-Style Model Answer for all visual types."""
+        """Generate Layer A: Examiner-Style Band 8 Model Answer for all visual types."""
         
         if visual_type == "process":
             return cls._generate_process_model(task_data)

@@ -833,31 +833,33 @@ export default function WritingTask1Practice() {
                           {/* Band 6 Model Answer */}
                           {modelTab === 'band6' && (
                             <div className="bg-white p-4 rounded-lg border">
-                              {modelAnswer?.layer_b_reasoning_notes ? (
+                              {modelAnswer?.layer_a6_band6_model?.full_text ? (
                                 <>
-                                  <p className="text-sm text-amber-800 font-medium mb-2">Band 6 Typical Response</p>
-                                  <p className="text-sm text-gray-600 leading-relaxed italic mb-3">
-                                    A Band 6 response would typically cover the main features but miss important comparisons, 
-                                    use repetitive vocabulary, and contain several grammatical errors. The overview would be 
-                                    unclear or missing entirely.
+                                  <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                                    {modelAnswer.layer_a6_band6_model.full_text}
                                   </p>
-                                  <div className="space-y-2">
-                                    <p className="text-xs font-semibold text-gray-700">Common Band 6 Issues:</p>
-                                    <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4">
-                                      <li>No clear overview or summary of main trends</li>
-                                      <li>Mechanical listing of data without comparisons</li>
-                                      <li>Repetitive linking words (Furthermore, Moreover, In addition)</li>
-                                      <li>Subject-verb agreement and article errors</li>
-                                      <li>Limited vocabulary range with overuse of basic words</li>
-                                    </ul>
+                                  <div className="mt-3 pt-3 border-t flex items-center justify-between">
+                                    <span className="text-xs text-gray-500">
+                                      Word Count: {modelAnswer.layer_a6_band6_model.word_count || '-'}
+                                    </span>
+                                    <Badge className="bg-amber-100 text-amber-700">
+                                      Band {modelAnswer.layer_a6_band6_model.estimated_band || '6.0'}
+                                    </Badge>
                                   </div>
+                                  {modelAnswer.layer_a6_band6_model.band_characteristics?.length > 0 && (
+                                    <div className="mt-3 pt-3 border-t">
+                                      <p className="text-xs font-semibold text-gray-700 mb-1">Typical Band 6 Issues in This Response:</p>
+                                      <ul className="text-xs text-gray-600 space-y-0.5 list-disc pl-4">
+                                        {modelAnswer.layer_a6_band6_model.band_characteristics.map((c, i) => (
+                                          <li key={i}>{c}</li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
                                 </>
                               ) : (
-                                <p className="text-sm text-gray-500">Band 6 example details not available for this task.</p>
+                                <p className="text-sm text-gray-500">Band 6 example loading or not available for this task.</p>
                               )}
-                              <div className="mt-3 pt-3 border-t">
-                                <Badge className="bg-amber-100 text-amber-700">Band 6.0</Badge>
-                              </div>
                             </div>
                           )}
 
