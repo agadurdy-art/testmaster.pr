@@ -3,7 +3,7 @@ IELTS Writing Task 1 - Model Answer Generator
 ==============================================
 Three-Layer Model Answer System following ULTRA MASTER PROMPT.
 
-LAYER A: Examiner-Style Model Answer (Band 8.5-9)
+LAYER A: Examiner-Style Model Answer (Band 8)
 - Natural academic tone
 - No visible template
 - Logical flow
@@ -277,7 +277,7 @@ class ModelAnswerGenerator:
                 "body_paragraph_1": body1_paragraph,
                 "body_paragraph_2": body2_paragraph
             },
-            "estimated_band": "8.5",
+            "estimated_band": "8.0",
             "word_count": len(full_text.split())
         }
     
@@ -536,7 +536,7 @@ class ModelAnswerGenerator:
                 model="gpt-4o"
             )
             
-            prompt = f"""You are an IELTS examiner writing a Band 9 model answer for Writing Task 1.
+            prompt = f"""You are an IELTS examiner writing a Band 8 model answer for Writing Task 1.
 
 TASK DESCRIPTION:
 {task_data.get('task_description', '')}
@@ -553,7 +553,8 @@ CRITICAL RULES:
 4. Select key data points - don't list everything
 5. Make meaningful comparisons
 6. Use varied vocabulary and sentence structures
-7. Write approximately 180-200 words
+7. Write MINIMUM 170 words and MAXIMUM 210 words — this is essential
+8. This is a Band 8 model, not Band 9. It should be excellent but show natural human writing
 
 Write ONLY the model answer text, no explanations."""
 

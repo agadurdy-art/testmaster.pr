@@ -763,7 +763,7 @@ export default function WritingTask1Practice() {
                         <>
                           {/* Tab buttons for different band samples */}
                           <div className="flex gap-2 mb-4">
-                            <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 9 Example</Badge>
+                            <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 8 Example</Badge>
                             <Badge variant="outline" className="cursor-pointer">Band 6 Example</Badge>
                             <Badge variant="outline" className="cursor-pointer">Academic Notes</Badge>
                           </div>
@@ -780,7 +780,7 @@ export default function WritingTask1Practice() {
                                 Word Count: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
                               </span>
                               <Badge className="bg-green-100 text-green-700">
-                                Estimated Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.5'}
+                                Estimated Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.0'}
                               </Badge>
                             </div>
                           </div>

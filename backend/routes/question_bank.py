@@ -1077,7 +1077,7 @@ async def get_model_answer(task_id: str):
     Retrieve the three-layer model answer for a generated task.
     
     Returns:
-    - Layer A: Examiner-style Band 8.5-9 model answer
+    - Layer A: Examiner-style Band 8 model answer
     - Layer B: Academic reasoning notes (teaching layer)
     - Layer C: Alternative academic expressions
     """
@@ -1256,6 +1256,12 @@ IMPORTANT RULES:
 - Detect and penalize TEMPLATE language
 - Be STRICT - real IELTS is strict
 
+CRITICAL LINE-BY-LINE RULES:
+- For "line_by_line_corrections": You MUST quote the ACTUAL sentence from the student's text in "original_line"
+- Then write the FULL corrected sentence in "corrected_line" — NOT just a description
+- Provide at least 3 line-by-line corrections if errors exist
+- Do NOT leave original_line or corrected_line empty
+
 Return ONLY this JSON (no other text):
 {{
     "overall_band": 6.5,
@@ -1295,7 +1301,7 @@ Return ONLY this JSON (no other text):
         {{"original": "error from text", "corrected": "correct version", "explanation": "brief explanation"}}
     ],
     "line_by_line_corrections": [
-        {{"original_line": "exact sentence from the essay", "corrected_line": "corrected version", "issue": "what was wrong"}}
+        {{"original_line": "COPY the EXACT sentence from the student text that contains an error", "corrected_line": "Write the FULL corrected version of that same sentence", "issue": "Explain the grammar or vocabulary error"}}
     ],
     "high_priority_fixes": [
         "The single most important fix described in 1-2 sentences",
@@ -1358,6 +1364,12 @@ CRITICAL EVALUATION POINTS:
 - Is there a PROPER CONCLUSION that summarizes?
 - Penalize memorized templates and generic content
 
+CRITICAL LINE-BY-LINE RULES:
+- For "line_by_line_corrections": You MUST quote the ACTUAL sentence from the student's text in "original_line"
+- Then write the FULL corrected sentence in "corrected_line" — NOT just a description
+- Provide at least 3 line-by-line corrections if errors exist
+- Do NOT leave original_line or corrected_line empty
+
 Return ONLY this JSON (no other text):
 {{
     "overall_band": 6.5,
@@ -1397,7 +1409,7 @@ Return ONLY this JSON (no other text):
         {{"original": "error from essay", "corrected": "correct version", "explanation": "why this is wrong"}}
     ],
     "line_by_line_corrections": [
-        {{"original_line": "exact sentence from the essay", "corrected_line": "corrected version", "issue": "what was wrong"}}
+        {{"original_line": "COPY the EXACT sentence from the student text that contains an error", "corrected_line": "Write the FULL corrected version of that same sentence", "issue": "Explain the grammar or vocabulary error"}}
     ],
     "high_priority_fixes": [
         "The single most important fix described in 1-2 sentences",
