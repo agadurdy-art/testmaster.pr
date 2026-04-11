@@ -38,6 +38,7 @@ export default function WritingTask1Practice() {
   const [visualType, setVisualType] = useState('line_graph');
   const [svgContent, setSvgContent] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [modelTab, setModelTab] = useState('band8');
   const [taskData, setTaskData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userResponse, setUserResponse] = useState('');
@@ -762,65 +763,99 @@ export default function WritingTask1Practice() {
                         <>
                           {/* Tab buttons for different band samples */}
                           <div className="flex gap-2 mb-4">
-                            <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 8 Example</Badge>
-                            <Badge variant="outline" className="cursor-pointer">Band 6 Example</Badge>
-                            <Badge variant="outline" className="cursor-pointer">Academic Notes</Badge>
+                            <Badge 
+                              className={`cursor-pointer ${modelTab === 'band8' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}
+                              onClick={() => setModelTab('band8')}
+                              data-testid="model-tab-band8"
+                            >Band 8 Example</Badge>
+                            <Badge 
+                              className={`cursor-pointer ${modelTab === 'band6' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-600'}`}
+                              onClick={() => setModelTab('band6')}
+                              data-testid="model-tab-band6"
+                            >Band 6 Example</Badge>
+                            <Badge 
+                              className={`cursor-pointer ${modelTab === 'notes' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}`}
+                              onClick={() => setModelTab('notes')}
+                              data-testid="model-tab-notes"
+                            >Academic Notes</Badge>
                           </div>
 
-                          {/* Model Answer Text */}
-                          <div className="bg-white p-4 rounded-lg border">
-                            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                              {modelAnswer?.layer_a_examiner_model?.full_text || 
-                               modelAnswer?.text ||
-                               'Model cevap yüklenirken...'}
-                            </p>
-                            <div className="mt-3 pt-3 border-t flex items-center justify-between">
-                              <span className="text-xs text-gray-500">
-                                Word Count: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
-                              </span>
-                              <Badge className="bg-green-100 text-green-700">
-                                Estimated Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.0'}
-                              </Badge>
-                            </div>
-                          </div>
-
-                          {/* Academic Reasoning Notes */}
-                          {modelAnswer?.layer_b_reasoning_notes && (
-                            <details className="mt-4">
-                              <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                                Academic Justification Notes
-                              </summary>
-                              <div className="mt-3 space-y-3">
-                                {Object.entries(modelAnswer.layer_b_reasoning_notes).map(([key, value]) => (
-                                  <div key={key} className="p-3 bg-white rounded-lg border">
-                                    <h5 className="text-xs font-semibold text-gray-800 mb-1">
-                                      {value.question}
-                                    </h5>
-                                    <p className="text-xs text-gray-600">
-                                      {value.explanation}
-                                    </p>
-                                  </div>
-                                ))}
+                          {/* Band 8 Model Answer */}
+                          {modelTab === 'band8' && (
+                            <div className="bg-white p-4 rounded-lg border">
+                              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                                {modelAnswer?.layer_a_examiner_model?.full_text || 
+                                 modelAnswer?.text ||
+                                 'Loading model answer...'}
+                              </p>
+                              <div className="mt-3 pt-3 border-t flex items-center justify-between">
+                                <span className="text-xs text-gray-500">
+                                  Word Count: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
+                                </span>
+                                <Badge className="bg-green-100 text-green-700">
+                                  Estimated Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.0'}
+                                </Badge>
                               </div>
-                            </details>
+                            </div>
                           )}
 
-                          {/* Alternative Expressions */}
-                          {modelAnswer?.layer_c_alternatives && (
-                            <details className="mt-4">
-                              <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                                Alternative Expressions
-                              </summary>
-                              <div className="mt-3 space-y-2">
-                                <div className="flex flex-wrap gap-2">
-                                  {modelAnswer.layer_c_alternatives.overview_alternatives?.slice(0, 4).map((alt, idx) => (
-                                    <Badge key={idx} variant="outline" className="text-xs">
-                                      {alt}
-                                    </Badge>
+                          {/* Band 6 Model Answer */}
+                          {modelTab === 'band6' && (
+                            <div className="bg-white p-4 rounded-lg border">
+                              {modelAnswer?.layer_b_reasoning_notes ? (
+                                <>
+                                  <p className="text-sm text-amber-800 font-medium mb-2">Band 6 Typical Response</p>
+                                  <p className="text-sm text-gray-600 leading-relaxed italic mb-3">
+                                    A Band 6 response would typically cover the main features but miss important comparisons, 
+                                    use repetitive vocabulary, and contain several grammatical errors. The overview would be 
+                                    unclear or missing entirely.
+                                  </p>
+                                  <div className="space-y-2">
+                                    <p className="text-xs font-semibold text-gray-700">Common Band 6 Issues:</p>
+                                    <ul className="text-xs text-gray-600 space-y-1 list-disc pl-4">
+                                      <li>No clear overview or summary of main trends</li>
+                                      <li>Mechanical listing of data without comparisons</li>
+                                      <li>Repetitive linking words (Furthermore, Moreover, In addition)</li>
+                                      <li>Subject-verb agreement and article errors</li>
+                                      <li>Limited vocabulary range with overuse of basic words</li>
+                                    </ul>
+                                  </div>
+                                </>
+                              ) : (
+                                <p className="text-sm text-gray-500">Band 6 example details not available for this task.</p>
+                              )}
+                              <div className="mt-3 pt-3 border-t">
+                                <Badge className="bg-amber-100 text-amber-700">Band 6.0</Badge>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Academic Notes */}
+                          {modelTab === 'notes' && (
+                            <div className="bg-white p-4 rounded-lg border space-y-4">
+                              {modelAnswer?.layer_b_reasoning_notes ? (
+                                <div className="space-y-3">
+                                  {Object.entries(modelAnswer.layer_b_reasoning_notes).map(([key, value]) => (
+                                    <div key={key} className="p-3 bg-gray-50 rounded-lg">
+                                      <h5 className="text-xs font-semibold text-gray-800 mb-1">{value.question}</h5>
+                                      <p className="text-xs text-gray-600">{value.explanation}</p>
+                                    </div>
                                   ))}
                                 </div>
-                              </div>
-                            </details>
+                              ) : (
+                                <p className="text-sm text-gray-500">Academic notes not available for this task.</p>
+                              )}
+                              {modelAnswer?.layer_c_alternatives && (
+                                <div>
+                                  <p className="text-xs font-semibold text-gray-700 mb-2">Alternative Expressions</p>
+                                  <div className="flex flex-wrap gap-2">
+                                    {modelAnswer.layer_c_alternatives.overview_alternatives?.slice(0, 6).map((alt, idx) => (
+                                      <Badge key={idx} variant="outline" className="text-xs">{alt}</Badge>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           )}
                         </>
                       ) : (
