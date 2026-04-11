@@ -680,7 +680,7 @@ export default function WritingTask2Practice() {
                       {/* Characteristics */}
                       {modelAnswers[selectedBand].characteristics && (
                         <div className="p-3 bg-gray-50 rounded-lg">
-                          <h4 className="font-semibold text-gray-800 mb-2 text-xs">📋 Bu Band'ın Özellikleri</h4>
+                          <h4 className="font-semibold text-gray-800 mb-2 text-xs">Band Characteristics</h4>
                           <ul className="space-y-1">
                             {modelAnswers[selectedBand].characteristics.map((char, idx) => (
                               <li key={idx} className="text-xs text-gray-600 flex items-start gap-1">
@@ -694,17 +694,17 @@ export default function WritingTask2Practice() {
                     </div>
                   ) : (
                     <div className="text-center py-8 text-gray-500">
-                      <p className="text-sm">Bu soru için model yanıt henüz eklenmedi.</p>
+                      <p className="text-sm">Model answer not available for this prompt.</p>
                     </div>
                   )}
 
                   {/* Comparison Note */}
                   <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <h4 className="font-semibold text-blue-800 mb-1 text-xs">💡 Band 6 vs Band 8.5 Farkları</h4>
+                    <h4 className="font-semibold text-blue-800 mb-1 text-xs">Band 6 vs Band 8 Differences</h4>
                     <ul className="text-xs text-blue-700 space-y-1">
-                      <li>• <strong>Band 6:</strong> Temel yapılar, yeterli kelime hazinesi, bazı hatalar</li>
-                      <li>• <strong>Band 8.5:</strong> Sofistike yapılar, geniş kelime hazinesi, minimal hata</li>
-                      <li>• İki örneği karşılaştırarak gelişim alanlarınızı belirleyin</li>
+                      <li>- <strong>Band 6:</strong> Basic structures, adequate vocabulary, some errors</li>
+                      <li>- <strong>Band 8:</strong> Sophisticated structures, wide vocabulary, minimal errors</li>
+                      <li>- Compare both examples to identify your areas for improvement</li>
                     </ul>
                   </div>
                 </Card>
@@ -714,16 +714,16 @@ export default function WritingTask2Practice() {
               {showModelAnswer && !modelAnswers && selectedPrompt && (
                 <Card className="p-5 border-2 border-indigo-200 bg-indigo-50/30">
                   <h3 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                    <Eye className="w-5 h-5 text-indigo-600" /> Model Yanıt Yapısı
+                    <Eye className="w-5 h-5 text-indigo-600" /> Model Answer Structure
                   </h3>
                   <div className="text-sm text-gray-700 leading-relaxed space-y-3">
-                    <p><strong>Giriş Paragrafı:</strong> Konuyu paraphrase edin ve tez cümlenizi belirtin.</p>
-                    <p><strong>Gövde Paragraf 1:</strong> İlk ana argümanınızı örnek ve kanıtlarla destekleyin.</p>
-                    <p><strong>Gövde Paragraf 2:</strong> İkinci ana argümanınızı veya karşıt görüşü tartışın.</p>
-                    <p><strong>Sonuç:</strong> Ana noktalarınızı özetleyin ve görüşünüzü yeniden ifade edin.</p>
+                    <p><strong>Introduction:</strong> Paraphrase the topic and state your thesis.</p>
+                    <p><strong>Body Paragraph 1:</strong> Support your first main argument with examples and evidence.</p>
+                    <p><strong>Body Paragraph 2:</strong> Discuss your second argument or the opposing view.</p>
+                    <p><strong>Conclusion:</strong> Summarise your main points and restate your position.</p>
                   </div>
                   <p className="text-xs text-gray-500 mt-3 italic">
-                    Not: Spesifik model yanıtlar için farklı bir soru seçin.
+                    Note: Select a different prompt to see specific model answers.
                   </p>
                 </Card>
               )}

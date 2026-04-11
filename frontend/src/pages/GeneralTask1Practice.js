@@ -167,7 +167,14 @@ export default function GeneralTask1Practice() {
           strengths: data.evaluation.strengths || [],
           weaknesses: data.evaluation.weaknesses || [],
           suggestions: data.evaluation.improvement_suggestions || [],
-          recommended_lessons: data.recommended_lessons || []  // Dual-Track lesson recommendations
+          grammar_corrections: data.evaluation.grammar_corrections || [],
+          line_by_line_corrections: data.evaluation.line_by_line_corrections || [],
+          high_priority_fixes: data.evaluation.high_priority_fixes || [],
+          rewrite_guidance: data.evaluation.rewrite_guidance || {},
+          response_diagnosis: data.evaluation.response_diagnosis || {},
+          examiner_comment: data.evaluation.examiner_comment || '',
+          vocabulary_to_use: data.evaluation.vocabulary_to_use || [],
+          recommended_lessons: data.recommended_lessons || []
         });
         toast.success('Evaluation complete!');
       } else {
@@ -519,6 +526,65 @@ export default function GeneralTask1Practice() {
                       </div>
                     )}
                   </div>
+
+                  {/* Examiner Comment */}
+                  {evaluation.examiner_comment && (
+                    <div className="mt-4 p-3 bg-gray-50 rounded-lg border">
+                      <p className="text-xs text-gray-700 italic">{evaluation.examiner_comment}</p>
+                    </div>
+                  )}
+
+                  {/* Line-by-Line Corrections */}
+                  {evaluation.line_by_line_corrections?.length > 0 && (
+                    <div className="mt-4">
+                      <h4 className="font-semibold text-gray-800 mb-2 text-xs">Line-by-Line Corrections</h4>
+                      <div className="space-y-2">
+                        {evaluation.line_by_line_corrections.map((item, idx) => (
+                          <div key={idx} className="rounded-lg border p-3 bg-gray-50">
+                            <p className="text-xs text-red-700"><strong>Original:</strong> {item.original_line || item.original}</p>
+                            <p className="text-xs text-amber-700 mt-1"><strong>Issue:</strong> {item.issue}</p>
+                            <p className="text-xs text-green-700 mt-1"><strong>Corrected:</strong> {item.corrected_line || item.improved}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* High Priority Fixes */}
+                  {evaluation.high_priority_fixes?.length > 0 && (
+                    <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-100">
+                      <h4 className="font-semibold text-red-800 mb-2 text-xs">High Priority Fixes</h4>
+                      <ul className="space-y-1">
+                        {evaluation.high_priority_fixes.map((fix, idx) => (
+                          <li key={idx} className="text-xs text-red-700">• {fix}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Response Diagnosis */}
+                  {evaluation.response_diagnosis?.main_issue && (
+                    <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                      <h4 className="font-semibold text-blue-800 mb-2 text-xs">Response Diagnosis</h4>
+                      <div className="space-y-1 text-xs text-blue-700">
+                        <p><strong>Main Issue:</strong> {evaluation.response_diagnosis.main_issue}</p>
+                        <p><strong>Band Ceiling:</strong> {evaluation.response_diagnosis.band_ceiling_reason}</p>
+                        <p><strong>Quick Win:</strong> {evaluation.response_diagnosis.quick_win}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Rewrite Guidance */}
+                  {evaluation.rewrite_guidance?.weakest_paragraph && (
+                    <div className="mt-4 p-3 bg-violet-50 rounded-lg border border-violet-100">
+                      <h4 className="font-semibold text-violet-800 mb-2 text-xs">Rewrite Guidance</h4>
+                      <div className="space-y-1 text-xs text-violet-700">
+                        <p><strong>Weakest Paragraph:</strong> {evaluation.rewrite_guidance.weakest_paragraph}</p>
+                        <p><strong>Suggested Opening:</strong> {evaluation.rewrite_guidance.suggested_opening}</p>
+                        <p><strong>Key Linking Phrases:</strong> {evaluation.rewrite_guidance.key_linking_phrases}</p>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Recommended Lessons - General Training Track */}
                   {evaluation.recommended_lessons?.length > 0 && (

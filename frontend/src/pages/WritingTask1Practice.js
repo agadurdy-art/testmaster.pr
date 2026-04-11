@@ -615,12 +615,43 @@ export default function WritingTask1Practice() {
 
                       {evaluation.high_priority_fixes?.length > 0 && (
                         <div className="mb-4 p-3 bg-rose-50 rounded-lg">
-                          <h4 className="text-sm font-semibold text-rose-700 mb-2">🚨 Highest-Priority Fixes</h4>
+                          <h4 className="text-sm font-semibold text-rose-700 mb-2">Highest-Priority Fixes</h4>
                           <ul className="space-y-1">
                             {evaluation.high_priority_fixes.map((fix, idx) => (
                               <li key={idx} className="text-xs text-gray-700">• {fix}</li>
                             ))}
                           </ul>
+                        </div>
+                      )}
+
+                      {/* Examiner Comment */}
+                      {evaluation.examiner_comment && (
+                        <div className="mb-4 p-3 bg-gray-50 rounded-lg border">
+                          <p className="text-xs text-gray-700 italic">{evaluation.examiner_comment}</p>
+                        </div>
+                      )}
+
+                      {/* Response Diagnosis */}
+                      {evaluation.response_diagnosis?.main_issue && (
+                        <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
+                          <h4 className="font-semibold text-blue-800 mb-2 text-xs">Response Diagnosis</h4>
+                          <div className="space-y-1 text-xs text-blue-700">
+                            <p><strong>Main Issue:</strong> {evaluation.response_diagnosis.main_issue}</p>
+                            <p><strong>Band Ceiling:</strong> {evaluation.response_diagnosis.band_ceiling_reason}</p>
+                            <p><strong>Quick Win:</strong> {evaluation.response_diagnosis.quick_win}</p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Rewrite Guidance */}
+                      {evaluation.rewrite_guidance?.weakest_paragraph && (
+                        <div className="mb-4 p-3 bg-violet-50 rounded-lg border border-violet-100">
+                          <h4 className="font-semibold text-violet-800 mb-2 text-xs">Rewrite Guidance</h4>
+                          <div className="space-y-1 text-xs text-violet-700">
+                            <p><strong>Weakest Paragraph:</strong> {evaluation.rewrite_guidance.weakest_paragraph}</p>
+                            <p><strong>Suggested Opening:</strong> {evaluation.rewrite_guidance.suggested_opening}</p>
+                            <p><strong>Key Linking Phrases:</strong> {evaluation.rewrite_guidance.key_linking_phrases}</p>
+                          </div>
                         </div>
                       )}
 
