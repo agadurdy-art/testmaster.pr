@@ -544,13 +544,13 @@ export default function WritingTask1Practice() {
                       <div className="text-4xl font-bold text-green-600">
                         Band {evaluation.overall_band}
                       </div>
-                      <p className="text-sm text-gray-500 mt-1">Genel Band Puanı</p>
+                      <p className="text-sm text-gray-500 mt-1">Overall Band Score</p>
                     </div>
 
                     {/* Criteria Breakdown - Collapsible */}
                     <details className="mt-4">
                       <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                        Kriter Detayları
+                        Criteria Details
                       </summary>
                       <div className="grid grid-cols-2 gap-3 mt-3">
                         {[
@@ -747,7 +747,7 @@ export default function WritingTask1Practice() {
                         className="w-full mt-4"
                         onClick={() => setModelAnswerStep(3)}
                       >
-                        {modelAnswerStep < 3 ? 'Model Cevabı Gör' : 'Model Cevap Gösteriliyor'}
+                        {modelAnswerStep < 3 ? 'Show Model Answer' : 'Model Answer Shown'}
                       </Button>
                     </Card>
                   )}
@@ -756,16 +756,16 @@ export default function WritingTask1Practice() {
                   {modelAnswerStep >= 3 && (
                     <Card className="p-5 border-2 border-blue-200 bg-blue-50/30">
                       <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                        <Layers className="w-5 h-5 text-blue-600" /> Model Cevap
+                        <Layers className="w-5 h-5 text-blue-600" /> Model Answer
                       </h3>
                       
                       {modelAnswer ? (
                         <>
                           {/* Tab buttons for different band samples */}
                           <div className="flex gap-2 mb-4">
-                            <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 9 Örnek</Badge>
-                            <Badge variant="outline" className="cursor-pointer">Band 6 Örnek</Badge>
-                            <Badge variant="outline" className="cursor-pointer">Akademik Notlar</Badge>
+                            <Badge className="bg-green-100 text-green-700 cursor-pointer">Band 9 Example</Badge>
+                            <Badge variant="outline" className="cursor-pointer">Band 6 Example</Badge>
+                            <Badge variant="outline" className="cursor-pointer">Academic Notes</Badge>
                           </div>
 
                           {/* Model Answer Text */}
@@ -777,10 +777,10 @@ export default function WritingTask1Practice() {
                             </p>
                             <div className="mt-3 pt-3 border-t flex items-center justify-between">
                               <span className="text-xs text-gray-500">
-                                Kelime Sayısı: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
+                                Word Count: {modelAnswer?.layer_a_examiner_model?.word_count || modelAnswer?.word_count || '-'}
                               </span>
                               <Badge className="bg-green-100 text-green-700">
-                                Tahmini Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.5'}
+                                Estimated Band: {modelAnswer?.layer_a_examiner_model?.estimated_band || '8.5'}
                               </Badge>
                             </div>
                           </div>
@@ -789,7 +789,7 @@ export default function WritingTask1Practice() {
                           {modelAnswer?.layer_b_reasoning_notes && (
                             <details className="mt-4">
                               <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                                📚 Akademik Gerekçelendirme Notları
+                                Academic Justification Notes
                               </summary>
                               <div className="mt-3 space-y-3">
                                 {Object.entries(modelAnswer.layer_b_reasoning_notes).map(([key, value]) => (
@@ -810,7 +810,7 @@ export default function WritingTask1Practice() {
                           {modelAnswer?.layer_c_alternatives && (
                             <details className="mt-4">
                               <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
-                                🔄 Alternatif İfadeler
+                                Alternative Expressions
                               </summary>
                               <div className="mt-3 space-y-2">
                                 <div className="flex flex-wrap gap-2">

@@ -1294,6 +1294,23 @@ Return ONLY this JSON (no other text):
     "grammar_corrections": [
         {{"original": "error from text", "corrected": "correct version", "explanation": "brief explanation"}}
     ],
+    "line_by_line_corrections": [
+        {{"original_line": "exact sentence from the essay", "corrected_line": "corrected version", "issue": "what was wrong"}}
+    ],
+    "high_priority_fixes": [
+        "The single most important fix described in 1-2 sentences",
+        "Second priority fix"
+    ],
+    "rewrite_guidance": {{
+        "weakest_paragraph": "Which paragraph needs the most work and why",
+        "suggested_opening": "A better opening sentence for that paragraph",
+        "key_linking_phrases": "2-3 linking phrases the student should add"
+    }},
+    "response_diagnosis": {{
+        "main_issue": "The root cause of the low score (e.g. no overview, weak data, off-topic)",
+        "band_ceiling_reason": "What is preventing a higher band",
+        "quick_win": "One thing to fix that would raise the band by 0.5"
+    }},
     "examiner_comment": "A 2-3 sentence overall assessment as an examiner would write"
 }}"""
     else:  # Task 2
@@ -1379,6 +1396,23 @@ Return ONLY this JSON (no other text):
     "grammar_corrections": [
         {{"original": "error from essay", "corrected": "correct version", "explanation": "why this is wrong"}}
     ],
+    "line_by_line_corrections": [
+        {{"original_line": "exact sentence from the essay", "corrected_line": "corrected version", "issue": "what was wrong"}}
+    ],
+    "high_priority_fixes": [
+        "The single most important fix described in 1-2 sentences",
+        "Second priority fix"
+    ],
+    "rewrite_guidance": {{
+        "weakest_paragraph": "Which paragraph needs the most work and why",
+        "suggested_opening": "A better opening sentence for that paragraph",
+        "key_linking_phrases": "2-3 linking phrases the student should add"
+    }},
+    "response_diagnosis": {{
+        "main_issue": "The root cause of the low score (e.g. weak thesis, no examples, repetitive vocabulary)",
+        "band_ceiling_reason": "What is preventing a higher band",
+        "quick_win": "One thing to fix that would raise the band by 0.5"
+    }},
     "examiner_comment": "A 2-3 sentence overall assessment like an examiner would write in official feedback"
 }}"""
 

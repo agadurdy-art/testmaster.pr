@@ -193,13 +193,13 @@ export default function WritingTask2Practice() {
         if (data.recommended_lessons && data.recommended_lessons.length > 0) {
           setRecommendedLessons(data.recommended_lessons);
         }
-        toast.success('Değerlendirme tamamlandı!');
+        toast.success('Evaluation complete!');
       } else {
-        toast.error(data.error || 'Değerlendirme başarısız');
+        toast.error(data.error || 'Evaluation failed');
       }
     } catch (error) {
       console.error('Evaluation error:', error);
-      toast.error('Değerlendirme sırasında hata oluştu');
+      toast.error('Error during evaluation');
     } finally {
       setEvaluating(false);
     }
@@ -481,7 +481,7 @@ export default function WritingTask2Practice() {
                     <div className="text-3xl font-bold text-blue-600">
                       Band {evaluation.overall_band}
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Genel Band Puanı</p>
+                    <p className="text-xs text-gray-500 mt-1">Overall Band Score</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 mb-4">
@@ -527,7 +527,7 @@ export default function WritingTask2Practice() {
                     {recommendedLessons.length > 0 && (
                       <div className="bg-purple-50 p-3 rounded-lg border border-purple-200 col-span-2">
                         <h4 className="font-semibold text-purple-800 mb-2 text-xs flex items-center gap-2">
-                          📚 Önerilen Dersler
+                          Recommended Lessons
                           <Badge className="bg-purple-100 text-purple-600 text-xs">Kurs Odaklı</Badge>
                         </h4>
                         <p className="text-xs text-purple-600 mb-2">
@@ -672,7 +672,7 @@ export default function WritingTask2Practice() {
                       </div>
                       
                       <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                        <span>Kelime Sayısı: {modelAnswers[selectedBand].word_count}</span>
+                        <span>Word Count: {modelAnswers[selectedBand].word_count}</span>
                         <Badge className={selectedBand === 'band_6' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}>
                           Band {modelAnswers[selectedBand].band}
                         </Badge>

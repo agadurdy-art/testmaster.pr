@@ -477,7 +477,7 @@ export default function GeneralTask1Practice() {
                     <div className="text-3xl font-bold text-purple-600">
                       Band {evaluation.overall_band}
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Genel Band Puanı</p>
+                    <p className="text-xs text-gray-500 mt-1">Overall Band Score</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 mb-4">
@@ -585,7 +585,7 @@ export default function GeneralTask1Practice() {
                       </div>
                       
                       <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                        <span>Kelime Sayısı: {modelAnswers[selectedBand].word_count}</span>
+                        <span>Word Count: {modelAnswers[selectedBand].word_count}</span>
                         <Badge className={selectedBand === 'band_6' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'}>
                           Band {modelAnswers[selectedBand].band}
                         </Badge>
