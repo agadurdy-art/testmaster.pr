@@ -1192,231 +1192,229 @@ async def evaluate_writing(request: WritingEvaluationRequest):
     
     response_text = request.response.strip()
     word_count = len(response_text.split())
-    
-    # Minimum word check
-    min_words = 150 if request.task_type == "task1" else 250
-    if word_count < min_words * 0.6:  # Allow some flexibility
+
+    # Hard reject: completely empty or trivial
+    if word_count < 30:
         return {
             "success": False,
-            "error": f"Response too short. Minimum {min_words} words required, you wrote {word_count}.",
+            "error": f"Response too short. You wrote only {word_count} words.",
             "word_count": word_count
         }
-    
+
+    min_words = 150 if request.task_type == "task1" else 250
+
     # Build context from task description if available
     task_context = ""
     if request.task_description:
-        task_context = f"""
-ORIGINAL TASK:
-{request.task_description}
-"""
-    
-    # Build evaluation prompt based on task type
-    if request.task_type == "task1":
-        evaluation_prompt = f"""You are a senior IELTS examiner. Your evaluation must be STRICT and HONEST.
+        task_context = f"ORIGINAL TASK:\n{request.task_description}"
 
-TASK: Academic Writing Task 1 — {request.visual_type or 'chart/graph'} about "{request.topic or 'general'}"
-WORD COUNT: {word_count} words (minimum 150)
+    # =====================================================================
+    # TASK 1 EVALUATION PROMPT — Cambridge/IDP/BC aligned
+    # =====================================================================
+    if request.task_type == "task1":
+        evaluation_prompt = f"""You are a calibrated IELTS examiner. Follow the evaluation protocol below EXACTLY.
+
+=== INPUT ===
+TASK TYPE: Academic Writing Task 1 — {request.visual_type or 'chart/graph'}
+TOPIC: "{request.topic or 'general'}"
+WORD COUNT: {word_count} words (minimum required: 150)
+{task_context}
 
 STUDENT'S RESPONSE:
 \"\"\"
 {response_text}
 \"\"\"
 
-EVALUATION PROTOCOL:
+=== EVALUATION PROTOCOL ===
 
 STEP 1 — RELEVANCE CHECK (do this FIRST):
-- Does the response describe the visual type stated above?
-- If the response is about a DIFFERENT topic, or is random text, or does NOT describe the visual: ALL criteria = Band 3 maximum. State "OFF-TOPIC" in examiner_comment.
+Does the response describe the visual type and topic stated above?
+If the response is OFF-TOPIC (about a different subject entirely): ALL criteria = 2-3 maximum. Write "OFF-TOPIC" in examiner_comment. Skip to JSON output.
 
-STEP 2 — WORD COUNT CHECK:
-- Under 120 words: Maximum Band 5.0 overall (penalize Task Achievement heavily)
-- 120-149 words: Maximum Band 6.0 overall
-- 150+ words: No penalty
+STEP 2 — WORD COUNT PENALTIES (apply BEFORE scoring):
+- Under 100 words → TA capped at 3.0
+- 100-119 words → TA capped at 4.0
+- 120-149 words → TA capped at 5.0 (proportional: ~1 band per 20 words under 150)
+- 150-199 words → TA ceiling 6.5 unless exceptionally dense
+- 200+ words → no penalty
 
-STEP 3 — IELTS BAND DESCRIPTORS:
+STEP 3 — SCORE EACH CRITERION (use band descriptors below):
 
-TASK ACHIEVEMENT:
-- Band 8: Covers all requirements of the task sufficiently; presents, highlights and illustrates key features/bullet points clearly and appropriately; could be used as a model answer
-- Band 7: Covers requirements; presents clear overview; could be slightly more developed
-- Band 6: Addresses requirements but some features are inadequately covered; overview present but unclear
-- Band 5: Generally addresses task; no clear overview; tendency to focus on details
-- Band 4: Task is attempted but does not cover requirements; no overview; format may be confused
+TASK ACHIEVEMENT (TA):
+Band 9: All key features fully and accurately described. All significant trends/data selected and clearly compared. No inaccuracies.
+Band 8: Key features covered, minor omissions acceptable. Overview clearly present. Comparisons accurate and well-selected.
+Band 7: Key features addressed. Overview present but may lack precision. Some less relevant detail included.
+Band 6: Key features present but main trends not always highlighted. Overview may be absent or unclear. Some mechanical description.
+Band 5: Task partially addressed. Key features identified but detail insufficient or inaccurate. May describe only part of the graph.
+Band 4: Minimal task coverage. Mostly irrelevant or inaccurate information. No real overview.
+Band 3: Barely addresses task. Bullet points or notes. Very little relevant content.
 
-COHERENCE AND COHESION:
-- Band 8: Sequences information logically; manages all aspects of cohesion well; uses paragraphing sufficiently and appropriately
-- Band 6: Arranges information coherently; uses cohesive devices effectively but cohesion within sentences may be faulty
-- Band 4: Presents information but not arranged coherently; uses some basic cohesive devices but inaccurately
+AI checks for TA:
+- Is there an overview/summary statement? (Required for 6+. No overview → TA max 5)
+- Are all data series mentioned at least once?
+- Are the highest/lowest values correctly identified?
+- Does the essay avoid copying the question verbatim?
 
-LEXICAL RESOURCE:
-- Band 8: Uses a wide range of vocabulary fluently and flexibly; skillfully uses uncommon items; rare errors
-- Band 6: Uses adequate range for the task; attempts less common vocabulary with some inaccuracy
-- Band 4: Uses only basic vocabulary; may use inappropriate words; errors cause strain for the reader
+COHERENCE & COHESION (CC):
+Band 8: Well-organized. Paragraphing used effectively. Cohesive devices varied and appropriate.
+Band 7: Clear progression. Paragraphing present. Some overuse or mechanical use of cohesive devices.
+Band 6: Coherent overall. Cohesive devices used but may be repetitive or faulty. Paragraphing present but not always logical.
+Band 5: Some organization but lacks overall progression. Repetitive or inaccurate cohesive devices. May lack clear paragraphing.
+Band 4: Little coherence. Cohesive devices basic (and/but/so). No clear paragraphing.
 
-GRAMMATICAL RANGE AND ACCURACY:
-- Band 8: Uses wide range of structures; majority of sentences are error-free; makes very occasional errors
-- Band 6: Uses mix of simple and complex forms; makes some errors in grammar but they rarely reduce communication
-- Band 4: Uses only limited range of structures; subordinate clauses are rare; some structures are accurate but errors predominate
+LEXICAL RESOURCE (LR):
+Band 8: Wide range. Natural collocation. Minor errors that don't impede. Precise word choice.
+Band 7: Adequate range. Attempts less common vocabulary, sometimes unsuccessfully.
+Band 6: Adequate vocabulary for the task. Some less common words but with errors. Errors in word choice and spelling.
+Band 5: Limited range. Repetitive. Basic vocabulary. Noticeable spelling errors.
+Band 4: Very limited vocabulary. Same words repeated. Frequent spelling errors that impede meaning.
 
-STRICT RULES:
-- If no overview paragraph exists → TA maximum Band 5
-- If data is inaccurate or invented → TA maximum Band 5
-- If no comparisons between features → CC maximum Band 6
-- Detect template language ("Overall, it is clear that") → penalize LR by 0.5
-- Every grammar error you find MUST appear in line_by_line_corrections
-- overall_band = average of 4 criteria, rounded to nearest 0.5
+Deductions for LR: Each distinct spelling error = -0.25 (cap -1.0). Overused words ("important", "many", "things", "good/bad") flag. Template language = -0.5.
 
-CRITICAL LINE-BY-LINE RULES:
-- "line_by_line_corrections" is the MOST IMPORTANT part of your evaluation
-- You MUST find 3-5 actual sentences from the student's text that contain errors
-- For each, copy the EXACT sentence into "original_line", write the corrected version in "corrected_line"
-- NEVER leave original_line or corrected_line empty or as descriptions
-- If the student wrote "The map show changes" then original_line = "The map show changes" and corrected_line = "The maps show changes"
+GRAMMATICAL RANGE & ACCURACY (GRA):
+Band 8: Wide range of structures. Majority error-free. Very occasional errors.
+Band 7: Good range. Some errors in complex structures but rarely impede communication.
+Band 6: Mix of simple and complex. Some errors but don't impede overall communication.
+Band 5: Limited range. Mostly simple sentences. Errors frequent; some impede meaning.
+Band 4: Very limited range. Basic structures only. Errors impede communication.
 
-Return ONLY this JSON (no other text):
+Error density rule:
+- 0-1 errors per 100 words → GRA 8-9
+- 2-3 errors per 100 words → GRA 6-7
+- 4-6 errors per 100 words → GRA 5
+- 7+ errors per 100 words → GRA 4 or below
+Range check: Only simple sentences → GRA cap 5.5. Must have 3+ complex structures for 6+.
+
+STEP 4 — CALCULATE OVERALL BAND:
+overall_band = (TA + CC + LR + GRA) / 4, rounded to nearest 0.5
+Example: TA=6, CC=7, LR=6, GRA=6 → 6.25 → Band 6.5
+When in doubt between two bands, give the LOWER band (examiner convention).
+
+STEP 5 — LINE-BY-LINE CORRECTIONS:
+Find 3-5 sentences from the student's text that contain errors.
+For each: copy the EXACT sentence → write the corrected version → explain the error.
+
+=== OUTPUT (JSON ONLY, no other text) ===
 {{
-    "overall_band": 6.5,
-    "task_achievement": {{
-        "score": 6,
-        "feedback": "Specific feedback on task response, overview, and data coverage"
-    }},
-    "coherence_cohesion": {{
-        "score": 7,
-        "feedback": "Feedback on organization, paragraphing, and linking"
-    }},
-    "lexical_resource": {{
-        "score": 6,
-        "feedback": "Feedback on vocabulary range, accuracy, and appropriateness"
-    }},
-    "grammatical_range": {{
-        "score": 7,
-        "feedback": "Feedback on sentence variety, accuracy, and complexity"
-    }},
-    "strengths": ["strength 1", "strength 2", "strength 3"],
-    "weaknesses": ["weakness 1", "weakness 2", "weakness 3"],
-    "improvement_suggestions": ["suggestion 1", "suggestion 2", "suggestion 3"],
-    "vocabulary_to_use": ["word 1", "word 2", "word 3"],
-    "grammar_corrections": [
-        {{"original": "error from text", "corrected": "correct version", "explanation": "brief explanation"}}
-    ],
+    "overall_band": 5.5,
+    "task_achievement": {{"score": 5, "feedback": "specific feedback"}},
+    "coherence_cohesion": {{"score": 6, "feedback": "specific feedback"}},
+    "lexical_resource": {{"score": 5, "feedback": "specific feedback"}},
+    "grammatical_range": {{"score": 6, "feedback": "specific feedback"}},
+    "strengths": ["specific strength 1", "specific strength 2"],
+    "weaknesses": ["specific weakness 1", "specific weakness 2"],
+    "improvement_suggestions": ["actionable suggestion 1", "actionable suggestion 2"],
+    "vocabulary_to_use": ["word1", "word2", "word3"],
+    "grammar_corrections": [{{"original": "error from text", "corrected": "corrected version", "explanation": "rule"}}],
     "line_by_line_corrections": [
-        {{"original_line": "The map show a airport before and after.", "corrected_line": "The maps show an airport before and after redevelopment.", "issue": "Subject-verb agreement: 'map' should be 'maps'; article 'a' before vowel should be 'an'"}},
-        {{"original_line": "In first map there is small terminal.", "corrected_line": "In the first map, there is a small terminal.", "issue": "Missing articles 'the' and 'a'; missing comma after introductory phrase"}},
-        {{"original_line": "The car park get reorganised.", "corrected_line": "The car park was reorganised.", "issue": "Incorrect tense: 'get' should be past passive 'was'"}}
+        {{"original_line": "The map show a airport before and after.", "corrected_line": "The maps show an airport before and after redevelopment.", "issue": "Subject-verb agreement and article error"}},
+        {{"original_line": "The car park get reorganised.", "corrected_line": "The car park was reorganised.", "issue": "Incorrect tense: needs past passive"}}
     ],
-    "high_priority_fixes": [
-        "The single most important fix in 1-2 sentences",
-        "Second priority fix"
-    ],
-    "rewrite_guidance": {{
-        "weakest_paragraph": "Which paragraph needs the most work and why",
-        "suggested_opening": "A better opening sentence for that paragraph",
-        "key_linking_phrases": "2-3 linking phrases the student should add"
-    }},
-    "response_diagnosis": {{
-        "main_issue": "The root cause of the low score",
-        "band_ceiling_reason": "What is preventing a higher band",
-        "quick_win": "One thing to fix that would raise the band by 0.5"
-    }},
-    "examiner_comment": "A 2-3 sentence overall assessment as an examiner would write"
+    "high_priority_fixes": ["most important fix", "second fix"],
+    "rewrite_guidance": {{"weakest_paragraph": "which and why", "suggested_opening": "better opening", "key_linking_phrases": "phrases to add"}},
+    "response_diagnosis": {{"main_issue": "root cause", "band_ceiling_reason": "what blocks higher band", "quick_win": "one fix for +0.5"}},
+    "examiner_comment": "2-3 sentence examiner assessment. Neutral tone. No praise inflation."
 }}"""
-    else:  # Task 2
-        evaluation_prompt = f"""You are an official IELTS examiner with 15+ years of experience. Evaluate this Writing Task 2 essay using the official IELTS band descriptors.
 
+    # =====================================================================
+    # TASK 2 EVALUATION PROMPT — Cambridge/IDP/BC aligned
+    # =====================================================================
+    else:
+        evaluation_prompt = f"""You are a calibrated IELTS examiner. Follow the evaluation protocol below EXACTLY.
+
+=== INPUT ===
+TASK TYPE: Academic Writing Task 2 — Essay
+TOPIC: "{request.topic or 'opinion/discussion'}"
+WORD COUNT: {word_count} words (minimum required: 250)
 {task_context}
 
-TASK TYPE: Academic Writing Task 2 (Essay)
-Essay Type: {request.topic or 'opinion/discussion'}
-Target Band: {request.band_level}
-Word Count: {word_count} words (minimum 250 required)
-
-CANDIDATE'S RESPONSE:
+STUDENT'S RESPONSE:
 \"\"\"
 {response_text}
 \"\"\"
 
-OFFICIAL IELTS TASK 2 BAND DESCRIPTORS:
+=== EVALUATION PROTOCOL ===
+
+STEP 1 — RELEVANCE CHECK:
+Does the response address the essay prompt? If OFF-TOPIC: ALL criteria = 2-3 max. Write "OFF-TOPIC" in examiner_comment.
+
+STEP 2 — WORD COUNT PENALTIES:
+- Under 150 words → TR capped at 3.0
+- 150-199 words → TR capped at 4.0
+- 200-249 words → TR capped at 5.0 (~1 band per 30 words under 250)
+- 250-299 words → TR ceiling 6.0 unless argument fully developed
+- 300+ words → no penalty
+
+STEP 3 — SCORE EACH CRITERION:
 
 TASK RESPONSE (TR):
-- Band 9: Fully addresses all parts; presents a well-developed position; relevant, extended ideas
-- Band 7: Addresses all parts; presents a clear position; main ideas relevant but may lack focus
-- Band 5: Addresses task only partially; position unclear at times; limited development
+Band 9: Fully addresses all parts. Position clear throughout. Ideas fully extended with relevant, precise support.
+Band 8: All parts addressed sufficiently. Position clear. Ideas well-developed. Occasional under-extension acceptable.
+Band 7: All parts addressed, some more fully than others. Clear position. Main ideas clear but not always fully extended.
+Band 6: All parts addressed but unevenly. Position present but not always maintained. Some development but may be formulaic.
+Band 5: Partial task coverage. Position sometimes unclear. Development limited.
+Band 4: Minimal task coverage. Format may be wrong. Position unclear or absent.
+Band 3: Barely addresses task. Often off-topic.
 
-COHERENCE AND COHESION (CC):
-- Band 9: Uses cohesion attracting no attention; paragraphing is skillfully managed
-- Band 7: Logically organizes information; clear progression; uses range of cohesive devices
-- Band 5: Presents information with some organization; inadequate or overused cohesive devices
+AI checks for TR:
+- Does the essay answer ALL parts of the prompt?
+- Is the writer's position stated and consistent?
+- Is each body paragraph supported with example or explanation?
+- Does the conclusion restate position?
+- Is the response memorized/template? → TR cap 5
+
+COHERENCE & COHESION (CC):
+Band 8: Well-organized. Paragraphing effective. Cohesive devices varied.
+Band 7: Clear progression. Paragraphing present. Some mechanical cohesive device use.
+Band 6: Coherent overall. May be repetitive. Paragraphing not always logical.
+Band 5: Some organization but no progression. Repetitive devices. Poor paragraphing.
+Band 4: Little coherence. Basic devices only.
+Deduction: Fewer than 3 paragraphs → CC -0.5. "Moreover" every sentence → CC cap 5.
 
 LEXICAL RESOURCE (LR):
-- Band 9: Full flexibility; natural and sophisticated control; rare slips only
-- Band 7: Uses sufficient vocabulary; uses less common items; aware of style and collocation
-- Band 5: Limited range but adequate for task; noticeable errors in spelling/word formation
+Band 8: Wide range. Natural collocation. Precise.
+Band 7: Adequate range. Attempts less common vocabulary.
+Band 6: Adequate for task. Errors in word choice and spelling.
+Band 5: Limited, repetitive. Basic. Noticeable spelling errors.
+Band 4: Very limited. Frequent errors impede meaning.
+Deductions: Each spelling error = -0.25 (cap -1.0). Template language = -0.5.
 
-GRAMMATICAL RANGE AND ACCURACY (GRA):
-- Band 9: Wide range with full flexibility; rare minor errors as slips
-- Band 7: Variety of complex structures; frequently error-free; good control
-- Band 5: Limited range; attempts complex sentences; frequent grammatical errors
+GRAMMATICAL RANGE & ACCURACY (GRA):
+Band 8: Wide range. Mostly error-free.
+Band 7: Good range. Errors rarely impede.
+Band 6: Mix of simple and complex. Some errors.
+Band 5: Limited range. Mostly simple. Frequent errors.
+Band 4: Very limited. Errors impede communication.
+Error density: 0-1/100w → 8-9, 2-3/100w → 6-7, 4-6/100w → 5, 7+/100w → 4 or below.
+Only simple sentences → GRA cap 5.5.
 
-CRITICAL EVALUATION POINTS:
-- Does the essay have a CLEAR THESIS STATEMENT?
-- Are BOTH SIDES discussed (if required)?
-- Is the OPINION clearly stated (if opinion essay)?
-- Are IDEAS SUPPORTED with examples/evidence?
-- Is there a PROPER CONCLUSION that summarizes?
-- Penalize memorized templates and generic content
+STEP 4 — CALCULATE OVERALL BAND:
+overall_band = (TR + CC + LR + GRA) / 4, rounded to nearest 0.5
+When in doubt, give the LOWER band.
 
-CRITICAL LINE-BY-LINE RULES:
-- "line_by_line_corrections" is the MOST IMPORTANT part of your evaluation
-- You MUST find 3-5 actual sentences from the student's essay that contain errors
-- For each, copy the EXACT sentence into "original_line", write the corrected version in "corrected_line"
-- NEVER leave original_line or corrected_line empty or as descriptions
-- Example: original_line = "Education is important for develop country." corrected_line = "Education is important for developing countries."
+STEP 5 — LINE-BY-LINE CORRECTIONS:
+Find 3-5 sentences with errors. Copy exact sentence → write corrected version → explain error.
 
-Return ONLY this JSON (no other text):
+=== OUTPUT (JSON ONLY) ===
 {{
-    "overall_band": 6.5,
-    "task_achievement": {{
-        "score": 6,
-        "feedback": "Specific feedback on thesis, arguments, position, and conclusion"
-    }},
-    "coherence_cohesion": {{
-        "score": 7,
-        "feedback": "Feedback on essay structure, paragraphing, and transitions"
-    }},
-    "lexical_resource": {{
-        "score": 6,
-        "feedback": "Feedback on academic vocabulary, range, and accuracy"
-    }},
-    "grammatical_range": {{
-        "score": 7,
-        "feedback": "Feedback on sentence variety, complexity, and accuracy"
-    }},
-    "strengths": ["strength 1", "strength 2", "strength 3"],
-    "weaknesses": ["weakness 1", "weakness 2", "weakness 3"],
-    "improvement_suggestions": ["suggestion 1", "suggestion 2", "suggestion 3"],
-    "vocabulary_to_use": ["word 1", "word 2", "word 3"],
-    "grammar_corrections": [
-        {{"original": "error from essay", "corrected": "correct version", "explanation": "why this is wrong"}}
-    ],
+    "overall_band": 5.5,
+    "task_achievement": {{"score": 5, "feedback": "specific feedback on thesis, arguments, position"}},
+    "coherence_cohesion": {{"score": 6, "feedback": "specific feedback on structure and linking"}},
+    "lexical_resource": {{"score": 5, "feedback": "specific feedback on vocabulary and spelling"}},
+    "grammatical_range": {{"score": 6, "feedback": "specific feedback on grammar and range"}},
+    "strengths": ["specific strength 1", "specific strength 2"],
+    "weaknesses": ["specific weakness 1", "specific weakness 2"],
+    "improvement_suggestions": ["actionable suggestion 1", "actionable suggestion 2"],
+    "vocabulary_to_use": ["word1", "word2", "word3"],
+    "grammar_corrections": [{{"original": "error", "corrected": "fix", "explanation": "rule"}}],
     "line_by_line_corrections": [
-        {{"original_line": "Education is important for develop country.", "corrected_line": "Education is important for developing countries.", "issue": "Word form error: 'develop' should be 'developing' (adjective); 'country' should be plural 'countries'"}},
-        {{"original_line": "Many people thinks that technology is bad.", "corrected_line": "Many people think that technology is harmful.", "issue": "Subject-verb agreement: 'people' is plural so 'thinks' should be 'think'; 'bad' upgraded to 'harmful'"}},
-        {{"original_line": "In the conclusion I want to say education help us.", "corrected_line": "In conclusion, education helps individuals and society.", "issue": "Missing comma; 'help' needs -s for third person; vague 'us' improved to specific noun"}}
+        {{"original_line": "Education is important for develop country.", "corrected_line": "Education is important for developing countries.", "issue": "Word form: 'develop' → 'developing'; plural: 'country' → 'countries'"}},
+        {{"original_line": "Many people thinks technology is bad.", "corrected_line": "Many people think that technology is harmful.", "issue": "Subject-verb agreement; upgrade 'bad' to 'harmful'"}}
     ],
-    "high_priority_fixes": [
-        "Most important fix in 1-2 sentences",
-        "Second priority fix"
-    ],
-    "rewrite_guidance": {{
-        "weakest_paragraph": "Which paragraph needs the most work and why",
-        "suggested_opening": "A better opening sentence for that paragraph",
-        "key_linking_phrases": "2-3 linking phrases the student should add"
-    }},
-    "response_diagnosis": {{
-        "main_issue": "The root cause of the low score",
-        "band_ceiling_reason": "What is preventing a higher band",
-        "quick_win": "One thing to fix that would raise the band by 0.5"
-    }},
-    "examiner_comment": "A 2-3 sentence overall assessment like an examiner would write in official feedback"
+    "high_priority_fixes": ["most important fix", "second fix"],
+    "rewrite_guidance": {{"weakest_paragraph": "which and why", "suggested_opening": "better opening", "key_linking_phrases": "phrases to add"}},
+    "response_diagnosis": {{"main_issue": "root cause", "band_ceiling_reason": "what blocks higher band", "quick_win": "one fix for +0.5"}},
+    "examiner_comment": "2-3 sentence examiner assessment. Neutral tone."
 }}"""
 
     try:
@@ -1478,6 +1476,45 @@ Return ONLY this JSON (no other text):
         for key, default_value in default_evaluation.items():
             if key not in evaluation:
                 evaluation[key] = default_value
+
+        # ============ SERVER-SIDE BAND ENFORCEMENT ============
+        # Apply word count caps that AI might not have followed strictly
+        ta_key = "task_achievement"
+        ta_score = float(evaluation.get(ta_key, {}).get("score", 5))
+
+        if request.task_type == "task1":
+            if word_count < 100:
+                ta_cap = 3.0
+            elif word_count < 120:
+                ta_cap = 4.0
+            elif word_count < 150:
+                ta_cap = 5.0
+            else:
+                ta_cap = 9.0
+        else:  # task2
+            if word_count < 150:
+                ta_cap = 3.0
+            elif word_count < 200:
+                ta_cap = 4.0
+            elif word_count < 250:
+                ta_cap = 5.0
+            else:
+                ta_cap = 9.0
+
+        if ta_score > ta_cap:
+            evaluation[ta_key]["score"] = ta_cap
+            evaluation[ta_key]["feedback"] += f" [Word count penalty applied: {word_count} words, TA capped at {ta_cap}]"
+
+        # Recalculate overall_band from 4 criteria (server-side, not trusting AI math)
+        scores = [
+            float(evaluation.get("task_achievement", {}).get("score", 5)),
+            float(evaluation.get("coherence_cohesion", {}).get("score", 5)),
+            float(evaluation.get("lexical_resource", {}).get("score", 5)),
+            float(evaluation.get("grammatical_range", {}).get("score", 5)),
+        ]
+        avg = sum(scores) / 4
+        evaluation["overall_band"] = round(avg * 2) / 2  # Round to nearest 0.5
+        evaluation["word_count"] = word_count
         
         # ============ LESSON RECOMMENDATIONS (ULTRA MASTER PROMPT + DUAL-TRACK) ============
         # Fetch recommended lessons based on weaknesses AND track
