@@ -34,6 +34,8 @@ export default function Dashboard({ user, onLogout }) {
   const [userDetails, setUserDetails] = useState(user);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [continueData, setContinueData] = useState(null);
+  const [dailyTask, setDailyTask] = useState(null);
+  const [showMigrationModal, setShowMigrationModal] = useState(false);
   
   // Verification modal state - must be at top level
   const [showLockedModal, setShowLockedModal] = useState(false);
@@ -57,12 +59,35 @@ export default function Dashboard({ user, onLogout }) {
       const [testsData, progressData, freshUser] = await Promise.all([getTests(), getUserProgress(user.id), getUser(user.id)]);
       setTests(testsData);
       setProgress(progressData);
-      if (freshUser) { setUserDetails(freshUser); localStorage.setItem('user', JSON.stringify(freshUser)); }
-      
+      if (freshUser) {
+        setUserDetails(freshUser);
+        localStorage.setItem('user', JSON.stringify(freshUser));
+        // Show migration modal for users who haven't chosen a learning mode yet
+        if (!freshUser.learning_mode) setShowMigrationModal(true);
+      }
       // Determine "Continue Learning" suggestion
       determineContinueSuggestion(progressData);
+      // Fetch Liz daily task
+      try {
+        const taskRes = await fetch(`${API_URL}/api/liz/daily-task/${user.id}`);
+        if (taskRes.ok) { const taskData = await taskRes.json(); setDailyTask(taskData.task); }
+      } catch {}
     } catch (error) { toast.error('Failed to load dashboard data'); }
     finally { setLoading(false); }
+  };
+
+  const handleSetLearningMode = async (mode) => {
+    try {
+      await fetch(`${API_URL}/api/user/learning-mode`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id, mode }),
+      });
+      const updated = { ...userDetails, learning_mode: mode };
+      setUserDetails(updated);
+      localStorage.setItem('user', JSON.stringify(updated));
+    } catch {}
+    setShowMigrationModal(false);
   };
 
   // Translation helper for inline texts
@@ -364,7 +389,7 @@ export default function Dashboard({ user, onLogout }) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 pb-24">
         
         {/* Welcome + Continue Section */}
-        <div className="mb-6">
+        <div className="mb-4">
           <h1 className={`text-2xl sm:text-3xl font-bold ${textPrimary} mb-1`}>
             {getText(
               `Welcome back, ${user.name?.split(' ')[0] || 'Student'}!`,
@@ -372,21 +397,48 @@ export default function Dashboard({ user, onLogout }) {
               `Tekrar hoş geldin, ${user.name?.split(' ')[0] || 'Öğrenci'}!`
             )} 👋
           </h1>
-          <p className={`${textSecondary} text-sm`}>
-            {getText(
-              'Continue your IELTS preparation journey',
-              'Tiếp tục hành trình IELTS của bạn',
-              'IELTS hazırlık yolculuğunuza devam edin'
-            )}
-          </p>
         </div>
+
+        {/* Liz Daily Task Card */}
+        {dailyTask && (
+          <div className="mb-6 rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 p-5 text-white shadow-lg">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-white/20 flex-shrink-0 overflow-hidden">
+                <img src="/liz-avatar.png" alt="Liz" className="w-full h-full object-cover"
+                  onError={e => { e.target.style.display = 'none'; }} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-xs font-semibold opacity-75 uppercase tracking-wider mb-1">Today from Liz</div>
+                <div className="font-bold text-lg leading-tight mb-1">{dailyTask.title}</div>
+                <div className="text-sm opacity-80 mb-3">{dailyTask.description}</div>
+                <div className="flex gap-2 flex-wrap">
+                  <button
+                    onClick={() => navigate(dailyTask.route)}
+                    className="px-4 py-2 bg-white text-violet-700 font-semibold rounded-xl text-sm hover:bg-violet-50 transition"
+                  >
+                    {dailyTask.label} →
+                  </button>
+                  <button
+                    onClick={() => navigate('/liz')}
+                    className="px-4 py-2 bg-white/20 text-white font-semibold rounded-xl text-sm hover:bg-white/30 transition"
+                  >
+                    Ask Liz
+                  </button>
+                </div>
+              </div>
+              {dailyTask.duration && (
+                <div className="text-xs opacity-60 flex-shrink-0">{dailyTask.duration} min</div>
+              )}
+            </div>
+          </div>
+        )}
 
 
         {/* Quick Stats Row - Always visible */}
         <div className="grid grid-cols-5 gap-3 mb-6">
           {[
             { icon: BarChart3, label: getText('Tests', 'Bài thi', 'Testler'), value: progress?.total_tests || 0, color: 'text-blue-600', bg: isDark ? 'bg-blue-900/30' : 'bg-blue-50' },
-            { icon: Award, label: getText('Avg Band', 'TB Band', 'Ort. Band'), value: progress?.average_band?.toFixed(1) || '-', color: 'text-purple-600', bg: isDark ? 'bg-purple-900/30' : 'bg-purple-50' },
+            { icon: Award, label: getText('Avg Band', 'TB Band', 'Ort. Band'), value: (progress?.average_band && progress.average_band > 0) ? progress.average_band.toFixed(1) : '-', color: 'text-purple-600', bg: isDark ? 'bg-purple-900/30' : 'bg-purple-50' },
             { icon: Flame, label: getText('Best', 'Cao nhất', 'En İyi'), value: progress?.best_band?.toFixed(1) || '-', color: 'text-orange-600', bg: isDark ? 'bg-orange-900/30' : 'bg-orange-50' },
             { icon: Zap, label: getText('Streak', 'Streak', 'Seri'), value: `${progress?.streak || 0}🔥`, color: 'text-red-600', bg: isDark ? 'bg-red-900/30' : 'bg-red-50' },
             { icon: Star, label: getText('Badges', 'Huy hiệu', 'Rozetler'), value: progress?.badges?.length || 0, color: 'text-amber-600', bg: isDark ? 'bg-amber-900/30' : 'bg-amber-50' }
@@ -896,6 +948,36 @@ export default function Dashboard({ user, onLogout }) {
         user={user}
         type={feedbackType}
       />
+
+      {/* Learning Mode Migration Modal — shown once for existing users */}
+      {showMigrationModal && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
+            <div className="text-4xl mb-3">👋</div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">We've updated IELTS Ace!</h2>
+            <p className="text-gray-500 mb-6">
+              To help Liz guide you better, tell us what you're here for:
+            </p>
+            <div className="flex flex-col gap-3 mb-4">
+              <button
+                onClick={() => handleSetLearningMode('ielts')}
+                className="w-full py-4 px-6 rounded-xl border-2 border-violet-600 bg-violet-600 text-white font-semibold text-left hover:bg-violet-700 transition"
+              >
+                <div className="text-lg">🎯 IELTS Exam Preparation</div>
+                <div className="text-sm opacity-80 mt-1">I need to reach a specific band score</div>
+              </button>
+              <button
+                onClick={() => handleSetLearningMode('general')}
+                className="w-full py-4 px-6 rounded-xl border-2 border-gray-200 text-gray-700 font-semibold text-left hover:border-violet-300 hover:bg-violet-50 transition"
+              >
+                <div className="text-lg">📚 General English Learning</div>
+                <div className="text-sm text-gray-500 mt-1">I want to improve my English overall</div>
+              </button>
+            </div>
+            <p className="text-xs text-gray-400">You can change this later in your Profile settings.</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

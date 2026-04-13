@@ -4,7 +4,7 @@ import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import {
   Shield, Users, MessageSquare, CreditCard, BookOpen, Image,
-  Paintbrush, ArrowLeft, ChevronRight
+  Paintbrush, ArrowLeft, ChevronRight, BarChart3, Brain, GraduationCap, Map
 } from 'lucide-react';
 
 const ADMIN_MODULES = [
@@ -61,6 +61,33 @@ const ADMIN_MODULES = [
     path: '/admin/visual-generator',
     color: 'from-indigo-500 to-blue-600',
     bg: 'bg-indigo-50'
+  },
+  {
+    id: 'liz-analytics',
+    title: 'Liz Analytics',
+    description: 'Message usage, navigation clicks, evaluation chat stats by plan.',
+    icon: Brain,
+    path: '/admin/liz-analytics',
+    color: 'from-violet-600 to-purple-700',
+    bg: 'bg-violet-50'
+  },
+  {
+    id: 'onboarding-analytics',
+    title: 'Onboarding Analytics',
+    description: 'Quiz completion rates, drop-off points, plan recommendation vs purchase.',
+    icon: BarChart3,
+    path: '/admin/onboarding-analytics',
+    color: 'from-teal-500 to-emerald-600',
+    bg: 'bg-teal-50'
+  },
+  {
+    id: 'learning-mode',
+    title: 'Learning Mode Stats',
+    description: 'IELTS vs General English users, Unified Course stage progress.',
+    icon: Map,
+    path: '/admin/learning-mode',
+    color: 'from-sky-500 to-blue-600',
+    bg: 'bg-sky-50'
   }
 ];
 

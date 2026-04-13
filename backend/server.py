@@ -577,6 +577,9 @@ class User(BaseModel):
     last_resend_at: Optional[str] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     test_history: List[str] = Field(default_factory=list)
+    learning_mode: Optional[str] = Field(default=None, description="ielts or general")
+    onboarding_complete: bool = Field(default=False)
+    onboarding: Optional[dict] = Field(default=None, description="Quiz answers and recommended plan")
 
 class UserCreate(BaseModel):
     email: str
@@ -7940,6 +7943,281 @@ async def _restore_vocab_image_mappings():
         logger.info(f"✅ Restored vocab images/enrichment for {updated} lessons")
     else:
         logger.info("✅ No vocab restoration needed")
+
+# ─────────────────────────────────────────────
+# ADMIN ANALYTICS ENDPOINTS
+# ─────────────────────────────────────────────
+
+@app.get("/api/admin/liz-analytics")
+async def get_liz_analytics(admin_email: str = None):
+    """Liz usage analytics for admin."""
+    from plan_access import is_admin_user
+    if not admin_email or not is_admin_user(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    try:
+        # Message usage by plan
+        pipeline = [
+            {"$group": {"_id": "$plan", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}
+        ]
+        plan_counts = await db.users.aggregate(pipeline).to_list(20)
+        # Total Liz sessions
+        total_sessions = await db.liz_sessions.count_documents({})
+        # Sessions this month
+        month_start = datetime.now(timezone.utc).replace(day=1, hour=0, minute=0, second=0)
+        sessions_this_month = await db.liz_sessions.count_documents(
+            {"created_at": {"$gte": month_start}}
+        )
+        # Homework assigned
+        total_homework = await db.liz_homework.count_documents({})
+        return {
+            "total_sessions": total_sessions,
+            "sessions_this_month": sessions_this_month,
+            "total_homework_assigned": total_homework,
+            "users_by_plan": plan_counts,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/admin/onboarding-analytics")
+async def get_onboarding_analytics(admin_email: str = None):
+    """Onboarding quiz analytics for admin."""
+    from plan_access import is_admin_user
+    if not admin_email or not is_admin_user(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    try:
+        total_users = await db.users.count_documents({})
+        onboarded = await db.users.count_documents({"onboarding_complete": True})
+        ielts_mode = await db.users.count_documents({"learning_mode": "ielts"})
+        general_mode = await db.users.count_documents({"learning_mode": "general"})
+        no_mode = await db.users.count_documents({"learning_mode": None})
+        # Target band distribution
+        pipeline = [
+            {"$match": {"onboarding.target_band": {"$exists": True}}},
+            {"$group": {"_id": "$onboarding.target_band", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}
+        ]
+        target_bands = await db.users.aggregate(pipeline).to_list(10)
+        # Weakest skill distribution
+        pipeline2 = [
+            {"$match": {"onboarding.weakest_skill": {"$exists": True}}},
+            {"$group": {"_id": "$onboarding.weakest_skill", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}
+        ]
+        weak_skills = await db.users.aggregate(pipeline2).to_list(10)
+        return {
+            "total_users": total_users,
+            "onboarding_complete": onboarded,
+            "onboarding_rate": round(onboarded / total_users * 100, 1) if total_users else 0,
+            "ielts_mode_users": ielts_mode,
+            "general_mode_users": general_mode,
+            "no_mode_selected": no_mode,
+            "target_band_distribution": target_bands,
+            "weakest_skill_distribution": weak_skills,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/admin/learning-mode-stats")
+async def get_learning_mode_stats(admin_email: str = None):
+    """Learning mode and Unified Course progress stats."""
+    from plan_access import is_admin_user
+    if not admin_email or not is_admin_user(admin_email):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    try:
+        ielts_users = await db.users.count_documents({"learning_mode": "ielts"})
+        general_users = await db.users.count_documents({"learning_mode": "general"})
+        # Unified stage progress
+        pipeline = [
+            {"$group": {"_id": "$stage_id", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}}
+        ]
+        stage_progress = await db.unified_user_progress.aggregate(pipeline).to_list(20)
+        return {
+            "ielts_users": ielts_users,
+            "general_users": general_users,
+            "unified_stage_engagement": stage_progress,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ─────────────────────────────────────────────
+# LEARNING TOOLS INDEX ENDPOINTS
+# ─────────────────────────────────────────────
+
+VOCAB_TOPIC_INDEX = [
+    {"topic": "Technology & Innovation", "route": "/advanced-mastery?module=digital-frontier&tab=vocabulary", "word_count": 45},
+    {"topic": "Environment & Sustainability", "route": "/advanced-mastery?module=green-imperative&tab=vocabulary", "word_count": 42},
+    {"topic": "Education & Learning", "route": "/advanced-mastery?module=educational-paradigm&tab=vocabulary", "word_count": 38},
+    {"topic": "Health & Medicine", "route": "/advanced-mastery?module=healthcare-systems&tab=vocabulary", "word_count": 40},
+    {"topic": "Society & Culture", "route": "/mastery-course?module=gt-mastery-1&tab=vocabulary", "word_count": 35},
+    {"topic": "Economy & Business", "route": "/advanced-mastery?module=economy-wealth&tab=vocabulary", "word_count": 41},
+    {"topic": "Crime & Justice", "route": "/advanced-mastery?module=crime-justice&tab=vocabulary", "word_count": 36},
+    {"topic": "Urban Development", "route": "/advanced-mastery?module=urbanisation&tab=vocabulary", "word_count": 33},
+    {"topic": "Science & Research", "route": "/advanced-mastery?module=science-bioethics&tab=vocabulary", "word_count": 37},
+    {"topic": "Media & Communication", "route": "/advanced-mastery?module=media-journalism&tab=vocabulary", "word_count": 34},
+    {"topic": "Travel & Tourism", "route": "/advanced-mastery?module=tourism-heritage&tab=vocabulary", "word_count": 30},
+    {"topic": "Work & Employment", "route": "/advanced-mastery?module=work-employment&tab=vocabulary", "word_count": 39},
+    {"topic": "Public Health", "route": "/advanced-mastery?module=public-health-allocation&tab=vocabulary", "word_count": 32},
+    {"topic": "Globalisation", "route": "/advanced-mastery?module=globalisation-cultural&tab=vocabulary", "word_count": 35},
+]
+
+GRAMMAR_TOPIC_INDEX = [
+    {"topic": "Passive Voice", "description": "Essential for Task 1 process diagrams", "route": "/grammar-engine/passive-voice"},
+    {"topic": "Conditionals (Type 1-3)", "description": "Hypothesis and speculation for essays", "route": "/grammar-engine/conditionals"},
+    {"topic": "Perfect Tenses", "description": "Describing changes over time", "route": "/grammar-engine/perfect-tenses"},
+    {"topic": "Relative Clauses", "description": "Adding detail without new sentences", "route": "/grammar-engine/relative-clauses"},
+    {"topic": "Modal Verbs", "description": "Expressing possibility and recommendation", "route": "/grammar-engine/modal-verbs"},
+    {"topic": "Reported Speech", "description": "Summarising arguments in essays", "route": "/grammar-engine/reported-speech"},
+    {"topic": "Articles (a/an/the)", "description": "One of the most common IELTS errors", "route": "/grammar-engine/articles"},
+    {"topic": "Discourse Markers", "description": "Cohesion — linking ideas clearly", "route": "/grammar-engine/discourse-markers"},
+    {"topic": "Comparison Structures", "description": "Key for Task 1 data description", "route": "/grammar-engine/comparison"},
+    {"topic": "Gerunds vs Infinitives", "description": "Natural academic expression", "route": "/grammar-engine/gerunds-infinitives"},
+    {"topic": "Nominalization", "description": "Band 7+ academic writing style", "route": "/grammar-engine/nominalization"},
+]
+
+@app.get("/api/learning-tools/vocabulary")
+async def get_vocab_topic_index():
+    """Return vocabulary topic index pointing to Mastery/Advanced content."""
+    return {"topics": VOCAB_TOPIC_INDEX}
+
+@app.get("/api/learning-tools/grammar")
+async def get_grammar_topic_index():
+    """Return grammar topic index pointing to grammar engine modules."""
+    return {"topics": GRAMMAR_TOPIC_INDEX}
+
+
+# ─────────────────────────────────────────────
+# ONBOARDING + LEARNING MODE ENDPOINTS
+# ─────────────────────────────────────────────
+
+class OnboardingQuizData(BaseModel):
+    user_id: str
+    learning_mode: str  # "ielts" | "general"
+    current_band: Optional[str] = None
+    target_band: Optional[str] = None
+    exam_date: Optional[str] = None
+    weakest_skill: Optional[str] = None
+    english_level: Optional[str] = None
+    english_goal: Optional[str] = None
+    recommended_plan: Optional[str] = None
+
+class LearningModeRequest(BaseModel):
+    user_id: str
+    mode: str  # "ielts" | "general"
+
+@app.post("/api/onboarding/quiz")
+async def save_onboarding_quiz(data: OnboardingQuizData):
+    """Save onboarding quiz answers and recommended plan to user profile."""
+    try:
+        update_data = {
+            "learning_mode": data.learning_mode,
+            "onboarding_complete": True,
+            "onboarding": {
+                "learning_mode": data.learning_mode,
+                "current_band": data.current_band,
+                "target_band": data.target_band,
+                "exam_date": data.exam_date,
+                "weakest_skill": data.weakest_skill,
+                "english_level": data.english_level,
+                "english_goal": data.english_goal,
+                "recommended_plan": data.recommended_plan,
+                "completed_at": datetime.now(timezone.utc).isoformat()
+            }
+        }
+        await db.users.update_one({"id": data.user_id}, {"$set": update_data})
+        return {"success": True}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/onboarding/status/{user_id}")
+async def get_onboarding_status(user_id: str):
+    """Check if user has completed onboarding."""
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "onboarding_complete": 1, "learning_mode": 1, "onboarding": 1})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {
+        "onboarding_complete": user.get("onboarding_complete", False),
+        "learning_mode": user.get("learning_mode"),
+        "onboarding": user.get("onboarding")
+    }
+
+@app.post("/api/user/learning-mode")
+async def set_learning_mode(data: LearningModeRequest):
+    """Set learning mode for existing users (migration modal)."""
+    if data.mode not in ["ielts", "general"]:
+        raise HTTPException(status_code=400, detail="Mode must be 'ielts' or 'general'")
+    await db.users.update_one(
+        {"id": data.user_id},
+        {"$set": {"learning_mode": data.mode}}
+    )
+    return {"success": True, "mode": data.mode}
+
+@app.get("/api/liz/daily-task/{user_id}")
+async def get_liz_daily_task(user_id: str):
+    """Get today's recommended task for the user based on their profile and history."""
+    try:
+        user = await db.users.find_one({"id": user_id}, {"_id": 0})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        onboarding = user.get("onboarding", {}) or {}
+        weakest_skill = onboarding.get("weakest_skill", "writing")
+        learning_mode = user.get("learning_mode", "ielts")
+
+        # Get recent activity to avoid repeats
+        recent_tests = await db.test_results.find(
+            {"user_id": user_id},
+            {"_id": 0, "skill": 1, "created_at": 1}
+        ).sort("created_at", -1).to_list(5)
+
+        recent_skills = [t.get("skill") for t in recent_tests if t.get("skill")]
+
+        # Task routing map
+        TASK_ROUTES = {
+            "writing": {"route": "/writing-practice/task2", "label": "Writing Task 2 Practice", "duration": 20},
+            "speaking": {"route": "/speaking-practice", "label": "Speaking Practice", "duration": 15},
+            "reading": {"route": "/reading-practice/academic", "label": "Reading Practice", "duration": 30},
+            "listening": {"route": "/listening-practice", "label": "Listening Practice", "duration": 25},
+        }
+
+        if learning_mode == "general":
+            return {
+                "task": {
+                    "title": "Continue Your Learning Journey",
+                    "description": "Pick up where you left off in your English course.",
+                    "route": "/unified",
+                    "label": "Continue Learning",
+                    "duration": 20,
+                    "skill": "general"
+                }
+            }
+
+        # Choose skill: weakest first, avoid recent repeats
+        skill_order = [weakest_skill, "writing", "speaking", "reading", "listening"]
+        chosen_skill = weakest_skill
+        for skill in skill_order:
+            if skill not in recent_skills[:2]:
+                chosen_skill = skill
+                break
+
+        task_info = TASK_ROUTES.get(chosen_skill, TASK_ROUTES["writing"])
+        target_band = onboarding.get("target_band", "7.0")
+
+        return {
+            "task": {
+                "title": task_info["label"],
+                "description": f"Focus area: {chosen_skill.capitalize()}. Target: Band {target_band}.",
+                "route": task_info["route"],
+                "label": f"Start {chosen_skill.capitalize()} Practice",
+                "duration": task_info["duration"],
+                "skill": chosen_skill
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

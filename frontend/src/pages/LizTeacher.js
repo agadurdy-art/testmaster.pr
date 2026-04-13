@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import {
   ArrowLeft, Send, Volume2, VolumeX, Plus,
@@ -86,15 +86,15 @@ function LizPresence({ status, onStop }) {
   );
 }
 
-function SpeechDisplay({ text, status }) {
+function SpeechDisplay({ text, status, onNavigate }) {
   if (!text) return null;
   return (
-    <div className={`max-w-xl mx-auto px-5 py-4 rounded-2xl text-sm sm:text-base leading-relaxed text-center whitespace-pre-wrap transition-all ${
+    <div className={`max-w-xl mx-auto px-5 py-4 rounded-2xl text-sm sm:text-base leading-relaxed text-center transition-all ${
       status === 'speaking'
         ? 'bg-white/90 border border-teal-200 shadow-md text-slate-800'
         : 'bg-white/60 border border-slate-200 text-slate-700'
     }`} data-testid="liz-speech">
-      {text}
+      {parseLizResponse(text, onNavigate)}
     </div>
   );
 }
@@ -196,10 +196,56 @@ function HomeworkCard({ hw, onSubmit, onDelete, submitting }) {
   );
 }
 
-const ALLOWED_PLANS = ['booster', 'pro'];
+// All plans can access Liz — message limits enforced on backend
+const ALLOWED_PLANS = ['free', 'explorer', 'learner', 'achiever', 'master', 'booster', 'pro'];
+
+const TEMPLATE_QUESTIONS = {
+  writing: [
+    "Why did I get this band score?",
+    "Fix my weakest paragraph",
+    "Line by line correction",
+    "Show me a Band 7 version",
+    "What's my biggest mistake?",
+  ],
+  speaking: [
+    "Why this fluency score?",
+    "Give me a model answer",
+    "What grammar mistakes did I make?",
+    "How can I extend my answers?",
+  ],
+  reading: [
+    "Why did I get this wrong?",
+    "Explain the answer strategy",
+    "What reading technique should I use?",
+  ],
+};
+
+function parseLizResponse(text, onNavigate) {
+  const navRegex = /\[NAVIGATE:\s*([^\|]+)\|([^\]]+)\]/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+  while ((match = navRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push({ type: 'text', content: text.slice(lastIndex, match.index) });
+    parts.push({ type: 'nav', route: match[1].trim(), label: match[2].trim() });
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) parts.push({ type: 'text', content: text.slice(lastIndex) });
+  return parts.map((part, i) => {
+    if (part.type === 'nav') return (
+      <button key={i} onClick={() => onNavigate(part.route)}
+        className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-violet-600 text-white text-sm font-semibold rounded-xl hover:bg-violet-700 transition">
+        → {part.label}
+      </button>
+    );
+    return <span key={i} style={{ whiteSpace: 'pre-wrap' }}>{part.content}</span>;
+  });
+}
 
 export default function LizTeacher({ user }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const evaluationContext = location.state?.evaluation_context || null;
 
   // Plan gate - only booster and pro users can access
   if (!user || !ALLOWED_PLANS.includes(user.plan)) {
@@ -360,7 +406,7 @@ export default function LizTeacher({ user }) {
       const res = await fetch(`${API_URL}/api/liz/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice })
+        body: JSON.stringify({ user_id: user.id, message: trimmed, session_id: sessionId, is_voice: isVoice, evaluation_context: evaluationContext })
       });
       const data = await res.json();
       if (data.success) {
@@ -579,10 +625,27 @@ export default function LizTeacher({ user }) {
         <LizPresence status={status} onStop={stopSpeaking} />
 
         {/* Current Liz Speech */}
-        <SpeechDisplay text={latestLiz} status={status} />
+        <SpeechDisplay text={latestLiz} status={status} onNavigate={navigate} />
 
-        {/* Lesson mode buttons (only on fresh start, no messages yet) */}
-        {messages.length <= 1 && status === 'idle' && latestLiz && (
+        {/* Evaluation Context Banner */}
+        {evaluationContext && messages.length <= 1 && (
+          <div className="w-full max-w-xl bg-violet-50 border border-violet-200 rounded-2xl p-4">
+            <div className="text-xs font-semibold text-violet-600 uppercase tracking-wider mb-2">
+              Discussing your {evaluationContext.skill} result — Band {evaluationContext.overall_band}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {(TEMPLATE_QUESTIONS[evaluationContext.skill] || []).map(q => (
+                <button key={q} onClick={() => sendMessage(q)}
+                  className="px-3 py-1.5 bg-white border border-violet-200 rounded-xl text-xs text-violet-700 hover:bg-violet-100 transition">
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Lesson mode buttons (only on fresh start, no messages yet, no eval context) */}
+        {messages.length <= 1 && status === 'idle' && latestLiz && !evaluationContext && (
           <div className="flex flex-wrap justify-center gap-2 mt-2" data-testid="lesson-modes">
             {LESSON_MODES.map(m => (
               <button

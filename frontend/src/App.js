@@ -82,6 +82,8 @@ import { useI18n } from './lib/i18n';
 import { scanDomForLanguageLeaks } from './lib/leakDetection';
 import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
 import ErrorBoundary from './components/ErrorBoundary';
+import OnboardingQuiz from './pages/OnboardingQuiz';
+import LearningToolsIndex from './pages/LearningToolsIndex';
 
 
 // Language Leak Watcher Component (Development Only)
@@ -249,6 +251,8 @@ function AppWithSessionHandler() {
       <Routes>
         <Route path="/" element={<LandingPage onLogin={handleLogin} user={user} />} />
         <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <LandingPage onLogin={handleLogin} user={user} showLogin={true} />} />
+        <Route path="/onboarding" element={<OnboardingQuiz user={user} onComplete={() => window.location.href = '/dashboard'} />} />
+        <Route path="/learning-tools" element={<LearningToolsIndex user={user} />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/admin/credits" element={<AdminCreditsPage user={user} />} />

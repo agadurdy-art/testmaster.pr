@@ -13,8 +13,8 @@ PLAN_TIERS = {
 
 PLAN_FEATURES = {
     "free": {
-        "unified_stages": ["stage_1"],
-        "max_liz_messages": 0,
+        "unified_stages": ["stage_1", "stage_2"],
+        "max_liz_messages": 5,
         "speaking_credits": 0,
         "mastery_course": False,
         "advanced_mastery": False,
@@ -23,7 +23,7 @@ PLAN_FEATURES = {
     },
     "explorer": {
         "unified_stages": "all",
-        "max_liz_messages": 0,
+        "max_liz_messages": 15,
         "speaking_credits": 1,
         "mastery_course": False,
         "advanced_mastery": False,
