@@ -84,6 +84,9 @@ import { isEnglishLockedRoute, getEffectiveLanguage } from './lib/languageLock';
 import ErrorBoundary from './components/ErrorBoundary';
 import OnboardingQuiz from './pages/OnboardingQuiz';
 import LearningToolsIndex from './pages/LearningToolsIndex';
+import AdminLizAnalytics from './pages/AdminLizAnalytics';
+import AdminOnboardingAnalytics from './pages/AdminOnboardingAnalytics';
+import AdminLearningMode from './pages/AdminLearningMode';
 
 
 // Language Leak Watcher Component (Development Only)
@@ -259,6 +262,9 @@ function AppWithSessionHandler() {
         <Route path="/admin/feedback" element={<AdminFeedback user={user} />} />
         <Route path="/admin/users" element={<AdminPanel user={user} />} />
         <Route path="/admin/vocabulary-images" element={<VocabularyImageManager user={user} />} />
+        <Route path="/admin/liz-analytics" element={<AdminLizAnalytics user={user} />} />
+        <Route path="/admin/onboarding-analytics" element={<AdminOnboardingAnalytics user={user} />} />
+        <Route path="/admin/learning-mode" element={<AdminLearningMode user={user} />} />
         <Route path="/admin" element={<AdminDashboard user={user} />} />
         <Route 
           path="/dashboard" 

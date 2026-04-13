@@ -6,8 +6,9 @@ import {
   Loader2, ChevronDown, Mic, MicOff,
   MessageSquare, BookOpen, PenTool, Target,
   GraduationCap, ChevronUp, ClipboardList,
-  CheckCircle2, Clock, X, Star, FileText
+  CheckCircle2, Clock, X, Star, FileText, Headphones
 } from 'lucide-react';
+import PronunciationChecker from '../components/PronunciationChecker';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 const LIZ_AVATAR = 'https://static.prod-images.emergentagent.com/jobs/799d7d0f-0425-4acb-aa13-54128002d580/images/baeb03c8118b149f97024b78f7f053e092a9d4c22d6c09656fd3a17aacf6359b.png';
@@ -291,6 +292,7 @@ export default function LizTeacher({ user }) {
   const [showSessions, setShowSessions] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
   const [showHomework, setShowHomework] = useState(false);
+  const [showPronunciation, setShowPronunciation] = useState(false);
   const [homework, setHomework] = useState([]);
   const [submittingHw, setSubmittingHw] = useState(false);
   const [autoVoice, setAutoVoice] = useState(true);
@@ -575,9 +577,17 @@ export default function LizTeacher({ user }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {/* Pronunciation button */}
+            <button
+              onClick={() => { setShowPronunciation(v => !v); setShowHomework(false); }}
+              className={`p-2 rounded-full transition-colors ${showPronunciation ? 'text-teal-600 bg-teal-50' : 'text-slate-400 bg-slate-50 hover:bg-slate-100'}`}
+              title="Pronunciation Check"
+            >
+              <Headphones className="w-4 h-4" />
+            </button>
             {/* Homework button with badge */}
             <button
-              onClick={() => setShowHomework(v => !v)}
+              onClick={() => { setShowHomework(v => !v); setShowPronunciation(false); }}
               className={`relative p-2 rounded-full transition-colors ${showHomework ? 'text-teal-600 bg-teal-50' : 'text-slate-400 bg-slate-50 hover:bg-slate-100'}`}
               data-testid="homework-toggle-btn"
             >
@@ -658,6 +668,13 @@ export default function LizTeacher({ user }) {
                 {m.label}
               </button>
             ))}
+          </div>
+        )}
+
+        {/* Pronunciation Panel */}
+        {showPronunciation && (
+          <div className="w-full max-w-xl">
+            <PronunciationChecker />
           </div>
         )}
 

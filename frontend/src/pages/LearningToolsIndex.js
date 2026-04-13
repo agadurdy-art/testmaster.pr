@@ -126,7 +126,7 @@ export default function LearningToolsIndex({ user }) {
         {/* Liz CTA */}
         <div className="mt-10 bg-violet-50 border border-violet-200 rounded-2xl p-6 flex items-center gap-4">
           <div className="w-12 h-12 rounded-full bg-violet-200 flex-shrink-0 overflow-hidden">
-            <img src="/liz-avatar.png" alt="Liz" className="w-full h-full object-cover"
+            <img src="/liz-avatar.svg" alt="Liz" className="w-full h-full object-cover"
               onError={e => { e.target.style.display = 'none'; }} />
           </div>
           <div className="flex-1">

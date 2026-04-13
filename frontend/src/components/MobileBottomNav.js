@@ -33,7 +33,7 @@ export default function MobileBottomNav({ currentPath }) {
                     ? 'bg-violet-700 shadow-violet-300'
                     : 'bg-violet-600 hover:bg-violet-700 shadow-violet-200'
                 }`}>
-                  <img src="/liz-avatar.png" alt="Liz" className="w-10 h-10 rounded-xl object-cover"
+                  <img src="/liz-avatar.svg" alt="Liz" className="w-10 h-10 rounded-xl object-cover"
                     onError={e => {
                       e.target.style.display = 'none';
                       e.target.parentElement.innerHTML = '<span class="text-white font-bold text-lg">L</span>';

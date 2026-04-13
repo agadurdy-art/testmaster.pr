@@ -96,11 +96,19 @@ const PLAN_INFO = {
 
 export default function OnboardingQuiz({ user, onComplete }) {
   const navigate = useNavigate();
-  const [phase, setPhase] = useState('mode'); // 'mode' | 'questions' | 'result'
-  const [learningMode, setLearningMode] = useState(null);
+
+  // Pre-select path if user clicked IELTS Ace / General English on landing page
+  const preselectedPath = localStorage.getItem('selected_path');
+  const [phase, setPhase] = useState(preselectedPath ? 'questions' : 'mode');
+  const [learningMode, setLearningMode] = useState(preselectedPath || null);
   const [stepIndex, setStepIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState(preselectedPath ? { learning_mode: preselectedPath } : {});
   const [saving, setSaving] = useState(false);
+
+  // Clear the pre-selection so next visit starts fresh
+  React.useEffect(() => {
+    if (preselectedPath) localStorage.removeItem('selected_path');
+  }, []); // eslint-disable-line
 
   const steps = learningMode === 'ielts' ? IELTS_STEPS : GENERAL_STEPS;
   const currentStep = steps[stepIndex];
@@ -184,7 +192,7 @@ export default function OnboardingQuiz({ user, onComplete }) {
         {phase === 'mode' && (
           <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
             <div className="w-20 h-20 rounded-full bg-violet-100 mx-auto mb-4 overflow-hidden">
-              <img src="/liz-avatar.png" alt="Liz" className="w-full h-full object-cover"
+              <img src="/liz-avatar.svg" alt="Liz" className="w-full h-full object-cover"
                 onError={e => { e.target.style.display = 'none'; }} />
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Hi! I'm Liz 👋</h2>
@@ -228,7 +236,7 @@ export default function OnboardingQuiz({ user, onComplete }) {
             {/* Liz says */}
             <div className="flex items-start gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-violet-100 flex-shrink-0 overflow-hidden">
-                <img src="/liz-avatar.png" alt="Liz" className="w-full h-full object-cover"
+                <img src="/liz-avatar.svg" alt="Liz" className="w-full h-full object-cover"
                   onError={e => { e.target.style.display = 'none'; }} />
               </div>
               <div className="bg-violet-50 rounded-xl rounded-tl-none px-4 py-3 text-sm text-violet-800">

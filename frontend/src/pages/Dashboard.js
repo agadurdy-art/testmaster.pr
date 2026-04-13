@@ -404,7 +404,7 @@ export default function Dashboard({ user, onLogout }) {
           <div className="mb-6 rounded-2xl bg-gradient-to-r from-violet-600 to-purple-600 p-5 text-white shadow-lg">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-white/20 flex-shrink-0 overflow-hidden">
-                <img src="/liz-avatar.png" alt="Liz" className="w-full h-full object-cover"
+                <img src="/liz-avatar.svg" alt="Liz" className="w-full h-full object-cover"
                   onError={e => { e.target.style.display = 'none'; }} />
               </div>
               <div className="flex-1 min-w-0">

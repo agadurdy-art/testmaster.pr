@@ -478,24 +478,53 @@ export default function LandingPage({ onLogin, user, showLogin }) {
               {t('landingHeroDesc')}
             </p>
 
-            <div className="flex flex-wrap gap-4 justify-center mb-12">
-              <Button 
-                data-testid="start-practicing-btn"
-                onClick={handleStartFreePractice} 
-                size="lg" 
-                className="bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 text-white px-8 py-6 text-lg shadow-xl shadow-purple-200 border-0"
+            {/* Learning Path Selection */}
+            <p className={`text-sm font-semibold uppercase tracking-widest ${isDark ? 'text-gray-500' : 'text-gray-400'} mb-4`}>
+              {getText('Choose your path', 'Chọn lộ trình của bạn', 'Yolunu seç')}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+              <button
+                data-testid="path-ielts-btn"
+                onClick={() => { localStorage.setItem('selected_path', 'ielts'); handleStartFreePractice(); }}
+                className={`group flex-1 max-w-xs mx-auto sm:mx-0 rounded-2xl border-2 border-violet-500 p-6 text-left transition-all hover:shadow-xl hover:shadow-violet-200/30 hover:-translate-y-0.5 ${isDark ? 'bg-violet-900/20 hover:bg-violet-900/30' : 'bg-violet-50 hover:bg-violet-100'}`}
               >
-                {t('landingStartLevelCheck')}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button 
+                <div className="text-2xl mb-2">🎯</div>
+                <div className="font-bold text-violet-600 text-lg mb-1">IELTS Ace</div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  {getText('AI teacher + Band scoring + Full exam prep', 'AI teacher + Band score + Luyện thi IELTS', 'AI öğretmen + Band skoru + Sınav hazırlığı')}
+                </div>
+                <div className="mt-3 flex items-center gap-1 text-violet-600 text-sm font-semibold">
+                  {getText('Get started', 'Bắt đầu', 'Başla')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
+
+              <button
+                data-testid="path-general-btn"
+                onClick={() => { localStorage.setItem('selected_path', 'general'); handleStartFreePractice(); }}
+                className={`group flex-1 max-w-xs mx-auto sm:mx-0 rounded-2xl border-2 border-sky-500 p-6 text-left transition-all hover:shadow-xl hover:shadow-sky-200/30 hover:-translate-y-0.5 ${isDark ? 'bg-sky-900/20 hover:bg-sky-900/30' : 'bg-sky-50 hover:bg-sky-100'}`}
+              >
+                <div className="text-2xl mb-2">🌍</div>
+                <div className="font-bold text-sky-600 text-lg mb-1">
+                  {getText('General English', 'Tiếng Anh Tổng quát', 'Genel İngilizce')}
+                </div>
+                <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  {getText('A1 to C1 · Grammar · Vocabulary · Fluency', 'A1 đến C1 · Ngữ pháp · Từ vựng · Giao tiếp', 'A1\'den C1\'e · Gramer · Kelime · Akıcılık')}
+                </div>
+                <div className="mt-3 flex items-center gap-1 text-sky-600 text-sm font-semibold">
+                  {getText('Get started', 'Bắt đầu', 'Başla')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
+            </div>
+
+            <div className="flex flex-wrap gap-3 justify-center mb-12">
+              <Button
                 data-testid="try-lessons-btn"
-                onClick={() => setShowCourseSelector(true)} 
-                size="lg" 
+                onClick={() => setShowCourseSelector(true)}
+                size="sm"
                 variant="outline"
-                className={`border-2 border-amber-500 text-amber-600 ${isDark ? 'hover:bg-amber-900/30' : 'hover:bg-amber-50'} px-8 py-6 text-lg`}
+                className={`border border-gray-300 ${isDark ? 'text-gray-400 border-gray-700 hover:bg-gray-800' : 'text-gray-500 hover:bg-gray-50'} px-5 py-2 text-sm`}
               >
-                <Play className="w-5 h-5 mr-2" />
+                <Play className="w-4 h-4 mr-2" />
                 {t('landingTryOurLessons')}
               </Button>
             </div>

@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
-import { Trophy, User, Mail, Calendar, Award, ArrowLeft } from 'lucide-react';
+import { Trophy, User, Mail, Calendar, Award, ArrowLeft, GraduationCap, Globe } from 'lucide-react';
 import { getUserProgress } from '../lib/api';
 import { getBandScoreColor } from '../lib/utils';
 import { toast } from 'sonner';
 import { useTheme, THEME_MODES } from '../contexts/ThemeContext';
 import ThemeToggle from '../components/ThemeToggle';
 
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 export default function Profile({ user, onLogout }) {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [learningMode, setLearningMode] = useState(user?.learning_mode || null);
+  const [savingMode, setSavingMode] = useState(false);
   
   // Theme support
   const { activeTheme } = useTheme();
@@ -38,6 +42,25 @@ export default function Profile({ user, onLogout }) {
       toast.error('Failed to load profile data');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleModeChange = async (mode) => {
+    if (mode === learningMode || savingMode) return;
+    setSavingMode(true);
+    try {
+      const res = await fetch(`${API_URL}/api/user/learning-mode`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: user.id, mode })
+      });
+      if (!res.ok) throw new Error();
+      setLearningMode(mode);
+      toast.success(`Switched to ${mode === 'ielts' ? 'IELTS Ace' : 'General English'}`);
+    } catch {
+      toast.error('Failed to update learning path');
+    } finally {
+      setSavingMode(false);
     }
   };
 
@@ -120,6 +143,37 @@ export default function Profile({ user, onLogout }) {
                   </div>
                 </div>
               )}
+
+              {/* Learning Path Toggle */}
+              <div className="pt-6 border-t">
+                <h3 className="text-sm font-semibold text-gray-700 mb-3">Learning Path</h3>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => handleModeChange('ielts')}
+                    disabled={savingMode}
+                    className={`flex-1 flex items-center gap-2 px-4 py-3 rounded-xl border-2 font-semibold text-sm transition ${
+                      learningMode === 'ielts'
+                        ? 'border-violet-600 bg-violet-600 text-white'
+                        : 'border-gray-200 text-gray-600 hover:border-violet-400'
+                    }`}
+                  >
+                    <GraduationCap className="w-4 h-4" />
+                    IELTS Ace
+                  </button>
+                  <button
+                    onClick={() => handleModeChange('general')}
+                    disabled={savingMode}
+                    className={`flex-1 flex items-center gap-2 px-4 py-3 rounded-xl border-2 font-semibold text-sm transition ${
+                      learningMode === 'general'
+                        ? 'border-sky-500 bg-sky-500 text-white'
+                        : 'border-gray-200 text-gray-600 hover:border-sky-400'
+                    }`}
+                  >
+                    <Globe className="w-4 h-4" />
+                    General English
+                  </button>
+                </div>
+              </div>
 
               <div className="pt-6 border-t">
                 <div className="flex items-center text-gray-600 mb-4">

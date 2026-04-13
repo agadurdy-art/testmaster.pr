@@ -546,14 +546,40 @@ Student Profile:
         {"$push": {"messages": {"role": "assistant", "content": greeting, "timestamp": now}}}
     )
 
-    # Generate TTS audio
+    # Generate TTS audio using Azure Neural TTS
     audio_base64 = None
     try:
-        from emergentintegrations.llm.openai import OpenAITextToSpeech
-        tts = OpenAITextToSpeech(api_key=api_key)
-        audio_base64 = await tts.generate_speech_base64(
-            text=greeting[:500], voice="nova", model="tts-1"
-        )
+        import azure.cognitiveservices.speech as speechsdk
+        import asyncio
+        import base64
+
+        azure_key = os.getenv("AZURE_SPEECH_KEY")
+        azure_region = os.getenv("AZURE_SPEECH_REGION", "southeastasia")
+
+        if azure_key:
+            def _synthesize_greeting():
+                speech_config = speechsdk.SpeechConfig(subscription=azure_key, region=azure_region)
+                speech_config.set_speech_synthesis_output_format(
+                    speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3
+                )
+                synth = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=None)
+                clean = re.sub(r'\[NAVIGATE:[^\]]+\]', '', greeting[:600]).strip()
+                ssml = f"""<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis"
+                           xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-GB">
+                    <voice name="en-GB-SoniaNeural">
+                        <prosody rate="0%" pitch="0%">
+                            <mstts:express-as style="chat">{clean}</mstts:express-as>
+                        </prosody>
+                    </voice>
+                </speak>"""
+                result = synth.speak_ssml_async(ssml).get()
+                if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+                    return result.audio_data
+                return None
+
+            audio_bytes = await asyncio.to_thread(_synthesize_greeting)
+            if audio_bytes:
+                audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
     except Exception:
         pass
 
@@ -603,22 +629,52 @@ async def get_user_sessions(user_id: str):
 
 @router.post("/tts")
 async def liz_speak(req: TTSRequest):
-    """Convert Liz's response to speech."""
+    """Convert Liz's response to speech using Azure Neural TTS."""
     if not req.text:
         raise HTTPException(status_code=400, detail="No text provided")
 
-    api_key = get_api_key()
-    if not api_key:
-        raise HTTPException(status_code=500, detail="TTS API key not configured")
+    azure_key = os.getenv("AZURE_SPEECH_KEY")
+    azure_region = os.getenv("AZURE_SPEECH_REGION", "southeastasia")
+
+    if not azure_key:
+        raise HTTPException(status_code=500, detail="Azure Speech key not configured")
 
     try:
-        from emergentintegrations.llm.openai import OpenAITextToSpeech
-        tts = OpenAITextToSpeech(api_key=api_key)
-        audio_base64 = await tts.generate_speech_base64(
-            text=req.text[:500],
-            voice="nova",
-            model="tts-1"
-        )
+        import azure.cognitiveservices.speech as speechsdk
+        import asyncio
+        import base64
+
+        def synthesize():
+            speech_config = speechsdk.SpeechConfig(
+                subscription=azure_key,
+                region=azure_region
+            )
+            speech_config.set_speech_synthesis_output_format(
+                speechsdk.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3
+            )
+            synthesizer = speechsdk.SpeechSynthesizer(
+                speech_config=speech_config,
+                audio_config=None
+            )
+            # Clean text: strip [NAVIGATE:...] tags before TTS
+            clean = re.sub(r'\[NAVIGATE:[^\]]+\]', '', req.text[:600]).strip()
+            ssml = f"""<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis"
+                       xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-GB">
+                <voice name="en-GB-SoniaNeural">
+                    <prosody rate="0%" pitch="0%">
+                        <mstts:express-as style="chat">
+                            {clean}
+                        </mstts:express-as>
+                    </prosody>
+                </voice>
+            </speak>"""
+            result = synthesizer.speak_ssml_async(ssml).get()
+            if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+                return result.audio_data
+            raise Exception(f"Azure TTS failed: {result.reason}")
+
+        audio_bytes = await asyncio.to_thread(synthesize)
+        audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
         return {"audio": audio_base64, "format": "mp3"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
